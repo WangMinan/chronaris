@@ -1,0 +1,4 @@
+*.csv !text !filter !merge !diff
+*.jsonl !text !filter !merge !diff
+*.npz !text !filter !merge !diff
+*.pt !text !filter !merge !diff
