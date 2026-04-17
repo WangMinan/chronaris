@@ -5,6 +5,7 @@
 建议后续至少拆成：
 
 - `dataset/`: 数据集构建参数
+- `environments/`: conda / pip 环境依赖模板
 - `train/`: 训练参数
 - `export/`: 特征导出参数
 - `eval/`: 评测参数

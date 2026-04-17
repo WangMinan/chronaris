@@ -1,0 +1,16 @@
+name: chronaris-stage-e-gpu
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - packaging
+  - pyyaml
+  - setuptools
+  - numpy=2.0.1
+  - pytorch=2.5.1
+  - pytorch-cuda=12.1
+  - pip:
+      - torchdiffeq==0.2.2
