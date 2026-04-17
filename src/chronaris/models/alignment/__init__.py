@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from chronaris.models.alignment.config import AlignmentPrototypeConfig
 from chronaris.models.alignment.splits import (
     ChronologicalSampleSplit,
     ChronologicalSplitConfig,
@@ -19,8 +20,26 @@ _BATCHING_EXPORTS = {
     "AlignmentStreamBatch",
     "build_alignment_batch",
 }
+_TORCH_BATCH_EXPORTS = {
+    "TorchAlignmentBatch",
+    "TorchAlignmentStreamBatch",
+    "build_torch_alignment_batch",
+}
+_PROTOTYPE_EXPORTS = {
+    "DualStreamODERNNPrototype",
+    "DualStreamPrototypeOutput",
+    "SingleStreamODERNNPrototype",
+    "StreamPrototypeOutput",
+}
+_LOSS_EXPORTS = {
+    "ReconstructionLossBreakdown",
+    "dual_stream_reconstruction_loss",
+    "masked_mean_squared_error",
+    "stream_reconstruction_loss",
+}
 
 __all__ = [
+    "AlignmentPrototypeConfig",
     "ChronologicalSampleSplit",
     "ChronologicalSplitConfig",
     "ReferenceGrid",
@@ -28,7 +47,7 @@ __all__ = [
     "build_reference_grid",
     "build_reference_grids",
     "split_e0_samples_chronologically",
-] + sorted(_BATCHING_EXPORTS)
+] + sorted(_BATCHING_EXPORTS | _TORCH_BATCH_EXPORTS | _PROTOTYPE_EXPORTS | _LOSS_EXPORTS)
 
 
 def __getattr__(name: str) -> Any:
@@ -39,6 +58,52 @@ def __getattr__(name: str) -> Any:
             "AlignmentBatch": AlignmentBatch,
             "AlignmentStreamBatch": AlignmentStreamBatch,
             "build_alignment_batch": build_alignment_batch,
+        }
+        globals().update(exports)
+        return exports[name]
+    if name in _TORCH_BATCH_EXPORTS:
+        from chronaris.models.alignment.torch_batch import (
+            TorchAlignmentBatch,
+            TorchAlignmentStreamBatch,
+            build_torch_alignment_batch,
+        )
+
+        exports = {
+            "TorchAlignmentBatch": TorchAlignmentBatch,
+            "TorchAlignmentStreamBatch": TorchAlignmentStreamBatch,
+            "build_torch_alignment_batch": build_torch_alignment_batch,
+        }
+        globals().update(exports)
+        return exports[name]
+    if name in _PROTOTYPE_EXPORTS:
+        from chronaris.models.alignment.prototype import (
+            DualStreamODERNNPrototype,
+            DualStreamPrototypeOutput,
+            SingleStreamODERNNPrototype,
+            StreamPrototypeOutput,
+        )
+
+        exports = {
+            "DualStreamODERNNPrototype": DualStreamODERNNPrototype,
+            "DualStreamPrototypeOutput": DualStreamPrototypeOutput,
+            "SingleStreamODERNNPrototype": SingleStreamODERNNPrototype,
+            "StreamPrototypeOutput": StreamPrototypeOutput,
+        }
+        globals().update(exports)
+        return exports[name]
+    if name in _LOSS_EXPORTS:
+        from chronaris.models.alignment.losses import (
+            ReconstructionLossBreakdown,
+            dual_stream_reconstruction_loss,
+            masked_mean_squared_error,
+            stream_reconstruction_loss,
+        )
+
+        exports = {
+            "ReconstructionLossBreakdown": ReconstructionLossBreakdown,
+            "dual_stream_reconstruction_loss": dual_stream_reconstruction_loss,
+            "masked_mean_squared_error": masked_mean_squared_error,
+            "stream_reconstruction_loss": stream_reconstruction_loss,
         }
         globals().update(exports)
         return exports[name]
