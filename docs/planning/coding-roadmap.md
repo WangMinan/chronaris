@@ -37,6 +37,7 @@
 - 已开始单架次时间覆盖与窗口策略核验
 - 已完成 overlap-focused E0 最小实验输入适配
 - 已开始阶段 E 的执行计划固化与最小训练/验证切分策略实现
+- 已完成实验室服务器 WSL Ubuntu 22.04 + RTX 4090 环境迁移与依赖验证
 - 还没有开始模型训练代码
 
 ## 4. 阶段拆解
@@ -251,11 +252,27 @@
 具体任务：
 
 1. 基于 E0 定义稳定的模型输入张量协议
-   当前状态：已开始
+   当前状态：已完成最小可用版本
 2. 实现生理流 / 飞机流双流编码
+   当前状态：已完成最小前向原型
 3. 实现连续时间状态推进
+   当前状态：已完成最小前向原型
 4. 实现最小重构损失
+   当前状态：已完成最小可调用版本
 5. 实现最小时间对齐损失
+   当前状态：未开始
+
+当前已验证：
+
+- 实验室服务器 `chronaris` 环境已在真实 shell 中确认可用
+- 当前实际服务器环境可直接导入 `numpy`、`torch`、`torchdiffeq`、`chronaris`
+- 当前实际服务器环境版本为 `numpy 2.4.4`、`torch 2.11.0+cu130`
+- `torch.cuda.is_available()` 为 `True`
+- 当前可见 GPU 为 `NVIDIA GeForce RTX 4090`
+- 当前服务器实际环境与 `configs/environments/chronaris-stage-e-gpu.yml` 不完全一致，后续需决定是回写环境定义还是保持现状
+- 已完成 `split / reference grid / torch batch` 基础模块
+- 已完成确定性双流 ODE-RNN 最小 forward 原型
+- 已完成最小 reconstruction loss 实现与单元测试
 
 退出条件：
 
@@ -370,11 +387,13 @@
 
 ## 6. 当前未完成但最该做的事
 
+服务器环境已经不再阻塞阶段 E，后续优先级重新收敛为：
+
 按优先级排序：
 
-1. 固化最小训练/验证切分方式
-2. 继续阶段 E 的 CPU 安全基础模块
-3. 开始 `AlignmentBatch -> torch` 输入适配
+1. 把时间顺序切分真正接入 preview 训练/验证路径
+2. 基于共享参考时间轴接入投影与最小 `alignment loss`
+3. 搭建最小 preview train / validation loop
 
 ## 7. 当前不该提前做的事
 

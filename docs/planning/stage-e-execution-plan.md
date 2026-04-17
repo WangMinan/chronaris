@@ -22,19 +22,37 @@
 
 当前仍未完成：
 
-1. 最小训练/验证切分策略定稿
-2. `torch` 侧输入适配
-3. 连续时间模型前向原型
-4. 训练 loop
+1. 最小训练/验证切分策略接入 preview 训练路径
+2. 共享参考时间轴上的投影与 `alignment loss`
+3. 最小训练 loop
+4. 最小 validation loop
 5. 真实 GPU 环境下的训练与回归验证
 
-当前环境探针（`2026-04-17`）已确认：
+当前环境探针（`2026-04-17`）已确认两组事实：
 
-1. 本地 `chronaris` 环境中 `numpy` 已安装
-2. 本地 `chronaris` 环境中 `torch` 已安装
-3. 本地 `chronaris` 环境中 `torchdiffeq` 仍未安装完成
+1. 本地 Windows `chronaris` 环境中 `numpy` / `torch` 已安装
+2. 但当前本机相关二进制运行时并不稳定，不适合作为可靠的 `numpy/torch` runtime 验证环境
+3. 实验室服务器 WSL Ubuntu 22.04 已完成 `chronaris` 训练环境准备
+4. 当前服务器环境路径为 `/home/wangminan/env/anaconda3/envs/chronaris`
+5. 在真实 shell 中已经确认：
+   - `numpy 2.4.4`
+   - `torch 2.11.0+cu130`
+   - `torchdiffeq` 已安装在该 env 的 `site-packages`
+   - `torch.cuda.is_available() == True`
+   - 可见 GPU 为 `NVIDIA GeForce RTX 4090`
+6. 当前服务器实际环境版本高于仓库中 `chronaris-stage-e-gpu.yml` 记录的目标版本
+7. 如果后续需要严格复现，应补一次环境文件回写或重建校准
 
-这意味着当前本地环境已经从“极简开发环境”升级到“可做张量与前向开发的 CPU 环境”，但仍不建议在本地直接展开真实训练。
+这意味着当前环境分工已经从“本地 CPU 开发 + 远程训练环境待准备”切换为“本地 CPU 辅助开发 + 服务器 GPU 主环境已就绪”。
+
+当前代码探针（`2026-04-17` 夜）补充确认：
+
+1. `ChronologicalSplitConfig / split_e0_samples_chronologically` 已实现并有单元测试
+2. `ReferenceGrid` 构造器已实现并有单元测试
+3. `AlignmentBatch -> TorchAlignmentBatch` 适配已实现并有单元测试
+4. 最小确定性双流 `ODE-RNN` forward 原型已实现
+5. 最小 reconstruction loss 已实现
+6. 共享参考时间轴上的投影对齐损失与 preview train loop 仍未落地
 
 需要额外记录的是：
 
@@ -42,7 +60,7 @@
 2. 但相关二进制运行时并不稳定，至少在当前机器上不适合作为可靠的 `numpy/torch` runtime 验证环境
 3. 因此仓库中的 `numpy/torch` 运行时测试默认只在显式启用时执行，避免本机环境把无关流程直接打崩
 
-另外，当前机器上的 `conda` 配置显示：
+另外，本地机器上的 `conda` 配置显示：
 
 1. `defaults` 使用清华镜像
 2. `pytorch` / `conda-forge` 也通过清华镜像映射
@@ -54,7 +72,7 @@
 2. 镜像同步节奏导致的小包元数据延迟
 3. 本地代理变量影响包管理器访问路径
 
-针对 `torchdiffeq`，当前仓库已经改为：
+针对 `torchdiffeq`，当前仓库默认目标仍然约定为：
 
 1. `numpy` / `pytorch` 继续优先走 `conda`
 2. `torchdiffeq` 通过环境文件中的 `pip` 子段安装
@@ -68,7 +86,7 @@
 1. **本地 Windows + `chronaris` conda 环境**
    负责纯 Python 模块、协议、切分、配置、测试和不依赖 GPU 的代码开发
 2. **远程 WSL Ubuntu 22.04 + GPU**
-   负责 `torch` / `torchdiffeq` 依赖安装、真实训练、长时间实验和性能回归
+   当前已完成依赖安装与 GPU 验证，后续负责 `torch` 前向开发、真实训练、长时间实验和性能回归
 
 ### 3.2 GPU 环境优先级
 
@@ -97,6 +115,12 @@
 2. 安装 `torchdiffeq`
 3. 开始真实训练 loop
 4. 需要长时间 ODE 积分或中间态导出验证
+
+当前状态补充（`2026-04-17` 晚）：
+
+1. 上述切换条件中的依赖安装已经完成
+2. 服务器环境已经不再是阶段 E 的阻塞项
+3. 后续共享参考时间轴、alignment loss 和训练 loop 默认在服务器环境推进
 
 ### 3.4 跨机器同步原则
 
@@ -258,8 +282,8 @@
 2. 再 CPU 安全模块
 3. 再最小前向原型
 4. 再训练 loop
-5. 最后切远程 WSL + GPU 环境做真实训练
+5. 服务器 GPU 环境已完成验证，后续默认在该环境继续 E-3 / E-4
 
 当前下一步就是：
 
-**实现时间顺序 train/val/test 切分工具与单元测试。**
+**把最小前向原型接上共享参考时间轴、投影头和 `alignment loss`。**
