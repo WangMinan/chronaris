@@ -137,14 +137,13 @@
 - 用户：`wangminan`
 - 训练平台：WSL Ubuntu 22.04 + RTX 4090
 - 备用：家里工作站 WSL Ubuntu 22.04 + RTX 4070 Ti
+- 默认环境：`/home/wangminan/env/anaconda3/envs/chronaris`
 
 当前已知：
 
 - 从当前机器可探测到 SSH 入口，已配置公钥免密
 
 环境依赖文件位置：
-
-环境文件位置：
 
 - `configs/environments/chronaris-stage-e-cpu.yml`
 - `configs/environments/chronaris-stage-e-gpu.yml`
