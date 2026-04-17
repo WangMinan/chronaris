@@ -26,6 +26,7 @@
 ### `planning`
 
 - [coding-roadmap.md](D:/code/chronaris/docs/planning/coding-roadmap.md)
+- [stage-e-execution-plan.md](D:/code/chronaris/docs/planning/stage-e-execution-plan.md)
 - [implementation-summary-2026-04-15.md](D:/code/chronaris/docs/planning/implementation-summary-2026-04-15.md)
 
 ### `models`
