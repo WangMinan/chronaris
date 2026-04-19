@@ -17,6 +17,12 @@ from chronaris.access.live_factory import StageBLiveLoaderConfig, build_stage_b_
 from chronaris.access.loader import SortieLoader
 from chronaris.access.live_readers import PhysiologyInfluxPointReader, RealBusInfluxPointReader
 from chronaris.access.memory import InMemoryMetadataReader, InMemoryPointReader
+from chronaris.access.overlap_preview import (
+    DirectInfluxScopeConfig,
+    OverlapPreviewSortieLoaderConfig,
+    ScopedInfluxPointReader,
+    build_overlap_preview_sortie_loader,
+)
 from chronaris.access.mysql_cli import MySQLCliRunner, SQLQueryRunner
 from chronaris.access.mysql_metadata import (
     MySQLCollectTaskReader,
@@ -44,6 +50,7 @@ from chronaris.access.physiology_context import PhysiologyQueryContext, derive_p
 __all__ = [
     "AppSettings",
     "AttachedClockTime",
+    "DirectInfluxScopeConfig",
     "InfluxCliRunner",
     "InfluxDistinctMeasurementReader",
     "InfluxMeasurementPointReader",
@@ -60,11 +67,13 @@ __all__ = [
     "MySQLSettings",
     "MySQLRealBusContextReader",
     "MySQLSortieMetadataReader",
+    "OverlapPreviewSortieLoaderConfig",
     "PhysiologyInfluxPointReader",
     "PhysiologyQueryContext",
     "PhysiologyPointReader",
     "RealBusDerivedContext",
     "RealBusInfluxPointReader",
+    "ScopedInfluxPointReader",
     "SQLQueryRunner",
     "StageBLiveLoaderConfig",
     "SortieLoader",
@@ -76,6 +85,7 @@ __all__ = [
     "derive_flight_date",
     "derive_physiology_query_context",
     "derive_real_bus_context",
+    "build_overlap_preview_sortie_loader",
     "fetch_measurement_time_bounds",
     "parse_influx_annotated_csv",
     "parse_bus_clock_time",

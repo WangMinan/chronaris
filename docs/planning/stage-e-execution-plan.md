@@ -22,10 +22,10 @@
 
 当前仍未完成：
 
-1. 最小训练/验证切分策略接入 preview 训练路径
-2. 共享参考时间轴上的投影与 `alignment loss`
-3. 最小训练 loop
-4. 最小 validation loop
+1. 导出并核验共享参考时间轴上的中间态
+2. 处理 vehicle stream 的尺度问题或 loss weighting 问题
+3. 固化最小实验摘要输出
+4. 基于修正后的目标再跑一轮真实训练回归
 5. 真实 GPU 环境下的训练与回归验证
 
 当前环境探针（`2026-04-17`）已确认两组事实：
@@ -52,7 +52,10 @@
 3. `AlignmentBatch -> TorchAlignmentBatch` 适配已实现并有单元测试
 4. 最小确定性双流 `ODE-RNN` forward 原型已实现
 5. 最小 reconstruction loss 已实现
-6. 共享参考时间轴上的投影对齐损失与 preview train loop 仍未落地
+6. 共享参考时间轴上的最小投影对齐损失已实现
+7. 最小 preview `train / validation / test` pipeline 已实现并有单元测试
+8. 已基于真实 overlap-focused E0 样本完成一轮最小训练回归
+9. 当前已确认 `alignment loss` 下降，但 vehicle reconstruction loss 量级过大并主导 total loss
 
 需要额外记录的是：
 
@@ -120,7 +123,7 @@
 
 1. 上述切换条件中的依赖安装已经完成
 2. 服务器环境已经不再是阶段 E 的阻塞项
-3. 后续共享参考时间轴、alignment loss 和训练 loop 默认在服务器环境推进
+3. 后续真实 preview 训练回归和中间态检查默认在服务器环境推进
 
 ### 3.4 跨机器同步原则
 
@@ -286,4 +289,4 @@
 
 当前下一步就是：
 
-**把最小前向原型接上共享参考时间轴、投影头和 `alignment loss`。**
+**导出共享参考时间轴上的中间态，并处理 vehicle stream 的尺度或 loss weighting 问题。**

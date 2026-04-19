@@ -260,7 +260,7 @@
 4. 实现最小重构损失
    当前状态：已完成最小可调用版本
 5. 实现最小时间对齐损失
-   当前状态：未开始
+   当前状态：已完成最小可调用版本
 
 当前已验证：
 
@@ -273,6 +273,10 @@
 - 已完成 `split / reference grid / torch batch` 基础模块
 - 已完成确定性双流 ODE-RNN 最小 forward 原型
 - 已完成最小 reconstruction loss 实现与单元测试
+- 已完成共享参考时间轴上的最小 `alignment loss`
+- 已完成最小 `train / validation / test` preview pipeline 与单元测试
+- 已基于真实 overlap-focused E0 样本完成一次最小训练回归
+- 当前已确认 `alignment loss` 可下降，但 vehicle reconstruction loss 量级过大并主导 total loss
 
 退出条件：
 
@@ -391,9 +395,9 @@
 
 按优先级排序：
 
-1. 把时间顺序切分真正接入 preview 训练/验证路径
-2. 基于共享参考时间轴接入投影与最小 `alignment loss`
-3. 搭建最小 preview train / validation loop
+1. 导出并检查共享参考时间轴上的中间态
+2. 处理 vehicle stream 的尺度问题或 loss weighting 问题
+3. 基于修正后的目标再跑一轮真实训练回归
 
 ## 7. 当前不该提前做的事
 

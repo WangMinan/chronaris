@@ -5,7 +5,7 @@
 本次完成的不是完整训练框架，而是 `阶段 E` 的两项关键前置能力：
 
 1. 服务器环境迁移与运行时确认
-2. 最小确定性双流 ODE-RNN 前向原型
+2. 最小确定性双流 ODE-RNN 训练闭环原型
 
 已确认的关键结果：
 
@@ -16,7 +16,10 @@
 5. `split / reference grid / torch batch` 基础模块已齐备
 6. 最小确定性双流 ODE-RNN forward 原型已落地
 7. 最小 reconstruction loss 已落地
-8. 阶段 E 后续工作已不再被环境阻塞
+8. 最小 `alignment loss` 已落地
+9. 最小 preview `train / validation / test` pipeline 已落地
+10. 已完成一次真实 overlap-focused 最小训练回归
+11. 阶段 E 后续工作已不再被环境阻塞
 
 ## 2. 当前服务器环境事实
 
@@ -47,6 +50,7 @@
 3. 环境准备不再是阶段 E 的 blocker
 
 这次实现之后，阶段 E 的代码状态已经从“只有输入协议”推进到“已有最小前向原型”。
+这次继续推进后，阶段 E 的代码状态已经进一步从“只有最小前向原型”推进到“已有最小训练闭环”。
 
 当前已经具备：
 
@@ -55,13 +59,16 @@
 3. `TorchAlignmentBatch`
 4. `DualStreamODERNNPrototype`
 5. `dual_stream_reconstruction_loss`
+6. `dual_stream_alignment_loss`
+7. `AlignmentPreviewPipeline`
+8. 一次真实 overlap-focused 训练回归结果
 
 因此当前最高优先级重新收敛为：
 
-1. 把时间顺序切分接入 preview 训练/验证路径
-2. 基于共享参考时间轴实现最小 `alignment loss`
-3. 搭建 preview train / validation loop
-4. 导出中间态与最小实验摘要
+1. 导出共享参考时间轴上的中间态与投影结果
+2. 处理 vehicle stream 的尺度问题或 reconstruction weighting
+3. 基于修正后的目标再跑真实训练回归
+4. 记录更稳定的实验日志与指标输出
 
 ## 4. 当前注意事项
 
