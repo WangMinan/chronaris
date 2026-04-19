@@ -30,6 +30,9 @@ class StreamPrototypeOutput:
     delta_t_s: torch.Tensor
     point_counts: torch.Tensor
     final_hidden_state: torch.Tensor
+    reference_offsets_s: torch.Tensor | None = None
+    reference_hidden_states: torch.Tensor | None = None
+    reference_projected_states: torch.Tensor | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -84,7 +87,12 @@ class SingleStreamODERNNPrototype(nn.Module):
             activation=self.config.activation,
         )
 
-    def forward(self, stream: TorchAlignmentStreamBatch) -> StreamPrototypeOutput:
+    def forward(
+        self,
+        stream: TorchAlignmentStreamBatch,
+        *,
+        reference_offsets_s: torch.Tensor | None = None,
+    ) -> StreamPrototypeOutput:
         """Run the minimal deterministic ODE-RNN forward pass for one stream."""
 
         if stream.values.ndim != 3:
@@ -117,6 +125,24 @@ class SingleStreamODERNNPrototype(nn.Module):
             reconstruction_steps.append(self.decoder(hidden_state) * valid_mask_float)
             projection_steps.append(self.projection_head(hidden_state) * valid_mask_float)
 
+        reference_hidden_states: torch.Tensor | None = None
+        reference_projected_states: torch.Tensor | None = None
+        if reference_offsets_s is not None:
+            resolved_reference_offsets = _resolve_reference_offsets_s(
+                reference_offsets_s,
+                batch_size=batch_size,
+                device=stream.values.device,
+                dtype=value_dtype,
+            )
+            reference_hidden_states = self._sample_reference_hidden_states(
+                stream,
+                observation_embeddings,
+                resolved_reference_offsets,
+            )
+            reference_projected_states = self.projection_head(reference_hidden_states)
+        else:
+            resolved_reference_offsets = None
+
         return StreamPrototypeOutput(
             feature_names=stream.feature_names,
             observation_embeddings=observation_embeddings,
@@ -130,7 +156,79 @@ class SingleStreamODERNNPrototype(nn.Module):
             delta_t_s=stream.delta_t_s,
             point_counts=stream.point_counts,
             final_hidden_state=hidden_state,
+            reference_offsets_s=resolved_reference_offsets,
+            reference_hidden_states=reference_hidden_states,
+            reference_projected_states=reference_projected_states,
         )
+
+    def _sample_reference_hidden_states(
+        self,
+        stream: TorchAlignmentStreamBatch,
+        observation_embeddings: torch.Tensor,
+        reference_offsets_s: torch.Tensor,
+    ) -> torch.Tensor:
+        """Replay one stream and sample hidden states on a shared reference grid."""
+
+        if reference_offsets_s.ndim != 2:
+            raise ValueError("reference_offsets_s must have shape [B, R].")
+        if reference_offsets_s.shape[0] != stream.values.shape[0]:
+            raise ValueError("reference_offsets_s batch dimension must match the stream batch size.")
+        if reference_offsets_s.shape[1] == 0:
+            raise ValueError("reference_offsets_s must include at least one reference point.")
+        if reference_offsets_s.shape[1] > 1 and not bool(
+            torch.all(reference_offsets_s[:, 1:] >= reference_offsets_s[:, :-1])
+        ):
+            raise ValueError("reference_offsets_s must be monotonically non-decreasing within each sample.")
+
+        reference_rows: list[torch.Tensor] = []
+        hidden_dtype = stream.values.dtype
+        device = stream.values.device
+
+        for sample_index in range(stream.values.shape[0]):
+            sample_hidden = stream.values.new_zeros((1, self.config.hidden_dim))
+            sample_current_time = stream.values.new_zeros(())
+            sample_reference_states: list[torch.Tensor] = []
+            observation_count = int(stream.point_counts[sample_index].item())
+            observation_index = 0
+
+            while observation_index < observation_count and not bool(stream.mask[sample_index, observation_index]):
+                observation_index += 1
+
+            for reference_time in reference_offsets_s[sample_index]:
+                resolved_reference_time = torch.clamp(reference_time.to(dtype=hidden_dtype), min=0.0)
+
+                while observation_index < observation_count:
+                    if not bool(stream.mask[sample_index, observation_index]):
+                        observation_index += 1
+                        continue
+
+                    observation_time = stream.offsets_s[sample_index, observation_index].to(dtype=hidden_dtype)
+                    if bool(observation_time > resolved_reference_time):
+                        break
+
+                    delta_to_observation = torch.clamp(observation_time - sample_current_time, min=0.0)
+                    sample_hidden = self.ode_rnn_cell.evolve_hidden_state(
+                        sample_hidden,
+                        delta_to_observation.reshape(1),
+                    )
+                    sample_hidden = self.ode_rnn_cell.update_hidden_state(
+                        sample_hidden,
+                        observation_embeddings[sample_index, observation_index].unsqueeze(0),
+                        torch.ones((1,), dtype=torch.bool, device=device),
+                    )
+                    sample_current_time = observation_time
+                    observation_index += 1
+
+                delta_to_reference = torch.clamp(resolved_reference_time - sample_current_time, min=0.0)
+                sampled_hidden = self.ode_rnn_cell.evolve_hidden_state(
+                    sample_hidden,
+                    delta_to_reference.reshape(1),
+                )[0]
+                sample_reference_states.append(sampled_hidden)
+
+            reference_rows.append(torch.stack(sample_reference_states, dim=0))
+
+        return torch.stack(reference_rows, dim=0)
 
 
 class DualStreamODERNNPrototype(nn.Module):
@@ -169,11 +267,40 @@ class DualStreamODERNNPrototype(nn.Module):
             config=config,
         )
 
-    def forward(self, batch: TorchAlignmentBatch) -> DualStreamPrototypeOutput:
+    def forward(
+        self,
+        batch: TorchAlignmentBatch,
+        *,
+        reference_offsets_s: torch.Tensor | None = None,
+    ) -> DualStreamPrototypeOutput:
         """Run the deterministic dual-stream forward pass."""
 
         return DualStreamPrototypeOutput(
             sample_ids=batch.sample_ids,
-            physiology=self.physiology_stream(batch.physiology),
-            vehicle=self.vehicle_stream(batch.vehicle),
+            physiology=self.physiology_stream(
+                batch.physiology,
+                reference_offsets_s=reference_offsets_s,
+            ),
+            vehicle=self.vehicle_stream(
+                batch.vehicle,
+                reference_offsets_s=reference_offsets_s,
+            ),
         )
+
+
+def _resolve_reference_offsets_s(
+    reference_offsets_s: torch.Tensor,
+    *,
+    batch_size: int,
+    device: torch.device,
+    dtype: torch.dtype,
+) -> torch.Tensor:
+    """Normalize reference offsets into shape [B, R] on the target device."""
+
+    if reference_offsets_s.ndim == 1:
+        return reference_offsets_s.to(device=device, dtype=dtype).unsqueeze(0).repeat(batch_size, 1)
+    if reference_offsets_s.ndim == 2:
+        if reference_offsets_s.shape[0] != batch_size:
+            raise ValueError("reference_offsets_s batch dimension must match the stream batch size.")
+        return reference_offsets_s.to(device=device, dtype=dtype)
+    raise ValueError("reference_offsets_s must have shape [R] or [B, R].")

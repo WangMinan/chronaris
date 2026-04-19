@@ -32,6 +32,11 @@ _PROTOTYPE_EXPORTS = {
     "StreamPrototypeOutput",
 }
 _LOSS_EXPORTS = {
+    "AlignmentLossBreakdown",
+    "StageEObjectiveBreakdown",
+    "build_stage_e_objective",
+    "dual_stream_alignment_loss",
+    "projection_alignment_loss",
     "ReconstructionLossBreakdown",
     "dual_stream_reconstruction_loss",
     "masked_mean_squared_error",
@@ -93,16 +98,26 @@ def __getattr__(name: str) -> Any:
         return exports[name]
     if name in _LOSS_EXPORTS:
         from chronaris.models.alignment.losses import (
+            AlignmentLossBreakdown,
             ReconstructionLossBreakdown,
+            StageEObjectiveBreakdown,
+            build_stage_e_objective,
+            dual_stream_alignment_loss,
             dual_stream_reconstruction_loss,
             masked_mean_squared_error,
+            projection_alignment_loss,
             stream_reconstruction_loss,
         )
 
         exports = {
+            "AlignmentLossBreakdown": AlignmentLossBreakdown,
             "ReconstructionLossBreakdown": ReconstructionLossBreakdown,
+            "StageEObjectiveBreakdown": StageEObjectiveBreakdown,
+            "build_stage_e_objective": build_stage_e_objective,
+            "dual_stream_alignment_loss": dual_stream_alignment_loss,
             "dual_stream_reconstruction_loss": dual_stream_reconstruction_loss,
             "masked_mean_squared_error": masked_mean_squared_error,
+            "projection_alignment_loss": projection_alignment_loss,
             "stream_reconstruction_loss": stream_reconstruction_loss,
         }
         globals().update(exports)

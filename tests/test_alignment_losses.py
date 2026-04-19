@@ -19,7 +19,14 @@ if ENABLE_TORCH_RUNTIME_TESTS:
     from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
     from chronaris.models.alignment.batching import build_alignment_batch
     from chronaris.models.alignment.config import AlignmentPrototypeConfig
-    from chronaris.models.alignment.losses import dual_stream_reconstruction_loss, masked_mean_squared_error
+    from chronaris.models.alignment.losses import (
+        build_stage_e_objective,
+        dual_stream_alignment_loss,
+        dual_stream_reconstruction_loss,
+        masked_mean_squared_error,
+        projection_alignment_loss,
+    )
+    from chronaris.models.alignment.reference_grid import ReferenceGridConfig, build_reference_grids
     from chronaris.models.alignment.prototype import DualStreamODERNNPrototype
     from chronaris.models.alignment.torch_batch import build_torch_alignment_batch
     from chronaris.schema.models import StreamKind
@@ -96,6 +103,67 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertTrue(bool(torch.isfinite(loss.vehicle)))
             self.assertTrue(bool(torch.isfinite(loss.total)))
             self.assertGreaterEqual(float(loss.total.detach()), 0.0)
+
+        def test_projection_alignment_loss_is_zero_for_identical_reference_projections(self) -> None:
+            projections = torch.tensor(
+                [[[1.0, 2.0], [3.0, 4.0]]],
+                dtype=torch.float32,
+            )
+
+            loss = projection_alignment_loss(projections, projections, mode="mse")
+
+            self.assertEqual(float(loss), 0.0)
+
+        def test_dual_stream_alignment_and_objective_are_finite_when_reference_grid_is_provided(self) -> None:
+            samples = (
+                E0ExperimentSample(
+                    sample_id="sample-001",
+                    sortie_id="sortie-001",
+                    start_offset_ms=0,
+                    end_offset_ms=5000,
+                    physiology=_stream(
+                        StreamKind.PHYSIOLOGY,
+                        feature_names=("eeg.af3",),
+                        offsets_ms=(0, 1000),
+                        values=((1.0,), (2.0,)),
+                    ),
+                    vehicle=_stream(
+                        StreamKind.VEHICLE,
+                        feature_names=("BUS.code1002",),
+                        offsets_ms=(0, 2000),
+                        values=((10.0,), (11.0,)),
+                    ),
+                ),
+            )
+
+            numpy_batch = build_alignment_batch(samples)
+            torch_batch = build_torch_alignment_batch(numpy_batch)
+            model = DualStreamODERNNPrototype.from_torch_alignment_batch(
+                torch_batch,
+                config=AlignmentPrototypeConfig(
+                    hidden_dim=6,
+                    embedding_dim=4,
+                    encoder_hidden_dim=8,
+                    decoder_hidden_dim=8,
+                    dynamics_hidden_dim=8,
+                    projection_dim=3,
+                    ode_method="euler",
+                ),
+            )
+            reference_grids = build_reference_grids(samples, config=ReferenceGridConfig(point_count=4))
+            reference_offsets_s = torch.tensor(
+                [grid.relative_offsets_s for grid in reference_grids],
+                dtype=torch.float32,
+            )
+
+            output = model(torch_batch, reference_offsets_s=reference_offsets_s)
+            alignment = dual_stream_alignment_loss(output)
+            objective = build_stage_e_objective(output, torch_batch)
+
+            self.assertTrue(bool(torch.isfinite(alignment.alignment)))
+            self.assertGreaterEqual(float(alignment.alignment.detach()), 0.0)
+            self.assertTrue(bool(torch.isfinite(objective.total)))
+            self.assertGreaterEqual(float(objective.total.detach()), 0.0)
 else:
     class AlignmentLossesRuntimeDisabledTest(unittest.TestCase):
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")
