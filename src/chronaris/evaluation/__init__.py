@@ -1,5 +1,11 @@
 """Evaluation, ablation, and case-review helpers."""
 
+from chronaris.evaluation.alignment_diagnostics import (
+    AlignmentProjectionDiagnosticsSummary,
+    SampleAlignmentProjectionDiagnostic,
+    render_alignment_projection_diagnostics_markdown,
+    summarize_alignment_projection_diagnostics,
+)
 from chronaris.evaluation.sortie_validation import (
     CrossStreamTimingSummary,
     MeasurementCoverageSummary,
@@ -14,12 +20,16 @@ from chronaris.evaluation.sortie_validation import (
 )
 
 __all__ = [
+    "AlignmentProjectionDiagnosticsSummary",
     "CrossStreamTimingSummary",
     "MeasurementCoverageSummary",
+    "SampleAlignmentProjectionDiagnostic",
     "SortieValidationSummary",
     "StreamCoverageSummary",
     "WindowTrialSummary",
+    "render_alignment_projection_diagnostics_markdown",
     "render_validation_markdown",
+    "summarize_alignment_projection_diagnostics",
     "summarize_cross_stream_timing",
     "summarize_stream",
     "summarize_window_trial",

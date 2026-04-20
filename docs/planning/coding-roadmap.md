@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-04-17
+更新时间：2026-04-20
 
 ## 1. 目的
 
@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A 已完成，阶段 E0 已完成 preview 路径，阶段 E 已启动`
+`阶段 A 已完成，阶段 E0 已完成 preview 路径，阶段 E 进行中`
 
 更具体地说：
 
@@ -36,9 +36,9 @@
 - 已开始基于真实架次的 preview 联调
 - 已开始单架次时间覆盖与窗口策略核验
 - 已完成 overlap-focused E0 最小实验输入适配
-- 已开始阶段 E 的执行计划固化与最小训练/验证切分策略实现
+- 已完成阶段 E 的执行计划固化与最小训练/验证切分策略实现
 - 已完成实验室服务器 WSL Ubuntu 22.04 + RTX 4090 环境迁移与依赖验证
-- 还没有开始模型训练代码
+- 已完成阶段 E 最小训练闭环、`relative_mse` 真实回归与样本级诊断产物导出
 
 ## 4. 阶段拆解
 
@@ -277,6 +277,14 @@
 - 已完成最小 `train / validation / test` preview pipeline 与单元测试
 - 已基于真实 overlap-focused E0 样本完成一次最小训练回归
 - 当前已确认 `alignment loss` 可下降，但 vehicle reconstruction loss 量级过大并主导 total loss
+- 已新增 `relative_mse` 重构损失模式并接入 `AlignmentPreviewConfig`
+- 已完成本机最小损失缩放单测，验证 `relative_mse` 可缓解跨流量纲主导
+- 服务器环境已完成 `torchdiffeq` 安装并通过 Stage E 相关 runtime 测试（10/10）
+- 已完成 `relative_mse` 真实回归：`train/validation/test total` 分别约为 `2.03 / 2.03 / 2.03`
+- 已完成共享参考时间轴中间态导出（`test` 分区 `3` 个样本，`16` 个参考点）
+- 已提供回归可视化产出：训练曲线、重构曲线、参考时间轴 cosine 曲线，并自动追加到实验报告
+- 已新增样本级投影诊断模块（mean/min/max cosine、L2 gap、L2 ratio）
+- 已支持自动导出诊断产物：`projection_diagnostics_summary.json` 与 `projection_diagnostics_samples.csv`
 
 退出条件：
 
@@ -395,9 +403,9 @@
 
 按优先级排序：
 
-1. 导出并检查共享参考时间轴上的中间态
-2. 处理 vehicle stream 的尺度问题或 loss weighting 问题
-3. 基于修正后的目标再跑一轮真实训练回归
+1. 在 `relative_mse` 基线上评估输入归一化是否进一步改善 alignment 与泛化
+2. 基于样本级诊断结果补充“跨样本差异性”检查（当前导出样本指标高度接近）
+3. 把诊断阈值与结论模板固化到阶段 E 实验记录规范中
 
 ## 7. 当前不该提前做的事
 

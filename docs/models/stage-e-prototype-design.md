@@ -17,7 +17,7 @@
 1. `docs/planning/coding-roadmap.md`
 2. `docs/models/e0-minimal-input.md`
 3. `docs/models/alignment-batch-contract.md`
-4. `docs/planning/implementation-summary-2026-04-15.md`
+4. `docs/planning/implementation-summary-history-2026-04-15-to-2026-04-17.md`
 5. `D:\0_大学\2025.9\开题\王旻安-西北工业大学硕士学位研究生论文选题报告表.docx`
 6. `D:\0_大学\2025.9\2026年研究生创新基金申报\王旻安-4.6改-附件2.西北工业大学硕士研究生实践创新能力培育基金项目申请书.docx`
 7. [stage-e-reference-repos.md](D:/code/chronaris/docs/models/stage-e-reference-repos.md)
