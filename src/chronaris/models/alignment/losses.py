@@ -3,12 +3,18 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any
 
 import torch
 from torch.nn import functional as F
 
-from chronaris.models.alignment.prototype import DualStreamPrototypeOutput, StreamPrototypeOutput
 from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAlignmentStreamBatch
+
+if TYPE_CHECKING:
+    from chronaris.models.alignment.prototype import DualStreamPrototypeOutput, StreamPrototypeOutput
+else:
+    DualStreamPrototypeOutput = Any
+    StreamPrototypeOutput = Any
 
 
 @dataclass(frozen=True, slots=True)
@@ -60,28 +66,69 @@ def masked_mean_squared_error(
     return (squared_error * weighted_mask).sum() / valid_count
 
 
+def _masked_mean_square(
+    values: torch.Tensor,
+    valid_mask: torch.Tensor,
+) -> torch.Tensor:
+    """Compute the mean square magnitude on positions marked valid."""
+
+    if values.shape != valid_mask.shape:
+        raise ValueError("valid_mask must match values shape.")
+    weighted_mask = valid_mask.to(dtype=values.dtype)
+    valid_count = weighted_mask.sum()
+    if torch.is_nonzero(valid_count <= 0):
+        return values.new_zeros(())
+    return ((values**2) * weighted_mask).sum() / valid_count
+
+
 def stream_reconstruction_loss(
     output: StreamPrototypeOutput,
     stream_batch: TorchAlignmentStreamBatch,
+    *,
+    mode: str = "mse",
+    scale_epsilon: float = 1e-6,
 ) -> torch.Tensor:
     """Compute reconstruction MSE for one stream."""
 
+    if scale_epsilon <= 0:
+        raise ValueError("scale_epsilon must be positive.")
+
     valid_mask = stream_batch.feature_valid_mask & stream_batch.mask.unsqueeze(-1)
-    return masked_mean_squared_error(
+    reconstruction_mse = masked_mean_squared_error(
         output.reconstructions,
         stream_batch.values,
         valid_mask,
     )
+    if mode == "mse":
+        return reconstruction_mse
+    if mode == "relative_mse":
+        target_mean_square = _masked_mean_square(stream_batch.values, valid_mask)
+        scale = torch.clamp(target_mean_square, min=scale_epsilon)
+        return reconstruction_mse / scale
+    raise ValueError("mode must be either 'mse' or 'relative_mse'.")
 
 
 def dual_stream_reconstruction_loss(
     output: DualStreamPrototypeOutput,
     batch: TorchAlignmentBatch,
+    *,
+    mode: str = "mse",
+    scale_epsilon: float = 1e-6,
 ) -> ReconstructionLossBreakdown:
     """Compute reconstruction losses for both streams."""
 
-    physiology = stream_reconstruction_loss(output.physiology, batch.physiology)
-    vehicle = stream_reconstruction_loss(output.vehicle, batch.vehicle)
+    physiology = stream_reconstruction_loss(
+        output.physiology,
+        batch.physiology,
+        mode=mode,
+        scale_epsilon=scale_epsilon,
+    )
+    vehicle = stream_reconstruction_loss(
+        output.vehicle,
+        batch.vehicle,
+        mode=mode,
+        scale_epsilon=scale_epsilon,
+    )
     return ReconstructionLossBreakdown(
         physiology=physiology,
         vehicle=vehicle,
@@ -164,6 +211,8 @@ def build_stage_e_objective(
     output: DualStreamPrototypeOutput,
     batch: TorchAlignmentBatch,
     *,
+    reconstruction_mode: str = "mse",
+    reconstruction_scale_epsilon: float = 1e-6,
     alignment_mode: str = "mse",
     physiology_weight: float = 1.0,
     vehicle_weight: float = 1.0,
@@ -173,8 +222,15 @@ def build_stage_e_objective(
 
     if physiology_weight < 0 or vehicle_weight < 0 or alignment_weight < 0:
         raise ValueError("All objective weights must be non-negative.")
+    if reconstruction_scale_epsilon <= 0:
+        raise ValueError("reconstruction_scale_epsilon must be positive.")
 
-    reconstruction = dual_stream_reconstruction_loss(output, batch)
+    reconstruction = dual_stream_reconstruction_loss(
+        output,
+        batch,
+        mode=reconstruction_mode,
+        scale_epsilon=reconstruction_scale_epsilon,
+    )
     alignment = dual_stream_alignment_loss(output, mode=alignment_mode)
     total = (
         (physiology_weight * reconstruction.physiology)

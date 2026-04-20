@@ -22,11 +22,9 @@
 
 当前仍未完成：
 
-1. 导出并核验共享参考时间轴上的中间态
-2. 处理 vehicle stream 的尺度问题或 loss weighting 问题
-3. 固化最小实验摘要输出
-4. 基于修正后的目标再跑一轮真实训练回归
-5. 真实 GPU 环境下的训练与回归验证
+1. 评估是否需要继续叠加输入归一化或进一步 loss weighting
+2. 补充跨样本差异性诊断，避免仅靠均值指标判断对齐质量
+3. 固化诊断阈值与实验结论模板
 
 当前环境探针（`2026-04-17`）已确认两组事实：
 
@@ -56,6 +54,16 @@
 7. 最小 preview `train / validation / test` pipeline 已实现并有单元测试
 8. 已基于真实 overlap-focused E0 样本完成一轮最小训练回归
 9. 当前已确认 `alignment loss` 下降，但 vehicle reconstruction loss 量级过大并主导 total loss
+
+当前代码探针（`2026-04-20`）补充确认：
+
+1. 已在 `losses.py` 增加 `relative_mse` 重构模式，支持按目标均方做尺度归一化
+2. `AlignmentPreviewConfig` 已支持 `reconstruction_loss_mode` 与 `reconstruction_scale_epsilon`
+3. 已在服务器环境安装 `torchdiffeq` 并跑通 Stage E 相关 runtime 测试（8/8）
+4. 已完成 `relative_mse` 真实回归，`train/validation/test total` 已回到约 `2.03` 量级
+5. 已完成共享参考时间轴中间态导出（test 分区导出 3 个样本，16 个参考点）
+6. 已支持实验后自动产图并回写到报告（loss 曲线与 reference cosine 曲线）
+7. 已新增样本级投影诊断模块与诊断产物导出（JSON/CSV）
 
 需要额外记录的是：
 
@@ -289,4 +297,4 @@
 
 当前下一步就是：
 
-**导出共享参考时间轴上的中间态，并处理 vehicle stream 的尺度或 loss weighting 问题。**
+**在 `relative_mse` 基线之上评估输入归一化，并补充跨样本差异性诊断。**

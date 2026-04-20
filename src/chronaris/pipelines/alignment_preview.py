@@ -35,6 +35,8 @@ class AlignmentPreviewConfig:
     learning_rate: float = 1e-3
     device: str = "cpu"
     dtype: torch.dtype = torch.float32
+    reconstruction_loss_mode: str = "relative_mse"
+    reconstruction_scale_epsilon: float = 1e-6
     alignment_loss_mode: str = "mse"
     physiology_reconstruction_weight: float = 1.0
     vehicle_reconstruction_weight: float = 1.0
@@ -50,6 +52,10 @@ class AlignmentPreviewConfig:
             raise ValueError("batch_size must be positive.")
         if self.learning_rate <= 0:
             raise ValueError("learning_rate must be positive.")
+        if self.reconstruction_loss_mode not in {"mse", "relative_mse"}:
+            raise ValueError("reconstruction_loss_mode must be one of: mse, relative_mse.")
+        if self.reconstruction_scale_epsilon <= 0:
+            raise ValueError("reconstruction_scale_epsilon must be positive.")
         if self.physiology_reconstruction_weight < 0:
             raise ValueError("physiology_reconstruction_weight must be non-negative.")
         if self.vehicle_reconstruction_weight < 0:
@@ -235,6 +241,8 @@ class AlignmentPreviewPipeline:
                 objective = build_stage_e_objective(
                     output,
                     torch_batch,
+                    reconstruction_mode=self.config.reconstruction_loss_mode,
+                    reconstruction_scale_epsilon=self.config.reconstruction_scale_epsilon,
                     alignment_mode=self.config.alignment_loss_mode,
                     physiology_weight=self.config.physiology_reconstruction_weight,
                     vehicle_weight=self.config.vehicle_reconstruction_weight,
