@@ -29,6 +29,8 @@ from chronaris.access import (
 )
 from chronaris.dataset.builder import SortieDatasetBuilder
 from chronaris.evaluation import (
+    AlignmentProjectionThresholdConfig,
+    evaluate_alignment_projection_thresholds,
     render_alignment_projection_diagnostics_markdown,
     summarize_alignment_projection_diagnostics,
 )
@@ -227,6 +229,69 @@ def _render_visual_artifacts(
     plt.close(fig_recon)
     image_paths["reconstruction_stream_loss"] = reconstruction_path
 
+    physics_totals = [item.physics_total for item in train_history]
+    has_physics_signal = any(value > 0.0 for value in physics_totals)
+    if has_physics_signal:
+        fig_physics, ax_physics = plt.subplots(figsize=(8, 4.5))
+        ax_physics.plot(
+            epoch_indexes,
+            [item.physics_total for item in train_history],
+            marker="o",
+            linewidth=2.0,
+            label="train physics total",
+        )
+        if validation_history:
+            ax_physics.plot(
+                epoch_indexes,
+                [item.physics_total for item in validation_history],
+                marker="o",
+                linewidth=2.0,
+                label="validation physics total",
+            )
+        ax_physics.set_title("Stage F(min) Physics Constraint Loss")
+        ax_physics.set_xlabel("Epoch")
+        ax_physics.set_ylabel("Loss")
+        ax_physics.grid(True, alpha=0.25)
+        ax_physics.legend(loc="best")
+        physics_path = assets_dir / "train_validation_physics_loss.png"
+        fig_physics.tight_layout()
+        fig_physics.savefig(physics_path, dpi=160)
+        plt.close(fig_physics)
+        image_paths["train_validation_physics_loss"] = physics_path
+
+        final_train = train_history[-1]
+        final_validation = validation_history[-1] if validation_history else None
+        test_metrics = preview_result.test_metrics
+        labels = ["vehicle physics", "physiology physics"]
+        train_values = [final_train.vehicle_physics, final_train.physiology_physics]
+        validation_values = (
+            [final_validation.vehicle_physics, final_validation.physiology_physics]
+            if final_validation is not None
+            else [0.0, 0.0]
+        )
+        test_values = [test_metrics.vehicle_physics, test_metrics.physiology_physics]
+
+        fig_components, ax_components = plt.subplots(figsize=(8, 4.5))
+        x_positions = [0, 1]
+        width = 0.22
+        ax_components.bar([x - width for x in x_positions], train_values, width=width, label="train")
+        if final_validation is not None:
+            ax_components.bar(x_positions, validation_values, width=width, label="validation")
+            ax_components.bar([x + width for x in x_positions], test_values, width=width, label="test")
+        else:
+            ax_components.bar(x_positions, test_values, width=width, label="test")
+        ax_components.set_xticks(x_positions)
+        ax_components.set_xticklabels(labels)
+        ax_components.set_ylabel("Loss")
+        ax_components.set_title("Final Physics Constraint Components")
+        ax_components.grid(True, axis="y", alpha=0.25)
+        ax_components.legend(loc="best")
+        component_path = assets_dir / "constraint_component_breakdown.png"
+        fig_components.tight_layout()
+        fig_components.savefig(component_path, dpi=160)
+        plt.close(fig_components)
+        image_paths["constraint_component_breakdown"] = component_path
+
     intermediate = preview_result.intermediate_export
     if intermediate is not None and intermediate.samples:
         fig_cosine, ax_cosine = plt.subplots(figsize=(8, 4.5))
@@ -269,6 +334,8 @@ def _append_visual_links_to_report(
         "train_validation_total_loss": "Train/Validation Total Loss",
         "train_validation_alignment_loss": "Train/Validation Alignment Loss",
         "reconstruction_stream_loss": "Per-Stream Reconstruction Loss",
+        "train_validation_physics_loss": "Train/Validation Physics Loss",
+        "constraint_component_breakdown": "Final Physics Constraint Components",
         "reference_projection_cosine": "Reference Projection Cosine",
     }
     lines = [
@@ -291,13 +358,20 @@ def _write_projection_diagnostics_artifacts(
     *,
     report_path: Path,
     diagnostics_summary,
+    threshold_config: AlignmentProjectionThresholdConfig,
+    threshold_evaluation,
 ) -> dict[str, str]:
     assets_dir = report_path.parent / "assets" / report_path.stem
     assets_dir.mkdir(parents=True, exist_ok=True)
 
     json_path = assets_dir / "projection_diagnostics_summary.json"
+    summary_payload = {
+        "summary": asdict(diagnostics_summary),
+        "threshold_config": asdict(threshold_config),
+        "threshold_evaluation": asdict(threshold_evaluation),
+    }
     json_path.write_text(
-        json.dumps(asdict(diagnostics_summary), ensure_ascii=False, indent=2),
+        json.dumps(summary_payload, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
 
@@ -337,7 +411,228 @@ def _write_projection_diagnostics_artifacts(
     }
 
 
-def run(args: argparse.Namespace) -> dict[str, object]:
+def _state_dict_to_cpu(model: torch.nn.Module) -> dict[str, torch.Tensor]:
+    state = model.state_dict()
+    cpu_state: dict[str, torch.Tensor] = {}
+    for key, value in state.items():
+        if torch.is_tensor(value):
+            cpu_state[key] = value.detach().cpu()
+        else:
+            cpu_state[key] = value
+    return cpu_state
+
+
+def _write_model_checkpoint(
+    *,
+    report_path: Path,
+    sortie_id: str,
+    model: torch.nn.Module,
+    normalization_mode: str,
+    resolved_device: str,
+    args: argparse.Namespace,
+    split: dict[str, int],
+    final_train: dict[str, object],
+    final_validation: dict[str, object],
+    final_test: dict[str, object],
+) -> dict[str, str]:
+    assets_dir = report_path.parent / "assets" / report_path.stem
+    assets_dir.mkdir(parents=True, exist_ok=True)
+    checkpoint_path = assets_dir / "alignment_model_checkpoint.pt"
+    payload = {
+        "checkpoint_format_version": 1,
+        "saved_at_utc": datetime.now(timezone.utc).isoformat(),
+        "sortie_id": sortie_id,
+        "input_normalization_mode": normalization_mode,
+        "runtime_device": resolved_device,
+        "seed": args.seed,
+        "prototype_config": {
+            "hidden_dim": args.hidden_dim,
+            "embedding_dim": args.embedding_dim,
+            "encoder_hidden_dim": args.encoder_hidden_dim,
+            "decoder_hidden_dim": args.decoder_hidden_dim,
+            "dynamics_hidden_dim": args.dynamics_hidden_dim,
+            "projection_dim": args.projection_dim,
+            "ode_method": args.ode_method,
+        },
+        "training_config": {
+            "epoch_count": args.epoch_count,
+            "batch_size": args.batch_size,
+            "learning_rate": args.learning_rate,
+            "reconstruction_loss_mode": "relative_mse",
+            "reconstruction_scale_epsilon": args.reconstruction_scale_epsilon,
+            "alignment_loss_mode": args.alignment_loss_mode,
+            "physiology_weight": args.physiology_weight,
+            "vehicle_weight": args.vehicle_weight,
+            "alignment_weight": args.alignment_weight,
+            "enable_physics_constraints": args.enable_physics_constraints,
+            "physics_constraint_mode": args.physics_constraint_mode,
+            "vehicle_physics_weight": args.vehicle_physics_weight,
+            "physiology_physics_weight": args.physiology_physics_weight,
+            "physics_huber_delta": args.physics_huber_delta,
+            "physiology_envelope_quantile": args.physiology_envelope_quantile,
+            "reference_point_count": args.reference_point_count,
+            "intermediate_partition": args.intermediate_partition,
+            "intermediate_sample_limit": args.intermediate_sample_limit,
+        },
+        "split": split,
+        "final_metrics": {
+            "train": final_train,
+            "validation": final_validation,
+            "test": final_test,
+        },
+        "model_state_dict": _state_dict_to_cpu(model),
+    }
+    torch.save(payload, checkpoint_path)
+    return {
+        "alignment_model_checkpoint": str(checkpoint_path),
+    }
+
+
+def _build_threshold_config(args: argparse.Namespace) -> AlignmentProjectionThresholdConfig:
+    return AlignmentProjectionThresholdConfig(
+        min_sample_count=args.threshold_min_sample_count,
+        min_mean_projection_cosine=args.threshold_min_mean_cosine,
+        enforce_min_projection_cosine=args.threshold_enforce_min_cosine,
+        min_min_projection_cosine=args.threshold_min_cosine,
+        max_mean_projection_l2_gap=args.threshold_max_mean_l2_gap,
+        max_mean_projection_l2_ratio_deviation=args.threshold_max_mean_l2_ratio_deviation,
+        max_projection_cosine_cv=args.threshold_max_cosine_cv,
+        max_projection_l2_gap_cv=args.threshold_max_l2_gap_cv,
+    )
+
+
+def _render_physics_diagnostics_markdown(
+    *,
+    enabled: bool,
+    train_final: dict[str, object],
+    validation_final: dict[str, object],
+    test_final: dict[str, object],
+) -> str:
+    lines = [
+        "## Physics Constraint Diagnostics",
+        "",
+        f"- enabled: `{enabled}`",
+        (
+            "- mode: `feature_first_with_latent_fallback`"
+            if enabled
+            else "- mode: `(disabled)`"
+        ),
+        "",
+        "| metric | train | validation | test |",
+        "| --- | ---: | ---: | ---: |",
+        (
+            f"| vehicle physics | {train_final['vehicle_physics']:.6f} | "
+            f"{validation_final['vehicle_physics']:.6f} | {test_final['vehicle_physics']:.6f} |"
+        ),
+        (
+            f"| physiology physics | {train_final['physiology_physics']:.6f} | "
+            f"{validation_final['physiology_physics']:.6f} | {test_final['physiology_physics']:.6f} |"
+        ),
+        (
+            f"| physics total | {train_final['physics_total']:.6f} | "
+            f"{validation_final['physics_total']:.6f} | {test_final['physics_total']:.6f} |"
+        ),
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _with_mode_suffix(report_path: str, mode: str) -> str:
+    path = Path(report_path)
+    return str(path.with_name(f"{path.stem}-{mode}{path.suffix}"))
+
+
+def _render_normalization_comparison_markdown(
+    *,
+    primary_mode: str,
+    primary_summary: dict[str, object],
+    secondary_mode: str,
+    secondary_summary: dict[str, object],
+) -> str:
+    primary_threshold = primary_summary["threshold_evaluation"]["verdict"]
+    secondary_threshold = secondary_summary["threshold_evaluation"]["verdict"]
+    primary_diag = primary_summary["projection_diagnostics"]
+    secondary_diag = secondary_summary["projection_diagnostics"]
+    primary_visuals = primary_summary["visual_artifacts"]
+    secondary_visuals = secondary_summary["visual_artifacts"]
+    primary_checkpoints = primary_summary["checkpoint_artifacts"]
+    secondary_checkpoints = secondary_summary["checkpoint_artifacts"]
+    return "\n".join(
+        [
+            "# Stage E Normalization Comparison",
+            "",
+            f"- primary mode: `{primary_mode}`",
+            f"- secondary mode: `{secondary_mode}`",
+            f"- sample count: `{primary_summary['sample_summary']['sample_count']}`",
+            (
+                f"- split: train `{primary_summary['split']['train']}`, "
+                f"validation `{primary_summary['split']['validation']}`, "
+                f"test `{primary_summary['split']['test']}`"
+            ),
+            "",
+            "| metric | primary | secondary |",
+            "| --- | ---: | ---: |",
+            f"| final train total | {primary_summary['final_train']['total']:.6f} | {secondary_summary['final_train']['total']:.6f} |",
+            f"| final validation total | {primary_summary['final_validation']['total']:.6f} | {secondary_summary['final_validation']['total']:.6f} |",
+            f"| test total | {primary_summary['test']['total']:.6f} | {secondary_summary['test']['total']:.6f} |",
+            f"| test physics total | {primary_summary['test']['physics_total']:.6f} | {secondary_summary['test']['physics_total']:.6f} |",
+            f"| threshold verdict | {primary_threshold} | {secondary_threshold} |",
+            "",
+            "## Diagnostics Summary",
+            "",
+            "| metric | primary | secondary |",
+            "| --- | ---: | ---: |",
+            f"| mean projection cosine | {primary_diag['mean_projection_cosine']:.6f} | {secondary_diag['mean_projection_cosine']:.6f} |",
+            f"| min projection cosine | {primary_diag['min_projection_cosine']:.6f} | {secondary_diag['min_projection_cosine']:.6f} |",
+            f"| mean projection L2 gap | {primary_diag['mean_projection_l2_gap']:.6f} | {secondary_diag['mean_projection_l2_gap']:.6f} |",
+            f"| mean projection L2 ratio | {primary_diag['mean_projection_l2_ratio']:.6f} | {secondary_diag['mean_projection_l2_ratio']:.6f} |",
+            "",
+            "## Decision",
+            "",
+            (
+                f"- both threshold templates are `{primary_threshold}` / `{secondary_threshold}` "
+                "under the default Stage E closure rules"
+            ),
+            (
+                f"- recommended mode for Stage F entry: `{secondary_mode}` "
+                f"(lower test total `{secondary_summary['test']['total']:.6f}` vs `{primary_summary['test']['total']:.6f}`)"
+            ),
+            "",
+            "## Visual Artifacts",
+            "",
+            f"### Primary `{primary_mode}` - Total Loss",
+            "",
+            f"![Primary Total Loss]({Path(primary_visuals['train_validation_total_loss']).relative_to(REPO_ROOT / 'docs' / 'reports').as_posix()})",
+            "",
+            f"### Secondary `{secondary_mode}` - Total Loss",
+            "",
+            f"![Secondary Total Loss]({Path(secondary_visuals['train_validation_total_loss']).relative_to(REPO_ROOT / 'docs' / 'reports').as_posix()})",
+            "",
+            "## Diagnostic Artifacts",
+            "",
+            f"- primary summary json: `{primary_summary['diagnostic_artifacts']['projection_diagnostics_summary_json']}`",
+            f"- secondary summary json: `{secondary_summary['diagnostic_artifacts']['projection_diagnostics_summary_json']}`",
+            "",
+            "## Checkpoints",
+            "",
+            f"- primary checkpoint: `{primary_checkpoints['alignment_model_checkpoint']}`",
+            f"- secondary checkpoint: `{secondary_checkpoints['alignment_model_checkpoint']}`",
+            "",
+        ]
+    ).rstrip() + "\n"
+
+
+def _run_once(
+    args: argparse.Namespace,
+    *,
+    normalization_mode: str,
+    report_path_override: str | None = None,
+) -> dict[str, object]:
+    if args.seed is not None:
+        torch.manual_seed(args.seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(args.seed)
+
     sortie_id = args.sortie_id
     settings = _resolve_influx_settings()
     loader = build_overlap_preview_sortie_loader(
@@ -394,10 +689,18 @@ def run(args: argparse.Namespace) -> dict[str, object]:
                 device=resolved_device,
                 reconstruction_loss_mode="relative_mse",
                 reconstruction_scale_epsilon=args.reconstruction_scale_epsilon,
+                input_normalization_mode=normalization_mode,
+                input_normalization_epsilon=args.input_normalization_epsilon,
                 alignment_loss_mode=args.alignment_loss_mode,
                 physiology_reconstruction_weight=args.physiology_weight,
                 vehicle_reconstruction_weight=args.vehicle_weight,
                 alignment_weight=args.alignment_weight,
+                enable_physics_constraints=args.enable_physics_constraints,
+                physics_constraint_mode=args.physics_constraint_mode,
+                vehicle_physics_weight=args.vehicle_physics_weight,
+                physiology_physics_weight=args.physiology_physics_weight,
+                physics_huber_delta=args.physics_huber_delta,
+                physiology_envelope_quantile=args.physiology_envelope_quantile,
                 export_intermediate_states=True,
                 intermediate_sample_limit=args.intermediate_sample_limit,
                 intermediate_partition=args.intermediate_partition,
@@ -406,26 +709,45 @@ def run(args: argparse.Namespace) -> dict[str, object]:
     )
 
     result = pipeline.run(SortieLocator(sortie_id=sortie_id))
-    report_path = Path(args.report_path)
+    report_path = Path(report_path_override or args.report_path)
     if not report_path.is_absolute():
         report_path = REPO_ROOT / report_path
     report_path.parent.mkdir(parents=True, exist_ok=True)
     diagnostics_summary = summarize_alignment_projection_diagnostics(result.preview_result.intermediate_export)
+    threshold_config = _build_threshold_config(args)
+    threshold_evaluation = evaluate_alignment_projection_thresholds(
+        diagnostics_summary,
+        config=threshold_config,
+    )
     diagnostics_markdown = render_alignment_projection_diagnostics_markdown(
         diagnostics_summary,
         max_samples=args.diagnostic_max_samples,
+        threshold_evaluation=threshold_evaluation,
     )
     diagnostics_artifacts = _write_projection_diagnostics_artifacts(
         report_path=report_path,
         diagnostics_summary=diagnostics_summary,
+        threshold_config=threshold_config,
+        threshold_evaluation=threshold_evaluation,
     )
     visual_artifacts = _render_visual_artifacts(
         report_path=report_path,
         experiment_result=result,
     )
+    train_final = asdict(result.preview_result.train_history[-1])
+    validation_final = asdict(result.preview_result.validation_history[-1])
+    test_final = asdict(result.preview_result.test_metrics)
+    physics_diagnostics_markdown = _render_physics_diagnostics_markdown(
+        enabled=args.enable_physics_constraints,
+        train_final=train_final,
+        validation_final=validation_final,
+        test_final=test_final,
+    )
     report_with_diagnostics = "\n".join(
         [
             result.report_markdown.rstrip(),
+            "",
+            physics_diagnostics_markdown.rstrip(),
             "",
             diagnostics_markdown.rstrip(),
             "",
@@ -438,26 +760,36 @@ def run(args: argparse.Namespace) -> dict[str, object]:
     )
     report_path.write_text(report_markdown, encoding="utf-8")
 
-    train_final = result.preview_result.train_history[-1]
-    validation_final = result.preview_result.validation_history[-1]
-    test_final = result.preview_result.test_metrics
     intermediate = result.preview_result.intermediate_export
+    split_summary = {
+        "train": len(result.preview_result.split.train),
+        "validation": len(result.preview_result.split.validation),
+        "test": len(result.preview_result.split.test),
+        "skipped_between_train_validation": len(result.preview_result.split.skipped_between_train_validation),
+        "skipped_between_validation_test": len(result.preview_result.split.skipped_between_validation_test),
+    }
+    checkpoint_artifacts = _write_model_checkpoint(
+        report_path=report_path,
+        sortie_id=sortie_id,
+        model=result.preview_result.model,
+        normalization_mode=normalization_mode,
+        resolved_device=resolved_device,
+        args=args,
+        split=split_summary,
+        final_train=train_final,
+        final_validation=validation_final,
+        final_test=test_final,
+    )
 
     return {
         "report_path": str(report_path),
         "run_timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "device": resolved_device,
         "sample_summary": asdict(result.sample_summary),
-        "split": {
-            "train": len(result.preview_result.split.train),
-            "validation": len(result.preview_result.split.validation),
-            "test": len(result.preview_result.split.test),
-            "skipped_between_train_validation": len(result.preview_result.split.skipped_between_train_validation),
-            "skipped_between_validation_test": len(result.preview_result.split.skipped_between_validation_test),
-        },
-        "final_train": asdict(train_final),
-        "final_validation": asdict(validation_final),
-        "test": asdict(test_final),
+        "split": split_summary,
+        "final_train": train_final,
+        "final_validation": validation_final,
+        "test": test_final,
         "intermediate_export": (
             None
             if intermediate is None
@@ -468,8 +800,58 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             }
         ),
         "projection_diagnostics": asdict(diagnostics_summary),
+        "threshold_config": asdict(threshold_config),
+        "threshold_evaluation": asdict(threshold_evaluation),
         "diagnostic_artifacts": diagnostics_artifacts,
         "visual_artifacts": visual_artifacts,
+        "checkpoint_artifacts": checkpoint_artifacts,
+        "input_normalization_mode": normalization_mode,
+        "physics_config": {
+            "enabled": args.enable_physics_constraints,
+            "mode": args.physics_constraint_mode,
+            "vehicle_weight": args.vehicle_physics_weight,
+            "physiology_weight": args.physiology_physics_weight,
+            "huber_delta": args.physics_huber_delta,
+            "physiology_envelope_quantile": args.physiology_envelope_quantile,
+        },
+    }
+
+
+def run(args: argparse.Namespace) -> dict[str, object]:
+    if not args.compare_with_zscore_train:
+        return _run_once(
+            args,
+            normalization_mode=args.input_normalization_mode,
+        )
+
+    primary_mode = args.input_normalization_mode
+    secondary_mode = "zscore_train" if primary_mode != "zscore_train" else "none"
+    primary_summary = _run_once(
+        args,
+        normalization_mode=primary_mode,
+        report_path_override=_with_mode_suffix(args.report_path, primary_mode),
+    )
+    secondary_summary = _run_once(
+        args,
+        normalization_mode=secondary_mode,
+        report_path_override=_with_mode_suffix(args.report_path, secondary_mode),
+    )
+
+    comparison_report_path = Path(args.report_path)
+    if not comparison_report_path.is_absolute():
+        comparison_report_path = REPO_ROOT / comparison_report_path
+    comparison_report_path.parent.mkdir(parents=True, exist_ok=True)
+    comparison_markdown = _render_normalization_comparison_markdown(
+        primary_mode=primary_mode,
+        primary_summary=primary_summary,
+        secondary_mode=secondary_mode,
+        secondary_summary=secondary_summary,
+    )
+    comparison_report_path.write_text(comparison_markdown, encoding="utf-8")
+    return {
+        "comparison_report_path": str(comparison_report_path),
+        "primary": primary_summary,
+        "secondary": secondary_summary,
     }
 
 
@@ -478,7 +860,10 @@ def build_parser() -> argparse.ArgumentParser:
     default_report = f"docs/reports/alignment-preview-20251005-act4-j20-22-relative-mse-{today}.md"
 
     parser = argparse.ArgumentParser(
-        description="Run overlap-focused Stage E preview experiment with relative reconstruction loss.",
+        description=(
+            "Run overlap-focused Stage E baseline / Stage F(min) preview "
+            "with relative reconstruction loss and optional physics constraints."
+        ),
     )
     parser.add_argument("--sortie-id", default="20251005_四01_ACT-4_云_J20_22#01")
     parser.add_argument("--physiology-bucket", default="physiological_input")
@@ -504,13 +889,35 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--projection-dim", type=int, default=16)
     parser.add_argument("--ode-method", default="euler")
     parser.add_argument("--alignment-loss-mode", default="mse")
+    parser.add_argument("--seed", type=int, default=20260421)
     parser.add_argument("--reconstruction-scale-epsilon", type=float, default=1e-6)
+    parser.add_argument("--input-normalization-mode", choices=("none", "zscore_train"), default="none")
+    parser.add_argument("--input-normalization-epsilon", type=float, default=1e-6)
     parser.add_argument("--physiology-weight", type=float, default=1.0)
     parser.add_argument("--vehicle-weight", type=float, default=1.0)
     parser.add_argument("--alignment-weight", type=float, default=1.0)
+    parser.add_argument("--enable-physics-constraints", action="store_true")
+    parser.add_argument(
+        "--physics-constraint-mode",
+        choices=("feature_first_with_latent_fallback", "feature_only", "latent_only"),
+        default="feature_first_with_latent_fallback",
+    )
+    parser.add_argument("--vehicle-physics-weight", type=float, default=0.1)
+    parser.add_argument("--physiology-physics-weight", type=float, default=0.1)
+    parser.add_argument("--physics-huber-delta", type=float, default=1.0)
+    parser.add_argument("--physiology-envelope-quantile", type=float, default=0.95)
     parser.add_argument("--intermediate-sample-limit", type=int, default=3)
     parser.add_argument("--intermediate-partition", choices=("train", "validation", "test"), default="test")
     parser.add_argument("--diagnostic-max-samples", type=int, default=10)
+    parser.add_argument("--threshold-min-sample-count", type=int, default=1)
+    parser.add_argument("--threshold-min-mean-cosine", type=float, default=0.65)
+    parser.add_argument("--threshold-enforce-min-cosine", action="store_true")
+    parser.add_argument("--threshold-min-cosine", type=float, default=0.10)
+    parser.add_argument("--threshold-max-mean-l2-gap", type=float, default=0.25)
+    parser.add_argument("--threshold-max-mean-l2-ratio-deviation", type=float, default=0.30)
+    parser.add_argument("--threshold-max-cosine-cv", type=float, default=0.15)
+    parser.add_argument("--threshold-max-l2-gap-cv", type=float, default=0.25)
+    parser.add_argument("--compare-with-zscore-train", action="store_true")
     parser.add_argument("--report-path", default=default_report)
     return parser
 

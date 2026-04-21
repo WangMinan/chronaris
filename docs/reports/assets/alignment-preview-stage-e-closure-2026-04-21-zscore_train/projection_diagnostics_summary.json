@@ -1,0 +1,110 @@
+{
+  "summary": {
+    "sample_count": 3,
+    "reference_point_count": 16,
+    "mean_projection_cosine": 0.7601730250392468,
+    "min_projection_cosine": -0.1253784773984651,
+    "max_projection_cosine": 0.9194229937515875,
+    "mean_projection_l2_gap": 0.2119331139397271,
+    "mean_projection_l2_ratio": 0.8521813968058489,
+    "std_projection_cosine": 0.0,
+    "cv_projection_cosine": 0.0,
+    "std_projection_l2_gap": 0.0,
+    "cv_projection_l2_gap": 0.0,
+    "std_projection_l2_ratio": 0.0,
+    "cv_projection_l2_ratio": 0.0,
+    "samples": [
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0020",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7601730250392468,
+        "min_projection_cosine": -0.1253784773984651,
+        "max_projection_cosine": 0.9194229937515875,
+        "physiology_projection_l2_mean": 1.1589615628617949,
+        "vehicle_projection_l2_mean": 0.9794819734697486,
+        "projection_l2_gap_mean": 0.2119331139397271,
+        "projection_l2_ratio_mean": 0.8521813968058489
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0021",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7601730250392468,
+        "min_projection_cosine": -0.1253784773984651,
+        "max_projection_cosine": 0.9194229937515875,
+        "physiology_projection_l2_mean": 1.1589615628617949,
+        "vehicle_projection_l2_mean": 0.9794819734697486,
+        "projection_l2_gap_mean": 0.2119331139397271,
+        "projection_l2_ratio_mean": 0.8521813968058489
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0022",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7601730250392468,
+        "min_projection_cosine": -0.1253784773984651,
+        "max_projection_cosine": 0.9194229937515875,
+        "physiology_projection_l2_mean": 1.1589615628617949,
+        "vehicle_projection_l2_mean": 0.9794819734697486,
+        "projection_l2_gap_mean": 0.2119331139397271,
+        "projection_l2_ratio_mean": 0.8521813968058489
+      }
+    ]
+  },
+  "threshold_config": {
+    "min_sample_count": 1,
+    "min_mean_projection_cosine": 0.65,
+    "enforce_min_projection_cosine": false,
+    "min_min_projection_cosine": 0.1,
+    "max_mean_projection_l2_gap": 0.25,
+    "max_mean_projection_l2_ratio_deviation": 0.3,
+    "max_projection_cosine_cv": 0.15,
+    "max_projection_l2_gap_cv": 0.25
+  },
+  "threshold_evaluation": {
+    "passed": true,
+    "verdict": "PASS",
+    "checks": [
+      {
+        "name": "sample_count",
+        "passed": true,
+        "actual": 3.0,
+        "operator": ">=",
+        "expected": 1.0
+      },
+      {
+        "name": "mean_projection_cosine",
+        "passed": true,
+        "actual": 0.7601730250392468,
+        "operator": ">=",
+        "expected": 0.65
+      },
+      {
+        "name": "mean_projection_l2_gap",
+        "passed": true,
+        "actual": 0.2119331139397271,
+        "operator": "<=",
+        "expected": 0.25
+      },
+      {
+        "name": "mean_projection_l2_ratio_deviation",
+        "passed": true,
+        "actual": 0.14781860319415108,
+        "operator": "<=",
+        "expected": 0.3
+      },
+      {
+        "name": "projection_cosine_cv",
+        "passed": true,
+        "actual": 0.0,
+        "operator": "<=",
+        "expected": 0.15
+      },
+      {
+        "name": "projection_l2_gap_cv",
+        "passed": true,
+        "actual": 0.0,
+        "operator": "<=",
+        "expected": 0.25
+      }
+    ]
+  }
+}
