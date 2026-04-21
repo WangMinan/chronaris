@@ -103,6 +103,9 @@ def render_alignment_experiment_report(
                 f"- vehicle reconstruction: `{final_train.vehicle_reconstruction:.6f}`",
                 f"- reconstruction total: `{final_train.reconstruction_total:.6f}`",
                 f"- alignment: `{final_train.alignment:.6f}`",
+                f"- vehicle physics: `{final_train.vehicle_physics:.6f}`",
+                f"- physiology physics: `{final_train.physiology_physics:.6f}`",
+                f"- physics total: `{final_train.physics_total:.6f}`",
                 f"- total: `{final_train.total:.6f}`",
                 "",
             ]
@@ -117,6 +120,9 @@ def render_alignment_experiment_report(
                 f"- vehicle reconstruction: `{final_validation.vehicle_reconstruction:.6f}`",
                 f"- reconstruction total: `{final_validation.reconstruction_total:.6f}`",
                 f"- alignment: `{final_validation.alignment:.6f}`",
+                f"- vehicle physics: `{final_validation.vehicle_physics:.6f}`",
+                f"- physiology physics: `{final_validation.physiology_physics:.6f}`",
+                f"- physics total: `{final_validation.physics_total:.6f}`",
                 f"- total: `{final_validation.total:.6f}`",
                 "",
             ]
@@ -161,6 +167,9 @@ def render_alignment_experiment_report(
             f"- vehicle reconstruction: `{test_metrics.vehicle_reconstruction:.6f}`",
             f"- reconstruction total: `{test_metrics.reconstruction_total:.6f}`",
             f"- alignment: `{test_metrics.alignment:.6f}`",
+            f"- vehicle physics: `{test_metrics.vehicle_physics:.6f}`",
+            f"- physiology physics: `{test_metrics.physiology_physics:.6f}`",
+            f"- physics total: `{test_metrics.physics_total:.6f}`",
             f"- total: `{test_metrics.total:.6f}`",
         ]
     )

@@ -17,21 +17,20 @@
 1. `docs/planning/coding-roadmap.md`
 2. `docs/models/e0-minimal-input.md`
 3. `docs/models/alignment-batch-contract.md`
-4. `docs/planning/implementation-summary-history-2026-04-15-to-2026-04-17.md`
-5. `D:\0_大学\2025.9\开题\王旻安-西北工业大学硕士学位研究生论文选题报告表.docx`
-6. `D:\0_大学\2025.9\2026年研究生创新基金申报\王旻安-4.6改-附件2.西北工业大学硕士研究生实践创新能力培育基金项目申请书.docx`
-7. [stage-e-reference-repos.md](D:/code/chronaris/docs/models/stage-e-reference-repos.md)
-8. [stage-e-execution-plan.md](D:/code/chronaris/docs/planning/stage-e-execution-plan.md)
+4. `docs/planning/stage-e-closure-2026-04-21.md`
+5. `docs/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx`
+6. `docs/选题报告与基金申请书/西北工业大学硕士研究生实践创新能力培育基金项目申请书.docx`
+7. `docs/models/stage-e-reference-repos.md`
 
 ## 3. 当前阶段判断
 
-按照路线图，当前结论是：
+按照路线图与收口记录，当前结论是：
 
-1. `阶段 E 可启动`
-2. 但在真正写模型前，需要同时固化最小训练/验证切分方式
-3. 当前仓库已经具备稳定的 `E0ExperimentSample -> AlignmentBatch` 输入路径
+1. `阶段 E 已完成收口`
+2. `阶段 F` 可在当前阶段 E 基线上启动
+3. 当前仓库已具备稳定的 `E0ExperimentSample -> AlignmentBatch -> Stage E objective` 路径
 
-也就是说，现在不是继续争论“数据能不能读”，而是开始写第一版可训练的连续对齐原型。
+也就是说，本文档当前主要作为阶段 E 设计存档；下一轮实现默认转向阶段 F。
 
 ## 4. 研究主线与当前实现边界的映射
 

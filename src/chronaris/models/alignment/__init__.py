@@ -33,9 +33,13 @@ _PROTOTYPE_EXPORTS = {
 }
 _LOSS_EXPORTS = {
     "AlignmentLossBreakdown",
+    "PhysicsLossBreakdown",
     "StageEObjectiveBreakdown",
+    "build_stage_f_physics_losses",
     "build_stage_e_objective",
     "dual_stream_alignment_loss",
+    "vehicle_physics_consistency_loss",
+    "physiology_physics_consistency_loss",
     "projection_alignment_loss",
     "ReconstructionLossBreakdown",
     "dual_stream_reconstruction_loss",
@@ -99,26 +103,34 @@ def __getattr__(name: str) -> Any:
     if name in _LOSS_EXPORTS:
         from chronaris.models.alignment.losses import (
             AlignmentLossBreakdown,
+            PhysicsLossBreakdown,
             ReconstructionLossBreakdown,
             StageEObjectiveBreakdown,
             build_stage_e_objective,
+            build_stage_f_physics_losses,
             dual_stream_alignment_loss,
             dual_stream_reconstruction_loss,
             masked_mean_squared_error,
+            physiology_physics_consistency_loss,
             projection_alignment_loss,
             stream_reconstruction_loss,
+            vehicle_physics_consistency_loss,
         )
 
         exports = {
             "AlignmentLossBreakdown": AlignmentLossBreakdown,
+            "PhysicsLossBreakdown": PhysicsLossBreakdown,
             "ReconstructionLossBreakdown": ReconstructionLossBreakdown,
             "StageEObjectiveBreakdown": StageEObjectiveBreakdown,
             "build_stage_e_objective": build_stage_e_objective,
+            "build_stage_f_physics_losses": build_stage_f_physics_losses,
             "dual_stream_alignment_loss": dual_stream_alignment_loss,
             "dual_stream_reconstruction_loss": dual_stream_reconstruction_loss,
             "masked_mean_squared_error": masked_mean_squared_error,
+            "physiology_physics_consistency_loss": physiology_physics_consistency_loss,
             "projection_alignment_loss": projection_alignment_loss,
             "stream_reconstruction_loss": stream_reconstruction_loss,
+            "vehicle_physics_consistency_loss": vehicle_physics_consistency_loss,
         }
         globals().update(exports)
         return exports[name]

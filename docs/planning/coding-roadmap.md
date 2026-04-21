@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-04-20
+更新时间：2026-04-21
 
 ## 1. 目的
 
@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A 已完成，阶段 E0 已完成 preview 路径，阶段 E 进行中`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E 已完成（可进入阶段 F）`
 
 更具体地说：
 
@@ -39,6 +39,8 @@
 - 已完成阶段 E 的执行计划固化与最小训练/验证切分策略实现
 - 已完成实验室服务器 WSL Ubuntu 22.04 + RTX 4090 环境迁移与依赖验证
 - 已完成阶段 E 最小训练闭环、`relative_mse` 真实回归与样本级诊断产物导出
+- 已完成阶段 E 收口：`none / zscore_train` 对照实跑、阈值模板判定与 checkpoint 导出
+- 阶段 E 收口事实统一沉淀于 `docs/planning/stage-e-closure-2026-04-21.md`
 
 ## 4. 阶段拆解
 
@@ -119,7 +121,7 @@
 - 全量生理流直接读取仍然偏重，当前更适合先走 measurement 白名单 + 限流 preview 路径
 - 以 5 秒窗口构建时，当前 preview 结果窗口数为 0
 - 以 30 分钟窗口构建时，当前 preview 结果可生成 1 个联合窗口
-- 这说明下一步应优先进入阶段 C，核验生理流和飞机流的真实时间覆盖关系与窗口策略
+- 上述限制已在阶段 C 通过 full-coverage probe 与 overlap-focused 路径核验，不再是当前主阻塞
 
 建议首个联调对象：
 
@@ -139,7 +141,7 @@
 
 状态：
 
-- 进行中
+- 已完成（以真实重叠核验为准）
 
 具体任务：
 
@@ -169,7 +171,7 @@
 - 这说明阶段 C 的核心结论已经变成：
   1. preview 首次不重叠是抽样策略问题
   2. 完整数据具备进入 E0 的基础
-  3. 下一步重点是固化最小实验输入，而不是继续怀疑是否重叠
+  3. 该结论已在后续 E0/E 阶段实现中吸收并闭环
 
 ### 阶段 D：数据集工程化与批量构建
 
@@ -205,7 +207,7 @@
 
 状态：
 
-- 进行中
+- 已完成 preview 路径
 
 适用前提：
 
@@ -219,7 +221,7 @@
 2. 完成单架次窗口样本到模型输入张量的转换
    当前状态：已完成 overlap-focused preview 路径
 3. 固化最小训练/验证切分方式
-   当前状态：已开始
+   当前状态：已完成（当前固定 15/5/5）
 4. 输出单架次实验摘要
    当前状态：已完成 preview 路径
 
@@ -247,7 +249,7 @@
 
 状态：
 
-- 已启动
+- 已完成（收口完成）
 
 具体任务：
 
@@ -276,7 +278,7 @@
 - 已完成共享参考时间轴上的最小 `alignment loss`
 - 已完成最小 `train / validation / test` preview pipeline 与单元测试
 - 已基于真实 overlap-focused E0 样本完成一次最小训练回归
-- 当前已确认 `alignment loss` 可下降，但 vehicle reconstruction loss 量级过大并主导 total loss
+- 历史上曾观察到 vehicle reconstruction loss 量级过大主导 total loss，后续已由 `relative_mse` 回归与收口对照缓解
 - 已新增 `relative_mse` 重构损失模式并接入 `AlignmentPreviewConfig`
 - 已完成本机最小损失缩放单测，验证 `relative_mse` 可缓解跨流量纲主导
 - 服务器环境已完成 `torchdiffeq` 安装并通过 Stage E 相关 runtime 测试（10/10）
@@ -285,11 +287,15 @@
 - 已提供回归可视化产出：训练曲线、重构曲线、参考时间轴 cosine 曲线，并自动追加到实验报告
 - 已新增样本级投影诊断模块（mean/min/max cosine、L2 gap、L2 ratio）
 - 已支持自动导出诊断产物：`projection_diagnostics_summary.json` 与 `projection_diagnostics_samples.csv`
+- 已完成 `none / zscore_train` 真实对照实跑（seed 固定），并形成阶段收口主报告
+- 已支持默认阈值模板评估（默认不强制单点 min cosine），收口判定为 `PASS`
+- 已支持自动导出模型 checkpoint：`docs/reports/assets/<report-stem>/alignment_model_checkpoint.pt`
 
-退出条件：
+退出条件（当前状态：已满足）：
 
 - 至少完成一个可训练最小实验
 - 能输出对齐中间态
+- 能给出可复现阈值判据并产出阶段收口报告
 
 ### 阶段 F：物理一致性约束
 
@@ -299,7 +305,7 @@
 
 状态：
 
-- 未开始
+- 进行中（`F(min constraints)` 已接入代码路径，待完成真实对比实跑收口）
 
 具体任务：
 
@@ -307,6 +313,14 @@
 2. 抽取生理侧平滑/包络约束
 3. 接入训练目标
 4. 做约束前后对比实验
+
+当前实现进展（2026-04-21）：
+
+- 已在 Stage E objective 中接入可开关的 Stage F 最小物理约束入口（默认关闭，不影响 E baseline）
+- 已支持 `feature_first_with_latent_fallback / feature_only / latent_only` 三种约束模式
+- 已接入飞机侧最小物理残差约束与生理侧平滑/包络约束
+- 已在 preview pipeline / script / report 中接入 physics 指标与可视化导出
+- 已补充对应单元测试；下一步是 `E baseline` vs `E+F(min)` 真实实跑与主报告收口
 
 退出条件：
 
@@ -389,6 +403,9 @@
 - 飞机时间跨日组装工具
 - RealBus 元信息派生骨架
 - 基础单元测试
+- Stage E 输入归一化模式（`none / zscore_train`）
+- Stage E 样本级诊断阈值评估与收口对照报告
+- Stage E 自动 checkpoint 导出
 
 对应代码：
 
@@ -399,20 +416,21 @@
 
 ## 6. 当前未完成但最该做的事
 
-服务器环境已经不再阻塞阶段 E，后续优先级重新收敛为：
+阶段 E 已完成收口，后续优先级重新收敛为阶段 F：
 
 按优先级排序：
 
-1. 在 `relative_mse` 基线上评估输入归一化是否进一步改善 alignment 与泛化
-2. 基于样本级诊断结果补充“跨样本差异性”检查（当前导出样本指标高度接近）
-3. 把诊断阈值与结论模板固化到阶段 E 实验记录规范中
+1. 在当前阶段 E 基线上接入最小物理一致性约束项（先定义最小接口，不做全量约束族）
+2. 建立 `E baseline` vs `E+F(min constraints)` 对比实验与报告模板
+3. 在阶段 F 沿用阶段 E 的阈值与证据模板，确保阶段切换可追溯
 
 ## 7. 当前不该提前做的事
 
 1. 提前写完整训练框架
-2. 提前写大而全特征工程
-3. 提前设计最终服务化接口
-4. 在没有真实数据联调和 E0 输入适配前直接开双流模型训练
+2. 在阶段 F 未完成前提前写阶段 G 全量因果融合
+3. 提前写大而全特征工程
+4. 提前设计最终服务化接口
+5. 跳过对比实验直接宣称约束有效
 
 ## 8. 路线图维护规则
 
