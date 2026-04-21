@@ -1,8 +1,14 @@
 # Chronaris 协作说明
 
-> [!NOTE]
->
-> 本项目中的绝对路径仅适用于本地开发环境
+> **codex 编码八荣八耻**
+> - 以瞎猜接口为耻，以认真查询为荣。
+> - 以模糊执行为耻，以寻求确认为荣。
+> - 以臆想业务为耻，以人类确认为荣。
+> - 以创造接口为耻，以复用现有为荣。
+> - 以跳过验证为耻，以主动测试为荣。
+> - 以破坏架构为耻，以遵循规范为荣。
+> - 以假装理解为耻，以诚实无知为荣。
+> - 以盲目修改为耻，以谨慎重构为荣。
 
 ## 1. 项目定位
 
@@ -74,8 +80,9 @@
   - 目标总线 measurement：`BUS6000019110020`
   - 重点生理 measurement：`eeg`、`spo2`
   - overlap-focused preview 在 `5s` 窗口下可生成 `25` 个联合窗口
-  - `relative_mse` 真实回归下 `train/validation/test total` 已稳定到约 `2.03`
-  - 阶段 E 报告已支持自动产图与样本级诊断（JSON/CSV）
+  - 阶段 E 对照实跑（`none` / `zscore_train`）已完成，默认阈值模板评估均为 `PASS`
+  - 阶段 E 收口报告：`docs/reports/alignment-preview-stage-e-closure-2026-04-21.md`
+  - 阶段 E 报告已支持自动产图与样本级诊断（JSON/CSV）与阈值模板判定
 
 ## 5. 目录与边界
 
@@ -107,16 +114,17 @@
 - 阶段 E0 preview 路径
 - 阶段 E 最小训练闭环与 `relative_mse` 真实回归
 - 阶段 E 样本级中间态投影诊断与可视化产物导出
+- 阶段 E 输入归一化对照（`none` / `zscore_train`）与阈值模板收口
 
 当前默认判断：
 
-- `阶段 E 进行中（收口与诊断阶段）`
+- `阶段 E 已完成（可进入阶段 F）`
 - `阶段 F / G 未启动`
 
 阶段 E 默认参考：
 
 - `docs/planning/coding-roadmap.md`
-- `docs/planning/stage-e-execution-plan.md`
+- `docs/planning/stage-e-closure-2026-04-21.md`
 - `docs/models/stage-e-prototype-design.md`
 - `docs/models/stage-e-reference-repos.md`
 
@@ -146,7 +154,7 @@
 
 当前已知：
 
-- 从当前机器可探测到 SSH 入口，已配置公钥免密
+- 从 windows 机器可探测到 SSH 入口，已配置公钥免密
 - `chronaris` 环境已可用并能执行阶段 E runtime 测试与真实训练回归
 
 环境依赖文件位置：
@@ -154,25 +162,35 @@
 - `configs/environments/chronaris-stage-e-cpu.yml`
 - `configs/environments/chronaris-stage-e-gpu.yml`
 
-## 8. 安全约束
+## 8. 编码规范
+
+- 以提高最终可读性为标准，大于500行的文件建议拆分，大于800行的文件请一定拆分。
+
+## 9. 安全约束
 
 - 把数据库密码、SSH 密码、token、连接串请参考 `docs/SECRETS.md`， 该文件已经被 `.gitignore` 纳管，因此请尽管使用。但请不要把对应信息写入其他文件。
 - 不要把原始大数据复制进仓库
 - 临时验证脚本中可复用部分要及时回收进正式模块
 - 实验尽量保留可复现配置、关键指标和架次范围
 
-## 9. 默认工作方式
+## 10. 默认工作方式
 
 - 继续研究主线时，默认先看 `docs/planning/coding-roadmap.md`
-- 阶段 E 默认先保住：
-  - 最小训练/验证切分
-  - 输入适配
-  - 最小前向原型
-  - 最小损失与训练 loop
-- 阶段 E 当前默认优先：
-  - 在 `relative_mse` 基线上评估输入归一化
-  - 做跨样本差异性诊断，避免仅看均值
-  - 固化诊断阈值与实验记录模板
-- 物理约束与因果融合分别后置到阶段 F / G
+- 需要规划“单轮会话如何收敛”时，默认同步参考 `docs/planning/iteration-playbook.md`
+- 阶段 E 已收口，默认冻结阶段 E 基线（仅修复缺陷，不再扩展范围）
+- 阶段 F 当前默认优先：
+  - 在阶段 E 基线上接入最小物理一致性约束项
+  - 保持与阶段 E 同一对照脚手架，补充 `E baseline` vs `E+F(min)` 对比
+  - 继续沿用阈值模板与报告模板，确保阶段切换可追溯
+- 因果融合继续后置到阶段 G
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
+
+## 11. 共性执行模板
+
+跨阶段默认使用同一套执行模板（详见 `docs/planning/iteration-playbook.md`）：
+
+1. 单轮会话节奏：`目标锁定 -> 代码实现 -> 测试闭环 -> 文档回写 -> 冗余清理`
+2. 阶段收口 gate：`真实实跑`、`判据可复现`、`测试全通过`、`状态文档一致`
+3. 文档治理：阶段状态只在 `coding-roadmap.md` 维护；阶段收口细节只在对应 closure 文档维护
+4. 测试治理：测试文件按域合并，默认将 `test_*.py` 规模控制在 `8-12` 个
