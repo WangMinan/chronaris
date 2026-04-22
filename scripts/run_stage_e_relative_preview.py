@@ -24,6 +24,10 @@ import torch
 from chronaris.access import (
     DirectInfluxScopeConfig,
     InfluxSettings,
+    MySQLCliRunner,
+    MySQLFlightTaskReader,
+    MySQLRealBusContextReader,
+    MySQLSettings,
     OverlapPreviewSortieLoaderConfig,
     build_overlap_preview_sortie_loader,
 )
@@ -50,7 +54,7 @@ def _utc(ts: str) -> datetime:
 
 
 def _extract_secret(md_text: str, key: str) -> str:
-    pattern = re.compile(rf"^\+\s+{re.escape(key)}:\s*(.+)$", re.MULTILINE)
+    pattern = re.compile(rf"^\+?\s*{re.escape(key)}:\s*(.+)$", re.MULTILINE)
     matched = pattern.search(md_text)
     if not matched:
         raise RuntimeError(f"Missing secret key in docs/SECRETS.md: {key}")
@@ -89,6 +93,70 @@ def _resolve_influx_settings() -> InfluxSettings:
         token_env=None,
         token_value=token,
     )
+
+
+def _resolve_mysql_settings(args: argparse.Namespace) -> MySQLSettings:
+    host = os.environ.get("CHRONARIS_MYSQL_HOST")
+    port = os.environ.get("CHRONARIS_MYSQL_PORT")
+    user = os.environ.get("CHRONARIS_MYSQL_USER")
+    password = os.environ.get("CHRONARIS_MYSQL_PASSWORD")
+    if not (host and port and user and password):
+        secrets_path = REPO_ROOT / "docs" / "SECRETS.md"
+        secrets_text = secrets_path.read_text(encoding="utf-8")
+        host = host or _extract_secret(secrets_text, "host")
+        port = port or _extract_secret(secrets_text, "port")
+        user = user or _extract_secret(secrets_text, "username")
+        password = password or _extract_secret(secrets_text, "password")
+    return MySQLSettings(
+        host=host,
+        port=int(port),
+        database=args.mysql_database,
+        user=user,
+        password_env=None,
+        password_value=password,
+    )
+
+
+def _resolve_vehicle_field_labels(args: argparse.Namespace, sortie_id: str) -> tuple[dict[str, str], dict[str, object]]:
+    if args.skip_mysql_field_labels:
+        return {}, {"status": "skipped", "field_count": 0, "error": None}
+    try:
+        mysql_runner = MySQLCliRunner(_resolve_mysql_settings(args))
+        context_reader = MySQLRealBusContextReader(
+            runner=mysql_runner,
+            flight_task_reader=MySQLFlightTaskReader(mysql_runner),
+        )
+        context = context_reader.fetch_context(
+            locator=SortieLocator(sortie_id=sortie_id),
+            access_rule_id=args.bus_access_rule_id,
+            analysis_id=args.bus_analysis_id,
+        )
+    except Exception as exc:  # pragma: no cover - exercised by live closure runs.
+        if args.strict_mysql_field_labels:
+            raise
+        return {}, {"status": "unavailable", "field_count": 0, "error": str(exc)}
+
+    labels: dict[str, str] = {}
+    measurement = context.analysis.measurement or args.vehicle_measurement
+    for detail in context.detail_list:
+        labels[detail.col_field] = detail.col_name
+        labels[f"{measurement}.{detail.col_field}"] = detail.col_name
+    for structure in context.structure_list:
+        labels.setdefault(structure.col_field, structure.col_name)
+        labels.setdefault(f"{measurement}.{structure.col_field}", structure.col_name)
+    for access_detail in context.access_rule_details:
+        if access_detail.col_name:
+            labels.setdefault(access_detail.col_field, access_detail.col_name)
+            labels.setdefault(f"{measurement}.{access_detail.col_field}", access_detail.col_name)
+
+    return labels, {
+        "status": "loaded",
+        "field_count": len(labels),
+        "measurement": measurement,
+        "analysis_id": context.analysis.analysis_id,
+        "access_rule_id": args.bus_access_rule_id,
+        "error": None,
+    }
 
 
 def _resolve_device(requested: str) -> str:
@@ -430,6 +498,7 @@ def _write_model_checkpoint(
     normalization_mode: str,
     resolved_device: str,
     args: argparse.Namespace,
+    enable_physics_constraints: bool,
     split: dict[str, int],
     final_train: dict[str, object],
     final_validation: dict[str, object],
@@ -464,11 +533,13 @@ def _write_model_checkpoint(
             "physiology_weight": args.physiology_weight,
             "vehicle_weight": args.vehicle_weight,
             "alignment_weight": args.alignment_weight,
-            "enable_physics_constraints": args.enable_physics_constraints,
+            "enable_physics_constraints": enable_physics_constraints,
             "physics_constraint_mode": args.physics_constraint_mode,
+            "physics_constraint_family": args.physics_constraint_family,
             "vehicle_physics_weight": args.vehicle_physics_weight,
             "physiology_physics_weight": args.physiology_physics_weight,
             "physics_huber_delta": args.physics_huber_delta,
+            "vehicle_envelope_quantile": args.vehicle_envelope_quantile,
             "physiology_envelope_quantile": args.physiology_envelope_quantile,
             "reference_point_count": args.reference_point_count,
             "intermediate_partition": args.intermediate_partition,
@@ -504,19 +575,24 @@ def _build_threshold_config(args: argparse.Namespace) -> AlignmentProjectionThre
 def _render_physics_diagnostics_markdown(
     *,
     enabled: bool,
+    family: str,
+    mode: str,
+    vehicle_metadata_summary: dict[str, object],
     train_final: dict[str, object],
     validation_final: dict[str, object],
     test_final: dict[str, object],
 ) -> str:
+    train_components = train_final.get("physics_components") or {}
+    validation_components = validation_final.get("physics_components") or {}
+    test_components = test_final.get("physics_components") or {}
     lines = [
         "## Physics Constraint Diagnostics",
         "",
         f"- enabled: `{enabled}`",
-        (
-            "- mode: `feature_first_with_latent_fallback`"
-            if enabled
-            else "- mode: `(disabled)`"
-        ),
+        f"- family: `{family if enabled else '(disabled)'}`",
+        f"- mode: `{mode if enabled else '(disabled)'}`",
+        f"- vehicle metadata status: `{vehicle_metadata_summary.get('status')}`",
+        f"- vehicle metadata fields: `{vehicle_metadata_summary.get('field_count')}`",
         "",
         "| metric | train | validation | test |",
         "| --- | ---: | ---: | ---: |",
@@ -534,6 +610,26 @@ def _render_physics_diagnostics_markdown(
         ),
         "",
     ]
+    if train_components or validation_components or test_components:
+        lines.extend(
+            [
+                "### Component Breakdown",
+                "",
+                "| component | train | validation | test |",
+                "| --- | ---: | ---: | ---: |",
+            ]
+        )
+        component_names = sorted(set(train_components) | set(validation_components) | set(test_components))
+        for component_name in component_names:
+            lines.append(
+                f"| {component_name} | {train_components.get(component_name, 0.0):.6f} | "
+                f"{validation_components.get(component_name, 0.0):.6f} | "
+                f"{test_components.get(component_name, 0.0):.6f} |"
+            )
+        lines.append("")
+    metadata_error = vehicle_metadata_summary.get("error")
+    if metadata_error:
+        lines.extend(["### Metadata Warning", "", f"- `{metadata_error}`", ""])
     return "\n".join(lines)
 
 
@@ -622,10 +718,71 @@ def _render_normalization_comparison_markdown(
     ).rstrip() + "\n"
 
 
+def _render_physics_comparison_markdown(
+    *,
+    baseline_summary: dict[str, object],
+    physics_summary: dict[str, object],
+) -> str:
+    baseline_threshold = baseline_summary["threshold_evaluation"]["verdict"]
+    physics_threshold = physics_summary["threshold_evaluation"]["verdict"]
+    baseline_components = baseline_summary["test"].get("physics_components") or {}
+    physics_components = physics_summary["test"].get("physics_components") or {}
+    return "\n".join(
+        [
+            "# Stage F Full Physics Comparison",
+            "",
+            f"- baseline normalization: `{baseline_summary['input_normalization_mode']}`",
+            f"- physics family: `{physics_summary['physics_config']['family']}`",
+            f"- physics mode: `{physics_summary['physics_config']['mode']}`",
+            f"- sample count: `{baseline_summary['sample_summary']['sample_count']}`",
+            (
+                f"- split: train `{baseline_summary['split']['train']}`, "
+                f"validation `{baseline_summary['split']['validation']}`, "
+                f"test `{baseline_summary['split']['test']}`"
+            ),
+            f"- vehicle metadata status: `{physics_summary['vehicle_field_metadata']['status']}`",
+            f"- vehicle metadata fields: `{physics_summary['vehicle_field_metadata']['field_count']}`",
+            "",
+            "| metric | E baseline | E+F(full) |",
+            "| --- | ---: | ---: |",
+            f"| final train total | {baseline_summary['final_train']['total']:.6f} | {physics_summary['final_train']['total']:.6f} |",
+            f"| final validation total | {baseline_summary['final_validation']['total']:.6f} | {physics_summary['final_validation']['total']:.6f} |",
+            f"| test total | {baseline_summary['test']['total']:.6f} | {physics_summary['test']['total']:.6f} |",
+            f"| test physics total | {baseline_summary['test']['physics_total']:.6f} | {physics_summary['test']['physics_total']:.6f} |",
+            f"| threshold verdict | {baseline_threshold} | {physics_threshold} |",
+            "",
+            "## Test Physics Components",
+            "",
+            "| component | E baseline | E+F(full) |",
+            "| --- | ---: | ---: |",
+            *[
+                f"| {component_name} | {baseline_components.get(component_name, 0.0):.6f} | "
+                f"{physics_components.get(component_name, 0.0):.6f} |"
+                for component_name in sorted(set(baseline_components) | set(physics_components))
+            ],
+            "",
+            "## Decision",
+            "",
+            (
+                f"- Stage F closure candidate verdict: `{physics_threshold}` "
+                f"(baseline `{baseline_threshold}`)"
+            ),
+            "- physics constraints are considered active when at least one E+F(full) component is non-zero",
+            "",
+            "## Reports",
+            "",
+            f"- E baseline report: `{baseline_summary['report_path']}`",
+            f"- E+F(full) report: `{physics_summary['report_path']}`",
+            "",
+        ]
+    ).rstrip() + "\n"
+
+
 def _run_once(
     args: argparse.Namespace,
     *,
     normalization_mode: str,
+    enable_physics_constraints: bool | None = None,
     report_path_override: str | None = None,
 ) -> dict[str, object]:
     if args.seed is not None:
@@ -635,6 +792,10 @@ def _run_once(
 
     sortie_id = args.sortie_id
     settings = _resolve_influx_settings()
+    resolved_enable_physics = (
+        args.enable_physics_constraints if enable_physics_constraints is None else enable_physics_constraints
+    )
+    vehicle_field_labels, vehicle_metadata_summary = _resolve_vehicle_field_labels(args, sortie_id)
     loader = build_overlap_preview_sortie_loader(
         OverlapPreviewSortieLoaderConfig(
             sortie_id=sortie_id,
@@ -695,12 +856,15 @@ def _run_once(
                 physiology_reconstruction_weight=args.physiology_weight,
                 vehicle_reconstruction_weight=args.vehicle_weight,
                 alignment_weight=args.alignment_weight,
-                enable_physics_constraints=args.enable_physics_constraints,
+                enable_physics_constraints=resolved_enable_physics,
                 physics_constraint_mode=args.physics_constraint_mode,
+                physics_constraint_family=args.physics_constraint_family,
                 vehicle_physics_weight=args.vehicle_physics_weight,
                 physiology_physics_weight=args.physiology_physics_weight,
                 physics_huber_delta=args.physics_huber_delta,
+                vehicle_envelope_quantile=args.vehicle_envelope_quantile,
                 physiology_envelope_quantile=args.physiology_envelope_quantile,
+                vehicle_field_labels=vehicle_field_labels,
                 export_intermediate_states=True,
                 intermediate_sample_limit=args.intermediate_sample_limit,
                 intermediate_partition=args.intermediate_partition,
@@ -738,7 +902,10 @@ def _run_once(
     validation_final = asdict(result.preview_result.validation_history[-1])
     test_final = asdict(result.preview_result.test_metrics)
     physics_diagnostics_markdown = _render_physics_diagnostics_markdown(
-        enabled=args.enable_physics_constraints,
+        enabled=resolved_enable_physics,
+        family=args.physics_constraint_family,
+        mode=args.physics_constraint_mode,
+        vehicle_metadata_summary=vehicle_metadata_summary,
         train_final=train_final,
         validation_final=validation_final,
         test_final=test_final,
@@ -775,6 +942,7 @@ def _run_once(
         normalization_mode=normalization_mode,
         resolved_device=resolved_device,
         args=args,
+        enable_physics_constraints=resolved_enable_physics,
         split=split_summary,
         final_train=train_final,
         final_validation=validation_final,
@@ -807,17 +975,50 @@ def _run_once(
         "checkpoint_artifacts": checkpoint_artifacts,
         "input_normalization_mode": normalization_mode,
         "physics_config": {
-            "enabled": args.enable_physics_constraints,
+            "enabled": resolved_enable_physics,
+            "family": args.physics_constraint_family,
             "mode": args.physics_constraint_mode,
             "vehicle_weight": args.vehicle_physics_weight,
             "physiology_weight": args.physiology_physics_weight,
             "huber_delta": args.physics_huber_delta,
+            "vehicle_envelope_quantile": args.vehicle_envelope_quantile,
             "physiology_envelope_quantile": args.physiology_envelope_quantile,
         },
+        "vehicle_field_metadata": vehicle_metadata_summary,
     }
 
 
 def run(args: argparse.Namespace) -> dict[str, object]:
+    if args.compare_with_physics_baseline:
+        baseline_summary = _run_once(
+            args,
+            normalization_mode=args.input_normalization_mode,
+            enable_physics_constraints=False,
+            report_path_override=_with_mode_suffix(args.report_path, "e-baseline"),
+        )
+        physics_summary = _run_once(
+            args,
+            normalization_mode=args.input_normalization_mode,
+            enable_physics_constraints=True,
+            report_path_override=_with_mode_suffix(args.report_path, f"stage-f-{args.physics_constraint_family}"),
+        )
+        comparison_report_path = Path(args.report_path)
+        if not comparison_report_path.is_absolute():
+            comparison_report_path = REPO_ROOT / comparison_report_path
+        comparison_report_path.parent.mkdir(parents=True, exist_ok=True)
+        comparison_report_path.write_text(
+            _render_physics_comparison_markdown(
+                baseline_summary=baseline_summary,
+                physics_summary=physics_summary,
+            ),
+            encoding="utf-8",
+        )
+        return {
+            "report_path": str(comparison_report_path),
+            "baseline": baseline_summary,
+            "physics": physics_summary,
+        }
+
     if not args.compare_with_zscore_train:
         return _run_once(
             args,
@@ -872,6 +1073,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--vehicle-measurement", default="BUS6000019110020")
     parser.add_argument("--collect-task-id", default="2100448")
     parser.add_argument("--pilot-id", default="10033")
+    parser.add_argument("--mysql-database", default="rjgx_backend")
+    parser.add_argument("--bus-access-rule-id", type=int, default=6000019510066)
+    parser.add_argument("--bus-analysis-id", type=int, default=6000019110020)
+    parser.add_argument("--skip-mysql-field-labels", action="store_true")
+    parser.add_argument("--strict-mysql-field-labels", action="store_true")
     parser.add_argument("--start-time-utc", default="2025-10-05T01:35:00Z")
     parser.add_argument("--stop-time-utc", default="2025-10-05T01:38:01Z")
     parser.add_argument("--physiology-point-limit", type=int, default=500)
@@ -902,9 +1108,11 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("feature_first_with_latent_fallback", "feature_only", "latent_only"),
         default="feature_first_with_latent_fallback",
     )
+    parser.add_argument("--physics-constraint-family", choices=("minimal", "full"), default="minimal")
     parser.add_argument("--vehicle-physics-weight", type=float, default=0.1)
     parser.add_argument("--physiology-physics-weight", type=float, default=0.1)
     parser.add_argument("--physics-huber-delta", type=float, default=1.0)
+    parser.add_argument("--vehicle-envelope-quantile", type=float, default=0.95)
     parser.add_argument("--physiology-envelope-quantile", type=float, default=0.95)
     parser.add_argument("--intermediate-sample-limit", type=int, default=3)
     parser.add_argument("--intermediate-partition", choices=("train", "validation", "test"), default="test")
@@ -918,6 +1126,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--threshold-max-cosine-cv", type=float, default=0.15)
     parser.add_argument("--threshold-max-l2-gap-cv", type=float, default=0.25)
     parser.add_argument("--compare-with-zscore-train", action="store_true")
+    parser.add_argument("--compare-with-physics-baseline", action="store_true")
     parser.add_argument("--report-path", default=default_report)
     return parser
 

@@ -4,10 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from math import ceil
+from typing import Mapping
 
 import torch
 
 from chronaris.features.experiment_input import E0ExperimentSample
+from chronaris.models.alignment.physics_features import PHYSICS_COMPONENT_KEYS
 from chronaris.models.alignment import (
     AlignmentPrototypeConfig,
     ChronologicalSampleSplit,
@@ -22,6 +24,12 @@ from chronaris.models.alignment import (
     build_torch_alignment_batch,
     build_alignment_batch,
     split_e0_samples_chronologically,
+)
+from chronaris.pipelines.alignment_physics import (
+    AlignmentPhysicsConstraintStats,
+    build_batch_physics_context,
+    build_physics_constraint_stats,
+    resolve_stream_normalization_vectors,
 )
 
 
@@ -47,10 +55,13 @@ class AlignmentPreviewConfig:
     alignment_weight: float = 1.0
     enable_physics_constraints: bool = False
     physics_constraint_mode: str = "feature_first_with_latent_fallback"
+    physics_constraint_family: str = "minimal"
     vehicle_physics_weight: float = 0.1
     physiology_physics_weight: float = 0.1
     physics_huber_delta: float = 1.0
+    vehicle_envelope_quantile: float = 0.95
     physiology_envelope_quantile: float = 0.95
+    vehicle_field_labels: Mapping[str, str] = field(default_factory=dict)
     export_intermediate_states: bool = True
     intermediate_sample_limit: int = 3
     intermediate_partition: str = "test"
@@ -84,12 +95,16 @@ class AlignmentPreviewConfig:
             raise ValueError(
                 "physics_constraint_mode must be one of: feature_first_with_latent_fallback, feature_only, latent_only."
             )
+        if self.physics_constraint_family not in {"minimal", "full"}:
+            raise ValueError("physics_constraint_family must be one of: minimal, full.")
         if self.vehicle_physics_weight < 0:
             raise ValueError("vehicle_physics_weight must be non-negative.")
         if self.physiology_physics_weight < 0:
             raise ValueError("physiology_physics_weight must be non-negative.")
         if self.physics_huber_delta <= 0:
             raise ValueError("physics_huber_delta must be positive.")
+        if not 0.5 < self.vehicle_envelope_quantile < 1.0:
+            raise ValueError("vehicle_envelope_quantile must be between 0.5 and 1.0.")
         if not 0.5 < self.physiology_envelope_quantile < 1.0:
             raise ValueError("physiology_envelope_quantile must be between 0.5 and 1.0.")
         if self.intermediate_sample_limit <= 0:
@@ -112,6 +127,7 @@ class AlignmentPreviewMetrics:
     physiology_physics: float
     physics_total: float
     total: float
+    physics_components: dict[str, float] = field(default_factory=dict)
 
 
 @dataclass(frozen=True, slots=True)
@@ -130,23 +146,6 @@ class AlignmentInputNormalizationStats:
     mode: str
     physiology: StreamInputNormalizationStats
     vehicle: StreamInputNormalizationStats
-
-
-@dataclass(frozen=True, slots=True)
-class StreamEnvelopeStats:
-    """Per-feature envelope statistics used by Stage F physiology constraints."""
-
-    feature_names: tuple[str, ...]
-    lower: torch.Tensor
-    upper: torch.Tensor
-
-
-@dataclass(frozen=True, slots=True)
-class AlignmentPhysicsConstraintStats:
-    """Train-partition physics statistics shared across partitions in one run."""
-
-    mode: str
-    physiology: StreamEnvelopeStats
 
 
 @dataclass(frozen=True, slots=True)
@@ -301,6 +300,7 @@ class AlignmentPreviewPipeline:
                 physiology_physics=0.0,
                 physics_total=0.0,
                 total=0.0,
+                physics_components=_zero_physics_components(),
             )
 
         if training and optimizer is None:
@@ -317,6 +317,7 @@ class AlignmentPreviewPipeline:
             "physics_total": 0.0,
             "total": 0.0,
         }
+        weighted_physics_components = _zero_physics_components()
         sample_count = 0
         batch_count = 0
 
@@ -326,12 +327,12 @@ class AlignmentPreviewPipeline:
                 torch_batch,
                 normalization_stats=normalization_stats,
             )
-            physiology_envelope_lower = None
-            physiology_envelope_upper = None
+            physics_context = None
             if physics_stats is not None:
-                physiology_envelope_lower, physiology_envelope_upper = self._resolve_stream_envelope_vectors(
-                    torch_batch.physiology,
-                    physics_stats.physiology,
+                physics_context = build_batch_physics_context(
+                    torch_batch,
+                    stats=physics_stats,
+                    normalization_stats=normalization_stats,
                 )
             reference_offsets_s = self._build_reference_offsets_s_tensor(batch_samples)
 
@@ -348,11 +349,11 @@ class AlignmentPreviewPipeline:
                     alignment_weight=self.config.alignment_weight,
                     enable_physics_constraints=self.config.enable_physics_constraints,
                     physics_constraint_mode=self.config.physics_constraint_mode,
+                    physics_constraint_family=self.config.physics_constraint_family,
                     vehicle_physics_weight=self.config.vehicle_physics_weight,
                     physiology_physics_weight=self.config.physiology_physics_weight,
                     physics_huber_delta=self.config.physics_huber_delta,
-                    physiology_envelope_lower=physiology_envelope_lower,
-                    physiology_envelope_upper=physiology_envelope_upper,
+                    physics_context=physics_context,
                 )
 
                 if training:
@@ -380,6 +381,9 @@ class AlignmentPreviewPipeline:
             )
             weighted_totals["physics_total"] += float(objective.physics_total.detach()) * current_batch_size
             weighted_totals["total"] += float(objective.total.detach()) * current_batch_size
+            for component_name, component_value in objective.physics_components.items():
+                weighted_physics_components.setdefault(component_name, 0.0)
+                weighted_physics_components[component_name] += float(component_value.detach()) * current_batch_size
 
         return AlignmentPreviewMetrics(
             sample_count=sample_count,
@@ -392,6 +396,10 @@ class AlignmentPreviewPipeline:
             physiology_physics=weighted_totals["physiology_physics"] / sample_count,
             physics_total=weighted_totals["physics_total"] / sample_count,
             total=weighted_totals["total"] / sample_count,
+            physics_components={
+                component_name: component_value / sample_count
+                for component_name, component_value in weighted_physics_components.items()
+            },
         )
 
     def _resolve_intermediate_partition_samples(
@@ -556,13 +564,13 @@ class AlignmentPreviewPipeline:
             return None
 
         train_batch = self._build_torch_batch(train_samples)
-        train_batch = self._apply_input_normalization(
+        return build_physics_constraint_stats(
             train_batch,
-            normalization_stats=normalization_stats,
-        )
-        return AlignmentPhysicsConstraintStats(
+            family=self.config.physics_constraint_family,
             mode=self.config.physics_constraint_mode,
-            physiology=self._build_stream_envelope_stats(train_batch.physiology),
+            vehicle_field_labels=self.config.vehicle_field_labels,
+            vehicle_envelope_quantile=self.config.vehicle_envelope_quantile,
+            physiology_envelope_quantile=self.config.physiology_envelope_quantile,
         )
 
     def _build_stream_input_normalization_stats(
@@ -594,32 +602,6 @@ class AlignmentPreviewPipeline:
             std=std.detach(),
         )
 
-    def _build_stream_envelope_stats(
-        self,
-        stream_batch: TorchAlignmentStreamBatch,
-    ) -> StreamEnvelopeStats:
-        valid_mask = stream_batch.feature_valid_mask & stream_batch.mask.unsqueeze(-1)
-        values = stream_batch.values
-        lower = torch.zeros((values.shape[-1],), dtype=values.dtype, device=values.device)
-        upper = torch.zeros((values.shape[-1],), dtype=values.dtype, device=values.device)
-        lower_q = 1.0 - self.config.physiology_envelope_quantile
-        upper_q = self.config.physiology_envelope_quantile
-
-        for feature_index in range(values.shape[-1]):
-            feature_values = values[..., feature_index][valid_mask[..., feature_index]]
-            if feature_values.numel() == 0:
-                lower[feature_index] = 0.0
-                upper[feature_index] = 0.0
-                continue
-            lower[feature_index] = torch.quantile(feature_values, q=lower_q)
-            upper[feature_index] = torch.quantile(feature_values, q=upper_q)
-
-        return StreamEnvelopeStats(
-            feature_names=stream_batch.feature_names,
-            lower=lower.detach(),
-            upper=upper.detach(),
-        )
-
     def _apply_input_normalization(
         self,
         batch: TorchAlignmentBatch,
@@ -642,7 +624,7 @@ class AlignmentPreviewPipeline:
         stream_batch: TorchAlignmentStreamBatch,
         stats: StreamInputNormalizationStats,
     ) -> TorchAlignmentStreamBatch:
-        mean, std = self._resolve_stream_normalization_vectors(stream_batch, stats)
+        mean, std = resolve_stream_normalization_vectors(stream_batch, stats)
         normalized = (stream_batch.values - mean.view(1, 1, -1)) / std.view(1, 1, -1)
         valid_mask = stream_batch.feature_valid_mask & stream_batch.mask.unsqueeze(-1)
         normalized = torch.where(valid_mask, normalized, torch.zeros_like(normalized))
@@ -657,70 +639,6 @@ class AlignmentPreviewPipeline:
             point_counts=stream_batch.point_counts,
             feature_names=stream_batch.feature_names,
         )
-
-    def _resolve_stream_normalization_vectors(
-        self,
-        stream_batch: TorchAlignmentStreamBatch,
-        stats: StreamInputNormalizationStats,
-    ) -> tuple[torch.Tensor, torch.Tensor]:
-        if stream_batch.feature_names == stats.feature_names:
-            return (
-                stats.mean.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype),
-                stats.std.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype),
-            )
-
-        mean = torch.zeros(
-            (len(stream_batch.feature_names),),
-            dtype=stream_batch.values.dtype,
-            device=stream_batch.values.device,
-        )
-        std = torch.ones(
-            (len(stream_batch.feature_names),),
-            dtype=stream_batch.values.dtype,
-            device=stream_batch.values.device,
-        )
-        source_index = {name: idx for idx, name in enumerate(stats.feature_names)}
-        source_mean = stats.mean.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype)
-        source_std = stats.std.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype)
-        for feature_index, feature_name in enumerate(stream_batch.feature_names):
-            mapped_index = source_index.get(feature_name)
-            if mapped_index is None:
-                continue
-            mean[feature_index] = source_mean[mapped_index]
-            std[feature_index] = source_std[mapped_index]
-        return mean, std
-
-    def _resolve_stream_envelope_vectors(
-        self,
-        stream_batch: TorchAlignmentStreamBatch,
-        stats: StreamEnvelopeStats,
-    ) -> tuple[torch.Tensor, torch.Tensor]:
-        if stream_batch.feature_names == stats.feature_names:
-            return (
-                stats.lower.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype),
-                stats.upper.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype),
-            )
-
-        lower = torch.zeros(
-            (len(stream_batch.feature_names),),
-            dtype=stream_batch.values.dtype,
-            device=stream_batch.values.device,
-        )
-        upper = torch.zeros(
-            (len(stream_batch.feature_names),),
-            dtype=stream_batch.values.dtype,
-            device=stream_batch.values.device,
-        )
-        source_index = {name: idx for idx, name in enumerate(stats.feature_names)}
-        source_lower = stats.lower.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype)
-        source_upper = stats.upper.to(device=stream_batch.values.device, dtype=stream_batch.values.dtype)
-        for feature_index, feature_name in enumerate(stream_batch.feature_names):
-            mapped_index = source_index.get(feature_name)
-            if mapped_index is None:
-                continue
-            lower[feature_index] = source_lower[mapped_index]
-            upper[feature_index] = source_upper[mapped_index]
-        return lower, upper
 
     def _build_reference_offsets_s_tensor(self, samples: tuple[E0ExperimentSample, ...]) -> torch.Tensor:
         grids = build_reference_grids(samples, config=self.config.reference_grid_config)
@@ -742,6 +660,10 @@ def _iterate_sample_batches(
         samples[batch_index * batch_size : (batch_index + 1) * batch_size]
         for batch_index in range(batch_total)
     )
+
+
+def _zero_physics_components() -> dict[str, float]:
+    return {component_name: 0.0 for component_name in PHYSICS_COMPONENT_KEYS}
 
 
 def _tensor_1d_to_tuple(values: torch.Tensor) -> tuple[float, ...]:

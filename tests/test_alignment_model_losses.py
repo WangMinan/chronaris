@@ -27,6 +27,11 @@ if ENABLE_TORCH_RUNTIME_TESTS:
         masked_mean_squared_error,
         projection_alignment_loss,
     )
+    from chronaris.models.alignment.physics_features import (
+        StageFPhysicsContext,
+        build_physiology_feature_groups,
+        build_vehicle_feature_groups,
+    )
     from chronaris.models.alignment.prototype import (
         DualStreamODERNNPrototype,
         DualStreamPrototypeOutput,
@@ -401,6 +406,72 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             )
 
             self.assertGreater(float(objective.vehicle_physics), 0.0)
+
+        def test_stage_f_vehicle_groups_use_realbus_field_labels(self) -> None:
+            groups = build_vehicle_feature_groups(
+                ("BUS.code1002", "BUS.code1003", "BUS.code1004"),
+                field_labels={
+                    "BUS.code1002": "速度",
+                    "BUS.code1003": "加速度",
+                    "BUS.code1004": "高度",
+                },
+            )
+
+            self.assertEqual(groups.speed, ("BUS.code1002",))
+            self.assertEqual(groups.acceleration, ("BUS.code1003",))
+            self.assertEqual(groups.altitude, ("BUS.code1004",))
+
+        def test_stage_f_full_family_exposes_component_breakdown(self) -> None:
+            physiology_batch = _single_sample_stream_batch(
+                feature_names=("eeg.af3", "eeg.af4", "spo2.spo2"),
+                values=((0.0, 2.0, 95.0), (0.0, 2.0, 80.0), (0.0, 2.0, 95.0)),
+            )
+            vehicle_batch = _single_sample_stream_batch(
+                feature_names=("BUS.code1002", "BUS.code1003"),
+                values=((0.0, 1.0), (1.0, 1.0), (2.0, 1.0)),
+            )
+            batch = TorchAlignmentBatch(
+                sample_ids=("sample-001",),
+                physiology=physiology_batch,
+                vehicle=vehicle_batch,
+            )
+            output = DualStreamPrototypeOutput(
+                sample_ids=("sample-001",),
+                physiology=_stream_output_with_reconstructions(
+                    physiology_batch,
+                    reconstructions=((0.0, 2.0, 95.0), (0.0, 2.0, 80.0), (0.0, 2.0, 95.0)),
+                ),
+                vehicle=_stream_output_with_reconstructions(
+                    vehicle_batch,
+                    reconstructions=((0.0, 1.0), (1.0, 1.0), (2.0, 1.0)),
+                ),
+            )
+            context = StageFPhysicsContext(
+                vehicle_groups=build_vehicle_feature_groups(
+                    vehicle_batch.feature_names,
+                    field_labels={"BUS.code1002": "速度", "BUS.code1003": "加速度"},
+                ),
+                physiology_groups=build_physiology_feature_groups(physiology_batch.feature_names),
+                vehicle_envelope_lower=torch.tensor([-1.0, -1.0], dtype=torch.float32),
+                vehicle_envelope_upper=torch.tensor([3.0, 2.0], dtype=torch.float32),
+                physiology_envelope_lower=torch.tensor([-1.0, -1.0, 85.0], dtype=torch.float32),
+                physiology_envelope_upper=torch.tensor([1.0, 1.0, 100.0], dtype=torch.float32),
+            )
+
+            objective = build_stage_e_objective(
+                output,
+                batch,
+                enable_physics_constraints=True,
+                physics_constraint_family="full",
+                physics_context=context,
+                vehicle_physics_weight=1.0,
+                physiology_physics_weight=1.0,
+            )
+
+            self.assertIn("vehicle_semantic", objective.physics_components)
+            self.assertIn("physiology_pairwise", objective.physics_components)
+            self.assertGreater(float(objective.physics_components["physiology_pairwise"]), 0.0)
+            self.assertGreater(float(objective.physics_components["physiology_envelope"]), 0.0)
 else:
     class AlignmentLossesRuntimeDisabledTest(unittest.TestCase):
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")
