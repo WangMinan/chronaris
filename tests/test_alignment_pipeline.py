@@ -199,6 +199,42 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertGreaterEqual(result.test_metrics.vehicle_physics, 0.0)
             self.assertGreaterEqual(result.test_metrics.physiology_physics, 0.0)
             self.assertGreaterEqual(result.test_metrics.physics_total, 0.0)
+            self.assertIn("vehicle_semantic", result.test_metrics.physics_components)
+
+        def test_alignment_preview_pipeline_supports_stage_f_full_physics_family(self) -> None:
+            samples = tuple(_sample(index) for index in range(25))
+            pipeline = AlignmentPreviewPipeline(
+                config=AlignmentPreviewConfig(
+                    prototype_config=AlignmentPrototypeConfig(
+                        hidden_dim=8,
+                        embedding_dim=6,
+                        encoder_hidden_dim=10,
+                        decoder_hidden_dim=10,
+                        dynamics_hidden_dim=12,
+                        projection_dim=4,
+                        ode_method="euler",
+                    ),
+                    split_config=ChronologicalSplitConfig(),
+                    reference_grid_config=ReferenceGridConfig(point_count=4),
+                    epoch_count=1,
+                    batch_size=4,
+                    learning_rate=1e-3,
+                    device="cpu",
+                    input_normalization_mode="zscore_train",
+                    enable_physics_constraints=True,
+                    physics_constraint_family="full",
+                    vehicle_field_labels={
+                        "BUS.code1002": "速度",
+                        "BUS.code1003": "加速度",
+                    },
+                )
+            )
+
+            result = pipeline.run(samples)
+            self.assertEqual(result.test_metrics.sample_count, 5)
+            self.assertIn("vehicle_semantic", result.test_metrics.physics_components)
+            self.assertIn("physiology_pairwise", result.test_metrics.physics_components)
+            self.assertGreaterEqual(result.test_metrics.physics_total, 0.0)
 else:
     class AlignmentPreviewPipelineRuntimeDisabledTest(unittest.TestCase):
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")

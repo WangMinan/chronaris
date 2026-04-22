@@ -12,12 +12,15 @@
 当前已提供：
 
 - `run_stage_e_relative_preview.py`
-  - 用 overlap-focused 配置直接运行一轮 Stage E baseline / Stage F(min) preview
+  - 用 overlap-focused 配置直接运行一轮 Stage E baseline / Stage F preview
   - 支持 `none / zscore_train` 两种输入归一化模式（`--input-normalization-mode`）
-  - 默认可按 Stage E 基线运行；开启 `--enable-physics-constraints` 后进入 Stage F(min)
+  - 默认可按 Stage E 基线运行；开启 `--enable-physics-constraints` 后进入 Stage F
   - 支持 `feature_first_with_latent_fallback / feature_only / latent_only` 约束模式
+  - 支持 `minimal / full` 物理约束族（`--physics-constraint-family`）
+  - 支持 `E baseline` vs `E+F(full)` 一次性对比（`--compare-with-physics-baseline`）
+  - 支持从真实 MySQL 读取 RealBus 字段语义映射（可用 `CHRONARIS_MYSQL_HOST=127.0.0.1` 指向本机 MySQL）
   - 支持设置 `--vehicle-physics-weight`、`--physiology-physics-weight`、`--physics-huber-delta`
-  - 支持设置生理包络分位 `--physiology-envelope-quantile`
+  - 支持设置飞机/生理包络分位 `--vehicle-envelope-quantile`、`--physiology-envelope-quantile`
   - 自动从 `CHRONARIS_INFLUX_*` 或 `docs/SECRETS.md` 解析 Influx 连接信息
   - 输出报告到 `docs/reports/` 并打印 JSON 摘要
   - 自动追加 `Physics Constraint Diagnostics` 区块

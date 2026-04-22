@@ -3,11 +3,18 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Mapping
 
 import torch
 from torch.nn import functional as F
 
+from chronaris.models.alignment.physics import (
+    PhysicsLossBreakdown,
+    build_stage_f_physics_losses,
+    physiology_physics_consistency_loss,
+    vehicle_physics_consistency_loss,
+)
+from chronaris.models.alignment.physics_features import StageFPhysicsContext
 from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAlignmentStreamBatch
 
 if TYPE_CHECKING:
@@ -62,15 +69,6 @@ class AlignmentLossBreakdown:
 
 
 @dataclass(frozen=True, slots=True)
-class PhysicsLossBreakdown:
-    """Physics-constraint loss summary for Stage F(min)."""
-
-    vehicle: torch.Tensor
-    physiology: torch.Tensor
-    total: torch.Tensor
-
-
-@dataclass(frozen=True, slots=True)
 class StageEObjectiveBreakdown:
     """Combined reconstruction + alignment (+ optional physics) objective summary."""
 
@@ -81,6 +79,7 @@ class StageEObjectiveBreakdown:
     vehicle_physics: torch.Tensor
     physiology_physics: torch.Tensor
     physics_total: torch.Tensor
+    physics_components: Mapping[str, torch.Tensor]
     total: torch.Tensor
 
 
@@ -421,140 +420,6 @@ def dual_stream_alignment_loss(
     )
 
 
-def vehicle_physics_consistency_loss(
-    output: DualStreamPrototypeOutput,
-    batch: TorchAlignmentBatch,
-    *,
-    mode: str = "feature_first_with_latent_fallback",
-    huber_delta: float = 1.0,
-) -> torch.Tensor:
-    """Compute vehicle-side physics consistency loss."""
-
-    if mode not in _ALLOWED_PHYSICS_CONSTRAINT_MODES:
-        raise ValueError(
-            f"mode must be one of {sorted(_ALLOWED_PHYSICS_CONSTRAINT_MODES)!r}."
-        )
-    if huber_delta <= 0:
-        raise ValueError("huber_delta must be positive.")
-
-    stream_batch = batch.vehicle
-    stream_output = output.vehicle
-    valid_feature_mask = stream_batch.feature_valid_mask & stream_batch.mask.unsqueeze(-1)
-
-    use_feature_loss = mode in {"feature_first_with_latent_fallback", "feature_only"}
-    if use_feature_loss:
-        speed_indices = _select_feature_indices(stream_batch.feature_names, _VEHICLE_SPEED_TOKENS)
-        accel_indices = _select_feature_indices(stream_batch.feature_names, _VEHICLE_ACCEL_TOKENS)
-        if speed_indices and accel_indices:
-            speed_series, speed_valid = _aggregate_selected_features(
-                stream_output.reconstructions,
-                valid_feature_mask,
-                speed_indices,
-            )
-            accel_series, accel_valid = _aggregate_selected_features(
-                stream_output.reconstructions,
-                valid_feature_mask,
-                accel_indices,
-            )
-            speed_derivative, derivative_valid = _first_derivative(
-                speed_series,
-                stream_batch.offsets_s,
-                speed_valid,
-            )
-            accel_target = accel_series[:, 1:]
-            residual_valid = derivative_valid & accel_valid[:, 1:]
-            if bool(torch.any(residual_valid)):
-                return _masked_huber_loss(
-                    speed_derivative - accel_target,
-                    residual_valid,
-                    delta=huber_delta,
-                )
-            if mode == "feature_only":
-                return stream_batch.values.new_zeros(())
-        elif mode == "feature_only":
-            return stream_batch.values.new_zeros(())
-
-    latent_states, latent_times, latent_valid = _resolve_physics_stream_states(stream_output, stream_batch)
-    return _second_derivative_smoothness_loss(
-        latent_states,
-        latent_times,
-        latent_valid,
-    )
-
-
-def physiology_physics_consistency_loss(
-    output: DualStreamPrototypeOutput,
-    batch: TorchAlignmentBatch,
-    *,
-    mode: str = "feature_first_with_latent_fallback",
-    envelope_lower: torch.Tensor | None = None,
-    envelope_upper: torch.Tensor | None = None,
-) -> torch.Tensor:
-    """Compute physiology-side smoothness/envelope consistency loss."""
-
-    if mode not in _ALLOWED_PHYSICS_CONSTRAINT_MODES:
-        raise ValueError(
-            f"mode must be one of {sorted(_ALLOWED_PHYSICS_CONSTRAINT_MODES)!r}."
-        )
-
-    stream_batch = batch.physiology
-    stream_output = output.physiology
-    valid_feature_mask = stream_batch.feature_valid_mask & stream_batch.mask.unsqueeze(-1)
-
-    use_feature_loss = mode in {"feature_first_with_latent_fallback", "feature_only"}
-    if use_feature_loss:
-        smoothness = _second_derivative_smoothness_loss(
-            stream_output.reconstructions,
-            stream_batch.offsets_s,
-            stream_batch.mask,
-        )
-        envelope = _physiology_envelope_penalty(
-            stream_output.reconstructions,
-            valid_feature_mask,
-            lower=envelope_lower,
-            upper=envelope_upper,
-        )
-        return smoothness + envelope
-
-    latent_states, latent_times, latent_valid = _resolve_physics_stream_states(stream_output, stream_batch)
-    return _second_derivative_smoothness_loss(
-        latent_states,
-        latent_times,
-        latent_valid,
-    )
-
-
-def build_stage_f_physics_losses(
-    output: DualStreamPrototypeOutput,
-    batch: TorchAlignmentBatch,
-    *,
-    mode: str = "feature_first_with_latent_fallback",
-    huber_delta: float = 1.0,
-    physiology_envelope_lower: torch.Tensor | None = None,
-    physiology_envelope_upper: torch.Tensor | None = None,
-) -> PhysicsLossBreakdown:
-    """Build minimal Stage F physics-constraint losses."""
-
-    vehicle = vehicle_physics_consistency_loss(
-        output,
-        batch,
-        mode=mode,
-        huber_delta=huber_delta,
-    )
-    physiology = physiology_physics_consistency_loss(
-        output,
-        batch,
-        mode=mode,
-        envelope_lower=physiology_envelope_lower,
-        envelope_upper=physiology_envelope_upper,
-    )
-    return PhysicsLossBreakdown(
-        vehicle=vehicle,
-        physiology=physiology,
-        total=vehicle + physiology,
-    )
-
-
 def build_stage_e_objective(
     output: DualStreamPrototypeOutput,
     batch: TorchAlignmentBatch,
@@ -567,9 +432,11 @@ def build_stage_e_objective(
     alignment_weight: float = 1.0,
     enable_physics_constraints: bool = False,
     physics_constraint_mode: str = "feature_first_with_latent_fallback",
+    physics_constraint_family: str = "minimal",
     vehicle_physics_weight: float = 0.0,
     physiology_physics_weight: float = 0.0,
     physics_huber_delta: float = 1.0,
+    physics_context: StageFPhysicsContext | None = None,
     physiology_envelope_lower: torch.Tensor | None = None,
     physiology_envelope_upper: torch.Tensor | None = None,
 ) -> StageEObjectiveBreakdown:
@@ -600,13 +467,14 @@ def build_stage_e_objective(
             output,
             batch,
             mode=physics_constraint_mode,
+            family=physics_constraint_family,
             huber_delta=physics_huber_delta,
+            context=physics_context,
             physiology_envelope_lower=physiology_envelope_lower,
             physiology_envelope_upper=physiology_envelope_upper,
         )
     else:
-        zero = reconstruction.total.new_zeros(())
-        physics = PhysicsLossBreakdown(vehicle=zero, physiology=zero, total=zero)
+        physics = PhysicsLossBreakdown.zeros(reconstruction.total)
 
     total = (
         (physiology_weight * reconstruction.physiology)
@@ -623,5 +491,6 @@ def build_stage_e_objective(
         vehicle_physics=physics.vehicle,
         physiology_physics=physics.physiology,
         physics_total=physics.total,
+        physics_components=physics.component_tensors(),
         total=total,
     )

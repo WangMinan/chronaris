@@ -83,6 +83,9 @@
   - 阶段 E 对照实跑（`none` / `zscore_train`）已完成，默认阈值模板评估均为 `PASS`
   - 阶段 E 收口报告：`docs/reports/alignment-preview-stage-e-closure-2026-04-21.md`
   - 阶段 E 报告已支持自动产图与样本级诊断（JSON/CSV）与阈值模板判定
+  - 阶段 F 完整物理约束族对照实跑（`E baseline` / `E+F(full)`）已完成，默认阈值模板评估均为 `PASS`
+  - 阶段 F 收口报告：`docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
+  - 阶段 F 已确认 MySQL RealBus 字段语义映射可加载（当前字段映射数 `96`）
 
 ## 5. 目录与边界
 
@@ -115,16 +118,18 @@
 - 阶段 E 最小训练闭环与 `relative_mse` 真实回归
 - 阶段 E 样本级中间态投影诊断与可视化产物导出
 - 阶段 E 输入归一化对照（`none` / `zscore_train`）与阈值模板收口
+- 阶段 F 完整物理约束族接入与真实库对照收口
 
 当前默认判断：
 
-- `阶段 E 已完成（可进入阶段 F）`
-- `阶段 F / G 未启动`
+- `阶段 F 已完成（可进入阶段 G）`
+- `阶段 G 未启动`
 
-阶段 E 默认参考：
+阶段 E/F 默认参考：
 
 - `docs/planning/coding-roadmap.md`
 - `docs/planning/stage-e-closure-2026-04-21.md`
+- `docs/planning/stage-f-closure-2026-04-22.md`
 - `docs/models/stage-e-prototype-design.md`
 - `docs/models/stage-e-reference-repos.md`
 
@@ -178,11 +183,11 @@
 - 继续研究主线时，默认先看 `docs/planning/coding-roadmap.md`
 - 需要规划“单轮会话如何收敛”时，默认同步参考 `docs/planning/iteration-playbook.md`
 - 阶段 E 已收口，默认冻结阶段 E 基线（仅修复缺陷，不再扩展范围）
-- 阶段 F 当前默认优先：
-  - 在阶段 E 基线上接入最小物理一致性约束项
-  - 保持与阶段 E 同一对照脚手架，补充 `E baseline` vs `E+F(min)` 对比
+- 阶段 F 已收口，默认冻结阶段 F 基线（仅修复缺陷，不再扩展范围）
+- 阶段 G 当前默认优先：
+  - 在阶段 F 对齐潜态基础上实现最小因果掩码跨模态融合
+  - 保持与阶段 E/F 同一对照脚手架，补充 `F baseline` vs `F+G(min)` 对比
   - 继续沿用阈值模板与报告模板，确保阶段切换可追溯
-- 因果融合继续后置到阶段 G
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
 

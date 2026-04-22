@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E 已完成（可进入阶段 F）`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F 已完成（可进入阶段 G）`
 
 更具体地说：
 
@@ -41,6 +41,8 @@
 - 已完成阶段 E 最小训练闭环、`relative_mse` 真实回归与样本级诊断产物导出
 - 已完成阶段 E 收口：`none / zscore_train` 对照实跑、阈值模板判定与 checkpoint 导出
 - 阶段 E 收口事实统一沉淀于 `docs/planning/stage-e-closure-2026-04-21.md`
+- 已完成阶段 F 完整物理约束族：RealBus 字段语义映射、组件级 physics breakdown、`E baseline` vs `E+F(full)` 真实对比实跑
+- 阶段 F 收口事实统一沉淀于 `docs/planning/stage-f-closure-2026-04-22.md`
 
 ## 4. 阶段拆解
 
@@ -305,7 +307,7 @@
 
 状态：
 
-- 进行中（`F(min constraints)` 已接入代码路径，待完成真实对比实跑收口）
+- 已完成（收口完成）
 
 具体任务：
 
@@ -314,17 +316,21 @@
 3. 接入训练目标
 4. 做约束前后对比实验
 
-当前实现进展（2026-04-21）：
+当前实现进展（2026-04-22）：
 
 - 已在 Stage E objective 中接入可开关的 Stage F 最小物理约束入口（默认关闭，不影响 E baseline）
 - 已支持 `feature_first_with_latent_fallback / feature_only / latent_only` 三种约束模式
 - 已接入飞机侧最小物理残差约束与生理侧平滑/包络约束
 - 已在 preview pipeline / script / report 中接入 physics 指标与可视化导出
-- 已补充对应单元测试；下一步是 `E baseline` vs `E+F(min)` 真实实跑与主报告收口
+- 已扩展为完整物理约束族：飞机侧语义残差/平滑/包络/潜态 fallback，生理侧 EEG 平滑/对称通道/`spo2` 突变/包络/潜态 fallback
+- 已接入 MySQL RealBus 字段语义映射，当前真实收口运行加载字段映射 `96` 个
+- 已完成 `E baseline` vs `E+F(full)` 真实实跑，默认阈值模板均为 `PASS`
+- 已补充对应单元测试、pipeline 测试、真实报告、诊断产物与 checkpoint
 
 退出条件：
 
 - 能量化说明约束是否改善稳定性或解释性
+  当前状态：已满足。阶段 F 报告中 `E+F(full)` 的 test physics total 为 `1.539611`，physics component 非零且阈值 verdict 为 `PASS`。
 
 ### 阶段 G：因果融合模型原型
 
@@ -406,6 +412,8 @@
 - Stage E 输入归一化模式（`none / zscore_train`）
 - Stage E 样本级诊断阈值评估与收口对照报告
 - Stage E 自动 checkpoint 导出
+- Stage F 完整物理约束族、组件级 physics breakdown、MySQL RealBus 字段语义映射
+- Stage F `E baseline` vs `E+F(full)` 收口对照报告、图表、JSON/CSV 诊断和 checkpoint
 
 对应代码：
 
@@ -416,18 +424,18 @@
 
 ## 6. 当前未完成但最该做的事
 
-阶段 E 已完成收口，后续优先级重新收敛为阶段 F：
+阶段 F 已完成收口，后续优先级重新收敛为阶段 G：
 
 按优先级排序：
 
-1. 在当前阶段 E 基线上接入最小物理一致性约束项（先定义最小接口，不做全量约束族）
-2. 建立 `E baseline` vs `E+F(min constraints)` 对比实验与报告模板
-3. 在阶段 F 沿用阶段 E 的阈值与证据模板，确保阶段切换可追溯
+1. 在阶段 F 对齐潜态基础上实现最小因果掩码跨模态融合
+2. 建立 `F baseline` vs `F+G(min)` 对比实验与报告模板
+3. 沿用阶段 E/F 的阈值与证据模板，确保阶段切换可追溯
 
 ## 7. 当前不该提前做的事
 
 1. 提前写完整训练框架
-2. 在阶段 F 未完成前提前写阶段 G 全量因果融合
+2. 在阶段 G 最小闭环前提前写全量因果融合
 3. 提前写大而全特征工程
 4. 提前设计最终服务化接口
 5. 跳过对比实验直接宣称约束有效
