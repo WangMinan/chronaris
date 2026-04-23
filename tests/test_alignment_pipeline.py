@@ -15,8 +15,16 @@ if ENABLE_TORCH_RUNTIME_TESTS:
     if str(SRC) not in sys.path:
         sys.path.insert(0, str(SRC))
 
+    import torch
+
     from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
     from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig, ReferenceGridConfig
+    from chronaris.models.fusion import (
+        CausalFusionTensorInput,
+        CausalMaskedCrossModalFusion,
+        build_causal_attention_mask,
+    )
+    from chronaris.pipelines.causal_fusion import StageGCausalFusionConfig, run_stage_g_causal_fusion
     from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
     from chronaris.schema.models import StreamKind
 
@@ -235,6 +243,78 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertIn("vehicle_semantic", result.test_metrics.physics_components)
             self.assertIn("physiology_pairwise", result.test_metrics.physics_components)
             self.assertGreaterEqual(result.test_metrics.physics_total, 0.0)
+
+        def test_stage_g_causal_mask_blocks_future_vehicle_states(self) -> None:
+            physiology_offsets = torch.tensor([[0.0, 1.0, 2.0]], dtype=torch.float32)
+            vehicle_offsets = torch.tensor([[0.0, 0.5, 1.5]], dtype=torch.float32)
+
+            mask = build_causal_attention_mask(physiology_offsets, vehicle_offsets)
+
+            self.assertEqual(mask.tolist(), [[[True, False, False], [True, True, False], [True, True, True]]])
+
+            model = CausalMaskedCrossModalFusion()
+            output = model(
+                CausalFusionTensorInput(
+                    physiology_states=torch.tensor(
+                        [[[1.0, 0.0], [0.0, 1.0], [1.0, 1.0]]],
+                        dtype=torch.float32,
+                    ),
+                    vehicle_states=torch.tensor(
+                        [[[1.0, 0.0], [0.0, 1.0], [1.0, 1.0]]],
+                        dtype=torch.float32,
+                    ),
+                    physiology_offsets_s=physiology_offsets,
+                    vehicle_offsets_s=vehicle_offsets,
+                )
+            )
+
+            self.assertEqual(tuple(output.fused_states.shape), (1, 3, 6))
+            self.assertAlmostEqual(float(output.attention_weights[0, 0, 1]), 0.0, places=6)
+            self.assertAlmostEqual(float(output.attention_weights[0, 0, 2]), 0.0, places=6)
+            self.assertAlmostEqual(float(output.attention_weights[0, 1, 2]), 0.0, places=6)
+            self.assertGreater(float(output.vehicle_event_scores[0, 2]), 0.0)
+
+        def test_stage_g_pipeline_exports_causal_fusion_summary(self) -> None:
+            samples = tuple(_sample(index) for index in range(25))
+            pipeline = AlignmentPreviewPipeline(
+                config=AlignmentPreviewConfig(
+                    prototype_config=AlignmentPrototypeConfig(
+                        hidden_dim=8,
+                        embedding_dim=6,
+                        encoder_hidden_dim=10,
+                        decoder_hidden_dim=10,
+                        dynamics_hidden_dim=12,
+                        projection_dim=4,
+                        ode_method="euler",
+                    ),
+                    split_config=ChronologicalSplitConfig(),
+                    reference_grid_config=ReferenceGridConfig(point_count=4),
+                    epoch_count=1,
+                    batch_size=4,
+                    learning_rate=1e-3,
+                    device="cpu",
+                    input_normalization_mode="zscore_train",
+                    enable_physics_constraints=True,
+                    physics_constraint_family="full",
+                )
+            )
+
+            result = pipeline.run(samples)
+            self.assertIsNotNone(result.intermediate_export)
+            assert result.intermediate_export is not None
+
+            fusion_result = run_stage_g_causal_fusion(
+                result.intermediate_export,
+                config=StageGCausalFusionConfig(state_source="hidden"),
+            )
+
+            self.assertEqual(fusion_result.sample_count, 3)
+            self.assertEqual(fusion_result.reference_point_count, 4)
+            self.assertEqual(fusion_result.state_dim, 8)
+            self.assertEqual(fusion_result.fused_dim, 24)
+            self.assertGreaterEqual(fusion_result.mean_max_attention, 0.0)
+            self.assertLessEqual(fusion_result.mean_attention_entropy, 1.0)
+            self.assertGreaterEqual(fusion_result.samples[0].top_contribution_score, 0.0)
 else:
     class AlignmentPreviewPipelineRuntimeDisabledTest(unittest.TestCase):
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")

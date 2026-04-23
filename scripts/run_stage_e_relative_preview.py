@@ -42,6 +42,11 @@ from chronaris.features.experiment_input import E0InputConfig
 from chronaris.models.alignment import AlignmentPrototypeConfig, ReferenceGridConfig
 from chronaris.pipelines.alignment_experiment import AlignmentExperimentPipeline
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
+from chronaris.pipelines.causal_fusion import (
+    StageGCausalFusionConfig,
+    render_stage_g_causal_fusion_markdown,
+    run_stage_g_causal_fusion,
+)
 from chronaris.pipelines.e0_preview import E0PreviewPipeline
 from chronaris.schema.models import SortieLocator
 
@@ -479,6 +484,88 @@ def _write_projection_diagnostics_artifacts(
     }
 
 
+def _write_stage_g_causal_fusion_artifacts(
+    *,
+    report_path: Path,
+    fusion_result,
+) -> dict[str, str]:
+    assets_dir = report_path.parent / "assets" / report_path.stem
+    assets_dir.mkdir(parents=True, exist_ok=True)
+
+    json_path = assets_dir / "causal_fusion_summary.json"
+    json_path.write_text(
+        json.dumps(fusion_result.to_dict(), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    csv_path = assets_dir / "causal_fusion_samples.csv"
+    with csv_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(
+            [
+                "sample_id",
+                "reference_point_count",
+                "state_dim",
+                "fused_dim",
+                "mean_attention_entropy",
+                "mean_max_attention",
+                "mean_causal_option_count",
+                "top_event_offset_s",
+                "top_event_score",
+                "top_contribution_offset_s",
+                "top_contribution_score",
+            ]
+        )
+        for sample in fusion_result.samples:
+            writer.writerow(
+                [
+                    sample.sample_id,
+                    sample.reference_point_count,
+                    sample.state_dim,
+                    sample.fused_dim,
+                    sample.mean_attention_entropy,
+                    sample.mean_max_attention,
+                    sample.mean_causal_option_count,
+                    sample.top_event_offset_s,
+                    sample.top_event_score,
+                    sample.top_contribution_offset_s,
+                    sample.top_contribution_score,
+                ]
+            )
+
+    artifacts = {
+        "causal_fusion_summary_json": str(json_path),
+        "causal_fusion_samples_csv": str(csv_path),
+    }
+    if fusion_result.samples:
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+
+        first_sample = fusion_result.samples[0]
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+        heatmap = ax.imshow(
+            first_sample.attention_weights,
+            aspect="auto",
+            origin="lower",
+            vmin=0.0,
+            vmax=1.0,
+            cmap="viridis",
+        )
+        ax.set_title("Stage G Causal Attention Heatmap")
+        ax.set_xlabel("Vehicle reference index")
+        ax.set_ylabel("Physiology reference index")
+        fig.colorbar(heatmap, ax=ax, label="attention weight")
+        heatmap_path = assets_dir / "causal_attention_heatmap.png"
+        fig.tight_layout()
+        fig.savefig(heatmap_path, dpi=160)
+        plt.close(fig)
+        artifacts["causal_attention_heatmap"] = str(heatmap_path)
+
+    return artifacts
+
+
 def _state_dict_to_cpu(model: torch.nn.Module) -> dict[str, torch.Tensor]:
     state = model.state_dict()
     cpu_state: dict[str, torch.Tensor] = {}
@@ -499,6 +586,7 @@ def _write_model_checkpoint(
     resolved_device: str,
     args: argparse.Namespace,
     enable_physics_constraints: bool,
+    enable_causal_fusion: bool,
     split: dict[str, int],
     final_train: dict[str, object],
     final_validation: dict[str, object],
@@ -544,6 +632,11 @@ def _write_model_checkpoint(
             "reference_point_count": args.reference_point_count,
             "intermediate_partition": args.intermediate_partition,
             "intermediate_sample_limit": args.intermediate_sample_limit,
+            "enable_causal_fusion": enable_causal_fusion,
+            "causal_fusion_state_source": args.causal_fusion_state_source,
+            "causal_fusion_attention_temperature": args.causal_fusion_attention_temperature,
+            "causal_fusion_event_bias_weight": args.causal_fusion_event_bias_weight,
+            "causal_fusion_epsilon_s": args.causal_fusion_epsilon_s,
         },
         "split": split,
         "final_metrics": {
@@ -631,6 +724,30 @@ def _render_physics_diagnostics_markdown(
     if metadata_error:
         lines.extend(["### Metadata Warning", "", f"- `{metadata_error}`", ""])
     return "\n".join(lines)
+
+
+def _render_stage_g_artifacts_markdown(stage_g_artifacts: dict[str, str], *, report_path: Path) -> str:
+    if not stage_g_artifacts:
+        return ""
+    lines = [
+        "### Stage G Artifacts",
+        "",
+        f"- summary json: `{stage_g_artifacts['causal_fusion_summary_json']}`",
+        f"- samples csv: `{stage_g_artifacts['causal_fusion_samples_csv']}`",
+        "",
+    ]
+    heatmap_path = stage_g_artifacts.get("causal_attention_heatmap")
+    if heatmap_path:
+        relative_path = Path(heatmap_path).relative_to(report_path.parent)
+        lines.extend(
+            [
+                "#### Causal Attention Heatmap",
+                "",
+                f"![Causal Attention Heatmap]({relative_path.as_posix()})",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip()
 
 
 def _with_mode_suffix(report_path: str, mode: str) -> str:
@@ -778,11 +895,81 @@ def _render_physics_comparison_markdown(
     ).rstrip() + "\n"
 
 
+def _render_causal_fusion_comparison_markdown(
+    *,
+    baseline_summary: dict[str, object],
+    fusion_summary: dict[str, object],
+) -> str:
+    baseline_threshold = baseline_summary["threshold_evaluation"]["verdict"]
+    fusion_threshold = fusion_summary["threshold_evaluation"]["verdict"]
+    fusion_result = fusion_summary["causal_fusion"] or {}
+    fusion_artifacts = fusion_summary["causal_fusion_artifacts"] or {}
+    return "\n".join(
+        [
+            "# Stage G Minimal Causal Fusion Comparison",
+            "",
+            f"- baseline: `F baseline ({baseline_summary['physics_config']['family']})`",
+            "- candidate: `F+G(min)`",
+            f"- fusion state source: `{fusion_result.get('config', {}).get('state_source', '(missing)')}`",
+            f"- sample count: `{baseline_summary['sample_summary']['sample_count']}`",
+            (
+                f"- split: train `{baseline_summary['split']['train']}`, "
+                f"validation `{baseline_summary['split']['validation']}`, "
+                f"test `{baseline_summary['split']['test']}`"
+            ),
+            f"- vehicle metadata status: `{fusion_summary['vehicle_field_metadata']['status']}`",
+            f"- vehicle metadata fields: `{fusion_summary['vehicle_field_metadata']['field_count']}`",
+            "",
+            "| metric | F baseline | F+G(min) |",
+            "| --- | ---: | ---: |",
+            f"| final train total | {baseline_summary['final_train']['total']:.6f} | {fusion_summary['final_train']['total']:.6f} |",
+            f"| final validation total | {baseline_summary['final_validation']['total']:.6f} | {fusion_summary['final_validation']['total']:.6f} |",
+            f"| test total | {baseline_summary['test']['total']:.6f} | {fusion_summary['test']['total']:.6f} |",
+            f"| test physics total | {baseline_summary['test']['physics_total']:.6f} | {fusion_summary['test']['physics_total']:.6f} |",
+            f"| threshold verdict | {baseline_threshold} | {fusion_threshold} |",
+            "",
+            "## Stage G Attention Summary",
+            "",
+            "| metric | value |",
+            "| --- | ---: |",
+            f"| exported fusion samples | {fusion_result.get('sample_count', 0)} |",
+            f"| reference point count | {fusion_result.get('reference_point_count', 0)} |",
+            f"| state dim | {fusion_result.get('state_dim', 0)} |",
+            f"| fused dim | {fusion_result.get('fused_dim', 0)} |",
+            f"| mean attention entropy | {fusion_result.get('mean_attention_entropy', 0.0):.6f} |",
+            f"| mean max attention | {fusion_result.get('mean_max_attention', 0.0):.6f} |",
+            f"| mean causal option count | {fusion_result.get('mean_causal_option_count', 0.0):.6f} |",
+            f"| mean top event score | {fusion_result.get('mean_top_event_score', 0.0):.6f} |",
+            f"| mean top contribution score | {fusion_result.get('mean_top_contribution_score', 0.0):.6f} |",
+            "",
+            "## Decision",
+            "",
+            (
+                f"- Stage G minimal candidate verdict: `{fusion_threshold}` "
+                f"(F baseline `{baseline_threshold}`)"
+            ),
+            "- Stage G is considered active when causal fusion exports non-empty attention and contribution artifacts",
+            "",
+            "## Reports",
+            "",
+            f"- F baseline report: `{baseline_summary['report_path']}`",
+            f"- F+G(min) report: `{fusion_summary['report_path']}`",
+            "",
+            "## Diagnostic Artifacts",
+            "",
+            f"- fusion summary json: `{fusion_artifacts.get('causal_fusion_summary_json', '(missing)')}`",
+            f"- fusion samples csv: `{fusion_artifacts.get('causal_fusion_samples_csv', '(missing)')}`",
+            "",
+        ]
+    ).rstrip() + "\n"
+
+
 def _run_once(
     args: argparse.Namespace,
     *,
     normalization_mode: str,
     enable_physics_constraints: bool | None = None,
+    enable_causal_fusion: bool | None = None,
     report_path_override: str | None = None,
 ) -> dict[str, object]:
     if args.seed is not None:
@@ -794,6 +981,9 @@ def _run_once(
     settings = _resolve_influx_settings()
     resolved_enable_physics = (
         args.enable_physics_constraints if enable_physics_constraints is None else enable_physics_constraints
+    )
+    resolved_enable_causal_fusion = (
+        args.enable_causal_fusion if enable_causal_fusion is None else enable_causal_fusion
     )
     vehicle_field_labels, vehicle_metadata_summary = _resolve_vehicle_field_labels(args, sortie_id)
     loader = build_overlap_preview_sortie_loader(
@@ -894,6 +1084,32 @@ def _run_once(
         threshold_config=threshold_config,
         threshold_evaluation=threshold_evaluation,
     )
+    stage_g_result = None
+    stage_g_markdown = ""
+    stage_g_artifacts: dict[str, str] = {}
+    if resolved_enable_causal_fusion:
+        if result.preview_result.intermediate_export is None:
+            raise RuntimeError("Stage G causal fusion requires intermediate state export.")
+        stage_g_result = run_stage_g_causal_fusion(
+            result.preview_result.intermediate_export,
+            config=StageGCausalFusionConfig(
+                state_source=args.causal_fusion_state_source,
+                attention_temperature=args.causal_fusion_attention_temperature,
+                event_bias_weight=args.causal_fusion_event_bias_weight,
+                causal_epsilon_s=args.causal_fusion_epsilon_s,
+            ),
+        )
+        stage_g_artifacts = _write_stage_g_causal_fusion_artifacts(
+            report_path=report_path,
+            fusion_result=stage_g_result,
+        )
+        stage_g_markdown = "\n".join(
+            [
+                render_stage_g_causal_fusion_markdown(stage_g_result).rstrip(),
+                "",
+                _render_stage_g_artifacts_markdown(stage_g_artifacts, report_path=report_path),
+            ]
+        ).rstrip()
     visual_artifacts = _render_visual_artifacts(
         report_path=report_path,
         experiment_result=result,
@@ -915,6 +1131,8 @@ def _run_once(
             result.report_markdown.rstrip(),
             "",
             physics_diagnostics_markdown.rstrip(),
+            "",
+            stage_g_markdown,
             "",
             diagnostics_markdown.rstrip(),
             "",
@@ -943,6 +1161,7 @@ def _run_once(
         resolved_device=resolved_device,
         args=args,
         enable_physics_constraints=resolved_enable_physics,
+        enable_causal_fusion=resolved_enable_causal_fusion,
         split=split_summary,
         final_train=train_final,
         final_validation=validation_final,
@@ -973,6 +1192,8 @@ def _run_once(
         "diagnostic_artifacts": diagnostics_artifacts,
         "visual_artifacts": visual_artifacts,
         "checkpoint_artifacts": checkpoint_artifacts,
+        "causal_fusion": None if stage_g_result is None else stage_g_result.to_dict(),
+        "causal_fusion_artifacts": stage_g_artifacts,
         "input_normalization_mode": normalization_mode,
         "physics_config": {
             "enabled": resolved_enable_physics,
@@ -989,17 +1210,51 @@ def _run_once(
 
 
 def run(args: argparse.Namespace) -> dict[str, object]:
+    if args.compare_with_causal_fusion_baseline:
+        baseline_summary = _run_once(
+            args,
+            normalization_mode=args.input_normalization_mode,
+            enable_physics_constraints=True,
+            enable_causal_fusion=False,
+            report_path_override=_with_mode_suffix(args.report_path, "stage-f-baseline"),
+        )
+        fusion_summary = _run_once(
+            args,
+            normalization_mode=args.input_normalization_mode,
+            enable_physics_constraints=True,
+            enable_causal_fusion=True,
+            report_path_override=_with_mode_suffix(args.report_path, "stage-g-min"),
+        )
+        comparison_report_path = Path(args.report_path)
+        if not comparison_report_path.is_absolute():
+            comparison_report_path = REPO_ROOT / comparison_report_path
+        comparison_report_path.parent.mkdir(parents=True, exist_ok=True)
+        comparison_report_path.write_text(
+            _render_causal_fusion_comparison_markdown(
+                baseline_summary=baseline_summary,
+                fusion_summary=fusion_summary,
+            ),
+            encoding="utf-8",
+        )
+        return {
+            "report_path": str(comparison_report_path),
+            "baseline": baseline_summary,
+            "fusion": fusion_summary,
+        }
+
     if args.compare_with_physics_baseline:
         baseline_summary = _run_once(
             args,
             normalization_mode=args.input_normalization_mode,
             enable_physics_constraints=False,
+            enable_causal_fusion=False,
             report_path_override=_with_mode_suffix(args.report_path, "e-baseline"),
         )
         physics_summary = _run_once(
             args,
             normalization_mode=args.input_normalization_mode,
             enable_physics_constraints=True,
+            enable_causal_fusion=False,
             report_path_override=_with_mode_suffix(args.report_path, f"stage-f-{args.physics_constraint_family}"),
         )
         comparison_report_path = Path(args.report_path)
@@ -1114,6 +1369,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--physics-huber-delta", type=float, default=1.0)
     parser.add_argument("--vehicle-envelope-quantile", type=float, default=0.95)
     parser.add_argument("--physiology-envelope-quantile", type=float, default=0.95)
+    parser.add_argument("--enable-causal-fusion", action="store_true")
+    parser.add_argument("--causal-fusion-state-source", choices=("hidden", "projection"), default="hidden")
+    parser.add_argument("--causal-fusion-attention-temperature", type=float, default=1.0)
+    parser.add_argument("--causal-fusion-event-bias-weight", type=float, default=0.25)
+    parser.add_argument("--causal-fusion-epsilon-s", type=float, default=1e-6)
     parser.add_argument("--intermediate-sample-limit", type=int, default=3)
     parser.add_argument("--intermediate-partition", choices=("train", "validation", "test"), default="test")
     parser.add_argument("--diagnostic-max-samples", type=int, default=10)
@@ -1127,6 +1387,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--threshold-max-l2-gap-cv", type=float, default=0.25)
     parser.add_argument("--compare-with-zscore-train", action="store_true")
     parser.add_argument("--compare-with-physics-baseline", action="store_true")
+    parser.add_argument("--compare-with-causal-fusion-baseline", action="store_true")
     parser.add_argument("--report-path", default=default_report)
     return parser
 
