@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-04-21
+更新时间：2026-04-22
 
 ## 1. 目的
 
@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F 已完成（可进入阶段 G）`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成（可进入阶段 H）`
 
 更具体地说：
 
@@ -43,6 +43,8 @@
 - 阶段 E 收口事实统一沉淀于 `docs/planning/stage-e-closure-2026-04-21.md`
 - 已完成阶段 F 完整物理约束族：RealBus 字段语义映射、组件级 physics breakdown、`E baseline` vs `E+F(full)` 真实对比实跑
 - 阶段 F 收口事实统一沉淀于 `docs/planning/stage-f-closure-2026-04-22.md`
+- 已完成阶段 G 最小因果融合原型：`F baseline` vs `F+G(min)` 真实对比实跑、非对称因果注意力诊断与事件贡献导出
+- 阶段 G 收口事实统一沉淀于 `docs/planning/stage-g-closure-2026-04-22.md`
 
 ## 4. 阶段拆解
 
@@ -340,7 +342,7 @@
 
 状态：
 
-- 未开始
+- 已完成（最小原型收口）
 
 具体任务：
 
@@ -349,10 +351,19 @@
 3. 实现非对称交叉注意力
 4. 输出融合表示与中间态解释接口
 
+当前实现进展（2026-04-22）：
+
+- 已在 `src/chronaris/models/fusion` 实现 Stage G 最小非对称因果融合模块。
+- 已按选题报告中的“当前生理状态作为 Query、历史航电事件作为 Key/Value、非对称因果掩码切断逆向信息流”约束实现单向融合。
+- 已在 `src/chronaris/pipelines/causal_fusion.py` 实现从阶段 F 对齐中间态到融合摘要、注意力权重、事件贡献的导出。
+- 已扩展单架次脚本，支持 `F baseline` vs `F+G(min)` 对比报告与 `causal_fusion_summary.json` / `causal_fusion_samples.csv` / `causal_attention_heatmap.png`。
+- 已在真实单架次 overlap-focused preview 上完成最小融合闭环，默认阈值模板为 `PASS`。
+
 退出条件：
 
 - 能完成一次最小融合实验
 - 能导出关键注意力或事件贡献信息
+  当前状态：已满足。阶段 G 报告中 `F+G(min)` 导出 `3` 个 test 样本、`16` 个参考点、`96` 维融合表示，平均 causal option count 为 `8.500000`。
 
 ### 阶段 H：标准化特征导出
 
@@ -414,6 +425,7 @@
 - Stage E 自动 checkpoint 导出
 - Stage F 完整物理约束族、组件级 physics breakdown、MySQL RealBus 字段语义映射
 - Stage F `E baseline` vs `E+F(full)` 收口对照报告、图表、JSON/CSV 诊断和 checkpoint
+- Stage G 最小非对称因果融合、事件贡献摘要、注意力热力图与 `F baseline` vs `F+G(min)` 收口对照报告
 
 对应代码：
 
@@ -424,18 +436,19 @@
 
 ## 6. 当前未完成但最该做的事
 
-阶段 F 已完成收口，后续优先级重新收敛为阶段 G：
+阶段 G(min) 已完成收口，后续优先级重新收敛为阶段 H 与后续验证准备：
 
 按优先级排序：
 
-1. 在阶段 F 对齐潜态基础上实现最小因果掩码跨模态融合
-2. 建立 `F baseline` vs `F+G(min)` 对比实验与报告模板
-3. 沿用阶段 E/F 的阈值与证据模板，确保阶段切换可追溯
+1. 定义阶段 H 标准化融合特征矩阵格式与中间态落盘格式
+2. 将 Stage G 的融合表示、注意力权重和事件贡献整理为可复用 feature export
+3. 做轻量多架次可用性盘点，为后续阶段 I 对比/消融实验准备 manifest
+4. 明确最小消融矩阵：`E`、`E+F(full)`、`E+F(full)+G(min)`、`E+G(no physics)`、`F+G(no causal mask)`
 
 ## 7. 当前不该提前做的事
 
 1. 提前写完整训练框架
-2. 在阶段 G 最小闭环前提前写全量因果融合
+2. 在阶段 H 特征格式固化前提前写完整下游任务训练框架
 3. 提前写大而全特征工程
 4. 提前设计最终服务化接口
 5. 跳过对比实验直接宣称约束有效
