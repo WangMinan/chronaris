@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成（可进入阶段 H）`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已启动（v1 双架次导出已验证，未收口）`
 
 更具体地说：
 
@@ -373,14 +373,38 @@
 
 状态：
 
-- 未开始
+- 已启动（Stage H v1 已实跑，未收口）
+
+当前前置事实（2026-04-25）：
+
+- 已完成第二个真实架次 `20251002_单01_ACT-8_翼云_J16_12#01` 的可用性盘点预验证，详见 `docs/reports/sortie-availability-preview-20251002-act8-j16-12.md`
+- 该架次 MySQL 已确认 `collect_task_id=2100450`、`up_pilot_id=10035`、`down_pilot_id=10033`，且 `source_sortie_id` 为空，后续多架次入口需要支持 `collect_task + pilot_ids` 回退
+- 该架次 Influx 生理侧已确认 `11` 个 measurement，飞机侧已确认 `BUS6000019110021` 到 `BUS6000019110026` 六个 measurement
+- 这说明阶段 H 的 manifest 与 feature export 不能继续沿用阶段 E/F/G 单架次默认的固定 `pilot_id` / 固定 BUS measurement 假设
+
+当前实现进展（2026-04-26）：
+
+- 已在 `src/chronaris/access/stage_h_profile.py` 固化 Stage H profile resolver，正式支持：
+  - `source_sortie_id` 与 `collect_task + up/down_pilot_id` 双路径 pilot 解析
+  - sortie 级 physiology availability 探测
+  - sortie 级完整 BUS family 解析
+- 已在 `src/chronaris/pipelines/stage_h_export.py` 实现 run/sortie/view 三级 manifest、`feature_bundle.npz`、`intermediate_summary.json`、`projection_diagnostics_summary.json`、`causal_fusion_summary.json` 与 `window_manifest.jsonl` 导出
+- 已在真实两条 sortie 上完成 Stage H v1 导出：
+  - `20251005_四01_ACT-4_云_J20_22#01` 导出 `1` 个 pilot view
+  - `20251002_单01_ACT-8_翼云_J16_12#01` 导出 `2` 个 pilot view
+  - 主报告：`docs/reports/stage-h-export-v1-2026-04-26.md`
+  - 机器资产根目录：`artifacts/stage_h/20260426T072340Z-stage-h-v1/`
+- 已同步实现 partial-data v1 标准入口：
+  - `configs/partial-data/stage-h-seed-v1.jsonl`
+  - `src/chronaris/pipelines/partial_data.py`
+  - 当前 `20251110_单01_ACT-2_涛_J20_26#01` 已进入 repo 内标准 manifest，但仍是 `manifest_only`
 
 具体任务：
 
-1. 定义特征矩阵格式
-2. 定义中间态落盘格式
-3. 定义版本号与配置记录
-4. 实现导出 pipeline
+1. 固化 Stage H v1 导出资产的下游消费接口与版本约定
+2. 补齐 partial-data 的真实 vehicle-only reader / builder，使 `manifest_only` 资产可进入单流样本导出
+3. 继续扩展轻量多架次 manifest 盘点，但不提前宣称多架次训练条件已齐备
+4. 在上述基础上评估阶段 H 收口 gate，而不是仅凭单次脚本成功就直接关阶段
 
 退出条件：
 
@@ -436,13 +460,13 @@
 
 ## 6. 当前未完成但最该做的事
 
-阶段 G(min) 已完成收口，后续优先级重新收敛为阶段 H 与后续验证准备：
+阶段 G(min) 已完成收口，阶段 H 已启动但未收口，后续优先级重新收敛为阶段 H 剩余工作与后续验证准备：
 
 按优先级排序：
 
-1. 定义阶段 H 标准化融合特征矩阵格式与中间态落盘格式
-2. 将 Stage G 的融合表示、注意力权重和事件贡献整理为可复用 feature export
-3. 做轻量多架次可用性盘点，为后续阶段 I 对比/消融实验准备 manifest
+1. 为 `artifacts/stage_h/20260426T072340Z-stage-h-v1/` 补齐稳定的下游读取与复用接口
+2. 把 `20251110_单01_ACT-2_涛_J20_26#01` 从 partial manifest 推进到真实 vehicle-only builder
+3. 继续做轻量多架次可用性盘点，为后续阶段 I 对比/消融实验准备 manifest
 4. 明确最小消融矩阵：`E`、`E+F(full)`、`E+F(full)+G(min)`、`E+G(no physics)`、`F+G(no causal mask)`
 
 ## 7. 当前不该提前做的事

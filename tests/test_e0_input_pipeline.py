@@ -187,3 +187,81 @@ class ExperimentInputTest(unittest.TestCase):
         self.assertEqual(samples[0].physiology.feature_names, ("eeg.af3",))
         self.assertEqual(samples[0].vehicle.feature_names, ("BUS6000019110020.code1002",))
         self.assertIn("BUS6000019110020.code1001", samples[0].vehicle.dropped_fields)
+
+    def test_build_e0_experiment_samples_uses_stable_feature_space_across_windows(self) -> None:
+        aligned_bundle = AlignedSortieBundle(
+            locator=SortieLocator(sortie_id="sortie-002"),
+            metadata=SortieMetadata(sortie_id="sortie-002"),
+            reference_time=_utc(2025, 10, 5, 1, 35, 0),
+        )
+        result = DatasetBuildResult(
+            aligned_bundle=aligned_bundle,
+            windows=(
+                SampleWindow(
+                    sample_id="sortie-002:0000",
+                    sortie_id="sortie-002",
+                    window_index=0,
+                    start_offset_ms=0,
+                    end_offset_ms=5000,
+                    physiology_points=(
+                        AlignedPoint(
+                            point=RawPoint(
+                                stream_kind=StreamKind.PHYSIOLOGY,
+                                measurement="eeg",
+                                timestamp=_utc(2025, 10, 5, 1, 35, 0),
+                                values={"af3": "1.0"},
+                            ),
+                            offset_ms=0,
+                        ),
+                    ),
+                    vehicle_points=(
+                        AlignedPoint(
+                            point=RawPoint(
+                                stream_kind=StreamKind.VEHICLE,
+                                measurement="BUS001",
+                                timestamp=_utc(2025, 10, 5, 1, 35, 0),
+                                values={"speed": "200.0"},
+                            ),
+                            offset_ms=0,
+                        ),
+                    ),
+                ),
+                SampleWindow(
+                    sample_id="sortie-002:0001",
+                    sortie_id="sortie-002",
+                    window_index=1,
+                    start_offset_ms=5000,
+                    end_offset_ms=10000,
+                    physiology_points=(
+                        AlignedPoint(
+                            point=RawPoint(
+                                stream_kind=StreamKind.PHYSIOLOGY,
+                                measurement="spo2",
+                                timestamp=_utc(2025, 10, 5, 1, 35, 5),
+                                values={"spo2": "97"},
+                            ),
+                            offset_ms=5000,
+                        ),
+                    ),
+                    vehicle_points=(
+                        AlignedPoint(
+                            point=RawPoint(
+                                stream_kind=StreamKind.VEHICLE,
+                                measurement="BUS002",
+                                timestamp=_utc(2025, 10, 5, 1, 35, 5),
+                                values={"accel": "0.5"},
+                            ),
+                            offset_ms=5000,
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        samples = build_e0_experiment_samples(result)
+
+        self.assertEqual(len(samples), 2)
+        self.assertEqual(samples[0].physiology.feature_names, ("eeg.af3", "spo2.spo2"))
+        self.assertEqual(samples[1].physiology.feature_names, ("eeg.af3", "spo2.spo2"))
+        self.assertEqual(samples[0].vehicle.feature_names, ("BUS001.speed", "BUS002.accel"))
+        self.assertEqual(samples[1].vehicle.feature_names, ("BUS001.speed", "BUS002.accel"))
