@@ -89,6 +89,10 @@
   - 阶段 G 最小因果融合对照实跑（`F baseline` / `F+G(min)`）已完成，默认阈值模板评估均为 `PASS`
   - 阶段 G 收口报告：`docs/reports/alignment-preview-stage-g-min-closure-2026-04-22.md`
   - 阶段 G 已导出因果注意力热力图、事件贡献 JSON/CSV 与 `96` 维最小融合表示
+  - 阶段 H v1 双架次标准化导出已实跑：`20251005` 导出 `1` 个 view，`20251002` 导出 `2` 个 view
+  - 阶段 H v1 主报告：`docs/reports/stage-h-export-v1-2026-04-26.md`
+  - 阶段 H v1 机器资产根目录：`artifacts/stage_h/20260426T072340Z-stage-h-v1/`
+  - partial-data v1 已纳入 repo 标准入口：`configs/partial-data/stage-h-seed-v1.jsonl`
 
 ## 5. 目录与边界
 
@@ -127,7 +131,7 @@
 当前默认判断：
 
 - `阶段 G(min) 已完成（可进入阶段 H）`
-- `阶段 H 未启动`
+- `阶段 H 已启动（Stage H v1 双架次导出与 partial-data manifest 已打通，未收口）`
 
 阶段 E/F/G 默认参考：
 
@@ -178,7 +182,7 @@
 
 ## 9. 安全约束
 
-- 把数据库密码、SSH 密码、token、连接串请参考 `docs/SECRETS.md`， 该文件已经被 `.gitignore` 纳管，因此请尽管使用。但请不要把对应信息写入其他文件。
+- 数据库密码、SSH 密码、token、连接串请参考 `docs/SECRETS.md`， 该文件已经被 `.gitignore` 纳管，因此请尽管使用。但请不要把对应信息写入其他文件。
 - 不要把原始大数据复制进仓库
 - 临时验证脚本中可复用部分要及时回收进正式模块
 - 实验尽量保留可复现配置、关键指标和架次范围
@@ -191,9 +195,9 @@
 - 阶段 F 已收口，默认冻结阶段 F 基线（仅修复缺陷，不再扩展范围）
 - 阶段 G 已收口，默认冻结 G(min) 基线（仅修复缺陷，不提前扩展完整因果融合）
 - 阶段 H 当前默认优先：
-  - 定义标准化融合特征矩阵与中间态落盘格式
-  - 将 Stage G 的融合表示、注意力权重和事件贡献整理为可复用 feature export
-  - 做轻量多架次可用性盘点，为后续阶段 I 对比/消融实验准备 manifest
+  - 基于 `artifacts/stage_h/20260426T072340Z-stage-h-v1/` 固化可复用特征消费接口与下游读取约定
+  - 将 `20251110_单01_ACT-2_涛_J20_26#01` 从 manifest-only 推进到真实 vehicle-only reader / builder
+  - 在不破坏当前 frozen E/F/G(min) 导出路径的前提下，继续扩展轻量多架次 manifest 盘点
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
 

@@ -102,6 +102,17 @@ class FakeCollectTaskReader:
         )
 
 
+class FakeDualPilotFlightTaskReader:
+    def fetch_by_locator(self, locator: SortieLocator) -> FlightTaskMetadata:
+        return FlightTaskMetadata(
+            flight_task_id=6000002,
+            sortie_number=locator.sortie_id,
+            flight_date=date(2025, 10, 2),
+            up_pilot_id=10035,
+            down_pilot_id=10033,
+        )
+
+
 class FakeRealBusContextReader:
     def fetch_context(self, *, locator, flight_task_id=None, access_rule_id, analysis_id):
         return RealBusContext(
@@ -156,8 +167,22 @@ class LiveReadersTest(unittest.TestCase):
         self.assertEqual(len(runner.queries), 3)
         self.assertIn('distinct(column: "_measurement")', runner.queries[0])
         self.assertIn('r.collect_task_id == "2100448"', runner.queries[0])
+        self.assertIn('r.pilot_id == "10033"', runner.queries[0])
         self.assertIn('r._measurement == "eeg"', runner.queries[1])
         self.assertIn('r._measurement == "spo2"', runner.queries[2])
+
+    def test_physiology_reader_can_filter_multiple_pilot_ids(self) -> None:
+        runner = FakeInfluxRunner()
+        reader = PhysiologyInfluxPointReader(
+            flight_task_reader=FakeDualPilotFlightTaskReader(),
+            collect_task_reader=FakeCollectTaskReader(),
+            runner=runner,
+        )
+
+        reader.fetch_points(SortieLocator(sortie_id="20251002_单01_ACT-8_翼云_J16_12#01"))
+
+        self.assertIn('(r.pilot_id == "10035" or r.pilot_id == "10033")', runner.queries[0])
+        self.assertIn('(r.pilot_id == "10035" or r.pilot_id == "10033")', runner.queries[1])
 
     def test_physiology_reader_can_query_specific_measurements(self) -> None:
         runner = FakeInfluxRunner()
@@ -207,6 +232,7 @@ from chronaris.access.mysql_metadata import (
     MySQLCollectTaskReader,
     MySQLFlightTaskReader,
     MySQLRealBusContextReader,
+    MySQLStorageAnalysisReader,
     MySQLSortieMetadataReader,
 )
 from chronaris.schema.models import SortieLocator
@@ -262,6 +288,25 @@ class FakeRunner:
                     "col_name": "速度",
                     "parent_id": "0",
                     "is_leaf": "1",
+                },
+            )
+        if "FROM storage_data_analysis" in sql:
+            return (
+                {
+                    "id": "6000019110021",
+                    "category": "BUS",
+                    "bucket": "bus",
+                    "measurement": "BUS6000019110021",
+                    "sortie_number": "20251002_单01_ACT-8_翼云_J16_12#01",
+                    "md5_val": "md5-21",
+                },
+                {
+                    "id": "6000019110022",
+                    "category": "BUS",
+                    "bucket": "bus",
+                    "measurement": "BUS6000019110022",
+                    "sortie_number": "20251002_单01_ACT-8_翼云_J16_12#01",
+                    "md5_val": "md5-22",
                 },
             )
         return ()
@@ -353,6 +398,16 @@ class MySQLMetadataTest(unittest.TestCase):
         self.assertEqual(collect_task.collect_task_id, 2100448)
         self.assertEqual(collect_task.collect_date.isoformat(), "2025-10-05")
         self.assertEqual(collect_task.subject, "ACT-4")
+
+    def test_storage_analysis_reader_lists_all_measurements_for_sortie(self) -> None:
+        analyses = MySQLStorageAnalysisReader(FakeRunner()).list_for_sortie(
+            SortieLocator(sortie_id="20251002_单01_ACT-8_翼云_J16_12#01"),
+            category="BUS",
+        )
+
+        self.assertEqual(len(analyses), 2)
+        self.assertEqual(analyses[0].measurement, "BUS6000019110021")
+        self.assertEqual(analyses[1].measurement, "BUS6000019110022")
 
 
 # ---- merged from test_physiology_context.py ----

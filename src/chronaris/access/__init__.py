@@ -28,6 +28,7 @@ from chronaris.access.mysql_metadata import (
     MySQLCollectTaskReader,
     MySQLFlightTaskReader,
     MySQLRealBusContextReader,
+    MySQLStorageAnalysisReader,
     MySQLSortieMetadataReader,
 )
 from chronaris.access.real_bus_context import (
@@ -38,6 +39,11 @@ from chronaris.access.real_bus_context import (
     resolve_time_column_index,
 )
 from chronaris.access.settings import AppSettings, InfluxSettings, MySQLSettings
+from chronaris.access.stage_h_profile import (
+    StageHProfileResolver,
+    StageHSortieProfile,
+    StageHViewProfile,
+)
 from chronaris.access.temporal import (
     AttachedClockTime,
     attach_bus_timestamps,
@@ -66,6 +72,7 @@ __all__ = [
     "MySQLFlightTaskReader",
     "MySQLSettings",
     "MySQLRealBusContextReader",
+    "MySQLStorageAnalysisReader",
     "MySQLSortieMetadataReader",
     "OverlapPreviewSortieLoaderConfig",
     "PhysiologyInfluxPointReader",
@@ -77,6 +84,9 @@ __all__ = [
     "SQLQueryRunner",
     "StageBLiveLoaderConfig",
     "SortieLoader",
+    "StageHProfileResolver",
+    "StageHSortieProfile",
+    "StageHViewProfile",
     "VehiclePointReader",
     "attach_bus_timestamps",
     "attach_cross_day_times",
