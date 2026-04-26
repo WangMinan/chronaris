@@ -34,6 +34,7 @@ class InfluxQuerySpec:
     start: datetime
     stop: datetime
     tag_filters: Mapping[str, str] = field(default_factory=dict)
+    tag_filters_any: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     limit: int | None = None
     sort_by_time: bool = False
     time_desc: bool = False
@@ -98,6 +99,7 @@ class InfluxDistinctMeasurementReader:
         start: datetime,
         stop: datetime,
         tag_filters: Mapping[str, str] | None = None,
+        tag_filters_any: Mapping[str, tuple[str, ...]] | None = None,
     ) -> tuple[str, ...]:
         rows = self.runner.query(
             build_distinct_measurements_query(
@@ -105,6 +107,7 @@ class InfluxDistinctMeasurementReader:
                 start=start,
                 stop=stop,
                 tag_filters=tag_filters or {},
+                tag_filters_any=tag_filters_any or {},
             )
         )
         names = [row["_value"] for row in rows if row.get("_value")]
@@ -119,6 +122,21 @@ def build_flux_query(spec: InfluxQuerySpec) -> str:
         filters.append(f'r._measurement == "{_escape_flux_string(spec.measurement)}"')
     for key, value in spec.tag_filters.items():
         filters.append(f'r.{key} == "{_escape_flux_string(value)}"')
+    for key, values in spec.tag_filters_any.items():
+        normalized_values = tuple(dict.fromkeys(value for value in values if value))
+        if not normalized_values:
+            continue
+        if len(normalized_values) == 1:
+            filters.append(f'r.{key} == "{_escape_flux_string(normalized_values[0])}"')
+            continue
+        filters.append(
+            "("
+            + " or ".join(
+                f'r.{key} == "{_escape_flux_string(value)}"'
+                for value in normalized_values
+            )
+            + ")"
+        )
 
     flux = (
         f'from(bucket:"{_escape_flux_string(spec.bucket)}")'
@@ -139,6 +157,7 @@ def build_distinct_measurements_query(
     start: datetime,
     stop: datetime,
     tag_filters: Mapping[str, str] | None = None,
+    tag_filters_any: Mapping[str, tuple[str, ...]] | None = None,
 ) -> str:
     """Build a Flux query that lists distinct measurements for a scoped tag range."""
 
@@ -146,6 +165,21 @@ def build_distinct_measurements_query(
         f'r.{key} == "{_escape_flux_string(value)}"'
         for key, value in (tag_filters or {}).items()
     ]
+    for key, values in (tag_filters_any or {}).items():
+        normalized_values = tuple(dict.fromkeys(value for value in values if value))
+        if not normalized_values:
+            continue
+        if len(normalized_values) == 1:
+            filters.append(f'r.{key} == "{_escape_flux_string(normalized_values[0])}"')
+            continue
+        filters.append(
+            "("
+            + " or ".join(
+                f'r.{key} == "{_escape_flux_string(value)}"'
+                for value in normalized_values
+            )
+            + ")"
+        )
     filter_clause = ""
     if filters:
         filter_clause = f' |> filter(fn: (r) => {" and ".join(filters)})'

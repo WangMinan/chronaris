@@ -84,6 +84,7 @@ class PhysiologyInfluxPointReader:
             start=context.start_time_utc,
             stop=context.stop_time_utc,
             tag_filters={"collect_task_id": str(context.collect_task_id)},
+            tag_filters_any={"pilot_id": tuple(str(pilot_id) for pilot_id in context.pilot_ids)},
         )
 
         points: list[RawPoint] = []
@@ -97,6 +98,7 @@ class PhysiologyInfluxPointReader:
                     start=self.start_time_override_utc or context.start_time_utc,
                     stop=self.stop_time_override_utc or context.stop_time_utc,
                     tag_filters={"collect_task_id": str(context.collect_task_id)},
+                    tag_filters_any={"pilot_id": tuple(str(pilot_id) for pilot_id in context.pilot_ids)},
                     limit=self.point_limit_per_measurement,
                 ),
             )

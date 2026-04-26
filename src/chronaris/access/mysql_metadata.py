@@ -119,6 +119,29 @@ class MySQLRealBusContextReader:
 
 
 @dataclass(frozen=True, slots=True)
+class MySQLStorageAnalysisReader:
+    """Lists storage_data_analysis rows for one sortie."""
+
+    runner: SQLQueryRunner
+
+    def list_for_sortie(
+        self,
+        locator: SortieLocator,
+        *,
+        category: str | None = None,
+    ) -> tuple[StorageAnalysis, ...]:
+        return tuple(
+            _map_storage_analysis(row)
+            for row in self.runner.query(
+                _build_storage_analysis_for_sortie_query(
+                    sortie_number=locator.sortie_id,
+                    category=category,
+                )
+            )
+        )
+
+
+@dataclass(frozen=True, slots=True)
 class MySQLCollectTaskReader:
     """Reads collect_task metadata for physiology-side lookup."""
 
@@ -265,6 +288,24 @@ SELECT
 FROM storage_data_analysis
 WHERE id = {analysis_id}
 LIMIT 1
+""".strip()
+
+
+def _build_storage_analysis_for_sortie_query(*, sortie_number: str, category: str | None = None) -> str:
+    conditions = [f"sortie_number = '{_escape_sql_literal(sortie_number)}'"]
+    if category is not None:
+        conditions.append(f"category = '{_escape_sql_literal(category)}'")
+    return f"""
+SELECT
+    id,
+    category,
+    bucket,
+    measurement,
+    sortie_number,
+    md5_val
+FROM storage_data_analysis
+WHERE {' AND '.join(conditions)}
+ORDER BY measurement, id
 """.strip()
 
 

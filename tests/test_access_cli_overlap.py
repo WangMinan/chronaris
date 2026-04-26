@@ -101,6 +101,21 @@ class InfluxCliTest(unittest.TestCase):
         self.assertIn('r.sortie_number == "20251005_四01_ACT-4_云_J20_22#01"', query)
         self.assertIn("|> limit(n: 10)", query)
 
+    def test_build_flux_query_supports_multi_value_tag_filters(self) -> None:
+        query = build_flux_query(
+            InfluxQuerySpec(
+                bucket="physiological_input",
+                measurement="eeg",
+                start=datetime(2025, 10, 2, 0, 0, tzinfo=timezone.utc),
+                stop=datetime(2025, 10, 3, 0, 0, tzinfo=timezone.utc),
+                tag_filters={"collect_task_id": "2100450"},
+                tag_filters_any={"pilot_id": ("10035", "10033")},
+            )
+        )
+
+        self.assertIn('r.collect_task_id == "2100450"', query)
+        self.assertIn('(r.pilot_id == "10035" or r.pilot_id == "10033")', query)
+
     def test_parse_influx_annotated_csv_ignores_annotation_lines(self) -> None:
         rows = parse_influx_annotated_csv(RAW_INFLUX_CSV)
         self.assertEqual(len(rows), 4)
@@ -135,6 +150,18 @@ class InfluxCliTest(unittest.TestCase):
         self.assertIn('from(bucket:"physiological_input")', query)
         self.assertIn('r.collect_task_id == "2100448"', query)
         self.assertIn('distinct(column: "_measurement")', query)
+
+    def test_build_distinct_measurements_query_supports_multi_value_tag_filters(self) -> None:
+        query = build_distinct_measurements_query(
+            bucket="physiological_input",
+            start=datetime(2025, 10, 2, 0, 0, tzinfo=timezone.utc),
+            stop=datetime(2025, 10, 3, 0, 0, tzinfo=timezone.utc),
+            tag_filters={"collect_task_id": "2100450"},
+            tag_filters_any={"pilot_id": ("10035", "10033")},
+        )
+
+        self.assertIn('r.collect_task_id == "2100450"', query)
+        self.assertIn('(r.pilot_id == "10035" or r.pilot_id == "10033")', query)
 
 
 # ---- merged from test_influx_probe.py ----

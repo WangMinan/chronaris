@@ -44,3 +44,20 @@
   - 自动把图片链接追加到报告的 `Visual Artifacts` 区域
   - 自动导出模型 checkpoint 到 `docs/reports/assets/<report-stem>/alignment_model_checkpoint.pt`
   - 可选一次运行完成 `none` 与 `zscore_train` 对照（`--compare-with-zscore-train`）
+
+- `run_stage_h_export.py`
+  - 用 Stage H v1 frozen 配置批量导出当前两条真实 sortie 的 run/sortie/view 三级资产
+  - 默认导出：
+    - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
+    - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
+  - 默认写出 `artifacts/stage_h/<run_id>/` 机器资产和 `docs/reports/stage-h-export-v1-<date>.md` 主报告
+  - 自动生成 `run_manifest.json`、`sortie_manifest.json`、`view_manifest.json`
+  - 每个 view 自动导出：
+    - `feature_bundle.npz`
+    - `intermediate_summary.json`
+    - `projection_diagnostics_summary.json`
+    - `causal_fusion_summary.json`
+    - `window_manifest.jsonl`
+  - 默认启用 `zscore_train + Stage F(full) + Stage G(min)` frozen 路径
+  - 默认附带 partial-data sidecar，读取 `configs/partial-data/stage-h-seed-v1.jsonl`
+  - 可用 `--use-full-clip-scope` 改回 sortie 全 clip 范围；默认仍使用当前 preview-scale export scope

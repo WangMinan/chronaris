@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from typing import Literal
 
 import torch
@@ -59,6 +59,16 @@ class StageGCausalFusionSample:
 
 
 @dataclass(frozen=True, slots=True)
+class StageGCausalFusionTensorExport:
+    """Tensor-shaped Stage G outputs serialized as Python tuples."""
+
+    sample_ids: tuple[str, ...]
+    fused_states: tuple[tuple[tuple[float, ...], ...], ...]
+    attention_weights: tuple[tuple[tuple[float, ...], ...], ...]
+    vehicle_event_scores: tuple[tuple[float, ...], ...]
+
+
+@dataclass(frozen=True, slots=True)
 class StageGCausalFusionResult:
     """Stage G minimal causal fusion output for exported alignment intermediates."""
 
@@ -76,7 +86,88 @@ class StageGCausalFusionResult:
     samples: tuple[StageGCausalFusionSample, ...]
 
     def to_dict(self) -> dict[str, object]:
-        return asdict(self)
+        return {
+            "config": {
+                "state_source": self.config.state_source,
+                "attention_temperature": self.config.attention_temperature,
+                "event_bias_weight": self.config.event_bias_weight,
+                "causal_epsilon_s": self.config.causal_epsilon_s,
+                "normalize_states": self.config.normalize_states,
+            },
+            "partition": self.partition,
+            "sample_count": self.sample_count,
+            "reference_point_count": self.reference_point_count,
+            "state_dim": self.state_dim,
+            "fused_dim": self.fused_dim,
+            "mean_attention_entropy": self.mean_attention_entropy,
+            "mean_max_attention": self.mean_max_attention,
+            "mean_causal_option_count": self.mean_causal_option_count,
+            "mean_top_event_score": self.mean_top_event_score,
+            "mean_top_contribution_score": self.mean_top_contribution_score,
+            "samples": [
+                {
+                    "sample_id": sample.sample_id,
+                    "reference_point_count": sample.reference_point_count,
+                    "state_dim": sample.state_dim,
+                    "fused_dim": sample.fused_dim,
+                    "mean_attention_entropy": sample.mean_attention_entropy,
+                    "mean_max_attention": sample.mean_max_attention,
+                    "mean_causal_option_count": sample.mean_causal_option_count,
+                    "top_event_offset_s": sample.top_event_offset_s,
+                    "top_event_score": sample.top_event_score,
+                    "top_contribution_offset_s": sample.top_contribution_offset_s,
+                    "top_contribution_score": sample.top_contribution_score,
+                    "attention_weights": sample.attention_weights,
+                    "vehicle_event_scores": sample.vehicle_event_scores,
+                }
+                for sample in self.samples
+            ],
+        }
+
+
+def export_stage_g_causal_fusion_tensors(
+    intermediate_export: AlignmentPreviewIntermediateExport,
+    *,
+    config: StageGCausalFusionConfig | None = None,
+) -> StageGCausalFusionTensorExport:
+    """Export deterministic Stage G tensors for downstream feature packaging."""
+
+    resolved_config = config or StageGCausalFusionConfig()
+    if not intermediate_export.samples:
+        return StageGCausalFusionTensorExport(
+            sample_ids=(),
+            fused_states=(),
+            attention_weights=(),
+            vehicle_event_scores=(),
+        )
+
+    tensor_input = _build_tensor_input(intermediate_export, config=resolved_config)
+    model = CausalMaskedCrossModalFusion(
+        CausalFusionConfig(
+            attention_temperature=resolved_config.attention_temperature,
+            event_bias_weight=resolved_config.event_bias_weight,
+            causal_epsilon_s=resolved_config.causal_epsilon_s,
+            normalize_states=resolved_config.normalize_states,
+        )
+    )
+    with torch.no_grad():
+        output = model(tensor_input)
+
+    return StageGCausalFusionTensorExport(
+        sample_ids=tuple(sample.sample_id for sample in intermediate_export.samples),
+        fused_states=tuple(
+            _tensor_2d_to_tuple(output.fused_states[sample_index])
+            for sample_index in range(output.fused_states.shape[0])
+        ),
+        attention_weights=tuple(
+            _tensor_2d_to_tuple(output.attention_weights[sample_index])
+            for sample_index in range(output.attention_weights.shape[0])
+        ),
+        vehicle_event_scores=tuple(
+            _tensor_1d_to_tuple(output.vehicle_event_scores[sample_index])
+            for sample_index in range(output.vehicle_event_scores.shape[0])
+        ),
+    )
 
 
 def run_stage_g_causal_fusion(
@@ -104,6 +195,10 @@ def run_stage_g_causal_fusion(
         )
 
     tensor_input = _build_tensor_input(intermediate_export, config=resolved_config)
+    tensor_export = export_stage_g_causal_fusion_tensors(
+        intermediate_export,
+        config=resolved_config,
+    )
     model = CausalMaskedCrossModalFusion(
         CausalFusionConfig(
             attention_temperature=resolved_config.attention_temperature,
@@ -140,8 +235,8 @@ def run_stage_g_causal_fusion(
                 top_event_score=float(event_scores[top_event_index].detach().cpu()),
                 top_contribution_offset_s=float(vehicle_offsets[top_contribution_index].detach().cpu()),
                 top_contribution_score=float(sample_contributions[top_contribution_index].detach().cpu()),
-                attention_weights=_tensor_2d_to_tuple(output.attention_weights[sample_index]),
-                vehicle_event_scores=_tensor_1d_to_tuple(event_scores),
+                attention_weights=tensor_export.attention_weights[sample_index],
+                vehicle_event_scores=tensor_export.vehicle_event_scores[sample_index],
             )
         )
 

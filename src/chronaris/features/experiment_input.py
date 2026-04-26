@@ -52,10 +52,21 @@ def build_e0_experiment_samples(
 
     active_config = config or E0InputConfig()
     samples: list[E0ExperimentSample] = []
+    filtered_points_by_window = [
+        (
+            _filter_points(window.physiology_points, active_config.physiology_measurements),
+            _filter_points(window.vehicle_points, active_config.vehicle_measurements),
+        )
+        for window in result.windows
+    ]
+    physiology_feature_names, physiology_dropped_fields = _discover_numeric_features(
+        tuple(point for physiology_points, _vehicle_points in filtered_points_by_window for point in physiology_points)
+    )
+    vehicle_feature_names, vehicle_dropped_fields = _discover_numeric_features(
+        tuple(point for _physiology_points, vehicle_points in filtered_points_by_window for point in vehicle_points)
+    )
 
-    for window in result.windows:
-        physiology_points = _filter_points(window.physiology_points, active_config.physiology_measurements)
-        vehicle_points = _filter_points(window.vehicle_points, active_config.vehicle_measurements)
+    for window, (physiology_points, vehicle_points) in zip(result.windows, filtered_points_by_window):
 
         if (
             not active_config.include_windows_without_both_streams
@@ -63,8 +74,18 @@ def build_e0_experiment_samples(
         ):
             continue
 
-        physiology_matrix = build_numeric_stream_matrix(StreamKind.PHYSIOLOGY, physiology_points)
-        vehicle_matrix = build_numeric_stream_matrix(StreamKind.VEHICLE, vehicle_points)
+        physiology_matrix = build_numeric_stream_matrix(
+            StreamKind.PHYSIOLOGY,
+            physiology_points,
+            feature_names=physiology_feature_names,
+            dropped_fields=physiology_dropped_fields,
+        )
+        vehicle_matrix = build_numeric_stream_matrix(
+            StreamKind.VEHICLE,
+            vehicle_points,
+            feature_names=vehicle_feature_names,
+            dropped_fields=vehicle_dropped_fields,
+        )
         notes = []
         if not physiology_matrix.feature_names:
             notes.append("physiology stream has no numeric features after filtering")
@@ -89,6 +110,9 @@ def build_e0_experiment_samples(
 def build_numeric_stream_matrix(
     stream_kind: StreamKind,
     points: tuple[AlignedPoint, ...],
+    *,
+    feature_names: tuple[str, ...] | None = None,
+    dropped_fields: tuple[str, ...] | None = None,
 ) -> NumericStreamMatrix:
     """Convert one stream's aligned points into a numeric feature matrix."""
 
@@ -96,14 +120,15 @@ def build_numeric_stream_matrix(
         return NumericStreamMatrix(
             stream_kind=stream_kind,
             point_count=0,
-            feature_names=(),
+            feature_names=feature_names or (),
             point_offsets_ms=(),
             point_measurements=(),
             values=(),
-            dropped_fields=(),
+            dropped_fields=dropped_fields or (),
         )
 
-    feature_names, dropped_fields = _discover_numeric_features(points)
+    if feature_names is None or dropped_fields is None:
+        feature_names, dropped_fields = _discover_numeric_features(points)
     rows = tuple(_build_value_row(point, feature_names) for point in points)
 
     return NumericStreamMatrix(

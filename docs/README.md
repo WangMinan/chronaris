@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-04-21
+更新时间：2026-04-26
 
 ## 目录说明
 
@@ -27,6 +27,8 @@
 - [coding-roadmap.md](planning/coding-roadmap.md)
 - [iteration-playbook.md](planning/iteration-playbook.md)
 - [stage-e-closure-2026-04-21.md](planning/stage-e-closure-2026-04-21.md)
+- [stage-f-closure-2026-04-22.md](planning/stage-f-closure-2026-04-22.md)
+- [stage-g-closure-2026-04-22.md](planning/stage-g-closure-2026-04-22.md)
 
 ### models
 
@@ -40,6 +42,10 @@
 - [validation-overlap-preview-20251005-act4-j20-22.md](reports/validation-overlap-preview-20251005-act4-j20-22.md)
 - [e0-preview-20251005-act4-j20-22.md](reports/e0-preview-20251005-act4-j20-22.md)
 - [alignment-preview-stage-e-closure-2026-04-21.md](reports/alignment-preview-stage-e-closure-2026-04-21.md)
+- [alignment-preview-stage-f-closure-2026-04-22.md](reports/alignment-preview-stage-f-closure-2026-04-22.md)
+- [alignment-preview-stage-g-min-closure-2026-04-22.md](reports/alignment-preview-stage-g-min-closure-2026-04-22.md)
+- [sortie-availability-preview-20251002-act8-j16-12.md](reports/sortie-availability-preview-20251002-act8-j16-12.md)
+- [stage-h-export-v1-2026-04-26.md](reports/stage-h-export-v1-2026-04-26.md)
 
 ### 选题报告与基金申请书
 
