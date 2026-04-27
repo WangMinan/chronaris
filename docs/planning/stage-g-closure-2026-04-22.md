@@ -61,7 +61,7 @@
 注意：
 
 - 当前仍是单架次 overlap-focused preview 收口，不等价于多架次泛化验证。
-- 当前 G(min) 是无下游标签的最小融合与解释接口，尚未进入阶段 H 标准化特征导出和阶段 I 下游任务验证。
+- 当前 G(min) 是无下游标签的最小融合与解释接口；阶段 H v1 已在后续完成标准化特征导出入口，但阶段 I 下游任务验证尚未开始。
 - 当前 G(min) 没有宣称完成完整多头语义查询训练层；本轮只先固化与选题报告一致的单向因果计算图、历史事件 Key/Value 约束和解释产物。
 - 后续消融应至少覆盖 `E`、`E+F(full)`、`E+F(full)+G(min)`、`E+G(no physics)`、`F+G(no causal mask)`。
 
@@ -74,11 +74,13 @@
 关键产物：
 
 - 对比主报告：`docs/reports/alignment-preview-stage-g-min-closure-2026-04-22.md`
-- F baseline 子报告：`docs/reports/alignment-preview-stage-g-min-closure-2026-04-22-stage-f-baseline.md`
-- G(min) 子报告：`docs/reports/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min.md`
+- F baseline 细粒度资产：`docs/reports/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-f-baseline/`
+- G(min) 细粒度资产：`docs/reports/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/`
 - 诊断 JSON/CSV：`docs/reports/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/`
 - 因果注意力热力图：`docs/reports/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/causal_attention_heatmap.png`
 - 模型 checkpoint：`docs/reports/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/alignment_model_checkpoint.pt`
+
+说明：顶层单配置子报告 Markdown 已清理，阶段 G(min) 事实以本 closure 文档和对比主报告为准。
 
 ## 5. 测试闭环
 

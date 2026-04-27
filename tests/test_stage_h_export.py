@@ -28,11 +28,21 @@ from chronaris.pipelines.causal_fusion import (
     StageGCausalFusionSample,
     StageGCausalFusionTensorExport,
 )
-from chronaris.pipelines.partial_data import PartialDataBuilder, PartialDataConfig, PartialDataEntry
+from chronaris.features import STAGE_H_FEATURE_KEYS, load_stage_h_feature_run
+from chronaris.pipelines.partial_data import (
+    InfluxPartialVehiclePointProvider,
+    PartialDataBuilder,
+    PartialDataConfig,
+    PartialDataEntry,
+)
 from chronaris.pipelines.stage_h_export import (
     StageHExportConfig,
     StageHExportPipeline,
+    StageHRunManifest,
+    StageHSortieManifest,
     StageHViewExecutionResult,
+    StageHViewManifest,
+    render_stage_h_report,
 )
 from chronaris.schema.models import (
     AlignedPoint,
@@ -319,6 +329,15 @@ class _FakeViewRunner:
         return _view_execution(profile.sortie_id, include_stage_g=self.include_stage_g)
 
 
+class _FakeInfluxRunner:
+    def __init__(self) -> None:
+        self.queries: list[str] = []
+
+    def query(self, flux: str) -> tuple[dict[str, str], ...]:
+        self.queries.append(flux)
+        return ()
+
+
 def _profile(sortie_id: str, pilot_ids: tuple[int, ...]) -> StageHSortieProfile:
     flight_task = FlightTaskMetadata(
         flight_task_id=1 if sortie_id.endswith("22#01") else 2,
@@ -383,6 +402,121 @@ class StageHProfileResolverTest(unittest.TestCase):
         self.assertEqual(single.vehicle_measurements[-1], "BUS6000019110020")
 
 
+class StageHExportConfigTest(unittest.TestCase):
+    def test_preview_profile_resolves_default_point_limit_guard(self) -> None:
+        config = StageHExportConfig(
+            run_id="stage-h-preview",
+            sortie_ids=("sortie-1",),
+            preview_point_limit_per_measurement=500,
+        )
+
+        self.assertEqual(config.export_profile, "preview")
+        self.assertEqual(config.resolved_physiology_point_limit_per_measurement, 500)
+        self.assertEqual(config.resolved_vehicle_point_limit_per_measurement, 500)
+        self.assertEqual(config.point_limit_note, "preview query guard, not a Stage H closure standard")
+
+    def test_validation_profile_can_run_without_point_caps(self) -> None:
+        config = StageHExportConfig(
+            run_id="stage-h-validation",
+            sortie_ids=("sortie-1",),
+            export_profile="validation",
+        )
+
+        self.assertIsNone(config.resolved_physiology_point_limit_per_measurement)
+        self.assertIsNone(config.resolved_vehicle_point_limit_per_measurement)
+        self.assertEqual(config.point_limit_note, "no per-measurement point cap")
+
+    def test_report_renders_warn_diagnostic_reasons(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            diagnostic_path = tmp / "projection_diagnostics_summary.json"
+            diagnostic_path.write_text(
+                json.dumps(
+                    {
+                        "threshold_evaluation": {
+                            "checks": [
+                                {
+                                    "name": "projection_cosine_cv",
+                                    "passed": False,
+                                    "actual": 0.2312348313869933,
+                                    "operator": "<=",
+                                    "expected": 0.15,
+                                }
+                            ],
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            config = StageHExportConfig(
+                run_id="stage-h-report",
+                sortie_ids=("sortie-1",),
+                preview_point_limit_per_measurement=500,
+            )
+            view_manifest = StageHViewManifest(
+                view_id="sortie-1__pilot_10033",
+                sortie_id="sortie-1",
+                pilot_id=10033,
+                flight_task_id=1,
+                collect_task_id=2,
+                physiology_measurements=("eeg", "spo2"),
+                vehicle_measurements=("BUS001",),
+                clip_start_utc="2025-10-05T01:35:00+00:00",
+                clip_stop_utc="2025-10-05T01:38:01+00:00",
+                export_start_utc="2025-10-05T01:35:00+00:00",
+                export_stop_utc="2025-10-05T01:38:01+00:00",
+                window_count=37,
+                model_sample_count=37,
+                split_summary={"train": 1, "validation": 0, "test": 1},
+                intermediate_summary={"sample_count": 1},
+                projection_diagnostics_verdict="WARN",
+                stage_g_enabled=True,
+                stage_g_available=True,
+                vehicle_field_metadata={"status": "loaded"},
+                artifact_paths={
+                    "feature_bundle_npz": str(tmp / "feature_bundle.npz"),
+                    "projection_diagnostics_summary_json": str(diagnostic_path),
+                },
+            )
+            sortie_manifest = StageHSortieManifest(
+                sortie_id="sortie-1",
+                flight_task_id=1,
+                collect_task_id=2,
+                pilot_ids=(10033,),
+                physiology_measurements=("eeg", "spo2"),
+                vehicle_measurements=("BUS001",),
+                clip_start_utc="2025-10-05T01:35:00+00:00",
+                clip_stop_utc="2025-10-05T01:38:01+00:00",
+                exported_view_ids=("sortie-1__pilot_10033",),
+                view_manifest_paths={"sortie-1__pilot_10033": str(tmp / "view_manifest.json")},
+            )
+            run_manifest = StageHRunManifest(
+                run_id=config.run_id,
+                export_version=config.export_version,
+                generated_at_utc="2026-04-27T00:00:00+00:00",
+                output_root=str(tmp / "artifacts"),
+                report_path=str(tmp / "report.md"),
+                sortie_ids=config.sortie_ids,
+                generated_view_count=1,
+                generated_view_ids=("sortie-1__pilot_10033",),
+                config={},
+                sortie_manifest_paths={"sortie-1": str(tmp / "sortie_manifest.json")},
+                failures=(),
+                skipped=(),
+            )
+
+            report = render_stage_h_report(
+                config=config,
+                run_manifest=run_manifest,
+                sortie_manifests=(sortie_manifest,),
+                view_manifests=(view_manifest,),
+            )
+
+            self.assertIn("point limit note: `preview query guard", report)
+            self.assertIn("`WARN` (projection_cosine_cv)", report)
+            self.assertIn("projection_cosine_cv=0.231235 <= 0.150000", report)
+
+
 class StageHExportPipelineTest(unittest.TestCase):
     def test_pipeline_writes_stage_h_artifacts_and_report(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -405,6 +539,7 @@ class StageHExportPipelineTest(unittest.TestCase):
                 sortie_ids=(profile.sortie_id,),
                 output_root=tmp / "artifacts" / "stage_h",
                 report_path=tmp / "docs" / "reports" / "stage-h-test.md",
+                preview_point_limit_per_measurement=500,
                 partial_data_entries=(partial_entry,),
             )
             pipeline = StageHExportPipeline(
@@ -430,21 +565,22 @@ class StageHExportPipelineTest(unittest.TestCase):
             view_manifest = json.loads(view_manifest_path.read_text(encoding="utf-8"))
             self.assertEqual(view_manifest["view_id"], profile.views[0].view_id)
             self.assertEqual(run_manifest["generated_view_count"], 1)
+            self.assertEqual(run_manifest["config"]["export_profile"], "preview")
+            self.assertEqual(run_manifest["config"]["physiology_point_limit_per_measurement"], 500)
+            self.assertEqual(run_manifest["config"]["vehicle_point_limit_per_measurement"], 500)
+            self.assertEqual(
+                run_manifest["config"]["point_limit_note"],
+                "preview query guard, not a Stage H closure standard",
+            )
             self.assertIn("partial_data", run_manifest)
             self.assertEqual(run_manifest["partial_data"]["entry_count"], 1)
 
             feature_bundle = np.load(view_manifest["artifact_paths"]["feature_bundle_npz"])
-            self.assertEqual(
-                set(feature_bundle.files),
-                {
-                    "physiology_reference_projection",
-                    "vehicle_reference_projection",
-                    "fused_representation",
-                    "reference_offsets_s",
-                    "attention_weights",
-                    "vehicle_event_scores",
-                },
-            )
+            self.assertEqual(set(feature_bundle.files), set(STAGE_H_FEATURE_KEYS))
+            feature_run = load_stage_h_feature_run(run_manifest_path)
+            self.assertEqual(feature_run.generated_view_count, 1)
+            self.assertEqual(feature_run.views[0].view_id, profile.views[0].view_id)
+            self.assertEqual(feature_run.views[0].fused_representation.shape[-1], 6)
             self.assertTrue(Path(view_manifest["artifact_paths"]["projection_diagnostics_summary_json"]).exists())
             self.assertTrue(Path(view_manifest["artifact_paths"]["causal_fusion_summary_json"]).exists())
             self.assertIn("run_manifest.json", report_path.read_text(encoding="utf-8"))
@@ -514,6 +650,52 @@ class StageHExportPipelineTest(unittest.TestCase):
 
 
 class PartialDataBuilderTest(unittest.TestCase):
+    def test_influx_vehicle_provider_uses_partial_entry_scope(self) -> None:
+        entry = PartialDataEntry(
+            sortie_id="20251110_单01_ACT-2_涛_J20_26#01",
+            source_type="self_built_inventory",
+            stream_kind="vehicle",
+            data_tier="Tier B",
+            raw_manifest_path=None,
+            inventory_reference="seed",
+            time_range={"start_utc": "2025-11-10T01:00:00Z", "stop_utc": "2025-11-10T01:10:00Z"},
+            measurement_family=("BUS9000", "BUS_PENDING"),
+            usable_for_pretraining=True,
+            notes=("vehicle-only",),
+            bucket="bus",
+            tag_filters={"sortie_number": "20251110_单01_ACT-2_涛_J20_26#01"},
+        )
+        runner = _FakeInfluxRunner()
+
+        points = InfluxPartialVehiclePointProvider(
+            runner=runner,
+            point_limit_per_measurement=25,
+        )(entry)
+
+        self.assertEqual(points, ())
+        self.assertEqual(len(runner.queries), 1)
+        self.assertIn('from(bucket:"bus")', runner.queries[0])
+        self.assertIn('r._measurement == "BUS9000"', runner.queries[0])
+        self.assertIn('r.sortie_number == "20251110_单01_ACT-2_涛_J20_26#01"', runner.queries[0])
+        self.assertIn("|> limit(n: 25)", runner.queries[0])
+
+    def test_influx_vehicle_provider_rejects_manifest_only_seed_scope(self) -> None:
+        entry = PartialDataEntry(
+            sortie_id="20251110_单01_ACT-2_涛_J20_26#01",
+            source_type="self_built_inventory",
+            stream_kind="vehicle",
+            data_tier="Tier B",
+            raw_manifest_path=None,
+            inventory_reference="seed",
+            time_range={"start_utc": None, "stop_utc": None},
+            measurement_family=("BUS_PENDING",),
+            usable_for_pretraining=True,
+            notes=("vehicle-only",),
+        )
+
+        with self.assertRaisesRegex(ValueError, "requires bucket"):
+            InfluxPartialVehiclePointProvider(runner=_FakeInfluxRunner())(entry)
+
     def test_vehicle_only_partial_entry_builds_single_stream_artifacts(self) -> None:
         entry = PartialDataEntry(
             sortie_id="20251110_单01_ACT-2_涛_J20_26#01",

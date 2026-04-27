@@ -19,6 +19,7 @@ from chronaris.pipelines.causal_fusion import (
 from chronaris.pipelines.dataset_v1 import DatasetPipelineV1
 from chronaris.pipelines.e0_preview import E0PreviewPipeline
 from chronaris.pipelines.partial_data import (
+    InfluxPartialVehiclePointProvider,
     PartialDataBuilder,
     PartialDataBuildResult,
     PartialDataConfig,
@@ -31,6 +32,7 @@ from chronaris.pipelines.partial_data import (
 from chronaris.pipelines.stage_h_export import (
     AlignmentStageHViewRunner,
     StageHExportConfig,
+    StageHExportProfile,
     StageHExportPipeline,
     StageHExportRunResult,
     StageHRunManifest,
@@ -49,6 +51,7 @@ __all__ = [
     "AlignmentStageHViewRunner",
     "DatasetPipelineV1",
     "E0PreviewPipeline",
+    "InfluxPartialVehiclePointProvider",
     "PartialDataBuilder",
     "PartialDataBuildResult",
     "PartialDataConfig",
@@ -60,6 +63,7 @@ __all__ = [
     "StageGCausalFusionSample",
     "StageGCausalFusionTensorExport",
     "StageHExportConfig",
+    "StageHExportProfile",
     "StageHExportPipeline",
     "StageHExportRunResult",
     "StageHRunManifest",
