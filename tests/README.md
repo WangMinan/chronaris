@@ -11,6 +11,7 @@
 7. `test_alignment_model_losses.py`
 8. `test_alignment_pipeline.py`
 9. `test_alignment_diagnostics.py`
+10. `test_stage_h_export.py`
 
 测试维护共性规则：
 
@@ -23,6 +24,7 @@
 1. 数据访问层的查询拼装与字段映射
 2. 样本构建与时间对齐前处理
 3. 特征导出格式
-4. 指标计算与关键评测逻辑
+4. Stage H run/sortie/view manifest、feature bundle 读取与 partial-data sidecar
+5. 指标计算与关键评测逻辑
 
 模型效果验证属于实验，不完全等价于单元测试。

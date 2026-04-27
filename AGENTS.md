@@ -95,8 +95,13 @@
   - 阶段 H v1 已补齐下游读取接口：`src/chronaris/features/stage_h_bundle.py`
   - 阶段 H 默认 `preview` profile 的每 measurement `500` 点上限是查询防护，不是收口标准；`validation/full_clip` 可取消默认点数上限
   - 阶段 H 报告里的 `WARN` 是投影诊断阈值提醒，不代表 view 包导出失败
+  - 阶段 H 收口已完成：`docs/planning/stage-h-closure-2026-04-27.md`
+  - 阶段 H 收口主报告：`docs/reports/stage-h-closure-2026-04-27.md`
+  - 阶段 H 收口机器资产根目录：`artifacts/stage_h/20260427T000000Z-stage-h-closure/`
+  - 阶段 H `validation` profile 已验证当前两条双流 sortie 可导出 `3` 个 view，`load_stage_h_feature_run()` 可直接读取 run manifest
   - partial-data v1 已纳入 repo 标准入口：`configs/partial-data/stage-h-seed-v1.jsonl`
-  - partial-data v1 已有 Influx vehicle-only reader / builder 入口；但 `20251110_单01_ACT-2_涛_J20_26#01` 仍缺真实 `bucket / time_range / measurement_family`，当前不能真实构窗
+  - partial-data v1 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 `bucket / time_range / measurement_family / tag_filters`
+  - partial-data v1 已生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`；该架次仍是 vehicle-only partial-data，不是双流 Stage H view
 
 ## 5. 目录与边界
 
@@ -131,18 +136,21 @@
 - 阶段 E 输入归一化对照（`none` / `zscore_train`）与阈值模板收口
 - 阶段 F 完整物理约束族接入与真实库对照收口
 - 阶段 G 最小非对称因果融合接入与真实库对照收口
+- 阶段 H 标准化特征导出、下游读取接口与 vehicle-only partial-data 收口
 
 当前默认判断：
 
-- `阶段 G(min) 已完成（可进入阶段 H）`
-- `阶段 H 已启动（Stage H v1 双架次导出、feature bundle 读取接口与 partial-data reader 入口已打通，未收口）`
+- `阶段 G(min) 已完成`
+- `阶段 H 已完成收口（可进入阶段 I）`
+- `阶段 I 未开始`
 
-阶段 E/F/G 默认参考：
+阶段 E/F/G/H 默认参考：
 
 - `docs/planning/coding-roadmap.md`
 - `docs/planning/stage-e-closure-2026-04-21.md`
 - `docs/planning/stage-f-closure-2026-04-22.md`
 - `docs/planning/stage-g-closure-2026-04-22.md`
+- `docs/planning/stage-h-closure-2026-04-27.md`
 - `docs/models/stage-e-prototype-design.md`
 - `docs/models/stage-e-reference-repos.md`
 
@@ -199,11 +207,12 @@
 - 阶段 E 已收口，默认冻结阶段 E 基线（仅修复缺陷，不再扩展范围）
 - 阶段 F 已收口，默认冻结阶段 F 基线（仅修复缺陷，不再扩展范围）
 - 阶段 G 已收口，默认冻结 G(min) 基线（仅修复缺陷，不提前扩展完整因果融合）
-- 阶段 H 当前默认优先：
-  - 将 `20251110_单01_ACT-2_涛_J20_26#01` 的标准 partial-data entry 从 seed 补全为真实 `bucket / time_range / measurement_family / tag_filters`
-  - 用真实补全后的 partial entry 生成 `vehicle_only_feature_bundle.npz`
-  - 用 `validation` 或 `full_clip` profile 跑一次 Stage H 导出复核，再评估阶段 H 收口
-  - 在不破坏当前 frozen E/F/G(min) 导出路径的前提下，继续扩展轻量多架次 manifest 盘点
+- 阶段 H 已收口，默认冻结 Stage H 导出 contract（仅修复缺陷，不再扩展范围）
+- 阶段 I 当前默认优先：
+  - 用 `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json` 作为最小下游任务输入
+  - 让阶段 I 代码消费 `load_stage_h_feature_run()`，不直接读取 E/F/G 训练中间对象
+  - 明确 `20251110...` vehicle-only partial bundle 只用于单流预训练/补充诊断，不作为双流融合 view
+  - 在不破坏 frozen E/F/G(min)/H 导出路径的前提下，继续扩展轻量多架次 manifest 盘点
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
 

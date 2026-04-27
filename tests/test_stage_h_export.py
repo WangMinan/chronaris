@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import sys
 import tempfile
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 import unittest
 
@@ -31,9 +31,13 @@ from chronaris.pipelines.causal_fusion import (
 from chronaris.features import STAGE_H_FEATURE_KEYS, load_stage_h_feature_run
 from chronaris.pipelines.partial_data import (
     InfluxPartialVehiclePointProvider,
+    PartialMeasurementMetadata,
+    PartialPointChunk,
     PartialDataBuilder,
     PartialDataConfig,
     PartialDataEntry,
+    VEHICLE_ONLY_FEATURE_BUNDLE_KEYS,
+    load_partial_data_entries,
 )
 from chronaris.pipelines.stage_h_export import (
     StageHExportConfig,
@@ -650,6 +654,28 @@ class StageHExportPipelineTest(unittest.TestCase):
 
 
 class PartialDataBuilderTest(unittest.TestCase):
+    def test_seed_partial_data_entry_is_concrete(self) -> None:
+        seed_path = Path(__file__).resolve().parents[1] / "configs" / "partial-data" / "stage-h-seed-v1.jsonl"
+
+        entries = load_partial_data_entries(seed_path)
+
+        self.assertEqual(len(entries), 1)
+        entry = entries[0]
+        self.assertEqual(entry.bucket, "bus")
+        self.assertEqual(entry.time_range["start_utc"], "2025-11-10T00:00:00Z")
+        self.assertEqual(entry.time_range["stop_utc"], "2025-11-11T00:00:00Z")
+        self.assertEqual(
+            entry.measurement_family,
+            (
+                "BUS6000019110027",
+                "BUS6000019110028",
+                "BUS6000019110029",
+                "BUS6000019110030",
+                "BUS6000019110031",
+            ),
+        )
+        self.assertEqual(entry.tag_filters["sortie_number"], entry.sortie_id)
+
     def test_influx_vehicle_provider_uses_partial_entry_scope(self) -> None:
         entry = PartialDataEntry(
             sortie_id="20251110_单01_ACT-2_涛_J20_26#01",
@@ -673,10 +699,12 @@ class PartialDataBuilderTest(unittest.TestCase):
         )(entry)
 
         self.assertEqual(points, ())
-        self.assertEqual(len(runner.queries), 1)
+        self.assertEqual(len(runner.queries), 2)
         self.assertIn('from(bucket:"bus")', runner.queries[0])
         self.assertIn('r._measurement == "BUS9000"', runner.queries[0])
         self.assertIn('r.sortie_number == "20251110_单01_ACT-2_涛_J20_26#01"', runner.queries[0])
+        self.assertIn("|> window(every: 5s)", runner.queries[0])
+        self.assertIn("|> limit(n: 32)", runner.queries[0])
         self.assertIn("|> limit(n: 25)", runner.queries[0])
 
     def test_influx_vehicle_provider_rejects_manifest_only_seed_scope(self) -> None:
@@ -733,3 +761,177 @@ class PartialDataBuilderTest(unittest.TestCase):
             ]
             self.assertEqual(rows[0]["stream_kind"], "vehicle")
             self.assertEqual(rows[0]["builder_status"], "built")
+
+    def test_vehicle_only_builder_filters_realbus_fields_and_records_skips(self) -> None:
+        entry = PartialDataEntry(
+            sortie_id="20251110_单01_ACT-2_涛_J20_26#01",
+            source_type="self_built_inventory",
+            stream_kind="vehicle",
+            data_tier="Tier B",
+            raw_manifest_path=None,
+            inventory_reference="seed",
+            time_range={"start_utc": "2025-11-10T01:00:00Z", "stop_utc": "2025-11-10T01:00:10Z"},
+            measurement_family=("BUS9000", "BUS9001"),
+            usable_for_pretraining=True,
+            notes=("vehicle-only",),
+        )
+
+        def metadata_provider(_: PartialDataEntry) -> dict[str, PartialMeasurementMetadata]:
+            return {
+                "BUS9000": PartialMeasurementMetadata(
+                    measurement="BUS9000",
+                    status="available",
+                    field_names=("speed",),
+                ),
+                "BUS9001": PartialMeasurementMetadata(
+                    measurement="BUS9001",
+                    status="skipped",
+                    reason="no_realbus_field_mapping",
+                ),
+            }
+
+        def chunk_provider(_: PartialDataEntry):
+            yield PartialPointChunk(
+                start_utc=_utc(2025, 11, 10, 1, 0, 0),
+                stop_utc=_utc(2025, 11, 10, 1, 0, 5),
+                points=(
+                    RawPoint(
+                        StreamKind.VEHICLE,
+                        "BUS9000",
+                        _utc(2025, 11, 10, 1, 0, 0),
+                        {"speed": 200.0, "unmapped": 999.0},
+                    ),
+                    RawPoint(
+                        StreamKind.VEHICLE,
+                        "BUS9001",
+                        _utc(2025, 11, 10, 1, 0, 1),
+                        {"speed": 201.0},
+                    ),
+                ),
+            )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result = PartialDataBuilder(
+                config=PartialDataConfig(),
+                chunk_provider=chunk_provider,
+                metadata_provider=metadata_provider,
+            ).run((entry,), output_root=tmpdir)
+
+            bundle = np.load(result.feature_bundle_path or "")
+            self.assertEqual(tuple(bundle["feature_names"].tolist()), ("BUS9000.speed",))
+            manifest_rows = [
+                json.loads(line)
+                for line in Path(result.manifest_path).read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            statuses = {
+                item["measurement"]: item
+                for item in manifest_rows[0]["measurement_statuses"]
+            }
+            self.assertEqual(statuses["BUS9001"]["status"], "skipped")
+            self.assertEqual(statuses["BUS9001"]["reason"], "no_realbus_field_mapping")
+
+    def test_vehicle_only_builder_caps_each_field_to_32_points_per_window(self) -> None:
+        entry = PartialDataEntry(
+            sortie_id="20251110_单01_ACT-2_涛_J20_26#01",
+            source_type="self_built_inventory",
+            stream_kind="vehicle",
+            data_tier="Tier B",
+            raw_manifest_path=None,
+            inventory_reference="seed",
+            time_range={"start_utc": "2025-11-10T01:00:00Z", "stop_utc": "2025-11-10T01:00:10Z"},
+            measurement_family=("BUS9000",),
+            usable_for_pretraining=True,
+            notes=("vehicle-only",),
+        )
+
+        def chunk_provider(_: PartialDataEntry):
+            base = _utc(2025, 11, 10, 1, 0, 0)
+            yield PartialPointChunk(
+                start_utc=base,
+                stop_utc=base + timedelta(seconds=5),
+                points=tuple(
+                    RawPoint(
+                        StreamKind.VEHICLE,
+                        "BUS9000",
+                        base + timedelta(milliseconds=100 * index),
+                        {"speed": float(index)},
+                    )
+                    for index in range(40)
+                ),
+            )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result = PartialDataBuilder(
+                config=PartialDataConfig(max_points_per_field_per_window=32),
+                chunk_provider=chunk_provider,
+            ).run((entry,), output_root=tmpdir)
+
+            bundle = np.load(result.feature_bundle_path or "")
+            self.assertEqual(set(bundle.files), set(VEHICLE_ONLY_FEATURE_BUNDLE_KEYS))
+            self.assertEqual(bundle["values"].shape, (1, 32, 1))
+            self.assertEqual(bundle["point_counts"].tolist(), [32])
+            window_rows = [
+                json.loads(line)
+                for line in Path(result.window_manifest_path).read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            self.assertEqual(window_rows[0]["field_point_count_max"], 32)
+            self.assertEqual(window_rows[0]["capped_field_count"], 1)
+
+    def test_validation_pipeline_writes_three_views_and_built_partial_sidecar(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            single = _profile("20251005_四01_ACT-4_云_J20_22#01", (10033,))
+            dual = _profile("20251002_单01_ACT-8_翼云_J16_12#01", (10035, 10033))
+            partial_entry = PartialDataEntry(
+                sortie_id="20251110_单01_ACT-2_涛_J20_26#01",
+                source_type="self_built_inventory",
+                stream_kind="vehicle",
+                data_tier="Tier B",
+                raw_manifest_path=None,
+                inventory_reference="seed",
+                time_range={"start_utc": "2025-11-10T01:00:00Z", "stop_utc": "2025-11-10T01:00:10Z"},
+                measurement_family=("BUS9000",),
+                usable_for_pretraining=True,
+                notes=("vehicle-only",),
+            )
+
+            def partial_chunks(_: PartialDataEntry):
+                yield PartialPointChunk(
+                    start_utc=_utc(2025, 11, 10, 1, 0, 0),
+                    stop_utc=_utc(2025, 11, 10, 1, 0, 10),
+                    points=(
+                        RawPoint(StreamKind.VEHICLE, "BUS9000", _utc(2025, 11, 10, 1, 0, 0), {"speed": 200.0}),
+                        RawPoint(StreamKind.VEHICLE, "BUS9000", _utc(2025, 11, 10, 1, 0, 5), {"speed": 201.0}),
+                    ),
+                )
+
+            config = StageHExportConfig(
+                run_id="stage-h-validation-test",
+                sortie_ids=(single.sortie_id, dual.sortie_id),
+                output_root=tmp / "artifacts" / "stage_h",
+                report_path=tmp / "docs" / "reports" / "stage-h-validation-test.md",
+                export_profile="validation",
+                partial_data_entries=(partial_entry,),
+            )
+            pipeline = StageHExportPipeline(
+                config=config,
+                profile_resolver=_FakeProfileResolver((single, dual)),
+                view_runner=_FakeViewRunner(include_stage_g=True),
+                partial_data_builder=PartialDataBuilder(
+                    config=PartialDataConfig(),
+                    chunk_provider=partial_chunks,
+                ),
+            )
+
+            result = pipeline.run()
+
+            self.assertEqual(len(result.generated_view_ids), 3)
+            run_manifest = json.loads(Path(result.run_manifest_path).read_text(encoding="utf-8"))
+            self.assertEqual(run_manifest["config"]["export_profile"], "validation")
+            self.assertEqual(run_manifest["partial_data"]["built_entry_count"], 1)
+            self.assertTrue(Path(run_manifest["partial_data"]["feature_bundle_path"]).exists())
+            self.assertIn("export profile: `validation`", Path(result.report_path).read_text(encoding="utf-8"))
+            feature_run = load_stage_h_feature_run(result.run_manifest_path)
+            self.assertEqual(feature_run.generated_view_count, 3)

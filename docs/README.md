@@ -15,8 +15,8 @@
 ## 当前事实源
 
 - 阶段状态只看 [coding-roadmap.md](planning/coding-roadmap.md)。
-- 阶段 E/F/G 的收口依据只看 `docs/planning/stage-*-closure-*.md`。
-- 阶段 H 当前主报告只看 [stage-h-export-v1-2026-04-26.md](reports/stage-h-export-v1-2026-04-26.md)。
+- 阶段 E/F/G/H 的收口依据只看 `docs/planning/stage-*-closure-*.md`。
+- 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)。
 - 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
 ## 分类索引
@@ -36,6 +36,7 @@
 - [stage-e-closure-2026-04-21.md](planning/stage-e-closure-2026-04-21.md)
 - [stage-f-closure-2026-04-22.md](planning/stage-f-closure-2026-04-22.md)
 - [stage-g-closure-2026-04-22.md](planning/stage-g-closure-2026-04-22.md)
+- [stage-h-closure-2026-04-27.md](planning/stage-h-closure-2026-04-27.md)
 
 ### models
 
@@ -53,6 +54,7 @@
 - [alignment-preview-stage-g-min-closure-2026-04-22.md](reports/alignment-preview-stage-g-min-closure-2026-04-22.md)
 - [sortie-availability-preview-20251002-act8-j16-12.md](reports/sortie-availability-preview-20251002-act8-j16-12.md)
 - [stage-h-export-v1-2026-04-26.md](reports/stage-h-export-v1-2026-04-26.md)
+- [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)
 
 ### 选题报告与基金申请书
 
