@@ -71,11 +71,12 @@
 关键产物：
 
 - 对比主报告：`docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
-- baseline 子报告：`docs/reports/alignment-preview-stage-f-closure-2026-04-22-e-baseline.md`
-- F(full) 子报告：`docs/reports/alignment-preview-stage-f-closure-2026-04-22-stage-f-full.md`
-- 诊断 JSON/CSV：`docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/`
-- 可视化图像：同上 assets 目录
+- baseline 细粒度资产：`docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-e-baseline/`
+- F(full) 细粒度资产：`docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/`
+- 诊断 JSON/CSV 与可视化图像：同上 assets 目录
 - 模型 checkpoint：`docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/alignment_model_checkpoint.pt`
+
+说明：顶层单配置子报告 Markdown 已清理，阶段 F 事实以本 closure 文档和对比主报告为准。
 
 ## 5. 测试闭环
 

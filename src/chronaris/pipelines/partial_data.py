@@ -10,6 +10,11 @@ from typing import Callable, Iterable, Mapping, Sequence
 
 import numpy as np
 
+from chronaris.access.influx_cli import (
+    InfluxMeasurementPointReader,
+    InfluxQueryRunner,
+    InfluxQuerySpec,
+)
 from chronaris.dataset.builder import SortieDatasetBuilder
 from chronaris.features.experiment_input import NumericStreamMatrix, build_numeric_stream_matrix
 from chronaris.schema.models import (
@@ -95,6 +100,7 @@ class PartialDataConfig:
     """Controls partial-data manifesting and vehicle-only sample export."""
 
     export_version: str = "partial-data-v1"
+    point_limit_per_measurement: int | None = None
     window_config: WindowConfig = field(
         default_factory=lambda: WindowConfig(
             duration_ms=5_000,
@@ -103,6 +109,10 @@ class PartialDataConfig:
             min_vehicle_points=1,
         )
     )
+
+    def __post_init__(self) -> None:
+        if self.point_limit_per_measurement is not None and self.point_limit_per_measurement <= 0:
+            raise ValueError("point_limit_per_measurement must be positive when provided.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -155,6 +165,7 @@ class PartialDataBuilder:
                 try:
                     points = tuple(self.point_provider(entry))
                 except Exception as exc:
+                    status = "provider_error"
                     reason = str(exc)
                 else:
                     if points:
@@ -234,6 +245,54 @@ class PartialDataBuilder:
         )
 
 
+@dataclass(frozen=True, slots=True)
+class InfluxPartialVehiclePointProvider:
+    """Read vehicle-only partial-data entries from Influx using entry metadata."""
+
+    runner: InfluxQueryRunner
+    point_limit_per_measurement: int | None = None
+
+    def __post_init__(self) -> None:
+        if self.point_limit_per_measurement is not None and self.point_limit_per_measurement <= 0:
+            raise ValueError("point_limit_per_measurement must be positive when provided.")
+
+    def __call__(self, entry: PartialDataEntry) -> tuple[RawPoint, ...]:
+        if entry.stream_kind != StreamKind.VEHICLE.value:
+            return ()
+        bucket = entry.bucket
+        if not bucket:
+            raise ValueError("vehicle-only partial entry requires bucket.")
+        measurements = tuple(
+            measurement
+            for measurement in entry.measurement_family
+            if measurement and not measurement.endswith("_PENDING")
+        )
+        if not measurements:
+            raise ValueError("vehicle-only partial entry requires concrete measurement_family.")
+        start = _parse_required_utc(entry.time_range.get("start_utc"), "time_range.start_utc")
+        stop = _parse_required_utc(entry.time_range.get("stop_utc"), "time_range.stop_utc")
+        if stop <= start:
+            raise ValueError("time_range.stop_utc must be greater than start_utc.")
+
+        points: list[RawPoint] = []
+        for measurement in measurements:
+            reader = InfluxMeasurementPointReader(
+                runner=self.runner,
+                stream_kind=StreamKind.VEHICLE,
+                query_builder=lambda _, measurement=measurement: InfluxQuerySpec(
+                    bucket=bucket,
+                    measurement=measurement,
+                    start=start,
+                    stop=stop,
+                    tag_filters=entry.tag_filters,
+                    limit=self.point_limit_per_measurement,
+                ),
+            )
+            points.extend(reader.fetch_points(SortieLocator(sortie_id=entry.sortie_id)))
+        points.sort(key=lambda point: (point.timestamp, point.measurement))
+        return tuple(points)
+
+
 def load_partial_data_entries(path: str | Path) -> tuple[PartialDataEntry, ...]:
     """Load standardized partial-data entries from JSONL."""
 
@@ -265,6 +324,15 @@ def dump_partial_data_entries(
     """Write standardized partial-data entries to JSONL."""
 
     _write_jsonl(Path(path), [entry.to_dict() for entry in entries])
+
+
+def _parse_required_utc(value: str | None, field_name: str) -> datetime:
+    if not value:
+        raise ValueError(f"vehicle-only partial entry requires {field_name}.")
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
 
 
 def _write_jsonl(path: Path, rows: Sequence[Mapping[str, object]]) -> None:

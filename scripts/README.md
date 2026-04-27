@@ -59,5 +59,10 @@
     - `causal_fusion_summary.json`
     - `window_manifest.jsonl`
   - 默认启用 `zscore_train + Stage F(full) + Stage G(min)` frozen 路径
+  - 默认 `--export-profile preview`，并使用 `--preview-point-limit 500` 作为每个 measurement 的查询防护上限；这是 preview-scale 运行保护，不是阶段 H 收口标准
+  - 可用 `--export-profile validation` 去掉默认 500 点上限，或用 `--export-profile full_clip` 同时去掉默认 preview 时间裁剪
+  - 可用 `--physiology-point-limit`、`--vehicle-point-limit`、`--partial-vehicle-point-limit` 显式覆盖对应流的读取上限
+  - MySQL 可指向 Docker 暴露端口；需要自定义 CLI 时可用 `--mysql-binary`，Influx CLI 同理可用 `--influx-binary`
   - 默认附带 partial-data sidecar，读取 `configs/partial-data/stage-h-seed-v1.jsonl`
+  - partial-data sidecar 已支持基于标准 entry 的 Influx vehicle-only reader；若 entry 仍缺 `bucket / time_range / measurement_family`，会保留为跳过状态而不会被误提升为 Stage H 双流导出
   - 可用 `--use-full-clip-scope` 改回 sortie 全 clip 范围；默认仍使用当前 preview-scale export scope

@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-04-26
+更新时间：2026-04-27
 
 ## 目录说明
 
@@ -11,6 +11,13 @@
 3. `models`：模型输入协议、模型设计与参考资料
 4. `reports`：阶段主报告与可复现实验结论
 5. `选题报告与基金申请书`：选题与基金原始文档
+
+## 当前事实源
+
+- 阶段状态只看 [coding-roadmap.md](planning/coding-roadmap.md)。
+- 阶段 E/F/G 的收口依据只看 `docs/planning/stage-*-closure-*.md`。
+- 阶段 H 当前主报告只看 [stage-h-export-v1-2026-04-26.md](reports/stage-h-export-v1-2026-04-26.md)。
+- 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
 ## 分类索引
 

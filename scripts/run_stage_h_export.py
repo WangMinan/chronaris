@@ -27,7 +27,12 @@ from chronaris.access import (
     MySQLStorageAnalysisReader,
     StageHProfileResolver,
 )
-from chronaris.pipelines.partial_data import PartialDataBuilder, load_partial_data_entries
+from chronaris.pipelines.partial_data import (
+    InfluxPartialVehiclePointProvider,
+    PartialDataBuilder,
+    PartialDataConfig,
+    load_partial_data_entries,
+)
 from chronaris.pipelines.stage_h_export import (
     AlignmentStageHViewRunner,
     StageHExportConfig,
@@ -125,10 +130,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-root", default="artifacts/stage_h")
     parser.add_argument("--report-path", default=_default_report_path())
     parser.add_argument("--sortie-id", dest="sortie_ids", action="append")
+    parser.add_argument(
+        "--export-profile",
+        choices=("preview", "validation", "full_clip"),
+        default="preview",
+    )
     parser.add_argument("--mysql-database", default="rjgx_backend")
+    parser.add_argument("--mysql-binary", default="mysql")
+    parser.add_argument("--influx-binary", default="influx")
     parser.add_argument("--bus-access-rule-id", type=int, default=6000019510066)
-    parser.add_argument("--physiology-point-limit", type=int, default=500)
-    parser.add_argument("--vehicle-point-limit", type=int, default=500)
+    parser.add_argument("--preview-point-limit", type=int, default=500)
+    parser.add_argument("--physiology-point-limit", type=int)
+    parser.add_argument("--vehicle-point-limit", type=int)
+    parser.add_argument("--partial-vehicle-point-limit", type=int)
     parser.add_argument(
         "--partial-data-path",
         default="configs/partial-data/stage-h-seed-v1.jsonl",
@@ -137,13 +151,33 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _resolve_preview_point_limit(args: argparse.Namespace) -> int | None:
+    if args.export_profile != "preview":
+        return None
+    return args.preview_point_limit
+
+
+def _resolve_scope_overrides(args: argparse.Namespace) -> dict[str, tuple[datetime, datetime]]:
+    if args.export_profile == "full_clip":
+        return {}
+    return _build_default_scope_overrides(args.use_full_clip_scope)
+
+
+def _resolve_partial_vehicle_point_limit(args: argparse.Namespace) -> int | None:
+    if args.partial_vehicle_point_limit is not None:
+        return args.partial_vehicle_point_limit
+    if args.vehicle_point_limit is not None:
+        return args.vehicle_point_limit
+    return _resolve_preview_point_limit(args)
+
+
 def main() -> int:
     args = parse_args()
     sortie_ids = tuple(args.sortie_ids or DEFAULT_SORTIES)
     influx_settings = _resolve_influx_settings()
     mysql_settings = _resolve_mysql_settings(args.mysql_database)
-    mysql_runner = MySQLCliRunner(mysql_settings)
-    influx_runner = InfluxCliRunner(influx_settings)
+    mysql_runner = MySQLCliRunner(mysql_settings, mysql_binary=args.mysql_binary)
+    influx_runner = InfluxCliRunner(influx_settings, influx_binary=args.influx_binary)
 
     profile_resolver = StageHProfileResolver(
         flight_task_reader=MySQLFlightTaskReader(mysql_runner),
@@ -156,10 +190,15 @@ def main() -> int:
         sortie_ids=sortie_ids,
         output_root=args.output_root,
         report_path=args.report_path,
+        export_profile=args.export_profile,
         bus_access_rule_id=args.bus_access_rule_id,
+        preview_point_limit_per_measurement=_resolve_preview_point_limit(args),
         physiology_point_limit_per_measurement=args.physiology_point_limit,
         vehicle_point_limit_per_measurement=args.vehicle_point_limit,
-        export_scope_overrides_utc=_build_default_scope_overrides(args.use_full_clip_scope),
+        export_scope_overrides_utc=_resolve_scope_overrides(args),
+        partial_data_config=PartialDataConfig(
+            point_limit_per_measurement=_resolve_partial_vehicle_point_limit(args),
+        ),
         partial_data_entries=load_partial_data_entries(REPO_ROOT / args.partial_data_path),
     )
     view_runner = AlignmentStageHViewRunner(
@@ -174,7 +213,13 @@ def main() -> int:
         config=config,
         profile_resolver=profile_resolver,
         view_runner=view_runner,
-        partial_data_builder=PartialDataBuilder(config=config.partial_data_config),
+        partial_data_builder=PartialDataBuilder(
+            config=config.partial_data_config,
+            point_provider=InfluxPartialVehiclePointProvider(
+                runner=influx_runner,
+                point_limit_per_measurement=config.partial_data_config.point_limit_per_measurement,
+            ),
+        ),
     )
     result = pipeline.run()
     print(
