@@ -50,7 +50,7 @@
   - 默认导出：
     - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
     - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
-  - 默认写出 `artifacts/stage_h/<run_id>/` 机器资产和 `docs/reports/stage-h-export-v1-<date>.md` 主报告
+  - 默认写出 `artifacts/stage_h/<run_id>/` 机器资产和 `docs/reports/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/reports/stage-h-closure-2026-04-27.md`
   - 自动生成 `run_manifest.json`、`sortie_manifest.json`、`view_manifest.json`
   - 每个 view 自动导出：
     - `feature_bundle.npz`
@@ -60,9 +60,10 @@
     - `window_manifest.jsonl`
   - 默认启用 `zscore_train + Stage F(full) + Stage G(min)` frozen 路径
   - 默认 `--export-profile preview`，并使用 `--preview-point-limit 500` 作为每个 measurement 的查询防护上限；这是 preview-scale 运行保护，不是阶段 H 收口标准
-  - 可用 `--export-profile validation` 去掉默认 500 点上限，或用 `--export-profile full_clip` 同时去掉默认 preview 时间裁剪
+  - 可用 `--export-profile validation` 去掉默认 500 点上限，或用 `--export-profile full_clip` 同时去掉默认 preview 时间裁剪；阶段 H 收口采用 `validation` profile 和当前两条双流 sortie 的已验证时间范围
   - 可用 `--physiology-point-limit`、`--vehicle-point-limit`、`--partial-vehicle-point-limit` 显式覆盖对应流的读取上限
   - MySQL 可指向 Docker 暴露端口；需要自定义 CLI 时可用 `--mysql-binary`，Influx CLI 同理可用 `--influx-binary`
   - 默认附带 partial-data sidecar，读取 `configs/partial-data/stage-h-seed-v1.jsonl`
-  - partial-data sidecar 已支持基于标准 entry 的 Influx vehicle-only reader；若 entry 仍缺 `bucket / time_range / measurement_family`，会保留为跳过状态而不会被误提升为 Stage H 双流导出
+  - partial-data sidecar 已支持基于标准 entry 的 Influx vehicle-only reader、MySQL RealBus 字段过滤、Flux 侧 `5s window + 每字段最多 32 点` 下推；若 entry 缺 `bucket / time_range / measurement_family`，会保留为跳过状态而不会被误提升为 Stage H 双流导出
+  - 当前 `configs/partial-data/stage-h-seed-v1.jsonl` 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 vehicle-only 范围，并可生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`
   - 可用 `--use-full-clip-scope` 改回 sortie 全 clip 范围；默认仍使用当前 preview-scale export scope

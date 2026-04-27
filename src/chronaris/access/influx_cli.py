@@ -33,11 +33,14 @@ class InfluxQuerySpec:
     measurement: str | None
     start: datetime
     stop: datetime
+    measurement_any: tuple[str, ...] = ()
     tag_filters: Mapping[str, str] = field(default_factory=dict)
     tag_filters_any: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     limit: int | None = None
     sort_by_time: bool = False
     time_desc: bool = False
+    window_every: str | None = None
+    window_limit: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -118,8 +121,23 @@ def build_flux_query(spec: InfluxQuerySpec) -> str:
     """Build a simple Flux query for one measurement and tag filter set."""
 
     filters: list[str] = []
+    if spec.measurement is not None and spec.measurement_any:
+        raise ValueError("Use either measurement or measurement_any, not both.")
     if spec.measurement is not None:
         filters.append(f'r._measurement == "{_escape_flux_string(spec.measurement)}"')
+    elif spec.measurement_any:
+        measurements = tuple(dict.fromkeys(measurement for measurement in spec.measurement_any if measurement))
+        if len(measurements) == 1:
+            filters.append(f'r._measurement == "{_escape_flux_string(measurements[0])}"')
+        elif measurements:
+            filters.append(
+                "("
+                + " or ".join(
+                    f'r._measurement == "{_escape_flux_string(measurement)}"'
+                    for measurement in measurements
+                )
+                + ")"
+            )
     for key, value in spec.tag_filters.items():
         filters.append(f'r.{key} == "{_escape_flux_string(value)}"')
     for key, values in spec.tag_filters_any.items():
@@ -144,6 +162,14 @@ def build_flux_query(spec: InfluxQuerySpec) -> str:
         f' stop: {spec.stop.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")})'
         f' |> filter(fn: (r) => {" and ".join(filters)})'
     )
+    if spec.window_limit is not None and spec.window_every is None:
+        raise ValueError("window_every is required when window_limit is set.")
+    if spec.window_every is not None:
+        flux += f" |> window(every: {spec.window_every})"
+        flux += ' |> group(columns: ["_measurement", "_field", "_start", "_stop"])'
+        if spec.window_limit is not None:
+            flux += f" |> limit(n: {spec.window_limit})"
+        flux += " |> group()"
     if spec.sort_by_time:
         flux += f' |> sort(columns: ["_time"], desc: {"true" if spec.time_desc else "false"})'
     if spec.limit is not None:

@@ -29,6 +29,7 @@ from chronaris.access import (
 )
 from chronaris.pipelines.partial_data import (
     InfluxPartialVehiclePointProvider,
+    MySQLPartialVehicleMetadataProvider,
     PartialDataBuilder,
     PartialDataConfig,
     load_partial_data_entries,
@@ -215,9 +216,19 @@ def main() -> int:
         view_runner=view_runner,
         partial_data_builder=PartialDataBuilder(
             config=config.partial_data_config,
-            point_provider=InfluxPartialVehiclePointProvider(
+            chunk_provider=InfluxPartialVehiclePointProvider(
                 runner=influx_runner,
                 point_limit_per_measurement=config.partial_data_config.point_limit_per_measurement,
+                window_duration_ms=config.partial_data_config.window_config.duration_ms,
+                window_limit_per_field=config.partial_data_config.max_points_per_field_per_window,
+            ).iter_chunks,
+            metadata_provider=MySQLPartialVehicleMetadataProvider(
+                storage_analysis_reader=MySQLStorageAnalysisReader(mysql_runner),
+                real_bus_context_reader=MySQLRealBusContextReader(
+                    runner=mysql_runner,
+                    flight_task_reader=MySQLFlightTaskReader(mysql_runner),
+                ),
+                access_rule_id=args.bus_access_rule_id,
             ),
         ),
     )

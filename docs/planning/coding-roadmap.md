@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已启动（v1 双架次导出、下游读取接口和 partial-data reader 入口已验证，未收口）`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 未开始`
 
 更具体地说：
 
@@ -45,6 +45,8 @@
 - 阶段 F 收口事实统一沉淀于 `docs/planning/stage-f-closure-2026-04-22.md`
 - 已完成阶段 G 最小因果融合原型：`F baseline` vs `F+G(min)` 真实对比实跑、非对称因果注意力诊断与事件贡献导出
 - 阶段 G 收口事实统一沉淀于 `docs/planning/stage-g-closure-2026-04-22.md`
+- 已完成阶段 H 标准化特征导出收口：双流 `validation` profile 三 view 导出、`load_stage_h_feature_run()` 下游读取验证、`20251110...` vehicle-only partial bundle 真实构建
+- 阶段 H 收口事实统一沉淀于 `docs/planning/stage-h-closure-2026-04-27.md`
 
 ## 4. 阶段拆解
 
@@ -373,7 +375,7 @@
 
 状态：
 
-- 已启动（Stage H v1 已实跑，未收口）
+- 已完成（收口完成）
 
 当前前置事实（2026-04-25）：
 
@@ -407,21 +409,35 @@
   - `validation` 默认不加点数上限，但仍可复用显式导出范围；
   - `full_clip` 默认使用 sortie/collect-task clip 边界且不加点数上限。
 - 已在 Stage H 主报告生成逻辑中输出 point-limit 语义，并把 `WARN` view 的失败阈值项写入报告，便于区分“导出失败”和“诊断阈值提醒”。
-- 已补充 partial-data 的 Influx vehicle-only reader 入口；但 `configs/partial-data/stage-h-seed-v1.jsonl` 中的 `20251110_单01_ACT-2_涛_J20_26#01` 仍缺实际 `bucket / time_range / measurement_family`，因此当前仍只能作为标准 manifest seed，不能真实构窗。
-- 已完成一轮 `/tmp` 输出的 Stage H preview 真实冒烟复核：三 view 成功导出，`partial-data` 对 `20251110...` 因缺 `bucket` 被标准记录为 `provider_error`，没有误提升为双流 Stage H。
+- 已将 `20251110_单01_ACT-2_涛_J20_26#01` 的 partial-data seed 补齐为真实 vehicle-only entry：
+  - `bucket=bus`
+  - 时间范围：`2025-11-10T00:00:00Z` 到 `2025-11-11T00:00:00Z`
+  - BUS family：`BUS6000019110027` 到 `BUS6000019110031`
+  - `tag_filters={"sortie_number":"20251110_单01_ACT-2_涛_J20_26#01"}`
+- 已实现 partial-data 的分块 Influx vehicle-only reader、MySQL RealBus 字段过滤、每 `5s` 窗口每字段最多 `32` 点的有界导出。
+- 已完成 Stage H 收口实跑：
+  - 双流 `validation` profile 仍导出 `3` 个 view；
+  - `load_stage_h_feature_run()` 可从 run manifest 读取三 view，三者 `fused_representation.shape` 均为 `(8, 16, 96)`；
+  - `20251110...` vehicle-only partial 生成 `1478` 个窗口样本，`vehicle_only_feature_bundle.npz` 的 `values.shape=(1478, 105, 823)`。
+  - 主报告：`docs/reports/stage-h-closure-2026-04-27.md`
+  - 收口记录：`docs/planning/stage-h-closure-2026-04-27.md`
+  - 机器资产根目录：`artifacts/stage_h/20260427T000000Z-stage-h-closure/`
 
 具体任务：
 
 1. 固化 Stage H v1 导出资产的下游消费接口与版本约定
-   当前状态：已完成首版读取接口与固定键校验。
+   当前状态：已完成读取接口、固定键校验与真实 run manifest 读取验证。
 2. 补齐 partial-data 的真实 vehicle-only 数据范围，使 seed 资产可进入单流样本导出
-   当前状态：reader / builder 入口已实现；`20251110...` 仍等待真实 bucket、时间范围、BUS measurement family 和 tag filters 补齐。
+   当前状态：已完成，`20251110...` 已生成 window manifest 与 feature bundle。
 3. 继续扩展轻量多架次 manifest 盘点，但不提前宣称多架次训练条件已齐备
+   当前状态：转入阶段 I 前置准备，不作为阶段 H 收口阻塞。
 4. 在上述基础上评估阶段 H 收口 gate，而不是仅凭单次脚本成功就直接关阶段
+   当前状态：已完成真实实跑、判据可复现、测试覆盖与文档回写。
 
 退出条件：
 
 - 下游评测不需要直接依赖训练中间脚本
+  当前状态：已满足。阶段 I 默认从 `load_stage_h_feature_run()` 和 partial vehicle-only bundle 消费 Stage H 资产。
 
 ### 阶段 I：下游任务验证
 
@@ -465,7 +481,7 @@
 - Stage G 最小非对称因果融合、事件贡献摘要、注意力热力图与 `F baseline` vs `F+G(min)` 收口对照报告
 - Stage H v1 双架次标准化导出、run/sortie/view 三级 manifest、固定键 `feature_bundle.npz`
 - Stage H feature bundle 下游读取接口：`src/chronaris/features/stage_h_bundle.py`
-- partial-data 标准 manifest、vehicle-only reader / builder 入口
+- partial-data 标准 manifest、vehicle-only reader / builder、真实 vehicle-only feature bundle
 
 对应代码：
 
@@ -476,20 +492,19 @@
 
 ## 6. 当前未完成但最该做的事
 
-阶段 G(min) 已完成收口，阶段 H 已启动但未收口。当前不再优先扩展新模型结构，后续优先级收敛为“补齐 partial-data 真值入口 -> 复核运行 profile -> 准备阶段 I 消费接口”。
+阶段 H 已完成收口，阶段 I 未开始。当前不再优先扩展新模型结构，后续优先级收敛为“用 Stage H 标准资产驱动下游任务验证”。
 
 按优先级排序：
 
-1. 补全 `20251110_单01_ACT-2_涛_J20_26#01` 的 partial-data 真值入口：`bucket`、UTC 时间范围、BUS measurement family、tag filters。
-2. 基于真实 partial entry 生成 `vehicle_only_window_manifest.jsonl` 和 `vehicle_only_feature_bundle.npz`。
-3. 用 `--export-profile validation` 或 `--export-profile full_clip` 对当前两条 Stage H sortie 做一次非 preview 点数上限复核。
-4. 让阶段 I 的最小评测脚本只消费 `load_stage_h_feature_run()`，不再直接依赖 E/F/G 训练中间对象。
-5. 继续做轻量多架次可用性盘点，为后续对比/消融实验准备 manifest。
+1. 让阶段 I 的最小评测脚本只消费 `load_stage_h_feature_run()`，不再直接依赖 E/F/G 训练中间对象。
+2. 明确 `vehicle_only_feature_bundle.npz` 在下游任务中的使用边界：可用于单流预训练/补充诊断，不作为双流融合 view。
+3. 基于 `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json` 做一轮最小任务验证。
+4. 继续做轻量多架次可用性盘点，为后续对比/消融实验准备 manifest。
 
 ## 7. 当前不该提前做的事
 
 1. 提前写完整训练框架
-2. 在 `20251110...` vehicle-only 样本和 Stage H validation/full_clip 复核完成前提前写完整下游任务训练框架
+2. 把 `20251110...` vehicle-only 样本误提升为双流 Stage H 融合样本
 3. 提前写大而全特征工程
 4. 提前设计最终服务化接口
 5. 跳过对比实验直接宣称约束有效
