@@ -6,7 +6,7 @@ import json
 from dataclasses import asdict, dataclass, field, replace
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Mapping, MutableMapping, Sequence
+from typing import Literal, Mapping, MutableMapping, Sequence
 
 import numpy as np
 
@@ -40,6 +40,8 @@ from chronaris.pipelines.partial_data import (
 )
 from chronaris.schema.models import DatasetBuildResult, SortieLocator, WindowConfig
 
+StageHExportProfile = Literal["preview", "validation", "full_clip"]
+
 
 def _default_stage_h_preview_config() -> AlignmentPreviewConfig:
     return AlignmentPreviewConfig(
@@ -72,6 +74,7 @@ class StageHExportConfig:
     output_root: str | Path = "artifacts/stage_h"
     report_path: str | Path = "docs/reports/stage-h-export-v1.md"
     export_version: str = "stage-h-v1"
+    export_profile: StageHExportProfile = "preview"
     window_config: WindowConfig = field(
         default_factory=lambda: WindowConfig(duration_ms=5_000, stride_ms=5_000)
     )
@@ -82,11 +85,47 @@ class StageHExportConfig:
         default_factory=AlignmentProjectionThresholdConfig
     )
     bus_access_rule_id: int = 6000019510066
+    preview_point_limit_per_measurement: int | None = None
     physiology_point_limit_per_measurement: int | None = None
     vehicle_point_limit_per_measurement: int | None = None
     export_scope_overrides_utc: Mapping[str, tuple[datetime, datetime]] = field(default_factory=dict)
     partial_data_config: PartialDataConfig = field(default_factory=PartialDataConfig)
     partial_data_entries: tuple[PartialDataEntry, ...] = field(default_factory=tuple)
+
+    def __post_init__(self) -> None:
+        if self.export_profile not in {"preview", "validation", "full_clip"}:
+            raise ValueError("export_profile must be one of: preview, validation, full_clip.")
+        for field_name in (
+            "preview_point_limit_per_measurement",
+            "physiology_point_limit_per_measurement",
+            "vehicle_point_limit_per_measurement",
+        ):
+            value = getattr(self, field_name)
+            if value is not None and value <= 0:
+                raise ValueError(f"{field_name} must be positive when provided.")
+
+    @property
+    def resolved_physiology_point_limit_per_measurement(self) -> int | None:
+        if self.physiology_point_limit_per_measurement is not None:
+            return self.physiology_point_limit_per_measurement
+        return self.preview_point_limit_per_measurement
+
+    @property
+    def resolved_vehicle_point_limit_per_measurement(self) -> int | None:
+        if self.vehicle_point_limit_per_measurement is not None:
+            return self.vehicle_point_limit_per_measurement
+        return self.preview_point_limit_per_measurement
+
+    @property
+    def point_limit_note(self) -> str:
+        if (
+            self.resolved_physiology_point_limit_per_measurement is None
+            and self.resolved_vehicle_point_limit_per_measurement is None
+        ):
+            return "no per-measurement point cap"
+        if self.export_profile == "preview":
+            return "preview query guard, not a Stage H closure standard"
+        return "explicit per-measurement query cap"
 
 
 @dataclass(frozen=True, slots=True)
@@ -275,7 +314,9 @@ class AlignmentStageHViewRunner:
                         "collect_task_id": str(profile.collect_task_id),
                         "pilot_id": str(view.pilot_id),
                     },
-                    point_limit_per_measurement=self.config.physiology_point_limit_per_measurement,
+                    point_limit_per_measurement=(
+                        self.config.resolved_physiology_point_limit_per_measurement
+                    ),
                 ),
                 vehicle_scope=DirectInfluxScopeConfig(
                     bucket=profile.vehicle_bucket,
@@ -283,7 +324,9 @@ class AlignmentStageHViewRunner:
                     start_time_utc=export_start_utc,
                     stop_time_utc=export_stop_utc,
                     tag_filters={"sortie_number": profile.sortie_id},
-                    point_limit_per_measurement=self.config.vehicle_point_limit_per_measurement,
+                    point_limit_per_measurement=(
+                        self.config.resolved_vehicle_point_limit_per_measurement
+                    ),
                 ),
                 metadata=profile.to_sortie_metadata(),
             ),
@@ -582,6 +625,7 @@ def render_stage_h_report(
         f"# Stage H Export v1 - {config.run_id}",
         "",
         f"- export version: `{config.export_version}`",
+        f"- export profile: `{config.export_profile}`",
         f"- generated at UTC: `{run_manifest.generated_at_utc}`",
         f"- artifact root: `{run_manifest.output_root}`",
         f"- run manifest: `{run_manifest.output_root}/run_manifest.json`",
@@ -599,6 +643,9 @@ def render_stage_h_report(
         f"- intermediate partition: `{config.preview_config.intermediate_partition}`",
         f"- window duration ms: `{config.window_config.duration_ms}`",
         f"- window stride ms: `{config.window_config.stride_ms}`",
+        f"- physiology point limit per measurement: `{config.resolved_physiology_point_limit_per_measurement}`",
+        f"- vehicle point limit per measurement: `{config.resolved_vehicle_point_limit_per_measurement}`",
+        f"- point limit note: `{config.point_limit_note}`",
         "",
         "## Sortie Summary",
         "",
@@ -624,15 +671,26 @@ def render_stage_h_report(
         ]
     )
     for view_manifest in view_manifests:
+        failed_checks = _summarize_failed_diagnostic_checks(view_manifest)
         lines.append(
             "| "
             f"`{view_manifest.view_id}` | "
             f"{view_manifest.window_count} | "
             f"{view_manifest.model_sample_count} | "
-            f"`{view_manifest.projection_diagnostics_verdict}` | "
+            f"`{view_manifest.projection_diagnostics_verdict}`"
+            f"{(' (' + failed_checks + ')') if failed_checks else ''} | "
             f"`{'enabled' if view_manifest.stage_g_available else 'disabled'}` | "
             f"`{view_manifest.artifact_paths['feature_bundle_npz']}` |"
         )
+
+    warn_details = [
+        _render_warn_detail(view_manifest)
+        for view_manifest in view_manifests
+        if view_manifest.projection_diagnostics_verdict != "PASS"
+    ]
+    if warn_details:
+        lines.extend(["", "## Diagnostics Warnings", ""])
+        lines.extend(warn_details)
 
     if run_manifest.partial_data is not None:
         lines.extend(
@@ -669,9 +727,52 @@ def render_stage_h_report(
     return "\n".join(lines)
 
 
+def _summarize_failed_diagnostic_checks(view_manifest: StageHViewManifest) -> str:
+    failed = _load_failed_diagnostic_checks(view_manifest)
+    if not failed:
+        return ""
+    return ", ".join(check["name"] for check in failed)
+
+
+def _render_warn_detail(view_manifest: StageHViewManifest) -> str:
+    failed = _load_failed_diagnostic_checks(view_manifest)
+    if not failed:
+        return f"- `{view_manifest.view_id}`: diagnostics verdict `{view_manifest.projection_diagnostics_verdict}`"
+    details = "; ".join(
+        f"{check['name']}={check['actual']:.6f} {check['operator']} {check['expected']:.6f}"
+        for check in failed
+    )
+    return f"- `{view_manifest.view_id}`: {details}"
+
+
+def _load_failed_diagnostic_checks(view_manifest: StageHViewManifest) -> tuple[dict[str, object], ...]:
+    path = view_manifest.artifact_paths.get("projection_diagnostics_summary_json")
+    if not path:
+        return ()
+    try:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    except OSError:
+        return ()
+    checks = payload.get("threshold_evaluation", {}).get("checks", ())
+    failed = []
+    for check in checks:
+        if check.get("passed"):
+            continue
+        failed.append(
+            {
+                "name": str(check.get("name", "unknown")),
+                "actual": float(check.get("actual", 0.0)),
+                "operator": str(check.get("operator", "?")),
+                "expected": float(check.get("expected", 0.0)),
+            }
+        )
+    return tuple(failed)
+
+
 def _build_run_config_summary(config: StageHExportConfig) -> dict[str, object]:
     return {
         "export_version": config.export_version,
+        "export_profile": config.export_profile,
         "sortie_ids": list(config.sortie_ids),
         "input_normalization_mode": config.preview_config.input_normalization_mode,
         "physics_constraint_family": config.preview_config.physics_constraint_family,
@@ -681,8 +782,10 @@ def _build_run_config_summary(config: StageHExportConfig) -> dict[str, object]:
         "intermediate_partition": config.preview_config.intermediate_partition,
         "window_duration_ms": config.window_config.duration_ms,
         "window_stride_ms": config.window_config.stride_ms,
-        "physiology_point_limit_per_measurement": config.physiology_point_limit_per_measurement,
-        "vehicle_point_limit_per_measurement": config.vehicle_point_limit_per_measurement,
+        "preview_point_limit_per_measurement": config.preview_point_limit_per_measurement,
+        "physiology_point_limit_per_measurement": config.resolved_physiology_point_limit_per_measurement,
+        "vehicle_point_limit_per_measurement": config.resolved_vehicle_point_limit_per_measurement,
+        "point_limit_note": config.point_limit_note,
         "export_scope_overrides_utc": {
             sortie_id: [bounds[0].isoformat(), bounds[1].isoformat()]
             for sortie_id, bounds in config.export_scope_overrides_utc.items()

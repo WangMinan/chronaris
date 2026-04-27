@@ -1,6 +1,7 @@
 # Stage H Export v1 - 20260426T072340Z-stage-h-v1
 
 - export version: `stage-h-v1`
+- export profile: `preview`
 - generated at UTC: `2026-04-26T07:23:40.349020+00:00`
 - artifact root: `artifacts/stage_h/20260426T072340Z-stage-h-v1`
 - run manifest: `artifacts/stage_h/20260426T072340Z-stage-h-v1/run_manifest.json`
@@ -18,6 +19,9 @@
 - intermediate partition: `test`
 - window duration ms: `5000`
 - window stride ms: `5000`
+- physiology point limit per measurement: `500`
+- vehicle point limit per measurement: `500`
+- point limit note: `preview query guard, not a Stage H closure standard`
 
 ## Sortie Summary
 
@@ -30,9 +34,15 @@
 
 | view | windows | model samples | diagnostics | stage G | feature bundle |
 | --- | ---: | ---: | --- | --- | --- |
-| `20251005_四01_ACT-4_云_J20_22#01__pilot_10033` | 37 | 37 | `WARN` | `enabled` | `artifacts/stage_h/20260426T072340Z-stage-h-v1/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz` |
+| `20251005_四01_ACT-4_云_J20_22#01__pilot_10033` | 37 | 37 | `WARN` (projection_cosine_cv, projection_l2_gap_cv) | `enabled` | `artifacts/stage_h/20260426T072340Z-stage-h-v1/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz` |
 | `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035` | 37 | 37 | `PASS` | `enabled` | `artifacts/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz` |
-| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | 37 | 37 | `WARN` | `enabled` | `artifacts/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz` |
+| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | 37 | 37 | `WARN` (projection_cosine_cv) | `enabled` | `artifacts/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz` |
+
+## Diagnostics Warnings
+
+- `20251005_四01_ACT-4_云_J20_22#01__pilot_10033`: `projection_cosine_cv=0.282381 <= 0.150000` 未通过，`projection_l2_gap_cv=0.452307 <= 0.250000` 未通过。
+- `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033`: `projection_cosine_cv=0.231235 <= 0.150000` 未通过。
+- 这些 `WARN` 表示投影诊断的跨样本稳定性阈值提醒，不表示 view 包导出失败；三个 view 的 manifest、feature bundle、window manifest 和 Stage G 摘要均已生成。
 
 ## Partial Data
 
