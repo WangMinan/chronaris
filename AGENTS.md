@@ -99,6 +99,19 @@
   - 阶段 H 收口主报告：`docs/reports/stage-h-closure-2026-04-27.md`
   - 阶段 H 收口机器资产根目录：`artifacts/stage_h/20260427T000000Z-stage-h-closure/`
   - 阶段 H `validation` profile 已验证当前两条双流 sortie 可导出 `3` 个 view，`load_stage_h_feature_run()` 可直接读取 run manifest
+  - 阶段 I `Phase 0 + Phase 1` 已跑通：UAB `87` session manifest、`416` 维 session 特征与双轨 baseline 已导出
+  - 阶段 I 主报告：`docs/reports/stage-i-uab-baseline-2026-04-29.md`
+  - 阶段 I 机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+  - 阶段 I 当前主线样本：`n_back=48`、`heat_the_chair=34`；辅助 `flight_simulator=5`
+  - 阶段 I 当前已确认 `n_back` 有 `9` 个 session 缺失 ECG，但不阻塞当前 CPU baseline
+  - 阶段 I `Phase 2` 已跑通：`3` 个真实双流 view case study、`4` 条 bundle-only 消融与 `WARN` view 主线解释已导出
+  - 阶段 I Phase 2 主报告：`docs/reports/stage-i-case-study-phase2-2026-04-29.md`
+  - 阶段 I Phase 2 机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+  - 阶段 I 当前 `WARN` view：`20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033`
+  - 阶段 I `Phase 3` 代码路径已接入：window-level contract、`UAB window_v2`、`NASA CSM` attention-state、`run_stage_i_phase3.py` orchestration
+  - 阶段 I `Phase 3` synthetic + `python -m unittest discover -s tests -p 'test_*.py'` 已通过
+  - 阶段 I `Phase 3` 真实长跑仍在进行中；在引入最新 `EEG/ECG overlap` 边界修正后，尚未生成新的 closure 级主报告
+  - 阶段 I 当前仍处于 `Phase 3` 真实收口进行中，尚未把阶段 I 标记为 completed
   - partial-data v1 已纳入 repo 标准入口：`configs/partial-data/stage-h-seed-v1.jsonl`
   - partial-data v1 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 `bucket / time_range / measurement_family / tag_filters`
   - partial-data v1 已生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`；该架次仍是 vehicle-only partial-data，不是双流 Stage H view
@@ -137,12 +150,15 @@
 - 阶段 F 完整物理约束族接入与真实库对照收口
 - 阶段 G 最小非对称因果融合接入与真实库对照收口
 - 阶段 H 标准化特征导出、下游读取接口与 vehicle-only partial-data 收口
+- 阶段 I `Phase 0 + Phase 1` UAB 公共数据双轨 baseline
+- 阶段 I `Phase 2` Stage H 真实双流资产 case study
+- 阶段 I `Phase 3` window-level UAB / NASA CSM 代码接入与真实长跑进行中
 
 当前默认判断：
 
 - `阶段 G(min) 已完成`
 - `阶段 H 已完成收口（可进入阶段 I）`
-- `阶段 I 未开始`
+- `阶段 I 已启动（Phase 0 + Phase 1 + Phase 2 已跑通，Phase 3 真实收口进行中）`
 
 阶段 E/F/G/H 默认参考：
 
@@ -188,6 +204,8 @@
 
 - `configs/environments/chronaris-stage-e-cpu.yml`
 - `configs/environments/chronaris-stage-e-gpu.yml`
+- `configs/environments/chronaris-stage-i-cpu.yml`
+- `configs/environments/chronaris-stage-i-gpu.yml`
 
 ## 8. 编码规范
 
@@ -209,10 +227,10 @@
 - 阶段 G 已收口，默认冻结 G(min) 基线（仅修复缺陷，不提前扩展完整因果融合）
 - 阶段 H 已收口，默认冻结 Stage H 导出 contract（仅修复缺陷，不再扩展范围）
 - 阶段 I 当前默认优先：
-  - 用 `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json` 作为最小下游任务输入
-  - 让阶段 I 代码消费 `load_stage_h_feature_run()`，不直接读取 E/F/G 训练中间对象
+  - 保持已完成的 `Phase 2` case-study contract 冻结：继续消费 `load_stage_h_feature_run()`，不回到 E/F/G 训练中间对象
+  - 继续保持 UAB `Phase 0 + Phase 1` contract 冻结，避免在完成第二数据集前回到大而全特征工程
   - 明确 `20251110...` vehicle-only partial bundle 只用于单流预训练/补充诊断，不作为双流融合 view
-  - 在不破坏 frozen E/F/G(min)/H 导出路径的前提下，继续扩展轻量多架次 manifest 盘点
+  - 在不破坏 frozen E/F/G(min)/H 导出路径的前提下，优先接入 `NASA CSM`
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
 

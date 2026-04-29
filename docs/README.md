@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-04-27
+更新时间：2026-04-29
 
 ## 目录说明
 
@@ -16,7 +16,12 @@
 
 - 阶段状态只看 [coding-roadmap.md](planning/coding-roadmap.md)。
 - 阶段 E/F/G/H 的收口依据只看 `docs/planning/stage-*-closure-*.md`。
+- 阶段 I 当前 `Phase 0 + Phase 1 + Phase 2` 的规划与落地记录只看 [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md)。
+- 阶段 I `Phase 3` 当前仍在真实收口中，状态只看 [coding-roadmap.md](planning/coding-roadmap.md)；在 closure 文档生成前，不单独认定为 completed。
 - 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)。
+- 阶段 I 当前阶段主报告：
+  - `Phase 1`：[stage-i-uab-baseline-2026-04-29.md](reports/stage-i-uab-baseline-2026-04-29.md)
+  - `Phase 2`：[stage-i-case-study-phase2-2026-04-29.md](reports/stage-i-case-study-phase2-2026-04-29.md)
 - 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
 ## 分类索引
@@ -37,6 +42,8 @@
 - [stage-f-closure-2026-04-22.md](planning/stage-f-closure-2026-04-22.md)
 - [stage-g-closure-2026-04-22.md](planning/stage-g-closure-2026-04-22.md)
 - [stage-h-closure-2026-04-27.md](planning/stage-h-closure-2026-04-27.md)
+- [stage-i-preparation.md](planning/stage-i-preparation.md)
+- [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md)
 
 ### models
 
@@ -55,6 +62,8 @@
 - [sortie-availability-preview-20251002-act8-j16-12.md](reports/sortie-availability-preview-20251002-act8-j16-12.md)
 - [stage-h-export-v1-2026-04-26.md](reports/stage-h-export-v1-2026-04-26.md)
 - [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)
+- [stage-i-uab-baseline-2026-04-29.md](reports/stage-i-uab-baseline-2026-04-29.md)
+- [stage-i-case-study-phase2-2026-04-29.md](reports/stage-i-case-study-phase2-2026-04-29.md)
 
 ### 选题报告与基金申请书
 

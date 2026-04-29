@@ -12,6 +12,8 @@
 8. `test_alignment_pipeline.py`
 9. `test_alignment_diagnostics.py`
 10. `test_stage_h_export.py`
+11. `test_stage_i_pipeline.py`
+12. `test_stage_i_case_study.py`
 
 测试维护共性规则：
 
@@ -26,5 +28,8 @@
 3. 特征导出格式
 4. Stage H run/sortie/view manifest、feature bundle 读取与 partial-data sidecar
 5. 指标计算与关键评测逻辑
+6. Stage I task manifest、公开数据适配、session 级 baseline 评测
+7. Stage I window contract 兼容读取、UAB window-level workload、NASA CSM attention-state 与 Phase 3 orchestration 落盘
+8. Stage I Phase 2 case-study 资产装载、bundle-only 消融与 WARN 解释
 
 模型效果验证属于实验，不完全等价于单元测试。

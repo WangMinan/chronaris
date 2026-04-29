@@ -67,3 +67,58 @@
   - partial-data sidecar 已支持基于标准 entry 的 Influx vehicle-only reader、MySQL RealBus 字段过滤、Flux 侧 `5s window + 每字段最多 32 点` 下推；若 entry 缺 `bucket / time_range / measurement_family`，会保留为跳过状态而不会被误提升为 Stage H 双流导出
   - 当前 `configs/partial-data/stage-h-seed-v1.jsonl` 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 vehicle-only 范围，并可生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`
   - 可用 `--use-full-clip-scope` 改回 sortie 全 clip 范围；默认仍使用当前 preview-scale export scope
+
+- `prepare_stage_i_dataset.py`
+  - 用本地 `uab_workload_dataset` 或 `nasa_csm` 构建阶段 I `task_manifest.jsonl` 与标准 `feature_table.parquet`
+  - 当前支持：
+    - `--dataset uab --profile session_v1`
+    - `--dataset uab --profile window_v2`
+    - `--dataset nasa_csm --profile window_v2`
+  - 当前固定输出：
+    - `task_manifest.jsonl`
+    - `feature_table.parquet`
+    - `feature_schema.json`
+    - `dataset_summary.json`
+
+- `run_stage_i_baseline.py`
+  - 消费 `prepare_stage_i_dataset.py` 产出的标准资产，按 `dataset/profile/task-family` 运行阶段 I baseline
+  - 当前支持：
+    - UAB workload：`session_v1` / `window_v2`
+    - NASA CSM attention-state：`window_v2`
+  - 当前固定使用 `Leave-One-Subject-Out` 分组
+  - 自动输出：
+    - `objective_metrics.json`
+    - `subjective_metrics.json`
+    - `fold_predictions.csv`
+    - confusion matrix / regression scatter PNG
+    - `docs/reports/stage-i-<dataset>-<profile>-<date>.md`
+
+- `run_stage_i_phase3.py`
+  - 顺序执行阶段 I `Phase 3` 收口流程：
+    - UAB `window_v2` 数据准备
+    - NASA CSM `window_v2` 数据准备
+    - UAB workload 主线 + 消融
+    - NASA attention-state 主线 + 消融
+    - closure summary / 主报告 / planning gate note
+  - 自动输出：
+    - `artifacts/stage_i/<run_id>/uab_window/`
+    - `artifacts/stage_i/<run_id>/nasa_attention/`
+    - `artifacts/stage_i/<run_id>/closure_summary.json`
+    - `docs/reports/stage-i-closure-<date>.md`
+    - `docs/planning/stage-i-closure-<date>.md`
+
+- `run_stage_i_case_study.py`
+  - 消费 `artifacts/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
+  - 当前固定跑：
+    - `projection_refusion_baseline`
+    - `no_event_bias`
+    - `no_state_normalization`
+    - `vehicle_delta_suppressed`
+  - 当前固定纳入全部 `3` 个真实双流 view；`WARN` view 不放附录，而是在主报告中解释
+  - 自动输出：
+    - `case_study_summary.json`
+    - `view_summary.csv`
+    - `ablation_summary.csv`
+    - `window_rankings.csv`
+    - `docs/reports/stage-i-case-study-phase2-<date>.md`
+  - 当前真实主线输出根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
