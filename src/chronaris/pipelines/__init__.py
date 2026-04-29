@@ -45,6 +45,28 @@ from chronaris.pipelines.stage_h_export import (
     StageHViewManifest,
     render_stage_h_report,
 )
+from chronaris.pipelines.stage_i_baseline import (
+    StageIBaselineArtifacts,
+    render_stage_i_baseline_report,
+    render_uab_baseline_report,
+    run_stage_i_baselines,
+    run_uab_baselines,
+    write_baseline_artifacts,
+)
+from chronaris.pipelines.stage_i_case_study import (
+    StageICaseStudyConfig,
+    StageICaseStudyRunResult,
+    render_stage_i_case_study_report,
+    run_stage_i_case_study,
+    write_stage_i_case_study_report,
+)
+from chronaris.pipelines.stage_i_phase3 import (
+    StageIPhase3Config,
+    StageIPhase3RunResult,
+    build_stage_i_dataset_summary,
+    render_stage_i_phase3_report,
+    run_stage_i_phase3,
+)
 
 __all__ = [
     "AlignmentExperimentPipeline",
@@ -65,11 +87,16 @@ __all__ = [
     "PartialMeasurementMetadata",
     "PartialPointChunk",
     "PartialStreamSample",
+    "StageIBaselineArtifacts",
     "VEHICLE_ONLY_FEATURE_BUNDLE_KEYS",
     "StageGCausalFusionConfig",
     "StageGCausalFusionResult",
     "StageGCausalFusionSample",
     "StageGCausalFusionTensorExport",
+    "StageICaseStudyConfig",
+    "StageICaseStudyRunResult",
+    "StageIPhase3Config",
+    "StageIPhase3RunResult",
     "StageHExportConfig",
     "StageHExportProfile",
     "StageHExportPipeline",
@@ -80,9 +107,20 @@ __all__ = [
     "StageHViewManifest",
     "dump_partial_data_entries",
     "export_stage_g_causal_fusion_tensors",
+    "build_stage_i_dataset_summary",
     "load_partial_data_entries",
+    "render_alignment_experiment_report",
+    "render_stage_i_case_study_report",
+    "render_stage_i_baseline_report",
+    "render_stage_i_phase3_report",
     "render_stage_g_causal_fusion_markdown",
     "render_stage_h_report",
+    "render_uab_baseline_report",
+    "run_stage_i_case_study",
+    "run_stage_i_baselines",
+    "run_stage_i_phase3",
     "run_stage_g_causal_fusion",
-    "render_alignment_experiment_report",
+    "run_uab_baselines",
+    "write_stage_i_case_study_report",
+    "write_baseline_artifacts",
 ]

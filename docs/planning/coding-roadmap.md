@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-04-27
+更新时间：2026-04-29
 
 ## 1. 目的
 
@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 未开始`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 已启动（Phase 0 + Phase 1 + Phase 2 已跑通，Phase 3 真实收口进行中）`
 
 更具体地说：
 
@@ -47,6 +47,12 @@
 - 阶段 G 收口事实统一沉淀于 `docs/planning/stage-g-closure-2026-04-22.md`
 - 已完成阶段 H 标准化特征导出收口：双流 `validation` profile 三 view 导出、`load_stage_h_feature_run()` 下游读取验证、`20251110...` vehicle-only partial bundle 真实构建
 - 阶段 H 收口事实统一沉淀于 `docs/planning/stage-h-closure-2026-04-27.md`
+- 已完成阶段 I `Phase 0 + Phase 1`：UAB `87` session manifest、`416` 维 session 特征、双轨 baseline、主报告与机器资产导出
+- 已完成阶段 I `Phase 2`：`3` 个真实双流 view case study、`4` 条 bundle-only 消融、`WARN` view 主线解释与同 sortie 双 pilot 对比
+- 阶段 I `Phase 3` 代码入口已接入：window-level contract、`UAB window_v2`、`NASA CSM` attention-state、通用 baseline runner、`run_stage_i_phase3.py`
+- 阶段 I `Phase 3` synthetic / live-compatible 测试已并入 `test_stage_i_pipeline.py`，`python -m unittest discover -s tests -p 'test_*.py'` 当前通过
+- 阶段 I `Phase 3` 真实长跑仍在进行中；在引入最新 `EEG/ECG overlap` 边界修正后，尚未生成新的 closure 级主报告
+- 阶段 I 当前事实统一沉淀于 `docs/planning/stage-i-data-plan-2026-04-29.md` 与 `docs/reports/stage-i-uab-baseline-2026-04-29.md`
 
 ## 4. 阶段拆解
 
@@ -447,7 +453,14 @@
 
 状态：
 
-- 未开始
+- 进行中（`Phase 0 + Phase 1 + Phase 2` 已跑通，`Phase 3` 真实收口进行中）
+
+总体分期：
+
+1. `Phase 0`：数据 contract / 环境 / 评测入口固化
+2. `Phase 1`：UAB 主数据集双轨 baseline
+3. `Phase 2`：Stage H 真实双流资产 case study
+4. `Phase 3`：NASA CSM 第二公开数据集、对比/消融补齐与阶段 I 收口
 
 优先任务：
 
@@ -458,6 +471,27 @@
 退出条件：
 
 - 至少完成一轮对比实验和一轮消融实验
+
+当前已验证：
+
+- 已完成 UAB `task_manifest.jsonl` 导出：`87` 个 session（`n_back=48`、`heat_the_chair=34`、`flight_simulator=5`）
+- 已完成 `feature_table.parquet` 导出：`416` 维 session 级特征（EEG `404` / ECG `12`）
+- 已确认 `n_back` 有 `9` 个 session 缺失 ECG，但不阻塞当前 CPU baseline
+- 已完成 UAB 客观任务标签分类：
+  - `heat_the_chair` 最优 `logistic_regression`：`macro-F1=0.6173`
+  - `n_back` 最优 `random_forest_classifier`：`macro-F1=0.4966`
+- 已完成 UAB 主观负荷回归：
+  - `heat_the_chair` 最优 `random_forest_regressor`：`RMSE=1.4664`
+  - `n_back` 最优 `random_forest_regressor`：`RMSE=4.5161`
+- 当前机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+- 当前主报告：`docs/reports/stage-i-uab-baseline-2026-04-29.md`
+- 已完成 Phase 2 真实双流 case study：
+  - `3` 个真实双流 view 全部纳入主线（`PASS=2`、`WARN=1`）
+  - `4` 条 bundle-only 路径：`projection_refusion_baseline / no_event_bias / no_state_normalization / vehicle_delta_suppressed`
+  - 已完成同 sortie 双 pilot 对比：`20251002_单01_ACT-8_翼云_J16_12#01`
+  - `vehicle_delta_suppressed` 在 `3` 个 view 上均将 `mean_top_event_score` 压到 `0.0`
+  - 当前 Phase 2 机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+  - 当前 Phase 2 主报告：`docs/reports/stage-i-case-study-phase2-2026-04-29.md`
 
 ## 5. 当前已完成的代码状态
 
@@ -482,6 +516,8 @@
 - Stage H v1 双架次标准化导出、run/sortie/view 三级 manifest、固定键 `feature_bundle.npz`
 - Stage H feature bundle 下游读取接口：`src/chronaris/features/stage_h_bundle.py`
 - partial-data 标准 manifest、vehicle-only reader / builder、真实 vehicle-only feature bundle
+- Stage I task manifest contract、UAB 数据适配、session 级特征导出与 UAB 双轨 baseline
+- Stage I Phase 2 case-study asset loader、bundle-only 消融、`WARN` 解释与中文主报告
 
 对应代码：
 
@@ -492,14 +528,14 @@
 
 ## 6. 当前未完成但最该做的事
 
-阶段 H 已完成收口，阶段 I 未开始。当前不再优先扩展新模型结构，后续优先级收敛为“用 Stage H 标准资产驱动下游任务验证”。
+阶段 H 已完成收口，阶段 I 当前已经进入 `Phase 3` 真实收口阶段。当前不再优先扩展新模型结构，后续优先级收敛为“完成 window-level UAB + NASA CSM 真跑证据，再评估阶段 I 收口 gate”。
 
 按优先级排序：
 
-1. 让阶段 I 的最小评测脚本只消费 `load_stage_h_feature_run()`，不再直接依赖 E/F/G 训练中间对象。
-2. 明确 `vehicle_only_feature_bundle.npz` 在下游任务中的使用边界：可用于单流预训练/补充诊断，不作为双流融合 view。
-3. 基于 `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json` 做一轮最小任务验证。
-4. 继续做轻量多架次可用性盘点，为后续对比/消融实验准备 manifest。
+1. 完成 `Phase 3` 真实长跑，生成 `UAB window + NASA attention` 主结果、消融和 closure summary。
+2. 完成 `Phase 3` 中文主报告与 planning closure 文档回写，再决定是否把阶段 I 标记为 completed。
+3. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
+4. 在不破坏 frozen E/F/G(min)/H 与已完成 Phase 0/1/2 的前提下，评估阶段 I 收口 gate。
 
 ## 7. 当前不该提前做的事
 
