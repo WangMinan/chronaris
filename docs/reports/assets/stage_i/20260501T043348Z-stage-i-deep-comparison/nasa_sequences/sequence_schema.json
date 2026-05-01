@@ -1,0 +1,42 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "sequence_length": 64,
+  "modalities": {
+    "eeg": {
+      "feature_dim": 20,
+      "feature_names": [
+        "EEG_C3",
+        "EEG_C4",
+        "EEG_Cz",
+        "EEG_F3",
+        "EEG_F4",
+        "EEG_F7",
+        "EEG_F8",
+        "EEG_FP1",
+        "EEG_FP2",
+        "EEG_Fz",
+        "EEG_O1",
+        "EEG_O2",
+        "EEG_P3",
+        "EEG_P4",
+        "EEG_POz",
+        "EEG_Pz",
+        "EEG_T3",
+        "EEG_T4",
+        "EEG_T5",
+        "EEG_T6"
+      ],
+      "time_axis_key": "time_axis"
+    },
+    "peripheral": {
+      "feature_dim": 3,
+      "feature_names": [
+        "ECG",
+        "R",
+        "GSR"
+      ],
+      "time_axis_key": "time_axis"
+    }
+  }
+}

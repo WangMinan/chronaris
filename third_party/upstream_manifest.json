@@ -1,0 +1,15 @@
+{
+  "mult": {
+    "upstream_url": "https://github.com/yaohungt/Multimodal-Transformer",
+    "commit": "a670936824ee722c8494fd98d204977a1d663c7a",
+    "snapshot_scope": "full_repository",
+    "local_path": "third_party/mult"
+  },
+  "contiformer": {
+    "upstream_url": "https://github.com/microsoft/SeqML/tree/main/ContiFormer",
+    "seqml_commit": "1ecaa5b28fd14fa30eabf5c7de9fe11444e315ce",
+    "snapshot_scope": "ContiFormer_subdirectory",
+    "local_path": "third_party/contiformer",
+    "upstream_license_copy": "third_party/contiformer/UPSTREAM_LICENSE"
+  }
+}

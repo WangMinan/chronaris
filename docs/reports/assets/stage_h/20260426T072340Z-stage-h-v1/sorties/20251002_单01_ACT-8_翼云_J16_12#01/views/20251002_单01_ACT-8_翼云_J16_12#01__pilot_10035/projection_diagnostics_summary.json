@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "sample_count": 8,
+    "reference_point_count": 16,
+    "mean_projection_cosine": 0.7529256434019355,
+    "min_projection_cosine": 0.4699526597123083,
+    "max_projection_cosine": 0.8575915424507188,
+    "mean_projection_l2_gap": 0.11684641564542245,
+    "mean_projection_l2_ratio": 1.0817856188366561,
+    "std_projection_cosine": 0.09892369431075704,
+    "cv_projection_cosine": 0.1313857419755173,
+    "std_projection_l2_gap": 0.009965117206634152,
+    "cv_projection_l2_gap": 0.08528389297686209,
+    "std_projection_l2_ratio": 0.007924056767181801,
+    "cv_projection_l2_ratio": 0.007324978839803094,
+    "samples": [
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.7903152853902267,
+        "min_projection_cosine": 0.4875048610371696,
+        "max_projection_cosine": 0.8575915424507188,
+        "physiology_projection_l2_mean": 1.1137844865154036,
+        "vehicle_projection_l2_mean": 1.2066867413274356,
+        "projection_l2_gap_mean": 0.12061287591890311,
+        "projection_l2_ratio_mean": 1.0847806307767593
+      },
+      {
+        "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.4911981494838973,
+        "min_projection_cosine": 0.4699526597123083,
+        "max_projection_cosine": 0.5163356147663924,
+        "physiology_projection_l2_mean": 1.4379828552875598,
+        "vehicle_projection_l2_mean": 1.5273874076347986,
+        "projection_l2_gap_mean": 0.09048119373105784,
+        "projection_l2_ratio_mean": 1.0608205352559348
+      }
+    ]
+  },
+  "threshold_evaluation": {
+    "passed": true,
+    "verdict": "PASS",
+    "checks": [
+      {
+        "name": "sample_count",
+        "passed": true,
+        "actual": 8.0,
+        "operator": ">=",
+        "expected": 1.0
+      },
+      {
+        "name": "mean_projection_cosine",
+        "passed": true,
+        "actual": 0.7529256434019355,
+        "operator": ">=",
+        "expected": 0.65
+      },
+      {
+        "name": "mean_projection_l2_gap",
+        "passed": true,
+        "actual": 0.11684641564542245,
+        "operator": "<=",
+        "expected": 0.25
+      },
+      {
+        "name": "mean_projection_l2_ratio_deviation",
+        "passed": true,
+        "actual": 0.08178561883665614,
+        "operator": "<=",
+        "expected": 0.3
+      },
+      {
+        "name": "projection_cosine_cv",
+        "passed": true,
+        "actual": 0.1313857419755173,
+        "operator": "<=",
+        "expected": 0.15
+      },
+      {
+        "name": "projection_l2_gap_cv",
+        "passed": true,
+        "actual": 0.08528389297686209,
+        "operator": "<=",
+        "expected": 0.25
+      }
+    ]
+  }
+}

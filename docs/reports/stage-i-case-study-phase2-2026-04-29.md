@@ -1,8 +1,8 @@
 # Stage I Phase 2 Case Study - 20260429T000000Z-stage-i-phase2-case-study
 
 - generated at UTC: `2026-04-29T03:26:29.113999Z`
-- Stage H run manifest: `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
-- artifact root: `artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study`
+- Stage H run manifest: `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
+- artifact root: `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study`
 - report path: `docs/reports/stage-i-case-study-phase2-2026-04-29.md`
 - top-k windows per view: `5`
 
@@ -102,8 +102,8 @@
 
 ## Machine Artifacts
 
-- summary json: `artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/case_study_summary.json`
-- view summary csv: `artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/view_summary.csv`
-- ablation summary csv: `artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/ablation_summary.csv`
-- window rankings csv: `artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/window_rankings.csv`
+- summary json: `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/case_study_summary.json`
+- view summary csv: `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/view_summary.csv`
+- ablation summary csv: `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/ablation_summary.csv`
+- window rankings csv: `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/window_rankings.csv`
 

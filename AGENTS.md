@@ -91,27 +91,39 @@
   - 阶段 G 已导出因果注意力热力图、事件贡献 JSON/CSV 与 `96` 维最小融合表示
   - 阶段 H v1 双架次标准化导出已实跑：`20251005` 导出 `1` 个 view，`20251002` 导出 `2` 个 view
   - 阶段 H v1 主报告：`docs/reports/stage-h-export-v1-2026-04-26.md`
-  - 阶段 H v1 机器资产根目录：`artifacts/stage_h/20260426T072340Z-stage-h-v1/`
+  - 阶段 H v1 机器资产根目录：`docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/`
   - 阶段 H v1 已补齐下游读取接口：`src/chronaris/features/stage_h_bundle.py`
   - 阶段 H 默认 `preview` profile 的每 measurement `500` 点上限是查询防护，不是收口标准；`validation/full_clip` 可取消默认点数上限
   - 阶段 H 报告里的 `WARN` 是投影诊断阈值提醒，不代表 view 包导出失败
   - 阶段 H 收口已完成：`docs/planning/stage-h-closure-2026-04-27.md`
   - 阶段 H 收口主报告：`docs/reports/stage-h-closure-2026-04-27.md`
-  - 阶段 H 收口机器资产根目录：`artifacts/stage_h/20260427T000000Z-stage-h-closure/`
+  - 阶段 H 收口机器资产根目录：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/`
   - 阶段 H `validation` profile 已验证当前两条双流 sortie 可导出 `3` 个 view，`load_stage_h_feature_run()` 可直接读取 run manifest
   - 阶段 I `Phase 0 + Phase 1` 已跑通：UAB `87` session manifest、`416` 维 session 特征与双轨 baseline 已导出
-  - 阶段 I 主报告：`docs/reports/stage-i-uab-baseline-2026-04-29.md`
-  - 阶段 I 机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+  - 阶段 I `Phase 0 + Phase 1` 主报告：`docs/reports/stage-i-uab-baseline-2026-04-29.md`
+  - 阶段 I `Phase 0 + Phase 1` 机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
   - 阶段 I 当前主线样本：`n_back=48`、`heat_the_chair=34`；辅助 `flight_simulator=5`
   - 阶段 I 当前已确认 `n_back` 有 `9` 个 session 缺失 ECG，但不阻塞当前 CPU baseline
   - 阶段 I `Phase 2` 已跑通：`3` 个真实双流 view case study、`4` 条 bundle-only 消融与 `WARN` view 主线解释已导出
   - 阶段 I Phase 2 主报告：`docs/reports/stage-i-case-study-phase2-2026-04-29.md`
-  - 阶段 I Phase 2 机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+  - 阶段 I Phase 2 机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
   - 阶段 I 当前 `WARN` view：`20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033`
-  - 阶段 I `Phase 3` 代码路径已接入：window-level contract、`UAB window_v2`、`NASA CSM` attention-state、`run_stage_i_phase3.py` orchestration
-  - 阶段 I `Phase 3` synthetic + `python -m unittest discover -s tests -p 'test_*.py'` 已通过
-  - 阶段 I `Phase 3` 真实长跑仍在进行中；在引入最新 `EEG/ECG overlap` 边界修正后，尚未生成新的 closure 级主报告
-  - 阶段 I 当前仍处于 `Phase 3` 真实收口进行中，尚未把阶段 I 标记为 completed
+  - 阶段 I `Phase 3` 已完成：UAB `window_v2` workload 主线、NASA CSM attention-state 主线、cross-dataset window count 图、UAB session-vs-window 对比图与 closure summary 已落盘
+  - 阶段 I `Phase 3` UAB window 主报告：`docs/reports/stage-i-uab-window-baseline-2026-04-29.md`
+  - 阶段 I `Phase 3` NASA 主报告：`docs/reports/stage-i-nasa-attention-baseline-2026-04-29.md`
+  - 阶段 I 收口主报告：`docs/reports/stage-i-closure-2026-04-30.md`
+  - 阶段 I 收口记录：`docs/planning/stage-i-closure-2026-04-30.md`
+  - 阶段 I 收口机器资产根目录：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
+  - 阶段 I 收口测试：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_pipeline` 与 `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'` 均已通过
+  - 阶段 I 增强实验第一批已实跑：`stage_h_case` sequence contract、`MulT / ContiFormer` 真实 sortie smoke comparison 已落盘
+  - 阶段 I 增强实验第一批主报告：`docs/reports/stage-i-real-sortie-deep-comparison-2026-05-01.md`
+  - 阶段 I 增强实验第一批机器资产根目录：`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`
+  - 阶段 I 增强实验第二批 probe 已实跑：`UAB / NASA` sequence 导出与统一 comparison probe 已落盘
+  - 阶段 I 增强实验第二批 probe 主报告：`docs/reports/stage-i-deep-comparison-probe-2026-05-01.md`
+  - 阶段 I 增强实验第二批 probe 机器资产根目录：`docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/`
+  - 阶段 I 增强实验第二批 full LOSO 已实跑：`UAB / NASA` 双模型实跑与统一 comparison summary 已落盘
+  - 阶段 I 增强实验第二批 full LOSO 主报告：`docs/reports/stage-i-deep-comparison-full-loso-2026-05-01.md`
+  - 阶段 I 增强实验第二批 full LOSO 机器资产根目录：`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`
   - partial-data v1 已纳入 repo 标准入口：`configs/partial-data/stage-h-seed-v1.jsonl`
   - partial-data v1 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 `bucket / time_range / measurement_family / tag_filters`
   - partial-data v1 已生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`；该架次仍是 vehicle-only partial-data，不是双流 Stage H view
@@ -152,13 +164,15 @@
 - 阶段 H 标准化特征导出、下游读取接口与 vehicle-only partial-data 收口
 - 阶段 I `Phase 0 + Phase 1` UAB 公共数据双轨 baseline
 - 阶段 I `Phase 2` Stage H 真实双流资产 case study
-- 阶段 I `Phase 3` window-level UAB / NASA CSM 代码接入与真实长跑进行中
+- 阶段 I `Phase 3` window-level UAB / NASA CSM 真跑、对比/消融与 closure 收口
+- 阶段 I 增强实验第一批真实 sortie deep baseline
+- 阶段 I 增强实验第二批公开数据 probe comparison
 
 当前默认判断：
 
 - `阶段 G(min) 已完成`
 - `阶段 H 已完成收口（可进入阶段 I）`
-- `阶段 I 已启动（Phase 0 + Phase 1 + Phase 2 已跑通，Phase 3 真实收口进行中）`
+- `阶段 I 已完成收口`
 
 阶段 E/F/G/H 默认参考：
 
@@ -176,6 +190,10 @@
 
 - 平台：Windows
 - 默认环境：`D:\env\anaconda3\envs\chronaris`
+- 默认要求：除非明确说明只做静态文本处理，否则本仓库相关的 Python 运行、测试、脚本验证默认都在 `chronaris` conda 环境内执行，不要默认落到 `base`
+- 推荐启动方式：
+  - Windows：`conda activate chronaris`
+  - WSL / Linux 显式解释器：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
 - 主要用途：
   - 文档整理
   - 协议与纯 Python 模块开发
@@ -193,11 +211,16 @@
 - 训练平台：WSL Ubuntu 22.04 + RTX 4090
 - 备用：家里工作站 WSL Ubuntu 22.04 + RTX 4070 Ti
 - 默认环境：`/home/wangminan/env/anaconda3/envs/chronaris`
+- 强制约定：远程环境下的训练、评测、artifact 构建、`unittest`、阶段脚本实跑，默认一律使用 `chronaris` conda 环境；不要因为 shell 停在 `base` 就直接运行
+- 推荐执行方式：
+  - 先激活：`conda activate chronaris`
+  - 或显式调用：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python <script>`
 
 当前已知：
 
 - 从 windows 机器可探测到 SSH 入口，已配置公钥免密
 - `chronaris` 环境已可用并能执行阶段 E runtime 测试与真实训练回归
+- 如果出现“当前 namespace 正确但缺包”的情况，先检查是否误用了 `base` 或其他解释器，再判断是否真缺依赖
 - 当前数据库服务跑在 Docker 中，但 MySQL `3306` 与 InfluxDB `8086` 已映射到本机端口；真实验证默认优先使用 `127.0.0.1` 访问，不要先假设宿主机原生服务。
 
 环境依赖文件位置：
@@ -222,6 +245,7 @@
 
 - 继续研究主线时，默认先看 `docs/planning/coding-roadmap.md`
 - 需要规划“单轮会话如何收敛”时，默认同步参考 `docs/planning/iteration-playbook.md`
+- 运行任何 Python 脚本、测试、基准或收口命令前，默认先确认解释器属于 `chronaris` 环境；若有歧义，优先使用显式解释器路径 `/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
 - 阶段 E 已收口，默认冻结阶段 E 基线（仅修复缺陷，不再扩展范围）
 - 阶段 F 已收口，默认冻结阶段 F 基线（仅修复缺陷，不再扩展范围）
 - 阶段 G 已收口，默认冻结 G(min) 基线（仅修复缺陷，不提前扩展完整因果融合）

@@ -1,0 +1,62 @@
+{
+  "dataset_id": "nasa_csm",
+  "generated_at_utc": "2026-04-29T08:26:03.874457Z",
+  "entry_count": 16609,
+  "recording_count": 68,
+  "window_count": 16609,
+  "sample_granularity_counts": {
+    "window": 16609
+  },
+  "subset_counts": {
+    "benchmark": 3441,
+    "loft": 13168
+  },
+  "subset_source_counts": {
+    "benchmark": {
+      "benchmark": 3441
+    },
+    "loft": {
+      "loft": 13168
+    }
+  },
+  "training_role_counts": {
+    "primary": 2810,
+    "inventory_only": 13799
+  },
+  "split_group_count": 17,
+  "task_family_counts": {
+    "attention_state": 16609
+  },
+  "label_distribution": {
+    "attention_state": {
+      "2": 2332,
+      "0": 13799,
+      "5": 294,
+      "1": 184
+    }
+  },
+  "objective_label_distributions": {
+    "benchmark": {
+      "2": 1205,
+      "0": 1990,
+      "5": 158,
+      "1": 88
+    },
+    "loft": {
+      "0": 11809,
+      "1": 96,
+      "2": 1127,
+      "5": 136
+    }
+  },
+  "subjective_target_counts": {},
+  "feature_count": 92,
+  "feature_group_counts": {
+    "eeg": 80,
+    "peripheral": 12
+  },
+  "eeg_feature_count": 80,
+  "ecg_feature_count": 0,
+  "peripheral_feature_count": 12,
+  "missing_ecg_session_counts": {}
+}

@@ -2,6 +2,10 @@
 
 `chronaris` 用于承接航空人机异构时序数据的下游研究与原型实现。
 
+仓库内所有 Python 脚本、测试、阶段收口命令默认显式使用 `chronaris` 解释器：
+
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
+
 当前仓库的目标不是重复做上游接收入库，而是围绕已经进入 InfluxDB 的生理/航电数据和已经进入 MySQL 的业务元数据，逐步实现下面这条链路：
 
 1. 数据访问与统一表达

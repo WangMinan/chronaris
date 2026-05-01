@@ -19,6 +19,15 @@ from chronaris.features.stage_i_features import (
     build_nasa_csm_feature_table,
     build_uab_feature_table,
 )
+from chronaris.features.stage_i_sequences import (
+    DEFAULT_SEQUENCE_STEPS,
+    REAL_SORTIE_V1,
+    STAGE_H_CASE_DATASET_ID,
+    StageISequencePreparationPayload,
+    prepare_nasa_sequences,
+    prepare_stage_h_case_sequences,
+    prepare_uab_sequences,
+)
 from chronaris.features.stage_h_bundle import (
     STAGE_H_FEATURE_KEYS,
     StageHFeatureRun,
@@ -31,11 +40,15 @@ __all__ = [
     "E0ExperimentSample",
     "E0InputConfig",
     "NumericStreamMatrix",
+    "DEFAULT_SEQUENCE_STEPS",
+    "REAL_SORTIE_V1",
     "STAGE_H_FEATURE_KEYS",
+    "STAGE_H_CASE_DATASET_ID",
     "StageICaseStudyRunInput",
     "StageICaseStudyViewInput",
     "StageICaseStudyWindowRow",
     "StageIFeatureTableResult",
+    "StageISequencePreparationPayload",
     "StageHFeatureRun",
     "StageHFeatureView",
     "build_e0_experiment_samples",
@@ -45,5 +58,8 @@ __all__ = [
     "build_uab_feature_table",
     "load_stage_h_feature_run",
     "load_stage_h_feature_view",
+    "prepare_nasa_sequences",
+    "prepare_stage_h_case_sequences",
+    "prepare_uab_sequences",
     "summarize_e0_samples",
 ]

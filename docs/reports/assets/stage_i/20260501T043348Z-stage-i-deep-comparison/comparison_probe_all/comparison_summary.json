@@ -1,0 +1,728 @@
+{
+  "generated_at_utc": "2026-05-01T10:05:44.839908Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all",
+  "dataset_order": [
+    "stage_h_case",
+    "uab_workload_dataset",
+    "nasa_csm"
+  ],
+  "model_names": [
+    "mult",
+    "contiformer"
+  ],
+  "datasets": {
+    "stage_h_case": {
+      "status": "completed",
+      "models": {
+        "mult": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "stage_h_case",
+            "profile": "real_sortie_v1",
+            "model_name": "mult",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences",
+            "smoke_training_target": "projection_diagnostics_verdict_code",
+            "view_count": 3,
+            "sample_count": 24,
+            "view_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/view_summary.csv",
+            "sample_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/sample_summary.csv",
+            "pilot_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/pilot_summary.csv",
+            "plot_paths": {
+              "view_representation_stability": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/plots/view_representation_stability.png",
+              "event_mask_interference": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/plots/event_mask_interference.png"
+            },
+            "view_metrics": [
+              {
+                "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+                "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9998231358517053,
+                "mean_attention_entropy": 2.7360392212867737,
+                "top_event_concentration": 0.0800868347287178,
+                "event_mask_interference": 0.1235748901963234
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10035,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9527341616243332,
+                "mean_attention_entropy": 2.72572124004364,
+                "top_event_concentration": 0.11711434926837683,
+                "event_mask_interference": 0.058188438415527344
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "WARN",
+                "sample_count": 8,
+                "representation_stability": 0.9726219969753294,
+                "mean_attention_entropy": 2.75015527009964,
+                "top_event_concentration": 0.10435506328940392,
+                "event_mask_interference": 0.15091662853956223
+              }
+            ],
+            "pilot_metrics": [
+              {
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "reference_pilot_id": 10033,
+                "comparison_pilot_id": 10035,
+                "delta_representation_stability": -0.01988783535099614,
+                "delta_attention_entropy": -0.024434030055999756,
+                "delta_top_event_concentration": 0.012759285978972912,
+                "delta_event_mask_interference": -0.09272819012403488
+              }
+            ],
+            "verdict_counts": {
+              "PASS": 16,
+              "WARN": 8
+            }
+          }
+        },
+        "contiformer": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "stage_h_case",
+            "profile": "real_sortie_v1",
+            "model_name": "contiformer",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences",
+            "smoke_training_target": "projection_diagnostics_verdict_code",
+            "view_count": 3,
+            "sample_count": 24,
+            "view_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/view_summary.csv",
+            "sample_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/sample_summary.csv",
+            "pilot_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/pilot_summary.csv",
+            "plot_paths": {
+              "view_representation_stability": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/plots/view_representation_stability.png",
+              "event_mask_interference": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/plots/event_mask_interference.png"
+            },
+            "view_metrics": [
+              {
+                "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+                "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9265633829242401,
+                "mean_attention_entropy": 2.770962357521057,
+                "top_event_concentration": 0.06709280144423246,
+                "event_mask_interference": 0.11525274068117142
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10035,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9660867819801189,
+                "mean_attention_entropy": 2.7436560094356537,
+                "top_event_concentration": 0.0924281058833003,
+                "event_mask_interference": 0.10381997376680374
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "WARN",
+                "sample_count": 8,
+                "representation_stability": 0.9502256049516241,
+                "mean_attention_entropy": 2.7626210749149323,
+                "top_event_concentration": 0.08548432122915983,
+                "event_mask_interference": 0.12321030348539352
+              }
+            ],
+            "pilot_metrics": [
+              {
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "reference_pilot_id": 10033,
+                "comparison_pilot_id": 10035,
+                "delta_representation_stability": 0.015861177028494766,
+                "delta_attention_entropy": -0.018965065479278564,
+                "delta_top_event_concentration": 0.006943784654140472,
+                "delta_event_mask_interference": -0.019390329718589783
+              }
+            ],
+            "verdict_counts": {
+              "PASS": 16,
+              "WARN": 8
+            }
+          }
+        }
+      }
+    },
+    "uab_workload_dataset": {
+      "status": "completed",
+      "models": {
+        "mult": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "uab_workload_dataset",
+            "profile": "window_v2",
+            "model_name": "mult",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences",
+            "objective": {
+              "track": "objective",
+              "model_name": "mult",
+              "groups": {
+                "n_back": {
+                  "sample_count": 1888,
+                  "fold_count": 1,
+                  "label_order": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "macro_f1": 0.1600814056168299,
+                  "balanced_accuracy": 0.20405987916558554,
+                  "per_class_recall": {
+                    "0": 0.0015455950540958269,
+                    "1": 0.22364217252396165,
+                    "2": 0.38699186991869916
+                  },
+                  "confusion_matrix": [
+                    [
+                      1,
+                      256,
+                      390
+                    ],
+                    [
+                      11,
+                      140,
+                      475
+                    ],
+                    [
+                      0,
+                      377,
+                      238
+                    ]
+                  ]
+                },
+                "heat_the_chair": {
+                  "sample_count": 324,
+                  "fold_count": 1,
+                  "label_order": [
+                    0,
+                    1
+                  ],
+                  "macro_f1": 0.3360655737704918,
+                  "balanced_accuracy": 0.5,
+                  "per_class_recall": {
+                    "0": 0.0,
+                    "1": 1.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      160
+                    ],
+                    [
+                      0,
+                      164
+                    ]
+                  ]
+                }
+              },
+              "plot_paths": {
+                "objective_n_back_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/plots/objective_n_back_confusion_matrix.png",
+                "objective_heat_the_chair_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/plots/objective_heat_the_chair_confusion_matrix.png",
+                "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/plots/objective_primary_metrics.png"
+              }
+            },
+            "subjective": {
+              "track": "subjective",
+              "model_name": "mult",
+              "groups": {
+                "n_back": {
+                  "sample_count": 1888,
+                  "fold_count": 1,
+                  "mae": 5.779193071017073,
+                  "rmse": 6.865814659799225,
+                  "r2": -0.39454845518673354,
+                  "spearman": 0.016880883715260298
+                },
+                "heat_the_chair": {
+                  "sample_count": 324,
+                  "fold_count": 1,
+                  "mae": 0.9468681561404172,
+                  "rmse": 1.2452452980880935,
+                  "r2": -1.7571061863591657,
+                  "spearman": -0.06895010005390322
+                }
+              },
+              "plot_paths": {
+                "subjective_n_back_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/plots/subjective_n_back_regression.png",
+                "subjective_heat_the_chair_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/plots/subjective_heat_the_chair_regression.png",
+                "subjective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/plots/subjective_primary_metrics.png"
+              }
+            },
+            "reference_comparison": {
+              "objective": {
+                "n_back": {
+                  "macro_f1": 0.34776469149030814,
+                  "balanced_accuracy": 0.36246600531768225,
+                  "sample_count": 28052.0
+                },
+                "heat_the_chair": {
+                  "macro_f1": 0.5404767483230504,
+                  "balanced_accuracy": 0.5404704649205386,
+                  "sample_count": 5440.0
+                }
+              },
+              "subjective": {
+                "n_back": {
+                  "rmse": 10.223413421909578,
+                  "mae": 4.798697119158675,
+                  "sample_count": 28052.0
+                },
+                "heat_the_chair": {
+                  "rmse": 1.8639105911346199,
+                  "mae": 1.2785132457477062,
+                  "sample_count": 5440.0
+                }
+              }
+            }
+          }
+        },
+        "contiformer": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "uab_workload_dataset",
+            "profile": "window_v2",
+            "model_name": "contiformer",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences",
+            "objective": {
+              "track": "objective",
+              "model_name": "contiformer",
+              "groups": {
+                "n_back": {
+                  "sample_count": 1888,
+                  "fold_count": 1,
+                  "label_order": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "macro_f1": 0.17015121630506247,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "0": 1.0,
+                    "1": 0.0,
+                    "2": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      647,
+                      0,
+                      0
+                    ],
+                    [
+                      626,
+                      0,
+                      0
+                    ],
+                    [
+                      615,
+                      0,
+                      0
+                    ]
+                  ]
+                },
+                "heat_the_chair": {
+                  "sample_count": 324,
+                  "fold_count": 1,
+                  "label_order": [
+                    0,
+                    1
+                  ],
+                  "macro_f1": 0.3305785123966942,
+                  "balanced_accuracy": 0.5,
+                  "per_class_recall": {
+                    "0": 1.0,
+                    "1": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      160,
+                      0
+                    ],
+                    [
+                      164,
+                      0
+                    ]
+                  ]
+                }
+              },
+              "plot_paths": {
+                "objective_n_back_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/plots/objective_n_back_confusion_matrix.png",
+                "objective_heat_the_chair_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/plots/objective_heat_the_chair_confusion_matrix.png",
+                "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/plots/objective_primary_metrics.png"
+              }
+            },
+            "subjective": {
+              "track": "subjective",
+              "model_name": "contiformer",
+              "groups": {
+                "n_back": {
+                  "sample_count": 1888,
+                  "fold_count": 1,
+                  "mae": 5.217400609341971,
+                  "rmse": 5.892184605250488,
+                  "r2": -0.027074975389436373,
+                  "spearman": NaN
+                },
+                "heat_the_chair": {
+                  "sample_count": 324,
+                  "fold_count": 1,
+                  "mae": 1.8741135244016294,
+                  "rmse": 2.018592521650436,
+                  "r2": -6.245043402950184,
+                  "spearman": NaN
+                }
+              },
+              "plot_paths": {
+                "subjective_n_back_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/plots/subjective_n_back_regression.png",
+                "subjective_heat_the_chair_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/plots/subjective_heat_the_chair_regression.png",
+                "subjective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/plots/subjective_primary_metrics.png"
+              }
+            },
+            "reference_comparison": {
+              "objective": {
+                "n_back": {
+                  "macro_f1": 0.34776469149030814,
+                  "balanced_accuracy": 0.36246600531768225,
+                  "sample_count": 28052.0
+                },
+                "heat_the_chair": {
+                  "macro_f1": 0.5404767483230504,
+                  "balanced_accuracy": 0.5404704649205386,
+                  "sample_count": 5440.0
+                }
+              },
+              "subjective": {
+                "n_back": {
+                  "rmse": 10.223413421909578,
+                  "mae": 4.798697119158675,
+                  "sample_count": 28052.0
+                },
+                "heat_the_chair": {
+                  "rmse": 1.8639105911346199,
+                  "mae": 1.2785132457477062,
+                  "sample_count": 5440.0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "nasa_csm": {
+      "status": "completed",
+      "models": {
+        "mult": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "nasa_csm",
+            "profile": "window_v2",
+            "model_name": "mult",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences",
+            "objective": {
+              "track": "objective",
+              "model_name": "mult",
+              "groups": {
+                "benchmark_only": {
+                  "sample_count": 87,
+                  "fold_count": 1,
+                  "label_order": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "macro_f1": 0.29957805907172996,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "1": 0.0,
+                    "2": 1.0,
+                    "5": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      6,
+                      0
+                    ],
+                    [
+                      0,
+                      71,
+                      0
+                    ],
+                    [
+                      0,
+                      10,
+                      0
+                    ]
+                  ]
+                },
+                "loft_only": {
+                  "sample_count": 100,
+                  "fold_count": 1,
+                  "label_order": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "macro_f1": 0.3082437275985663,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "1": 0.0,
+                    "2": 1.0,
+                    "5": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      6,
+                      0
+                    ],
+                    [
+                      0,
+                      86,
+                      0
+                    ],
+                    [
+                      0,
+                      8,
+                      0
+                    ]
+                  ]
+                },
+                "combined": {
+                  "sample_count": 187,
+                  "fold_count": 1,
+                  "label_order": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "macro_f1": 0.30426356589147285,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "1": 0.0,
+                    "2": 1.0,
+                    "5": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      12,
+                      0
+                    ],
+                    [
+                      0,
+                      157,
+                      0
+                    ],
+                    [
+                      0,
+                      18,
+                      0
+                    ]
+                  ]
+                }
+              },
+              "plot_paths": {
+                "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/plots/objective_benchmark_only_confusion_matrix.png",
+                "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/plots/objective_loft_only_confusion_matrix.png",
+                "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/plots/objective_combined_confusion_matrix.png",
+                "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/plots/objective_primary_metrics.png"
+              }
+            },
+            "subjective": null,
+            "reference_comparison": {
+              "objective": {
+                "benchmark_only": {
+                  "macro_f1": 0.4641561353985333,
+                  "balanced_accuracy": 0.4905424988898386,
+                  "sample_count": 1451.0
+                },
+                "loft_only": {
+                  "macro_f1": 0.3723186247618541,
+                  "balanced_accuracy": 0.38077459244567397,
+                  "sample_count": 1359.0
+                },
+                "combined": {
+                  "macro_f1": 0.3741024976765464,
+                  "balanced_accuracy": 0.37649783482140214,
+                  "sample_count": 2810.0
+                }
+              },
+              "subjective": {}
+            }
+          }
+        },
+        "contiformer": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "nasa_csm",
+            "profile": "window_v2",
+            "model_name": "contiformer",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences",
+            "objective": {
+              "track": "objective",
+              "model_name": "contiformer",
+              "groups": {
+                "benchmark_only": {
+                  "sample_count": 87,
+                  "fold_count": 1,
+                  "label_order": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "macro_f1": 0.29957805907172996,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "1": 0.0,
+                    "2": 1.0,
+                    "5": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      6,
+                      0
+                    ],
+                    [
+                      0,
+                      71,
+                      0
+                    ],
+                    [
+                      0,
+                      10,
+                      0
+                    ]
+                  ]
+                },
+                "loft_only": {
+                  "sample_count": 100,
+                  "fold_count": 1,
+                  "label_order": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "macro_f1": 0.3082437275985663,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "1": 0.0,
+                    "2": 1.0,
+                    "5": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      6,
+                      0
+                    ],
+                    [
+                      0,
+                      86,
+                      0
+                    ],
+                    [
+                      0,
+                      8,
+                      0
+                    ]
+                  ]
+                },
+                "combined": {
+                  "sample_count": 187,
+                  "fold_count": 1,
+                  "label_order": [
+                    1,
+                    2,
+                    5
+                  ],
+                  "macro_f1": 0.30426356589147285,
+                  "balanced_accuracy": 0.3333333333333333,
+                  "per_class_recall": {
+                    "1": 0.0,
+                    "2": 1.0,
+                    "5": 0.0
+                  },
+                  "confusion_matrix": [
+                    [
+                      0,
+                      12,
+                      0
+                    ],
+                    [
+                      0,
+                      157,
+                      0
+                    ],
+                    [
+                      0,
+                      18,
+                      0
+                    ]
+                  ]
+                }
+              },
+              "plot_paths": {
+                "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/plots/objective_benchmark_only_confusion_matrix.png",
+                "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/plots/objective_loft_only_confusion_matrix.png",
+                "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/plots/objective_combined_confusion_matrix.png",
+                "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/plots/objective_primary_metrics.png"
+              }
+            },
+            "subjective": null,
+            "reference_comparison": {
+              "objective": {
+                "benchmark_only": {
+                  "macro_f1": 0.4641561353985333,
+                  "balanced_accuracy": 0.4905424988898386,
+                  "sample_count": 1451.0
+                },
+                "loft_only": {
+                  "macro_f1": 0.3723186247618541,
+                  "balanced_accuracy": 0.38077459244567397,
+                  "sample_count": 1359.0
+                },
+                "combined": {
+                  "macro_f1": 0.3741024976765464,
+                  "balanced_accuracy": 0.37649783482140214,
+                  "sample_count": 2810.0
+                }
+              },
+              "subjective": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

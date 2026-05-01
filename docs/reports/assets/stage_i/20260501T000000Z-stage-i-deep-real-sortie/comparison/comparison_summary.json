@@ -1,0 +1,170 @@
+{
+  "generated_at_utc": "2026-05-01T04:23:57.590354Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison",
+  "dataset_order": [
+    "stage_h_case",
+    "uab_workload_dataset",
+    "nasa_csm"
+  ],
+  "model_names": [
+    "mult",
+    "contiformer"
+  ],
+  "datasets": {
+    "stage_h_case": {
+      "status": "completed",
+      "models": {
+        "mult": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "stage_h_case",
+            "profile": "real_sortie_v1",
+            "model_name": "mult",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences",
+            "smoke_training_target": "projection_diagnostics_verdict_code",
+            "view_count": 3,
+            "sample_count": 24,
+            "view_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/view_summary.csv",
+            "sample_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/sample_summary.csv",
+            "pilot_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/pilot_summary.csv",
+            "plot_paths": {
+              "view_representation_stability": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/plots/view_representation_stability.png",
+              "event_mask_interference": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/plots/event_mask_interference.png"
+            },
+            "view_metrics": [
+              {
+                "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+                "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.974266699439394,
+                "mean_attention_entropy": 2.754592716693878,
+                "top_event_concentration": 0.09530456457287073,
+                "event_mask_interference": 0.12909016013145447
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10035,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9529781233705734,
+                "mean_attention_entropy": 2.767657160758972,
+                "top_event_concentration": 0.07738610357046127,
+                "event_mask_interference": 0.09513489902019501
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "WARN",
+                "sample_count": 8,
+                "representation_stability": 0.9445333909334657,
+                "mean_attention_entropy": 2.759103775024414,
+                "top_event_concentration": 0.07675605826079845,
+                "event_mask_interference": 0.13257579505443573
+              }
+            ],
+            "pilot_metrics": [
+              {
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "reference_pilot_id": 10033,
+                "comparison_pilot_id": 10035,
+                "delta_representation_stability": 0.00844473243710775,
+                "delta_attention_entropy": 0.008553385734558105,
+                "delta_top_event_concentration": 0.0006300453096628189,
+                "delta_event_mask_interference": -0.03744089603424072
+              }
+            ],
+            "verdict_counts": {
+              "PASS": 16,
+              "WARN": 8
+            }
+          }
+        },
+        "contiformer": {
+          "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer",
+          "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/deep_baseline_summary.json",
+          "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/deep_baseline_report.md",
+          "summary": {
+            "dataset_id": "stage_h_case",
+            "profile": "real_sortie_v1",
+            "model_name": "contiformer",
+            "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer",
+            "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences",
+            "smoke_training_target": "projection_diagnostics_verdict_code",
+            "view_count": 3,
+            "sample_count": 24,
+            "view_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/view_summary.csv",
+            "sample_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/sample_summary.csv",
+            "pilot_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/pilot_summary.csv",
+            "plot_paths": {
+              "view_representation_stability": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/plots/view_representation_stability.png",
+              "event_mask_interference": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/plots/event_mask_interference.png"
+            },
+            "view_metrics": [
+              {
+                "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+                "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9713581480918803,
+                "mean_attention_entropy": 2.749519795179367,
+                "top_event_concentration": 0.09319352172315121,
+                "event_mask_interference": 0.06161968410015106
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10035,
+                "projection_diagnostics_verdict": "PASS",
+                "sample_count": 8,
+                "representation_stability": 0.9858472343125779,
+                "mean_attention_entropy": 2.7672651410102844,
+                "top_event_concentration": 0.07653978187590837,
+                "event_mask_interference": 0.03107786923646927
+              },
+              {
+                "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "pilot_id": 10033,
+                "projection_diagnostics_verdict": "WARN",
+                "sample_count": 8,
+                "representation_stability": 0.9671296118871036,
+                "mean_attention_entropy": 2.771658629179001,
+                "top_event_concentration": 0.0655888132750988,
+                "event_mask_interference": 0.12305261194705963
+              }
+            ],
+            "pilot_metrics": [
+              {
+                "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+                "reference_pilot_id": 10033,
+                "comparison_pilot_id": 10035,
+                "delta_representation_stability": 0.018717622425474367,
+                "delta_attention_entropy": -0.004393488168716431,
+                "delta_top_event_concentration": 0.010950968600809574,
+                "delta_event_mask_interference": -0.09197474271059036
+              }
+            ],
+            "verdict_counts": {
+              "PASS": 16,
+              "WARN": 8
+            }
+          }
+        }
+      }
+    },
+    "uab_workload_dataset": {
+      "status": "not_run"
+    },
+    "nasa_csm": {
+      "status": "not_run"
+    }
+  }
+}

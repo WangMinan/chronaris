@@ -1,0 +1,75 @@
+{
+  "track": "subjective",
+  "generated_at_utc": "2026-04-29T02:51:42.926654Z",
+  "primary_results": {
+    "heat_the_chair": {
+      "best_model_name": "random_forest_regressor",
+      "models": {
+        "ridge_regression": {
+          "sample_count": 34,
+          "fold_count": 17,
+          "mae": 3.6197342155930468,
+          "rmse": 5.971433865979955,
+          "r2": -14.762494273185547,
+          "spearman": 0.11401913923071912
+        },
+        "svr": {
+          "sample_count": 34,
+          "fold_count": 17,
+          "mae": 1.2530237337673382,
+          "rmse": 1.5504444716344905,
+          "r2": -0.06262522655960256,
+          "spearman": 0.0606061464904225
+        },
+        "random_forest_regressor": {
+          "sample_count": 34,
+          "fold_count": 17,
+          "mae": 1.2518627450980395,
+          "rmse": 1.4664393484713574,
+          "r2": 0.04940418295377269,
+          "spearman": 0.2644631846854801
+        }
+      }
+    },
+    "n_back": {
+      "best_model_name": "random_forest_regressor",
+      "models": {
+        "ridge_regression": {
+          "sample_count": 48,
+          "fold_count": 16,
+          "mae": 8.60805671993012,
+          "rmse": 18.931809274267064,
+          "r2": -16.302703029773344,
+          "spearman": 0.32337932001521197
+        },
+        "svr": {
+          "sample_count": 48,
+          "fold_count": 16,
+          "mae": 3.705797731900525,
+          "rmse": 4.716375815717878,
+          "r2": -0.07385716775627138,
+          "spearman": -0.023726790269752787
+        },
+        "random_forest_regressor": {
+          "sample_count": 48,
+          "fold_count": 16,
+          "mae": 3.6536284722222216,
+          "rmse": 4.516086289395266,
+          "r2": 0.015412822218613287,
+          "spearman": 0.16098382871811676
+        }
+      }
+    }
+  },
+  "auxiliary_flight_summary": {
+    "sample_count": 5,
+    "subject_count": 2,
+    "theoretical_difficulty_distribution": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1
+    },
+    "perceived_difficulty_mean": 1.5952107209665392
+  }
+}

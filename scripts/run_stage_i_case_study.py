@@ -13,7 +13,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines import (
+from chronaris.pipelines.stage_i_case_study import (
     StageICaseStudyConfig,
     run_stage_i_case_study,
     write_stage_i_case_study_report,
@@ -24,10 +24,10 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--stage-h-run-manifest",
-        default="artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
+        default="docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
     )
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--output-root", default="artifacts/stage_i")
+    parser.add_argument("--output-root", default="docs/reports/assets/stage_i")
     parser.add_argument(
         "--report-path",
         default=f"docs/reports/stage-i-case-study-phase2-{datetime.now().date().isoformat()}.md",

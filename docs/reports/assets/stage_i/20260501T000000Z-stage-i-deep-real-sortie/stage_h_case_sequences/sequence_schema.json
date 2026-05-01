@@ -1,0 +1,64 @@
+{
+  "dataset_id": "stage_h_case",
+  "profile": "real_sortie_v1",
+  "sequence_length": 16,
+  "modalities": {
+    "physiology": {
+      "feature_dim": 16,
+      "feature_names": [
+        "projection_00",
+        "projection_01",
+        "projection_02",
+        "projection_03",
+        "projection_04",
+        "projection_05",
+        "projection_06",
+        "projection_07",
+        "projection_08",
+        "projection_09",
+        "projection_10",
+        "projection_11",
+        "projection_12",
+        "projection_13",
+        "projection_14",
+        "projection_15"
+      ],
+      "time_axis_key": "time_axis",
+      "notes": "Stage H physiology_reference_projection"
+    },
+    "vehicle": {
+      "feature_dim": 16,
+      "feature_names": [
+        "projection_00",
+        "projection_01",
+        "projection_02",
+        "projection_03",
+        "projection_04",
+        "projection_05",
+        "projection_06",
+        "projection_07",
+        "projection_08",
+        "projection_09",
+        "projection_10",
+        "projection_11",
+        "projection_12",
+        "projection_13",
+        "projection_14",
+        "projection_15"
+      ],
+      "time_axis_key": "time_axis",
+      "notes": "Stage H vehicle_reference_projection"
+    }
+  },
+  "extras": {
+    "vehicle_event_scores": [
+      24,
+      16
+    ],
+    "attention_weights": [
+      24,
+      16,
+      16
+    ]
+  }
+}

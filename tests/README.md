@@ -1,5 +1,9 @@
 # Tests
 
+运行测试时默认显式使用 `chronaris` 解释器：
+
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
+
 当前测试组织（域级 suite）：
 
 1. `test_access_cli_overlap.py`
@@ -14,6 +18,7 @@
 10. `test_stage_h_export.py`
 11. `test_stage_i_pipeline.py`
 12. `test_stage_i_case_study.py`
+13. `test_stage_i_deep_pipeline.py`
 
 测试维护共性规则：
 
@@ -31,5 +36,11 @@
 6. Stage I task manifest、公开数据适配、session 级 baseline 评测
 7. Stage I window contract 兼容读取、UAB window-level workload、NASA CSM attention-state 与 Phase 3 orchestration 落盘
 8. Stage I Phase 2 case-study 资产装载、bundle-only 消融与 WARN 解释
+9. Stage I deep sequence contract、真实 sortie smoke comparison 与 mini UAB/NASA comparison orchestration
 
 模型效果验证属于实验，不完全等价于单元测试。
+
+`test_stage_i_deep_pipeline.py` 默认只跑 synthetic + repo 内 Stage H 真实资产；
+如需开启本机 UAB/NASA live sequence 导出回归，显式设置：
+
+- `CHRONARIS_ENABLE_STAGE_I_LIVE_SEQUENCE_TESTS=1`

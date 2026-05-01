@@ -1,7 +1,7 @@
 # Stage I UAB Baseline
 
 - 生成时间：2026-04-29 02:51:43 UTC
-- 机器产物根目录：`/home/wangminan/projects/chronaris/artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab`
+- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab`
 
 ## 数据摘要
 
@@ -50,8 +50,8 @@
 
 ## 图表
 
-- `objective_confusion_matrix_heat_the_chair`: `/home/wangminan/projects/chronaris/artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/objective_confusion_matrix_heat_the_chair.png`
-- `objective_confusion_matrix_n_back`: `/home/wangminan/projects/chronaris/artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/objective_confusion_matrix_n_back.png`
-- `subjective_regression_heat_the_chair`: `/home/wangminan/projects/chronaris/artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/subjective_regression_heat_the_chair.png`
-- `subjective_regression_n_back`: `/home/wangminan/projects/chronaris/artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/subjective_regression_n_back.png`
+- `objective_confusion_matrix_heat_the_chair`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/objective_confusion_matrix_heat_the_chair.png`
+- `objective_confusion_matrix_n_back`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/objective_confusion_matrix_n_back.png`
+- `subjective_regression_heat_the_chair`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/subjective_regression_heat_the_chair.png`
+- `subjective_regression_n_back`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/plots/subjective_regression_n_back.png`
 

@@ -1,0 +1,543 @@
+{
+  "track": "objective",
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "generated_at_utc": "2026-04-30T01:43:30.566897Z",
+  "primary_feature_set": "eeg_ecg",
+  "feature_set_columns": {
+    "eeg_ecg": 214,
+    "eeg_only": 202,
+    "ecg_only": 12
+  },
+  "primary_results": {
+    "n_back": {
+      "sample_count": 28052,
+      "fold_count": 16,
+      "best_model_name": "logistic_regression",
+      "models": {
+        "logistic_regression": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "label_order": [
+            0,
+            1,
+            2
+          ],
+          "macro_f1": 0.34776469149030814,
+          "balanced_accuracy": 0.36246600531768225,
+          "per_class_recall": {
+            "0": 0.32841123570556235,
+            "1": 0.5597590616083694,
+            "2": 0.199227718639115
+          },
+          "confusion_matrix": [
+            [
+              2958,
+              4312,
+              1737
+            ],
+            [
+              2272,
+              5297,
+              1894
+            ],
+            [
+              2383,
+              5290,
+              1909
+            ]
+          ]
+        },
+        "linear_svc": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "label_order": [
+            0,
+            1,
+            2
+          ],
+          "macro_f1": 0.34264106994618054,
+          "balanced_accuracy": 0.34790190777679236,
+          "per_class_recall": {
+            "0": 0.32008437881647606,
+            "1": 0.4768043960688999,
+            "2": 0.24681694844500104
+          },
+          "confusion_matrix": [
+            [
+              2883,
+              3725,
+              2399
+            ],
+            [
+              2201,
+              4512,
+              2750
+            ],
+            [
+              2182,
+              5035,
+              2365
+            ]
+          ]
+        }
+      }
+    },
+    "heat_the_chair": {
+      "sample_count": 5440,
+      "fold_count": 17,
+      "best_model_name": "linear_svc",
+      "models": {
+        "logistic_regression": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "label_order": [
+            0,
+            1
+          ],
+          "macro_f1": 0.49733572186299146,
+          "balanced_accuracy": 0.5112373998095507,
+          "per_class_recall": {
+            "0": 0.6535189481825213,
+            "1": 0.3689558514365802
+          },
+          "confusion_matrix": [
+            [
+              1690,
+              896
+            ],
+            [
+              1801,
+              1053
+            ]
+          ]
+        },
+        "linear_svc": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "label_order": [
+            0,
+            1
+          ],
+          "macro_f1": 0.5404767483230504,
+          "balanced_accuracy": 0.5404704649205386,
+          "per_class_recall": {
+            "0": 0.5112142304717711,
+            "1": 0.5697266993693062
+          },
+          "confusion_matrix": [
+            [
+              1322,
+              1264
+            ],
+            [
+              1228,
+              1626
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "ablation_results": {
+    "n_back": {
+      "eeg_ecg": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "best_model_name": "logistic_regression",
+        "models": {
+          "logistic_regression": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "label_order": [
+              0,
+              1,
+              2
+            ],
+            "macro_f1": 0.34776469149030814,
+            "balanced_accuracy": 0.36246600531768225,
+            "per_class_recall": {
+              "0": 0.32841123570556235,
+              "1": 0.5597590616083694,
+              "2": 0.199227718639115
+            },
+            "confusion_matrix": [
+              [
+                2958,
+                4312,
+                1737
+              ],
+              [
+                2272,
+                5297,
+                1894
+              ],
+              [
+                2383,
+                5290,
+                1909
+              ]
+            ]
+          },
+          "linear_svc": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "label_order": [
+              0,
+              1,
+              2
+            ],
+            "macro_f1": 0.34264106994618054,
+            "balanced_accuracy": 0.34790190777679236,
+            "per_class_recall": {
+              "0": 0.32008437881647606,
+              "1": 0.4768043960688999,
+              "2": 0.24681694844500104
+            },
+            "confusion_matrix": [
+              [
+                2883,
+                3725,
+                2399
+              ],
+              [
+                2201,
+                4512,
+                2750
+              ],
+              [
+                2182,
+                5035,
+                2365
+              ]
+            ]
+          }
+        }
+      },
+      "eeg_only": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "best_model_name": "linear_svc",
+        "models": {
+          "logistic_regression": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "label_order": [
+              0,
+              1,
+              2
+            ],
+            "macro_f1": 0.29521167207433824,
+            "balanced_accuracy": 0.32980964320418776,
+            "per_class_recall": {
+              "0": 0.13123126457199955,
+              "1": 0.6491598858712881,
+              "2": 0.2090377791692757
+            },
+            "confusion_matrix": [
+              [
+                1182,
+                5641,
+                2184
+              ],
+              [
+                1330,
+                6143,
+                1990
+              ],
+              [
+                1591,
+                5988,
+                2003
+              ]
+            ]
+          },
+          "linear_svc": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "label_order": [
+              0,
+              1,
+              2
+            ],
+            "macro_f1": 0.3276273109204963,
+            "balanced_accuracy": 0.3369640202361814,
+            "per_class_recall": {
+              "0": 0.23248584434328856,
+              "1": 0.5099862622846877,
+              "2": 0.26841995408056774
+            },
+            "confusion_matrix": [
+              [
+                2094,
+                3925,
+                2988
+              ],
+              [
+                1833,
+                4826,
+                2804
+              ],
+              [
+                1832,
+                5178,
+                2572
+              ]
+            ]
+          }
+        }
+      },
+      "ecg_only": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "best_model_name": "linear_svc",
+        "models": {
+          "logistic_regression": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "label_order": [
+              0,
+              1,
+              2
+            ],
+            "macro_f1": 0.339221888526515,
+            "balanced_accuracy": 0.3699093619585769,
+            "per_class_recall": {
+              "0": 0.3727101143555013,
+              "1": 0.6227412025784634,
+              "2": 0.1142767689417658
+            },
+            "confusion_matrix": [
+              [
+                3357,
+                4670,
+                980
+              ],
+              [
+                2170,
+                5893,
+                1400
+              ],
+              [
+                2088,
+                6399,
+                1095
+              ]
+            ]
+          },
+          "linear_svc": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "label_order": [
+              0,
+              1,
+              2
+            ],
+            "macro_f1": 0.34182320896064994,
+            "balanced_accuracy": 0.36239903349349234,
+            "per_class_recall": {
+              "0": 0.36160763850338623,
+              "1": 0.5764556694494346,
+              "2": 0.14913379252765602
+            },
+            "confusion_matrix": [
+              [
+                3257,
+                4298,
+                1452
+              ],
+              [
+                2172,
+                5455,
+                1836
+              ],
+              [
+                2113,
+                6040,
+                1429
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "heat_the_chair": {
+      "eeg_ecg": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "best_model_name": "linear_svc",
+        "models": {
+          "logistic_regression": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "label_order": [
+              0,
+              1
+            ],
+            "macro_f1": 0.49733572186299146,
+            "balanced_accuracy": 0.5112373998095507,
+            "per_class_recall": {
+              "0": 0.6535189481825213,
+              "1": 0.3689558514365802
+            },
+            "confusion_matrix": [
+              [
+                1690,
+                896
+              ],
+              [
+                1801,
+                1053
+              ]
+            ]
+          },
+          "linear_svc": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "label_order": [
+              0,
+              1
+            ],
+            "macro_f1": 0.5404767483230504,
+            "balanced_accuracy": 0.5404704649205386,
+            "per_class_recall": {
+              "0": 0.5112142304717711,
+              "1": 0.5697266993693062
+            },
+            "confusion_matrix": [
+              [
+                1322,
+                1264
+              ],
+              [
+                1228,
+                1626
+              ]
+            ]
+          }
+        }
+      },
+      "eeg_only": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "best_model_name": "linear_svc",
+        "models": {
+          "logistic_regression": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "label_order": [
+              0,
+              1
+            ],
+            "macro_f1": 0.48632587306457087,
+            "balanced_accuracy": 0.5008882934414244,
+            "per_class_recall": {
+              "0": 0.645784996133024,
+              "1": 0.3559915907498248
+            },
+            "confusion_matrix": [
+              [
+                1670,
+                916
+              ],
+              [
+                1838,
+                1016
+              ]
+            ]
+          },
+          "linear_svc": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "label_order": [
+              0,
+              1
+            ],
+            "macro_f1": 0.5215350709229751,
+            "balanced_accuracy": 0.5218283615457282,
+            "per_class_recall": {
+              "0": 0.5208816705336426,
+              "1": 0.5227750525578136
+            },
+            "confusion_matrix": [
+              [
+                1347,
+                1239
+              ],
+              [
+                1362,
+                1492
+              ]
+            ]
+          }
+        }
+      },
+      "ecg_only": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "best_model_name": "linear_svc",
+        "models": {
+          "logistic_regression": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "label_order": [
+              0,
+              1
+            ],
+            "macro_f1": 0.5069281809327469,
+            "balanced_accuracy": 0.5072517317386326,
+            "per_class_recall": {
+              "0": 0.4566898685228152,
+              "1": 0.5578135949544499
+            },
+            "confusion_matrix": [
+              [
+                1181,
+                1405
+              ],
+              [
+                1262,
+                1592
+              ]
+            ]
+          },
+          "linear_svc": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "label_order": [
+              0,
+              1
+            ],
+            "macro_f1": 0.513365691403931,
+            "balanced_accuracy": 0.5141507746688411,
+            "per_class_recall": {
+              "0": 0.5290023201856149,
+              "1": 0.49929922915206726
+            },
+            "confusion_matrix": [
+              [
+                1368,
+                1218
+              ],
+              [
+                1429,
+                1425
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  "auxiliary_flight_summary": {
+    "sample_count": 1256,
+    "subject_count": 2,
+    "theoretical_difficulty_distribution": {
+      "1": 331,
+      "2": 434,
+      "3": 121,
+      "4": 114
+    },
+    "perceived_difficulty_mean": 1.4346750028823414
+  }
+}

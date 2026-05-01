@@ -1,6 +1,11 @@
 # Stage I 数据计划
 
-更新时间：2026-04-29
+更新时间：2026-04-30
+
+说明：
+
+- 本文档保留为阶段 I 启动期的数据计划与开工顺序记录。
+- 当前阶段状态与收口结果已由 `docs/planning/stage-i-closure-2026-04-30.md` 接管。
 
 ## 0. 总分期
 
@@ -16,7 +21,7 @@
 - `Phase 0`：已完成
 - `Phase 1`：已完成
 - `Phase 2`：已完成
-- `Phase 3`：未开始
+- `Phase 3`：已完成
 
 当前不纳入阶段 I 主线完成条件：
 
@@ -65,7 +70,7 @@
 
 机器资产根目录：
 
-- `artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+- `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
 
 关键资产：
 
@@ -110,18 +115,18 @@
 
 测试闭环：
 
-- `python -m unittest tests.test_stage_i_pipeline`
-- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 python -m unittest discover -s tests -p 'test_*.py'`
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_pipeline`
+- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'`
 
 ## 5. Phase 2 实跑结果摘要
 
 Phase 2 当前输入固定为：
 
-- `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
+- `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
 
 Phase 2 当前产物根目录：
 
-- `artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+- `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
 
 Phase 2 当前主报告：
 
@@ -156,8 +161,8 @@ Phase 2 关键结论：
 
 ## 6. 下一步
 
-阶段 I 后续默认按下面顺序推进：
+阶段 I 已于 `2026-04-30` 完成收口。后续默认按下面顺序推进：
 
-1. `Phase 3`：接入 `NASA CSM`，形成第二个公开数据评测入口
-2. 在 Phase 3 中补齐跨数据源对比/消融，并完成阶段 I 收口
-3. 在阶段 I 收口后，再考虑更重的 EEG 深度模型或补充公开数据集
+1. 保持 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/` 作为阶段 I 机器事实根目录。
+2. 在不破坏 frozen Stage I contract 的前提下，再考虑 MATB-II / DS007262 / EEGMAT 等补充公开数据。
+3. 在阶段 I 收口后，再评估更重的 EEG 深度模型与多模态对照，而不是回退修改已完成的 Phase 3 主线。

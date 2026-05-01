@@ -13,7 +13,11 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines import render_stage_i_baseline_report, run_stage_i_baselines, write_baseline_artifacts
+from chronaris.pipelines.stage_i_baseline import (
+    render_stage_i_baseline_report,
+    run_stage_i_baselines,
+    write_baseline_artifacts,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -56,10 +60,12 @@ def main() -> int:
         subjective_metrics=artifacts.subjective_metrics,
         plot_paths=artifacts.plot_paths,
     )
+    (artifact_root / "baseline_report.md").write_text(report_markdown + "\n", encoding="utf-8")
     report_path.write_text(report_markdown + "\n", encoding="utf-8")
 
     payload = {
         "artifact_root": str(artifact_root),
+        "baseline_report_path": str(artifact_root / "baseline_report.md"),
         "report_path": str(report_path),
         "dataset_id": dataset_id,
         "profile": profile,

@@ -52,9 +52,9 @@
 
 主运行：
 
-- run manifest：`artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
+- run manifest：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
 - 主报告：`docs/reports/stage-h-closure-2026-04-27.md`
-- 机器资产根目录：`artifacts/stage_h/20260427T000000Z-stage-h-closure/`
+- 机器资产根目录：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/`
 
 双流 Stage H `validation` 结果：
 
@@ -65,15 +65,15 @@
 
 下游读取验证：
 
-- `load_stage_h_feature_run("artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json")`
+- `load_stage_h_feature_run("docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json")`
 - `generated_view_count=3`
 - 三个 view 的 `fused_representation.shape` 均为 `(8, 16, 96)`
 
 partial-data 结果：
 
-- manifest：`artifacts/stage_h/20260427T000000Z-stage-h-closure/partial_data/partial_data_manifest.jsonl`
-- window manifest：`artifacts/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_window_manifest.jsonl`
-- feature bundle：`artifacts/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_feature_bundle.npz`
+- manifest：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/partial_data_manifest.jsonl`
+- window manifest：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_window_manifest.jsonl`
+- feature bundle：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_feature_bundle.npz`
 - `built_entry_count=1`
 - `skipped_entry_count=0`
 - `vehicle_only_window_manifest` 行数：`1478`

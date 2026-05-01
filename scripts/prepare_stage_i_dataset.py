@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dataset", choices=("uab", "nasa_csm"), required=True)
     parser.add_argument("--profile", choices=("session_v1", "window_v2"), default="window_v2")
     parser.add_argument("--run-id", default=None)
-    parser.add_argument("--output-root", default="artifacts/stage_i")
+    parser.add_argument("--output-root", default="docs/reports/assets/stage_i")
     return parser.parse_args()
 
 

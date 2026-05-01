@@ -5,30 +5,34 @@ from __future__ import annotations
 import json
 import warnings
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Mapping, Sequence
+
+import numpy as np
+import pandas as pd
+
+from chronaris.evaluation import evaluate_classification_predictions, evaluate_regression_predictions
+from chronaris.pipelines.stage_i_baseline_models import (
+    StageIBaselineLosoSplit,
+    StageIBaselineModelSpec,
+    build_fold_cache,
+    build_loso_splits,
+    clone_estimator,
+    objective_model_specs,
+    subjective_model_specs,
+)
+from chronaris.pipelines.stage_i_baseline_reporting import (
+    render_stage_i_baseline_report,
+    render_uab_baseline_report,
+    summarize_auxiliary_flight,
+    write_best_model_plots,
+    write_dataset_diagnostic_plots,
+)
 
 warnings.filterwarnings(
     "ignore",
     message=".*is_sparse is deprecated and will be removed in a future version.*",
     category=DeprecationWarning,
-)
-
-import pandas as pd
-from sklearn.base import clone
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import LogisticRegression, Ridge
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import LinearSVC, SVR
-
-from chronaris.evaluation import (
-    evaluate_classification_predictions,
-    evaluate_regression_predictions,
-    save_confusion_matrix_plot,
-    save_regression_plot,
 )
 
 UAB_DATASET_ID = "uab_workload_dataset"
@@ -104,83 +108,6 @@ def write_baseline_artifacts(
     artifacts.fold_predictions.to_csv(root / "fold_predictions.csv", index=False)
 
 
-def render_stage_i_baseline_report(
-    *,
-    artifact_root: str | Path,
-    dataset_summary: Mapping[str, object],
-    objective_metrics: Mapping[str, object] | None,
-    subjective_metrics: Mapping[str, object] | None,
-    plot_paths: Mapping[str, str],
-) -> str:
-    """Render one markdown report for a Stage I baseline run."""
-
-    dataset_id = str(dataset_summary["dataset_id"])
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    title = "# Stage I NASA CSM Attention Baseline" if dataset_id == NASA_DATASET_ID else "# Stage I UAB Baseline"
-    lines = [
-        title,
-        "",
-        f"- 生成时间：{generated_at}",
-        f"- 机器产物根目录：`{artifact_root}`",
-        "",
-        "## 数据摘要",
-        "",
-        f"- 样本总数：`{dataset_summary['entry_count']}`",
-        f"- recording 数：`{dataset_summary['recording_count']}`",
-        f"- window 数：`{dataset_summary['window_count']}`",
-        f"- split_group 数：`{dataset_summary['split_group_count']}`",
-        f"- 特征总数：`{dataset_summary['feature_count']}`",
-        f"- 模态特征数：`{json.dumps(dataset_summary['feature_group_counts'], ensure_ascii=False)}`",
-        f"- subset 计数：`{json.dumps(dataset_summary['subset_counts'], ensure_ascii=False)}`",
-        "",
-    ]
-
-    if objective_metrics is not None:
-        lines.extend(_render_track_section("客观/分类主结果", objective_metrics, metric_fields=("macro_f1", "balanced_accuracy")))
-    if subjective_metrics is not None:
-        lines.extend(_render_track_section("主观/回归主结果", subjective_metrics, metric_fields=("rmse", "mae", "spearman")))
-
-    if dataset_id == UAB_DATASET_ID and objective_metrics is not None:
-        flight_summary = objective_metrics.get("auxiliary_flight_summary", {})
-        lines.extend(
-            [
-                "## Flight 辅助摘要",
-                "",
-                f"- flight window 数：`{flight_summary.get('sample_count', 0)}`",
-                f"- flight split_group 数：`{flight_summary.get('subject_count', 0)}`",
-                f"- 理论难度分布：`{json.dumps(flight_summary.get('theoretical_difficulty_distribution', {}), ensure_ascii=False)}`",
-                f"- 感知难度均值：`{flight_summary.get('perceived_difficulty_mean', float('nan')):.4f}`",
-                "",
-            ]
-        )
-
-    if plot_paths:
-        lines.extend(["## 图表", ""])
-        for name, path in sorted(plot_paths.items()):
-            lines.append(f"- `{name}`: `{path}`")
-        lines.append("")
-    return "\n".join(lines)
-
-
-def render_uab_baseline_report(
-    *,
-    artifact_root: str | Path,
-    dataset_summary: Mapping[str, object],
-    objective_metrics: Mapping[str, object],
-    subjective_metrics: Mapping[str, object],
-    plot_paths: Mapping[str, str],
-) -> str:
-    """Backwards-compatible UAB report wrapper."""
-
-    return render_stage_i_baseline_report(
-        artifact_root=artifact_root,
-        dataset_summary=dataset_summary,
-        objective_metrics=objective_metrics,
-        subjective_metrics=subjective_metrics,
-        plot_paths=plot_paths,
-    )
-
-
 def _run_uab_workload_suite(
     feature_table: pd.DataFrame,
     *,
@@ -208,16 +135,24 @@ def _run_uab_workload_suite(
         feature_sets=feature_sets,
         evaluation_groups=subjective_groups,
     )
-    objective_metrics["auxiliary_flight_summary"] = _summarize_auxiliary_flight(
+    objective_metrics["auxiliary_flight_summary"] = summarize_auxiliary_flight(
         feature_table.loc[feature_table["subset_id"] == "flight_simulator"].copy()
     )
     predictions = [frame for frame in (objective_predictions, subjective_predictions) if not frame.empty]
-    plot_paths = _write_best_model_plots(
+    plot_paths = write_best_model_plots(
         artifact_root=Path(artifact_root),
         objective_metrics=objective_metrics,
         objective_predictions=objective_predictions,
         subjective_metrics=subjective_metrics,
         subjective_predictions=subjective_predictions,
+    )
+    plot_paths.update(
+        write_dataset_diagnostic_plots(
+            artifact_root=Path(artifact_root),
+            feature_table=feature_table,
+            objective_metrics=objective_metrics,
+            subjective_metrics=subjective_metrics,
+        )
     )
     return StageIBaselineArtifacts(
         objective_metrics=objective_metrics,
@@ -249,12 +184,20 @@ def _run_nasa_attention_suite(
         evaluation_groups=objective_groups,
         label_order=(1, 2, 5),
     )
-    plot_paths = _write_best_model_plots(
+    plot_paths = write_best_model_plots(
         artifact_root=Path(artifact_root),
         objective_metrics=objective_metrics,
         objective_predictions=objective_predictions,
         subjective_metrics=None,
         subjective_predictions=pd.DataFrame(),
+    )
+    plot_paths.update(
+        write_dataset_diagnostic_plots(
+            artifact_root=Path(artifact_root),
+            feature_table=feature_table,
+            objective_metrics=objective_metrics,
+            subjective_metrics=None,
+        )
     )
     return StageIBaselineArtifacts(
         objective_metrics=objective_metrics,
@@ -273,28 +216,7 @@ def _run_objective_suite(
     evaluation_groups: Mapping[str, Callable[[pd.DataFrame], pd.DataFrame]],
     label_order: Sequence[int] | None = None,
 ) -> tuple[dict[str, object], pd.DataFrame]:
-    models = {
-        "logistic_regression": Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                ("scaler", StandardScaler()),
-                ("model", LogisticRegression(max_iter=2_000, class_weight="balanced", random_state=42)),
-            ]
-        ),
-        "linear_svc": Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                ("scaler", StandardScaler()),
-                ("model", LinearSVC(class_weight="balanced", max_iter=5_000)),
-            ]
-        ),
-        "random_forest_classifier": Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                ("model", RandomForestClassifier(n_estimators=200, random_state=42, class_weight="balanced")),
-            ]
-        ),
-    }
+    model_specs = objective_model_specs(profile)
     return _run_grouped_track(
         feature_table,
         dataset_id=dataset_id,
@@ -303,8 +225,11 @@ def _run_objective_suite(
         feature_sets=feature_sets,
         evaluation_groups=evaluation_groups,
         target_column="objective_label_value",
-        models=models,
-        scorer=lambda predictions, _: evaluate_classification_predictions(predictions, label_order=label_order or sorted(set(predictions["y_true"].astype(int)))),
+        model_specs=model_specs,
+        scorer=lambda predictions, _: evaluate_classification_predictions(
+            predictions,
+            label_order=label_order or sorted(set(predictions["y_true"].astype(int))),
+        ),
         result_picker=lambda metrics: max(
             metrics,
             key=lambda name: (metrics[name]["macro_f1"], metrics[name]["balanced_accuracy"]),
@@ -320,28 +245,7 @@ def _run_subjective_suite(
     feature_sets: Mapping[str, tuple[str, ...]],
     evaluation_groups: Mapping[str, Callable[[pd.DataFrame], pd.DataFrame]],
 ) -> tuple[dict[str, object], pd.DataFrame]:
-    models = {
-        "ridge_regression": Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                ("scaler", StandardScaler()),
-                ("model", Ridge(alpha=1.0)),
-            ]
-        ),
-        "svr": Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                ("scaler", StandardScaler()),
-                ("model", SVR(C=1.0, epsilon=0.1)),
-            ]
-        ),
-        "random_forest_regressor": Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-                ("model", RandomForestRegressor(n_estimators=200, random_state=42)),
-            ]
-        ),
-    }
+    model_specs = subjective_model_specs(profile)
     return _run_grouped_track(
         feature_table,
         dataset_id=dataset_id,
@@ -350,7 +254,7 @@ def _run_subjective_suite(
         feature_sets=feature_sets,
         evaluation_groups=evaluation_groups,
         target_column="subjective_target_value",
-        models=models,
+        model_specs=model_specs,
         scorer=lambda predictions, _: evaluate_regression_predictions(predictions),
         result_picker=lambda metrics: min(
             metrics,
@@ -368,7 +272,7 @@ def _run_grouped_track(
     feature_sets: Mapping[str, tuple[str, ...]],
     evaluation_groups: Mapping[str, Callable[[pd.DataFrame], pd.DataFrame]],
     target_column: str,
-    models: Mapping[str, Pipeline],
+    model_specs: Mapping[str, StageIBaselineModelSpec],
     scorer: Callable[[pd.DataFrame, pd.DataFrame], dict[str, object]],
     result_picker: Callable[[Mapping[str, dict[str, object]]], str],
 ) -> tuple[dict[str, object], pd.DataFrame]:
@@ -379,17 +283,31 @@ def _run_grouped_track(
 
     for group_name, frame_builder in evaluation_groups.items():
         group_frame = frame_builder(feature_table)
+        group_frame = group_frame.loc[group_frame[target_column].notna()].copy().reset_index(drop=True)
+        if group_frame.empty:
+            continue
+        split_groups = group_frame["split_group"].astype(str).to_numpy()
+        loso_splits = build_loso_splits(split_groups)
+        required_preprocessing = {spec.preprocessing for spec in model_specs.values()}
+        feature_matrices = {
+            feature_set_name: group_frame.loc[:, list(feature_columns)].to_numpy(dtype=float, copy=True)
+            for feature_set_name, feature_columns in feature_sets.items()
+            if feature_columns
+        }
         feature_set_results: dict[str, object] = {}
-        for feature_set_name, feature_columns in feature_sets.items():
-            if not feature_columns:
-                continue
+        for feature_set_name, feature_matrix in feature_matrices.items():
+            fold_cache = build_fold_cache(
+                feature_matrix=feature_matrix,
+                loso_splits=loso_splits,
+                preprocess_modes=required_preprocessing,
+            )
             model_metrics: dict[str, object] = {}
-            for model_name, model in models.items():
+            for model_name, spec in model_specs.items():
                 predictions = _run_loso_predictions(
                     data=group_frame,
-                    feature_columns=feature_columns,
                     target_column=target_column,
-                    model=clone(model),
+                    model_spec=spec,
+                    fold_cache=fold_cache,
                     track=track,
                     model_name=model_name,
                     evaluation_group=group_name,
@@ -411,126 +329,60 @@ def _run_grouped_track(
         "track": track,
         "dataset_id": dataset_id,
         "profile": profile,
-        "generated_at_utc": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "generated_at_utc": pd.Timestamp.now("UTC").isoformat().replace("+00:00", "Z"),
         "primary_feature_set": primary_feature_set,
         "feature_set_columns": {name: len(columns) for name, columns in feature_sets.items()},
         "primary_results": primary_results,
         "ablation_results": ablation_results,
     }
-    return metrics, pd.concat(prediction_frames, axis=0, ignore_index=True)
+    return metrics, pd.concat(prediction_frames, axis=0, ignore_index=True) if prediction_frames else pd.DataFrame()
 
 
 def _run_loso_predictions(
     *,
     data: pd.DataFrame,
-    feature_columns: Sequence[str],
     target_column: str,
-    model: Pipeline,
+    model_spec: StageIBaselineModelSpec,
+    fold_cache: Sequence[tuple[StageIBaselineLosoSplit, Mapping[str, tuple[object, object]]]],
     track: str,
     model_name: str,
     evaluation_group: str,
     feature_set: str,
 ) -> pd.DataFrame:
-    rows: list[dict[str, object]] = []
-    unique_groups = tuple(sorted(data["split_group"].astype(str).unique()))
-    for split_group in unique_groups:
-        train = data.loc[data["split_group"] != split_group].copy()
-        test = data.loc[data["split_group"] == split_group].copy()
-        model.fit(train[list(feature_columns)], train[target_column])
-        predictions = model.predict(test[list(feature_columns)])
-        for sample_id, subset_id, subject_id, y_true, y_pred in zip(
-            test["sample_id"],
-            test["subset_id"],
-            test["subject_id"],
-            test[target_column],
-            predictions,
-            strict=True,
-        ):
-            rows.append(
+    dataset_id = str(data["dataset_id"].iloc[0])
+    y_all = data[target_column].to_numpy()
+    sample_ids = data["sample_id"].to_numpy()
+    subset_ids = data["subset_id"].to_numpy()
+    subject_ids = data["subject_id"].to_numpy()
+    prediction_frames: list[pd.DataFrame] = []
+
+    for split, prepared_matrices in fold_cache:
+        estimator = clone_estimator(model_spec)
+        train_X, test_X = prepared_matrices[model_spec.preprocessing]
+        estimator.fit(train_X, y_all[split.train_indices])
+        predicted = estimator.predict(test_X)
+        test_indices = split.test_indices
+        y_true = y_all[test_indices]
+        prediction_frames.append(
+            pd.DataFrame(
                 {
                     "track": track,
-                    "dataset_id": str(test["dataset_id"].iloc[0]),
+                    "dataset_id": dataset_id,
                     "evaluation_group": evaluation_group,
                     "feature_set": feature_set,
                     "model_name": model_name,
-                    "subset_id": subset_id,
-                    "split_group": split_group,
-                    "sample_id": sample_id,
-                    "subject_id": subject_id,
-                    "y_true": float(y_true) if track == "subjective" else int(y_true),
-                    "y_pred": float(y_pred) if track == "subjective" else int(round(float(y_pred))),
+                    "subset_id": subset_ids[test_indices],
+                    "split_group": split.split_group,
+                    "sample_id": sample_ids[test_indices],
+                    "subject_id": subject_ids[test_indices],
+                    "y_true": y_true.astype(float if track == "subjective" else int, copy=False),
+                    "y_pred": predicted.astype(float, copy=False)
+                    if track == "subjective"
+                    else np.rint(predicted).astype(int, copy=False),
                 }
             )
-    return pd.DataFrame(rows)
-
-
-def _write_best_model_plots(
-    *,
-    artifact_root: Path,
-    objective_metrics: Mapping[str, object] | None,
-    objective_predictions: pd.DataFrame,
-    subjective_metrics: Mapping[str, object] | None,
-    subjective_predictions: pd.DataFrame,
-) -> dict[str, str]:
-    plot_root = artifact_root / "plots"
-    plot_paths: dict[str, str] = {}
-    if objective_metrics is not None:
-        for evaluation_group, payload in objective_metrics["primary_results"].items():
-            best_model = payload["best_model_name"]
-            metrics = payload["models"][best_model]
-            plot_key = f"objective_confusion_matrix_{evaluation_group}"
-            plot_paths[plot_key] = save_confusion_matrix_plot(
-                metrics,
-                path=plot_root / f"{plot_key}.png",
-                title=f"{evaluation_group} objective ({best_model})",
-            )
-    if subjective_metrics is not None:
-        for evaluation_group, payload in subjective_metrics["primary_results"].items():
-            best_model = payload["best_model_name"]
-            subset_predictions = subjective_predictions.loc[
-                (subjective_predictions["evaluation_group"] == evaluation_group)
-                & (subjective_predictions["feature_set"] == subjective_metrics["primary_feature_set"])
-                & (subjective_predictions["model_name"] == best_model)
-            ].copy()
-            plot_key = f"subjective_regression_{evaluation_group}"
-            plot_paths[plot_key] = save_regression_plot(
-                subset_predictions,
-                path=plot_root / f"{plot_key}.png",
-                title=f"{evaluation_group} subjective ({best_model})",
-            )
-    return plot_paths
-
-
-def _render_track_section(
-    title: str,
-    metrics: Mapping[str, object],
-    *,
-    metric_fields: Sequence[str],
-) -> list[str]:
-    lines = [f"## {title}", "", f"- 主特征集：`{metrics['primary_feature_set']}`", ""]
-    for evaluation_group, payload in metrics["primary_results"].items():
-        best_name = payload["best_model_name"]
-        best_metrics = payload["models"][best_name]
-        lines.extend(
-            [
-                f"### {evaluation_group}",
-                "",
-                f"- 最优模型：`{best_name}`",
-                *(f"- {field}：`{best_metrics[field]:.4f}`" for field in metric_fields),
-                f"- 样本数：`{payload['sample_count']}`",
-                f"- ablation：`{json.dumps(_render_ablation_metrics(metrics['ablation_results'][evaluation_group], metric_fields[0]), ensure_ascii=False)}`",
-                "",
-            ]
         )
-    return lines
-
-
-def _render_ablation_metrics(feature_set_results: Mapping[str, object], rank_field: str) -> dict[str, float]:
-    rendered: dict[str, float] = {}
-    for feature_set_name, payload in feature_set_results.items():
-        best_model_name = payload["best_model_name"]
-        rendered[feature_set_name] = float(payload["models"][best_model_name][rank_field])
-    return rendered
+    return pd.concat(prediction_frames, axis=0, ignore_index=True)
 
 
 def _subset_primary(frame: pd.DataFrame, *, subset_id: str) -> pd.DataFrame:
@@ -554,22 +406,4 @@ def _nasa_feature_sets(feature_table: pd.DataFrame) -> dict[str, tuple[str, ...]
         "all_sensors": tuple((*eeg_columns, *peripheral_columns)),
         "eeg_only": eeg_columns,
         "peripheral_only": peripheral_columns,
-    }
-
-
-def _summarize_auxiliary_flight(flight_frame: pd.DataFrame) -> dict[str, object]:
-    theoretical = (
-        flight_frame["objective_label_value"]
-        .dropna()
-        .astype(int)
-        .value_counts()
-        .sort_index()
-        .to_dict()
-    )
-    perceived = flight_frame["subjective_target_value"].dropna().astype(float)
-    return {
-        "sample_count": int(len(flight_frame)),
-        "subject_count": int(flight_frame["subject_id"].nunique()),
-        "theoretical_difficulty_distribution": {str(key): int(value) for key, value in theoretical.items()},
-        "perceived_difficulty_mean": float(perceived.mean()) if not perceived.empty else float("nan"),
     }

@@ -47,7 +47,7 @@
 
 脚本入口：
 
-- `python scripts/run_stage_e_relative_preview.py --compare-with-zscore-train --report-path docs/reports/alignment-preview-stage-e-closure-2026-04-21.md`
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --compare-with-zscore-train --report-path docs/reports/alignment-preview-stage-e-closure-2026-04-21.md`
 
 关键产物：
 
@@ -64,7 +64,7 @@
 
 执行命令：
 
-- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 python -m unittest discover -s tests -p 'test_*.py'`
+- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'`
 
 结果：
 

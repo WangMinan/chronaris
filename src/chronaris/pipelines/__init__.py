@@ -60,12 +60,26 @@ from chronaris.pipelines.stage_i_case_study import (
     run_stage_i_case_study,
     write_stage_i_case_study_report,
 )
+from chronaris.pipelines.stage_i_deep_baseline import (
+    StageIDeepBaselineConfig,
+    StageIDeepBaselineRunResult,
+    StageIDeepComparisonConfig,
+    StageIDeepComparisonRunResult,
+    run_stage_i_deep_baseline,
+    run_stage_i_deep_comparison,
+)
 from chronaris.pipelines.stage_i_phase3 import (
     StageIPhase3Config,
     StageIPhase3RunResult,
     build_stage_i_dataset_summary,
+    compose_stage_i_phase3_closure,
     render_stage_i_phase3_report,
     run_stage_i_phase3,
+)
+from chronaris.pipelines.stage_i_sequence_preparation import (
+    StageISequencePreparationConfig,
+    StageISequencePreparationRunResult,
+    run_stage_i_sequence_preparation,
 )
 
 __all__ = [
@@ -95,8 +109,14 @@ __all__ = [
     "StageGCausalFusionTensorExport",
     "StageICaseStudyConfig",
     "StageICaseStudyRunResult",
+    "StageIDeepBaselineConfig",
+    "StageIDeepBaselineRunResult",
+    "StageIDeepComparisonConfig",
+    "StageIDeepComparisonRunResult",
     "StageIPhase3Config",
     "StageIPhase3RunResult",
+    "StageISequencePreparationConfig",
+    "StageISequencePreparationRunResult",
     "StageHExportConfig",
     "StageHExportProfile",
     "StageHExportPipeline",
@@ -108,6 +128,7 @@ __all__ = [
     "dump_partial_data_entries",
     "export_stage_g_causal_fusion_tensors",
     "build_stage_i_dataset_summary",
+    "compose_stage_i_phase3_closure",
     "load_partial_data_entries",
     "render_alignment_experiment_report",
     "render_stage_i_case_study_report",
@@ -118,7 +139,10 @@ __all__ = [
     "render_uab_baseline_report",
     "run_stage_i_case_study",
     "run_stage_i_baselines",
+    "run_stage_i_deep_baseline",
+    "run_stage_i_deep_comparison",
     "run_stage_i_phase3",
+    "run_stage_i_sequence_preparation",
     "run_stage_g_causal_fusion",
     "run_uab_baselines",
     "write_stage_i_case_study_report",
