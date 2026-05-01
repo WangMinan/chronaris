@@ -66,7 +66,7 @@
 
 脚本入口：
 
-- `CHRONARIS_MYSQL_HOST=127.0.0.1 python scripts/run_stage_e_relative_preview.py --input-normalization-mode zscore_train --physics-constraint-family full --compare-with-physics-baseline --report-path docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
+- `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --input-normalization-mode zscore_train --physics-constraint-family full --compare-with-physics-baseline --report-path docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
 
 关键产物：
 
@@ -82,8 +82,8 @@
 
 执行命令：
 
-- `CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 python -m unittest tests.test_alignment_model_losses tests.test_alignment_pipeline`
-- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 python -m unittest discover -s tests -p 'test_*.py'`
+- `CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_alignment_model_losses tests.test_alignment_pipeline`
+- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'`
 
 结果：
 

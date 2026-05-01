@@ -1,0 +1,67 @@
+{
+  "dataset_id": "stage_h_case",
+  "profile": "real_sortie_v1",
+  "model_name": "contiformer",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences",
+  "smoke_training_target": "projection_diagnostics_verdict_code",
+  "view_count": 3,
+  "sample_count": 24,
+  "view_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/view_summary.csv",
+  "sample_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/sample_summary.csv",
+  "pilot_summary_csv": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/pilot_summary.csv",
+  "plot_paths": {
+    "view_representation_stability": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/plots/view_representation_stability.png",
+    "event_mask_interference": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/plots/event_mask_interference.png"
+  },
+  "view_metrics": [
+    {
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "pilot_id": 10033,
+      "projection_diagnostics_verdict": "PASS",
+      "sample_count": 8,
+      "representation_stability": 0.9265633829242401,
+      "mean_attention_entropy": 2.770962357521057,
+      "top_event_concentration": 0.06709280144423246,
+      "event_mask_interference": 0.11525274068117142
+    },
+    {
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "pilot_id": 10035,
+      "projection_diagnostics_verdict": "PASS",
+      "sample_count": 8,
+      "representation_stability": 0.9660867819801189,
+      "mean_attention_entropy": 2.7436560094356537,
+      "top_event_concentration": 0.0924281058833003,
+      "event_mask_interference": 0.10381997376680374
+    },
+    {
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "pilot_id": 10033,
+      "projection_diagnostics_verdict": "WARN",
+      "sample_count": 8,
+      "representation_stability": 0.9502256049516241,
+      "mean_attention_entropy": 2.7626210749149323,
+      "top_event_concentration": 0.08548432122915983,
+      "event_mask_interference": 0.12321030348539352
+    }
+  ],
+  "pilot_metrics": [
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "reference_pilot_id": 10033,
+      "comparison_pilot_id": 10035,
+      "delta_representation_stability": 0.015861177028494766,
+      "delta_attention_entropy": -0.018965065479278564,
+      "delta_top_event_concentration": 0.006943784654140472,
+      "delta_event_mask_interference": -0.019390329718589783
+    }
+  ],
+  "verdict_counts": {
+    "PASS": 16,
+    "WARN": 8
+  }
+}

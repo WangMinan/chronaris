@@ -1,0 +1,82 @@
+{
+  "dataset_id": "uab_workload_dataset",
+  "generated_at_utc": "2026-04-29T07:43:26.621687Z",
+  "entry_count": 34748,
+  "recording_count": 87,
+  "window_count": 34748,
+  "sample_granularity_counts": {
+    "window": 34748
+  },
+  "subset_counts": {
+    "n_back": 28052,
+    "heat_the_chair": 5440,
+    "flight_simulator": 1256
+  },
+  "subset_source_counts": {
+    "n_back": {
+      "benchmark": 28052
+    },
+    "heat_the_chair": {
+      "benchmark": 5440
+    },
+    "flight_simulator": {
+      "benchmark": 1256
+    }
+  },
+  "training_role_counts": {
+    "primary": 33492,
+    "auxiliary": 1256
+  },
+  "split_group_count": 28,
+  "task_family_counts": {
+    "workload": 34748
+  },
+  "label_distribution": {
+    "workload_level": {
+      "0": 11593,
+      "1": 12317,
+      "2": 9582
+    },
+    "theoretical_difficulty": {
+      "2.0": 434,
+      "4.0": 114,
+      "1.0": 331,
+      "3.0": 121
+    }
+  },
+  "objective_label_distributions": {
+    "n_back": {
+      "0": 9007,
+      "1": 9463,
+      "2": 9582
+    },
+    "heat_the_chair": {
+      "1": 2854,
+      "0": 2586
+    },
+    "flight_simulator": {
+      "2.0": 434,
+      "4.0": 114,
+      "1.0": 331,
+      "3.0": 121
+    }
+  },
+  "subjective_target_counts": {
+    "n_back": 28052,
+    "heat_the_chair": 5440,
+    "flight_simulator": 1256
+  },
+  "feature_count": 214,
+  "feature_group_counts": {
+    "eeg": 202,
+    "ecg": 12
+  },
+  "eeg_feature_count": 202,
+  "ecg_feature_count": 12,
+  "peripheral_feature_count": 0,
+  "missing_ecg_session_counts": {
+    "flight_simulator": 380,
+    "heat_the_chair": 654,
+    "n_back": 9044
+  }
+}

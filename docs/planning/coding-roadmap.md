@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-04-29
+更新时间：2026-05-01
 
 ## 1. 目的
 
@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 已启动（Phase 0 + Phase 1 + Phase 2 已跑通，Phase 3 真实收口进行中）`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 已完成收口`
 
 更具体地说：
 
@@ -49,10 +49,15 @@
 - 阶段 H 收口事实统一沉淀于 `docs/planning/stage-h-closure-2026-04-27.md`
 - 已完成阶段 I `Phase 0 + Phase 1`：UAB `87` session manifest、`416` 维 session 特征、双轨 baseline、主报告与机器资产导出
 - 已完成阶段 I `Phase 2`：`3` 个真实双流 view case study、`4` 条 bundle-only 消融、`WARN` view 主线解释与同 sortie 双 pilot 对比
-- 阶段 I `Phase 3` 代码入口已接入：window-level contract、`UAB window_v2`、`NASA CSM` attention-state、通用 baseline runner、`run_stage_i_phase3.py`
-- 阶段 I `Phase 3` synthetic / live-compatible 测试已并入 `test_stage_i_pipeline.py`，`python -m unittest discover -s tests -p 'test_*.py'` 当前通过
-- 阶段 I `Phase 3` 真实长跑仍在进行中；在引入最新 `EEG/ECG overlap` 边界修正后，尚未生成新的 closure 级主报告
-- 阶段 I 当前事实统一沉淀于 `docs/planning/stage-i-data-plan-2026-04-29.md` 与 `docs/reports/stage-i-uab-baseline-2026-04-29.md`
+- 已完成阶段 I `Phase 3`：UAB `window_v2` workload 主线、NASA CSM attention-state 主线、`reuse-existing-artifacts` closure 组装、cross-dataset window count 图与 UAB session-vs-window 对比
+- 阶段 I 收口事实统一沉淀于 `docs/planning/stage-i-closure-2026-04-30.md`
+- 阶段 I 当前事实统一沉淀于 `docs/reports/stage-i-closure-2026-04-30.md`
+- 已完成阶段 I 增强实验第一批：`stage_h_case` sequence contract、`MulT / ContiFormer` 真实 sortie smoke comparison、CLI 与 `test_stage_i_deep_pipeline.py`
+- 增强实验第一批事实沉淀于 `docs/planning/stage-i-deep-baseline-plan-2026-05-01.md` 与 `docs/reports/stage-i-real-sortie-deep-comparison-2026-05-01.md`
+- 已完成阶段 I 增强实验第二批 probe：`UAB / NASA` sequence 导出、统一 `Stage H -> UAB -> NASA` comparison probe 与回归数值兜底
+- 增强实验第二批 probe 主报告：`docs/reports/stage-i-deep-comparison-probe-2026-05-01.md`
+- 已完成阶段 I 增强实验第二批 full LOSO：`UAB / NASA` 双模型实跑与统一 comparison summary
+- 增强实验第二批 full LOSO 主报告：`docs/reports/stage-i-deep-comparison-full-loso-2026-05-01.md`
 
 ## 4. 阶段拆解
 
@@ -401,7 +406,7 @@
   - `20251005_四01_ACT-4_云_J20_22#01` 导出 `1` 个 pilot view
   - `20251002_单01_ACT-8_翼云_J16_12#01` 导出 `2` 个 pilot view
   - 主报告：`docs/reports/stage-h-export-v1-2026-04-26.md`
-  - 机器资产根目录：`artifacts/stage_h/20260426T072340Z-stage-h-v1/`
+  - 机器资产根目录：`docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/`
 - 已同步实现 partial-data v1 标准入口：
   - `configs/partial-data/stage-h-seed-v1.jsonl`
   - `src/chronaris/pipelines/partial_data.py`
@@ -427,7 +432,7 @@
   - `20251110...` vehicle-only partial 生成 `1478` 个窗口样本，`vehicle_only_feature_bundle.npz` 的 `values.shape=(1478, 105, 823)`。
   - 主报告：`docs/reports/stage-h-closure-2026-04-27.md`
   - 收口记录：`docs/planning/stage-h-closure-2026-04-27.md`
-  - 机器资产根目录：`artifacts/stage_h/20260427T000000Z-stage-h-closure/`
+  - 机器资产根目录：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/`
 
 具体任务：
 
@@ -453,7 +458,7 @@
 
 状态：
 
-- 进行中（`Phase 0 + Phase 1 + Phase 2` 已跑通，`Phase 3` 真实收口进行中）
+- 已完成收口（`Phase 0 + Phase 1 + Phase 2 + Phase 3` 均已完成）
 
 总体分期：
 
@@ -483,15 +488,31 @@
 - 已完成 UAB 主观负荷回归：
   - `heat_the_chair` 最优 `random_forest_regressor`：`RMSE=1.4664`
   - `n_back` 最优 `random_forest_regressor`：`RMSE=4.5161`
-- 当前机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+- 当前机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
 - 当前主报告：`docs/reports/stage-i-uab-baseline-2026-04-29.md`
 - 已完成 Phase 2 真实双流 case study：
   - `3` 个真实双流 view 全部纳入主线（`PASS=2`、`WARN=1`）
   - `4` 条 bundle-only 路径：`projection_refusion_baseline / no_event_bias / no_state_normalization / vehicle_delta_suppressed`
   - 已完成同 sortie 双 pilot 对比：`20251002_单01_ACT-8_翼云_J16_12#01`
   - `vehicle_delta_suppressed` 在 `3` 个 view 上均将 `mean_top_event_score` 压到 `0.0`
-  - 当前 Phase 2 机器资产根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+  - 当前 Phase 2 机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
   - 当前 Phase 2 主报告：`docs/reports/stage-i-case-study-phase2-2026-04-29.md`
+ - 已完成 Phase 3 UAB window-level workload：
+   - `n_back` 最优 `logistic_regression`：`macro-F1=0.3478`
+   - `heat_the_chair` 最优 `linear_svc`：`macro-F1=0.5405`
+   - `n_back` 最优 `linear_svr`：`RMSE=10.2234`
+   - `heat_the_chair` 最优 `linear_svr`：`RMSE=1.8639`
+   - UAB window 主报告：`docs/reports/stage-i-uab-window-baseline-2026-04-29.md`
+ - 已完成 Phase 3 NASA CSM attention-state：
+   - `benchmark_only`：`macro-F1=0.4642`
+   - `loft_only`：`macro-F1=0.3723`
+   - `combined`：`macro-F1=0.3741`
+   - NASA 主报告：`docs/reports/stage-i-nasa-attention-baseline-2026-04-29.md`
+ - 已完成 Stage I closure 组装：
+   - 收口机器资产根目录：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
+   - 收口主报告：`docs/reports/stage-i-closure-2026-04-30.md`
+   - 收口记录：`docs/planning/stage-i-closure-2026-04-30.md`
+   - 收口测试：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_pipeline` 与 `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'` 均已通过
 
 ## 5. 当前已完成的代码状态
 
@@ -526,16 +547,28 @@
 - [dataset](../../src/chronaris/dataset)
 - [dataset_v1.py](../../src/chronaris/pipelines/dataset_v1.py)
 
-## 6. 当前未完成但最该做的事
+## 6. 阶段 I 收口后建议
 
-阶段 H 已完成收口，阶段 I 当前已经进入 `Phase 3` 真实收口阶段。当前不再优先扩展新模型结构，后续优先级收敛为“完成 window-level UAB + NASA CSM 真跑证据，再评估阶段 I 收口 gate”。
+阶段 I 已完成收口。当前默认不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 主线事实，后续工作按增强实验处理。
+
+当前增强实验已完成第一批真实 sortie 验证，机器资产位于：
+
+- `docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`
+
+当前增强实验也已完成第二批公开数据 probe，机器资产位于：
+
+- `docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/`
+
+当前增强实验还已完成第二批公开数据 full LOSO，机器资产位于：
+
+- `docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`
 
 按优先级排序：
 
-1. 完成 `Phase 3` 真实长跑，生成 `UAB window + NASA attention` 主结果、消融和 closure summary。
-2. 完成 `Phase 3` 中文主报告与 planning closure 文档回写，再决定是否把阶段 I 标记为 completed。
-3. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
-4. 在不破坏 frozen E/F/G(min)/H 与已完成 Phase 0/1/2 的前提下，评估阶段 I 收口 gate。
+1. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
+2. 若继续冲指标，优先只对 `ContiFormer + UAB subjective` 做小范围调参。
+3. 若继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
+4. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/` 与 `docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`。
 
 ## 7. 当前不该提前做的事
 

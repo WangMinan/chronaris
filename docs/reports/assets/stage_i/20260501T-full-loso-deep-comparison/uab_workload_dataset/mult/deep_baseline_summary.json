@@ -1,0 +1,128 @@
+{
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "model_name": "mult",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences",
+  "objective": {
+    "track": "objective",
+    "model_name": "mult",
+    "groups": {
+      "n_back": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "label_order": [
+          0,
+          1,
+          2
+        ],
+        "macro_f1": 0.2621303182956521,
+        "balanced_accuracy": 0.30487771996138335,
+        "per_class_recall": {
+          "0": 0.08160319751304541,
+          "1": 0.6394378104195287,
+          "2": 0.19359215195157586
+        },
+        "confusion_matrix": [
+          [
+            735,
+            6282,
+            1990
+          ],
+          [
+            1323,
+            6051,
+            2089
+          ],
+          [
+            1227,
+            6500,
+            1855
+          ]
+        ]
+      },
+      "heat_the_chair": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "label_order": [
+          0,
+          1
+        ],
+        "macro_f1": 0.5160979438874922,
+        "balanced_accuracy": 0.5211289456298294,
+        "per_class_recall": {
+          "0": 0.39404485692188707,
+          "1": 0.6482130343377716
+        },
+        "confusion_matrix": [
+          [
+            1019,
+            1567
+          ],
+          [
+            1004,
+            1850
+          ]
+        ]
+      }
+    },
+    "plot_paths": {
+      "objective_n_back_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/plots/objective_n_back_confusion_matrix.png",
+      "objective_heat_the_chair_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/plots/objective_heat_the_chair_confusion_matrix.png",
+      "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/plots/objective_primary_metrics.png"
+    }
+  },
+  "subjective": {
+    "track": "subjective",
+    "model_name": "mult",
+    "groups": {
+      "n_back": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "mae": 4.670542635891571,
+        "rmse": 5.828201477861089,
+        "r2": -0.6091732062569284,
+        "spearman": -0.2321704679451848
+      },
+      "heat_the_chair": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "mae": 2.3534156768308843,
+        "rmse": 2.8251064718014294,
+        "r2": -3.0786962774093825,
+        "spearman": -0.14828013073805651
+      }
+    },
+    "plot_paths": {
+      "subjective_n_back_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/plots/subjective_n_back_regression.png",
+      "subjective_heat_the_chair_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/plots/subjective_heat_the_chair_regression.png",
+      "subjective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/plots/subjective_primary_metrics.png"
+    }
+  },
+  "reference_comparison": {
+    "objective": {
+      "n_back": {
+        "macro_f1": 0.34776469149030814,
+        "balanced_accuracy": 0.36246600531768225,
+        "sample_count": 28052.0
+      },
+      "heat_the_chair": {
+        "macro_f1": 0.5404767483230504,
+        "balanced_accuracy": 0.5404704649205386,
+        "sample_count": 5440.0
+      }
+    },
+    "subjective": {
+      "n_back": {
+        "rmse": 10.223413421909578,
+        "mae": 4.798697119158675,
+        "sample_count": 28052.0
+      },
+      "heat_the_chair": {
+        "rmse": 1.8639105911346199,
+        "mae": 1.2785132457477062,
+        "sample_count": 5440.0
+      }
+    }
+  }
+}

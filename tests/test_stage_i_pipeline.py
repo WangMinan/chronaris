@@ -21,7 +21,11 @@ if str(SRC) not in sys.path:
 from chronaris.dataset import build_nasa_csm_task_entries, build_uab_task_entries, load_stage_i_task_entries
 from chronaris.features import build_nasa_csm_feature_table, build_uab_feature_table
 from chronaris.pipelines.stage_i_baseline import run_stage_i_baselines
-from chronaris.pipelines.stage_i_phase3 import StageIPhase3Config, run_stage_i_phase3
+from chronaris.pipelines.stage_i_phase3 import (
+    StageIPhase3Config,
+    compose_stage_i_phase3_closure,
+    run_stage_i_phase3,
+)
 
 REAL_DATASET_ROOT = Path("/home/wangminan/dataset/chronaris")
 
@@ -143,10 +147,18 @@ class StageISyntheticPipelineTest(unittest.TestCase):
                     set(artifacts.objective_metrics["ablation_results"][group_name]),
                     {"eeg_ecg", "eeg_only", "ecg_only"},
                 )
+                objective_models = set(
+                    artifacts.objective_metrics["ablation_results"][group_name]["eeg_ecg"]["models"]
+                )
+                self.assertEqual(objective_models, {"logistic_regression", "linear_svc"})
                 self.assertEqual(
                     set(artifacts.subjective_metrics["ablation_results"][group_name]),
                     {"eeg_ecg", "eeg_only", "ecg_only"},
                 )
+                subjective_models = set(
+                    artifacts.subjective_metrics["ablation_results"][group_name]["eeg_ecg"]["models"]
+                )
+                self.assertEqual(subjective_models, {"ridge_regression", "linear_svr"})
             self.assertEqual(
                 set(artifacts.fold_predictions["split_group"].unique()),
                 {"subject_01", "subject_02", "subject_03"},
@@ -184,6 +196,10 @@ class StageISyntheticPipelineTest(unittest.TestCase):
                     set(artifacts.objective_metrics["ablation_results"][group_name]),
                     {"all_sensors", "eeg_only", "peripheral_only"},
                 )
+                self.assertEqual(
+                    set(artifacts.objective_metrics["ablation_results"][group_name]["all_sensors"]["models"]),
+                    {"logistic_regression", "linear_svc"},
+                )
             combined = artifacts.fold_predictions.loc[
                 artifacts.fold_predictions["evaluation_group"] == "combined"
             ]
@@ -217,6 +233,35 @@ class StageISyntheticPipelineTest(unittest.TestCase):
             self.assertIn("uab_session_comparison", summary)
             self.assertTrue((Path(result.uab_artifact_root) / "baseline_report.md").exists())
             self.assertTrue((Path(result.nasa_artifact_root) / "baseline_report.md").exists())
+
+    def test_compose_phase3_closure_rebuilds_local_baseline_reports(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dataset_root = Path(temp_dir)
+            _write_mini_uab_dataset(dataset_root)
+            _write_mini_nasa_csm_dataset(dataset_root)
+            prior_root = Path(temp_dir) / "prior_session"
+            prior_root.mkdir(parents=True, exist_ok=True)
+            _write_fake_session_comparison_assets(prior_root)
+
+            result = run_stage_i_phase3(
+                StageIPhase3Config(
+                    dataset_root=str(dataset_root),
+                    output_root=str(Path(temp_dir) / "artifacts"),
+                    run_id="phase3-reuse-test",
+                    prior_uab_session_artifact_root=str(prior_root),
+                )
+            )
+            Path(result.uab_artifact_root, "baseline_report.md").unlink()
+            Path(result.nasa_artifact_root, "baseline_report.md").unlink()
+
+            recomposed = compose_stage_i_phase3_closure(
+                artifact_root=result.artifact_root,
+                prior_uab_session_artifact_root=str(prior_root),
+            )
+
+            self.assertTrue(Path(recomposed.closure_summary_path).exists())
+            self.assertTrue(Path(recomposed.uab_artifact_root, "baseline_report.md").exists())
+            self.assertTrue(Path(recomposed.nasa_artifact_root, "baseline_report.md").exists())
 
 
 def _write_mini_uab_dataset(dataset_root: Path) -> None:

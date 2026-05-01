@@ -61,7 +61,7 @@
 注意：
 
 - 当前仍是单架次 overlap-focused preview 收口，不等价于多架次泛化验证。
-- 当前 G(min) 是无下游标签的最小融合与解释接口；阶段 H v1 已在后续完成标准化特征导出入口，但阶段 I 下游任务验证尚未开始。
+- 当前 G(min) 是无下游标签的最小融合与解释接口；阶段 H 已在后续完成标准化特征导出收口，阶段 I 也已在后续完成公开数据与 case-study 收口。
 - 当前 G(min) 没有宣称完成完整多头语义查询训练层；本轮只先固化与选题报告一致的单向因果计算图、历史事件 Key/Value 约束和解释产物。
 - 后续消融应至少覆盖 `E`、`E+F(full)`、`E+F(full)+G(min)`、`E+G(no physics)`、`F+G(no causal mask)`。
 
@@ -69,7 +69,7 @@
 
 脚本入口：
 
-- `CHRONARIS_MYSQL_HOST=127.0.0.1 python scripts/run_stage_e_relative_preview.py --input-normalization-mode zscore_train --physics-constraint-family full --compare-with-causal-fusion-baseline --report-path docs/reports/alignment-preview-stage-g-min-closure-2026-04-22.md`
+- `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --input-normalization-mode zscore_train --physics-constraint-family full --compare-with-causal-fusion-baseline --report-path docs/reports/alignment-preview-stage-g-min-closure-2026-04-22.md`
 
 关键产物：
 
@@ -86,8 +86,8 @@
 
 执行命令：
 
-- `CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 python -m unittest tests.test_alignment_pipeline`
-- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 python -m unittest discover -s tests -p 'test_*.py'`
+- `CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_alignment_pipeline`
+- `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'`
 
 结果：
 

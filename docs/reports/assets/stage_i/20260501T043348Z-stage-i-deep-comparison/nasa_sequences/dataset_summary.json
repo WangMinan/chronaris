@@ -1,0 +1,42 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "generated_at_utc": "2026-05-01T04:37:07.827283Z",
+  "entry_count": 16609,
+  "recording_count": 68,
+  "split_group_count": 17,
+  "sequence_length": 64,
+  "subset_counts": {
+    "benchmark": 3441,
+    "loft": 13168
+  },
+  "training_role_counts": {
+    "primary": 2810,
+    "inventory_only": 13799
+  },
+  "task_family_counts": {
+    "attention_state": 16609
+  },
+  "label_distribution": {
+    "attention_state": {
+      "2": 2332,
+      "0": 13799,
+      "5": 294,
+      "1": 184
+    }
+  },
+  "modality_feature_counts": {
+    "eeg": 20,
+    "peripheral": 3
+  },
+  "source_origin_counts": {
+    "nasa_attention_state_window_v2": 16609
+  },
+  "extra_summary": {
+    "prepared_subset_counts": {
+      "benchmark": 3441,
+      "loft": 13168
+    },
+    "inventory_only_background_count": 13799
+  }
+}

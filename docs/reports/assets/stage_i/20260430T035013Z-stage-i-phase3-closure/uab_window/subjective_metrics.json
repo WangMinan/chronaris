@@ -1,0 +1,204 @@
+{
+  "track": "subjective",
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "generated_at_utc": "2026-04-30T01:44:12.372377Z",
+  "primary_feature_set": "eeg_ecg",
+  "feature_set_columns": {
+    "eeg_ecg": 214,
+    "eeg_only": 202,
+    "ecg_only": 12
+  },
+  "primary_results": {
+    "n_back": {
+      "sample_count": 28052,
+      "fold_count": 16,
+      "best_model_name": "linear_svr",
+      "models": {
+        "ridge_regression": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "mae": 5.049908692427043,
+          "rmse": 21.652186680173834,
+          "r2": -21.209419871397444,
+          "spearman": 0.13308571171300942
+        },
+        "linear_svr": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "mae": 4.798697119158675,
+          "rmse": 10.223413421909578,
+          "r2": -3.9513717657562717,
+          "spearman": 0.12094266623297155
+        }
+      }
+    },
+    "heat_the_chair": {
+      "sample_count": 5440,
+      "fold_count": 17,
+      "best_model_name": "linear_svr",
+      "models": {
+        "ridge_regression": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.3133126434421414,
+          "rmse": 2.0613847045431273,
+          "r2": -1.171549932830307,
+          "spearman": 0.1841790997704985
+        },
+        "linear_svr": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.2785132457477062,
+          "rmse": 1.8639105911346199,
+          "r2": -0.7754231306938644,
+          "spearman": 0.17213594909307567
+        }
+      }
+    }
+  },
+  "ablation_results": {
+    "n_back": {
+      "eeg_ecg": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "best_model_name": "linear_svr",
+        "models": {
+          "ridge_regression": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 5.049908692427043,
+            "rmse": 21.652186680173834,
+            "r2": -21.209419871397444,
+            "spearman": 0.13308571171300942
+          },
+          "linear_svr": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 4.798697119158675,
+            "rmse": 10.223413421909578,
+            "r2": -3.9513717657562717,
+            "spearman": 0.12094266623297155
+          }
+        }
+      },
+      "eeg_only": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "best_model_name": "linear_svr",
+        "models": {
+          "ridge_regression": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 5.053506227607282,
+            "rmse": 21.3673758327362,
+            "r2": -20.62898138028974,
+            "spearman": 0.0948131596679678
+          },
+          "linear_svr": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 5.007686082316392,
+            "rmse": 11.985013124136149,
+            "r2": -5.80472716368929,
+            "spearman": 0.01184949755894851
+          }
+        }
+      },
+      "ecg_only": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "best_model_name": "ridge_regression",
+        "models": {
+          "ridge_regression": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 3.889812538162694,
+            "rmse": 5.4682413286903575,
+            "r2": -0.4165406270356311,
+            "spearman": -0.06529307004186609
+          },
+          "linear_svr": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 3.903354090233983,
+            "rmse": 5.776059818749087,
+            "r2": -0.5805092920897854,
+            "spearman": -0.005005952067102371
+          }
+        }
+      }
+    },
+    "heat_the_chair": {
+      "eeg_ecg": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "best_model_name": "linear_svr",
+        "models": {
+          "ridge_regression": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.3133126434421414,
+            "rmse": 2.0613847045431273,
+            "r2": -1.171549932830307,
+            "spearman": 0.1841790997704985
+          },
+          "linear_svr": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.2785132457477062,
+            "rmse": 1.8639105911346199,
+            "r2": -0.7754231306938644,
+            "spearman": 0.17213594909307567
+          }
+        }
+      },
+      "eeg_only": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "best_model_name": "ridge_regression",
+        "models": {
+          "ridge_regression": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.3641877275723329,
+            "rmse": 2.4076468046550064,
+            "r2": -1.9623561899402024,
+            "spearman": 0.11879452944395913
+          },
+          "linear_svr": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.4245327379908341,
+            "rmse": 2.454232037558576,
+            "r2": -2.078101692417479,
+            "spearman": 0.13119790858664893
+          }
+        }
+      },
+      "ecg_only": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "best_model_name": "linear_svr",
+        "models": {
+          "ridge_regression": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.1725671329191292,
+            "rmse": 1.4807758974488745,
+            "r2": -0.12054782021007959,
+            "spearman": -0.016980900795705623
+          },
+          "linear_svr": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.1058666029703756,
+            "rmse": 1.4579560165642602,
+            "r2": -0.08627695538423907,
+            "spearman": 0.15875431051930589
+          }
+        }
+      }
+    }
+  }
+}

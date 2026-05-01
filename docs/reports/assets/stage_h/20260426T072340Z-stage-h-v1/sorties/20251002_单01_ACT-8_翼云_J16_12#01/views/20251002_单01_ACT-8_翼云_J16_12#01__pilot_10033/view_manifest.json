@@ -1,0 +1,66 @@
+{
+  "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+  "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+  "pilot_id": 10033,
+  "flight_task_id": 6000002,
+  "collect_task_id": 2100450,
+  "physiology_measurements": [
+    "eeg",
+    "spo2"
+  ],
+  "vehicle_measurements": [
+    "BUS6000019110021",
+    "BUS6000019110022",
+    "BUS6000019110023",
+    "BUS6000019110024",
+    "BUS6000019110025",
+    "BUS6000019110026"
+  ],
+  "clip_start_utc": "2025-10-02T07:45:00+00:00",
+  "clip_stop_utc": "2025-10-02T14:00:00+00:00",
+  "export_start_utc": "2025-10-02T08:35:00+00:00",
+  "export_stop_utc": "2025-10-02T08:38:01+00:00",
+  "window_count": 37,
+  "model_sample_count": 37,
+  "split_summary": {
+    "train": 22,
+    "validation": 7,
+    "test": 8,
+    "skipped_between_train_validation": 0,
+    "skipped_between_validation_test": 0
+  },
+  "intermediate_summary": {
+    "partition": "test",
+    "sample_count": 8,
+    "reference_point_count": 16,
+    "sample_ids": [
+      "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+      "20251002_单01_ACT-8_翼云_J16_12#01:0036"
+    ],
+    "mean_physiology_reference_projection_l2": 1.3438756465911865,
+    "mean_vehicle_reference_projection_l2": 1.4924262315034866,
+    "mean_reference_projection_cosine": 0.7506038136780262
+  },
+  "projection_diagnostics_verdict": "WARN",
+  "stage_g_enabled": true,
+  "stage_g_available": true,
+  "vehicle_field_metadata": {
+    "status": "loaded",
+    "field_count": 2666,
+    "error_count": 0,
+    "errors": []
+  },
+  "artifact_paths": {
+    "feature_bundle_npz": "docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz",
+    "intermediate_summary_json": "docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/intermediate_summary.json",
+    "projection_diagnostics_summary_json": "docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/projection_diagnostics_summary.json",
+    "causal_fusion_summary_json": "docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/causal_fusion_summary.json",
+    "window_manifest_jsonl": "docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/window_manifest.jsonl"
+  }
+}

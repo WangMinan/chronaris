@@ -13,17 +13,22 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i_phase3 import StageIPhase3Config, render_stage_i_phase3_report, run_stage_i_phase3
+from chronaris.pipelines.stage_i_phase3 import (
+    StageIPhase3Config,
+    compose_stage_i_phase3_closure,
+    render_stage_i_phase3_report,
+    run_stage_i_phase3,
+)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", required=True)
     parser.add_argument("--run-id", default=None)
-    parser.add_argument("--output-root", default="artifacts/stage_i")
+    parser.add_argument("--output-root", default="docs/reports/assets/stage_i")
     parser.add_argument(
         "--prior-uab-session-artifact-root",
-        default="artifacts/stage_i/20260429T000000Z-stage-i-phase0-1-uab",
+        default="docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab",
     )
     parser.add_argument(
         "--report-path",
@@ -33,6 +38,7 @@ def parse_args() -> argparse.Namespace:
         "--planning-path",
         default=f"docs/planning/stage-i-closure-{datetime.now().date().isoformat()}.md",
     )
+    parser.add_argument("--reuse-existing-artifacts", action="store_true")
     return parser.parse_args()
 
 
@@ -48,7 +54,14 @@ def main() -> int:
         run_id=args.run_id or _default_run_id(),
         prior_uab_session_artifact_root=str(REPO_ROOT / args.prior_uab_session_artifact_root),
     )
-    result = run_stage_i_phase3(config)
+    result = (
+        compose_stage_i_phase3_closure(
+            artifact_root=str(REPO_ROOT / args.output_root / config.run_id),
+            prior_uab_session_artifact_root=str(REPO_ROOT / args.prior_uab_session_artifact_root),
+        )
+        if args.reuse_existing_artifacts
+        else run_stage_i_phase3(config)
+    )
 
     report_path = REPO_ROOT / args.report_path
     report_path.write_text(render_stage_i_phase3_report(result.closure_summary) + "\n", encoding="utf-8")

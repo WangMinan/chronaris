@@ -1,0 +1,18 @@
+{
+  "partition": "test",
+  "sample_count": 8,
+  "reference_point_count": 16,
+  "sample_ids": [
+    "20251005_四01_ACT-4_云_J20_22#01:0029",
+    "20251005_四01_ACT-4_云_J20_22#01:0030",
+    "20251005_四01_ACT-4_云_J20_22#01:0031",
+    "20251005_四01_ACT-4_云_J20_22#01:0032",
+    "20251005_四01_ACT-4_云_J20_22#01:0033",
+    "20251005_四01_ACT-4_云_J20_22#01:0034",
+    "20251005_四01_ACT-4_云_J20_22#01:0035",
+    "20251005_四01_ACT-4_云_J20_22#01:0036"
+  ],
+  "mean_physiology_reference_projection_l2": 1.2363807708024979,
+  "mean_vehicle_reference_projection_l2": 1.2355015724897385,
+  "mean_reference_projection_cosine": 0.8194446042180061
+}
