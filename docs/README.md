@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-04-29
+更新时间：2026-05-01
 
 ## 目录说明
 
@@ -12,16 +12,30 @@
 4. `reports`：阶段主报告与可复现实验结论
 5. `选题报告与基金申请书`：选题与基金原始文档
 
+## 运行约定
+
+- 本仓库文档中的 Python 命令默认显式使用 `chronaris` 解释器：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
+- 如果命令前带环境变量，例如 `CHRONARIS_ENABLE_*` 或 `CHRONARIS_MYSQL_HOST`，变量应直接放在该解释器前，不要退回 `base` 的 `python`
+
 ## 当前事实源
 
 - 阶段状态只看 [coding-roadmap.md](planning/coding-roadmap.md)。
 - 阶段 E/F/G/H 的收口依据只看 `docs/planning/stage-*-closure-*.md`。
-- 阶段 I 当前 `Phase 0 + Phase 1 + Phase 2` 的规划与落地记录只看 [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md)。
-- 阶段 I `Phase 3` 当前仍在真实收口中，状态只看 [coding-roadmap.md](planning/coding-roadmap.md)；在 closure 文档生成前，不单独认定为 completed。
+- 阶段 I 收口依据只看 [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md) 与 [stage-i-closure-2026-04-30.md](reports/stage-i-closure-2026-04-30.md)。
+- [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md) 继续保留为阶段 I 启动期计划，不再作为当前阶段状态判断依据。
+- [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md) 是第三方基线落地前置准备记录。
+- [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md) 是当前增强实验执行计划与已验证状态。
 - 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)。
 - 阶段 I 当前阶段主报告：
   - `Phase 1`：[stage-i-uab-baseline-2026-04-29.md](reports/stage-i-uab-baseline-2026-04-29.md)
   - `Phase 2`：[stage-i-case-study-phase2-2026-04-29.md](reports/stage-i-case-study-phase2-2026-04-29.md)
+  - `Phase 3` UAB window：[stage-i-uab-window-baseline-2026-04-29.md](reports/stage-i-uab-window-baseline-2026-04-29.md)
+  - `Phase 3` NASA attention：[stage-i-nasa-attention-baseline-2026-04-29.md](reports/stage-i-nasa-attention-baseline-2026-04-29.md)
+  - `Stage I closure`：[stage-i-closure-2026-04-30.md](reports/stage-i-closure-2026-04-30.md)
+  - `Enhancement batch 1 real sortie`：[stage-i-real-sortie-deep-comparison-2026-05-01.md](reports/stage-i-real-sortie-deep-comparison-2026-05-01.md)
+  - `Enhancement batch 2 public probe`：[stage-i-deep-comparison-probe-2026-05-01.md](reports/stage-i-deep-comparison-probe-2026-05-01.md)
+  - `Enhancement batch 2 full LOSO`：[stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage-i-deep-comparison-full-loso-2026-05-01.md)
+  - `Thesis support assessment`：[thesis-support-assessment-2026-05-01.md](reports/thesis-support-assessment-2026-05-01.md)
 - 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
 ## 分类索引
@@ -44,6 +58,9 @@
 - [stage-h-closure-2026-04-27.md](planning/stage-h-closure-2026-04-27.md)
 - [stage-i-preparation.md](planning/stage-i-preparation.md)
 - [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md)
+- [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md)
+- [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md)
+- [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md)
 
 ### models
 
@@ -64,6 +81,13 @@
 - [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)
 - [stage-i-uab-baseline-2026-04-29.md](reports/stage-i-uab-baseline-2026-04-29.md)
 - [stage-i-case-study-phase2-2026-04-29.md](reports/stage-i-case-study-phase2-2026-04-29.md)
+- [stage-i-uab-window-baseline-2026-04-29.md](reports/stage-i-uab-window-baseline-2026-04-29.md)
+- [stage-i-nasa-attention-baseline-2026-04-29.md](reports/stage-i-nasa-attention-baseline-2026-04-29.md)
+- [stage-i-closure-2026-04-30.md](reports/stage-i-closure-2026-04-30.md)
+- [stage-i-real-sortie-deep-comparison-2026-05-01.md](reports/stage-i-real-sortie-deep-comparison-2026-05-01.md)
+- [stage-i-deep-comparison-probe-2026-05-01.md](reports/stage-i-deep-comparison-probe-2026-05-01.md)
+- [stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage-i-deep-comparison-full-loso-2026-05-01.md)
+- [thesis-support-assessment-2026-05-01.md](reports/thesis-support-assessment-2026-05-01.md)
 
 ### 选题报告与基金申请书
 

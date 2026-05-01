@@ -1,0 +1,1748 @@
+{
+  "phase": "stage_i_phase3",
+  "run_id": "20260430T035013Z-stage-i-phase3-closure",
+  "generated_at_utc": "2026-04-30T03:51:02.713471Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure",
+  "uab_window": {
+    "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window",
+    "dataset_summary": {
+      "dataset_id": "uab_workload_dataset",
+      "generated_at_utc": "2026-04-29T07:43:26.621687Z",
+      "entry_count": 34748,
+      "recording_count": 87,
+      "window_count": 34748,
+      "sample_granularity_counts": {
+        "window": 34748
+      },
+      "subset_counts": {
+        "n_back": 28052,
+        "heat_the_chair": 5440,
+        "flight_simulator": 1256
+      },
+      "subset_source_counts": {
+        "n_back": {
+          "benchmark": 28052
+        },
+        "heat_the_chair": {
+          "benchmark": 5440
+        },
+        "flight_simulator": {
+          "benchmark": 1256
+        }
+      },
+      "training_role_counts": {
+        "primary": 33492,
+        "auxiliary": 1256
+      },
+      "split_group_count": 28,
+      "task_family_counts": {
+        "workload": 34748
+      },
+      "label_distribution": {
+        "workload_level": {
+          "0": 11593,
+          "1": 12317,
+          "2": 9582
+        },
+        "theoretical_difficulty": {
+          "2.0": 434,
+          "4.0": 114,
+          "1.0": 331,
+          "3.0": 121
+        }
+      },
+      "objective_label_distributions": {
+        "n_back": {
+          "0": 9007,
+          "1": 9463,
+          "2": 9582
+        },
+        "heat_the_chair": {
+          "1": 2854,
+          "0": 2586
+        },
+        "flight_simulator": {
+          "2.0": 434,
+          "4.0": 114,
+          "1.0": 331,
+          "3.0": 121
+        }
+      },
+      "subjective_target_counts": {
+        "n_back": 28052,
+        "heat_the_chair": 5440,
+        "flight_simulator": 1256
+      },
+      "feature_count": 214,
+      "feature_group_counts": {
+        "eeg": 202,
+        "ecg": 12
+      },
+      "eeg_feature_count": 202,
+      "ecg_feature_count": 12,
+      "peripheral_feature_count": 0,
+      "missing_ecg_session_counts": {
+        "flight_simulator": 380,
+        "heat_the_chair": 654,
+        "n_back": 9044
+      }
+    },
+    "objective_primary": {
+      "n_back": {
+        "macro_f1": 0.34776469149030814,
+        "balanced_accuracy": 0.36246600531768225,
+        "sample_count": 28052.0
+      },
+      "heat_the_chair": {
+        "macro_f1": 0.5404767483230504,
+        "balanced_accuracy": 0.5404704649205386,
+        "sample_count": 5440.0
+      }
+    },
+    "subjective_primary": {
+      "n_back": {
+        "rmse": 10.223413421909578,
+        "mae": 4.798697119158675,
+        "sample_count": 28052.0
+      },
+      "heat_the_chair": {
+        "rmse": 1.8639105911346199,
+        "mae": 1.2785132457477062,
+        "sample_count": 5440.0
+      }
+    },
+    "plot_paths": {
+      "dataset_subset_counts": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/dataset_subset_counts.png",
+      "label_distribution": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/label_distribution.png",
+      "objective_ablation_macro_f1": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_ablation_macro_f1.png",
+      "objective_confusion_matrix_heat_the_chair": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_confusion_matrix_heat_the_chair.png",
+      "objective_confusion_matrix_n_back": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_confusion_matrix_n_back.png",
+      "subjective_ablation_rmse": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_ablation_rmse.png",
+      "subjective_regression_heat_the_chair": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_regression_heat_the_chair.png",
+      "subjective_regression_n_back": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_regression_n_back.png"
+    },
+    "objective_ablation_results": {
+      "n_back": {
+        "eeg_ecg": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "best_model_name": "logistic_regression",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "label_order": [
+                0,
+                1,
+                2
+              ],
+              "macro_f1": 0.34776469149030814,
+              "balanced_accuracy": 0.36246600531768225,
+              "per_class_recall": {
+                "0": 0.32841123570556235,
+                "1": 0.5597590616083694,
+                "2": 0.199227718639115
+              },
+              "confusion_matrix": [
+                [
+                  2958,
+                  4312,
+                  1737
+                ],
+                [
+                  2272,
+                  5297,
+                  1894
+                ],
+                [
+                  2383,
+                  5290,
+                  1909
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "label_order": [
+                0,
+                1,
+                2
+              ],
+              "macro_f1": 0.34264106994618054,
+              "balanced_accuracy": 0.34790190777679236,
+              "per_class_recall": {
+                "0": 0.32008437881647606,
+                "1": 0.4768043960688999,
+                "2": 0.24681694844500104
+              },
+              "confusion_matrix": [
+                [
+                  2883,
+                  3725,
+                  2399
+                ],
+                [
+                  2201,
+                  4512,
+                  2750
+                ],
+                [
+                  2182,
+                  5035,
+                  2365
+                ]
+              ]
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "label_order": [
+                0,
+                1,
+                2
+              ],
+              "macro_f1": 0.29521167207433824,
+              "balanced_accuracy": 0.32980964320418776,
+              "per_class_recall": {
+                "0": 0.13123126457199955,
+                "1": 0.6491598858712881,
+                "2": 0.2090377791692757
+              },
+              "confusion_matrix": [
+                [
+                  1182,
+                  5641,
+                  2184
+                ],
+                [
+                  1330,
+                  6143,
+                  1990
+                ],
+                [
+                  1591,
+                  5988,
+                  2003
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "label_order": [
+                0,
+                1,
+                2
+              ],
+              "macro_f1": 0.3276273109204963,
+              "balanced_accuracy": 0.3369640202361814,
+              "per_class_recall": {
+                "0": 0.23248584434328856,
+                "1": 0.5099862622846877,
+                "2": 0.26841995408056774
+              },
+              "confusion_matrix": [
+                [
+                  2094,
+                  3925,
+                  2988
+                ],
+                [
+                  1833,
+                  4826,
+                  2804
+                ],
+                [
+                  1832,
+                  5178,
+                  2572
+                ]
+              ]
+            }
+          }
+        },
+        "ecg_only": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "label_order": [
+                0,
+                1,
+                2
+              ],
+              "macro_f1": 0.339221888526515,
+              "balanced_accuracy": 0.3699093619585769,
+              "per_class_recall": {
+                "0": 0.3727101143555013,
+                "1": 0.6227412025784634,
+                "2": 0.1142767689417658
+              },
+              "confusion_matrix": [
+                [
+                  3357,
+                  4670,
+                  980
+                ],
+                [
+                  2170,
+                  5893,
+                  1400
+                ],
+                [
+                  2088,
+                  6399,
+                  1095
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "label_order": [
+                0,
+                1,
+                2
+              ],
+              "macro_f1": 0.34182320896064994,
+              "balanced_accuracy": 0.36239903349349234,
+              "per_class_recall": {
+                "0": 0.36160763850338623,
+                "1": 0.5764556694494346,
+                "2": 0.14913379252765602
+              },
+              "confusion_matrix": [
+                [
+                  3257,
+                  4298,
+                  1452
+                ],
+                [
+                  2172,
+                  5455,
+                  1836
+                ],
+                [
+                  2113,
+                  6040,
+                  1429
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "heat_the_chair": {
+        "eeg_ecg": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "label_order": [
+                0,
+                1
+              ],
+              "macro_f1": 0.49733572186299146,
+              "balanced_accuracy": 0.5112373998095507,
+              "per_class_recall": {
+                "0": 0.6535189481825213,
+                "1": 0.3689558514365802
+              },
+              "confusion_matrix": [
+                [
+                  1690,
+                  896
+                ],
+                [
+                  1801,
+                  1053
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "label_order": [
+                0,
+                1
+              ],
+              "macro_f1": 0.5404767483230504,
+              "balanced_accuracy": 0.5404704649205386,
+              "per_class_recall": {
+                "0": 0.5112142304717711,
+                "1": 0.5697266993693062
+              },
+              "confusion_matrix": [
+                [
+                  1322,
+                  1264
+                ],
+                [
+                  1228,
+                  1626
+                ]
+              ]
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "label_order": [
+                0,
+                1
+              ],
+              "macro_f1": 0.48632587306457087,
+              "balanced_accuracy": 0.5008882934414244,
+              "per_class_recall": {
+                "0": 0.645784996133024,
+                "1": 0.3559915907498248
+              },
+              "confusion_matrix": [
+                [
+                  1670,
+                  916
+                ],
+                [
+                  1838,
+                  1016
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "label_order": [
+                0,
+                1
+              ],
+              "macro_f1": 0.5215350709229751,
+              "balanced_accuracy": 0.5218283615457282,
+              "per_class_recall": {
+                "0": 0.5208816705336426,
+                "1": 0.5227750525578136
+              },
+              "confusion_matrix": [
+                [
+                  1347,
+                  1239
+                ],
+                [
+                  1362,
+                  1492
+                ]
+              ]
+            }
+          }
+        },
+        "ecg_only": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "label_order": [
+                0,
+                1
+              ],
+              "macro_f1": 0.5069281809327469,
+              "balanced_accuracy": 0.5072517317386326,
+              "per_class_recall": {
+                "0": 0.4566898685228152,
+                "1": 0.5578135949544499
+              },
+              "confusion_matrix": [
+                [
+                  1181,
+                  1405
+                ],
+                [
+                  1262,
+                  1592
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "label_order": [
+                0,
+                1
+              ],
+              "macro_f1": 0.513365691403931,
+              "balanced_accuracy": 0.5141507746688411,
+              "per_class_recall": {
+                "0": 0.5290023201856149,
+                "1": 0.49929922915206726
+              },
+              "confusion_matrix": [
+                [
+                  1368,
+                  1218
+                ],
+                [
+                  1429,
+                  1425
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "subjective_ablation_results": {
+      "n_back": {
+        "eeg_ecg": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "best_model_name": "linear_svr",
+          "models": {
+            "ridge_regression": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "mae": 5.049908692427043,
+              "rmse": 21.652186680173834,
+              "r2": -21.209419871397444,
+              "spearman": 0.13308571171300942
+            },
+            "linear_svr": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "mae": 4.798697119158675,
+              "rmse": 10.223413421909578,
+              "r2": -3.9513717657562717,
+              "spearman": 0.12094266623297155
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "best_model_name": "linear_svr",
+          "models": {
+            "ridge_regression": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "mae": 5.053506227607282,
+              "rmse": 21.3673758327362,
+              "r2": -20.62898138028974,
+              "spearman": 0.0948131596679678
+            },
+            "linear_svr": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "mae": 5.007686082316392,
+              "rmse": 11.985013124136149,
+              "r2": -5.80472716368929,
+              "spearman": 0.01184949755894851
+            }
+          }
+        },
+        "ecg_only": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "best_model_name": "ridge_regression",
+          "models": {
+            "ridge_regression": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "mae": 3.889812538162694,
+              "rmse": 5.4682413286903575,
+              "r2": -0.4165406270356311,
+              "spearman": -0.06529307004186609
+            },
+            "linear_svr": {
+              "sample_count": 28052,
+              "fold_count": 16,
+              "mae": 3.903354090233983,
+              "rmse": 5.776059818749087,
+              "r2": -0.5805092920897854,
+              "spearman": -0.005005952067102371
+            }
+          }
+        }
+      },
+      "heat_the_chair": {
+        "eeg_ecg": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "best_model_name": "linear_svr",
+          "models": {
+            "ridge_regression": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "mae": 1.3133126434421414,
+              "rmse": 2.0613847045431273,
+              "r2": -1.171549932830307,
+              "spearman": 0.1841790997704985
+            },
+            "linear_svr": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "mae": 1.2785132457477062,
+              "rmse": 1.8639105911346199,
+              "r2": -0.7754231306938644,
+              "spearman": 0.17213594909307567
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "best_model_name": "ridge_regression",
+          "models": {
+            "ridge_regression": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "mae": 1.3641877275723329,
+              "rmse": 2.4076468046550064,
+              "r2": -1.9623561899402024,
+              "spearman": 0.11879452944395913
+            },
+            "linear_svr": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "mae": 1.4245327379908341,
+              "rmse": 2.454232037558576,
+              "r2": -2.078101692417479,
+              "spearman": 0.13119790858664893
+            }
+          }
+        },
+        "ecg_only": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "best_model_name": "linear_svr",
+          "models": {
+            "ridge_regression": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "mae": 1.1725671329191292,
+              "rmse": 1.4807758974488745,
+              "r2": -0.12054782021007959,
+              "spearman": -0.016980900795705623
+            },
+            "linear_svr": {
+              "sample_count": 5440,
+              "fold_count": 17,
+              "mae": 1.1058666029703756,
+              "rmse": 1.4579560165642602,
+              "r2": -0.08627695538423907,
+              "spearman": 0.15875431051930589
+            }
+          }
+        }
+      }
+    }
+  },
+  "nasa_attention": {
+    "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention",
+    "dataset_summary": {
+      "dataset_id": "nasa_csm",
+      "generated_at_utc": "2026-04-29T08:26:03.874457Z",
+      "entry_count": 16609,
+      "recording_count": 68,
+      "window_count": 16609,
+      "sample_granularity_counts": {
+        "window": 16609
+      },
+      "subset_counts": {
+        "benchmark": 3441,
+        "loft": 13168
+      },
+      "subset_source_counts": {
+        "benchmark": {
+          "benchmark": 3441
+        },
+        "loft": {
+          "loft": 13168
+        }
+      },
+      "training_role_counts": {
+        "primary": 2810,
+        "inventory_only": 13799
+      },
+      "split_group_count": 17,
+      "task_family_counts": {
+        "attention_state": 16609
+      },
+      "label_distribution": {
+        "attention_state": {
+          "2": 2332,
+          "0": 13799,
+          "5": 294,
+          "1": 184
+        }
+      },
+      "objective_label_distributions": {
+        "benchmark": {
+          "2": 1205,
+          "0": 1990,
+          "5": 158,
+          "1": 88
+        },
+        "loft": {
+          "0": 11809,
+          "1": 96,
+          "2": 1127,
+          "5": 136
+        }
+      },
+      "subjective_target_counts": {},
+      "feature_count": 92,
+      "feature_group_counts": {
+        "eeg": 80,
+        "peripheral": 12
+      },
+      "eeg_feature_count": 80,
+      "ecg_feature_count": 0,
+      "peripheral_feature_count": 12,
+      "missing_ecg_session_counts": {}
+    },
+    "objective_primary": {
+      "benchmark_only": {
+        "macro_f1": 0.4641561353985333,
+        "balanced_accuracy": 0.4905424988898386,
+        "sample_count": 1451.0
+      },
+      "loft_only": {
+        "macro_f1": 0.3723186247618541,
+        "balanced_accuracy": 0.38077459244567397,
+        "sample_count": 1359.0
+      },
+      "combined": {
+        "macro_f1": 0.3741024976765464,
+        "balanced_accuracy": 0.37649783482140214,
+        "sample_count": 2810.0
+      }
+    },
+    "subjective_primary": {},
+    "plot_paths": {
+      "dataset_subset_counts": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/dataset_subset_counts.png",
+      "label_distribution": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/label_distribution.png",
+      "objective_ablation_macro_f1": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_ablation_macro_f1.png",
+      "objective_confusion_matrix_benchmark_only": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_benchmark_only.png",
+      "objective_confusion_matrix_combined": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_combined.png",
+      "objective_confusion_matrix_loft_only": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_loft_only.png"
+    },
+    "objective_ablation_results": {
+      "benchmark_only": {
+        "all_sensors": {
+          "sample_count": 1451,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.418397846649728,
+              "balanced_accuracy": 0.5081497786839454,
+              "per_class_recall": {
+                "1": 0.45454545454545453,
+                "2": 0.6331950207468879,
+                "5": 0.43670886075949367
+              },
+              "confusion_matrix": [
+                [
+                  40,
+                  26,
+                  22
+                ],
+                [
+                  160,
+                  763,
+                  282
+                ],
+                [
+                  29,
+                  60,
+                  69
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.4641561353985333,
+              "balanced_accuracy": 0.4905424988898386,
+              "per_class_recall": {
+                "1": 0.32954545454545453,
+                "2": 0.8066390041493776,
+                "5": 0.33544303797468356
+              },
+              "confusion_matrix": [
+                [
+                  29,
+                  39,
+                  20
+                ],
+                [
+                  74,
+                  972,
+                  159
+                ],
+                [
+                  19,
+                  86,
+                  53
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3134996956786366,
+              "balanced_accuracy": 0.33812441607099947,
+              "per_class_recall": {
+                "1": 0.011363636363636364,
+                "2": 0.9966804979253112,
+                "5": 0.006329113924050633
+              },
+              "confusion_matrix": [
+                [
+                  1,
+                  87,
+                  0
+                ],
+                [
+                  4,
+                  1201,
+                  0
+                ],
+                [
+                  0,
+                  157,
+                  1
+                ]
+              ]
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 1451,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.42302928466901624,
+              "balanced_accuracy": 0.5079396040344619,
+              "per_class_recall": {
+                "1": 0.4318181818181818,
+                "2": 0.6489626556016598,
+                "5": 0.4430379746835443
+              },
+              "confusion_matrix": [
+                [
+                  38,
+                  27,
+                  23
+                ],
+                [
+                  161,
+                  782,
+                  262
+                ],
+                [
+                  26,
+                  62,
+                  70
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.4460816461835107,
+              "balanced_accuracy": 0.4642892897672561,
+              "per_class_recall": {
+                "1": 0.3068181818181818,
+                "2": 0.8265560165975103,
+                "5": 0.25949367088607594
+              },
+              "confusion_matrix": [
+                [
+                  27,
+                  45,
+                  16
+                ],
+                [
+                  87,
+                  996,
+                  122
+                ],
+                [
+                  18,
+                  99,
+                  41
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3101071622729828,
+              "balanced_accuracy": 0.3358929915786894,
+              "per_class_recall": {
+                "1": 0.0,
+                "2": 0.9950207468879668,
+                "5": 0.012658227848101266
+              },
+              "confusion_matrix": [
+                [
+                  0,
+                  88,
+                  0
+                ],
+                [
+                  2,
+                  1199,
+                  4
+                ],
+                [
+                  1,
+                  155,
+                  2
+                ]
+              ]
+            }
+          }
+        },
+        "peripheral_only": {
+          "sample_count": 1451,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.31974271189957465,
+              "balanced_accuracy": 0.41492745353636157,
+              "per_class_recall": {
+                "1": 0.3068181818181818,
+                "2": 0.45062240663900416,
+                "5": 0.4873417721518987
+              },
+              "confusion_matrix": [
+                [
+                  27,
+                  34,
+                  27
+                ],
+                [
+                  222,
+                  543,
+                  440
+                ],
+                [
+                  27,
+                  54,
+                  77
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.4172284863448296,
+              "balanced_accuracy": 0.39810337473161145,
+              "per_class_recall": {
+                "1": 0.10227272727272728,
+                "2": 0.9717842323651452,
+                "5": 0.12025316455696203
+              },
+              "confusion_matrix": [
+                [
+                  9,
+                  75,
+                  4
+                ],
+                [
+                  18,
+                  1171,
+                  16
+                ],
+                [
+                  2,
+                  137,
+                  19
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 1451,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.2885108587204439,
+              "balanced_accuracy": 0.29518762922040404,
+              "per_class_recall": {
+                "1": 0.1590909090909091,
+                "2": 0.6315352697095435,
+                "5": 0.0949367088607595
+              },
+              "confusion_matrix": [
+                [
+                  14,
+                  62,
+                  12
+                ],
+                [
+                  204,
+                  761,
+                  240
+                ],
+                [
+                  38,
+                  105,
+                  15
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "loft_only": {
+        "all_sensors": {
+          "sample_count": 1359,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.27792397281780495,
+              "balanced_accuracy": 0.3695884150761754,
+              "per_class_recall": {
+                "1": 0.4583333333333333,
+                "2": 0.3930789707187223,
+                "5": 0.25735294117647056
+              },
+              "confusion_matrix": [
+                [
+                  44,
+                  30,
+                  22
+                ],
+                [
+                  331,
+                  443,
+                  353
+                ],
+                [
+                  45,
+                  56,
+                  35
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3723186247618541,
+              "balanced_accuracy": 0.38077459244567397,
+              "per_class_recall": {
+                "1": 0.21875,
+                "2": 0.8500443655723159,
+                "5": 0.07352941176470588
+              },
+              "confusion_matrix": [
+                [
+                  21,
+                  66,
+                  9
+                ],
+                [
+                  100,
+                  958,
+                  69
+                ],
+                [
+                  16,
+                  110,
+                  10
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.30222579780101905,
+              "balanced_accuracy": 0.3333333333333333,
+              "per_class_recall": {
+                "1": 0.0,
+                "2": 1.0,
+                "5": 0.0
+              },
+              "confusion_matrix": [
+                [
+                  0,
+                  96,
+                  0
+                ],
+                [
+                  0,
+                  1127,
+                  0
+                ],
+                [
+                  0,
+                  136,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 1359,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.2699658045627497,
+              "balanced_accuracy": 0.3683640122715753,
+              "per_class_recall": {
+                "1": 0.4583333333333333,
+                "2": 0.3673469387755102,
+                "5": 0.27941176470588236
+              },
+              "confusion_matrix": [
+                [
+                  44,
+                  27,
+                  25
+                ],
+                [
+                  370,
+                  414,
+                  343
+                ],
+                [
+                  54,
+                  44,
+                  38
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.34126707789549715,
+              "balanced_accuracy": 0.35166530380268046,
+              "per_class_recall": {
+                "1": 0.16666666666666666,
+                "2": 0.8589174800354925,
+                "5": 0.029411764705882353
+              },
+              "confusion_matrix": [
+                [
+                  16,
+                  75,
+                  5
+                ],
+                [
+                  105,
+                  968,
+                  54
+                ],
+                [
+                  19,
+                  113,
+                  4
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.30222579780101905,
+              "balanced_accuracy": 0.3333333333333333,
+              "per_class_recall": {
+                "1": 0.0,
+                "2": 1.0,
+                "5": 0.0
+              },
+              "confusion_matrix": [
+                [
+                  0,
+                  96,
+                  0
+                ],
+                [
+                  0,
+                  1127,
+                  0
+                ],
+                [
+                  0,
+                  136,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "peripheral_only": {
+          "sample_count": 1359,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.32043693347650487,
+              "balanced_accuracy": 0.40929977063289086,
+              "per_class_recall": {
+                "1": 0.5104166666666666,
+                "2": 0.4968944099378882,
+                "5": 0.22058823529411764
+              },
+              "confusion_matrix": [
+                [
+                  49,
+                  31,
+                  16
+                ],
+                [
+                  348,
+                  560,
+                  219
+                ],
+                [
+                  42,
+                  64,
+                  30
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.38141408844016006,
+              "balanced_accuracy": 0.3819600303889672,
+              "per_class_recall": {
+                "1": 0.16666666666666666,
+                "2": 0.9645075421472937,
+                "5": 0.014705882352941176
+              },
+              "confusion_matrix": [
+                [
+                  16,
+                  78,
+                  2
+                ],
+                [
+                  26,
+                  1087,
+                  14
+                ],
+                [
+                  8,
+                  126,
+                  2
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 1359,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.32039622560949577,
+              "balanced_accuracy": 0.3414238883959381,
+              "per_class_recall": {
+                "1": 0.14583333333333334,
+                "2": 0.878438331854481,
+                "5": 0.0
+              },
+              "confusion_matrix": [
+                [
+                  14,
+                  80,
+                  2
+                ],
+                [
+                  137,
+                  990,
+                  0
+                ],
+                [
+                  12,
+                  124,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "combined": {
+        "all_sensors": {
+          "sample_count": 2810,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.32874416155628355,
+              "balanced_accuracy": 0.3938642464219635,
+              "per_class_recall": {
+                "1": 0.30978260869565216,
+                "2": 0.5248713550600344,
+                "5": 0.3469387755102041
+              },
+              "confusion_matrix": [
+                [
+                  57,
+                  68,
+                  59
+                ],
+                [
+                  514,
+                  1224,
+                  594
+                ],
+                [
+                  79,
+                  113,
+                  102
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3741024976765464,
+              "balanced_accuracy": 0.37649783482140214,
+              "per_class_recall": {
+                "1": 0.15760869565217392,
+                "2": 0.8936535162950258,
+                "5": 0.0782312925170068
+              },
+              "confusion_matrix": [
+                [
+                  29,
+                  139,
+                  16
+                ],
+                [
+                  163,
+                  2084,
+                  85
+                ],
+                [
+                  28,
+                  243,
+                  23
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.30679683683359416,
+              "balanced_accuracy": 0.3353150293851102,
+              "per_class_recall": {
+                "1": 0.0,
+                "2": 0.9991423670668954,
+                "5": 0.006802721088435374
+              },
+              "confusion_matrix": [
+                [
+                  0,
+                  184,
+                  0
+                ],
+                [
+                  0,
+                  2330,
+                  2
+                ],
+                [
+                  0,
+                  292,
+                  2
+                ]
+              ]
+            }
+          }
+        },
+        "eeg_only": {
+          "sample_count": 2810,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.28503740816171463,
+              "balanced_accuracy": 0.36166151647225125,
+              "per_class_recall": {
+                "1": 0.33695652173913043,
+                "2": 0.4180960548885077,
+                "5": 0.3299319727891156
+              },
+              "confusion_matrix": [
+                [
+                  62,
+                  55,
+                  67
+                ],
+                [
+                  560,
+                  975,
+                  797
+                ],
+                [
+                  92,
+                  105,
+                  97
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3306928521069402,
+              "balanced_accuracy": 0.3434648463507013,
+              "per_class_recall": {
+                "1": 0.11413043478260869,
+                "2": 0.9026586620926244,
+                "5": 0.013605442176870748
+              },
+              "confusion_matrix": [
+                [
+                  21,
+                  158,
+                  5
+                ],
+                [
+                  176,
+                  2105,
+                  51
+                ],
+                [
+                  28,
+                  262,
+                  4
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3023466874108648,
+              "balanced_accuracy": 0.3333333333333333,
+              "per_class_recall": {
+                "1": 0.0,
+                "2": 1.0,
+                "5": 0.0
+              },
+              "confusion_matrix": [
+                [
+                  0,
+                  184,
+                  0
+                ],
+                [
+                  0,
+                  2332,
+                  0
+                ],
+                [
+                  0,
+                  294,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "peripheral_only": {
+          "sample_count": 2810,
+          "fold_count": 17,
+          "best_model_name": "linear_svc",
+          "models": {
+            "logistic_regression": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.37024270574279944,
+              "balanced_accuracy": 0.4146956455786879,
+              "per_class_recall": {
+                "1": 0.33152173913043476,
+                "2": 0.6676672384219554,
+                "5": 0.24489795918367346
+              },
+              "confusion_matrix": [
+                [
+                  61,
+                  90,
+                  33
+                ],
+                [
+                  418,
+                  1557,
+                  357
+                ],
+                [
+                  70,
+                  152,
+                  72
+                ]
+              ]
+            },
+            "linear_svc": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3879762965458353,
+              "balanced_accuracy": 0.37976067449875023,
+              "per_class_recall": {
+                "1": 0.11956521739130435,
+                "2": 0.9686963979416809,
+                "5": 0.05102040816326531
+              },
+              "confusion_matrix": [
+                [
+                  22,
+                  155,
+                  7
+                ],
+                [
+                  31,
+                  2259,
+                  42
+                ],
+                [
+                  8,
+                  271,
+                  15
+                ]
+              ]
+            },
+            "random_forest_classifier": {
+              "sample_count": 2810,
+              "fold_count": 17,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.31613658991166055,
+              "balanced_accuracy": 0.31512264835832166,
+              "per_class_recall": {
+                "1": 0.07608695652173914,
+                "2": 0.7774442538593482,
+                "5": 0.09183673469387756
+              },
+              "confusion_matrix": [
+                [
+                  14,
+                  145,
+                  25
+                ],
+                [
+                  273,
+                  1813,
+                  246
+                ],
+                [
+                  35,
+                  232,
+                  27
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    "subjective_ablation_results": {}
+  },
+  "uab_session_comparison": {
+    "objective": {
+      "n_back": {
+        "session_macro_f1": 0.49656938044034815,
+        "window_macro_f1": 0.34776469149030814,
+        "delta": -0.14880468895004
+      },
+      "heat_the_chair": {
+        "session_macro_f1": 0.6173160173160174,
+        "window_macro_f1": 0.5404767483230504,
+        "delta": -0.076839268992967
+      }
+    },
+    "subjective": {
+      "n_back": {
+        "session_rmse": 4.516086289395266,
+        "window_rmse": 10.223413421909578,
+        "delta": 5.707327132514313
+      },
+      "heat_the_chair": {
+        "session_rmse": 1.4664393484713574,
+        "window_rmse": 1.8639105911346199,
+        "delta": 0.3974712426632625
+      }
+    }
+  },
+  "reports": {
+    "uab_baseline_report": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/baseline_report.md",
+    "nasa_baseline_report": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/baseline_report.md"
+  },
+  "plot_paths": {
+    "phase3_window_counts": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/phase3_window_counts.png",
+    "uab_session_vs_window_objective": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_objective.png",
+    "uab_session_vs_window_subjective": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_subjective.png"
+  }
+}

@@ -37,7 +37,9 @@ from chronaris.evaluation.stage_i_case_metrics import (
 from chronaris.evaluation.stage_i_metrics import (
     evaluate_classification_predictions,
     evaluate_regression_predictions,
+    save_bar_plot,
     save_confusion_matrix_plot,
+    save_grouped_bar_plot,
     save_regression_plot,
 )
 
@@ -67,7 +69,9 @@ __all__ = [
     "explain_warn_view",
     "render_alignment_projection_diagnostics_markdown",
     "render_validation_markdown",
+    "save_bar_plot",
     "save_confusion_matrix_plot",
+    "save_grouped_bar_plot",
     "save_regression_plot",
     "summarize_alignment_projection_diagnostics",
     "summarize_cross_stream_timing",

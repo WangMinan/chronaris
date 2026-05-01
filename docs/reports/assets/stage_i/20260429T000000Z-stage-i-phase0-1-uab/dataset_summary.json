@@ -1,0 +1,45 @@
+{
+  "dataset_id": "uab_workload_dataset",
+  "generated_at_utc": "2026-04-29T02:50:43.696007Z",
+  "entry_count": 87,
+  "subset_counts": {
+    "n_back": 48,
+    "heat_the_chair": 34,
+    "flight_simulator": 5
+  },
+  "training_role_counts": {
+    "primary": 82,
+    "auxiliary": 5
+  },
+  "split_group_count": 28,
+  "objective_label_distributions": {
+    "n_back": {
+      "0": 16,
+      "1": 16,
+      "2": 16
+    },
+    "heat_the_chair": {
+      "1": 17,
+      "0": 17
+    },
+    "flight_simulator": {
+      "2.0": 1,
+      "4.0": 1,
+      "1.0": 1,
+      "3.0": 1
+    }
+  },
+  "subjective_target_counts": {
+    "n_back": 48,
+    "heat_the_chair": 34,
+    "flight_simulator": 5
+  },
+  "feature_count": 416,
+  "eeg_feature_count": 404,
+  "ecg_feature_count": 12,
+  "missing_ecg_session_counts": {
+    "flight_simulator": 0,
+    "heat_the_chair": 0,
+    "n_back": 9
+  }
+}

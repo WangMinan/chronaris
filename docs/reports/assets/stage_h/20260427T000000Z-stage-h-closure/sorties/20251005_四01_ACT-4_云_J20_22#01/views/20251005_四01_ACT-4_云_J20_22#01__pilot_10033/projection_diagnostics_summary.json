@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "sample_count": 8,
+    "reference_point_count": 16,
+    "mean_projection_cosine": 0.8194446485338004,
+    "min_projection_cosine": 0.24081839976228164,
+    "max_projection_cosine": 0.9444852215333487,
+    "mean_projection_l2_gap": 0.10033348744359606,
+    "mean_projection_l2_ratio": 1.0028178892134065,
+    "std_projection_cosine": 0.07170417324409918,
+    "cv_projection_cosine": 0.0875033760637727,
+    "std_projection_l2_gap": 0.020766529197853555,
+    "cv_projection_l2_gap": 0.20697505615488312,
+    "std_projection_l2_ratio": 0.04952156515163163,
+    "cv_projection_l2_ratio": 0.04938241098837547,
+    "samples": [
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0034",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0035",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.8465462785865686,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.9444852215333487,
+        "physiology_projection_l2_mean": 1.2464901725807436,
+        "vehicle_projection_l2_mean": 1.2233030728827334,
+        "projection_l2_gap_mean": 0.09248447717909862,
+        "projection_l2_ratio_mean": 0.9841004969382781
+      },
+      {
+        "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0036",
+        "reference_point_count": 16,
+        "mean_projection_cosine": 0.6297332381644224,
+        "min_projection_cosine": 0.24081839976228164,
+        "max_projection_cosine": 0.8452481210353802,
+        "physiology_projection_l2_mean": 1.1656144242602189,
+        "vehicle_projection_l2_mean": 1.320890983555297,
+        "projection_l2_gap_mean": 0.15527655929507822,
+        "projection_l2_ratio_mean": 1.1338396351393065
+      }
+    ]
+  },
+  "threshold_evaluation": {
+    "passed": true,
+    "verdict": "PASS",
+    "checks": [
+      {
+        "name": "sample_count",
+        "passed": true,
+        "actual": 8.0,
+        "operator": ">=",
+        "expected": 1.0
+      },
+      {
+        "name": "mean_projection_cosine",
+        "passed": true,
+        "actual": 0.8194446485338004,
+        "operator": ">=",
+        "expected": 0.65
+      },
+      {
+        "name": "mean_projection_l2_gap",
+        "passed": true,
+        "actual": 0.10033348744359606,
+        "operator": "<=",
+        "expected": 0.25
+      },
+      {
+        "name": "mean_projection_l2_ratio_deviation",
+        "passed": true,
+        "actual": 0.0028178892134065325,
+        "operator": "<=",
+        "expected": 0.3
+      },
+      {
+        "name": "projection_cosine_cv",
+        "passed": true,
+        "actual": 0.0875033760637727,
+        "operator": "<=",
+        "expected": 0.15
+      },
+      {
+        "name": "projection_l2_gap_cv",
+        "passed": true,
+        "actual": 0.20697505615488312,
+        "operator": "<=",
+        "expected": 0.25
+      }
+    ]
+  }
+}

@@ -1,0 +1,1521 @@
+{
+  "config": {
+    "run_id": "20260429T000000Z-stage-i-phase2-case-study",
+    "stage_h_run_manifest_path": "docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
+    "output_root": "artifacts/stage_i",
+    "report_path": "docs/reports/stage-i-case-study-phase2-2026-04-29.md",
+    "top_k_windows": 5,
+    "ablation_paths": [
+      "projection_refusion_baseline",
+      "no_event_bias",
+      "no_state_normalization",
+      "vehicle_delta_suppressed"
+    ]
+  },
+  "generated_at_utc": "2026-04-29T03:26:29.113999Z",
+  "view_results": [
+    {
+      "view_summary": {
+        "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+        "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+        "pilot_id": 10033,
+        "verdict": "PASS",
+        "window_count": 37,
+        "selected_window_count": 37,
+        "case_partition_sample_count": 8,
+        "mean_projection_cosine": 0.8194446485338004,
+        "projection_cosine_cv": 0.0875033760637727,
+        "mean_projection_l2_gap": 0.10033348744359606,
+        "projection_l2_gap_cv": 0.20697505615488312,
+        "mean_attention_entropy": 0.9297644421458244,
+        "mean_max_attention": 0.23280493542551994,
+        "mean_top_event_score": 1.0,
+        "mean_top_contribution_score": 2.1242539286613464,
+        "exported_hidden_fused_vs_projection_baseline_cosine": 0.758324921131134
+      },
+      "ablations": [
+        {
+          "name": "projection_refusion_baseline",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9297644421458244,
+          "mean_max_attention": 0.23280493542551994,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.1242539286613464,
+          "mean_fused_l2_norm": 1.9553584158420563,
+          "mean_fused_cosine_to_projection_baseline": 1.0,
+          "delta_mean_attention_entropy": 0.0,
+          "delta_mean_max_attention": 0.0,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": 0.0,
+          "delta_fused_l2_norm": 0.0,
+          "delta_fused_cosine_to_projection_baseline": 0.0,
+          "sample_metrics": [
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0034",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0035",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.2006092071533203,
+              "mean_attention_entropy": 0.9292470216751099,
+              "mean_max_attention": 0.23325258493423462,
+              "mean_fused_l2_norm": 1.9244673252105713
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0036",
+              "top_event_offset_s": 0.39640000462532043,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 1.5897669792175293,
+              "mean_attention_entropy": 0.9333863854408264,
+              "mean_max_attention": 0.2296713888645172,
+              "mean_fused_l2_norm": 2.171596050262451
+            }
+          ]
+        },
+        {
+          "name": "no_event_bias",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9326574206352234,
+          "mean_max_attention": 0.2302882857620716,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 1.936861976981163,
+          "mean_fused_l2_norm": 1.954349234700203,
+          "mean_fused_cosine_to_projection_baseline": 0.9999253749847412,
+          "delta_mean_attention_entropy": 0.0028929784893989563,
+          "delta_mean_max_attention": -0.0025166496634483337,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": -0.1873919516801834,
+          "delta_fused_l2_norm": -0.0010091811418533325,
+          "delta_fused_cosine_to_projection_baseline": -7.462501525878906e-05,
+          "sample_metrics": [
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0034",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0035",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 1.9907183647155762,
+              "mean_attention_entropy": 0.9321864247322083,
+              "mean_max_attention": 0.2313273847103119,
+              "mean_fused_l2_norm": 1.9230893850326538
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0036",
+              "top_event_offset_s": 0.39640000462532043,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 1.559867262840271,
+              "mean_attention_entropy": 0.9359543919563293,
+              "mean_max_attention": 0.22301459312438965,
+              "mean_fused_l2_norm": 2.173168182373047
+            }
+          ]
+        },
+        {
+          "name": "no_state_normalization",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9274630695581436,
+          "mean_max_attention": 0.23561464808881283,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.095527723431587,
+          "mean_fused_l2_norm": 1.9534424096345901,
+          "mean_fused_cosine_to_projection_baseline": 0.9999673962593079,
+          "delta_mean_attention_entropy": -0.0023013725876808167,
+          "delta_mean_max_attention": 0.002809712663292885,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": -0.028726205229759216,
+          "delta_fused_l2_norm": -0.0019160062074661255,
+          "delta_fused_cosine_to_projection_baseline": -3.260374069213867e-05,
+          "sample_metrics": [
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0034",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0035",
+              "top_event_offset_s": 0.6666666865348816,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.169956922531128,
+              "mean_attention_entropy": 0.9267411231994629,
+              "mean_max_attention": 0.23621110618114471,
+              "mean_fused_l2_norm": 1.9224165678024292
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0036",
+              "top_event_offset_s": 0.39640000462532043,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 1.5745233297348022,
+              "mean_attention_entropy": 0.9325166940689087,
+              "mean_max_attention": 0.23143944144248962,
+              "mean_fused_l2_norm": 2.170623302459717
+            }
+          ]
+        },
+        {
+          "name": "vehicle_delta_suppressed",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9375,
+          "mean_max_attention": 0.21129557490348816,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 0.0,
+          "mean_top_contribution_score": 0.0,
+          "mean_fused_l2_norm": 2.395143002271652,
+          "mean_fused_cosine_to_projection_baseline": 0.8582878112792969,
+          "delta_mean_attention_entropy": 0.007735557854175568,
+          "delta_mean_max_attention": -0.021509360522031784,
+          "delta_mean_top_event_score": -1.0,
+          "delta_mean_top_contribution_score": -2.1242539286613464,
+          "delta_fused_l2_norm": 0.43978458642959595,
+          "delta_fused_cosine_to_projection_baseline": -0.14171218872070312,
+          "sample_metrics": [
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0034",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0035",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.4014039039611816
+            },
+            {
+              "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0036",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.3513166904449463
+            }
+          ]
+        }
+      ],
+      "top_windows": [
+        {
+          "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+          "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+          "pilot_id": 10033,
+          "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+          "window_index": 29,
+          "start_offset_ms": 145000,
+          "end_offset_ms": 150000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.6666666865348816,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.2006092071533203
+        },
+        {
+          "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+          "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+          "pilot_id": 10033,
+          "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+          "window_index": 30,
+          "start_offset_ms": 150000,
+          "end_offset_ms": 155000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.6666666865348816,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.2006092071533203
+        },
+        {
+          "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+          "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+          "pilot_id": 10033,
+          "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+          "window_index": 31,
+          "start_offset_ms": 155000,
+          "end_offset_ms": 160000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.6666666865348816,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.2006092071533203
+        },
+        {
+          "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+          "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+          "pilot_id": 10033,
+          "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+          "window_index": 32,
+          "start_offset_ms": 160000,
+          "end_offset_ms": 165000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.6666666865348816,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.2006092071533203
+        },
+        {
+          "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+          "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+          "pilot_id": 10033,
+          "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+          "window_index": 33,
+          "start_offset_ms": 165000,
+          "end_offset_ms": 170000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.6666666865348816,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.2006092071533203
+        }
+      ],
+      "warn_explanation": null
+    },
+    {
+      "view_summary": {
+        "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "pilot_id": 10035,
+        "verdict": "PASS",
+        "window_count": 37,
+        "selected_window_count": 37,
+        "case_partition_sample_count": 8,
+        "mean_projection_cosine": 0.733689788767247,
+        "projection_cosine_cv": 0.10545215192299118,
+        "mean_projection_l2_gap": 0.10819334211344751,
+        "projection_l2_gap_cv": 0.16633755043989595,
+        "mean_attention_entropy": 0.9345391318202019,
+        "mean_max_attention": 0.22814021818339825,
+        "mean_top_event_score": 1.0,
+        "mean_top_contribution_score": 2.646299809217453,
+        "exported_hidden_fused_vs_projection_baseline_cosine": 0.7717307806015015
+      },
+      "ablations": [
+        {
+          "name": "projection_refusion_baseline",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9345391318202019,
+          "mean_max_attention": 0.22814021818339825,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.646299809217453,
+          "mean_fused_l2_norm": 1.992960810661316,
+          "mean_fused_cosine_to_projection_baseline": 1.0,
+          "delta_mean_attention_entropy": 0.0,
+          "delta_mean_max_attention": 0.0,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": 0.0,
+          "delta_fused_l2_norm": 0.0,
+          "delta_fused_cosine_to_projection_baseline": 0.0,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.663458824157715,
+              "mean_attention_entropy": 0.9344779849052429,
+              "mean_max_attention": 0.22896617650985718,
+              "mean_fused_l2_norm": 1.954878807067871
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0660666674375534,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 2.52618670463562,
+              "mean_attention_entropy": 0.9349671602249146,
+              "mean_max_attention": 0.22235850989818573,
+              "mean_fused_l2_norm": 2.2595348358154297
+            }
+          ]
+        },
+        {
+          "name": "no_event_bias",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9371623024344444,
+          "mean_max_attention": 0.21721870824694633,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.3374328017234802,
+          "mean_fused_l2_norm": 1.9896658807992935,
+          "mean_fused_cosine_to_projection_baseline": 0.9999240636825562,
+          "delta_mean_attention_entropy": 0.0026231706142425537,
+          "delta_mean_max_attention": -0.010921509936451912,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": -0.3088670074939728,
+          "delta_fused_l2_norm": -0.0032949298620224,
+          "delta_fused_cosine_to_projection_baseline": -7.593631744384766e-05,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.337157726287842,
+              "mean_attention_entropy": 0.9371358752250671,
+              "mean_max_attention": 0.2174597531557083,
+              "mean_fused_l2_norm": 1.9514206647872925
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0660666674375534,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 2.339358329772949,
+              "mean_attention_entropy": 0.9373472929000854,
+              "mean_max_attention": 0.2155313938856125,
+              "mean_fused_l2_norm": 2.257382392883301
+            }
+          ]
+        },
+        {
+          "name": "no_state_normalization",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.93055010586977,
+          "mean_max_attention": 0.2394594196230173,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.809703230857849,
+          "mean_fused_l2_norm": 1.9958294034004211,
+          "mean_fused_cosine_to_projection_baseline": 0.9999324083328247,
+          "delta_mean_attention_entropy": -0.003989025950431824,
+          "delta_mean_max_attention": 0.011319201439619064,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": 0.16340342164039612,
+          "delta_fused_l2_norm": 0.0028685927391052246,
+          "delta_fused_cosine_to_projection_baseline": -6.759166717529297e-05,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.8618078231811523,
+              "mean_attention_entropy": 0.9301221370697021,
+              "mean_max_attention": 0.24136298894882202,
+              "mean_fused_l2_norm": 1.9579510688781738
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0660666674375534,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 2.4449710845947266,
+              "mean_attention_entropy": 0.9335458874702454,
+              "mean_max_attention": 0.22613443434238434,
+              "mean_fused_l2_norm": 2.2609777450561523
+            }
+          ]
+        },
+        {
+          "name": "vehicle_delta_suppressed",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9375,
+          "mean_max_attention": 0.21129557490348816,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 0.0,
+          "mean_top_contribution_score": 0.0,
+          "mean_fused_l2_norm": 2.059053987264633,
+          "mean_fused_cosine_to_projection_baseline": 0.8962250351905823,
+          "delta_mean_attention_entropy": 0.0029608681797981262,
+          "delta_mean_max_attention": -0.016844643279910088,
+          "delta_mean_top_event_score": -1.0,
+          "delta_mean_top_contribution_score": -2.646299809217453,
+          "delta_fused_l2_norm": 0.06609317660331726,
+          "delta_fused_cosine_to_projection_baseline": -0.10377496480941772,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.0360937118530273
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 2.219775915145874
+            }
+          ]
+        }
+      ],
+      "top_windows": [
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10035,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "window_index": 29,
+          "start_offset_ms": 145000,
+          "end_offset_ms": 150000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.663458824157715
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10035,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "window_index": 30,
+          "start_offset_ms": 150000,
+          "end_offset_ms": 155000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.663458824157715
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10035,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "window_index": 31,
+          "start_offset_ms": 155000,
+          "end_offset_ms": 160000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.663458824157715
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10035,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "window_index": 32,
+          "start_offset_ms": 160000,
+          "end_offset_ms": 165000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.663458824157715
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10035,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "window_index": 33,
+          "start_offset_ms": 165000,
+          "end_offset_ms": 170000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.663458824157715
+        }
+      ],
+      "warn_explanation": null
+    },
+    {
+      "view_summary": {
+        "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "pilot_id": 10033,
+        "verdict": "WARN",
+        "window_count": 37,
+        "selected_window_count": 37,
+        "case_partition_sample_count": 8,
+        "mean_projection_cosine": 0.5636222323352342,
+        "projection_cosine_cv": 0.29822718052566133,
+        "mean_projection_l2_gap": 0.09719819762669298,
+        "projection_l2_gap_cv": 0.5585019313514468,
+        "mean_attention_entropy": 0.9277549982070923,
+        "mean_max_attention": 0.23762932792305946,
+        "mean_top_event_score": 1.0,
+        "mean_top_contribution_score": 2.4288233816623688,
+        "exported_hidden_fused_vs_projection_baseline_cosine": 0.7673187851905823
+      },
+      "ablations": [
+        {
+          "name": "projection_refusion_baseline",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9277549982070923,
+          "mean_max_attention": 0.23762932792305946,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.4288233816623688,
+          "mean_fused_l2_norm": 1.5814619213342667,
+          "mean_fused_cosine_to_projection_baseline": 1.0,
+          "delta_mean_attention_entropy": 0.0,
+          "delta_mean_max_attention": 0.0,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": 0.0,
+          "delta_fused_l2_norm": 0.0,
+          "delta_fused_cosine_to_projection_baseline": 0.0,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.4192211627960205,
+              "mean_attention_entropy": 0.9267657399177551,
+              "mean_max_attention": 0.2396831512451172,
+              "mean_fused_l2_norm": 1.548164963722229
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0660666674375534,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 2.4960389137268066,
+              "mean_attention_entropy": 0.9346798062324524,
+              "mean_max_attention": 0.2232525646686554,
+              "mean_fused_l2_norm": 1.8145406246185303
+            }
+          ]
+        },
+        {
+          "name": "no_event_bias",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9286687523126602,
+          "mean_max_attention": 0.23713239654898643,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.104183852672577,
+          "mean_fused_l2_norm": 1.5780372023582458,
+          "mean_fused_cosine_to_projection_baseline": 0.9999003410339355,
+          "delta_mean_attention_entropy": 0.0009137541055679321,
+          "delta_mean_max_attention": -0.0004969313740730286,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": -0.32463952898979187,
+          "delta_fused_l2_norm": -0.003424718976020813,
+          "delta_fused_cosine_to_projection_baseline": -9.965896606445312e-05,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.081789970397949,
+              "mean_attention_entropy": 0.9275679588317871,
+              "mean_max_attention": 0.23953627049922943,
+              "mean_fused_l2_norm": 1.5442774295806885
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0660666674375534,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 2.2609410285949707,
+              "mean_attention_entropy": 0.936374306678772,
+              "mean_max_attention": 0.22030527889728546,
+              "mean_fused_l2_norm": 1.8143556118011475
+            }
+          ]
+        },
+        {
+          "name": "no_state_normalization",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9307131320238113,
+          "mean_max_attention": 0.23242967389523983,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 1.0,
+          "mean_top_contribution_score": 2.5135832130908966,
+          "mean_fused_l2_norm": 1.585092380642891,
+          "mean_fused_cosine_to_projection_baseline": 0.9999083280563354,
+          "delta_mean_attention_entropy": 0.002958133816719055,
+          "delta_mean_max_attention": -0.0051996540278196335,
+          "delta_mean_top_event_score": 0.0,
+          "delta_mean_top_contribution_score": 0.08475983142852783,
+          "delta_fused_l2_norm": 0.0036304593086242676,
+          "delta_fused_cosine_to_projection_baseline": -9.167194366455078e-05,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.3333333432674408,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.3333333432674408,
+              "top_contribution_score": 2.511363983154297,
+              "mean_attention_entropy": 0.9301271438598633,
+              "mean_max_attention": 0.23378972709178925,
+              "mean_fused_l2_norm": 1.5522828102111816
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0660666674375534,
+              "top_event_score": 1.0,
+              "top_contribution_offset_s": 0.0660666674375534,
+              "top_contribution_score": 2.5291178226470947,
+              "mean_attention_entropy": 0.9348150491714478,
+              "mean_max_attention": 0.22290930151939392,
+              "mean_fused_l2_norm": 1.814759373664856
+            }
+          ]
+        },
+        {
+          "name": "vehicle_delta_suppressed",
+          "sample_count": 8,
+          "reference_point_count": 16,
+          "mean_attention_entropy": 0.9375,
+          "mean_max_attention": 0.21129557490348816,
+          "mean_causal_option_count": 8.5,
+          "mean_top_event_score": 0.0,
+          "mean_top_contribution_score": 0.0,
+          "mean_fused_l2_norm": 1.9949853718280792,
+          "mean_fused_cosine_to_projection_baseline": 0.7931786775588989,
+          "delta_mean_attention_entropy": 0.009745001792907715,
+          "delta_mean_max_attention": -0.026333753019571304,
+          "delta_mean_top_event_score": -1.0,
+          "delta_mean_top_contribution_score": -2.4288233816623688,
+          "delta_fused_l2_norm": 0.41352345049381256,
+          "delta_fused_cosine_to_projection_baseline": -0.20682132244110107,
+          "sample_metrics": [
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.998876929283142
+            },
+            {
+              "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+              "top_event_offset_s": 0.0,
+              "top_event_score": 0.0,
+              "top_contribution_offset_s": 0.0,
+              "top_contribution_score": 0.0,
+              "mean_attention_entropy": 0.9375,
+              "mean_max_attention": 0.21129557490348816,
+              "mean_fused_l2_norm": 1.9677444696426392
+            }
+          ]
+        }
+      ],
+      "top_windows": [
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10033,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+          "window_index": 36,
+          "start_offset_ms": 180000,
+          "end_offset_ms": 180991,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.0660666674375534,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.0660666674375534,
+          "top_contribution_score": 2.4960389137268066
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10033,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "window_index": 29,
+          "start_offset_ms": 145000,
+          "end_offset_ms": 150000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.4192211627960205
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10033,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "window_index": 30,
+          "start_offset_ms": 150000,
+          "end_offset_ms": 155000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.4192211627960205
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10033,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "window_index": 31,
+          "start_offset_ms": 155000,
+          "end_offset_ms": 160000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.4192211627960205
+        },
+        {
+          "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+          "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+          "pilot_id": 10033,
+          "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "window_index": 32,
+          "start_offset_ms": 160000,
+          "end_offset_ms": 165000,
+          "selected_for_model": true,
+          "top_event_offset_s": 0.3333333432674408,
+          "top_event_score": 1.0,
+          "top_contribution_offset_s": 0.3333333432674408,
+          "top_contribution_score": 2.4192211627960205
+        }
+      ],
+      "warn_explanation": "- 该视图 `verdict=WARN`。\n- 触发的阈值项：mean_projection_cosine=0.563622 >= 0.650000, projection_cosine_cv=0.298227 <= 0.150000, projection_l2_gap_cv=0.558502 <= 0.250000。\n- 同 sortie 对比显示：projection cosine 差值 `-0.170068`，projection cosine CV 差值 `+0.192775`，projection L2 gap CV 差值 `+0.392164`。\n- 在 bundle-only 消融中，对 top contribution 影响最大的路径为 `vehicle_delta_suppressed`，delta=`-2.428823`。\n- 这说明该视图不是导出失败，而是对投影一致性与事件驱动变化更敏感，需要在 Phase 3 与第二公开数据集结果一起综合解释。"
+    }
+  ],
+  "pilot_comparisons": [
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "reference_view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "comparison_view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "reference_pilot_id": 10035,
+      "comparison_pilot_id": 10033,
+      "reference_verdict": "PASS",
+      "comparison_verdict": "WARN",
+      "delta_mean_projection_cosine": -0.17006755643201277,
+      "delta_projection_cosine_cv": 0.19277502860267015,
+      "delta_mean_projection_l2_gap": -0.010995144486754538,
+      "delta_projection_l2_gap_cv": 0.3921643809115508,
+      "delta_mean_attention_entropy": -0.006784133613109589,
+      "delta_mean_top_contribution_score": -0.21747642755508423,
+      "delta_exported_hidden_fused_vs_projection_baseline_cosine": -0.0044119954109191895
+    }
+  ]
+}

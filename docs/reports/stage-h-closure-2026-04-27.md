@@ -3,8 +3,8 @@
 - export version: `stage-h-v1`
 - export profile: `validation`
 - generated at UTC: `2026-04-27T13:41:48.885541+00:00`
-- artifact root: `artifacts/stage_h/20260427T000000Z-stage-h-closure`
-- run manifest: `artifacts/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
+- artifact root: `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure`
+- run manifest: `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
 - report path: `docs/reports/stage-h-closure-2026-04-27.md`
 - sortie count: `2`
 - generated view count: `3`
@@ -34,9 +34,9 @@
 
 | view | windows | model samples | diagnostics | stage G | feature bundle |
 | --- | ---: | ---: | --- | --- | --- |
-| `20251005_四01_ACT-4_云_J20_22#01__pilot_10033` | 37 | 37 | `PASS` | `enabled` | `artifacts/stage_h/20260427T000000Z-stage-h-closure/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz` |
-| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035` | 37 | 37 | `PASS` | `enabled` | `artifacts/stage_h/20260427T000000Z-stage-h-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz` |
-| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | 37 | 37 | `WARN` (mean_projection_cosine, projection_cosine_cv, projection_l2_gap_cv) | `enabled` | `artifacts/stage_h/20260427T000000Z-stage-h-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz` |
+| `20251005_四01_ACT-4_云_J20_22#01__pilot_10033` | 37 | 37 | `PASS` | `enabled` | `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz` |
+| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035` | 37 | 37 | `PASS` | `enabled` | `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz` |
+| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | 37 | 37 | `WARN` (mean_projection_cosine, projection_cosine_cv, projection_l2_gap_cv) | `enabled` | `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz` |
 
 ## Diagnostics Warnings
 
@@ -45,9 +45,9 @@
 
 ## Partial Data
 
-- manifest path: `artifacts/stage_h/20260427T000000Z-stage-h-closure/partial_data/partial_data_manifest.jsonl`
-- window manifest path: `artifacts/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_window_manifest.jsonl`
-- feature bundle path: `artifacts/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_feature_bundle.npz`
+- manifest path: `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/partial_data_manifest.jsonl`
+- window manifest path: `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_window_manifest.jsonl`
+- feature bundle path: `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_feature_bundle.npz`
 - entry count: `1`
 - built entry count: `1`
 - skipped entry count: `0`

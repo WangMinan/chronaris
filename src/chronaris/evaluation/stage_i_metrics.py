@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Sequence
+from typing import Mapping, Sequence
 
 os.environ.setdefault("MPLCONFIGDIR", "/tmp/chronaris-matplotlib")
 
@@ -13,6 +13,11 @@ import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
 from sklearn.metrics import balanced_accuracy_score, confusion_matrix, f1_score, mean_absolute_error, mean_squared_error, r2_score, recall_score
+
+try:
+    from sklearn.metrics import root_mean_squared_error
+except ImportError:  # pragma: no cover - older sklearn fallback
+    root_mean_squared_error = None
 
 
 def evaluate_classification_predictions(
@@ -54,10 +59,16 @@ def evaluate_regression_predictions(predictions: pd.DataFrame) -> dict[str, obje
         "sample_count": int(len(predictions)),
         "fold_count": int(predictions["split_group"].nunique()),
         "mae": float(mean_absolute_error(y_true, y_pred)),
-        "rmse": float(mean_squared_error(y_true, y_pred, squared=False)),
+        "rmse": _compute_rmse(y_true, y_pred),
         "r2": float(r2_score(y_true, y_pred)),
         "spearman": float(spearman.statistic) if spearman.statistic == spearman.statistic else float("nan"),
     }
+
+
+def _compute_rmse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    if root_mean_squared_error is not None:
+        return float(root_mean_squared_error(y_true, y_pred))
+    return float(np.sqrt(mean_squared_error(y_true, y_pred)))
 
 
 def save_confusion_matrix_plot(
@@ -109,6 +120,77 @@ def save_regression_plot(
     axis.set_title(title)
     axis.set_xlabel("True")
     axis.set_ylabel("Predicted")
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=150)
+    plt.close(fig)
+    return str(output_path)
+
+
+def save_bar_plot(
+    values: Mapping[str, float | int],
+    *,
+    path: str | Path,
+    title: str,
+    ylabel: str,
+) -> str:
+    """Render one single-series bar chart."""
+
+    labels = list(values)
+    heights = [float(values[label]) for label in labels]
+    fig, axis = plt.subplots(figsize=(6, 4))
+    bars = axis.bar(labels, heights, color="#3a7ca5")
+    axis.set_title(title)
+    axis.set_ylabel(ylabel)
+    axis.set_xticks(range(len(labels)))
+    axis.set_xticklabels(labels, rotation=20, ha="right")
+    for bar, height in zip(bars, heights, strict=True):
+        axis.text(bar.get_x() + bar.get_width() / 2, height, f"{height:.2f}" if height % 1 else f"{int(height)}", ha="center", va="bottom")
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=150)
+    plt.close(fig)
+    return str(output_path)
+
+
+def save_grouped_bar_plot(
+    series_by_group: Mapping[str, Mapping[str, float | int]],
+    *,
+    path: str | Path,
+    title: str,
+    ylabel: str,
+) -> str:
+    """Render one grouped bar chart."""
+
+    if not series_by_group:
+        raise ValueError("grouped bar plot received empty data.")
+    groups = list(series_by_group)
+    categories = list({category for values in series_by_group.values() for category in values})
+    categories.sort()
+    x = np.arange(len(groups))
+    width = 0.8 / max(len(categories), 1)
+
+    fig, axis = plt.subplots(figsize=(max(6, len(groups) * 1.5), 4))
+    for index, category in enumerate(categories):
+        heights = [float(series_by_group[group].get(category, 0.0)) for group in groups]
+        offsets = x - 0.4 + width / 2 + index * width
+        bars = axis.bar(offsets, heights, width=width, label=category)
+        for bar, height in zip(bars, heights, strict=True):
+            axis.text(
+                bar.get_x() + bar.get_width() / 2,
+                height,
+                f"{height:.2f}" if height % 1 else f"{int(height)}",
+                ha="center",
+                va="bottom",
+                fontsize=8,
+            )
+    axis.set_title(title)
+    axis.set_ylabel(ylabel)
+    axis.set_xticks(x)
+    axis.set_xticklabels(groups, rotation=20, ha="right")
+    axis.legend(loc="best")
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fig.tight_layout()

@@ -1,0 +1,2 @@
+sortie_id,reference_pilot_id,comparison_pilot_id,delta_representation_stability,delta_attention_entropy,delta_top_event_concentration,delta_event_mask_interference
+20251002_单01_ACT-8_翼云_J16_12#01,10033,10035,0.018717622425474367,-0.004393488168716431,0.010950968600809574,-0.09197474271059036

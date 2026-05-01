@@ -1,5 +1,10 @@
 # Scripts
 
+运行约定：
+
+- 本文档涉及的所有 Python 脚本默认显式使用 `chronaris` 解释器：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
+- 若命令前需要环境变量，例如 `CHRONARIS_MYSQL_HOST=127.0.0.1`，应写成 `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python <script>`
+
 这里放一次性或轻量脚本，例如：
 
 - 数据抽样
@@ -50,7 +55,7 @@
   - 默认导出：
     - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
     - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
-  - 默认写出 `artifacts/stage_h/<run_id>/` 机器资产和 `docs/reports/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/reports/stage-h-closure-2026-04-27.md`
+  - 默认写出 `docs/reports/assets/stage_h/<run_id>/` 机器资产和 `docs/reports/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/reports/stage-h-closure-2026-04-27.md`
   - 自动生成 `run_manifest.json`、`sortie_manifest.json`、`view_manifest.json`
   - 每个 view 自动导出：
     - `feature_bundle.npz`
@@ -101,14 +106,14 @@
     - NASA attention-state 主线 + 消融
     - closure summary / 主报告 / planning gate note
   - 自动输出：
-    - `artifacts/stage_i/<run_id>/uab_window/`
-    - `artifacts/stage_i/<run_id>/nasa_attention/`
-    - `artifacts/stage_i/<run_id>/closure_summary.json`
+    - `docs/reports/assets/stage_i/<run_id>/uab_window/`
+    - `docs/reports/assets/stage_i/<run_id>/nasa_attention/`
+    - `docs/reports/assets/stage_i/<run_id>/closure_summary.json`
     - `docs/reports/stage-i-closure-<date>.md`
     - `docs/planning/stage-i-closure-<date>.md`
 
 - `run_stage_i_case_study.py`
-  - 消费 `artifacts/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
+  - 消费 `docs/reports/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
   - 当前固定跑：
     - `projection_refusion_baseline`
     - `no_event_bias`
@@ -121,4 +126,4 @@
     - `ablation_summary.csv`
     - `window_rankings.csv`
     - `docs/reports/stage-i-case-study-phase2-<date>.md`
-  - 当前真实主线输出根目录：`artifacts/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+  - 当前真实主线输出根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`

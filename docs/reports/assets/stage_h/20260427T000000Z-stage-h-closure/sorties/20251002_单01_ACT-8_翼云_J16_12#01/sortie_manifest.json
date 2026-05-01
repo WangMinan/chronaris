@@ -1,0 +1,40 @@
+{
+  "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+  "flight_task_id": 6000002,
+  "collect_task_id": 2100450,
+  "pilot_ids": [
+    10035,
+    10033
+  ],
+  "physiology_measurements": [
+    "eeg",
+    "spo2",
+    "tshirt_ecg_accel_gyro",
+    "tshirt_heartrate",
+    "tshirt_hrv",
+    "tshirt_resp",
+    "tshirt_respiratory_rate",
+    "tshirt_temp",
+    "wristband_gsr",
+    "wristband_ppg_accel",
+    "wristband_spo2"
+  ],
+  "vehicle_measurements": [
+    "BUS6000019110021",
+    "BUS6000019110022",
+    "BUS6000019110023",
+    "BUS6000019110024",
+    "BUS6000019110025",
+    "BUS6000019110026"
+  ],
+  "clip_start_utc": "2025-10-02T07:45:00+00:00",
+  "clip_stop_utc": "2025-10-02T14:00:00+00:00",
+  "exported_view_ids": [
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033"
+  ],
+  "view_manifest_paths": {
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/view_manifest.json",
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/view_manifest.json"
+  }
+}
