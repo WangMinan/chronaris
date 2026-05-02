@@ -63,7 +63,7 @@ class AlignmentPreviewConfig:
     physiology_envelope_quantile: float = 0.95
     vehicle_field_labels: Mapping[str, str] = field(default_factory=dict)
     export_intermediate_states: bool = True
-    intermediate_sample_limit: int = 3
+    intermediate_sample_limit: int | None = 3
     intermediate_partition: str = "test"
 
     def __post_init__(self) -> None:
@@ -107,10 +107,10 @@ class AlignmentPreviewConfig:
             raise ValueError("vehicle_envelope_quantile must be between 0.5 and 1.0.")
         if not 0.5 < self.physiology_envelope_quantile < 1.0:
             raise ValueError("physiology_envelope_quantile must be between 0.5 and 1.0.")
-        if self.intermediate_sample_limit <= 0:
-            raise ValueError("intermediate_sample_limit must be positive.")
-        if self.intermediate_partition not in {"train", "validation", "test"}:
-            raise ValueError("intermediate_partition must be one of: train, validation, test.")
+        if self.intermediate_sample_limit is not None and self.intermediate_sample_limit <= 0:
+            raise ValueError("intermediate_sample_limit must be positive when provided.")
+        if self.intermediate_partition not in {"train", "validation", "test", "all"}:
+            raise ValueError("intermediate_partition must be one of: train, validation, test, all.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -406,6 +406,9 @@ class AlignmentPreviewPipeline:
         self,
         split: ChronologicalSampleSplit,
     ) -> tuple[str, tuple[E0ExperimentSample, ...]]:
+        if self.config.intermediate_partition == "all":
+            return "all", split.train + split.validation + split.test
+
         partitions = {
             "train": split.train,
             "validation": split.validation,
@@ -439,7 +442,11 @@ class AlignmentPreviewPipeline:
                 samples=(),
             )
 
-        export_samples = samples[: self.config.intermediate_sample_limit]
+        export_samples = (
+            samples
+            if self.config.intermediate_sample_limit is None
+            else samples[: self.config.intermediate_sample_limit]
+        )
         torch_batch = self._build_torch_batch(export_samples)
         torch_batch = self._apply_input_normalization(
             torch_batch,

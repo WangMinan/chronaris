@@ -213,6 +213,10 @@ def _view_execution(sortie_id: str, *, include_stage_g: bool) -> StageHViewExecu
     return StageHViewExecutionResult(
         dataset_result=_dataset_result(sortie_id),
         sample_ids=(f"{sortie_id}:0000",),
+        sample_partition_by_id={
+            f"{sortie_id}:0000": "train",
+            f"{sortie_id}:0001": "test",
+        },
         split_summary={"train": 1, "validation": 0, "test": 1},
         train_metrics={"total": 1.0},
         validation_metrics={"total": 1.0},
@@ -223,6 +227,8 @@ def _view_execution(sortie_id: str, *, include_stage_g: bool) -> StageHViewExecu
         stage_g_result=stage_g_result,
         stage_g_tensor_export=stage_g_tensor,
         vehicle_field_metadata={"status": "loaded", "field_count": 4},
+        physiology_measurements=("eeg",),
+        vehicle_measurements=("BUS001",),
     )
 
 
@@ -580,13 +586,32 @@ class StageHExportPipelineTest(unittest.TestCase):
             self.assertEqual(run_manifest["partial_data"]["entry_count"], 1)
 
             feature_bundle = np.load(view_manifest["artifact_paths"]["feature_bundle_npz"])
-            self.assertEqual(set(feature_bundle.files), set(STAGE_H_FEATURE_KEYS))
+            self.assertTrue(set(STAGE_H_FEATURE_KEYS).issubset(set(feature_bundle.files)))
+            self.assertIn("sample_ids", feature_bundle.files)
+            self.assertIn("sample_partitions", feature_bundle.files)
+            self.assertIn("physiology_reference_hidden", feature_bundle.files)
+            self.assertIn("vehicle_reference_hidden", feature_bundle.files)
             feature_run = load_stage_h_feature_run(run_manifest_path)
             self.assertEqual(feature_run.generated_view_count, 1)
             self.assertEqual(feature_run.views[0].view_id, profile.views[0].view_id)
+            self.assertEqual(feature_run.views[0].sample_ids, (f"{profile.sortie_id}:0000",))
             self.assertEqual(feature_run.views[0].fused_representation.shape[-1], 6)
             self.assertTrue(Path(view_manifest["artifact_paths"]["projection_diagnostics_summary_json"]).exists())
             self.assertTrue(Path(view_manifest["artifact_paths"]["causal_fusion_summary_json"]).exists())
+            self.assertTrue(Path(view_manifest["artifact_paths"]["raw_window_summary_jsonl"]).exists())
+            window_rows = [
+                json.loads(line)
+                for line in Path(view_manifest["artifact_paths"]["window_manifest_jsonl"]).read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            self.assertEqual(window_rows[0]["sample_partition"], "train")
+            raw_rows = [
+                json.loads(line)
+                for line in Path(view_manifest["artifact_paths"]["raw_window_summary_jsonl"]).read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            self.assertIn("physiology_feature_stats", raw_rows[0])
+            self.assertIn("vehicle_feature_stats", raw_rows[0])
             self.assertIn("run_manifest.json", report_path.read_text(encoding="utf-8"))
 
     def test_dual_pilot_sortie_exports_two_views(self) -> None:
@@ -638,17 +663,9 @@ class StageHExportPipelineTest(unittest.TestCase):
             )
             feature_bundle = np.load(view_manifest["artifact_paths"]["feature_bundle_npz"])
 
-            self.assertEqual(
-                set(feature_bundle.files),
-                {
-                    "physiology_reference_projection",
-                    "vehicle_reference_projection",
-                    "fused_representation",
-                    "reference_offsets_s",
-                    "attention_weights",
-                    "vehicle_event_scores",
-                },
-            )
+            self.assertTrue(set(STAGE_H_FEATURE_KEYS).issubset(set(feature_bundle.files)))
+            self.assertIn("sample_ids", feature_bundle.files)
+            self.assertIn("sample_partitions", feature_bundle.files)
             self.assertFalse(view_manifest["stage_g_available"])
             self.assertEqual(view_manifest["artifact_paths"]["causal_fusion_summary_json"], "")
 

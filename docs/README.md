@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-05-01
+更新时间：2026-05-02
 
 ## 目录说明
 
@@ -25,7 +25,11 @@
 - [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md) 继续保留为阶段 I 启动期计划，不再作为当前阶段状态判断依据。
 - [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md) 是第三方基线落地前置准备记录。
 - [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md) 是当前增强实验执行计划与已验证状态。
+- [stage-i-private-benchmark-plan-2026-05-02.md](planning/stage-i-private-benchmark-plan-2026-05-02.md) 是当前私有双流最优性验证入口与执行顺序。
 - 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)。
+- 阶段 H all-window clean 运行报告：
+  - [stage-h-private-e-allwindow-clean-2026-05-02.md](reports/stage-h-private-e-allwindow-clean-2026-05-02.md)
+  - [stage-h-private-f-allwindow-clean-2026-05-02.md](reports/stage-h-private-f-allwindow-clean-2026-05-02.md)
 - 阶段 I 当前阶段主报告：
   - `Phase 1`：[stage-i-uab-baseline-2026-04-29.md](reports/stage-i-uab-baseline-2026-04-29.md)
   - `Phase 2`：[stage-i-case-study-phase2-2026-04-29.md](reports/stage-i-case-study-phase2-2026-04-29.md)
@@ -35,6 +39,7 @@
   - `Enhancement batch 1 real sortie`：[stage-i-real-sortie-deep-comparison-2026-05-01.md](reports/stage-i-real-sortie-deep-comparison-2026-05-01.md)
   - `Enhancement batch 2 public probe`：[stage-i-deep-comparison-probe-2026-05-01.md](reports/stage-i-deep-comparison-probe-2026-05-01.md)
   - `Enhancement batch 2 full LOSO`：[stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage-i-deep-comparison-full-loso-2026-05-01.md)
+  - `Private optimized benchmark`：[private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md)
   - `Thesis support assessment`：[thesis-support-assessment-2026-05-01.md](reports/thesis-support-assessment-2026-05-01.md)
 - 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
@@ -61,6 +66,7 @@
 - [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md)
 - [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md)
 - [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md)
+- [stage-i-private-benchmark-plan-2026-05-02.md](planning/stage-i-private-benchmark-plan-2026-05-02.md)
 
 ### models
 
@@ -88,6 +94,13 @@
 - [stage-i-deep-comparison-probe-2026-05-01.md](reports/stage-i-deep-comparison-probe-2026-05-01.md)
 - [stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage-i-deep-comparison-full-loso-2026-05-01.md)
 - [thesis-support-assessment-2026-05-01.md](reports/thesis-support-assessment-2026-05-01.md)
+- 私有双流 benchmark 实跑报告：
+  - `chronaris_opt` full LOSO run：
+    - [private-alignment-support-20260502T121815Z-stage-i-private-opt-full.md](reports/private-alignment-support-20260502T121815Z-stage-i-private-opt-full.md)
+    - [private-causal-fusion-support-20260502T121815Z-stage-i-private-opt-full.md](reports/private-causal-fusion-support-20260502T121815Z-stage-i-private-opt-full.md)
+    - [private-optimality-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private-optimality-summary-20260502T121815Z-stage-i-private-opt-full.md)
+    - [private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md)
+    - 结论是鼎新私有 proxy benchmark 三任务全面最优：`private_optimality_supported=True`
 
 ### 选题报告与基金申请书
 

@@ -9,6 +9,8 @@ from typing import TYPE_CHECKING, Mapping, Sequence
 
 import numpy as np
 
+from chronaris.features import E0InputConfig, build_e0_experiment_samples
+
 if TYPE_CHECKING:
     from chronaris.pipelines.causal_fusion import StageGCausalFusionTensorExport
     from chronaris.pipelines.stage_h_export import (
@@ -46,6 +48,7 @@ def render_stage_h_report(
         "## Frozen Config",
         "",
         f"- input normalization: `{config.preview_config.input_normalization_mode}`",
+        f"- physics constraints enabled: `{config.preview_config.enable_physics_constraints}`",
         f"- physics constraint family: `{config.preview_config.physics_constraint_family}`",
         f"- causal fusion enabled: `{config.causal_fusion_enabled}`",
         f"- causal fusion state source: `{config.causal_fusion_config.state_source}`",
@@ -180,6 +183,7 @@ def build_run_config_summary(config: StageHExportConfig) -> dict[str, object]:
         "export_profile": config.export_profile,
         "sortie_ids": list(config.sortie_ids),
         "input_normalization_mode": config.preview_config.input_normalization_mode,
+        "physics_constraints_enabled": config.preview_config.enable_physics_constraints,
         "physics_constraint_family": config.preview_config.physics_constraint_family,
         "physics_constraint_mode": config.preview_config.physics_constraint_mode,
         "causal_fusion_enabled": config.causal_fusion_enabled,
@@ -219,11 +223,13 @@ def write_view_artifacts(
     projection_summary_path = view_dir / "projection_diagnostics_summary.json"
     causal_fusion_summary_path = view_dir / "causal_fusion_summary.json"
     window_manifest_path = view_dir / "window_manifest.jsonl"
+    raw_window_summary_path = view_dir / "raw_window_summary.jsonl"
 
     write_feature_bundle(
         feature_bundle_path,
         intermediate_export=execution.intermediate_export,
         stage_g_tensor_export=execution.stage_g_tensor_export,
+        sample_partition_by_id=execution.sample_partition_by_id,
     )
     write_json(intermediate_summary_path, build_intermediate_summary(execution.intermediate_export))
     write_json(
@@ -239,6 +245,14 @@ def write_view_artifacts(
         window_manifest_path,
         dataset_result=execution.dataset_result,
         selected_sample_ids=set(execution.sample_ids),
+        sample_partition_by_id=execution.sample_partition_by_id,
+    )
+    write_window_value_summary(
+        raw_window_summary_path,
+        dataset_result=execution.dataset_result,
+        physiology_measurements=execution.physiology_measurements,
+        vehicle_measurements=execution.vehicle_measurements,
+        sample_partition_by_id=execution.sample_partition_by_id,
     )
     return {
         "feature_bundle_npz": str(feature_bundle_path),
@@ -246,6 +260,7 @@ def write_view_artifacts(
         "projection_diagnostics_summary_json": str(projection_summary_path),
         "causal_fusion_summary_json": str(causal_fusion_summary_path) if execution.stage_g_result is not None else "",
         "window_manifest_jsonl": str(window_manifest_path),
+        "raw_window_summary_jsonl": str(raw_window_summary_path),
     }
 
 
@@ -254,9 +269,13 @@ def write_feature_bundle(
     *,
     intermediate_export,
     stage_g_tensor_export: StageGCausalFusionTensorExport | None,
+    sample_partition_by_id: Mapping[str, str],
 ) -> None:
+    sample_ids = tuple(sample.sample_id for sample in intermediate_export.samples)
     physiology_reference_projection = np.asarray([sample.physiology.reference_projected_states for sample in intermediate_export.samples], dtype=np.float32)
     vehicle_reference_projection = np.asarray([sample.vehicle.reference_projected_states for sample in intermediate_export.samples], dtype=np.float32)
+    physiology_reference_hidden = np.asarray([sample.physiology.reference_hidden_states for sample in intermediate_export.samples], dtype=np.float32)
+    vehicle_reference_hidden = np.asarray([sample.vehicle.reference_hidden_states for sample in intermediate_export.samples], dtype=np.float32)
     reference_offsets_s = np.asarray([sample.physiology.reference_offsets_s for sample in intermediate_export.samples], dtype=np.float32)
     fused_representation = np.zeros((0,), dtype=np.float32)
     attention_weights = np.zeros((0,), dtype=np.float32)
@@ -267,8 +286,15 @@ def write_feature_bundle(
         vehicle_event_scores = np.asarray(stage_g_tensor_export.vehicle_event_scores, dtype=np.float32)
     np.savez(
         path,
+        sample_ids=np.asarray(sample_ids, dtype=str),
+        sample_partitions=np.asarray(
+            [sample_partition_by_id.get(sample_id, "") for sample_id in sample_ids],
+            dtype=str,
+        ),
         physiology_reference_projection=physiology_reference_projection,
         vehicle_reference_projection=vehicle_reference_projection,
+        physiology_reference_hidden=physiology_reference_hidden,
+        vehicle_reference_hidden=vehicle_reference_hidden,
         fused_representation=fused_representation,
         reference_offsets_s=reference_offsets_s,
         attention_weights=attention_weights,
@@ -297,6 +323,7 @@ def write_window_manifest(
     *,
     dataset_result,
     selected_sample_ids: set[str],
+    sample_partition_by_id: Mapping[str, str],
 ) -> None:
     rows = []
     for window in dataset_result.windows:
@@ -309,7 +336,40 @@ def write_window_manifest(
                 "end_offset_ms": window.end_offset_ms,
                 "physiology_point_count": len(window.physiology_points),
                 "vehicle_point_count": len(window.vehicle_points),
+                "sample_partition": sample_partition_by_id.get(window.sample_id),
                 "selected_for_model": window.sample_id in selected_sample_ids,
+            }
+        )
+    path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8")
+
+
+def write_window_value_summary(
+    path: Path,
+    *,
+    dataset_result,
+    physiology_measurements: Sequence[str],
+    vehicle_measurements: Sequence[str],
+    sample_partition_by_id: Mapping[str, str],
+) -> None:
+    samples = build_e0_experiment_samples(
+        dataset_result,
+        config=E0InputConfig(
+            physiology_measurements=tuple(physiology_measurements),
+            vehicle_measurements=tuple(vehicle_measurements),
+            include_windows_without_both_streams=True,
+        ),
+    )
+    rows = []
+    for sample in samples:
+        rows.append(
+            {
+                "sample_id": sample.sample_id,
+                "sortie_id": sample.sortie_id,
+                "sample_partition": sample_partition_by_id.get(sample.sample_id),
+                "start_offset_ms": sample.start_offset_ms,
+                "end_offset_ms": sample.end_offset_ms,
+                "physiology_feature_stats": _summarize_numeric_stream(sample.physiology),
+                "vehicle_feature_stats": _summarize_numeric_stream(sample.vehicle),
             }
         )
     path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8")
@@ -323,3 +383,56 @@ def mean(values: Sequence[float]) -> float:
     if not values:
         return 0.0
     return float(sum(values) / len(values))
+
+
+def _summarize_numeric_stream(stream) -> dict[str, object]:
+    values = np.asarray(stream.values, dtype=np.float32)
+    if values.size == 0 or not stream.feature_names:
+        return {"feature_count": 0, "features": {}}
+
+    rows: dict[str, object] = {}
+    for feature_index, feature_name in enumerate(stream.feature_names):
+        column = values[:, feature_index]
+        finite = column[np.isfinite(column)]
+        if finite.size == 0:
+            rows[feature_name] = {
+                "count": 0,
+                "mean": None,
+                "std": None,
+                "min": None,
+                "max": None,
+                "start": None,
+                "end": None,
+                "delta": None,
+            }
+            continue
+        start_value = _first_finite_value(column)
+        end_value = _last_finite_value(column)
+        rows[feature_name] = {
+            "count": int(finite.size),
+            "mean": float(finite.mean()),
+            "std": float(finite.std()),
+            "min": float(finite.min()),
+            "max": float(finite.max()),
+            "start": start_value,
+            "end": end_value,
+            "delta": None if start_value is None or end_value is None else float(end_value - start_value),
+        }
+    return {
+        "feature_count": len(stream.feature_names),
+        "features": rows,
+    }
+
+
+def _first_finite_value(values: np.ndarray) -> float | None:
+    for value in values:
+        if np.isfinite(value):
+            return float(value)
+    return None
+
+
+def _last_finite_value(values: np.ndarray) -> float | None:
+    for value in values[::-1]:
+        if np.isfinite(value):
+            return float(value)
+    return None
