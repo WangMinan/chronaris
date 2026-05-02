@@ -29,8 +29,12 @@ class StageHFeatureView:
     manifest_path: str
     feature_bundle_path: str
     projection_diagnostics_verdict: str
+    sample_ids: tuple[str, ...]
+    sample_partitions: tuple[str, ...]
     physiology_reference_projection: np.ndarray
     vehicle_reference_projection: np.ndarray
+    physiology_reference_hidden: np.ndarray | None
+    vehicle_reference_hidden: np.ndarray | None
     fused_representation: np.ndarray
     reference_offsets_s: np.ndarray
     attention_weights: np.ndarray
@@ -131,8 +135,12 @@ def _load_view(
         manifest_path=view_manifest_path,
         feature_bundle_path=feature_bundle_path,
         projection_diagnostics_verdict=str(view_manifest["projection_diagnostics_verdict"]),
+        sample_ids=_resolve_sample_ids(bundle, view_manifest),
+        sample_partitions=_resolve_sample_partitions(bundle),
         physiology_reference_projection=bundle["physiology_reference_projection"],
         vehicle_reference_projection=bundle["vehicle_reference_projection"],
+        physiology_reference_hidden=_optional_bundle_array(bundle, "physiology_reference_hidden"),
+        vehicle_reference_hidden=_optional_bundle_array(bundle, "vehicle_reference_hidden"),
         fused_representation=bundle["fused_representation"],
         reference_offsets_s=bundle["reference_offsets_s"],
         attention_weights=bundle["attention_weights"],
@@ -143,6 +151,26 @@ def _load_view(
 
 def _read_json(path: Path) -> Mapping[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _optional_bundle_array(bundle, key: str) -> np.ndarray | None:
+    if key not in bundle.files:
+        return None
+    return bundle[key]
+
+
+def _resolve_sample_ids(bundle, view_manifest: Mapping[str, object]) -> tuple[str, ...]:
+    if "sample_ids" in bundle.files:
+        return tuple(str(value) for value in bundle["sample_ids"].tolist())
+    summary = view_manifest.get("intermediate_summary", {})
+    sample_ids = summary.get("sample_ids", ()) if isinstance(summary, Mapping) else ()
+    return tuple(str(value) for value in sample_ids)
+
+
+def _resolve_sample_partitions(bundle) -> tuple[str, ...]:
+    if "sample_partitions" not in bundle.files:
+        return ()
+    return tuple(str(value) for value in bundle["sample_partitions"].tolist())
 
 
 def _resolve_artifact_path(

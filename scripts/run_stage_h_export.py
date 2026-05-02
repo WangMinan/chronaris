@@ -7,6 +7,7 @@ import json
 import os
 import re
 import sys
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -145,6 +146,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--vehicle-point-limit", type=int)
     parser.add_argument("--partial-vehicle-point-limit", type=int)
     parser.add_argument(
+        "--intermediate-partition",
+        choices=("train", "validation", "test", "all"),
+    )
+    parser.add_argument(
+        "--intermediate-sample-limit",
+        help="positive integer or 'all'",
+    )
+    parser.add_argument(
+        "--all-window-export",
+        action="store_true",
+        help="export all windows from train/validation/test into the intermediate bundle",
+    )
+    parser.add_argument("--disable-physics-constraints", action="store_true")
+    parser.add_argument("--disable-causal-fusion", action="store_true")
+    parser.add_argument("--disable-partial-data", action="store_true")
+    parser.add_argument(
         "--partial-data-path",
         default="configs/partial-data/stage-h-seed-v1.jsonl",
     )
@@ -172,6 +189,34 @@ def _resolve_partial_vehicle_point_limit(args: argparse.Namespace) -> int | None
     return _resolve_preview_point_limit(args)
 
 
+def _resolve_intermediate_sample_limit(args: argparse.Namespace) -> int | None:
+    if args.all_window_export:
+        return None
+    if args.intermediate_sample_limit is None:
+        return StageHExportConfig(run_id="preview-config-probe", sortie_ids=("probe",)).preview_config.intermediate_sample_limit
+    if str(args.intermediate_sample_limit).strip().lower() == "all":
+        return None
+    value = int(args.intermediate_sample_limit)
+    if value <= 0:
+        raise ValueError("--intermediate-sample-limit must be positive or 'all'.")
+    return value
+
+
+def _resolve_preview_config(args: argparse.Namespace):
+    base = StageHExportConfig(run_id="preview-config-probe", sortie_ids=("probe",)).preview_config
+    intermediate_partition = (
+        "all"
+        if args.all_window_export
+        else (args.intermediate_partition or base.intermediate_partition)
+    )
+    return replace(
+        base,
+        intermediate_partition=intermediate_partition,
+        intermediate_sample_limit=_resolve_intermediate_sample_limit(args),
+        enable_physics_constraints=not args.disable_physics_constraints,
+    )
+
+
 def main() -> int:
     args = parse_args()
     sortie_ids = tuple(args.sortie_ids or DEFAULT_SORTIES)
@@ -192,6 +237,8 @@ def main() -> int:
         output_root=args.output_root,
         report_path=args.report_path,
         export_profile=args.export_profile,
+        preview_config=_resolve_preview_config(args),
+        causal_fusion_enabled=not args.disable_causal_fusion,
         bus_access_rule_id=args.bus_access_rule_id,
         preview_point_limit_per_measurement=_resolve_preview_point_limit(args),
         physiology_point_limit_per_measurement=args.physiology_point_limit,
@@ -200,7 +247,11 @@ def main() -> int:
         partial_data_config=PartialDataConfig(
             point_limit_per_measurement=_resolve_partial_vehicle_point_limit(args),
         ),
-        partial_data_entries=load_partial_data_entries(REPO_ROOT / args.partial_data_path),
+        partial_data_entries=(
+            ()
+            if args.disable_partial_data
+            else load_partial_data_entries(REPO_ROOT / args.partial_data_path)
+        ),
     )
     view_runner = AlignmentStageHViewRunner(
         config=config,
@@ -230,7 +281,7 @@ def main() -> int:
                 ),
                 access_rule_id=args.bus_access_rule_id,
             ),
-        ),
+        ) if not args.disable_partial_data else None,
     )
     result = pipeline.run()
     print(

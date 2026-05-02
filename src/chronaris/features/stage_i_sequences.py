@@ -45,6 +45,19 @@ STAGE_H_CASE_DATASET_ID = "stage_h_case"
 REAL_SORTIE_V1 = "real_sortie_v1"
 WINDOW_V2 = "window_v2"
 DEFAULT_SEQUENCE_STEPS = 64
+CHRONARIS_PUBLIC_UAB_ADAPTER_ID = "chronaris_public_uab_v1"
+CHRONARIS_PUBLIC_NASA_ADAPTER_ID = "chronaris_public_nasa_v1"
+PUBLIC_CONTEXT_LABEL_KEYS = frozenset(
+    {
+        "objective_label_text",
+        "event_code",
+        "label_sources",
+        "task_variant",
+        "game_mode",
+        "theoretical_difficulty",
+        "perceived_difficulty",
+    }
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -316,19 +329,41 @@ def prepare_uab_sequences(
             feature_positions=feature_position_maps[spec.modality_name],
         )
 
+    physiology_feature_names = tuple(
+        f"eeg::{feature_name}" for feature_name in eeg_feature_names
+    ) + tuple(f"ecg::{feature_name}" for feature_name in ecg_feature_names)
+    physiology_values = np.concatenate((eeg_values, ecg_values), axis=-1)
+    physiology_masks = np.maximum(eeg_masks, ecg_masks).astype(np.uint8)
+    task_context_feature_names, task_context_values = _build_public_context_sequences(
+        entries,
+        target_steps=target_steps,
+        feature_names=(
+            "task__n_back",
+            "task__heat_the_chair",
+            "task__flight_simulator",
+            "source_partition__benchmark",
+            "window_index_norm",
+        ),
+    )
+    task_context_masks = np.ones((len(entries), target_steps), dtype=np.uint8)
     modality_schema = _build_bimodal_schema(
-        first_name="eeg",
-        first_features=eeg_feature_names,
-        second_name="ecg",
-        second_features=ecg_feature_names,
+        first_name="physiology",
+        first_features=physiology_feature_names,
+        second_name="task_context",
+        second_features=task_context_feature_names,
+        notes={
+            "physiology": "Chronaris-public UAB physiology stream: EEG and ECG values only.",
+            "task_context": "Chronaris-public UAB task/context stream; excludes objective and subjective targets.",
+        },
     )
     sequence_entries = tuple(
         _sequence_entry_from_task_entry(
             entry,
             bundle_path="sequence_bundle.npz",
             sequence_length=target_steps,
-            source_origin="uab_window_v2",
+            source_origin=CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
             modality_schema=modality_schema,
+            context_payload=_chronaris_public_context_payload(entry),
         )
         for entry in entries
     )
@@ -338,7 +373,7 @@ def prepare_uab_sequences(
                 "sample_id": entry.sample_id,
                 "recording_id": entry.recording_id,
                 "source_refs": dict(entry.source_refs),
-                "context_payload": dict(entry.context_payload),
+                "context_payload": _chronaris_public_context_payload(entry),
             },
             ensure_ascii=False,
         )
@@ -352,12 +387,12 @@ def prepare_uab_sequences(
             window_duration_s=UAB_WINDOW_DURATION_SECONDS,
         ),
         modality_arrays={
-            "eeg": eeg_values,
-            "ecg": ecg_values,
+            "physiology": physiology_values,
+            "task_context": task_context_values,
         },
         modality_masks={
-            "eeg": eeg_masks,
-            "ecg": ecg_masks,
+            "physiology": physiology_masks,
+            "task_context": task_context_masks,
         },
         objective_label_values=np.asarray(
             [
@@ -393,10 +428,12 @@ def prepare_uab_sequences(
         dataset_id=UAB_DATASET_ID,
         profile=profile,
         modality_feature_counts={
-            "eeg": len(eeg_feature_names),
-            "ecg": len(ecg_feature_names),
+            "physiology": len(physiology_feature_names),
+            "task_context": len(task_context_feature_names),
         },
         extra_summary={
+            "adapter_id": CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
+            "adapter_contract": "physiology_plus_task_context_without_target_label_inputs",
             "prepared_subset_counts": dict(prepared.subset_counts),
             "ecg_zero_mask_samples": _count_zero_mask_samples(
                 entries=entries,
@@ -411,8 +448,14 @@ def prepare_uab_sequences(
         sequence_schema={
             "dataset_id": UAB_DATASET_ID,
             "profile": profile,
+            "adapter_id": CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
+            "adapter_contract": "physiology_plus_task_context_without_target_label_inputs",
             "sequence_length": target_steps,
             "modalities": modality_schema,
+            "label_leakage_guard": {
+                "excluded_from_context_stream": sorted(PUBLIC_CONTEXT_LABEL_KEYS),
+                "context_feature_names": list(task_context_feature_names),
+            },
         },
     )
 
@@ -527,19 +570,39 @@ def prepare_nasa_sequences(
                 feature_positions=peripheral_feature_positions,
             )
 
+    physiology_feature_names = tuple(
+        f"eeg::{feature_name}" for feature_name in eeg_feature_names
+    ) + tuple(f"peripheral::{feature_name}" for feature_name in peripheral_feature_names)
+    physiology_values = np.concatenate((eeg_values, peripheral_values), axis=-1)
+    physiology_masks = np.maximum(eeg_masks, peripheral_masks).astype(np.uint8)
+    scenario_context_feature_names, scenario_context_values = _build_public_context_sequences(
+        entries,
+        target_steps=target_steps,
+        feature_names=(
+            "source_partition__benchmark",
+            "source_partition__loft",
+            "window_index_norm",
+        ),
+    )
+    scenario_context_masks = np.ones((len(entries), target_steps), dtype=np.uint8)
     modality_schema = _build_bimodal_schema(
-        first_name="eeg",
-        first_features=eeg_feature_names,
-        second_name="peripheral",
-        second_features=peripheral_feature_names,
+        first_name="physiology",
+        first_features=physiology_feature_names,
+        second_name="scenario_context",
+        second_features=scenario_context_feature_names,
+        notes={
+            "physiology": "Chronaris-public NASA physiology stream: EEG and peripheral signals only.",
+            "scenario_context": "Chronaris-public NASA scenario/context stream; excludes event code and attention-state labels.",
+        },
     )
     sequence_entries = tuple(
         _sequence_entry_from_task_entry(
             entry,
             bundle_path="sequence_bundle.npz",
             sequence_length=target_steps,
-            source_origin="nasa_attention_state_window_v2",
+            source_origin=CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
             modality_schema=modality_schema,
+            context_payload=_chronaris_public_context_payload(entry),
         )
         for entry in entries
     )
@@ -549,7 +612,7 @@ def prepare_nasa_sequences(
                 "sample_id": entry.sample_id,
                 "recording_id": entry.recording_id,
                 "source_refs": dict(entry.source_refs),
-                "context_payload": dict(entry.context_payload),
+                "context_payload": _chronaris_public_context_payload(entry),
             },
             ensure_ascii=False,
         )
@@ -563,12 +626,12 @@ def prepare_nasa_sequences(
             window_duration_s=NASA_WINDOW_DURATION_SECONDS,
         ),
         modality_arrays={
-            "eeg": eeg_values,
-            "peripheral": peripheral_values,
+            "physiology": physiology_values,
+            "scenario_context": scenario_context_values,
         },
         modality_masks={
-            "eeg": eeg_masks,
-            "peripheral": peripheral_masks,
+            "physiology": physiology_masks,
+            "scenario_context": scenario_context_masks,
         },
         objective_label_values=np.asarray(
             [float(entry.objective_label_value) for entry in entries],
@@ -588,10 +651,12 @@ def prepare_nasa_sequences(
         dataset_id=NASA_DATASET_ID,
         profile=profile,
         modality_feature_counts={
-            "eeg": len(eeg_feature_names),
-            "peripheral": len(peripheral_feature_names),
+            "physiology": len(physiology_feature_names),
+            "scenario_context": len(scenario_context_feature_names),
         },
         extra_summary={
+            "adapter_id": CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
+            "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
             "prepared_subset_counts": dict(prepared.subset_counts),
             "inventory_only_background_count": sum(
                 1 for entry in entries if entry.training_role == "inventory_only"
@@ -605,8 +670,14 @@ def prepare_nasa_sequences(
         sequence_schema={
             "dataset_id": NASA_DATASET_ID,
             "profile": profile,
+            "adapter_id": CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
+            "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
             "sequence_length": target_steps,
             "modalities": modality_schema,
+            "label_leakage_guard": {
+                "excluded_from_context_stream": sorted(PUBLIC_CONTEXT_LABEL_KEYS),
+                "context_feature_names": list(scenario_context_feature_names),
+            },
         },
     )
 
@@ -618,6 +689,7 @@ def _sequence_entry_from_task_entry(
     sequence_length: int,
     source_origin: str,
     modality_schema: Mapping[str, object],
+    context_payload: Mapping[str, object] | None = None,
 ) -> StageISequenceEntry:
     return StageISequenceEntry(
         sample_id=entry.sample_id,
@@ -643,7 +715,7 @@ def _sequence_entry_from_task_entry(
         subjective_target_value=entry.subjective_target_value,
         window_start_utc=entry.window_start_utc,
         window_end_utc=entry.window_end_utc,
-        context_payload=dict(entry.context_payload),
+        context_payload=dict(context_payload if context_payload is not None else entry.context_payload),
     )
 
 
@@ -717,6 +789,58 @@ def _build_bimodal_schema(
             if modality_name in schema:
                 schema[modality_name]["notes"] = note
     return schema
+
+
+def _build_public_context_sequences(
+    entries: Sequence[StageITaskEntry],
+    *,
+    target_steps: int,
+    feature_names: Sequence[str],
+) -> tuple[tuple[str, ...], np.ndarray]:
+    names = tuple(feature_names)
+    values = np.zeros((len(entries), target_steps, len(names)), dtype=np.float32)
+    max_window_by_recording: dict[str, int] = {}
+    for entry in entries:
+        recording_id = entry.recording_id or entry.session_id
+        max_window_by_recording[recording_id] = max(
+            max_window_by_recording.get(recording_id, 0),
+            int(entry.window_index or 0),
+        )
+    for sample_index, entry in enumerate(entries):
+        row = np.asarray(
+            [
+                _public_context_feature_value(entry, feature_name, max_window_by_recording)
+                for feature_name in names
+            ],
+            dtype=np.float32,
+        )
+        values[sample_index, :, :] = row.reshape(1, -1)
+    return names, values
+
+
+def _public_context_feature_value(
+    entry: StageITaskEntry,
+    feature_name: str,
+    max_window_by_recording: Mapping[str, int],
+) -> float:
+    if feature_name.startswith("task__"):
+        return float(entry.subset_id == feature_name.removeprefix("task__"))
+    if feature_name.startswith("source_partition__"):
+        source_partition = str(entry.context_payload.get("source_partition") or entry.subset_id)
+        return float(source_partition == feature_name.removeprefix("source_partition__"))
+    if feature_name == "window_index_norm":
+        recording_id = entry.recording_id or entry.session_id
+        denominator = max(max_window_by_recording.get(recording_id, 0), 1)
+        return float(int(entry.window_index or 0) / denominator)
+    raise ValueError(f"unsupported Chronaris-public context feature: {feature_name}")
+
+
+def _chronaris_public_context_payload(entry: StageITaskEntry) -> dict[str, object]:
+    return {
+        key: value
+        for key, value in entry.context_payload.items()
+        if key not in PUBLIC_CONTEXT_LABEL_KEYS
+    }
 
 
 def _merge_sequence_results(

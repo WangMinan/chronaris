@@ -32,9 +32,11 @@ from chronaris.features import (  # noqa: E402
 from chronaris.pipelines import (  # noqa: E402
     StageIDeepBaselineConfig,
     StageIDeepComparisonConfig,
+    StageIPrivateBenchmarkConfig,
     StageISequencePreparationConfig,
     run_stage_i_deep_baseline,
     run_stage_i_deep_comparison,
+    run_stage_i_private_benchmark,
     run_stage_i_sequence_preparation,
 )
 from chronaris.pipelines.stage_i_deep_baseline import (  # noqa: E402
@@ -197,18 +199,30 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
             uab_payload = prepare_uab_sequences(dataset_root)
             self.assertEqual(uab_payload.summary.dataset_id, "uab_workload_dataset")
             self.assertEqual(uab_payload.bundle.time_axis.shape[1], 64)
+            self.assertEqual(uab_payload.sequence_schema["adapter_id"], "chronaris_public_uab_v1")
+            self.assertEqual(
+                set(uab_payload.bundle.modality_arrays),
+                {"physiology", "task_context"},
+            )
             self.assertIn("n_back", uab_payload.summary.subset_counts)
             ecg_zero_mask = uab_payload.summary.extra_summary["ecg_zero_mask_samples"]
             self.assertEqual(ecg_zero_mask["n_back"], 3)
+            self.assertNotIn("objective_label_text", uab_payload.entries[0].context_payload)
 
             nasa_payload = prepare_nasa_sequences(dataset_root)
             self.assertEqual(nasa_payload.summary.dataset_id, "nasa_csm")
             self.assertEqual(nasa_payload.bundle.time_axis.shape[1], 64)
+            self.assertEqual(nasa_payload.sequence_schema["adapter_id"], "chronaris_public_nasa_v1")
+            self.assertEqual(
+                set(nasa_payload.bundle.modality_arrays),
+                {"physiology", "scenario_context"},
+            )
             self.assertIn("benchmark", nasa_payload.summary.subset_counts)
             self.assertGreater(
                 nasa_payload.summary.extra_summary["inventory_only_background_count"],
                 0,
             )
+            self.assertNotIn("event_code", nasa_payload.entries[0].context_payload)
 
     @unittest.skipUnless(
         ENABLE_LIVE_SEQUENCE_TESTS and (REAL_DATASET_ROOT / "uab_workload_dataset").exists(),
@@ -293,3 +307,394 @@ class StageIDeepComparisonPipelineTest(unittest.TestCase):
                 comparison.summary["datasets"]["stage_h_case"]["status"],
                 "completed",
             )
+
+
+def _write_private_stage_h_run(
+    root: Path,
+    *,
+    run_name: str,
+    amplitude_scale: float,
+    physics_enabled: bool,
+) -> Path:
+    run_root = root / run_name
+    run_root.mkdir(parents=True, exist_ok=True)
+    view_specs = (
+        ("sortie-A", "sortie-A__pilot_10001", 10001, (0, 1, 2)),
+        ("sortie-B", "sortie-B__pilot_10002", 10002, (0, 1, 2)),
+        ("sortie-B", "sortie-B__pilot_10003", 10003, (0, 1, 2)),
+    )
+    sortie_manifest_paths: dict[str, str] = {}
+    by_sortie: dict[str, list[tuple[str, Path]]] = {}
+    for sortie_id, view_id, pilot_id, class_codes in view_specs:
+        view_dir = run_root / "sorties" / sortie_id / "views" / view_id
+        view_dir.mkdir(parents=True, exist_ok=True)
+        raw_sample_ids = tuple(f"{sortie_id}:{index:04d}" for index in range(len(class_codes)))
+        partitions = ("train", "validation", "test")
+        bundle_path = view_dir / "feature_bundle.npz"
+        window_manifest_path = view_dir / "window_manifest.jsonl"
+        raw_summary_path = view_dir / "raw_window_summary.jsonl"
+        projection_path = view_dir / "projection_diagnostics_summary.json"
+        intermediate_path = view_dir / "intermediate_summary.json"
+        causal_path = view_dir / "causal_fusion_summary.json"
+
+        time_axis = np.tile(np.linspace(0.0, 5.0, 4, dtype=np.float32), (len(class_codes), 1))
+        physiology_projection = []
+        vehicle_projection = []
+        physiology_hidden = []
+        vehicle_hidden = []
+        raw_rows = []
+        window_rows = []
+        for index, class_code in enumerate(class_codes):
+            level = float(class_code + 1)
+            physiology_projection.append(
+                np.asarray(
+                    [
+                        [level * amplitude_scale, 0.1 * level],
+                        [level * amplitude_scale + 0.2, 0.2 * level],
+                        [level * amplitude_scale + 0.4, 0.3 * level],
+                        [level * amplitude_scale + 0.6, 0.4 * level],
+                    ],
+                    dtype=np.float32,
+                )
+            )
+            vehicle_projection.append(
+                np.asarray(
+                    [
+                        [0.3 * level, level * amplitude_scale],
+                        [0.4 * level, level * amplitude_scale + 0.2],
+                        [0.5 * level, level * amplitude_scale + 0.4],
+                        [0.6 * level, level * amplitude_scale + 0.6],
+                    ],
+                    dtype=np.float32,
+                )
+            )
+            physiology_hidden.append(
+                np.asarray(
+                    [
+                        [level, 0.2 * level],
+                        [level + 0.3, 0.3 * level],
+                        [level + 0.6, 0.4 * level],
+                        [level + 0.9, 0.5 * level],
+                    ],
+                    dtype=np.float32,
+                )
+            )
+            vehicle_hidden.append(
+                np.asarray(
+                    [
+                        [0.2 * level, level],
+                        [0.3 * level, level + 0.3],
+                        [0.4 * level, level + 0.6],
+                        [0.5 * level, level + 0.9],
+                    ],
+                    dtype=np.float32,
+                )
+            )
+            raw_rows.append(
+                {
+                    "sample_id": raw_sample_ids[index],
+                    "sortie_id": sortie_id,
+                    "sample_partition": partitions[index],
+                    "start_offset_ms": index * 5000,
+                    "end_offset_ms": (index + 1) * 5000,
+                    "physiology_feature_stats": {
+                        "feature_count": 2,
+                        "features": {
+                            "eeg.alpha": {
+                                "count": 4,
+                                "mean": 0.5 * level,
+                                "std": 0.1 * level,
+                                "min": 0.4 * level,
+                                "max": 0.7 * level,
+                                "start": 0.4 * level,
+                                "end": 0.7 * level,
+                                "delta": 0.3 * level,
+                            },
+                            "spo2.spo2": {
+                                "count": 4,
+                                "mean": 97.0 - level,
+                                "std": 0.2 * level,
+                                "min": 96.5 - level,
+                                "max": 97.3 - level,
+                                "start": 97.2 - level,
+                                "end": 96.8 - level,
+                                "delta": -0.4 * level,
+                            },
+                        },
+                    },
+                    "vehicle_feature_stats": {
+                        "feature_count": 2,
+                        "features": {
+                            "BUS001.speed": {
+                                "count": 4,
+                                "mean": 100.0 + 20.0 * level,
+                                "std": 1.0 * level,
+                                "min": 99.0 + 20.0 * level,
+                                "max": 101.0 + 20.0 * level,
+                                "start": 99.0 + 20.0 * level,
+                                "end": 101.0 + 20.0 * level,
+                                "delta": 2.0 * level,
+                            },
+                            "BUS001.accel": {
+                                "count": 4,
+                                "mean": 0.5 * level,
+                                "std": 0.3 * level,
+                                "min": 0.1 * level,
+                                "max": 0.9 * level,
+                                "start": 0.1 * level,
+                                "end": 0.9 * level,
+                                "delta": 0.8 * level,
+                            },
+                        },
+                    },
+                }
+            )
+            window_rows.append(
+                {
+                    "sample_id": raw_sample_ids[index],
+                    "sortie_id": sortie_id,
+                    "window_index": index,
+                    "start_offset_ms": index * 5000,
+                    "end_offset_ms": (index + 1) * 5000,
+                    "physiology_point_count": 4,
+                    "vehicle_point_count": 4,
+                    "sample_partition": partitions[index],
+                    "selected_for_model": True,
+                }
+            )
+
+        np.savez(
+            bundle_path,
+            sample_ids=np.asarray(raw_sample_ids, dtype=str),
+            sample_partitions=np.asarray(partitions, dtype=str),
+            physiology_reference_projection=np.asarray(physiology_projection, dtype=np.float32),
+            vehicle_reference_projection=np.asarray(vehicle_projection, dtype=np.float32),
+            physiology_reference_hidden=np.asarray(physiology_hidden, dtype=np.float32),
+            vehicle_reference_hidden=np.asarray(vehicle_hidden, dtype=np.float32),
+            fused_representation=np.zeros((0,), dtype=np.float32),
+            reference_offsets_s=time_axis,
+            attention_weights=np.zeros((0,), dtype=np.float32),
+            vehicle_event_scores=np.zeros((0,), dtype=np.float32),
+        )
+        window_manifest_path.write_text(
+            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in window_rows),
+            encoding="utf-8",
+        )
+        raw_summary_path.write_text(
+            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in raw_rows),
+            encoding="utf-8",
+        )
+        projection_path.write_text(json.dumps({"threshold_evaluation": {"checks": []}}), encoding="utf-8")
+        causal_path.write_text(json.dumps({}), encoding="utf-8")
+        intermediate_path.write_text(
+            json.dumps(
+                {
+                    "partition": "all",
+                    "sample_count": len(raw_sample_ids),
+                    "reference_point_count": 4,
+                    "sample_ids": list(raw_sample_ids),
+                }
+            ),
+            encoding="utf-8",
+        )
+        view_manifest = {
+            "view_id": view_id,
+            "sortie_id": sortie_id,
+            "pilot_id": pilot_id,
+            "projection_diagnostics_verdict": "PASS",
+            "intermediate_summary": {
+                "partition": "all",
+                "sample_count": len(raw_sample_ids),
+                "reference_point_count": 4,
+                "sample_ids": list(raw_sample_ids),
+            },
+            "artifact_paths": {
+                "feature_bundle_npz": str(bundle_path),
+                "projection_diagnostics_summary_json": str(projection_path),
+                "causal_fusion_summary_json": str(causal_path),
+                "intermediate_summary_json": str(intermediate_path),
+                "window_manifest_jsonl": str(window_manifest_path),
+                "raw_window_summary_jsonl": str(raw_summary_path),
+            },
+        }
+        view_manifest_path = view_dir / "view_manifest.json"
+        view_manifest_path.write_text(
+            json.dumps(view_manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        by_sortie.setdefault(sortie_id, []).append((view_id, view_manifest_path))
+
+    for sortie_id, items in by_sortie.items():
+        sortie_manifest = {
+            "sortie_id": sortie_id,
+            "view_manifest_paths": {
+                view_id: str(path)
+                for view_id, path in items
+            },
+        }
+        sortie_manifest_path = run_root / "sorties" / sortie_id / "sortie_manifest.json"
+        sortie_manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        sortie_manifest_path.write_text(
+            json.dumps(sortie_manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        sortie_manifest_paths[sortie_id] = str(sortie_manifest_path)
+
+    run_manifest = {
+        "run_id": run_name,
+        "export_version": "stage-h-v1",
+        "output_root": str(run_root),
+        "generated_view_count": 3,
+        "generated_view_ids": [view_id for items in by_sortie.values() for view_id, _ in items],
+        "config": {
+            "export_profile": "validation",
+            "physics_constraints_enabled": physics_enabled,
+            "physics_constraint_family": "full",
+            "causal_fusion_enabled": False,
+            "intermediate_partition": "all",
+            "physiology_point_limit_per_measurement": None,
+            "vehicle_point_limit_per_measurement": None,
+            "point_limit_note": "no per-measurement point cap",
+        },
+        "sortie_manifest_paths": sortie_manifest_paths,
+        "partial_data": None,
+    }
+    run_manifest_path = run_root / "run_manifest.json"
+    run_manifest_path.write_text(
+        json.dumps(run_manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return run_manifest_path
+
+
+class StageIPrivateBenchmarkPipelineTest(unittest.TestCase):
+    def test_private_benchmark_runs_on_synthetic_stage_h_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            e_manifest = _write_private_stage_h_run(
+                root,
+                run_name="stage-h-e",
+                amplitude_scale=0.8,
+                physics_enabled=False,
+            )
+            f_manifest = _write_private_stage_h_run(
+                root,
+                run_name="stage-h-f",
+                amplitude_scale=1.4,
+                physics_enabled=True,
+            )
+
+            result = run_stage_i_private_benchmark(
+                StageIPrivateBenchmarkConfig(
+                    run_id="private-benchmark-smoke",
+                    e_run_manifest_path=str(e_manifest),
+                    f_run_manifest_path=str(f_manifest),
+                    output_root=str(root / "artifacts"),
+                    report_root=str(root / "reports"),
+                    max_deep_folds=1,
+                    deep_epochs=1,
+                    deep_batch_size=4,
+                )
+            )
+
+            self.assertTrue(Path(result.task_manifest_path).exists())
+            self.assertTrue(Path(result.task_summary_path).exists())
+            self.assertTrue(Path(result.benchmark_summary_path).exists())
+            self.assertTrue(Path(result.alignment_report_path).exists())
+            self.assertTrue(Path(result.causal_report_path).exists())
+            self.assertTrue(Path(result.optimality_report_path).exists())
+
+            task_summary = json.loads(Path(result.task_summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(task_summary["entry_count"], 27)
+            self.assertEqual(task_summary["coverage"]["T1_maneuver_intensity_class"]["valid_label_count"], 9)
+            self.assertEqual(task_summary["coverage"]["T2_next_window_physiology_response"]["valid_label_count"], 6)
+            self.assertEqual(task_summary["coverage"]["T3_paired_pilot_window_retrieval"]["valid_label_count"], 6)
+            self.assertIn("BUS001.speed", task_summary["selected_vehicle_fields"])
+            self.assertIn("eeg.alpha", task_summary["selected_physiology_fields"])
+
+            summary = json.loads(Path(result.benchmark_summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["records"]["sample_count"], 9)
+            self.assertEqual(summary["records"]["view_count"], 3)
+            self.assertIn("g_min", summary["tasks"]["T1_maneuver_intensity_class"]["variants"])
+            self.assertEqual(
+                summary["tasks"]["T1_maneuver_intensity_class"]["variants"]["naive_sync"]["status"],
+                "completed",
+            )
+            self.assertEqual(
+                summary["tasks"]["T2_next_window_physiology_response"]["variants"]["f_full"]["status"],
+                "completed",
+            )
+            self.assertEqual(
+                summary["tasks"]["T3_paired_pilot_window_retrieval"]["variants"]["g_min"]["status"],
+                "completed",
+            )
+            self.assertIn("mult", summary["tasks"]["T1_maneuver_intensity_class"]["deep_models"])
+            self.assertIn("contiformer", summary["tasks"]["T2_next_window_physiology_response"]["deep_models"])
+            self.assertTrue(Path(summary["plots"]["t1_metrics"]).exists())
+            self.assertTrue(Path(summary["plots"]["t2_metrics"]).exists())
+            self.assertTrue(Path(summary["plots"]["t3_metrics"]).exists())
+
+    def test_private_benchmark_rejects_dirty_e_run_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            e_manifest = _write_private_stage_h_run(
+                root,
+                run_name="stage-h-e-dirty",
+                amplitude_scale=0.8,
+                physics_enabled=True,
+            )
+            f_manifest = _write_private_stage_h_run(
+                root,
+                run_name="stage-h-f",
+                amplitude_scale=1.4,
+                physics_enabled=True,
+            )
+
+            with self.assertRaisesRegex(ValueError, "physics_constraints_enabled=false"):
+                run_stage_i_private_benchmark(
+                    StageIPrivateBenchmarkConfig(
+                        run_id="private-benchmark-dirty-e",
+                        e_run_manifest_path=str(e_manifest),
+                        f_run_manifest_path=str(f_manifest),
+                        output_root=str(root / "artifacts"),
+                        report_root=str(root / "reports"),
+                        max_deep_folds=1,
+                    )
+                )
+
+    def test_private_benchmark_rejects_view_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            e_manifest = _write_private_stage_h_run(
+                root,
+                run_name="stage-h-e",
+                amplitude_scale=0.8,
+                physics_enabled=False,
+            )
+            f_manifest = _write_private_stage_h_run(
+                root,
+                run_name="stage-h-f-mismatch",
+                amplitude_scale=1.4,
+                physics_enabled=True,
+            )
+            f_payload = json.loads(Path(f_manifest).read_text(encoding="utf-8"))
+            sortie_manifest_path = Path(next(iter(f_payload["sortie_manifest_paths"].values())))
+            sortie_payload = json.loads(sortie_manifest_path.read_text(encoding="utf-8"))
+            removed_view_id = next(iter(sortie_payload["view_manifest_paths"]))
+            sortie_payload["view_manifest_paths"].pop(removed_view_id)
+            sortie_manifest_path.write_text(
+                json.dumps(sortie_payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "same view ids"):
+                run_stage_i_private_benchmark(
+                    StageIPrivateBenchmarkConfig(
+                        run_id="private-benchmark-view-mismatch",
+                        e_run_manifest_path=str(e_manifest),
+                        f_run_manifest_path=str(f_manifest),
+                        output_root=str(root / "artifacts"),
+                        report_root=str(root / "reports"),
+                        max_deep_folds=1,
+                    )
+                )

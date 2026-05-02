@@ -72,6 +72,38 @@
   - partial-data sidecar 已支持基于标准 entry 的 Influx vehicle-only reader、MySQL RealBus 字段过滤、Flux 侧 `5s window + 每字段最多 32 点` 下推；若 entry 缺 `bucket / time_range / measurement_family`，会保留为跳过状态而不会被误提升为 Stage H 双流导出
   - 当前 `configs/partial-data/stage-h-seed-v1.jsonl` 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 vehicle-only 范围，并可生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`
   - 可用 `--use-full-clip-scope` 改回 sortie 全 clip 范围；默认仍使用当前 preview-scale export scope
+  - 当前也支持私有 benchmark 所需的 all-window 导出参数：
+    - `--all-window-export`
+    - `--intermediate-partition all`
+    - `--intermediate-sample-limit all`
+    - `--disable-physics-constraints`
+    - `--disable-causal-fusion`
+    - `--disable-partial-data`
+
+- `run_stage_i_private_benchmark.py`
+  - 消费一套 `E all-window` run manifest 和一套 `F all-window` run manifest，运行私有双流 benchmark
+  - 其中 `E` 必须是 `physics_constraints_enabled=false`，`F` 必须是 `physics_constraints_enabled=true`
+  - 自动构造：
+    - `T1 maneuver_intensity_class`
+    - `T2 next_window_physiology_response`
+    - `T3 paired_pilot_window_retrieval`
+  - 自动比较：
+    - `naive_sync / E baseline / F full / G min / G no causal mask`
+    - 可选 `--enable-optimized-chronaris` 后增加 `chronaris_opt / chronaris_opt_no_causal_mask`
+    - `classical / MulT / ContiFormer`
+  - 优化候选参数：
+    - `--target-variant-name`
+    - `--lag-window-points`
+    - `--residual-mode`
+  - 自动输出：
+    - `private_task_manifest.jsonl`
+    - `task_summary.json`
+    - `private_benchmark_summary.json`
+    - `private-alignment-support-<run_id>.md`
+    - `private-causal-fusion-support-<run_id>.md`
+    - `private-optimality-summary-<run_id>.md`
+    - 启用优化候选时额外输出 `private-optimization-summary-<run_id>.md`
+    - 启用优化候选时额外输出 `optimized_candidate_summary.json` 与 `optimized_candidate_metrics.csv`
 
 - `prepare_stage_i_dataset.py`
   - 用本地 `uab_workload_dataset` 或 `nasa_csm` 构建阶段 I `task_manifest.jsonl` 与标准 `feature_table.parquet`

@@ -1,0 +1,194 @@
+{
+  "run_id": "20260502T121815Z-stage-i-private-opt-full",
+  "target_variant_name": "chronaris_opt",
+  "no_mask_variant_name": "chronaris_opt_no_causal_mask",
+  "private_optimality_supported": true,
+  "criterion_details": {
+    "t1_chronaris_opt_beats_module_baselines": true,
+    "t2_chronaris_opt_beats_module_baselines": true,
+    "t3_chronaris_opt_beats_module_baselines": true,
+    "t1_chronaris_opt_beats_best_deep": true,
+    "t2_chronaris_opt_beats_best_deep": true,
+    "t1_chronaris_opt_beats_chronaris_opt_no_causal_mask": true,
+    "t2_chronaris_opt_beats_chronaris_opt_no_causal_mask": true,
+    "t3_chronaris_opt_beats_chronaris_opt_no_causal_mask": true
+  },
+  "task_metrics": {
+    "T1_maneuver_intensity_class": {
+      "chronaris_opt": {
+        "sample_count": 111,
+        "fold_count": 3,
+        "label_order": [
+          0,
+          1,
+          2
+        ],
+        "macro_f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "per_class_recall": {
+          "0": 1.0,
+          "1": 1.0,
+          "2": 1.0
+        },
+        "confusion_matrix": [
+          [
+            39,
+            0,
+            0
+          ],
+          [
+            0,
+            36,
+            0
+          ],
+          [
+            0,
+            0,
+            36
+          ]
+        ]
+      },
+      "chronaris_opt_no_causal_mask": {
+        "sample_count": 111,
+        "fold_count": 3,
+        "label_order": [
+          0,
+          1,
+          2
+        ],
+        "macro_f1": 0.17333333333333334,
+        "balanced_accuracy": 0.3333333333333333,
+        "per_class_recall": {
+          "0": 1.0,
+          "1": 0.0,
+          "2": 0.0
+        },
+        "confusion_matrix": [
+          [
+            39,
+            0,
+            0
+          ],
+          [
+            36,
+            0,
+            0
+          ],
+          [
+            36,
+            0,
+            0
+          ]
+        ]
+      },
+      "best_variant": {
+        "name": "chronaris_opt",
+        "metrics": {
+          "sample_count": 111,
+          "fold_count": 3,
+          "label_order": [
+            0,
+            1,
+            2
+          ],
+          "macro_f1": 1.0,
+          "balanced_accuracy": 1.0,
+          "per_class_recall": {
+            "0": 1.0,
+            "1": 1.0,
+            "2": 1.0
+          },
+          "confusion_matrix": [
+            [
+              39,
+              0,
+              0
+            ],
+            [
+              0,
+              36,
+              0
+            ],
+            [
+              0,
+              0,
+              36
+            ]
+          ]
+        }
+      }
+    },
+    "T2_next_window_physiology_response": {
+      "chronaris_opt": {
+        "sample_count": 108,
+        "fold_count": 3,
+        "mae": 113.85192590448891,
+        "rmse": 201.4895651832178,
+        "r2": 0.5011313889121192,
+        "spearman": 0.3491791250988575
+      },
+      "chronaris_opt_no_causal_mask": {
+        "sample_count": 108,
+        "fold_count": 3,
+        "mae": 173.6487185096497,
+        "rmse": 313.23247677481385,
+        "r2": -0.20563161717852063,
+        "spearman": -0.43098417952969936
+      },
+      "best_variant": {
+        "name": "chronaris_opt",
+        "metrics": {
+          "sample_count": 108,
+          "fold_count": 3,
+          "mae": 113.85192590448891,
+          "rmse": 201.4895651832178,
+          "r2": 0.5011313889121192,
+          "spearman": 0.3491791250988575
+        }
+      }
+    },
+    "T3_paired_pilot_window_retrieval": {
+      "chronaris_opt": {
+        "sample_count": 74,
+        "top1_accuracy": 1.0,
+        "mrr": 1.0
+      },
+      "chronaris_opt_no_causal_mask": {
+        "sample_count": 74,
+        "top1_accuracy": 0.02702702702702703,
+        "mrr": 0.1135563844276126
+      },
+      "best_variant": {
+        "name": "chronaris_opt",
+        "metrics": {
+          "status": "completed",
+          "sample_count": 74,
+          "head_family": "chronaris_time_residual_retrieval",
+          "variant_name": "chronaris_opt",
+          "top1_accuracy": 1.0,
+          "mrr": 1.0
+        }
+      }
+    }
+  },
+  "diagnostics": {
+    "chronaris_opt": {
+      "mean_attention_entropy": 0.934591421135911,
+      "mean_top_event_concentration": 0.3974255199904914,
+      "mean_event_mask_interference": 0.0021227399508158364,
+      "mean_causal_residual_gate": 1.0,
+      "lag_window_points": 3,
+      "residual_mode": "raw_window_stats",
+      "use_causal_mask": true
+    },
+    "chronaris_opt_no_causal_mask": {
+      "mean_attention_entropy": 0.9988200777285808,
+      "mean_top_event_concentration": 0.06846144922950247,
+      "mean_event_mask_interference": 0.0011366240613095396,
+      "mean_causal_residual_gate": 0.0,
+      "lag_window_points": 3,
+      "residual_mode": "raw_window_stats",
+      "use_causal_mask": false
+    }
+  }
+}

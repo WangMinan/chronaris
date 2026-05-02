@@ -19,6 +19,7 @@
 11. `test_stage_i_pipeline.py`
 12. `test_stage_i_case_study.py`
 13. `test_stage_i_deep_pipeline.py`
+14. `test_stage_i_private_optimization.py`
 
 测试维护共性规则：
 
@@ -37,6 +38,9 @@
 7. Stage I window contract 兼容读取、UAB window-level workload、NASA CSM attention-state 与 Phase 3 orchestration 落盘
 8. Stage I Phase 2 case-study 资产装载、bundle-only 消融与 WARN 解释
 9. Stage I deep sequence contract、真实 sortie smoke comparison 与 mini UAB/NASA comparison orchestration
+10. Stage I 私有双流 all-window contract、proxy task 构造与 private benchmark orchestration
+    - 基础 orchestration 回归集中在 `tests/test_stage_i_deep_pipeline.py`
+    - `chronaris_opt / chronaris_opt_no_causal_mask`、target variant 判据与优化候选 artifacts 回归集中在 `tests/test_stage_i_private_optimization.py`
 
 模型效果验证属于实验，不完全等价于单元测试。
 

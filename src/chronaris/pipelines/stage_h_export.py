@@ -258,6 +258,7 @@ class StageHViewExecutionResult:
 
     dataset_result: DatasetBuildResult
     sample_ids: tuple[str, ...]
+    sample_partition_by_id: Mapping[str, str]
     split_summary: Mapping[str, int]
     train_metrics: Mapping[str, object]
     validation_metrics: Mapping[str, object]
@@ -268,6 +269,8 @@ class StageHViewExecutionResult:
     stage_g_result: StageGCausalFusionResult | None
     stage_g_tensor_export: StageGCausalFusionTensorExport | None
     vehicle_field_metadata: Mapping[str, object]
+    physiology_measurements: tuple[str, ...]
+    vehicle_measurements: tuple[str, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -373,6 +376,7 @@ class AlignmentStageHViewRunner:
         return StageHViewExecutionResult(
             dataset_result=dataset_result,
             sample_ids=tuple(sample.sample_id for sample in samples),
+            sample_partition_by_id=_build_sample_partition_by_id(preview_result),
             split_summary={
                 "train": len(preview_result.split.train),
                 "validation": len(preview_result.split.validation),
@@ -401,6 +405,8 @@ class AlignmentStageHViewRunner:
             stage_g_result=stage_g_result,
             stage_g_tensor_export=stage_g_tensor_export,
             vehicle_field_metadata=vehicle_field_metadata,
+            physiology_measurements=profile.model_physiology_measurements,
+            vehicle_measurements=profile.vehicle_measurements,
         )
 
     def _resolve_vehicle_field_labels(
@@ -618,3 +624,15 @@ class StageHExportPipeline:
             generated_view_ids=run_manifest.generated_view_ids,
             partial_data_result=partial_data_result,
         )
+
+
+def _build_sample_partition_by_id(preview_result) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for partition_name, partition_samples in (
+        ("train", preview_result.split.train),
+        ("validation", preview_result.split.validation),
+        ("test", preview_result.split.test),
+    ):
+        for sample in partition_samples:
+            mapping[sample.sample_id] = partition_name
+    return mapping

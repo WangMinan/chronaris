@@ -10,6 +10,11 @@ from chronaris.dataset.stage_i_contracts import (
     isoformat_utc,
     load_stage_i_task_entries,
 )
+from chronaris.dataset.stage_i_private_contracts import (
+    StageIPrivateTaskEntry,
+    dump_stage_i_private_task_entries,
+    load_stage_i_private_task_entries,
+)
 from chronaris.dataset.stage_i_sequence_contracts import (
     StageISequenceBundle,
     StageISequenceDatasetSummary,
@@ -29,6 +34,7 @@ __all__ = [
     "NASACSMPreparedTaskSet",
     "ReferenceStrategy",
     "StageIDatasetSummary",
+    "StageIPrivateTaskEntry",
     "StageISequenceBundle",
     "StageISequenceDatasetSummary",
     "StageISequenceEntry",
@@ -43,12 +49,14 @@ __all__ = [
     "build_uab_task_entries",
     "dump_stage_i_sequence_entries",
     "dump_stage_i_sequence_summary",
+    "dump_stage_i_private_task_entries",
     "dump_stage_i_summary",
     "dump_stage_i_task_entries",
     "isoformat_utc",
     "load_stage_i_sequence_bundle",
     "load_stage_i_sequence_entries",
     "load_stage_i_sequence_summary",
+    "load_stage_i_private_task_entries",
     "load_stage_i_task_entries",
     "save_stage_i_sequence_bundle",
 ]
