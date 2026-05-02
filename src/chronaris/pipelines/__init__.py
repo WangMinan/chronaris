@@ -76,6 +76,11 @@ from chronaris.pipelines.stage_i_phase3 import (
     render_stage_i_phase3_report,
     run_stage_i_phase3,
 )
+from chronaris.pipelines.stage_i_private_benchmark import (
+    StageIPrivateBenchmarkConfig,
+    StageIPrivateBenchmarkRunResult,
+    run_stage_i_private_benchmark,
+)
 from chronaris.pipelines.stage_i_sequence_preparation import (
     StageISequencePreparationConfig,
     StageISequencePreparationRunResult,
@@ -115,6 +120,8 @@ __all__ = [
     "StageIDeepComparisonRunResult",
     "StageIPhase3Config",
     "StageIPhase3RunResult",
+    "StageIPrivateBenchmarkConfig",
+    "StageIPrivateBenchmarkRunResult",
     "StageISequencePreparationConfig",
     "StageISequencePreparationRunResult",
     "StageHExportConfig",
@@ -142,6 +149,7 @@ __all__ = [
     "run_stage_i_deep_baseline",
     "run_stage_i_deep_comparison",
     "run_stage_i_phase3",
+    "run_stage_i_private_benchmark",
     "run_stage_i_sequence_preparation",
     "run_stage_g_causal_fusion",
     "run_uab_baselines",

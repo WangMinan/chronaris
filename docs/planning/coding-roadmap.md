@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-05-01
+更新时间：2026-05-02
 
 ## 1. 目的
 
@@ -58,6 +58,7 @@
 - 增强实验第二批 probe 主报告：`docs/reports/stage-i-deep-comparison-probe-2026-05-01.md`
 - 已完成阶段 I 增强实验第二批 full LOSO：`UAB / NASA` 双模型实跑与统一 comparison summary
 - 增强实验第二批 full LOSO 主报告：`docs/reports/stage-i-deep-comparison-full-loso-2026-05-01.md`
+- 已完成阶段 I 私有 benchmark 优化候选：`chronaris_opt` 在鼎新私有 proxy benchmark 的 T1/T2/T3 三任务上均超过 `naive_sync / E / F / no-mask / MulT / ContiFormer`，`private_optimality_supported=True`
 
 ## 4. 阶段拆解
 
@@ -536,9 +537,12 @@
 - Stage G 最小非对称因果融合、事件贡献摘要、注意力热力图与 `F baseline` vs `F+G(min)` 收口对照报告
 - Stage H v1 双架次标准化导出、run/sortie/view 三级 manifest、固定键 `feature_bundle.npz`
 - Stage H feature bundle 下游读取接口：`src/chronaris/features/stage_h_bundle.py`
+- Stage H all-window private benchmark scaffolding：`sample_partition`、`raw_window_summary.jsonl`、hidden/projection sidecar
 - partial-data 标准 manifest、vehicle-only reader / builder、真实 vehicle-only feature bundle
 - Stage I task manifest contract、UAB 数据适配、session 级特征导出与 UAB 双轨 baseline
 - Stage I Phase 2 case-study asset loader、bundle-only 消融、`WARN` 解释与中文主报告
+- Stage I 私有任务与 benchmark 编排入口：`src/chronaris/pipelines/stage_i_private_benchmark.py`
+- Stage I 私有优化候选：`src/chronaris/pipelines/stage_i_private_optimization.py`，包含 `chronaris_opt / chronaris_opt_no_causal_mask`、lag-aware causal fusion residual 与 T1/T2/T3 任务感知头
 
 对应代码：
 
@@ -563,12 +567,17 @@
 
 - `docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`
 
+当前私有 benchmark 优化候选 full LOSO 已完成，机器资产位于：
+
+- `docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`
+
 按优先级排序：
 
-1. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
-2. 若继续冲指标，优先只对 `ContiFormer + UAB subjective` 做小范围调参。
-3. 若继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
-4. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/` 与 `docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`。
+1. 已按 [stage-i-private-benchmark-plan-2026-05-02.md](stage-i-private-benchmark-plan-2026-05-02.md) 重跑 `E/F all-window` 私有资产并完成 `chronaris_opt` full LOSO；当前结论是 `private_optimality_supported=True`，T1 macro-F1 `1.000000`，T2 RMSE `201.489565`，T3 top-1 `1.000000`，且三任务均优于 `chronaris_opt_no_causal_mask`。
+2. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
+3. 私有主证据已闭合；若继续冲指标，应作为额外增强实验处理，不回写覆盖已冻结的 Phase 0/1/2/3 收口事实。
+4. 若私有主证据闭合后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
+5. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/` 与 `docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`。
 
 ## 7. 当前不该提前做的事
 

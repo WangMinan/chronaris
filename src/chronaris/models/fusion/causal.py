@@ -17,6 +17,8 @@ class CausalFusionConfig:
     event_bias_weight: float = 0.25
     causal_epsilon_s: float = 1e-6
     normalize_states: bool = True
+    use_causal_mask: bool = True
+    lag_window_points: int | None = None
 
     def __post_init__(self) -> None:
         if self.attention_temperature <= 0:
@@ -25,6 +27,8 @@ class CausalFusionConfig:
             raise ValueError("event_bias_weight must be non-negative.")
         if self.causal_epsilon_s < 0:
             raise ValueError("causal_epsilon_s must be non-negative.")
+        if self.lag_window_points is not None and self.lag_window_points <= 0:
+            raise ValueError("lag_window_points must be positive when provided.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,11 +67,23 @@ class CausalMaskedCrossModalFusion(nn.Module):
         query_states = _maybe_l2_normalize(physiology_states, enabled=self.config.normalize_states)
         key_states = _maybe_l2_normalize(vehicle_states, enabled=self.config.normalize_states)
         event_scores = compute_vehicle_event_scores(vehicle_states)
-        causal_mask = build_causal_attention_mask(
-            inputs.physiology_offsets_s,
-            inputs.vehicle_offsets_s,
-            epsilon_s=self.config.causal_epsilon_s,
-        )
+        if self.config.use_causal_mask:
+            causal_mask = build_causal_attention_mask(
+                inputs.physiology_offsets_s,
+                inputs.vehicle_offsets_s,
+                epsilon_s=self.config.causal_epsilon_s,
+                lag_window_points=self.config.lag_window_points,
+            )
+        else:
+            causal_mask = torch.ones(
+                (
+                    physiology_states.shape[0],
+                    physiology_states.shape[1],
+                    vehicle_states.shape[1],
+                ),
+                dtype=torch.bool,
+                device=physiology_states.device,
+            )
 
         raw_scores = torch.matmul(query_states, key_states.transpose(-1, -2))
         raw_scores = raw_scores / self.config.attention_temperature
@@ -102,6 +118,7 @@ def build_causal_attention_mask(
     vehicle_offsets_s: torch.Tensor,
     *,
     epsilon_s: float = 1e-6,
+    lag_window_points: int | None = None,
 ) -> torch.Tensor:
     """Build a mask where each physiology point sees only past/current vehicle states."""
 
@@ -111,6 +128,8 @@ def build_causal_attention_mask(
         raise ValueError("offset tensors must share the same batch size.")
     if epsilon_s < 0:
         raise ValueError("epsilon_s must be non-negative.")
+    if lag_window_points is not None and lag_window_points <= 0:
+        raise ValueError("lag_window_points must be positive when provided.")
 
     mask = vehicle_offsets_s.unsqueeze(1) <= (physiology_offsets_s.unsqueeze(-1) + epsilon_s)
     if not bool(mask.all(dim=-1).all()):
@@ -119,6 +138,12 @@ def build_causal_attention_mask(
             first_vehicle = torch.zeros_like(mask)
             first_vehicle[:, :, 0] = True
             mask = torch.where(empty_rows.unsqueeze(-1), first_vehicle, mask)
+    if lag_window_points is not None:
+        visible_rank = mask.to(dtype=torch.int64).cumsum(dim=-1)
+        visible_count = mask.sum(dim=-1)
+        first_kept_rank = torch.clamp(visible_count - int(lag_window_points) + 1, min=1)
+        lag_mask = mask & (visible_rank >= first_kept_rank.unsqueeze(-1))
+        mask = torch.where(mask.any(dim=-1, keepdim=True), lag_mask, mask)
     return mask
 
 

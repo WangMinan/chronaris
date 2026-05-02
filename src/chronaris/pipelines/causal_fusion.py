@@ -16,6 +16,8 @@ from chronaris.models.fusion import (
 from chronaris.pipelines.alignment_preview import AlignmentPreviewIntermediateExport
 
 FusionStateSource = Literal["hidden", "projection"]
+FusionOutputMode = Literal["concat", "pooled_with_residual"]
+FusionResidualMode = Literal["none", "raw_window_stats"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,15 +29,25 @@ class StageGCausalFusionConfig:
     event_bias_weight: float = 0.25
     causal_epsilon_s: float = 1e-6
     normalize_states: bool = True
+    use_causal_mask: bool = True
+    lag_window_points: int | None = None
+    fusion_output_mode: FusionOutputMode = "concat"
+    residual_mode: FusionResidualMode = "none"
 
     def __post_init__(self) -> None:
         if self.state_source not in {"hidden", "projection"}:
             raise ValueError("state_source must be one of: hidden, projection.")
+        if self.fusion_output_mode not in {"concat", "pooled_with_residual"}:
+            raise ValueError("fusion_output_mode must be one of: concat, pooled_with_residual.")
+        if self.residual_mode not in {"none", "raw_window_stats"}:
+            raise ValueError("residual_mode must be one of: none, raw_window_stats.")
         CausalFusionConfig(
             attention_temperature=self.attention_temperature,
             event_bias_weight=self.event_bias_weight,
             causal_epsilon_s=self.causal_epsilon_s,
             normalize_states=self.normalize_states,
+            use_causal_mask=self.use_causal_mask,
+            lag_window_points=self.lag_window_points,
         )
 
 
@@ -93,6 +105,10 @@ class StageGCausalFusionResult:
                 "event_bias_weight": self.config.event_bias_weight,
                 "causal_epsilon_s": self.config.causal_epsilon_s,
                 "normalize_states": self.config.normalize_states,
+                "use_causal_mask": self.config.use_causal_mask,
+                "lag_window_points": self.config.lag_window_points,
+                "fusion_output_mode": self.config.fusion_output_mode,
+                "residual_mode": self.config.residual_mode,
             },
             "partition": self.partition,
             "sample_count": self.sample_count,
@@ -148,6 +164,8 @@ def export_stage_g_causal_fusion_tensors(
             event_bias_weight=resolved_config.event_bias_weight,
             causal_epsilon_s=resolved_config.causal_epsilon_s,
             normalize_states=resolved_config.normalize_states,
+            use_causal_mask=resolved_config.use_causal_mask,
+            lag_window_points=resolved_config.lag_window_points,
         )
     )
     with torch.no_grad():
@@ -205,6 +223,8 @@ def run_stage_g_causal_fusion(
             event_bias_weight=resolved_config.event_bias_weight,
             causal_epsilon_s=resolved_config.causal_epsilon_s,
             normalize_states=resolved_config.normalize_states,
+            use_causal_mask=resolved_config.use_causal_mask,
+            lag_window_points=resolved_config.lag_window_points,
         )
     )
     with torch.no_grad():
@@ -269,6 +289,10 @@ def render_stage_g_causal_fusion_markdown(result: StageGCausalFusionResult) -> s
         f"- reference point count: `{result.reference_point_count}`",
         f"- state dim: `{result.state_dim}`",
         f"- fused dim: `{result.fused_dim}`",
+        f"- use causal mask: `{result.config.use_causal_mask}`",
+        f"- lag window points: `{result.config.lag_window_points}`",
+        f"- fusion output mode: `{result.config.fusion_output_mode}`",
+        f"- residual mode: `{result.config.residual_mode}`",
         f"- mean attention entropy: `{result.mean_attention_entropy:.6f}`",
         f"- mean max attention: `{result.mean_max_attention:.6f}`",
         f"- mean causal option count: `{result.mean_causal_option_count:.6f}`",
