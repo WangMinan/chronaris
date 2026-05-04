@@ -2,6 +2,11 @@
 
 更新时间：2026-05-01
 
+> 说明：本文件成稿时间早于 `chronaris_opt` 私有 full LOSO 与 package 固化。  
+> 当前鼎新私有最优性与主线工件请改看：
+> - `docs/reports/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md`
+> - `docs/reports/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md`
+
 ## 1. 目的
 
 本文件不是新的实验报告，而是把当前仓库里已经完成的 `E/F/G/H/I` 与选题报告中的论文主线做一次对齐，回答三个问题：

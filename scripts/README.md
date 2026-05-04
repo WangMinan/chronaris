@@ -95,6 +95,7 @@
     - `--target-variant-name`
     - `--lag-window-points`
     - `--residual-mode`
+    - 可选 `--export-optimized-package` 后额外固化 `optimized_candidate_package.json`
   - 自动输出：
     - `private_task_manifest.jsonl`
     - `task_summary.json`
@@ -104,6 +105,7 @@
     - `private-optimality-summary-<run_id>.md`
     - 启用优化候选时额外输出 `private-optimization-summary-<run_id>.md`
     - 启用优化候选时额外输出 `optimized_candidate_summary.json` 与 `optimized_candidate_metrics.csv`
+    - 启用 `--export-optimized-package` 时额外输出 `optimized_candidate_package.json` 与 `private-optimized-package-<run_id>.md`
 
 - `prepare_stage_i_dataset.py`
   - 用本地 `uab_workload_dataset` 或 `nasa_csm` 构建阶段 I `task_manifest.jsonl` 与标准 `feature_table.parquet`
@@ -143,6 +145,19 @@
     - `docs/reports/assets/stage_i/<run_id>/closure_summary.json`
     - `docs/reports/stage-i-closure-<date>.md`
     - `docs/planning/stage-i-closure-<date>.md`
+
+- `run_stage_i_public_opt.py`
+  - 消费已准备好的 `UAB window_v2 sequence contract`，运行 `chronaris public opt` 的最小 `subjective regression` 路径
+  - 当前固定：
+    - `dataset_id=uab_workload_dataset`
+    - `profile=window_v2`
+    - subset 只评估 `n_back / heat_the_chair`
+    - 两个 head：`physiology_persistence / ridge_residual`
+  - 自动输出：
+    - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
+    - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
+    - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
+    - `docs/reports/stage-i-public-opt-<run_id>.md`
 
 - `run_stage_i_case_study.py`
   - 消费 `docs/reports/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study

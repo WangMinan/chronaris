@@ -19,6 +19,7 @@ from chronaris.pipelines import (  # noqa: E402
 )
 from chronaris.pipelines.stage_i_private_benchmark_data import (  # noqa: E402
     TASK_MANEUVER,
+    TASK_RESPONSE,
     TASK_RETRIEVAL,
     build_variant_feature_frames,
     load_aligned_private_records,
@@ -77,6 +78,7 @@ class StageIPrivateOptimizationTest(unittest.TestCase):
                     output_root=str(root / "artifacts"),
                     report_root=str(root / "reports"),
                     enable_optimized_chronaris=True,
+                    export_optimized_package=True,
                     target_variant_name="chronaris_opt",
                     lag_window_points=3,
                     residual_mode="raw_window_stats",
@@ -93,9 +95,20 @@ class StageIPrivateOptimizationTest(unittest.TestCase):
             self.assertTrue(Path(result.optimization_report_path).exists())
             self.assertTrue(Path(result.optimized_candidate_summary_path).exists())
             self.assertTrue(Path(result.optimized_candidate_metrics_path).exists())
+            self.assertTrue(Path(result.optimized_candidate_package_path).exists())
+            self.assertTrue(Path(result.optimized_candidate_package_report_path).exists())
             self.assertIn(
                 "t1_chronaris_opt_beats_chronaris_opt_no_causal_mask",
                 summary["criterion_details"],
+            )
+            package = json.loads(Path(result.optimized_candidate_package_path).read_text(encoding="utf-8"))
+            self.assertEqual(package["target_variant_name"], "chronaris_opt")
+            self.assertEqual(package["tasks"][TASK_MANEUVER]["head_family"], "class_balanced_threshold")
+            recommended_head = package["tasks"][TASK_RESPONSE]["recommended_head"]
+            self.assertIn(recommended_head, package["tasks"][TASK_RESPONSE]["available_heads"])
+            self.assertEqual(
+                package["tasks"][TASK_RETRIEVAL]["head_family"],
+                "chronaris_time_residual_retrieval",
             )
 
             t1 = summary["tasks"][TASK_MANEUVER]["variants"]

@@ -2,6 +2,9 @@
 
 更新时间：2026-05-01
 
+> 说明：本文件是 `MulT / ContiFormer` 深基线阶段的历史快照。  
+> 当前鼎新私有主线已切到 `chronaris_opt`，以 `docs/planning/stage-i-private-benchmark-plan-2026-05-02.md` 与 `docs/planning/stage-i-mainline-transition-2026-05-04.md` 为准。
+
 ## 1. 定位
 
 本文件只负责 Stage I 收口后的增强实验，不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 主线事实。
