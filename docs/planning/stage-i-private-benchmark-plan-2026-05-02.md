@@ -1,6 +1,6 @@
 # Stage I 私有双流 benchmark 执行计划
 
-更新时间：2026-05-02
+更新时间：2026-05-04
 
 ## 1. 目标
 
@@ -46,6 +46,8 @@
   - `private-optimization-summary-<run_id>.md`
   - `optimized_candidate_summary.json`
   - `optimized_candidate_metrics.csv`
+  - 可选 `optimized_candidate_package.json`
+  - 可选 `private-optimized-package-<run_id>.md`
 
 ## 3. 当前固定任务
 
@@ -90,6 +92,7 @@
 1. 先用 `StageHExportConfig.preview_config.intermediate_partition='all'` 和 `intermediate_sample_limit=None` 重跑 E / F all-window 资产。
 2. 再执行私有 benchmark 编排入口。
 3. 只在三份私有报告和资产都落盘后，再回写“是否证明最优”的状态文本。
+4. 如果要把当前最佳工件从 summary 升级到可引用 package，执行 benchmark 时额外开启 package 导出。
 
 ## 6. 建议命令
 
@@ -114,6 +117,11 @@ from chronaris.pipelines import (
 )
 ```
 
+如需同时导出当前最佳 package，应额外设置：
+
+- `enable_optimized_chronaris=True`
+- `export_optimized_package=True`
+
 ## 7. 当前状态边界
 
 当前仓库状态是：
@@ -123,6 +131,7 @@ from chronaris.pipelines import (
 - `E/F all-window clean run` 已完成，`E` / `F` 均导出 `3` 个 view，且 `sample_manifest` 对齐
 - `private benchmark smoke` 已完成并已被 full run 覆盖，docs/assets 中不再保留中间 smoke 产物
 - `private benchmark full` 已完成：`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`
+- `private benchmark package` 已完成：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/`
 - 私有 benchmark 的最终结论是：
   - `private_optimality_supported = True`
   - T1：`chronaris_opt` macro-F1 `1.000000`、balanced accuracy `1.000000`
@@ -130,5 +139,6 @@ from chronaris.pipelines import (
   - T3：`chronaris_opt` top-1 `1.000000`、MRR `1.000000`
   - `chronaris_opt` 在 T1/T2/T3 均优于 `chronaris_opt_no_causal_mask`
   - `criterion_details` 全为 `true`
+  - 当前可引用 package：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 
 因此当前可以说“已在鼎新私有 proxy benchmark 上证明 `chronaris_opt` 三任务全面最优”。该结论不外推为人工真值或真实飞行风险标签最优。

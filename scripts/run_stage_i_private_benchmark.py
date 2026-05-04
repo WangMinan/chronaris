@@ -39,6 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--deep-dropout", type=float, default=0.1)
     parser.add_argument("--max-deep-folds", type=int)
     parser.add_argument("--enable-optimized-chronaris", action="store_true")
+    parser.add_argument("--export-optimized-package", action="store_true")
     parser.add_argument("--target-variant-name", default="chronaris_opt")
     parser.add_argument("--lag-window-points", type=int, default=3)
     parser.add_argument("--residual-mode", default="raw_window_stats")
@@ -63,6 +64,7 @@ def main() -> int:
             deep_dropout=args.deep_dropout,
             max_deep_folds=args.max_deep_folds,
             enable_optimized_chronaris=args.enable_optimized_chronaris,
+            export_optimized_package=args.export_optimized_package,
             target_variant_name=args.target_variant_name,
             lag_window_points=args.lag_window_points,
             residual_mode=args.residual_mode,
@@ -81,6 +83,8 @@ def main() -> int:
                 "optimization_report_path": result.optimization_report_path,
                 "optimized_candidate_summary_path": result.optimized_candidate_summary_path,
                 "optimized_candidate_metrics_path": result.optimized_candidate_metrics_path,
+                "optimized_candidate_package_path": result.optimized_candidate_package_path,
+                "optimized_candidate_package_report_path": result.optimized_candidate_package_report_path,
             },
             ensure_ascii=False,
             indent=2,

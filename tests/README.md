@@ -20,6 +20,7 @@
 12. `test_stage_i_case_study.py`
 13. `test_stage_i_deep_pipeline.py`
 14. `test_stage_i_private_optimization.py`
+15. `test_stage_i_public_opt.py`
 
 测试维护共性规则：
 
@@ -41,6 +42,17 @@
 10. Stage I 私有双流 all-window contract、proxy task 构造与 private benchmark orchestration
     - 基础 orchestration 回归集中在 `tests/test_stage_i_deep_pipeline.py`
     - `chronaris_opt / chronaris_opt_no_causal_mask`、target variant 判据与优化候选 artifacts 回归集中在 `tests/test_stage_i_private_optimization.py`
+11. Stage I `chronaris public opt` prepared sequence frame、UAB subjective LOSO、artifact 落盘与有限值兜底
+    - 当前最小回归集中在 `tests/test_stage_i_public_opt.py`
+
+当前鼎新私有主线最小回归命令：
+
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_h_export tests.test_stage_i_deep_pipeline tests.test_stage_i_private_optimization`
+
+当前 public opt 最小回归命令：
+
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_public_opt`
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_pipeline tests.test_stage_i_deep_pipeline tests.test_stage_i_public_opt`
 
 模型效果验证属于实验，不完全等价于单元测试。
 
