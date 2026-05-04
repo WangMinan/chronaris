@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-05-02
+更新时间：2026-05-04
 
 ## 目录说明
 
@@ -24,8 +24,10 @@
 - 阶段 I 收口依据只看 [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md) 与 [stage-i-closure-2026-04-30.md](reports/stage-i-closure-2026-04-30.md)。
 - [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md) 继续保留为阶段 I 启动期计划，不再作为当前阶段状态判断依据。
 - [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md) 是第三方基线落地前置准备记录。
-- [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md) 是当前增强实验执行计划与已验证状态。
+- [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md) 是 `MulT / ContiFormer` 深基线阶段的历史执行快照，不再作为当前私有主线判断依据。
 - [stage-i-private-benchmark-plan-2026-05-02.md](planning/stage-i-private-benchmark-plan-2026-05-02.md) 是当前私有双流最优性验证入口与执行顺序。
+- [stage-i-mainline-transition-2026-05-04.md](planning/stage-i-mainline-transition-2026-05-04.md) 是当前“`chronaris_opt` 升级为鼎新私有主线、`E/F/G/H` 保留为历史基线”的迁移计划。
+- [stage-i-public-opt-minimal-plan-2026-05-04.md](planning/stage-i-public-opt-minimal-plan-2026-05-04.md) 是当前 `chronaris public opt` 最小可跑入口，首轮只覆盖 `UAB subjective regression`。
 - 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage-h-closure-2026-04-27.md)。
 - 阶段 H all-window clean 运行报告：
   - [stage-h-private-e-allwindow-clean-2026-05-02.md](reports/stage-h-private-e-allwindow-clean-2026-05-02.md)
@@ -39,8 +41,11 @@
   - `Enhancement batch 1 real sortie`：[stage-i-real-sortie-deep-comparison-2026-05-01.md](reports/stage-i-real-sortie-deep-comparison-2026-05-01.md)
   - `Enhancement batch 2 public probe`：[stage-i-deep-comparison-probe-2026-05-01.md](reports/stage-i-deep-comparison-probe-2026-05-01.md)
   - `Enhancement batch 2 full LOSO`：[stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage-i-deep-comparison-full-loso-2026-05-01.md)
+  - `chronaris public opt` 最小实跑：[stage-i-public-opt-20260504T170000Z-stage-i-public-opt-uab.md](reports/stage-i-public-opt-20260504T170000Z-stage-i-public-opt-uab.md)
   - `Private optimized benchmark`：[private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md)
+  - `Private optimized package`：[private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md](reports/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md)
   - `Thesis support assessment`：[thesis-support-assessment-2026-05-01.md](reports/thesis-support-assessment-2026-05-01.md)
+    - 注意：该文档成稿时间早于 `chronaris_opt` 私有 full LOSO，不再作为“鼎新当前最优性”判断依据
 - 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
 ## 分类索引
@@ -67,6 +72,8 @@
 - [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md)
 - [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md)
 - [stage-i-private-benchmark-plan-2026-05-02.md](planning/stage-i-private-benchmark-plan-2026-05-02.md)
+- [stage-i-mainline-transition-2026-05-04.md](planning/stage-i-mainline-transition-2026-05-04.md)
+- [stage-i-public-opt-minimal-plan-2026-05-04.md](planning/stage-i-public-opt-minimal-plan-2026-05-04.md)
 
 ### models
 
@@ -101,6 +108,10 @@
     - [private-optimality-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private-optimality-summary-20260502T121815Z-stage-i-private-opt-full.md)
     - [private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md)
     - 结论是鼎新私有 proxy benchmark 三任务全面最优：`private_optimality_supported=True`
+  - `chronaris_opt` package 固化报告：
+    - [private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md](reports/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md)
+    - [private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md](reports/private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md)
+    - 当前 package 路径：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 
 ### 选题报告与基金申请书
 

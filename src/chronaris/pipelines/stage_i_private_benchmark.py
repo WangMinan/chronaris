@@ -30,6 +30,10 @@ from chronaris.pipelines.stage_i_private_optimization import (
     optimized_no_mask_variant_name,
     write_optimized_candidate_artifacts,
 )
+from chronaris.pipelines.stage_i_private_optimized_package import (
+    StageIPrivateOptimizedPackageResult,
+    write_optimized_candidate_package,
+)
 
 DEEP_MODEL_ORDER = ("mult", "contiformer")
 
@@ -57,6 +61,7 @@ class StageIPrivateBenchmarkConfig:
     target_variant_name: str = DEFAULT_OPTIMIZED_VARIANT_NAME
     lag_window_points: int = 3
     residual_mode: str = "raw_window_stats"
+    export_optimized_package: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -73,6 +78,8 @@ class StageIPrivateBenchmarkRunResult:
     optimization_report_path: str | None
     optimized_candidate_summary_path: str | None
     optimized_candidate_metrics_path: str | None
+    optimized_candidate_package_path: str | None
+    optimized_candidate_package_report_path: str | None
     summary: Mapping[str, object]
 
 
@@ -174,6 +181,7 @@ def run_stage_i_private_benchmark(
     }
     optimized_candidate_summary_path = None
     optimized_candidate_metrics_path = None
+    optimized_package_result: StageIPrivateOptimizedPackageResult | None = None
     if config.enable_optimized_chronaris:
         (
             optimized_candidate_summary_path,
@@ -185,6 +193,24 @@ def run_stage_i_private_benchmark(
         )
         summary["optimized_candidate_summary_path"] = optimized_candidate_summary_path
         summary["optimized_candidate_metrics_path"] = optimized_candidate_metrics_path
+        if config.export_optimized_package:
+            optimized_package_result = write_optimized_candidate_package(
+                run_id=config.run_id,
+                target_variant_name=resolved_target_variant_name,
+                e_run_manifest_path=config.e_run_manifest_path,
+                f_run_manifest_path=config.f_run_manifest_path,
+                lag_window_points=config.lag_window_points,
+                residual_mode=config.residual_mode,
+                records=records,
+                task_payload=task_payload,
+                variant_frames=variant_frames,
+                task_results=task_results,
+                diagnostics=diagnostic_summary,
+                artifact_root=artifact_root,
+                report_root=report_root,
+            )
+            summary["optimized_candidate_package_path"] = optimized_package_result.package_path
+            summary["optimized_candidate_package_report_path"] = optimized_package_result.report_path
     benchmark_summary_path = artifact_root / "private_benchmark_summary.json"
     benchmark_summary_path.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2, default=json_default) + "\n",
@@ -218,6 +244,12 @@ def run_stage_i_private_benchmark(
         optimization_report_path=str(optimization_report_path) if optimization_report_path is not None else None,
         optimized_candidate_summary_path=optimized_candidate_summary_path,
         optimized_candidate_metrics_path=optimized_candidate_metrics_path,
+        optimized_candidate_package_path=(
+            optimized_package_result.package_path if optimized_package_result is not None else None
+        ),
+        optimized_candidate_package_report_path=(
+            optimized_package_result.report_path if optimized_package_result is not None else None
+        ),
         summary=summary,
     )
 
@@ -356,6 +388,8 @@ def _render_optimization_report(summary: Mapping[str, object]) -> str:
             "",
             f"- optimized candidate summary: `{summary.get('optimized_candidate_summary_path')}`",
             f"- optimized candidate metrics: `{summary.get('optimized_candidate_metrics_path')}`",
+            f"- optimized candidate package: `{summary.get('optimized_candidate_package_path')}`",
+            f"- optimized package report: `{summary.get('optimized_candidate_package_report_path')}`",
         ]
     )
     return "\n".join(lines)

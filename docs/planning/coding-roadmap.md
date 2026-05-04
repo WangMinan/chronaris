@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-05-02
+更新时间：2026-05-04
 
 ## 1. 目的
 
@@ -59,6 +59,7 @@
 - 已完成阶段 I 增强实验第二批 full LOSO：`UAB / NASA` 双模型实跑与统一 comparison summary
 - 增强实验第二批 full LOSO 主报告：`docs/reports/stage-i-deep-comparison-full-loso-2026-05-01.md`
 - 已完成阶段 I 私有 benchmark 优化候选：`chronaris_opt` 在鼎新私有 proxy benchmark 的 T1/T2/T3 三任务上均超过 `naive_sync / E / F / no-mask / MulT / ContiFormer`，`private_optimality_supported=True`
+- 当前鼎新私有任务验证主线已切换到 `chronaris_opt`；`E/F/G/H` 收口事实继续保留为历史基线与导出依赖，不删除、不覆写
 
 ## 4. 阶段拆解
 
@@ -553,7 +554,7 @@
 
 ## 6. 阶段 I 收口后建议
 
-阶段 I 已完成收口。当前默认不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 主线事实，后续工作按增强实验处理。
+阶段 I 已完成收口。当前不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 公开 benchmark 历史事实，但鼎新私有任务验证主线已切换为 `chronaris_opt`。
 
 当前增强实验已完成第一批真实 sortie 验证，机器资产位于：
 
@@ -574,10 +575,12 @@
 按优先级排序：
 
 1. 已按 [stage-i-private-benchmark-plan-2026-05-02.md](stage-i-private-benchmark-plan-2026-05-02.md) 重跑 `E/F all-window` 私有资产并完成 `chronaris_opt` full LOSO；当前结论是 `private_optimality_supported=True`，T1 macro-F1 `1.000000`，T2 RMSE `201.489565`，T3 top-1 `1.000000`，且三任务均优于 `chronaris_opt_no_causal_mask`。
-2. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
-3. 私有主证据已闭合；若继续冲指标，应作为额外增强实验处理，不回写覆盖已冻结的 Phase 0/1/2/3 收口事实。
-4. 若私有主证据闭合后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
-5. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/` 与 `docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`。
+2. 已新增真实 `chronaris_opt` package 固化产物：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`，后续若需要替换“当前最佳工件”指向，应优先引用该 package。
+3. 当前鼎新私有任务验证主线默认以 `chronaris_opt` 为准；`E/F/G/H` 的历史收口报告与工件保留为其依赖底座，不删除、不改写为“无效”。
+4. 保持 `vehicle_only_feature_bundle.npz` 仍只用于单流预训练/补充诊断，不作为双流融合 view。
+5. 私有主证据已闭合；下一步不再优先重复 `MulT / ContiFormer` 公开 baseline，而是优先按 [stage-i-public-opt-minimal-plan-2026-05-04.md](stage-i-public-opt-minimal-plan-2026-05-04.md) 实现 `chronaris public opt`。
+6. 若私有主线同步完成后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
+7. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`、`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/` 与 `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`。
 
 ## 7. 当前不该提前做的事
 
