@@ -1,4 +1,4 @@
-"""Run the minimal Stage I public-opt UAB subjective regression path."""
+"""Run one Stage I public-opt path over prepared UAB or NASA assets."""
 
 from __future__ import annotations
 
@@ -32,6 +32,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dataset-id", default="uab_workload_dataset")
     parser.add_argument("--profile", default="window_v2")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--feature-profile",
+        default="full",
+        choices=("full", "physiology_only", "context_only", "residual_only"),
+    )
+    parser.add_argument(
+        "--head-catalog",
+        default="expanded",
+        choices=("minimal", "expanded"),
+    )
+    parser.add_argument(
+        "--train-balance-policy",
+        default="class_weight_balanced",
+        choices=("none", "class_weight_balanced"),
+    )
+    parser.add_argument(
+        "--ensemble-policy",
+        default="none",
+        choices=("none", "mean_top2", "vote_top2"),
+    )
+    parser.add_argument(
+        "--winner-margin-policy",
+        default="paper_gate",
+        choices=("paper_gate", "none"),
+    )
+    parser.add_argument("--reference-phase3-closure-summary")
+    parser.add_argument("--reference-deep-comparison-summary")
     return parser.parse_args()
 
 
@@ -40,12 +67,27 @@ def main() -> int:
     result = run_stage_i_public_opt(
         StageIPublicOptConfig(
             run_id=args.run_id,
-            prepared_artifact_root=str(REPO_ROOT / args.prepared_artifact_root),
-            artifact_root=str(REPO_ROOT / args.artifact_root),
-            report_root=str(REPO_ROOT / args.report_root),
+            prepared_artifact_root=_resolve_path(args.prepared_artifact_root),
+            artifact_root=_resolve_path(args.artifact_root),
+            report_root=_resolve_path(args.report_root),
             dataset_id=args.dataset_id,
             profile=args.profile,
             seed=args.seed,
+            feature_profile=args.feature_profile,
+            head_catalog=args.head_catalog,
+            train_balance_policy=args.train_balance_policy,
+            ensemble_policy=args.ensemble_policy,
+            winner_margin_policy=args.winner_margin_policy,
+            reference_phase3_closure_summary_path=(
+                _resolve_path(args.reference_phase3_closure_summary)
+                if args.reference_phase3_closure_summary
+                else None
+            ),
+            reference_deep_comparison_summary_path=(
+                _resolve_path(args.reference_deep_comparison_summary)
+                if args.reference_deep_comparison_summary
+                else None
+            ),
         )
     )
     print(
@@ -61,6 +103,11 @@ def main() -> int:
         )
     )
     return 0
+
+
+def _resolve_path(path_like: str) -> str:
+    path = Path(path_like)
+    return str(path if path.is_absolute() else (REPO_ROOT / path))
 
 
 if __name__ == "__main__":

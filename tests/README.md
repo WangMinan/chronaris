@@ -21,6 +21,7 @@
 13. `test_stage_i_deep_pipeline.py`
 14. `test_stage_i_private_optimization.py`
 15. `test_stage_i_public_opt.py`
+16. `test_stage_i_support.py`
 
 测试维护共性规则：
 
@@ -42,8 +43,15 @@
 10. Stage I 私有双流 all-window contract、proxy task 构造与 private benchmark orchestration
     - 基础 orchestration 回归集中在 `tests/test_stage_i_deep_pipeline.py`
     - `chronaris_opt / chronaris_opt_no_causal_mask`、target variant 判据与优化候选 artifacts 回归集中在 `tests/test_stage_i_private_optimization.py`
-11. Stage I `chronaris public opt` prepared sequence frame、UAB subjective LOSO、artifact 落盘与有限值兜底
+11. Stage I `chronaris public opt` prepared sequence frame、增强特征组、UAB subjective LOSO、NASA attention-state LOSO、artifact 落盘与有限值兜底
     - 当前最小回归集中在 `tests/test_stage_i_public_opt.py`
+    - 当前还覆盖 `feature_profile` 与 `ensemble_policy` 配置入口
+    - 当前还覆盖 `StageIPublicOptTorchUABConfig` 的 `device=cuda` synthetic smoke
+12. Stage I `chronaris_public_fusion` 公共深模型入口与 fusion config 透传
+    - 当前回归并入 `tests/test_stage_i_deep_pipeline.py`
+    - 当前还覆盖 `public_fusion_screen` 的 GPU smoke 筛选入口
+13. Stage I 论文证据 support / ablation 聚合、固定 6 路径主矩阵与中文报告落盘
+    - 当前回归集中在 `tests/test_stage_i_support.py`
 
 当前鼎新私有主线最小回归命令：
 
@@ -52,6 +60,7 @@
 当前 public opt 最小回归命令：
 
 - `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_public_opt`
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_support tests.test_stage_i_public_opt`
 - `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_pipeline tests.test_stage_i_deep_pipeline tests.test_stage_i_public_opt`
 
 模型效果验证属于实验，不完全等价于单元测试。

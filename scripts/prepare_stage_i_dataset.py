@@ -15,7 +15,7 @@ if str(SRC) not in sys.path:
 
 from chronaris.dataset import build_nasa_csm_task_entries, build_uab_task_entries, dump_stage_i_summary, dump_stage_i_task_entries
 from chronaris.features import build_nasa_csm_feature_table, build_uab_feature_table
-from chronaris.pipelines.stage_i_phase3 import build_stage_i_dataset_summary
+from chronaris.pipelines.stage_i.stage_i_phase3 import build_stage_i_dataset_summary
 
 
 def parse_args() -> argparse.Namespace:

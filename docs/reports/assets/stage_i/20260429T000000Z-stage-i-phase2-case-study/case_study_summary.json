@@ -3,7 +3,7 @@
     "run_id": "20260429T000000Z-stage-i-phase2-case-study",
     "stage_h_run_manifest_path": "docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
     "output_root": "artifacts/stage_i",
-    "report_path": "docs/reports/stage-i-case-study-phase2-2026-04-29.md",
+    "report_path": "docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md",
     "top_k_windows": 5,
     "ablation_paths": [
       "projection_refusion_baseline",

@@ -41,7 +41,7 @@
   - `docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences/`
 - 已完成 `MulT + ContiFormer` 第一批真实 sortie comparison：
   - 机器资产根目录：`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/`
-  - 主报告：`docs/reports/stage-i-real-sortie-deep-comparison-2026-05-01.md`
+  - 主报告：`docs/reports/stage_i/stage-i-real-sortie-deep-comparison-2026-05-01.md`
 
 ### 第二批公开数据 full LOSO
 
@@ -51,10 +51,10 @@
    - `docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences/`
 3. 已完成一轮统一 deep comparison probe：
    - `docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/`
-   - `docs/reports/stage-i-deep-comparison-probe-2026-05-01.md`
+   - `docs/reports/stage_i/stage-i-deep-comparison-probe-2026-05-01.md`
 4. 已完成第二批 full LOSO：
    - `docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`
-   - `docs/reports/stage-i-deep-comparison-full-loso-2026-05-01.md`
+   - `docs/reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
 
 ## 3. 当前边界
 

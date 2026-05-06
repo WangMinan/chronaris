@@ -36,7 +36,7 @@ from chronaris.pipelines.partial_data import (
     load_partial_data_entries,
 )
 from chronaris.pipelines.causal_fusion import StageGCausalFusionConfig
-from chronaris.pipelines.stage_h_export import (
+from chronaris.pipelines.stage_h.export import (
     AlignmentStageHViewRunner,
     StageHExportConfig,
     StageHExportPipeline,
@@ -115,7 +115,7 @@ def _default_run_id() -> str:
 
 
 def _default_report_path() -> str:
-    return f"docs/reports/stage-h-export-v1-{datetime.now().date().isoformat()}.md"
+    return f"docs/reports/stage_h/stage-h-export-v1-{datetime.now().date().isoformat()}.md"
 
 
 def _build_default_scope_overrides(use_full_clip_scope: bool) -> dict[str, tuple[datetime, datetime]]:

@@ -33,14 +33,17 @@ from chronaris.features import (  # noqa: E402
 from chronaris.pipelines import (  # noqa: E402
     StageIDeepBaselineConfig,
     StageIDeepComparisonConfig,
+    StageIPublicFusionCandidate,
+    StageIPublicFusionScreenConfig,
     StageIPrivateBenchmarkConfig,
     StageISequencePreparationConfig,
     run_stage_i_deep_baseline,
     run_stage_i_deep_comparison,
     run_stage_i_private_benchmark,
+    run_stage_i_public_fusion_screen,
     run_stage_i_sequence_preparation,
 )
-from chronaris.pipelines.stage_i_deep_baseline import (  # noqa: E402
+from chronaris.pipelines.stage_i.stage_i_deep_baseline import (  # noqa: E402
     _sanitize_regression_outputs,
 )
 
@@ -224,6 +227,58 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
                 0,
             )
             self.assertNotIn("event_code", nasa_payload.entries[0].context_payload)
+
+    def test_chronaris_public_fusion_runs_on_synthetic_uab_and_nasa(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dataset_root = Path(temp_dir) / "dataset"
+            _write_mini_uab_dataset(dataset_root)
+            _write_mini_nasa_csm_dataset(dataset_root)
+
+            uab_root = Path(temp_dir) / "uab_sequences"
+            nasa_root = Path(temp_dir) / "nasa_sequences"
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="uab_workload_dataset",
+                    artifact_root=str(uab_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=64,
+                )
+            )
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="nasa_csm",
+                    artifact_root=str(nasa_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=64,
+                )
+            )
+            for dataset_id, prepared_root in (
+                ("uab_workload_dataset", uab_root),
+                ("nasa_csm", nasa_root),
+            ):
+                result = run_stage_i_deep_baseline(
+                    StageIDeepBaselineConfig(
+                        model_name="chronaris_public_fusion",
+                        dataset_id=dataset_id,
+                        profile="window_v2",
+                        prepared_artifact_root=str(prepared_root),
+                        artifact_root=str(Path(temp_dir) / dataset_id / "fusion"),
+                        epochs=1,
+                        batch_size=8,
+                        max_folds=1,
+                        fusion_event_bias_weight=0.5,
+                        fusion_lag_window_points=4,
+                        fusion_normalize_states=False,
+                    )
+                )
+                self.assertEqual(result.summary["model_name"], "chronaris_public_fusion")
+                self.assertEqual(result.summary["model_config"]["fusion_event_bias_weight"], 0.5)
+                self.assertEqual(result.summary["model_config"]["fusion_lag_window_points"], 4)
+                self.assertFalse(result.summary["model_config"]["fusion_normalize_states"])
+                self.assertTrue(Path(result.summary_path).exists())
+                self.assertTrue(Path(result.predictions_path).exists())
 
     @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
     def test_public_deep_baseline_supports_cuda_runtime(self) -> None:
@@ -665,6 +720,69 @@ class StageIPrivateBenchmarkPipelineTest(unittest.TestCase):
             self.assertTrue(Path(summary["plots"]["t1_metrics"]).exists())
             self.assertTrue(Path(summary["plots"]["t2_metrics"]).exists())
             self.assertTrue(Path(summary["plots"]["t3_metrics"]).exists())
+
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
+    def test_public_fusion_screen_runs_on_cuda_with_synthetic_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dataset_root = Path(temp_dir) / "datasets"
+            _write_mini_uab_dataset(dataset_root)
+            _write_mini_nasa_csm_dataset(dataset_root)
+
+            uab_root = Path(temp_dir) / "uab_sequences"
+            nasa_root = Path(temp_dir) / "nasa_sequences"
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="uab_workload_dataset",
+                    artifact_root=str(uab_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=64,
+                ),
+            )
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="nasa_csm",
+                    artifact_root=str(nasa_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=64,
+                ),
+            )
+
+            result = run_stage_i_public_fusion_screen(
+                StageIPublicFusionScreenConfig(
+                    run_id="fusion-screen-test",
+                    dataset_prepared_roots={
+                        "uab_workload_dataset": str(uab_root),
+                        "nasa_csm": str(nasa_root),
+                    },
+                    artifact_root=str(Path(temp_dir) / "fusion_screen"),
+                    report_root=str(Path(temp_dir) / "reports"),
+                    epochs=1,
+                    batch_size=32,
+                    max_folds=1,
+                    device="cuda",
+                    candidates=(
+                        StageIPublicFusionCandidate(
+                            candidate_id="test_candidate",
+                            hidden_dim=32,
+                            num_heads=2,
+                            layers=1,
+                            dropout=0.1,
+                            fusion_event_bias_weight=0.25,
+                            fusion_lag_window_points=4,
+                            fusion_normalize_states=True,
+                        ),
+                    ),
+                )
+            )
+            self.assertTrue(Path(result.summary_path).exists())
+            self.assertTrue(Path(result.leaderboard_csv_path).exists())
+            self.assertTrue(Path(result.report_path).exists())
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["runtime_device"], "cuda")
+            self.assertIn("nasa_csm", summary["per_dataset_rankings"])
+            self.assertIn("uab_workload_dataset", summary["per_dataset_rankings"])
 
     def test_private_benchmark_rejects_dirty_e_run_contract(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -64,7 +64,7 @@
 - `src/chronaris/dataset/uab_stage_i.py`
 - `src/chronaris/features/stage_i_features.py`
 - `src/chronaris/evaluation/stage_i_metrics.py`
-- `src/chronaris/pipelines/stage_i_baseline.py`
+- `src/chronaris/pipelines/stage_i/stage_i_baseline.py`
 - `scripts/prepare_stage_i_dataset.py`
 - `scripts/run_stage_i_baseline.py`
 
@@ -111,7 +111,7 @@
 
 主报告：
 
-- `docs/reports/stage-i-uab-baseline-2026-04-29.md`
+- `docs/reports/stage_i/stage-i-uab-baseline-2026-04-29.md`
 
 测试闭环：
 
@@ -130,7 +130,7 @@ Phase 2 当前产物根目录：
 
 Phase 2 当前主报告：
 
-- `docs/reports/stage-i-case-study-phase2-2026-04-29.md`
+- `docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md`
 
 Phase 2 当前已验证：
 

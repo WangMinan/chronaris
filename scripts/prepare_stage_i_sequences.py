@@ -12,7 +12,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i_sequence_preparation import (  # noqa: E402
+from chronaris.pipelines.stage_i.stage_i_sequence_preparation import (  # noqa: E402
     StageISequencePreparationConfig,
     run_stage_i_sequence_preparation,
 )

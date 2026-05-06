@@ -1313,7 +1313,7 @@ def run(args: argparse.Namespace) -> dict[str, object]:
 
 def build_parser() -> argparse.ArgumentParser:
     today = datetime.now(timezone.utc).date().isoformat()
-    default_report = f"docs/reports/alignment-preview-20251005-act4-j20-22-relative-mse-{today}.md"
+    default_report = f"docs/reports/alignment/alignment-preview-20251005-act4-j20-22-relative-mse-{today}.md"
 
     parser = argparse.ArgumentParser(
         description=(
