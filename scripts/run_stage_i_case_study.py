@@ -33,6 +33,7 @@ def parse_args() -> argparse.Namespace:
         default=f"docs/reports/stage-i-case-study-phase2-{datetime.now().date().isoformat()}.md",
     )
     parser.add_argument("--top-k-windows", type=int, default=5)
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     return parser.parse_args()
 
 
@@ -48,6 +49,7 @@ def main() -> int:
         output_root=args.output_root,
         report_path=args.report_path,
         top_k_windows=args.top_k_windows,
+        device=args.device,
     )
     result = run_stage_i_case_study(config)
     report_path = write_stage_i_case_study_report(result)

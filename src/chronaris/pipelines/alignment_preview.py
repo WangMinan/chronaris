@@ -31,6 +31,10 @@ from chronaris.pipelines.alignment_physics import (
     build_physics_constraint_stats,
     resolve_stream_normalization_vectors,
 )
+from chronaris.pipelines.torch_runtime import (
+    TORCH_DEVICE_CHOICES,
+    resolve_torch_device_name,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -43,7 +47,7 @@ class AlignmentPreviewConfig:
     epoch_count: int = 1
     batch_size: int = 8
     learning_rate: float = 1e-3
-    device: str = "cpu"
+    device: str = "auto"
     dtype: torch.dtype = torch.float32
     reconstruction_loss_mode: str = "relative_mse"
     reconstruction_scale_epsilon: float = 1e-6
@@ -73,6 +77,8 @@ class AlignmentPreviewConfig:
             raise ValueError("batch_size must be positive.")
         if self.learning_rate <= 0:
             raise ValueError("learning_rate must be positive.")
+        if self.device not in TORCH_DEVICE_CHOICES:
+            raise ValueError(f"device must be one of: {', '.join(TORCH_DEVICE_CHOICES)}.")
         if self.reconstruction_loss_mode not in {"mse", "relative_mse"}:
             raise ValueError("reconstruction_loss_mode must be one of: mse, relative_mse.")
         if self.reconstruction_scale_epsilon <= 0:
@@ -276,7 +282,7 @@ class AlignmentPreviewPipeline:
             torch_batch,
             config=self.config.prototype_config,
         )
-        return model.to(device=self.config.device, dtype=self.config.dtype)
+        return model.to(device=self._resolved_device_name(), dtype=self.config.dtype)
 
     def _run_partition(
         self,
@@ -541,7 +547,7 @@ class AlignmentPreviewPipeline:
         numpy_batch = build_alignment_batch(samples)
         return build_torch_alignment_batch(
             numpy_batch,
-            device=self.config.device,
+            device=self._resolved_device_name(),
             dtype=self.config.dtype,
         )
 
@@ -653,8 +659,11 @@ class AlignmentPreviewPipeline:
         return torch.as_tensor(
             reference_offsets,
             dtype=self.config.dtype,
-            device=self.config.device,
+            device=self._resolved_device_name(),
         )
+
+    def _resolved_device_name(self) -> str:
+        return resolve_torch_device_name(self.config.device)
 
 
 def _iterate_sample_batches(

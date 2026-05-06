@@ -56,6 +56,7 @@ def _default_stage_h_preview_config() -> AlignmentPreviewConfig:
         epoch_count=3,
         batch_size=8,
         learning_rate=1e-3,
+        device="auto",
         reconstruction_loss_mode="relative_mse",
         input_normalization_mode="zscore_train",
         alignment_loss_mode="mse",

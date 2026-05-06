@@ -9,6 +9,7 @@ from pathlib import Path
 import unittest
 
 import numpy as np
+import torch
 
 SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
@@ -67,6 +68,24 @@ class StageICaseStudyPipelineTest(unittest.TestCase):
             self.assertTrue(Path(result.view_summary_csv_path).exists())
             self.assertTrue(Path(result.ablation_summary_csv_path).exists())
             self.assertTrue(Path(result.window_rankings_csv_path).exists())
+
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
+    def test_case_study_pipeline_supports_cuda_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            run_manifest_path = _write_fake_stage_h_case_run(root)
+
+            result = run_stage_i_case_study(
+                StageICaseStudyConfig(
+                    run_id="stage-i-phase2-cuda-test",
+                    stage_h_run_manifest_path=str(run_manifest_path),
+                    output_root=str(root / "artifacts" / "stage_i"),
+                    report_path=str(root / "docs" / "reports" / "stage-i-phase2-cuda-test.md"),
+                    top_k_windows=1,
+                    device="cuda",
+                )
+            )
+            self.assertEqual(len(result.view_results), 2)
 
 
 def _write_fake_stage_h_case_run(root: Path) -> Path:

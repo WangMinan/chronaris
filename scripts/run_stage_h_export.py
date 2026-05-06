@@ -35,6 +35,7 @@ from chronaris.pipelines.partial_data import (
     PartialDataConfig,
     load_partial_data_entries,
 )
+from chronaris.pipelines.causal_fusion import StageGCausalFusionConfig
 from chronaris.pipelines.stage_h_export import (
     AlignmentStageHViewRunner,
     StageHExportConfig,
@@ -161,6 +162,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--disable-physics-constraints", action="store_true")
     parser.add_argument("--disable-causal-fusion", action="store_true")
     parser.add_argument("--disable-partial-data", action="store_true")
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument(
         "--partial-data-path",
         default="configs/partial-data/stage-h-seed-v1.jsonl",
@@ -211,6 +213,7 @@ def _resolve_preview_config(args: argparse.Namespace):
     )
     return replace(
         base,
+        device=args.device,
         intermediate_partition=intermediate_partition,
         intermediate_sample_limit=_resolve_intermediate_sample_limit(args),
         enable_physics_constraints=not args.disable_physics_constraints,
@@ -239,6 +242,7 @@ def main() -> int:
         export_profile=args.export_profile,
         preview_config=_resolve_preview_config(args),
         causal_fusion_enabled=not args.disable_causal_fusion,
+        causal_fusion_config=StageGCausalFusionConfig(device=args.device),
         bus_access_rule_id=args.bus_access_rule_id,
         preview_point_limit_per_measurement=_resolve_preview_point_limit(args),
         physiology_point_limit_per_measurement=args.physiology_point_limit,
