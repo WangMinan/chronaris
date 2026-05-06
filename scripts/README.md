@@ -52,6 +52,7 @@
 
 - `run_stage_h_export.py`
   - 用 Stage H v1 frozen 配置批量导出当前两条真实 sortie 的 run/sortie/view 三级资产
+  - 当前 torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
   - 默认导出：
     - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
     - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
@@ -82,6 +83,7 @@
 
 - `run_stage_i_private_benchmark.py`
   - 消费一套 `E all-window` run manifest 和一套 `F all-window` run manifest，运行私有双流 benchmark
+  - 当前 deep torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
   - 其中 `E` 必须是 `physics_constraints_enabled=false`，`F` 必须是 `physics_constraints_enabled=true`
   - 自动构造：
     - `T1 maneuver_intensity_class`
@@ -161,6 +163,7 @@
 
 - `run_stage_i_case_study.py`
   - 消费 `docs/reports/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
+  - 当前 causal-fusion torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
   - 当前固定跑：
     - `projection_refusion_baseline`
     - `no_event_bias`

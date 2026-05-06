@@ -11,6 +11,7 @@ import torch
 
 from chronaris.features.stage_i_case import StageICaseStudyViewInput, StageICaseStudyWindowRow
 from chronaris.models.fusion import CausalFusionConfig, CausalFusionTensorInput, CausalMaskedCrossModalFusion, attention_entropy
+from chronaris.pipelines.torch_runtime import resolve_torch_device_name
 
 
 @dataclass(frozen=True, slots=True)
@@ -199,6 +200,8 @@ class StageICaseStudyPilotComparison:
 
 def compute_case_study_ablations(
     view: StageICaseStudyViewInput,
+    *,
+    device: str = "auto",
 ) -> tuple[tuple[StageICaseStudyAblationMetrics, ...], np.ndarray]:
     """Run the fixed Phase 2 bundle-only ablation family for one view."""
 
@@ -218,6 +221,7 @@ def compute_case_study_ablations(
             event_bias_weight=0.25,
             normalize_states=True,
         ),
+        device=device,
     )
     no_event_bias = _run_one_ablation(
         name="no_event_bias",
@@ -232,6 +236,7 @@ def compute_case_study_ablations(
             normalize_states=True,
         ),
         baseline_fused=baseline["fused_states"],
+        device=device,
     )
     no_state_normalization = _run_one_ablation(
         name="no_state_normalization",
@@ -246,6 +251,7 @@ def compute_case_study_ablations(
             normalize_states=False,
         ),
         baseline_fused=baseline["fused_states"],
+        device=device,
     )
     first_vehicle = np.repeat(vehicle_states[:, :1, :], repeats=vehicle_states.shape[1], axis=1)
     vehicle_delta_suppressed = _run_one_ablation(
@@ -261,6 +267,7 @@ def compute_case_study_ablations(
             normalize_states=True,
         ),
         baseline_fused=baseline["fused_states"],
+        device=device,
     )
     baseline_metrics = _to_ablation_metrics(
         name="projection_refusion_baseline",
@@ -473,13 +480,31 @@ def _run_one_ablation(
     vehicle_offsets_s: np.ndarray,
     config: CausalFusionConfig,
     baseline_fused: np.ndarray | None = None,
+    device: str = "auto",
 ) -> dict[str, object]:
-    model = CausalMaskedCrossModalFusion(config)
+    runtime_device = resolve_torch_device_name(device)
+    model = CausalMaskedCrossModalFusion(config).to(device=runtime_device)
     inputs = CausalFusionTensorInput(
-        physiology_states=torch.from_numpy(physiology_states),
-        vehicle_states=torch.from_numpy(vehicle_states),
-        physiology_offsets_s=torch.from_numpy(physiology_offsets_s),
-        vehicle_offsets_s=torch.from_numpy(vehicle_offsets_s),
+        physiology_states=torch.as_tensor(
+            physiology_states,
+            dtype=torch.float32,
+            device=runtime_device,
+        ),
+        vehicle_states=torch.as_tensor(
+            vehicle_states,
+            dtype=torch.float32,
+            device=runtime_device,
+        ),
+        physiology_offsets_s=torch.as_tensor(
+            physiology_offsets_s,
+            dtype=torch.float32,
+            device=runtime_device,
+        ),
+        vehicle_offsets_s=torch.as_tensor(
+            vehicle_offsets_s,
+            dtype=torch.float32,
+            device=runtime_device,
+        ),
     )
     with torch.no_grad():
         output = model(inputs)

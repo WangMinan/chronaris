@@ -146,6 +146,33 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertGreaterEqual(first_export.mean_reference_projection_cosine, -1.0)
             self.assertLessEqual(first_export.mean_reference_projection_cosine, 1.0)
 
+        @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
+        def test_alignment_preview_pipeline_supports_cuda_runtime(self) -> None:
+            samples = tuple(_sample(index) for index in range(10))
+            pipeline = AlignmentPreviewPipeline(
+                config=AlignmentPreviewConfig(
+                    prototype_config=AlignmentPrototypeConfig(
+                        hidden_dim=8,
+                        embedding_dim=6,
+                        encoder_hidden_dim=10,
+                        decoder_hidden_dim=10,
+                        dynamics_hidden_dim=12,
+                        projection_dim=4,
+                        ode_method="euler",
+                    ),
+                    split_config=ChronologicalSplitConfig(),
+                    reference_grid_config=ReferenceGridConfig(point_count=4),
+                    epoch_count=1,
+                    batch_size=2,
+                    learning_rate=1e-3,
+                    device="cuda",
+                )
+            )
+
+            result = pipeline.run(samples)
+            self.assertEqual(next(result.model.parameters()).device.type, "cuda")
+            self.assertEqual(result.test_metrics.sample_count, 2)
+
         def test_alignment_preview_pipeline_supports_zscore_train_normalization(self) -> None:
             samples = tuple(_sample(index) for index in range(25))
             pipeline = AlignmentPreviewPipeline(

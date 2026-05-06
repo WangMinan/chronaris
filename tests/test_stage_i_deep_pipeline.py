@@ -11,6 +11,7 @@ from pathlib import Path
 import unittest
 
 import numpy as np
+import torch
 
 SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
@@ -223,6 +224,37 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
                 0,
             )
             self.assertNotIn("event_code", nasa_payload.entries[0].context_payload)
+
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
+    def test_public_deep_baseline_supports_cuda_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            dataset_root = Path(temp_dir) / "datasets"
+            _write_mini_uab_dataset(dataset_root)
+
+            prepared_root = Path(temp_dir) / "uab_sequences"
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="uab_workload_dataset",
+                    artifact_root=str(prepared_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=64,
+                ),
+            )
+            result = run_stage_i_deep_baseline(
+                StageIDeepBaselineConfig(
+                    model_name="mult",
+                    dataset_id="uab_workload_dataset",
+                    profile="window_v2",
+                    prepared_artifact_root=str(prepared_root),
+                    artifact_root=str(Path(temp_dir) / "mult_cuda"),
+                    epochs=1,
+                    batch_size=8,
+                    max_folds=1,
+                    device="cuda",
+                )
+            )
+            self.assertEqual(result.summary["runtime_device"], "cuda")
 
     @unittest.skipUnless(
         ENABLE_LIVE_SEQUENCE_TESTS and (REAL_DATASET_ROOT / "uab_workload_dataset").exists(),

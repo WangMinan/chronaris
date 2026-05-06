@@ -34,6 +34,7 @@ class StageICaseStudyConfig:
     output_root: str
     report_path: str
     top_k_windows: int = 5
+    device: str = "auto"
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -42,6 +43,7 @@ class StageICaseStudyConfig:
             "output_root": self.output_root,
             "report_path": self.report_path,
             "top_k_windows": self.top_k_windows,
+            "device": self.device,
             "ablation_paths": [
                 "projection_refusion_baseline",
                 "no_event_bias",
@@ -85,7 +87,10 @@ def run_stage_i_case_study(
     run_input = load_stage_i_case_study_run(config.stage_h_run_manifest_path)
     provisional_results: list[tuple[StageICaseStudyViewInput, tuple[StageICaseStudyAblationMetrics, ...], np.ndarray]] = []
     for view in run_input.views:
-        ablations, baseline_fused_states = compute_case_study_ablations(view)
+        ablations, baseline_fused_states = compute_case_study_ablations(
+            view,
+            device=config.device,
+        )
         provisional_results.append((view, ablations, baseline_fused_states))
 
     view_summaries = tuple(

@@ -14,6 +14,10 @@ from chronaris.models.fusion import (
     attention_entropy,
 )
 from chronaris.pipelines.alignment_preview import AlignmentPreviewIntermediateExport
+from chronaris.pipelines.torch_runtime import (
+    TORCH_DEVICE_CHOICES,
+    resolve_torch_device_name,
+)
 
 FusionStateSource = Literal["hidden", "projection"]
 FusionOutputMode = Literal["concat", "pooled_with_residual"]
@@ -33,6 +37,7 @@ class StageGCausalFusionConfig:
     lag_window_points: int | None = None
     fusion_output_mode: FusionOutputMode = "concat"
     residual_mode: FusionResidualMode = "none"
+    device: str = "auto"
 
     def __post_init__(self) -> None:
         if self.state_source not in {"hidden", "projection"}:
@@ -41,6 +46,8 @@ class StageGCausalFusionConfig:
             raise ValueError("fusion_output_mode must be one of: concat, pooled_with_residual.")
         if self.residual_mode not in {"none", "raw_window_stats"}:
             raise ValueError("residual_mode must be one of: none, raw_window_stats.")
+        if self.device not in TORCH_DEVICE_CHOICES:
+            raise ValueError(f"device must be one of: {', '.join(TORCH_DEVICE_CHOICES)}.")
         CausalFusionConfig(
             attention_temperature=self.attention_temperature,
             event_bias_weight=self.event_bias_weight,
@@ -105,11 +112,12 @@ class StageGCausalFusionResult:
                 "event_bias_weight": self.config.event_bias_weight,
                 "causal_epsilon_s": self.config.causal_epsilon_s,
                 "normalize_states": self.config.normalize_states,
-                "use_causal_mask": self.config.use_causal_mask,
-                "lag_window_points": self.config.lag_window_points,
-                "fusion_output_mode": self.config.fusion_output_mode,
-                "residual_mode": self.config.residual_mode,
-            },
+            "use_causal_mask": self.config.use_causal_mask,
+            "lag_window_points": self.config.lag_window_points,
+            "fusion_output_mode": self.config.fusion_output_mode,
+            "residual_mode": self.config.residual_mode,
+            "device": self.config.device,
+        },
             "partition": self.partition,
             "sample_count": self.sample_count,
             "reference_point_count": self.reference_point_count,
@@ -149,6 +157,7 @@ def export_stage_g_causal_fusion_tensors(
     """Export deterministic Stage G tensors for downstream feature packaging."""
 
     resolved_config = config or StageGCausalFusionConfig()
+    resolved_device = resolve_torch_device_name(resolved_config.device)
     if not intermediate_export.samples:
         return StageGCausalFusionTensorExport(
             sample_ids=(),
@@ -157,7 +166,11 @@ def export_stage_g_causal_fusion_tensors(
             vehicle_event_scores=(),
         )
 
-    tensor_input = _build_tensor_input(intermediate_export, config=resolved_config)
+    tensor_input = _build_tensor_input(
+        intermediate_export,
+        config=resolved_config,
+        device=resolved_device,
+    )
     model = CausalMaskedCrossModalFusion(
         CausalFusionConfig(
             attention_temperature=resolved_config.attention_temperature,
@@ -167,7 +180,7 @@ def export_stage_g_causal_fusion_tensors(
             use_causal_mask=resolved_config.use_causal_mask,
             lag_window_points=resolved_config.lag_window_points,
         )
-    )
+    ).to(device=resolved_device)
     with torch.no_grad():
         output = model(tensor_input)
 
@@ -196,6 +209,7 @@ def run_stage_g_causal_fusion(
     """Run deterministic Stage G(min) fusion over exported reference-grid states."""
 
     resolved_config = config or StageGCausalFusionConfig()
+    resolved_device = resolve_torch_device_name(resolved_config.device)
     if not intermediate_export.samples:
         return StageGCausalFusionResult(
             config=resolved_config,
@@ -212,7 +226,11 @@ def run_stage_g_causal_fusion(
             samples=(),
         )
 
-    tensor_input = _build_tensor_input(intermediate_export, config=resolved_config)
+    tensor_input = _build_tensor_input(
+        intermediate_export,
+        config=resolved_config,
+        device=resolved_device,
+    )
     tensor_export = export_stage_g_causal_fusion_tensors(
         intermediate_export,
         config=resolved_config,
@@ -226,7 +244,7 @@ def run_stage_g_causal_fusion(
             use_causal_mask=resolved_config.use_causal_mask,
             lag_window_points=resolved_config.lag_window_points,
         )
-    )
+    ).to(device=resolved_device)
     with torch.no_grad():
         output = model(tensor_input)
 
@@ -323,6 +341,7 @@ def _build_tensor_input(
     intermediate_export: AlignmentPreviewIntermediateExport,
     *,
     config: StageGCausalFusionConfig,
+    device: str,
 ) -> CausalFusionTensorInput:
     physiology_states = []
     vehicle_states = []
@@ -341,10 +360,26 @@ def _build_tensor_input(
         vehicle_offsets.append(sample.vehicle.reference_offsets_s)
 
     return CausalFusionTensorInput(
-        physiology_states=torch.as_tensor(physiology_states, dtype=torch.float32),
-        vehicle_states=torch.as_tensor(vehicle_states, dtype=torch.float32),
-        physiology_offsets_s=torch.as_tensor(physiology_offsets, dtype=torch.float32),
-        vehicle_offsets_s=torch.as_tensor(vehicle_offsets, dtype=torch.float32),
+        physiology_states=torch.as_tensor(
+            physiology_states,
+            dtype=torch.float32,
+            device=device,
+        ),
+        vehicle_states=torch.as_tensor(
+            vehicle_states,
+            dtype=torch.float32,
+            device=device,
+        ),
+        physiology_offsets_s=torch.as_tensor(
+            physiology_offsets,
+            dtype=torch.float32,
+            device=device,
+        ),
+        vehicle_offsets_s=torch.as_tensor(
+            vehicle_offsets,
+            dtype=torch.float32,
+            device=device,
+        ),
     )
 
 

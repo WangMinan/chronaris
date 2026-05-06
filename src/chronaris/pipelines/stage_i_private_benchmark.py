@@ -34,6 +34,7 @@ from chronaris.pipelines.stage_i_private_optimized_package import (
     StageIPrivateOptimizedPackageResult,
     write_optimized_candidate_package,
 )
+from chronaris.pipelines.torch_runtime import resolve_torch_device_name
 
 DEEP_MODEL_ORDER = ("mult", "contiformer")
 
@@ -62,6 +63,7 @@ class StageIPrivateBenchmarkConfig:
     lag_window_points: int = 3
     residual_mode: str = "raw_window_stats"
     export_optimized_package: bool = False
+    device: str = "auto"
 
 
 @dataclass(frozen=True, slots=True)
@@ -175,6 +177,7 @@ def run_stage_i_private_benchmark(
         },
         "variant_order": list(variant_order),
         "diagnostics": diagnostic_summary,
+        "deep_runtime_device": resolve_torch_device_name(config.device),
         "tasks": task_results,
         "plots": plot_paths,
         "conclusion": conclusion,

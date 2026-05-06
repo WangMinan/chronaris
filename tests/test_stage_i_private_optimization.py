@@ -9,6 +9,8 @@ import tempfile
 from pathlib import Path
 import unittest
 
+import torch
+
 SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
@@ -156,6 +158,34 @@ class StageIPrivateOptimizationTest(unittest.TestCase):
             self.assertNotIn(
                 "t1_g_min_beats_module_baselines",
                 summary["conclusion"]["criterion_details"],
+            )
+
+    @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
+    def test_private_benchmark_deep_models_support_cuda_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            e_manifest, f_manifest = _write_pair(root)
+
+            result = run_stage_i_private_benchmark(
+                StageIPrivateBenchmarkConfig(
+                    run_id="private-cuda-smoke",
+                    e_run_manifest_path=str(e_manifest),
+                    f_run_manifest_path=str(f_manifest),
+                    output_root=str(root / "artifacts"),
+                    report_root=str(root / "reports"),
+                    deep_model_names=("mult",),
+                    max_deep_folds=1,
+                    deep_epochs=1,
+                    deep_batch_size=4,
+                    device="cuda",
+                )
+            )
+
+            summary = json.loads(Path(result.benchmark_summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["deep_runtime_device"], "cuda")
+            self.assertEqual(
+                summary["tasks"][TASK_MANEUVER]["deep_models"]["mult"]["status"],
+                "completed",
             )
 
 

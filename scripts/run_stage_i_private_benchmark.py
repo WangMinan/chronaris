@@ -43,6 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target-variant-name", default="chronaris_opt")
     parser.add_argument("--lag-window-points", type=int, default=3)
     parser.add_argument("--residual-mode", default="raw_window_stats")
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     return parser.parse_args()
 
 
@@ -68,6 +69,7 @@ def main() -> int:
             target_variant_name=args.target_variant_name,
             lag_window_points=args.lag_window_points,
             residual_mode=args.residual_mode,
+            device=args.device,
         )
     )
     print(
