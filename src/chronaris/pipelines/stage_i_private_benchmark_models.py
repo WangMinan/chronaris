@@ -45,6 +45,7 @@ from chronaris.pipelines.stage_i_private_optimization import (
     run_optimized_retrieval_variant,
     run_optimized_supervised_variant,
 )
+from chronaris.pipelines.torch_runtime import resolve_torch_device_name, seed_torch
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
     from chronaris.pipelines.stage_i_private_benchmark import StageIPrivateBenchmarkConfig
@@ -232,7 +233,9 @@ def run_one_deep_model(
 ) -> pd.DataFrame:
     ordered_modalities = ("physiology", "vehicle")
     frames: list[pd.DataFrame] = []
+    runtime_device = resolve_torch_device_name(config.device)
     for fold_index, split in enumerate(loso_splits):
+        seed_torch(config.seed + fold_index, device=runtime_device)
         normalized_arrays = normalize_modalities(
             modality_arrays=modality_arrays,
             modality_masks=modality_masks,
@@ -251,7 +254,7 @@ def run_one_deep_model(
             num_heads=config.deep_num_heads,
             layers=config.deep_layers,
             dropout=config.deep_dropout,
-        )
+        ).to(device=runtime_device)
         optimizer = torch.optim.Adam(model.parameters(), lr=config.deep_learning_rate)
         criterion = torch.nn.CrossEntropyLoss() if task_type == "classification" else torch.nn.MSELoss()
         train_deep_model(
@@ -651,6 +654,7 @@ def train_deep_model(
 ) -> None:
     if len(train_indices) == 0:
         return
+    runtime_device = next(model.parameters()).device
     for epoch in range(epochs):
         for batch_indices in iter_batches(len(train_indices), batch_size=batch_size, seed=seed + epoch):
             global_indices = train_indices[batch_indices]
@@ -664,10 +668,18 @@ def train_deep_model(
                 training=True,
             )
             if task_type == "classification":
-                targets = torch.as_tensor(labels[global_indices], dtype=torch.long)
+                targets = torch.as_tensor(
+                    labels[global_indices],
+                    dtype=torch.long,
+                    device=runtime_device,
+                )
                 loss = criterion(output.logits, targets)
             else:
-                targets = torch.as_tensor(labels[global_indices], dtype=torch.float32).view(-1, 1)
+                targets = torch.as_tensor(
+                    labels[global_indices],
+                    dtype=torch.float32,
+                    device=runtime_device,
+                ).view(-1, 1)
                 loss = criterion(output.logits, targets)
             loss.backward()
             optimizer.step()
@@ -682,15 +694,28 @@ def forward_deep_model(
     indices: np.ndarray,
     training: bool = False,
 ):
+    runtime_device = next(model.parameters()).device
     modality_tensor_map = {
-        name: torch.as_tensor(modality_arrays[name][indices], dtype=torch.float32)
+        name: torch.as_tensor(
+            modality_arrays[name][indices],
+            dtype=torch.float32,
+            device=runtime_device,
+        )
         for name in ("physiology", "vehicle")
     }
     mask_tensor_map = {
-        name: torch.as_tensor(modality_masks[name][indices], dtype=torch.float32)
+        name: torch.as_tensor(
+            modality_masks[name][indices],
+            dtype=torch.float32,
+            device=runtime_device,
+        )
         for name in ("physiology", "vehicle")
     }
-    time_tensor = torch.as_tensor(time_axis[indices], dtype=torch.float32)
+    time_tensor = torch.as_tensor(
+        time_axis[indices],
+        dtype=torch.float32,
+        device=runtime_device,
+    )
     if training:
         model.train()
         return model(modality_tensor_map, time_axis=time_tensor, modality_masks=mask_tensor_map)

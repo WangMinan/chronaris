@@ -32,6 +32,7 @@ from chronaris.pipelines.stage_i_phase3_assets import (
     extract_primary_metrics,
     load_stage_i_baseline_artifacts,
 )
+from chronaris.pipelines.torch_runtime import resolve_torch_device_name, seed_torch
 
 DATASET_RUN_ORDER = (STAGE_H_CASE_DATASET_ID, "uab_workload_dataset", "nasa_csm")
 
@@ -53,6 +54,7 @@ class StageIDeepBaselineConfig:
     dropout: float = 0.1
     max_folds: int | None = None
     seed: int = 42
+    device: str = "auto"
 
 
 @dataclass(frozen=True, slots=True)
@@ -81,6 +83,7 @@ class StageIDeepComparisonConfig:
     dropout: float = 0.1
     max_folds: int | None = None
     seed: int = 42
+    device: str = "auto"
 
 
 @dataclass(frozen=True, slots=True)
@@ -158,6 +161,7 @@ def run_stage_i_deep_comparison(
                     dropout=config.dropout,
                     max_folds=config.max_folds,
                     seed=config.seed,
+                    device=config.device,
                 ),
             )
             dataset_model_results[model_name] = {
@@ -176,6 +180,7 @@ def run_stage_i_deep_comparison(
             "Z",
         ),
         "artifact_root": str(artifact_root),
+        "runtime_device": resolve_torch_device_name(config.device),
         "dataset_order": list(DATASET_RUN_ORDER),
         "model_names": list(config.model_names),
         "datasets": dataset_results,
@@ -272,6 +277,7 @@ def _run_public_deep_baseline(
         "dataset_id": config.dataset_id,
         "profile": config.profile,
         "model_name": config.model_name,
+        "runtime_device": resolve_torch_device_name(config.device),
         "artifact_root": str(Path(config.artifact_root)),
         "prepared_artifact_root": config.prepared_artifact_root,
         "objective": objective_summary,
@@ -489,6 +495,7 @@ def _run_real_sortie_case_study(
         "dataset_id": STAGE_H_CASE_DATASET_ID,
         "profile": config.profile,
         "model_name": config.model_name,
+        "runtime_device": resolve_torch_device_name(config.device),
         "artifact_root": str(artifact_root),
         "prepared_artifact_root": config.prepared_artifact_root,
         "smoke_training_target": "projection_diagnostics_verdict_code",
@@ -645,13 +652,14 @@ def _train_model(
     task: str,
     config: StageIDeepBaselineConfig,
 ) -> nn.Module:
+    runtime_device = resolve_torch_device_name(config.device)
     normalized_arrays = _normalize_modalities(
         modality_arrays=modality_arrays,
         modality_masks=modality_masks,
         ordered_modalities=ordered_modalities,
         train_indices=train_indices,
     )
-    torch.manual_seed(config.seed)
+    seed_torch(config.seed, device=runtime_device)
     model = build_stage_i_deep_model(
         model_name=model_name,
         ordered_modalities=ordered_modalities,
@@ -664,7 +672,7 @@ def _train_model(
         num_heads=config.num_heads,
         layers=config.layers,
         dropout=config.dropout,
-    )
+    ).to(device=runtime_device)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
     criterion = (
         nn.CrossEntropyLoss()
@@ -695,10 +703,18 @@ def _train_model(
             if logits is None:
                 raise ValueError("deep model returned no logits during supervised training.")
             if task == "classification":
-                target_tensor = torch.as_tensor(batch_targets, dtype=torch.long)
+                target_tensor = torch.as_tensor(
+                    batch_targets,
+                    dtype=torch.long,
+                    device=runtime_device,
+                )
                 loss = criterion(logits, target_tensor)
             else:
-                target_tensor = torch.as_tensor(batch_targets, dtype=torch.float32).view(-1, 1)
+                target_tensor = torch.as_tensor(
+                    batch_targets,
+                    dtype=torch.float32,
+                    device=runtime_device,
+                ).view(-1, 1)
                 loss = criterion(logits, target_tensor)
             loss.backward()
             optimizer.step()
@@ -715,15 +731,28 @@ def _forward_dataset(
     indices: np.ndarray,
     training: bool = False,
 ):
+    runtime_device = next(model.parameters()).device
     modality_tensor_map = {
-        name: torch.as_tensor(modality_arrays[name][indices], dtype=torch.float32)
+        name: torch.as_tensor(
+            modality_arrays[name][indices],
+            dtype=torch.float32,
+            device=runtime_device,
+        )
         for name in ordered_modalities
     }
     mask_tensor_map = {
-        name: torch.as_tensor(modality_masks[name][indices], dtype=torch.float32)
+        name: torch.as_tensor(
+            modality_masks[name][indices],
+            dtype=torch.float32,
+            device=runtime_device,
+        )
         for name in ordered_modalities
     }
-    time_tensor = torch.as_tensor(time_axis[indices], dtype=torch.float32)
+    time_tensor = torch.as_tensor(
+        time_axis[indices],
+        dtype=torch.float32,
+        device=runtime_device,
+    )
     if training:
         model.train()
         return model(

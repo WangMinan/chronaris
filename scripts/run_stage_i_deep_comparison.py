@@ -48,6 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dropout", type=float, default=0.1)
     parser.add_argument("--max-folds", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     return parser.parse_args()
 
 
@@ -86,6 +87,7 @@ def main() -> int:
             dropout=args.dropout,
             max_folds=args.max_folds,
             seed=args.seed,
+            device=args.device,
         ),
     )
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))
