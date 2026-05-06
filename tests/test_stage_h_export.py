@@ -39,7 +39,7 @@ from chronaris.pipelines.partial_data import (
     VEHICLE_ONLY_FEATURE_BUNDLE_KEYS,
     load_partial_data_entries,
 )
-from chronaris.pipelines.stage_h_export import (
+from chronaris.pipelines.stage_h.export import (
     StageHExportConfig,
     StageHExportPipeline,
     StageHRunManifest,

@@ -12,7 +12,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i_deep_baseline import (  # noqa: E402
+from chronaris.pipelines.stage_i.stage_i_deep_baseline import (  # noqa: E402
     StageIDeepBaselineConfig,
     run_stage_i_deep_baseline,
 )
@@ -20,7 +20,11 @@ from chronaris.pipelines.stage_i_deep_baseline import (  # noqa: E402
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", required=True, choices=("mult", "contiformer"))
+    parser.add_argument(
+        "--model",
+        required=True,
+        choices=("mult", "contiformer", "chronaris_public_fusion"),
+    )
     parser.add_argument(
         "--dataset",
         required=True,
@@ -41,6 +45,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-heads", type=int, default=2)
     parser.add_argument("--layers", type=int, default=1)
     parser.add_argument("--dropout", type=float, default=0.1)
+    parser.add_argument("--fusion-event-bias-weight", type=float, default=0.25)
+    parser.add_argument("--fusion-lag-window-points", type=int, default=None)
+    parser.add_argument(
+        "--fusion-normalize-states",
+        choices=("true", "false"),
+        default="true",
+    )
     parser.add_argument("--max-folds", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
@@ -69,6 +80,9 @@ def main() -> int:
             num_heads=args.num_heads,
             layers=args.layers,
             dropout=args.dropout,
+            fusion_event_bias_weight=args.fusion_event_bias_weight,
+            fusion_lag_window_points=args.fusion_lag_window_points,
+            fusion_normalize_states=(args.fusion_normalize_states == "true"),
             max_folds=args.max_folds,
             seed=args.seed,
             device=args.device,

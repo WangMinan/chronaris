@@ -56,7 +56,7 @@
   - 默认导出：
     - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
     - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
-  - 默认写出 `docs/reports/assets/stage_h/<run_id>/` 机器资产和 `docs/reports/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/reports/stage-h-closure-2026-04-27.md`
+  - 默认写出 `docs/reports/assets/stage_h/<run_id>/` 机器资产和 `docs/reports/stage_h/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/reports/stage_h/stage-h-closure-2026-04-27.md`
   - 自动生成 `run_manifest.json`、`sortie_manifest.json`、`view_manifest.json`
   - 每个 view 自动导出：
     - `feature_bundle.npz`
@@ -132,7 +132,7 @@
     - `subjective_metrics.json`
     - `fold_predictions.csv`
     - confusion matrix / regression scatter PNG
-    - `docs/reports/stage-i-<dataset>-<profile>-<date>.md`
+    - `docs/reports/stage_i/stage-i-<dataset>-<profile>-<date>.md`
 
 - `run_stage_i_phase3.py`
   - 顺序执行阶段 I `Phase 3` 收口流程：
@@ -145,21 +145,96 @@
     - `docs/reports/assets/stage_i/<run_id>/uab_window/`
     - `docs/reports/assets/stage_i/<run_id>/nasa_attention/`
     - `docs/reports/assets/stage_i/<run_id>/closure_summary.json`
-    - `docs/reports/stage-i-closure-<date>.md`
+    - `docs/reports/stage_i/stage-i-closure-<date>.md`
     - `docs/planning/stage-i-closure-<date>.md`
 
 - `run_stage_i_public_opt.py`
-  - 消费已准备好的 `UAB window_v2 sequence contract`，运行 `chronaris public opt` 的最小 `subjective regression` 路径
-  - 当前固定：
+  - 消费已准备好的公开 `sequence contract`，运行 `chronaris public opt`
+  - 当前支持：
     - `dataset_id=uab_workload_dataset`
-    - `profile=window_v2`
-    - subset 只评估 `n_back / heat_the_chair`
-    - 两个 head：`physiology_persistence / ridge_residual`
+      - `profile=window_v2`
+      - `track=subjective regression`
+      - evaluation groups：`n_back / heat_the_chair`
+      - 当前增强 head：`physiology_persistence / ridge_residual_cv / elasticnet_residual / huber_residual`
+    - `dataset_id=nasa_csm`
+      - `profile=window_v2`
+      - `track=attention_state classification`
+      - evaluation groups：`benchmark_only / loft_only / combined`
+      - 当前增强 head：`physiology_margin_balanced_logistic / balanced_logistic_context / balanced_linear_svc_context`
+  - 当前可调：
+    - `feature_profile=full|physiology_only|context_only|residual_only`
+    - `head_catalog=minimal|expanded`
+    - `train_balance_policy=none|class_weight_balanced`
+    - `ensemble_policy=none|mean_top2|vote_top2`
+    - `winner_margin_policy=paper_gate|none`
   - 自动输出：
     - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
     - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
     - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
-    - `docs/reports/stage-i-public-opt-<run_id>.md`
+    - `docs/reports/stage_i/stage-i-public-opt-<run_id>.md`
+  - 当前定位：
+    - `NASA attention_state` 主线继续优先引用这里的 `NASA enhanced round 1`
+    - `UAB subjective` 旧 CPU line 继续保留为 historical baseline，不再继续扩大搜索
+
+- `run_stage_i_public_opt_torch_uab.py`
+  - 消费同一套公开 `sequence contract` 与 `public opt` 特征帧，运行 GPU-first `UAB subjective` torch-native completion branch
+  - 固定候选族：
+    - `mlp_huber_small`
+    - `mlp_huber_wide`
+    - `residual_gated_mlp`
+  - 固定训练口径：
+    - `HuberLoss`
+    - `AdamW`
+    - `epochs=20`
+    - `patience=4`
+    - `batch_size=256`
+    - `device=cuda`
+  - 默认先做 `max_folds=2` 粗筛，再对 winner 执行 full LOSO
+  - 自动输出：
+    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
+    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/candidate_leaderboard.csv`
+    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
+    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
+    - `docs/reports/stage_i/stage-i-public-opt-<run_id>.md`
+
+- `run_stage_i_deep_baseline.py`
+  - 当前已支持 `chronaris_public_fusion`
+  - 当前可调：
+    - `fusion_event_bias_weight`
+    - `fusion_lag_window_points`
+    - `fusion_normalize_states`
+    - `train_sampling_policy=none|balanced_class`
+
+- `run_stage_i_public_fusion_screen.py`
+  - 以 `chronaris_public_fusion` 为目标模型，按固定候选集执行 GPU-first 公共数据筛选
+  - 当前固定：
+    - 候选集定义在 `src/chronaris/pipelines/stage_i/stage_i_public_fusion_screen.py`
+    - `NASA` 以 `combined macro-F1` 排序
+    - `UAB` 以 `mean RMSE` 排序
+    - 默认 `device=cuda`
+    - follow-up 可显式加 `--train-sampling-policy balanced_class --epochs 10`
+  - 自动输出：
+    - `fusion_screen_summary.json`
+    - `candidate_leaderboard.csv`
+    - `docs/reports/stage_i/stage-i-public-fusion-screen-<run_id>.md`
+
+- `run_stage_i_public_mainline_report.py`
+  - 聚合 `UAB`、`NASA`、`MulT / ContiFormer` 与当前 `public_fusion` 结果，生成统一公开主线报告
+  - 当前用于固化 `NASA closed, UAB partial` 这类 paper-facing 状态判断
+  - 自动输出：
+    - `docs/reports/assets/stage_i_public_mainline/<run_id>/public_mainline_summary.json`
+    - `docs/reports/stage_i/stage-i-public-mainline-<run_id>.md`
+
+- `run_stage_i_support.py`
+  - 聚合既有 `E/F/G/H + Phase 2 + private no-mask` 资产，生成论文证据 support / ablation 报告
+  - 当前固定输出：
+    - `support_summary.json`
+    - `support_matrix.csv`
+    - `ablation_matrix.csv`
+    - `support_overview.png`
+    - `docs/reports/stage_i/stage-i-alignment-support-<run_id>.md`
+    - `docs/reports/stage_i/stage-i-causal-support-<run_id>.md`
+    - `docs/reports/stage_i/stage-i-ablation-support-<run_id>.md`
 
 - `run_stage_i_case_study.py`
   - 消费 `docs/reports/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
@@ -175,5 +250,5 @@
     - `view_summary.csv`
     - `ablation_summary.csv`
     - `window_rankings.csv`
-    - `docs/reports/stage-i-case-study-phase2-<date>.md`
+    - `docs/reports/stage_i/stage-i-case-study-phase2-<date>.md`
   - 当前真实主线输出根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`

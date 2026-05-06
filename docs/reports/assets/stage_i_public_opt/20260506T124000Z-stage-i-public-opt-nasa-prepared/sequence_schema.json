@@ -1,0 +1,65 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "adapter_id": "chronaris_public_nasa_v1",
+  "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+  "sequence_length": 64,
+  "modalities": {
+    "physiology": {
+      "feature_dim": 23,
+      "feature_names": [
+        "eeg::EEG_C3",
+        "eeg::EEG_C4",
+        "eeg::EEG_Cz",
+        "eeg::EEG_F3",
+        "eeg::EEG_F4",
+        "eeg::EEG_F7",
+        "eeg::EEG_F8",
+        "eeg::EEG_FP1",
+        "eeg::EEG_FP2",
+        "eeg::EEG_Fz",
+        "eeg::EEG_O1",
+        "eeg::EEG_O2",
+        "eeg::EEG_P3",
+        "eeg::EEG_P4",
+        "eeg::EEG_POz",
+        "eeg::EEG_Pz",
+        "eeg::EEG_T3",
+        "eeg::EEG_T4",
+        "eeg::EEG_T5",
+        "eeg::EEG_T6",
+        "peripheral::ECG",
+        "peripheral::R",
+        "peripheral::GSR"
+      ],
+      "time_axis_key": "time_axis",
+      "notes": "Chronaris-public NASA physiology stream: EEG and peripheral signals only."
+    },
+    "scenario_context": {
+      "feature_dim": 3,
+      "feature_names": [
+        "source_partition__benchmark",
+        "source_partition__loft",
+        "window_index_norm"
+      ],
+      "time_axis_key": "time_axis",
+      "notes": "Chronaris-public NASA scenario/context stream; excludes event code and attention-state labels."
+    }
+  },
+  "label_leakage_guard": {
+    "excluded_from_context_stream": [
+      "event_code",
+      "game_mode",
+      "label_sources",
+      "objective_label_text",
+      "perceived_difficulty",
+      "task_variant",
+      "theoretical_difficulty"
+    ],
+    "context_feature_names": [
+      "source_partition__benchmark",
+      "source_partition__loft",
+      "window_index_norm"
+    ]
+  }
+}

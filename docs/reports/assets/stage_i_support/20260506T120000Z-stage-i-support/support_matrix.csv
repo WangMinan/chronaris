@@ -1,0 +1,11 @@
+family,variant,source,sample_count,mean_projection_cosine,mean_projection_l2_gap,mean_attention_entropy,mean_top_event_score,mean_top_contribution_score,delta_mean_top_event_score,delta_mean_top_contribution_score,event_mask_interference,note
+alignment,e_baseline,projection_diagnostics_summary,3.0,0.7601730250392468,0.2119331139397271,,,,,,,PASS
+alignment,f_full,projection_diagnostics_summary,3.0,0.699514367348323,0.21201644583491966,,,,,,,PASS
+alignment,delta_f_minus_e,projection_diagnostics_summary,3.0,-0.06065865769092382,8.333189519255102e-05,,,,,,,PASS
+alignment,stage_h_export,stage_h_run_manifest,3.0,,,,,,,,,"{""PASS"": 2, ""WARN"": 1}"
+causal,g_min,causal_fusion_summary,3.0,,,0.9314456582069397,1.0,2.609973430633545,,,,g_min_hidden_summary
+causal,no_event_bias,case_study_ablation_summary,3.0,,,,,,0.0,-0.273632829388,,phase2_bundle_only
+causal,no_state_normalization,case_study_ablation_summary,3.0,,,,,,0.0,0.073145682613,,phase2_bundle_only
+causal,vehicle_delta_suppressed,case_study_ablation_summary,3.0,,,,,,-1.0,-2.39979237318,,phase2_bundle_only
+causal,chronaris_opt,private_benchmark_summary,,,,,,,,,,target_variant
+causal,chronaris_opt_no_causal_mask,private_benchmark_summary,,,,,,,,,,no_causal_mask_variant

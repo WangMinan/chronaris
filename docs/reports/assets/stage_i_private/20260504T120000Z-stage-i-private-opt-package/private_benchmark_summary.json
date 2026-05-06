@@ -40892,5 +40892,5 @@
   "optimized_candidate_summary_path": "docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_summary.json",
   "optimized_candidate_metrics_path": "docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_metrics.csv",
   "optimized_candidate_package_path": "docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json",
-  "optimized_candidate_package_report_path": "docs/reports/private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md"
+  "optimized_candidate_package_report_path": "docs/reports/private/private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md"
 }

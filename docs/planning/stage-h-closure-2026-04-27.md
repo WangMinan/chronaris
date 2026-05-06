@@ -33,10 +33,10 @@
 主要变更：
 
 - `configs/partial-data/stage-h-seed-v1.jsonl` 已补齐真实 `bucket / time_range / measurement_family / tag_filters`
-- `src/chronaris/pipelines/partial_data_contracts.py`：partial-data entry、manifest、bundle key 与 JSONL 契约
-- `src/chronaris/pipelines/partial_data_sources.py`：Influx 分块读取与 MySQL RealBus 字段元数据过滤
-- `src/chronaris/pipelines/partial_data_builder.py`：vehicle-only 窗口构建、每字段每窗口最多 `32` 点、`vehicle_only_feature_bundle.npz` 写出
-- `src/chronaris/pipelines/partial_data.py`：兼容 re-export 入口
+- `src/chronaris/pipelines/partial_data/contracts.py`：partial-data entry、manifest、bundle key 与 JSONL 契约
+- `src/chronaris/pipelines/partial_data/sources.py`：Influx 分块读取与 MySQL RealBus 字段元数据过滤
+- `src/chronaris/pipelines/partial_data/builder.py`：vehicle-only 窗口构建、每字段每窗口最多 `32` 点、`vehicle_only_feature_bundle.npz` 写出
+- `src/chronaris/pipelines/partial_data/__init__.py`：兼容 re-export 入口
 - `src/chronaris/access/influx_cli.py`：支持多 measurement 查询与 Flux 侧 `window + limit` 下推
 - `scripts/run_stage_h_export.py`：partial-data sidecar 接入真实 Influx reader 与 MySQL metadata provider
 
@@ -53,7 +53,7 @@
 主运行：
 
 - run manifest：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
-- 主报告：`docs/reports/stage-h-closure-2026-04-27.md`
+- 主报告：`docs/reports/stage_h/stage-h-closure-2026-04-27.md`
 - 机器资产根目录：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/`
 
 双流 Stage H `validation` 结果：

@@ -13,7 +13,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i_phase3 import (
+from chronaris.pipelines.stage_i.stage_i_phase3 import (
     StageIPhase3Config,
     compose_stage_i_phase3_closure,
     render_stage_i_phase3_report,
@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--report-path",
-        default=f"docs/reports/stage-i-closure-{datetime.now().date().isoformat()}.md",
+        default=f"docs/reports/stage_i/stage-i-closure-{datetime.now().date().isoformat()}.md",
     )
     parser.add_argument(
         "--planning-path",
