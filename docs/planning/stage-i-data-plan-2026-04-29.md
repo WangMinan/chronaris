@@ -111,7 +111,7 @@
 
 主报告：
 
-- `docs/reports/stage_i/stage-i-uab-baseline-2026-04-29.md`
+- `docs/reports/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
 
 测试闭环：
 

@@ -53,9 +53,9 @@
 - 阶段 I 收口事实统一沉淀于 `docs/planning/stage-i-closure-2026-04-30.md`
 - 阶段 I 当前事实统一沉淀于 `docs/reports/stage_i/stage-i-closure-2026-04-30.md`
 - 已完成阶段 I 增强实验第一批：`stage_h_case` sequence contract、`MulT / ContiFormer` 真实 sortie smoke comparison、CLI 与 `test_stage_i_deep_pipeline.py`
-- 增强实验第一批事实沉淀于 `docs/planning/stage-i-deep-baseline-plan-2026-05-01.md` 与 `docs/reports/stage_i/stage-i-real-sortie-deep-comparison-2026-05-01.md`
+- 增强实验第一批事实沉淀于 `docs/planning/stage-i-deep-baseline-plan-2026-05-01.md` 与 `docs/reports/stage_i/archive/deep_history/stage-i-real-sortie-deep-comparison-2026-05-01.md`
 - 已完成阶段 I 增强实验第二批 probe：`UAB / NASA` sequence 导出、统一 `Stage H -> UAB -> NASA` comparison probe 与回归数值兜底
-- 增强实验第二批 probe 主报告：`docs/reports/stage_i/stage-i-deep-comparison-probe-2026-05-01.md`
+- 增强实验第二批 probe 主报告：`docs/reports/stage_i/archive/deep_history/stage-i-deep-comparison-probe-2026-05-01.md`
 - 已完成阶段 I 增强实验第二批 full LOSO：`UAB / NASA` 双模型实跑与统一 comparison summary
 - 增强实验第二批 full LOSO 主报告：`docs/reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
 - 已完成阶段 I 私有 benchmark 优化候选：`chronaris_opt` 在鼎新私有 proxy benchmark 的 T1/T2/T3 三任务上均超过 `naive_sync / E / F / no-mask / MulT / ContiFormer`，`private_optimality_supported=True`
@@ -491,7 +491,7 @@
   - `heat_the_chair` 最优 `random_forest_regressor`：`RMSE=1.4664`
   - `n_back` 最优 `random_forest_regressor`：`RMSE=4.5161`
 - 当前机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
-- 当前主报告：`docs/reports/stage_i/stage-i-uab-baseline-2026-04-29.md`
+- 当前主报告：`docs/reports/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
 - 已完成 Phase 2 真实双流 case study：
   - `3` 个真实双流 view 全部纳入主线（`PASS=2`、`WARN=1`）
   - `4` 条 bundle-only 路径：`projection_refusion_baseline / no_event_bias / no_state_normalization / vehicle_delta_suppressed`
@@ -504,12 +504,12 @@
    - `heat_the_chair` 最优 `linear_svc`：`macro-F1=0.5405`
    - `n_back` 最优 `linear_svr`：`RMSE=10.2234`
    - `heat_the_chair` 最优 `linear_svr`：`RMSE=1.8639`
-   - UAB window 主报告：`docs/reports/stage_i/stage-i-uab-window-baseline-2026-04-29.md`
+   - UAB window 主报告：`docs/reports/stage_i/archive/baselines/stage-i-uab-window-baseline-2026-04-29.md`
  - 已完成 Phase 3 NASA CSM attention-state：
    - `benchmark_only`：`macro-F1=0.4642`
    - `loft_only`：`macro-F1=0.3723`
    - `combined`：`macro-F1=0.3741`
-   - NASA 主报告：`docs/reports/stage_i/stage-i-nasa-attention-baseline-2026-04-29.md`
+   - NASA 主报告：`docs/reports/stage_i/archive/baselines/stage-i-nasa-attention-baseline-2026-04-29.md`
  - 已完成 Stage I closure 组装：
    - 收口机器资产根目录：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
    - 收口主报告：`docs/reports/stage_i/stage-i-closure-2026-04-30.md`
@@ -582,8 +582,8 @@
    - `alignment support`、`causal support`、`fixed six-path ablation matrix` 已落到 `docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`
    - 主报告为 `stage-i-alignment-support-20260506T120000Z-stage-i-support.md`、`stage-i-causal-support-20260506T120000Z-stage-i-support.md`、`stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
 6. `chronaris public opt` 历史基线与增强线已全部落盘：
-   - `UAB subjective historical baseline`：`docs/reports/stage_i/stage-i-public-opt-20260506T121000Z-stage-i-public-opt-uab.md`
-   - `NASA attention_state`：`docs/reports/stage_i/stage-i-public-opt-20260506T124500Z-stage-i-public-opt-nasa.md`
+   - `UAB subjective historical baseline`：`docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260506T121000Z-stage-i-public-opt-uab.md`
+   - `NASA attention_state`：`docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260506T124500Z-stage-i-public-opt-nasa.md`
    - `NASA enhanced round 1`：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
 7. 已完成 `UAB torch-native` GPU completion branch full LOSO：
    - 主报告：`docs/reports/stage_i/stage-i-public-opt-20260506T063146Z-stage-i-public-opt-uab-torch.md`
@@ -593,7 +593,7 @@
    - `docs/reports/stage_i/stage-i-public-mainline-20260506T064302Z-stage-i-public-mainline.md`
    - 当前公开主线事实：`NASA closed, UAB partial`
 9. 已完成 `chronaris_public_fusion` GPU 主线接入与两轮公共数据筛选：
-   - round 1：`docs/reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round1.md`
+   - round 1：`docs/reports/stage_i/archive/public_history/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round1.md`
    - round 2：`docs/reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md`
    - 当前 best candidate 为 `fusion_h64_l2_hd4_do01_bias025_lag16_norm1`
    - 现有 confirm：`NASA combined macro-F1 = 0.3348 < 0.40`，当前仍只保留为 exploratory branch

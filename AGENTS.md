@@ -84,11 +84,11 @@
   - Stage I 主线迁移计划：`docs/planning/stage-i-mainline-transition-2026-05-04.md`
   - Stage I public opt 增强计划：`docs/planning/stage-i-public-opt-win-plan-2026-05-06.md`
   - Stage I 论文证据 support：`docs/reports/stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
-  - Stage I public opt UAB historical baseline：`docs/reports/stage_i/stage-i-public-opt-20260506T121000Z-stage-i-public-opt-uab.md`
-  - Stage I public opt NASA：`docs/reports/stage_i/stage-i-public-opt-20260506T124500Z-stage-i-public-opt-nasa.md`
   - Stage I public opt NASA enhanced round 1：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
   - Stage I public opt UAB torch：`docs/reports/stage_i/stage-i-public-opt-20260506T063146Z-stage-i-public-opt-uab-torch.md`
   - Stage I public mainline：`docs/reports/stage_i/stage-i-public-mainline-20260506T064302Z-stage-i-public-mainline.md`
+  - Stage I 报告索引与历史快照：`docs/reports/stage_i/README.md`
+  - Private 报告索引与历史快照：`docs/reports/private/README.md`
   - 当前 `chronaris_opt` package：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 - 当前已验证：
   - 目标总线 measurement：`BUS6000019110020`
