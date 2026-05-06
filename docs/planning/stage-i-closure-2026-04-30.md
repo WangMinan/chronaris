@@ -59,10 +59,10 @@ UAB session vs window：
 
 阶段主报告：
 
-- `Phase 1`：`docs/reports/stage_i/stage-i-uab-baseline-2026-04-29.md`
+- `Phase 1`：`docs/reports/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
 - `Phase 2`：`docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md`
-- `Phase 3 / UAB window`：`docs/reports/stage_i/stage-i-uab-window-baseline-2026-04-29.md`
-- `Phase 3 / NASA attention`：`docs/reports/stage_i/stage-i-nasa-attention-baseline-2026-04-29.md`
+- `Phase 3 / UAB window`：`docs/reports/stage_i/archive/baselines/stage-i-uab-window-baseline-2026-04-29.md`
+- `Phase 3 / NASA attention`：`docs/reports/stage_i/archive/baselines/stage-i-nasa-attention-baseline-2026-04-29.md`
 
 图表：
 
