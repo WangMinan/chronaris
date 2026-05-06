@@ -16,7 +16,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.features import load_stage_i_case_study_run
-from chronaris.pipelines.stage_i_case_study import (
+from chronaris.pipelines.stage_i.stage_i_case_study import (
     StageICaseStudyConfig,
     render_stage_i_case_study_report,
     run_stage_i_case_study,

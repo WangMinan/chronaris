@@ -13,7 +13,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i_baseline import (
+from chronaris.pipelines.stage_i.stage_i_baseline import (
     render_stage_i_baseline_report,
     run_stage_i_baselines,
     write_baseline_artifacts,
@@ -51,7 +51,7 @@ def main() -> int:
 
     report_path = REPO_ROOT / (
         args.report_path
-        or f"docs/reports/stage-i-{args.dataset or dataset_id}-{profile}-{datetime.now().date().isoformat()}.md"
+        or f"docs/reports/stage_i/stage-i-{args.dataset or dataset_id}-{profile}-{datetime.now().date().isoformat()}.md"
     )
     report_markdown = render_stage_i_baseline_report(
         artifact_root=artifact_root,

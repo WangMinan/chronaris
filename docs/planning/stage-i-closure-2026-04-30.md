@@ -55,14 +55,14 @@ UAB session vs window：
 - run root：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
 - closure summary：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/closure_summary.json`
 - closure report：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/stage_i_phase3_closure_report.md`
-- 主报告：`docs/reports/stage-i-closure-2026-04-30.md`
+- 主报告：`docs/reports/stage_i/stage-i-closure-2026-04-30.md`
 
 阶段主报告：
 
-- `Phase 1`：`docs/reports/stage-i-uab-baseline-2026-04-29.md`
-- `Phase 2`：`docs/reports/stage-i-case-study-phase2-2026-04-29.md`
-- `Phase 3 / UAB window`：`docs/reports/stage-i-uab-window-baseline-2026-04-29.md`
-- `Phase 3 / NASA attention`：`docs/reports/stage-i-nasa-attention-baseline-2026-04-29.md`
+- `Phase 1`：`docs/reports/stage_i/stage-i-uab-baseline-2026-04-29.md`
+- `Phase 2`：`docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md`
+- `Phase 3 / UAB window`：`docs/reports/stage_i/stage-i-uab-window-baseline-2026-04-29.md`
+- `Phase 3 / NASA attention`：`docs/reports/stage_i/stage-i-nasa-attention-baseline-2026-04-29.md`
 
 图表：
 

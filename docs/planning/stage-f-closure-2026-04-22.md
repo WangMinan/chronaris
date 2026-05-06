@@ -15,7 +15,7 @@
 
 主报告：
 
-- `docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
+- `docs/reports/alignment/alignment-preview-stage-f-closure-2026-04-22.md`
 
 核心配置：
 
@@ -66,11 +66,11 @@
 
 脚本入口：
 
-- `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --input-normalization-mode zscore_train --physics-constraint-family full --compare-with-physics-baseline --report-path docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
+- `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --input-normalization-mode zscore_train --physics-constraint-family full --compare-with-physics-baseline --report-path docs/reports/alignment/alignment-preview-stage-f-closure-2026-04-22.md`
 
 关键产物：
 
-- 对比主报告：`docs/reports/alignment-preview-stage-f-closure-2026-04-22.md`
+- 对比主报告：`docs/reports/alignment/alignment-preview-stage-f-closure-2026-04-22.md`
 - baseline 细粒度资产：`docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-e-baseline/`
 - F(full) 细粒度资产：`docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/`
 - 诊断 JSON/CSV 与可视化图像：同上 assets 目录

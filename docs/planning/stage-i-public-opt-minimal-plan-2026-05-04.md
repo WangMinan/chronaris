@@ -23,9 +23,9 @@
 2. 主任务：
    - `subjective regression`
 3. 复用入口：
-   - `src/chronaris/pipelines/stage_i_sequence_preparation.py`
+   - `src/chronaris/pipelines/stage_i/stage_i_sequence_preparation.py`
    - `src/chronaris/features/stage_i_sequences.py`
-   - `src/chronaris/pipelines/stage_i_baseline_models.py`
+   - `src/chronaris/pipelines/stage_i/stage_i_baseline_models.py`
    - `src/chronaris/evaluation/stage_i_metrics.py`
 
 ### 本轮不纳入
@@ -86,7 +86,7 @@
 
 建议文件：
 
-- `src/chronaris/pipelines/stage_i_public_opt_data.py`
+- `src/chronaris/pipelines/stage_i/stage_i_public_opt_data.py`
 
 ### Phase B: 轻量任务头
 
@@ -107,7 +107,7 @@
 
 建议文件：
 
-- `src/chronaris/pipelines/stage_i_public_opt.py`
+- `src/chronaris/pipelines/stage_i/stage_i_public_opt.py`
 
 ### Phase C: CLI
 
@@ -125,8 +125,8 @@
 
 ### 代码
 
-- `src/chronaris/pipelines/stage_i_public_opt_data.py`
-- `src/chronaris/pipelines/stage_i_public_opt.py`
+- `src/chronaris/pipelines/stage_i/stage_i_public_opt_data.py`
+- `src/chronaris/pipelines/stage_i/stage_i_public_opt.py`
 
 ### 脚本
 

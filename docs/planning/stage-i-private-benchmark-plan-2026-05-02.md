@@ -23,9 +23,9 @@
 - `src/chronaris/pipelines/alignment_preview.py`
   - `intermediate_partition` 已支持 `all`
   - `intermediate_sample_limit=None` 时可导出全部样本
-- `src/chronaris/pipelines/stage_h_export.py`
+- `src/chronaris/pipelines/stage_h/export.py`
   - view 执行结果会保留 `sample_partition_by_id`
-- `src/chronaris/pipelines/stage_h_export_helpers.py`
+- `src/chronaris/pipelines/stage_h/export_helpers.py`
   - `window_manifest.jsonl` 已新增 `sample_partition`
   - `feature_bundle.npz` 已新增：
     - `sample_ids`
@@ -37,8 +37,8 @@
 ### 私有任务与 benchmark 管线
 
 - 任务 contract：`src/chronaris/dataset/stage_i_private_contracts.py`
-- 主入口：`src/chronaris/pipelines/stage_i_private_benchmark.py`
-- 优化候选与任务头：`src/chronaris/pipelines/stage_i_private_optimization.py`
+- 主入口：`src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
+- 优化候选与任务头：`src/chronaris/pipelines/stage_i/stage_i_private_optimization.py`
 - 导出报告：
   - `private-alignment-support-<run_id>.md`
   - `private-causal-fusion-support-<run_id>.md`
