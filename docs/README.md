@@ -37,13 +37,8 @@
   - [stage-h-private-e-allwindow-clean-2026-05-02.md](reports/stage_h/stage-h-private-e-allwindow-clean-2026-05-02.md)
   - [stage-h-private-f-allwindow-clean-2026-05-02.md](reports/stage_h/stage-h-private-f-allwindow-clean-2026-05-02.md)
 - 阶段 I 当前阶段主报告：
-  - `Phase 1`：[stage-i-uab-baseline-2026-04-29.md](reports/stage_i/stage-i-uab-baseline-2026-04-29.md)
   - `Phase 2`：[stage-i-case-study-phase2-2026-04-29.md](reports/stage_i/stage-i-case-study-phase2-2026-04-29.md)
-  - `Phase 3` UAB window：[stage-i-uab-window-baseline-2026-04-29.md](reports/stage_i/stage-i-uab-window-baseline-2026-04-29.md)
-  - `Phase 3` NASA attention：[stage-i-nasa-attention-baseline-2026-04-29.md](reports/stage_i/stage-i-nasa-attention-baseline-2026-04-29.md)
   - `Stage I closure`：[stage-i-closure-2026-04-30.md](reports/stage_i/stage-i-closure-2026-04-30.md)
-  - `Enhancement batch 1 real sortie`：[stage-i-real-sortie-deep-comparison-2026-05-01.md](reports/stage_i/stage-i-real-sortie-deep-comparison-2026-05-01.md)
-  - `Enhancement batch 2 public probe`：[stage-i-deep-comparison-probe-2026-05-01.md](reports/stage_i/stage-i-deep-comparison-probe-2026-05-01.md)
   - `Enhancement batch 2 full LOSO`：[stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md)
   - 论文证据 support：
     - [stage-i-alignment-support-20260506T120000Z-stage-i-support.md](reports/stage_i/stage-i-alignment-support-20260506T120000Z-stage-i-support.md)
@@ -51,18 +46,15 @@
     - [stage-i-ablation-support-20260506T120000Z-stage-i-support.md](reports/stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
     - 当前 support 资产根：`docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`
   - `chronaris public opt` 实跑：
-    - UAB subjective historical baseline：[stage-i-public-opt-20260506T121000Z-stage-i-public-opt-uab.md](reports/stage_i/stage-i-public-opt-20260506T121000Z-stage-i-public-opt-uab.md)
-    - NASA attention：[stage-i-public-opt-20260506T124500Z-stage-i-public-opt-nasa.md](reports/stage_i/stage-i-public-opt-20260506T124500Z-stage-i-public-opt-nasa.md)
     - NASA enhanced round 1：[stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md](reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md)
     - UAB torch full LOSO：[stage-i-public-opt-20260506T063146Z-stage-i-public-opt-uab-torch.md](reports/stage_i/stage-i-public-opt-20260506T063146Z-stage-i-public-opt-uab-torch.md)
     - unified public mainline：[stage-i-public-mainline-20260506T064302Z-stage-i-public-mainline.md](reports/stage_i/stage-i-public-mainline-20260506T064302Z-stage-i-public-mainline.md)
   - `chronaris_public_fusion` GPU screen：
-    - round 1：[stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round1.md](reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round1.md)
     - round 2：[stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md](reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md)
-  - `Private optimized benchmark`：[private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md)
   - `Private optimized package`：[private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md](reports/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md)
-  - `Thesis support assessment`：[thesis-support-assessment-2026-05-01.md](reports/stage_i/thesis-support-assessment-2026-05-01.md)
-    - 注意：该文档成稿时间早于 `chronaris_opt` 私有 full LOSO，不再作为“鼎新当前最优性”判断依据
+  - 历史 baseline / probe / 旧 public-opt / round1 screen 与私有旧支撑报告已统一下沉到：
+    - [stage_i/README.md](reports/stage_i/README.md)
+    - [private/README.md](reports/private/README.md)
 - 顶层 `docs/reports` 只保留主报告和必要数据盘点；E/F/G 的单配置子报告 Markdown 已清理，底层 JSON/CSV/图片/checkpoint assets 继续保留作为证据。
 
 ## 分类索引
@@ -101,35 +93,12 @@
 - [stage-e-reference-repos.md](models/stage-e-reference-repos.md)
 
 ### reports
-
-- [validation-overlap-preview-20251005-act4-j20-22.md](reports/preview/validation-overlap-preview-20251005-act4-j20-22.md)
-- [e0-preview-20251005-act4-j20-22.md](reports/preview/e0-preview-20251005-act4-j20-22.md)
-- [alignment-preview-stage-e-closure-2026-04-21.md](reports/alignment/alignment-preview-stage-e-closure-2026-04-21.md)
-- [alignment-preview-stage-f-closure-2026-04-22.md](reports/alignment/alignment-preview-stage-f-closure-2026-04-22.md)
-- [alignment-preview-stage-g-min-closure-2026-04-22.md](reports/alignment/alignment-preview-stage-g-min-closure-2026-04-22.md)
-- [sortie-availability-preview-20251002-act8-j16-12.md](reports/preview/sortie-availability-preview-20251002-act8-j16-12.md)
-- [stage-h-export-v1-2026-04-26.md](reports/stage_h/stage-h-export-v1-2026-04-26.md)
-- [stage-h-closure-2026-04-27.md](reports/stage_h/stage-h-closure-2026-04-27.md)
-- [stage-i-uab-baseline-2026-04-29.md](reports/stage_i/stage-i-uab-baseline-2026-04-29.md)
-- [stage-i-case-study-phase2-2026-04-29.md](reports/stage_i/stage-i-case-study-phase2-2026-04-29.md)
-- [stage-i-uab-window-baseline-2026-04-29.md](reports/stage_i/stage-i-uab-window-baseline-2026-04-29.md)
-- [stage-i-nasa-attention-baseline-2026-04-29.md](reports/stage_i/stage-i-nasa-attention-baseline-2026-04-29.md)
-- [stage-i-closure-2026-04-30.md](reports/stage_i/stage-i-closure-2026-04-30.md)
-- [stage-i-real-sortie-deep-comparison-2026-05-01.md](reports/stage_i/stage-i-real-sortie-deep-comparison-2026-05-01.md)
-- [stage-i-deep-comparison-probe-2026-05-01.md](reports/stage_i/stage-i-deep-comparison-probe-2026-05-01.md)
-- [stage-i-deep-comparison-full-loso-2026-05-01.md](reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md)
-- [thesis-support-assessment-2026-05-01.md](reports/stage_i/thesis-support-assessment-2026-05-01.md)
-- 私有双流 benchmark 实跑报告：
-  - `chronaris_opt` full LOSO run：
-    - [private-alignment-support-20260502T121815Z-stage-i-private-opt-full.md](reports/private/private-alignment-support-20260502T121815Z-stage-i-private-opt-full.md)
-    - [private-causal-fusion-support-20260502T121815Z-stage-i-private-opt-full.md](reports/private/private-causal-fusion-support-20260502T121815Z-stage-i-private-opt-full.md)
-    - [private-optimality-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private/private-optimality-summary-20260502T121815Z-stage-i-private-opt-full.md)
-    - [private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md](reports/private/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md)
-    - 结论是鼎新私有 proxy benchmark 三任务全面最优：`private_optimality_supported=True`
-  - `chronaris_opt` package 固化报告：
-    - [private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md](reports/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md)
-    - [private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md](reports/private/private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md)
-    - 当前 package 路径：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+- [reports/README.md](reports/README.md)
+- [reports/alignment/](reports/alignment)
+- [reports/preview/](reports/preview)
+- [reports/stage_h/](reports/stage_h)
+- [reports/stage_i/](reports/stage_i)
+- [reports/private/](reports/private)
 
 ### 选题报告与基金申请书
 
