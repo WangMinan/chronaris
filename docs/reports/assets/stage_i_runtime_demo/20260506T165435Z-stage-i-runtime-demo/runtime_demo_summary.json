@@ -1,0 +1,60 @@
+{
+  "generated_at_utc": "2026-05-07T02:39:29.890909Z",
+  "run_id": "20260506T165435Z-stage-i-runtime-demo",
+  "source_type": "optimized_candidate_package",
+  "source_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo",
+  "optimized_package": {
+    "package_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json",
+    "source_run_id": "20260504T120000Z-stage-i-private-opt-package",
+    "target_variant_name": "chronaris_opt",
+    "dependency_contracts": {
+      "requires_stage_h_all_window_contract": true,
+      "requires_f_full_reference_hidden": true,
+      "requires_stage_g_causal_fusion": true,
+      "use_causal_mask": true,
+      "fusion_output_mode": "pooled_with_residual",
+      "lag_window_points": 3,
+      "residual_mode": "raw_window_stats"
+    },
+    "record_sample_count": 111,
+    "record_view_count": 3,
+    "selected_vehicle_field_count": 1930,
+    "selected_physiology_field_count": 12,
+    "diagnostics": {
+      "mean_attention_entropy": 0.934591421135911,
+      "mean_top_event_concentration": 0.3974255199904914,
+      "mean_event_mask_interference": 0.0021227399508158364,
+      "mean_causal_residual_gate": 1.0,
+      "lag_window_points": 3,
+      "residual_mode": "raw_window_stats",
+      "use_causal_mask": true
+    },
+    "tasks": [
+      {
+        "task_id": "T1_maneuver_intensity_class",
+        "task_type": "classification",
+        "head_family": "class_balanced_threshold",
+        "recommended_head": "class_balanced_threshold",
+        "prediction_contract_available": true,
+        "metric_snapshot": "macro_f1=1.000000, balanced_accuracy=1.000000"
+      },
+      {
+        "task_id": "T2_next_window_physiology_response",
+        "task_type": "regression",
+        "head_family": "n/a",
+        "recommended_head": "physiology_persistence",
+        "prediction_contract_available": true,
+        "metric_snapshot": "rmse=201.489565, mae=113.851926"
+      },
+      {
+        "task_id": "T3_paired_pilot_window_retrieval",
+        "task_type": "retrieval",
+        "head_family": "chronaris_time_residual_retrieval",
+        "recommended_head": "chronaris_time_residual_retrieval",
+        "prediction_contract_available": true,
+        "metric_snapshot": "top1_accuracy=1.000000, mrr=1.000000"
+      }
+    ]
+  }
+}

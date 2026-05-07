@@ -89,6 +89,7 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
         f"- dataset_id：`{summary['dataset_id']}`",
         f"- profile：`{summary['profile']}`",
         f"- runtime_device：`{summary['runtime_device']}`",
+        f"- requested_device：`{summary['screen_config']['device']}`",
         f"- prepared asset root：`{summary['prepared_artifact_root']}`",
         f"- output artifact root：`{summary['artifact_root']}`",
         f"- generated_at_utc：`{summary['generated_at_utc']}`",
@@ -102,6 +103,7 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
         f"- learning_rate：`{winning['learning_rate']}`",
         f"- weight_decay：`{winning['weight_decay']}`",
         f"- full_run_completed：`{summary['full_run_completed']}`",
+        f"- ensemble_policy：`{summary['screen_config']['ensemble_policy']}`",
         "",
         "## Screen Leaderboard",
         "",
@@ -128,11 +130,20 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
     )
     for subset_id in ("n_back", "heat_the_chair"):
         metrics = final_result["groups"][subset_id]
+        group_selection = final_result.get("group_selections", {}).get(subset_id, {})
         lines.append(
             f"| {subset_id} | {fmt_public_opt_float(metrics['rmse'])} | "
             f"{fmt_public_opt_float(metrics['mae'])} | {fmt_public_opt_float(metrics['r2'])} | "
             f"{fmt_public_opt_float(metrics['spearman'])} |"
         )
+        lines.append(
+            f"- {subset_id} selected source：`{group_selection.get('selected_source_type', 'candidate')}` / "
+            f"`{group_selection.get('selected_source_id', '')}`"
+        )
+        if group_selection.get("selected_members"):
+            lines.append(
+                f"- {subset_id} ensemble members：`{group_selection['selected_members']}`"
+            )
 
     acceptance = summary["acceptance"]
     lines.extend(

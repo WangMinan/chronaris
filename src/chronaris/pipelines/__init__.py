@@ -324,6 +324,18 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.stage_i.stage_i_support",
         "run_stage_i_support",
     ),
+    "StageIAnchorConfig": (
+        "chronaris.pipelines.stage_i.stage_i_anchor",
+        "StageIAnchorConfig",
+    ),
+    "StageIAnchorRunResult": (
+        "chronaris.pipelines.stage_i.stage_i_anchor",
+        "StageIAnchorRunResult",
+    ),
+    "run_stage_i_anchor": (
+        "chronaris.pipelines.stage_i.stage_i_anchor",
+        "run_stage_i_anchor",
+    ),
 }
 
 __all__ = sorted(_EXPORTS)

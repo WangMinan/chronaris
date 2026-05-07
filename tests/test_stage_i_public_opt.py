@@ -6,9 +6,11 @@ import importlib.util
 import json
 import sys
 import tempfile
+import warnings
 from dataclasses import replace
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -24,10 +26,13 @@ from chronaris.dataset import (  # noqa: E402
     load_stage_i_sequence_entries,
     save_stage_i_sequence_bundle,
 )
+from chronaris.evaluation import save_bar_plot, save_grouped_bar_plot  # noqa: E402
 from chronaris.pipelines import (  # noqa: E402
+    StageIPublicMainlineReportConfig,
     StageIPublicOptConfig,
     StageIPublicOptTorchUABConfig,
     StageISequencePreparationConfig,
+    run_stage_i_public_mainline_report,
     run_stage_i_public_opt,
     run_stage_i_public_opt_torch_uab,
     run_stage_i_sequence_preparation,
@@ -35,6 +40,7 @@ from chronaris.pipelines import (  # noqa: E402
 from chronaris.pipelines.stage_i.stage_i_public_opt_data import (  # noqa: E402
     build_stage_i_public_opt_feature_frame,
 )
+from chronaris.pipelines.stage_i import stage_i_public_opt_torch as stage_i_public_opt_torch_module  # noqa: E402
 
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "stage_i_pipeline_helpers",
@@ -333,6 +339,133 @@ class StageIPublicOptTest(unittest.TestCase):
                 summary["subset_results"]["combined"]["heads"],
             )
 
+    def test_stage_i_metric_plots_fallback_to_ascii_safe_labels(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            with warnings.catch_warnings(record=True) as caught:
+                warnings.simplefilter("always")
+                save_bar_plot(
+                    {"20251005_四01_ACT-4_云_J20_22#01": 1.0},
+                    path=root / "bar.png",
+                    title="中文标题",
+                    ylabel="指标值",
+                )
+                save_grouped_bar_plot(
+                    {
+                        "20251005_四01_ACT-4_云_J20_22#01": {"宏平均": 1.0},
+                        "20251002_单01_ACT-8_翼云_J16_12#01": {"宏平均": 0.8},
+                    },
+                    path=root / "grouped.png",
+                    title="中文分组标题",
+                    ylabel="指标值",
+                )
+            self.assertTrue((root / "bar.png").exists())
+            self.assertTrue((root / "grouped.png").exists())
+            self.assertFalse(
+                any("Glyph" in str(item.message) for item in caught),
+                msg=[str(item.message) for item in caught],
+            )
+
+    def test_public_mainline_prefers_best_uab_source_and_tie_breaks_by_mae(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            _, deep_summary_path = _write_reference_summaries(root)
+            nasa_summary_path = _write_reference_nasa_public_opt_summary(root)
+            torch_summary_path = _write_reference_torch_uab_summary(
+                root / "torch_uab_summary.json",
+                n_back_rmse=5.0,
+                n_back_mae=4.0,
+                heat_rmse=1.7,
+                heat_mae=1.3,
+            )
+            legacy_summary_path = _write_reference_legacy_uab_summary(
+                root / "legacy_uab_summary.json",
+                n_back_rmse=4.59,
+                n_back_mae=3.79,
+                heat_rmse=1.45,
+                heat_mae=1.15,
+            )
+            tie_summary_path = _write_reference_legacy_uab_summary(
+                root / "tie_uab_summary.json",
+                n_back_rmse=4.6000005,
+                n_back_mae=3.7000,
+                heat_rmse=1.4500005,
+                heat_mae=1.1500,
+            )
+
+            result = run_stage_i_public_mainline_report(
+                StageIPublicMainlineReportConfig(
+                    run_id="public-mainline-best-of-test",
+                    uab_summary_path=str(torch_summary_path),
+                    extra_uab_summary_paths=(
+                        str(legacy_summary_path),
+                        str(tie_summary_path),
+                    ),
+                    nasa_summary_path=str(nasa_summary_path),
+                    deep_comparison_summary_path=str(deep_summary_path),
+                    artifact_root=str(root / "artifacts"),
+                    report_root=str(root / "reports"),
+                )
+            )
+
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["public_mainline_status"], "public opt closed")
+            self.assertEqual(summary["uab"]["source_type"], "multi_source_best_of")
+            self.assertEqual(
+                summary["uab"]["groups"]["n_back"]["best_public_source_type"],
+                "legacy_public_opt",
+            )
+            self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["clean_win"])
+            self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["tie_break_used"])
+            self.assertIn("current torch-native branch", Path(result.report_path).read_text(encoding="utf-8"))
+
+    def test_public_opt_torch_uab_auto_device_falls_back_to_cpu(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            prepared_root = _build_prepared_uab_root(Path(temp_dir))
+            reference_public_opt = Path(temp_dir) / "reference_public_opt_summary.json"
+            reference_deep = Path(temp_dir) / "reference_deep_summary.json"
+            _write_reference_public_opt_summary(reference_public_opt)
+            _, deep_summary_path = _write_reference_summaries(Path(temp_dir))
+            reference_deep.write_text(
+                Path(deep_summary_path).read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+
+            with patch.object(
+                stage_i_public_opt_torch_module,
+                "resolve_torch_device_name",
+                return_value="cpu",
+            ):
+                result = run_stage_i_public_opt_torch_uab(
+                    StageIPublicOptTorchUABConfig(
+                        run_id="public-opt-uab-torch-auto-cpu",
+                        prepared_artifact_root=str(prepared_root),
+                        artifact_root=str(Path(temp_dir) / "artifacts"),
+                        report_root=str(Path(temp_dir) / "reports"),
+                        device="auto",
+                        screen_max_folds=1,
+                        full_max_folds=1,
+                        batch_size=32,
+                        epochs=1,
+                        patience=1,
+                        full_candidate_limit=2,
+                        ensemble_policy="mean_top2",
+                        reference_public_opt_summary_path=str(reference_public_opt),
+                        reference_deep_comparison_summary_path=str(reference_deep),
+                    )
+                )
+
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["runtime_device"], "cpu")
+            self.assertEqual(summary["screen_config"]["device"], "auto")
+            self.assertEqual(summary["screen_config"]["ensemble_policy"], "mean_top2")
+            self.assertEqual(
+                summary["final_result"]["selection_policy"]["ensemble_policy"],
+                "mean_top2",
+            )
+            predictions = pd.read_csv(result.predictions_path)
+            self.assertTrue(np.isfinite(predictions["y_pred"].to_numpy(dtype=float)).all())
+
     @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
     def test_public_opt_torch_uab_runs_on_cuda_with_finite_predictions(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -358,6 +491,8 @@ class StageIPublicOptTest(unittest.TestCase):
                     batch_size=32,
                     epochs=2,
                     patience=1,
+                    full_candidate_limit=2,
+                    ensemble_policy="mean_top2",
                     reference_public_opt_summary_path=str(reference_public_opt),
                     reference_deep_comparison_summary_path=str(reference_deep),
                 )
@@ -597,3 +732,151 @@ def _write_reference_public_opt_summary(path: Path) -> None:
         + "\n",
         encoding="utf-8",
     )
+
+
+def _write_reference_legacy_uab_summary(
+    path: Path,
+    *,
+    n_back_rmse: float,
+    n_back_mae: float,
+    heat_rmse: float,
+    heat_mae: float,
+) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "subset_results": {
+                    "n_back": {
+                        "best_head": "ridge_residual",
+                        "heads": {
+                            "ridge_residual": {
+                                "rmse": n_back_rmse,
+                                "mae": n_back_mae,
+                            }
+                        },
+                    },
+                    "heat_the_chair": {
+                        "best_head": "physiology_persistence",
+                        "heads": {
+                            "physiology_persistence": {
+                                "rmse": heat_rmse,
+                                "mae": heat_mae,
+                            }
+                        },
+                    },
+                }
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def _write_reference_torch_uab_summary(
+    path: Path,
+    *,
+    n_back_rmse: float,
+    n_back_mae: float,
+    heat_rmse: float,
+    heat_mae: float,
+) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "final_result": {
+                    "groups": {
+                        "n_back": {
+                            "rmse": n_back_rmse,
+                            "mae": n_back_mae,
+                            "r2": 0.0,
+                            "spearman": 0.0,
+                        },
+                        "heat_the_chair": {
+                            "rmse": heat_rmse,
+                            "mae": heat_mae,
+                            "r2": 0.0,
+                            "spearman": 0.0,
+                        },
+                    }
+                },
+                "acceptance": {
+                    "groups": {
+                        "n_back": {
+                            "threshold_rmse": 4.6,
+                            "observed_rmse": n_back_rmse,
+                            "passed": n_back_rmse < 4.6,
+                        },
+                        "heat_the_chair": {
+                            "threshold_rmse": 1.45,
+                            "observed_rmse": heat_rmse,
+                            "passed": heat_rmse < 1.45,
+                        },
+                    }
+                },
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def _write_reference_nasa_public_opt_summary(path_root: Path) -> Path:
+    path = path_root / "nasa_public_opt_summary.json"
+    path.write_text(
+        json.dumps(
+            {
+                "subset_results": {
+                    "benchmark_only": {
+                        "best_head": "balanced_linear_svc_context",
+                        "heads": {
+                            "balanced_linear_svc_context": {
+                                "macro_f1": 0.74,
+                                "balanced_accuracy": 0.75,
+                            }
+                        },
+                    },
+                    "loft_only": {
+                        "best_head": "balanced_linear_svc_context",
+                        "heads": {
+                            "balanced_linear_svc_context": {
+                                "macro_f1": 0.36,
+                                "balanced_accuracy": 0.40,
+                            }
+                        },
+                    },
+                    "combined": {
+                        "best_head": "balanced_logistic_context",
+                        "heads": {
+                            "balanced_logistic_context": {
+                                "macro_f1": 0.46,
+                                "balanced_accuracy": 0.56,
+                            }
+                        },
+                    },
+                },
+                "winning_margin_vs_deep": {
+                    "combined": {
+                        "best_public_head": "balanced_logistic_context",
+                        "best_public_value": 0.46,
+                        "best_deep_model": "mult",
+                        "best_deep_value": 0.30,
+                        "margin_vs_best_deep": 0.16,
+                        "gate_passed": True,
+                        "rerun_threshold": 0.005,
+                        "needs_deep_rerun": False,
+                    }
+                },
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path

@@ -177,7 +177,8 @@
     - `UAB subjective` 旧 CPU line 继续保留为 historical baseline，不再继续扩大搜索
 
 - `run_stage_i_public_opt_torch_uab.py`
-  - 消费同一套公开 `sequence contract` 与 `public opt` 特征帧，运行 GPU-first `UAB subjective` torch-native completion branch
+  - 消费同一套公开 `sequence contract` 与 `public opt` 特征帧，运行 GPU-preferred `UAB subjective` torch-native mainline
+  - CLI 会输出 `INFO` 级进度日志：设备解析、candidate 粗筛、full LOSO、final selection 与落盘路径
   - 固定候选族：
     - `mlp_huber_small`
     - `mlp_huber_wide`
@@ -188,8 +189,14 @@
     - `epochs=20`
     - `patience=4`
     - `batch_size=256`
-    - `device=cuda`
-  - 默认先做 `max_folds=2` 粗筛，再对 winner 执行 full LOSO
+    - 默认 `device=auto`，优先 `cuda`，无 CUDA 时回落到 `cpu`
+  - 默认先做 `max_folds=2` 粗筛，再对 top candidates 执行 full LOSO
+  - 当前可调：
+    - `feature_profile=full|residual_only`
+    - `learning_rate`
+    - `weight_decay`
+    - `ensemble_policy=none|mean_top2`
+    - `full_candidate_limit`
   - 自动输出：
     - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
     - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/candidate_leaderboard.csv`
@@ -206,12 +213,13 @@
     - `train_sampling_policy=none|balanced_class`
 
 - `run_stage_i_public_fusion_screen.py`
-  - 以 `chronaris_public_fusion` 为目标模型，按固定候选集执行 GPU-first 公共数据筛选
+  - 以 `chronaris_public_fusion` 为目标模型，按固定候选集执行 GPU-preferred 公共数据筛选
+  - CLI 会输出 `INFO` 级进度日志：dataset/candidate 进度、得分与最终落盘路径
   - 当前固定：
     - 候选集定义在 `src/chronaris/pipelines/stage_i/stage_i_public_fusion_screen.py`
     - `NASA` 以 `combined macro-F1` 排序
     - `UAB` 以 `mean RMSE` 排序
-    - 默认 `device=cuda`
+    - 默认 `device=auto`，优先 `cuda`，无 CUDA 时回落到 `cpu`
     - follow-up 可显式加 `--train-sampling-policy balanced_class --epochs 10`
   - 自动输出：
     - `fusion_screen_summary.json`
@@ -235,6 +243,26 @@
     - `docs/reports/stage_i/stage-i-alignment-support-<run_id>.md`
     - `docs/reports/stage_i/stage-i-causal-support-<run_id>.md`
     - `docs/reports/stage_i/stage-i-ablation-support-<run_id>.md`
+
+- `run_stage_i_runtime_demo.py`
+  - 运行 thesis-facing 最小 runtime/demo 入口
+  - CLI 会输出 `INFO` 级进度日志：source type 判定、summary/report 落盘路径
+  - 当前支持两类输入：
+    - `Stage H run manifest`
+    - `optimized_candidate_package.json`
+  - 自动输出：
+    - `runtime_demo_summary.json`
+    - 可选 `runtime_demo_windows.csv`
+    - `docs/reports/stage_i/stage-i-runtime-demo-<run_id>.md`
+
+- `run_stage_i_anchor.py`
+  - 基于 frozen `Stage H` 真实双流资产导出关键工况锚点
+  - 当前复用 `Phase 2 case study` 的固定消融家族与 paired-pilot 对照
+  - CLI 会输出 `INFO` 级进度日志：view/anchor 选取概况与最终落盘路径
+  - 自动输出：
+    - `anchor_manifest.json`
+    - `anchor_windows.csv`
+    - `docs/reports/stage_i/stage-i-anchor-<run_id>.md`
 
 - `run_stage_i_case_study.py`
   - 消费 `docs/reports/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study

@@ -9,6 +9,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC = REPO_ROOT / "src"
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
@@ -55,6 +57,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-folds", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
+    parser.add_argument(
+        "--train-sampling-policy",
+        choices=("none", "balanced_class"),
+        default="none",
+    )
     return parser.parse_args()
 
 
@@ -86,6 +93,7 @@ def main() -> int:
             max_folds=args.max_folds,
             seed=args.seed,
             device=args.device,
+            train_sampling_policy=args.train_sampling_policy,
         ),
     )
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))

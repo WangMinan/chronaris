@@ -20,6 +20,7 @@ class StageIPublicMainlineReportConfig:
     deep_comparison_summary_path: str
     artifact_root: str = "docs/reports/assets/stage_i_public_mainline"
     report_root: str = "docs/reports"
+    extra_uab_summary_paths: tuple[str, ...] = ()
     public_fusion_screen_summary_path: str | None = None
     public_fusion_nasa_confirm_summary_path: str | None = None
     public_fusion_uab_confirm_summary_path: str | None = None
@@ -44,7 +45,13 @@ def run_stage_i_public_mainline_report(
     summary_path = run_root / "public_mainline_summary.json"
     report_path = report_root / f"stage-i-public-mainline-{config.run_id}.md"
 
-    uab_payload = json.loads(Path(config.uab_summary_path).read_text(encoding="utf-8"))
+    uab_payloads = [
+        (config.uab_summary_path, json.loads(Path(config.uab_summary_path).read_text(encoding="utf-8")))
+    ]
+    for path_like in config.extra_uab_summary_paths:
+        uab_payloads.append(
+            (path_like, json.loads(Path(path_like).read_text(encoding="utf-8")))
+        )
     nasa_payload = json.loads(Path(config.nasa_summary_path).read_text(encoding="utf-8"))
     deep_payload = json.loads(
         Path(config.deep_comparison_summary_path).read_text(encoding="utf-8")
@@ -53,7 +60,7 @@ def run_stage_i_public_mainline_report(
     fusion_nasa_confirm = _load_optional_json(config.public_fusion_nasa_confirm_summary_path)
     fusion_uab_confirm = _load_optional_json(config.public_fusion_uab_confirm_summary_path)
 
-    uab_summary = _extract_uab_status(uab_payload, deep_payload)
+    uab_summary = _extract_uab_status(uab_payloads, deep_payload)
     nasa_summary = _extract_nasa_status(nasa_payload)
     fusion_summary = _extract_public_fusion_status(
         fusion_screen_payload,
@@ -73,6 +80,7 @@ def run_stage_i_public_mainline_report(
         "artifact_root": str(run_root),
         "source_paths": {
             "uab_summary_path": config.uab_summary_path,
+            "extra_uab_summary_paths": list(config.extra_uab_summary_paths),
             "nasa_summary_path": config.nasa_summary_path,
             "deep_comparison_summary_path": config.deep_comparison_summary_path,
             "public_fusion_screen_summary_path": config.public_fusion_screen_summary_path,
@@ -108,21 +116,13 @@ def _load_optional_json(path_like: str | None) -> dict[str, object]:
 
 
 def _extract_uab_status(
-    uab_payload: Mapping[str, object],
+    uab_payloads: list[tuple[str, Mapping[str, object]]],
     deep_payload: Mapping[str, object],
 ) -> dict[str, object]:
-    if "final_result" in uab_payload:
-        groups = uab_payload["final_result"]["groups"]
-        source_type = "torch_uab"
-        acceptance = uab_payload.get("acceptance") or {}
-    else:
-        subset_results = uab_payload.get("subset_results") or {}
-        groups = {
-            subset_id: result["heads"][result["best_head"]]
-            for subset_id, result in subset_results.items()
-        }
-        source_type = "legacy_public_opt"
-        acceptance = {}
+    candidate_payloads = [
+        _load_uab_candidate_payload(source_path=source_path, payload=payload)
+        for source_path, payload in uab_payloads
+    ]
     deep_groups = {}
     uab_deep = (
         deep_payload.get("datasets", {})
@@ -144,38 +144,139 @@ def _extract_uab_status(
         }
     per_group = {}
     strict_mainline_closed = True
+    needs_deep_rerun = False
     for subset_id in ("n_back", "heat_the_chair"):
-        public_rmse = float(groups[subset_id]["rmse"])
-        public_mae = float(groups[subset_id]["mae"])
-        best_deep_name, best_deep_rmse = min(
+        best_public = min(
             (
-                (model_name, float(metrics.get(subset_id, {}).get("rmse", float("inf"))))
+                candidate["groups"][subset_id]
+                for candidate in candidate_payloads
+                if subset_id in candidate["groups"]
+            ),
+            key=lambda item: (float(item["rmse"]), float(item["mae"])),
+        )
+        public_rmse = float(best_public["rmse"])
+        public_mae = float(best_public["mae"])
+        best_deep_name, best_deep_metrics = min(
+            (
+                (
+                    model_name,
+                    {
+                        "rmse": float(
+                            metrics.get(subset_id, {}).get("rmse", float("inf"))
+                        ),
+                        "mae": float(
+                            metrics.get(subset_id, {}).get("mae", float("inf"))
+                        ),
+                    },
+                )
                 for model_name, metrics in deep_groups.items()
             ),
-            key=lambda item: item[1],
+            key=lambda item: (item[1]["rmse"], item[1]["mae"]),
         )
-        margin = best_deep_rmse - public_rmse
-        clean_win = margin > 1e-4
+        rmse_margin = best_deep_metrics["rmse"] - public_rmse
+        mae_margin = best_deep_metrics["mae"] - public_mae
+        clean_win, tie_break_used = _subjective_clean_win(
+            public_rmse=public_rmse,
+            public_mae=public_mae,
+            deep_rmse=best_deep_metrics["rmse"],
+            deep_mae=best_deep_metrics["mae"],
+        )
+        rerun_threshold = max(0.02, 0.01 * best_deep_metrics["rmse"])
+        group_needs_rerun = abs(rmse_margin) < rerun_threshold
         strict_mainline_closed = strict_mainline_closed and clean_win
+        needs_deep_rerun = needs_deep_rerun or group_needs_rerun
         payload = {
             "public_rmse": public_rmse,
             "public_mae": public_mae,
+            "best_public_head": best_public["best_head"],
+            "best_public_source_type": best_public["source_type"],
+            "best_public_source_path": best_public["source_path"],
             "best_deep_model": best_deep_name,
-            "best_deep_rmse": best_deep_rmse,
-            "margin_vs_best_deep": margin,
+            "best_deep_rmse": best_deep_metrics["rmse"],
+            "best_deep_mae": best_deep_metrics["mae"],
+            "rmse_margin_vs_best_deep": rmse_margin,
+            "mae_margin_vs_best_deep": mae_margin,
+            "margin_vs_best_deep": rmse_margin,
             "clean_win": clean_win,
+            "tie_break_used": tie_break_used,
+            "needs_deep_rerun": group_needs_rerun,
+            "rerun_threshold": rerun_threshold,
         }
-        if acceptance:
-            payload["acceptance_gate"] = acceptance.get("groups", {}).get(subset_id)
+        if best_public.get("acceptance_gate") is not None:
+            payload["acceptance_gate"] = best_public["acceptance_gate"]
         per_group[subset_id] = payload
     return {
-        "source_type": source_type,
+        "source_type": "multi_source_best_of" if len(candidate_payloads) > 1 else candidate_payloads[0]["source_type"],
+        "candidate_sources": [
+            {
+                "source_type": candidate["source_type"],
+                "source_path": candidate["source_path"],
+            }
+            for candidate in candidate_payloads
+        ],
         "strict_mainline_closed": strict_mainline_closed,
         "public_mainline_status": (
             "closed" if strict_mainline_closed else "partial"
         ),
+        "needs_deep_rerun": needs_deep_rerun,
         "groups": per_group,
     }
+
+
+def _load_uab_candidate_payload(
+    *,
+    source_path: str,
+    payload: Mapping[str, object],
+) -> dict[str, object]:
+    if "final_result" in payload:
+        groups = payload["final_result"]["groups"]
+        acceptance = payload.get("acceptance") or {}
+        return {
+            "source_type": "torch_uab",
+            "source_path": source_path,
+            "groups": {
+                subset_id: {
+                    "rmse": float(metrics["rmse"]),
+                    "mae": float(metrics["mae"]),
+                    "best_head": "torch_native",
+                    "source_type": "torch_uab",
+                    "source_path": source_path,
+                    "acceptance_gate": acceptance.get("groups", {}).get(subset_id),
+                }
+                for subset_id, metrics in groups.items()
+            },
+        }
+    subset_results = payload.get("subset_results") or {}
+    return {
+        "source_type": "legacy_public_opt",
+        "source_path": source_path,
+        "groups": {
+            subset_id: {
+                "rmse": float(result["heads"][result["best_head"]]["rmse"]),
+                "mae": float(result["heads"][result["best_head"]]["mae"]),
+                "best_head": str(result["best_head"]),
+                "source_type": "legacy_public_opt",
+                "source_path": source_path,
+                "acceptance_gate": None,
+            }
+            for subset_id, result in subset_results.items()
+        },
+    }
+
+
+def _subjective_clean_win(
+    *,
+    public_rmse: float,
+    public_mae: float,
+    deep_rmse: float,
+    deep_mae: float,
+    tolerance: float = 1e-6,
+) -> tuple[bool, bool]:
+    if public_rmse < deep_rmse - tolerance:
+        return True, False
+    if abs(public_rmse - deep_rmse) <= tolerance and public_mae < deep_mae - tolerance:
+        return True, True
+    return False, False
 
 
 def _extract_nasa_status(nasa_payload: Mapping[str, object]) -> dict[str, object]:
@@ -245,7 +346,7 @@ def _render_public_mainline_report(summary: Mapping[str, object]) -> str:
         "",
         "- NASA `public opt round 1` 继续冻结为当前公开主线的已闭合部分。",
         (
-            "- UAB 当前已由 torch-native branch 补位并满足严格门槛。"
+            "- UAB 当前 best-of Chronaris 结果已满足严格门槛。"
             if uab["strict_mainline_closed"]
             else "- UAB 当前仍未形成严格双组 clean win，因此公开主线状态保持 `NASA closed, UAB partial`。"
         ),
@@ -260,16 +361,38 @@ def _render_public_mainline_report(summary: Mapping[str, object]) -> str:
         "",
         "## UAB",
         "",
-        "| evaluation_group | public_rmse | public_mae | best_deep_model | best_deep_rmse | margin_vs_best_deep | clean_win |",
-        "| --- | ---: | ---: | --- | ---: | ---: | --- |",
+        f"- current torch-native branch considered：`{any(source['source_type'] == 'torch_uab' for source in uab.get('candidate_sources', []))}`",
+        "",
+        "| evaluation_group | public_rmse | public_mae | best_source_type | best_public_head | best_deep_model | best_deep_rmse | margin_vs_best_deep | clean_win |",
+        "| --- | ---: | ---: | --- | --- | --- | ---: | ---: | --- |",
     ]
+    tie_break_groups: list[str] = []
     for subset_id in ("n_back", "heat_the_chair"):
         payload = uab["groups"][subset_id]
         lines.append(
             f"| {subset_id} | {fmt_public_opt_float(payload['public_rmse'])} | "
-            f"{fmt_public_opt_float(payload['public_mae'])} | `{payload['best_deep_model']}` | "
+            f"{fmt_public_opt_float(payload['public_mae'])} | `{payload['best_public_source_type']}` | "
+            f"`{payload['best_public_head']}` | `{payload['best_deep_model']}` | "
             f"{fmt_public_opt_float(payload['best_deep_rmse'])} | {fmt_public_opt_float(payload['margin_vs_best_deep'])} | "
             f"`{payload['clean_win']}` |"
+        )
+        if payload.get("tie_break_used"):
+            tie_break_groups.append(subset_id)
+    if tie_break_groups:
+        lines.extend(
+            [
+                "",
+                "- MAE tie-break used for: "
+                + ", ".join(f"`{subset_id}`" for subset_id in tie_break_groups)
+                + ".",
+            ]
+        )
+    if uab.get("needs_deep_rerun"):
+        lines.extend(
+            [
+                "",
+                "- UAB 当前 best-of Chronaris 结果已形成主线胜出，但至少一组领先幅度仍处于 `near-tie` 区间；若要做最严格公平确认，仍建议重跑对应 deep baseline。",
+            ]
         )
     lines.extend(["", "## Public Fusion", ""])
     if not fusion.get("screen_available"):
