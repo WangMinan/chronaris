@@ -16,11 +16,13 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.features import load_stage_i_case_study_run
+from chronaris.pipelines import StageIAnchorConfig, run_stage_i_anchor
 from chronaris.pipelines.stage_i.stage_i_case_study import (
     StageICaseStudyConfig,
     render_stage_i_case_study_report,
     run_stage_i_case_study,
 )
+from chronaris.serving import StageIRuntimeDemoConfig, run_stage_i_runtime_demo
 
 
 class StageICaseStudyPipelineTest(unittest.TestCase):
@@ -86,6 +88,129 @@ class StageICaseStudyPipelineTest(unittest.TestCase):
                 )
             )
             self.assertEqual(len(result.view_results), 2)
+
+
+class StageIRuntimeDemoTest(unittest.TestCase):
+    def test_runtime_demo_summarizes_stage_h_case_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            run_manifest_path = _write_fake_stage_h_case_run(root)
+
+            result = run_stage_i_runtime_demo(
+                StageIRuntimeDemoConfig(
+                    run_id="runtime-demo-stage-h",
+                    source_path=str(run_manifest_path),
+                    artifact_root=str(root / "artifacts" / "runtime_demo"),
+                    report_root=str(root / "reports"),
+                )
+            )
+
+            self.assertEqual(result.source_type, "stage_h_run_manifest")
+            self.assertTrue(Path(result.summary_path).exists())
+            self.assertTrue(Path(result.report_path).exists())
+            self.assertTrue(Path(result.window_csv_path).exists())
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["stage_h"]["view_count"], 2)
+            self.assertEqual(summary["stage_h"]["case_window_count"], 4)
+            self.assertEqual(summary["stage_h"]["view_verdict_counts"]["WARN"], 1)
+
+            window_rows = json.loads(
+                Path(result.summary_path).read_text(encoding="utf-8")
+            )["stage_h"]["views"]
+            self.assertEqual(len(window_rows), 2)
+            report = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("Stage H Runtime Overview", report)
+            self.assertIn("View Summary", report)
+
+    def test_runtime_demo_summarizes_optimized_package(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            package_path = _write_fake_optimized_package(root)
+
+            result = run_stage_i_runtime_demo(
+                StageIRuntimeDemoConfig(
+                    run_id="runtime-demo-package",
+                    source_path=str(package_path),
+                    artifact_root=str(root / "artifacts" / "runtime_demo"),
+                    report_root=str(root / "reports"),
+                )
+            )
+
+            self.assertEqual(result.source_type, "optimized_candidate_package")
+            self.assertTrue(Path(result.summary_path).exists())
+            self.assertTrue(Path(result.report_path).exists())
+            self.assertIsNone(result.window_csv_path)
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(
+                summary["optimized_package"]["target_variant_name"],
+                "chronaris_opt",
+            )
+            self.assertEqual(len(summary["optimized_package"]["tasks"]), 3)
+            self.assertTrue(
+                summary["optimized_package"]["tasks"][0]["prediction_contract_available"]
+            )
+            report = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("Optimized Package Overview", report)
+            self.assertIn("Task Export Summary", report)
+
+
+class StageIAnchorPipelineTest(unittest.TestCase):
+    def test_anchor_pipeline_exports_ranked_windows_and_report(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            run_manifest_path = _write_fake_stage_h_case_run(root)
+            private_summary_path = _write_fake_private_benchmark_summary(root)
+
+            result = run_stage_i_anchor(
+                StageIAnchorConfig(
+                    run_id="anchor-test",
+                    stage_h_run_manifest_path=str(run_manifest_path),
+                    output_root=str(root / "artifacts" / "stage_i_anchor"),
+                    report_root=str(root / "reports"),
+                    private_benchmark_summary_path=str(private_summary_path),
+                    top_k_windows=1,
+                )
+            )
+
+            self.assertTrue(Path(result.anchor_manifest_path).exists())
+            self.assertTrue(Path(result.anchor_windows_csv_path).exists())
+            self.assertTrue(Path(result.report_path).exists())
+            summary = json.loads(Path(result.anchor_manifest_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["overview"]["selected_view_count"], 2)
+            self.assertEqual(summary["overview"]["selected_anchor_count"], 2)
+            self.assertEqual(summary["anchors"][0]["view_verdict"], "WARN")
+            self.assertEqual(
+                summary["private_no_mask_summary"]["tasks"]["T1_maneuver_intensity_class"][
+                    "target_beats_no_mask"
+                ],
+                True,
+            )
+            report = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("Anchor Windows", report)
+            self.assertIn("Private No-Mask Comparison", report)
+
+    def test_anchor_pipeline_supports_warn_only_filter(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            run_manifest_path = _write_fake_stage_h_case_run(root)
+            private_summary_path = _write_fake_private_benchmark_summary(root)
+
+            result = run_stage_i_anchor(
+                StageIAnchorConfig(
+                    run_id="anchor-warn-only",
+                    stage_h_run_manifest_path=str(run_manifest_path),
+                    output_root=str(root / "artifacts" / "stage_i_anchor"),
+                    report_root=str(root / "reports"),
+                    private_benchmark_summary_path=str(private_summary_path),
+                    top_k_windows=1,
+                    view_verdict_filter="warn_only",
+                )
+            )
+
+            summary = json.loads(Path(result.anchor_manifest_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["overview"]["selected_view_count"], 1)
+            self.assertEqual(summary["overview"]["selected_anchor_count"], 1)
+            self.assertEqual(summary["anchors"][0]["view_verdict"], "WARN")
 
 
 def _write_fake_stage_h_case_run(root: Path) -> Path:
@@ -372,3 +497,145 @@ def _write_fake_view(
         json.dumps(view_manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def _write_fake_optimized_package(root: Path) -> Path:
+    package_path = root / "optimized_candidate_package.json"
+    package_path.write_text(
+        json.dumps(
+            {
+                "package_version": "v1",
+                "run_id": "private-opt-package",
+                "target_variant_name": "chronaris_opt",
+                "source_manifests": {
+                    "e_run_manifest_path": "e-run.json",
+                    "f_run_manifest_path": "f-run.json",
+                },
+                "dependency_contracts": {
+                    "requires_stage_h_all_window_contract": True,
+                    "requires_f_full_reference_hidden": True,
+                    "requires_stage_g_causal_fusion": True,
+                    "use_causal_mask": True,
+                },
+                "records_summary": {
+                    "sample_count": 111,
+                    "view_count": 3,
+                    "sortie_count": 2,
+                },
+                "selected_vehicle_fields": ["BUS001.speed", "BUS001.altitude"],
+                "selected_physiology_fields": ["eeg.alpha", "spo2"],
+                "tasks": {
+                    "T1_maneuver_intensity_class": {
+                        "status": "exported",
+                        "task_type": "classification",
+                        "head_family": "class_balanced_threshold",
+                        "thresholds": {"low_threshold": 1.0, "high_threshold": 2.0},
+                        "cross_validated_best_metrics": {
+                            "macro_f1": 1.0,
+                            "balanced_accuracy": 1.0,
+                        },
+                    },
+                    "T2_next_window_physiology_response": {
+                        "status": "exported",
+                        "task_type": "regression",
+                        "recommended_head": "physiology_persistence",
+                        "available_heads": {
+                            "physiology_persistence": {"head_family": "physiology_persistence"}
+                        },
+                        "cross_validated_best_metrics": {
+                            "rmse": 10.0,
+                            "mae": 5.0,
+                        },
+                    },
+                    "T3_paired_pilot_window_retrieval": {
+                        "status": "exported",
+                        "task_type": "retrieval",
+                        "head_family": "chronaris_time_residual_retrieval",
+                        "feature_columns": ["feat__ctx__window_index"],
+                        "cross_validated_metrics": {
+                            "top1_accuracy": 1.0,
+                            "mrr": 1.0,
+                        },
+                    },
+                },
+                "diagnostics": {
+                    "mean_attention_entropy": 0.93,
+                    "mean_top_event_concentration": 0.88,
+                },
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return package_path
+
+
+def _write_fake_private_benchmark_summary(root: Path) -> Path:
+    summary_path = root / "private_benchmark_summary.json"
+    summary_path.write_text(
+        json.dumps(
+            {
+                "target_variant_name": "chronaris_opt",
+                "tasks": {
+                    "T1_maneuver_intensity_class": {
+                        "task_type": "classification",
+                        "variants": {
+                            "chronaris_opt": {
+                                "best_metrics": {
+                                    "macro_f1": 1.0,
+                                    "balanced_accuracy": 1.0,
+                                }
+                            },
+                            "chronaris_opt_no_causal_mask": {
+                                "best_metrics": {
+                                    "macro_f1": 0.2,
+                                    "balanced_accuracy": 0.3,
+                                }
+                            },
+                        },
+                    },
+                    "T2_next_window_physiology_response": {
+                        "task_type": "regression",
+                        "variants": {
+                            "chronaris_opt": {
+                                "best_metrics": {
+                                    "rmse": 10.0,
+                                    "mae": 5.0,
+                                }
+                            },
+                            "chronaris_opt_no_causal_mask": {
+                                "best_metrics": {
+                                    "rmse": 20.0,
+                                    "mae": 8.0,
+                                }
+                            },
+                        },
+                    },
+                    "T3_paired_pilot_window_retrieval": {
+                        "task_type": "retrieval",
+                        "variants": {
+                            "chronaris_opt": {
+                                "top1_accuracy": 1.0,
+                                "mrr": 1.0,
+                            },
+                            "chronaris_opt_no_causal_mask": {
+                                "top1_accuracy": 0.1,
+                                "mrr": 0.2,
+                            },
+                        },
+                    },
+                },
+                "conclusion": {
+                    "target_variant_name": "chronaris_opt",
+                    "no_mask_variant_name": "chronaris_opt_no_causal_mask",
+                },
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return summary_path

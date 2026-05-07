@@ -1,15 +1,18 @@
-"""Run GPU-first chronaris_public_fusion screening over prepared public sequence assets."""
+"""Run GPU-preferred chronaris_public_fusion screening over prepared public sequence assets."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import logging
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SRC = REPO_ROOT / "src"
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
@@ -35,7 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--max-folds", type=int, default=2)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="cuda")
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument(
         "--train-sampling-policy",
         choices=("none", "balanced_class"),
@@ -45,6 +48,10 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
     args = parse_args()
     dataset_prepared_roots = {}
     if args.uab_root:

@@ -1,8 +1,9 @@
-"""GPU-first screening helpers for public Chronaris fusion candidates."""
+"""GPU-preferred screening helpers for public Chronaris fusion candidates."""
 
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -14,6 +15,9 @@ from chronaris.pipelines.stage_i.stage_i_deep_baseline import (
     run_stage_i_deep_baseline,
 )
 from chronaris.pipelines.torch_runtime import resolve_torch_device_name
+
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,7 +43,7 @@ class StageIPublicFusionScreenConfig:
     batch_size: int = 128
     max_folds: int | None = 2
     seed: int = 42
-    device: str = "cuda"
+    device: str = "auto"
     train_sampling_policy: str = "none"
     candidates: tuple[StageIPublicFusionCandidate, ...] = ()
 
@@ -92,9 +96,18 @@ def run_stage_i_public_fusion_screen(
     config: StageIPublicFusionScreenConfig,
 ) -> StageIPublicFusionScreenRunResult:
     runtime_device = resolve_torch_device_name(config.device)
+    LOGGER.info(
+        "stage_i_public_fusion_screen start run_id=%s requested_device=%s resolved_device=%s datasets=%s",
+        config.run_id,
+        config.device,
+        runtime_device,
+        sorted(config.dataset_prepared_roots),
+    )
     if runtime_device != "cuda":
-        raise ValueError(
-            "public fusion screening is GPU-first; current runtime does not expose CUDA."
+        LOGGER.warning(
+            "stage_i_public_fusion_screen using CPU fallback run_id=%s requested_device=%s",
+            config.run_id,
+            config.device,
         )
 
     candidates = config.candidates or DEFAULT_PUBLIC_FUSION_CANDIDATES
@@ -108,9 +121,21 @@ def run_stage_i_public_fusion_screen(
     candidate_summaries: dict[str, object] = {}
 
     for dataset_id, prepared_root in config.dataset_prepared_roots.items():
+        LOGGER.info(
+            "stage_i_public_fusion_screen dataset start dataset_id=%s candidate_count=%d",
+            dataset_id,
+            len(candidates),
+        )
         dataset_rows: list[dict[str, object]] = []
         dataset_candidate_summaries: dict[str, object] = {}
-        for candidate in candidates:
+        for candidate_index, candidate in enumerate(candidates, start=1):
+            LOGGER.info(
+                "stage_i_public_fusion_screen dataset=%s candidate %d/%d candidate_id=%s",
+                dataset_id,
+                candidate_index,
+                len(candidates),
+                candidate.candidate_id,
+            )
             candidate_root = artifact_root / dataset_id / candidate.candidate_id
             result = run_stage_i_deep_baseline(
                 StageIDeepBaselineConfig(
@@ -150,6 +175,13 @@ def run_stage_i_public_fusion_screen(
             rows.append(row)
             dataset_rows.append(row)
             dataset_candidate_summaries[candidate.candidate_id] = result.summary
+            LOGGER.info(
+                "stage_i_public_fusion_screen dataset=%s candidate=%s metric=%s selection_score=%.4f",
+                dataset_id,
+                candidate.candidate_id,
+                score_payload["screen_metric"],
+                float(score_payload["selection_score"]),
+            )
 
         ordered_rows = sorted(
             dataset_rows,
@@ -170,6 +202,12 @@ def run_stage_i_public_fusion_screen(
             )
         per_dataset_rankings[dataset_id] = ordered_rows
         candidate_summaries[dataset_id] = dataset_candidate_summaries
+        if ordered_rows:
+            LOGGER.info(
+                "stage_i_public_fusion_screen dataset complete dataset_id=%s best_candidate=%s",
+                dataset_id,
+                ordered_rows[0]["candidate_id"],
+            )
 
     leaderboard = pd.DataFrame(rows)
     leaderboard_csv_path = artifact_root / "candidate_leaderboard.csv"
@@ -204,6 +242,12 @@ def run_stage_i_public_fusion_screen(
     report_path.write_text(
         _render_public_fusion_screen_report(summary) + "\n",
         encoding="utf-8",
+    )
+    LOGGER.info(
+        "stage_i_public_fusion_screen finished run_id=%s summary_path=%s report_path=%s",
+        config.run_id,
+        summary_path,
+        report_path,
     )
     return StageIPublicFusionScreenRunResult(
         run_id=config.run_id,

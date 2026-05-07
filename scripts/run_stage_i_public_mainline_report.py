@@ -27,6 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default=_default_run_id())
     parser.add_argument("--uab-summary", required=True)
+    parser.add_argument("--extra-uab-summary", action="append", default=[])
     parser.add_argument("--nasa-summary", required=True)
     parser.add_argument("--deep-comparison-summary", required=True)
     parser.add_argument("--artifact-root", default="docs/reports/assets/stage_i_public_mainline")
@@ -43,6 +44,9 @@ def main() -> int:
         StageIPublicMainlineReportConfig(
             run_id=args.run_id,
             uab_summary_path=_resolve_path(args.uab_summary),
+            extra_uab_summary_paths=tuple(
+                _resolve_path(path_like) for path_like in args.extra_uab_summary
+            ),
             nasa_summary_path=_resolve_path(args.nasa_summary),
             deep_comparison_summary_path=_resolve_path(args.deep_comparison_summary),
             artifact_root=_resolve_path(args.artifact_root),

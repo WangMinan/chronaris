@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,20 +30,51 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prepared-artifact-root", required=True)
     parser.add_argument("--artifact-root", default="docs/reports/assets/stage_i_public_opt_torch")
     parser.add_argument("--report-root", default="docs/reports")
-    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="cuda")
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--batch-size", type=int, default=256)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--patience", type=int, default=4)
     parser.add_argument("--screen-max-folds", type=int, default=2)
     parser.add_argument("--full-max-folds", type=int, default=None)
+    parser.add_argument("--full-candidate-limit", type=int, default=2)
     parser.add_argument("--skip-full-loso", action="store_true")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--feature-profile",
+        action="append",
+        dest="feature_profiles",
+        choices=("full", "residual_only"),
+        default=[],
+    )
+    parser.add_argument(
+        "--learning-rate",
+        action="append",
+        dest="learning_rates",
+        type=float,
+        default=[],
+    )
+    parser.add_argument(
+        "--weight-decay",
+        action="append",
+        dest="weight_decays",
+        type=float,
+        default=[],
+    )
+    parser.add_argument(
+        "--ensemble-policy",
+        choices=("none", "mean_top2"),
+        default="none",
+    )
     parser.add_argument("--reference-public-opt-summary")
     parser.add_argument("--reference-deep-comparison-summary")
     return parser.parse_args()
 
 
 def main() -> int:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    )
     args = parse_args()
     result = run_stage_i_public_opt_torch_uab(
         StageIPublicOptTorchUABConfig(
@@ -57,7 +89,12 @@ def main() -> int:
             screen_max_folds=args.screen_max_folds,
             full_max_folds=args.full_max_folds,
             run_full_loso=not args.skip_full_loso,
+            full_candidate_limit=args.full_candidate_limit,
+            ensemble_policy=args.ensemble_policy,
             seed=args.seed,
+            feature_profiles=tuple(args.feature_profiles) or ("full", "residual_only"),
+            learning_rates=tuple(args.learning_rates) or (1e-3, 3e-4),
+            weight_decays=tuple(args.weight_decays) or (1e-4, 1e-3),
             reference_public_opt_summary_path=(
                 _resolve_path(args.reference_public_opt_summary)
                 if args.reference_public_opt_summary

@@ -83,13 +83,13 @@ def save_confusion_matrix_plot(
     matrix = np.asarray(metrics["confusion_matrix"], dtype=float)
     fig, axis = plt.subplots(figsize=(5, 4))
     image = axis.imshow(matrix, cmap="Blues")
-    axis.set_title(title)
+    axis.set_title(_ascii_safe_text(title))
     axis.set_xlabel("Predicted")
     axis.set_ylabel("True")
     axis.set_xticks(range(len(labels)))
-    axis.set_xticklabels(labels)
+    axis.set_xticklabels([_ascii_safe_text(label) for label in labels])
     axis.set_yticks(range(len(labels)))
-    axis.set_yticklabels(labels)
+    axis.set_yticklabels([_ascii_safe_text(label) for label in labels])
     for row_index in range(matrix.shape[0]):
         for column_index in range(matrix.shape[1]):
             axis.text(column_index, row_index, int(matrix[row_index, column_index]), ha="center", va="center")
@@ -117,7 +117,7 @@ def save_regression_plot(
     lower = float(min(np.min(y_true), np.min(y_pred)))
     upper = float(max(np.max(y_true), np.max(y_pred)))
     axis.plot([lower, upper], [lower, upper], linestyle="--", color="black", linewidth=1.0)
-    axis.set_title(title)
+    axis.set_title(_ascii_safe_text(title))
     axis.set_xlabel("True")
     axis.set_ylabel("Predicted")
     output_path = Path(path)
@@ -139,12 +139,17 @@ def save_bar_plot(
 
     labels = list(values)
     heights = [float(values[label]) for label in labels]
+    x = np.arange(len(labels))
     fig, axis = plt.subplots(figsize=(6, 4))
-    bars = axis.bar(labels, heights, color="#3a7ca5")
-    axis.set_title(title)
-    axis.set_ylabel(ylabel)
+    bars = axis.bar(x, heights, color="#3a7ca5")
+    axis.set_title(_ascii_safe_text(title))
+    axis.set_ylabel(_ascii_safe_text(ylabel))
     axis.set_xticks(range(len(labels)))
-    axis.set_xticklabels(labels, rotation=20, ha="right")
+    axis.set_xticklabels(
+        [_ascii_safe_text(label) for label in labels],
+        rotation=20,
+        ha="right",
+    )
     for bar, height in zip(bars, heights, strict=True):
         axis.text(bar.get_x() + bar.get_width() / 2, height, f"{height:.2f}" if height % 1 else f"{int(height)}", ha="center", va="bottom")
     output_path = Path(path)
@@ -176,7 +181,7 @@ def save_grouped_bar_plot(
     for index, category in enumerate(categories):
         heights = [float(series_by_group[group].get(category, 0.0)) for group in groups]
         offsets = x - 0.4 + width / 2 + index * width
-        bars = axis.bar(offsets, heights, width=width, label=category)
+        bars = axis.bar(offsets, heights, width=width, label=_ascii_safe_text(category))
         for bar, height in zip(bars, heights, strict=True):
             axis.text(
                 bar.get_x() + bar.get_width() / 2,
@@ -186,10 +191,14 @@ def save_grouped_bar_plot(
                 va="bottom",
                 fontsize=8,
             )
-    axis.set_title(title)
-    axis.set_ylabel(ylabel)
+    axis.set_title(_ascii_safe_text(title))
+    axis.set_ylabel(_ascii_safe_text(ylabel))
     axis.set_xticks(x)
-    axis.set_xticklabels(groups, rotation=20, ha="right")
+    axis.set_xticklabels(
+        [_ascii_safe_text(group) for group in groups],
+        rotation=20,
+        ha="right",
+    )
     axis.legend(loc="best")
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -197,3 +206,14 @@ def save_grouped_bar_plot(
     fig.savefig(output_path, dpi=150)
     plt.close(fig)
     return str(output_path)
+
+
+def _ascii_safe_text(text: object) -> str:
+    value = str(text)
+    result: list[str] = []
+    for char in value:
+        if ord(char) < 128:
+            result.append(char)
+        else:
+            result.append(f"u{ord(char):04x}")
+    return "".join(result)

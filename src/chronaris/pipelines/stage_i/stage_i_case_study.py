@@ -79,22 +79,34 @@ class StageICaseStudyRunResult:
     window_rankings_csv_path: str
 
 
-def run_stage_i_case_study(
-    config: StageICaseStudyConfig,
-) -> StageICaseStudyRunResult:
-    """Run the fixed Phase 2 case-study family over a Stage H run."""
+def build_stage_i_case_study_results(
+    run_input,
+    *,
+    top_k_windows: int,
+    device: str = "auto",
+) -> tuple[tuple[StageICaseStudyViewResult, ...], tuple[StageICaseStudyPilotComparison, ...]]:
+    """Build deterministic Phase 2 view results without writing artifacts."""
 
-    run_input = load_stage_i_case_study_run(config.stage_h_run_manifest_path)
-    provisional_results: list[tuple[StageICaseStudyViewInput, tuple[StageICaseStudyAblationMetrics, ...], np.ndarray]] = []
+    provisional_results: list[
+        tuple[
+            StageICaseStudyViewInput,
+            tuple[StageICaseStudyAblationMetrics, ...],
+            np.ndarray,
+        ]
+    ] = []
     for view in run_input.views:
         ablations, baseline_fused_states = compute_case_study_ablations(
             view,
-            device=config.device,
+            device=device,
         )
         provisional_results.append((view, ablations, baseline_fused_states))
 
     view_summaries = tuple(
-        build_view_summary(view, baseline=ablations[0], baseline_fused_states=baseline_fused_states)
+        build_view_summary(
+            view,
+            baseline=ablations[0],
+            baseline_fused_states=baseline_fused_states,
+        )
         for view, ablations, baseline_fused_states in provisional_results
     )
     pilot_comparisons = build_pilot_comparisons(view_summaries)
@@ -102,7 +114,11 @@ def run_stage_i_case_study(
         StageICaseStudyViewResult(
             view_summary=summary,
             ablations=ablations,
-            top_windows=build_window_rankings(view, baseline=ablations[0], top_k=config.top_k_windows),
+            top_windows=build_window_rankings(
+                view,
+                baseline=ablations[0],
+                top_k=top_k_windows,
+            ),
             warn_explanation=(
                 explain_warn_view(
                     view,
@@ -114,7 +130,25 @@ def run_stage_i_case_study(
                 else None
             ),
         )
-        for summary, (view, ablations, _baseline_fused_states) in zip(view_summaries, provisional_results, strict=True)
+        for summary, (view, ablations, _baseline_fused_states) in zip(
+            view_summaries,
+            provisional_results,
+            strict=True,
+        )
+    )
+    return view_results, pilot_comparisons
+
+
+def run_stage_i_case_study(
+    config: StageICaseStudyConfig,
+) -> StageICaseStudyRunResult:
+    """Run the fixed Phase 2 case-study family over a Stage H run."""
+
+    run_input = load_stage_i_case_study_run(config.stage_h_run_manifest_path)
+    view_results, pilot_comparisons = build_stage_i_case_study_results(
+        run_input,
+        top_k_windows=config.top_k_windows,
+        device=config.device,
     )
 
     artifact_root = Path(config.output_root) / config.run_id

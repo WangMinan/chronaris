@@ -27,7 +27,7 @@
 
 当前仓库处于：
 
-`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 已完成收口`
+`阶段 A/B/C 已完成，阶段 E0 已完成 preview 路径，阶段 E/F/G(min) 已完成，阶段 H 已完成收口，阶段 I 的历史公开 benchmark 收口已完成`
 
 更具体地说：
 
@@ -60,6 +60,10 @@
 - 增强实验第二批 full LOSO 主报告：`docs/reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
 - 已完成阶段 I 私有 benchmark 优化候选：`chronaris_opt` 在鼎新私有 proxy benchmark 的 T1/T2/T3 三任务上均超过 `naive_sync / E / F / no-mask / MulT / ContiFormer`，`private_optimality_supported=True`
 - 当前鼎新私有任务验证主线已切换到 `chronaris_opt`；`E/F/G/H` 收口事实继续保留为历史基线与导出依赖，不删除、不覆写
+- 这里的“阶段 I 已完成收口”特指 `2026-04-30` 的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 历史 closure，不等于当前论文主线的所有增强与整编工作都已结束
+- 当前论文私有主线：`chronaris_opt` 已闭合并完成 package 固化
+- 当前论文公开主线：`NASA closed, UAB partial`；若要主张“公开数据已全面优于 `MulT / ContiFormer`”，编码工作仍未完成
+- 面向毕业论文的剩余编码工作见 [thesis-coding-gap-2026-05-06.md](thesis-coding-gap-2026-05-06.md)
 
 ## 4. 阶段拆解
 
@@ -460,7 +464,7 @@
 
 状态：
 
-- 已完成收口（`Phase 0 + Phase 1 + Phase 2 + Phase 3` 均已完成）
+- 历史收口已完成（`Phase 0 + Phase 1 + Phase 2 + Phase 3` 均已完成；不等于当前论文主线所有增强工作都已闭合）
 
 总体分期：
 
@@ -542,6 +546,8 @@
 - partial-data 标准 manifest、vehicle-only reader / builder、真实 vehicle-only feature bundle
 - Stage I task manifest contract、UAB 数据适配、session 级特征导出与 UAB 双轨 baseline
 - Stage I Phase 2 case-study asset loader、bundle-only 消融、`WARN` 解释与中文主报告
+- Stage I thesis-facing runtime/demo 入口：`src/chronaris/serving/runtime_demo.py`，可消费 `Stage H run manifest` 与 `optimized_candidate_package.json`
+- Stage I 关键工况锚定导出入口：`src/chronaris/pipelines/stage_i/stage_i_anchor.py`
 - Stage I 私有任务与 benchmark 编排入口：`src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
 - Stage I 私有优化候选：`src/chronaris/pipelines/stage_i/stage_i_private_optimization.py`，包含 `chronaris_opt / chronaris_opt_no_causal_mask`、lag-aware causal fusion residual 与 T1/T2/T3 任务感知头
 
@@ -552,9 +558,18 @@
 - [dataset](../../src/chronaris/dataset)
 - [dataset_v1.py](../../src/chronaris/pipelines/dataset_v1.py)
 
-## 6. 阶段 I 收口后建议
+## 6. 阶段 I 收口后现状与论文剩余工作
 
-阶段 I 已完成收口。当前不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 公开 benchmark 历史事实，但鼎新私有任务验证主线已切换为 `chronaris_opt`。
+阶段 I 的历史收口已经完成，但这不等于“为了毕业论文已经没有剩余编码工作”。当前更准确的判断是：
+
+- 历史公开 benchmark closure：已完成，冻结于 `docs/reports/stage_i/stage-i-closure-2026-04-30.md`
+- 私有 proxy 主线：已完成，当前以 `chronaris_opt` 为准
+- 公开 quantitative 主线：`NASA closed, UAB partial`
+- 论文证据 support：已完成，已形成 `alignment / causal / six-path ablation` 三份主报告
+- thesis-facing 剩余编码工作：见 [thesis-coding-gap-2026-05-06.md](thesis-coding-gap-2026-05-06.md)
+- 当前 thesis-facing 剩余主风险已从“入口缺失”收敛为“公开 quantitative 主线还未完全 closed”
+
+在此基础上，当前不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 公开 benchmark 历史事实，但鼎新私有任务验证主线已切换为 `chronaris_opt`。
 
 当前增强实验已完成第一批真实 sortie 验证，机器资产位于：
 
@@ -581,27 +596,32 @@
 5. 已按“论文证据优先”补出自有数据 support 批次：
    - `alignment support`、`causal support`、`fixed six-path ablation matrix` 已落到 `docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`
    - 主报告为 `stage-i-alignment-support-20260506T120000Z-stage-i-support.md`、`stage-i-causal-support-20260506T120000Z-stage-i-support.md`、`stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
-6. `chronaris public opt` 历史基线与增强线已全部落盘：
+6. thesis-facing 最小原型输出已正式落盘：
+   - runtime/demo：`docs/reports/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo/`
+   - 关键工况 anchor：`docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/`
+   - 主报告：`stage-i-runtime-demo-20260506T165435Z-stage-i-runtime-demo.md`、`stage-i-anchor-20260506T165435Z-stage-i-anchor.md`
+7. `chronaris public opt` 历史基线与增强线已全部落盘：
    - `UAB subjective historical baseline`：`docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260506T121000Z-stage-i-public-opt-uab.md`
    - `NASA attention_state`：`docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260506T124500Z-stage-i-public-opt-nasa.md`
    - `NASA enhanced round 1`：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
-7. 已完成 `UAB torch-native` GPU completion branch full LOSO：
-   - 主报告：`docs/reports/stage_i/stage-i-public-opt-20260506T063146Z-stage-i-public-opt-uab-torch.md`
+8. 已完成 `UAB torch-native` GPU completion branch full LOSO：
+   - `device=auto` 在沙箱受限时可回落到 CPU；当前已补出 `auto -> cuda` 实跑 confirm
+   - 当前主报告：`docs/reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
    - winner：`residual_gated_mlp__full__lr0p0003__wd0p0001`
    - 当前结果未通过 `n_back RMSE < 4.6541` 与 `heat_the_chair RMSE < 1.4568` 双门槛
-8. 已完成 unified public comparison 主报告：
-   - `docs/reports/stage_i/stage-i-public-mainline-20260506T064302Z-stage-i-public-mainline.md`
+9. 已完成 unified public comparison 主报告：
+   - `docs/reports/stage_i/stage-i-public-mainline-20260507T024112Z-stage-i-public-mainline.md`
    - 当前公开主线事实：`NASA closed, UAB partial`
-9. 已完成 `chronaris_public_fusion` GPU 主线接入与两轮公共数据筛选：
+10. 已完成 `chronaris_public_fusion` GPU 主线接入与两轮公共数据筛选：
    - round 1：`docs/reports/stage_i/archive/public_history/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round1.md`
    - round 2：`docs/reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md`
    - 当前 best candidate 为 `fusion_h64_l2_hd4_do01_bias025_lag16_norm1`
    - 现有 confirm：`NASA combined macro-F1 = 0.3348 < 0.40`，当前仍只保留为 exploratory branch
-10. 当前下一步优先级不再是扩大 CPU / torch UAB 搜索，而是：
+11. 当前下一步优先级不再是扩大 CPU / torch UAB 搜索，而是：
    - 冻结 `NASA closed, UAB partial` 作为论文公开主线现状
    - 若继续扩展公开线，只做 `public_fusion balanced sampling + epochs=10` 的 `NASA-first` confirm；若仍不超过 `0.40`，则停止该支线
-11. 若私有主线同步完成后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
-12. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`、`docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`、`docs/reports/assets/stage_i_public_opt_torch/20260506T063146Z-stage-i-public-opt-uab-torch/`、`docs/reports/assets/stage_i_public_mainline/20260506T064302Z-stage-i-public-mainline/`、`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/` 与 `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`。
+12. 若私有主线同步完成后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
+13. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`、`docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`、`docs/reports/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo/`、`docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/`、`docs/reports/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/`、`docs/reports/assets/stage_i_public_mainline/20260507T024112Z-stage-i-public-mainline/`、`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/` 与 `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`。
 
 ## 7. 当前不该提前做的事
 
