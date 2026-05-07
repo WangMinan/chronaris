@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -46,6 +47,8 @@ UAB_TORCH_ACCEPTANCE_THRESHOLDS = {
     "n_back": 4.6541,
     "heat_the_chair": 1.4568,
 }
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
 
 
 @dataclass(frozen=True, slots=True)
@@ -56,7 +59,7 @@ class StageIPublicOptTorchUABConfig:
     report_root: str = "docs/reports"
     dataset_id: str = UAB_TORCH_DATASET_ID
     profile: str = PUBLIC_OPT_PROFILE
-    device: str = "cuda"
+    device: str = "auto"
     seed: int = 42
     batch_size: int = 256
     epochs: int = 20
@@ -64,6 +67,8 @@ class StageIPublicOptTorchUABConfig:
     screen_max_folds: int | None = 2
     full_max_folds: int | None = None
     run_full_loso: bool = True
+    full_candidate_limit: int = 2
+    ensemble_policy: str = "none"
     learning_rates: tuple[float, ...] = (1e-3, 3e-4)
     weight_decays: tuple[float, ...] = (1e-4, 1e-3)
     feature_profiles: tuple[str, ...] = ("full", "residual_only")
@@ -206,9 +211,20 @@ def run_stage_i_public_opt_torch_uab(
         learning_rates=config.learning_rates,
         weight_decays=config.weight_decays,
     )
+    _validate_torch_uab_runtime_config(config)
     runtime_device = resolve_torch_device_name(config.device)
+    LOGGER.info(
+        "stage_i_public_opt_torch start run_id=%s requested_device=%s resolved_device=%s",
+        config.run_id,
+        config.device,
+        runtime_device,
+    )
     if runtime_device != "cuda":
-        raise ValueError("torch UAB public-opt mainline requires explicit CUDA runtime.")
+        LOGGER.warning(
+            "stage_i_public_opt_torch using CPU fallback run_id=%s requested_device=%s",
+            config.run_id,
+            config.device,
+        )
 
     prepared = load_public_opt_prepared_dataset(config.prepared_artifact_root)
     if prepared["dataset_id"] != UAB_TORCH_DATASET_ID:
@@ -223,6 +239,13 @@ def run_stage_i_public_opt_torch_uab(
     )
     if feature_result.track != "subjective":
         raise ValueError("torch UAB runner only supports subjective regression track.")
+    LOGGER.info(
+        "stage_i_public_opt_torch prepared dataset_id=%s samples=%d subsets=%s feature_profiles=%s",
+        prepared["dataset_id"],
+        len(feature_result.feature_frame),
+        sorted(feature_result.feature_frame["subset_id"].astype(str).unique()),
+        config.feature_profiles,
+    )
 
     run_root = Path(config.artifact_root) / config.run_id
     run_root.mkdir(parents=True, exist_ok=True)
@@ -245,7 +268,13 @@ def run_stage_i_public_opt_torch_uab(
     best_candidate: _TorchUABCandidateSpec | None = None
     best_screen_result: tuple[dict[str, object], pd.DataFrame] | None = None
     best_screen_row: dict[str, object] | None = None
-    for candidate in candidates:
+    for candidate_index, candidate in enumerate(candidates, start=1):
+        LOGGER.info(
+            "stage_i_public_opt_torch screen candidate %d/%d candidate_id=%s",
+            candidate_index,
+            len(candidates),
+            candidate.candidate_id,
+        )
         candidate_bundle = _build_candidate_feature_bundle(feature_result, candidate)
         subset_result, predictions = _run_torch_uab_candidate(
             feature_bundle=candidate_bundle,
@@ -274,6 +303,12 @@ def run_stage_i_public_opt_torch_uab(
             "heat_the_chair_mae": subset_result["groups"]["heat_the_chair"]["mae"],
         }
         screen_rows.append(row)
+        LOGGER.info(
+            "stage_i_public_opt_torch screen candidate done candidate_id=%s mean_rmse=%.4f mean_mae=%.4f",
+            candidate.candidate_id,
+            float(subset_result["mean_rmse"]),
+            float(subset_result["mean_mae"]),
+        )
         if best_screen_row is None or is_better_torch_screen_row(row, best_screen_row):
             best_candidate = candidate
             best_screen_result = (subset_result, predictions)
@@ -288,23 +323,60 @@ def run_stage_i_public_opt_torch_uab(
     ).reset_index(drop=True)
     leaderboard_path = run_root / "candidate_leaderboard.csv"
     leaderboard.to_csv(leaderboard_path, index=False)
+    LOGGER.info(
+        "stage_i_public_opt_torch screen complete winner=%s leaderboard_path=%s",
+        best_candidate.candidate_id,
+        leaderboard_path,
+    )
 
     final_result = best_screen_result[0]
     final_predictions = best_screen_result[1]
     full_run_completed = False
+    full_candidate_results: dict[str, dict[str, object]] = {}
+    full_candidate_predictions: dict[str, pd.DataFrame] = {}
     if config.run_full_loso:
-        full_bundle = _build_candidate_feature_bundle(feature_result, best_candidate)
-        final_result, final_predictions = _run_torch_uab_candidate(
-            feature_bundle=full_bundle,
-            candidate=best_candidate,
-            seed=config.seed,
-            device=runtime_device,
-            batch_size=config.batch_size,
-            epochs=config.epochs,
-            patience=config.patience,
-            max_folds=config.full_max_folds,
+        shortlist_size = max(config.full_candidate_limit, 2 if config.ensemble_policy == "mean_top2" else 1)
+        shortlist_rows = leaderboard.head(shortlist_size).to_dict(orient="records")
+        candidates_by_id = {candidate.candidate_id: candidate for candidate in candidates}
+        for shortlist_index, row in enumerate(shortlist_rows, start=1):
+            candidate_id = str(row["candidate_id"])
+            candidate = candidates_by_id[candidate_id]
+            LOGGER.info(
+                "stage_i_public_opt_torch full LOSO candidate %d/%d candidate_id=%s",
+                shortlist_index,
+                len(shortlist_rows),
+                candidate_id,
+            )
+            full_bundle = _build_candidate_feature_bundle(feature_result, candidate)
+            candidate_result, candidate_predictions = _run_torch_uab_candidate(
+                feature_bundle=full_bundle,
+                candidate=candidate,
+                seed=config.seed,
+                device=runtime_device,
+                batch_size=config.batch_size,
+                epochs=config.epochs,
+                patience=config.patience,
+                max_folds=config.full_max_folds,
+            )
+            full_candidate_results[candidate_id] = candidate_result
+            full_candidate_predictions[candidate_id] = candidate_predictions
+            LOGGER.info(
+                "stage_i_public_opt_torch full LOSO done candidate_id=%s mean_rmse=%.4f mean_mae=%.4f",
+                candidate_id,
+                float(candidate_result["mean_rmse"]),
+                float(candidate_result["mean_mae"]),
+            )
+        final_result, final_predictions = _select_final_torch_uab_result(
+            candidate_results=full_candidate_results,
+            candidate_predictions=full_candidate_predictions,
+            ensemble_policy=config.ensemble_policy,
         )
         full_run_completed = True
+        LOGGER.info(
+            "stage_i_public_opt_torch final selection run_id=%s selection=%s",
+            config.run_id,
+            final_result["selection_policy"],
+        )
 
     final_predictions.to_csv(predictions_path, index=False)
     reference_public_opt = load_torch_uab_reference_public_opt_summary(
@@ -338,6 +410,7 @@ def run_stage_i_public_opt_torch_uab(
             "screen_max_folds": config.screen_max_folds,
             "full_max_folds": config.full_max_folds,
             "run_full_loso": config.run_full_loso,
+            "full_candidate_limit": config.full_candidate_limit,
             "batch_size": config.batch_size,
             "epochs": config.epochs,
             "patience": config.patience,
@@ -345,6 +418,7 @@ def run_stage_i_public_opt_torch_uab(
             "weight_decays": list(config.weight_decays),
             "feature_profiles": list(config.feature_profiles),
             "device": config.device,
+            "ensemble_policy": config.ensemble_policy,
         },
         "candidate_count": len(candidates),
         "screen_leaderboard": leaderboard.to_dict(orient="records"),
@@ -359,6 +433,7 @@ def run_stage_i_public_opt_torch_uab(
             "weight_decay": best_candidate.weight_decay,
         },
         "full_run_completed": full_run_completed,
+        "full_candidate_details": full_candidate_results,
         "final_result": final_result,
         "reference_public_opt": reference_public_opt,
         "reference_deep_models": reference_deep,
@@ -370,6 +445,13 @@ def run_stage_i_public_opt_torch_uab(
         encoding="utf-8",
     )
     report_path.write_text(render_torch_uab_report(summary) + "\n", encoding="utf-8")
+    LOGGER.info(
+        "stage_i_public_opt_torch finished run_id=%s status=%s summary_path=%s report_path=%s",
+        config.run_id,
+        public_mainline_status,
+        summary_path,
+        report_path,
+    )
     return StageIPublicOptTorchUABRunResult(
         run_id=config.run_id,
         artifact_root=str(run_root),
@@ -428,6 +510,11 @@ def _run_torch_uab_candidate(
     group_metrics: dict[str, object] = {}
     subset_order = ("n_back", "heat_the_chair")
     for subset_id in subset_order:
+        LOGGER.info(
+            "stage_i_public_opt_torch candidate=%s subset=%s start",
+            candidate.candidate_id,
+            subset_id,
+        )
         subset_frame = feature_bundle.feature_frame.loc[
             feature_bundle.feature_frame["subset_id"].astype(str) == subset_id
         ].reset_index(drop=True)
@@ -442,6 +529,24 @@ def _run_torch_uab_candidate(
         frames: list[pd.DataFrame] = []
         targets = subset_frame["y_true"].to_numpy(dtype=np.float32, copy=True)
         for fold_index, split in enumerate(loso_splits):
+            held_out_groups = ",".join(
+                sorted(
+                    subset_frame.iloc[split.test_indices]["split_group"]
+                    .astype(str)
+                    .unique()
+                    .tolist()
+                )
+            )
+            LOGGER.info(
+                "stage_i_public_opt_torch candidate=%s subset=%s fold=%d/%d train=%d test=%d held_out=%s",
+                candidate.candidate_id,
+                subset_id,
+                fold_index + 1,
+                len(loso_splits),
+                len(split.train_indices),
+                len(split.test_indices),
+                held_out_groups,
+            )
             fold_predictions = _run_one_torch_uab_fold(
                 subset_frame=subset_frame,
                 subset_matrix=subset_matrix,
@@ -462,6 +567,13 @@ def _run_torch_uab_candidate(
         metrics = sanitize_public_opt_metrics(evaluate_regression_predictions(predictions))
         group_metrics[subset_id] = metrics
         prediction_frames.append(predictions)
+        LOGGER.info(
+            "stage_i_public_opt_torch candidate=%s subset=%s done rmse=%.4f mae=%.4f",
+            candidate.candidate_id,
+            subset_id,
+            float(metrics["rmse"]),
+            float(metrics["mae"]),
+        )
     predictions = pd.concat(prediction_frames, axis=0, ignore_index=True)
     mean_rmse = float(
         np.mean([float(group_metrics[group]["rmse"]) for group in subset_order], dtype=np.float64)
@@ -653,6 +765,196 @@ def _build_torch_uab_model(
     raise ValueError(f"unsupported torch UAB model family: {candidate.model_family}")
 
 
+def _validate_torch_uab_runtime_config(config: StageIPublicOptTorchUABConfig) -> None:
+    if config.full_candidate_limit < 1:
+        raise ValueError("torch UAB full_candidate_limit must be >= 1.")
+    if config.ensemble_policy not in {"none", "mean_top2"}:
+        raise ValueError(
+            f"unsupported torch UAB ensemble_policy: {config.ensemble_policy}"
+        )
+
+
+def _select_final_torch_uab_result(
+    *,
+    candidate_results: Mapping[str, Mapping[str, object]],
+    candidate_predictions: Mapping[str, pd.DataFrame],
+    ensemble_policy: str,
+) -> tuple[dict[str, object], pd.DataFrame]:
+    subset_order = ("n_back", "heat_the_chair")
+    final_groups: dict[str, object] = {}
+    final_predictions: list[pd.DataFrame] = []
+    selection_details: dict[str, object] = {}
+    for subset_id in subset_order:
+        candidate_metrics = {
+            candidate_id: result["groups"][subset_id]
+            for candidate_id, result in candidate_results.items()
+        }
+        candidate_frames = {
+            candidate_id: predictions.loc[
+                predictions["subset_id"].astype(str) == subset_id
+            ].reset_index(drop=True)
+            for candidate_id, predictions in candidate_predictions.items()
+        }
+        best_candidate_id = min(
+            candidate_metrics,
+            key=lambda candidate_id: (
+                float(candidate_metrics[candidate_id]["rmse"]),
+                float(candidate_metrics[candidate_id]["mae"]),
+                candidate_id,
+            ),
+        )
+        selected_metrics = dict(candidate_metrics[best_candidate_id])
+        selected_frame = candidate_frames[best_candidate_id].copy()
+        selection_payload = {
+            "selected_source_type": "candidate",
+            "selected_source_id": best_candidate_id,
+            "selected_metrics": {
+                "rmse": float(selected_metrics["rmse"]),
+                "mae": float(selected_metrics["mae"]),
+            },
+        }
+        if ensemble_policy == "mean_top2":
+            ensemble_frame, ensemble_metrics, ensemble_members = _build_torch_regression_ensemble(
+                candidate_prediction_frames=candidate_frames,
+                candidate_metrics=candidate_metrics,
+            )
+            if (
+                ensemble_frame is not None
+                and ensemble_metrics is not None
+                and _is_better_regression_metrics(ensemble_metrics, selected_metrics)
+            ):
+                selected_metrics = ensemble_metrics
+                selected_frame = ensemble_frame
+                selection_payload = {
+                    "selected_source_type": "mean_top2_ensemble",
+                    "selected_source_id": "mean_top2_ensemble",
+                    "selected_members": list(ensemble_members),
+                    "selected_metrics": {
+                        "rmse": float(selected_metrics["rmse"]),
+                        "mae": float(selected_metrics["mae"]),
+                    },
+                }
+        final_groups[subset_id] = selected_metrics
+        final_predictions.append(selected_frame)
+        selection_details[subset_id] = selection_payload
+    merged_predictions = pd.concat(final_predictions, axis=0, ignore_index=True)
+    mean_rmse = float(
+        np.mean([float(final_groups[subset_id]["rmse"]) for subset_id in subset_order], dtype=np.float64)
+    )
+    mean_mae = float(
+        np.mean([float(final_groups[subset_id]["mae"]) for subset_id in subset_order], dtype=np.float64)
+    )
+    return {
+        "selection_policy": {
+            "ensemble_policy": ensemble_policy,
+            "selection_scope": "per_subset_best_of_full_candidates",
+        },
+        "groups": final_groups,
+        "group_selections": selection_details,
+        "mean_rmse": mean_rmse,
+        "mean_mae": mean_mae,
+    }, merged_predictions
+
+
+def _build_torch_regression_ensemble(
+    *,
+    candidate_prediction_frames: Mapping[str, pd.DataFrame],
+    candidate_metrics: Mapping[str, Mapping[str, object]],
+) -> tuple[pd.DataFrame | None, dict[str, object] | None, tuple[str, str] | None]:
+    if len(candidate_prediction_frames) < 2:
+        return None, None, None
+    top_two = tuple(
+        sorted(
+            candidate_metrics,
+            key=lambda candidate_id: (
+                float(candidate_metrics[candidate_id]["rmse"]),
+                float(candidate_metrics[candidate_id]["mae"]),
+                candidate_id,
+            ),
+        )[:2]
+    )
+    merged = _merge_prediction_frames(
+        [candidate_prediction_frames[candidate_id] for candidate_id in top_two]
+    )
+    if merged.empty:
+        return None, None, None
+    ensemble = merged.loc[
+        :,
+        [
+            "track",
+            "dataset_id",
+            "profile",
+            "evaluation_group",
+            "subset_id",
+            "split_group",
+            "sample_id",
+            "subject_id",
+            "y_true",
+        ],
+    ].copy()
+    ensemble["candidate_id"] = "mean_top2_ensemble"
+    ensemble["model_name"] = "mean_top2_ensemble"
+    ensemble["feature_profile"] = "ensemble"
+    ensemble["y_pred"] = merged[
+        [f"y_pred__{index}" for index in range(len(top_two))]
+    ].mean(axis=1)
+    ensemble = ensemble[
+        [
+            "track",
+            "dataset_id",
+            "profile",
+            "evaluation_group",
+            "subset_id",
+            "candidate_id",
+            "model_name",
+            "feature_profile",
+            "split_group",
+            "sample_id",
+            "subject_id",
+            "y_true",
+            "y_pred",
+        ]
+    ]
+    metrics = sanitize_public_opt_metrics(evaluate_regression_predictions(ensemble))
+    return ensemble, metrics, top_two
+
+
+def _merge_prediction_frames(frames: Sequence[pd.DataFrame]) -> pd.DataFrame:
+    base_keys = [
+        "track",
+        "dataset_id",
+        "profile",
+        "evaluation_group",
+        "subset_id",
+        "split_group",
+        "sample_id",
+        "subject_id",
+        "y_true",
+    ]
+    merged = None
+    for index, frame in enumerate(frames):
+        renamed = frame.loc[:, base_keys + ["y_pred"]].rename(
+            columns={"y_pred": f"y_pred__{index}"}
+        )
+        merged = renamed if merged is None else merged.merge(renamed, on=base_keys, how="inner")
+    if merged is None:
+        return pd.DataFrame()
+    return merged
+
+
+def _is_better_regression_metrics(
+    candidate_metrics: Mapping[str, object],
+    incumbent_metrics: Mapping[str, object],
+) -> bool:
+    return (
+        float(candidate_metrics["rmse"]),
+        float(candidate_metrics["mae"]),
+    ) < (
+        float(incumbent_metrics["rmse"]),
+        float(incumbent_metrics["mae"]),
+    )
+
+
 def _fit_standardizer(values: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     mean = np.mean(values, axis=0, dtype=np.float64)
     std = np.std(values, axis=0, dtype=np.float64)
@@ -753,4 +1055,3 @@ def _predict_torch_uab(
         fallback_value=fallback_value,
     )
     return predictions
-
