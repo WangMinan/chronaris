@@ -1,0 +1,61 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "generated_at_utc": "2026-05-08T08:19:30.859291Z",
+  "entry_count": 16609,
+  "recording_count": 68,
+  "split_group_count": 17,
+  "sequence_length": 64,
+  "subset_counts": {
+    "benchmark": 3441,
+    "loft": 13168
+  },
+  "training_role_counts": {
+    "primary": 2810,
+    "inventory_only": 13799
+  },
+  "task_family_counts": {
+    "attention_state": 16609
+  },
+  "label_distribution": {
+    "attention_state": {
+      "2": 2332,
+      "0": 13799,
+      "5": 294,
+      "1": 184
+    }
+  },
+  "modality_feature_counts": {
+    "physiology": 23,
+    "scenario_context": 3
+  },
+  "source_origin_counts": {
+    "chronaris_public_nasa_v1": 16609
+  },
+  "extra_summary": {
+    "adapter_id": "chronaris_public_nasa_v1",
+    "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+    "prepared_subset_counts": {
+      "benchmark": 3441,
+      "loft": 13168
+    },
+    "processing_diagnostics": {
+      "csv_file_count": 68,
+      "chunk_size": 200000,
+      "window_count": 16609,
+      "primary_count": 2810,
+      "background_count": 13799,
+      "modalities": [
+        "physiology",
+        "scenario_context"
+      ],
+      "context_feature_names": [
+        "source_partition__benchmark",
+        "source_partition__loft",
+        "window_index_norm"
+      ],
+      "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs"
+    },
+    "inventory_only_background_count": 13799
+  }
+}

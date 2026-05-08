@@ -65,15 +65,25 @@ def build_torch_uab_acceptance(
 ) -> dict[str, object]:
     per_group = {}
     for subset_id, threshold in thresholds.items():
+        if subset_id not in groups:
+            per_group[subset_id] = {
+                "threshold_rmse": threshold,
+                "observed_rmse": None,
+                "passed": False,
+                "status": "not_run",
+            }
+            continue
         rmse = float(groups[subset_id]["rmse"])
         per_group[subset_id] = {
             "threshold_rmse": threshold,
             "observed_rmse": rmse,
             "passed": rmse < threshold,
+            "status": "completed",
         }
     return {
         "groups": per_group,
-        "all_passed": all(item["passed"] for item in per_group.values()),
+        "all_passed": set(groups) >= set(thresholds)
+        and all(item["passed"] for item in per_group.values()),
     }
 
 
@@ -104,6 +114,8 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
         f"- weight_decay：`{winning['weight_decay']}`",
         f"- full_run_completed：`{summary['full_run_completed']}`",
         f"- ensemble_policy：`{summary['screen_config']['ensemble_policy']}`",
+        f"- prediction_aggregation_policy：`{summary['screen_config']['prediction_aggregation_policy']}`",
+        f"- supervision_granularity：`{summary['screen_config']['supervision_granularity']}`",
         "",
         "## Screen Leaderboard",
         "",
@@ -129,6 +141,9 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
         ]
     )
     for subset_id in ("n_back", "heat_the_chair"):
+        if subset_id not in final_result["groups"]:
+            lines.append(f"| {subset_id} | not_run | not_run | not_run | not_run |")
+            continue
         metrics = final_result["groups"][subset_id]
         group_selection = final_result.get("group_selections", {}).get(subset_id, {})
         lines.append(
@@ -157,9 +172,14 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
     )
     for subset_id in ("n_back", "heat_the_chair"):
         payload = acceptance["groups"][subset_id]
+        observed = (
+            "not_run"
+            if payload.get("observed_rmse") is None
+            else fmt_public_opt_float(payload["observed_rmse"])
+        )
         lines.append(
             f"| {subset_id} | {fmt_public_opt_float(payload['threshold_rmse'])} | "
-            f"{fmt_public_opt_float(payload['observed_rmse'])} | `{payload['passed']}` |"
+            f"{observed} | `{payload['passed']}` |"
         )
     lines.append("")
     lines.append(f"- public_mainline_status：`{summary['public_mainline_status']}`")
@@ -186,7 +206,8 @@ def render_torch_uab_report(summary: Mapping[str, object]) -> str:
                 .get(subset_id, {})
                 .get("rmse", 0.0)
             )
-            torch_rmse = float(final_result["groups"][subset_id]["rmse"])
+            torch_group = final_result["groups"].get(subset_id) or {}
+            torch_rmse = float(torch_group.get("rmse", 0.0))
             lines.append(
                 f"| {subset_id} | {fmt_public_opt_float(public_opt_rmse)} | "
                 f"{fmt_public_opt_float(mult_rmse)} | {fmt_public_opt_float(contiformer_rmse)} | "

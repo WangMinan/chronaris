@@ -58,6 +58,7 @@ PUBLIC_CONTEXT_LABEL_KEYS = frozenset(
         "perceived_difficulty",
     }
 )
+PreparationProgressCallback = Callable[[str, Mapping[str, object]], None]
 
 
 @dataclass(frozen=True, slots=True)
@@ -264,6 +265,7 @@ def prepare_uab_sequences(
     *,
     profile: str = WINDOW_V2,
     target_steps: int = DEFAULT_SEQUENCE_STEPS,
+    progress_callback: PreparationProgressCallback | None = None,
 ) -> StageISequencePreparationPayload:
     prepared = build_uab_task_entries(dataset_root, profile=profile)
     entries = tuple(
@@ -303,13 +305,35 @@ def prepare_uab_sequences(
         },
     }
     window_specs = build_window_specs(entries, time_range_builder=entry_iso_window_bounds)
-    for spec in modality_specs:
+    for source_index, spec in enumerate(modality_specs, start=1):
+        _emit_preparation_progress(
+            progress_callback,
+            "source_processing_started",
+            dataset_id=UAB_DATASET_ID,
+            source_index=source_index,
+            total_sources=len(modality_specs),
+            source_kind="parquet",
+            source_path=spec.relative_path,
+            modality=spec.modality_name,
+            entry_count=len(entries),
+        )
         parquet_path = root / spec.relative_path
         feature_names = infer_parquet_value_columns(
             parquet_path,
             selector=spec.selector,
         )
         if not feature_names:
+            _emit_preparation_progress(
+                progress_callback,
+                "source_processing_skipped",
+                dataset_id=UAB_DATASET_ID,
+                source_index=source_index,
+                total_sources=len(modality_specs),
+                source_kind="parquet",
+                source_path=spec.relative_path,
+                modality=spec.modality_name,
+                reason="no_feature_columns",
+            )
             continue
         results = stream_window_sequence_arrays_from_parquet(
             parquet_path=parquet_path,
@@ -327,6 +351,18 @@ def prepare_uab_sequences(
             target_masks=eeg_masks if spec.modality_name == "eeg" else ecg_masks,
             sample_id_to_index=sample_id_to_index,
             feature_positions=feature_position_maps[spec.modality_name],
+        )
+        _emit_preparation_progress(
+            progress_callback,
+            "source_processing_finished",
+            dataset_id=UAB_DATASET_ID,
+            source_index=source_index,
+            total_sources=len(modality_specs),
+            source_kind="parquet",
+            source_path=spec.relative_path,
+            modality=spec.modality_name,
+            feature_count=len(feature_names),
+            entry_count=len(entries),
         )
 
     physiology_feature_names = tuple(
@@ -465,6 +501,7 @@ def prepare_nasa_sequences(
     *,
     profile: str = WINDOW_V2,
     target_steps: int = DEFAULT_SEQUENCE_STEPS,
+    progress_callback: PreparationProgressCallback | None = None,
 ) -> StageISequencePreparationPayload:
     prepared = build_nasa_csm_task_entries(dataset_root)
     entries = tuple(prepared.entries)
@@ -513,7 +550,8 @@ def prepare_nasa_sequences(
         feature_name: index
         for index, feature_name in enumerate(peripheral_feature_names)
     }
-    for relative_path, group_entries in sorted(grouped.items()):
+    grouped_items = sorted(grouped.items())
+    for source_index, (relative_path, group_entries) in enumerate(grouped_items, start=1):
         csv_path = root / relative_path
         recording_id = group_entries[0].recording_id or group_entries[0].session_id
         window_specs = {
@@ -525,6 +563,17 @@ def prepare_nasa_sequences(
                 ),
             )[recording_id]
         }
+        _emit_preparation_progress(
+            progress_callback,
+            "source_processing_started",
+            dataset_id=NASA_DATASET_ID,
+            source_index=source_index,
+            total_sources=len(grouped_items),
+            source_kind="csv",
+            source_path=relative_path,
+            recording_id=recording_id,
+            window_count=len(group_entries),
+        )
         eeg_columns = tuple(
             column
             for column in csv_headers[relative_path]
@@ -569,6 +618,19 @@ def prepare_nasa_sequences(
                 sample_id_to_index=sample_id_to_index,
                 feature_positions=peripheral_feature_positions,
             )
+        _emit_preparation_progress(
+            progress_callback,
+            "source_processing_finished",
+            dataset_id=NASA_DATASET_ID,
+            source_index=source_index,
+            total_sources=len(grouped_items),
+            source_kind="csv",
+            source_path=relative_path,
+            recording_id=recording_id,
+            window_count=len(group_entries),
+            eeg_feature_count=len(eeg_columns),
+            peripheral_feature_count=len(peripheral_columns),
+        )
 
     physiology_feature_names = tuple(
         f"eeg::{feature_name}" for feature_name in eeg_feature_names
@@ -658,6 +720,20 @@ def prepare_nasa_sequences(
             "adapter_id": CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
             "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
             "prepared_subset_counts": dict(prepared.subset_counts),
+            "processing_diagnostics": {
+                "csv_file_count": len(grouped),
+                "chunk_size": 200_000,
+                "window_count": len(entries),
+                "primary_count": sum(
+                    1 for entry in entries if entry.training_role == "primary"
+                ),
+                "background_count": sum(
+                    1 for entry in entries if entry.training_role == "inventory_only"
+                ),
+                "modalities": ["physiology", "scenario_context"],
+                "context_feature_names": list(scenario_context_feature_names),
+                "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+            },
             "inventory_only_background_count": sum(
                 1 for entry in entries if entry.training_role == "inventory_only"
             ),
@@ -717,6 +793,16 @@ def _sequence_entry_from_task_entry(
         window_end_utc=entry.window_end_utc,
         context_payload=dict(context_payload if context_payload is not None else entry.context_payload),
     )
+
+
+def _emit_preparation_progress(
+    progress_callback: PreparationProgressCallback | None,
+    event: str,
+    **fields: object,
+) -> None:
+    if progress_callback is None:
+        return
+    progress_callback(event, fields)
 
 
 def _build_summary(

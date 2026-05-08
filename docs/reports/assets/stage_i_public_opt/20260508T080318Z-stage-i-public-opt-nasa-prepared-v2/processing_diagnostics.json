@@ -1,0 +1,44 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "entry_count": 16609,
+  "csv_file_count": 68,
+  "chunk_size": 200000,
+  "window_count": 16609,
+  "primary_count": 2810,
+  "background_count": 13799,
+  "label_distribution": {
+    "attention_state": {
+      "2": 2332,
+      "0": 13799,
+      "5": 294,
+      "1": 184
+    }
+  },
+  "modalities": [
+    "physiology",
+    "scenario_context"
+  ],
+  "context_feature_names": [
+    "source_partition__benchmark",
+    "source_partition__loft",
+    "window_index_norm"
+  ],
+  "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+  "label_leakage_guard": {
+    "excluded_from_context_stream": [
+      "event_code",
+      "game_mode",
+      "label_sources",
+      "objective_label_text",
+      "perceived_difficulty",
+      "task_variant",
+      "theoretical_difficulty"
+    ],
+    "context_feature_names": [
+      "source_partition__benchmark",
+      "source_partition__loft",
+      "window_index_norm"
+    ]
+  }
+}

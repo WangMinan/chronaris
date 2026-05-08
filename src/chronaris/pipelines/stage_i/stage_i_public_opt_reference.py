@@ -29,6 +29,55 @@ def load_public_opt_prepared_dataset(artifact_root: str | Path) -> dict[str, obj
     }
 
 
+def validate_public_opt_prepared_dataset_contract(
+    prepared: Mapping[str, object],
+    *,
+    dataset_id: str,
+) -> None:
+    """Fail fast on stale public prepared assets before long runs start."""
+
+    if dataset_id != "nasa_csm":
+        return
+    schema = prepared.get("schema") or {}
+    if not isinstance(schema, Mapping):
+        raise ValueError("NASA prepared asset is missing sequence_schema.json.")
+    modalities = tuple((schema.get("modalities") or {}).keys())
+    expected_modalities = ("physiology", "scenario_context")
+    if modalities != expected_modalities:
+        raise ValueError(
+            "NASA prepared asset must use Chronaris-public modalities "
+            f"{expected_modalities}, got {modalities}. Rebuild NASA sequence assets."
+        )
+    guard = schema.get("label_leakage_guard")
+    if not isinstance(guard, Mapping):
+        raise ValueError(
+            "NASA prepared asset is missing label_leakage_guard. "
+            "Rebuild NASA sequence assets before public-opt/public-fusion runs."
+        )
+    context_feature_names = tuple(
+        str(value) for value in guard.get("context_feature_names", ())
+    )
+    forbidden = {"event_code", "objective_label_text"}
+    leaked_features = tuple(
+        name
+        for name in context_feature_names
+        if any(forbidden_name in name for forbidden_name in forbidden)
+    )
+    if leaked_features:
+        raise ValueError(
+            "NASA prepared asset leaks label-like context features: "
+            + ", ".join(leaked_features)
+        )
+    entries = tuple(prepared.get("entries") or ())
+    for entry in entries:
+        leaked_context = sorted(forbidden.intersection(entry.context_payload))
+        if leaked_context:
+            raise ValueError(
+                "NASA prepared asset context_payload contains label-like fields: "
+                + ", ".join(leaked_context)
+            )
+
+
 def build_public_opt_reference_comparison(
     *,
     dataset_id: str,

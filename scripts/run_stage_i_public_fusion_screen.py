@@ -20,6 +20,9 @@ from chronaris.pipelines import (  # noqa: E402
     run_stage_i_public_fusion_screen,
     StageIPublicFusionScreenConfig,
 )
+from chronaris.pipelines.stage_i.stage_i_run_observer import (  # noqa: E402
+    configure_stage_i_cli_logging,
+)
 
 
 def _default_run_id() -> str:
@@ -40,6 +43,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument(
+        "--allow-cpu-debug",
+        action="store_true",
+        help="allow CPU fallback for debugging only; paper-facing runs require CUDA",
+    )
+    parser.add_argument(
         "--train-sampling-policy",
         choices=("none", "balanced_class"),
         default="none",
@@ -51,7 +59,9 @@ def main() -> int:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        stream=sys.stdout,
     )
+    configure_stage_i_cli_logging(sys.stdout)
     args = parse_args()
     dataset_prepared_roots = {}
     if args.uab_root:
@@ -73,6 +83,7 @@ def main() -> int:
             max_folds=args.max_folds,
             seed=args.seed,
             device=args.device,
+            require_cuda=not args.allow_cpu_debug,
             train_sampling_policy=args.train_sampling_policy,
         )
     )

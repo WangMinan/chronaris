@@ -86,7 +86,7 @@
   - Stage I 论文证据 support：`docs/reports/stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
   - Stage I public opt NASA enhanced round 1：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
   - Stage I public opt UAB torch：`docs/reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
-  - Stage I public mainline：`docs/reports/stage_i/stage-i-public-mainline-20260507T024112Z-stage-i-public-mainline.md`
+  - Stage I public mainline：`docs/reports/stage_i/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`
   - Stage I 报告索引与历史快照：`docs/reports/stage_i/README.md`
   - Private 报告索引与历史快照：`docs/reports/private/README.md`
   - 当前 `chronaris_opt` package：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
@@ -231,7 +231,7 @@
   - 保持 `E/F/G(min)/H` 导出路径稳定：它们是 `chronaris_opt` 的历史基线与输入依赖，不直接废弃
   - 继续把 UAB/NASA `Phase 0/1/2/3` 视为公开 benchmark 历史事实，不与私有 proxy 最优性混写
   - 明确 `20251110...` vehicle-only partial bundle 只用于单流预训练/补充诊断，不作为双流融合 view
-  - 当前公开主线事实已冻结为 `NASA closed, UAB partial`；引用时优先看 `stage-i-public-mainline-20260507T024112Z-stage-i-public-mainline.md`
+  - 当前公开主线事实已冻结为 `NASA closed, UAB partial`；引用时优先看 `stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`
   - 不再继续扩大 CPU-heavy `sklearn` 搜索，也不把当前 `UAB torch-native` partial 结果写成 closure
   - 如果继续扩展公开主线，优先复用 `run_stage_i_public_fusion_screen.py --train-sampling-policy balanced_class --device cuda` 做 `NASA-first` confirm；若 `combined macro-F1 <= 0.40`，则停止该支线
 - 切到远程环境前，先同步代码、测试和文档

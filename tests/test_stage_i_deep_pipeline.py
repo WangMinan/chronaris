@@ -9,6 +9,7 @@ import sys
 import tempfile
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import torch
@@ -46,6 +47,7 @@ from chronaris.pipelines import (  # noqa: E402
 from chronaris.pipelines.stage_i.stage_i_deep_baseline import (  # noqa: E402
     _sanitize_regression_outputs,
 )
+from chronaris.pipelines.stage_i import stage_i_public_fusion_screen as public_fusion_module  # noqa: E402
 
 REAL_DATASET_ROOT = Path("/home/wangminan/dataset/chronaris")
 REAL_STAGE_H_RUN_MANIFEST = Path(
@@ -221,6 +223,10 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
                 set(nasa_payload.bundle.modality_arrays),
                 {"physiology", "scenario_context"},
             )
+            diagnostics = nasa_payload.summary.extra_summary["processing_diagnostics"]
+            self.assertEqual(diagnostics["modalities"], ["physiology", "scenario_context"])
+            self.assertGreater(diagnostics["csv_file_count"], 0)
+            self.assertNotIn("event_code", diagnostics["context_feature_names"])
             self.assertIn("benchmark", nasa_payload.summary.subset_counts)
             self.assertGreater(
                 nasa_payload.summary.extra_summary["inventory_only_background_count"],
@@ -254,6 +260,16 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
                     target_steps=64,
                 )
             )
+            self.assertTrue((nasa_root / "run.log").exists())
+            self.assertTrue((nasa_root / "progress.json").exists())
+            self.assertTrue((nasa_root / "processing_diagnostics.json").exists())
+            nasa_progress = json.loads(
+                (nasa_root / "progress.json").read_text(encoding="utf-8")
+            )
+            nasa_events = [event["event"] for event in nasa_progress["events"]]
+            self.assertIn("source_processing_started", nasa_events)
+            self.assertIn("source_processing_finished", nasa_events)
+            self.assertEqual(nasa_progress["last_event"], "finished")
             for dataset_id, prepared_root in (
                 ("uab_workload_dataset", uab_root),
                 ("nasa_csm", nasa_root),
@@ -720,6 +736,29 @@ class StageIPrivateBenchmarkPipelineTest(unittest.TestCase):
             self.assertTrue(Path(summary["plots"]["t1_metrics"]).exists())
             self.assertTrue(Path(summary["plots"]["t2_metrics"]).exists())
             self.assertTrue(Path(summary["plots"]["t3_metrics"]).exists())
+
+    def test_public_fusion_screen_require_cuda_fails_before_candidates_on_cpu(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with patch.object(
+                public_fusion_module,
+                "resolve_torch_device_name",
+                return_value="cpu",
+            ):
+                with self.assertRaisesRegex(RuntimeError, "requires CUDA"):
+                    run_stage_i_public_fusion_screen(
+                        StageIPublicFusionScreenConfig(
+                            run_id="fusion-screen-require-cuda",
+                            dataset_prepared_roots={"nasa_csm": str(Path(temp_dir) / "missing")},
+                            artifact_root=str(Path(temp_dir) / "fusion_screen"),
+                            report_root=str(Path(temp_dir) / "reports"),
+                            device="auto",
+                            require_cuda=True,
+                        )
+                    )
+            run_root = Path(temp_dir) / "fusion_screen" / "fusion-screen-require-cuda"
+            self.assertTrue((run_root / "run.log").exists())
+            progress = json.loads((run_root / "progress.json").read_text(encoding="utf-8"))
+            self.assertEqual(progress["last_event"], "failed")
 
     @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
     def test_public_fusion_screen_runs_on_cuda_with_synthetic_assets(self) -> None:

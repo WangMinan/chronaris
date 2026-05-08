@@ -4,6 +4,7 @@
 
 - 本文档涉及的所有 Python 脚本默认显式使用 `chronaris` 解释器：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
 - 若命令前需要环境变量，例如 `CHRONARIS_MYSQL_HOST=127.0.0.1`，应写成 `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python <script>`
+- Stage I 长任务默认要同时看 CLI `INFO` 输出、artifact 目录下的 `run.log` 与 `progress.json`；断连后优先从这两个文件判断 dataset/candidate/fold/输出路径进度。
 
 这里放一次性或轻量脚本，例如：
 
@@ -149,54 +150,90 @@
     - `docs/planning/stage-i-closure-<date>.md`
 
 - `run_stage_i_public_opt.py`
-  - 消费已准备好的公开 `sequence contract`，运行 `chronaris public opt`
+  - 消费已准备好的公开 `sequence contract`，运行统一的 `chronaris public opt` 入口
+  - 当前 `backend=auto`：
+    - `dataset_id=uab_workload_dataset` 默认切到 torch-native UAB heat specialist 主线，CUDA fail-fast
+    - `dataset_id=nasa_csm` 保持 sklearn `NASA enhanced` 主线
   - 当前支持：
     - `dataset_id=uab_workload_dataset`
       - `profile=window_v2`
       - `track=subjective regression`
-      - evaluation groups：`n_back / heat_the_chair`
-      - 当前增强 head：`physiology_persistence / ridge_residual_cv / elasticnet_residual / huber_residual`
+      - `backend=torch|auto`：
+        - 默认 evaluation groups：`heat_the_chair`
+        - 当前 heat specialist 候选：`heat_linear_huber_lowdim / heat_mlp_lowdim / heat_residual_correction / heat_affine_calibrated_blend`
+        - 默认 `artifact_root`：`docs/reports/assets/stage_i_public_opt_torch`
+      - `backend=sklearn`：
+        - evaluation groups：`n_back / heat_the_chair`
+        - 当前增强 head：`physiology_persistence / ridge_residual_cv / elasticnet_residual / huber_residual`
+        - `head_catalog=uab_hybrid` 属于 CPU-heavy historical reproduction，必须显式加 `--allow-cpu-heavy-sklearn`
+        - 默认 `artifact_root`：`docs/reports/assets/stage_i_public_opt`
     - `dataset_id=nasa_csm`
       - `profile=window_v2`
       - `track=attention_state classification`
       - evaluation groups：`benchmark_only / loft_only / combined`
       - 当前增强 head：`physiology_margin_balanced_logistic / balanced_logistic_context / balanced_linear_svc_context`
   - 当前可调：
-    - `feature_profile=full|physiology_only|context_only|residual_only`
-    - `head_catalog=minimal|expanded`
+    - `feature_profile=full|physiology_only|physiology_lowdim|physiology_scalar_only|context_only|residual_only`
+    - `head_catalog=minimal|expanded|uab_hybrid`
     - `train_balance_policy=none|class_weight_balanced`
     - `ensemble_policy=none|mean_top2|vote_top2`
+    - `prediction_aggregation_policy=none|session_mean_broadcast|session_median_broadcast`
     - `winner_margin_policy=paper_gate|none`
+    - `backend=auto|sklearn|torch`
+    - `device=auto|cpu|cuda`（torch UAB；默认 `require_cuda`，只有 `--allow-cpu-debug` 才允许 CPU fallback）
+    - `torch_candidate_catalog=default|heat_specialist`（torch UAB）
+    - `selected_subset=n_back|heat_the_chair`（torch UAB；heat specialist 默认只跑 `heat_the_chair`）
+    - `torch_feature_profile=full|residual_only|physiology_only|physiology_lowdim|physiology_scalar_only`（torch UAB）
+    - `learning_rate / weight_decay / screen_max_folds / full_candidate_limit / full_group_winner_limit`（torch UAB）
+    - `supervision_granularity=window|session_pooled_broadcast`（torch UAB）
   - 自动输出：
-    - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
-    - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
-    - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
+    - sklearn：
+      - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
+      - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
+      - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
+      - `docs/reports/assets/stage_i_public_opt/<run_id>/run.log`
+      - `docs/reports/assets/stage_i_public_opt/<run_id>/progress.json`
+    - torch UAB：
+      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
+      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
+      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
+      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/run.log`
+      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/progress.json`
     - `docs/reports/stage_i/stage-i-public-opt-<run_id>.md`
   - 当前定位：
     - `NASA attention_state` 主线继续优先引用这里的 `NASA enhanced round 1`
-    - `UAB subjective` 旧 CPU line 继续保留为 historical baseline，不再继续扩大搜索
+    - `UAB subjective` 当前默认走 heat-only torch-native GPU-first 主线；只有在需要历史复现时，才显式切回 `--backend sklearn`
 
 - `run_stage_i_public_opt_torch_uab.py`
   - 消费同一套公开 `sequence contract` 与 `public opt` 特征帧，运行 GPU-preferred `UAB subjective` torch-native mainline
-  - CLI 会输出 `INFO` 级进度日志：设备解析、candidate 粗筛、full LOSO、final selection 与落盘路径
-  - 固定候选族：
+  - CLI 会输出 `INFO` 级进度日志，并落盘 `run.log / progress.json`：设备解析、candidate 粗筛、subset/fold、full LOSO、final selection 与落盘路径
+  - 默认 `candidate_catalog=heat_specialist`，只跑 `selected_subset=heat_the_chair`
+  - default 候选族：
+    - `linear_huber`
     - `mlp_huber_small`
     - `mlp_huber_wide`
     - `residual_gated_mlp`
+  - heat specialist 候选族：
+    - `heat_linear_huber_lowdim`
+    - `heat_mlp_lowdim`
+    - `heat_residual_correction`
+    - `heat_affine_calibrated_blend`
   - 固定训练口径：
     - `HuberLoss`
     - `AdamW`
     - `epochs=20`
     - `patience=4`
     - `batch_size=256`
-    - 默认 `device=auto`，优先 `cuda`，无 CUDA 时回落到 `cpu`
+    - 默认 `device=auto`，但 paper-facing CLI 会要求 `runtime_device=cuda`；调试 CPU fallback 必须加 `--allow-cpu-debug`
   - 默认先做 `max_folds=2` 粗筛，再对 top candidates 执行 full LOSO
   - 当前可调：
-    - `feature_profile=full|residual_only`
+    - `feature_profile=full|residual_only|physiology_only|physiology_lowdim|physiology_scalar_only`
     - `learning_rate`
     - `weight_decay`
     - `ensemble_policy=none|mean_top2`
-    - `full_candidate_limit`
+    - `prediction_aggregation_policy=none|session_mean_broadcast|session_median_broadcast`
+    - `supervision_granularity=window|session_pooled_broadcast`
+    - `full_candidate_limit|full_group_winner_limit`
   - 自动输出：
     - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
     - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/candidate_leaderboard.csv`
@@ -214,16 +251,19 @@
 
 - `run_stage_i_public_fusion_screen.py`
   - 以 `chronaris_public_fusion` 为目标模型，按固定候选集执行 GPU-preferred 公共数据筛选
-  - CLI 会输出 `INFO` 级进度日志：dataset/candidate 进度、得分与最终落盘路径
+  - CLI 会输出 `INFO` 级进度日志，并落盘 `run.log / progress.json`：dataset/candidate 进度、得分与最终落盘路径
   - 当前固定：
     - 候选集定义在 `src/chronaris/pipelines/stage_i/stage_i_public_fusion_screen.py`
     - `NASA` 以 `combined macro-F1` 排序
     - `UAB` 以 `mean RMSE` 排序
-    - 默认 `device=auto`，优先 `cuda`，无 CUDA 时回落到 `cpu`
+    - 默认 `device=auto`，但 paper-facing CLI 会要求 `runtime_device=cuda`；调试 CPU fallback 必须加 `--allow-cpu-debug`
+    - NASA prepared asset 会先校验 `physiology + scenario_context`、`label_leakage_guard` 和 context feature 无标签泄漏
     - follow-up 可显式加 `--train-sampling-policy balanced_class --epochs 10`
   - 自动输出：
     - `fusion_screen_summary.json`
     - `candidate_leaderboard.csv`
+    - `run.log`
+    - `progress.json`
     - `docs/reports/stage_i/stage-i-public-fusion-screen-<run_id>.md`
 
 - `run_stage_i_public_mainline_report.py`

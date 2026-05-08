@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import sys
 from pathlib import Path
 
@@ -15,6 +16,9 @@ if str(SRC) not in sys.path:
 from chronaris.pipelines.stage_i.stage_i_sequence_preparation import (  # noqa: E402
     StageISequencePreparationConfig,
     run_stage_i_sequence_preparation,
+)
+from chronaris.pipelines.stage_i.stage_i_run_observer import (  # noqa: E402
+    configure_stage_i_cli_logging,
 )
 
 
@@ -41,6 +45,12 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        stream=sys.stdout,
+    )
+    configure_stage_i_cli_logging(sys.stdout)
     args = parse_args()
     result = run_stage_i_sequence_preparation(
         StageISequencePreparationConfig(

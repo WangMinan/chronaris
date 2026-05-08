@@ -18,6 +18,9 @@ from chronaris.pipelines import (  # noqa: E402
     StageIPublicOptTorchUABConfig,
     run_stage_i_public_opt_torch_uab,
 )
+from chronaris.pipelines.stage_i.stage_i_run_observer import (  # noqa: E402
+    configure_stage_i_cli_logging,
+)
 
 
 def _default_run_id() -> str:
@@ -37,13 +40,37 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--screen-max-folds", type=int, default=2)
     parser.add_argument("--full-max-folds", type=int, default=None)
     parser.add_argument("--full-candidate-limit", type=int, default=2)
+    parser.add_argument("--full-group-winner-limit", type=int, default=1)
     parser.add_argument("--skip-full-loso", action="store_true")
+    parser.add_argument(
+        "--allow-cpu-debug",
+        action="store_true",
+        help="allow CPU fallback for debugging only; default paper-facing runs require CUDA",
+    )
+    parser.add_argument(
+        "--candidate-catalog",
+        choices=("default", "heat_specialist"),
+        default="heat_specialist",
+    )
+    parser.add_argument(
+        "--selected-subset",
+        action="append",
+        dest="selected_subsets",
+        choices=("n_back", "heat_the_chair"),
+        default=[],
+    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
         "--feature-profile",
         action="append",
         dest="feature_profiles",
-        choices=("full", "residual_only"),
+        choices=(
+            "full",
+            "residual_only",
+            "physiology_only",
+            "physiology_lowdim",
+            "physiology_scalar_only",
+        ),
         default=[],
     )
     parser.add_argument(
@@ -65,6 +92,11 @@ def parse_args() -> argparse.Namespace:
         choices=("none", "mean_top2"),
         default="none",
     )
+    parser.add_argument(
+        "--supervision-granularity",
+        choices=("window", "session_pooled_broadcast"),
+        default="window",
+    )
     parser.add_argument("--reference-public-opt-summary")
     parser.add_argument("--reference-deep-comparison-summary")
     return parser.parse_args()
@@ -74,7 +106,9 @@ def main() -> int:
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        stream=sys.stdout,
     )
+    configure_stage_i_cli_logging(sys.stdout)
     args = parse_args()
     result = run_stage_i_public_opt_torch_uab(
         StageIPublicOptTorchUABConfig(
@@ -90,9 +124,28 @@ def main() -> int:
             full_max_folds=args.full_max_folds,
             run_full_loso=not args.skip_full_loso,
             full_candidate_limit=args.full_candidate_limit,
+            full_group_winner_limit=args.full_group_winner_limit,
             ensemble_policy=args.ensemble_policy,
+            supervision_granularity=args.supervision_granularity,
+            require_cuda=not args.allow_cpu_debug,
+            candidate_catalog=args.candidate_catalog,
+            selected_subsets=tuple(args.selected_subsets) or (
+                ("heat_the_chair",)
+                if args.candidate_catalog == "heat_specialist"
+                else ("n_back", "heat_the_chair")
+            ),
             seed=args.seed,
-            feature_profiles=tuple(args.feature_profiles) or ("full", "residual_only"),
+            feature_profiles=tuple(args.feature_profiles) or (
+                ("physiology_lowdim",)
+                if args.candidate_catalog == "heat_specialist"
+                else (
+                    "full",
+                    "residual_only",
+                    "physiology_only",
+                    "physiology_lowdim",
+                    "physiology_scalar_only",
+                )
+            ),
             learning_rates=tuple(args.learning_rates) or (1e-3, 3e-4),
             weight_decays=tuple(args.weight_decays) or (1e-4, 1e-3),
             reference_public_opt_summary_path=(
