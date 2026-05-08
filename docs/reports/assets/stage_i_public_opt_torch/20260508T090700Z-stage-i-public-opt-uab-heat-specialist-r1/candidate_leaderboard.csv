@@ -1,0 +1,17 @@
+candidate_id,model_family,feature_profile,learning_rate,weight_decay,dropout,hidden_dims,screen_mean_rmse,screen_mean_mae,n_back_rmse,n_back_mae,heat_the_chair_rmse,heat_the_chair_mae
+heat_residual_correction__lr0p0003__wd0p0001,heat_residual_correction,physiology_lowdim,0.0003,0.0001,0.0,"[0, 0]",2.0960458303963434,1.7883089216525279,,,2.0960458303963434,1.7883089216525279
+heat_residual_correction__lr0p001__wd0p0001,heat_residual_correction,physiology_lowdim,0.001,0.0001,0.0,"[0, 0]",2.0960458303963434,1.7883089216525279,,,2.0960458303963434,1.7883089216525279
+heat_residual_correction__lr0p0003__wd0p001,heat_residual_correction,physiology_lowdim,0.0003,0.001,0.0,"[0, 0]",2.096045831129953,1.7883089238947087,,,2.096045831129953,1.7883089238947087
+heat_residual_correction__lr0p001__wd0p001,heat_residual_correction,physiology_lowdim,0.001,0.001,0.0,"[0, 0]",2.096045831129953,1.7883089238947087,,,2.096045831129953,1.7883089238947087
+heat_mlp_lowdim__lr0p0003__wd0p0001,mlp_huber_small,physiology_lowdim,0.0003,0.0001,0.1,"[96, 48]",2.172823422794418,1.886343316972069,,,2.172823422794418,1.886343316972069
+heat_mlp_lowdim__lr0p0003__wd0p001,mlp_huber_small,physiology_lowdim,0.0003,0.001,0.1,"[96, 48]",2.172869551733196,1.8863861904622619,,,2.172869551733196,1.8863861904622619
+heat_mlp_lowdim__lr0p001__wd0p0001,mlp_huber_small,physiology_lowdim,0.001,0.0001,0.1,"[96, 48]",2.2438909385234336,1.968512198020672,,,2.2438909385234336,1.968512198020672
+heat_mlp_lowdim__lr0p001__wd0p001,mlp_huber_small,physiology_lowdim,0.001,0.001,0.1,"[96, 48]",2.2440200834712276,1.9686534217906222,,,2.2440200834712276,1.9686534217906222
+heat_affine_calibrated_blend__lr0p0003__wd0p001,heat_affine_calibrated_blend,physiology_lowdim,0.0003,0.001,0.0,"[0, 0]",2.6045499718652025,2.340337537299129,,,2.6045499718652025,2.340337537299129
+heat_affine_calibrated_blend__lr0p001__wd0p001,heat_affine_calibrated_blend,physiology_lowdim,0.001,0.001,0.0,"[0, 0]",2.6045499718652025,2.340337537299129,,,2.6045499718652025,2.340337537299129
+heat_affine_calibrated_blend__lr0p0003__wd0p0001,heat_affine_calibrated_blend,physiology_lowdim,0.0003,0.0001,0.0,"[0, 0]",2.604550203600181,2.3403377562854732,,,2.604550203600181,2.3403377562854732
+heat_affine_calibrated_blend__lr0p001__wd0p0001,heat_affine_calibrated_blend,physiology_lowdim,0.001,0.0001,0.0,"[0, 0]",2.604550203600181,2.3403377562854732,,,2.604550203600181,2.3403377562854732
+heat_linear_huber_lowdim__lr0p001__wd0p0001,linear_huber,physiology_lowdim,0.001,0.0001,0.0,"[0, 0]",5.443209132318218,5.089119438514067,,,5.443209132318218,5.089119438514067
+heat_linear_huber_lowdim__lr0p001__wd0p001,linear_huber,physiology_lowdim,0.001,0.001,0.0,"[0, 0]",5.443259978055717,5.089167822140698,,,5.443259978055717,5.089167822140698
+heat_linear_huber_lowdim__lr0p0003__wd0p0001,linear_huber,physiology_lowdim,0.0003,0.0001,0.0,"[0, 0]",5.684833849627022,5.3467676428593345,,,5.684833849627022,5.3467676428593345
+heat_linear_huber_lowdim__lr0p0003__wd0p001,linear_huber,physiology_lowdim,0.0003,0.001,0.0,"[0, 0]",5.684836030028096,5.346768459906586,,,5.684836030028096,5.346768459906586

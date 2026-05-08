@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Mapping, Sequence
 
 import numpy as np
@@ -15,6 +16,11 @@ from sklearn.svm import LinearSVC
 from chronaris.evaluation import evaluate_classification_predictions, evaluate_regression_predictions
 from chronaris.pipelines.stage_i.stage_i_baseline_models import build_loso_splits
 from chronaris.pipelines.stage_i.stage_i_public_opt_data import PUBLIC_OPT_FEATURE_PROFILES, StageIPublicOptFeatureFrameResult
+from chronaris.pipelines.stage_i.stage_i_public_opt_postprocess import (
+    apply_public_opt_regression_prediction_aggregation,
+    merge_public_opt_prediction_frames,
+    validate_public_opt_prediction_aggregation_policy,
+)
 from chronaris.pipelines.stage_i.stage_i_public_opt_shared import (
     safe_public_opt_classification_fallback,
     safe_public_opt_regression_fallback,
@@ -24,20 +30,30 @@ from chronaris.pipelines.stage_i.stage_i_public_opt_shared import (
     should_use_public_opt_classification_fallback,
     should_use_public_opt_regression_fallback,
 )
+from chronaris.pipelines.stage_i.stage_i_run_observer import StageIRunProgress
+
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
 
 
 def run_public_opt_backend(
     *,
     feature_result: StageIPublicOptFeatureFrameResult,
     head_feature_columns: Mapping[str, Sequence[str]],
+    head_catalog: str,
     train_balance_policy: str,
     ensemble_policy: str,
+    prediction_aggregation_policy: str,
+    progress: StageIRunProgress | None = None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     if feature_result.task_type == "regression":
         return _run_public_opt_regression(
             feature_result=feature_result,
             head_feature_columns=head_feature_columns,
+            head_catalog=head_catalog,
             ensemble_policy=ensemble_policy,
+            prediction_aggregation_policy=prediction_aggregation_policy,
+            progress=progress,
         )
     if feature_result.task_type == "classification":
         return _run_public_opt_classification(
@@ -45,6 +61,7 @@ def run_public_opt_backend(
             head_feature_columns=head_feature_columns,
             train_balance_policy=train_balance_policy,
             ensemble_policy=ensemble_policy,
+            progress=progress,
         )
     raise ValueError(f"unsupported public opt task type: {feature_result.task_type}")
 
@@ -55,11 +72,12 @@ def validate_public_opt_config(
     head_catalog: str,
     train_balance_policy: str,
     ensemble_policy: str,
+    prediction_aggregation_policy: str,
     winner_margin_policy: str,
 ) -> None:
     if feature_profile not in set(PUBLIC_OPT_FEATURE_PROFILES):
         raise ValueError(f"unsupported public opt feature_profile: {feature_profile}")
-    if head_catalog not in {"minimal", "expanded"}:
+    if head_catalog not in {"minimal", "expanded", "uab_hybrid"}:
         raise ValueError(f"unsupported public opt head_catalog: {head_catalog}")
     if train_balance_policy not in {"none", "class_weight_balanced"}:
         raise ValueError(
@@ -68,6 +86,7 @@ def validate_public_opt_config(
         )
     if ensemble_policy not in {"none", "mean_top2", "vote_top2"}:
         raise ValueError(f"unsupported public opt ensemble_policy: {ensemble_policy}")
+    validate_public_opt_prediction_aggregation_policy(prediction_aggregation_policy)
     if winner_margin_policy not in {"paper_gate", "none"}:
         raise ValueError(
             "unsupported public opt winner_margin_policy: "
@@ -89,9 +108,31 @@ def resolve_head_feature_columns(
                 "balanced_logistic_context",
             ),
         }
-    else:
+    elif head_catalog == "uab_hybrid":
+        if feature_result.dataset_id != "uab_workload_dataset":
+            raise ValueError("head_catalog=uab_hybrid only supports UAB public opt.")
         catalog = {
-            "subjective": tuple(feature_result.head_feature_columns),
+            "subjective": (
+                "physiology_persistence",
+                "ridge_residual_cv",
+                "elasticnet_residual",
+                "huber_residual",
+                "ridge_heat_physiology_lowdim",
+                "huber_heat_physiology_lowdim",
+            ),
+            "objective": (),
+        }
+    else:
+        subjective_heads = tuple(feature_result.head_feature_columns)
+        if feature_result.dataset_id == "uab_workload_dataset":
+            subjective_heads = (
+                "physiology_persistence",
+                "ridge_residual_cv",
+                "elasticnet_residual",
+                "huber_residual",
+            )
+        catalog = {
+            "subjective": subjective_heads,
             "objective": tuple(feature_result.head_feature_columns),
         }
     allowed_columns = set(feature_result.feature_groups[feature_profile])
@@ -113,7 +154,10 @@ def _run_public_opt_regression(
     *,
     feature_result: StageIPublicOptFeatureFrameResult,
     head_feature_columns: Mapping[str, Sequence[str]],
+    head_catalog: str,
     ensemble_policy: str,
+    prediction_aggregation_policy: str,
+    progress: StageIRunProgress | None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     prediction_frames: list[pd.DataFrame] = []
     subset_results: dict[str, object] = {}
@@ -126,17 +170,57 @@ def _run_public_opt_regression(
         )
         if subset_frame.empty:
             continue
+        LOGGER.info(
+            "stage_i_public_opt_sklearn regression subset start dataset_id=%s subset=%s rows=%d",
+            feature_result.dataset_id,
+            evaluation_group,
+            len(subset_frame),
+        )
+        if progress is not None:
+            progress.update(
+                "subset_start",
+                dataset_id=feature_result.dataset_id,
+                subset=evaluation_group,
+                sample_count=len(subset_frame),
+            )
         split_groups = subset_frame["split_group"].astype(str).to_numpy()
         loso_splits = build_loso_splits(split_groups)
         head_metrics: dict[str, dict[str, object]] = {}
         head_prediction_frames: dict[str, pd.DataFrame] = {}
-        for head_name, feature_columns in head_feature_columns.items():
+        active_head_feature_columns = _select_regression_head_feature_columns(
+            evaluation_group=evaluation_group,
+            head_catalog=head_catalog,
+            head_feature_columns=head_feature_columns,
+        )
+        for head_name, feature_columns in active_head_feature_columns.items():
+            LOGGER.info(
+                "stage_i_public_opt_sklearn regression subset=%s head=%s start feature_count=%d fold_count=%d",
+                evaluation_group,
+                head_name,
+                len(feature_columns),
+                len(loso_splits),
+            )
+            if progress is not None:
+                progress.update(
+                    "head_start",
+                    dataset_id=feature_result.dataset_id,
+                    subset=evaluation_group,
+                    candidate=head_name,
+                    head=head_name,
+                    feature_count=len(feature_columns),
+                    fold_count=len(loso_splits),
+                )
             predictions = _run_one_regression_head(
                 subset_frame=subset_frame,
                 evaluation_group=evaluation_group,
                 head_name=head_name,
                 feature_columns=tuple(feature_columns),
                 loso_splits=loso_splits,
+                progress=progress,
+            )
+            predictions = apply_public_opt_regression_prediction_aggregation(
+                predictions,
+                policy=prediction_aggregation_policy,
             )
             metrics = sanitize_public_opt_metrics(
                 evaluate_regression_predictions(predictions)
@@ -144,6 +228,23 @@ def _run_public_opt_regression(
             head_metrics[head_name] = metrics
             head_prediction_frames[head_name] = predictions
             prediction_frames.append(predictions)
+            LOGGER.info(
+                "stage_i_public_opt_sklearn regression subset=%s head=%s done rmse=%.4f mae=%.4f",
+                evaluation_group,
+                head_name,
+                float(metrics["rmse"]),
+                float(metrics["mae"]),
+            )
+            if progress is not None:
+                progress.update(
+                    "head_done",
+                    dataset_id=feature_result.dataset_id,
+                    subset=evaluation_group,
+                    candidate=head_name,
+                    head=head_name,
+                    rmse=float(metrics["rmse"]),
+                    mae=float(metrics["mae"]),
+                )
         ensemble_name, ensemble_predictions, ensemble_metrics = _build_regression_ensemble(
             head_prediction_frames=head_prediction_frames,
             head_metrics=head_metrics,
@@ -170,6 +271,14 @@ def _run_public_opt_regression(
             "best_head": best_head,
             "heads": head_metrics,
         }
+        if progress is not None:
+            progress.update(
+                "subset_done",
+                dataset_id=feature_result.dataset_id,
+                subset=evaluation_group,
+                best_candidate=best_head,
+                best_head=best_head,
+            )
 
     predictions = (
         pd.concat(prediction_frames, axis=0, ignore_index=True)
@@ -179,12 +288,43 @@ def _run_public_opt_regression(
     return predictions, subset_results
 
 
+def _select_regression_head_feature_columns(
+    *,
+    evaluation_group: str,
+    head_catalog: str,
+    head_feature_columns: Mapping[str, Sequence[str]],
+) -> dict[str, Sequence[str]]:
+    if head_catalog != "uab_hybrid":
+        return dict(head_feature_columns)
+    if evaluation_group == "n_back":
+        selected_names = (
+            "physiology_persistence",
+            "ridge_residual_cv",
+            "elasticnet_residual",
+            "huber_residual",
+        )
+    elif evaluation_group == "heat_the_chair":
+        selected_names = (
+            "physiology_persistence",
+            "ridge_heat_physiology_lowdim",
+            "huber_heat_physiology_lowdim",
+        )
+    else:
+        selected_names = tuple(head_feature_columns)
+    return {
+        head_name: head_feature_columns[head_name]
+        for head_name in selected_names
+        if head_name in head_feature_columns
+    }
+
+
 def _run_public_opt_classification(
     *,
     feature_result: StageIPublicOptFeatureFrameResult,
     head_feature_columns: Mapping[str, Sequence[str]],
     train_balance_policy: str,
     ensemble_policy: str,
+    progress: StageIRunProgress | None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     prediction_frames: list[pd.DataFrame] = []
     subset_results: dict[str, object] = {}
@@ -199,11 +339,41 @@ def _run_public_opt_classification(
         )
         if subset_frame.empty:
             continue
+        LOGGER.info(
+            "stage_i_public_opt_sklearn classification subset start dataset_id=%s subset=%s rows=%d",
+            feature_result.dataset_id,
+            evaluation_group,
+            len(subset_frame),
+        )
+        if progress is not None:
+            progress.update(
+                "subset_start",
+                dataset_id=feature_result.dataset_id,
+                subset=evaluation_group,
+                sample_count=len(subset_frame),
+            )
         split_groups = subset_frame["split_group"].astype(str).to_numpy()
         loso_splits = build_loso_splits(split_groups)
         head_metrics: dict[str, dict[str, object]] = {}
         head_prediction_frames: dict[str, pd.DataFrame] = {}
         for head_name, feature_columns in head_feature_columns.items():
+            LOGGER.info(
+                "stage_i_public_opt_sklearn classification subset=%s head=%s start feature_count=%d fold_count=%d",
+                evaluation_group,
+                head_name,
+                len(feature_columns),
+                len(loso_splits),
+            )
+            if progress is not None:
+                progress.update(
+                    "head_start",
+                    dataset_id=feature_result.dataset_id,
+                    subset=evaluation_group,
+                    candidate=head_name,
+                    head=head_name,
+                    feature_count=len(feature_columns),
+                    fold_count=len(loso_splits),
+                )
             predictions = _run_one_classification_head(
                 subset_frame=subset_frame,
                 evaluation_group=evaluation_group,
@@ -212,6 +382,7 @@ def _run_public_opt_classification(
                 loso_splits=loso_splits,
                 label_order=feature_result.label_order,
                 train_balance_policy=train_balance_policy,
+                progress=progress,
             )
             metrics = sanitize_public_opt_metrics(
                 evaluate_classification_predictions(
@@ -222,6 +393,23 @@ def _run_public_opt_classification(
             head_metrics[head_name] = metrics
             head_prediction_frames[head_name] = predictions
             prediction_frames.append(predictions)
+            LOGGER.info(
+                "stage_i_public_opt_sklearn classification subset=%s head=%s done macro_f1=%.4f balanced_accuracy=%.4f",
+                evaluation_group,
+                head_name,
+                float(metrics["macro_f1"]),
+                float(metrics["balanced_accuracy"]),
+            )
+            if progress is not None:
+                progress.update(
+                    "head_done",
+                    dataset_id=feature_result.dataset_id,
+                    subset=evaluation_group,
+                    candidate=head_name,
+                    head=head_name,
+                    macro_f1=float(metrics["macro_f1"]),
+                    balanced_accuracy=float(metrics["balanced_accuracy"]),
+                )
         ensemble_name, ensemble_predictions, ensemble_metrics = _build_classification_ensemble(
             head_prediction_frames=head_prediction_frames,
             head_metrics=head_metrics,
@@ -249,6 +437,14 @@ def _run_public_opt_classification(
             "best_head": best_head,
             "heads": head_metrics,
         }
+        if progress is not None:
+            progress.update(
+                "subset_done",
+                dataset_id=feature_result.dataset_id,
+                subset=evaluation_group,
+                best_candidate=best_head,
+                best_head=best_head,
+            )
 
     predictions = (
         pd.concat(prediction_frames, axis=0, ignore_index=True)
@@ -277,11 +473,33 @@ def _run_one_regression_head(
     head_name: str,
     feature_columns: Sequence[str],
     loso_splits,
+    progress: StageIRunProgress | None,
 ) -> pd.DataFrame:
     rows: list[pd.DataFrame] = []
     feature_matrix = _extract_feature_matrix(subset_frame, feature_columns)
     y_all = subset_frame["y_true"].to_numpy(dtype=float, copy=True)
-    for split in loso_splits:
+    for fold_index, split in enumerate(loso_splits):
+        LOGGER.info(
+            "stage_i_public_opt_sklearn regression subset=%s head=%s fold=%d/%d train=%d test=%d",
+            evaluation_group,
+            head_name,
+            fold_index + 1,
+            len(loso_splits),
+            len(split.train_indices),
+            len(split.test_indices),
+        )
+        if progress is not None:
+            progress.update(
+                "fold_start",
+                dataset_id=str(subset_frame["dataset_id"].iloc[0]),
+                subset=evaluation_group,
+                candidate=head_name,
+                head=head_name,
+                fold_index=fold_index + 1,
+                fold_count=len(loso_splits),
+                train_count=len(split.train_indices),
+                test_count=len(split.test_indices),
+            )
         train_X = feature_matrix[split.train_indices]
         test_X = feature_matrix[split.test_indices]
         train_y = y_all[split.train_indices]
@@ -324,6 +542,7 @@ def _run_one_regression_head(
                     "split_group": test_frame["split_group"].astype(str).to_numpy(),
                     "sample_id": test_frame["sample_id"].astype(str).to_numpy(),
                     "subject_id": test_frame["subject_id"].astype(str).to_numpy(),
+                    "session_id": test_frame["session_id"].astype(str).to_numpy(),
                     "y_true": test_frame["y_true"].to_numpy(dtype=float, copy=True),
                     "y_pred": predicted.astype(float, copy=False),
                 }
@@ -341,11 +560,33 @@ def _run_one_classification_head(
     loso_splits,
     label_order: Sequence[int | float],
     train_balance_policy: str,
+    progress: StageIRunProgress | None,
 ) -> pd.DataFrame:
     rows: list[pd.DataFrame] = []
     feature_matrix = _extract_feature_matrix(subset_frame, feature_columns)
     y_all = subset_frame["y_true"].to_numpy(dtype=int, copy=True)
-    for split in loso_splits:
+    for fold_index, split in enumerate(loso_splits):
+        LOGGER.info(
+            "stage_i_public_opt_sklearn classification subset=%s head=%s fold=%d/%d train=%d test=%d",
+            evaluation_group,
+            head_name,
+            fold_index + 1,
+            len(loso_splits),
+            len(split.train_indices),
+            len(split.test_indices),
+        )
+        if progress is not None:
+            progress.update(
+                "fold_start",
+                dataset_id=str(subset_frame["dataset_id"].iloc[0]),
+                subset=evaluation_group,
+                candidate=head_name,
+                head=head_name,
+                fold_index=fold_index + 1,
+                fold_count=len(loso_splits),
+                train_count=len(split.train_indices),
+                test_count=len(split.test_indices),
+            )
         train_X = feature_matrix[split.train_indices]
         test_X = feature_matrix[split.test_indices]
         train_y = y_all[split.train_indices]
@@ -393,6 +634,7 @@ def _run_one_classification_head(
                     "split_group": test_frame["split_group"].astype(str).to_numpy(),
                     "sample_id": test_frame["sample_id"].astype(str).to_numpy(),
                     "subject_id": test_frame["subject_id"].astype(str).to_numpy(),
+                    "session_id": test_frame["session_id"].astype(str).to_numpy(),
                     "y_true": test_frame["y_true"].to_numpy(dtype=int, copy=True),
                     "y_pred": predicted.astype(int, copy=False),
                     "prediction_confidence": confidence.astype(float, copy=False),
@@ -444,6 +686,22 @@ def _fit_regression_head(
     if head_name == "huber_residual":
         search = _fit_regression_search(
             estimator_name="huber",
+            train_X=train_X,
+            train_y=train_y,
+            split_groups=split_groups,
+        )
+        return np.asarray(search.predict(test_X), dtype=np.float32)
+    if head_name == "ridge_heat_physiology_lowdim":
+        search = _fit_regression_search(
+            estimator_name="ridge_lowdim",
+            train_X=train_X,
+            train_y=train_y,
+            split_groups=split_groups,
+        )
+        return np.asarray(search.predict(test_X), dtype=np.float32)
+    if head_name == "huber_heat_physiology_lowdim":
+        search = _fit_regression_search(
+            estimator_name="huber_lowdim",
             train_X=train_X,
             train_y=train_y,
             split_groups=split_groups,
@@ -562,6 +820,9 @@ def _regression_search_spec(
     if estimator_name == "ridge":
         pipeline = Pipeline([("scaler", StandardScaler()), ("model", Ridge())])
         return pipeline, {"model__alpha": [0.1, 1.0, 4.0, 16.0, 64.0]}
+    if estimator_name == "ridge_lowdim":
+        pipeline = Pipeline([("scaler", StandardScaler()), ("model", Ridge())])
+        return pipeline, {"model__alpha": [0.01, 0.1, 1.0, 4.0, 16.0]}
     if estimator_name == "elasticnet":
         pipeline = Pipeline(
             [
@@ -583,6 +844,17 @@ def _regression_search_spec(
         return pipeline, {
             "model__alpha": [0.0001, 0.001, 0.01],
             "model__epsilon": [1.1, 1.35, 1.5],
+        }
+    if estimator_name == "huber_lowdim":
+        pipeline = Pipeline(
+            [
+                ("scaler", StandardScaler()),
+                ("model", HuberRegressor(max_iter=500)),
+            ]
+        )
+        return pipeline, {
+            "model__alpha": [0.00001, 0.0001, 0.001],
+            "model__epsilon": [1.1, 1.35],
         }
     raise ValueError(f"unsupported regression search estimator: {estimator_name}")
 
@@ -648,7 +920,9 @@ def _build_regression_ensemble(
             float(head_metrics[name]["mae"]),
         ),
     )[:2]
-    merged = _merge_prediction_frames([head_prediction_frames[name] for name in top_two])
+    merged = merge_public_opt_prediction_frames(
+        [head_prediction_frames[name] for name in top_two]
+    )
     ensemble = merged.loc[
         :,
         [
@@ -659,6 +933,7 @@ def _build_regression_ensemble(
             "split_group",
             "sample_id",
             "subject_id",
+            "session_id",
             "y_true",
         ],
     ].copy()
@@ -680,6 +955,7 @@ def _build_regression_ensemble(
             "split_group",
             "sample_id",
             "subject_id",
+            "session_id",
             "y_true",
             "y_pred",
         ]
@@ -705,7 +981,9 @@ def _build_classification_ensemble(
         ),
         reverse=True,
     )[:2]
-    merged = _merge_prediction_frames([head_prediction_frames[name] for name in top_two])
+    merged = merge_public_opt_prediction_frames(
+        [head_prediction_frames[name] for name in top_two]
+    )
     ensemble = merged.loc[
         :,
         [
@@ -716,6 +994,7 @@ def _build_classification_ensemble(
             "split_group",
             "sample_id",
             "subject_id",
+            "session_id",
             "y_true",
         ],
     ].copy()
@@ -752,6 +1031,7 @@ def _build_classification_ensemble(
             "split_group",
             "sample_id",
             "subject_id",
+            "session_id",
             "y_true",
             "y_pred",
             "prediction_confidence",
@@ -761,35 +1041,3 @@ def _build_classification_ensemble(
         evaluate_classification_predictions(ensemble, label_order=label_order)
     )
     return "vote_top2_ensemble", ensemble, metrics
-
-
-def _merge_prediction_frames(frames: Sequence[pd.DataFrame]) -> pd.DataFrame:
-    base_keys = [
-        "dataset_id",
-        "profile",
-        "evaluation_group",
-        "subset_id",
-        "split_group",
-        "sample_id",
-        "subject_id",
-        "y_true",
-    ]
-    merged = None
-    for index, frame in enumerate(frames):
-        selected_columns = base_keys + ["y_pred"]
-        if "prediction_confidence" in frame.columns:
-            selected_columns.append("prediction_confidence")
-        renamed = frame.loc[:, selected_columns].rename(
-            columns={
-                "y_pred": f"y_pred__{index}",
-                "prediction_confidence": f"prediction_confidence__{index}",
-            }
-        )
-        merged = (
-            renamed
-            if merged is None
-            else merged.merge(renamed, on=base_keys, how="inner")
-        )
-    if merged is None:
-        return pd.DataFrame()
-    return merged

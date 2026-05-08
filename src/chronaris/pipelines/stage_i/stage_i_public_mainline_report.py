@@ -211,6 +211,7 @@ def _extract_uab_status(
             {
                 "source_type": candidate["source_type"],
                 "source_path": candidate["source_path"],
+                "prediction_aggregation_policy": candidate["prediction_aggregation_policy"],
             }
             for candidate in candidate_payloads
         ],
@@ -234,6 +235,12 @@ def _load_uab_candidate_payload(
         return {
             "source_type": "torch_uab",
             "source_path": source_path,
+            "prediction_aggregation_policy": str(
+                payload.get("screen_config", {}).get(
+                    "prediction_aggregation_policy",
+                    "none",
+                )
+            ),
             "groups": {
                 subset_id: {
                     "rmse": float(metrics["rmse"]),
@@ -250,6 +257,9 @@ def _load_uab_candidate_payload(
     return {
         "source_type": "legacy_public_opt",
         "source_path": source_path,
+        "prediction_aggregation_policy": str(
+            payload.get("prediction_aggregation_policy", "none")
+        ),
         "groups": {
             subset_id: {
                 "rmse": float(result["heads"][result["best_head"]]["rmse"]),

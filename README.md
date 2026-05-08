@@ -17,8 +17,8 @@
 
 建议先读：
 
-- [docs/README.md](D:\code\chronaris\docs\README.md)
-- [docs/foundation/project-scope.md](D:\code\chronaris\docs\foundation\project-scope.md)
-- [docs/foundation/repo-layout.md](D:\code\chronaris\docs\foundation\repo-layout.md)
-- [docs/planning/coding-roadmap.md](D:\code\chronaris\docs\planning\coding-roadmap.md)
-- [AGENTS.md](D:\code\chronaris\AGENTS.md)
+- [docs/README.md](docs/README.md)
+- [docs/foundation/project-scope.md](docs/foundation/project-scope.md)
+- [docs/foundation/repo-layout.md](docs/foundation/repo-layout.md)
+- [docs/planning/coding-roadmap.md](docs/planning/coding-roadmap.md)
+- [AGENTS.md](AGENTS.md)

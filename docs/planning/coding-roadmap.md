@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-05-06
+更新时间：2026-05-08
 
 ## 1. 目的
 
@@ -63,7 +63,9 @@
 - 这里的“阶段 I 已完成收口”特指 `2026-04-30` 的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 历史 closure，不等于当前论文主线的所有增强与整编工作都已结束
 - 当前论文私有主线：`chronaris_opt` 已闭合并完成 package 固化
 - 当前论文公开主线：`NASA closed, UAB partial`；若要主张“公开数据已全面优于 `MulT / ContiFormer`”，编码工作仍未完成
-- 面向毕业论文的剩余编码工作见 [thesis-coding-gap-2026-05-06.md](thesis-coding-gap-2026-05-06.md)
+- 当前 public-opt 执行约束：长任务必须检查 `run.log / progress.json`；UAB 下一轮默认走 CUDA fail-fast 的 `heat_specialist` heat-only torch 路线，CPU-heavy `sklearn uab_hybrid` 只作为显式历史复现
+- NASA 后续只做 prepared asset schema/diagnostics 校验与可选 GPU confirm，不重新定义 `attention_state` 标签任务，也不推翻 `NASA closed` 的当前事实
+- 面向毕业论文的剩余编码工作见 [thesis-coding-gap.md](thesis-coding-gap.md)
 
 ## 4. 阶段拆解
 
@@ -566,7 +568,7 @@
 - 私有 proxy 主线：已完成，当前以 `chronaris_opt` 为准
 - 公开 quantitative 主线：`NASA closed, UAB partial`
 - 论文证据 support：已完成，已形成 `alignment / causal / six-path ablation` 三份主报告
-- thesis-facing 剩余编码工作：见 [thesis-coding-gap-2026-05-06.md](thesis-coding-gap-2026-05-06.md)
+- thesis-facing 剩余编码工作：见 [thesis-coding-gap.md](thesis-coding-gap.md)
 - 当前 thesis-facing 剩余主风险已从“入口缺失”收敛为“公开 quantitative 主线还未完全 closed”
 
 在此基础上，当前不回退修改已冻结的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 公开 benchmark 历史事实，但鼎新私有任务验证主线已切换为 `chronaris_opt`。
@@ -609,19 +611,32 @@
    - 当前主报告：`docs/reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
    - winner：`residual_gated_mlp__full__lr0p0003__wd0p0001`
    - 当前结果未通过 `n_back RMSE < 4.6541` 与 `heat_the_chair RMSE < 1.4568` 双门槛
-9. 已完成 unified public comparison 主报告：
-   - `docs/reports/stage_i/stage-i-public-mainline-20260507T024112Z-stage-i-public-mainline.md`
+9. 已完成 `UAB torch-native` 第二轮迭代：
+   - `r2`：`20260507T133000Z-stage-i-public-opt-uab-torch-mainline-r2`
+   - `r3`：`20260507T134500Z-stage-i-public-opt-uab-torch-sessionmean-r3`
+   - `r4`：`20260507T141500Z-stage-i-public-opt-uab-torch-sessionpooled-r4`
+   - `r5`：`20260507T142500Z-stage-i-public-opt-uab-torch-sessionpooled-scalar-r5`
+   - 当前结论：`session_mean_broadcast` 仅对 `n_back` 有有限改善，`session_pooled_broadcast` 与 `physiology_only / physiology_scalar_only` 没有把 `heat_the_chair` 推到 gate 附近
+10. 已完成 `heat_specialist` 真实 GPU-only `full LOSO`：
+   - `run_id`：`20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1`
+   - `winner`：`heat_residual_correction__lr0p0003__wd0p0001`
+   - `heat_the_chair RMSE=1.4630 / MAE=1.1594`
+   - 结果已优于 legacy `MAE`，但仍未越过 `RMSE < 1.4568` promote gate
+11. 已完成 unified public comparison 主报告：
+   - `docs/reports/stage_i/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`
    - 当前公开主线事实：`NASA closed, UAB partial`
-10. 已完成 `chronaris_public_fusion` GPU 主线接入与两轮公共数据筛选：
+   - 当前 UAB best-of 仍由 `legacy_public_opt` 保持：`n_back=4.6103`、`heat_the_chair=1.4567586`
+12. 已完成 `chronaris_public_fusion` GPU 主线接入与两轮公共数据筛选：
    - round 1：`docs/reports/stage_i/archive/public_history/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round1.md`
    - round 2：`docs/reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md`
    - 当前 best candidate 为 `fusion_h64_l2_hd4_do01_bias025_lag16_norm1`
    - 现有 confirm：`NASA combined macro-F1 = 0.3348 < 0.40`，当前仍只保留为 exploratory branch
-11. 当前下一步优先级不再是扩大 CPU / torch UAB 搜索，而是：
+13. 当前下一步优先级不再是扩大 CPU / torch UAB 搜索，而是：
    - 冻结 `NASA closed, UAB partial` 作为论文公开主线现状
+   - 若要补最严格公平表述，只做 `UAB ContiFormer fairness confirm`，不再继续 UAB 候选扩搜
    - 若继续扩展公开线，只做 `public_fusion balanced sampling + epochs=10` 的 `NASA-first` confirm；若仍不超过 `0.40`，则停止该支线
-12. 若私有主线同步完成后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
-13. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`、`docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`、`docs/reports/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo/`、`docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/`、`docs/reports/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/`、`docs/reports/assets/stage_i_public_mainline/20260507T024112Z-stage-i-public-mainline/`、`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/` 与 `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`。
+14. 若私有主线同步完成后还要继续扩展公开数据，再评估 MATB-II / DS007262 / EEGMAT 等补充数据集。
+15. 如果进入阶段 J 或论文整编，优先消费 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`、`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/`、`docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`、`docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`、`docs/reports/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo/`、`docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/`、`docs/reports/assets/stage_i_public_opt_torch/20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1/`、`docs/reports/assets/stage_i_public_mainline/20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1/`、`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/` 与 `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`。
 
 ## 7. 当前不该提前做的事
 

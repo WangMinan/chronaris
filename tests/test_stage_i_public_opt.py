@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import importlib.util
 import json
 import sys
@@ -9,6 +10,7 @@ import tempfile
 import warnings
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -53,6 +55,15 @@ _HELPER_SPEC.loader.exec_module(_HELPER_MODULE)
 _write_mini_uab_dataset = _HELPER_MODULE._write_mini_uab_dataset
 _write_mini_nasa_csm_dataset = _HELPER_MODULE._write_mini_nasa_csm_dataset
 
+_SCRIPT_SPEC = importlib.util.spec_from_file_location(
+    "run_stage_i_public_opt_script",
+    Path(__file__).resolve().parents[1] / "scripts" / "run_stage_i_public_opt.py",
+)
+if _SCRIPT_SPEC is None or _SCRIPT_SPEC.loader is None:  # pragma: no cover - import guard
+    raise RuntimeError("failed to load run_stage_i_public_opt script")
+_SCRIPT_MODULE = importlib.util.module_from_spec(_SCRIPT_SPEC)
+_SCRIPT_SPEC.loader.exec_module(_SCRIPT_MODULE)
+
 
 class StageIPublicOptTest(unittest.TestCase):
     def test_public_opt_feature_frame_filters_to_primary_subjective_uab_windows(self) -> None:
@@ -85,7 +96,14 @@ class StageIPublicOptTest(unittest.TestCase):
             )
             self.assertEqual(
                 set(feature_result.feature_groups),
-                {"full", "physiology_only", "context_only", "residual_only"},
+                {
+                    "full",
+                    "physiology_only",
+                    "physiology_lowdim",
+                    "physiology_scalar_only",
+                    "context_only",
+                    "residual_only",
+                },
             )
             for head_name in (
                 "physiology_persistence",
@@ -141,6 +159,8 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertTrue(Path(result.predictions_path).exists())
             self.assertTrue(Path(result.summary_path).exists())
             self.assertTrue(Path(result.report_path).exists())
+            self.assertTrue((Path(result.artifact_root) / "run.log").exists())
+            self.assertTrue((Path(result.artifact_root) / "progress.json").exists())
 
             summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
             self.assertEqual(summary["track"], "subjective")
@@ -158,6 +178,12 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertIn("reference_comparison", summary)
             self.assertIn("n_back", summary["reference_comparison"]["groups"])
             self.assertIn("winning_margin_vs_deep", summary)
+            self.assertIn("run_log_path", summary)
+            progress = json.loads(
+                (Path(result.artifact_root) / "progress.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(progress["dataset_id"], "uab_workload_dataset")
+            self.assertEqual(progress["last_event"], "finished")
             for subset_id in ("n_back", "heat_the_chair"):
                 subset_payload = summary["subset_results"][subset_id]
                 self.assertEqual(
@@ -178,6 +204,53 @@ class StageIPublicOptTest(unittest.TestCase):
                         "huber_residual",
                     },
                 )
+
+    def test_run_stage_i_public_opt_uab_hybrid_splits_heads_by_task(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            prepared_root = _build_prepared_uab_root(Path(temp_dir))
+            phase3_summary_path, deep_summary_path = _write_reference_summaries(Path(temp_dir))
+            result = run_stage_i_public_opt(
+                StageIPublicOptConfig(
+                    run_id="public-opt-uab-hybrid",
+                    prepared_artifact_root=str(prepared_root),
+                    artifact_root=str(Path(temp_dir) / "artifacts"),
+                    report_root=str(Path(temp_dir) / "reports"),
+                    head_catalog="uab_hybrid",
+                    reference_phase3_closure_summary_path=str(phase3_summary_path),
+                    reference_deep_comparison_summary_path=str(deep_summary_path),
+                )
+            )
+
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["head_catalog"], "uab_hybrid")
+            self.assertEqual(
+                set(summary["subset_results"]["n_back"]["heads"]),
+                {
+                    "physiology_persistence",
+                    "ridge_residual_cv",
+                    "elasticnet_residual",
+                    "huber_residual",
+                },
+            )
+            self.assertEqual(
+                set(summary["subset_results"]["heat_the_chair"]["heads"]),
+                {
+                    "physiology_persistence",
+                    "ridge_heat_physiology_lowdim",
+                    "huber_heat_physiology_lowdim",
+                },
+            )
+            self.assertIn(
+                summary["subset_results"]["heat_the_chair"]["best_head"],
+                {
+                    "physiology_persistence",
+                    "ridge_heat_physiology_lowdim",
+                    "huber_heat_physiology_lowdim",
+                },
+            )
+            report_text = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("ridge_heat_physiology_lowdim", report_text)
+            self.assertNotIn("| huber_residual |", report_text.split("### heat_the_chair", 1)[1])
 
     def test_run_stage_i_public_opt_writes_expected_nasa_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -213,6 +286,29 @@ class StageIPublicOptTest(unittest.TestCase):
             )
             self.assertIn("combined", summary["reference_comparison"]["groups"])
             self.assertIn("winning_margin_vs_deep", summary)
+
+    def test_nasa_public_opt_rejects_prepared_assets_without_leakage_guard(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            prepared_root = _build_prepared_nasa_root(Path(temp_dir))
+            schema_path = prepared_root / "sequence_schema.json"
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+            schema.pop("label_leakage_guard", None)
+            schema_path.write_text(
+                json.dumps(schema, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "label_leakage_guard"):
+                run_stage_i_public_opt(
+                    StageIPublicOptConfig(
+                        run_id="public-opt-nasa-stale",
+                        prepared_artifact_root=str(prepared_root),
+                        artifact_root=str(Path(temp_dir) / "artifacts"),
+                        report_root=str(Path(temp_dir) / "reports"),
+                        dataset_id="nasa_csm",
+                        profile="window_v2",
+                    )
+                )
 
     def test_public_opt_predictions_preserve_subject_loso_split_groups(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -419,6 +515,104 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["tie_break_used"])
             self.assertIn("current torch-native branch", Path(result.report_path).read_text(encoding="utf-8"))
 
+    def test_public_opt_script_auto_routes_uab_to_torch_backend(self) -> None:
+        args = _build_public_opt_script_args()
+        fake_result = SimpleNamespace(
+            feature_frame_path="/tmp/public_opt_torch_feature_frame.parquet",
+            predictions_path="/tmp/public_opt_torch_predictions.csv",
+            summary_path="/tmp/public_opt_torch_summary.json",
+            report_path="/tmp/public_opt_torch_report.md",
+            summary={"runtime_device": "cuda"},
+        )
+        with patch.object(
+            _SCRIPT_MODULE,
+            "run_stage_i_public_opt_torch_uab",
+            return_value=fake_result,
+        ) as torch_runner, patch.object(
+            _SCRIPT_MODULE,
+            "run_stage_i_public_opt",
+        ) as sklearn_runner:
+            payload = _SCRIPT_MODULE._run_from_args(args)
+
+        torch_runner.assert_called_once()
+        sklearn_runner.assert_not_called()
+        config = torch_runner.call_args.args[0]
+        self.assertEqual(config.dataset_id, "uab_workload_dataset")
+        self.assertEqual(config.device, "auto")
+        self.assertTrue(config.require_cuda)
+        self.assertEqual(config.candidate_catalog, "heat_specialist")
+        self.assertEqual(config.selected_subsets, ("heat_the_chair",))
+        self.assertEqual(
+            config.feature_profiles,
+            ("physiology_lowdim",),
+        )
+        self.assertTrue(config.artifact_root.endswith("docs/reports/assets/stage_i_public_opt_torch"))
+        self.assertEqual(payload["backend"], "torch")
+        self.assertEqual(payload["runtime_device"], "cuda")
+
+    def test_public_opt_script_auto_routes_nasa_to_sklearn_backend(self) -> None:
+        args = _build_public_opt_script_args(dataset_id="nasa_csm")
+        fake_result = SimpleNamespace(
+            feature_frame_path="/tmp/public_opt_feature_frame.parquet",
+            predictions_path="/tmp/public_opt_predictions.csv",
+            summary_path="/tmp/public_opt_summary.json",
+            report_path="/tmp/public_opt_report.md",
+        )
+        with patch.object(
+            _SCRIPT_MODULE,
+            "run_stage_i_public_opt",
+            return_value=fake_result,
+        ) as sklearn_runner, patch.object(
+            _SCRIPT_MODULE,
+            "run_stage_i_public_opt_torch_uab",
+        ) as torch_runner:
+            payload = _SCRIPT_MODULE._run_from_args(args)
+
+        sklearn_runner.assert_called_once()
+        torch_runner.assert_not_called()
+        config = sklearn_runner.call_args.args[0]
+        self.assertEqual(config.dataset_id, "nasa_csm")
+        self.assertTrue(config.artifact_root.endswith("docs/reports/assets/stage_i_public_opt"))
+        self.assertEqual(payload["backend"], "sklearn")
+
+    def test_public_opt_script_supports_sklearn_uab_hybrid_catalog(self) -> None:
+        args = _build_public_opt_script_args(
+            backend="sklearn",
+            head_catalog="uab_hybrid",
+            allow_cpu_heavy_sklearn=True,
+        )
+        fake_result = SimpleNamespace(
+            feature_frame_path="/tmp/public_opt_feature_frame.parquet",
+            predictions_path="/tmp/public_opt_predictions.csv",
+            summary_path="/tmp/public_opt_summary.json",
+            report_path="/tmp/public_opt_report.md",
+        )
+        with patch.object(
+            _SCRIPT_MODULE,
+            "run_stage_i_public_opt",
+            return_value=fake_result,
+        ) as sklearn_runner, patch.object(
+            _SCRIPT_MODULE,
+            "run_stage_i_public_opt_torch_uab",
+        ) as torch_runner:
+            payload = _SCRIPT_MODULE._run_from_args(args)
+
+        sklearn_runner.assert_called_once()
+        torch_runner.assert_not_called()
+        config = sklearn_runner.call_args.args[0]
+        self.assertEqual(config.dataset_id, "uab_workload_dataset")
+        self.assertEqual(config.head_catalog, "uab_hybrid")
+        self.assertTrue(config.artifact_root.endswith("docs/reports/assets/stage_i_public_opt"))
+        self.assertEqual(payload["backend"], "sklearn")
+
+    def test_public_opt_script_rejects_uab_hybrid_without_cpu_heavy_override(self) -> None:
+        args = _build_public_opt_script_args(
+            backend="sklearn",
+            head_catalog="uab_hybrid",
+        )
+        with self.assertRaisesRegex(ValueError, "CPU-heavy historical reproduction"):
+            _SCRIPT_MODULE._run_from_args(args)
+
     def test_public_opt_torch_uab_auto_device_falls_back_to_cpu(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             prepared_root = _build_prepared_uab_root(Path(temp_dir))
@@ -450,6 +644,9 @@ class StageIPublicOptTest(unittest.TestCase):
                         patience=1,
                         full_candidate_limit=2,
                         ensemble_policy="mean_top2",
+                        feature_profiles=("full",),
+                        learning_rates=(1e-3,),
+                        weight_decays=(1e-4,),
                         reference_public_opt_summary_path=str(reference_public_opt),
                         reference_deep_comparison_summary_path=str(reference_deep),
                     )
@@ -465,6 +662,126 @@ class StageIPublicOptTest(unittest.TestCase):
             )
             predictions = pd.read_csv(result.predictions_path)
             self.assertTrue(np.isfinite(predictions["y_pred"].to_numpy(dtype=float)).all())
+
+    def test_public_opt_torch_uab_require_cuda_fails_before_training_on_cpu(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            prepared_root = _build_prepared_uab_root(Path(temp_dir))
+            with patch.object(
+                stage_i_public_opt_torch_module,
+                "resolve_torch_device_name",
+                return_value="cpu",
+            ):
+                with self.assertRaisesRegex(RuntimeError, "requires CUDA"):
+                    run_stage_i_public_opt_torch_uab(
+                        StageIPublicOptTorchUABConfig(
+                            run_id="public-opt-uab-torch-require-cuda",
+                            prepared_artifact_root=str(prepared_root),
+                            artifact_root=str(Path(temp_dir) / "artifacts"),
+                            report_root=str(Path(temp_dir) / "reports"),
+                            device="auto",
+                            require_cuda=True,
+                            screen_max_folds=1,
+                            run_full_loso=False,
+                            feature_profiles=("physiology_lowdim",),
+                            learning_rates=(1e-3,),
+                            weight_decays=(1e-4,),
+                        )
+                    )
+            run_root = Path(temp_dir) / "artifacts" / "public-opt-uab-torch-require-cuda"
+            self.assertTrue((run_root / "run.log").exists())
+            progress = json.loads((run_root / "progress.json").read_text(encoding="utf-8"))
+            self.assertEqual(progress["last_event"], "failed")
+
+    def test_public_opt_torch_heat_specialist_runs_heat_only_with_finite_metrics(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            prepared_root = _build_prepared_uab_root(Path(temp_dir))
+            result = run_stage_i_public_opt_torch_uab(
+                StageIPublicOptTorchUABConfig(
+                    run_id="public-opt-uab-torch-heat-only",
+                    prepared_artifact_root=str(prepared_root),
+                    artifact_root=str(Path(temp_dir) / "artifacts"),
+                    report_root=str(Path(temp_dir) / "reports"),
+                    device="cpu",
+                    candidate_catalog="heat_specialist",
+                    selected_subsets=("heat_the_chair",),
+                    feature_profiles=("physiology_lowdim",),
+                    screen_max_folds=1,
+                    full_max_folds=1,
+                    batch_size=32,
+                    epochs=1,
+                    patience=1,
+                    full_candidate_limit=1,
+                    full_group_winner_limit=1,
+                    learning_rates=(1e-3,),
+                    weight_decays=(1e-4,),
+                )
+            )
+
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["screen_config"]["candidate_catalog"], "heat_specialist")
+            self.assertEqual(summary["screen_config"]["selected_subsets"], ["heat_the_chair"])
+            self.assertEqual(set(summary["final_result"]["groups"]), {"heat_the_chair"})
+            predictions = pd.read_csv(result.predictions_path)
+            self.assertEqual(set(predictions["subset_id"]), {"heat_the_chair"})
+            self.assertTrue(np.isfinite(predictions["y_pred"].to_numpy(dtype=float)).all())
+            self.assertTrue((Path(result.artifact_root) / "run.log").exists())
+
+    def test_torch_uab_heat_specialist_shortlist_preserves_mae_and_blend_winners(self) -> None:
+        leaderboard = pd.DataFrame(
+            [
+                {
+                    "candidate_id": "heat_linear_huber_lowdim__lr0p001__wd0p0001",
+                    "screen_mean_rmse": 1.00,
+                    "screen_mean_mae": 1.20,
+                    "heat_the_chair_rmse": 1.00,
+                },
+                {
+                    "candidate_id": "heat_mlp_lowdim__lr0p001__wd0p0001",
+                    "screen_mean_rmse": 1.05,
+                    "screen_mean_mae": 0.95,
+                    "heat_the_chair_rmse": 1.07,
+                },
+                {
+                    "candidate_id": "heat_affine_calibrated_blend__lr0p001__wd0p0001",
+                    "screen_mean_rmse": 1.08,
+                    "screen_mean_mae": 1.05,
+                    "heat_the_chair_rmse": 1.09,
+                },
+                {
+                    "candidate_id": "heat_residual_correction__lr0p001__wd0p0001",
+                    "screen_mean_rmse": 1.20,
+                    "screen_mean_mae": 1.10,
+                    "heat_the_chair_rmse": 0.98,
+                },
+            ]
+        )
+
+        shortlist_rows = stage_i_public_opt_torch_module._build_torch_uab_full_shortlist_rows(
+            leaderboard=leaderboard,
+            full_candidate_limit=1,
+            group_winner_limit=1,
+            ensemble_policy="none",
+            selected_subsets=("heat_the_chair",),
+            candidate_catalog="heat_specialist",
+        )
+
+        shortlisted_candidate_ids = [str(row["candidate_id"]) for row in shortlist_rows]
+        self.assertEqual(
+            shortlisted_candidate_ids[0],
+            "heat_linear_huber_lowdim__lr0p001__wd0p0001",
+        )
+        self.assertIn(
+            "heat_mlp_lowdim__lr0p001__wd0p0001",
+            shortlisted_candidate_ids,
+        )
+        self.assertIn(
+            "heat_affine_calibrated_blend__lr0p001__wd0p0001",
+            shortlisted_candidate_ids,
+        )
+        self.assertIn(
+            "heat_residual_correction__lr0p001__wd0p0001",
+            shortlisted_candidate_ids,
+        )
 
     @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
     def test_public_opt_torch_uab_runs_on_cuda_with_finite_predictions(self) -> None:
@@ -489,10 +806,13 @@ class StageIPublicOptTest(unittest.TestCase):
                     screen_max_folds=1,
                     full_max_folds=1,
                     batch_size=32,
-                    epochs=2,
+                    epochs=1,
                     patience=1,
-                    full_candidate_limit=2,
-                    ensemble_policy="mean_top2",
+                    full_candidate_limit=1,
+                    ensemble_policy="none",
+                    feature_profiles=("full",),
+                    learning_rates=(1e-3,),
+                    weight_decays=(1e-4,),
                     reference_public_opt_summary_path=str(reference_public_opt),
                     reference_deep_comparison_summary_path=str(reference_deep),
                 )
@@ -526,6 +846,47 @@ def _build_prepared_uab_root(temp_root: Path) -> Path:
         )
     )
     return prepared_root
+
+
+def _build_public_opt_script_args(**overrides: object) -> argparse.Namespace:
+    defaults: dict[str, object] = {
+        "run_id": None,
+        "prepared_artifact_root": "prepared_assets",
+        "artifact_root": None,
+        "report_root": "docs/reports",
+        "dataset_id": "uab_workload_dataset",
+        "profile": "window_v2",
+        "seed": 42,
+        "backend": "auto",
+        "feature_profile": "full",
+        "head_catalog": "expanded",
+        "train_balance_policy": "class_weight_balanced",
+        "ensemble_policy": "none",
+        "prediction_aggregation_policy": "none",
+        "winner_margin_policy": "paper_gate",
+        "device": "auto",
+        "batch_size": 256,
+        "epochs": 20,
+        "patience": 4,
+        "screen_max_folds": 2,
+        "full_max_folds": None,
+        "full_candidate_limit": 2,
+        "full_group_winner_limit": 1,
+        "skip_full_loso": False,
+        "supervision_granularity": "window",
+        "torch_feature_profiles": [],
+        "learning_rates": [],
+        "weight_decays": [],
+        "allow_cpu_debug": False,
+        "allow_cpu_heavy_sklearn": False,
+        "selected_subsets": [],
+        "torch_candidate_catalog": "heat_specialist",
+        "reference_public_opt_summary": None,
+        "reference_phase3_closure_summary": None,
+        "reference_deep_comparison_summary": None,
+    }
+    defaults.update(overrides)
+    return argparse.Namespace(**defaults)
 
 
 def _build_prepared_nasa_root(temp_root: Path) -> Path:
