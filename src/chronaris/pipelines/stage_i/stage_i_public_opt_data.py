@@ -14,7 +14,14 @@ PUBLIC_OPT_DEFAULT_DATASET_ID = "uab_workload_dataset"
 PUBLIC_OPT_PROFILE = "window_v2"
 PUBLIC_OPT_SUBSET_ORDER = ("n_back", "heat_the_chair")
 PUBLIC_OPT_REQUIRED_MODALITIES = ("physiology", "task_context")
-PUBLIC_OPT_FEATURE_PROFILES = ("full", "physiology_only", "context_only", "residual_only")
+PUBLIC_OPT_FEATURE_PROFILES = (
+    "full",
+    "physiology_only",
+    "physiology_lowdim",
+    "physiology_scalar_only",
+    "context_only",
+    "residual_only",
+)
 
 PUBLIC_OPT_DATASET_SPECS: Mapping[str, Mapping[str, object]] = {
     "uab_workload_dataset": {
@@ -615,8 +622,15 @@ def _build_feature_groups(
         "ctx__window_fraction",
     }
     physiology_only = []
+    physiology_lowdim = []
     context_only = []
     residual_only = []
+    physiology_scalar_columns = {
+        f"ctx__{first_modality_name}_valid_ratio",
+        f"residual__{first_modality_name}_intensity_mean",
+        f"residual__{first_modality_name}_delta_l2",
+        f"residual__{first_modality_name}_diff_l2_mean",
+    }
     for column in feature_columns:
         if (
             column.startswith(f"{first_modality_name}__")
@@ -625,6 +639,8 @@ def _build_feature_groups(
             or column.startswith(f"residual__{first_modality_name}_")
         ):
             physiology_only.append(column)
+        if column in physiology_scalar_columns:
+            physiology_lowdim.append(column)
         if (
             column.startswith(f"{second_modality_name}__")
             or column.startswith(f"segment__{second_modality_name}__")
@@ -641,11 +657,15 @@ def _build_feature_groups(
     for column in generic_context_columns:
         if column in feature_columns and column not in physiology_only:
             physiology_only.append(column)
+        if column in feature_columns and column not in physiology_lowdim:
+            physiology_lowdim.append(column)
         if column in feature_columns and column not in context_only:
             context_only.append(column)
     return {
         "full": tuple(feature_columns),
         "physiology_only": tuple(physiology_only),
+        "physiology_lowdim": tuple(physiology_lowdim),
+        "physiology_scalar_only": tuple(physiology_lowdim),
         "context_only": tuple(context_only),
         "residual_only": tuple(residual_only),
     }
@@ -658,6 +678,7 @@ def _build_default_head_feature_columns(
 ) -> dict[str, tuple[str, ...]]:
     full = tuple(feature_groups["full"])
     physiology_only = tuple(feature_groups["physiology_only"])
+    physiology_lowdim = _uab_physiology_lowdim_columns(full)
     residual_only = tuple(feature_groups["residual_only"])
     if dataset_id == "uab_workload_dataset":
         return {
@@ -665,6 +686,8 @@ def _build_default_head_feature_columns(
             "ridge_residual_cv": full,
             "elasticnet_residual": residual_only,
             "huber_residual": full,
+            "ridge_heat_physiology_lowdim": physiology_lowdim,
+            "huber_heat_physiology_lowdim": physiology_lowdim,
         }
     if dataset_id == "nasa_csm":
         return {
@@ -673,3 +696,21 @@ def _build_default_head_feature_columns(
             "balanced_linear_svc_context": full,
         }
     raise ValueError(f"unsupported public opt dataset for head features: {dataset_id}")
+
+
+def _uab_physiology_lowdim_columns(
+    feature_columns: Sequence[str],
+) -> tuple[str, ...]:
+    selected = []
+    for column in feature_columns:
+        if column in {
+            "ctx__window_fraction",
+            "ctx__physiology_valid_ratio",
+            "residual__physiology_intensity_mean",
+            "residual__physiology_delta_l2",
+            "residual__physiology_diff_l2_mean",
+        } or column.startswith("segment__physiology__"):
+            selected.append(column)
+    if not selected:
+        raise ValueError("UAB physiology low-dimensional head has no feature columns.")
+    return tuple(selected)

@@ -14,6 +14,14 @@ from chronaris.pipelines.stage_i.stage_i_deep_baseline import (
     StageIDeepBaselineConfig,
     run_stage_i_deep_baseline,
 )
+from chronaris.pipelines.stage_i.stage_i_public_opt_reference import (
+    load_public_opt_prepared_dataset,
+    validate_public_opt_prepared_dataset_contract,
+)
+from chronaris.pipelines.stage_i.stage_i_run_observer import (
+    StageIRunProgress,
+    open_stage_i_run_observer,
+)
 from chronaris.pipelines.torch_runtime import resolve_torch_device_name
 
 LOGGER = logging.getLogger(__name__)
@@ -44,6 +52,7 @@ class StageIPublicFusionScreenConfig:
     max_folds: int | None = 2
     seed: int = 42
     device: str = "auto"
+    require_cuda: bool = False
     train_sampling_policy: str = "none"
     candidates: tuple[StageIPublicFusionCandidate, ...] = ()
 
@@ -95,7 +104,35 @@ DEFAULT_PUBLIC_FUSION_CANDIDATES = (
 def run_stage_i_public_fusion_screen(
     config: StageIPublicFusionScreenConfig,
 ) -> StageIPublicFusionScreenRunResult:
+    artifact_root = Path(config.artifact_root) / config.run_id
+    artifact_root.mkdir(parents=True, exist_ok=True)
+    with open_stage_i_run_observer(
+        run_root=artifact_root,
+        run_id=config.run_id,
+        stage_name="stage_i_public_fusion_screen",
+        logger=LOGGER,
+        initial_progress={
+            "datasets": sorted(config.dataset_prepared_roots),
+            "requested_device": config.device,
+            "require_cuda": config.require_cuda,
+            "artifact_root": str(artifact_root),
+        },
+    ) as progress:
+        return _run_stage_i_public_fusion_screen_observed(
+            config=config,
+            artifact_root=artifact_root,
+            progress=progress,
+        )
+
+
+def _run_stage_i_public_fusion_screen_observed(
+    *,
+    config: StageIPublicFusionScreenConfig,
+    artifact_root: Path,
+    progress: StageIRunProgress,
+) -> StageIPublicFusionScreenRunResult:
     runtime_device = resolve_torch_device_name(config.device)
+    progress.update("device_resolved", runtime_device=runtime_device)
     LOGGER.info(
         "stage_i_public_fusion_screen start run_id=%s requested_device=%s resolved_device=%s datasets=%s",
         config.run_id,
@@ -104,6 +141,12 @@ def run_stage_i_public_fusion_screen(
         sorted(config.dataset_prepared_roots),
     )
     if runtime_device != "cuda":
+        if config.require_cuda:
+            raise RuntimeError(
+                "stage_i_public_fusion_screen requires CUDA but resolved runtime_device="
+                f"{runtime_device}. Use --device cuda on a CUDA host or pass "
+                "--allow-cpu-debug for explicit debugging only."
+            )
         LOGGER.warning(
             "stage_i_public_fusion_screen using CPU fallback run_id=%s requested_device=%s",
             config.run_id,
@@ -111,8 +154,6 @@ def run_stage_i_public_fusion_screen(
         )
 
     candidates = config.candidates or DEFAULT_PUBLIC_FUSION_CANDIDATES
-    artifact_root = Path(config.artifact_root) / config.run_id
-    artifact_root.mkdir(parents=True, exist_ok=True)
     report_root = Path(config.report_root)
     report_root.mkdir(parents=True, exist_ok=True)
 
@@ -121,6 +162,14 @@ def run_stage_i_public_fusion_screen(
     candidate_summaries: dict[str, object] = {}
 
     for dataset_id, prepared_root in config.dataset_prepared_roots.items():
+        prepared = load_public_opt_prepared_dataset(prepared_root)
+        validate_public_opt_prepared_dataset_contract(prepared, dataset_id=dataset_id)
+        progress.update(
+            "dataset_start",
+            dataset_id=dataset_id,
+            prepared_root=prepared_root,
+            candidate_count=len(candidates),
+        )
         LOGGER.info(
             "stage_i_public_fusion_screen dataset start dataset_id=%s candidate_count=%d",
             dataset_id,
@@ -135,6 +184,13 @@ def run_stage_i_public_fusion_screen(
                 candidate_index,
                 len(candidates),
                 candidate.candidate_id,
+            )
+            progress.update(
+                "candidate_start",
+                dataset_id=dataset_id,
+                candidate_index=candidate_index,
+                candidate_count=len(candidates),
+                candidate=candidate.candidate_id,
             )
             candidate_root = artifact_root / dataset_id / candidate.candidate_id
             result = run_stage_i_deep_baseline(
@@ -182,6 +238,15 @@ def run_stage_i_public_fusion_screen(
                 score_payload["screen_metric"],
                 float(score_payload["selection_score"]),
             )
+            progress.update(
+                "candidate_done",
+                dataset_id=dataset_id,
+                candidate=candidate.candidate_id,
+                screen_metric=score_payload["screen_metric"],
+                selection_score=float(score_payload["selection_score"]),
+                summary_path=result.summary_path,
+                report_path=result.report_path,
+            )
 
         ordered_rows = sorted(
             dataset_rows,
@@ -208,6 +273,11 @@ def run_stage_i_public_fusion_screen(
                 dataset_id,
                 ordered_rows[0]["candidate_id"],
             )
+            progress.update(
+                "dataset_done",
+                dataset_id=dataset_id,
+                best_candidate=ordered_rows[0]["candidate_id"],
+            )
 
     leaderboard = pd.DataFrame(rows)
     leaderboard_csv_path = artifact_root / "candidate_leaderboard.csv"
@@ -226,10 +296,13 @@ def run_stage_i_public_fusion_screen(
             "max_folds": config.max_folds,
             "seed": config.seed,
             "device": config.device,
+            "require_cuda": config.require_cuda,
             "train_sampling_policy": config.train_sampling_policy,
         },
         "candidate_order": [candidate.candidate_id for candidate in candidates],
         "leaderboard_csv_path": str(leaderboard_csv_path),
+        "run_log_path": str(artifact_root / "run.log"),
+        "progress_path": str(artifact_root / "progress.json"),
         "per_dataset_rankings": per_dataset_rankings,
         "candidate_summaries": candidate_summaries,
     }
@@ -242,6 +315,11 @@ def run_stage_i_public_fusion_screen(
     report_path.write_text(
         _render_public_fusion_screen_report(summary) + "\n",
         encoding="utf-8",
+    )
+    progress.finish(
+        summary_path=str(summary_path),
+        report_path=str(report_path),
+        leaderboard_csv_path=str(leaderboard_csv_path),
     )
     LOGGER.info(
         "stage_i_public_fusion_screen finished run_id=%s summary_path=%s report_path=%s",

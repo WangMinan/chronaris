@@ -52,6 +52,7 @@ def render_stage_i_public_opt_report(
         f"- head_catalog：`{summary['head_catalog']}`",
         f"- train_balance_policy：`{summary['train_balance_policy']}`",
         f"- ensemble_policy：`{summary['ensemble_policy']}`",
+        f"- prediction_aggregation_policy：`{summary['prediction_aggregation_policy']}`",
         f"- track：`{summary['track']}`",
         f"- task_type：`{summary['task_type']}`",
         f"- prepared asset root：`{summary['prepared_artifact_root']}`",
@@ -92,7 +93,7 @@ def render_stage_i_public_opt_report(
                 _detail_table_divider(track=str(summary["track"])),
             ]
         )
-        for head_name in summary["heads"]:
+        for head_name in payload["heads"]:
             metrics = payload["heads"][head_name]
             lines.append(
                 _render_detail_table_row(
