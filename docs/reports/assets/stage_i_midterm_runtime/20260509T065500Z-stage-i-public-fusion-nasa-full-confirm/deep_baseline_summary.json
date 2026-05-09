@@ -1,0 +1,134 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "model_name": "chronaris_public_fusion",
+  "model_config": {
+    "hidden_dim": 96,
+    "num_heads": 4,
+    "layers": 2,
+    "dropout": 0.2,
+    "epochs": 10,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "fusion_event_bias_weight": 0.5,
+    "fusion_lag_window_points": 8,
+    "fusion_normalize_states": true,
+    "train_sampling_policy": "balanced_class"
+  },
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T065500Z-stage-i-public-fusion-nasa-full-confirm",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+  "objective": {
+    "track": "objective",
+    "model_name": "chronaris_public_fusion",
+    "groups": {
+      "benchmark_only": {
+        "sample_count": 1451,
+        "fold_count": 17,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.598530591492866,
+        "balanced_accuracy": 0.6369680575915146,
+        "per_class_recall": {
+          "1": 0.5227272727272727,
+          "2": 0.8755186721991701,
+          "5": 0.5126582278481012
+        },
+        "confusion_matrix": [
+          [
+            46,
+            29,
+            13
+          ],
+          [
+            62,
+            1055,
+            88
+          ],
+          [
+            24,
+            53,
+            81
+          ]
+        ]
+      },
+      "loft_only": {
+        "sample_count": 1359,
+        "fold_count": 17,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.6328592010748634,
+        "balanced_accuracy": 0.6182598039215687,
+        "per_class_recall": {
+          "1": 0.78125,
+          "2": 1.0,
+          "5": 0.07352941176470588
+        },
+        "confusion_matrix": [
+          [
+            75,
+            18,
+            3
+          ],
+          [
+            0,
+            1127,
+            0
+          ],
+          [
+            12,
+            114,
+            10
+          ]
+        ]
+      },
+      "combined": {
+        "sample_count": 2810,
+        "fold_count": 17,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.5615950767425805,
+        "balanced_accuracy": 0.5421254364474802,
+        "per_class_recall": {
+          "1": 0.6086956521739131,
+          "2": 0.9292452830188679,
+          "5": 0.08843537414965986
+        },
+        "confusion_matrix": [
+          [
+            112,
+            62,
+            10
+          ],
+          [
+            23,
+            2167,
+            142
+          ],
+          [
+            13,
+            255,
+            26
+          ]
+        ]
+      }
+    },
+    "plot_paths": {
+      "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T065500Z-stage-i-public-fusion-nasa-full-confirm/plots/objective_benchmark_only_confusion_matrix.png",
+      "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T065500Z-stage-i-public-fusion-nasa-full-confirm/plots/objective_loft_only_confusion_matrix.png",
+      "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T065500Z-stage-i-public-fusion-nasa-full-confirm/plots/objective_combined_confusion_matrix.png",
+      "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T065500Z-stage-i-public-fusion-nasa-full-confirm/plots/objective_primary_metrics.png"
+    }
+  },
+  "subjective": null,
+  "reference_comparison": null
+}

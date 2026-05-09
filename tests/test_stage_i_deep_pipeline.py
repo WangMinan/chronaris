@@ -47,6 +47,10 @@ from chronaris.pipelines import (  # noqa: E402
 from chronaris.pipelines.stage_i.stage_i_deep_baseline import (  # noqa: E402
     _sanitize_regression_outputs,
 )
+from chronaris.pipelines.stage_i.stage_i_deep_baseline_runtime import (  # noqa: E402
+    _apply_classification_logit_adjustment,
+    _classification_loss,
+)
 from chronaris.pipelines.stage_i import stage_i_public_fusion_screen as public_fusion_module  # noqa: E402
 
 REAL_DATASET_ROOT = Path("/home/wangminan/dataset/chronaris")
@@ -147,6 +151,32 @@ class StageISequenceContractTest(unittest.TestCase):
         )
         np.testing.assert_allclose(sanitized, np.asarray([1.0, 3.5, 3.5, 3.5], dtype=np.float32))
         np.testing.assert_array_equal(nonfinite_mask, np.asarray([False, True, True, True]))
+
+    def test_balanced_class_path_uses_prior_logit_adjustment_without_weighted_loss(self) -> None:
+        logits = np.zeros((2, 3), dtype=np.float32)
+        train_targets = np.asarray([0, 0, 0, 1], dtype=int)
+        adjusted = _apply_classification_logit_adjustment(
+            logits,
+            train_targets=train_targets,
+            output_dim=3,
+            sampling_policy="balanced_class",
+        )
+        self.assertGreater(adjusted[0, 0], adjusted[0, 1])
+        self.assertAlmostEqual(float(adjusted[0, 1]), float(adjusted[0, 2]), places=6)
+        balanced_loss = _classification_loss(
+            train_targets,
+            device="cpu",
+            output_dim=3,
+            sampling_policy="balanced_class",
+        )
+        default_loss = _classification_loss(
+            train_targets,
+            device="cpu",
+            output_dim=3,
+            sampling_policy="none",
+        )
+        self.assertIsNone(balanced_loss.weight)
+        self.assertIsNotNone(default_loss.weight)
 
 
 class StageIRealSortieSequenceTest(unittest.TestCase):
@@ -295,6 +325,8 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
                 self.assertFalse(result.summary["model_config"]["fusion_normalize_states"])
                 self.assertTrue(Path(result.summary_path).exists())
                 self.assertTrue(Path(result.predictions_path).exists())
+                self.assertTrue((Path(result.artifact_root) / "run.log").exists())
+                self.assertTrue((Path(result.artifact_root) / "progress.json").exists())
 
     @unittest.skipUnless(torch.cuda.is_available(), "CUDA not available")
     def test_public_deep_baseline_supports_cuda_runtime(self) -> None:

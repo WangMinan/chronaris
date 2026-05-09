@@ -1,0 +1,134 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "model_name": "chronaris_public_fusion",
+  "model_config": {
+    "hidden_dim": 64,
+    "num_heads": 4,
+    "layers": 2,
+    "dropout": 0.2,
+    "epochs": 10,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "fusion_event_bias_weight": 0.25,
+    "fusion_lag_window_points": 8,
+    "fusion_normalize_states": true,
+    "train_sampling_policy": "balanced_class"
+  },
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+  "objective": {
+    "track": "objective",
+    "model_name": "chronaris_public_fusion",
+    "groups": {
+      "benchmark_only": {
+        "sample_count": 172,
+        "fold_count": 2,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.11567356179890913,
+        "balanced_accuracy": 0.39999999999999997,
+        "per_class_recall": {
+          "1": 0.6,
+          "2": 0.0,
+          "5": 0.6
+        },
+        "confusion_matrix": [
+          [
+            6,
+            0,
+            4
+          ],
+          [
+            55,
+            0,
+            87
+          ],
+          [
+            8,
+            0,
+            12
+          ]
+        ]
+      },
+      "loft_only": {
+        "sample_count": 180,
+        "fold_count": 2,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.32280701754385965,
+        "balanced_accuracy": 0.5555555555555555,
+        "per_class_recall": {
+          "1": 0.6666666666666666,
+          "2": 0.0,
+          "5": 1.0
+        },
+        "confusion_matrix": [
+          [
+            6,
+            0,
+            3
+          ],
+          [
+            0,
+            0,
+            155
+          ],
+          [
+            0,
+            0,
+            16
+          ]
+        ]
+      },
+      "combined": {
+        "sample_count": 352,
+        "fold_count": 2,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.146011396011396,
+        "balanced_accuracy": 0.42836257309941517,
+        "per_class_recall": {
+          "1": 0.3684210526315789,
+          "2": 0.0,
+          "5": 0.9166666666666666
+        },
+        "confusion_matrix": [
+          [
+            7,
+            0,
+            12
+          ],
+          [
+            27,
+            0,
+            270
+          ],
+          [
+            3,
+            0,
+            33
+          ]
+        ]
+      }
+    },
+    "plot_paths": {
+      "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_benchmark_only_confusion_matrix.png",
+      "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_loft_only_confusion_matrix.png",
+      "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_combined_confusion_matrix.png",
+      "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_primary_metrics.png"
+    }
+  },
+  "subjective": null,
+  "reference_comparison": null
+}
