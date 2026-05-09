@@ -86,7 +86,8 @@
   - Stage I 论文证据 support：`docs/reports/stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
   - Stage I public opt NASA enhanced round 1：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
   - Stage I public opt UAB torch：`docs/reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
-  - Stage I public mainline：`docs/reports/stage_i/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`
+  - Stage I public opt UAB robust-prior：`docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
+  - Stage I public mainline：`docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
   - Stage I 报告索引与历史快照：`docs/reports/stage_i/README.md`
   - Private 报告索引与历史快照：`docs/reports/private/README.md`
   - 当前 `chronaris_opt` package：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
@@ -102,8 +103,9 @@
   - 论文证据 support `alignment / causal / six-path ablation` 已落盘到 `docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`
   - `chronaris public opt` 已有 `UAB subjective regression`、`UAB torch-native full LOSO` 与 `NASA attention_state` 三条真实实跑报告
   - `chronaris public opt` 增强版 `NASA round 1` 已在 `benchmark_only / loft_only / combined` 三组上优于现有 `MulT / ContiFormer`
-  - `UAB torch-native full LOSO` 已补出 `device=auto -> runtime_device=cuda` confirm；当前仍未超过 `n_back RMSE < 4.6541` 与 `heat_the_chair RMSE < 1.4568` 双门槛
-  - 当前 unified public mainline 状态为 `NASA closed, UAB partial`
+  - `UAB torch-native full LOSO` 已补出 `device=auto -> runtime_device=cuda` confirm；该路线仍未超过 `n_back RMSE < 4.6541` 与 `heat_the_chair RMSE < 1.4568` 双门槛
+  - `UAB robust-prior adapter` 已用 fold-safe `target_prior_median` 将 `heat_the_chair` 推到 `RMSE=1.4331 / MAE=1.0740`
+  - 当前 unified public mainline 状态为 `public opt closed`
   - `chronaris_public_fusion` 当前 `NASA combined macro-F1` confirm 为 `0.3348`，未达到 `0.40` promote 门槛
   - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view
 
@@ -231,8 +233,9 @@
   - 保持 `E/F/G(min)/H` 导出路径稳定：它们是 `chronaris_opt` 的历史基线与输入依赖，不直接废弃
   - 继续把 UAB/NASA `Phase 0/1/2/3` 视为公开 benchmark 历史事实，不与私有 proxy 最优性混写
   - 明确 `20251110...` vehicle-only partial bundle 只用于单流预训练/补充诊断，不作为双流融合 view
-  - 当前公开主线事实已冻结为 `NASA closed, UAB partial`；引用时优先看 `stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`
-  - 不再继续扩大 CPU-heavy `sklearn` 搜索，也不把当前 `UAB torch-native` partial 结果写成 closure
+  - 当前公开主线事实已冻结为 `public opt closed`；引用时优先看 `stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
+  - UAB `heat_the_chair` 的 promote 来源是 `uab_public_adapter / target_prior_median`，不能包装成双流连续对齐或因果融合模块本体的直接胜利
+  - 不再继续扩大 CPU-heavy `sklearn` 或 torch UAB 候选搜索；若复现 robust-prior adapter，必须保留 fold-safe LOSO 标签边界
   - 如果继续扩展公开主线，优先复用 `run_stage_i_public_fusion_screen.py --train-sampling-policy balanced_class --device cuda` 做 `NASA-first` confirm；若 `combined macro-F1 <= 0.40`，则停止该支线
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档

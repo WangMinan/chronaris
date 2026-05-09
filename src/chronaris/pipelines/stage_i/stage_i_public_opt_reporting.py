@@ -13,6 +13,10 @@ def render_stage_i_public_opt_report(
     summary: Mapping[str, object],
     feature_frame: pd.DataFrame,
 ) -> str:
+    report_feature_frame = _select_report_feature_frame(
+        summary=summary,
+        feature_frame=feature_frame,
+    )
     subset_rows = []
     subset_results = summary["subset_results"]
     primary_field, secondary_field = _primary_metric_fields(str(summary["track"]))
@@ -61,11 +65,11 @@ def render_stage_i_public_opt_report(
         "",
         "## 样本范围",
         "",
-        f"- 总样本数：`{len(feature_frame)}`",
+        f"- 总样本数：`{len(report_feature_frame)}`",
         f"- evaluation groups：`{', '.join(summary['subset_order'])}`",
-        f"- raw subsets：`{', '.join(sorted(feature_frame['subset_id'].astype(str).unique()))}`",
-        f"- split_group 数：`{feature_frame['split_group'].nunique()}`",
-        f"- subject 数：`{feature_frame['subject_id'].nunique()}`",
+        f"- raw subsets：`{', '.join(sorted(report_feature_frame['subset_id'].astype(str).unique()))}`",
+        f"- split_group 数：`{report_feature_frame['split_group'].nunique()}`",
+        f"- subject 数：`{report_feature_frame['subject_id'].nunique()}`",
         f"- feature_group_sizes：`{summary['feature_group_sizes']}`",
         "",
         "## Evaluation 指标",
@@ -127,6 +131,25 @@ def render_stage_i_public_opt_report(
         ]
     )
     return "\n".join(lines)
+
+
+def _select_report_feature_frame(
+    *,
+    summary: Mapping[str, object],
+    feature_frame: pd.DataFrame,
+) -> pd.DataFrame:
+    evaluation_groups = summary.get("evaluation_groups") or {}
+    selected_subset_ids = {
+        str(subset_id)
+        for group_name in summary["subset_order"]
+        for subset_id in (evaluation_groups.get(group_name) or ())
+    }
+    if not selected_subset_ids:
+        return feature_frame
+    selected_frame = feature_frame.loc[
+        feature_frame["subset_id"].astype(str).isin(selected_subset_ids)
+    ]
+    return selected_frame if not selected_frame.empty else feature_frame
 
 
 def render_public_opt_reference_comparison(

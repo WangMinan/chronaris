@@ -682,12 +682,15 @@ def _build_default_head_feature_columns(
     residual_only = tuple(feature_groups["residual_only"])
     if dataset_id == "uab_workload_dataset":
         return {
+            "target_prior_median": (),
+            "target_prior_trimmed_mean": (),
             "physiology_persistence": ("residual__physiology_intensity_mean",),
             "ridge_residual_cv": full,
             "elasticnet_residual": residual_only,
             "huber_residual": full,
             "ridge_heat_physiology_lowdim": physiology_lowdim,
             "huber_heat_physiology_lowdim": physiology_lowdim,
+            "heat_prior_residual_guarded": physiology_lowdim,
         }
     if dataset_id == "nasa_csm":
         return {

@@ -254,8 +254,9 @@ def _load_uab_candidate_payload(
             },
         }
     subset_results = payload.get("subset_results") or {}
+    source_type = _infer_uab_public_opt_source_type(payload)
     return {
-        "source_type": "legacy_public_opt",
+        "source_type": source_type,
         "source_path": source_path,
         "prediction_aggregation_policy": str(
             payload.get("prediction_aggregation_policy", "none")
@@ -265,13 +266,31 @@ def _load_uab_candidate_payload(
                 "rmse": float(result["heads"][result["best_head"]]["rmse"]),
                 "mae": float(result["heads"][result["best_head"]]["mae"]),
                 "best_head": str(result["best_head"]),
-                "source_type": "legacy_public_opt",
+                "source_type": source_type,
                 "source_path": source_path,
                 "acceptance_gate": None,
             }
             for subset_id, result in subset_results.items()
         },
     }
+
+
+def _infer_uab_public_opt_source_type(payload: Mapping[str, object]) -> str:
+    subset_results = payload.get("subset_results") or {}
+    head_names = {
+        str(head_name)
+        for result in subset_results.values()
+        for head_name in (result.get("heads") or {})
+    }
+    if str(payload.get("head_catalog", "")) == "uab_hybrid" and head_names.intersection(
+        {
+            "target_prior_median",
+            "target_prior_trimmed_mean",
+            "heat_prior_residual_guarded",
+        }
+    ):
+        return "uab_public_adapter"
+    return "legacy_public_opt"
 
 
 def _subjective_clean_win(

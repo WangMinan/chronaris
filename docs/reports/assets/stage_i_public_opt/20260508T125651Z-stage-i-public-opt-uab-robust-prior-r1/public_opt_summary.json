@@ -1,0 +1,163 @@
+{
+  "generated_at_utc": "2026-05-08T13:17:24.354524Z",
+  "run_id": "20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1",
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "feature_profile": "full",
+  "head_catalog": "uab_hybrid",
+  "train_balance_policy": "class_weight_balanced",
+  "ensemble_policy": "none",
+  "prediction_aggregation_policy": "none",
+  "winner_margin_policy": "paper_gate",
+  "selected_subsets": [
+    "heat_the_chair"
+  ],
+  "track": "subjective",
+  "task_type": "regression",
+  "subset_order": [
+    "heat_the_chair"
+  ],
+  "evaluation_groups": {
+    "n_back": [
+      "n_back"
+    ],
+    "heat_the_chair": [
+      "heat_the_chair"
+    ]
+  },
+  "heads": [
+    "target_prior_median",
+    "target_prior_trimmed_mean",
+    "physiology_persistence",
+    "ridge_residual_cv",
+    "elasticnet_residual",
+    "huber_residual",
+    "ridge_heat_physiology_lowdim",
+    "huber_heat_physiology_lowdim",
+    "heat_prior_residual_guarded"
+  ],
+  "feature_group_sizes": {
+    "full": 580,
+    "physiology_only": 534,
+    "physiology_lowdim": 6,
+    "physiology_scalar_only": 6,
+    "context_only": 41,
+    "residual_only": 17
+  },
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared",
+  "run_log_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/run.log",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/progress.json",
+  "subset_results": {
+    "heat_the_chair": {
+      "sample_count": 5440,
+      "fold_count": 17,
+      "best_head": "target_prior_median",
+      "heads": {
+        "target_prior_median": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.073958345604878,
+          "rmse": 1.433140268927459,
+          "r2": -0.049612803683816376,
+          "spearman": 0.0
+        },
+        "target_prior_trimmed_mean": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.1614813820988525,
+          "rmse": 1.4542981176712229,
+          "r2": -0.0808330234186787,
+          "spearman": -0.7949890198122205
+        },
+        "heat_prior_residual_guarded": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.1431723910511709,
+          "rmse": 1.4647889894366724,
+          "r2": -0.09648287974116165,
+          "spearman": -0.34540805811022746
+        },
+        "physiology_persistence": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.1636927899776721,
+          "rmse": 1.4567585657677036,
+          "r2": -0.08449332265696508,
+          "spearman": -0.7922311996746196
+        },
+        "ridge_heat_physiology_lowdim": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.1723617818133505,
+          "rmse": 1.4623559033790818,
+          "r2": -0.09284328178902834,
+          "spearman": -0.7573271560957667
+        },
+        "huber_heat_physiology_lowdim": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.197920497433812,
+          "rmse": 1.5076881916149842,
+          "r2": -0.16164863998947676,
+          "spearman": -0.7277596764809207
+        }
+      }
+    }
+  },
+  "reference_comparison": {
+    "dataset_id": "uab_workload_dataset",
+    "track": "subjective",
+    "groups": {
+      "heat_the_chair": {
+        "public_opt": {
+          "best_head": "target_prior_median",
+          "best_metrics": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.073958345604878,
+            "rmse": 1.433140268927459,
+            "r2": -0.049612803683816376,
+            "spearman": 0.0
+          }
+        },
+        "classical": {
+          "rmse": 1.8639105911346199,
+          "mae": 1.2785132457477062,
+          "sample_count": 5440.0
+        },
+        "deep_models": {
+          "mult": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 2.3534156768308843,
+            "rmse": 2.8251064718014294,
+            "r2": -3.0786962774093825,
+            "spearman": -0.14828013073805651
+          },
+          "contiformer": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.1636927941704498,
+            "rmse": 1.4567585837447001,
+            "r2": -0.08449336180562583,
+            "spearman": -0.7922311996746196
+          }
+        }
+      }
+    }
+  },
+  "winning_margin_vs_deep": {
+    "heat_the_chair": {
+      "best_public_head": "target_prior_median",
+      "best_public_value": 1.433140268927459,
+      "best_deep_model": "contiformer",
+      "best_deep_value": 1.4567585837447001,
+      "margin_vs_best_deep": 0.02361831481724108,
+      "gate_passed": true,
+      "rerun_threshold": 0.02,
+      "needs_deep_rerun": false
+    }
+  },
+  "needs_deep_rerun": false
+}
