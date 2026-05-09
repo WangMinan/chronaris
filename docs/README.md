@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-05-08
+更新时间：2026-05-09
 
 ## 目录说明
 
@@ -32,6 +32,7 @@
 - [stage-i-public-opt-minimal-plan-2026-05-04.md](planning/stage-i-public-opt-minimal-plan-2026-05-04.md) 是 `chronaris public opt` 的历史最小起步计划；当前真实实跑已扩到 `UAB subjective regression` 与 `NASA attention_state`。
 - [stage-i-public-opt-win-plan-2026-05-06.md](planning/stage-i-public-opt-win-plan-2026-05-06.md) 是当前“`public opt` 优于 `MulT / ContiFormer`”的增强执行计划与后续 `chronaris_public_fusion` 公开化预案。
 - [stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md) 是当前公开主线统一结论：`public opt closed`。
+- [stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md](reports/stage_i/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md) 是当前中期报告整编证据入口；它保留 `public opt closed` 作为公开主线，同时把 `NASA public_fusion` 的 2026-05-09 full confirm 作为补充证据写入。
 - 若要回答“为了毕业论文还差哪些编码工作”，优先看 [thesis-coding-gap.md](planning/thesis-coding-gap.md)。
 - 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage_h/stage-h-closure-2026-04-27.md)。
 - 阶段 H all-window clean 运行报告：
@@ -49,6 +50,8 @@
   - thesis-facing 最小原型输出：
     - runtime/demo：[stage-i-runtime-demo-20260506T165435Z-stage-i-runtime-demo.md](reports/stage_i/stage-i-runtime-demo-20260506T165435Z-stage-i-runtime-demo.md)
     - anchor：[stage-i-anchor-20260506T165435Z-stage-i-anchor.md](reports/stage_i/stage-i-anchor-20260506T165435Z-stage-i-anchor.md)
+  - 当前中期整编证据：
+    - [stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md](reports/stage_i/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md)
   - `chronaris public opt` 实跑：
     - NASA enhanced round 1：[stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md](reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md)
     - UAB torch auto-cuda confirm：[stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md](reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md)
@@ -56,6 +59,7 @@
     - unified public mainline：[stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
   - `chronaris_public_fusion` GPU screen：
     - round 2：[stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md](reports/stage_i/stage-i-public-fusion-screen-20260506T-stage-i-public-fusion-screen-round2.md)
+    - 2026-05-09 prepared-v2 balanced confirm 与 full confirm：见 [stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md](reports/stage_i/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md) 引用的 `docs/reports/assets/stage_i_midterm_runtime/` 资产
   - `Private optimized package`：[private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md](reports/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md)
   - 历史 baseline / probe / 旧 public-opt / round1 screen 与私有旧支撑报告已统一下沉到：
     - [stage_i/README.md](reports/stage_i/README.md)

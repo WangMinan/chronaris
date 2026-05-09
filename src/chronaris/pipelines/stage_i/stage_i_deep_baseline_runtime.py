@@ -62,6 +62,10 @@ def _fit_predict_classification(
     label_to_index = {int(label): position for position, label in enumerate(label_order)}
     frames: list[pd.DataFrame] = []
     for split in loso_splits:
+        train_label_indices = np.asarray(
+            [label_to_index[int(value)] for value in labels[split.train_indices]],
+            dtype=int,
+        )
         model = _train_model(
             model_name=config.model_name,
             ordered_modalities=ordered_modalities,
@@ -69,10 +73,7 @@ def _fit_predict_classification(
             modality_masks=bundle.modality_masks,
             time_axis=bundle.time_axis,
             train_indices=indices[split.train_indices],
-            train_targets=np.asarray(
-                [label_to_index[int(value)] for value in labels[split.train_indices]],
-                dtype=int,
-            ),
+            train_targets=train_label_indices,
             output_dim=len(label_order),
             task="classification",
             config=config,
@@ -91,6 +92,12 @@ def _fit_predict_classification(
             indices=indices[split.test_indices],
         )
         logits = _sanitize_classification_logits(output.logits.detach().cpu().numpy())
+        logits = _apply_classification_logit_adjustment(
+            logits,
+            train_targets=train_label_indices,
+            output_dim=len(label_order),
+            sampling_policy=config.train_sampling_policy,
+        )
         predicted_indices = logits.argmax(axis=1)
         predicted_labels = np.asarray(
             [label_order[index] for index in predicted_indices],
@@ -206,7 +213,12 @@ def _train_model(
     ).to(device=runtime_device)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
     criterion = (
-        _classification_loss(train_targets, device=runtime_device, output_dim=output_dim)
+        _classification_loss(
+            train_targets,
+            device=runtime_device,
+            output_dim=output_dim,
+            sampling_policy=config.train_sampling_policy,
+        )
         if task == "classification"
         else nn.MSELoss()
     )
@@ -259,7 +271,10 @@ def _classification_loss(
     *,
     device: str,
     output_dim: int,
+    sampling_policy: str = "none",
 ) -> nn.Module:
+    if sampling_policy == "balanced_class":
+        return nn.CrossEntropyLoss()
     if len(train_targets) == 0:
         return nn.CrossEntropyLoss()
     counts = np.bincount(np.asarray(train_targets, dtype=int), minlength=output_dim).astype(float)
@@ -267,6 +282,23 @@ def _classification_loss(
     weights = counts.sum() / (counts * float(output_dim))
     weight_tensor = torch.as_tensor(weights, dtype=torch.float32, device=device)
     return nn.CrossEntropyLoss(weight=weight_tensor)
+
+
+def _apply_classification_logit_adjustment(
+    logits: np.ndarray,
+    *,
+    train_targets: np.ndarray,
+    output_dim: int,
+    sampling_policy: str,
+) -> np.ndarray:
+    if sampling_policy != "balanced_class" or len(train_targets) == 0:
+        return logits
+    class_counts = np.bincount(np.asarray(train_targets, dtype=int), minlength=output_dim).astype(
+        np.float64
+    )
+    class_counts = np.maximum(class_counts, 1.0)
+    priors = class_counts / class_counts.sum()
+    return logits + np.log(priors).reshape(1, -1)
 
 
 def _forward_dataset(

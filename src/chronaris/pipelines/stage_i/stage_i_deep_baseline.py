@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -40,9 +41,12 @@ from chronaris.pipelines.stage_i.stage_i_deep_baseline_runtime import (
     _sanitize_regression_outputs,
     _select_indices,
 )
+from chronaris.pipelines.stage_i.stage_i_run_observer import open_stage_i_run_observer
 from chronaris.pipelines.torch_runtime import resolve_torch_device_name
 
 DATASET_RUN_ORDER = (STAGE_H_CASE_DATASET_ID, "uab_workload_dataset", "nasa_csm")
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
 
 
 @dataclass(frozen=True, slots=True)
@@ -122,33 +126,58 @@ def run_stage_i_deep_baseline(
 ) -> StageIDeepBaselineRunResult:
     artifact_root = Path(config.artifact_root)
     artifact_root.mkdir(parents=True, exist_ok=True)
-    dataset = _load_prepared_sequence_dataset(config.prepared_artifact_root)
-    if dataset["dataset_id"] != config.dataset_id:
-        raise ValueError(
-            f"prepared dataset mismatch: expected {config.dataset_id}, got {dataset['dataset_id']}"
+    with open_stage_i_run_observer(
+        run_root=artifact_root,
+        run_id=artifact_root.name,
+        stage_name="stage_i_deep_baseline",
+        logger=LOGGER,
+        initial_progress={
+            "dataset_id": config.dataset_id,
+            "model_name": config.model_name,
+            "requested_device": config.device,
+            "artifact_root": str(artifact_root),
+        },
+    ) as progress:
+        dataset = _load_prepared_sequence_dataset(config.prepared_artifact_root)
+        if dataset["dataset_id"] != config.dataset_id:
+            raise ValueError(
+                f"prepared dataset mismatch: expected {config.dataset_id}, got {dataset['dataset_id']}"
+            )
+        progress.update(
+            "dataset_loaded",
+            prepared_artifact_root=config.prepared_artifact_root,
+            runtime_device=resolve_torch_device_name(config.device),
         )
-    if config.dataset_id == STAGE_H_CASE_DATASET_ID:
-        summary, predictions = _run_real_sortie_case_study(dataset=dataset, config=config)
-    else:
-        summary, predictions = _run_public_deep_baseline(dataset=dataset, config=config)
-    summary_path = artifact_root / "deep_baseline_summary.json"
-    report_path = artifact_root / "deep_baseline_report.md"
-    predictions_path = artifact_root / "fold_predictions.csv"
-    summary_path.write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    report_path.write_text(_render_deep_baseline_report(summary) + "\n", encoding="utf-8")
-    predictions.to_csv(predictions_path, index=False)
-    return StageIDeepBaselineRunResult(
-        dataset_id=config.dataset_id,
-        model_name=config.model_name,
-        artifact_root=str(artifact_root),
-        summary_path=str(summary_path),
-        report_path=str(report_path),
-        predictions_path=str(predictions_path),
-        summary=summary,
-    )
+        if config.dataset_id == STAGE_H_CASE_DATASET_ID:
+            summary, predictions = _run_real_sortie_case_study(dataset=dataset, config=config)
+        else:
+            summary, predictions = _run_public_deep_baseline(dataset=dataset, config=config)
+        summary_path = artifact_root / "deep_baseline_summary.json"
+        report_path = artifact_root / "deep_baseline_report.md"
+        predictions_path = artifact_root / "fold_predictions.csv"
+        summary_path.write_text(
+            json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        report_path.write_text(
+            _render_deep_baseline_report(summary) + "\n",
+            encoding="utf-8",
+        )
+        predictions.to_csv(predictions_path, index=False)
+        progress.finish(
+            summary_path=str(summary_path),
+            report_path=str(report_path),
+            predictions_path=str(predictions_path),
+        )
+        return StageIDeepBaselineRunResult(
+            dataset_id=config.dataset_id,
+            model_name=config.model_name,
+            artifact_root=str(artifact_root),
+            summary_path=str(summary_path),
+            report_path=str(report_path),
+            predictions_path=str(predictions_path),
+            summary=summary,
+        )
 
 
 def run_stage_i_deep_comparison(
