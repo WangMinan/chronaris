@@ -1,0 +1,115 @@
+{
+  "datasets": [
+    "nasa_csm"
+  ],
+  "requested_device": "cuda",
+  "require_cuda": true,
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10",
+  "stage_name": "stage_i_public_fusion_screen",
+  "run_id": "20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10",
+  "last_event": "finished",
+  "updated_at_utc": "2026-05-09T05:59:12.749438Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-05-09T05:57:46.808018Z",
+      "event": "start",
+      "datasets": [
+        "nasa_csm"
+      ],
+      "requested_device": "cuda",
+      "require_cuda": true,
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:57:46.886955Z",
+      "event": "device_resolved",
+      "runtime_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:57:48.440921Z",
+      "event": "dataset_start",
+      "dataset_id": "nasa_csm",
+      "prepared_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+      "candidate_count": 3
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:57:48.441444Z",
+      "event": "candidate_start",
+      "dataset_id": "nasa_csm",
+      "candidate_index": 1,
+      "candidate_count": 3,
+      "candidate": "fusion_h64_l2_hd4_do02_bias025_lag8_norm1"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:58:23.649564Z",
+      "event": "candidate_done",
+      "dataset_id": "nasa_csm",
+      "candidate": "fusion_h64_l2_hd4_do02_bias025_lag8_norm1",
+      "screen_metric": "macro_f1",
+      "selection_score": 0.146011396011396,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/deep_baseline_report.md"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:58:23.649924Z",
+      "event": "candidate_start",
+      "dataset_id": "nasa_csm",
+      "candidate_index": 2,
+      "candidate_count": 3,
+      "candidate": "fusion_h96_l2_hd4_do02_bias050_lag8_norm1"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:58:48.054756Z",
+      "event": "candidate_done",
+      "dataset_id": "nasa_csm",
+      "candidate": "fusion_h96_l2_hd4_do02_bias050_lag8_norm1",
+      "screen_metric": "macro_f1",
+      "selection_score": 0.15725359911406422,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/deep_baseline_report.md"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:58:48.055189Z",
+      "event": "candidate_start",
+      "dataset_id": "nasa_csm",
+      "candidate_index": 3,
+      "candidate_count": 3,
+      "candidate": "fusion_h64_l2_hd4_do01_bias025_lag16_norm1"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:59:12.746190Z",
+      "event": "candidate_done",
+      "dataset_id": "nasa_csm",
+      "candidate": "fusion_h64_l2_hd4_do01_bias025_lag16_norm1",
+      "screen_metric": "macro_f1",
+      "selection_score": 0.17815224681421862,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_report.md"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:59:12.746605Z",
+      "event": "dataset_done",
+      "dataset_id": "nasa_csm",
+      "best_candidate": "fusion_h64_l2_hd4_do01_bias025_lag16_norm1"
+    },
+    {
+      "timestamp_utc": "2026-05-09T05:59:12.749438Z",
+      "event": "finished",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/fusion_screen_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/reports/stage-i-public-fusion-screen-20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10.md",
+      "leaderboard_csv_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/candidate_leaderboard.csv"
+    }
+  ],
+  "runtime_device": "cuda",
+  "dataset_id": "nasa_csm",
+  "prepared_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+  "candidate_count": 3,
+  "candidate_index": 3,
+  "candidate": "fusion_h64_l2_hd4_do01_bias025_lag16_norm1",
+  "screen_metric": "macro_f1",
+  "selection_score": 0.17815224681421862,
+  "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/fusion_screen_summary.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/reports/stage-i-public-fusion-screen-20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10.md",
+  "best_candidate": "fusion_h64_l2_hd4_do01_bias025_lag16_norm1",
+  "leaderboard_csv_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/candidate_leaderboard.csv"
+}

@@ -1,0 +1,7 @@
+figure_id,title_cn,title_ascii,path,exists,note
+thesis_chain_status,论文链路状态图,Thesis Chain Status,/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/plots/thesis_chain_status.png,True,using CJK font WenQuanYi Zen Hei
+private_opt_task_metrics,private opt 三任务指标图,Private Opt Task Metrics,/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/plots/private_opt_task_metrics.png,True,
+public_mainline_metrics,public mainline 指标图,Public Mainline Metrics,/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/plots/public_mainline_metrics.png,True,
+support_ablation,support ablation 图,Support Ablation,/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/plots/support_ablation_metrics.png,True,
+anchor_window_scores,anchor window 图,Anchor Window Scores,/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/plots/anchor_window_scores.png,True,
+runtime_progress_timeline,runtime progress timeline 图,Runtime Progress Timeline,/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/plots/runtime_progress_timeline.png,True,

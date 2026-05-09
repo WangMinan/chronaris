@@ -60,6 +60,7 @@
     - 当前还覆盖 `public_fusion_screen` 的 GPU smoke 筛选入口与 `require_cuda` CPU fail-fast
 13. Stage I 论文证据 support / ablation 聚合、固定 6 路径主矩阵与中文报告落盘
     - 当前回归集中在 `tests/test_stage_i_support.py`
+    - 当前还覆盖 `stage_i_midterm_evidence` 的 manifest / metrics / figure index / cleanup audit / 中文报告，以及 `run.log / progress.json`
 
 当前鼎新私有主线最小回归命令：
 

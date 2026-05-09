@@ -1,6 +1,6 @@
 # Private Reports
 
-更新时间：2026-05-06
+更新时间：2026-05-09
 
 当前顶层只保留当前鼎新私有主线最需要直接引用的两份文档：
 
@@ -18,4 +18,5 @@
 
 - 如果要回答“当前私有最优 package 是什么”，优先看 `private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md`。
 - 如果要回答“当前私有主线结论是什么”，优先看 `private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md`。
+- 如果要回答“当前中期整编里私有主线如何被引用”，可交叉查看 `../stage_i/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md`；但私有 truth source 仍以上面两份 private 报告为准。
 - 若只是追溯 earlier support/optimality narrative，请进入 `archive/`，不要把 archive 报告当成当前活跃 truth source。

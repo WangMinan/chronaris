@@ -1,0 +1,473 @@
+{
+  "generated_at_utc": "2026-05-09T05:59:12.748757Z",
+  "run_id": "20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10",
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10",
+  "dataset_prepared_roots": {
+    "nasa_csm": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2"
+  },
+  "screen_config": {
+    "epochs": 10,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "max_folds": 2,
+    "seed": 42,
+    "device": "cuda",
+    "require_cuda": true,
+    "train_sampling_policy": "balanced_class"
+  },
+  "candidate_order": [
+    "fusion_h64_l2_hd4_do02_bias025_lag8_norm1",
+    "fusion_h96_l2_hd4_do02_bias050_lag8_norm1",
+    "fusion_h64_l2_hd4_do01_bias025_lag16_norm1"
+  ],
+  "leaderboard_csv_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/candidate_leaderboard.csv",
+  "run_log_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/run.log",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/progress.json",
+  "per_dataset_rankings": {
+    "nasa_csm": [
+      {
+        "dataset_id": "nasa_csm",
+        "candidate_id": "fusion_h64_l2_hd4_do01_bias025_lag16_norm1",
+        "screen_metric": "macro_f1",
+        "selection_score": 0.17815224681421862,
+        "secondary_score": 0.5160818713450293,
+        "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_summary.json",
+        "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_report.md",
+        "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1",
+        "combined_macro_f1": 0.17815224681421862,
+        "combined_balanced_accuracy": 0.5160818713450293
+      },
+      {
+        "dataset_id": "nasa_csm",
+        "candidate_id": "fusion_h96_l2_hd4_do02_bias050_lag8_norm1",
+        "screen_metric": "macro_f1",
+        "selection_score": 0.15725359911406422,
+        "secondary_score": 0.45419103313840153,
+        "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/deep_baseline_summary.json",
+        "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/deep_baseline_report.md",
+        "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1",
+        "combined_macro_f1": 0.15725359911406422,
+        "combined_balanced_accuracy": 0.45419103313840153
+      },
+      {
+        "dataset_id": "nasa_csm",
+        "candidate_id": "fusion_h64_l2_hd4_do02_bias025_lag8_norm1",
+        "screen_metric": "macro_f1",
+        "selection_score": 0.146011396011396,
+        "secondary_score": 0.42836257309941517,
+        "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/deep_baseline_summary.json",
+        "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/deep_baseline_report.md",
+        "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1",
+        "combined_macro_f1": 0.146011396011396,
+        "combined_balanced_accuracy": 0.42836257309941517
+      }
+    ]
+  },
+  "candidate_summaries": {
+    "nasa_csm": {
+      "fusion_h64_l2_hd4_do02_bias025_lag8_norm1": {
+        "dataset_id": "nasa_csm",
+        "profile": "window_v2",
+        "model_name": "chronaris_public_fusion",
+        "model_config": {
+          "hidden_dim": 64,
+          "num_heads": 4,
+          "layers": 2,
+          "dropout": 0.2,
+          "epochs": 10,
+          "learning_rate": 0.001,
+          "batch_size": 128,
+          "fusion_event_bias_weight": 0.25,
+          "fusion_lag_window_points": 8,
+          "fusion_normalize_states": true,
+          "train_sampling_policy": "balanced_class"
+        },
+        "runtime_device": "cuda",
+        "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1",
+        "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+        "objective": {
+          "track": "objective",
+          "model_name": "chronaris_public_fusion",
+          "groups": {
+            "benchmark_only": {
+              "sample_count": 172,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.11567356179890913,
+              "balanced_accuracy": 0.39999999999999997,
+              "per_class_recall": {
+                "1": 0.6,
+                "2": 0.0,
+                "5": 0.6
+              },
+              "confusion_matrix": [
+                [
+                  6,
+                  0,
+                  4
+                ],
+                [
+                  55,
+                  0,
+                  87
+                ],
+                [
+                  8,
+                  0,
+                  12
+                ]
+              ]
+            },
+            "loft_only": {
+              "sample_count": 180,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.32280701754385965,
+              "balanced_accuracy": 0.5555555555555555,
+              "per_class_recall": {
+                "1": 0.6666666666666666,
+                "2": 0.0,
+                "5": 1.0
+              },
+              "confusion_matrix": [
+                [
+                  6,
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  0,
+                  155
+                ],
+                [
+                  0,
+                  0,
+                  16
+                ]
+              ]
+            },
+            "combined": {
+              "sample_count": 352,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.146011396011396,
+              "balanced_accuracy": 0.42836257309941517,
+              "per_class_recall": {
+                "1": 0.3684210526315789,
+                "2": 0.0,
+                "5": 0.9166666666666666
+              },
+              "confusion_matrix": [
+                [
+                  7,
+                  0,
+                  12
+                ],
+                [
+                  27,
+                  0,
+                  270
+                ],
+                [
+                  3,
+                  0,
+                  33
+                ]
+              ]
+            }
+          },
+          "plot_paths": {
+            "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_benchmark_only_confusion_matrix.png",
+            "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_loft_only_confusion_matrix.png",
+            "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_combined_confusion_matrix.png",
+            "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/plots/objective_primary_metrics.png"
+          }
+        },
+        "subjective": null,
+        "reference_comparison": null
+      },
+      "fusion_h96_l2_hd4_do02_bias050_lag8_norm1": {
+        "dataset_id": "nasa_csm",
+        "profile": "window_v2",
+        "model_name": "chronaris_public_fusion",
+        "model_config": {
+          "hidden_dim": 96,
+          "num_heads": 4,
+          "layers": 2,
+          "dropout": 0.2,
+          "epochs": 10,
+          "learning_rate": 0.001,
+          "batch_size": 128,
+          "fusion_event_bias_weight": 0.5,
+          "fusion_lag_window_points": 8,
+          "fusion_normalize_states": true,
+          "train_sampling_policy": "balanced_class"
+        },
+        "runtime_device": "cuda",
+        "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1",
+        "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+        "objective": {
+          "track": "objective",
+          "model_name": "chronaris_public_fusion",
+          "groups": {
+            "benchmark_only": {
+              "sample_count": 172,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.14522995598046307,
+              "balanced_accuracy": 0.4523474178403755,
+              "per_class_recall": {
+                "1": 0.4,
+                "2": 0.007042253521126761,
+                "5": 0.95
+              },
+              "confusion_matrix": [
+                [
+                  4,
+                  0,
+                  6
+                ],
+                [
+                  70,
+                  1,
+                  71
+                ],
+                [
+                  1,
+                  0,
+                  19
+                ]
+              ]
+            },
+            "loft_only": {
+              "sample_count": 180,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.3029100529100529,
+              "balanced_accuracy": 0.5347222222222222,
+              "per_class_recall": {
+                "1": 0.6666666666666666,
+                "2": 0.0,
+                "5": 0.9375
+              },
+              "confusion_matrix": [
+                [
+                  6,
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  0,
+                  155
+                ],
+                [
+                  1,
+                  0,
+                  15
+                ]
+              ]
+            },
+            "combined": {
+              "sample_count": 352,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.15725359911406422,
+              "balanced_accuracy": 0.45419103313840153,
+              "per_class_recall": {
+                "1": 0.47368421052631576,
+                "2": 0.0,
+                "5": 0.8888888888888888
+              },
+              "confusion_matrix": [
+                [
+                  9,
+                  0,
+                  10
+                ],
+                [
+                  31,
+                  0,
+                  266
+                ],
+                [
+                  4,
+                  0,
+                  32
+                ]
+              ]
+            }
+          },
+          "plot_paths": {
+            "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/plots/objective_benchmark_only_confusion_matrix.png",
+            "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/plots/objective_loft_only_confusion_matrix.png",
+            "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/plots/objective_combined_confusion_matrix.png",
+            "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/plots/objective_primary_metrics.png"
+          }
+        },
+        "subjective": null,
+        "reference_comparison": null
+      },
+      "fusion_h64_l2_hd4_do01_bias025_lag16_norm1": {
+        "dataset_id": "nasa_csm",
+        "profile": "window_v2",
+        "model_name": "chronaris_public_fusion",
+        "model_config": {
+          "hidden_dim": 64,
+          "num_heads": 4,
+          "layers": 2,
+          "dropout": 0.1,
+          "epochs": 10,
+          "learning_rate": 0.001,
+          "batch_size": 128,
+          "fusion_event_bias_weight": 0.25,
+          "fusion_lag_window_points": 16,
+          "fusion_normalize_states": true,
+          "train_sampling_policy": "balanced_class"
+        },
+        "runtime_device": "cuda",
+        "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1",
+        "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
+        "objective": {
+          "track": "objective",
+          "model_name": "chronaris_public_fusion",
+          "groups": {
+            "benchmark_only": {
+              "sample_count": 172,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.13206941206941206,
+              "balanced_accuracy": 0.4356807511737089,
+              "per_class_recall": {
+                "1": 0.6,
+                "2": 0.007042253521126761,
+                "5": 0.7
+              },
+              "confusion_matrix": [
+                [
+                  6,
+                  0,
+                  4
+                ],
+                [
+                  53,
+                  1,
+                  88
+                ],
+                [
+                  6,
+                  0,
+                  14
+                ]
+              ]
+            },
+            "loft_only": {
+              "sample_count": 180,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.32280701754385965,
+              "balanced_accuracy": 0.5555555555555555,
+              "per_class_recall": {
+                "1": 0.6666666666666666,
+                "2": 0.0,
+                "5": 1.0
+              },
+              "confusion_matrix": [
+                [
+                  6,
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  0,
+                  155
+                ],
+                [
+                  0,
+                  0,
+                  16
+                ]
+              ]
+            },
+            "combined": {
+              "sample_count": 352,
+              "fold_count": 2,
+              "label_order": [
+                1,
+                2,
+                5
+              ],
+              "macro_f1": 0.17815224681421862,
+              "balanced_accuracy": 0.5160818713450293,
+              "per_class_recall": {
+                "1": 0.631578947368421,
+                "2": 0.0,
+                "5": 0.9166666666666666
+              },
+              "confusion_matrix": [
+                [
+                  12,
+                  0,
+                  7
+                ],
+                [
+                  37,
+                  0,
+                  260
+                ],
+                [
+                  3,
+                  0,
+                  33
+                ]
+              ]
+            }
+          },
+          "plot_paths": {
+            "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/plots/objective_benchmark_only_confusion_matrix.png",
+            "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/plots/objective_loft_only_confusion_matrix.png",
+            "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/plots/objective_combined_confusion_matrix.png",
+            "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/plots/objective_primary_metrics.png"
+          }
+        },
+        "subjective": null,
+        "reference_comparison": null
+      }
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "model_name": "contiformer",
+  "model_config": {
+    "hidden_dim": 32,
+    "num_heads": 2,
+    "layers": 1,
+    "dropout": 0.1,
+    "epochs": 1,
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "fusion_event_bias_weight": 0.25,
+    "fusion_lag_window_points": null,
+    "fusion_normalize_states": true,
+    "train_sampling_policy": "none"
+  },
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences",
+  "objective": {
+    "track": "objective",
+    "model_name": "contiformer",
+    "groups": {
+      "n_back": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "label_order": [
+          0,
+          1,
+          2
+        ],
+        "macro_f1": 0.16202991625965804,
+        "balanced_accuracy": 0.3333333333333333,
+        "per_class_recall": {
+          "0": 1.0,
+          "1": 0.0,
+          "2": 0.0
+        },
+        "confusion_matrix": [
+          [
+            9007,
+            0,
+            0
+          ],
+          [
+            9463,
+            0,
+            0
+          ],
+          [
+            9582,
+            0,
+            0
+          ]
+        ]
+      },
+      "heat_the_chair": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "label_order": [
+          0,
+          1
+        ],
+        "macro_f1": 0.3222028407675056,
+        "balanced_accuracy": 0.5,
+        "per_class_recall": {
+          "0": 1.0,
+          "1": 0.0
+        },
+        "confusion_matrix": [
+          [
+            2586,
+            0
+          ],
+          [
+            2854,
+            0
+          ]
+        ]
+      }
+    },
+    "plot_paths": {
+      "objective_n_back_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/plots/objective_n_back_confusion_matrix.png",
+      "objective_heat_the_chair_confusion_matrix": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/plots/objective_heat_the_chair_confusion_matrix.png",
+      "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/plots/objective_primary_metrics.png"
+    }
+  },
+  "subjective": {
+    "track": "subjective",
+    "model_name": "contiformer",
+    "groups": {
+      "n_back": {
+        "sample_count": 28052,
+        "fold_count": 16,
+        "mae": 3.8122692104117193,
+        "rmse": 4.654091035125815,
+        "r2": -0.026132462753980512,
+        "spearman": -0.40538114088456173
+      },
+      "heat_the_chair": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "mae": 1.1636927941704498,
+        "rmse": 1.4567585837447001,
+        "r2": -0.08449336180562583,
+        "spearman": -0.7922311996746196
+      }
+    },
+    "plot_paths": {
+      "subjective_n_back_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/plots/subjective_n_back_regression.png",
+      "subjective_heat_the_chair_regression": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/plots/subjective_heat_the_chair_regression.png",
+      "subjective_primary_metrics": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/plots/subjective_primary_metrics.png"
+    }
+  },
+  "reference_comparison": null
+}

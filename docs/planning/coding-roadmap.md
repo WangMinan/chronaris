@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-更新时间：2026-05-08
+更新时间：2026-05-09
 
 ## 1. 目的
 
@@ -63,8 +63,10 @@
 - 这里的“阶段 I 已完成收口”特指 `2026-04-30` 的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 历史 closure，不等于当前论文主线的所有增强与整编工作都已结束
 - 当前论文私有主线：`chronaris_opt` 已闭合并完成 package 固化
 - 当前论文公开主线：`public opt closed`；UAB 由 `n_back=legacy_public_opt/ridge_residual` 与 `heat_the_chair=uab_public_adapter/target_prior_median` 组成，不能把 robust-prior adapter 写成双流融合本体胜利
+- 已完成中期证据整编入口：`src/chronaris/pipelines/stage_i/stage_i_midterm_evidence.py`、`scripts/build_stage_i_midterm_evidence.py`、`docs/reports/assets/stage_i_midterm/20260509T071500Z-stage-i-midterm-r2/`
 - 当前 public-opt 执行约束：长任务必须检查 `run.log / progress.json`；UAB torch `heat_specialist` 与 sklearn robust-prior adapter 均已冻结为证据，不再盲目扩大 UAB 候选扩搜
-- NASA 后续只做 prepared asset schema/diagnostics 校验与可选 GPU confirm，不重新定义 `attention_state` 标签任务，也不推翻 `NASA closed` 的当前事实
+- 2026-05-09 已完成 `prepared-v2 + balanced_class + cuda` 的 `chronaris_public_fusion` 迭代：修正了 balanced sampling 下的双重纠偏口径，并在 NASA 上完成 `2-fold screen + 17-fold full confirm`
+- 当前 `chronaris_public_fusion` 在 NASA `combined macro-F1` 上的最新 supplementary confirm 为 `0.5616`；该结果作为补充证据保留，不替换 `public opt closed` 这条公开主线
 - 面向毕业论文的剩余编码工作见 [thesis-coding-gap.md](thesis-coding-gap.md)
 
 ## 4. 阶段拆解

@@ -1,0 +1,65 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm",
+  "report_root": "/home/wangminan/projects/chronaris/docs/reports/stage_i",
+  "stage_name": "stage_i_midterm_evidence",
+  "run_id": "20260509T060500Z-stage-i-midterm",
+  "last_event": "finished",
+  "updated_at_utc": "2026-05-09T06:04:25.983579Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.124028Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm",
+      "report_root": "/home/wangminan/projects/chronaris/docs/reports/stage_i"
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.136463Z",
+      "event": "sources_loaded",
+      "source_count": 10
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.185648Z",
+      "event": "font_selected",
+      "font_family": "WenQuanYi Zen Hei",
+      "ascii_only": false
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.189290Z",
+      "event": "metrics_written",
+      "metric_row_count": 19
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.420496Z",
+      "event": "cleanup_audit_written",
+      "outdated_doc_count": 5,
+      "unreferenced_code_count": 0
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.982411Z",
+      "event": "figures_written",
+      "figure_count": 6
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.983263Z",
+      "event": "report_written",
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-midterm-20260509T060500Z-stage-i-midterm.md"
+    },
+    {
+      "timestamp_utc": "2026-05-09T06:04:25.983579Z",
+      "event": "finished",
+      "manifest_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/midterm_evidence_manifest.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-midterm-20260509T060500Z-stage-i-midterm.md",
+      "figure_index_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/midterm_figure_index.csv"
+    }
+  ],
+  "source_count": 10,
+  "font_family": "WenQuanYi Zen Hei",
+  "ascii_only": false,
+  "metric_row_count": 19,
+  "outdated_doc_count": 5,
+  "unreferenced_code_count": 0,
+  "figure_count": 6,
+  "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-midterm-20260509T060500Z-stage-i-midterm.md",
+  "manifest_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/midterm_evidence_manifest.json",
+  "figure_index_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm/20260509T060500Z-stage-i-midterm/midterm_figure_index.csv"
+}

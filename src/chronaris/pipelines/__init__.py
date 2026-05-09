@@ -336,6 +336,18 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.stage_i.stage_i_anchor",
         "run_stage_i_anchor",
     ),
+    "StageIMidtermEvidenceConfig": (
+        "chronaris.pipelines.stage_i.stage_i_midterm_evidence",
+        "StageIMidtermEvidenceConfig",
+    ),
+    "StageIMidtermEvidenceRunResult": (
+        "chronaris.pipelines.stage_i.stage_i_midterm_evidence",
+        "StageIMidtermEvidenceRunResult",
+    ),
+    "run_stage_i_midterm_evidence": (
+        "chronaris.pipelines.stage_i.stage_i_midterm_evidence",
+        "run_stage_i_midterm_evidence",
+    ),
 }
 
 __all__ = sorted(_EXPORTS)

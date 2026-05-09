@@ -1,0 +1,317 @@
+{
+  "generated_at_utc": "2026-05-09T06:20:01.088120Z",
+  "outdated_report_candidates": [
+    {
+      "path": "docs/reports/stage_i/stage-i-midterm-20260509T060500Z-stage-i-midterm.md",
+      "suggested_archive_path": "docs/reports/stage_i/archive/public_history/stage-i-midterm-20260509T060500Z-stage-i-midterm.md",
+      "reference_hits": [],
+      "safe_to_move": true
+    },
+    {
+      "path": "docs/reports/stage_i/stage-i-public-mainline-20260507T024112Z-stage-i-public-mainline.md",
+      "suggested_archive_path": "docs/reports/stage_i/archive/public_history/stage-i-public-mainline-20260507T024112Z-stage-i-public-mainline.md",
+      "reference_hits": [
+        {
+          "path": "tests/test_stage_i_support.py",
+          "line_numbers": [
+            422,
+            427
+          ]
+        }
+      ],
+      "safe_to_move": true
+    },
+    {
+      "path": "docs/reports/stage_i/stage-i-public-mainline-20260507T143000Z-stage-i-public-mainline-uab-iteration.md",
+      "suggested_archive_path": "docs/reports/stage_i/archive/public_history/stage-i-public-mainline-20260507T143000Z-stage-i-public-mainline-uab-iteration.md",
+      "reference_hits": [],
+      "safe_to_move": true
+    },
+    {
+      "path": "docs/reports/stage_i/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md",
+      "suggested_archive_path": "docs/reports/stage_i/archive/public_history/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md",
+      "reference_hits": [
+        {
+          "path": "docs/reports/README.md",
+          "line_numbers": [
+            23
+          ]
+        }
+      ],
+      "safe_to_move": true
+    },
+    {
+      "path": "docs/reports/stage_i/stage-i-public-opt-20260507T134500Z-stage-i-public-opt-uab-torch-sessionmean-r3.md",
+      "suggested_archive_path": "docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260507T134500Z-stage-i-public-opt-uab-torch-sessionmean-r3.md",
+      "reference_hits": [
+        {
+          "path": "tests/test_stage_i_support.py",
+          "line_numbers": [
+            431
+          ]
+        }
+      ],
+      "safe_to_move": true
+    },
+    {
+      "path": "docs/reports/stage_i/stage-i-public-opt-20260507T142500Z-stage-i-public-opt-uab-torch-sessionpooled-scalar-r5.md",
+      "suggested_archive_path": "docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260507T142500Z-stage-i-public-opt-uab-torch-sessionpooled-scalar-r5.md",
+      "reference_hits": [],
+      "safe_to_move": true
+    }
+  ],
+  "unreferenced_code_candidates": [],
+  "test_coverage_status": [
+    {
+      "path": "src/chronaris/pipelines/stage_i/__init__.py",
+      "test_hit_count": 5,
+      "test_hits": [
+        "tests/test_access_cli_overlap.py",
+        "tests/test_access_metadata_live.py",
+        "tests/test_alignment_pipeline.py",
+        "tests/test_stage_h_export.py",
+        "tests/test_stage_i_support.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_anchor.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_case_study.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_baseline.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_stage_i_pipeline.py",
+        "tests/test_stage_i_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_baseline_models.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_baseline_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_case_study.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_stage_i_case_study.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_deep_baseline.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_deep_baseline_case.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_deep_baseline_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_deep_baseline_runtime.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_deep_models.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_midterm_evidence.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_support.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_phase3.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_phase3_assets.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_phase3_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_stage_i_deep_pipeline.py",
+        "tests/test_stage_i_private_optimization.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_private_benchmark_data.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_private_optimization.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_private_benchmark_models.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_private_feature_utils.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_private_optimization.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/README.md"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_private_optimized_package.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_fusion_screen.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_mainline_report.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt.py",
+      "test_hit_count": 3,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_stage_i_public_opt.py",
+        "tests/test_stage_i_public_opt_aggregation.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_data.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_postprocess.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_reference.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_shared.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_sklearn.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_stage_i_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_torch.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_stage_i_public_opt.py",
+        "tests/test_stage_i_public_opt_aggregation.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_torch_catalog.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_torch_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_public_opt_torch_supervision.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_run_observer.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_sequence_preparation.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_stage_i_deep_pipeline.py",
+        "tests/test_stage_i_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_support.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_stage_i_support.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_support_builders.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/stage_i/stage_i_support_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    }
+  ],
+  "summary": {
+    "outdated_doc_candidate_count": 6,
+    "unreferenced_code_candidate_count": 0
+  }
+}
