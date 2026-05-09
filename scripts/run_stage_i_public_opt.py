@@ -219,6 +219,7 @@ def _run_from_args(args: argparse.Namespace) -> dict[str, object]:
             ensemble_policy=args.ensemble_policy,
             prediction_aggregation_policy=args.prediction_aggregation_policy,
             winner_margin_policy=args.winner_margin_policy,
+            selected_subsets=tuple(args.selected_subsets),
             reference_phase3_closure_summary_path=(
                 _resolve_path(args.reference_phase3_closure_summary)
                 if args.reference_phase3_closure_summary

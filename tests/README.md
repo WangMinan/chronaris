@@ -52,7 +52,8 @@
     - 当前还覆盖 `session_pooled_broadcast` 与 `physiology_only` / `physiology_scalar_only` torch 配置入口
     - 当前还覆盖 `feature_profile` 与 `ensemble_policy` 配置入口
     - 当前还覆盖 `StageIPublicOptTorchUABConfig` 的 `device=auto` CPU fallback 回归
-    - 当前还覆盖长任务 `run.log / progress.json`、UAB torch `require_cuda` fail-fast、heat-only `heat_specialist`、UAB `sklearn uab_hybrid` CPU-heavy 显式开关，以及 NASA `label_leakage_guard` prepared asset 校验
+    - 当前还覆盖长任务 `run.log / progress.json`、UAB torch `require_cuda` fail-fast、heat-only `heat_specialist`、UAB `sklearn uab_hybrid` CPU-heavy 显式开关、heat-only `selected_subsets`、fold-safe `target_prior_* / heat_prior_residual_guarded`，以及 NASA `label_leakage_guard` prepared asset 校验
+    - 当前还覆盖 unified public mainline 从新 UAB robust-prior summary 与旧 summary 中做 best-of 选择
     - 若本机具备 CUDA，还额外覆盖 `device=cuda` synthetic smoke
 12. Stage I `chronaris_public_fusion` 公共深模型入口与 fusion config 透传
     - 当前回归并入 `tests/test_stage_i_deep_pipeline.py`
