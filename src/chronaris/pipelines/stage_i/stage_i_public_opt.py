@@ -52,6 +52,7 @@ class StageIPublicOptConfig:
     ensemble_policy: str = "none"
     prediction_aggregation_policy: str = "none"
     winner_margin_policy: str = "paper_gate"
+    selected_subsets: tuple[str, ...] = ()
     reference_phase3_closure_summary_path: str | None = None
     reference_deep_comparison_summary_path: str | None = None
 
@@ -86,6 +87,7 @@ def run_stage_i_public_opt(
             "prepared_artifact_root": str(Path(config.prepared_artifact_root)),
             "artifact_root": str(run_root),
             "head_catalog": config.head_catalog,
+            "selected_subsets": list(config.selected_subsets),
         },
     ) as progress:
         LOGGER.info(
@@ -132,6 +134,7 @@ def run_stage_i_public_opt(
             feature_profile=config.feature_profile,
             head_catalog=config.head_catalog,
         )
+        active_subset_order = config.selected_subsets or feature_result.subset_order
         report_root = Path(config.report_root)
         report_root.mkdir(parents=True, exist_ok=True)
         report_path = report_root / f"stage-i-public-opt-{config.run_id}.md"
@@ -153,6 +156,7 @@ def run_stage_i_public_opt(
             train_balance_policy=config.train_balance_policy,
             ensemble_policy=config.ensemble_policy,
             prediction_aggregation_policy=config.prediction_aggregation_policy,
+            selected_evaluation_groups=active_subset_order,
             progress=progress,
         )
         reference_comparison = build_public_opt_reference_comparison(
@@ -173,9 +177,10 @@ def run_stage_i_public_opt(
             "ensemble_policy": config.ensemble_policy,
             "prediction_aggregation_policy": config.prediction_aggregation_policy,
             "winner_margin_policy": config.winner_margin_policy,
+            "selected_subsets": list(active_subset_order),
             "track": feature_result.track,
             "task_type": feature_result.task_type,
-            "subset_order": list(feature_result.subset_order),
+            "subset_order": list(active_subset_order),
             "evaluation_groups": {
                 key: list(value)
                 for key, value in feature_result.evaluation_groups.items()

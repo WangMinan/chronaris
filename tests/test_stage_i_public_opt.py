@@ -39,9 +39,11 @@ from chronaris.pipelines import (  # noqa: E402
     run_stage_i_public_opt_torch_uab,
     run_stage_i_sequence_preparation,
 )
+from chronaris.pipelines.stage_i.stage_i_baseline_models import build_loso_splits  # noqa: E402
 from chronaris.pipelines.stage_i.stage_i_public_opt_data import (  # noqa: E402
     build_stage_i_public_opt_feature_frame,
 )
+from chronaris.pipelines.stage_i import stage_i_public_opt_sklearn as stage_i_public_opt_sklearn_module  # noqa: E402
 from chronaris.pipelines.stage_i import stage_i_public_opt_torch as stage_i_public_opt_torch_module  # noqa: E402
 
 _HELPER_SPEC = importlib.util.spec_from_file_location(
@@ -106,12 +108,24 @@ class StageIPublicOptTest(unittest.TestCase):
                 },
             )
             for head_name in (
+                "target_prior_median",
+                "target_prior_trimmed_mean",
                 "physiology_persistence",
                 "ridge_residual_cv",
                 "elasticnet_residual",
                 "huber_residual",
+                "heat_prior_residual_guarded",
             ):
                 self.assertIn(head_name, feature_result.head_feature_columns)
+            self.assertEqual(feature_result.head_feature_columns["target_prior_median"], ())
+            self.assertEqual(feature_result.head_feature_columns["target_prior_trimmed_mean"], ())
+            for head_name in (
+                "physiology_persistence",
+                "ridge_residual_cv",
+                "elasticnet_residual",
+                "huber_residual",
+                "heat_prior_residual_guarded",
+            ):
                 self.assertTrue(feature_result.head_feature_columns[head_name])
 
     def test_public_opt_feature_frame_filters_to_primary_nasa_attention_sequences(self) -> None:
@@ -235,6 +249,9 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertEqual(
                 set(summary["subset_results"]["heat_the_chair"]["heads"]),
                 {
+                    "target_prior_median",
+                    "target_prior_trimmed_mean",
+                    "heat_prior_residual_guarded",
                     "physiology_persistence",
                     "ridge_heat_physiology_lowdim",
                     "huber_heat_physiology_lowdim",
@@ -243,14 +260,83 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertIn(
                 summary["subset_results"]["heat_the_chair"]["best_head"],
                 {
+                    "target_prior_median",
+                    "target_prior_trimmed_mean",
+                    "heat_prior_residual_guarded",
                     "physiology_persistence",
                     "ridge_heat_physiology_lowdim",
                     "huber_heat_physiology_lowdim",
                 },
             )
             report_text = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("target_prior_median", report_text)
+            self.assertIn("heat_prior_residual_guarded", report_text)
             self.assertIn("ridge_heat_physiology_lowdim", report_text)
             self.assertNotIn("| huber_residual |", report_text.split("### heat_the_chair", 1)[1])
+
+    def test_public_opt_prior_heads_use_only_outer_train_labels(self) -> None:
+        subset_frame = _build_public_opt_prior_probe_frame(
+            y_by_group={"s1": 0.0, "s2": 10.0, "s3": 20.0, "s4": 999.0},
+            feature_by_group={"s1": 1.0, "s2": 2.0, "s3": 3.0, "s4": 4.0},
+        )
+        loso_splits = build_loso_splits(
+            subset_frame["split_group"].astype(str).to_numpy()
+        )
+
+        for head_name, reducer in (
+            ("target_prior_median", _expected_train_median),
+            ("target_prior_trimmed_mean", _expected_train_trimmed_mean),
+        ):
+            predictions = stage_i_public_opt_sklearn_module._run_one_regression_head(
+                subset_frame=subset_frame,
+                evaluation_group="heat_the_chair",
+                head_name=head_name,
+                feature_columns=(),
+                loso_splits=loso_splits,
+                progress=None,
+            )
+            for split_group, group_predictions in predictions.groupby("split_group"):
+                train_values = subset_frame.loc[
+                    subset_frame["split_group"] != split_group,
+                    "y_true",
+                ].to_numpy(dtype=float)
+                self.assertTrue(
+                    np.allclose(
+                        group_predictions["y_pred"].to_numpy(dtype=float),
+                        reducer(train_values),
+                    ),
+                    msg=f"{head_name} leaked labels for {split_group}",
+                )
+
+    def test_heat_prior_residual_guarded_falls_back_when_inner_cv_does_not_improve(self) -> None:
+        subset_frame = _build_public_opt_prior_probe_frame(
+            y_by_group={"s1": 0.0, "s2": 10.0, "s3": 20.0, "s4": 30.0},
+            feature_by_group={"s1": 0.0, "s2": 0.0, "s3": 0.0, "s4": 0.0},
+        )
+        loso_splits = build_loso_splits(
+            subset_frame["split_group"].astype(str).to_numpy()
+        )
+
+        predictions = stage_i_public_opt_sklearn_module._run_one_regression_head(
+            subset_frame=subset_frame,
+            evaluation_group="heat_the_chair",
+            head_name="heat_prior_residual_guarded",
+            feature_columns=("residual__physiology_intensity_mean",),
+            loso_splits=loso_splits,
+            progress=None,
+        )
+
+        for split_group, group_predictions in predictions.groupby("split_group"):
+            train_values = subset_frame.loc[
+                subset_frame["split_group"] != split_group,
+                "y_true",
+            ].to_numpy(dtype=float)
+            self.assertTrue(
+                np.allclose(
+                    group_predictions["y_pred"].to_numpy(dtype=float),
+                    np.median(train_values),
+                )
+            )
 
     def test_run_stage_i_public_opt_writes_expected_nasa_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -514,6 +600,63 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["clean_win"])
             self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["tie_break_used"])
             self.assertIn("current torch-native branch", Path(result.report_path).read_text(encoding="utf-8"))
+
+    def test_public_mainline_can_promote_new_prior_summary_from_extra_uab_sources(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            _, deep_summary_path = _write_reference_summaries(root)
+            nasa_summary_path = _write_reference_nasa_public_opt_summary(root)
+            current_uab_path = _write_reference_torch_uab_summary(
+                root / "current_torch_uab_summary.json",
+                n_back_rmse=5.0,
+                n_back_mae=4.0,
+                heat_rmse=1.7,
+                heat_mae=1.3,
+            )
+            legacy_uab_path = _write_reference_legacy_uab_summary(
+                root / "legacy_uab_summary.json",
+                n_back_rmse=4.59,
+                n_back_mae=3.79,
+                heat_rmse=1.4567586,
+                heat_mae=1.1637,
+            )
+            prior_uab_path = _write_reference_prior_uab_summary(
+                root / "prior_uab_summary.json",
+                n_back_rmse=6.0,
+                n_back_mae=5.0,
+                heat_rmse=1.44,
+                heat_mae=1.14,
+            )
+
+            result = run_stage_i_public_mainline_report(
+                StageIPublicMainlineReportConfig(
+                    run_id="public-mainline-prior-extra-test",
+                    uab_summary_path=str(current_uab_path),
+                    extra_uab_summary_paths=(
+                        str(legacy_uab_path),
+                        str(prior_uab_path),
+                    ),
+                    nasa_summary_path=str(nasa_summary_path),
+                    deep_comparison_summary_path=str(deep_summary_path),
+                    artifact_root=str(root / "artifacts"),
+                    report_root=str(root / "reports"),
+                )
+            )
+
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["public_mainline_status"], "public opt closed")
+            self.assertEqual(
+                summary["uab"]["groups"]["n_back"]["best_public_head"],
+                "ridge_residual",
+            )
+            self.assertEqual(
+                summary["uab"]["groups"]["heat_the_chair"]["best_public_head"],
+                "target_prior_median",
+            )
+            self.assertEqual(
+                summary["uab"]["groups"]["heat_the_chair"]["best_public_source_type"],
+                "uab_public_adapter",
+            )
 
     def test_public_opt_script_auto_routes_uab_to_torch_backend(self) -> None:
         args = _build_public_opt_script_args()
@@ -848,6 +991,47 @@ def _build_prepared_uab_root(temp_root: Path) -> Path:
     return prepared_root
 
 
+def _build_public_opt_prior_probe_frame(
+    *,
+    y_by_group: dict[str, float],
+    feature_by_group: dict[str, float],
+) -> pd.DataFrame:
+    rows = []
+    for index, (split_group, y_true) in enumerate(y_by_group.items()):
+        rows.append(
+            {
+                "track": "subjective",
+                "dataset_id": "uab_workload_dataset",
+                "profile": "window_v2",
+                "evaluation_group": "heat_the_chair",
+                "subset_id": "heat_the_chair",
+                "split_group": split_group,
+                "sample_id": f"sample-{index}",
+                "subject_id": split_group,
+                "session_id": f"session-{split_group}",
+                "window_index": index,
+                "y_true": float(y_true),
+                "residual__physiology_intensity_mean": float(
+                    feature_by_group[split_group]
+                ),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _expected_train_median(values: np.ndarray) -> float:
+    return float(np.median(values.astype(float, copy=False)))
+
+
+def _expected_train_trimmed_mean(values: np.ndarray) -> float:
+    finite_values = values.astype(float, copy=False)
+    lower, upper = np.quantile(finite_values, [0.1, 0.9])
+    trimmed = finite_values[(finite_values >= lower) & (finite_values <= upper)]
+    if trimmed.size == 0:
+        trimmed = finite_values
+    return float(np.mean(trimmed, dtype=np.float64))
+
+
 def _build_public_opt_script_args(**overrides: object) -> argparse.Namespace:
     defaults: dict[str, object] = {
         "run_id": None,
@@ -1126,6 +1310,49 @@ def _write_reference_legacy_uab_summary(
                         },
                     },
                 }
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def _write_reference_prior_uab_summary(
+    path: Path,
+    *,
+    n_back_rmse: float,
+    n_back_mae: float,
+    heat_rmse: float,
+    heat_mae: float,
+) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "head_catalog": "uab_hybrid",
+                "prediction_aggregation_policy": "none",
+                "subset_results": {
+                    "n_back": {
+                        "best_head": "ridge_residual",
+                        "heads": {
+                            "ridge_residual": {
+                                "rmse": n_back_rmse,
+                                "mae": n_back_mae,
+                            }
+                        },
+                    },
+                    "heat_the_chair": {
+                        "best_head": "target_prior_median",
+                        "heads": {
+                            "target_prior_median": {
+                                "rmse": heat_rmse,
+                                "mae": heat_mae,
+                            }
+                        },
+                    },
+                },
             },
             ensure_ascii=False,
             indent=2,

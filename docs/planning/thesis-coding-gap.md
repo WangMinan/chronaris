@@ -25,164 +25,127 @@
 - `chronaris_opt` 已在鼎新私有 proxy benchmark 的 `T1 / T2 / T3` 三任务上达到当前对照矩阵最优，并完成 package 固化。
 - `alignment support`、`causal support`、`fixed six-path ablation` 三份论文证据 support 已落盘。
 - thesis-facing `runtime/demo` 与 `anchor` 入口已正式落盘。
-- 当前公开主线仍然是 `NASA closed, UAB partial`，最新统一口径见 `docs/reports/stage_i/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`。
+- 当前公开主线已从 `NASA closed, UAB partial` 提升为 `public opt closed`，最新统一口径见 `docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`。
 
-因此，当前真正没完成的已经不是“E/F/G/H 还没做出来”，而是论文面向的最后一层编码收束。
+因此，当前真正没完成的已经不是“E/F/G/H 还没做出来”，而是论文面向的最后一层证据表述、图表整理和可选公平性确认。
 
-## 3. 本轮 UAB 迭代结论
+## 3. 最新 UAB 公开主线结论
 
-本轮围绕 `UAB subjective` 连续做了四轮真实实跑，并同步改了 `torch` 主线代码：
+### 3.1 2026-05-08 torch `heat_specialist`
 
-- `r2 = torch mainline`
-  - `full + residual_only`
-  - `mean_top2`
-  - 结果：`n_back RMSE=5.0619`，`heat_the_chair RMSE=1.6211`
-- `r3 = torch + session_mean_broadcast`
-  - 结果：`n_back RMSE=4.9450`，`heat_the_chair RMSE=1.6204`
-  - 结论：只对 `n_back` 有有限改善，对 `heat_the_chair` 几乎无效
-- `r4 = torch + session_pooled_broadcast + physiology_only shortlist`
-  - 结果：`n_back RMSE=6.6951`，`heat_the_chair RMSE=1.7997`
-  - 结论：session-level pooled supervision 在当前实现下整体退化
-- `r5 = torch + session_pooled_broadcast + physiology_scalar_only`
-  - 结果：`n_back RMSE=6.6874`，`heat_the_chair RMSE=1.8651`
-  - 结论：更接近 `physiology_persistence` 的 scalar profile 仍未把 `heat_the_chair` 拉到 gate 附近
-
-本轮新增/验证过的代码方向：
-
-- `torch` 路线支持 `prediction_aggregation_policy=session_mean_broadcast`
-- `torch` 路线支持 `supervision_granularity=session_pooled_broadcast`
-- `torch` 候选空间新增 `physiology_only / physiology_scalar_only`
-- `torch` 候选家族新增 `linear_huber`
-- full LOSO shortlist 不再只看整体均值，已支持保留组内 winner
-
-但当前 best-of 事实没有改变：
-
-- `n_back` 最优仍是旧 `legacy_public_opt`：`4.6103`
-- `heat_the_chair` 最优仍是旧 `legacy_public_opt / physiology_persistence`：`1.4567586`
-- 因此当前主线结论继续保持：`NASA closed, UAB partial`
-
-### 3.2 2026-05-08 `heat_specialist` 真实 full LOSO 结果
-
-按新的 GPU-first、heat-only 路线又补了一轮真实 `full LOSO`：
+GPU-first、heat-only 路线已完成真实 `full LOSO`：
 
 - run：`20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1`
 - runtime_device：`cuda`
-- shortlist 已显式保住：
-  - overall RMSE winner
-  - overall MAE winner
-  - `heat_affine_calibrated_blend`
-- screen winner：`heat_residual_correction__lr0p0003__wd0p0001`
-- full LOSO best：
-  - `heat_the_chair RMSE=1.4630`
-  - `heat_the_chair MAE=1.1594`
+- winner：`heat_residual_correction__lr0p0003__wd0p0001`
+- `heat_the_chair RMSE=1.4630 / MAE=1.1594`
 
-这轮结果说明：
+结论：
 
-- 新的 `heat_residual_correction` 已经把 heat-only torch 路线推进到非常接近 legacy best-of 的位置。
-- 它在 `MAE` 上已经优于 legacy `physiology_persistence`，但 `RMSE` 仍高于 `1.4568` gate。
-- 因此统一公开主线报告仍然必须冻结为 `NASA closed, UAB partial`，不能把这轮写成公开主线闭环。
+- 该路线在 `MAE` 上优于 legacy `physiology_persistence`，但 `RMSE` 仍高于 `1.4568` gate。
+- 它作为 near-positive evidence 保留，不单独 promote。
 
-### 3.1 2026-05-08 可观测与 GPU 防误跑修正
+### 3.2 2026-05-08 sklearn robust-prior adapter
 
-昨晚的 UAB `sklearn --head-catalog uab_hybrid` 长任务出现断连，当前只留下空 artifact 目录，没有有效 `summary / predictions / report`，不能作为论文证据或主线事实引用。
+本轮新增 fold-safe 的 UAB heat adapter，并只跑 `heat_the_chair`：
 
-本轮已把后续公开主线改成：
+- run：`20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1`
+- artifact：`docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/`
+- report：`docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
+- selected_subsets：`heat_the_chair`
+- best_head：`target_prior_median`
+- `heat_the_chair RMSE=1.4331 / MAE=1.0740`
 
-- 长任务默认落盘 `run.log` 与 `progress.json`，并在 CLI 打印 `start / dataset / candidate / subset / fold / metric / output path` 级进度。
-- UAB torch 与 `public_fusion_screen` 增加 `require_cuda` 防护；CLI 默认要求 CUDA，只有显式 `--allow-cpu-debug` 才允许 CPU fallback。
-- UAB `sklearn --head-catalog uab_hybrid` 归为 CPU-heavy historical reproduction；CLI 必须显式 `--allow-cpu-heavy-sklearn` 才允许运行。
-- UAB 下一轮优化入口转向 `heat_the_chair` 专项 `heat_specialist`：`selected_subsets=("heat_the_chair",)`，低维生理 profile、残差修正与训练折内 affine calibration/blend，不再重复训练 `n_back`。
-- NASA 保持 `attention_state` 任务定义不变；新增 prepared asset contract 校验和 `processing_diagnostics.json`，防止旧 `event_code / objective_label_text` context 泄漏资产进入 public-opt/public-fusion。
+该 adapter 的论文口径必须保持克制：
 
-## 4. 仍未完成的编码工作
+- 它是 UAB public adapter / calibration baseline。
+- 它只使用每个 LOSO outer fold 的训练 subject 标签中位数，不读取测试 subject 标签。
+- 它不能写成双流连续对齐或非对称因果融合本体的直接胜利。
+- 它说明 UAB `heat_the_chair` 的剩余卡点主要是 subject-level 主观标签泛化与统计先验上限，而不是 E/F/G/H contract 缺失。
 
-### 4.1 必须继续处理的项
+### 3.3 统一 public mainline
+
+最新统一报告：
+
+- report：`docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
+- artifact：`docs/reports/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/public_mainline_summary.json`
+- status：`public opt closed`
+
+当前 best-of：
+
+| group | best source | best head | metric |
+| --- | --- | --- | --- |
+| `n_back` | `legacy_public_opt` | `ridge_residual` | `RMSE=4.6103 / MAE=3.8043` |
+| `heat_the_chair` | `uab_public_adapter` | `target_prior_median` | `RMSE=1.4331 / MAE=1.0740` |
+| `NASA combined` | `public opt round 1` | `balanced_logistic_context` | `macro-F1=0.4550 / balanced_accuracy=0.5591` |
+
+注意：
+
+- UAB 两组都已 clean win。
+- `n_back` 的领先幅度仍处于 near-tie 区间，若论文要做最严格公平确认，可补一次 frozen `ContiFormer` confirm rerun。
+- `chronaris_public_fusion` 仍是 secondary exploratory branch；当前 `NASA combined macro-F1=0.3348 < 0.40`，不进入主线。
+
+## 4. 当前剩余编码工作
+
+### 4.1 必须完成
 
 1. 文档 truth-source 同步
-   - `coding-roadmap.md`
+   - `docs/planning/coding-roadmap.md`
    - `docs/reports/stage_i/README.md`
-   - unified public mainline report
-   这些文档都需要统一到“最新 UAB 迭代已经验证，但 best-of 仍未超出 legacy near-tie”的口径。
+   - `tests/README.md`
+2. 论文证据整理
+   - 把 `chronaris_opt` 私有主线、Stage I support、公开 `public opt closed` 分开写。
+   - 不把 UAB robust prior 包装成因果融合模块本体的胜利。
+3. 图表与表格清洗
+   - 汇总 private benchmark、support matrix、public mainline、runtime/demo、anchor。
+   - 处理 Matplotlib 中文缺字 warning 后再导出论文图件。
 
-2. `UAB clean win` 仍未闭合
-   - 若论文只需要“公开数据存在可复现实证，且 NASA 主线已经闭合”，当前可以成立。
-   - 若论文要写成“Chronaris 在公开数据上全面优于 `MulT / ContiFormer` 且当前统一 UAB 主线也已闭合”，则编码工作仍未结束。
+### 4.2 可选完成
 
-### 4.2 当前更合理的下一条代码主线
+1. `UAB ContiFormer` fairness confirm rerun
+   - 目的只是不让 `n_back` near-tie 被质疑。
+   - 不改变当前 public mainline 已 closed 的事实。
+2. `chronaris_public_fusion` NASA-first confirm
+   - 仅当继续探索 secondary branch 时执行。
+   - 若 `combined macro-F1 <= 0.40`，停止该支线。
 
-本轮已经证明：
+### 4.3 不建议继续扩
 
-- 继续盲目扩大 `torch` 候选搜索，不会自然把 `heat_the_chair` 推到 `1.4568` 附近。
-- `session_mean_broadcast` 只能改善 `n_back`，不能有效解决 `heat_the_chair`。
-- `session_pooled_broadcast` 与纯 `physiology_only / physiology_scalar_only` 反而会把 `n_back` 拉坏。
-
-这轮 `heat_specialist` 真实 run 之后，下一条更合理的代码主线已经不再是“继续扩 UAB 候选”，而是：
-
-1. 冻结当前 UAB 公开主线
-   - `n_back` 仍引用 legacy `ridge_residual`
-   - `heat_the_chair` 仍引用 legacy `physiology_persistence`
-   - 新 `heat_specialist` 作为“已验证但未 promote”的最新负/近正证据保留
-2. 若最终论文需要最严格公平表述，再补一次 `UAB ContiFormer` confirm rerun
-   - 当前 `heat_the_chair` 仍是 near-tie 问题，不是“大幅落后”问题
-3. 其余精力转入论文证据整编与图表整理，而不是继续公开训练扩搜
-
-### 4.3 当前不建议继续扩的项
-
-1. 不继续把 `session_pooled_broadcast` 当作默认主线扩大搜索。
-2. 不继续盲目增加更多公开数据集来拖大 Stage I 边界。
+1. 不继续盲目扩大 UAB torch / sklearn 候选空间。
+2. 不继续增加公开数据集来拖大 Stage I 边界。
 3. 不把私有 `proxy / weak-label` 任务写成真实 `G-LOC` 或人工真值最优。
 4. 不为了论文措辞去重写上游 receiver / 入库链路。
 
-## 5. 推荐的编码收束顺序
+## 5. 推荐收束顺序
 
-1. 冻结当前最新统一口径：
-   - `NASA closed`
-   - `UAB partial`
-   - `legacy_public_opt` 仍是 UAB best-of truth source
-2. 将 `20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1` 作为最新 UAB heat-only 真实证据保留。
-3. 冻结当前 `public mainline`，转入论文整编与图表整理；除非后续明确决定补 `ContiFormer fairness confirm`，否则不再继续 UAB 候选扩搜。
+1. 冻结当前公开主线：
+   - `public opt closed`
+   - `n_back = legacy_public_opt / ridge_residual`
+   - `heat_the_chair = uab_public_adapter / target_prior_median`
+   - `NASA = public opt round 1 / balanced_logistic_context`
+2. 冻结私有主线：
+   - `chronaris_opt` 仍是鼎新私有任务验证主线。
+3. 进入论文整编：
+   - 方法链路写 E/F/G/H。
+   - 私有最优性写 `chronaris_opt`。
+   - 公开数据写 UAB/NASA 可复现实证与 adapter/calibration 边界。
 
-## 6. 当前判断
-
-当前仓库已经足够支撑论文的核心方法链路：
-
-- 连续对齐
-- 物理约束
-- 非对称因果融合
-- 标准化导出
-- 真实 sortie case study
-- 私有 proxy 最优性
-- 公开数据的可复现实证
-
-但如果把要求提高到下面这两个版本，则编码工作还不能算结束：
-
-1. `公开数据上全面优于 MulT / ContiFormer`
-2. `公开 quantitative 主线已经完全 closed`
-
-换句话说，当前剩余工作主要是 thesis-facing closure，而不是底层模型还没搭起来。
-
-## 7. 本轮核查与测试
+## 6. 本轮核查与测试
 
 本轮新增或更新的真实工件：
 
-- `docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260507T133000Z-stage-i-public-opt-uab-torch-mainline-r2.md`
-- `docs/reports/stage_i/stage-i-public-opt-20260507T134500Z-stage-i-public-opt-uab-torch-sessionmean-r3.md`
-- `docs/reports/stage_i/archive/public_history/stage-i-public-opt-20260507T141500Z-stage-i-public-opt-uab-torch-sessionpooled-r4.md`
-- `docs/reports/stage_i/stage-i-public-opt-20260507T142500Z-stage-i-public-opt-uab-torch-sessionpooled-scalar-r5.md`
-- `docs/reports/stage_i/stage-i-public-opt-20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1.md`
-- `docs/reports/stage_i/stage-i-public-mainline-20260508T091000Z-stage-i-public-mainline-uab-heat-specialist-r1.md`
+- `docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
+- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_summary.json`
+- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_predictions.csv`
+- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/run.log`
+- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/progress.json`
+- `docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
+- `docs/reports/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/public_mainline_summary.json`
 
 本轮已运行并通过的相关测试：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_public_opt
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_public_opt_aggregation tests.test_stage_i_deep_pipeline
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python -c "import torch; print('cuda_available=', torch.cuda.is_available()); print('device_count=', torch.cuda.device_count()); print('device_name=', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'NONE')"
-nvidia-smi
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_public_opt tests.test_stage_i_public_opt_aggregation
 ```
 
-CUDA 核查结果：`cuda_available=True`，`device_name=NVIDIA GeForce RTX 4090`；`nvidia-smi` 显示同一张 RTX 4090 可见，但当前有外部 `python3.10` 进程占用显存和算力。
-
-当前残余技术风险：
-
-- `stage_i_metrics.py` 出图时仍有 Matplotlib 中文缺字 warning；不影响指标，但论文图件出图前最好处理。
+真实运行命令使用同一个 `chronaris` 解释器完成，且 `progress.json` 显示本轮 sklearn adapter 只执行了 `selected_subsets=["heat_the_chair"]`。

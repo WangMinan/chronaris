@@ -44,6 +44,7 @@ def run_public_opt_backend(
     train_balance_policy: str,
     ensemble_policy: str,
     prediction_aggregation_policy: str,
+    selected_evaluation_groups: Sequence[str] | None = None,
     progress: StageIRunProgress | None = None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     if feature_result.task_type == "regression":
@@ -53,6 +54,7 @@ def run_public_opt_backend(
             head_catalog=head_catalog,
             ensemble_policy=ensemble_policy,
             prediction_aggregation_policy=prediction_aggregation_policy,
+            selected_evaluation_groups=selected_evaluation_groups,
             progress=progress,
         )
     if feature_result.task_type == "classification":
@@ -61,6 +63,7 @@ def run_public_opt_backend(
             head_feature_columns=head_feature_columns,
             train_balance_policy=train_balance_policy,
             ensemble_policy=ensemble_policy,
+            selected_evaluation_groups=selected_evaluation_groups,
             progress=progress,
         )
     raise ValueError(f"unsupported public opt task type: {feature_result.task_type}")
@@ -113,12 +116,15 @@ def resolve_head_feature_columns(
             raise ValueError("head_catalog=uab_hybrid only supports UAB public opt.")
         catalog = {
             "subjective": (
+                "target_prior_median",
+                "target_prior_trimmed_mean",
                 "physiology_persistence",
                 "ridge_residual_cv",
                 "elasticnet_residual",
                 "huber_residual",
                 "ridge_heat_physiology_lowdim",
                 "huber_heat_physiology_lowdim",
+                "heat_prior_residual_guarded",
             ),
             "objective": (),
         }
@@ -157,12 +163,17 @@ def _run_public_opt_regression(
     head_catalog: str,
     ensemble_policy: str,
     prediction_aggregation_policy: str,
+    selected_evaluation_groups: Sequence[str] | None,
     progress: StageIRunProgress | None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     prediction_frames: list[pd.DataFrame] = []
     subset_results: dict[str, object] = {}
+    subset_order = _resolve_selected_evaluation_groups(
+        feature_result=feature_result,
+        selected_evaluation_groups=selected_evaluation_groups,
+    )
 
-    for evaluation_group in feature_result.subset_order:
+    for evaluation_group in subset_order:
         subset_frame = _select_evaluation_group_frame(
             feature_result.feature_frame,
             evaluation_group=evaluation_group,
@@ -305,6 +316,9 @@ def _select_regression_head_feature_columns(
         )
     elif evaluation_group == "heat_the_chair":
         selected_names = (
+            "target_prior_median",
+            "target_prior_trimmed_mean",
+            "heat_prior_residual_guarded",
             "physiology_persistence",
             "ridge_heat_physiology_lowdim",
             "huber_heat_physiology_lowdim",
@@ -324,14 +338,19 @@ def _run_public_opt_classification(
     head_feature_columns: Mapping[str, Sequence[str]],
     train_balance_policy: str,
     ensemble_policy: str,
+    selected_evaluation_groups: Sequence[str] | None,
     progress: StageIRunProgress | None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     prediction_frames: list[pd.DataFrame] = []
     subset_results: dict[str, object] = {}
     if feature_result.label_order is None:
         raise ValueError("classification public opt requires explicit label_order.")
+    subset_order = _resolve_selected_evaluation_groups(
+        feature_result=feature_result,
+        selected_evaluation_groups=selected_evaluation_groups,
+    )
 
-    for evaluation_group in feature_result.subset_order:
+    for evaluation_group in subset_order:
         subset_frame = _select_evaluation_group_frame(
             feature_result.feature_frame,
             evaluation_group=evaluation_group,
@@ -452,6 +471,24 @@ def _run_public_opt_classification(
         else pd.DataFrame()
     )
     return predictions, subset_results
+
+
+def _resolve_selected_evaluation_groups(
+    *,
+    feature_result: StageIPublicOptFeatureFrameResult,
+    selected_evaluation_groups: Sequence[str] | None,
+) -> tuple[str, ...]:
+    if not selected_evaluation_groups:
+        return tuple(feature_result.subset_order)
+    requested = tuple(str(value) for value in selected_evaluation_groups)
+    supported = set(feature_result.subset_order)
+    unsupported = tuple(value for value in requested if value not in supported)
+    if unsupported:
+        raise ValueError(
+            "unsupported public opt selected evaluation groups: "
+            f"{unsupported}; supported={tuple(feature_result.subset_order)}"
+        )
+    return requested
 
 
 def _select_evaluation_group_frame(
@@ -648,6 +685,8 @@ def _extract_feature_matrix(
     subset_frame: pd.DataFrame,
     feature_columns: Sequence[str],
 ) -> np.ndarray:
+    if not feature_columns:
+        return np.zeros((len(subset_frame), 0), dtype=np.float32)
     feature_matrix = subset_frame.loc[:, list(feature_columns)].to_numpy(
         dtype=float,
         copy=True,
@@ -663,6 +702,18 @@ def _fit_regression_head(
     test_X: np.ndarray,
     split_groups: np.ndarray,
 ) -> np.ndarray:
+    if head_name == "target_prior_median":
+        return _target_prior_predictions(
+            train_y=train_y,
+            test_count=len(test_X),
+            policy="median",
+        )
+    if head_name == "target_prior_trimmed_mean":
+        return _target_prior_predictions(
+            train_y=train_y,
+            test_count=len(test_X),
+            policy="trimmed_mean",
+        )
     if head_name == "physiology_persistence":
         model = Ridge(alpha=1.0)
         model.fit(train_X, train_y)
@@ -707,7 +758,118 @@ def _fit_regression_head(
             split_groups=split_groups,
         )
         return np.asarray(search.predict(test_X), dtype=np.float32)
+    if head_name == "heat_prior_residual_guarded":
+        return _fit_heat_prior_residual_guarded(
+            train_X=train_X,
+            train_y=train_y,
+            test_X=test_X,
+            split_groups=split_groups,
+        )
     raise ValueError(f"unsupported public opt regression head: {head_name}")
+
+
+def _target_prior_predictions(
+    *,
+    train_y: np.ndarray,
+    test_count: int,
+    policy: str,
+) -> np.ndarray:
+    prior_value = _target_prior_value(train_y=train_y, policy=policy)
+    return np.full((test_count,), prior_value, dtype=np.float32)
+
+
+def _target_prior_value(
+    *,
+    train_y: np.ndarray,
+    policy: str,
+) -> float:
+    finite_values = np.asarray(train_y, dtype=np.float64)
+    finite_values = finite_values[np.isfinite(finite_values)]
+    if finite_values.size == 0:
+        return 0.0
+    if policy == "median":
+        return float(np.median(finite_values))
+    if policy == "trimmed_mean":
+        lower, upper = np.quantile(finite_values, [0.1, 0.9])
+        trimmed = finite_values[(finite_values >= lower) & (finite_values <= upper)]
+        if trimmed.size == 0:
+            trimmed = finite_values
+        return float(np.mean(trimmed, dtype=np.float64))
+    raise ValueError(f"unsupported target prior policy: {policy}")
+
+
+def _fit_heat_prior_residual_guarded(
+    *,
+    train_X: np.ndarray,
+    train_y: np.ndarray,
+    test_X: np.ndarray,
+    split_groups: np.ndarray,
+) -> np.ndarray:
+    prior_value = _target_prior_value(train_y=train_y, policy="median")
+    pure_prior = np.full((len(test_X),), prior_value, dtype=np.float32)
+    if train_X.shape[1] == 0 or np.unique(split_groups).size < 2:
+        return pure_prior
+    if not _guarded_residual_improves_inner_cv(
+        train_X=train_X,
+        train_y=train_y,
+        split_groups=split_groups,
+    ):
+        return pure_prior
+    model = _fit_guarded_residual_model(
+        train_X=train_X,
+        train_residual=train_y - prior_value,
+    )
+    return np.asarray(prior_value + model.predict(test_X), dtype=np.float32)
+
+
+def _guarded_residual_improves_inner_cv(
+    *,
+    train_X: np.ndarray,
+    train_y: np.ndarray,
+    split_groups: np.ndarray,
+    tolerance: float = 1e-9,
+) -> bool:
+    prior_predictions: list[np.ndarray] = []
+    residual_predictions: list[np.ndarray] = []
+    truth_values: list[np.ndarray] = []
+    for held_out_group in sorted(np.unique(split_groups).tolist()):
+        train_mask = split_groups != held_out_group
+        validation_mask = split_groups == held_out_group
+        if not np.any(train_mask) or not np.any(validation_mask):
+            continue
+        inner_train_y = train_y[train_mask]
+        inner_prior = _target_prior_value(train_y=inner_train_y, policy="median")
+        model = _fit_guarded_residual_model(
+            train_X=train_X[train_mask],
+            train_residual=inner_train_y - inner_prior,
+        )
+        validation_X = train_X[validation_mask]
+        prior_predictions.append(
+            np.full((len(validation_X),), inner_prior, dtype=np.float32)
+        )
+        residual_predictions.append(
+            np.asarray(inner_prior + model.predict(validation_X), dtype=np.float32)
+        )
+        truth_values.append(train_y[validation_mask])
+    if not truth_values:
+        return False
+    y_true = np.concatenate(truth_values).astype(float, copy=False)
+    prior_pred = np.concatenate(prior_predictions).astype(float, copy=False)
+    residual_pred = np.concatenate(residual_predictions).astype(float, copy=False)
+    prior_rmse = _rmse(y_true, prior_pred)
+    residual_rmse = _rmse(y_true, residual_pred)
+    return bool(residual_rmse < prior_rmse - tolerance)
+
+
+def _fit_guarded_residual_model(*, train_X: np.ndarray, train_residual: np.ndarray) -> Pipeline:
+    model = Pipeline([("scaler", StandardScaler()), ("model", Ridge(alpha=1.0))])
+    model.fit(train_X, train_residual)
+    return model
+
+
+def _rmse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    residual = np.asarray(y_true, dtype=float) - np.asarray(y_pred, dtype=float)
+    return float(np.sqrt(np.mean(residual * residual, dtype=np.float64)))
 
 
 def _fit_classification_head(
