@@ -2,6 +2,9 @@
 
 更新时间：2026-05-04
 
+> 说明：本文件已归档为 `chronaris_opt` 私有 proxy benchmark 阶段快照。  
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+
 ## 1. 目标
 
 当前新增的最高优先级不是继续扩公开数据，而是：

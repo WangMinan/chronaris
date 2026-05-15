@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
 from math import ceil
+from pathlib import Path
 from typing import Mapping
 
 import torch
@@ -69,6 +71,8 @@ class AlignmentPreviewConfig:
     export_intermediate_states: bool = True
     intermediate_sample_limit: int | None = 3
     intermediate_partition: str = "test"
+    checkpoint_path: str | None = None
+    inference_only: bool = False
 
     def __post_init__(self) -> None:
         if self.epoch_count <= 0:
@@ -117,6 +121,8 @@ class AlignmentPreviewConfig:
             raise ValueError("intermediate_sample_limit must be positive when provided.")
         if self.intermediate_partition not in {"train", "validation", "test", "all"}:
             raise ValueError("intermediate_partition must be one of: train, validation, test, all.")
+        if self.inference_only and not self.checkpoint_path:
+            raise ValueError("checkpoint_path is required when inference_only=True.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -200,6 +206,8 @@ class AlignmentPreviewRunResult:
     validation_history: tuple[AlignmentPreviewMetrics, ...]
     test_metrics: AlignmentPreviewMetrics
     intermediate_export: AlignmentPreviewIntermediateExport | None = None
+    input_normalization_stats: AlignmentInputNormalizationStats | None = None
+    checkpoint_metadata: Mapping[str, object] | None = None
 
 
 @dataclass(slots=True)
@@ -212,45 +220,63 @@ class AlignmentPreviewPipeline:
         """Split samples chronologically and run a minimal preview train/validation loop."""
 
         split = split_e0_samples_chronologically(samples, config=self.config.split_config)
-        if not split.train:
+        if not self.config.inference_only and not split.train:
             raise ValueError("AlignmentPreviewPipeline requires at least one training sample.")
 
-        normalization_stats = self._build_input_normalization_stats(split.train)
+        checkpoint_metadata = None
+        if self.config.inference_only:
+            model, normalization_stats, checkpoint_metadata = self._load_model_from_checkpoint(
+                samples
+            )
+            train_history = []
+            validation_history = []
+        else:
+            normalization_stats = self._build_input_normalization_stats(split.train)
+            model = self._build_model(
+                split.train,
+                prototype_config=self.config.prototype_config,
+            )
+            optimizer = torch.optim.Adam(model.parameters(), lr=self.config.learning_rate)
+
+            train_history = []
+            validation_history = []
+
+            physics_stats = self._build_physics_constraint_stats(
+                split.train,
+                normalization_stats=normalization_stats,
+            )
+
+            for _epoch_index in range(self.config.epoch_count):
+                train_history.append(
+                    self._run_partition(
+                        model,
+                        split.train,
+                        optimizer=optimizer,
+                        training=True,
+                        normalization_stats=normalization_stats,
+                        physics_stats=physics_stats,
+                    )
+                )
+                validation_history.append(
+                    self._run_partition(
+                        model,
+                        split.validation,
+                        optimizer=None,
+                        training=False,
+                        normalization_stats=normalization_stats,
+                        physics_stats=physics_stats,
+                    )
+                )
+        physics_seed_samples = split.train or split.validation or split.test or samples
         physics_stats = self._build_physics_constraint_stats(
-            split.train,
+            physics_seed_samples,
             normalization_stats=normalization_stats,
         )
-        model = self._build_model(split.train)
-        optimizer = torch.optim.Adam(model.parameters(), lr=self.config.learning_rate)
 
-        train_history: list[AlignmentPreviewMetrics] = []
-        validation_history: list[AlignmentPreviewMetrics] = []
-
-        for _epoch_index in range(self.config.epoch_count):
-            train_history.append(
-                self._run_partition(
-                    model,
-                    split.train,
-                    optimizer=optimizer,
-                    training=True,
-                    normalization_stats=normalization_stats,
-                    physics_stats=physics_stats,
-                )
-            )
-            validation_history.append(
-                self._run_partition(
-                    model,
-                    split.validation,
-                    optimizer=None,
-                    training=False,
-                    normalization_stats=normalization_stats,
-                    physics_stats=physics_stats,
-                )
-            )
-
+        evaluation_samples = split.test or split.validation or split.train or samples
         test_metrics = self._run_partition(
             model,
-            split.test,
+            evaluation_samples,
             optimizer=None,
             training=False,
             normalization_stats=normalization_stats,
@@ -274,15 +300,49 @@ class AlignmentPreviewPipeline:
             validation_history=tuple(validation_history),
             test_metrics=test_metrics,
             intermediate_export=intermediate_export,
+            input_normalization_stats=normalization_stats,
+            checkpoint_metadata=checkpoint_metadata,
         )
 
-    def _build_model(self, samples: tuple[E0ExperimentSample, ...]) -> DualStreamODERNNPrototype:
+    def _build_model(
+        self,
+        samples: tuple[E0ExperimentSample, ...],
+        *,
+        prototype_config,
+    ) -> DualStreamODERNNPrototype:
         torch_batch = self._build_torch_batch(samples)
         model = DualStreamODERNNPrototype.from_torch_alignment_batch(
             torch_batch,
-            config=self.config.prototype_config,
+            config=prototype_config,
         )
         return model.to(device=self._resolved_device_name(), dtype=self.config.dtype)
+
+    def _load_model_from_checkpoint(
+        self,
+        samples: tuple[E0ExperimentSample, ...],
+    ) -> tuple[
+        DualStreamODERNNPrototype,
+        AlignmentInputNormalizationStats | None,
+        Mapping[str, object],
+    ]:
+        checkpoint_payload = load_alignment_preview_checkpoint(self.config.checkpoint_path)
+        prototype_config = AlignmentPrototypeConfig(
+            **dict(checkpoint_payload["prototype_config"])
+        )
+        model = self._build_model(samples, prototype_config=prototype_config)
+        self._validate_checkpoint_feature_schema(samples, checkpoint_payload)
+        model.load_state_dict(dict(checkpoint_payload["model_state_dict"]))
+        normalization_stats = _deserialize_input_normalization_stats(
+            checkpoint_payload.get("input_normalization_stats"),
+        )
+        return (
+            model,
+            normalization_stats,
+            _checkpoint_metadata_from_payload(
+                checkpoint_payload,
+                checkpoint_path=self.config.checkpoint_path,
+            ),
+        )
 
     def _run_partition(
         self,
@@ -664,6 +724,146 @@ class AlignmentPreviewPipeline:
 
     def _resolved_device_name(self) -> str:
         return resolve_torch_device_name(self.config.device)
+
+    def _validate_checkpoint_feature_schema(
+        self,
+        samples: tuple[E0ExperimentSample, ...],
+        checkpoint_payload: Mapping[str, object],
+    ) -> None:
+        torch_batch = self._build_torch_batch(samples)
+        feature_schema = checkpoint_payload.get("feature_schema") or {}
+        expected_physiology = tuple(feature_schema.get("physiology_feature_names", ()))
+        expected_vehicle = tuple(feature_schema.get("vehicle_feature_names", ()))
+        if expected_physiology and torch_batch.physiology.feature_names != expected_physiology:
+            raise ValueError("checkpoint physiology feature schema does not match current samples.")
+        if expected_vehicle and torch_batch.vehicle.feature_names != expected_vehicle:
+            raise ValueError("checkpoint vehicle feature schema does not match current samples.")
+
+
+def save_alignment_preview_checkpoint(
+    path: str | Path,
+    *,
+    run_id: str,
+    model: DualStreamODERNNPrototype,
+    config: AlignmentPreviewConfig,
+    samples: tuple[E0ExperimentSample, ...],
+    input_normalization_stats: AlignmentInputNormalizationStats | None,
+    train_history: tuple[AlignmentPreviewMetrics, ...] = (),
+    validation_history: tuple[AlignmentPreviewMetrics, ...] = (),
+    test_metrics: AlignmentPreviewMetrics | None = None,
+) -> dict[str, object]:
+    numpy_batch = build_alignment_batch(samples)
+    checkpoint_path = Path(path)
+    checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "backbone_run_id": run_id,
+        "saved_at_utc": datetime.now(timezone.utc).isoformat(),
+        "prototype_config": asdict(config.prototype_config),
+        "reference_grid_config": asdict(config.reference_grid_config),
+        "split_config": asdict(config.split_config),
+        "preview_config": {
+            "epoch_count": config.epoch_count,
+            "batch_size": config.batch_size,
+            "learning_rate": config.learning_rate,
+            "device": config.device,
+            "input_normalization_mode": config.input_normalization_mode,
+            "enable_physics_constraints": config.enable_physics_constraints,
+            "physics_constraint_mode": config.physics_constraint_mode,
+            "physics_constraint_family": config.physics_constraint_family,
+            "intermediate_partition": config.intermediate_partition,
+            "intermediate_sample_limit": config.intermediate_sample_limit,
+        },
+        "feature_schema": {
+            "physiology_feature_names": numpy_batch.physiology.feature_names,
+            "vehicle_feature_names": numpy_batch.vehicle.feature_names,
+        },
+        "input_normalization_stats": _serialize_input_normalization_stats(
+            input_normalization_stats
+        ),
+        "train_metrics": asdict(train_history[-1]) if train_history else None,
+        "validation_metrics": asdict(validation_history[-1]) if validation_history else None,
+        "test_metrics": asdict(test_metrics) if test_metrics is not None else None,
+        "model_state_dict": {
+            key: value.detach().cpu()
+            for key, value in model.state_dict().items()
+        },
+    }
+    torch.save(payload, checkpoint_path)
+    return _checkpoint_metadata_from_payload(payload, checkpoint_path=checkpoint_path)
+
+
+def load_alignment_preview_checkpoint(path: str | Path | None) -> Mapping[str, object]:
+    if path is None:
+        raise ValueError("checkpoint path is required.")
+    return torch.load(Path(path), map_location="cpu")
+
+
+def _serialize_input_normalization_stats(
+    stats: AlignmentInputNormalizationStats | None,
+) -> dict[str, object] | None:
+    if stats is None:
+        return None
+    return {
+        "mode": stats.mode,
+        "physiology": {
+            "feature_names": stats.physiology.feature_names,
+            "mean": stats.physiology.mean.detach().cpu(),
+            "std": stats.physiology.std.detach().cpu(),
+        },
+        "vehicle": {
+            "feature_names": stats.vehicle.feature_names,
+            "mean": stats.vehicle.mean.detach().cpu(),
+            "std": stats.vehicle.std.detach().cpu(),
+        },
+    }
+
+
+def _deserialize_input_normalization_stats(
+    payload: object,
+) -> AlignmentInputNormalizationStats | None:
+    if not isinstance(payload, Mapping):
+        return None
+    physiology = payload.get("physiology") or {}
+    vehicle = payload.get("vehicle") or {}
+    physiology_mean = physiology.get("mean")
+    physiology_std = physiology.get("std")
+    vehicle_mean = vehicle.get("mean")
+    vehicle_std = vehicle.get("std")
+    if (
+        physiology_mean is None
+        or physiology_std is None
+        or vehicle_mean is None
+        or vehicle_std is None
+    ):
+        return None
+    return AlignmentInputNormalizationStats(
+        mode=str(payload.get("mode") or "none"),
+        physiology=StreamInputNormalizationStats(
+            feature_names=tuple(physiology.get("feature_names", ())),
+            mean=torch.as_tensor(physiology_mean),
+            std=torch.as_tensor(physiology_std),
+        ),
+        vehicle=StreamInputNormalizationStats(
+            feature_names=tuple(vehicle.get("feature_names", ())),
+            mean=torch.as_tensor(vehicle_mean),
+            std=torch.as_tensor(vehicle_std),
+        ),
+    )
+
+
+def _checkpoint_metadata_from_payload(
+    payload: Mapping[str, object],
+    *,
+    checkpoint_path: str | Path | None,
+) -> dict[str, object]:
+    return {
+        "checkpoint_path": str(checkpoint_path) if checkpoint_path is not None else None,
+        "backbone_run_id": payload.get("backbone_run_id"),
+        "saved_at_utc": payload.get("saved_at_utc"),
+        "feature_schema": dict(payload.get("feature_schema") or {}),
+        "preview_config": dict(payload.get("preview_config") or {}),
+        "reference_grid_config": dict(payload.get("reference_grid_config") or {}),
+    }
 
 
 def _iterate_sample_batches(

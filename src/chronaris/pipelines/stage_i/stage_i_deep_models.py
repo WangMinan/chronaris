@@ -22,6 +22,9 @@ from chronaris.models.fusion import (
     CausalMaskedCrossModalFusion,
 )
 
+PUBLIC_ADAPTER_EVIDENCE_ROLE = "public_adapter_evidence"
+PUBLIC_CONTEXT_PROXY_ROLE = "context_proxy"
+
 
 @dataclass(frozen=True, slots=True)
 class StageIDeepForwardResult:
@@ -259,7 +262,7 @@ class ChronarisContiFormerWrapper(nn.Module):
 
 
 class ChronarisPublicFusionWrapper(nn.Module):
-    """Public Chronaris wrapper: shared hidden projection + causal fusion."""
+    """Public Chronaris wrapper over physiology + context-proxy adapter streams."""
 
     def __init__(
         self,
@@ -280,6 +283,15 @@ class ChronarisPublicFusionWrapper(nn.Module):
         if len(self.ordered_modalities) != 2:
             raise ValueError("ChronarisPublicFusionWrapper expects exactly two modalities.")
         first_name, second_name = self.ordered_modalities
+        self.thesis_facing_contract = {
+            "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+            "first_stream_name": first_name,
+            "first_stream_role": "physiology",
+            "second_stream_name": second_name,
+            "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
+            "second_stream_is_real_vehicle": False,
+            "fusion_vehicle_slot_semantics": "context_proxy_adapter_reuse_only",
+        }
         self.projections = nn.ModuleDict(
             {
                 modality_name: nn.Linear(
@@ -334,18 +346,20 @@ class ChronarisPublicFusionWrapper(nn.Module):
         first = self.projections[first_name](
             _append_time_features(modality_arrays[first_name], time_axis),
         )
-        second = self.projections[second_name](
+        context_proxy = self.projections[second_name](
             _append_time_features(modality_arrays[second_name], time_axis),
         )
         first = first * modality_masks[first_name].unsqueeze(-1)
-        second = second * modality_masks[second_name].unsqueeze(-1)
+        context_proxy = context_proxy * modality_masks[second_name].unsqueeze(-1)
         encoded_first = self._self_encode(first_name, first)
-        encoded_second = self._self_encode(second_name, second)
+        encoded_context_proxy = self._self_encode(second_name, context_proxy)
         combined_mask = torch.maximum(modality_masks[first_name], modality_masks[second_name])
+        # The Stage G fusion core still exposes a `vehicle_states` slot. On the public
+        # branch we reuse that slot for the adapter/context proxy stream only.
         fusion_output = self.causal_fusion(
             CausalFusionTensorInput(
                 physiology_states=encoded_first,
-                vehicle_states=encoded_second,
+                vehicle_states=encoded_context_proxy,
                 physiology_offsets_s=time_axis,
                 vehicle_offsets_s=time_axis,
             )

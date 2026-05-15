@@ -77,6 +77,10 @@
 
 - `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_case_study tests.test_stage_i_support`
 
+当前 backbone / checkpoint inference 最小回归命令：
+
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_h_export tests.test_alignment_pipeline`
+
 模型效果验证属于实验，不完全等价于单元测试。
 
 `test_stage_i_deep_pipeline.py` 默认只跑 synthetic + repo 内 Stage H 真实资产；

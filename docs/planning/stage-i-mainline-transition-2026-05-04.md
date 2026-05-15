@@ -2,6 +2,9 @@
 
 更新时间：2026-05-04
 
+> 说明：本文件保留为 `chronaris_opt` 升级为鼎新私有主线时的历史节点快照。
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+
 ## 1. 目的
 
 本文件只回答一件事：
@@ -60,7 +63,7 @@
    - 优先维护 `chronaris_opt` 主线
    - 下一步进入 `chronaris public opt`
 3. 在 `docs/README.md` 中明确：
-   - 当前鼎新私有最优性依据看 `stage-i-private-benchmark-plan-2026-05-02.md`
+   - 当前鼎新私有最优性依据看 `archive/stage_i/stage-i-private-benchmark-plan-2026-05-02.md`
    - `thesis-support-assessment-2026-05-01.md` 是 private-opt 之前的快照
 4. 在 `tests/README.md` 中补齐当前鼎新主线回归入口。
 5. 补一份真实 `chronaris_opt` package 固化产物，避免当前最佳工件只停留在 summary / metrics。

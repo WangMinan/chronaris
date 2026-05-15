@@ -2,6 +2,9 @@
 
 更新时间：2026-04-30
 
+> 说明：本文件已归档。  
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+
 说明：
 
 - 本文档保留为阶段 I 启动期的数据计划与开工顺序记录。

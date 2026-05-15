@@ -29,6 +29,14 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.alignment_preview",
         "AlignmentPreviewPipeline",
     ),
+    "save_alignment_preview_checkpoint": (
+        "chronaris.pipelines.alignment_preview",
+        "save_alignment_preview_checkpoint",
+    ),
+    "load_alignment_preview_checkpoint": (
+        "chronaris.pipelines.alignment_preview",
+        "load_alignment_preview_checkpoint",
+    ),
     "StageGCausalFusionConfig": (
         "chronaris.pipelines.causal_fusion",
         "StageGCausalFusionConfig",
@@ -187,6 +195,26 @@ _EXPORTS: dict[str, tuple[str, str]] = {
     "StageIDeepBaselineRunResult": (
         "chronaris.pipelines.stage_i.stage_i_deep_baseline",
         "StageIDeepBaselineRunResult",
+    ),
+    "StageIBackboneTrainConfig": (
+        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "StageIBackboneTrainConfig",
+    ),
+    "StageIBackboneTrainPipeline": (
+        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "StageIBackboneTrainPipeline",
+    ),
+    "StageIBackboneTrainRunResult": (
+        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "StageIBackboneTrainRunResult",
+    ),
+    "collect_stage_i_backbone_samples": (
+        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "collect_stage_i_backbone_samples",
+    ),
+    "run_stage_i_backbone_train": (
+        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "run_stage_i_backbone_train",
     ),
     "StageIDeepComparisonConfig": (
         "chronaris.pipelines.stage_i.stage_i_deep_baseline",

@@ -22,6 +22,7 @@ from chronaris.dataset import (  # noqa: E402
     StageISequenceBundle,
     StageISequenceEntry,
     dump_stage_i_sequence_entries,
+    load_stage_i_private_task_entries,
     load_stage_i_sequence_bundle,
     load_stage_i_sequence_entries,
     save_stage_i_sequence_bundle,
@@ -51,6 +52,7 @@ from chronaris.pipelines.stage_i.stage_i_deep_baseline_runtime import (  # noqa:
     _apply_classification_logit_adjustment,
     _classification_loss,
 )
+from chronaris.pipelines.stage_i.stage_i_deep_models import build_stage_i_deep_model  # noqa: E402
 from chronaris.pipelines.stage_i import stage_i_public_fusion_screen as public_fusion_module  # noqa: E402
 
 REAL_DATASET_ROOT = Path("/home/wangminan/dataset/chronaris")
@@ -236,6 +238,9 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
             self.assertEqual(uab_payload.summary.dataset_id, "uab_workload_dataset")
             self.assertEqual(uab_payload.bundle.time_axis.shape[1], 64)
             self.assertEqual(uab_payload.sequence_schema["adapter_id"], "chronaris_public_uab_v1")
+            self.assertEqual(uab_payload.sequence_schema["evidence_role"], "public_adapter_evidence")
+            self.assertEqual(uab_payload.sequence_schema["second_stream_role"], "context_proxy")
+            self.assertFalse(uab_payload.sequence_schema["second_stream_is_real_vehicle"])
             self.assertEqual(
                 set(uab_payload.bundle.modality_arrays),
                 {"physiology", "task_context"},
@@ -244,11 +249,17 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
             ecg_zero_mask = uab_payload.summary.extra_summary["ecg_zero_mask_samples"]
             self.assertEqual(ecg_zero_mask["n_back"], 3)
             self.assertNotIn("objective_label_text", uab_payload.entries[0].context_payload)
+            self.assertEqual(uab_payload.entries[0].context_payload["second_stream_name"], "task_context")
+            self.assertEqual(uab_payload.entries[0].context_payload["second_stream_role"], "context_proxy")
+            self.assertFalse(uab_payload.entries[0].context_payload["second_stream_is_real_vehicle"])
 
             nasa_payload = prepare_nasa_sequences(dataset_root)
             self.assertEqual(nasa_payload.summary.dataset_id, "nasa_csm")
             self.assertEqual(nasa_payload.bundle.time_axis.shape[1], 64)
             self.assertEqual(nasa_payload.sequence_schema["adapter_id"], "chronaris_public_nasa_v1")
+            self.assertEqual(nasa_payload.sequence_schema["evidence_role"], "public_adapter_evidence")
+            self.assertEqual(nasa_payload.sequence_schema["second_stream_role"], "context_proxy")
+            self.assertFalse(nasa_payload.sequence_schema["second_stream_is_real_vehicle"])
             self.assertEqual(
                 set(nasa_payload.bundle.modality_arrays),
                 {"physiology", "scenario_context"},
@@ -263,6 +274,24 @@ class StageIPublicSequencePreparationTest(unittest.TestCase):
                 0,
             )
             self.assertNotIn("event_code", nasa_payload.entries[0].context_payload)
+            self.assertEqual(
+                nasa_payload.entries[0].context_payload["second_stream_name"],
+                "scenario_context",
+            )
+            self.assertEqual(nasa_payload.entries[0].context_payload["second_stream_role"], "context_proxy")
+            self.assertFalse(nasa_payload.entries[0].context_payload["second_stream_is_real_vehicle"])
+
+    def test_public_fusion_wrapper_marks_second_stream_as_context_proxy(self) -> None:
+        model = build_stage_i_deep_model(
+            model_name="chronaris_public_fusion",
+            ordered_modalities=("physiology", "task_context"),
+            modality_input_dims={"physiology": 4, "task_context": 3},
+            output_dim=1,
+        )
+        self.assertEqual(model.thesis_facing_contract["evidence_role"], "public_adapter_evidence")
+        self.assertEqual(model.thesis_facing_contract["second_stream_name"], "task_context")
+        self.assertEqual(model.thesis_facing_contract["second_stream_role"], "context_proxy")
+        self.assertFalse(model.thesis_facing_contract["second_stream_is_real_vehicle"])
 
     def test_chronaris_public_fusion_runs_on_synthetic_uab_and_nasa(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -741,13 +770,32 @@ class StageIPrivateBenchmarkPipelineTest(unittest.TestCase):
 
             task_summary = json.loads(Path(result.task_summary_path).read_text(encoding="utf-8"))
             self.assertEqual(task_summary["entry_count"], 27)
+            self.assertEqual(task_summary["benchmark_role"], "private_proxy_benchmark")
+            self.assertEqual(task_summary["task_role"], "proxy_task")
+            self.assertEqual(task_summary["task_role_counts"]["proxy_task"], 27)
             self.assertEqual(task_summary["coverage"]["T1_maneuver_intensity_class"]["valid_label_count"], 9)
             self.assertEqual(task_summary["coverage"]["T2_next_window_physiology_response"]["valid_label_count"], 6)
             self.assertEqual(task_summary["coverage"]["T3_paired_pilot_window_retrieval"]["valid_label_count"], 6)
             self.assertIn("BUS001.speed", task_summary["selected_vehicle_fields"])
             self.assertIn("eeg.alpha", task_summary["selected_physiology_fields"])
+            self.assertEqual(
+                task_summary["proxy_task_definitions"]["T1_maneuver_intensity_class"]["proxy_task_id"],
+                "maneuver_intensity_proxy",
+            )
+            task_entries = load_stage_i_private_task_entries(result.task_manifest_path)
+            self.assertTrue(all(entry.benchmark_role == "private_proxy_benchmark" for entry in task_entries))
+            self.assertTrue(all(entry.task_role == "proxy_task" for entry in task_entries))
+            self.assertTrue(
+                all(
+                    entry.context_payload["thesis_task_boundary"]
+                    == "proxy_task_not_direct_thesis_task"
+                    for entry in task_entries
+                )
+            )
 
             summary = json.loads(Path(result.benchmark_summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["benchmark_role"], "private_proxy_benchmark")
+            self.assertEqual(summary["task_role"], "proxy_task")
             self.assertEqual(summary["records"]["sample_count"], 9)
             self.assertEqual(summary["records"]["view_count"], 3)
             self.assertIn("g_min", summary["tasks"]["T1_maneuver_intensity_class"]["variants"])

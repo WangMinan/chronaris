@@ -100,6 +100,9 @@ class StageHExportConfig:
     export_scope_overrides_utc: Mapping[str, tuple[datetime, datetime]] = field(default_factory=dict)
     partial_data_config: PartialDataConfig = field(default_factory=PartialDataConfig)
     partial_data_entries: tuple[PartialDataEntry, ...] = field(default_factory=tuple)
+    checkpoint_path: str | None = None
+    backbone_run_id: str | None = None
+    inference_only: bool = False
 
     def __post_init__(self) -> None:
         if self.export_profile not in {"preview", "validation", "full_clip"}:
@@ -112,6 +115,8 @@ class StageHExportConfig:
             value = getattr(self, field_name)
             if value is not None and value <= 0:
                 raise ValueError(f"{field_name} must be positive when provided.")
+        if self.inference_only and not self.checkpoint_path:
+            raise ValueError("checkpoint_path is required when inference_only=True.")
 
     @property
     def resolved_physiology_point_limit_per_measurement(self) -> int | None:
@@ -135,6 +140,12 @@ class StageHExportConfig:
         if self.export_profile == "preview":
             return "preview query guard, not a Stage H closure standard"
         return "explicit per-measurement query cap"
+
+    @property
+    def export_mode(self) -> str:
+        if self.inference_only:
+            return "frozen_checkpoint_inference"
+        return "per_view_preview_training"
 
 
 @dataclass(frozen=True, slots=True)
@@ -161,6 +172,8 @@ class StageHViewManifest:
     stage_g_available: bool
     vehicle_field_metadata: Mapping[str, object]
     artifact_paths: Mapping[str, str]
+    export_mode: str = "per_view_preview_training"
+    backbone_lineage: Mapping[str, object] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -184,6 +197,8 @@ class StageHViewManifest:
             "stage_g_available": self.stage_g_available,
             "vehicle_field_metadata": dict(self.vehicle_field_metadata),
             "artifact_paths": dict(self.artifact_paths),
+            "export_mode": self.export_mode,
+            "backbone_lineage": dict(self.backbone_lineage),
         }
 
 
@@ -234,6 +249,8 @@ class StageHRunManifest:
     failures: tuple[Mapping[str, str], ...]
     skipped: tuple[Mapping[str, str], ...]
     partial_data: Mapping[str, object] | None = None
+    export_mode: str = "per_view_preview_training"
+    backbone_lineage: Mapping[str, object] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -250,6 +267,8 @@ class StageHRunManifest:
             "failures": [dict(item) for item in self.failures],
             "skipped": [dict(item) for item in self.skipped],
             "partial_data": None if self.partial_data is None else dict(self.partial_data),
+            "export_mode": self.export_mode,
+            "backbone_lineage": dict(self.backbone_lineage),
         }
 
 
@@ -272,6 +291,7 @@ class StageHViewExecutionResult:
     vehicle_field_metadata: Mapping[str, object]
     physiology_measurements: tuple[str, ...]
     vehicle_measurements: tuple[str, ...]
+    backbone_checkpoint_metadata: Mapping[str, object] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -313,6 +333,8 @@ class AlignmentStageHViewRunner:
         preview_config = replace(
             self.config.preview_config,
             vehicle_field_labels=vehicle_field_labels,
+            checkpoint_path=self.config.checkpoint_path,
+            inference_only=self.config.inference_only,
         )
         loader = build_overlap_preview_sortie_loader(
             OverlapPreviewSortieLoaderConfig(
@@ -408,6 +430,7 @@ class AlignmentStageHViewRunner:
             vehicle_field_metadata=vehicle_field_metadata,
             physiology_measurements=profile.model_physiology_measurements,
             vehicle_measurements=profile.vehicle_measurements,
+            backbone_checkpoint_metadata=preview_result.checkpoint_metadata,
         )
 
     def _resolve_vehicle_field_labels(
@@ -531,6 +554,10 @@ class StageHExportPipeline:
                 intermediate_summary = build_intermediate_summary(
                     execution.intermediate_export
                 )
+                backbone_lineage = _resolve_backbone_lineage(
+                    execution.backbone_checkpoint_metadata,
+                    config=self.config,
+                )
                 view_manifest = StageHViewManifest(
                     view_id=view.view_id,
                     sortie_id=profile.sortie_id,
@@ -552,6 +579,8 @@ class StageHExportPipeline:
                     stage_g_available=execution.stage_g_result is not None,
                     vehicle_field_metadata=execution.vehicle_field_metadata,
                     artifact_paths=artifact_paths,
+                    export_mode=self.config.export_mode,
+                    backbone_lineage=backbone_lineage,
                 )
                 view_manifest_path = view_dir / "view_manifest.json"
                 write_json(view_manifest_path, view_manifest.to_dict())
@@ -606,6 +635,18 @@ class StageHExportPipeline:
             failures=tuple(failures),
             skipped=tuple(skipped),
             partial_data=partial_summary,
+            export_mode=self.config.export_mode,
+            backbone_lineage=_resolve_backbone_lineage(
+                next(
+                    (
+                        view_manifest.backbone_lineage
+                        for view_manifest in view_manifests
+                        if view_manifest.backbone_lineage
+                    ),
+                    None,
+                ),
+                config=self.config,
+            ),
         )
         run_manifest_path = run_root / "run_manifest.json"
         write_json(run_manifest_path, run_manifest.to_dict())
@@ -637,3 +678,26 @@ def _build_sample_partition_by_id(preview_result) -> dict[str, str]:
         for sample in partition_samples:
             mapping[sample.sample_id] = partition_name
     return mapping
+
+
+def _resolve_backbone_lineage(
+    checkpoint_metadata: Mapping[str, object] | None,
+    *,
+    config: StageHExportConfig,
+) -> dict[str, object]:
+    metadata = dict(checkpoint_metadata or {})
+    return {
+        "backbone_run_id": str(
+            config.backbone_run_id
+            or metadata.get("backbone_run_id")
+            or ""
+        )
+        or None,
+        "checkpoint_path": str(
+            config.checkpoint_path
+            or metadata.get("checkpoint_path")
+            or ""
+        )
+        or None,
+        "saved_at_utc": metadata.get("saved_at_utc"),
+    }
