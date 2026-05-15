@@ -1,6 +1,6 @@
 # 文档索引
 
-更新时间：2026-05-09
+更新时间：2026-05-15
 
 ## 目录说明
 
@@ -22,18 +22,20 @@
 ## 当前事实源
 
 - 阶段状态只看 [coding-roadmap.md](planning/coding-roadmap.md)。
+- 下一阶段指导性路线图只看 [stage-i-thesis-mainline-roadmap-2026-05-15.md](planning/stage-i-thesis-mainline-roadmap-2026-05-15.md)。
+- 按文件拆解的详细编码计划只看 [stage-i-thesis-mainline-coding-plan-2026-05-15.md](planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md)。
+- 若要回答“为了毕业论文还差哪些编码工作”，优先看 [thesis-coding-gap.md](planning/thesis-coding-gap.md)。
 - 阶段 E/F/G/H 的收口依据只看 `docs/planning/stage-*-closure-*.md`。
 - 阶段 I 收口依据只看 [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md) 与 [stage-i-closure-2026-04-30.md](reports/stage_i/stage-i-closure-2026-04-30.md)。
-- [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md) 继续保留为阶段 I 启动期计划，不再作为当前阶段状态判断依据。
+- [planning/README.md](planning/README.md) 负责区分 `planning` 根目录的现行入口与历史归档。
+- [archive/stage_i/README.md](planning/archive/stage_i/README.md) 负责索引已归档的 `stage-xxx-plan` 历史文档。
 - [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md) 是第三方基线落地前置准备记录。
-- [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md) 是 `MulT / ContiFormer` 深基线阶段的历史执行快照，不再作为当前私有主线判断依据。
-- [stage-i-private-benchmark-plan-2026-05-02.md](planning/stage-i-private-benchmark-plan-2026-05-02.md) 是当前私有双流最优性验证入口与执行顺序。
-- [stage-i-mainline-transition-2026-05-04.md](planning/stage-i-mainline-transition-2026-05-04.md) 是当前“`chronaris_opt` 升级为鼎新私有主线、`E/F/G/H` 保留为历史基线”的迁移计划。
-- [stage-i-public-opt-minimal-plan-2026-05-04.md](planning/stage-i-public-opt-minimal-plan-2026-05-04.md) 是 `chronaris public opt` 的历史最小起步计划；当前真实实跑已扩到 `UAB subjective regression` 与 `NASA attention_state`。
-- [stage-i-public-opt-win-plan-2026-05-06.md](planning/stage-i-public-opt-win-plan-2026-05-06.md) 是当前“`public opt` 优于 `MulT / ContiFormer`”的增强执行计划与后续 `chronaris_public_fusion` 公开化预案。
+- [stage-i-mainline-transition-2026-05-04.md](planning/stage-i-mainline-transition-2026-05-04.md) 保留为 `chronaris_opt` 升级为鼎新私有主线时的历史节点快照。
 - [stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md) 是当前公开主线统一结论：`public opt closed`。
 - [stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md](reports/stage_i/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md) 是当前中期报告整编证据入口；它保留 `public opt closed` 作为公开主线，同时把 `NASA public_fusion` 的 2026-05-09 full confirm 作为补充证据写入。
-- 若要回答“为了毕业论文还差哪些编码工作”，优先看 [thesis-coding-gap.md](planning/thesis-coding-gap.md)。
+- 当前仓库代码 contract 已把公开第二模态固定为 `context proxy / public adapter evidence`；历史 public mainline / public opt 报告继续按各自生成时快照保留。
+- 当前仓库代码 contract 已把鼎新 `T1/T2/T3` 固定为 `private proxy benchmark / proxy tasks`；不要把这些 contract 直接解读成人工真值 thesis tasks。
+- 当前仓库代码 contract 已补上 `stage_i_backbone_train` 与 `Stage H checkpoint inference export`；历史 `per-view training` 导出路径继续保留为 preview/research 旁路。
 - 阶段 H 当前主报告只看 [stage-h-closure-2026-04-27.md](reports/stage_h/stage-h-closure-2026-04-27.md)。
 - 阶段 H all-window clean 运行报告：
   - [stage-h-private-e-allwindow-clean-2026-05-02.md](reports/stage_h/stage-h-private-e-allwindow-clean-2026-05-02.md)
@@ -78,22 +80,21 @@
 
 ### planning
 
+- [planning/README.md](planning/README.md)
 - [coding-roadmap.md](planning/coding-roadmap.md)
 - [iteration-playbook.md](planning/iteration-playbook.md)
+- [stage-i-thesis-mainline-roadmap-2026-05-15.md](planning/stage-i-thesis-mainline-roadmap-2026-05-15.md)
+- [stage-i-thesis-mainline-coding-plan-2026-05-15.md](planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md)
 - [stage-e-closure-2026-04-21.md](planning/stage-e-closure-2026-04-21.md)
 - [stage-f-closure-2026-04-22.md](planning/stage-f-closure-2026-04-22.md)
 - [stage-g-closure-2026-04-22.md](planning/stage-g-closure-2026-04-22.md)
 - [stage-h-closure-2026-04-27.md](planning/stage-h-closure-2026-04-27.md)
 - [stage-i-preparation.md](planning/stage-i-preparation.md)
-- [stage-i-data-plan-2026-04-29.md](planning/stage-i-data-plan-2026-04-29.md)
 - [stage-i-third-party-baseline-prep-2026-04-30.md](planning/stage-i-third-party-baseline-prep-2026-04-30.md)
 - [stage-i-closure-2026-04-30.md](planning/stage-i-closure-2026-04-30.md)
-- [stage-i-deep-baseline-plan-2026-05-01.md](planning/stage-i-deep-baseline-plan-2026-05-01.md)
-- [stage-i-private-benchmark-plan-2026-05-02.md](planning/stage-i-private-benchmark-plan-2026-05-02.md)
 - [stage-i-mainline-transition-2026-05-04.md](planning/stage-i-mainline-transition-2026-05-04.md)
-- [stage-i-public-opt-minimal-plan-2026-05-04.md](planning/stage-i-public-opt-minimal-plan-2026-05-04.md)
-- [stage-i-public-opt-win-plan-2026-05-06.md](planning/stage-i-public-opt-win-plan-2026-05-06.md)
 - [thesis-coding-gap.md](planning/thesis-coding-gap.md)
+- [planning/archive/stage_i/README.md](planning/archive/stage_i/README.md)
 
 ### models
 

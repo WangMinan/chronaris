@@ -28,7 +28,12 @@ from chronaris.pipelines.causal_fusion import (
     StageGCausalFusionSample,
     StageGCausalFusionTensorExport,
 )
-from chronaris.features import STAGE_H_FEATURE_KEYS, load_stage_h_feature_run
+from chronaris.features import (
+    E0InputConfig,
+    STAGE_H_FEATURE_KEYS,
+    build_e0_experiment_samples,
+    load_stage_h_feature_run,
+)
 from chronaris.pipelines.partial_data import (
     InfluxPartialVehiclePointProvider,
     PartialMeasurementMetadata,
@@ -436,6 +441,14 @@ class StageHExportConfigTest(unittest.TestCase):
         self.assertIsNone(config.resolved_vehicle_point_limit_per_measurement)
         self.assertEqual(config.point_limit_note, "no per-measurement point cap")
 
+    def test_inference_only_requires_checkpoint_path(self) -> None:
+        with self.assertRaises(ValueError):
+            StageHExportConfig(
+                run_id="stage-h-infer",
+                sortie_ids=("sortie-1",),
+                inference_only=True,
+            )
+
     def test_report_renders_warn_diagnostic_reasons(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmp = Path(tmpdir)
@@ -668,6 +681,91 @@ class StageHExportPipelineTest(unittest.TestCase):
             self.assertIn("sample_partitions", feature_bundle.files)
             self.assertFalse(view_manifest["stage_g_available"])
             self.assertEqual(view_manifest["artifact_paths"]["causal_fusion_summary_json"], "")
+
+    def test_pipeline_records_backbone_inference_lineage_in_manifests(self) -> None:
+        class _BackboneInferenceViewRunner(_FakeViewRunner):
+            def run(
+                self,
+                profile: StageHSortieProfile,
+                view: StageHViewProfile,
+                *,
+                export_start_utc: datetime,
+                export_stop_utc: datetime,
+            ) -> StageHViewExecutionResult:
+                result = super().run(
+                    profile,
+                    view,
+                    export_start_utc=export_start_utc,
+                    export_stop_utc=export_stop_utc,
+                )
+                return StageHViewExecutionResult(
+                    dataset_result=result.dataset_result,
+                    sample_ids=result.sample_ids,
+                    sample_partition_by_id=result.sample_partition_by_id,
+                    split_summary=result.split_summary,
+                    train_metrics=result.train_metrics,
+                    validation_metrics=result.validation_metrics,
+                    test_metrics=result.test_metrics,
+                    intermediate_export=result.intermediate_export,
+                    diagnostics_summary=result.diagnostics_summary,
+                    threshold_evaluation=result.threshold_evaluation,
+                    stage_g_result=result.stage_g_result,
+                    stage_g_tensor_export=result.stage_g_tensor_export,
+                    vehicle_field_metadata=result.vehicle_field_metadata,
+                    physiology_measurements=result.physiology_measurements,
+                    vehicle_measurements=result.vehicle_measurements,
+                    backbone_checkpoint_metadata={
+                        "backbone_run_id": "stage-i-backbone-smoke",
+                        "checkpoint_path": "/tmp/alignment_backbone_checkpoint.pt",
+                        "saved_at_utc": "2026-05-15T00:00:00+00:00",
+                    },
+                )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp = Path(tmpdir)
+            profile = _profile("20251005_四01_ACT-4_云_J20_22#01", (10033,))
+            config = StageHExportConfig(
+                run_id="stage-h-backbone-infer",
+                sortie_ids=(profile.sortie_id,),
+                output_root=tmp / "artifacts" / "stage_h",
+                report_path=tmp / "docs" / "reports" / "stage-h-backbone-infer.md",
+                checkpoint_path="/tmp/alignment_backbone_checkpoint.pt",
+                backbone_run_id="stage-i-backbone-smoke",
+                inference_only=True,
+                causal_fusion_enabled=False,
+            )
+            pipeline = StageHExportPipeline(
+                config=config,
+                profile_resolver=_FakeProfileResolver((profile,)),
+                view_runner=_BackboneInferenceViewRunner(include_stage_g=False),
+            )
+
+            result = pipeline.run()
+
+            run_manifest = json.loads(Path(result.run_manifest_path).read_text(encoding="utf-8"))
+            self.assertEqual(run_manifest["export_mode"], "frozen_checkpoint_inference")
+            self.assertTrue(run_manifest["config"]["inference_only"])
+            self.assertEqual(
+                run_manifest["backbone_lineage"]["backbone_run_id"],
+                "stage-i-backbone-smoke",
+            )
+            sortie_manifest = json.loads(
+                Path(run_manifest["sortie_manifest_paths"][profile.sortie_id]).read_text(encoding="utf-8")
+            )
+            view_manifest = json.loads(
+                Path(sortie_manifest["view_manifest_paths"][profile.views[0].view_id]).read_text(encoding="utf-8")
+            )
+            self.assertEqual(view_manifest["export_mode"], "frozen_checkpoint_inference")
+            self.assertEqual(
+                view_manifest["backbone_lineage"]["checkpoint_path"],
+                "/tmp/alignment_backbone_checkpoint.pt",
+            )
+            feature_run = load_stage_h_feature_run(result.run_manifest_path)
+            self.assertEqual(feature_run.export_mode, "frozen_checkpoint_inference")
+            self.assertEqual(
+                feature_run.backbone_lineage["backbone_run_id"],
+                "stage-i-backbone-smoke",
+            )
 
 
 class PartialDataBuilderTest(unittest.TestCase):

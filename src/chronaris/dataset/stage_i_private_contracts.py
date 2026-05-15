@@ -24,6 +24,8 @@ class StageIPrivateTaskEntry:
     label_value: float | int | str | None
     label_source: str
     source_refs: Mapping[str, str]
+    benchmark_role: str = "private_proxy_benchmark"
+    task_role: str = "proxy_task"
     paired_sample_id: str | None = None
     context_payload: Mapping[str, object] = field(default_factory=dict)
 
@@ -41,6 +43,8 @@ class StageIPrivateTaskEntry:
             "label_value": self.label_value,
             "label_source": self.label_source,
             "source_refs": dict(self.source_refs),
+            "benchmark_role": self.benchmark_role,
+            "task_role": self.task_role,
             "paired_sample_id": self.paired_sample_id,
             "context_payload": dict(self.context_payload),
         }
@@ -77,6 +81,8 @@ def load_stage_i_private_task_entries(path: str | Path) -> tuple[StageIPrivateTa
             label_value=row.get("label_value"),
             label_source=str(row["label_source"]),
             source_refs=dict(row.get("source_refs", {})),
+            benchmark_role=str(row.get("benchmark_role") or "private_proxy_benchmark"),
+            task_role=str(row.get("task_role") or "proxy_task"),
             paired_sample_id=_optional_str(row.get("paired_sample_id")),
             context_payload=dict(row.get("context_payload", {})),
         )

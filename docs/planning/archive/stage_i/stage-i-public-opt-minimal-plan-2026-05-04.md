@@ -2,6 +2,9 @@
 
 更新时间：2026-05-04
 
+> 说明：本文件已归档为 `chronaris public opt` 启动期最小方案快照。  
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+
 ## 1. 目标
 
 本计划的目标不是重新设计 Stage I，而是把 `chronaris_opt` 的核心思路迁到现有公开数据 `sequence contract` 上，做出一个：

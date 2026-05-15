@@ -273,6 +273,8 @@ class StageIPublicOptTest(unittest.TestCase):
             self.assertIn("heat_prior_residual_guarded", report_text)
             self.assertIn("ridge_heat_physiology_lowdim", report_text)
             self.assertNotIn("| huber_residual |", report_text.split("### heat_the_chair", 1)[1])
+            self.assertIn("context proxy / adapter stream", report_text)
+            self.assertIn("public adapter evidence", report_text)
 
     def test_public_opt_prior_heads_use_only_outer_train_labels(self) -> None:
         subset_frame = _build_public_opt_prior_probe_frame(
@@ -372,6 +374,9 @@ class StageIPublicOptTest(unittest.TestCase):
             )
             self.assertIn("combined", summary["reference_comparison"]["groups"])
             self.assertIn("winning_margin_vs_deep", summary)
+            report_text = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("scenario_context", report_text)
+            self.assertIn("public adapter evidence", report_text)
 
     def test_nasa_public_opt_rejects_prepared_assets_without_leakage_guard(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -592,6 +597,12 @@ class StageIPublicOptTest(unittest.TestCase):
 
             summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
             self.assertEqual(summary["public_mainline_status"], "public opt closed")
+            self.assertEqual(summary["thesis_facing_status"], "public_adapter_evidence")
+            self.assertFalse(summary["thesis_dual_stream_mainline_closed"])
+            self.assertEqual(
+                summary["public_branch_semantics"]["uab"]["second_stream_name"],
+                "task_context",
+            )
             self.assertEqual(summary["uab"]["source_type"], "multi_source_best_of")
             self.assertEqual(
                 summary["uab"]["groups"]["n_back"]["best_public_source_type"],
@@ -599,7 +610,11 @@ class StageIPublicOptTest(unittest.TestCase):
             )
             self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["clean_win"])
             self.assertTrue(summary["uab"]["groups"]["heat_the_chair"]["tie_break_used"])
-            self.assertIn("current torch-native branch", Path(result.report_path).read_text(encoding="utf-8"))
+            report_text = Path(result.report_path).read_text(encoding="utf-8")
+            self.assertIn("current torch-native branch", report_text)
+            self.assertIn("public adapter evidence", report_text)
+            self.assertIn("context proxy", report_text)
+            self.assertIn("不是论文里的真实 vehicle stream", report_text)
 
     def test_public_mainline_can_promote_new_prior_summary_from_extra_uab_sources(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -645,6 +660,10 @@ class StageIPublicOptTest(unittest.TestCase):
 
             summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
             self.assertEqual(summary["public_mainline_status"], "public opt closed")
+            self.assertEqual(
+                summary["public_branch_semantics"]["nasa"]["second_stream_name"],
+                "scenario_context",
+            )
             self.assertEqual(
                 summary["uab"]["groups"]["n_back"]["best_public_head"],
                 "ridge_residual",

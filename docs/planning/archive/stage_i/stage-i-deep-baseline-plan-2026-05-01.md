@@ -3,7 +3,7 @@
 更新时间：2026-05-01
 
 > 说明：本文件是 `MulT / ContiFormer` 深基线阶段的历史快照。  
-> 当前鼎新私有主线已切到 `chronaris_opt`，以 `docs/planning/stage-i-private-benchmark-plan-2026-05-02.md` 与 `docs/planning/stage-i-mainline-transition-2026-05-04.md` 为准。
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md`、`docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md` 与 `docs/planning/stage-i-mainline-transition-2026-05-04.md`。
 
 ## 1. 定位
 

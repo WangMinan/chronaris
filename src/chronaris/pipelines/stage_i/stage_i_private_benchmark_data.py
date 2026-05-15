@@ -44,6 +44,22 @@ TASK_RESPONSE = "T2_next_window_physiology_response"
 TASK_RETRIEVAL = "T3_paired_pilot_window_retrieval"
 CLASS_LABEL_TO_ID = {"low": 0, "medium": 1, "high": 2}
 CLASS_ID_TO_LABEL = {value: key for key, value in CLASS_LABEL_TO_ID.items()}
+PRIVATE_PROXY_BENCHMARK_ROLE = "private_proxy_benchmark"
+PROXY_TASK_ROLE = "proxy_task"
+PROXY_TASK_METADATA = {
+    TASK_MANEUVER: {
+        "proxy_task_id": "maneuver_intensity_proxy",
+        "proxy_description": "window-level maneuver-intensity proxy derived from raw vehicle stats",
+    },
+    TASK_RESPONSE: {
+        "proxy_task_id": "next_window_physiology_response_proxy",
+        "proxy_description": "next-window physiology response proxy derived from adjacent windows",
+    },
+    TASK_RETRIEVAL: {
+        "proxy_task_id": "paired_pilot_window_retrieval_proxy",
+        "proxy_description": "same-sortie paired-pilot retrieval proxy at matched window index",
+    },
+}
 
 
 def load_aligned_private_records(
@@ -207,6 +223,7 @@ def derive_private_task_entries(
         paired_lookup[(str(right["sortie_id"]), int(right["pilot_id"]), int(right["window_index"]))] = str(left["sample_id"])
 
     for row in records.itertuples(index=False):
+        maneuver_proxy = PROXY_TASK_METADATA[TASK_MANEUVER]
         maneuver_score = aggregate_field_score(row.raw_vehicle_stats, maneuver_fields)
         maneuver_label = None if maneuver_score is None else bucketize_score(maneuver_score, lower_q, upper_q)
         if maneuver_label is not None:
@@ -224,7 +241,11 @@ def derive_private_task_entries(
             label_value=maneuver_label,
             label_source="raw_vehicle_window_stats",
             source_refs={"window_summary": "raw_window_summary.jsonl"},
+            benchmark_role=PRIVATE_PROXY_BENCHMARK_ROLE,
+            task_role=PROXY_TASK_ROLE,
             context_payload={
+                **maneuver_proxy,
+                "thesis_task_boundary": "proxy_task_not_direct_thesis_task",
                 "score": maneuver_score,
                 "selected_vehicle_fields": list(maneuver_fields),
             },
@@ -232,6 +253,7 @@ def derive_private_task_entries(
         task_entries.append(maneuver_entry)
         by_task[TASK_MANEUVER].append(maneuver_entry)
 
+        response_proxy = PROXY_TASK_METADATA[TASK_RESPONSE]
         response_value = response_labels[row.sample_id]
         if response_value is not None:
             response_valid_count += 1
@@ -248,7 +270,11 @@ def derive_private_task_entries(
             label_value=response_value,
             label_source="next_window_raw_physiology_stats",
             source_refs={"window_summary": "raw_window_summary.jsonl"},
+            benchmark_role=PRIVATE_PROXY_BENCHMARK_ROLE,
+            task_role=PROXY_TASK_ROLE,
             context_payload={
+                **response_proxy,
+                "thesis_task_boundary": "proxy_task_not_direct_thesis_task",
                 "selected_physiology_fields": list(physiology_fields),
                 "next_sample_id": response_refs[row.sample_id],
             },
@@ -256,6 +282,7 @@ def derive_private_task_entries(
         task_entries.append(response_entry)
         by_task[TASK_RESPONSE].append(response_entry)
 
+        retrieval_proxy = PROXY_TASK_METADATA[TASK_RETRIEVAL]
         paired_sample_id = paired_lookup.get((row.sortie_id, int(row.pilot_id), int(row.window_index)))
         if paired_sample_id is not None:
             retrieval_valid_count += 1
@@ -272,15 +299,24 @@ def derive_private_task_entries(
             label_value=paired_sample_id,
             label_source="same_sortie_dual_pilot_window_index",
             source_refs={"window_manifest": "window_manifest.jsonl"},
+            benchmark_role=PRIVATE_PROXY_BENCHMARK_ROLE,
+            task_role=PROXY_TASK_ROLE,
             paired_sample_id=paired_sample_id,
-            context_payload={},
+            context_payload={
+                **retrieval_proxy,
+                "thesis_task_boundary": "proxy_task_not_direct_thesis_task",
+            },
         )
         task_entries.append(retrieval_entry)
         by_task[TASK_RETRIEVAL].append(retrieval_entry)
 
     summary = {
         "entry_count": len(task_entries),
+        "benchmark_role": PRIVATE_PROXY_BENCHMARK_ROLE,
+        "task_role": PROXY_TASK_ROLE,
+        "thesis_task_boundary": "t1_t2_t3_are_proxy_tasks_not_direct_thesis_tasks",
         "task_counts": {task_name: len(entries) for task_name, entries in by_task.items()},
+        "task_role_counts": dict(Counter(entry.task_role for entry in task_entries)),
         "coverage": {
             TASK_MANEUVER: {
                 "valid_label_count": maneuver_valid_count,
@@ -297,6 +333,7 @@ def derive_private_task_entries(
         },
         "selected_vehicle_fields": list(maneuver_fields),
         "selected_physiology_fields": list(physiology_fields),
+        "proxy_task_definitions": PROXY_TASK_METADATA,
         "maneuver_label_distribution": dict(Counter(
             entry.label_value for entry in by_task[TASK_MANEUVER] if entry.label_value is not None
         )),
@@ -791,4 +828,3 @@ def resolve_quantile_bounds(values: np.ndarray) -> tuple[float, float]:
     if lower_q > upper_q:
         lower_q, upper_q = upper_q, lower_q
     return lower_q, upper_q
-

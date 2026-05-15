@@ -130,6 +130,7 @@ def render_stage_i_public_opt_report(
             "- 当前主 gate 只看相对 `MulT / ContiFormer` 的胜出情况；`classical baseline` 只保留为历史背景，不作为本轮前进门槛。",
         ]
     )
+    lines.extend(["", *_public_adapter_scope_lines(summary)])
     return "\n".join(lines)
 
 
@@ -199,6 +200,40 @@ def render_public_opt_winning_margins(
         )
     lines.extend(["", f"- overall_needs_deep_rerun：`{needs_deep_rerun}`"])
     return lines
+
+
+def _public_adapter_scope_lines(summary: Mapping[str, object]) -> list[str]:
+    dataset_id = str(summary["dataset_id"])
+    if dataset_id == "uab_workload_dataset":
+        second_stream_name = "task_context"
+    else:
+        second_stream_name = "scenario_context"
+    lines = [
+        "## Thesis-Facing Boundary",
+        "",
+        f"- 当前公开第二模态：`{second_stream_name}`，按 `context proxy / adapter stream` 解释，不等价于真实 vehicle stream。",
+        "- 该报告属于 `public adapter evidence`，不能单独写成 thesis 双流主线 fully closed。",
+    ]
+    if dataset_id == "uab_workload_dataset" and _uses_uab_adapter_heads(summary):
+        lines.append(
+            "- 若 `heat_the_chair` 由 `target_prior_median` 等 head 胜出，只能写成 "
+            "`uab_public_adapter / calibration baseline`，不是双流融合主干本体直接胜出。"
+        )
+    return lines
+
+
+def _uses_uab_adapter_heads(summary: Mapping[str, object]) -> bool:
+    subset_results = summary.get("subset_results") or {}
+    adapter_heads = {
+        "target_prior_median",
+        "target_prior_trimmed_mean",
+        "heat_prior_residual_guarded",
+    }
+    return any(
+        adapter_heads.intersection(set((payload.get("heads") or {}).keys()))
+        for payload in subset_results.values()
+        if isinstance(payload, Mapping)
+    )
 
 
 def fmt_public_opt_float(value: float | int | object) -> str:

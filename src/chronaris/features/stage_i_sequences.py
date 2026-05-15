@@ -47,6 +47,8 @@ WINDOW_V2 = "window_v2"
 DEFAULT_SEQUENCE_STEPS = 64
 CHRONARIS_PUBLIC_UAB_ADAPTER_ID = "chronaris_public_uab_v1"
 CHRONARIS_PUBLIC_NASA_ADAPTER_ID = "chronaris_public_nasa_v1"
+PUBLIC_ADAPTER_EVIDENCE_ROLE = "public_adapter_evidence"
+PUBLIC_CONTEXT_PROXY_ROLE = "context_proxy"
 PUBLIC_CONTEXT_LABEL_KEYS = frozenset(
     {
         "objective_label_text",
@@ -389,7 +391,10 @@ def prepare_uab_sequences(
         second_features=task_context_feature_names,
         notes={
             "physiology": "Chronaris-public UAB physiology stream: EEG and ECG values only.",
-            "task_context": "Chronaris-public UAB task/context stream; excludes objective and subjective targets.",
+            "task_context": (
+                "Chronaris-public UAB task/context proxy stream; adapter evidence only "
+                "and not a real vehicle stream."
+            ),
         },
     )
     sequence_entries = tuple(
@@ -399,7 +404,11 @@ def prepare_uab_sequences(
             sequence_length=target_steps,
             source_origin=CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
             modality_schema=modality_schema,
-            context_payload=_chronaris_public_context_payload(entry),
+            context_payload=_chronaris_public_context_payload(
+                entry,
+                adapter_id=CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
+                second_stream_name="task_context",
+            ),
         )
         for entry in entries
     )
@@ -409,7 +418,11 @@ def prepare_uab_sequences(
                 "sample_id": entry.sample_id,
                 "recording_id": entry.recording_id,
                 "source_refs": dict(entry.source_refs),
-                "context_payload": _chronaris_public_context_payload(entry),
+                "context_payload": _chronaris_public_context_payload(
+                    entry,
+                    adapter_id=CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
+                    second_stream_name="task_context",
+                ),
             },
             ensure_ascii=False,
         )
@@ -470,6 +483,11 @@ def prepare_uab_sequences(
         extra_summary={
             "adapter_id": CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
             "adapter_contract": "physiology_plus_task_context_without_target_label_inputs",
+            "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+            "second_stream_name": "task_context",
+            "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
+            "second_stream_is_real_vehicle": False,
+            "thesis_task_boundary": "public_context_proxy_only_not_vehicle_stream",
             "prepared_subset_counts": dict(prepared.subset_counts),
             "ecg_zero_mask_samples": _count_zero_mask_samples(
                 entries=entries,
@@ -486,6 +504,10 @@ def prepare_uab_sequences(
             "profile": profile,
             "adapter_id": CHRONARIS_PUBLIC_UAB_ADAPTER_ID,
             "adapter_contract": "physiology_plus_task_context_without_target_label_inputs",
+            "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+            "second_stream_name": "task_context",
+            "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
+            "second_stream_is_real_vehicle": False,
             "sequence_length": target_steps,
             "modalities": modality_schema,
             "label_leakage_guard": {
@@ -654,7 +676,10 @@ def prepare_nasa_sequences(
         second_features=scenario_context_feature_names,
         notes={
             "physiology": "Chronaris-public NASA physiology stream: EEG and peripheral signals only.",
-            "scenario_context": "Chronaris-public NASA scenario/context stream; excludes event code and attention-state labels.",
+            "scenario_context": (
+                "Chronaris-public NASA scenario/context proxy stream; adapter evidence only "
+                "and not a real vehicle stream."
+            ),
         },
     )
     sequence_entries = tuple(
@@ -664,7 +689,11 @@ def prepare_nasa_sequences(
             sequence_length=target_steps,
             source_origin=CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
             modality_schema=modality_schema,
-            context_payload=_chronaris_public_context_payload(entry),
+            context_payload=_chronaris_public_context_payload(
+                entry,
+                adapter_id=CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
+                second_stream_name="scenario_context",
+            ),
         )
         for entry in entries
     )
@@ -674,7 +703,11 @@ def prepare_nasa_sequences(
                 "sample_id": entry.sample_id,
                 "recording_id": entry.recording_id,
                 "source_refs": dict(entry.source_refs),
-                "context_payload": _chronaris_public_context_payload(entry),
+                "context_payload": _chronaris_public_context_payload(
+                    entry,
+                    adapter_id=CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
+                    second_stream_name="scenario_context",
+                ),
             },
             ensure_ascii=False,
         )
@@ -719,6 +752,11 @@ def prepare_nasa_sequences(
         extra_summary={
             "adapter_id": CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
             "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+            "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+            "second_stream_name": "scenario_context",
+            "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
+            "second_stream_is_real_vehicle": False,
+            "thesis_task_boundary": "public_context_proxy_only_not_vehicle_stream",
             "prepared_subset_counts": dict(prepared.subset_counts),
             "processing_diagnostics": {
                 "csv_file_count": len(grouped),
@@ -733,6 +771,8 @@ def prepare_nasa_sequences(
                 "modalities": ["physiology", "scenario_context"],
                 "context_feature_names": list(scenario_context_feature_names),
                 "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+                "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+                "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
             },
             "inventory_only_background_count": sum(
                 1 for entry in entries if entry.training_role == "inventory_only"
@@ -748,6 +788,10 @@ def prepare_nasa_sequences(
             "profile": profile,
             "adapter_id": CHRONARIS_PUBLIC_NASA_ADAPTER_ID,
             "adapter_contract": "physiology_plus_scenario_context_without_attention_label_inputs",
+            "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+            "second_stream_name": "scenario_context",
+            "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
+            "second_stream_is_real_vehicle": False,
             "sequence_length": target_steps,
             "modalities": modality_schema,
             "label_leakage_guard": {
@@ -921,12 +965,28 @@ def _public_context_feature_value(
     raise ValueError(f"unsupported Chronaris-public context feature: {feature_name}")
 
 
-def _chronaris_public_context_payload(entry: StageITaskEntry) -> dict[str, object]:
-    return {
+def _chronaris_public_context_payload(
+    entry: StageITaskEntry,
+    *,
+    adapter_id: str,
+    second_stream_name: str,
+) -> dict[str, object]:
+    payload = {
         key: value
         for key, value in entry.context_payload.items()
         if key not in PUBLIC_CONTEXT_LABEL_KEYS
     }
+    payload.update(
+        {
+            "adapter_id": adapter_id,
+            "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+            "second_stream_name": second_stream_name,
+            "second_stream_role": PUBLIC_CONTEXT_PROXY_ROLE,
+            "second_stream_is_real_vehicle": False,
+            "thesis_task_boundary": "public_context_proxy_only_not_vehicle_stream",
+        }
+    )
+    return payload
 
 
 def _merge_sequence_results(

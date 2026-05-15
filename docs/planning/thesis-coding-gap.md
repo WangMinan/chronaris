@@ -1,151 +1,174 @@
 # 毕业论文编码缺口评估
 
-更新时间：2026-05-08
+更新时间：2026-05-15
 
 ## 1. 目的
 
 这份文档只回答一件事：
 
-- 结合 `docs/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx` 与当前仓库/报告现状，为了支撑毕业论文，编码层面还差什么
+- 对照 `docs/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx`、当前仓库实现和已落盘证据，论文主线在编码层面还差什么
 
-它不重写阶段历史 closure，也不把 proxy 标签包装成人工真值。
+它不覆写历史 closure，也不把 `proxy / adapter` 结果包装成已经完成的 thesis 本体。
 
-## 2. 当前已经完成到什么程度
+## 2. 当前已经成立的事实
 
-对照选题报告里的三段主线：
-
-1. `基于连续时间动力学的异步数据对齐`
-2. `基于语义解耦的非对称因果融合`
-3. `融合管线的系统级实现与效能验证`
-
-当前仓库已经可以成立的结论是：
+当前可以明确成立的结论是：
 
 - `E / F / G(min) / H` 已完成真实数据链路、导出 contract 与测试闭环。
-- `Stage I Phase 0 + Phase 1 + Phase 2 + Phase 3` 的历史公开 benchmark closure 已完成。
-- `chronaris_opt` 已在鼎新私有 proxy benchmark 的 `T1 / T2 / T3` 三任务上达到当前对照矩阵最优，并完成 package 固化。
-- `alignment support`、`causal support`、`fixed six-path ablation` 三份论文证据 support 已落盘。
-- thesis-facing `runtime/demo` 与 `anchor` 入口已正式落盘。
-- 当前公开主线已从 `NASA closed, UAB partial` 提升为 `public opt closed`，最新统一口径见 `docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`。
+- `Stage I Phase 0 + Phase 1 + Phase 2 + Phase 3` 的公开 benchmark 历史收口已完成。
+- `chronaris_opt` 已在鼎新私有 `proxy benchmark` 的 `T1 / T2 / T3` 三任务上达到当前对照矩阵最优，并固化 package。
+- `alignment support`、`causal support`、`fixed six-path ablation` 三份 support 已落盘。
+- `runtime/demo` 与 `anchor` 已经提供 thesis-facing 的离线展示入口。
+- `public opt closed` 仍可作为公开支撑证据，但它主要是 `public adapter / calibration evidence`，不是 thesis 双流主线已经完全收口的证据。
+- `Stage I thesis mainline Phase A` 已完成首轮代码/测试收敛：公开第二模态与私有 `T1/T2/T3` 的 thesis-facing 边界已经在 contract、metadata 与报告生成代码里统一。
 
-因此，当前真正没完成的已经不是“E/F/G/H 还没做出来”，而是论文面向的最后一层证据表述、图表整理和可选公平性确认。
+因此，当前真正没完成的已经不是“系统完全跑不起来”，而是“现有实现是否已经和论文主线一一对应”。
 
-## 3. 最新 UAB 公开主线结论
+## 3. 当前七类关键缺口
 
-### 3.1 2026-05-08 torch `heat_specialist`
+### 3.1 公开分支的第二模态仍是代理流
 
-GPU-first、heat-only 路线已完成真实 `full LOSO`：
+当前 `UAB` 与 `NASA` 公共分支使用的是 `task_context / scenario_context`，而不是论文里严格意义上的航电/战术环境连续流。
 
-- run：`20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1`
-- runtime_device：`cuda`
-- winner：`heat_residual_correction__lr0p0003__wd0p0001`
-- `heat_the_chair RMSE=1.4630 / MAE=1.1594`
+这意味着：
 
-结论：
+- 它可以作为 `public adapter evidence`。
+- 但它不能单独证明“生理流 + 航电流”的 thesis 双流本体已经被公开数据严谨复现。
 
-- 该路线在 `MAE` 上优于 legacy `physiology_persistence`，但 `RMSE` 仍高于 `1.4568` gate。
-- 它作为 near-positive evidence 保留，不单独 promote。
+### 3.2 Stage H 已补上 frozen backbone inference export 基础
 
-### 3.2 2026-05-08 sklearn robust-prior adapter
+当前仓库已经补上：
 
-本轮新增 fold-safe 的 UAB heat adapter，并只跑 `heat_the_chair`：
+- `stage_i_backbone_train` 可复用骨干训练入口
+- `AlignmentPreviewPipeline` 的 checkpoint 保存 / 加载与 `inference_only` 运行
+- `Stage H export` 的 `checkpoint_path + inference_only`
+- `run/view manifest` 与 `load_stage_h_feature_run()` 的 `export_mode / backbone_lineage`
 
-- run：`20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1`
-- artifact：`docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/`
-- report：`docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
-- selected_subsets：`heat_the_chair`
-- best_head：`target_prior_median`
-- `heat_the_chair RMSE=1.4331 / MAE=1.0740`
+这意味着：
 
-该 adapter 的论文口径必须保持克制：
+- `Stage H` 已不再必须绑定 `per-view training` 才能导出。
+- 论文主线已经具备 `frozen checkpoint inference export` 的代码基础。
+- 当前剩余缺口不再是“能不能做 checkpoint inference”，而是“backbone 是否已经和真实 thesis task 联合训练闭环”。
 
-- 它是 UAB public adapter / calibration baseline。
-- 它只使用每个 LOSO outer fold 的训练 subject 标签中位数，不读取测试 subject 标签。
-- 它不能写成双流连续对齐或非对称因果融合本体的直接胜利。
-- 它说明 UAB `heat_the_chair` 的剩余卡点主要是 subject-level 主观标签泛化与统计先验上限，而不是 E/F/G/H contract 缺失。
+### 3.3 骨干和下游任务还没有联合训练闭环
 
-### 3.3 统一 public mainline
+当前主线仍是：
 
-最新统一报告：
+1. 先学对齐/物理/最小因果融合表示。
+2. 再把导出特征交给 `classical / deep heads` 或 `chronaris_opt` 头做任务。
 
-- report：`docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
-- artifact：`docs/reports/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/public_mainline_summary.json`
-- status：`public opt closed`
+这意味着：
 
-当前 best-of：
+- 论文里“任务牵引的统一损失”还没有在代码里真正落地。
+- 当前很多提升仍来自外接 head、residual 和 calibration，而不是 backbone 本体。
 
-| group | best source | best head | metric |
-| --- | --- | --- | --- |
-| `n_back` | `legacy_public_opt` | `ridge_residual` | `RMSE=4.6103 / MAE=3.8043` |
-| `heat_the_chair` | `uab_public_adapter` | `target_prior_median` | `RMSE=1.4331 / MAE=1.0740` |
-| `NASA combined` | `public opt round 1` | `balanced_logistic_context` | `macro-F1=0.4550 / balanced_accuracy=0.5591` |
+### 3.4 Stage F 仍是 weak physics family
 
-注意：
+当前 `Stage F` 已经有价值，但核心仍是：
 
-- UAB 两组都已 clean win。
-- `n_back` 的领先幅度仍处于 near-tie 区间，若论文要做最严格公平确认，可补一次 frozen `ContiFormer` confirm rerun。
-- `chronaris_public_fusion` 仍是 secondary exploratory branch；当前 `NASA combined macro-F1=0.3348 < 0.40`，不进入主线。
+- `speed <-> acceleration`
+- `altitude <-> vertical_speed`
+- `attitude <-> angular_rate`
+- smoothness / envelope / pairwise / latent fallback
 
-## 4. 当前剩余编码工作
+它足以支撑“物理一致性约束”，但还不够支撑“显式刚体动力学残差 / rigid-body family”的强表述。
 
-### 4.1 必须完成
+### 3.5 Stage G 仍停留在 minimal causal attention
 
-1. 文档 truth-source 同步
-   - `docs/planning/coding-roadmap.md`
-   - `docs/reports/stage_i/README.md`
-   - `tests/README.md`
-2. 论文证据整理
-   - 把 `chronaris_opt` 私有主线、Stage I support、公开 `public opt closed` 分开写。
-   - 不把 UAB robust prior 包装成因果融合模块本体的胜利。
-3. 图表与表格清洗
-   - 汇总 private benchmark、support matrix、public mainline、runtime/demo、anchor。
-   - 处理 Matplotlib 中文缺字 warning 后再导出论文图件。
+当前 `Stage G` 已经实现：
 
-### 4.2 可选完成
+- 当前生理状态作为 `Query`
+- 历史第二流状态作为 `Key/Value`
+- 非对称因果 mask
+- 基于相邻 hidden state 变化范数的 event score
 
-1. `UAB ContiFormer` fairness confirm rerun
-   - 目的只是不让 `n_back` near-tie 被质疑。
-   - 不改变当前 public mainline 已 closed 的事实。
-2. `chronaris_public_fusion` NASA-first confirm
-   - 仅当继续探索 secondary branch 时执行。
-   - 若 `combined macro-F1 <= 0.40`，停止该支线。
+但它还没有：
 
-### 4.3 不建议继续扩
+- `SemanticQueryBank`
+- `EventTokenExtractor`
+- `query-to-event attention`
+- 事件原型级解释
 
-1. 不继续盲目扩大 UAB torch / sklearn 候选空间。
-2. 不继续增加公开数据集来拖大 Stage I 边界。
-3. 不把私有 `proxy / weak-label` 任务写成真实 `G-LOC` 或人工真值最优。
-4. 不为了论文措辞去重写上游 receiver / 入库链路。
+### 3.6 私有任务仍以 proxy benchmark 为主
 
-## 5. 推荐收束顺序
+当前 `T1 / T2 / T3` 能证明表示学习有效，但它们还不是论文任务本体：
 
-1. 冻结当前公开主线：
-   - `public opt closed`
-   - `n_back = legacy_public_opt / ridge_residual`
-   - `heat_the_chair = uab_public_adapter / target_prior_median`
-   - `NASA = public opt round 1 / balanced_logistic_context`
-2. 冻结私有主线：
-   - `chronaris_opt` 仍是鼎新私有任务验证主线。
-3. 进入论文整编：
-   - 方法链路写 E/F/G/H。
-   - 私有最优性写 `chronaris_opt`。
-   - 公开数据写 UAB/NASA 可复现实证与 adapter/calibration 边界。
+- `T1` 更像机动强度 proxy
+- `T2` 更像下一窗口生理响应 proxy
+- `T3` 更像同 sortie 双 pilot 配对检索 proxy
 
-## 6. 本轮核查与测试
+它们不能直接替代：
 
-本轮新增或更新的真实工件：
+- 空中失能风险分析
+- 认知负荷评估
+- 飞行事件复盘
 
-- `docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
-- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_summary.json`
-- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_predictions.csv`
-- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/run.log`
-- `docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/progress.json`
-- `docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
-- `docs/reports/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/public_mainline_summary.json`
+### 3.7 serving 仍是 demo，不是 runtime inference
 
-本轮已运行并通过的相关测试：
+当前 `runtime_demo.py` 的职责是读取已冻结资产并生成总结，不负责：
 
-```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_public_opt tests.test_stage_i_public_opt_aggregation
-```
+- 流式接入
+- 增量分窗
+- checkpoint 推理
+- 在线解释输出
 
-真实运行命令使用同一个 `chronaris` 解释器完成，且 `progress.json` 显示本轮 sklearn adapter 只执行了 `selected_subsets=["heat_the_chair"]`。
+所以它可以支撑展示和报告，但还不能支撑“近实时推理引擎”这层论文表述。
+
+## 4. 当前优先级
+
+### 第一优先级：主线边界校准已完成
+
+已完成三件事：
+
+1. 公开分支降格为 `public adapter evidence`
+   当前状态：已完成首轮代码/测试收敛，后续新报告与导出默认沿用该口径
+2. `Stage H` 改为 `checkpoint inference export`
+   当前状态：已完成首轮代码/测试收敛，后续 thesis-facing 导出默认沿用该口径
+3. `proxy task` 和 `thesis task` 明确拆开
+   当前状态：已完成 `proxy contract / proxy report wording` 首轮收敛，后续仍需补真实 thesis-task builder
+
+当前最重要的未完成项已经前移到第二优先级：把 backbone、任务损失和 thesis task builder 真正接起来。
+
+### 第二优先级：再补方法体
+
+然后再完成三件事：
+
+1. 联合训练与 `L_task`
+2. `Stage F rigid_body_family`
+3. `Stage G semantic event fusion`
+
+这是把研究原型收敛成论文方法主线的关键阶段。
+
+### 第三优先级：最后补 runtime inference
+
+最后再做：
+
+1. 流式窗口缓存
+2. checkpoint 推理
+3. 预测 + attention/event 解释输出
+
+## 5. 当前不应再沿用的旧判断
+
+下面这些判断已经不再准确：
+
+- “为了毕业论文，剩余工作主要是图表整理和 fairness confirm。”
+- “`public opt closed` 基本等于论文公开主线已经完成。”
+- “`chronaris_opt` 私有最优 package 已经足以证明 thesis 主线 fully closed。”
+- “`runtime_demo` 已经可以视作实时推理入口。”
+
+更准确的判断是：
+
+- 当前已经有很强的历史证据和支撑资产。
+- 但 thesis mainline 仍需要一次结构化重构与收口。
+
+## 6. 当前执行入口
+
+当前应以这三份文档为准：
+
+1. [coding-roadmap.md](coding-roadmap.md)
+2. [stage-i-thesis-mainline-roadmap-2026-05-15.md](stage-i-thesis-mainline-roadmap-2026-05-15.md)
+3. [stage-i-thesis-mainline-coding-plan-2026-05-15.md](stage-i-thesis-mainline-coding-plan-2026-05-15.md)
+
+历史 `stage-xxx-plan` 已统一归档到：
+
+- [archive/stage_i/README.md](archive/stage_i/README.md)

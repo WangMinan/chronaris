@@ -11,6 +11,8 @@ import pandas as pd
 
 from chronaris.pipelines.stage_i.stage_i_public_opt_reporting import fmt_public_opt_float
 
+PUBLIC_ADAPTER_EVIDENCE_ROLE = "public_adapter_evidence"
+
 
 @dataclass(frozen=True, slots=True)
 class StageIPublicMainlineReportConfig:
@@ -78,6 +80,12 @@ def run_stage_i_public_mainline_report(
         "generated_at_utc": pd.Timestamp.now("UTC").isoformat().replace("+00:00", "Z"),
         "run_id": config.run_id,
         "artifact_root": str(run_root),
+        "thesis_facing_status": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+        "thesis_dual_stream_mainline_closed": False,
+        "public_branch_semantics": {
+            "uab": _public_branch_semantics(second_stream_name="task_context"),
+            "nasa": _public_branch_semantics(second_stream_name="scenario_context"),
+        },
         "source_paths": {
             "uab_summary_path": config.uab_summary_path,
             "extra_uab_summary_paths": list(config.extra_uab_summary_paths),
@@ -104,6 +112,15 @@ def run_stage_i_public_mainline_report(
         report_path=str(report_path),
         summary=summary,
     )
+
+
+def _public_branch_semantics(*, second_stream_name: str) -> dict[str, object]:
+    return {
+        "evidence_role": PUBLIC_ADAPTER_EVIDENCE_ROLE,
+        "second_stream_name": second_stream_name,
+        "second_stream_role": "context_proxy",
+        "second_stream_is_real_vehicle": False,
+    }
 
 
 def _load_optional_json(path_like: str | None) -> dict[str, object]:
@@ -370,14 +387,21 @@ def _render_public_mainline_report(summary: Mapping[str, object]) -> str:
         "",
         f"- generated_at_utc：`{summary['generated_at_utc']}`",
         f"- public_mainline_status：`{summary['public_mainline_status']}`",
+        f"- thesis_facing_status：`{summary['thesis_facing_status']}`",
+        f"- thesis_dual_stream_mainline_closed：`{summary['thesis_dual_stream_mainline_closed']}`",
+        "",
+        "## Thesis-Facing Boundary",
+        "",
+        "- `public opt closed` 只表示公开 `adapter evidence` 已收口，不代表论文双流主线已经 fully closed。",
+        "- UAB / NASA 第二模态分别是 `task_context` / `scenario_context` 的 `context proxy`，不是论文里的真实 vehicle stream。",
         "",
         "## Mainline Decision",
         "",
-        "- NASA `public opt round 1` 继续冻结为当前公开主线的已闭合部分。",
+        "- NASA `public opt round 1` 继续冻结为当前公开 adapter evidence 的已闭合部分。",
         (
-            "- UAB 当前 best-of Chronaris 结果已满足严格门槛。"
+            "- UAB 当前 best-of Chronaris public adapter evidence 已满足严格门槛。"
             if uab["strict_mainline_closed"]
-            else "- UAB 当前仍未形成严格双组 clean win，因此公开主线状态保持 `NASA closed, UAB partial`。"
+            else "- UAB 当前仍未形成严格双组 clean win，因此公开 adapter evidence 状态保持 `NASA closed, UAB partial`。"
         ),
         "- `chronaris_public_fusion` 继续作为 secondary exploratory branch，不作为当前论文主线。",
         "",
