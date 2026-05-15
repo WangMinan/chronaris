@@ -1,3 +1,6 @@
+> 说明：本文件保留为 Stage I 启动期方案快照。
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+
 结论先说：阶段 I 最容易落地的版本，应该改成“公开标注数据集上的认知负荷量化实验 + 现有实飞 Stage H 资产上的小样本案例复盘”。不要把阶段 I 设计成“必须拿到更多鼎新实飞数据和专家细粒度标签”的方案。那条路现在不可控，而且会拖死毕设。
 
 这不违背选题报告。选题报告的核心不是“必须在真实军机数据上训练一个完整下游模型”，而是证明一条从异构时序到标准化融合特征、再到下游任务验证的管线。我们现在可以把“真实实飞数据”用于证明 Chronaris 管线能处理真实人机异构数据，把“公开
@@ -79,7 +82,7 @@ MulT 和 ContiFormer 保留为论文对照方向，不作为第一轮必须落�
 - scripts/prepare_stage_i_dataset.py
 - scripts/run_stage_i_baseline.py
 - scripts/run_stage_i_case_study.py
-- docs/planning/stage-i-data-plan-2026-04-28.md
+- docs/planning/archive/stage_i/stage-i-data-plan-2026-04-29.md
 
 进入阶段 I 前你真正需要准备的东西
 你不需要再等鼎新或专家。你需要准备的是：

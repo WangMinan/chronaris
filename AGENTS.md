@@ -80,9 +80,11 @@
 - 当前应优先引用的事实源：
   - Stage H 收口：`docs/reports/stage_h/stage-h-closure-2026-04-27.md`
   - Stage I 公开数据收口：`docs/reports/stage_i/stage-i-closure-2026-04-30.md`
-  - Stage I 私有主线计划：`docs/planning/stage-i-private-benchmark-plan-2026-05-02.md`
-  - Stage I 主线迁移计划：`docs/planning/stage-i-mainline-transition-2026-05-04.md`
-  - Stage I public opt 增强计划：`docs/planning/stage-i-public-opt-win-plan-2026-05-06.md`
+  - Stage I 当前阶段路线图：`docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md`
+  - Stage I 当前详细编码计划：`docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`
+  - Stage I 当前 gap 评估：`docs/planning/thesis-coding-gap.md`
+  - Stage I 主线迁移历史快照：`docs/planning/stage-i-mainline-transition-2026-05-04.md`
+  - Stage I 历史计划归档索引：`docs/planning/archive/stage_i/README.md`
   - Stage I 论文证据 support：`docs/reports/stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
   - Stage I public opt NASA enhanced round 1：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
   - Stage I public opt UAB torch：`docs/reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
@@ -107,6 +109,9 @@
   - `UAB robust-prior adapter` 已用 fold-safe `target_prior_median` 将 `heat_the_chair` 推到 `RMSE=1.4331 / MAE=1.0740`
   - 当前 unified public mainline 状态为 `public opt closed`
   - `chronaris_public_fusion` 当前 `NASA combined macro-F1` confirm 为 `0.3348`，未达到 `0.40` promote 门槛
+  - `Stage I thesis mainline Phase A` 首轮代码收敛已完成：公开 sequence / deep wrapper / report contract 已统一写成 `context proxy / public adapter evidence`
+  - `Stage I thesis mainline Phase A` 已把私有 `T1/T2/T3` 的 manifest / summary / report contract 统一写成 `private proxy benchmark / proxy task`
+  - `Stage I thesis mainline Phase B` 首轮代码收敛已完成：`stage_i_backbone_train`、`checkpoint_path + inference_only` 的 `Stage H export`、以及 `export_mode / backbone_lineage` manifest contract 已落地
   - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view
 
 ## 5. 目录与边界
@@ -228,15 +233,16 @@
 - 阶段 G 已收口，默认冻结 G(min) 基线（仅修复缺陷，不提前扩展完整因果融合）
 - 阶段 H 已收口，默认冻结 Stage H 导出 contract（仅修复缺陷，不再扩展范围）
 - 阶段 I 当前默认优先：
-  - `chronaris_opt` 作为当前鼎新私有任务验证主线，默认优先维护其文档、测试与后续迁移
-  - 保持 `load_stage_h_feature_run()` 与 `Stage H all-window` contract 稳定：它们是 `chronaris_opt` 的输入依赖
-  - 保持 `E/F/G(min)/H` 导出路径稳定：它们是 `chronaris_opt` 的历史基线与输入依赖，不直接废弃
-  - 继续把 UAB/NASA `Phase 0/1/2/3` 视为公开 benchmark 历史事实，不与私有 proxy 最优性混写
+  - 当前最高优先级是按 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md` 收敛论文主线，而不是继续扩大旧 benchmark
+  - `chronaris_opt` 仍是当前鼎新私有任务验证主线，但应明确把它写成 `private proxy evidence`
+  - 保持 `load_stage_h_feature_run()` 与 `Stage H all-window` contract 稳定：它们仍是现有私有资产和历史基线的输入依赖
+  - 保持 `E/F/G(min)/H` 导出路径稳定：它们是现有主线重构前的历史基线与输入依赖，不直接废弃
+  - 继续把 UAB/NASA `Phase 0/1/2/3` 与 `public opt closed` 视为公开支撑证据，不把它们写成 thesis 双流主线 fully closed
+  - 明确公开第二模态当前是 `context proxy / adapter evidence`，不是论文里严格意义上的真实航电流
+  - 明确 `T1/T2/T3` 是 `proxy benchmark`，后续要和 `risk / workload / replay` 一类 thesis task builder 拆开
   - 明确 `20251110...` vehicle-only partial bundle 只用于单流预训练/补充诊断，不作为双流融合 view
-  - 当前公开主线事实已冻结为 `public opt closed`；引用时优先看 `stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
-  - UAB `heat_the_chair` 的 promote 来源是 `uab_public_adapter / target_prior_median`，不能包装成双流连续对齐或因果融合模块本体的直接胜利
-  - 不再继续扩大 CPU-heavy `sklearn` 或 torch UAB 候选搜索；若复现 robust-prior adapter，必须保留 fold-safe LOSO 标签边界
-  - 如果继续扩展公开主线，优先复用 `run_stage_i_public_fusion_screen.py --train-sampling-policy balanced_class --device cuda` 做 `NASA-first` confirm；若 `combined macro-F1 <= 0.40`，则停止该支线
+  - 当前公开主线事实已冻结为 `public opt closed`；UAB `heat_the_chair` 的 promote 来源是 `uab_public_adapter / target_prior_median`，不能包装成双流连续对齐或因果融合模块本体的直接胜利
+  - 不再继续扩大 CPU-heavy `sklearn` 或 torch UAB 候选搜索；若后续继续扩公开支线，仅保留 `NASA-first public_fusion confirm` 的有限探索，`combined macro-F1 <= 0.40` 即停止
 - 切到远程环境前，先同步代码、测试和文档
 - 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
 

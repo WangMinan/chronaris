@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Mapping
 
@@ -40,6 +40,8 @@ class StageHFeatureView:
     attention_weights: np.ndarray
     vehicle_event_scores: np.ndarray
     view_manifest: Mapping[str, object]
+    export_mode: str = "per_view_preview_training"
+    backbone_lineage: Mapping[str, object] = field(default_factory=dict)
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,6 +51,8 @@ class StageHFeatureRun:
     run_manifest_path: str
     run_manifest: Mapping[str, object]
     views: tuple[StageHFeatureView, ...]
+    export_mode: str = "per_view_preview_training"
+    backbone_lineage: Mapping[str, object] = field(default_factory=dict)
 
     @property
     def generated_view_count(self) -> int:
@@ -89,6 +93,8 @@ def load_stage_h_feature_run(run_manifest_path: str | Path) -> StageHFeatureRun:
         run_manifest_path=str(manifest_path),
         run_manifest=run_manifest,
         views=tuple(views),
+        export_mode=str(run_manifest.get("export_mode") or "per_view_preview_training"),
+        backbone_lineage=dict(run_manifest.get("backbone_lineage", {})),
     )
 
 
@@ -146,6 +152,8 @@ def _load_view(
         attention_weights=bundle["attention_weights"],
         vehicle_event_scores=bundle["vehicle_event_scores"],
         view_manifest=view_manifest,
+        export_mode=str(view_manifest.get("export_mode") or "per_view_preview_training"),
+        backbone_lineage=dict(view_manifest.get("backbone_lineage", {})),
     )
 
 

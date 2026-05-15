@@ -2,6 +2,9 @@
 
 更新时间：2026-05-06
 
+> 说明：本文件已归档为 `public opt` 增强阶段快照。  
+> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+
 ## 1. 目标
 
 本计划只回答一件事：

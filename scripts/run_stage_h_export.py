@@ -162,6 +162,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--disable-physics-constraints", action="store_true")
     parser.add_argument("--disable-causal-fusion", action="store_true")
     parser.add_argument("--disable-partial-data", action="store_true")
+    parser.add_argument("--checkpoint-path")
+    parser.add_argument("--backbone-run-id")
+    parser.add_argument("--inference-only", action="store_true")
+    parser.add_argument(
+        "--per-view-preview-training",
+        action="store_true",
+        help="force the historical per-view training export path even when a checkpoint is provided",
+    )
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument(
         "--partial-data-path",
@@ -206,18 +214,32 @@ def _resolve_intermediate_sample_limit(args: argparse.Namespace) -> int | None:
 
 def _resolve_preview_config(args: argparse.Namespace):
     base = StageHExportConfig(run_id="preview-config-probe", sortie_ids=("probe",)).preview_config
+    inference_only = _resolve_inference_only(args)
     intermediate_partition = (
         "all"
         if args.all_window_export
-        else (args.intermediate_partition or base.intermediate_partition)
+        else (
+            args.intermediate_partition
+            or ("all" if inference_only else base.intermediate_partition)
+        )
     )
     return replace(
         base,
         device=args.device,
         intermediate_partition=intermediate_partition,
-        intermediate_sample_limit=_resolve_intermediate_sample_limit(args),
+        intermediate_sample_limit=(
+            None if inference_only and args.intermediate_sample_limit is None else _resolve_intermediate_sample_limit(args)
+        ),
         enable_physics_constraints=not args.disable_physics_constraints,
     )
+
+
+def _resolve_inference_only(args: argparse.Namespace) -> bool:
+    if args.per_view_preview_training:
+        return False
+    if args.inference_only:
+        return True
+    return args.export_profile != "preview" and bool(args.checkpoint_path)
 
 
 def main() -> int:
@@ -256,6 +278,9 @@ def main() -> int:
             if args.disable_partial_data
             else load_partial_data_entries(REPO_ROOT / args.partial_data_path)
         ),
+        checkpoint_path=args.checkpoint_path,
+        backbone_run_id=args.backbone_run_id,
+        inference_only=_resolve_inference_only(args),
     )
     view_runner = AlignmentStageHViewRunner(
         config=config,

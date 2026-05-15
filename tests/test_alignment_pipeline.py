@@ -5,28 +5,36 @@ from __future__ import annotations
 # ---- merged from test_alignment_preview_pipeline.py ----
 import os
 import sys
+import tempfile
 from pathlib import Path
 import unittest
+
+SRC = Path(__file__).resolve().parents[1] / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+import torch
+
+from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
+from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig, ReferenceGridConfig
+from chronaris.pipelines import (
+    StageIBackboneTrainConfig,
+    load_alignment_preview_checkpoint,
+    run_stage_i_backbone_train,
+    save_alignment_preview_checkpoint,
+)
+from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
+from chronaris.schema.models import StreamKind
 
 ENABLE_TORCH_RUNTIME_TESTS = os.environ.get("CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS") == "1"
 
 if ENABLE_TORCH_RUNTIME_TESTS:
-    SRC = Path(__file__).resolve().parents[1] / "src"
-    if str(SRC) not in sys.path:
-        sys.path.insert(0, str(SRC))
-
-    import torch
-
-    from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-    from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig, ReferenceGridConfig
     from chronaris.models.fusion import (
         CausalFusionTensorInput,
         CausalMaskedCrossModalFusion,
         build_causal_attention_mask,
     )
     from chronaris.pipelines.causal_fusion import StageGCausalFusionConfig, run_stage_g_causal_fusion
-    from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
-    from chronaris.schema.models import StreamKind
 
     def _stream(
         kind: StreamKind,
@@ -471,3 +479,157 @@ else:
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")
         def test_torch_runtime_disabled(self) -> None:
             pass
+
+
+def _light_stream(
+    kind: StreamKind,
+    *,
+    feature_names: tuple[str, ...],
+    offsets_ms: tuple[int, ...],
+    values: tuple[tuple[float, ...], ...],
+) -> NumericStreamMatrix:
+    return NumericStreamMatrix(
+        stream_kind=kind,
+        point_count=len(offsets_ms),
+        feature_names=feature_names,
+        point_offsets_ms=offsets_ms,
+        point_measurements=tuple("measurement" for _ in offsets_ms),
+        values=values,
+        dropped_fields=(),
+    )
+
+
+def _light_sample(index: int) -> E0ExperimentSample:
+    base = float(index + 1)
+    return E0ExperimentSample(
+        sample_id=f"light-sample-{index:03d}",
+        sortie_id="sortie-001",
+        start_offset_ms=index * 5000,
+        end_offset_ms=(index + 1) * 5000,
+        physiology=_light_stream(
+            StreamKind.PHYSIOLOGY,
+            feature_names=("eeg.af3", "eeg.af4"),
+            offsets_ms=(0, 1000, 3000),
+            values=(
+                (base, base + 0.5),
+                (base + 1.0, base + 1.5),
+                (base + 2.0, base + 2.5),
+            ),
+        ),
+        vehicle=_light_stream(
+            StreamKind.VEHICLE,
+            feature_names=("BUS.code1002", "BUS.code1003"),
+            offsets_ms=(0, 2000, 4000),
+            values=(
+                (base + 10.0, base + 20.0),
+                (base + 11.0, base + 21.0),
+                (base + 12.0, base + 22.0),
+            ),
+        ),
+    )
+
+
+class AlignmentPreviewCheckpointTest(unittest.TestCase):
+    def test_alignment_preview_checkpoint_supports_inference_only_export(self) -> None:
+        samples = tuple(_light_sample(index) for index in range(10))
+        train_config = AlignmentPreviewConfig(
+            prototype_config=AlignmentPrototypeConfig(
+                hidden_dim=8,
+                embedding_dim=6,
+                encoder_hidden_dim=10,
+                decoder_hidden_dim=10,
+                dynamics_hidden_dim=12,
+                projection_dim=4,
+                ode_method="euler",
+            ),
+            split_config=ChronologicalSplitConfig(),
+            reference_grid_config=ReferenceGridConfig(point_count=4),
+            epoch_count=1,
+            batch_size=2,
+            learning_rate=1e-3,
+            device="cpu",
+            export_intermediate_states=False,
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            checkpoint_path = Path(temp_dir) / "alignment_backbone_checkpoint.pt"
+            train_result = AlignmentPreviewPipeline(config=train_config).run(samples)
+            checkpoint_metadata = save_alignment_preview_checkpoint(
+                checkpoint_path,
+                run_id="alignment-backbone-smoke",
+                model=train_result.model,
+                config=train_config,
+                samples=samples,
+                input_normalization_stats=train_result.input_normalization_stats,
+                train_history=train_result.train_history,
+                validation_history=train_result.validation_history,
+                test_metrics=train_result.test_metrics,
+            )
+            loaded = load_alignment_preview_checkpoint(checkpoint_path)
+            self.assertEqual(loaded["backbone_run_id"], "alignment-backbone-smoke")
+
+            inference_result = AlignmentPreviewPipeline(
+                config=AlignmentPreviewConfig(
+                    prototype_config=train_config.prototype_config,
+                    split_config=train_config.split_config,
+                    reference_grid_config=train_config.reference_grid_config,
+                    epoch_count=1,
+                    batch_size=2,
+                    learning_rate=1e-3,
+                    device="cpu",
+                    checkpoint_path=str(checkpoint_path),
+                    inference_only=True,
+                    intermediate_partition="all",
+                    intermediate_sample_limit=None,
+                )
+            ).run(samples)
+
+            self.assertEqual(
+                inference_result.checkpoint_metadata["backbone_run_id"],
+                checkpoint_metadata["backbone_run_id"],
+            )
+            self.assertEqual(len(inference_result.train_history), 0)
+            self.assertEqual(len(inference_result.validation_history), 0)
+            self.assertIsNotNone(inference_result.intermediate_export)
+            assert inference_result.intermediate_export is not None
+            self.assertEqual(inference_result.intermediate_export.partition, "all")
+            self.assertEqual(inference_result.intermediate_export.sample_count, 10)
+
+    def test_stage_i_backbone_train_writes_checkpoint_and_summary(self) -> None:
+        samples = tuple(_light_sample(index) for index in range(10))
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = StageIBackboneTrainConfig(
+                run_id="stage-i-backbone-test",
+                output_root=temp_dir,
+                preview_config=AlignmentPreviewConfig(
+                    prototype_config=AlignmentPrototypeConfig(
+                        hidden_dim=8,
+                        embedding_dim=6,
+                        encoder_hidden_dim=10,
+                        decoder_hidden_dim=10,
+                        dynamics_hidden_dim=12,
+                        projection_dim=4,
+                        ode_method="euler",
+                    ),
+                    split_config=ChronologicalSplitConfig(),
+                    reference_grid_config=ReferenceGridConfig(point_count=4),
+                    epoch_count=1,
+                    batch_size=2,
+                    learning_rate=1e-3,
+                    device="cpu",
+                    export_intermediate_states=False,
+                ),
+            )
+
+            result = run_stage_i_backbone_train(
+                config,
+                samples,
+                source_summary={"sample_count": len(samples)},
+            )
+
+            self.assertTrue(Path(result.checkpoint_path).exists())
+            self.assertTrue(Path(result.summary_path).exists())
+            self.assertEqual(
+                result.summary["checkpoint_metadata"]["backbone_run_id"],
+                "stage-i-backbone-test",
+            )

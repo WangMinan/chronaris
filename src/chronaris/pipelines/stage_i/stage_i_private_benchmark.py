@@ -162,6 +162,10 @@ def run_stage_i_private_benchmark(
         "artifact_root": str(artifact_root),
         "task_manifest_path": str(task_manifest_path),
         "task_summary_path": str(task_summary_path),
+        "benchmark_role": task_payload["summary"]["benchmark_role"],
+        "task_role": task_payload["summary"]["task_role"],
+        "thesis_task_boundary": task_payload["summary"]["thesis_task_boundary"],
+        "proxy_task_definitions": task_payload["summary"]["proxy_task_definitions"],
         "enable_optimized_chronaris": config.enable_optimized_chronaris,
         "target_variant_name": resolved_target_variant_name,
         "private_optimality_supported": conclusion["private_optimality_supported"],
@@ -263,9 +267,12 @@ def _render_alignment_report(summary: Mapping[str, object]) -> str:
     lines = [
         f"# Private Alignment Support - {summary['run_id']}",
         "",
+        f"- benchmark_role: `{summary['benchmark_role']}`",
+        f"- task_role: `{summary['task_role']}`",
+        "- `T1/T2/T3` 仅作为 private proxy tasks，用于验证表示学习与融合增益，不等价于论文风险/负荷/复盘人工真值任务。",
         f"- alignment gain supported: `{summary['conclusion']['alignment_gain_supported']}`",
         "",
-        "## T1",
+        "## T1 Proxy Task",
         "",
         "| variant | macro-F1 | balanced accuracy |",
         "| --- | ---: | ---: |",
@@ -280,7 +287,7 @@ def _render_alignment_report(summary: Mapping[str, object]) -> str:
     lines.extend(
         [
             "",
-            "## T2",
+            "## T2 Proxy Task",
             "",
             "| variant | RMSE | MAE | Spearman |",
             "| --- | ---: | ---: | ---: |",
@@ -304,11 +311,13 @@ def _render_causal_report(summary: Mapping[str, object]) -> str:
     lines = [
         f"# Private Causal Fusion Support - {summary['run_id']}",
         "",
+        f"- benchmark_role: `{summary['benchmark_role']}`",
+        "- `T1/T2/T3` 仍按 private proxy tasks 解释，不直接等价于论文任务本体。",
         f"- causal gain supported: `{summary['conclusion']['causal_gain_supported']}`",
         f"- diagnostic supported: `{summary['conclusion']['diagnostic_supported']}`",
         f"- target variant: `{target_variant_name}`",
         "",
-        "## T1",
+        "## T1 Proxy Task",
         "",
         "| variant | macro-F1 | balanced accuracy |",
         "| --- | ---: | ---: |",
@@ -322,7 +331,7 @@ def _render_causal_report(summary: Mapping[str, object]) -> str:
     lines.extend(
         [
             "",
-            "## T2",
+            "## T2 Proxy Task",
             "",
             "| variant | RMSE | MAE | Spearman |",
             "| --- | ---: | ---: | ---: |",
@@ -358,6 +367,8 @@ def _render_optimization_report(summary: Mapping[str, object]) -> str:
     lines = [
         f"# Private Optimization Summary - {summary['run_id']}",
         "",
+        f"- benchmark_role: `{summary['benchmark_role']}`",
+        "- `T1/T2/T3` 的最优性只说明 private proxy benchmark 收敛，不代表论文真值任务已经闭环。",
         f"- target variant: `{target_variant_name}`",
         f"- no-mask variant: `{no_mask_name}`",
         f"- private optimality supported: `{summary['private_optimality_supported']}`",
@@ -457,6 +468,8 @@ def _render_optimality_report(summary: Mapping[str, object]) -> str:
     lines = [
         f"# Private Optimality Summary - {summary['run_id']}",
         "",
+        f"- benchmark_role: `{summary['benchmark_role']}`",
+        "- `T1/T2/T3` 只按 private proxy tasks 解读，不把它们写成人工真值 thesis tasks。",
         f"- private optimality supported: `{summary['conclusion']['private_optimality_supported']}`",
         f"- best T1 variant: `{t1['best_variant']['name']}`",
         f"- best T2 variant: `{t2['best_variant']['name']}`",
