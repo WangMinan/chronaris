@@ -1,8 +1,8 @@
 # Stage I Deep Baseline - uab_workload_dataset - contiformer
 
 - profile: `window_v2`
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer`
-- prepared root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer`
+- prepared root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
 
 ## Objective
 

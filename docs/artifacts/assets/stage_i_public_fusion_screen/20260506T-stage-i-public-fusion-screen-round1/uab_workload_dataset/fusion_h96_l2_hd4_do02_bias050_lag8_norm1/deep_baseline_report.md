@@ -1,8 +1,8 @@
 # Stage I Deep Baseline - uab_workload_dataset - chronaris_public_fusion
 
 - profile: `window_v2`
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round1/uab_workload_dataset/fusion_h96_l2_hd4_do02_bias050_lag8_norm1`
-- prepared root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round1/uab_workload_dataset/fusion_h96_l2_hd4_do02_bias050_lag8_norm1`
+- prepared root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
 
 ## Objective
 

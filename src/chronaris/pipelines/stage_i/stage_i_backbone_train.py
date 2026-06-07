@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -172,6 +172,61 @@ def collect_stage_i_backbone_samples(
     influx_settings: object | None = None,
     runner: object | None = None,
 ) -> tuple[tuple[E0ExperimentSample, ...], dict[str, object]]:
+    summary = _collect_stage_i_samples(
+        profiles=profiles,
+        window_config=window_config,
+        physiology_point_limit_per_measurement=physiology_point_limit_per_measurement,
+        vehicle_point_limit_per_measurement=vehicle_point_limit_per_measurement,
+        export_scope_overrides_utc=export_scope_overrides_utc,
+        influx_settings=influx_settings,
+        runner=runner,
+        prefix_view_id_into_sample_id=False,
+    )
+    return summary.samples, summary.source_summary
+
+
+@dataclass(frozen=True, slots=True)
+class _CollectedStageISamples:
+    samples: tuple[E0ExperimentSample, ...]
+    source_summary: dict[str, object]
+
+
+def collect_stage_i_multitask_samples(
+    *,
+    profiles: Sequence[StageHSortieProfile],
+    window_config: WindowConfig,
+    physiology_point_limit_per_measurement: int | None = None,
+    vehicle_point_limit_per_measurement: int | None = None,
+    export_scope_overrides_utc: Mapping[str, tuple[object, object]] | None = None,
+    influx_settings: object | None = None,
+    runner: object | None = None,
+) -> tuple[tuple[E0ExperimentSample, ...], dict[str, object]]:
+    """Collect real E0 samples with view-prefixed sample ids for multitask training."""
+
+    summary = _collect_stage_i_samples(
+        profiles=profiles,
+        window_config=window_config,
+        physiology_point_limit_per_measurement=physiology_point_limit_per_measurement,
+        vehicle_point_limit_per_measurement=vehicle_point_limit_per_measurement,
+        export_scope_overrides_utc=export_scope_overrides_utc,
+        influx_settings=influx_settings,
+        runner=runner,
+        prefix_view_id_into_sample_id=True,
+    )
+    return summary.samples, summary.source_summary
+
+
+def _collect_stage_i_samples(
+    *,
+    profiles: Sequence[StageHSortieProfile],
+    window_config: WindowConfig,
+    physiology_point_limit_per_measurement: int | None,
+    vehicle_point_limit_per_measurement: int | None,
+    export_scope_overrides_utc: Mapping[str, tuple[object, object]] | None,
+    influx_settings: object | None,
+    runner: object | None,
+    prefix_view_id_into_sample_id: bool,
+) -> _CollectedStageISamples:
     if (influx_settings is None) == (runner is None):
         raise ValueError("Provide exactly one of influx_settings or runner.")
 
@@ -223,6 +278,11 @@ def collect_stage_i_backbone_samples(
                     vehicle_measurements=profile.vehicle_measurements,
                 ),
             )
+            if prefix_view_id_into_sample_id:
+                view_samples = tuple(
+                    replace(sample, sample_id=f"{view.view_id}::{sample.sample_id}")
+                    for sample in view_samples
+                )
             samples.extend(view_samples)
             view_summaries.append(
                 {
@@ -230,6 +290,7 @@ def collect_stage_i_backbone_samples(
                     "view_id": view.view_id,
                     "pilot_id": view.pilot_id,
                     "sample_count": len(view_samples),
+                    "sample_id_mode": "view_prefixed" if prefix_view_id_into_sample_id else "raw_window_sample_id",
                     "export_start_utc": export_start_utc.isoformat(),
                     "export_stop_utc": export_stop_utc.isoformat(),
                 }
@@ -238,6 +299,10 @@ def collect_stage_i_backbone_samples(
         "sortie_count": len({profile.sortie_id for profile in profiles}),
         "view_count": len(view_summaries),
         "sample_count": len(samples),
+        "sample_id_mode": "view_prefixed" if prefix_view_id_into_sample_id else "raw_window_sample_id",
         "view_summaries": view_summaries,
     }
-    return tuple(samples), source_summary
+    return _CollectedStageISamples(
+        samples=tuple(samples),
+        source_summary=source_summary,
+    )

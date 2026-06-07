@@ -2,10 +2,10 @@
 
 更新时间：2026-05-01
 
-- 机器资产根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison`
-- UAB sequence 资产：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
-- NASA sequence 资产：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
-- unified comparison probe：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all`
+- 机器资产根目录：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison`
+- UAB sequence 资产：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
+- NASA sequence 资产：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
+- unified comparison probe：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all`
 
 ## 1. 范围
 

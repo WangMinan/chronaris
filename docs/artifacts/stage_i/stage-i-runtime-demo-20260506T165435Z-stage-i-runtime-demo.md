@@ -2,11 +2,11 @@
 
 - generated_at_utc: `2026-05-07T02:39:29.890909Z`
 - source_type: `optimized_candidate_package`
-- source_path: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+- source_path: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 
 ## Optimized Package Overview
 
-- package_path: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+- package_path: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 - target_variant_name: `chronaris_opt`
 - source_run_id: `20260504T120000Z-stage-i-private-opt-package`
 - record_sample_count: `111`

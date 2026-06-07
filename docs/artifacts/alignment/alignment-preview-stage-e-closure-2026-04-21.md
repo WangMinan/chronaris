@@ -30,18 +30,18 @@
 
 ### Primary `none` - Total Loss
 
-![Primary Total Loss](assets/alignment-preview-stage-e-closure-2026-04-21-none/train_validation_total_loss.png)
+![Primary Total Loss](../assets/alignment-preview-stage-e-closure-2026-04-21-none/train_validation_total_loss.png)
 
 ### Secondary `zscore_train` - Total Loss
 
-![Secondary Total Loss](assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/train_validation_total_loss.png)
+![Secondary Total Loss](../assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/train_validation_total_loss.png)
 
 ## Diagnostic Artifacts
 
-- primary summary json: `/home/wangminan/projects/chronaris/docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-none/projection_diagnostics_summary.json`
-- secondary summary json: `/home/wangminan/projects/chronaris/docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/projection_diagnostics_summary.json`
+- primary summary json: `/home/wangminan/projects/chronaris/docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-none/projection_diagnostics_summary.json`
+- secondary summary json: `/home/wangminan/projects/chronaris/docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/projection_diagnostics_summary.json`
 
 ## Checkpoints
 
-- primary checkpoint: `/home/wangminan/projects/chronaris/docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-none/alignment_model_checkpoint.pt`
-- secondary checkpoint: `/home/wangminan/projects/chronaris/docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/alignment_model_checkpoint.pt`
+- primary checkpoint: `/home/wangminan/projects/chronaris/docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-none/alignment_model_checkpoint.pt`
+- secondary checkpoint: `/home/wangminan/projects/chronaris/docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/alignment_model_checkpoint.pt`

@@ -1,9 +1,9 @@
-"""Loss functions for Stage E baseline and Stage F(min) physics constraints."""
+"""Loss functions for Stage E/F backbones and Stage I multitask training."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping, Sequence
 
 import torch
 from torch.nn import functional as F
@@ -19,9 +19,11 @@ from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAli
 
 if TYPE_CHECKING:
     from chronaris.models.alignment.prototype import DualStreamPrototypeOutput, StreamPrototypeOutput
+    from chronaris.models.alignment.task_heads import StageITaskHeadOutput
 else:
     DualStreamPrototypeOutput = Any
     StreamPrototypeOutput = Any
+    StageITaskHeadOutput = Any
 
 
 _VEHICLE_SPEED_TOKENS = (
@@ -80,7 +82,19 @@ class StageEObjectiveBreakdown:
     physiology_physics: torch.Tensor
     physics_total: torch.Tensor
     physics_components: Mapping[str, torch.Tensor]
+    causal_total: torch.Tensor
+    causal_components: Mapping[str, torch.Tensor]
+    task_total: torch.Tensor
+    task_components: Mapping[str, torch.Tensor]
     total: torch.Tensor
+
+
+@dataclass(frozen=True, slots=True)
+class TaskLossBreakdown:
+    """Task supervision losses attached to the shared Stage I backbone."""
+
+    total: torch.Tensor
+    task_components: Mapping[str, torch.Tensor]
 
 
 def masked_mean_squared_error(
@@ -420,6 +434,77 @@ def dual_stream_alignment_loss(
     )
 
 
+def build_task_loss_breakdown(
+    task_outputs: Sequence[StageITaskHeadOutput],
+    *,
+    task_weights: Mapping[str, float] | None = None,
+) -> TaskLossBreakdown:
+    """Aggregate classification/regression/retrieval supervision into one scalar."""
+
+    if task_weights is None:
+        task_weights = {}
+    if not task_outputs:
+        zero = torch.zeros((), dtype=torch.float32)
+        return TaskLossBreakdown(total=zero, task_components={})
+
+    component_losses: dict[str, torch.Tensor] = {}
+    total_loss: torch.Tensor | None = None
+    reference_tensor = task_outputs[0].logits
+    for task_output in task_outputs:
+        weight = float(task_weights.get(task_output.task_name, 1.0))
+        if weight < 0:
+            raise ValueError("task weights must be non-negative.")
+        component = _build_one_task_loss(task_output)
+        weighted_component = component * weight
+        component_losses[task_output.task_name] = weighted_component
+        total_loss = weighted_component if total_loss is None else total_loss + weighted_component
+
+    if total_loss is None:
+        total_loss = reference_tensor.new_zeros(())
+    return TaskLossBreakdown(
+        total=total_loss,
+        task_components=component_losses,
+    )
+
+
+def _build_one_task_loss(task_output: StageITaskHeadOutput) -> torch.Tensor:
+    if task_output.task_type == "classification":
+        if task_output.targets is None:
+            raise ValueError(f"{task_output.task_name} classification head requires targets.")
+        targets = task_output.targets.to(dtype=torch.long, device=task_output.logits.device).reshape(-1)
+        return F.cross_entropy(task_output.logits, targets)
+
+    if task_output.task_type == "regression":
+        if task_output.targets is None:
+            raise ValueError(f"{task_output.task_name} regression head requires targets.")
+        predictions = task_output.logits.reshape(-1)
+        targets = task_output.targets.to(dtype=predictions.dtype, device=predictions.device).reshape(-1)
+        return F.mse_loss(predictions, targets)
+
+    if task_output.task_type == "retrieval":
+        if not task_output.paired_sample_ids:
+            raise ValueError(f"{task_output.task_name} retrieval head requires paired_sample_ids.")
+        similarity = torch.matmul(task_output.logits, task_output.logits.transpose(-1, -2))
+        sample_index = {sample_id: index for index, sample_id in enumerate(task_output.sample_ids)}
+        valid_rows: list[int] = []
+        target_indices: list[int] = []
+        for row_index, paired_sample_id in enumerate(task_output.paired_sample_ids):
+            if not paired_sample_id:
+                continue
+            positive_index = sample_index.get(str(paired_sample_id))
+            if positive_index is None or positive_index == row_index:
+                continue
+            valid_rows.append(row_index)
+            target_indices.append(positive_index)
+        if not valid_rows:
+            return similarity.new_zeros(())
+        row_index_tensor = torch.as_tensor(valid_rows, dtype=torch.long, device=similarity.device)
+        target_tensor = torch.as_tensor(target_indices, dtype=torch.long, device=similarity.device)
+        return F.cross_entropy(similarity.index_select(0, row_index_tensor), target_tensor)
+
+    raise ValueError(f"Unsupported task_type: {task_output.task_type}")
+
+
 def build_stage_e_objective(
     output: DualStreamPrototypeOutput,
     batch: TorchAlignmentBatch,
@@ -439,6 +524,11 @@ def build_stage_e_objective(
     physics_context: StageFPhysicsContext | None = None,
     physiology_envelope_lower: torch.Tensor | None = None,
     physiology_envelope_upper: torch.Tensor | None = None,
+    causal_regularization: torch.Tensor | None = None,
+    causal_weight: float = 0.0,
+    causal_components: Mapping[str, torch.Tensor] | None = None,
+    task_loss_breakdown: TaskLossBreakdown | None = None,
+    task_weight: float = 1.0,
 ) -> StageEObjectiveBreakdown:
     """Combine reconstruction/alignment losses with optional Stage F(min) constraints."""
 
@@ -454,6 +544,8 @@ def build_stage_e_objective(
         )
     if physics_huber_delta <= 0:
         raise ValueError("physics_huber_delta must be positive.")
+    if causal_weight < 0 or task_weight < 0:
+        raise ValueError("causal/task weights must be non-negative.")
 
     reconstruction = dual_stream_reconstruction_loss(
         output,
@@ -475,6 +567,16 @@ def build_stage_e_objective(
         )
     else:
         physics = PhysicsLossBreakdown.zeros(reconstruction.total)
+    causal_total = (
+        causal_regularization
+        if causal_regularization is not None
+        else reconstruction.total.new_zeros(())
+    )
+    task_total = (
+        task_loss_breakdown.total
+        if task_loss_breakdown is not None
+        else reconstruction.total.new_zeros(())
+    )
 
     total = (
         (physiology_weight * reconstruction.physiology)
@@ -482,6 +584,8 @@ def build_stage_e_objective(
         + (alignment_weight * alignment.alignment)
         + (vehicle_physics_weight * physics.vehicle)
         + (physiology_physics_weight * physics.physiology)
+        + (causal_weight * causal_total)
+        + (task_weight * task_total)
     )
     return StageEObjectiveBreakdown(
         physiology_reconstruction=reconstruction.physiology,
@@ -492,5 +596,9 @@ def build_stage_e_objective(
         physiology_physics=physics.physiology,
         physics_total=physics.total,
         physics_components=physics.component_tensors(),
+        causal_total=causal_total,
+        causal_components=dict(causal_components or {}),
+        task_total=task_total,
+        task_components=dict(task_loss_breakdown.task_components) if task_loss_breakdown is not None else {},
         total=total,
     )
