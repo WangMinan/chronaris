@@ -8,10 +8,13 @@ from typing import Literal
 import torch
 
 from chronaris.models.fusion import (
+    CausalEventFusion,
+    CausalEventFusionConfig,
     CausalFusionConfig,
     CausalFusionTensorInput,
     CausalMaskedCrossModalFusion,
     attention_entropy,
+    semantic_query_entropy,
 )
 from chronaris.pipelines.alignment_preview import AlignmentPreviewIntermediateExport
 from chronaris.pipelines.torch_runtime import (
@@ -37,6 +40,8 @@ class StageGCausalFusionConfig:
     lag_window_points: int | None = None
     fusion_output_mode: FusionOutputMode = "concat"
     residual_mode: FusionResidualMode = "none"
+    semantic_event_top_k: int = 4
+    semantic_event_score_quantile: float = 0.75
     device: str = "auto"
 
     def __post_init__(self) -> None:
@@ -46,6 +51,10 @@ class StageGCausalFusionConfig:
             raise ValueError("fusion_output_mode must be one of: concat, pooled_with_residual.")
         if self.residual_mode not in {"none", "raw_window_stats"}:
             raise ValueError("residual_mode must be one of: none, raw_window_stats.")
+        if self.semantic_event_top_k <= 0:
+            raise ValueError("semantic_event_top_k must be positive.")
+        if not 0.0 < self.semantic_event_score_quantile <= 1.0:
+            raise ValueError("semantic_event_score_quantile must be in (0, 1].")
         if self.device not in TORCH_DEVICE_CHOICES:
             raise ValueError(f"device must be one of: {', '.join(TORCH_DEVICE_CHOICES)}.")
         CausalFusionConfig(
@@ -103,6 +112,7 @@ class StageGCausalFusionResult:
     mean_top_event_score: float
     mean_top_contribution_score: float
     samples: tuple[StageGCausalFusionSample, ...]
+    semantic_event_summary: dict[str, object] | None = None
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -112,12 +122,14 @@ class StageGCausalFusionResult:
                 "event_bias_weight": self.config.event_bias_weight,
                 "causal_epsilon_s": self.config.causal_epsilon_s,
                 "normalize_states": self.config.normalize_states,
-            "use_causal_mask": self.config.use_causal_mask,
-            "lag_window_points": self.config.lag_window_points,
-            "fusion_output_mode": self.config.fusion_output_mode,
-            "residual_mode": self.config.residual_mode,
-            "device": self.config.device,
-        },
+                "use_causal_mask": self.config.use_causal_mask,
+                "lag_window_points": self.config.lag_window_points,
+                "fusion_output_mode": self.config.fusion_output_mode,
+                "residual_mode": self.config.residual_mode,
+                "semantic_event_top_k": self.config.semantic_event_top_k,
+                "semantic_event_score_quantile": self.config.semantic_event_score_quantile,
+                "device": self.config.device,
+            },
             "partition": self.partition,
             "sample_count": self.sample_count,
             "reference_point_count": self.reference_point_count,
@@ -128,6 +140,7 @@ class StageGCausalFusionResult:
             "mean_causal_option_count": self.mean_causal_option_count,
             "mean_top_event_score": self.mean_top_event_score,
             "mean_top_contribution_score": self.mean_top_contribution_score,
+            "semantic_event": self.semantic_event_summary,
             "samples": [
                 {
                     "sample_id": sample.sample_id,
@@ -252,6 +265,18 @@ def run_stage_g_causal_fusion(
     max_attention = output.attention_weights.max(dim=-1).values
     causal_option_count = output.causal_mask.sum(dim=-1).to(dtype=output.attention_weights.dtype)
     contribution_scores = output.attention_weights.sum(dim=1) * output.vehicle_event_scores
+    semantic_fusion = CausalEventFusion(
+        CausalEventFusionConfig(
+            attention_temperature=resolved_config.attention_temperature,
+            event_score_bias_weight=resolved_config.event_bias_weight,
+            event_top_k=resolved_config.semantic_event_top_k,
+            event_score_quantile=resolved_config.semantic_event_score_quantile,
+        )
+    ).to(device=resolved_device)
+    with torch.no_grad():
+        semantic_output = semantic_fusion(
+            inputs=_build_semantic_event_input(tensor_input=tensor_input, causal_output=output)
+        )
 
     samples: list[StageGCausalFusionSample] = []
     for sample_index, source_sample in enumerate(intermediate_export.samples):
@@ -291,6 +316,10 @@ def run_stage_g_causal_fusion(
         mean_top_event_score=_mean(tuple(sample.top_event_score for sample in samples)),
         mean_top_contribution_score=_mean(tuple(sample.top_contribution_score for sample in samples)),
         samples=tuple(samples),
+        semantic_event_summary=_build_semantic_event_summary(
+            sample_ids=tuple(sample.sample_id for sample in intermediate_export.samples),
+            semantic_output=semantic_output,
+        ),
     )
 
 
@@ -331,6 +360,28 @@ def render_stage_g_causal_fusion_markdown(result: StageGCausalFusionResult) -> s
                 f"| `{sample.sample_id}` | {sample.top_event_offset_s:.6f} | "
                 f"{sample.top_event_score:.6f} | {sample.top_contribution_offset_s:.6f} | "
                 f"{sample.top_contribution_score:.6f} |"
+            )
+        lines.append("")
+
+    semantic_event = result.semantic_event_summary or {}
+    if semantic_event:
+        lines.extend(
+            [
+                "### Semantic Event Fusion",
+                "",
+                f"- query names: `{semantic_event['query_names']}`",
+                f"- mean_event_token_count: `{semantic_event['mean_event_token_count']:.6f}`",
+                f"- mean_query_entropy: `{semantic_event['mean_query_entropy']:.6f}`",
+                f"- mean_top_event_attribution: `{semantic_event['mean_top_event_attribution']:.6f}`",
+                "",
+                "| sample | top query | top query event offset s | top event attribution |",
+                "| --- | --- | ---: | ---: |",
+            ]
+        )
+        for row in semantic_event.get("samples", []):
+            lines.append(
+                f"| `{row['sample_id']}` | `{row['top_query_name']}` | "
+                f"{row['top_query_event_offset_s']:.6f} | {row['top_event_attribution']:.6f} |"
             )
         lines.append("")
 
@@ -381,6 +432,64 @@ def _build_tensor_input(
             device=device,
         ),
     )
+
+
+def _build_semantic_event_input(
+    *,
+    tensor_input: CausalFusionTensorInput,
+    causal_output,
+):
+    from chronaris.models.fusion import SemanticEventTensorInput
+
+    return SemanticEventTensorInput(
+        physiology_states=tensor_input.physiology_states,
+        vehicle_states=tensor_input.vehicle_states,
+        attention_weights=causal_output.attention_weights,
+        vehicle_event_scores=causal_output.vehicle_event_scores,
+        vehicle_offsets_s=tensor_input.vehicle_offsets_s,
+    )
+
+
+def _build_semantic_event_summary(
+    *,
+    sample_ids: tuple[str, ...],
+    semantic_output,
+) -> dict[str, object]:
+    query_entropy = semantic_query_entropy(
+        semantic_output.query_to_event_attention,
+        semantic_output.event_token_mask,
+    )
+    token_count = semantic_output.event_token_mask.sum(dim=-1)
+    samples: list[dict[str, object]] = []
+    top_query_scores, top_event_scores = [], []
+    for sample_index, sample_id in enumerate(sample_ids):
+        query_index = int(torch.argmax(semantic_output.query_attribution_scores[sample_index]).detach().cpu())
+        event_index = int(torch.argmax(semantic_output.event_attribution_scores[sample_index]).detach().cpu())
+        top_query_scores.append(float(semantic_output.query_attribution_scores[sample_index, query_index].detach().cpu()))
+        top_event_scores.append(float(semantic_output.event_attribution_scores[sample_index, event_index].detach().cpu()))
+        samples.append(
+            {
+                "sample_id": sample_id,
+                "event_token_count": int(token_count[sample_index].detach().cpu()),
+                "top_query_name": semantic_output.query_names[query_index],
+                "top_query_score": float(semantic_output.query_attribution_scores[sample_index, query_index].detach().cpu()),
+                "top_query_event_offset_s": float(
+                    semantic_output.event_token_center_offsets_s[sample_index, event_index].detach().cpu()
+                ),
+                "top_event_attribution": float(
+                    semantic_output.event_attribution_scores[sample_index, event_index].detach().cpu()
+                ),
+            }
+        )
+    return {
+        "query_names": list(semantic_output.query_names),
+        "query_count": len(semantic_output.query_names),
+        "mean_event_token_count": float(token_count.to(dtype=torch.float32).mean().detach().cpu()),
+        "mean_query_entropy": float(query_entropy.mean().detach().cpu()),
+        "mean_top_query_score": _mean(tuple(top_query_scores)),
+        "mean_top_event_attribution": _mean(tuple(top_event_scores)),
+        "samples": samples,
+    }
 
 
 def _tensor_1d_to_tuple(values: torch.Tensor) -> tuple[float, ...]:

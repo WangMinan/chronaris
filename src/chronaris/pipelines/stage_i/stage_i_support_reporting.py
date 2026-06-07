@@ -66,6 +66,7 @@ def render_stage_i_alignment_support_report(summary: Mapping[str, object]) -> st
 def render_stage_i_causal_support_report(summary: Mapping[str, object]) -> str:
     causal = summary["causal_support"]
     g_min = causal["g_min"]
+    semantic_event = causal.get("semantic_event")
     strongest_ablation = causal["case_study"]["strongest_ablation"]
     private_no_mask = causal["private_no_mask"]
     lines = [
@@ -84,14 +85,40 @@ def render_stage_i_causal_support_report(summary: Mapping[str, object]) -> str:
         f"- mean_top_event_score: `{_fmt_float(g_min['mean_top_event_score'])}`",
         f"- mean_top_contribution_score: `{_fmt_float(g_min['mean_top_contribution_score'])}`",
         "",
-        "## Phase 2 Bundle-Only Ablations",
-        "",
-        f"- strongest ablation: `{strongest_ablation['name']}`",
-        f"- strongest delta_mean_top_contribution_score: `{_fmt_signed(strongest_ablation['delta_mean_top_contribution_score'])}`",
-        "",
-        "| ablation | mean_attention_entropy | mean_top_event_score | mean_top_contribution_score | delta_mean_attention_entropy | delta_mean_top_event_score | delta_mean_top_contribution_score |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
+    if semantic_event is not None:
+        lines.extend(
+            [
+                "## Semantic Event Fusion",
+                "",
+                f"- query_names: `{semantic_event['query_names']}`",
+                f"- query_count: `{semantic_event['query_count']}`",
+                f"- mean_event_token_count: `{_fmt_float(semantic_event['mean_event_token_count'])}`",
+                f"- mean_query_entropy: `{_fmt_float(semantic_event['mean_query_entropy'])}`",
+                f"- mean_top_query_score: `{_fmt_float(semantic_event['mean_top_query_score'])}`",
+                f"- mean_top_event_attribution: `{_fmt_float(semantic_event['mean_top_event_attribution'])}`",
+                "",
+                "| sample | top query | top query event offset s | top event attribution |",
+                "| --- | --- | ---: | ---: |",
+            ]
+        )
+        for row in semantic_event.get("samples", []):
+            lines.append(
+                f"| `{row['sample_id']}` | `{row['top_query_name']}` | "
+                f"{_fmt_float(row['top_query_event_offset_s'])} | {_fmt_float(row['top_event_attribution'])} |"
+            )
+        lines.append("")
+    lines.extend(
+        [
+            "## Phase 2 Bundle-Only Ablations",
+            "",
+            f"- strongest ablation: `{strongest_ablation['name']}`",
+            f"- strongest delta_mean_top_contribution_score: `{_fmt_signed(strongest_ablation['delta_mean_top_contribution_score'])}`",
+            "",
+            "| ablation | mean_attention_entropy | mean_top_event_score | mean_top_contribution_score | delta_mean_attention_entropy | delta_mean_top_event_score | delta_mean_top_contribution_score |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+        ]
+    )
     for name, payload in causal["case_study"]["ablation_means"].items():
         lines.append(
             f"| `{name}` | {_fmt_optional(payload['mean_attention_entropy'])} | "
@@ -124,9 +151,10 @@ def render_stage_i_causal_support_report(summary: Mapping[str, object]) -> str:
             "## 因果结论",
             "",
             "1. `G(min)` 已形成稳定的因果注意力统计，不是只存在于图示。",
-            "2. `Phase 2 bundle-only` 消融已经给出 `no_event_bias / vehicle_delta_suppressed` 两条扰动证据，说明事件偏置与机动上下文都会改变贡献分布。",
-            "3. 私有 proxy benchmark 中 `chronaris_opt_no_causal_mask` 三任务同步退化，说明“拿掉掩码”不是无损替换。",
-            "4. 因果支撑链回答的是“掩码机制是否有必要”，不是“当前公开 benchmark 已由因果模型接管主线”。",
+            "2. 语义事件融合把时间步注意力进一步折叠成 `event token + query-to-event attribution`，可以把解释粒度从单点权重提升到事件级归因。",
+            "3. `Phase 2 bundle-only` 消融已经给出 `no_event_bias / vehicle_delta_suppressed` 两条扰动证据，说明事件偏置与机动上下文都会改变贡献分布。",
+            "4. 私有 proxy benchmark 中 `chronaris_opt_no_causal_mask` 三任务同步退化，说明“拿掉掩码”不是无损替换。",
+            "5. 因果支撑链回答的是“掩码机制是否有必要”，不是“当前公开 benchmark 已由因果模型接管主线”。",
         ]
     )
     return "\n".join(lines)

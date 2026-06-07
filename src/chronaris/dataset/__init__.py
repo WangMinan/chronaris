@@ -35,6 +35,7 @@ from chronaris.dataset.stage_i_sequence_contracts import (
     load_stage_i_sequence_summary,
     save_stage_i_sequence_bundle,
 )
+from chronaris.dataset.streaming_windows import StreamingPointEvent, StreamingWindowBuffer, iter_aligned_sortie_events
 from chronaris.dataset.uab_stage_i import UABPreparedTaskSet, build_uab_task_entries
 from chronaris.dataset.timebase import ReferenceStrategy, TimebaseError, TimebasePolicy, align_sortie_bundle
 from chronaris.dataset.windows import build_sample_windows
@@ -48,6 +49,8 @@ __all__ = [
     "StageISequenceDatasetSummary",
     "StageISequenceEntry",
     "StageITaskEntry",
+    "StreamingPointEvent",
+    "StreamingWindowBuffer",
     "TASK_EVENT_REPLAY_TAG",
     "TASK_RISK_PROXY",
     "TASK_WORKLOAD_PROXY",
@@ -69,6 +72,7 @@ __all__ = [
     "dump_stage_i_summary",
     "dump_stage_i_task_entries",
     "isoformat_utc",
+    "iter_aligned_sortie_events",
     "load_stage_i_sequence_bundle",
     "load_stage_i_sequence_entries",
     "load_stage_i_sequence_summary",

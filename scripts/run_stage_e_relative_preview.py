@@ -1363,7 +1363,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=("feature_first_with_latent_fallback", "feature_only", "latent_only"),
         default="feature_first_with_latent_fallback",
     )
-    parser.add_argument("--physics-constraint-family", choices=("minimal", "full"), default="minimal")
+    parser.add_argument("--physics-constraint-family", choices=("minimal", "full", "rigid_body"), default="minimal")
     parser.add_argument("--vehicle-physics-weight", type=float, default=0.1)
     parser.add_argument("--physiology-physics-weight", type=float, default=0.1)
     parser.add_argument("--physics-huber-delta", type=float, default=1.0)
