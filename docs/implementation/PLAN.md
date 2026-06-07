@@ -86,11 +86,10 @@
 
 ## 4. 当前优先级
 
-1. P0：冻结当前 Phase C 工作区，补跑必要测试并提交。
-2. P1：补一条真实资产上的 Stage I multitask 联合训练证据。
-3. P2：补 Stage F 刚体运动物理约束。
-4. P3：补 Stage G 语义事件融合。
-5. P4：补 runtime inference。
+1. P0：冻结当前 Phase C 工作区与新增真实产物，补跑必要测试并提交。
+2. P1：补 Stage F 刚体运动物理约束。
+3. P2：补 Stage G 语义事件融合。
+4. P3：补 runtime inference。
 
 ## 5. 历史计划入口
 

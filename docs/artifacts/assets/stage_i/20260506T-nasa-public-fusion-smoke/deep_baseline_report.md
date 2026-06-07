@@ -1,8 +1,8 @@
 # Stage I Deep Baseline - nasa_csm - chronaris_public_fusion
 
 - profile: `window_v2`
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260506T-nasa-public-fusion-smoke`
-- prepared root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260506T124000Z-stage-i-public-opt-nasa-prepared`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260506T-nasa-public-fusion-smoke`
+- prepared root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260506T124000Z-stage-i-public-opt-nasa-prepared`
 
 ## Objective
 

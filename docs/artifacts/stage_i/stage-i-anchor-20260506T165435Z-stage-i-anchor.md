@@ -1,8 +1,8 @@
 # Stage I Anchor Report - 20260506T165435Z-stage-i-anchor
 
 - generated_at_utc: `2026-05-06T16:55:22.667722Z`
-- stage_h_run_manifest_path: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
-- anchor_windows_csv_path: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/anchor_windows.csv`
+- stage_h_run_manifest_path: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
+- anchor_windows_csv_path: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/anchor_windows.csv`
 
 ## Overview
 

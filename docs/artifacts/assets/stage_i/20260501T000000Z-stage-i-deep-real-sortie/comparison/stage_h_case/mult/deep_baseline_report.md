@@ -1,8 +1,8 @@
 # Stage I Deep Baseline - stage_h_case - mult
 
 - profile: `real_sortie_v1`
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult`
-- prepared root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult`
+- prepared root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
 
 ## Real Sortie Summary
 

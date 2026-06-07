@@ -40,30 +40,30 @@
 - 已完成实验室服务器 WSL Ubuntu 22.04 + RTX 4090 环境迁移与依赖验证
 - 已完成阶段 E 最小训练闭环、`relative_mse` 真实回归与样本级诊断产物导出
 - 已完成阶段 E 收口：`none / zscore_train` 对照实跑、阈值模板判定与 checkpoint 导出
-- 阶段 E 收口事实统一沉淀于 `docs/planning/stage-e-closure-2026-04-21.md`
+- 阶段 E 收口事实统一沉淀于 `docs/implementation/notes/stage-e-closure-2026-04-21.md`
 - 已完成阶段 F 完整物理约束族：RealBus 字段语义映射、组件级 physics breakdown、`E baseline` vs `E+F(full)` 真实对比实跑
-- 阶段 F 收口事实统一沉淀于 `docs/planning/stage-f-closure-2026-04-22.md`
+- 阶段 F 收口事实统一沉淀于 `docs/implementation/notes/stage-f-closure-2026-04-22.md`
 - 已完成阶段 G 最小因果融合原型：`F baseline` vs `F+G(min)` 真实对比实跑、非对称因果注意力诊断与事件贡献导出
-- 阶段 G 收口事实统一沉淀于 `docs/planning/stage-g-closure-2026-04-22.md`
+- 阶段 G 收口事实统一沉淀于 `docs/implementation/notes/stage-g-closure-2026-04-22.md`
 - 已完成阶段 H 标准化特征导出收口：双流 `validation` profile 三 view 导出、`load_stage_h_feature_run()` 下游读取验证、`20251110...` vehicle-only partial bundle 真实构建
-- 阶段 H 收口事实统一沉淀于 `docs/planning/stage-h-closure-2026-04-27.md`
+- 阶段 H 收口事实统一沉淀于 `docs/implementation/notes/stage-h-closure-2026-04-27.md`
 - 已完成阶段 I `Phase 0 + Phase 1`：UAB `87` session manifest、`416` 维 session 特征、双轨 baseline、主报告与机器资产导出
 - 已完成阶段 I `Phase 2`：`3` 个真实双流 view case study、`4` 条 bundle-only 消融、`WARN` view 主线解释与同 sortie 双 pilot 对比
 - 已完成阶段 I `Phase 3`：UAB `window_v2` workload 主线、NASA CSM attention-state 主线、`reuse-existing-artifacts` closure 组装、cross-dataset window count 图与 UAB session-vs-window 对比
-- 阶段 I 收口事实统一沉淀于 `docs/planning/stage-i-closure-2026-04-30.md`
-- 阶段 I 当前事实统一沉淀于 `docs/reports/stage_i/stage-i-closure-2026-04-30.md`
+- 阶段 I 收口事实统一沉淀于 `docs/implementation/notes/stage-i-closure-2026-04-30.md`
+- 阶段 I 当前事实统一沉淀于 `docs/artifacts/stage_i/stage-i-closure-2026-04-30.md`
 - 已完成阶段 I 增强实验第一批：`stage_h_case` sequence contract、`MulT / ContiFormer` 真实 sortie smoke comparison、CLI 与 `test_stage_i_deep_pipeline.py`
-- 增强实验第一批事实沉淀于 `docs/planning/archive/stage_i/stage-i-deep-baseline-plan-2026-05-01.md` 与 `docs/reports/stage_i/archive/deep_history/stage-i-real-sortie-deep-comparison-2026-05-01.md`
+- 增强实验第一批事实沉淀于 `docs/implementation/notes/archive/stage_i/stage-i-deep-baseline-plan-2026-05-01.md` 与 `docs/artifacts/stage_i/archive/deep_history/stage-i-real-sortie-deep-comparison-2026-05-01.md`
 - 已完成阶段 I 增强实验第二批 probe：`UAB / NASA` sequence 导出、统一 `Stage H -> UAB -> NASA` comparison probe 与回归数值兜底
-- 增强实验第二批 probe 主报告：`docs/reports/stage_i/archive/deep_history/stage-i-deep-comparison-probe-2026-05-01.md`
+- 增强实验第二批 probe 主报告：`docs/artifacts/stage_i/archive/deep_history/stage-i-deep-comparison-probe-2026-05-01.md`
 - 已完成阶段 I 增强实验第二批 full LOSO：`UAB / NASA` 双模型实跑与统一 comparison summary
-- 增强实验第二批 full LOSO 主报告：`docs/reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
+- 增强实验第二批 full LOSO 主报告：`docs/artifacts/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
 - 已完成阶段 I 私有 benchmark 优化候选：`chronaris_opt` 在鼎新私有 proxy benchmark 的 T1/T2/T3 三任务上均超过 `naive_sync / E / F / no-mask / MulT / ContiFormer`，`private_optimality_supported=True`
 - 当前鼎新私有任务验证主线已切换到 `chronaris_opt`；`E/F/G/H` 收口事实继续保留为历史基线与导出依赖，不删除、不覆写
 - 这里的“阶段 I 已完成收口”特指 `2026-04-30` 的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 历史 closure，不等于当前论文主线的所有增强与整编工作都已结束
 - 当前论文私有支撑证据：`chronaris_opt` 已闭合并完成 package 固化，但它仍是 `private proxy benchmark evidence`
 - 当前论文公开支撑证据：`public opt closed`；UAB 由 `n_back=legacy_public_opt/ridge_residual` 与 `heat_the_chair=uab_public_adapter/target_prior_median` 组成，不能把 robust-prior adapter 写成双流融合本体胜利
-- 已完成中期证据整编入口：`src/chronaris/pipelines/stage_i/stage_i_midterm_evidence.py`、`scripts/build_stage_i_midterm_evidence.py`、`docs/reports/assets/stage_i_midterm/20260509T071500Z-stage-i-midterm-r2/`
+- 已完成中期证据整编入口：`src/chronaris/pipelines/stage_i/stage_i_midterm_evidence.py`、`scripts/build_stage_i_midterm_evidence.py`、`docs/artifacts/assets/stage_i_midterm/20260509T071500Z-stage-i-midterm-r2/`
 - 当前 `chronaris_public_fusion` 仍只保留为 exploratory branch；当前可确认的主线判断仍以 `public opt closed` 与 `NASA combined macro-F1=0.3348 < 0.40` 的 promote 门槛边界为准
 - 当前最高优先级不再是继续扩 `public opt` 或重跑旧 benchmark，而是把现有研究原型收敛成更贴近选题报告的“统一骨干、联合训练、checkpoint 推理、真实 thesis task、在线入口”主线
 - `Stage I thesis mainline Phase A` 已完成首轮代码收敛：公开 sequence / deep wrapper / public report 已统一标注为 `context proxy / public adapter evidence`，私有 `T1/T2/T3` manifest / summary / report 已统一标注为 `private proxy benchmark / proxy task`，并通过 `tests.test_stage_i_public_opt` 与 `tests.test_stage_i_deep_pipeline`
@@ -72,9 +72,9 @@
 - `Stage I thesis mainline Phase C` 当前只说明“最小联合训练闭环 + weak-label thesis task builder”已经落地，不代表 `rigid-body physics`、`semantic event fusion` 或在线推理已经收口
 - 当前下一优先级已前移到：`Stage F rigid-body 补强 / Stage G semantic event fusion / 在线入口`，而不是继续补 `per-view training` 式导出
 - 面向毕业论文的当前主线文档改为：
-  - `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md`
-  - `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`
-  - `docs/planning/thesis-coding-gap.md`
+  - `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md`
+  - `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`
+  - `docs/implementation/notes/thesis-coding-gap.md`
 
 ## 4. 阶段拆解
 
@@ -323,7 +323,7 @@
 - 已支持自动导出诊断产物：`projection_diagnostics_summary.json` 与 `projection_diagnostics_samples.csv`
 - 已完成 `none / zscore_train` 真实对照实跑（seed 固定），并形成阶段收口主报告
 - 已支持默认阈值模板评估（默认不强制单点 min cosine），收口判定为 `PASS`
-- 已支持自动导出模型 checkpoint：`docs/reports/assets/<report-stem>/alignment_model_checkpoint.pt`
+- 已支持自动导出模型 checkpoint：`docs/artifacts/assets/<report-stem>/alignment_model_checkpoint.pt`
 
 退出条件（当前状态：已满足）：
 
@@ -407,7 +407,7 @@
 
 当前前置事实（2026-04-25）：
 
-- 已完成第二个真实架次 `20251002_单01_ACT-8_翼云_J16_12#01` 的可用性盘点预验证，详见 `docs/reports/preview/sortie-availability-preview-20251002-act8-j16-12.md`
+- 已完成第二个真实架次 `20251002_单01_ACT-8_翼云_J16_12#01` 的可用性盘点预验证，详见 `docs/artifacts/preview/sortie-availability-preview-20251002-act8-j16-12.md`
 - 该架次 MySQL 已确认 `collect_task_id=2100450`、`up_pilot_id=10035`、`down_pilot_id=10033`，且 `source_sortie_id` 为空，后续多架次入口需要支持 `collect_task + pilot_ids` 回退
 - 该架次 Influx 生理侧已确认 `11` 个 measurement，飞机侧已确认 `BUS6000019110021` 到 `BUS6000019110026` 六个 measurement
 - 这说明阶段 H 的 manifest 与 feature export 不能继续沿用阶段 E/F/G 单架次默认的固定 `pilot_id` / 固定 BUS measurement 假设
@@ -422,8 +422,8 @@
 - 已在真实两条 sortie 上完成 Stage H v1 导出：
   - `20251005_四01_ACT-4_云_J20_22#01` 导出 `1` 个 pilot view
   - `20251002_单01_ACT-8_翼云_J16_12#01` 导出 `2` 个 pilot view
-  - 主报告：`docs/reports/stage_h/stage-h-export-v1-2026-04-26.md`
-  - 机器资产根目录：`docs/reports/assets/stage_h/20260426T072340Z-stage-h-v1/`
+  - 主报告：`docs/artifacts/stage_h/stage-h-export-v1-2026-04-26.md`
+  - 机器资产根目录：`docs/artifacts/assets/stage_h/20260426T072340Z-stage-h-v1/`
 - 已同步实现 partial-data v1 标准入口：
   - `configs/partial-data/stage-h-seed-v1.jsonl`
   - `src/chronaris/pipelines/partial_data/__init__.py`
@@ -447,9 +447,9 @@
   - 双流 `validation` profile 仍导出 `3` 个 view；
   - `load_stage_h_feature_run()` 可从 run manifest 读取三 view，三者 `fused_representation.shape` 均为 `(8, 16, 96)`；
   - `20251110...` vehicle-only partial 生成 `1478` 个窗口样本，`vehicle_only_feature_bundle.npz` 的 `values.shape=(1478, 105, 823)`。
-  - 主报告：`docs/reports/stage_h/stage-h-closure-2026-04-27.md`
-  - 收口记录：`docs/planning/stage-h-closure-2026-04-27.md`
-  - 机器资产根目录：`docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/`
+  - 主报告：`docs/artifacts/stage_h/stage-h-closure-2026-04-27.md`
+  - 收口记录：`docs/implementation/notes/stage-h-closure-2026-04-27.md`
+  - 机器资产根目录：`docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/`
 
 具体任务：
 
@@ -505,30 +505,30 @@
 - 已完成 UAB 主观负荷回归：
   - `heat_the_chair` 最优 `random_forest_regressor`：`RMSE=1.4664`
   - `n_back` 最优 `random_forest_regressor`：`RMSE=4.5161`
-- 当前机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
-- 当前主报告：`docs/reports/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
+- 当前机器资产根目录：`docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+- 当前主报告：`docs/artifacts/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
 - 已完成 Phase 2 真实双流 case study：
   - `3` 个真实双流 view 全部纳入主线（`PASS=2`、`WARN=1`）
   - `4` 条 bundle-only 路径：`projection_refusion_baseline / no_event_bias / no_state_normalization / vehicle_delta_suppressed`
   - 已完成同 sortie 双 pilot 对比：`20251002_单01_ACT-8_翼云_J16_12#01`
   - `vehicle_delta_suppressed` 在 `3` 个 view 上均将 `mean_top_event_score` 压到 `0.0`
-  - 当前 Phase 2 机器资产根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
-  - 当前 Phase 2 主报告：`docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md`
+  - 当前 Phase 2 机器资产根目录：`docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+  - 当前 Phase 2 主报告：`docs/artifacts/stage_i/stage-i-case-study-phase2-2026-04-29.md`
  - 已完成 Phase 3 UAB window-level workload：
    - `n_back` 最优 `logistic_regression`：`macro-F1=0.3478`
    - `heat_the_chair` 最优 `linear_svc`：`macro-F1=0.5405`
    - `n_back` 最优 `linear_svr`：`RMSE=10.2234`
    - `heat_the_chair` 最优 `linear_svr`：`RMSE=1.8639`
-   - UAB window 主报告：`docs/reports/stage_i/archive/baselines/stage-i-uab-window-baseline-2026-04-29.md`
+   - UAB window 主报告：`docs/artifacts/stage_i/archive/baselines/stage-i-uab-window-baseline-2026-04-29.md`
  - 已完成 Phase 3 NASA CSM attention-state：
    - `benchmark_only`：`macro-F1=0.4642`
    - `loft_only`：`macro-F1=0.3723`
    - `combined`：`macro-F1=0.3741`
-   - NASA 主报告：`docs/reports/stage_i/archive/baselines/stage-i-nasa-attention-baseline-2026-04-29.md`
+   - NASA 主报告：`docs/artifacts/stage_i/archive/baselines/stage-i-nasa-attention-baseline-2026-04-29.md`
  - 已完成 Stage I closure 组装：
-   - 收口机器资产根目录：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
-   - 收口主报告：`docs/reports/stage_i/stage-i-closure-2026-04-30.md`
-   - 收口记录：`docs/planning/stage-i-closure-2026-04-30.md`
+   - 收口机器资产根目录：`docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
+   - 收口主报告：`docs/artifacts/stage_i/stage-i-closure-2026-04-30.md`
+   - 收口记录：`docs/implementation/notes/stage-i-closure-2026-04-30.md`
    - 收口测试：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_pipeline` 与 `CHRONARIS_ENABLE_NUMPY_RUNTIME_TESTS=1 CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest discover -s tests -p 'test_*.py'` 均已通过
 
 ## 5. 当前已完成的代码状态
@@ -573,7 +573,7 @@
 
 阶段 I 的历史收口已经完成，但这不等于“为了毕业论文已经没有剩余编码工作”。当前更准确的判断是：
 
-- 历史公开 benchmark closure：已完成，冻结于 `docs/reports/stage_i/stage-i-closure-2026-04-30.md`
+- 历史公开 benchmark closure：已完成，冻结于 `docs/artifacts/stage_i/stage-i-closure-2026-04-30.md`
 - 私有 proxy 证据：已完成，当前以 `chronaris_opt` package 为准
 - 公开 adapter 证据：已完成，当前以 `public opt closed` 为准
 - 论文证据 support：已完成，已形成 `alignment / causal / six-path ablation` 三份主报告
@@ -587,11 +587,11 @@
 
 当前应优先消费的事实资产：
 
-1. `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
-2. `docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`
-3. `docs/reports/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/`
-4. `docs/reports/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo/`
-5. `docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/`
+1. `docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+2. `docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support/`
+3. `docs/artifacts/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/`
+4. `docs/artifacts/assets/stage_i_runtime_demo/20260506T165435Z-stage-i-runtime-demo/`
+5. `docs/artifacts/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/`
 
 ## 7. 当前不做的事
 
@@ -609,10 +609,10 @@
 1. `coding-roadmap.md` 中的当前阶段判断。
 2. `thesis-coding-gap.md` 中的缺口与优先级。
 3. `stage-i-thesis-mainline-roadmap-2026-05-15.md` 或 `stage-i-thesis-mainline-coding-plan-2026-05-15.md` 中的执行状态。
-4. `docs/planning/README.md` 中的现行入口与历史归档分类。
+4. `docs/implementation/notes/README.md` 中的现行入口与历史归档分类。
 
 补充规则：
 
 - `planning` 根目录只保留当前路线图、gap、closure 与少量关键节点文档。
-- 旧 `stage-xxx-plan` 统一留在 `docs/planning/archive/stage_i/`，不再作为当前工作入口。
+- 旧 `stage-xxx-plan` 统一留在 `docs/implementation/notes/archive/stage_i/`，不再作为当前工作入口。
 - 每完成一个可验证里程碑就更新一次，不要求每次细小重构都更新。

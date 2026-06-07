@@ -3,9 +3,9 @@
 - export version: `stage-h-v1`
 - export profile: `validation`
 - generated at UTC: `2026-05-02T09:28:09.573940+00:00`
-- artifact root: `docs/reports/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean`
-- run manifest: `docs/reports/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json`
-- report path: `docs/reports/stage_h/stage-h-private-e-allwindow-clean-2026-05-02.md`
+- artifact root: `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean`
+- run manifest: `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json`
+- report path: `docs/artifacts/stage_h/stage-h-private-e-allwindow-clean-2026-05-02.md`
 - sortie count: `2`
 - generated view count: `3`
 - generated view ids: `20251005_四01_ACT-4_云_J20_22#01__pilot_10033, 20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035, 20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033`
@@ -35,9 +35,9 @@
 
 | view | windows | model samples | diagnostics | stage G | feature bundle |
 | --- | ---: | ---: | --- | --- | --- |
-| `20251005_四01_ACT-4_云_J20_22#01__pilot_10033` | 37 | 37 | `WARN` (projection_l2_gap_cv) | `disabled` | `docs/reports/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz` |
-| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035` | 37 | 37 | `WARN` (projection_cosine_cv) | `disabled` | `docs/reports/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz` |
-| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | 37 | 37 | `PASS` | `disabled` | `docs/reports/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz` |
+| `20251005_四01_ACT-4_云_J20_22#01__pilot_10033` | 37 | 37 | `WARN` (projection_l2_gap_cv) | `disabled` | `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz` |
+| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035` | 37 | 37 | `WARN` (projection_cosine_cv) | `disabled` | `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz` |
+| `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | 37 | 37 | `PASS` | `disabled` | `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz` |
 
 ## Diagnostics Warnings
 

@@ -495,7 +495,8 @@ except ModuleNotFoundError:  # pragma: no cover - torch is expected in Stage E e
     torch = None
 
 if torch is not None:
-    from chronaris.models.alignment.losses import dual_stream_reconstruction_loss
+    from chronaris.models.alignment.losses import build_task_loss_breakdown, dual_stream_reconstruction_loss
+    from chronaris.models.alignment.task_heads import StageITaskHeadOutput
     from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAlignmentStreamBatch
 
     @dataclass(frozen=True, slots=True)
@@ -562,6 +563,45 @@ if torch is not None:
             self.assertAlmostEqual(float(relative.physiology), 1.0, places=6)
             self.assertAlmostEqual(float(relative.vehicle), 1.0, places=6)
             self.assertAlmostEqual(float(relative.total), 2.0, places=6)
+
+        def test_task_loss_breakdown_supports_classification_regression_and_retrieval(self) -> None:
+            task_outputs = (
+                StageITaskHeadOutput(
+                    task_name="risk_proxy",
+                    task_type="classification",
+                    sample_ids=("a", "b", "c"),
+                    logits=torch.tensor(
+                        [[2.5, 0.1, 0.0], [0.2, 2.0, 0.3], [0.3, 0.4, 2.2]],
+                        dtype=torch.float32,
+                    ),
+                    sample_indices=(0, 1, 2),
+                    targets=torch.tensor([0, 1, 2], dtype=torch.long),
+                ),
+                StageITaskHeadOutput(
+                    task_name="workload_proxy",
+                    task_type="regression",
+                    sample_ids=("a", "b"),
+                    logits=torch.tensor([[0.2], [0.8]], dtype=torch.float32),
+                    sample_indices=(0, 1),
+                    targets=torch.tensor([[0.1], [1.0]], dtype=torch.float32),
+                ),
+                StageITaskHeadOutput(
+                    task_name="event_replay_tag",
+                    task_type="retrieval",
+                    sample_ids=("a", "b", "c"),
+                    logits=torch.tensor(
+                        [[1.0, 0.0], [1.0, 0.1], [0.0, 1.0]],
+                        dtype=torch.float32,
+                    ),
+                    sample_indices=(0, 1, 2),
+                    paired_sample_ids=("b", "a", None),
+                ),
+            )
+
+            breakdown = build_task_loss_breakdown(task_outputs)
+
+            self.assertGreater(float(breakdown.total), 0.0)
+            self.assertEqual(set(breakdown.task_components), {"risk_proxy", "workload_proxy", "event_replay_tag"})
 else:
     class AlignmentLossScalingTorchMissingTest(unittest.TestCase):
         @unittest.skip("torch is not available in the current environment.")

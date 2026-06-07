@@ -3,7 +3,7 @@
 更新时间：2026-05-04
 
 > 说明：本文件保留为 `chronaris_opt` 升级为鼎新私有主线时的历史节点快照。
-> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+> 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
 
 ## 1. 目的
 
@@ -74,7 +74,7 @@
 
 当前这一步已经完成真实 package 固化：
 
-- `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+- `docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 
 下一轮直接进入：
 

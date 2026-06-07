@@ -31,10 +31,21 @@ _PROTOTYPE_EXPORTS = {
     "SingleStreamODERNNPrototype",
     "StreamPrototypeOutput",
 }
+_TASK_HEAD_EXPORTS = {
+    "ClassificationTaskHead",
+    "RegressionTaskHead",
+    "RetrievalTaskHead",
+    "StageITaskHeadBatch",
+    "StageITaskHeadOutput",
+    "StageITaskHeadSet",
+    "StageITaskHeadSpec",
+}
 _LOSS_EXPORTS = {
     "AlignmentLossBreakdown",
     "PhysicsLossBreakdown",
     "StageEObjectiveBreakdown",
+    "TaskLossBreakdown",
+    "build_task_loss_breakdown",
     "build_stage_f_physics_losses",
     "build_stage_e_objective",
     "build_physiology_feature_groups",
@@ -61,7 +72,7 @@ __all__ = [
     "build_reference_grid",
     "build_reference_grids",
     "split_e0_samples_chronologically",
-] + sorted(_BATCHING_EXPORTS | _TORCH_BATCH_EXPORTS | _PROTOTYPE_EXPORTS | _LOSS_EXPORTS)
+] + sorted(_BATCHING_EXPORTS | _TORCH_BATCH_EXPORTS | _PROTOTYPE_EXPORTS | _TASK_HEAD_EXPORTS | _LOSS_EXPORTS)
 
 
 def __getattr__(name: str) -> Any:
@@ -105,14 +116,38 @@ def __getattr__(name: str) -> Any:
         }
         globals().update(exports)
         return exports[name]
+    if name in _TASK_HEAD_EXPORTS:
+        from chronaris.models.alignment.task_heads import (
+            ClassificationTaskHead,
+            RegressionTaskHead,
+            RetrievalTaskHead,
+            StageITaskHeadBatch,
+            StageITaskHeadOutput,
+            StageITaskHeadSet,
+            StageITaskHeadSpec,
+        )
+
+        exports = {
+            "ClassificationTaskHead": ClassificationTaskHead,
+            "RegressionTaskHead": RegressionTaskHead,
+            "RetrievalTaskHead": RetrievalTaskHead,
+            "StageITaskHeadBatch": StageITaskHeadBatch,
+            "StageITaskHeadOutput": StageITaskHeadOutput,
+            "StageITaskHeadSet": StageITaskHeadSet,
+            "StageITaskHeadSpec": StageITaskHeadSpec,
+        }
+        globals().update(exports)
+        return exports[name]
     if name in _LOSS_EXPORTS:
         from chronaris.models.alignment.losses import (
             AlignmentLossBreakdown,
             PhysicsLossBreakdown,
             ReconstructionLossBreakdown,
             StageEObjectiveBreakdown,
+            TaskLossBreakdown,
             build_stage_e_objective,
             build_stage_f_physics_losses,
+            build_task_loss_breakdown,
             dual_stream_alignment_loss,
             dual_stream_reconstruction_loss,
             masked_mean_squared_error,
@@ -134,11 +169,13 @@ def __getattr__(name: str) -> Any:
             "PhysicsLossBreakdown": PhysicsLossBreakdown,
             "ReconstructionLossBreakdown": ReconstructionLossBreakdown,
             "StageEObjectiveBreakdown": StageEObjectiveBreakdown,
+            "TaskLossBreakdown": TaskLossBreakdown,
             "StageFPhysicsContext": StageFPhysicsContext,
             "StageFPhysiologyFeatureGroups": StageFPhysiologyFeatureGroups,
             "StageFVehicleFeatureGroups": StageFVehicleFeatureGroups,
             "build_stage_e_objective": build_stage_e_objective,
             "build_stage_f_physics_losses": build_stage_f_physics_losses,
+            "build_task_loss_breakdown": build_task_loss_breakdown,
             "build_physiology_feature_groups": build_physiology_feature_groups,
             "build_vehicle_feature_groups": build_vehicle_feature_groups,
             "dual_stream_alignment_loss": dual_stream_alignment_loss,

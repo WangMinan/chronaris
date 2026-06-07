@@ -15,6 +15,15 @@ from chronaris.dataset.stage_i_private_contracts import (
     dump_stage_i_private_task_entries,
     load_stage_i_private_task_entries,
 )
+from chronaris.dataset.stage_i_real_task_builders import (
+    TASK_EVENT_REPLAY_TAG,
+    TASK_RISK_PROXY,
+    TASK_WORKLOAD_PROXY,
+    THESIS_WEAK_LABEL_BENCHMARK_ROLE,
+    THESIS_WEAK_LABEL_BOUNDARY,
+    THESIS_WEAK_LABEL_ROLE,
+    build_stage_i_real_task_payload,
+)
 from chronaris.dataset.stage_i_sequence_contracts import (
     StageISequenceBundle,
     StageISequenceDatasetSummary,
@@ -39,6 +48,12 @@ __all__ = [
     "StageISequenceDatasetSummary",
     "StageISequenceEntry",
     "StageITaskEntry",
+    "TASK_EVENT_REPLAY_TAG",
+    "TASK_RISK_PROXY",
+    "TASK_WORKLOAD_PROXY",
+    "THESIS_WEAK_LABEL_BENCHMARK_ROLE",
+    "THESIS_WEAK_LABEL_BOUNDARY",
+    "THESIS_WEAK_LABEL_ROLE",
     "SortieDatasetBuilder",
     "TimebaseError",
     "TimebasePolicy",
@@ -46,6 +61,7 @@ __all__ = [
     "align_sortie_bundle",
     "build_sample_windows",
     "build_nasa_csm_task_entries",
+    "build_stage_i_real_task_payload",
     "build_uab_task_entries",
     "dump_stage_i_sequence_entries",
     "dump_stage_i_sequence_summary",

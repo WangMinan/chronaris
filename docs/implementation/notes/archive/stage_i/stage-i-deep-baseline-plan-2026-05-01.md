@@ -3,7 +3,7 @@
 更新时间：2026-05-01
 
 > 说明：本文件是 `MulT / ContiFormer` 深基线阶段的历史快照。  
-> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md`、`docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md` 与 `docs/planning/stage-i-mainline-transition-2026-05-04.md`。
+> 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md`、`docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md` 与 `docs/implementation/notes/stage-i-mainline-transition-2026-05-04.md`。
 
 ## 1. 定位
 
@@ -20,7 +20,7 @@
 ### 已完成
 
 1. 第三方前置准备已落盘：
-   - `docs/planning/stage-i-third-party-baseline-prep-2026-04-30.md`
+   - `docs/implementation/notes/stage-i-third-party-baseline-prep-2026-04-30.md`
 2. 已新增 sequence contract 与统一 bundle：
    - `task_manifest.jsonl`
    - `sequence_bundle.npz`
@@ -37,24 +37,24 @@
 
 ### 第一批真实 sortie 结果
 
-- 已基于 `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json` 生成 `stage_h_case` sequence 资产：
-  - `docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences/`
+- 已基于 `docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json` 生成 `stage_h_case` sequence 资产：
+  - `docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences/`
 - 已完成 `MulT + ContiFormer` 第一批真实 sortie comparison：
-  - 机器资产根目录：`docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/`
-  - 主报告：`docs/reports/stage_i/archive/deep_history/stage-i-real-sortie-deep-comparison-2026-05-01.md`
+  - 机器资产根目录：`docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/`
+  - 主报告：`docs/artifacts/stage_i/archive/deep_history/stage-i-real-sortie-deep-comparison-2026-05-01.md`
 
 ### 第二批公开数据 full LOSO
 
 1. 已完成 `UAB window_v2` sequence 资产：
-   - `docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences/`
+   - `docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences/`
 2. 已完成 `NASA attention_state` sequence 资产：
-   - `docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences/`
+   - `docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences/`
 3. 已完成一轮统一 deep comparison probe：
-   - `docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/`
-   - `docs/reports/stage_i/archive/deep_history/stage-i-deep-comparison-probe-2026-05-01.md`
+   - `docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/`
+   - `docs/artifacts/stage_i/archive/deep_history/stage-i-deep-comparison-probe-2026-05-01.md`
 4. 已完成第二批 full LOSO：
-   - `docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/`
-   - `docs/reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
+   - `docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/`
+   - `docs/artifacts/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md`
 
 ## 3. 当前边界
 
