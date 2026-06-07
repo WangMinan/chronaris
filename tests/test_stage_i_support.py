@@ -91,6 +91,8 @@ class StageISupportTest(unittest.TestCase):
             self.assertIn("本结论能支撑什么", alignment_report)
             self.assertIn("vehicle_delta_suppressed", causal_report)
             self.assertIn("Private No-Mask Comparison", causal_report)
+            self.assertIn("Semantic Event Fusion", causal_report)
+            self.assertIn("事件级归因", causal_report)
             self.assertIn("固定六路径主矩阵", ablation_report)
             self.assertIn("G(no causal mask)", ablation_report)
 
@@ -211,6 +213,24 @@ def _write_support_sources(temp_root: Path) -> dict[str, Path]:
                 "mean_max_attention": 0.22,
                 "mean_top_event_score": 1.0,
                 "mean_top_contribution_score": 2.6,
+                "semantic_event": {
+                    "query_names": ["risk_proxy", "workload_proxy", "event_replay_tag"],
+                    "query_count": 3,
+                    "mean_event_token_count": 2.0,
+                    "mean_query_entropy": 0.31,
+                    "mean_top_query_score": 0.62,
+                    "mean_top_event_attribution": 0.88,
+                    "samples": [
+                        {
+                            "sample_id": "sample-1",
+                            "event_token_count": 2,
+                            "top_query_name": "risk_proxy",
+                            "top_query_score": 0.62,
+                            "top_query_event_offset_s": 2.0,
+                            "top_event_attribution": 0.88,
+                        }
+                    ],
+                },
             },
             ensure_ascii=False,
             indent=2,

@@ -496,6 +496,18 @@ class StageIMultitaskTrainPipeline:
         checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
         payload = {
             "run_id": self.config.run_id,
+            "feature_schema": {
+                "physiology_feature_names": tuple(
+                    normalization_stats.physiology.feature_names
+                    if normalization_stats is not None
+                    else ()
+                ),
+                "vehicle_feature_names": tuple(
+                    normalization_stats.vehicle.feature_names
+                    if normalization_stats is not None
+                    else ()
+                ),
+            },
             "preview_config": {
                 "prototype_config": asdict(self.config.preview_config.prototype_config),
                 "split_config": asdict(self.config.preview_config.split_config),

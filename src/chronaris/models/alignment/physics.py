@@ -13,6 +13,12 @@ from chronaris.models.alignment.physics_features import (
     build_physiology_feature_groups,
     build_vehicle_feature_groups,
 )
+from chronaris.models.alignment.physics_residuals import build_rigid_body_vehicle_residuals
+from chronaris.models.alignment.physics_state_mapping import (
+    RigidBodyPhysicsDiagnostics,
+    build_rigid_body_state_mapping,
+    inspect_rigid_body_physics,
+)
 from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAlignmentStreamBatch
 
 if TYPE_CHECKING:
@@ -26,7 +32,7 @@ _ALLOWED_PHYSICS_CONSTRAINT_MODES = {
     "feature_only",
     "latent_only",
 }
-_ALLOWED_PHYSICS_FAMILIES = {"minimal", "full"}
+_ALLOWED_PHYSICS_FAMILIES = {"minimal", "full", "rigid_body"}
 
 
 @dataclass(frozen=True, slots=True)
@@ -36,6 +42,9 @@ class PhysicsLossBreakdown:
     vehicle_semantic: torch.Tensor
     vehicle_smoothness: torch.Tensor
     vehicle_envelope: torch.Tensor
+    vehicle_rigid_body_translation: torch.Tensor
+    vehicle_rigid_body_vertical: torch.Tensor
+    vehicle_rigid_body_rotation: torch.Tensor
     vehicle_latent: torch.Tensor
     physiology_smoothness: torch.Tensor
     physiology_envelope: torch.Tensor
@@ -53,6 +62,9 @@ class PhysicsLossBreakdown:
             vehicle_semantic=zero,
             vehicle_smoothness=zero,
             vehicle_envelope=zero,
+            vehicle_rigid_body_translation=zero,
+            vehicle_rigid_body_vertical=zero,
+            vehicle_rigid_body_rotation=zero,
             vehicle_latent=zero,
             physiology_smoothness=zero,
             physiology_envelope=zero,
@@ -69,6 +81,9 @@ class PhysicsLossBreakdown:
             "vehicle_semantic": self.vehicle_semantic,
             "vehicle_smoothness": self.vehicle_smoothness,
             "vehicle_envelope": self.vehicle_envelope,
+            "vehicle_rigid_body_translation": self.vehicle_rigid_body_translation,
+            "vehicle_rigid_body_vertical": self.vehicle_rigid_body_vertical,
+            "vehicle_rigid_body_rotation": self.vehicle_rigid_body_rotation,
             "vehicle_latent": self.vehicle_latent,
             "physiology_smoothness": self.physiology_smoothness,
             "physiology_envelope": self.physiology_envelope,
@@ -178,6 +193,9 @@ def build_stage_f_physics_losses(
             vehicle_semantic=vehicle,
             vehicle_smoothness=zero,
             vehicle_envelope=zero,
+            vehicle_rigid_body_translation=zero,
+            vehicle_rigid_body_vertical=zero,
+            vehicle_rigid_body_rotation=zero,
             vehicle_latent=zero,
             physiology_smoothness=physiology,
             physiology_envelope=zero,
@@ -187,6 +205,15 @@ def build_stage_f_physics_losses(
             vehicle=vehicle,
             physiology=physiology,
             total=vehicle + physiology,
+        )
+
+    if family == "rigid_body":
+        return _build_rigid_body_stage_f_physics_losses(
+            output,
+            batch,
+            mode=mode,
+            huber_delta=huber_delta,
+            context=context,
         )
 
     return _build_full_stage_f_physics_losses(output, batch, mode=mode, huber_delta=huber_delta, context=context)
@@ -286,6 +313,138 @@ def _build_full_stage_f_physics_losses(
         vehicle_semantic=vehicle_semantic,
         vehicle_smoothness=vehicle_smoothness,
         vehicle_envelope=vehicle_envelope,
+        vehicle_rigid_body_translation=reference.new_zeros(()),
+        vehicle_rigid_body_vertical=reference.new_zeros(()),
+        vehicle_rigid_body_rotation=reference.new_zeros(()),
+        vehicle_latent=vehicle_latent,
+        physiology_smoothness=physiology_smoothness,
+        physiology_envelope=physiology_envelope,
+        physiology_pairwise=physiology_pairwise,
+        physiology_spo2_delta=physiology_spo2_delta,
+        physiology_latent=physiology_latent,
+        vehicle=vehicle,
+        physiology=physiology,
+        total=vehicle + physiology,
+    )
+
+
+def _build_rigid_body_stage_f_physics_losses(
+    output: DualStreamPrototypeOutput,
+    batch: TorchAlignmentBatch,
+    *,
+    mode: str,
+    huber_delta: float,
+    context: StageFPhysicsContext | None,
+) -> PhysicsLossBreakdown:
+    reference = output.physiology.reconstructions
+    if context is None:
+        context = StageFPhysicsContext(
+            vehicle_groups=build_vehicle_feature_groups(batch.vehicle.feature_names),
+            physiology_groups=build_physiology_feature_groups(batch.physiology.feature_names),
+        )
+
+    vehicle_values = _denormalize_if_available(
+        output.vehicle.reconstructions,
+        context.vehicle_denormalize_mean,
+        context.vehicle_denormalize_std,
+    )
+    physiology_values = _denormalize_if_available(
+        output.physiology.reconstructions,
+        context.physiology_denormalize_mean,
+        context.physiology_denormalize_std,
+    )
+    vehicle_valid = batch.vehicle.feature_valid_mask & batch.vehicle.mask.unsqueeze(-1)
+    physiology_valid = batch.physiology.feature_valid_mask & batch.physiology.mask.unsqueeze(-1)
+
+    zero = reference.new_zeros(())
+    if mode == "latent_only":
+        rigid_components = {
+            "vehicle_rigid_body_translation": zero,
+            "vehicle_rigid_body_vertical": zero,
+            "vehicle_rigid_body_rotation": zero,
+        }
+        vehicle_envelope = zero
+        physiology_smoothness = zero
+        physiology_envelope = zero
+        physiology_pairwise = zero
+        physiology_spo2_delta = zero
+    else:
+        rigid_mapping = build_rigid_body_state_mapping(
+            batch.vehicle.feature_names,
+            field_labels=context.field_labels,
+        )
+        rigid_components = build_rigid_body_vehicle_residuals(
+            vehicle_values,
+            batch.vehicle.offsets_s,
+            vehicle_valid,
+            batch.vehicle.feature_names,
+            rigid_mapping,
+            huber_delta=huber_delta,
+        )
+        vehicle_envelope = _feature_envelope_penalty(
+            vehicle_values,
+            vehicle_valid,
+            lower=context.vehicle_envelope_lower,
+            upper=context.vehicle_envelope_upper,
+        )
+        physiology_smoothness = _selected_feature_smoothness_loss(
+            output.physiology.reconstructions,
+            batch.physiology.offsets_s,
+            batch.physiology.mask,
+            batch.physiology.feature_names,
+            context.physiology_groups.eeg or batch.physiology.feature_names,
+        )
+        physiology_envelope = _feature_envelope_penalty(
+            physiology_values,
+            physiology_valid,
+            lower=context.physiology_envelope_lower,
+            upper=context.physiology_envelope_upper,
+        )
+        physiology_pairwise = _pairwise_feature_consistency_loss(
+            output.physiology.reconstructions,
+            physiology_valid,
+            batch.physiology.feature_names,
+            context.physiology_groups.eeg_pairs,
+            huber_delta=huber_delta,
+        )
+        physiology_spo2_delta = _selected_first_derivative_loss(
+            output.physiology.reconstructions,
+            batch.physiology.offsets_s,
+            physiology_valid,
+            batch.physiology.feature_names,
+            context.physiology_groups.spo2,
+            huber_delta=huber_delta,
+        )
+
+    vehicle_latent = zero
+    physiology_latent = zero
+    if mode in {"feature_first_with_latent_fallback", "latent_only"}:
+        diagnostics = inspect_rigid_body_physics(
+            batch.vehicle.feature_names,
+            field_labels=context.field_labels,
+            mode=mode,
+        )
+        if diagnostics.uses_latent_fallback or mode == "latent_only":
+            vehicle_latent = _latent_fallback_loss(output.vehicle, batch.vehicle)
+        physiology_latent = _latent_fallback_loss(output.physiology, batch.physiology)
+
+    vehicle_semantic = zero
+    vehicle_smoothness = zero
+    vehicle = (
+        rigid_components["vehicle_rigid_body_translation"]
+        + rigid_components["vehicle_rigid_body_vertical"]
+        + rigid_components["vehicle_rigid_body_rotation"]
+        + vehicle_envelope
+        + vehicle_latent
+    )
+    physiology = physiology_smoothness + physiology_envelope + physiology_pairwise + physiology_spo2_delta + physiology_latent
+    return PhysicsLossBreakdown(
+        vehicle_semantic=vehicle_semantic,
+        vehicle_smoothness=vehicle_smoothness,
+        vehicle_envelope=vehicle_envelope,
+        vehicle_rigid_body_translation=rigid_components["vehicle_rigid_body_translation"],
+        vehicle_rigid_body_vertical=rigid_components["vehicle_rigid_body_vertical"],
+        vehicle_rigid_body_rotation=rigid_components["vehicle_rigid_body_rotation"],
         vehicle_latent=vehicle_latent,
         physiology_smoothness=physiology_smoothness,
         physiology_envelope=physiology_envelope,

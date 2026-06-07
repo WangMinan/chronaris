@@ -105,8 +105,8 @@ class AlignmentPreviewConfig:
             raise ValueError(
                 "physics_constraint_mode must be one of: feature_first_with_latent_fallback, feature_only, latent_only."
             )
-        if self.physics_constraint_family not in {"minimal", "full"}:
-            raise ValueError("physics_constraint_family must be one of: minimal, full.")
+        if self.physics_constraint_family not in {"minimal", "full", "rigid_body"}:
+            raise ValueError("physics_constraint_family must be one of: minimal, full, rigid_body.")
         if self.vehicle_physics_weight < 0:
             raise ValueError("vehicle_physics_weight must be non-negative.")
         if self.physiology_physics_weight < 0:

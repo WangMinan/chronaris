@@ -43,8 +43,11 @@ _TASK_HEAD_EXPORTS = {
 _LOSS_EXPORTS = {
     "AlignmentLossBreakdown",
     "PhysicsLossBreakdown",
+    "RigidBodyPhysicsDiagnostics",
+    "RigidBodyStateMapping",
     "StageEObjectiveBreakdown",
     "TaskLossBreakdown",
+    "build_rigid_body_state_mapping",
     "build_task_loss_breakdown",
     "build_stage_f_physics_losses",
     "build_stage_e_objective",
@@ -60,6 +63,7 @@ _LOSS_EXPORTS = {
     "StageFVehicleFeatureGroups",
     "dual_stream_reconstruction_loss",
     "masked_mean_squared_error",
+    "inspect_rigid_body_physics",
     "stream_reconstruction_loss",
 }
 
@@ -163,16 +167,25 @@ def __getattr__(name: str) -> Any:
             build_physiology_feature_groups,
             build_vehicle_feature_groups,
         )
+        from chronaris.models.alignment.physics_state_mapping import (
+            RigidBodyPhysicsDiagnostics,
+            RigidBodyStateMapping,
+            build_rigid_body_state_mapping,
+            inspect_rigid_body_physics,
+        )
 
         exports = {
             "AlignmentLossBreakdown": AlignmentLossBreakdown,
             "PhysicsLossBreakdown": PhysicsLossBreakdown,
             "ReconstructionLossBreakdown": ReconstructionLossBreakdown,
+            "RigidBodyPhysicsDiagnostics": RigidBodyPhysicsDiagnostics,
+            "RigidBodyStateMapping": RigidBodyStateMapping,
             "StageEObjectiveBreakdown": StageEObjectiveBreakdown,
             "TaskLossBreakdown": TaskLossBreakdown,
             "StageFPhysicsContext": StageFPhysicsContext,
             "StageFPhysiologyFeatureGroups": StageFPhysiologyFeatureGroups,
             "StageFVehicleFeatureGroups": StageFVehicleFeatureGroups,
+            "build_rigid_body_state_mapping": build_rigid_body_state_mapping,
             "build_stage_e_objective": build_stage_e_objective,
             "build_stage_f_physics_losses": build_stage_f_physics_losses,
             "build_task_loss_breakdown": build_task_loss_breakdown,
@@ -180,6 +193,7 @@ def __getattr__(name: str) -> Any:
             "build_vehicle_feature_groups": build_vehicle_feature_groups,
             "dual_stream_alignment_loss": dual_stream_alignment_loss,
             "dual_stream_reconstruction_loss": dual_stream_reconstruction_loss,
+            "inspect_rigid_body_physics": inspect_rigid_body_physics,
             "masked_mean_squared_error": masked_mean_squared_error,
             "physiology_physics_consistency_loss": physiology_physics_consistency_loss,
             "projection_alignment_loss": projection_alignment_loss,

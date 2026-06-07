@@ -32,6 +32,7 @@ if ENABLE_TORCH_RUNTIME_TESTS:
         build_physiology_feature_groups,
         build_vehicle_feature_groups,
     )
+    from chronaris.models.alignment.physics_state_mapping import inspect_rigid_body_physics
     from chronaris.models.alignment.prototype import (
         DualStreamODERNNPrototype,
         DualStreamPrototypeOutput,
@@ -472,6 +473,65 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertIn("physiology_pairwise", objective.physics_components)
             self.assertGreater(float(objective.physics_components["physiology_pairwise"]), 0.0)
             self.assertGreater(float(objective.physics_components["physiology_envelope"]), 0.0)
+
+        def test_stage_f_rigid_body_family_exposes_vehicle_residuals(self) -> None:
+            physiology_batch = _single_sample_stream_batch(
+                feature_names=("eeg.af3", "spo2.spo2"),
+                values=((0.0, 95.0), (0.2, 94.5), (0.4, 94.0)),
+            )
+            vehicle_batch = _single_sample_stream_batch(
+                feature_names=("speed", "acc", "altitude", "vertical_speed", "pitch", "pitch_rate"),
+                values=((0.0, 1.0, 100.0, 0.0, 0.0, 0.0), (1.0, 1.0, 101.0, 0.0, 2.0, 0.5), (2.0, 1.0, 103.0, 0.0, 5.0, 0.5)),
+            )
+            batch = TorchAlignmentBatch(
+                sample_ids=("sample-001",),
+                physiology=physiology_batch,
+                vehicle=vehicle_batch,
+            )
+            output = DualStreamPrototypeOutput(
+                sample_ids=("sample-001",),
+                physiology=_stream_output_with_reconstructions(
+                    physiology_batch,
+                    reconstructions=((0.0, 95.0), (0.2, 94.5), (0.4, 94.0)),
+                ),
+                vehicle=_stream_output_with_reconstructions(
+                    vehicle_batch,
+                    reconstructions=((0.0, 1.0, 100.0, 0.0, 0.0, 0.0), (1.0, 1.0, 101.0, 0.0, 2.0, 0.5), (2.0, 1.0, 103.0, 0.0, 5.0, 0.5)),
+                ),
+            )
+            context = StageFPhysicsContext(
+                physiology_groups=build_physiology_feature_groups(physiology_batch.feature_names),
+                physiology_envelope_lower=torch.tensor([-1.0, 90.0], dtype=torch.float32),
+                physiology_envelope_upper=torch.tensor([1.0, 100.0], dtype=torch.float32),
+                field_labels={},
+            )
+
+            objective = build_stage_e_objective(
+                output,
+                batch,
+                enable_physics_constraints=True,
+                physics_constraint_family="rigid_body",
+                physics_context=context,
+                vehicle_physics_weight=1.0,
+                physiology_physics_weight=1.0,
+            )
+
+            self.assertIn("vehicle_rigid_body_translation", objective.physics_components)
+            self.assertIn("vehicle_rigid_body_vertical", objective.physics_components)
+            self.assertIn("vehicle_rigid_body_rotation", objective.physics_components)
+            self.assertGreater(float(objective.physics_components["vehicle_rigid_body_vertical"]), 0.0)
+            self.assertGreater(float(objective.vehicle_physics), 0.0)
+
+        def test_stage_f_rigid_body_diagnostics_report_missing_requirements(self) -> None:
+            diagnostics = inspect_rigid_body_physics(
+                ("speed", "pitch", "pitch_rate"),
+                mode="feature_first_with_latent_fallback",
+            )
+
+            self.assertEqual(diagnostics.enabled_residuals, ("rotation",))
+            self.assertIn("translation", diagnostics.missing_requirements)
+            self.assertIn("vertical", diagnostics.missing_requirements)
+            self.assertFalse(diagnostics.uses_latent_fallback)
 else:
     class AlignmentLossesRuntimeDisabledTest(unittest.TestCase):
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")
