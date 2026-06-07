@@ -30,7 +30,7 @@
 
 ## Artifacts
 
-- optimized candidate summary: `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_summary.json`
-- optimized candidate metrics: `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_metrics.csv`
-- optimized candidate package: `docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
-- optimized package report: `docs/reports/private/private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md`
+- optimized candidate summary: `docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_summary.json`
+- optimized candidate metrics: `docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_metrics.csv`
+- optimized candidate package: `docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+- optimized package report: `docs/artifacts/private/private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md`

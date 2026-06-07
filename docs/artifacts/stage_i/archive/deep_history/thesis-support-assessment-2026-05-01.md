@@ -4,8 +4,8 @@
 
 > 说明：本文件成稿时间早于 `chronaris_opt` 私有 full LOSO 与 package 固化。  
 > 当前鼎新私有最优性与主线工件请改看：
-> - `docs/reports/private/archive/full_loso_20260502/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md`
-> - `docs/reports/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md`
+> - `docs/artifacts/private/archive/full_loso_20260502/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md`
+> - `docs/artifacts/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md`
 
 ## 1. 目的
 

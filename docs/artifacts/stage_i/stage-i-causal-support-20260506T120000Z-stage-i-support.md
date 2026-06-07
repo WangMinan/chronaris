@@ -1,9 +1,9 @@
 # Stage I Causal Support - 20260506T120000Z-stage-i-support
 
 - generated_at_utc: `2026-05-06T02:58:16.462491Z`
-- artifact_root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support`
-- support_matrix: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/support_matrix.csv`
-- main ablation matrix: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/ablation_matrix.csv`
+- artifact_root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support`
+- support_matrix: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support/support_matrix.csv`
+- main ablation matrix: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support/ablation_matrix.csv`
 
 ## G(min) Summary
 

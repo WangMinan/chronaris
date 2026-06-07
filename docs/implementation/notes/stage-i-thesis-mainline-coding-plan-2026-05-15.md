@@ -90,9 +90,9 @@
 
 | 文件 | 动作 | 验收 |
 | --- | --- | --- |
-| `docs/planning/coding-roadmap.md` | 只保留阶段状态与当前主线，不再把旧 `public opt` 扩搜当下一步。 | 顶层阶段状态与现行工作包一致。 |
-| `docs/planning/thesis-coding-gap.md` | 把“只剩图表整理”的旧判断改成“七类实现缺口 + 新优先级”。 | gap 文档与源码现状一致。 |
-| `docs/reports/stage_i/README.md` | 区分 `historical closure / public adapter evidence / private proxy evidence / thesis mainline roadmap`。 | 报告索引不再混淆当前主线。 |
+| `docs/implementation/notes/coding-roadmap.md` | 只保留阶段状态与当前主线，不再把旧 `public opt` 扩搜当下一步。 | 顶层阶段状态与现行工作包一致。 |
+| `docs/implementation/notes/thesis-coding-gap.md` | 把“只剩图表整理”的旧判断改成“七类实现缺口 + 新优先级”。 | gap 文档与源码现状一致。 |
+| `docs/artifacts/stage_i/README.md` | 区分 `historical closure / public adapter evidence / private proxy evidence / thesis mainline roadmap`。 | 报告索引不再混淆当前主线。 |
 | `docs/README.md` | 更新 `planning` 目录索引和当前事实源。 | 顶层文档入口不再指向旧计划。 |
 | `AGENTS.md` | 更新当前优先引用的事实源与 Stage I 默认工作方式。 | 协作约束与当前规划同步。 |
 

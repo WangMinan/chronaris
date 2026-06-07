@@ -2,8 +2,8 @@
 
 - generated_at_utc：`2026-05-09T06:14:57.784492Z`
 - runtime_device：`cuda`
-- artifact_root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2`
-- leaderboard_csv：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/candidate_leaderboard.csv`
+- artifact_root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2`
+- leaderboard_csv：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/candidate_leaderboard.csv`
 
 ## nasa_csm
 

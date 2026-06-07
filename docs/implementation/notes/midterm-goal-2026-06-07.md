@@ -12,9 +12,9 @@
 - `阶段 I Phase 0/1/2/3` 的公开数据基准历史收口已完成。
 - `chronaris_opt` 已作为当前鼎新私有代理任务基准主线固化，T1/T2/T3 均为“私有代理任务证据”，不能写成人工真值论文任务。
 - “公开数据支撑线已收口”已经固化；UAB `target_prior_median` 仍只能写成“公开数据适配器 / 校准证据”，不能写成双流连续对齐和因果融合模块本体的直接胜利。
-- 当前中期证据入口是 `docs/reports/stage_i/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md`，其中私有证据、公开证据、支撑性消融、关键窗口锚定、离线演示图件已经整编。
+- 当前最新中期证据入口是 `docs/artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md`，其中私有证据、公开证据、支撑性消融、关键窗口锚定、离线演示图件已经整编，并切换到最新 private benchmark summary。
 - 当前 git 顶端提交 `HEAD=2055dec` 已提交到 `origin/main`，其内容主要覆盖阶段 I 论文主线重构 A/B 两阶段：主线边界校准、统一骨干训练入口、阶段 H 固定 checkpoint 推理导出、文档索引收敛。
-- 当前工作区还有未提交改动，主要是阶段 I 论文主线重构 C 阶段：统一任务头、任务监督损失与因果融合损失、`risk_proxy / workload_proxy / event_replay_tag` 三类论文任务弱标签构造器、`stage_i_multitask_train` 联合训练入口，以及私有证据 summary 中“代理任务证据 / 论文弱标签任务证据”的分层。
+- 当前工作区还有未提交改动，主要是阶段 I 论文主线重构 C 阶段及其真实产物：统一任务头、任务监督损失与因果融合损失、`risk_proxy / workload_proxy / event_replay_tag` 三类论文任务弱标签构造器、`stage_i_multitask_train` 联合训练入口、真实 Stage H multitask 闭环产物，以及私有证据 summary 中“代理任务证据 / 论文弱标签任务证据”的分层。
 
 本轮已用指定解释器验证 C 阶段最小合约：
 
@@ -22,7 +22,7 @@
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_multitask_train tests.test_stage_i_private_optimization tests.test_alignment_model_losses
 ```
 
-结果：`Ran 10 tests in 3.903s`，`OK (skipped=3)`。测试中的 `ConstantInputWarning` 来自合成样本常量输入的 Spearman 计算，不改变当前合约判断。
+结果：`Ran 10 tests in 5.827s`，`OK (skipped=2)`。测试中的 `ConstantInputWarning` 来自合成样本常量输入的 Spearman 计算，不改变当前合约判断。
 
 ## 2. 待完成术语说明
 
@@ -72,8 +72,8 @@
 3. 保留并复查已修改文件中的 C 阶段合约：
    - `src/chronaris/models/alignment/losses.py`
    - `src/chronaris/pipelines/stage_i/stage_i_private_benchmark*.py`
-   - `docs/planning/*`
-   - `docs/reports/stage_i/README.md`
+   - `docs/implementation/notes/*`
+   - `docs/artifacts/stage_i/README.md`
    - `docs/README.md`
    - `AGENTS.md`
 4. 补跑：
@@ -82,19 +82,19 @@
    - `tests.test_alignment_model_losses`
 5. 通过后再提交。
 
-### P1：补一条真实资产上的 C 阶段联合训练证据
+### P1：已补一条真实资产上的 C 阶段联合训练证据
 
-当前 C 阶段已有合成样本 / 私有资产形态的最小冒烟测试，但中期答辩更需要一条可引用的真实资产运行记录。
+当前 C 阶段已经不只停留在合成样本 / 私有资产形态的最小冒烟测试，而是已经补出一条可引用的真实资产运行记录。
 
 建议下一步优先做：
 
-1. 用现有阶段 H 全窗口 E/F clean 资产构造 `risk_proxy / workload_proxy / event_replay_tag`。
-2. 运行 `stage_i_multitask_train`，输出：
-   - `multitask_checkpoint.pt`
-   - `multitask_summary.json`
-   - `thesis_task_manifest.jsonl`
-3. 在报告中明确写成“论文任务弱标签证据”，不写成人工真值任务。
-4. 如果结果只证明训练闭环，不证明指标最优，也要如实写成“主线闭环证据”。
+1. 已用现有阶段 H 全窗口 E/F clean 资产构造 `risk_proxy / workload_proxy / event_replay_tag`。
+2. 已运行 `stage_i_multitask_train`，输出：
+   - `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt`
+   - `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`
+   - `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
+3. 已补 `docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`，并明确写成“论文任务弱标签证据”。
+4. 当前这条证据按“主线闭环证据”使用，不宣称人工真值最优。
 
 ### P2：补强基于飞行刚体运动规律的物理一致性约束
 
@@ -156,23 +156,19 @@
 
 ## 5. 实验层面还需要做什么
 
-中期前不建议继续扩大 UAB/NASA 搜索。更重要的是把当前主线证据补成“可讲、可复现、边界清楚”。
+中期前不建议继续扩大 UAB/NASA 搜索。当前更重要的事已经从“补齐 C 阶段闭环”切到“提交收口 + 把剩余方法体工作留到中期后”。
 
 优先实验：
 
-1. C 阶段真实资产联合训练确认
-   - 目的：证明论文任务弱标签已经接入统一训练闭环。
-   - 输出：summary、manifest、checkpoint、小报告。
-2. 刚体运动物理约束冒烟测试 / 消融
+1. 刚体运动物理约束冒烟测试 / 消融
    - 目的：证明阶段 F 方法体已从弱物理约束向刚体运动物理约束前进。
    - 输出：物理约束分项损失、字段覆盖诊断、E/F/新物理约束对照。
-3. 语义事件融合支撑性冒烟测试
+2. 语义事件融合支撑性冒烟测试
    - 目的：补答辩中最容易展示的事件解释图/表。
    - 输出：事件归因、关键窗口解释、支撑报告补充。
-4. 中期证据包刷新
-   - 目的：把新 C 阶段、物理约束补强、语义事件融合结果并入中期证据包。
-   - 入口：`scripts/build_stage_i_midterm_evidence.py`
-   - 输出：新版 `docs/reports/assets/stage_i_midterm/...` 与对应 Markdown 报告。
+3. runtime inference 最小闭环
+   - 目的：把“离线演示”与“真正推理入口”分开。
+   - 输出：流式窗口缓存、checkpoint 推理、解释输出脚本与测试。
 
 不建议做：
 
@@ -186,8 +182,8 @@
 如果时间只够做最小闭环，按下面顺序收敛：
 
 1. 提交当前 C 阶段工作区。
-2. 补一条真实资产上的联合训练确认。
-3. 重导中期证据包。
+2. 直接引用最新联合训练确认与 private benchmark 分层资产。
+3. 直接引用最新中期证据包。
 4. 准备答辩叙事：
    - 历史收口：E/F/G/H + 阶段 I Phase 0/1/2/3。
    - 私有主线：`chronaris_opt` 是私有代理任务证据。
@@ -197,4 +193,4 @@
 
 ## 7. 当前一句话状态
 
-当前项目已经具备中期答辩所需的历史实验资产和主线重构雏形；真正要补的是把 C 阶段从未提交工作区固化，并补一条真实资产上的联合训练证据，然后再按时间余量推进“刚体运动物理约束补强”和“语义事件融合补强”，而不是继续扩旧公开数据基准。
+当前项目已经具备中期答辩所需的历史实验资产、Phase C 真实联合训练证据、private/thesis 分层资产和新版中期证据包；真正剩下的主要是把这些工作区改动固化进 git，并在中期后把研发重心切到“刚体运动物理约束补强”“语义事件融合补强”和“runtime inference”，而不是继续扩旧公开数据基准。

@@ -3,7 +3,7 @@
 更新时间：2026-05-06
 
 > 说明：本文件已归档为 `public opt` 增强阶段快照。  
-> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+> 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
 
 ## 1. 目标
 
@@ -25,7 +25,7 @@
 
 当前固定对照口径：
 
-- 默认冻结 `docs/reports/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md` 中的 `MulT / ContiFormer` 历史结果
+- 默认冻结 `docs/artifacts/stage_i/stage-i-deep-comparison-full-loso-2026-05-01.md` 中的 `MulT / ContiFormer` 历史结果
 - 只有在新结果“接近但不稳”时，才重跑一次对应 deep baseline 做公平确认
 - 本轮不再以 `classical baseline` 作为前进门槛
 

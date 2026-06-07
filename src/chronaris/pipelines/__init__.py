@@ -212,9 +212,29 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.stage_i.stage_i_backbone_train",
         "collect_stage_i_backbone_samples",
     ),
+    "collect_stage_i_multitask_samples": (
+        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "collect_stage_i_multitask_samples",
+    ),
     "run_stage_i_backbone_train": (
         "chronaris.pipelines.stage_i.stage_i_backbone_train",
         "run_stage_i_backbone_train",
+    ),
+    "StageIMultitaskTrainConfig": (
+        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "StageIMultitaskTrainConfig",
+    ),
+    "StageIMultitaskTrainPipeline": (
+        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "StageIMultitaskTrainPipeline",
+    ),
+    "StageIMultitaskTrainRunResult": (
+        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "StageIMultitaskTrainRunResult",
+    ),
+    "run_stage_i_multitask_train": (
+        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "run_stage_i_multitask_train",
     ),
     "StageIDeepComparisonConfig": (
         "chronaris.pipelines.stage_i.stage_i_deep_baseline",
