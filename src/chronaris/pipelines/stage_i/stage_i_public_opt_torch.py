@@ -69,8 +69,8 @@ LOGGER.addHandler(logging.NullHandler())
 class StageIPublicOptTorchUABConfig:
     run_id: str
     prepared_artifact_root: str
-    artifact_root: str = "docs/reports/assets/stage_i_public_opt_torch"
-    report_root: str = "docs/reports"
+    artifact_root: str = "docs/artifacts/assets/stage_i_public_opt_torch"
+    report_root: str = "docs/artifacts"
     dataset_id: str = UAB_TORCH_DATASET_ID
     profile: str = PUBLIC_OPT_PROFILE
     device: str = "auto"

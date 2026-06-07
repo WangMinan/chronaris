@@ -33,8 +33,8 @@ def parse_args() -> argparse.Namespace:
         default="auto",
     )
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--artifact-root", default="docs/reports/assets/stage_i_runtime_demo")
-    parser.add_argument("--report-root", default="docs/reports/stage_i")
+    parser.add_argument("--artifact-root", default="docs/artifacts/assets/stage_i_runtime_demo")
+    parser.add_argument("--report-root", default="docs/artifacts/stage_i")
     parser.add_argument("--no-window-csv", action="store_true")
     return parser.parse_args()
 

@@ -31,24 +31,24 @@
   - 支持设置 `--vehicle-physics-weight`、`--physiology-physics-weight`、`--physics-huber-delta`
   - 支持设置飞机/生理包络分位 `--vehicle-envelope-quantile`、`--physiology-envelope-quantile`
   - 自动从 `CHRONARIS_INFLUX_*` 或 `docs/SECRETS.md` 解析 Influx 连接信息
-  - 输出报告到 `docs/reports/` 并打印 JSON 摘要
+  - 输出报告到 `docs/artifacts/` 并打印 JSON 摘要
   - 自动追加 `Physics Constraint Diagnostics` 区块
   - 自动追加样本级投影诊断区块（`Sample-Level Projection Diagnostics`）
   - 支持诊断阈值模板与判定输出（`PASS / WARN`）
-  - 输出诊断产物到 `docs/reports/assets/<report-stem>/`：
+  - 输出诊断产物到 `docs/artifacts/assets/<report-stem>/`：
     - `projection_diagnostics_summary.json`
     - `projection_diagnostics_samples.csv`
     - causal fusion 开启时额外输出：
       - `causal_fusion_summary.json`
       - `causal_fusion_samples.csv`
-  - 额外输出可视化图片到 `docs/reports/assets/<report-stem>/`
+  - 额外输出可视化图片到 `docs/artifacts/assets/<report-stem>/`
     - physics 开启时额外输出：
       - `train_validation_physics_loss.png`
       - `constraint_component_breakdown.png`
     - causal fusion 开启时额外输出：
       - `causal_attention_heatmap.png`
   - 自动把图片链接追加到报告的 `Visual Artifacts` 区域
-  - 自动导出模型 checkpoint 到 `docs/reports/assets/<report-stem>/alignment_model_checkpoint.pt`
+  - 自动导出模型 checkpoint 到 `docs/artifacts/assets/<report-stem>/alignment_model_checkpoint.pt`
   - 可选一次运行完成 `none` 与 `zscore_train` 对照（`--compare-with-zscore-train`）
 
 - `run_stage_h_export.py`
@@ -57,7 +57,7 @@
   - 默认导出：
     - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
     - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
-  - 默认写出 `docs/reports/assets/stage_h/<run_id>/` 机器资产和 `docs/reports/stage_h/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/reports/stage_h/stage-h-closure-2026-04-27.md`
+  - 默认写出 `docs/artifacts/assets/stage_h/<run_id>/` 机器资产和 `docs/artifacts/stage_h/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/artifacts/stage_h/stage-h-closure-2026-04-27.md`
   - 自动生成 `run_manifest.json`、`sortie_manifest.json`、`view_manifest.json`
   - 每个 view 自动导出：
     - `feature_bundle.npz`
@@ -133,7 +133,7 @@
     - `subjective_metrics.json`
     - `fold_predictions.csv`
     - confusion matrix / regression scatter PNG
-    - `docs/reports/stage_i/stage-i-<dataset>-<profile>-<date>.md`
+    - `docs/artifacts/stage_i/stage-i-<dataset>-<profile>-<date>.md`
 
 - `run_stage_i_phase3.py`
   - 顺序执行阶段 I `Phase 3` 收口流程：
@@ -143,10 +143,10 @@
     - NASA attention-state 主线 + 消融
     - closure summary / 主报告 / planning gate note
   - 自动输出：
-    - `docs/reports/assets/stage_i/<run_id>/uab_window/`
-    - `docs/reports/assets/stage_i/<run_id>/nasa_attention/`
-    - `docs/reports/assets/stage_i/<run_id>/closure_summary.json`
-    - `docs/reports/stage_i/stage-i-closure-<date>.md`
+    - `docs/artifacts/assets/stage_i/<run_id>/uab_window/`
+    - `docs/artifacts/assets/stage_i/<run_id>/nasa_attention/`
+    - `docs/artifacts/assets/stage_i/<run_id>/closure_summary.json`
+    - `docs/artifacts/stage_i/stage-i-closure-<date>.md`
     - `docs/planning/stage-i-closure-<date>.md`
 
 - `run_stage_i_public_opt.py`
@@ -161,12 +161,12 @@
       - `backend=torch|auto`：
         - 默认 evaluation groups：`heat_the_chair`
         - 当前 heat specialist 候选：`heat_linear_huber_lowdim / heat_mlp_lowdim / heat_residual_correction / heat_affine_calibrated_blend`
-        - 默认 `artifact_root`：`docs/reports/assets/stage_i_public_opt_torch`
+        - 默认 `artifact_root`：`docs/artifacts/assets/stage_i_public_opt_torch`
       - `backend=sklearn`：
         - evaluation groups：`n_back / heat_the_chair`
         - 当前增强 head：`physiology_persistence / ridge_residual_cv / elasticnet_residual / huber_residual`
         - `head_catalog=uab_hybrid` 属于 CPU-heavy historical reproduction，必须显式加 `--allow-cpu-heavy-sklearn`
-        - 默认 `artifact_root`：`docs/reports/assets/stage_i_public_opt`
+        - 默认 `artifact_root`：`docs/artifacts/assets/stage_i_public_opt`
     - `dataset_id=nasa_csm`
       - `profile=window_v2`
       - `track=attention_state classification`
@@ -188,18 +188,18 @@
     - `supervision_granularity=window|session_pooled_broadcast`（torch UAB）
   - 自动输出：
     - sklearn：
-      - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
-      - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
-      - `docs/reports/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
-      - `docs/reports/assets/stage_i_public_opt/<run_id>/run.log`
-      - `docs/reports/assets/stage_i_public_opt/<run_id>/progress.json`
+      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
+      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
+      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
+      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/run.log`
+      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/progress.json`
     - torch UAB：
-      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
-      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
-      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
-      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/run.log`
-      - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/progress.json`
-    - `docs/reports/stage_i/stage-i-public-opt-<run_id>.md`
+      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
+      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
+      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
+      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/run.log`
+      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/progress.json`
+    - `docs/artifacts/stage_i/stage-i-public-opt-<run_id>.md`
   - 当前定位：
     - `NASA attention_state` 主线继续优先引用这里的 `NASA enhanced round 1`
     - `UAB subjective` 当前默认走 heat-only torch-native GPU-first 主线；只有在需要历史复现时，才显式切回 `--backend sklearn`
@@ -235,11 +235,11 @@
     - `supervision_granularity=window|session_pooled_broadcast`
     - `full_candidate_limit|full_group_winner_limit`
   - 自动输出：
-    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
-    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/candidate_leaderboard.csv`
-    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
-    - `docs/reports/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
-    - `docs/reports/stage_i/stage-i-public-opt-<run_id>.md`
+    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
+    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/candidate_leaderboard.csv`
+    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
+    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
+    - `docs/artifacts/stage_i/stage-i-public-opt-<run_id>.md`
 
 - `run_stage_i_deep_baseline.py`
   - 当前已支持 `chronaris_public_fusion`
@@ -264,14 +264,14 @@
     - `candidate_leaderboard.csv`
     - `run.log`
     - `progress.json`
-    - `docs/reports/stage_i/stage-i-public-fusion-screen-<run_id>.md`
+    - `docs/artifacts/stage_i/stage-i-public-fusion-screen-<run_id>.md`
 
 - `run_stage_i_public_mainline_report.py`
   - 聚合 `UAB`、`NASA`、`MulT / ContiFormer` 与当前 `public_fusion` 结果，生成统一公开主线报告
   - 当前用于固化 `NASA closed, UAB partial` 这类 paper-facing 状态判断
   - 自动输出：
-    - `docs/reports/assets/stage_i_public_mainline/<run_id>/public_mainline_summary.json`
-    - `docs/reports/stage_i/stage-i-public-mainline-<run_id>.md`
+    - `docs/artifacts/assets/stage_i_public_mainline/<run_id>/public_mainline_summary.json`
+    - `docs/artifacts/stage_i/stage-i-public-mainline-<run_id>.md`
 
 - `run_stage_i_support.py`
   - 聚合既有 `E/F/G/H + Phase 2 + private no-mask` 资产，生成论文证据 support / ablation 报告
@@ -280,9 +280,9 @@
     - `support_matrix.csv`
     - `ablation_matrix.csv`
     - `support_overview.png`
-    - `docs/reports/stage_i/stage-i-alignment-support-<run_id>.md`
-    - `docs/reports/stage_i/stage-i-causal-support-<run_id>.md`
-    - `docs/reports/stage_i/stage-i-ablation-support-<run_id>.md`
+    - `docs/artifacts/stage_i/stage-i-alignment-support-<run_id>.md`
+    - `docs/artifacts/stage_i/stage-i-causal-support-<run_id>.md`
+    - `docs/artifacts/stage_i/stage-i-ablation-support-<run_id>.md`
 
 - `run_stage_i_runtime_demo.py`
   - 运行 thesis-facing 最小 runtime/demo 入口
@@ -293,7 +293,7 @@
   - 自动输出：
     - `runtime_demo_summary.json`
     - 可选 `runtime_demo_windows.csv`
-    - `docs/reports/stage_i/stage-i-runtime-demo-<run_id>.md`
+    - `docs/artifacts/stage_i/stage-i-runtime-demo-<run_id>.md`
 
 - `run_stage_i_anchor.py`
   - 基于 frozen `Stage H` 真实双流资产导出关键工况锚点
@@ -302,10 +302,10 @@
   - 自动输出：
     - `anchor_manifest.json`
     - `anchor_windows.csv`
-    - `docs/reports/stage_i/stage-i-anchor-<run_id>.md`
+    - `docs/artifacts/stage_i/stage-i-anchor-<run_id>.md`
 
 - `run_stage_i_case_study.py`
-  - 消费 `docs/reports/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
+  - 消费 `docs/artifacts/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
   - 当前 causal-fusion torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
   - 当前固定跑：
     - `projection_refusion_baseline`
@@ -318,5 +318,5 @@
     - `view_summary.csv`
     - `ablation_summary.csv`
     - `window_rankings.csv`
-    - `docs/reports/stage_i/stage-i-case-study-phase2-<date>.md`
-  - 当前真实主线输出根目录：`docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+    - `docs/artifacts/stage_i/stage-i-case-study-phase2-<date>.md`
+  - 当前真实主线输出根目录：`docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`

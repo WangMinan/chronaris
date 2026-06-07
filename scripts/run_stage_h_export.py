@@ -115,7 +115,7 @@ def _default_run_id() -> str:
 
 
 def _default_report_path() -> str:
-    return f"docs/reports/stage_h/stage-h-export-v1-{datetime.now().date().isoformat()}.md"
+    return f"docs/artifacts/stage_h/stage-h-export-v1-{datetime.now().date().isoformat()}.md"
 
 
 def _build_default_scope_overrides(use_full_clip_scope: bool) -> dict[str, tuple[datetime, datetime]]:
@@ -130,7 +130,7 @@ def _build_default_scope_overrides(use_full_clip_scope: bool) -> dict[str, tuple
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--output-root", default="docs/reports/assets/stage_h")
+    parser.add_argument("--output-root", default="docs/artifacts/assets/stage_h")
     parser.add_argument("--report-path", default=_default_report_path())
     parser.add_argument("--sortie-id", dest="sortie_ids", action="append")
     parser.add_argument(

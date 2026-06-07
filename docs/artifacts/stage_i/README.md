@@ -2,12 +2,13 @@
 
 更新时间：2026-06-07
 
-本目录保留原 `docs/reports/stage_i` 的报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [stage/stage-i/README.md](../stage/stage-i/README.md)。
+本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
 ## 当前主入口
 
-- 中期证据整编：`stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md`
+- 中期证据整编：`stage-i-midterm-20260607T-stage-i-midterm-r3.md`
 - 历史 Stage I closure：`stage-i-closure-2026-04-30.md`
+- Phase C thesis weak-label evidence：`thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
 - 当前公开主线：`stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
 - UAB robust-prior adapter：`stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
 - NASA enhanced round 1：`stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`

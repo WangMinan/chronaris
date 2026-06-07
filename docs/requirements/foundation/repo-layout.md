@@ -25,7 +25,6 @@ chronaris/
 │  ├─ README.md
 │  ├─ STATE.md
 │  ├─ implementation/
-│  │  ├─ PLAN.md
 │  │  ├─ TASKS.md
 │  │  └─ notes/
 │  ├─ requirements/
@@ -60,7 +59,7 @@ chronaris/
 
 ### `docs/implementation`
 
-执行入口。`PLAN.md` 回答“按什么阶段推进”，`TASKS.md` 回答“当前先做什么”，`notes/` 保存历史计划、closure 和必要进度笔记。
+执行入口。`TASKS.md` 负责总路线、阶段结构、当前任务队列和默认工作方式，`notes/` 保存历史计划、closure 和必要进度笔记。
 
 ### `docs/requirements`
 
@@ -79,12 +78,10 @@ Code review 产物入口。按阶段保存 review 范围、发现、修复状态
 为避免历史脚本和测试立即失效，以下旧路径保留为符号链接：
 
 - `docs/planning` -> `docs/implementation/notes`
-- `docs/reports` -> `docs/artifacts`
 - `docs/foundation` -> `docs/requirements/foundation`
 - `docs/models` -> `docs/requirements/model-contracts`
-- `docs/选题报告与基金申请书` -> `docs/requirements/选题报告与基金申请书`
 
-新文档和新任务默认使用新目录；旧路径只作为兼容入口。
+后续统一使用 `docs/artifacts` 与 `docs/requirements/选题报告与基金申请书`。
 
 ## 5. 代码层职责
 

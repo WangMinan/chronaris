@@ -2,7 +2,7 @@
 
 更新时间：2026-06-07
 
-本目录保存旧 `docs/implementation/notes` 的计划、阶段收口记录和必要进度笔记。当前主动执行入口已经上移到 [../PLAN.md](../PLAN.md) 与 [../TASKS.md](../TASKS.md)。
+本目录保存旧 `docs/implementation/notes` 的计划、阶段收口记录和必要进度笔记。当前主动执行入口已经统一到 [../TASKS.md](../TASKS.md)。
 
 ## 当前仍需要引用的笔记
 

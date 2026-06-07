@@ -25,8 +25,8 @@ class StageIRuntimeDemoConfig:
 
     run_id: str
     source_path: str
-    artifact_root: str = "docs/reports/assets/stage_i_runtime_demo"
-    report_root: str = "docs/reports/stage_i"
+    artifact_root: str = "docs/artifacts/assets/stage_i_runtime_demo"
+    report_root: str = "docs/artifacts/stage_i"
     source_type: str = "auto"
     export_window_csv: bool = True
 

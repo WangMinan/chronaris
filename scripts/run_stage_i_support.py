@@ -36,8 +36,8 @@ def _default_run_id() -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--artifact-root", default="docs/reports/assets/stage_i_support")
-    parser.add_argument("--report-root", default="docs/reports")
+    parser.add_argument("--artifact-root", default="docs/artifacts/assets/stage_i_support")
+    parser.add_argument("--report-root", default="docs/artifacts")
     parser.add_argument("--alignment-e-summary-path", default=DEFAULT_ALIGNMENT_E_SUMMARY_PATH)
     parser.add_argument("--alignment-f-summary-path", default=DEFAULT_ALIGNMENT_F_SUMMARY_PATH)
     parser.add_argument("--causal-g-summary-path", default=DEFAULT_CAUSAL_G_SUMMARY_PATH)

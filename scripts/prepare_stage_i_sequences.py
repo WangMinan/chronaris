@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dataset-root", default="/home/wangminan/dataset/chronaris")
     parser.add_argument(
         "--stage-h-run-manifest",
-        default="docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
+        default="docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
     )
     parser.add_argument("--profile", default=None)
     parser.add_argument("--target-steps", type=int, default=64)

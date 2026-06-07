@@ -25,14 +25,14 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", required=True)
     parser.add_argument("--run-id", default=None)
-    parser.add_argument("--output-root", default="docs/reports/assets/stage_i")
+    parser.add_argument("--output-root", default="docs/artifacts/assets/stage_i")
     parser.add_argument(
         "--prior-uab-session-artifact-root",
-        default="docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab",
+        default="docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab",
     )
     parser.add_argument(
         "--report-path",
-        default=f"docs/reports/stage_i/stage-i-closure-{datetime.now().date().isoformat()}.md",
+        default=f"docs/artifacts/stage_i/stage-i-closure-{datetime.now().date().isoformat()}.md",
     )
     parser.add_argument(
         "--planning-path",

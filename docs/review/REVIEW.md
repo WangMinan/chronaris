@@ -8,7 +8,7 @@
 
 - 父入口：本文档。
 - 阶段目录：[stage/](stage/)。
-- 子目录命名与 [../implementation/PLAN.md](../implementation/PLAN.md) 的阶段一致。
+- 子目录命名与 [../implementation/TASKS.md](../implementation/TASKS.md) 的阶段一致。
 - 每次 review 应说明：
   - review 范围
   - 关键发现

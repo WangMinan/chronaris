@@ -57,7 +57,7 @@ from chronaris.pipelines.stage_i import stage_i_public_fusion_screen as public_f
 
 REAL_DATASET_ROOT = Path("/home/wangminan/dataset/chronaris")
 REAL_STAGE_H_RUN_MANIFEST = Path(
-    "/home/wangminan/projects/chronaris/docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
+    "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
 )
 ENABLE_LIVE_SEQUENCE_TESTS = (
     os.environ.get("CHRONARIS_ENABLE_STAGE_I_LIVE_SEQUENCE_TESTS") == "1"

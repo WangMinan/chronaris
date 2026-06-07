@@ -51,7 +51,7 @@ def main() -> int:
 
     report_path = REPO_ROOT / (
         args.report_path
-        or f"docs/reports/stage_i/stage-i-{args.dataset or dataset_id}-{profile}-{datetime.now().date().isoformat()}.md"
+        or f"docs/artifacts/stage_i/stage-i-{args.dataset or dataset_id}-{profile}-{datetime.now().date().isoformat()}.md"
     )
     report_markdown = render_stage_i_baseline_report(
         artifact_root=artifact_root,

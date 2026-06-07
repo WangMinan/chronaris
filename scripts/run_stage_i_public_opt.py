@@ -27,8 +27,8 @@ from chronaris.pipelines.stage_i.stage_i_run_observer import (  # noqa: E402
     configure_stage_i_cli_logging,
 )
 
-DEFAULT_SKLEARN_ARTIFACT_ROOT = "docs/reports/assets/stage_i_public_opt"
-DEFAULT_TORCH_ARTIFACT_ROOT = "docs/reports/assets/stage_i_public_opt_torch"
+DEFAULT_SKLEARN_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_public_opt"
+DEFAULT_TORCH_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_public_opt_torch"
 
 
 def _default_run_id(*, dataset_id: str, backend: str) -> str:
@@ -43,7 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-id")
     parser.add_argument("--prepared-artifact-root", required=True)
     parser.add_argument("--artifact-root")
-    parser.add_argument("--report-root", default="docs/reports")
+    parser.add_argument("--report-root", default="docs/artifacts")
     parser.add_argument("--dataset-id", default="uab_workload_dataset")
     parser.add_argument("--profile", default="window_v2")
     parser.add_argument("--seed", type=int, default=42)

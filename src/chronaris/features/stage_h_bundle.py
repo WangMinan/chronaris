@@ -120,6 +120,21 @@ def _load_view(
     artifact_paths = view_manifest.get("artifact_paths", {})
     if not isinstance(artifact_paths, Mapping):
         raise ValueError("view_manifest.artifact_paths must be a mapping.")
+    resolved_artifact_paths = {
+        key: (
+            str(
+                _resolve_artifact_path(
+                    value,
+                    output_root=output_root,
+                    run_root=run_root,
+                    colocated_with=Path(view_manifest_path).parent,
+                )
+            )
+            if isinstance(value, (str, Path)) and value
+            else value
+        )
+        for key, value in artifact_paths.items()
+    }
     feature_bundle_path = artifact_paths.get("feature_bundle_npz")
     if not isinstance(feature_bundle_path, str) or not feature_bundle_path:
         raise ValueError("view manifest is missing artifact_paths.feature_bundle_npz.")
@@ -139,7 +154,7 @@ def _load_view(
         sortie_id=str(view_manifest["sortie_id"]),
         pilot_id=int(view_manifest["pilot_id"]),
         manifest_path=view_manifest_path,
-        feature_bundle_path=feature_bundle_path,
+        feature_bundle_path=str(resolved_artifact_paths["feature_bundle_npz"]),
         projection_diagnostics_verdict=str(view_manifest["projection_diagnostics_verdict"]),
         sample_ids=_resolve_sample_ids(bundle, view_manifest),
         sample_partitions=_resolve_sample_partitions(bundle),
@@ -151,7 +166,7 @@ def _load_view(
         reference_offsets_s=bundle["reference_offsets_s"],
         attention_weights=bundle["attention_weights"],
         vehicle_event_scores=bundle["vehicle_event_scores"],
-        view_manifest=view_manifest,
+        view_manifest={**dict(view_manifest), "artifact_paths": resolved_artifact_paths},
         export_mode=str(view_manifest.get("export_mode") or "per_view_preview_training"),
         backbone_lineage=dict(view_manifest.get("backbone_lineage", {})),
     )
@@ -192,13 +207,27 @@ def _resolve_artifact_path(
         raise ValueError("artifact path must be a string or Path.")
     candidate = Path(path)
     if candidate.is_absolute():
+        rewritten = _rewrite_legacy_reports_path(candidate)
+        if rewritten.exists():
+            return rewritten
         return candidate
     cwd_candidate = Path.cwd() / candidate
     if cwd_candidate.exists():
         return cwd_candidate
+    rewritten_candidate = _rewrite_legacy_reports_path(candidate)
+    rewritten_cwd_candidate = Path.cwd() / rewritten_candidate
+    if rewritten_cwd_candidate.exists():
+        return rewritten_cwd_candidate
     if isinstance(output_root, str) and run_root is not None:
         try:
             return run_root / candidate.relative_to(Path(output_root))
+        except ValueError:
+            pass
+        rewritten_output_root = _rewrite_legacy_reports_path(Path(output_root))
+        try:
+            resolved = run_root / rewritten_candidate.relative_to(rewritten_output_root)
+            if resolved.exists():
+                return resolved
         except ValueError:
             pass
     if colocated_with is not None:
@@ -206,3 +235,10 @@ def _resolve_artifact_path(
         if sibling.exists():
             return sibling
     return cwd_candidate
+
+
+def _rewrite_legacy_reports_path(path: Path) -> Path:
+    path_str = str(path)
+    if "docs/reports" not in path_str:
+        return path
+    return Path(path_str.replace("docs/reports", "docs/artifacts", 1))

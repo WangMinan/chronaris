@@ -20,8 +20,8 @@ class StageIPublicMainlineReportConfig:
     uab_summary_path: str
     nasa_summary_path: str
     deep_comparison_summary_path: str
-    artifact_root: str = "docs/reports/assets/stage_i_public_mainline"
-    report_root: str = "docs/reports"
+    artifact_root: str = "docs/artifacts/assets/stage_i_public_mainline"
+    report_root: str = "docs/artifacts"
     extra_uab_summary_paths: tuple[str, ...] = ()
     public_fusion_screen_summary_path: str | None = None
     public_fusion_nasa_confirm_summary_path: str | None = None
