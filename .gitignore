@@ -27,6 +27,8 @@ dist/
 .env
 .env.*
 artifacts/
+!/docs/artifacts/
+!/docs/artifacts/**
 outputs/
 runs/
 logs/

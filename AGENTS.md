@@ -12,245 +12,75 @@
 
 ## 1. 项目定位
 
-`chronaris` 是“航空人机异构时序数据连续对齐与语义融合”仓库。整个项目都在为基于 `docs/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx` 的我的毕业设计服务。
+`chronaris` 是“航空人机异构时序数据连续对齐与语义融合”仓库，服务于基于 [论文选题报告表](docs/requirements/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx) 的毕业设计。
 
-默认承接：
+本仓库默认承接下游研究与原型实现、数据读取组织、建模、导出、验证；默认不承接历史接收器重写、上游入库链路重建、原始大数据文件入仓。
 
-- 下游研究与原型实现
-- 数据读取、组织、建模、导出、验证
+## 2. 文档事实源
 
-默认不承接：
+后续协作不要把阶段状态继续压在 `AGENTS.md`。请按下面入口读取事实：
 
-- 历史文件接收器重写
-- 上游入库链路重建
-- 原始大数据文件入仓
+- 总导航：[docs/README.md](docs/README.md)
+- 当前状态：[docs/STATE.md](docs/STATE.md)
+- 论文需求与仓库能力：[docs/requirements/SPEC.md](docs/requirements/SPEC.md)
+- 执行计划：[docs/implementation/PLAN.md](docs/implementation/PLAN.md)
+- 当前任务队列：[docs/implementation/TASKS.md](docs/implementation/TASKS.md)
+- 进度与历史计划笔记：[docs/implementation/notes/README.md](docs/implementation/notes/README.md)
+- 产物索引：[docs/artifacts/ARTIFACTS.md](docs/artifacts/ARTIFACTS.md)
+- Review 产物入口：[docs/review/REVIEW.md](docs/review/REVIEW.md)
 
-上游现状默认视为：
+`docs/planning`、`docs/reports`、`docs/foundation`、`docs/models` 和 `docs/选题报告与基金申请书` 仍保留为兼容入口；AI coding 的当前入口以 `docs/implementation`、`docs/artifacts`、`docs/requirements` 为准。
 
-- 生理数据、飞机时序数据已进入 InfluxDB
-- 业务元数据已进入 MySQL
+## 3. 研究主线
 
-## 2. 研究主线
+默认沿这条链路推进：
 
-后续工作默认沿这条链路推进：
+1. 读取指定架次的人机多源数据及元信息。
+2. 建立统一 schema、统一时间参考和统一样本组织。
+3. 实现双流连续潜态建模。
+4. 实现物理一致性约束时间对齐。
+5. 实现因果掩码跨模态融合。
+6. 输出标准化融合特征与中间态接口。
+7. 面向空中失能风险分析、认知负荷评估、飞行事件复盘做对比、消融和案例验证。
 
-1. 读取指定架次的人机多源数据及元信息
-2. 建立统一 schema、统一时间参考和统一样本组织
-3. 实现双流连续潜态建模
-4. 实现物理一致性约束时间对齐
-5. 实现因果掩码跨模态融合
-6. 输出标准化融合特征与中间态接口
-7. 面向典型任务开展对比、消融和案例验证
+## 4. 代码边界
 
-典型任务：
+新增可复用逻辑默认进入 `src/chronaris`：
 
-- 空中失能风险分析
-- 认知负荷评估
-- 飞行事件复盘
-
-## 3. 事实优先级
-
-如果在本地开发环境，默认按下面顺序判断事实：
-
-1. 当前仓库代码、文档、配置
-2. `D:\code\zorathos\zorathos-data-model`
-3. `D:\code\zorathos\zorathos-data-receiver`
-4. 本地真实样例与 `D:\0_大学\2024.9\实验室\数据中台\0_实采数据\AGENTS.md`
-5. 选题报告与基金申请书
-
-冲突时：
-
-- 当前仓库内已沉淀结论优先
-- 外部源码事实优先于论文式表述
-- 上游链路问题优先回看 `zorathos`
-
-## 4. 当前关键事实
-
-- 工作语言：中文
-- 理论依据：
-  - `docs/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx`
-  - `docs/选题报告与基金申请书/西北工业大学硕士研究生实践创新能力培育基金项目申请书.docx`
-- 生理流时间精度：微秒级
-- 飞机流时间精度：毫秒级
-- 飞机原始时间只有时分秒，完整日期来自 `flight_batch.fly_date`
-- 飞机完整时间拼接沿用 `TimeSequenceProcessor` 跨日规则
-- 当前主线 sortie：
-  - `20251005_四01_ACT-4_云_J20_22#01`
-  - `20251002_单01_ACT-8_翼云_J16_12#01`
-- 当前应优先引用的事实源：
-  - Stage H 收口：`docs/reports/stage_h/stage-h-closure-2026-04-27.md`
-  - Stage I 公开数据收口：`docs/reports/stage_i/stage-i-closure-2026-04-30.md`
-  - Stage I 当前阶段路线图：`docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md`
-  - Stage I 当前详细编码计划：`docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`
-  - Stage I 当前 gap 评估：`docs/planning/thesis-coding-gap.md`
-  - Stage I 主线迁移历史快照：`docs/planning/stage-i-mainline-transition-2026-05-04.md`
-  - Stage I 历史计划归档索引：`docs/planning/archive/stage_i/README.md`
-  - Stage I 论文证据 support：`docs/reports/stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md`
-  - Stage I public opt NASA enhanced round 1：`docs/reports/stage_i/stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
-  - Stage I public opt UAB torch：`docs/reports/stage_i/stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
-  - Stage I public opt UAB robust-prior：`docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
-  - Stage I public mainline：`docs/reports/stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
-  - Stage I 报告索引与历史快照：`docs/reports/stage_i/README.md`
-  - Private 报告索引与历史快照：`docs/reports/private/README.md`
-  - 当前 `chronaris_opt` package：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
-- 当前已验证：
-  - 目标总线 measurement：`BUS6000019110020`
-  - 重点生理 measurement：`eeg`、`spo2`
-  - overlap-focused preview 在 `5s` 窗口下可生成 `25` 个联合窗口
-  - Stage H `validation` profile 已稳定导出 `3` 个双流 view，`load_stage_h_feature_run()` 可直接读取 run manifest
-  - Stage I 公开 benchmark `Phase 0/1/2/3` 已完成并收口
-  - `MulT / ContiFormer` 真实 sortie smoke 与公开数据 full LOSO 已完成，作为历史对照保留
-  - `chronaris_opt` 已在鼎新私有 proxy benchmark 的 `T1/T2/T3` 三任务上达到当前对照矩阵最优
-  - `chronaris_opt` 真实 package 已固化，可作为当前最佳私有工件引用
-  - 论文证据 support `alignment / causal / six-path ablation` 已落盘到 `docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/`
-  - `chronaris public opt` 已有 `UAB subjective regression`、`UAB torch-native full LOSO` 与 `NASA attention_state` 三条真实实跑报告
-  - `chronaris public opt` 增强版 `NASA round 1` 已在 `benchmark_only / loft_only / combined` 三组上优于现有 `MulT / ContiFormer`
-  - `UAB torch-native full LOSO` 已补出 `device=auto -> runtime_device=cuda` confirm；该路线仍未超过 `n_back RMSE < 4.6541` 与 `heat_the_chair RMSE < 1.4568` 双门槛
-  - `UAB robust-prior adapter` 已用 fold-safe `target_prior_median` 将 `heat_the_chair` 推到 `RMSE=1.4331 / MAE=1.0740`
-  - 当前 unified public mainline 状态为 `public opt closed`
-  - `chronaris_public_fusion` 当前 `NASA combined macro-F1` confirm 为 `0.3348`，未达到 `0.40` promote 门槛
-  - `Stage I thesis mainline Phase A` 首轮代码收敛已完成：公开 sequence / deep wrapper / report contract 已统一写成 `context proxy / public adapter evidence`
-  - `Stage I thesis mainline Phase A` 已把私有 `T1/T2/T3` 的 manifest / summary / report contract 统一写成 `private proxy benchmark / proxy task`
-  - `Stage I thesis mainline Phase B` 首轮代码收敛已完成：`stage_i_backbone_train`、`checkpoint_path + inference_only` 的 `Stage H export`、以及 `export_mode / backbone_lineage` manifest contract 已落地
-  - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view
-
-## 5. 目录与边界
-
-新增代码默认遵守：
-
-- `src/chronaris/access`: InfluxDB / MySQL 访问
-- `src/chronaris/schema`: 统一 schema
-- `src/chronaris/dataset`: 样本组织、窗口切分、时间基准
-- `src/chronaris/models/alignment`: 连续对齐
-- `src/chronaris/models/fusion`: 因果融合
-- `src/chronaris/features`: 特征导出与中间态
-- `src/chronaris/pipelines`: 训练 / 导出 / 验证流程
-- `src/chronaris/serving`: 服务化或近实时接口
-- `src/chronaris/evaluation`: 对比、消融、案例分析
+- `access`：InfluxDB / MySQL 访问。
+- `schema`：统一 schema。
+- `dataset`：样本组织、窗口切分、时间基准。
+- `models/alignment`：连续对齐与物理约束。
+- `models/fusion`：因果融合与事件级语义融合。
+- `features`：特征导出与中间态。
+- `pipelines`：训练、导出、验证流程。
+- `serving`：离线或准实时推理接口。
+- `evaluation`：对比、消融、案例分析。
 
 约束：
 
-- 可复用逻辑必须进入 `src/chronaris`
-- `scripts` 不承载核心业务实现
-- notebook 只用于探索，不能成为唯一事实来源
-- `docs` 默认使用中文
+- `scripts` 只承载 CLI 编排，不承载核心业务实现。
+- notebook 只用于探索，不能成为唯一事实来源。
+- `docs` 默认使用中文。
+- 大于 500 行的文件建议拆分，大于 800 行的文件必须拆分。
 
-## 6. 当前阶段
+## 5. 环境约定
 
-当前仓库已完成：
+后续编码、测试、阶段脚本实跑默认使用服务器/WSL 的 `chronaris` conda 环境：
 
-- 阶段 B preview 路径
-- 阶段 C 真实重叠核验
-- 阶段 E0 preview 路径
-- 阶段 E/F/G(min)/H 收口
-- 阶段 I 公开 benchmark `Phase 0 + Phase 1 + Phase 2 + Phase 3` 收口
-- 第三方 deep baseline 对照（真实 sortie smoke + UAB/NASA full LOSO）
-- 鼎新私有 proxy benchmark `chronaris_opt` 最优性验证
-- `chronaris_opt` package 固化
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python
+```
 
-当前默认判断：
+不要因为 shell 停在 `base` 就直接运行 `python`。如需 MySQL 密码、InfluxDB token、连接串或 sudo 信息，可参考已被 `.gitignore` 纳管的 `docs/SECRETS.md`，但不要把其中内容写入其他文件。
 
-- `阶段 G(min) 已完成`
-- `阶段 H 已完成收口（可进入阶段 I）`
-- `阶段 I 已完成收口`
-- `当前鼎新私有任务验证主线 = chronaris_opt`
-- `E/F/G/H 收口工件保留为 chronaris_opt 的历史基线与导出依赖，不删除`
+当前数据库服务默认按 Docker 映射到本机端口处理：MySQL `127.0.0.1:3306`，InfluxDB `127.0.0.1:8086`。
 
-阶段 E/F/G/H 默认参考：
+## 6. 执行规则
 
-- `docs/planning/coding-roadmap.md`
-- `docs/planning/stage-e-closure-2026-04-21.md`
-- `docs/planning/stage-f-closure-2026-04-22.md`
-- `docs/planning/stage-g-closure-2026-04-22.md`
-- `docs/planning/stage-h-closure-2026-04-27.md`
-- `docs/models/stage-e-prototype-design.md`
-- `docs/models/stage-e-reference-repos.md`
-
-## 7. 环境约定
-
-### 本地开发环境
-
-- 平台：Windows
-- 默认环境：`D:\env\anaconda3\envs\chronaris`
-- 默认要求：除非明确说明只做静态文本处理，否则本仓库相关的 Python 运行、测试、脚本验证默认都在 `chronaris` conda 环境内执行，不要默认落到 `base`
-- 推荐启动方式：
-  - Windows：`conda activate chronaris`
-  - WSL / Linux 显式解释器：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
-- 主要用途：
-  - 文档整理
-  - 协议与纯 Python 模块开发
-  - CPU 安全测试
-
-注意：
-
-- 当前本机 `numpy` / `torch` 包虽可安装，但运行时并不稳定
-- 本机不作为可靠训练环境，也不作为严格的 `numpy/torch` runtime 验证环境
-
-### 远程训练环境
-
-- 首选：实验室服务器 `10.70.4.57`
-- 用户：`wangminan`
-- 训练平台：WSL Ubuntu 22.04 + RTX 4090
-- 备用：家里工作站 WSL Ubuntu 22.04 + RTX 4070 Ti
-- 默认环境：`/home/wangminan/env/anaconda3/envs/chronaris`
-- 强制约定：远程环境下的训练、评测、artifact 构建、`unittest`、阶段脚本实跑，默认一律使用 `chronaris` conda 环境；不要因为 shell 停在 `base` 就直接运行
-- 推荐执行方式：
-  - 先激活：`conda activate chronaris`
-  - 或显式调用：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python <script>`
-
-当前已知：
-
-- 从 windows 机器可探测到 SSH 入口，已配置公钥免密
-- `chronaris` 环境已可用并能执行阶段 E runtime 测试与真实训练回归
-- 如果出现“当前 namespace 正确但缺包”的情况，先检查是否误用了 `base` 或其他解释器，再判断是否真缺依赖
-- 当前数据库服务跑在 Docker 中，但 MySQL `3306` 与 InfluxDB `8086` 已映射到本机端口；真实验证默认优先使用 `127.0.0.1` 访问，不要先假设宿主机原生服务。
-
-环境依赖文件位置：
-
-- `configs/environments/chronaris-stage-e-cpu.yml`
-- `configs/environments/chronaris-stage-e-gpu.yml`
-- `configs/environments/chronaris-stage-i-cpu.yml`
-- `configs/environments/chronaris-stage-i-gpu.yml`
-
-## 8. 编码规范
-
-- 以提高最终可读性为标准，大于500行的文件建议拆分，大于800行的文件请一定拆分。
-
-## 9. 安全约束
-
-- 对于远程训练环境，如需 MySQL 数据库密码、sudo 用户名与密码、 InfluxDB token、连接串，请尽管参考并使用 `docs/SECRETS.md`， 该文件已经被 `.gitignore` 纳管，但请不要把对应信息写入其他文件。
-- 不要把原始大数据复制进仓库
-- 临时验证脚本中可复用部分要及时回收进正式模块
-- 实验尽量保留可复现配置、关键指标和架次范围
-
-## 10. 默认工作方式
-
-- 继续研究主线时，默认先看 `docs/planning/coding-roadmap.md`
-- 需要规划“单轮会话如何收敛”时，默认同步参考 `docs/planning/iteration-playbook.md`
-- 运行任何 Python 脚本、测试、基准或收口命令前，默认先确认解释器属于 `chronaris` 环境；若有歧义，优先使用显式解释器路径 `/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
-- 阶段 E 已收口，默认冻结阶段 E 基线（仅修复缺陷，不再扩展范围）
-- 阶段 F 已收口，默认冻结阶段 F 基线（仅修复缺陷，不再扩展范围）
-- 阶段 G 已收口，默认冻结 G(min) 基线（仅修复缺陷，不提前扩展完整因果融合）
-- 阶段 H 已收口，默认冻结 Stage H 导出 contract（仅修复缺陷，不再扩展范围）
-- 阶段 I 当前默认优先：
-  - 当前最高优先级是按 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md` 收敛论文主线，而不是继续扩大旧 benchmark
-  - `chronaris_opt` 仍是当前鼎新私有任务验证主线，但应明确把它写成 `private proxy evidence`
-  - 保持 `load_stage_h_feature_run()` 与 `Stage H all-window` contract 稳定：它们仍是现有私有资产和历史基线的输入依赖
-  - 保持 `E/F/G(min)/H` 导出路径稳定：它们是现有主线重构前的历史基线与输入依赖，不直接废弃
-  - 继续把 UAB/NASA `Phase 0/1/2/3` 与 `public opt closed` 视为公开支撑证据，不把它们写成 thesis 双流主线 fully closed
-  - 明确公开第二模态当前是 `context proxy / adapter evidence`，不是论文里严格意义上的真实航电流
-  - 明确 `T1/T2/T3` 是 `proxy benchmark`，后续要和 `risk / workload / replay` 一类 thesis task builder 拆开
-  - 明确 `20251110...` vehicle-only partial bundle 只用于单流预训练/补充诊断，不作为双流融合 view
-  - 当前公开主线事实已冻结为 `public opt closed`；UAB `heat_the_chair` 的 promote 来源是 `uab_public_adapter / target_prior_median`，不能包装成双流连续对齐或因果融合模块本体的直接胜利
-  - 不再继续扩大 CPU-heavy `sklearn` 或 torch UAB 候选搜索；若后续继续扩公开支线，仅保留 `NASA-first public_fusion confirm` 的有限探索，`combined macro-F1 <= 0.40` 即停止
-- 切到远程环境前，先同步代码、测试和文档
-- 在编写和维护 `docs` 目录下的文档时保持简洁，及时清理冗余文档
-
-## 11. 共性执行模板
-
-跨阶段默认使用同一套执行模板（详见 `docs/planning/iteration-playbook.md`）：
-
-1. 单轮会话节奏：`目标锁定 -> 代码实现 -> 测试闭环 -> 文档回写 -> 冗余清理`
-2. 阶段收口 gate：`真实实跑`、`判据可复现`、`测试全通过`、`状态文档一致`
-3. 文档治理：阶段状态只在 `coding-roadmap.md` 维护；阶段收口细节只在对应 closure 文档维护
-4. 测试治理：测试文件按域合并，默认将 `test_*.py` 规模控制在 `8-12` 个
+- 开始任何阶段工作前，先读 [docs/STATE.md](docs/STATE.md)、[docs/implementation/PLAN.md](docs/implementation/PLAN.md) 和 [docs/implementation/TASKS.md](docs/implementation/TASKS.md)。
+- 需要判断论文目标或 Word 原始材料时，先读 [docs/requirements/SPEC.md](docs/requirements/SPEC.md)；解析 `.docx` 必须使用 `$docx` skill 或文档插件。
+- 需要引用报告、图、CSV、checkpoint、manifest 时，先读 [docs/artifacts/ARTIFACTS.md](docs/artifacts/ARTIFACTS.md)。
+- 需要做 code review 时，把计划和结果落到 [docs/review/REVIEW.md](docs/review/REVIEW.md) 及对应阶段子目录。
+- 每轮实现默认按 `目标锁定 -> 代码实现 -> 测试闭环 -> 文档回写 -> 冗余清理` 收敛。
+- 阶段收口必须满足：真实实跑、判据可复现、测试通过、状态文档一致。
