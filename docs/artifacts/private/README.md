@@ -2,16 +2,16 @@
 
 更新时间：2026-06-07
 
-本目录保留原 `docs/reports/private` 的私有 benchmark 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
+本目录保存私有 benchmark 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
 ## 当前主入口
 
-- `private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md`
-- `private-optimized-package-20260504T120000Z-stage-i-private-opt-package.md`
+- `private-optimization-summary-20260607T-stage-i-private-opt-package-r2.md`
+- `private-optimized-package-20260607T-stage-i-private-opt-package-r2.md`
 
 当前 `chronaris_opt` package：
 
-- [../assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json](../assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json)
+- [../assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](../assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 
 ## 引用规则
 

@@ -53,7 +53,7 @@ class StageIBackboneTrainConfig:
     """Configuration for one reusable backbone-training run."""
 
     run_id: str
-    output_root: str | Path = "docs/reports/assets/stage_i_backbone"
+    output_root: str | Path = "docs/artifacts/assets/stage_i_backbone"
     preview_config: AlignmentPreviewConfig = field(
         default_factory=_default_backbone_preview_config
     )

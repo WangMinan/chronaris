@@ -708,7 +708,7 @@ class StageIPublicOptTest(unittest.TestCase):
             config.feature_profiles,
             ("physiology_lowdim",),
         )
-        self.assertTrue(config.artifact_root.endswith("docs/reports/assets/stage_i_public_opt_torch"))
+        self.assertTrue(config.artifact_root.endswith("docs/artifacts/assets/stage_i_public_opt_torch"))
         self.assertEqual(payload["backend"], "torch")
         self.assertEqual(payload["runtime_device"], "cuda")
 
@@ -734,7 +734,7 @@ class StageIPublicOptTest(unittest.TestCase):
         torch_runner.assert_not_called()
         config = sklearn_runner.call_args.args[0]
         self.assertEqual(config.dataset_id, "nasa_csm")
-        self.assertTrue(config.artifact_root.endswith("docs/reports/assets/stage_i_public_opt"))
+        self.assertTrue(config.artifact_root.endswith("docs/artifacts/assets/stage_i_public_opt"))
         self.assertEqual(payload["backend"], "sklearn")
 
     def test_public_opt_script_supports_sklearn_uab_hybrid_catalog(self) -> None:
@@ -764,7 +764,7 @@ class StageIPublicOptTest(unittest.TestCase):
         config = sklearn_runner.call_args.args[0]
         self.assertEqual(config.dataset_id, "uab_workload_dataset")
         self.assertEqual(config.head_catalog, "uab_hybrid")
-        self.assertTrue(config.artifact_root.endswith("docs/reports/assets/stage_i_public_opt"))
+        self.assertTrue(config.artifact_root.endswith("docs/artifacts/assets/stage_i_public_opt"))
         self.assertEqual(payload["backend"], "sklearn")
 
     def test_public_opt_script_rejects_uab_hybrid_without_cpu_heavy_override(self) -> None:
@@ -1056,7 +1056,7 @@ def _build_public_opt_script_args(**overrides: object) -> argparse.Namespace:
         "run_id": None,
         "prepared_artifact_root": "prepared_assets",
         "artifact_root": None,
-        "report_root": "docs/reports",
+        "report_root": "docs/artifacts",
         "dataset_id": "uab_workload_dataset",
         "profile": "window_v2",
         "seed": 42,

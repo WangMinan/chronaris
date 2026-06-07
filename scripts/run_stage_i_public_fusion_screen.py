@@ -32,8 +32,8 @@ def _default_run_id() -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--artifact-root", default="docs/reports/assets/stage_i_public_fusion_screen")
-    parser.add_argument("--report-root", default="docs/reports")
+    parser.add_argument("--artifact-root", default="docs/artifacts/assets/stage_i_public_fusion_screen")
+    parser.add_argument("--report-root", default="docs/artifacts")
     parser.add_argument("--uab-root", default=None)
     parser.add_argument("--nasa-root", default=None)
     parser.add_argument("--epochs", type=int, default=2)

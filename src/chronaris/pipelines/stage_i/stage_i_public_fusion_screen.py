@@ -45,7 +45,7 @@ class StageIPublicFusionScreenConfig:
     run_id: str
     dataset_prepared_roots: Mapping[str, str]
     artifact_root: str
-    report_root: str = "docs/reports"
+    report_root: str = "docs/artifacts"
     epochs: int = 2
     learning_rate: float = 1e-3
     batch_size: int = 128

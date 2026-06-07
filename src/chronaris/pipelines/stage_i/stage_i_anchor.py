@@ -18,7 +18,7 @@ from chronaris.pipelines.stage_i.stage_i_case_study import (
 )
 
 DEFAULT_PRIVATE_BENCHMARK_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
+    "docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
     "private_benchmark_summary.json"
 )
 LOGGER = logging.getLogger(__name__)
@@ -31,8 +31,8 @@ class StageIAnchorConfig:
 
     run_id: str
     stage_h_run_manifest_path: str
-    output_root: str = "docs/reports/assets/stage_i_anchor"
-    report_root: str = "docs/reports/stage_i"
+    output_root: str = "docs/artifacts/assets/stage_i_anchor"
+    report_root: str = "docs/artifacts/stage_i"
     private_benchmark_summary_path: str | None = DEFAULT_PRIVATE_BENCHMARK_SUMMARY_PATH
     top_k_windows: int = 5
     view_verdict_filter: str = "all"

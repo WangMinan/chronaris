@@ -20,12 +20,12 @@
 
 ## Git 与工作区核对
 
-- 当前 `HEAD=f0b58fc`，提交信息为 `restructure docs for ai coding`，主要是把事实源整理到 `docs/implementation`、`docs/artifacts`、`docs/requirements`，并保留 `docs/planning`、`docs/reports` 等兼容入口。
+- 当前 `HEAD=f0b58fc`，提交信息为 `restructure docs for ai coding`，主要是把事实源整理到 `docs/implementation`、`docs/artifacts`、`docs/requirements`，并保留 `docs/planning`、`docs/foundation`、`docs/models` 等兼容入口。
 - 上一个关键实现提交 `2055dec` 覆盖 Stage I thesis mainline `Phase A/B`：public adapter/proxy 边界、backbone train、Stage H checkpoint inference contract 和相关测试。
 - 当前工作区仍有未提交改动：
   - Phase C 代码与测试：`src/chronaris/models/alignment/task_heads.py`、`src/chronaris/dataset/stage_i_real_task_builders.py`、`src/chronaris/pipelines/stage_i/stage_i_multitask_train.py`、`tests/test_stage_i_multitask_train.py`，以及相关 `__init__`、loss、private benchmark 和测试改动。
   - Phase C 新增 runner 与真实产物：`scripts/run_stage_i_multitask_train.py`、`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/`、`docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/`、`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/`，以及对应 Markdown 报告。
-  - 大量历史报告与 notes 中的路径文字已从 `docs/reports/...` 刷到 `docs/artifacts/...`，提交前需要和 Phase C 代码一起复查范围。
+  - 大量历史报告与 notes 中的路径文字已从 `docs/artifacts/...` 刷到 `docs/artifacts/...`，提交前需要和 Phase C 代码一起复查范围。
 - 本轮新增的关键产物已经落盘：
   - Phase C 真实联合训练：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`
   - thesis weak-label 报告：`docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
@@ -66,8 +66,7 @@
 
 ## 当前关键入口
 
-- 当前执行计划：[implementation/PLAN.md](implementation/PLAN.md)
-- 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- 当前执行入口与任务队列：[implementation/TASKS.md](implementation/TASKS.md)
 - 论文需求入口：[requirements/SPEC.md](requirements/SPEC.md)
 - 产物索引：[artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)
 - 中期前目标笔记：[implementation/notes/midterm-goal-2026-06-07.md](implementation/notes/midterm-goal-2026-06-07.md)

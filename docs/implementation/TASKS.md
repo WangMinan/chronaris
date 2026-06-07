@@ -2,6 +2,31 @@
 
 更新时间：2026-06-07
 
+## 文档定位
+
+本文件是当前唯一主动执行入口。总路线、阶段结构、当前任务队列和默认工作方式统一维护在这里；历史计划与阶段笔记保留在 `notes/`。
+
+## 总路线
+
+1. 读取指定架次的人机多源数据及元信息。
+2. 建立统一 schema、统一时间参考和统一样本组织。
+3. 实现双流连续潜态建模。
+4. 实现物理一致性约束时间对齐。
+5. 实现因果掩码跨模态融合。
+6. 输出标准化融合特征与中间态接口。
+7. 面向典型任务开展对比、消融和案例验证。
+
+## 阶段结构
+
+- `Stage A/B/C`：已完成。
+- `Stage D`：后置，保留为后续数据集工程化工作。
+- `Stage E0/E/F/G(min)/H`：已完成并收口，作为历史基线与后续依赖。
+- `Stage I`：
+  - `Phase A/B/C`：已接上统一骨干、真实 weak-label 联合训练、private/thesis 分层资产和中期证据包。
+  - `Phase D`：刚体运动物理约束补强。
+  - `Phase E`：语义事件融合补强。
+  - `Phase F`：runtime inference。
+
 ## 默认工作方式
 
 每轮实现默认按下面顺序收敛：
@@ -26,7 +51,7 @@
 
 - 复查 `git status --short` 中全部未提交项，区分三类改动：
   - Phase C 代码与测试。
-  - 文档路径迁移造成的 `docs/reports/...` 到 `docs/artifacts/...` 文本刷新。
+  - 历史路径清理、导航合并和文档入口重写造成的文本刷新。
   - 与本阶段无关的临时改动。
 - 保留并复查新增文件：
   - `src/chronaris/models/alignment/task_heads.py`
@@ -43,7 +68,7 @@
   - `src/chronaris/pipelines/stage_i/stage_i_private_benchmark_models.py`
   - `tests/test_alignment_model_losses.py`
   - `tests/test_stage_i_private_optimization.py`
-- 修正或记录仍指向 `docs/reports` 的新增代码默认输出路径；在真正实跑前至少通过 CLI 参数显式写到 `docs/artifacts/assets/...`。
+- 修正或记录新增代码默认输出路径，统一落到 `docs/artifacts/assets/...`。
 - 补跑并保留结果：
 
 ```bash
@@ -182,3 +207,11 @@
 - NASA/UAB 公开数据适配器结果：中期前不改写成论文双流本体闭环；论文中可作为 public adapter evidence，用于说明方法在公开代理数据上的迁移与校准边界。
 - `chronaris_opt` 与 `T1/T2/T3`：中期前不写成人工真值 thesis task fully closed；论文中可作为 private proxy benchmark evidence，用于支撑表示学习、对齐和因果融合增益。
 - 上游接收器、入库链路和原始大文件入仓：中期前不重建；论文系统封装时可说明现有 MySQL / InfluxDB 接入边界，必要时补轻量接口说明或部署文档。
+
+## 历史计划入口
+
+- [notes/coding-roadmap.md](notes/coding-roadmap.md)
+- [notes/stage-i-thesis-mainline-roadmap-2026-05-15.md](notes/stage-i-thesis-mainline-roadmap-2026-05-15.md)
+- [notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md](notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md)
+- [notes/thesis-coding-gap.md](notes/thesis-coding-gap.md)
+- [notes/iteration-playbook.md](notes/iteration-playbook.md)

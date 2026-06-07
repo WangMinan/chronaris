@@ -24,37 +24,37 @@ from chronaris.pipelines.stage_i.stage_i_support_reporting import (
 )
 
 DEFAULT_ALIGNMENT_E_SUMMARY_PATH = (
-    "docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-e-baseline/"
+    "docs/artifacts/assets/alignment-preview-stage-f-closure-2026-04-22-e-baseline/"
     "projection_diagnostics_summary.json"
 )
 DEFAULT_ALIGNMENT_F_SUMMARY_PATH = (
-    "docs/reports/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/"
+    "docs/artifacts/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/"
     "projection_diagnostics_summary.json"
 )
 DEFAULT_CAUSAL_G_SUMMARY_PATH = (
-    "docs/reports/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/"
+    "docs/artifacts/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/"
     "causal_fusion_summary.json"
 )
 DEFAULT_STAGE_H_RUN_MANIFEST_PATH = (
-    "docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json"
+    "docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json"
 )
 DEFAULT_CASE_STUDY_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/"
+    "docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/"
     "case_study_summary.json"
 )
 DEFAULT_CASE_STUDY_ABLATION_CSV_PATH = (
-    "docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/"
+    "docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/"
     "ablation_summary.csv"
 )
 DEFAULT_PRIVATE_BENCHMARK_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
+    "docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
     "private_benchmark_summary.json"
 )
 DEFAULT_DEEP_COMPARISON_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/comparison_summary.json"
+    "docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/comparison_summary.json"
 )
-DEFAULT_REPORT_ROOT = "docs/reports"
-DEFAULT_ARTIFACT_ROOT = "docs/reports/assets/stage_i_support"
+DEFAULT_REPORT_ROOT = "docs/artifacts"
+DEFAULT_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_support"
 
 
 @dataclass(frozen=True, slots=True)

@@ -14,10 +14,9 @@
 
 ### implementation
 
-执行入口。用于放置计划、任务队列和必要进度笔记：
+执行入口。用于放置当前任务队列和必要进度笔记：
 
-- [implementation/PLAN.md](implementation/PLAN.md)：当前唯一主动执行计划入口。
-- [implementation/TASKS.md](implementation/TASKS.md)：当前任务队列与默认工作方式。
+- [implementation/TASKS.md](implementation/TASKS.md)：当前唯一主动执行入口，包含总路线、阶段结构、任务队列与默认工作方式。
 - [implementation/notes/README.md](implementation/notes/README.md)：旧 `planning` 内容、阶段 closure、历史计划和进度笔记索引。
 
 ### requirements
@@ -36,10 +35,8 @@
 产物入口。用于组织报告、图、CSV、JSON、checkpoint、manifest 等：
 
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：当前产物索引和引用规则。
-- [artifacts/stage/](artifacts/stage/)：按 [implementation/PLAN.md](implementation/PLAN.md) 的阶段组织产物。
+- [artifacts/stage/](artifacts/stage/)：按 [implementation/TASKS.md](implementation/TASKS.md) 的阶段组织产物。
 - [artifacts/mid-term/](artifacts/mid-term/)：中期答辩证据包。
-
-兼容说明：历史脚本仍可能默认输出到 `docs/reports/...`；该路径现在是 `docs/artifacts` 的兼容入口。
 
 ### review
 
@@ -53,9 +50,7 @@ Code review 产物入口：
 为避免现有脚本和测试立即失效，以下旧路径仍保留为符号链接：
 
 - `docs/planning` -> `docs/implementation/notes`
-- `docs/reports` -> `docs/artifacts`
 - `docs/foundation` -> `docs/requirements/foundation`
 - `docs/models` -> `docs/requirements/model-contracts`
-- `docs/选题报告与基金申请书` -> `docs/requirements/选题报告与基金申请书`
 
-新文档和新任务默认写入新目录；旧路径只作为兼容入口使用。
+后续统一使用 `docs/artifacts` 与 `docs/requirements/选题报告与基金申请书`。

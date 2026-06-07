@@ -80,8 +80,8 @@ class StageHExportConfig:
 
     run_id: str
     sortie_ids: tuple[str, ...]
-    output_root: str | Path = "docs/reports/assets/stage_h"
-    report_path: str | Path = "docs/reports/stage_h/stage-h-export-v1.md"
+    output_root: str | Path = "docs/artifacts/assets/stage_h"
+    report_path: str | Path = "docs/artifacts/stage_h/stage-h-export-v1.md"
     export_version: str = "stage-h-v1"
     export_profile: StageHExportProfile = "preview"
     window_config: WindowConfig = field(

@@ -28,15 +28,15 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--stage-h-run-manifest",
-        default="docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
+        default="docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
     )
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--output-root", default="docs/reports/assets/stage_i_anchor")
-    parser.add_argument("--report-root", default="docs/reports/stage_i")
+    parser.add_argument("--output-root", default="docs/artifacts/assets/stage_i_anchor")
+    parser.add_argument("--report-root", default="docs/artifacts/stage_i")
     parser.add_argument(
         "--private-benchmark-summary-path",
         default=(
-            "docs/reports/assets/stage_i_private/"
+            "docs/artifacts/assets/stage_i_private/"
             "20260504T120000Z-stage-i-private-opt-package/private_benchmark_summary.json"
         ),
     )

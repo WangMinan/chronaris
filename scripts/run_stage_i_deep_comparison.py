@@ -34,11 +34,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--stage-h-reference-root", default=None)
     parser.add_argument(
         "--uab-reference-root",
-        default="docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window",
+        default="docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window",
     )
     parser.add_argument(
         "--nasa-reference-root",
-        default="docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention",
+        default="docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention",
     )
     parser.add_argument("--artifact-root", required=True)
     parser.add_argument("--epochs", type=int, default=1)

@@ -20,39 +20,39 @@ from chronaris.pipelines.stage_i.stage_i_run_observer import (
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
 
-DEFAULT_ARTIFACT_ROOT = "docs/reports/assets/stage_i_midterm"
-DEFAULT_REPORT_ROOT = "docs/reports/stage_i"
+DEFAULT_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_midterm"
+DEFAULT_REPORT_ROOT = "docs/artifacts/stage_i"
 DEFAULT_PRIVATE_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
+    "docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
     "private_benchmark_summary.json"
 )
 DEFAULT_SUPPORT_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/"
+    "docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support/"
     "support_summary.json"
 )
 DEFAULT_PUBLIC_MAINLINE_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_public_mainline/"
+    "docs/artifacts/assets/stage_i_public_mainline/"
     "20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/"
     "public_mainline_summary.json"
 )
 DEFAULT_ANCHOR_MANIFEST_PATH = (
-    "docs/reports/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/"
+    "docs/artifacts/assets/stage_i_anchor/20260506T165435Z-stage-i-anchor/"
     "anchor_manifest.json"
 )
 DEFAULT_DEEP_COMPARISON_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison/"
+    "docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/"
     "comparison_summary.json"
 )
 DEFAULT_PUBLIC_FUSION_SCREEN_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_public_fusion_screen/"
+    "docs/artifacts/assets/stage_i_public_fusion_screen/"
     "20260506T-stage-i-public-fusion-screen-round2/fusion_screen_summary.json"
 )
 DEFAULT_NASA_PUBLIC_OPT_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_public_opt/20260506T161500Z-stage-i-public-opt-nasa-round1/"
+    "docs/artifacts/assets/stage_i_public_opt/20260506T161500Z-stage-i-public-opt-nasa-round1/"
     "public_opt_summary.json"
 )
 DEFAULT_UAB_PUBLIC_OPT_SUMMARY_PATH = (
-    "docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/"
+    "docs/artifacts/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/"
     "public_opt_summary.json"
 )
 KEEP_STAGE_I_REPORTS = {
@@ -476,8 +476,8 @@ def _build_cleanup_audit(
             if hit["path"]
             not in {
                 "docs/README.md",
-                "docs/reports/README.md",
-                "docs/reports/stage_i/README.md",
+                "docs/artifacts/ARTIFACTS.md",
+                "docs/artifacts/stage_i/README.md",
             }
             and not str(hit["path"]).startswith("tests/")
         ]
@@ -485,7 +485,7 @@ def _build_cleanup_audit(
             {
                 "path": str(path.relative_to(workspace_root)),
                 "suggested_archive_path": str(
-                    Path("docs/reports/stage_i/archive/public_history") / path.name
+                    Path("docs/artifacts/stage_i/archive/public_history") / path.name
                 ),
                 "reference_hits": hits,
                 "safe_to_move": not blocking_hits,
@@ -561,7 +561,7 @@ def _iter_repo_texts(workspace_root: Path) -> Iterable[tuple[str, list[str]]]:
             if not path.is_file() or path.suffix not in TEXT_SCAN_SUFFIXES:
                 continue
             relative_path = str(path.relative_to(workspace_root))
-            if relative_path.startswith("docs/reports/assets/") or "__pycache__" in relative_path:
+            if relative_path.startswith("docs/artifacts/assets/") or "__pycache__" in relative_path:
                 continue
             yield (relative_path, path.read_text(encoding="utf-8").splitlines())
 

@@ -26,9 +26,7 @@ dist/
 # Local runtime artifacts
 .env
 .env.*
-artifacts/
-!/docs/artifacts/
-!/docs/artifacts/**
+/artifacts/
 outputs/
 runs/
 logs/

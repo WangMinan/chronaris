@@ -23,13 +23,12 @@
 - 总导航：[docs/README.md](docs/README.md)
 - 当前状态：[docs/STATE.md](docs/STATE.md)
 - 论文需求与仓库能力：[docs/requirements/SPEC.md](docs/requirements/SPEC.md)
-- 执行计划：[docs/implementation/PLAN.md](docs/implementation/PLAN.md)
-- 当前任务队列：[docs/implementation/TASKS.md](docs/implementation/TASKS.md)
+- 执行入口与当前任务队列：[docs/implementation/TASKS.md](docs/implementation/TASKS.md)
 - 进度与历史计划笔记：[docs/implementation/notes/README.md](docs/implementation/notes/README.md)
 - 产物索引：[docs/artifacts/ARTIFACTS.md](docs/artifacts/ARTIFACTS.md)
 - Review 产物入口：[docs/review/REVIEW.md](docs/review/REVIEW.md)
 
-`docs/planning`、`docs/reports`、`docs/foundation`、`docs/models` 和 `docs/选题报告与基金申请书` 仍保留为兼容入口；AI coding 的当前入口以 `docs/implementation`、`docs/artifacts`、`docs/requirements` 为准。
+`docs/planning`、`docs/foundation`、`docs/models` 仍保留为兼容入口；AI coding 的当前入口以 `docs/implementation`、`docs/artifacts`、`docs/requirements` 为准。
 
 ## 3. 研究主线
 
@@ -78,7 +77,7 @@
 
 ## 6. 执行规则
 
-- 开始任何阶段工作前，先读 [docs/STATE.md](docs/STATE.md)、[docs/implementation/PLAN.md](docs/implementation/PLAN.md) 和 [docs/implementation/TASKS.md](docs/implementation/TASKS.md)。
+- 开始任何阶段工作前，先读 [docs/STATE.md](docs/STATE.md) 和 [docs/implementation/TASKS.md](docs/implementation/TASKS.md)。
 - 需要判断论文目标或 Word 原始材料时，先读 [docs/requirements/SPEC.md](docs/requirements/SPEC.md)；解析 `.docx` 必须使用 `$docx` skill 或文档插件。
 - 需要引用报告、图、CSV、checkpoint、manifest 时，先读 [docs/artifacts/ARTIFACTS.md](docs/artifacts/ARTIFACTS.md)。
 - 需要做 code review 时，把计划和结果落到 [docs/review/REVIEW.md](docs/review/REVIEW.md) 及对应阶段子目录。

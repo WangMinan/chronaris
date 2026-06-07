@@ -24,13 +24,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--stage-h-run-manifest",
-        default="docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
+        default="docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json",
     )
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--output-root", default="docs/reports/assets/stage_i")
+    parser.add_argument("--output-root", default="docs/artifacts/assets/stage_i")
     parser.add_argument(
         "--report-path",
-        default=f"docs/reports/stage_i/stage-i-case-study-phase2-{datetime.now().date().isoformat()}.md",
+        default=f"docs/artifacts/stage_i/stage-i-case-study-phase2-{datetime.now().date().isoformat()}.md",
     )
     parser.add_argument("--top-k-windows", type=int, default=5)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")

@@ -15,7 +15,6 @@
 - [AGENTS.md](AGENTS.md)
 - [docs/README.md](docs/README.md)
 - [docs/STATE.md](docs/STATE.md)
-- [docs/implementation/PLAN.md](docs/implementation/PLAN.md)
 - [docs/implementation/TASKS.md](docs/implementation/TASKS.md)
 - [docs/requirements/SPEC.md](docs/requirements/SPEC.md)
 - [docs/artifacts/ARTIFACTS.md](docs/artifacts/ARTIFACTS.md)

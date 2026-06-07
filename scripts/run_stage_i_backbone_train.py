@@ -111,7 +111,7 @@ def _build_default_scope_overrides(use_full_clip_scope: bool) -> dict[str, tuple
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default=_default_run_id())
-    parser.add_argument("--output-root", default="docs/reports/assets/stage_i_backbone")
+    parser.add_argument("--output-root", default="docs/artifacts/assets/stage_i_backbone")
     parser.add_argument("--sortie-id", dest="sortie_ids", action="append")
     parser.add_argument("--mysql-database", default="rjgx_backend")
     parser.add_argument("--mysql-binary", default="mysql")
