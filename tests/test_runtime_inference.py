@@ -22,6 +22,8 @@ from chronaris.serving import (  # noqa: E402
     StageIRuntimeInferenceConfig,
     dump_runtime_samples_jsonl,
     load_runtime_samples_jsonl,
+    run_stage_i_runtime_inference_batch,
+    run_stage_i_runtime_inference_incremental,
     run_stage_i_runtime_inference,
 )
 
@@ -51,6 +53,20 @@ class StreamingWindowBufferTest(unittest.TestCase):
         self.assertEqual(emitted[0].end_offset_ms, 2000)
         self.assertEqual(emitted[1].start_offset_ms, 1000)
         self.assertEqual(emitted[1].end_offset_ms, 3000)
+
+    def test_streaming_window_buffer_tracks_out_of_order_points(self) -> None:
+        buffer = StreamingWindowBuffer(
+            sortie_id="sortie-001",
+            window_config=WindowConfig(duration_ms=2000, stride_ms=1000),
+            max_cached_points_per_stream=4,
+        )
+        buffer.push(_event(StreamKind.PHYSIOLOGY, offset_ms=1000, measurement="eeg", values={"alpha": 0.1}))
+        buffer.push(_event(StreamKind.PHYSIOLOGY, offset_ms=0, measurement="eeg", values={"alpha": 0.2}))
+
+        diagnostics = buffer.diagnostics
+        self.assertEqual(diagnostics.out_of_order_event_count, 1)
+        self.assertEqual(diagnostics.max_cached_points_per_stream, 4)
+        self.assertEqual(diagnostics.physiology_cached_points, 2)
 
 
 class StageIRuntimeInferenceTest(unittest.TestCase):
@@ -130,6 +146,99 @@ class StageIRuntimeInferenceTest(unittest.TestCase):
             self.assertIn("event_replay_tag_prediction", first_row)
             self.assertIn("semantic_top_query_name", first_row)
 
+    def test_runtime_inference_strict_schema_rejects_feature_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            samples = _build_samples()
+            task_entries = _build_task_entries(samples)
+            train_result = run_stage_i_multitask_train(
+                _build_train_config(root, sample_count=len(samples)),
+                samples=samples,
+                task_entries=task_entries,
+                source_summary={"source": "runtime_test"},
+            )
+            mismatched = list(samples)
+            mismatched[0] = E0ExperimentSample(
+                sample_id=samples[0].sample_id,
+                sortie_id=samples[0].sortie_id,
+                start_offset_ms=samples[0].start_offset_ms,
+                end_offset_ms=samples[0].end_offset_ms,
+                physiology=samples[0].physiology,
+                vehicle=NumericStreamMatrix(
+                    stream_kind=StreamKind.VEHICLE,
+                    point_count=samples[0].vehicle.point_count,
+                    feature_names=samples[0].vehicle.feature_names + ("extra.vehicle",),
+                    point_offsets_ms=samples[0].vehicle.point_offsets_ms,
+                    point_measurements=samples[0].vehicle.point_measurements,
+                    values=tuple(row + (0.0,) for row in samples[0].vehicle.values),
+                    dropped_fields=(),
+                ),
+            )
+
+            with self.assertRaisesRegex(ValueError, "runtime feature schema mismatch"):
+                run_stage_i_runtime_inference(
+                    StageIRuntimeInferenceConfig(
+                        run_id="runtime-strict",
+                        checkpoint_path=train_result.checkpoint_path,
+                        artifact_root=str(root / "runtime"),
+                        report_root=str(root / "reports"),
+                        device="cpu",
+                        strict_feature_schema=True,
+                    ),
+                    samples=tuple(mismatched),
+                )
+
+    def test_runtime_inference_batch_and_incremental_match_sample_count(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            samples = _build_samples()
+            task_entries = _build_task_entries(samples)
+            train_result = run_stage_i_multitask_train(
+                _build_train_config(root, sample_count=len(samples)),
+                samples=samples,
+                task_entries=task_entries,
+                source_summary={"source": "runtime_test"},
+            )
+
+            batch_result = run_stage_i_runtime_inference_batch(
+                StageIRuntimeInferenceConfig(
+                    run_id="runtime-batch",
+                    checkpoint_path=train_result.checkpoint_path,
+                    artifact_root=str(root / "runtime_batch"),
+                    report_root=str(root / "reports"),
+                    device="cpu",
+                    batch_size=2,
+                    emit_predictions_jsonl=True,
+                    max_windows=3,
+                ),
+                samples=samples,
+            )
+            incremental_result = run_stage_i_runtime_inference_incremental(
+                StageIRuntimeInferenceConfig(
+                    run_id="runtime-incremental",
+                    checkpoint_path=train_result.checkpoint_path,
+                    artifact_root=str(root / "runtime_incremental"),
+                    report_root=str(root / "reports"),
+                    device="cpu",
+                    max_windows=3,
+                ),
+                samples=samples,
+            )
+
+            self.assertEqual(batch_result.summary["sample_count"], 3)
+            self.assertEqual(incremental_result.summary["sample_count"], 3)
+            self.assertEqual(batch_result.summary["sample_count"], incremental_result.summary["sample_count"])
+            self.assertTrue(Path(batch_result.predictions_jsonl_path).exists())
+            self.assertEqual(batch_result.summary["diagnostics"]["feature_schema_status"], "exact")
+            self.assertEqual(incremental_result.summary["diagnostics"]["batch_size"], 1)
+
+            jsonl_rows = [
+                json.loads(line)
+                for line in Path(batch_result.predictions_jsonl_path).read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            self.assertEqual(len(jsonl_rows), 3)
+
 
 def _event(
     stream_kind: StreamKind,
@@ -194,6 +303,43 @@ def _build_samples() -> tuple[E0ExperimentSample, ...]:
             )
         )
     return tuple(samples)
+
+
+def _build_train_config(root: Path, *, sample_count: int) -> StageIMultitaskTrainConfig:
+    return StageIMultitaskTrainConfig(
+        run_id="runtime-train",
+        output_root=str(root / "train"),
+        preview_config=AlignmentPreviewConfig(
+            prototype_config=AlignmentPrototypeConfig(
+                hidden_dim=8,
+                embedding_dim=8,
+                encoder_hidden_dim=12,
+                decoder_hidden_dim=12,
+                dynamics_hidden_dim=12,
+                projection_dim=4,
+                activation="relu",
+                ode_method="euler",
+            ),
+            split_config=ChronologicalSplitConfig(
+                train_ratio=1.0,
+                validation_ratio=0.0,
+                test_ratio=0.0,
+            ),
+            epoch_count=1,
+            batch_size=sample_count,
+            learning_rate=1e-3,
+            device="cpu",
+            reconstruction_loss_mode="relative_mse",
+            input_normalization_mode="zscore_train",
+            alignment_loss_mode="mse",
+            enable_physics_constraints=True,
+            physics_constraint_family="rigid_body",
+            vehicle_physics_weight=0.1,
+            physiology_physics_weight=0.1,
+            export_intermediate_states=False,
+            intermediate_partition="all",
+        ),
+    )
 
 
 def _build_task_entries(samples: Sequence[E0ExperimentSample]) -> tuple[StageIPrivateTaskEntry, ...]:

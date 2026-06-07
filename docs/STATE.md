@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主线补充证据：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和重建后的中期证据包都已形成并进入 git 历史；同时，`Phase D/E/F` 已经从“代码闭环”推进到“首轮真实资产闭环”，包括 `runtime sample export + checkpoint-backed replay`、语义事件融合 support 产物和 `minimal/full/rigid_body` 真实 smoke / ablation。当前工作区没有未提交的 `src/` 或 `scripts/` 代码改动，剩余未跟踪项主要是本轮真实产物；下一步编码主线是扩充 `rigid_body` 字段语义覆盖、放大语义事件 support、把 runtime replay 推进到更接近准实时服务的系统闭环。
+项目已经具备中期答辩可用的历史实验资产与最新主线补充证据：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和重建后的中期证据包都已形成并进入 git 历史；同时，`Phase D/E/F` 已经从“代码闭环”推进到“二轮真实资产闭环”，包括 `rigid_body translation+vertical` 真实启用、多 view 语义事件 support、以及具备 `batch/incremental/both` 模式和 schema diagnostics 的 runtime replay。当前下一步主线已经切到 `P10`：把这些分散命令收敛成统一 evidence runner。
 
 ## 当前阶段
 
@@ -17,17 +17,23 @@
   - `Phase A/B` 已经进入 git 历史，主线边界校准、统一骨干训练入口、checkpoint inference export contract 已具备。
   - `Phase C` 已进入 git 历史，内容包括统一任务头、任务监督损失、因果正则接入、`risk_proxy / workload_proxy / event_replay_tag` weak-label thesis task builder、`stage_i_multitask_train` 联合训练入口，以及 private benchmark 中 `proxy_evidence / thesis_task_evidence` 分层。
   - `Phase D` 已完成首轮真实 smoke / ablation：
-    - `minimal / full / rigid_body` 三组真实对比已落盘到 `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r1/`。
-    - 汇总报告：`docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r1.md`。
-    - 经过切到本地 `127.0.0.1:3306` MySQL 后，`vehicle_field_metadata.status` 已恢复为 `loaded`，`rigid_body` 的 `vehicle_rigid_body_translation` 已经非零；当前仍待补的是 `vertical / rotation` 残差覆盖。
+    - 首轮：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r1/`
+    - 二轮：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/`
+    - 最新汇总报告：`docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
+    - 当前 `rigid_body` 已经在真实链路上启用 `translation + vertical`：
+      - `vehicle_rigid_body_translation=1.133332371711731`
+      - `vehicle_rigid_body_vertical=3.9466116428375244`
+    - `rotation` 仍为 `0`，当前主要原因是缺少成对角速度字段，而不是 MySQL 元数据问题。
   - `Phase E` 已完成真实语义事件融合 support：
-    - preview / causal summary：`docs/artifacts/stage_i/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1.md`
-    - support summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r1/support_summary.json`
-    - causal support 报告：`docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r1.md`
+    - 单 view preview：`docs/artifacts/stage_i/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1.md`
+    - 多 view support summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
+    - 多 view support 报告：`docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
+    - 当前 semantic support 已覆盖 `3` 个双流 view、`111` 个样本，并给出 view-level ranking。
   - `Phase F` 已完成真实 runtime replay：
-    - runtime sample export：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl`
-    - replay summary：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_inference_summary.json`
-    - replay report：`docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-replay-r1.md`
+    - 首轮 replay：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/`
+    - 服务化补强 replay：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/`
+    - 最新报告：`docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md`
+    - 当前 runtime replay 已支持 `batch / incremental / both`，并输出 `latency / throughput / feature_schema_status / feature_schema_source`。
 
 ## Git 与工作区核对
 
@@ -62,12 +68,11 @@
 
 ## 编码层面还需要做什么
 
-1. 选择性整理本轮未跟踪产物：决定 runtime replay、semantic support、rigid_body ablation 的哪些文件进入 git 历史，并同步 `docs/artifacts/ARTIFACTS.md` 的常引用入口。
-2. 扩充 `rigid_body` 的字段语义映射：当前 `translation` 已启用，下一步要重点覆盖 `altitude / vertical_speed / pitch_rate / roll_rate / yaw_rate`，并把 `vehicle_rigid_body_vertical / rotation` 从 0 推到真实启用。
-3. 放大语义事件融合证据：从单条 preview-scale causal summary 扩到更多 Stage H view / sortie，形成 view-level support matrix 和 case-level 事件归因表。
-4. 强化 runtime inference：在已跑通 checkpoint-backed replay 的基础上补批次控制、窗口状态缓存、schema drift 诊断和更紧凑的 explanation 导出。
-5. 建立论文闭环评测 harness：统一跑 `minimal/full/rigid_body`、`g_min/semantic_event/no_mask`、runtime replay，并输出同一套可引用 CSV/Markdown。
-6. 系统封装阶段补离线服务边界：明确输入 manifest、checkpoint、样本流、输出 schema、错误处理和准实时延迟指标。
+1. 选择性整理本轮新增代码与产物：决定 `r2` 版 rigid_body、semantic support、runtime service 结果哪些进入 git 历史，并同步 `docs/artifacts/ARTIFACTS.md`。
+2. 补 `rotation` 方向的真实字段覆盖：重点确认 `真航向` 与潜在角速度字段是否存在，决定是扩 token 还是明确写成“当前 sortie 无可用 rate field”。
+3. 建立统一 evidence runner：把 rigid_body、semantic support、runtime replay 收进同一套 manifest 与 CLI。
+4. 在 runtime inference 上补更细的窗口状态缓存与错误样例。
+5. 系统封装阶段补离线服务边界：明确输入 manifest、checkpoint、样本流、输出 schema、错误处理和准实时延迟指标。
 
 ## 实验层面还需要做什么
 
@@ -81,17 +86,24 @@
 3. 已完成中期证据包重建：
    - 输出：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/`
    - 报告：`docs/artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md`
-4. 本轮新增的 `Phase D/E/F` 产物已经落盘并已用本地 MySQL 标签更新：
-   - runtime sample export + replay：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/`
-     - `runtime_sample_export_summary.json`：`sample_count=111`、`sortie_count=2`、`view_count=3`、`sample_id_mode=view_prefixed`
-     - `runtime_inference_summary.json`：`sample_count=111`、`task_heads=risk_proxy/workload_proxy/event_replay_tag`、`semantic_event.query_count=3`
-   - semantic event preview：`docs/artifacts/stage_i/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1.md`
-   - semantic event support：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r1/`
-     - `support_summary.json` 已包含 `alignment_support`、`causal_support.semantic_event` 和 `main_ablation_rows`
-   - rigid_body ablation：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r1/`
-     - `vehicle_field_metadata.status=loaded`、`field_count=96`、`measurement=BUS6000019110020`
-     - `rigid_body` 的 `vehicle_rigid_body_translation=1.413177490234375`
-     - `vehicle_rigid_body_vertical=0`、`vehicle_rigid_body_rotation=0`，这是下一轮 P7 的主要缺口。
+4. 本轮新增的 `Phase D/E/F` 产物已经落盘并已更新到 `r2`：
+   - runtime service-style replay：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/`
+     - `sample_count=40`
+     - `replay_mode=both`
+     - `sample_count_match=True`
+     - `feature_schema_status=aligned`
+     - `feature_schema_source=input_normalization_stats`
+   - semantic event support：`docs/artifacts/assets/stage_i_semantic_event_support/20260607T-stage-i-semantic-support-r2/`
+     - `view_count=3`
+     - `top_view_id=20251005_四01_ACT-4_云_J20_22#01__pilot_10033`
+   - support 聚合：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/`
+     - `support_summary.json` 已包含 `causal_support.semantic_event.view_rows`
+   - rigid_body ablation：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/`
+     - `vehicle_field_metadata.status=loaded`
+     - `enabled_residuals=['translation','vertical']`
+     - `vehicle_rigid_body_translation=1.133332371711731`
+     - `vehicle_rigid_body_vertical=3.9466116428375244`
+     - `vehicle_rigid_body_rotation=0`
 
 ## 当前关键入口
 

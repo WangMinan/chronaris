@@ -28,8 +28,13 @@ def main() -> None:
     parser.add_argument("--report-root", default="docs/artifacts/stage_i")
     parser.add_argument("--device", default="auto")
     parser.add_argument("--disable-predictions-csv", action="store_true")
+    parser.add_argument("--emit-jsonl", action="store_true")
     parser.add_argument("--semantic-event-top-k", type=int, default=4)
     parser.add_argument("--semantic-event-score-quantile", type=float, default=0.75)
+    parser.add_argument("--batch-size", type=int)
+    parser.add_argument("--max-windows", type=int)
+    parser.add_argument("--strict-feature-schema", action="store_true")
+    parser.add_argument("--replay-mode", choices=("batch", "incremental", "both"), default="batch")
     args = parser.parse_args()
 
     samples = load_runtime_samples_jsonl(args.sample_jsonl)
@@ -41,8 +46,13 @@ def main() -> None:
             report_root=args.report_root,
             device=args.device,
             export_predictions_csv=not args.disable_predictions_csv,
+            emit_predictions_jsonl=args.emit_jsonl,
             semantic_event_top_k=args.semantic_event_top_k,
             semantic_event_score_quantile=args.semantic_event_score_quantile,
+            batch_size=args.batch_size,
+            max_windows=args.max_windows,
+            strict_feature_schema=args.strict_feature_schema,
+            replay_mode=args.replay_mode,
         ),
         samples=samples,
     )
@@ -54,6 +64,7 @@ def main() -> None:
                 "summary_path": result.summary_path,
                 "report_path": result.report_path,
                 "predictions_csv_path": result.predictions_csv_path,
+                "predictions_jsonl_path": result.predictions_jsonl_path,
             },
             ensure_ascii=False,
             indent=2,

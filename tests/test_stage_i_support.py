@@ -93,6 +93,8 @@ class StageISupportTest(unittest.TestCase):
             self.assertIn("Private No-Mask Comparison", causal_report)
             self.assertIn("Semantic Event Fusion", causal_report)
             self.assertIn("事件级归因", causal_report)
+            self.assertIn("View-Level Semantic Ranking", causal_report)
+            self.assertIn("view-1", causal_report)
             self.assertIn("固定六路径主矩阵", ablation_report)
             self.assertIn("G(no causal mask)", ablation_report)
 
@@ -216,10 +218,29 @@ def _write_support_sources(temp_root: Path) -> dict[str, Path]:
                 "semantic_event": {
                     "query_names": ["risk_proxy", "workload_proxy", "event_replay_tag"],
                     "query_count": 3,
+                    "view_count": 3,
+                    "top_view_id": "view-1",
                     "mean_event_token_count": 2.0,
                     "mean_query_entropy": 0.31,
                     "mean_top_query_score": 0.62,
                     "mean_top_event_attribution": 0.88,
+                    "view_rows": [
+                        {
+                            "view_id": "view-1",
+                            "sortie_id": "sortie-1",
+                            "pilot_id": 10035,
+                            "state_source": "hidden",
+                            "dominant_query_name": "risk_proxy",
+                            "mean_event_token_count": 2.0,
+                            "mean_query_entropy": 0.31,
+                            "mean_top_query_score": 0.62,
+                            "mean_top_event_attribution": 0.88,
+                            "top_sample_id": "sample-1",
+                            "top_sample_query_name": "risk_proxy",
+                            "top_sample_query_event_offset_s": 2.0,
+                            "top_sample_event_attribution": 0.88,
+                        }
+                    ],
                     "samples": [
                         {
                             "sample_id": "sample-1",

@@ -7,12 +7,14 @@ from typing import Literal
 
 import torch
 
+from chronaris.features import load_stage_h_feature_run
 from chronaris.models.fusion import (
     CausalEventFusion,
     CausalEventFusionConfig,
     CausalFusionConfig,
     CausalFusionTensorInput,
     CausalMaskedCrossModalFusion,
+    SemanticEventTensorInput,
     attention_entropy,
     semantic_query_entropy,
 )
@@ -25,6 +27,7 @@ from chronaris.pipelines.torch_runtime import (
 FusionStateSource = Literal["hidden", "projection"]
 FusionOutputMode = Literal["concat", "pooled_with_residual"]
 FusionResidualMode = Literal["none", "raw_window_stats"]
+SemanticSupportStateSource = Literal["hidden_with_projection_fallback", "hidden", "projection"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -388,6 +391,168 @@ def render_stage_g_causal_fusion_markdown(result: StageGCausalFusionResult) -> s
     return "\n".join(lines).rstrip() + "\n"
 
 
+@dataclass(frozen=True, slots=True)
+class StageGSemanticEventSupportConfig:
+    """Configuration for view-level semantic event support aggregation."""
+
+    state_source: SemanticSupportStateSource = "hidden_with_projection_fallback"
+    attention_temperature: float = 1.0
+    event_score_bias_weight: float = 0.25
+    event_top_k: int = 4
+    event_score_quantile: float = 0.75
+    device: str = "auto"
+
+    def __post_init__(self) -> None:
+        if self.state_source not in {"hidden_with_projection_fallback", "hidden", "projection"}:
+            raise ValueError("unsupported state_source for semantic event support.")
+        if self.attention_temperature <= 0:
+            raise ValueError("attention_temperature must be positive.")
+        if self.event_score_bias_weight < 0:
+            raise ValueError("event_score_bias_weight must be non-negative.")
+        if self.event_top_k <= 0:
+            raise ValueError("event_top_k must be positive.")
+        if not 0.0 < self.event_score_quantile <= 1.0:
+            raise ValueError("event_score_quantile must be in (0, 1].")
+        if self.device not in TORCH_DEVICE_CHOICES:
+            raise ValueError(f"device must be one of: {', '.join(TORCH_DEVICE_CHOICES)}.")
+
+
+def build_stage_h_semantic_event_support(
+    run_manifest_path: str,
+    *,
+    config: StageGSemanticEventSupportConfig | None = None,
+) -> dict[str, object]:
+    """Aggregate semantic event support across all views in one Stage H run."""
+
+    resolved_config = config or StageGSemanticEventSupportConfig()
+    run = load_stage_h_feature_run(run_manifest_path)
+    resolved_device = resolve_torch_device_name(resolved_config.device)
+    fusion = CausalEventFusion(
+        CausalEventFusionConfig(
+            attention_temperature=resolved_config.attention_temperature,
+            event_score_bias_weight=resolved_config.event_score_bias_weight,
+            event_top_k=resolved_config.event_top_k,
+            event_score_quantile=resolved_config.event_score_quantile,
+        )
+    ).to(device=resolved_device)
+    causal_fusion = CausalMaskedCrossModalFusion(
+        CausalFusionConfig(
+            attention_temperature=resolved_config.attention_temperature,
+            event_bias_weight=resolved_config.event_score_bias_weight,
+            use_causal_mask=True,
+        )
+    ).to(device=resolved_device)
+    view_rows: list[dict[str, object]] = []
+    query_names: list[str] = []
+    event_token_counts: list[float] = []
+    query_entropies: list[float] = []
+    top_event_attributions: list[float] = []
+    top_query_scores: list[float] = []
+    sample_rows: list[dict[str, object]] = []
+    attention_entropies: list[float] = []
+    max_attentions: list[float] = []
+    top_event_scores: list[float] = []
+    top_contribution_scores: list[float] = []
+    total_sample_count = 0
+    for view in run.views:
+        physiology_states, vehicle_states, state_source_used = _resolve_view_state_tensors(
+            view,
+            state_source=resolved_config.state_source,
+            device=resolved_device,
+        )
+        attention_weights = torch.as_tensor(view.attention_weights, dtype=torch.float32, device=resolved_device)
+        vehicle_event_scores = torch.as_tensor(view.vehicle_event_scores, dtype=torch.float32, device=resolved_device)
+        if attention_weights.ndim != 3 or vehicle_event_scores.ndim != 2:
+            with torch.no_grad():
+                causal_output = causal_fusion(
+                    CausalFusionTensorInput(
+                        physiology_states=physiology_states,
+                        vehicle_states=vehicle_states,
+                        physiology_offsets_s=torch.as_tensor(view.reference_offsets_s, dtype=torch.float32, device=resolved_device),
+                        vehicle_offsets_s=torch.as_tensor(view.reference_offsets_s, dtype=torch.float32, device=resolved_device),
+                    )
+                )
+            attention_weights = causal_output.attention_weights
+            vehicle_event_scores = causal_output.vehicle_event_scores
+        semantic_input = SemanticEventTensorInput(
+            physiology_states=physiology_states,
+            vehicle_states=vehicle_states,
+            attention_weights=attention_weights,
+            vehicle_event_scores=vehicle_event_scores,
+            vehicle_offsets_s=torch.as_tensor(view.reference_offsets_s, dtype=torch.float32, device=resolved_device),
+        )
+        with torch.no_grad():
+            semantic_output = fusion(semantic_input)
+        semantic_summary = _build_semantic_event_summary(
+            sample_ids=view.sample_ids,
+            semantic_output=semantic_output,
+        )
+        raw_attention = attention_weights
+        raw_event_scores = vehicle_event_scores
+        raw_contributions = raw_attention.sum(dim=1) * raw_event_scores
+        raw_entropy = -(raw_attention * torch.log(torch.clamp(raw_attention, min=1e-12))).sum(dim=-1)
+        query_names = semantic_summary["query_names"]
+        sample_rows.extend(list(semantic_summary["samples"]))
+        event_token_counts.append(float(semantic_summary["mean_event_token_count"]))
+        query_entropies.append(float(semantic_summary["mean_query_entropy"]))
+        top_query_scores.append(float(semantic_summary["mean_top_query_score"]))
+        top_event_attributions.append(float(semantic_summary["mean_top_event_attribution"]))
+        attention_entropies.append(float(raw_entropy.mean().detach().cpu()))
+        max_attentions.append(float(raw_attention.max(dim=-1).values.mean().detach().cpu()))
+        top_event_scores.append(float(raw_event_scores.max(dim=-1).values.mean().detach().cpu()))
+        top_contribution_scores.append(float(raw_contributions.max(dim=-1).values.mean().detach().cpu()))
+        total_sample_count += len(view.sample_ids)
+        top_sample = max(
+            semantic_summary["samples"],
+            key=lambda row: float(row["top_event_attribution"]),
+        )
+        dominant_query_name = _mode_name(row["top_query_name"] for row in semantic_summary["samples"])
+        view_rows.append(
+            {
+                "view_id": view.view_id,
+                "sortie_id": view.sortie_id,
+                "pilot_id": view.pilot_id,
+                "source_summary_path": str(view.view_manifest["artifact_paths"].get("causal_fusion_summary_json") or ""),
+                "state_source": state_source_used,
+                "sample_count": len(view.sample_ids),
+                "query_names": semantic_summary["query_names"],
+                "mean_event_token_count": semantic_summary["mean_event_token_count"],
+                "mean_query_entropy": semantic_summary["mean_query_entropy"],
+                "mean_top_query_score": semantic_summary["mean_top_query_score"],
+                "mean_top_event_attribution": semantic_summary["mean_top_event_attribution"],
+                "mean_attention_entropy": float(raw_entropy.mean().detach().cpu()),
+                "mean_max_attention": float(raw_attention.max(dim=-1).values.mean().detach().cpu()),
+                "mean_top_event_score": float(raw_event_scores.max(dim=-1).values.mean().detach().cpu()),
+                "mean_top_contribution_score": float(raw_contributions.max(dim=-1).values.mean().detach().cpu()),
+                "dominant_query_name": dominant_query_name,
+                "top_sample_id": top_sample["sample_id"],
+                "top_sample_query_name": top_sample["top_query_name"],
+                "top_sample_query_event_offset_s": top_sample["top_query_event_offset_s"],
+                "top_sample_event_attribution": top_sample["top_event_attribution"],
+            }
+        )
+    top_view = max(view_rows, key=lambda row: float(row["mean_top_event_attribution"])) if view_rows else None
+    return {
+        "run_manifest_path": str(run_manifest_path),
+        "sample_count": total_sample_count,
+        "mean_attention_entropy": _mean(tuple(attention_entropies)),
+        "mean_max_attention": _mean(tuple(max_attentions)),
+        "mean_top_event_score": _mean(tuple(top_event_scores)),
+        "mean_top_contribution_score": _mean(tuple(top_contribution_scores)),
+        "view_count": len(view_rows),
+        "generated_view_ids": [view.view_id for view in run.views],
+        "query_names": query_names,
+        "query_count": len(query_names),
+        "mean_event_token_count": _mean(tuple(event_token_counts)),
+        "mean_query_entropy": _mean(tuple(query_entropies)),
+        "mean_top_query_score": _mean(tuple(top_query_scores)),
+        "mean_top_event_attribution": _mean(tuple(top_event_attributions)),
+        "top_view_id": None if top_view is None else top_view["view_id"],
+        "samples": sample_rows,
+        "view_rows": view_rows,
+    }
+
+
 def _build_tensor_input(
     intermediate_export: AlignmentPreviewIntermediateExport,
     *,
@@ -431,6 +596,39 @@ def _build_tensor_input(
             dtype=torch.float32,
             device=device,
         ),
+    )
+
+
+def _resolve_view_state_tensors(
+    view,
+    *,
+    state_source: SemanticSupportStateSource,
+    device: str,
+) -> tuple[torch.Tensor, torch.Tensor, str]:
+    if state_source == "projection":
+        return (
+            torch.as_tensor(view.physiology_reference_projection, dtype=torch.float32, device=device),
+            torch.as_tensor(view.vehicle_reference_projection, dtype=torch.float32, device=device),
+            "projection",
+        )
+    if state_source == "hidden":
+        if view.physiology_reference_hidden is None or view.vehicle_reference_hidden is None:
+            raise ValueError(f"view {view.view_id} is missing hidden-state tensors.")
+        return (
+            torch.as_tensor(view.physiology_reference_hidden, dtype=torch.float32, device=device),
+            torch.as_tensor(view.vehicle_reference_hidden, dtype=torch.float32, device=device),
+            "hidden",
+        )
+    if view.physiology_reference_hidden is not None and view.vehicle_reference_hidden is not None:
+        return (
+            torch.as_tensor(view.physiology_reference_hidden, dtype=torch.float32, device=device),
+            torch.as_tensor(view.vehicle_reference_hidden, dtype=torch.float32, device=device),
+            "hidden",
+        )
+    return (
+        torch.as_tensor(view.physiology_reference_projection, dtype=torch.float32, device=device),
+        torch.as_tensor(view.vehicle_reference_projection, dtype=torch.float32, device=device),
+        "projection_fallback",
     )
 
 
@@ -504,3 +702,13 @@ def _mean(values: tuple[float, ...]) -> float:
     if not values:
         return 0.0
     return sum(values) / len(values)
+
+
+def _mode_name(values) -> str:
+    counts: dict[str, int] = {}
+    for value in values:
+        key = str(value)
+        counts[key] = counts.get(key, 0) + 1
+    if not counts:
+        return ""
+    return max(counts.items(), key=lambda item: (item[1], item[0]))[0]

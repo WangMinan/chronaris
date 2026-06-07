@@ -35,16 +35,24 @@ _TRANSLATION_GROUP_TOKENS: Mapping[str, tuple[str, ...]] = {
     "altitude": (
         "高度",
         "海拔",
+        "海拔高度",
         "气压高",
+        "气压高度",
         "雷达高",
+        "卫星高度",
         "altitude",
         "height",
         "alt",
     ),
     "vertical_speed": (
         "垂直速度",
+        "垂向速度",
         "升降率",
         "爬升率",
+        "升降速度",
+        "爬升速度",
+        "速度_天向",
+        "天向速度",
         "vertical speed",
         "vertical_speed",
         "climb",
@@ -137,6 +145,17 @@ class RigidBodyPhysicsDiagnostics:
     uses_latent_fallback: bool
 
 
+@dataclass(frozen=True, slots=True)
+class RigidBodyMappingDiagnostics:
+    """Per-group feature/label matching diagnostics for rigid-body constraints."""
+
+    feature_labels: Mapping[str, str]
+    groups: Mapping[str, tuple[Mapping[str, str], ...]]
+    unmatched_features: tuple[Mapping[str, str], ...]
+    enabled_residuals: tuple[str, ...]
+    missing_requirements: Mapping[str, tuple[str, ...]]
+
+
 def build_rigid_body_state_mapping(
     feature_names: tuple[str, ...],
     *,
@@ -184,6 +203,66 @@ def inspect_rigid_body_physics(
         enabled_residuals=enabled,
         missing_requirements=mapping.missing_requirements(),
         uses_latent_fallback=(not enabled and mode in {"feature_first_with_latent_fallback", "latent_only"}),
+    )
+
+
+def build_rigid_body_mapping_diagnostics(
+    feature_names: tuple[str, ...],
+    *,
+    field_labels: Mapping[str, str] | None = None,
+    mode: str = "feature_first_with_latent_fallback",
+) -> RigidBodyMappingDiagnostics:
+    """Build a reader-friendly summary of rigid-body field matching."""
+
+    labels = _resolve_feature_labels(feature_names, field_labels=field_labels)
+    mapping = build_rigid_body_state_mapping(feature_names, field_labels=field_labels)
+    groups = {
+        "speed": _group_rows(mapping.speed, labels),
+        "acceleration": _group_rows(mapping.acceleration, labels),
+        "altitude": _group_rows(mapping.altitude, labels),
+        "vertical_speed": _group_rows(mapping.vertical_speed, labels),
+        "pitch": _group_rows(mapping.pitch, labels),
+        "pitch_rate": _group_rows(mapping.pitch_rate, labels),
+        "roll": _group_rows(mapping.roll, labels),
+        "roll_rate": _group_rows(mapping.roll_rate, labels),
+        "yaw": _group_rows(mapping.yaw, labels),
+        "yaw_rate": _group_rows(mapping.yaw_rate, labels),
+    }
+    matched = {item["feature_name"] for rows in groups.values() for item in rows}
+    unmatched = tuple(
+        {"feature_name": feature_name, "label": labels[feature_name]}
+        for feature_name in feature_names
+        if feature_name not in matched
+    )
+    physics = inspect_rigid_body_physics(feature_names, field_labels=field_labels, mode=mode)
+    return RigidBodyMappingDiagnostics(
+        feature_labels=labels,
+        groups=groups,
+        unmatched_features=unmatched,
+        enabled_residuals=physics.enabled_residuals,
+        missing_requirements=physics.missing_requirements,
+    )
+
+
+def _resolve_feature_labels(
+    feature_names: tuple[str, ...],
+    *,
+    field_labels: Mapping[str, str] | None,
+) -> dict[str, str]:
+    labels = field_labels or {}
+    return {
+        feature_name: labels.get(feature_name) or labels.get(_raw_field_name(feature_name)) or feature_name
+        for feature_name in feature_names
+    }
+
+
+def _group_rows(
+    group_features: tuple[str, ...],
+    labels: Mapping[str, str],
+) -> tuple[Mapping[str, str], ...]:
+    return tuple(
+        {"feature_name": feature_name, "label": labels[feature_name]}
+        for feature_name in group_features
     )
 
 

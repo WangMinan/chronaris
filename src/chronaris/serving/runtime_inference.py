@@ -5,7 +5,8 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping, Sequence
+from time import perf_counter
+from typing import Literal, Mapping, Sequence
 
 import pandas as pd
 import torch
@@ -36,6 +37,8 @@ from chronaris.pipelines.alignment_preview import (
 )
 from chronaris.schema.models import StreamKind
 
+ReplayMode = Literal["batch", "incremental", "both"]
+
 
 @dataclass(frozen=True, slots=True)
 class StageIRuntimeInferenceConfig:
@@ -47,14 +50,25 @@ class StageIRuntimeInferenceConfig:
     report_root: str = "docs/artifacts/stage_i"
     device: str = "auto"
     export_predictions_csv: bool = True
+    emit_predictions_jsonl: bool = False
     semantic_event_top_k: int = 4
     semantic_event_score_quantile: float = 0.75
+    batch_size: int | None = None
+    max_windows: int | None = None
+    strict_feature_schema: bool = False
+    replay_mode: ReplayMode = "batch"
 
     def __post_init__(self) -> None:
         if self.semantic_event_top_k <= 0:
             raise ValueError("semantic_event_top_k must be positive.")
         if not 0.0 < self.semantic_event_score_quantile <= 1.0:
             raise ValueError("semantic_event_score_quantile must be in (0, 1].")
+        if self.batch_size is not None and self.batch_size <= 0:
+            raise ValueError("batch_size must be positive when provided.")
+        if self.max_windows is not None and self.max_windows <= 0:
+            raise ValueError("max_windows must be positive when provided.")
+        if self.replay_mode not in {"batch", "incremental", "both"}:
+            raise ValueError("replay_mode must be one of: batch, incremental, both.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,7 +80,21 @@ class StageIRuntimeInferenceRunResult:
     summary_path: str
     report_path: str
     predictions_csv_path: str | None
+    predictions_jsonl_path: str | None
     summary: Mapping[str, object]
+
+
+@dataclass(frozen=True, slots=True)
+class _RuntimeSession:
+    checkpoint: Mapping[str, object]
+    preview_pipeline: AlignmentPreviewPipeline
+    model: object
+    task_heads: StageITaskHeadSet
+    task_metadata: Mapping[str, object]
+    reverse_label_maps: Mapping[str, Mapping[int, str]]
+    causal_fusion: CausalMaskedCrossModalFusion
+    semantic_fusion: CausalEventFusion
+    normalization_stats: AlignmentInputNormalizationStats | None
 
 
 def run_stage_i_runtime_inference(
@@ -74,7 +102,7 @@ def run_stage_i_runtime_inference(
     *,
     samples: Sequence[E0ExperimentSample],
 ) -> StageIRuntimeInferenceRunResult:
-    """Run multitask checkpoint inference over one sample batch."""
+    """Run checkpoint-backed inference in batch, incremental, or both modes."""
 
     sample_tuple = tuple(samples)
     if not sample_tuple:
@@ -84,110 +112,50 @@ def run_stage_i_runtime_inference(
     normalization_stats = _deserialize_input_normalization_stats(
         checkpoint.get("input_normalization_stats")
     )
-    preview_pipeline = _build_preview_pipeline(
-        checkpoint=checkpoint,
+    prepared_samples, schema_diagnostics = _prepare_runtime_samples(
         config=config,
-        sample_count=len(sample_tuple),
+        checkpoint=checkpoint,
+        samples=sample_tuple,
+    )
+    session = _load_runtime_session(
+        config=config,
+        checkpoint=checkpoint,
         normalization_stats=normalization_stats,
+        reference_samples=prepared_samples,
     )
-    _validate_feature_schema(sample_tuple, preview_pipeline=preview_pipeline, checkpoint=checkpoint)
-    model = preview_pipeline._build_model(
-        sample_tuple,
-        prototype_config=AlignmentPrototypeConfig(**dict(checkpoint["preview_config"]["prototype_config"])),
-    )
-    model.load_state_dict(dict(checkpoint["model_state_dict"]))
-    model.to(device=preview_pipeline._resolved_device_name(), dtype=preview_pipeline.config.dtype)
 
-    task_specs = [
-        StageITaskHeadSpec(**dict(payload["spec"]))
-        for payload in checkpoint.get("task_heads", {}).values()
-    ]
-    task_heads = StageITaskHeadSet(task_specs).to(
-        device=preview_pipeline._resolved_device_name(),
-        dtype=preview_pipeline.config.dtype,
-    )
-    task_heads.load_state_dict(dict(checkpoint["task_head_state_dict"]))
-    task_metadata = dict(checkpoint.get("task_heads") or {})
-    reverse_label_maps = {
-        task_name: {int(value): label for label, value in dict(payload.get("label_to_id", {})).items()}
-        for task_name, payload in task_metadata.items()
-    }
-
-    causal_fusion = CausalMaskedCrossModalFusion(
-        CausalFusionConfig(
-            attention_temperature=float(checkpoint["multitask_config"]["causal_attention_temperature"]),
-            event_bias_weight=float(checkpoint["multitask_config"]["causal_event_bias_weight"]),
-            use_causal_mask=True,
-            lag_window_points=checkpoint["multitask_config"].get("causal_lag_window_points"),
+    batch_summary = None
+    incremental_summary = None
+    if config.replay_mode in {"batch", "both"}:
+        batch_summary = _run_replay_mode(
+            session=session,
+            config=config,
+            samples=prepared_samples,
+            replay_mode="batch",
+            schema_diagnostics=schema_diagnostics,
         )
-    ).to(device=preview_pipeline._resolved_device_name())
-    semantic_fusion = CausalEventFusion(
-        CausalEventFusionConfig(
-            attention_temperature=float(checkpoint["multitask_config"]["causal_attention_temperature"]),
-            event_score_bias_weight=float(checkpoint["multitask_config"]["causal_event_bias_weight"]),
-            event_top_k=config.semantic_event_top_k,
-            event_score_quantile=config.semantic_event_score_quantile,
-        )
-    ).to(device=preview_pipeline._resolved_device_name())
-
-    sample_ids = tuple(sample.sample_id for sample in sample_tuple)
-    task_batches = _build_inference_task_batches(
-        sample_ids=sample_ids,
-        task_metadata=task_metadata,
-    )
-    torch_batch = preview_pipeline._build_torch_batch(sample_tuple)
-    torch_batch = preview_pipeline._apply_input_normalization(
-        torch_batch,
-        normalization_stats=normalization_stats,
-    )
-    reference_offsets_s = preview_pipeline._build_reference_offsets_s_tensor(sample_tuple)
-
-    model.train(False)
-    task_heads.train(False)
-    with torch.no_grad():
-        output = model(torch_batch, reference_offsets_s=reference_offsets_s)
-        if (
-            output.physiology.reference_projected_states is None
-            or output.vehicle.reference_projected_states is None
-            or output.physiology.reference_offsets_s is None
-            or output.vehicle.reference_offsets_s is None
-        ):
-            raise RuntimeError("runtime inference requires reference-grid projections for both streams.")
-        causal_output = causal_fusion(
-            CausalFusionTensorInput(
-                physiology_states=output.physiology.reference_projected_states,
-                vehicle_states=output.vehicle.reference_projected_states,
-                physiology_offsets_s=output.physiology.reference_offsets_s,
-                vehicle_offsets_s=output.vehicle.reference_offsets_s,
-            )
-        )
-        pooled = causal_output.fused_states.mean(dim=1)
-        task_outputs = task_heads(pooled, task_batches)
-        semantic_output = semantic_fusion(
-            SemanticEventTensorInput(
-                physiology_states=output.physiology.reference_projected_states,
-                vehicle_states=output.vehicle.reference_projected_states,
-                attention_weights=causal_output.attention_weights,
-                vehicle_event_scores=causal_output.vehicle_event_scores,
-                vehicle_offsets_s=output.vehicle.reference_offsets_s,
-            )
+    if config.replay_mode in {"incremental", "both"}:
+        incremental_summary = _run_replay_mode(
+            session=session,
+            config=config,
+            samples=prepared_samples,
+            replay_mode="incremental",
+            schema_diagnostics=schema_diagnostics,
         )
 
-    task_predictions = _summarize_task_predictions(
-        task_outputs=task_outputs,
-        reverse_label_maps=reverse_label_maps,
-    )
-    semantic_summary = _summarize_semantic_output(
-        sample_ids=sample_ids,
-        semantic_output=semantic_output,
-    )
-    causal_rows = _build_causal_rows(sample_ids=sample_ids, causal_output=causal_output, reference_offsets_s=output.vehicle.reference_offsets_s)
-    sample_rows = _merge_prediction_rows(
-        sample_ids=sample_ids,
-        task_predictions=task_predictions,
-        causal_rows=causal_rows,
-        semantic_summary=semantic_summary,
-    )
+    if config.replay_mode == "batch":
+        summary = batch_summary
+    elif config.replay_mode == "incremental":
+        summary = incremental_summary
+    else:
+        assert batch_summary is not None and incremental_summary is not None
+        summary = dict(batch_summary)
+        summary["incremental_consistency"] = {
+            "sample_count_match": batch_summary["sample_count"] == incremental_summary["sample_count"],
+            "batch_sample_count": batch_summary["sample_count"],
+            "incremental_sample_count": incremental_summary["sample_count"],
+            "incremental_diagnostics": incremental_summary["diagnostics"],
+        }
 
     run_root = Path(config.artifact_root) / config.run_id
     run_root.mkdir(parents=True, exist_ok=True)
@@ -196,30 +164,24 @@ def run_stage_i_runtime_inference(
     summary_path = run_root / "runtime_inference_summary.json"
     report_path = report_root / f"stage-i-runtime-inference-{config.run_id}.md"
     predictions_csv_path: str | None = None
+    predictions_jsonl_path: str | None = None
     if config.export_predictions_csv:
         csv_path = run_root / "runtime_inference_predictions.csv"
-        pd.DataFrame(sample_rows).to_csv(csv_path, index=False)
+        pd.DataFrame(summary["samples"]).to_csv(csv_path, index=False)
         predictions_csv_path = str(csv_path)
+    if config.emit_predictions_jsonl:
+        jsonl_path = run_root / "runtime_inference_predictions.jsonl"
+        _dump_prediction_rows_jsonl(summary["samples"], path=jsonl_path)
+        predictions_jsonl_path = str(jsonl_path)
 
     summary = {
+        **summary,
         "generated_at_utc": pd.Timestamp.now("UTC").isoformat().replace("+00:00", "Z"),
         "run_id": config.run_id,
         "checkpoint_path": str(Path(config.checkpoint_path)),
         "artifact_root": str(run_root),
-        "sample_count": len(sample_tuple),
-        "task_heads": {
-            task_name: {
-                "task_type": payload["task_type"],
-                "label_to_id": dict(payload.get("label_to_id", {})),
-            }
-            for task_name, payload in task_metadata.items()
-        },
         "predictions_csv_path": predictions_csv_path,
-        "mean_attention_entropy": _mean(row["attention_entropy"] for row in causal_rows),
-        "mean_top_event_score": _mean(row["top_event_score"] for row in causal_rows),
-        "mean_top_contribution_score": _mean(row["top_contribution_score"] for row in causal_rows),
-        "semantic_event": semantic_summary,
-        "samples": sample_rows,
+        "predictions_jsonl_path": predictions_jsonl_path,
     }
     summary_path.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2) + "\n",
@@ -235,24 +197,65 @@ def run_stage_i_runtime_inference(
         summary_path=str(summary_path),
         report_path=str(report_path),
         predictions_csv_path=predictions_csv_path,
+        predictions_jsonl_path=predictions_jsonl_path,
         summary=summary,
+    )
+
+
+def run_stage_i_runtime_inference_batch(
+    config: StageIRuntimeInferenceConfig,
+    *,
+    samples: Sequence[E0ExperimentSample],
+) -> StageIRuntimeInferenceRunResult:
+    """Convenience wrapper for batch replay only."""
+
+    return run_stage_i_runtime_inference(
+        _replace_config(config, replay_mode="batch"),
+        samples=samples,
+    )
+
+
+def run_stage_i_runtime_inference_incremental(
+    config: StageIRuntimeInferenceConfig,
+    *,
+    samples: Sequence[E0ExperimentSample],
+) -> StageIRuntimeInferenceRunResult:
+    """Convenience wrapper for incremental replay only."""
+
+    return run_stage_i_runtime_inference(
+        _replace_config(config, replay_mode="incremental"),
+        samples=samples,
     )
 
 
 def render_stage_i_runtime_inference_report(summary: Mapping[str, object]) -> str:
     """Render a compact runtime inference report."""
 
+    diagnostics = summary["diagnostics"]
     lines = [
         f"# Stage I Runtime Inference - {summary['run_id']}",
         "",
         f"- generated_at_utc: `{summary['generated_at_utc']}`",
         f"- checkpoint_path: `{summary['checkpoint_path']}`",
         f"- sample_count: `{summary['sample_count']}`",
+        f"- replay_mode: `{summary['replay_mode']}`",
     ]
     if summary.get("predictions_csv_path"):
         lines.append(f"- predictions_csv_path: `{summary['predictions_csv_path']}`")
+    if summary.get("predictions_jsonl_path"):
+        lines.append(f"- predictions_jsonl_path: `{summary['predictions_jsonl_path']}`")
     lines.extend(
         [
+            "",
+            "## Replay Diagnostics",
+            "",
+            f"- feature_schema_status: `{diagnostics['feature_schema_status']}`",
+            f"- feature_schema_source: `{diagnostics['feature_schema_source']}`",
+            f"- truncated_by_max_windows: `{diagnostics['truncated_by_max_windows']}`",
+            f"- batch_size: `{diagnostics['batch_size']}`",
+            f"- chunk_count: `{diagnostics['chunk_count']}`",
+            f"- latency_seconds: `{diagnostics['latency_seconds']:.6f}`",
+            f"- throughput_samples_per_second: `{diagnostics['throughput_samples_per_second']:.6f}`",
             "",
             "## Batch Summary",
             "",
@@ -266,6 +269,22 @@ def render_stage_i_runtime_inference_report(summary: Mapping[str, object]) -> st
             f"- mean_event_token_count: `{summary['semantic_event']['mean_event_token_count']:.6f}`",
             f"- mean_query_entropy: `{summary['semantic_event']['mean_query_entropy']:.6f}`",
             f"- mean_top_event_attribution: `{summary['semantic_event']['mean_top_event_attribution']:.6f}`",
+        ]
+    )
+    if summary.get("incremental_consistency"):
+        comparison = summary["incremental_consistency"]
+        lines.extend(
+            [
+                "",
+                "## Incremental Consistency",
+                "",
+                f"- sample_count_match: `{comparison['sample_count_match']}`",
+                f"- batch_sample_count: `{comparison['batch_sample_count']}`",
+                f"- incremental_sample_count: `{comparison['incremental_sample_count']}`",
+            ]
+        )
+    lines.extend(
+        [
             "",
             "## Sample Predictions",
             "",
@@ -308,6 +327,312 @@ def load_runtime_samples_jsonl(path: str | Path) -> tuple[E0ExperimentSample, ..
     return tuple(_deserialize_sample(row) for row in rows)
 
 
+def _run_replay_mode(
+    *,
+    session: _RuntimeSession,
+    config: StageIRuntimeInferenceConfig,
+    samples: tuple[E0ExperimentSample, ...],
+    replay_mode: Literal["batch", "incremental"],
+    schema_diagnostics: Mapping[str, object],
+) -> dict[str, object]:
+    batch_size = 1 if replay_mode == "incremental" else (config.batch_size or len(samples))
+    chunk_results: list[dict[str, object]] = []
+    start = perf_counter()
+    for chunk_start in range(0, len(samples), batch_size):
+        chunk = samples[chunk_start : chunk_start + batch_size]
+        chunk_results.append(
+            _infer_sample_batch(
+                session=session,
+                samples=chunk,
+                replay_mode=replay_mode,
+            )
+        )
+    elapsed = perf_counter() - start
+    sample_rows = [row for chunk in chunk_results for row in chunk["sample_rows"]]
+    causal_rows = [row for chunk in chunk_results for row in chunk["causal_rows"]]
+    semantic_rows = [row for chunk in chunk_results for row in chunk["semantic_summary"]["samples"]]
+    query_names = []
+    if chunk_results:
+        query_names = list(chunk_results[0]["semantic_summary"]["query_names"])
+    semantic_event = {
+        "query_names": query_names,
+        "query_count": len(query_names),
+        "mean_event_token_count": _weighted_chunk_mean(chunk_results, "semantic_summary", "mean_event_token_count"),
+        "mean_query_entropy": _weighted_chunk_mean(chunk_results, "semantic_summary", "mean_query_entropy"),
+        "mean_top_event_attribution": _weighted_chunk_mean(chunk_results, "semantic_summary", "mean_top_event_attribution"),
+        "samples": semantic_rows,
+    }
+    return {
+        "sample_count": len(sample_rows),
+        "replay_mode": replay_mode,
+        "task_heads": {
+            task_name: {
+                "task_type": payload["task_type"],
+                "label_to_id": dict(payload.get("label_to_id", {})),
+            }
+            for task_name, payload in session.task_metadata.items()
+        },
+        "mean_attention_entropy": _mean(row["attention_entropy"] for row in causal_rows),
+        "mean_top_event_score": _mean(row["top_event_score"] for row in causal_rows),
+        "mean_top_contribution_score": _mean(row["top_contribution_score"] for row in causal_rows),
+        "semantic_event": semantic_event,
+        "samples": sample_rows,
+        "diagnostics": {
+            **dict(schema_diagnostics),
+            "batch_size": batch_size,
+            "chunk_count": len(chunk_results),
+            "latency_seconds": elapsed,
+            "throughput_samples_per_second": (len(sample_rows) / elapsed) if elapsed > 0 else 0.0,
+            "retrieval_context": "per_chunk_only",
+        },
+    }
+
+
+def _infer_sample_batch(
+    *,
+    session: _RuntimeSession,
+    samples: tuple[E0ExperimentSample, ...],
+    replay_mode: Literal["batch", "incremental"],
+) -> dict[str, object]:
+    sample_ids = tuple(sample.sample_id for sample in samples)
+    task_batches = _build_inference_task_batches(
+        sample_ids=sample_ids,
+        task_metadata=session.task_metadata,
+    )
+    torch_batch = session.preview_pipeline._build_torch_batch(samples)
+    torch_batch = session.preview_pipeline._apply_input_normalization(
+        torch_batch,
+        normalization_stats=session.normalization_stats,
+    )
+    reference_offsets_s = session.preview_pipeline._build_reference_offsets_s_tensor(samples)
+
+    session.model.train(False)
+    session.task_heads.train(False)
+    with torch.no_grad():
+        output = session.model(torch_batch, reference_offsets_s=reference_offsets_s)
+        if (
+            output.physiology.reference_projected_states is None
+            or output.vehicle.reference_projected_states is None
+            or output.physiology.reference_offsets_s is None
+            or output.vehicle.reference_offsets_s is None
+        ):
+            raise RuntimeError("runtime inference requires reference-grid projections for both streams.")
+        causal_output = session.causal_fusion(
+            CausalFusionTensorInput(
+                physiology_states=output.physiology.reference_projected_states,
+                vehicle_states=output.vehicle.reference_projected_states,
+                physiology_offsets_s=output.physiology.reference_offsets_s,
+                vehicle_offsets_s=output.vehicle.reference_offsets_s,
+            )
+        )
+        pooled = causal_output.fused_states.mean(dim=1)
+        task_outputs = session.task_heads(pooled, task_batches)
+        semantic_output = session.semantic_fusion(
+            SemanticEventTensorInput(
+                physiology_states=output.physiology.reference_projected_states,
+                vehicle_states=output.vehicle.reference_projected_states,
+                attention_weights=causal_output.attention_weights,
+                vehicle_event_scores=causal_output.vehicle_event_scores,
+                vehicle_offsets_s=output.vehicle.reference_offsets_s,
+            )
+        )
+
+    task_predictions = _summarize_task_predictions(
+        task_outputs=task_outputs,
+        reverse_label_maps=session.reverse_label_maps,
+        replay_mode=replay_mode,
+    )
+    semantic_summary = _summarize_semantic_output(
+        sample_ids=sample_ids,
+        semantic_output=semantic_output,
+    )
+    causal_rows = _build_causal_rows(
+        sample_ids=sample_ids,
+        causal_output=causal_output,
+        reference_offsets_s=output.vehicle.reference_offsets_s,
+    )
+    sample_rows = _merge_prediction_rows(
+        sample_ids=sample_ids,
+        task_predictions=task_predictions,
+        causal_rows=causal_rows,
+        semantic_summary=semantic_summary,
+    )
+    return {
+        "sample_rows": sample_rows,
+        "causal_rows": causal_rows,
+        "semantic_summary": semantic_summary,
+    }
+
+
+def _load_runtime_session(
+    *,
+    config: StageIRuntimeInferenceConfig,
+    checkpoint: Mapping[str, object],
+    normalization_stats: AlignmentInputNormalizationStats | None,
+    reference_samples: tuple[E0ExperimentSample, ...],
+) -> _RuntimeSession:
+    preview_pipeline = _build_preview_pipeline(
+        checkpoint=checkpoint,
+        config=config,
+        sample_count=len(reference_samples),
+        normalization_stats=normalization_stats,
+    )
+    model = preview_pipeline._build_model(
+        reference_samples,
+        prototype_config=AlignmentPrototypeConfig(**dict(checkpoint["preview_config"]["prototype_config"])),
+    )
+    model.load_state_dict(dict(checkpoint["model_state_dict"]))
+    model.to(device=preview_pipeline._resolved_device_name(), dtype=preview_pipeline.config.dtype)
+
+    task_specs = [
+        StageITaskHeadSpec(**dict(payload["spec"]))
+        for payload in checkpoint.get("task_heads", {}).values()
+    ]
+    task_heads = StageITaskHeadSet(task_specs).to(
+        device=preview_pipeline._resolved_device_name(),
+        dtype=preview_pipeline.config.dtype,
+    )
+    task_heads.load_state_dict(dict(checkpoint["task_head_state_dict"]))
+    task_metadata = dict(checkpoint.get("task_heads") or {})
+    reverse_label_maps = {
+        task_name: {int(value): label for label, value in dict(payload.get("label_to_id", {})).items()}
+        for task_name, payload in task_metadata.items()
+    }
+    causal_fusion = CausalMaskedCrossModalFusion(
+        CausalFusionConfig(
+            attention_temperature=float(checkpoint["multitask_config"]["causal_attention_temperature"]),
+            event_bias_weight=float(checkpoint["multitask_config"]["causal_event_bias_weight"]),
+            use_causal_mask=True,
+            lag_window_points=checkpoint["multitask_config"].get("causal_lag_window_points"),
+        )
+    ).to(device=preview_pipeline._resolved_device_name())
+    semantic_fusion = CausalEventFusion(
+        CausalEventFusionConfig(
+            attention_temperature=float(checkpoint["multitask_config"]["causal_attention_temperature"]),
+            event_score_bias_weight=float(checkpoint["multitask_config"]["causal_event_bias_weight"]),
+            event_top_k=config.semantic_event_top_k,
+            event_score_quantile=config.semantic_event_score_quantile,
+        )
+    ).to(device=preview_pipeline._resolved_device_name())
+    return _RuntimeSession(
+        checkpoint=checkpoint,
+        preview_pipeline=preview_pipeline,
+        model=model,
+        task_heads=task_heads,
+        task_metadata=task_metadata,
+        reverse_label_maps=reverse_label_maps,
+        causal_fusion=causal_fusion,
+        semantic_fusion=semantic_fusion,
+        normalization_stats=normalization_stats,
+    )
+
+
+def _prepare_runtime_samples(
+    *,
+    config: StageIRuntimeInferenceConfig,
+    checkpoint: Mapping[str, object],
+    samples: tuple[E0ExperimentSample, ...],
+) -> tuple[tuple[E0ExperimentSample, ...], dict[str, object]]:
+    prepared = samples[: config.max_windows] if config.max_windows is not None else samples
+    feature_schema = dict(checkpoint.get("feature_schema") or {})
+    expected_physiology = tuple(feature_schema.get("physiology_feature_names", ()))
+    expected_vehicle = tuple(feature_schema.get("vehicle_feature_names", ()))
+    schema_source = "feature_schema"
+    if not expected_physiology or not expected_vehicle:
+        normalization_stats = _deserialize_input_normalization_stats(
+            checkpoint.get("input_normalization_stats")
+        )
+        if normalization_stats is not None:
+            expected_physiology = expected_physiology or tuple(normalization_stats.physiology.feature_names)
+            expected_vehicle = expected_vehicle or tuple(normalization_stats.vehicle.feature_names)
+            schema_source = "input_normalization_stats"
+    extra_physiology: set[str] = set()
+    missing_physiology: set[str] = set()
+    extra_vehicle: set[str] = set()
+    missing_vehicle: set[str] = set()
+    aligned_samples: list[E0ExperimentSample] = []
+    schema_status = "exact"
+    for sample in prepared:
+        physiology, physiology_diag = _align_stream_to_schema(
+            sample.physiology,
+            expected_feature_names=expected_physiology,
+        )
+        vehicle, vehicle_diag = _align_stream_to_schema(
+            sample.vehicle,
+            expected_feature_names=expected_vehicle,
+        )
+        extra_physiology.update(physiology_diag["extra_features"])
+        missing_physiology.update(physiology_diag["missing_features"])
+        extra_vehicle.update(vehicle_diag["extra_features"])
+        missing_vehicle.update(vehicle_diag["missing_features"])
+        aligned_samples.append(
+            E0ExperimentSample(
+                sample_id=sample.sample_id,
+                sortie_id=sample.sortie_id,
+                start_offset_ms=sample.start_offset_ms,
+                end_offset_ms=sample.end_offset_ms,
+                physiology=physiology,
+                vehicle=vehicle,
+                notes=sample.notes,
+            )
+        )
+    if extra_physiology or missing_physiology or extra_vehicle or missing_vehicle:
+        if config.strict_feature_schema:
+            raise ValueError(
+                "runtime feature schema mismatch: "
+                f"missing physiology={sorted(missing_physiology)}, extra physiology={sorted(extra_physiology)}, "
+                f"missing vehicle={sorted(missing_vehicle)}, extra vehicle={sorted(extra_vehicle)}"
+            )
+        schema_status = "aligned"
+    return (
+        tuple(aligned_samples),
+        {
+            "requested_sample_count": len(samples),
+            "truncated_by_max_windows": config.max_windows is not None and len(prepared) < len(samples),
+            "feature_schema_status": schema_status,
+            "feature_schema_source": schema_source if (expected_physiology or expected_vehicle) else "input_samples",
+            "missing_physiology_features": sorted(missing_physiology),
+            "extra_physiology_features": sorted(extra_physiology),
+            "missing_vehicle_features": sorted(missing_vehicle),
+            "extra_vehicle_features": sorted(extra_vehicle),
+            "strict_feature_schema": config.strict_feature_schema,
+        },
+    )
+
+
+def _align_stream_to_schema(
+    stream: NumericStreamMatrix,
+    *,
+    expected_feature_names: tuple[str, ...],
+) -> tuple[NumericStreamMatrix, dict[str, object]]:
+    if not expected_feature_names:
+        return stream, {"missing_features": (), "extra_features": ()}
+    current_index = {name: index for index, name in enumerate(stream.feature_names)}
+    missing = tuple(name for name in expected_feature_names if name not in current_index)
+    extra = tuple(name for name in stream.feature_names if name not in set(expected_feature_names))
+    if not missing and not extra and stream.feature_names == expected_feature_names:
+        return stream, {"missing_features": (), "extra_features": ()}
+    aligned_rows = []
+    for row in stream.values:
+        aligned_row = []
+        for feature_name in expected_feature_names:
+            feature_index = current_index.get(feature_name)
+            aligned_row.append(float("nan") if feature_index is None else row[feature_index])
+        aligned_rows.append(tuple(aligned_row))
+    return (
+        NumericStreamMatrix(
+            stream_kind=stream.stream_kind,
+            point_count=stream.point_count,
+            feature_names=expected_feature_names,
+            point_offsets_ms=stream.point_offsets_ms,
+            point_measurements=stream.point_measurements,
+            values=tuple(aligned_rows),
+            dropped_fields=stream.dropped_fields,
+        ),
+        {"missing_features": missing, "extra_features": extra},
+    )
+
+
 def _build_preview_pipeline(
     *,
     checkpoint: Mapping[str, object],
@@ -323,7 +648,7 @@ def _build_preview_pipeline(
             split_config=ChronologicalSplitConfig(**dict(preview_config["split_config"])),
             reference_grid_config=ReferenceGridConfig(**dict(preview_config["reference_grid_config"])),
             epoch_count=1,
-            batch_size=max(sample_count, 1),
+            batch_size=max(config.batch_size or sample_count, 1),
             learning_rate=float(training_config.get("learning_rate", 1e-3)),
             device=config.device,
             input_normalization_mode="zscore_train" if normalization_stats is not None else "none",
@@ -357,6 +682,7 @@ def _summarize_task_predictions(
     *,
     task_outputs,
     reverse_label_maps: Mapping[str, Mapping[int, str]],
+    replay_mode: Literal["batch", "incremental"],
 ) -> dict[str, dict[str, object]]:
     summary: dict[str, dict[str, object]] = {}
     for task_output in task_outputs:
@@ -387,9 +713,15 @@ def _summarize_task_predictions(
                 ],
             }
             continue
+        if replay_mode == "incremental" and len(task_output.sample_ids) <= 1:
+            summary[task_output.task_name] = {
+                "task_type": task_output.task_type,
+                "rows": [{"prediction": None, "score": None} for _ in task_output.sample_ids],
+            }
+            continue
         similarity = torch.matmul(task_output.logits, task_output.logits.transpose(-1, -2))
         rows = []
-        for row_index, sample_id in enumerate(task_output.sample_ids):
+        for row_index, _sample_id in enumerate(task_output.sample_ids):
             masked_similarity = similarity[row_index].clone()
             masked_similarity[row_index] = torch.finfo(masked_similarity.dtype).min
             if masked_similarity.numel() <= 1:
@@ -473,6 +805,7 @@ def _summarize_semantic_output(
         "query_count": len(semantic_output.query_names),
         "mean_event_token_count": float(token_count.to(dtype=torch.float32).mean().detach().cpu()),
         "mean_query_entropy": float(query_entropy.mean().detach().cpu()),
+        "mean_top_query_score": _mean(row["top_query_score"] for row in samples),
         "mean_top_event_attribution": _mean(top_event_attributions),
         "samples": samples,
     }
@@ -492,11 +825,15 @@ def _merge_prediction_rows(
     }
     rows: list[dict[str, object]] = []
     for sample_index, sample_id in enumerate(sample_ids):
-        row = {"sample_id": sample_id, **causal_by_sample[sample_id], **{
-            "semantic_top_query_name": semantic_by_sample[sample_id]["top_query_name"],
-            "semantic_top_event_attribution": semantic_by_sample[sample_id]["top_event_attribution"],
-            "semantic_top_query_event_offset_s": semantic_by_sample[sample_id]["top_query_event_offset_s"],
-        }}
+        row = {
+            "sample_id": sample_id,
+            **causal_by_sample[sample_id],
+            **{
+                "semantic_top_query_name": semantic_by_sample[sample_id]["top_query_name"],
+                "semantic_top_event_attribution": semantic_by_sample[sample_id]["top_event_attribution"],
+                "semantic_top_query_event_offset_s": semantic_by_sample[sample_id]["top_query_event_offset_s"],
+            },
+        }
         for task_name, payload in task_predictions.items():
             prediction_row = payload["rows"][sample_index]
             row[f"{task_name}_prediction"] = prediction_row.get("prediction")
@@ -506,22 +843,6 @@ def _merge_prediction_rows(
                 row[f"{task_name}_{key}"] = value
         rows.append(row)
     return rows
-
-
-def _validate_feature_schema(
-    samples: Sequence[E0ExperimentSample],
-    *,
-    preview_pipeline: AlignmentPreviewPipeline,
-    checkpoint: Mapping[str, object],
-) -> None:
-    torch_batch = preview_pipeline._build_torch_batch(tuple(samples))
-    feature_schema = dict(checkpoint.get("feature_schema") or {})
-    expected_physiology = tuple(feature_schema.get("physiology_feature_names", ()))
-    expected_vehicle = tuple(feature_schema.get("vehicle_feature_names", ()))
-    if expected_physiology and torch_batch.physiology.feature_names != expected_physiology:
-        raise ValueError("checkpoint physiology feature schema does not match runtime samples.")
-    if expected_vehicle and torch_batch.vehicle.feature_names != expected_vehicle:
-        raise ValueError("checkpoint vehicle feature schema does not match runtime samples.")
 
 
 def _deserialize_input_normalization_stats(
@@ -549,6 +870,27 @@ def _deserialize_input_normalization_stats(
             mean=torch.as_tensor(vehicle_mean),
             std=torch.as_tensor(vehicle_std),
         ),
+    )
+
+
+def dump_runtime_predictions_jsonl(
+    rows: Sequence[Mapping[str, object]],
+    *,
+    path: str | Path,
+) -> None:
+    """Write prediction rows as line-delimited JSON."""
+
+    _dump_prediction_rows_jsonl(rows, path=path)
+
+
+def _dump_prediction_rows_jsonl(
+    rows: Sequence[Mapping[str, object]],
+    *,
+    path: str | Path,
+) -> None:
+    Path(path).write_text(
+        "".join(json.dumps(dict(row), ensure_ascii=False) + "\n" for row in rows),
+        encoding="utf-8",
     )
 
 
@@ -597,6 +939,45 @@ def _deserialize_stream(payload: Mapping[str, object]) -> NumericStreamMatrix:
         point_measurements=tuple(str(value) for value in payload.get("point_measurements", [])),
         values=tuple(tuple(float(value) for value in row) for row in payload.get("values", [])),
         dropped_fields=tuple(str(value) for value in payload.get("dropped_fields", [])),
+    )
+
+
+def _weighted_chunk_mean(
+    chunk_results: Sequence[Mapping[str, object]],
+    section_key: str,
+    metric_key: str,
+) -> float:
+    weighted_total = 0.0
+    sample_count = 0
+    for chunk in chunk_results:
+        section = chunk[section_key]
+        current_count = len(chunk["sample_rows"])
+        weighted_total += float(section[metric_key]) * current_count
+        sample_count += current_count
+    if sample_count <= 0:
+        return 0.0
+    return weighted_total / sample_count
+
+
+def _replace_config(
+    config: StageIRuntimeInferenceConfig,
+    *,
+    replay_mode: ReplayMode,
+) -> StageIRuntimeInferenceConfig:
+    return StageIRuntimeInferenceConfig(
+        run_id=config.run_id,
+        checkpoint_path=config.checkpoint_path,
+        artifact_root=config.artifact_root,
+        report_root=config.report_root,
+        device=config.device,
+        export_predictions_csv=config.export_predictions_csv,
+        emit_predictions_jsonl=config.emit_predictions_jsonl,
+        semantic_event_top_k=config.semantic_event_top_k,
+        semantic_event_score_quantile=config.semantic_event_score_quantile,
+        batch_size=config.batch_size,
+        max_windows=config.max_windows,
+        strict_feature_schema=config.strict_feature_schema,
+        replay_mode=replay_mode,
     )
 
 

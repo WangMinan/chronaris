@@ -276,106 +276,102 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 4. 直接引用本轮 semantic support：`docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r1.md`。
 5. 直接引用本轮 rigid_body ablation：`docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r1.md`。
 
-## 当前 P7：扩充 rigid_body 的字段语义覆盖
+## 已完成 P7：扩充 rigid_body 的字段语义覆盖
 
-目标：在 `translation` 已经启用的基础上，继续让 `vertical / rotation` 残差在真实链路上稳定启用。
+结果：`rigid_body` 已经不再只启用 `translation`，本轮通过真实 MySQL label + token 扩充，`vertical` 也已经在真实链路上启用。
 
-现状：
+本轮完成：
 
 - `vehicle_field_metadata` 已确认可通过本地 `127.0.0.1:3306` 正常加载。
 - `BUS6000019110020` 当前加载字段数为 `96`。
-- 现有 token 映射已经触发 `speed + acceleration`，所以 `translation` 生效。
-- `altitude + vertical_speed` 和姿态角/角速度轴对没有在当前真实链路稳定匹配，导致 `vertical / rotation` 分量仍为 0。
-
-代码落点：
-
-- `scripts/run_stage_e_relative_preview.py`
-  - 复用 `_resolve_vehicle_field_labels()` 和 `MySQLRealBusContextReader`，不要绕过既有 MySQL 元信息访问。
-  - 新增或扩展字段映射诊断导出，至少能列出每个 `rigid_body` group 的匹配字段、原始 label、未匹配候选。
-- `src/chronaris/models/alignment/physics_state_mapping.py`
-  - 扩充 `_TRANSLATION_GROUP_TOKENS` 与 `_ROTATION_AXIS_TOKENS`。
-  - 优先加真实字段 label 的精确或半精确 token，不要用过宽的泛化词导致误配。
-  - 保留 `enabled_residuals()` 与 `missing_requirements()` 的可解释输出。
-- `src/chronaris/models/alignment/physics_features.py`
-  - 保持 Stage F 旧 semantic grouping 与 `rigid_body` mapping 口径一致，避免 `full` 与 `rigid_body` 对同一 label 给出冲突解释。
-- `src/chronaris/models/alignment/physics_residuals.py`
-  - 若新增字段组合后 vertical/rotation 数值尺度异常，优先在残差内部做单位/差分尺度诊断，不直接调大 loss weight 掩盖问题。
-- `tests/test_alignment_model_losses.py`
-  - 补真实中文 label token 的单元测试。
-  - 覆盖 `altitude + vertical_speed`、`pitch + pitch_rate`、`roll + roll_rate`、`yaw + yaw_rate` 至少一组 rotation 生效路径。
-
-实跑命令形态：
+- 已扩充中文 token，并新增刚体字段映射诊断导出。
+- 新的 `rigid_body` 真实 run：
 
 ```bash
+CHRONARIS_MYSQL_HOST=127.0.0.1 CHRONARIS_MYSQL_PORT=3306 \
+CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py \
-  --report-path docs/artifacts/stage_i/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2.md \
   --enable-physics-constraints \
   --physics-constraint-family rigid_body \
   --input-normalization-mode zscore_train \
   --epoch-count 1 \
   --batch-size 8 \
   --strict-mysql-field-labels \
-  --device cpu
+  --device cpu \
+  --report-path docs/artifacts/stage_i/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2.md
 ```
 
-验收：
+本轮验收：
 
-- MySQL metadata 仍为 `loaded`，且字段数没有意外降为 0。
-- `rigid_body` diagnostics 中 `enabled_residuals` 至少包含 `translation` 和 `vertical`；若真实字段具备姿态角/角速度，再包含 `rotation`。
-- `vehicle_rigid_body_vertical` 或 `vehicle_rigid_body_rotation` 至少一个从 0 变为非零。
-- `full` / `rigid_body` 的 `test_total` 仍在同量级，不因字段误配出现数量级爆炸。
-- 相关 unittest 通过，并重建 `docs/artifacts/assets/stage_i_rigid_body/<new_run_id>/rigid_body_ablation_summary.json`。
+- `vehicle_field_metadata.status=loaded`
+- `enabled_residuals=['translation','vertical']`
+- `vehicle_rigid_body_translation=1.133332371711731`
+- `vehicle_rigid_body_vertical=3.9466116428375244`
+- 汇总：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json`
+- 报告：`docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
 
-## 下一步 P8：放大 semantic event support 证据
+## 已完成 P8：放大 semantic event support 证据
 
-目标：把当前一条 preview-scale 语义事件证据，扩展成多 view / 多 sortie 的 support matrix，使论文中“语义事件融合”不只依赖单点样例。
+结果：已经从单 preview summary 扩到当前 Stage H `validation` profile 的 3 个双流 view，并生成了 view-level semantic ranking。
 
-代码落点：
+本轮完成：
 
-- `src/chronaris/pipelines/causal_fusion.py`
-  - 支持从 Stage H manifest 批量读取多个 view 的 causal summary 输入。
-  - 输出 view-level semantic event metrics：`event_token_count`、`query_entropy`、`top_query_name`、`top_event_attribution`、`top_query_event_offset_s`。
-- `src/chronaris/pipelines/stage_i/stage_i_support_builders.py`
-  - 将 `causal_support.semantic_event` 从单 summary 聚合改成可接收 summary list。
-  - 给每个 view 保留 `sortie_id / pilot_id / view_id / source_summary_path`。
-- `src/chronaris/pipelines/stage_i/stage_i_support_reporting.py`
-  - 增加 semantic event support 表与 view-level 排名表。
-  - 报告中继续区分 `private proxy evidence`、`thesis weak-label evidence`、`case support evidence`。
-- `tests/test_stage_i_support.py`
-  - 增加多 summary、多 view、缺失 semantic_event 字段的 fallback 测试。
+- 新增 runner：`scripts/run_stage_i_semantic_event_support.py`
+- 新增多 view summary：
+  - `docs/artifacts/assets/stage_i_semantic_event_support/20260607T-stage-i-semantic-support-r2/semantic_event_support_summary.json`
+- 新增 support 聚合：
+  - `docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
+- 新增报告：
+  - `docs/artifacts/stage_i/stage-i-semantic-event-support-20260607T-stage-i-semantic-support-r2.md`
+  - `docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
 
-验收：
+本轮验收：
 
-- 至少覆盖当前 Stage H `validation` profile 的 3 个双流 view。
-- `support_summary.json` 中有 view-level semantic rows，而不是只保存均值。
-- 支持报告能回答“哪个 view / 哪个 query / 哪个 offset 贡献最大”。
-- 不把 `T1/T2/T3` 或 weak label 写成人工真值。
+- 覆盖 `3` 个 view、`111` 个样本。
+- `support_summary.json` 已包含 `causal_support.semantic_event.view_rows`。
+- support 报告已经能回答：
+  - top view：`20251005_四01_ACT-4_云_J20_22#01__pilot_10033`
+  - dominant query：`risk_proxy`
+  - top offset：`0.626197s`
 
-## 下一步 P9：runtime inference 服务化补强
+## 已完成 P9：runtime inference 服务化补强
 
-目标：把 checkpoint-backed replay 从“可跑脚本”推进到“可封装准实时推理接口”，为毕业论文系统实现章节准备稳定边界。
+结果：runtime inference 现在支持 batch / incremental / both 三种 replay 模式、schema 对齐诊断和 JSONL 导出。
 
-代码落点：
+本轮完成：
 
-- `src/chronaris/dataset/streaming_windows.py`
-  - 明确窗口缓存策略：按 `view_id` 分桶、可配置 stride、最大缓存长度、乱序点处理。
-  - 增加 schema drift 诊断：缺列、额外列、时间戳不单调、采样间隔异常。
-- `src/chronaris/serving/runtime_inference.py`
-  - 输出标准化 response schema：prediction、confidence/score、attention summary、semantic event summary、diagnostics。
-  - 增加 batch replay 与 incremental replay 两种入口，避免脚本层自己拼业务逻辑。
-  - 对 checkpoint feature schema mismatch 给出可读错误和 fallback 策略。
-- `scripts/run_stage_i_runtime_inference.py`
-  - 增加 `--max-windows`、`--batch-size`、`--emit-jsonl`、`--strict-feature-schema`。
-- `tests/test_runtime_inference.py`
-  - 覆盖乱序输入、缺列、批次 replay、strict schema mismatch、解释输出裁剪。
+- `StreamingWindowBuffer` 已支持：
+  - `max_cached_points_per_stream`
+  - `allow_out_of_order`
+  - `diagnostics`
+- `runtime_inference.py` 已支持：
+  - `replay_mode=batch|incremental|both`
+  - `batch_size`
+  - `max_windows`
+  - `strict_feature_schema`
+  - `input_normalization_stats` 作为旧 checkpoint 的 schema fallback
+  - latency / throughput / chunk_count / feature_schema_status diagnostics
+- CLI 已支持：
+  - `--max-windows`
+  - `--batch-size`
+  - `--emit-jsonl`
+  - `--strict-feature-schema`
+  - `--replay-mode`
+- 新产物：
+  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_summary.json`
+  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_predictions.jsonl`
+  - `docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md`
 
-验收：
+本轮验收：
 
-- 同一 `runtime_samples.jsonl` 在 batch replay 与 incremental replay 下输出样本数一致。
-- `runtime_inference_summary.json` 增加 latency / throughput / diagnostics 统计。
-- 单条 prediction JSON 可直接作为系统接口样例纳入论文或附录。
+- `replay_mode=both`
+- `batch_sample_count=40`
+- `incremental_sample_count=40`
+- `sample_count_match=True`
+- `feature_schema_status=aligned`
+- `feature_schema_source=input_normalization_stats`
 
-## 下一步 P10：统一论文闭环评测 harness
+## 当前 P10：统一论文闭环评测 harness
 
 目标：把 Phase C/D/E/F 的真实命令整合成一个可重复跑的 evidence runner，减少后续论文补图、补表时的手工步骤。
 
