@@ -43,8 +43,10 @@ _TASK_HEAD_EXPORTS = {
 _LOSS_EXPORTS = {
     "AlignmentLossBreakdown",
     "PhysicsLossBreakdown",
+    "RigidBodyMappingDiagnostics",
     "RigidBodyPhysicsDiagnostics",
     "RigidBodyStateMapping",
+    "build_rigid_body_mapping_diagnostics",
     "StageEObjectiveBreakdown",
     "TaskLossBreakdown",
     "build_rigid_body_state_mapping",
@@ -168,8 +170,10 @@ def __getattr__(name: str) -> Any:
             build_vehicle_feature_groups,
         )
         from chronaris.models.alignment.physics_state_mapping import (
+            RigidBodyMappingDiagnostics,
             RigidBodyPhysicsDiagnostics,
             RigidBodyStateMapping,
+            build_rigid_body_mapping_diagnostics,
             build_rigid_body_state_mapping,
             inspect_rigid_body_physics,
         )
@@ -178,8 +182,10 @@ def __getattr__(name: str) -> Any:
             "AlignmentLossBreakdown": AlignmentLossBreakdown,
             "PhysicsLossBreakdown": PhysicsLossBreakdown,
             "ReconstructionLossBreakdown": ReconstructionLossBreakdown,
+            "RigidBodyMappingDiagnostics": RigidBodyMappingDiagnostics,
             "RigidBodyPhysicsDiagnostics": RigidBodyPhysicsDiagnostics,
             "RigidBodyStateMapping": RigidBodyStateMapping,
+            "build_rigid_body_mapping_diagnostics": build_rigid_body_mapping_diagnostics,
             "StageEObjectiveBreakdown": StageEObjectiveBreakdown,
             "TaskLossBreakdown": TaskLossBreakdown,
             "StageFPhysicsContext": StageFPhysicsContext,

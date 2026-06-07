@@ -32,7 +32,10 @@ if ENABLE_TORCH_RUNTIME_TESTS:
         build_physiology_feature_groups,
         build_vehicle_feature_groups,
     )
-    from chronaris.models.alignment.physics_state_mapping import inspect_rigid_body_physics
+    from chronaris.models.alignment.physics_state_mapping import (
+        build_rigid_body_mapping_diagnostics,
+        inspect_rigid_body_physics,
+    )
     from chronaris.models.alignment.prototype import (
         DualStreamODERNNPrototype,
         DualStreamPrototypeOutput,
@@ -532,6 +535,31 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertIn("translation", diagnostics.missing_requirements)
             self.assertIn("vertical", diagnostics.missing_requirements)
             self.assertFalse(diagnostics.uses_latent_fallback)
+
+        def test_stage_f_rigid_body_mapping_matches_realbus_vertical_labels(self) -> None:
+            diagnostics = build_rigid_body_mapping_diagnostics(
+                (
+                    "BUS6000019110020.code1029",
+                    "BUS6000019110020.code1033",
+                    "BUS6000019110020.code1030",
+                ),
+                field_labels={
+                    "BUS6000019110020.code1029": "[TSPI数据][载机平台系速度][速度_天向][_速度]",
+                    "BUS6000019110020.code1033": "[TSPI数据][载机海拔高度][_高度]",
+                    "BUS6000019110020.code1030": "[TSPI数据][载机俯仰角][_角度_毫弧度]",
+                },
+            )
+
+            self.assertIn("vertical", diagnostics.enabled_residuals)
+            self.assertEqual(
+                [row["feature_name"] for row in diagnostics.groups["vertical_speed"]],
+                ["BUS6000019110020.code1029"],
+            )
+            self.assertEqual(
+                [row["feature_name"] for row in diagnostics.groups["altitude"]],
+                ["BUS6000019110020.code1033"],
+            )
+            self.assertIn("rotation", diagnostics.missing_requirements)
 else:
     class AlignmentLossesRuntimeDisabledTest(unittest.TestCase):
         @unittest.skip("torch runtime tests are disabled on this machine; enable in a suitable environment.")

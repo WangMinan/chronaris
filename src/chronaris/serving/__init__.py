@@ -9,9 +9,12 @@ from chronaris.serving.runtime_demo import (
 from chronaris.serving.runtime_inference import (
     StageIRuntimeInferenceConfig,
     StageIRuntimeInferenceRunResult,
+    dump_runtime_predictions_jsonl,
     dump_runtime_samples_jsonl,
     load_runtime_samples_jsonl,
     render_stage_i_runtime_inference_report,
+    run_stage_i_runtime_inference_batch,
+    run_stage_i_runtime_inference_incremental,
     run_stage_i_runtime_inference,
 )
 
@@ -20,10 +23,13 @@ __all__ = [
     "StageIRuntimeDemoRunResult",
     "StageIRuntimeInferenceConfig",
     "StageIRuntimeInferenceRunResult",
+    "dump_runtime_predictions_jsonl",
     "dump_runtime_samples_jsonl",
     "load_runtime_samples_jsonl",
     "render_stage_i_runtime_demo_report",
     "render_stage_i_runtime_inference_report",
     "run_stage_i_runtime_demo",
+    "run_stage_i_runtime_inference_batch",
+    "run_stage_i_runtime_inference_incremental",
     "run_stage_i_runtime_inference",
 ]

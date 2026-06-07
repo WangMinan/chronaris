@@ -39,7 +39,11 @@ from chronaris.evaluation import (
     summarize_alignment_projection_diagnostics,
 )
 from chronaris.features.experiment_input import E0InputConfig
-from chronaris.models.alignment import AlignmentPrototypeConfig, ReferenceGridConfig
+from chronaris.models.alignment import (
+    AlignmentPrototypeConfig,
+    ReferenceGridConfig,
+    build_rigid_body_mapping_diagnostics,
+)
 from chronaris.pipelines.alignment_experiment import AlignmentExperimentPipeline
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
 from chronaris.pipelines.causal_fusion import (
@@ -671,6 +675,7 @@ def _render_physics_diagnostics_markdown(
     family: str,
     mode: str,
     vehicle_metadata_summary: dict[str, object],
+    rigid_body_mapping_diagnostics: dict[str, object] | None,
     train_final: dict[str, object],
     validation_final: dict[str, object],
     test_final: dict[str, object],
@@ -719,6 +724,41 @@ def _render_physics_diagnostics_markdown(
                 f"{validation_components.get(component_name, 0.0):.6f} | "
                 f"{test_components.get(component_name, 0.0):.6f} |"
             )
+        lines.append("")
+    if rigid_body_mapping_diagnostics is not None:
+        lines.extend(
+            [
+                "### Rigid-Body Mapping Diagnostics",
+                "",
+                f"- enabled residuals: `{rigid_body_mapping_diagnostics.get('enabled_residuals', [])}`",
+                f"- missing requirements: `{rigid_body_mapping_diagnostics.get('missing_requirements', {})}`",
+                "",
+                "| group | matched feature | matched label |",
+                "| --- | --- | --- |",
+            ]
+        )
+        groups = rigid_body_mapping_diagnostics.get("groups") or {}
+        for group_name, rows in groups.items():
+            if rows:
+                for row in rows:
+                    lines.append(
+                        f"| `{group_name}` | `{row['feature_name']}` | `{row['label']}` |"
+                    )
+            else:
+                lines.append(f"| `{group_name}` | `-` | `-` |")
+        unmatched = rigid_body_mapping_diagnostics.get("unmatched_features") or []
+        if unmatched:
+            lines.extend(
+                [
+                    "",
+                    "#### Unmatched Features",
+                    "",
+                    "| feature | label |",
+                    "| --- | --- |",
+                ]
+            )
+            for row in unmatched:
+                lines.append(f"| `{row['feature_name']}` | `{row['label']}` |")
         lines.append("")
     metadata_error = vehicle_metadata_summary.get("error")
     if metadata_error:
@@ -1114,6 +1154,21 @@ def _run_once(
         report_path=report_path,
         experiment_result=result,
     )
+    rigid_body_mapping_diagnostics = None
+    if (
+        resolved_enable_physics
+        and args.physics_constraint_family == "rigid_body"
+        and result.preview_result.intermediate_export is not None
+        and result.preview_result.intermediate_export.samples
+    ):
+        feature_names = result.preview_result.intermediate_export.samples[0].vehicle.feature_names
+        rigid_body_mapping_diagnostics = _serialize_rigid_body_mapping_diagnostics(
+            build_rigid_body_mapping_diagnostics(
+                feature_names,
+                field_labels=vehicle_field_labels,
+                mode=args.physics_constraint_mode,
+            )
+        )
     train_final = asdict(result.preview_result.train_history[-1])
     validation_final = asdict(result.preview_result.validation_history[-1])
     test_final = asdict(result.preview_result.test_metrics)
@@ -1122,6 +1177,7 @@ def _run_once(
         family=args.physics_constraint_family,
         mode=args.physics_constraint_mode,
         vehicle_metadata_summary=vehicle_metadata_summary,
+        rigid_body_mapping_diagnostics=rigid_body_mapping_diagnostics,
         train_final=train_final,
         validation_final=validation_final,
         test_final=test_final,
@@ -1206,6 +1262,23 @@ def _run_once(
             "physiology_envelope_quantile": args.physiology_envelope_quantile,
         },
         "vehicle_field_metadata": vehicle_metadata_summary,
+        "rigid_body_mapping_diagnostics": rigid_body_mapping_diagnostics,
+    }
+
+
+def _serialize_rigid_body_mapping_diagnostics(diagnostics) -> dict[str, object]:
+    return {
+        "feature_labels": dict(diagnostics.feature_labels),
+        "groups": {
+            group_name: [dict(row) for row in rows]
+            for group_name, rows in diagnostics.groups.items()
+        },
+        "unmatched_features": [dict(row) for row in diagnostics.unmatched_features],
+        "enabled_residuals": list(diagnostics.enabled_residuals),
+        "missing_requirements": {
+            key: list(value)
+            for key, value in diagnostics.missing_requirements.items()
+        },
     }
 
 

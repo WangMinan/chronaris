@@ -93,21 +93,52 @@ def render_stage_i_causal_support_report(summary: Mapping[str, object]) -> str:
                 "",
                 f"- query_names: `{semantic_event['query_names']}`",
                 f"- query_count: `{semantic_event['query_count']}`",
+                f"- view_count: `{semantic_event.get('view_count', 0)}`",
+                f"- top_view_id: `{semantic_event.get('top_view_id')}`",
                 f"- mean_event_token_count: `{_fmt_float(semantic_event['mean_event_token_count'])}`",
                 f"- mean_query_entropy: `{_fmt_float(semantic_event['mean_query_entropy'])}`",
                 f"- mean_top_query_score: `{_fmt_float(semantic_event['mean_top_query_score'])}`",
                 f"- mean_top_event_attribution: `{_fmt_float(semantic_event['mean_top_event_attribution'])}`",
-                "",
-                "| sample | top query | top query event offset s | top event attribution |",
-                "| --- | --- | ---: | ---: |",
             ]
         )
-        for row in semantic_event.get("samples", []):
-            lines.append(
-                f"| `{row['sample_id']}` | `{row['top_query_name']}` | "
-                f"{_fmt_float(row['top_query_event_offset_s'])} | {_fmt_float(row['top_event_attribution'])} |"
+        sample_rows = semantic_event.get("samples") or []
+        if sample_rows:
+            ranked_sample_rows = sorted(
+                sample_rows,
+                key=lambda row: float(row["top_event_attribution"]),
+                reverse=True,
+            )[:10]
+            lines.extend(
+                [
+                    "",
+                    "| sample | top query | top query event offset s | top event attribution |",
+                    "| --- | --- | ---: | ---: |",
+                ]
             )
-        lines.append("")
+            for row in ranked_sample_rows:
+                lines.append(
+                    f"| `{row['sample_id']}` | `{row['top_query_name']}` | "
+                    f"{_fmt_float(row['top_query_event_offset_s'])} | {_fmt_float(row['top_event_attribution'])} |"
+                )
+            lines.append("")
+        view_rows = semantic_event.get("view_rows") or []
+        if view_rows:
+            lines.extend(
+                [
+                    "### View-Level Semantic Ranking",
+                    "",
+                    "| view | sortie | pilot | state source | dominant query | mean event tokens | mean query entropy | mean top event attribution | top sample | top offset s |",
+                    "| --- | --- | ---: | --- | --- | ---: | ---: | ---: | --- | ---: |",
+                ]
+            )
+            for row in view_rows:
+                lines.append(
+                    f"| `{row['view_id']}` | `{row['sortie_id']}` | {row['pilot_id']} | `{row['state_source']}` | "
+                    f"`{row['dominant_query_name']}` | {_fmt_float(row['mean_event_token_count'])} | "
+                    f"{_fmt_float(row['mean_query_entropy'])} | {_fmt_float(row['mean_top_event_attribution'])} | "
+                    f"`{row['top_sample_id']}` | {_fmt_float(row['top_sample_query_event_offset_s'])} |"
+                )
+            lines.append("")
     lines.extend(
         [
             "## Phase 2 Bundle-Only Ablations",

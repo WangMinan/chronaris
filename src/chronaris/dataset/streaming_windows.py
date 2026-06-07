@@ -16,6 +16,17 @@ class StreamingPointEvent:
     point: AlignedPoint
 
 
+@dataclass(frozen=True, slots=True)
+class StreamingWindowBufferDiagnostics:
+    """Operational counters for one streaming window buffer."""
+
+    latest_offset_ms: int
+    out_of_order_event_count: int
+    max_cached_points_per_stream: int | None
+    physiology_cached_points: int
+    vehicle_cached_points: int
+
+
 def iter_aligned_sortie_events(bundle: AlignedSortieBundle) -> tuple[StreamingPointEvent, ...]:
     """Return all aligned points sorted into one replay-ready event stream."""
 
@@ -39,24 +50,33 @@ class StreamingWindowBuffer:
         sortie_id: str,
         window_config: WindowConfig,
         sample_id_prefix: str | None = None,
+        max_cached_points_per_stream: int | None = None,
+        allow_out_of_order: bool = True,
     ) -> None:
         self.sortie_id = sortie_id
         self.window_config = window_config
         self.sample_id_prefix = sample_id_prefix or sortie_id
+        self.max_cached_points_per_stream = max_cached_points_per_stream
+        self.allow_out_of_order = allow_out_of_order
         self._physiology_points: deque[AlignedPoint] = deque()
         self._vehicle_points: deque[AlignedPoint] = deque()
         self._next_window_start_ms = 0
         self._window_index = 0
         self._latest_offset_ms = -1
+        self._out_of_order_event_count = 0
 
     def push(self, event: StreamingPointEvent) -> tuple[SampleWindow, ...]:
         """Push one aligned point and emit any newly completed windows."""
 
+        if event.point.offset_ms < self._latest_offset_ms:
+            self._out_of_order_event_count += 1
+            if not self.allow_out_of_order:
+                raise ValueError("out-of-order streaming point is not allowed.")
         self._latest_offset_ms = max(self._latest_offset_ms, int(event.point.offset_ms))
         if event.stream_kind == StreamKind.PHYSIOLOGY:
-            self._physiology_points.append(event.point)
+            self._append_point(self._physiology_points, event.point)
         elif event.stream_kind == StreamKind.VEHICLE:
-            self._vehicle_points.append(event.point)
+            self._append_point(self._vehicle_points, event.point)
         else:  # pragma: no cover - defensive guard for future stream kinds.
             raise ValueError(f"unsupported stream kind: {event.stream_kind}")
         return self._emit_ready_windows(allow_partial=False)
@@ -125,3 +145,28 @@ class StreamingWindowBuffer:
             self._physiology_points.popleft()
         while self._vehicle_points and self._vehicle_points[0].offset_ms < before_offset_ms:
             self._vehicle_points.popleft()
+
+    @property
+    def diagnostics(self) -> StreamingWindowBufferDiagnostics:
+        return StreamingWindowBufferDiagnostics(
+            latest_offset_ms=self._latest_offset_ms,
+            out_of_order_event_count=self._out_of_order_event_count,
+            max_cached_points_per_stream=self.max_cached_points_per_stream,
+            physiology_cached_points=len(self._physiology_points),
+            vehicle_cached_points=len(self._vehicle_points),
+        )
+
+    def _append_point(self, target: deque[AlignedPoint], point: AlignedPoint) -> None:
+        if not target or point.offset_ms >= target[-1].offset_ms:
+            target.append(point)
+        else:
+            rows = list(target)
+            insert_index = 0
+            while insert_index < len(rows) and rows[insert_index].offset_ms <= point.offset_ms:
+                insert_index += 1
+            rows.insert(insert_index, point)
+            target.clear()
+            target.extend(rows)
+        if self.max_cached_points_per_stream is not None:
+            while len(target) > self.max_cached_points_per_stream:
+                target.popleft()

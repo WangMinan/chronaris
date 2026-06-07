@@ -23,6 +23,7 @@ def _build_alignment_support_summary(
         view_result["view_summary"]["verdict"]
         for view_result in case_study_summary["view_results"]
     )
+    partial_data = stage_h_run_manifest.get("partial_data") or {}
     return {
         "alignment_chain": {
             "e_baseline": e_summary,
@@ -49,10 +50,10 @@ def _build_alignment_support_summary(
             "generated_view_ids": list(stage_h_run_manifest["generated_view_ids"]),
             "view_verdict_counts": dict(view_verdict_counts),
             "partial_data_entry_count": int(
-                stage_h_run_manifest["partial_data"]["entry_count"]
+                partial_data.get("entry_count", 0)
             ),
             "partial_data_built_entry_count": int(
-                stage_h_run_manifest["partial_data"]["built_entry_count"]
+                partial_data.get("built_entry_count", 0)
             ),
         },
     }
@@ -108,6 +109,8 @@ def _build_causal_support_summary(
     private_no_mask = _extract_private_no_mask_summary(private_summary)
     deep_stage_h_case = _extract_deep_stage_h_case_summary(deep_summary)
     semantic_event = g_causal.get("semantic_event") if isinstance(g_causal.get("semantic_event"), Mapping) else None
+    if semantic_event is None and "view_rows" in g_causal and "query_names" in g_causal:
+        semantic_event = g_causal
     return {
         "g_min": {
             "sample_count": int(g_causal["sample_count"]),
@@ -124,6 +127,9 @@ def _build_causal_support_summary(
                 "mean_query_entropy": float(semantic_event.get("mean_query_entropy", 0.0)),
                 "mean_top_query_score": float(semantic_event.get("mean_top_query_score", 0.0)),
                 "mean_top_event_attribution": float(semantic_event.get("mean_top_event_attribution", 0.0)),
+                "view_count": int(semantic_event.get("view_count", 0)),
+                "top_view_id": semantic_event.get("top_view_id"),
+                "view_rows": list(semantic_event.get("view_rows", [])),
                 "samples": list(semantic_event.get("samples", [])),
             }
             if semantic_event is not None
