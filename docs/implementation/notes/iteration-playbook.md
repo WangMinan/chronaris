@@ -35,9 +35,9 @@
 
 采用“单一事实源 + 最小冗余”策略：
 
-1. 阶段状态只在 `docs/planning/coding-roadmap.md` 维护。
-2. 阶段收口细节只在 `docs/planning/stage-*-closure-*.md` 维护。
-3. `docs/reports` 每阶段只保留 1 份主报告。
+1. 阶段状态只在 `docs/implementation/notes/coding-roadmap.md` 维护。
+2. 阶段收口细节只在 `docs/implementation/notes/stage-*-closure-*.md` 维护。
+3. `docs/artifacts` 每阶段只保留 1 份主报告。
 4. 旧报告或旧 summary 一旦被新文档完整覆盖，优先删除而非并行维护。
 
 ## 5. 测试治理共性规则

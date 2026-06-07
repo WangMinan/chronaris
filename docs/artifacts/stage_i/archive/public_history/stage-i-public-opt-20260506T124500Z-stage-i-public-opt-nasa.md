@@ -7,8 +7,8 @@
 - profile：`window_v2`
 - track：`objective`
 - task_type：`classification`
-- prepared asset root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260506T124000Z-stage-i-public-opt-nasa-prepared`
-- output artifact root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260506T124500Z-stage-i-public-opt-nasa`
+- prepared asset root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260506T124000Z-stage-i-public-opt-nasa-prepared`
+- output artifact root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260506T124500Z-stage-i-public-opt-nasa`
 - generated_at_utc：`2026-05-06T03:01:50.018097Z`
 
 ## 样本范围

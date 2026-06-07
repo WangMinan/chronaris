@@ -1,7 +1,7 @@
 # Stage I Phase 3 Closure
 
 - 生成时间：`2026-04-30T03:51:02.713471Z`
-- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure`
+- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure`
 
 ## 收口说明
 
@@ -13,7 +13,7 @@
 
 ## UAB Window 主线
 
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window`
 - entry_count: `34748`
 - recording_count: `87`
 - window_count: `34748`
@@ -39,7 +39,7 @@
 
 ## NASA Attention 主线
 
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention`
 - entry_count: `16609`
 - recording_count: `68`
 - window_count: `16609`
@@ -72,7 +72,7 @@
 
 ## Closure 图表
 
-- `phase3_window_counts`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/phase3_window_counts.png`
-- `uab_session_vs_window_objective`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_objective.png`
-- `uab_session_vs_window_subjective`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_subjective.png`
+- `phase3_window_counts`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/phase3_window_counts.png`
+- `uab_session_vs_window_objective`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_objective.png`
+- `uab_session_vs_window_subjective`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_subjective.png`
 

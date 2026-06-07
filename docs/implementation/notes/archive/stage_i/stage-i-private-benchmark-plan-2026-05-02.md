@@ -3,7 +3,7 @@
 更新时间：2026-05-04
 
 > 说明：本文件已归档为 `chronaris_opt` 私有 proxy benchmark 阶段快照。  
-> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+> 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
 
 ## 1. 目标
 
@@ -132,9 +132,9 @@ from chronaris.pipelines import (
 - `all-window private benchmark scaffolding 已接入`
 - `synthetic / contract 回归已通过`
 - `E/F all-window clean run` 已完成，`E` / `F` 均导出 `3` 个 view，且 `sample_manifest` 对齐
-- `private benchmark smoke` 已完成并已被 full run 覆盖，docs/assets 中不再保留中间 smoke 产物
-- `private benchmark full` 已完成：`docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`
-- `private benchmark package` 已完成：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/`
+- `private benchmark smoke` 已完成并已被 full run 覆盖，`docs/artifacts/assets` 中不再保留中间 smoke 产物
+- `private benchmark full` 已完成：`docs/artifacts/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`
+- `private benchmark package` 已完成：`docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/`
 - 私有 benchmark 的最终结论是：
   - `private_optimality_supported = True`
   - T1：`chronaris_opt` macro-F1 `1.000000`、balanced accuracy `1.000000`
@@ -142,6 +142,6 @@ from chronaris.pipelines import (
   - T3：`chronaris_opt` top-1 `1.000000`、MRR `1.000000`
   - `chronaris_opt` 在 T1/T2/T3 均优于 `chronaris_opt_no_causal_mask`
   - `criterion_details` 全为 `true`
-  - 当前可引用 package：`docs/reports/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
+  - 当前可引用 package：`docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 
 因此当前可以说“已在鼎新私有 proxy benchmark 上证明 `chronaris_opt` 三任务全面最优”。该结论不外推为人工真值或真实飞行风险标签最优。

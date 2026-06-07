@@ -1,7 +1,7 @@
 # Stage I UAB Baseline
 
 - 生成时间：2026-04-30 03:51:02 UTC
-- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window`
+- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window`
 
 ## 数据摘要
 
@@ -79,12 +79,12 @@
 
 ## 图表
 
-- `dataset_subset_counts`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/dataset_subset_counts.png`
-- `label_distribution`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/label_distribution.png`
-- `objective_ablation_macro_f1`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_ablation_macro_f1.png`
-- `objective_confusion_matrix_heat_the_chair`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_confusion_matrix_heat_the_chair.png`
-- `objective_confusion_matrix_n_back`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_confusion_matrix_n_back.png`
-- `subjective_ablation_rmse`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_ablation_rmse.png`
-- `subjective_regression_heat_the_chair`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_regression_heat_the_chair.png`
-- `subjective_regression_n_back`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_regression_n_back.png`
+- `dataset_subset_counts`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/dataset_subset_counts.png`
+- `label_distribution`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/label_distribution.png`
+- `objective_ablation_macro_f1`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_ablation_macro_f1.png`
+- `objective_confusion_matrix_heat_the_chair`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_confusion_matrix_heat_the_chair.png`
+- `objective_confusion_matrix_n_back`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/objective_confusion_matrix_n_back.png`
+- `subjective_ablation_rmse`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_ablation_rmse.png`
+- `subjective_regression_heat_the_chair`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_regression_heat_the_chair.png`
+- `subjective_regression_n_back`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/plots/subjective_regression_n_back.png`
 

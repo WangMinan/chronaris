@@ -2,11 +2,11 @@
 
 更新时间：2026-05-01
 
-- 机器资产根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T-full-loso-deep-comparison`
+- 机器资产根目录：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison`
 - sequence 资产继续复用：
-  - `Stage H`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
-  - `UAB`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
-  - `NASA`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
+  - `Stage H`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
+  - `UAB`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
+  - `NASA`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
 
 ## 1. 本轮口径
 

@@ -1,5 +1,5 @@
 > 说明：本文件保留为 Stage I 启动期方案快照。
-> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+> 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
 
 结论先说：阶段 I 最容易落地的版本，应该改成“公开标注数据集上的认知负荷量化实验 + 现有实飞 Stage H 资产上的小样本案例复盘”。不要把阶段 I 设计成“必须拿到更多鼎新实飞数据和专家细粒度标签”的方案。那条路现在不可控，而且会拖死毕设。
 
@@ -27,7 +27,7 @@
 数据分成四层：
 
 1. Stage H 现有实飞资产
-    使用 docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json，通过 src/chronaris/features/stage_h_bundle.py:1 读取 3 个真实双流 view。它只做案例复盘、注意力解释、掩码干扰实验，不拿来做大规模监督训练。
+    使用 docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json，通过 src/chronaris/features/stage_h_bundle.py:1 读取 3 个真实双流 view。它只做案例复盘、注意力解释、掩码干扰实验，不拿来做大规模监督训练。
 2. UAB Flight-Deck Workload 数据集，作为第一主数据集
     这是我最建议优先做的。它包含 EEG/ECG，任务包括 N-back、serious game 和 Airbus320 沉浸式飞行模拟，且提供客观和主观 workload ground truth；UAB 页面也说明 zip 约 966.7 MB，数据可公开获取并带 Creative Commons 使用说明。来源：UAB
     DDD 数据集页面 https://ddd.uab.cat/record/259591
@@ -82,7 +82,7 @@ MulT 和 ContiFormer 保留为论文对照方向，不作为第一轮必须落�
 - scripts/prepare_stage_i_dataset.py
 - scripts/run_stage_i_baseline.py
 - scripts/run_stage_i_case_study.py
-- docs/planning/archive/stage_i/stage-i-data-plan-2026-04-29.md
+- docs/implementation/notes/archive/stage_i/stage-i-data-plan-2026-04-29.md
 
 进入阶段 I 前你真正需要准备的东西
 你不需要再等鼎新或专家。你需要准备的是：

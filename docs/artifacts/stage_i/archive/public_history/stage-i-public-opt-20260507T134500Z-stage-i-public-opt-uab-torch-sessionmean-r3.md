@@ -7,8 +7,8 @@
 - profile：`window_v2`
 - runtime_device：`cuda`
 - requested_device：`cuda`
-- prepared asset root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
-- output artifact root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260507T134500Z-stage-i-public-opt-uab-torch-sessionmean-r3`
+- prepared asset root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
+- output artifact root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt_torch/20260507T134500Z-stage-i-public-opt-uab-torch-sessionmean-r3`
 - generated_at_utc：`2026-05-07T05:57:31.442039Z`
 
 ## Screen Winner

@@ -2,8 +2,8 @@
 
 - generated_at_utc：`2026-05-06T05:07:45.736686Z`
 - runtime_device：`cuda`
-- artifact_root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2`
-- leaderboard_csv：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/candidate_leaderboard.csv`
+- artifact_root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2`
+- leaderboard_csv：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/candidate_leaderboard.csv`
 
 ## uab_workload_dataset
 

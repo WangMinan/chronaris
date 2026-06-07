@@ -1,9 +1,9 @@
 # Stage I Alignment Support - 20260506T120000Z-stage-i-support
 
 - generated_at_utc: `2026-05-06T02:58:16.462491Z`
-- artifact_root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support`
-- machine summary: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/support_summary.json`
-- main ablation matrix: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_support/20260506T120000Z-stage-i-support/ablation_matrix.csv`
+- artifact_root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support`
+- machine summary: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support/support_summary.json`
+- main ablation matrix: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_support/20260506T120000Z-stage-i-support/ablation_matrix.csv`
 
 ## Alignment Chain
 

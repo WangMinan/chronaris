@@ -161,7 +161,7 @@ def validate_private_stage_h_run_contract(
     raise ValueError(f"unsupported private Stage H stage name: {stage_name}")
 
 
-def derive_private_task_entries(
+def derive_private_proxy_task_entries(
     records: pd.DataFrame,
 ) -> dict[str, object]:
     maneuver_fields = select_feature_names(records["raw_vehicle_stats"], preferred_keywords=(
@@ -314,6 +314,7 @@ def derive_private_task_entries(
         "entry_count": len(task_entries),
         "benchmark_role": PRIVATE_PROXY_BENCHMARK_ROLE,
         "task_role": PROXY_TASK_ROLE,
+        "evidence_layer": "proxy_evidence",
         "thesis_task_boundary": "t1_t2_t3_are_proxy_tasks_not_direct_thesis_tasks",
         "task_counts": {task_name: len(entries) for task_name, entries in by_task.items()},
         "task_role_counts": dict(Counter(entry.task_role for entry in task_entries)),
@@ -343,6 +344,14 @@ def derive_private_task_entries(
         "by_task": {task_name: tuple(entries) for task_name, entries in by_task.items()},
         "summary": summary,
     }
+
+
+def derive_private_task_entries(
+    records: pd.DataFrame,
+) -> dict[str, object]:
+    """Backward-compatible alias for the historical private proxy task builder."""
+
+    return derive_private_proxy_task_entries(records)
 
 
 def build_variant_feature_frames(
