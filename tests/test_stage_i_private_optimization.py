@@ -99,9 +99,22 @@ class StageIPrivateOptimizationTest(unittest.TestCase):
             self.assertTrue(Path(result.optimized_candidate_metrics_path).exists())
             self.assertTrue(Path(result.optimized_candidate_package_path).exists())
             self.assertTrue(Path(result.optimized_candidate_package_report_path).exists())
+            self.assertTrue(Path(result.thesis_task_manifest_path).exists())
+            self.assertTrue(Path(result.thesis_task_summary_path).exists())
             self.assertIn(
                 "t1_chronaris_opt_beats_chronaris_opt_no_causal_mask",
                 summary["criterion_details"],
+            )
+            self.assertIn("evidence_layers", summary)
+            self.assertIn("proxy_evidence", summary["evidence_layers"])
+            self.assertIn("thesis_task_evidence", summary["evidence_layers"])
+            self.assertEqual(
+                summary["evidence_layers"]["proxy_evidence"]["summary"]["evidence_layer"],
+                "proxy_evidence",
+            )
+            self.assertEqual(
+                summary["evidence_layers"]["thesis_task_evidence"]["summary"]["benchmark_role"],
+                "thesis_task_weak_label_benchmark",
             )
             package = json.loads(Path(result.optimized_candidate_package_path).read_text(encoding="utf-8"))
             self.assertEqual(package["target_variant_name"], "chronaris_opt")

@@ -2,9 +2,9 @@
 
 更新时间：2026-05-01
 
-- 机器资产根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie`
-- sequence 资产：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
-- comparison 资产：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison`
+- 机器资产根目录：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie`
+- sequence 资产：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
+- comparison 资产：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison`
 
 ## 1. 范围
 

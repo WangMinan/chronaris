@@ -1,8 +1,8 @@
 # Stage I Deep Baseline - nasa_csm - mult
 
 - profile: `window_v2`
-- artifact root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/probes/nasa_mult_probe`
-- prepared root: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/probes/nasa_mult_probe`
+- prepared root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
 
 ## Objective
 

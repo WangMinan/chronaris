@@ -15,7 +15,7 @@
 
 主报告：
 
-- `docs/reports/alignment/alignment-preview-stage-e-closure-2026-04-21.md`
+- `docs/artifacts/alignment/alignment-preview-stage-e-closure-2026-04-21.md`
 
 核心结果（seed=`20260421`）：
 
@@ -47,17 +47,17 @@
 
 脚本入口：
 
-- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --compare-with-zscore-train --report-path docs/reports/alignment/alignment-preview-stage-e-closure-2026-04-21.md`
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_e_relative_preview.py --compare-with-zscore-train --report-path docs/artifacts/alignment/alignment-preview-stage-e-closure-2026-04-21.md`
 
 关键产物：
 
-- 对照主报告：`docs/reports/alignment/alignment-preview-stage-e-closure-2026-04-21.md`
+- 对照主报告：`docs/artifacts/alignment/alignment-preview-stage-e-closure-2026-04-21.md`
 - 模型 checkpoint：
-  - `docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-none/alignment_model_checkpoint.pt`
-  - `docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/alignment_model_checkpoint.pt`
+  - `docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-none/alignment_model_checkpoint.pt`
+  - `docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/alignment_model_checkpoint.pt`
 - 诊断 JSON/CSV：
-  - `docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-none/`
-  - `docs/reports/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/`
+  - `docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-none/`
+  - `docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/`
 - 可视化图像：同上 assets 目录
 
 ## 5. 测试闭环

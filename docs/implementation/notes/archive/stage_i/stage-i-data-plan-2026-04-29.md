@@ -3,12 +3,12 @@
 更新时间：2026-04-30
 
 > 说明：本文件已归档。  
-> 当前现行入口改为 `docs/planning/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/planning/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
+> 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
 
 说明：
 
 - 本文档保留为阶段 I 启动期的数据计划与开工顺序记录。
-- 当前阶段状态与收口结果已由 `docs/planning/stage-i-closure-2026-04-30.md` 接管。
+- 当前阶段状态与收口结果已由 `docs/implementation/notes/stage-i-closure-2026-04-30.md` 接管。
 
 ## 0. 总分期
 
@@ -73,7 +73,7 @@
 
 机器资产根目录：
 
-- `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
+- `docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/`
 
 关键资产：
 
@@ -114,7 +114,7 @@
 
 主报告：
 
-- `docs/reports/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
+- `docs/artifacts/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
 
 测试闭环：
 
@@ -125,15 +125,15 @@
 
 Phase 2 当前输入固定为：
 
-- `docs/reports/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
+- `docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/run_manifest.json`
 
 Phase 2 当前产物根目录：
 
-- `docs/reports/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+- `docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
 
 Phase 2 当前主报告：
 
-- `docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md`
+- `docs/artifacts/stage_i/stage-i-case-study-phase2-2026-04-29.md`
 
 Phase 2 当前已验证：
 
@@ -166,6 +166,6 @@ Phase 2 关键结论：
 
 阶段 I 已于 `2026-04-30` 完成收口。后续默认按下面顺序推进：
 
-1. 保持 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/` 作为阶段 I 机器事实根目录。
+1. 保持 `docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/` 作为阶段 I 机器事实根目录。
 2. 在不破坏 frozen Stage I contract 的前提下，再考虑 MATB-II / DS007262 / EEGMAT 等补充公开数据。
 3. 在阶段 I 收口后，再评估更重的 EEG 深度模型与多模态对照，而不是回退修改已完成的 Phase 3 主线。

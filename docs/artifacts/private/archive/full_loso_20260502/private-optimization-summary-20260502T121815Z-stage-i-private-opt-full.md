@@ -30,5 +30,5 @@
 
 ## Artifacts
 
-- optimized candidate summary: `docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/optimized_candidate_summary.json`
-- optimized candidate metrics: `docs/reports/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/optimized_candidate_metrics.csv`
+- optimized candidate summary: `docs/artifacts/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/optimized_candidate_summary.json`
+- optimized candidate metrics: `docs/artifacts/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/optimized_candidate_metrics.csv`

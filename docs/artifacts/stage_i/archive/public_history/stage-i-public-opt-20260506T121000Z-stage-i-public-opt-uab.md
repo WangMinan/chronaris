@@ -7,8 +7,8 @@
 - profile：`window_v2`
 - track：`subjective`
 - task_type：`regression`
-- prepared asset root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
-- output artifact root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260506T121000Z-stage-i-public-opt-uab`
+- prepared asset root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
+- output artifact root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260506T121000Z-stage-i-public-opt-uab`
 - generated_at_utc：`2026-05-06T03:02:40.010917Z`
 
 ## 样本范围

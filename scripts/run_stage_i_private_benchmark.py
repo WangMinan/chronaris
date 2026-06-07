@@ -30,8 +30,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-id", default=_default_run_id())
     parser.add_argument("--e-run-manifest", required=True)
     parser.add_argument("--f-run-manifest", required=True)
-    parser.add_argument("--output-root", default="docs/reports/assets/stage_i_private")
-    parser.add_argument("--report-root", default="docs/reports")
+    parser.add_argument("--output-root", default="docs/artifacts/assets/stage_i_private")
+    parser.add_argument("--report-root", default="docs/artifacts")
     parser.add_argument("--deep-epochs", type=int, default=1)
     parser.add_argument("--deep-learning-rate", type=float, default=1e-3)
     parser.add_argument("--deep-batch-size", type=int, default=32)
@@ -80,6 +80,8 @@ def main() -> int:
                 "artifact_root": result.artifact_root,
                 "task_manifest_path": result.task_manifest_path,
                 "task_summary_path": result.task_summary_path,
+                "thesis_task_manifest_path": result.thesis_task_manifest_path,
+                "thesis_task_summary_path": result.thesis_task_summary_path,
                 "benchmark_summary_path": result.benchmark_summary_path,
                 "alignment_report_path": result.alignment_report_path,
                 "causal_report_path": result.causal_report_path,

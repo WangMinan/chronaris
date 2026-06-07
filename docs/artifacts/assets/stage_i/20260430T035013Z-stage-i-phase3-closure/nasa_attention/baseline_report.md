@@ -1,7 +1,7 @@
 # Stage I NASA CSM Attention Baseline
 
 - 生成时间：2026-04-30 03:51:02 UTC
-- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention`
+- 机器产物根目录：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention`
 
 ## 数据摘要
 
@@ -55,10 +55,10 @@
 
 ## 图表
 
-- `dataset_subset_counts`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/dataset_subset_counts.png`
-- `label_distribution`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/label_distribution.png`
-- `objective_ablation_macro_f1`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_ablation_macro_f1.png`
-- `objective_confusion_matrix_benchmark_only`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_benchmark_only.png`
-- `objective_confusion_matrix_combined`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_combined.png`
-- `objective_confusion_matrix_loft_only`: `/home/wangminan/projects/chronaris/docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_loft_only.png`
+- `dataset_subset_counts`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/dataset_subset_counts.png`
+- `label_distribution`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/label_distribution.png`
+- `objective_ablation_macro_f1`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_ablation_macro_f1.png`
+- `objective_confusion_matrix_benchmark_only`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_benchmark_only.png`
+- `objective_confusion_matrix_combined`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_combined.png`
+- `objective_confusion_matrix_loft_only`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/plots/objective_confusion_matrix_loft_only.png`
 

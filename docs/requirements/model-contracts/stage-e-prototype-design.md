@@ -14,13 +14,13 @@
 
 本草案综合了下面几类来源：
 
-1. `docs/planning/coding-roadmap.md`
-2. `docs/models/e0-minimal-input.md`
-3. `docs/models/alignment-batch-contract.md`
-4. `docs/planning/stage-e-closure-2026-04-21.md`
-5. `docs/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx`
-6. `docs/选题报告与基金申请书/西北工业大学硕士研究生实践创新能力培育基金项目申请书.docx`
-7. `docs/models/stage-e-reference-repos.md`
+1. `docs/implementation/notes/coding-roadmap.md`
+2. `docs/requirements/model-contracts/e0-minimal-input.md`
+3. `docs/requirements/model-contracts/alignment-batch-contract.md`
+4. `docs/implementation/notes/stage-e-closure-2026-04-21.md`
+5. `docs/requirements/选题报告与基金申请书/西北工业大学硕士学位研究生论文选题报告表.docx`
+6. `docs/requirements/选题报告与基金申请书/西北工业大学硕士研究生实践创新能力培育基金项目申请书.docx`
+7. `docs/requirements/model-contracts/stage-e-reference-repos.md`
 
 ## 3. 当前阶段判断
 
@@ -56,7 +56,7 @@
 
 1. 选题和基金中的理论主线仍然成立
 2. 代码实现继续按 `E -> F -> G -> H -> I` 的工程顺序分步落地
-3. 本文档保留阶段 E 原型设计背景；当前阶段事实以 `docs/planning/coding-roadmap.md` 为准
+3. 本文档保留阶段 E 原型设计背景；当前阶段事实以 `docs/implementation/notes/coding-roadmap.md` 为准
 
 ## 5. 当前代码基底
 

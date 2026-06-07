@@ -51,6 +51,52 @@ if TYPE_CHECKING:  # pragma: no cover - typing only
     from chronaris.pipelines.stage_i.stage_i_private_benchmark import StageIPrivateBenchmarkConfig
 
 
+def run_task_suite(
+    *,
+    task_payload: Mapping[str, object],
+    variant_feature_frames: Mapping[str, pd.DataFrame],
+    variant_order: Sequence[str],
+    target_variant_name: str,
+    deep_model_names: Sequence[str],
+    records: pd.DataFrame,
+    config: StageIPrivateBenchmarkConfig,
+) -> dict[str, object]:
+    """Run one layer of Stage I private tasks over the current feature variants."""
+
+    results: dict[str, object] = {}
+    by_task = task_payload.get("by_task", {})
+    if not isinstance(by_task, Mapping):
+        raise ValueError("task_payload.by_task must be a mapping.")
+    for task_name, task_entries in by_task.items():
+        if not task_entries:
+            results[str(task_name)] = {"status": "not_run"}
+            continue
+        first_entry = task_entries[0]
+        task_type = getattr(first_entry, "task_type", None)
+        if task_type == "retrieval":
+            results[str(task_name)] = run_retrieval_task(
+                task_entries=task_entries,
+                variant_feature_frames=variant_feature_frames,
+                variant_order=variant_order,
+                target_variant_name=target_variant_name,
+            )
+            continue
+        if task_type not in {"classification", "regression"}:
+            raise ValueError(f"unsupported private benchmark task_type: {task_type}")
+        results[str(task_name)] = run_supervised_task(
+            task_name=str(task_name),
+            task_type=str(task_type),
+            task_entries=task_entries,
+            variant_feature_frames=variant_feature_frames,
+            variant_order=variant_order,
+            target_variant_name=target_variant_name,
+            deep_model_names=deep_model_names,
+            records=records,
+            config=config,
+        )
+    return results
+
+
 def run_supervised_task(
     *,
     task_name: str,

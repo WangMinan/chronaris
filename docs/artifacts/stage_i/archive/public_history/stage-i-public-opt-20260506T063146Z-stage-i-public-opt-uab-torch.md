@@ -6,8 +6,8 @@
 - dataset_id：`uab_workload_dataset`
 - profile：`window_v2`
 - runtime_device：`cuda`
-- prepared asset root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
-- output artifact root：`/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260506T063146Z-stage-i-public-opt-uab-torch`
+- prepared asset root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
+- output artifact root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt_torch/20260506T063146Z-stage-i-public-opt-uab-torch`
 - generated_at_utc：`2026-05-06T06:42:06.281479Z`
 
 ## Screen Winner

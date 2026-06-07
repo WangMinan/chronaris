@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
 
+from chronaris.dataset import build_stage_i_real_task_payload
 from chronaris.dataset.stage_i_private_contracts import dump_stage_i_private_task_entries
 from chronaris.pipelines.stage_i.stage_i_private_benchmark_data import (
     TASK_MANEUVER,
@@ -14,14 +15,13 @@ from chronaris.pipelines.stage_i.stage_i_private_benchmark_data import (
     TASK_RETRIEVAL,
     VARIANT_ORDER,
     build_variant_feature_frames,
-    derive_private_task_entries,
+    derive_private_proxy_task_entries,
     load_aligned_private_records,
 )
 from chronaris.pipelines.stage_i.stage_i_private_benchmark_models import (
     build_conclusion,
     json_default,
-    run_retrieval_task,
-    run_supervised_task,
+    run_task_suite,
     write_task_plots,
 )
 from chronaris.pipelines.stage_i.stage_i_private_optimization import (
@@ -46,8 +46,8 @@ class StageIPrivateBenchmarkConfig:
     run_id: str
     e_run_manifest_path: str
     f_run_manifest_path: str
-    output_root: str = "docs/reports/assets/stage_i_private"
-    report_root: str = "docs/reports"
+    output_root: str = "docs/artifacts/assets/stage_i_private"
+    report_root: str = "docs/artifacts"
     deep_model_names: tuple[str, ...] = DEEP_MODEL_ORDER
     deep_epochs: int = 1
     deep_learning_rate: float = 1e-3
@@ -73,6 +73,8 @@ class StageIPrivateBenchmarkRunResult:
     artifact_root: str
     task_manifest_path: str
     task_summary_path: str
+    thesis_task_manifest_path: str
+    thesis_task_summary_path: str
     benchmark_summary_path: str
     alignment_report_path: str
     causal_report_path: str
@@ -97,12 +99,20 @@ def run_stage_i_private_benchmark(
         e_run_manifest_path=config.e_run_manifest_path,
         f_run_manifest_path=config.f_run_manifest_path,
     )
-    task_payload = derive_private_task_entries(records)
-    task_manifest_path = artifact_root / "private_task_manifest.jsonl"
-    task_summary_path = artifact_root / "task_summary.json"
-    dump_stage_i_private_task_entries(task_payload["entries"], path=task_manifest_path)
+    proxy_task_payload = derive_private_proxy_task_entries(records)
+    thesis_task_payload = build_stage_i_real_task_payload(records)
+    task_manifest_path = artifact_root / "private_proxy_task_manifest.jsonl"
+    task_summary_path = artifact_root / "private_proxy_task_summary.json"
+    thesis_task_manifest_path = artifact_root / "thesis_task_manifest.jsonl"
+    thesis_task_summary_path = artifact_root / "thesis_task_summary.json"
+    dump_stage_i_private_task_entries(proxy_task_payload["entries"], path=task_manifest_path)
+    dump_stage_i_private_task_entries(thesis_task_payload["entries"], path=thesis_task_manifest_path)
     task_summary_path.write_text(
-        json.dumps(task_payload["summary"], ensure_ascii=False, indent=2, default=json_default) + "\n",
+        json.dumps(proxy_task_payload["summary"], ensure_ascii=False, indent=2, default=json_default) + "\n",
+        encoding="utf-8",
+    )
+    thesis_task_summary_path.write_text(
+        json.dumps(thesis_task_payload["summary"], ensure_ascii=False, indent=2, default=json_default) + "\n",
         encoding="utf-8",
     )
 
@@ -121,36 +131,24 @@ def run_stage_i_private_benchmark(
         lag_window_points=config.lag_window_points,
         residual_mode=config.residual_mode,
     )
-    task_results = {
-        TASK_MANEUVER: run_supervised_task(
-            task_name=TASK_MANEUVER,
-            task_type="classification",
-            task_entries=task_payload["by_task"][TASK_MANEUVER],
-            variant_feature_frames=variant_frames,
-            variant_order=variant_order,
-            target_variant_name=resolved_target_variant_name,
-            deep_model_names=config.deep_model_names,
-            records=records,
-            config=config,
-        ),
-        TASK_RESPONSE: run_supervised_task(
-            task_name=TASK_RESPONSE,
-            task_type="regression",
-            task_entries=task_payload["by_task"][TASK_RESPONSE],
-            variant_feature_frames=variant_frames,
-            variant_order=variant_order,
-            target_variant_name=resolved_target_variant_name,
-            deep_model_names=config.deep_model_names,
-            records=records,
-            config=config,
-        ),
-        TASK_RETRIEVAL: run_retrieval_task(
-            task_entries=task_payload["by_task"][TASK_RETRIEVAL],
-            variant_feature_frames=variant_frames,
-            variant_order=variant_order,
-            target_variant_name=resolved_target_variant_name,
-        ),
-    }
+    task_results = run_task_suite(
+        task_payload=proxy_task_payload,
+        variant_feature_frames=variant_frames,
+        variant_order=variant_order,
+        target_variant_name=resolved_target_variant_name,
+        deep_model_names=config.deep_model_names,
+        records=records,
+        config=config,
+    )
+    thesis_task_results = run_task_suite(
+        task_payload=thesis_task_payload,
+        variant_feature_frames=variant_frames,
+        variant_order=variant_order,
+        target_variant_name=resolved_target_variant_name,
+        deep_model_names=config.deep_model_names,
+        records=records,
+        config=config,
+    )
     plot_paths = write_task_plots(task_results, artifact_root=artifact_root)
     conclusion = build_conclusion(
         task_results,
@@ -162,10 +160,12 @@ def run_stage_i_private_benchmark(
         "artifact_root": str(artifact_root),
         "task_manifest_path": str(task_manifest_path),
         "task_summary_path": str(task_summary_path),
-        "benchmark_role": task_payload["summary"]["benchmark_role"],
-        "task_role": task_payload["summary"]["task_role"],
-        "thesis_task_boundary": task_payload["summary"]["thesis_task_boundary"],
-        "proxy_task_definitions": task_payload["summary"]["proxy_task_definitions"],
+        "thesis_task_manifest_path": str(thesis_task_manifest_path),
+        "thesis_task_summary_path": str(thesis_task_summary_path),
+        "benchmark_role": proxy_task_payload["summary"]["benchmark_role"],
+        "task_role": proxy_task_payload["summary"]["task_role"],
+        "thesis_task_boundary": proxy_task_payload["summary"]["thesis_task_boundary"],
+        "proxy_task_definitions": proxy_task_payload["summary"]["proxy_task_definitions"],
         "enable_optimized_chronaris": config.enable_optimized_chronaris,
         "target_variant_name": resolved_target_variant_name,
         "private_optimality_supported": conclusion["private_optimality_supported"],
@@ -183,6 +183,24 @@ def run_stage_i_private_benchmark(
         "diagnostics": diagnostic_summary,
         "deep_runtime_device": resolve_torch_device_name(config.device),
         "tasks": task_results,
+        "evidence_layers": {
+            "proxy_evidence": {
+                "summary": proxy_task_payload["summary"],
+                "task_metrics": _compact_task_metrics(
+                    task_results,
+                    target_variant_name=resolved_target_variant_name,
+                ),
+                "tasks": task_results,
+            },
+            "thesis_task_evidence": {
+                "summary": thesis_task_payload["summary"],
+                "task_metrics": _compact_task_metrics(
+                    thesis_task_results,
+                    target_variant_name=resolved_target_variant_name,
+                ),
+                "tasks": thesis_task_results,
+            },
+        },
         "plots": plot_paths,
         "conclusion": conclusion,
     }
@@ -209,7 +227,7 @@ def run_stage_i_private_benchmark(
                 lag_window_points=config.lag_window_points,
                 residual_mode=config.residual_mode,
                 records=records,
-                task_payload=task_payload,
+                task_payload=proxy_task_payload,
                 variant_frames=variant_frames,
                 task_results=task_results,
                 diagnostics=diagnostic_summary,
@@ -244,6 +262,8 @@ def run_stage_i_private_benchmark(
         artifact_root=str(artifact_root),
         task_manifest_path=str(task_manifest_path),
         task_summary_path=str(task_summary_path),
+        thesis_task_manifest_path=str(thesis_task_manifest_path),
+        thesis_task_summary_path=str(thesis_task_summary_path),
         benchmark_summary_path=str(benchmark_summary_path),
         alignment_report_path=str(alignment_report_path),
         causal_report_path=str(causal_report_path),
@@ -270,6 +290,7 @@ def _render_alignment_report(summary: Mapping[str, object]) -> str:
         f"- benchmark_role: `{summary['benchmark_role']}`",
         f"- task_role: `{summary['task_role']}`",
         "- `T1/T2/T3` 仅作为 private proxy tasks，用于验证表示学习与融合增益，不等价于论文风险/负荷/复盘人工真值任务。",
+        f"- thesis weak-label layer: `{summary['evidence_layers']['thesis_task_evidence']['summary']['benchmark_role']}`",
         f"- alignment gain supported: `{summary['conclusion']['alignment_gain_supported']}`",
         "",
         "## T1 Proxy Task",
@@ -313,6 +334,7 @@ def _render_causal_report(summary: Mapping[str, object]) -> str:
         "",
         f"- benchmark_role: `{summary['benchmark_role']}`",
         "- `T1/T2/T3` 仍按 private proxy tasks 解释，不直接等价于论文任务本体。",
+        f"- thesis weak-label boundary: `{summary['evidence_layers']['thesis_task_evidence']['summary']['thesis_task_boundary']}`",
         f"- causal gain supported: `{summary['conclusion']['causal_gain_supported']}`",
         f"- diagnostic supported: `{summary['conclusion']['diagnostic_supported']}`",
         f"- target variant: `{target_variant_name}`",
@@ -369,6 +391,7 @@ def _render_optimization_report(summary: Mapping[str, object]) -> str:
         "",
         f"- benchmark_role: `{summary['benchmark_role']}`",
         "- `T1/T2/T3` 的最优性只说明 private proxy benchmark 收敛，不代表论文真值任务已经闭环。",
+        f"- thesis weak-label manifest: `{summary['thesis_task_manifest_path']}`",
         f"- target variant: `{target_variant_name}`",
         f"- no-mask variant: `{no_mask_name}`",
         f"- private optimality supported: `{summary['private_optimality_supported']}`",
@@ -420,8 +443,9 @@ def _compact_task_metrics(
         else optimized_no_mask_variant_name(target_variant_name)
     )
     compact: dict[str, object] = {}
-    for task_name in (TASK_MANEUVER, TASK_RESPONSE, TASK_RETRIEVAL):
-        task = task_results[task_name]
+    for task_name, task in task_results.items():
+        if not isinstance(task, Mapping):
+            continue
         compact[task_name] = {
             target_variant_name: _extract_variant_metrics(task["variants"].get(target_variant_name)),
             no_mask_name: _extract_variant_metrics(task["variants"].get(no_mask_name)),
@@ -470,6 +494,7 @@ def _render_optimality_report(summary: Mapping[str, object]) -> str:
         "",
         f"- benchmark_role: `{summary['benchmark_role']}`",
         "- `T1/T2/T3` 只按 private proxy tasks 解读，不把它们写成人工真值 thesis tasks。",
+        f"- thesis weak-label tasks: `{', '.join(summary['evidence_layers']['thesis_task_evidence']['summary']['task_counts'].keys())}`",
         f"- private optimality supported: `{summary['conclusion']['private_optimality_supported']}`",
         f"- best T1 variant: `{t1['best_variant']['name']}`",
         f"- best T2 variant: `{t2['best_variant']['name']}`",

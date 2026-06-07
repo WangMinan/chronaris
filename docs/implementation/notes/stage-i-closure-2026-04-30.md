@@ -13,9 +13,9 @@
 
 ## 2. 收口策略
 
-- 最终 closure run 根：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
-- UAB 资产来源：此前的 prepared dataset 与本轮真跑结果已吸收到 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/`
-- NASA 资产来源：此前已完成的 attention baseline 资产已吸收到 `docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/`
+- 最终 closure run 根：`docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
+- UAB 资产来源：此前的 prepared dataset 与本轮真跑结果已吸收到 `docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/`
+- NASA 资产来源：此前已完成的 attention baseline 资产已吸收到 `docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/`
 - closure 组装方式：`run_stage_i_phase3.py --reuse-existing-artifacts`
 
 这样做的目的不是继续信任半成品 run 根，而是把“UAB 已补齐 + NASA 已完成”的两套资产收束到一个新的最终事实源。
@@ -52,17 +52,17 @@ UAB session vs window：
 
 主运行：
 
-- run root：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
-- closure summary：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/closure_summary.json`
-- closure report：`docs/reports/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/stage_i_phase3_closure_report.md`
-- 主报告：`docs/reports/stage_i/stage-i-closure-2026-04-30.md`
+- run root：`docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
+- closure summary：`docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/closure_summary.json`
+- closure report：`docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/stage_i_phase3_closure_report.md`
+- 主报告：`docs/artifacts/stage_i/stage-i-closure-2026-04-30.md`
 
 阶段主报告：
 
-- `Phase 1`：`docs/reports/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
-- `Phase 2`：`docs/reports/stage_i/stage-i-case-study-phase2-2026-04-29.md`
-- `Phase 3 / UAB window`：`docs/reports/stage_i/archive/baselines/stage-i-uab-window-baseline-2026-04-29.md`
-- `Phase 3 / NASA attention`：`docs/reports/stage_i/archive/baselines/stage-i-nasa-attention-baseline-2026-04-29.md`
+- `Phase 1`：`docs/artifacts/stage_i/archive/baselines/stage-i-uab-baseline-2026-04-29.md`
+- `Phase 2`：`docs/artifacts/stage_i/stage-i-case-study-phase2-2026-04-29.md`
+- `Phase 3 / UAB window`：`docs/artifacts/stage_i/archive/baselines/stage-i-uab-window-baseline-2026-04-29.md`
+- `Phase 3 / NASA attention`：`docs/artifacts/stage_i/archive/baselines/stage-i-nasa-attention-baseline-2026-04-29.md`
 
 图表：
 
