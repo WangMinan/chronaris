@@ -1,0 +1,43 @@
+{
+  "generated_at_utc": "2026-06-07T09:44:49.383582Z",
+  "run_id": "20260607T-stage-i-runtime-replay-r1",
+  "run_manifest_path": "docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json",
+  "sample_jsonl_path": "docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl",
+  "sample_count": 111,
+  "sample_id_mode": "view_prefixed",
+  "source_summary": {
+    "sortie_count": 2,
+    "view_count": 3,
+    "sample_count": 111,
+    "sample_id_mode": "view_prefixed",
+    "view_summaries": [
+      {
+        "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+        "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+        "pilot_id": 10033,
+        "sample_count": 37,
+        "sample_id_mode": "view_prefixed",
+        "export_start_utc": "2025-10-05T01:35:00+00:00",
+        "export_stop_utc": "2025-10-05T01:38:01+00:00"
+      },
+      {
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+        "pilot_id": 10035,
+        "sample_count": 37,
+        "sample_id_mode": "view_prefixed",
+        "export_start_utc": "2025-10-02T08:35:00+00:00",
+        "export_stop_utc": "2025-10-02T08:38:01+00:00"
+      },
+      {
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+        "pilot_id": 10033,
+        "sample_count": 37,
+        "sample_id_mode": "view_prefixed",
+        "export_start_utc": "2025-10-02T08:35:00+00:00",
+        "export_stop_utc": "2025-10-02T08:38:01+00:00"
+      }
+    ]
+  }
+}
