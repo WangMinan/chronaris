@@ -24,10 +24,14 @@
 ## 3. 中期答辩产物
 
 - [mid-term/](mid-term/)：中期答辩证据包、图件、指标表和运行日志。
+- [../midterm/](../midterm/)：中期报告写作事实清单、边界风险说明和 claims matrix。
 
 当前中期主入口：
 
 - [stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
+- [../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
+- [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
+- [../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
 
 ## 4. 当前最常引用产物
 
@@ -36,7 +40,6 @@
 - Stage I thesis weak-label evidence：[stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md)
 - Stage I evidence runner r2：[stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md)
 - Stage I bounded weak-label sweep r2：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
-- Stage I live weak-label sweep r2：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r2.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r2.md)
 - Stage I live weak-label stable resume：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md)
 - Stage I public mainline：[stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
 - Stage I support ablation：[stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md](stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
@@ -48,10 +51,11 @@
 - Stage I public adapter calibration r2：[stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md](stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md)
 - Stage I public transfer boundary r2：[stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md](stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md)
 - Stage I rotation audit r2：[stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md](stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md)
-- Stage I thesis materials r1：[stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md](stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md)
-- Stage I runtime service smoke r1：[stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md](stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md)
 - Stage I thesis materials p18：[stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md](stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md)
 - Stage I runtime service smoke r2 contract：[stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md)
+- Midterm fact sheet：[../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
+- Midterm boundaries and risks：[../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
+- Midterm claims matrix：[../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
 - 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
 - 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json)

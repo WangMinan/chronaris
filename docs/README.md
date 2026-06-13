@@ -1,6 +1,6 @@
 # Chronaris 文档入口
 
-更新时间：2026-06-07
+更新时间：2026-06-13
 
 本目录按 AI coding 使用方式重新组织。顶层只承担导航和状态入口；具体计划、需求、产物、review 记录分别下沉到专门目录。
 
@@ -37,6 +37,15 @@
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：当前产物索引和引用规则。
 - [artifacts/stage/](artifacts/stage/)：按 [implementation/TASKS.md](implementation/TASKS.md) 的阶段组织产物。
 - [artifacts/mid-term/](artifacts/mid-term/)：中期答辩证据包。
+
+### midterm
+
+中期报告写作材料入口。用于冻结当前事实、边界风险和可写 claim：
+
+- [midterm/README.md](midterm/README.md)：中期材料使用顺序。
+- [midterm/midterm-fact-sheet-2026-06-13.md](midterm/midterm-fact-sheet-2026-06-13.md)：中期事实清单。
+- [midterm/boundaries-and-risks-2026-06-13.md](midterm/boundaries-and-risks-2026-06-13.md)：边界与风险说明。
+- [midterm/claims-matrix-2026-06-13.md](midterm/claims-matrix-2026-06-13.md)：报告论断矩阵。
 
 ### review
 
