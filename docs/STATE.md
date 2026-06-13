@@ -59,8 +59,10 @@
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，当前基线 `HEAD=57ca739`，提交信息为 `feat: expand stage i rigid-body support and runtime service`。
-- `origin/main=57ca739`，本地 Phase D/E/F 代码、文档与资产已经推送到远端；本轮文档重组前工作区干净。
+- 当前分支为 `main`，本地 `main` 已同步推送到 `origin/main`。
+- `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
+- 最新进入历史的 `P10-P15` 主动证据提交：
+  - `70b651a feat: add stage i evidence closure tools`
 - 最新进入历史的 Phase D/E/F 相关提交：
   - `57ca739 feat: expand stage i rigid-body support and runtime service`
   - `890a315 docs: record stage i runtime semantic rigid-body artifacts`
@@ -68,12 +70,12 @@
   - `9ef4f64 feat: add rigid-body physics semantic event runtime inference`
 - 关键实现提交 `a5fda40` 覆盖 Stage I thesis mainline `Phase C`：真实 Stage H multitask 联合训练、private/thesis 分层资产和中期证据包。
 - 更早的关键实现提交 `2055dec` 覆盖 Stage I thesis mainline `Phase A/B`：public adapter/proxy 边界、backbone train、Stage H checkpoint inference contract 和相关测试。
-- 当前 `Phase D/E/F` 主代码、runtime sample exporter、r2 产物和状态文档已经进入 git 历史。
+- 当前 `Phase D/E/F` 主代码、runtime sample exporter、r2 产物和状态文档已经进入 git 历史；`P10-P15` evidence runner、bounded sweep、private component ablation、public adapter calibration、transfer boundary、rotation audit 已进入 git 历史。
   - 刚体物理：`physics_state_mapping.py`、`physics_residuals.py`、`physics.py`、`physics_features.py`、`run_stage_e_relative_preview.py`。
   - 语义事件融合：`semantic_event.py`、`causal_fusion.py`、`stage_i_support_builders.py`、`stage_i_support_reporting.py`。
   - runtime inference：`streaming_windows.py`、`runtime_inference.py`、`run_stage_i_runtime_inference.py`、`export_stage_i_runtime_samples.py`、`run_stage_i_semantic_event_support.py`。
   - 测试覆盖：`tests/test_alignment_model_losses.py`、`tests/test_stage_i_support.py`、`tests/test_runtime_inference.py`。
-- 本轮工作区变化定位为文档重组：`docs/STATE.md`、`docs/implementation/TASKS.md` 以及必要产物索引；当前不包含代码改动。
+- 本轮工作区已收口为 `P10-P15` 主动证据闭环提交；主体功能与资产状态以 `70b651a` 为准，后续纯文档同步提交不改变该证据事实。
 - 已进入历史的关键前置产物：
   - Phase C 真实联合训练：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`
   - thesis weak-label 报告：`docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
