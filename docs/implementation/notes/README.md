@@ -10,7 +10,8 @@
 - [stage-i-thesis-mainline-roadmap-2026-05-15.md](stage-i-thesis-mainline-roadmap-2026-05-15.md)：Stage I 论文主线重构路线图。
 - [stage-i-thesis-mainline-coding-plan-2026-05-15.md](stage-i-thesis-mainline-coding-plan-2026-05-15.md)：文件级编码计划。
 - [thesis-coding-gap.md](thesis-coding-gap.md)：论文主线编码缺口。
-- [midterm-goal-2026-06-07.md](midterm-goal-2026-06-07.md)：中期前目标和当前工作区判断。
+- [midterm-goal-2026-06-07.md](midterm-goal-2026-06-07.md)：中期前最小收敛历史快照；当前 P10-P15 主动任务以 [../TASKS.md](../TASKS.md) 为准。
+- [goal-prompt-stage-i-p10-p15-2026-06-07.md](goal-prompt-stage-i-p10-p15-2026-06-07.md)：用于新 session goal 模式推进 P10-P15 的长程 prompt。
 - [iteration-playbook.md](iteration-playbook.md)：跨阶段执行模板。
 
 ## 阶段收口记录

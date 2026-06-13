@@ -542,11 +542,13 @@ if ENABLE_TORCH_RUNTIME_TESTS:
                     "BUS6000019110020.code1029",
                     "BUS6000019110020.code1033",
                     "BUS6000019110020.code1030",
+                    "BUS6000019110020.code1031",
                 ),
                 field_labels={
                     "BUS6000019110020.code1029": "[TSPI数据][载机平台系速度][速度_天向][_速度]",
                     "BUS6000019110020.code1033": "[TSPI数据][载机海拔高度][_高度]",
                     "BUS6000019110020.code1030": "[TSPI数据][载机俯仰角][_角度_毫弧度]",
+                    "BUS6000019110020.code1031": "[TSPI数据][载机真航向][_角度_毫弧度]",
                 },
             )
 
@@ -558,6 +560,10 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertEqual(
                 [row["feature_name"] for row in diagnostics.groups["altitude"]],
                 ["BUS6000019110020.code1033"],
+            )
+            self.assertEqual(
+                [row["feature_name"] for row in diagnostics.groups["yaw"]],
+                ["BUS6000019110020.code1031"],
             )
             self.assertIn("rotation", diagnostics.missing_requirements)
 else:
