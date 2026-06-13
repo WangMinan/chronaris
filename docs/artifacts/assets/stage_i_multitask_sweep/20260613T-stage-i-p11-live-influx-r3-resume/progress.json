@@ -1,0 +1,68 @@
+{
+  "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume",
+  "max_runs": 2,
+  "physics_constraint_families": [
+    "minimal",
+    "full",
+    "rigid_body"
+  ],
+  "resume_existing": true,
+  "resume_run_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1",
+  "max_runtime_seconds": null,
+  "stage_name": "stage_i_multitask_sweep",
+  "run_id": "20260613T-stage-i-p11-live-influx-r3-resume",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-13T09:45:37.070656Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-13T09:45:37.057723Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume",
+      "max_runs": 2,
+      "physics_constraint_families": [
+        "minimal",
+        "full",
+        "rigid_body"
+      ],
+      "resume_existing": true,
+      "resume_run_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1",
+      "max_runtime_seconds": null
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:37.058123Z",
+      "event": "grid_ready",
+      "combination_count": 2
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:37.059386Z",
+      "event": "combination_reused",
+      "run_index": 1,
+      "child_run_id": "20260613T-stage-i-p11-live-influx-r3-resume-01-minimal-cw0p00-tlw0p50-lagnone",
+      "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:37.063817Z",
+      "event": "combination_reused",
+      "run_index": 2,
+      "child_run_id": "20260613T-stage-i-p11-live-influx-r3-resume-02-minimal-cw0p00-tlw0p50-lag3",
+      "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:37.070656Z",
+      "event": "finished",
+      "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json",
+      "table_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/thesis_weak_label_multitask_ablation.csv",
+      "report_path": "docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md",
+      "partial_summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/partial_summary.json",
+      "partial_table_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/thesis_weak_label_multitask_ablation.partial.csv"
+    }
+  ],
+  "combination_count": 2,
+  "run_index": 2,
+  "child_run_id": "20260613T-stage-i-p11-live-influx-r3-resume-02-minimal-cw0p00-tlw0p50-lag3",
+  "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json",
+  "table_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/thesis_weak_label_multitask_ablation.csv",
+  "report_path": "docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md",
+  "partial_summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/partial_summary.json",
+  "partial_table_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/thesis_weak_label_multitask_ablation.partial.csv"
+}

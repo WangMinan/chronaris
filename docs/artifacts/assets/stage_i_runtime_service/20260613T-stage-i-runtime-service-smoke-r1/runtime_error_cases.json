@@ -1,0 +1,30 @@
+[
+  {
+    "case_id": "missing_checkpoint",
+    "trigger": "checkpoint path does not exist",
+    "status": "expected_failure",
+    "error_type": "FileNotFoundError",
+    "message": "checkpoint not found: docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/missing-checkpoint.pt"
+  },
+  {
+    "case_id": "missing_fields",
+    "trigger": "drop vehicle from the first payload",
+    "status": "expected_failure",
+    "error_type": "ValueError",
+    "message": "runtime payload missing required fields: ['vehicle']"
+  },
+  {
+    "case_id": "empty_window",
+    "trigger": "replace stream values with zero-length windows",
+    "status": "expected_failure",
+    "error_type": "ValueError",
+    "message": "empty window detected in `physiology` stream"
+  },
+  {
+    "case_id": "schema_mismatch",
+    "trigger": "add one extra vehicle feature and enable strict feature schema",
+    "status": "expected_failure",
+    "error_type": "ValueError",
+    "message": "runtime feature schema mismatch: missing_physiology_count=0, extra_physiology_count=0, missing_vehicle_count=965, extra_vehicle_count=1, extra_vehicle_names=['schema.extra']"
+  }
+]

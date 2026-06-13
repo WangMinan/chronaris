@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-06-07
+更新时间：2026-06-13
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit` 已新增落盘，`P11 thesis weak-label multitask sweep` 已通过 `stage_h_window_stats_proxy` 的 bounded 路线形成可复现 sweep 产物。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。
 
 ## 当前阶段
 
@@ -43,6 +43,11 @@
       - 产物：`docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/`
       - 报告：`docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md`
       - 当前 `skip-heavy` runner 路线使用 `stage_h_window_stats_proxy` 样本源，仍明确写成 `thesis weak-label evidence`，不包装成人工真值任务。
+    - `P11+ live_influx thesis weak-label sweep` 已完成稳定汇总：
+      - 稳定汇总：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json`
+      - 比较表：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/proxy_vs_live_influx_comparison.csv`
+      - 报告：`docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r2.md`
+      - 当前 `sample_source=live_influx`、`sample_count=111`、`task_entry_count=333`、`combination_count=2`；稳定版复用了 `20260613T-stage-i-p11-live-influx-r1` 中已完成的两个 live child run，并保留了更大 `4` 组合尝试的 blocker 日志。
     - `P12 chronaris_opt component ablation` 已完成：
       - 产物：`docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/`
       - 报告：`docs/artifacts/stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
@@ -56,6 +61,28 @@
       - 产物：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
       - 报告：`docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
       - 当前已确认 `BUS6000019110020.code1031 = 真航向` 可映射到 `yaw`，但 `yaw_rate` 仍缺失，因此 `rotation_status=disabled`。
+    - `P16 thesis materials` 已完成：
+      - 稳定 root：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
+      - 稳定报告：`docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
+      - 当前已导出 `6` 张稳定表、`6` 张 PNG 说明图，以及 `table_manifest.json / figure_manifest.json`。
+    - `P17 runtime service smoke` 已完成：
+      - 稳定 root：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
+      - 稳定报告：`docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
+      - 当前已支持 checkpoint 冷启动、单 view replay JSONL -> predictions JSONL / summary JSON，并固化 `missing_checkpoint / missing_fields / empty_window / schema_mismatch` 四类错误样例。
+    - `P18 P11/P17 风险收口优化` 已完成：
+      - P11 stable resume：
+        - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
+        - `docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
+      - P11 partial blocked：
+        - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
+        - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/thesis_weak_label_multitask_ablation.partial.csv`
+      - P17 runtime schema contract：
+        - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
+        - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/canonical_runtime_samples.jsonl`
+        - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
+      - P16 刷新图表：
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
+        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
 
 ## Git 与工作区核对
 
@@ -86,10 +113,17 @@
   - 最新 runtime service r2：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_summary.json`
   - 最新主动 evidence runner：`docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`
   - 最新 bounded weak-label sweep：`docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json`
+  - 最新 live weak-label sweep：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json`
   - 最新 private component ablation：`docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json`
   - 最新 public adapter calibration：`docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json`
   - 最新 public transfer boundary：`docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json`
   - 最新 rotation audit：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
+  - 最新 thesis materials：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/figure_manifest.json`
+  - 最新 runtime service smoke：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/runtime_service_smoke_summary.json`
+  - 最新 live weak-label stable resume：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
+  - 最新 live weak-label partial blocked：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
+  - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
+  - 最新 thesis materials p18：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
 
 ## 当前主线事实
 
@@ -101,10 +135,10 @@
 
 ## 编码层面还需要做什么
 
-1. 进入 `P16/P17`：统一论文表格导出、runtime/service 边界、错误样例和 smoke CLI。
-2. 如需更强 `P11` 证据，可在现有 bounded proxy sweep 之外，再补一轮完整 `live_influx` sample collection 版本，并与 `stage_h_window_stats_proxy` 路线并排记录。
+1. 维护当前 `P11 stable resume / partial blocked / blocker log` 三段证据链，避免后续又退回到“完成两点 + 口头说明”的状态。
+2. 若后续要补更大的 `live_influx` 网格，先明确预算，再从当前 `2` 组合 stable resume 版继续扩展，而不是覆盖现有 stable summary。
 3. 若后续发现可用角速度字段，需要在 `rotation audit` 的基础上补 `minimal / full / rigid_body` 复跑；若没有，则继续保持 `rotation disabled` 的 diagnostics 口径。
-4. 持续维护 evidence runner 的 `skip-heavy` 与 `reuse-existing` 策略，避免后续文档同步阶段重复实跑历史稳定资产。
+4. 若后续要把 runtime/service 收紧到 `native exact schema`，优先补齐上游 view replay payload 的 vehicle measurement groups；当前 `native aligned / canonical exact` 已经把部署边界写清，不需要重建上游接收器。
 
 ## 实验层面还需要做什么
 
@@ -148,8 +182,36 @@
      - `docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/`
    - `P14 public transfer boundary`：
      - `docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/`
-   - `P15 rigid_body rotation audit`：
-     - `docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/`
+  - `P15 rigid_body rotation audit`：
+    - `docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/`
+  - `P11+ live_influx thesis weak-label sweep`：
+    - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/`
+    - 当前 `sample_source=live_influx`
+    - 当前 `sample_count=111`
+    - 当前 `task_entry_count=333`
+    - 当前 `combination_count=2`
+  - `P16 thesis materials`：
+    - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
+    - `figure_manifest.json` 已列出 `evidence_layer_overview / weak_label_sweep_ablation / chronaris_opt_component_ablation / public_transfer_boundary / runtime_semantic_case / rigid_body_rotation_audit`
+  - `P17 runtime service smoke`：
+    - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
+    - 当前 `input_sample_count=37`
+    - 当前 `view_count=1`
+    - 当前 `feature_schema_status=aligned`
+    - 当前 `runtime_error_cases.json` 已覆盖 `missing_checkpoint / missing_fields / empty_window / schema_mismatch`
+  - `P18 P11 partial/resume`：
+    - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/`
+    - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/`
+    - 当前 stable resume 已记录 `derived_from_run_id / completed_child_run_paths / blocked_attempt_log_paths / blocked_at_run_index`
+    - 当前 partial blocked 已记录 `status=partial_blocked`
+  - `P18 runtime schema contract`：
+    - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/`
+    - 当前 `native_feature_schema_status=aligned`
+    - 当前 `canonical_feature_schema_status=exact`
+    - 当前 `expected_vehicle_feature_count=1930`
+    - 当前 `input_vehicle_feature_count=965`
+    - 当前 `missing_vehicle_feature_count=965`
+    - 当前 missing groups 已覆盖 `BUS6000019110021` 到 `BUS6000019110026`
 
 ## 当前关键入口
 
@@ -230,6 +292,106 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   --skip-heavy \
   --test-summary "Ran 56 tests across P10-P15 and related suites; OK"
 ```
+
+本轮新增回归与 `P11+/P16/P17` 验证已完成：
+
+```bash
+CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
+  /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest \
+  tests.test_stage_i_multitask_sweep \
+  tests.test_runtime_inference \
+  tests.test_runtime_service_smoke
+```
+
+结果：`Ran 7 tests`，`OK`。此外，本轮真实命令已完成：
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_thesis_materials.py \
+  --run-id 20260613T-stage-i-thesis-materials-r1 \
+  --live-sweep-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_runtime_smoke.py \
+  --run-id 20260613T-stage-i-runtime-service-smoke-r1 \
+  --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
+  --sample-jsonl docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl \
+  --artifact-root docs/artifacts/assets/stage_i_runtime_service \
+  --report-root docs/artifacts/stage_i \
+  --device cpu \
+  --replay-mode both
+```
+
+当前 `P17` smoke 关键结果：
+
+- `checkpoint cold-start = success`
+- `input_sample_count = 37`
+- `view_count = 1`
+- `predictions_jsonl = generated`
+- `feature_schema_status = aligned`
+- `error_cases = missing_checkpoint / missing_fields / empty_window / schema_mismatch`
+
+本轮 `P18` 新增验证已完成：
+
+```bash
+CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
+  /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest \
+  tests.test_stage_i_multitask_sweep \
+  tests.test_runtime_service_smoke \
+  tests.test_runtime_schema_contract
+```
+
+结果：`Ran 6 tests`，`OK`。此外，本轮真实命令已完成：
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_multitask_sweep.py \
+  --run-id 20260613T-stage-i-p11-live-influx-r3-resume \
+  --e-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json \
+  --f-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json \
+  --sample-source live_influx \
+  --resume-existing \
+  --resume-run-root docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1 \
+  --max-runs 2 \
+  --epoch-count 1 \
+  --batch-size 8 \
+  --device cpu
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_multitask_sweep.py \
+  --run-id 20260613T-stage-i-p11-live-influx-r4-partial \
+  --e-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json \
+  --f-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json \
+  --sample-source stage_h_window_stats_proxy \
+  --resume-existing \
+  --resume-run-root docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1 \
+  --max-runs 4 \
+  --max-runtime-seconds 0 \
+  --epoch-count 1 \
+  --batch-size 8 \
+  --device cpu
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_runtime_smoke.py \
+  --run-id 20260613T-stage-i-runtime-service-smoke-r2-contract \
+  --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
+  --sample-jsonl docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl \
+  --artifact-root docs/artifacts/assets/stage_i_runtime_service \
+  --report-root docs/artifacts/stage_i \
+  --device cpu \
+  --replay-mode both \
+  --strict-feature-schema
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_thesis_materials.py \
+  --run-id 20260613T-stage-i-thesis-materials-r2-p18 \
+  --live-sweep-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json \
+  --live-partial-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json \
+  --runtime-summary-path docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json \
+  --runtime-service-summary-path docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json \
+  --runtime-schema-contract-path docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json
+```
+
+当前 `P18` 关键结果：
+
+- `P11 stable resume = completed`
+- `P11 partial blocked = expected blocker`
+- `P17 native_feature_schema_status = aligned`
+- `P17 canonical_feature_schema_status = exact`
 
 刚体对比另行落到了 `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r1/` 和 `docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r1.md`；与上一版不同的是，本次已确认 `vehicle_field_metadata.status=loaded`，且 `vehicle_rigid_body_translation` 已经非零。
 

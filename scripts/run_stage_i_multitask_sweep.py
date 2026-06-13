@@ -31,6 +31,7 @@ from chronaris.features.experiment_input import E0ExperimentSample, NumericStrea
 from chronaris.pipelines import collect_stage_i_multitask_samples  # noqa: E402
 from chronaris.pipelines.stage_i.stage_i_multitask_sweep import (  # noqa: E402
     StageIMultitaskSweepConfig,
+    discover_existing_child_summary_paths,
     resolve_git_commit,
     run_stage_i_multitask_sweep,
 )
@@ -104,6 +105,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-runs", type=int, default=4)
     parser.add_argument("--physiology-point-limit", type=int)
     parser.add_argument("--vehicle-point-limit", type=int)
+    parser.add_argument("--resume-existing", action="store_true")
+    parser.add_argument("--resume-run-root")
+    parser.add_argument("--max-runtime-seconds", type=float)
     parser.add_argument(
         "--sample-source",
         choices=("live_influx", "stage_h_window_stats_proxy"),
@@ -125,7 +129,42 @@ def main() -> int:
         f_run_manifest_path=args.f_run_manifest,
     )
     task_payload = build_stage_i_real_task_payload(records)
-    if args.sample_source == "stage_h_window_stats_proxy":
+    sweep_config = StageIMultitaskSweepConfig(
+        run_id=args.run_id,
+        output_root=args.output_root,
+        report_root=args.report_root,
+        max_runs=args.max_runs,
+        epoch_count=args.epoch_count,
+        batch_size=args.batch_size,
+        learning_rate=args.learning_rate,
+        device=args.device,
+        git_commit=resolve_git_commit(cwd=REPO_ROOT),
+        source_manifests={
+            "e_run_manifest_path": str(Path(args.e_run_manifest)),
+            "f_run_manifest_path": str(Path(args.f_run_manifest)),
+        },
+        resume_existing=args.resume_existing,
+        resume_run_root=args.resume_run_root,
+        max_runtime_seconds=args.max_runtime_seconds,
+    )
+    existing_child_summaries = discover_existing_child_summary_paths(sweep_config)
+    target_combination_count = args.max_runs if args.max_runs is not None else None
+    can_resume_without_sampling = (
+        args.resume_existing
+        and target_combination_count is not None
+        and len(existing_child_summaries) >= target_combination_count
+    )
+
+    if can_resume_without_sampling:
+        samples = ()
+        sample_source_summary = {
+            "sample_source": args.sample_source,
+            "resume_existing": True,
+            "resume_run_root": args.resume_run_root,
+            "sample_collection_skipped": True,
+            "completed_child_summary_count": len(existing_child_summaries),
+        }
+    elif args.sample_source == "stage_h_window_stats_proxy":
         samples = _build_proxy_multitask_samples(records)
         sample_source_summary = {
             "sample_source": "stage_h_window_stats_proxy",
@@ -155,21 +194,7 @@ def main() -> int:
             runner=influx_runner,
         )
     result = run_stage_i_multitask_sweep(
-        StageIMultitaskSweepConfig(
-            run_id=args.run_id,
-            output_root=args.output_root,
-            report_root=args.report_root,
-            max_runs=args.max_runs,
-            epoch_count=args.epoch_count,
-            batch_size=args.batch_size,
-            learning_rate=args.learning_rate,
-            device=args.device,
-            git_commit=resolve_git_commit(cwd=REPO_ROOT),
-            source_manifests={
-                "e_run_manifest_path": str(Path(args.e_run_manifest)),
-                "f_run_manifest_path": str(Path(args.f_run_manifest)),
-            },
-        ),
+        sweep_config,
         samples=samples,
         task_entries=task_payload["entries"],
         source_summary={
@@ -184,6 +209,8 @@ def main() -> int:
                 "summary_path": result.summary_path,
                 "table_path": result.table_path,
                 "report_path": result.report_path,
+                "partial_summary_path": result.partial_summary_path,
+                "partial_table_path": result.partial_table_path,
             },
             ensure_ascii=False,
             indent=2,

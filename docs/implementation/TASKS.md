@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-06-07
+更新时间：2026-06-13
 
 ## 文档定位
 
@@ -61,10 +61,11 @@
 
 后续收敛顺序：
 
-1. 保持 `P10-P15` evidence runner 的 `skip-heavy / reuse-existing` 策略，避免文档同步阶段重复实跑历史稳定资产。
-2. 进入 `P16/P17`：统一论文表格导出、runtime/service 边界、错误样例和 smoke CLI。
-3. 如需更强 `P11` 证据，在现有 `stage_h_window_stats_proxy` bounded sweep 之外补一轮 `live_influx` sample collection，并并排记录边界。
-4. 若发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
+1. 保留当前 `P11 live_influx + P16 + P17` 稳定产物入口，避免后续文档同步阶段误指向 `stage_h_window_stats_proxy` 单一路线或旧 runtime demo。
+2. 先维护 `P18` 的 stable/partial/schema-contract 入口，避免后续继续回退到纯手工解释。
+3. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
+4. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
+5. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
 
 验收：
 
@@ -446,6 +447,31 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - 仍明确写成 `thesis weak-label evidence`
   - 不包装成人工真值任务
 
+## 已完成 P11+：补一轮 `live_influx` thesis weak-label sweep
+
+目标：在当前 bounded `stage_h_window_stats_proxy` sweep 之外，使用本地 `127.0.0.1` 的 MySQL / InfluxDB CLI 形成 `live_influx` sample collection 证据，并与 proxy 路线并排展示。
+
+本轮结果：
+
+- 真实 `live_influx` child run 已完成并用于稳定汇总：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json`
+- 稳定汇总产物：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/thesis_weak_label_multitask_ablation.csv`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/proxy_vs_live_influx_comparison.csv`
+  - `docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r2.md`
+- 当前对比口径：
+  - `sample_source=live_influx`
+  - `sample_count=111`
+  - `task_entry_count=333`
+  - `combination_count=2`
+  - `best_test_total=1153.8985701851223`
+- 当前 blocker 已保留但未伪造成稳定证据：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/progress.json`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/run.log`
+  - `20260613T-stage-i-p11-live-influx-r1` 的 `4` 组合尝试在 `run_index=3/4` 处因 runtime cost 手动中断；稳定 `r2` 只复用其中已完成的两个 live child run，与 proxy 的 `2` 组合口径对齐。
+
 ## 已完成 P12：`chronaris_opt` 机制诊断
 
 代码落点：
@@ -584,44 +610,220 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `yaw_rate` 仍缺失
   - `rotation_status=disabled`
 
-## 下一步 P16：论文案例与消融表稳定化
+## 已完成 P16：论文案例、消融表与说明图稳定化
 
-目标：把现有和 P11-P15 新增 evidence 转成论文可直接引用的表格与案例材料，减少后期靠手工复制指标。
+目标：把现有和 P11-P15 新增 evidence 转成论文可直接引用的表格、案例材料和说明图件，减少后期靠手工复制指标或临时画图。
 
 代码落点：
 
-- `src/chronaris/evaluation/` 或 `src/chronaris/pipelines/stage_i/`
-  - 新增 report table builder：统一导出 thesis weak-label ablation、private proxy component ablation、public adapter calibration、transfer boundary、rigid_body rotation、runtime prediction examples、semantic event attribution cases。
-  - 对每张表附带 `evidence_layer`、`source_path`、`metric_definition`。
+- `src/chronaris/pipelines/stage_i/stage_i_thesis_materials.py`
+- `scripts/run_stage_i_thesis_materials.py`
 - `docs/artifacts/stage_i/`
-  - 输出论文案例报告，保留中文解释、边界说明和引用路径。
+  - 输出论文案例报告，保留中文解释、边界说明、图表引用路径。
+- `docs/artifacts/assets/stage_i_thesis_figures/<run_id>/`
+  - 输出 `.png` 图件和对应 `figure_manifest.json`，记录每张图的源数据、用途、证据层级和可复现命令。
 
-验收：
+本轮结果：
 
-- 至少生成六张稳定表：论文本体 weak-label 小网格、`chronaris_opt` 组件诊断、public adapter calibration、公开迁移边界、物理约束消融、runtime/semantic case。
-- 每张表都能追溯到 JSON/CSV 原始产物。
-- 表述不越界：public adapter、private proxy、thesis weak-label、case support 分层清楚。
+- 稳定报告：
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
+- 稳定 manifest：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/table_manifest.json`
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/figure_manifest.json`
+- 六张稳定表：
+  - `evidence_layer_overview.csv`
+  - `weak_label_sweep_ablation.csv`
+  - `chronaris_opt_component_ablation.csv`
+  - `public_transfer_boundary.csv`
+  - `runtime_semantic_case.csv`
+  - `rigid_body_rotation_audit.csv`
+- 六张稳定说明图：
+  - `evidence_layer_overview.png`
+  - `weak_label_sweep_ablation.png`
+  - `chronaris_opt_component_ablation.png`
+  - `public_transfer_boundary.png`
+  - `runtime_semantic_case.png`
+  - `rigid_body_rotation_audit.png`
+- 当前 stable root：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
+- 当前说明图和表共用同一批 source path，`figure_manifest.json` 已分别记录 `metric_definition` 或 `case_definition`，并保持 `public adapter / private proxy / thesis weak-label / runtime support` 分层清楚。
 
-## 下一步 P17：系统封装与部署边界
+## 已完成 P17：系统封装与部署边界
 
-目标：为毕业设计系统实现章节补齐“离线/准实时推理服务”的工程闭环，而不是只停留在训练脚本和报告。
+目标：为毕业设计系统实现章节补齐“离线/准实时推理服务”的工程闭环和说明图，而不是只停留在训练脚本和报告。
 
-建议落点：
+代码落点：
 
 - `src/chronaris/serving/`
-  - 增加纯 Python service facade：加载 checkpoint、接收 window payload、返回 response schema。
-  - 明确配置对象：checkpoint path、feature schema、window policy、device、diagnostics mode。
-- `scripts/serve_stage_i_runtime.py` 或 `scripts/run_stage_i_runtime_smoke.py`
-  - 如果暂不做常驻服务，先做本地 smoke CLI，输入 JSONL，输出 predictions JSONL。
-- `docs/implementation/`
-  - 补系统封装说明，明确不是重建上游接收器，也不把原始大文件入仓。
+  - `src/chronaris/serving/runtime_service_smoke.py`
+  - `src/chronaris/serving/__init__.py`
+- `scripts/run_stage_i_runtime_smoke.py`
+- `tests/test_runtime_service_smoke.py`
 
-验收：
+本轮结果：
 
-- 冷启动加载 checkpoint 成功。
-- 输入 1 个 view 的 replay JSONL，输出 predictions JSONL 与 summary JSON。
-- 有错误样例：缺 checkpoint、缺字段、空窗口、schema mismatch。
-- 与 `tests.test_runtime_inference` 形成自动化覆盖。
+- 真实单 view 输入：
+  - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl`
+  - 当前 `view_id=20251005_四01_ACT-4_云_J20_22#01__pilot_10033`
+  - 当前 `sample_count=37`
+- 稳定服务 smoke root：
+  - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
+- 关键输出：
+  - `runtime_service_smoke_summary.json`
+  - `runtime_inference/20260613T-stage-i-runtime-service-smoke-r1-runtime/runtime_inference_predictions.jsonl`
+  - `runtime_inference/20260613T-stage-i-runtime-service-smoke-r1-runtime/runtime_inference_summary.json`
+  - `runtime_error_cases.json`
+  - `figure_manifest.json`
+  - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
+- 三张系统说明图：
+  - `runtime_service_flow.png`
+  - `runtime_payload_schema.png`
+  - `runtime_error_cases.png`
+- 当前错误样例均已固化为 `expected_failure`：
+  - `missing_checkpoint`
+  - `missing_fields`
+  - `empty_window`
+  - `schema_mismatch`
+- 当前真实 smoke 结论：
+  - checkpoint 冷启动成功
+  - 单 view replay JSONL 成功输出 predictions JSONL 与 summary JSON
+  - `feature_schema_status=aligned`
+  - 说明当前 runtime facade 仍依赖 `input_normalization_stats` 做 schema 对齐，若后续要收紧到 exact schema，需要继续补输入契约而不是重建上游接收器
+
+## 已完成 P18：P11/P17 风险收口优化
+
+目标：把 P11 的“部分完成但不中断证据链”和 P17 的“aligned 但还不是 exact schema”变成可复现、可解释、可验收的工程能力，而不是靠人工口头说明。
+
+### 已完成 P18-A：P11 live_influx sweep partial/resume
+
+当前事实：
+
+- `r1` 的更大 `4` 组合尝试没有伪造成成功结果，blocker 已保留在 `progress.json / run.log`。
+- 当前已新增 stable resume 版与 partial blocked 版：
+  - stable resume：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/`
+  - partial blocked：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/`
+
+代码落点：
+
+- `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py`
+  - 每个 child run 完成后即时写入 `partial_summary.json` 和临时 CSV。
+  - 中断或失败时输出 `status=partial_blocked`、`completed_child_runs`、`blocked_at_run_index`、`blocker_log_path`。
+  - 支持从已有 child run 恢复汇总，避免重复跑已完成组合。
+- `scripts/run_stage_i_multitask_sweep.py`
+  - 增加 `--resume-existing` 与 `--resume-run-root`，允许从指定历史 run root 复用已完成 child run。
+  - 增加 `--max-runtime-seconds` 或明确的预算 guard，避免 live_influx 大网格无限拖住。
+- `tests/test_stage_i_multitask_sweep.py`
+  - 覆盖 partial summary、resume、blocker 不伪造成 completed。
+
+本轮结果：
+
+- stable resume summary：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
+  - `docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
+  - 当前已包含：
+    - `derived_from_run_id=20260613T-stage-i-p11-live-influx-r1`
+    - `completed_child_run_paths`
+    - `blocked_attempt_log_paths`
+    - `blocked_at_run_index=3`
+    - `evidence_layer=thesis_weak_label`
+- partial blocked summary：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/thesis_weak_label_multitask_ablation.partial.csv`
+  - 当前 `status=partial_blocked`
+  - 当前 `completed_child_runs=2`
+  - 当前 `blocked_at_run_index=3`
+  - 当前 `blocker_log_path=docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/run.log`
+- blocker 继续保留：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/progress.json`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/run.log`
+- 当前没有伪造更大 live_influx 网格成功；`r4-partial` 只是一个 bounded resume/blocker smoke，用来固化证据链，而不是把未完成组合包装成 completed。
+
+### 已完成 P18-B：P17 runtime schema contract 与 exact 边界
+
+当前事实：
+
+- P17 真实 smoke 成功，但 `feature_schema_status=aligned`，`feature_schema_source=input_normalization_stats`。
+- 当前 checkpoint 没有显式 `feature_schema`，runtime fallback 到 `input_normalization_stats`。
+- 当前单 view 输入为 `965` 个 vehicle features；checkpoint 期望 `1930` 个 vehicle features。缺口集中在另一半 BUS measurement：`BUS6000019110021` 到 `BUS6000019110026`。
+
+代码落点：
+
+- 新增 `src/chronaris/serving/runtime_schema_contract.py`
+  - 从 checkpoint 导出 expected schema、schema hash、stream feature counts、measurement group counts。
+  - 对比 runtime JSONL 输入 schema，输出 missing/extra feature 分组和 `exact_possible`。
+  - 输出 `runtime_schema_contract.json`，作为 P17 后续部署契约事实源。
+- 扩展 `src/chronaris/serving/runtime_service_smoke.py`
+  - `StageIRuntimeSmokeConfig` 增加 `strict_feature_schema: bool`。
+  - summary 增加 `schema_contract_path`、`native_feature_schema_status`、`canonical_feature_schema_status`。
+  - error cases 继续保留 `schema_mismatch`，但错误摘要优先输出分组统计，避免几百个字段刷屏。
+- 扩展 `scripts/run_stage_i_runtime_smoke.py`
+  - 增加 `--strict-feature-schema`。
+  - 增加 `--export-canonical-payload` 或等价参数，输出 `canonical_runtime_samples.jsonl`。
+- 测试：
+  - `tests/test_runtime_service_smoke.py`
+  - 新增 `tests/test_runtime_schema_contract.py`
+
+本轮结果：
+
+- 新增 schema contract root：
+  - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/`
+- 关键产物：
+  - `runtime_service_smoke_summary.json`
+  - `runtime_schema_contract.json`
+  - `canonical_runtime_samples.jsonl`
+  - `runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-canonical/runtime_inference_summary.json`
+  - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
+- 当前 native 单 view 输入已清楚记录：
+  - `native_feature_schema_status=aligned`
+  - `expected_vehicle_feature_count=1930`
+  - `input_vehicle_feature_count=965`
+  - `missing_vehicle_feature_count=965`
+  - `missing_vehicle_measurement_group_counts` 覆盖：
+    - `BUS6000019110021`
+    - `BUS6000019110022`
+    - `BUS6000019110023`
+    - `BUS6000019110024`
+    - `BUS6000019110025`
+    - `BUS6000019110026`
+- strict native smoke 已作为 expected failure 写入：
+  - `runtime_error_cases.json`
+  - `strict_native_feature_schema_probe`
+- canonical payload 路线已生成：
+  - `canonical_runtime_samples.jsonl`
+  - `runtime_schema_contract.json`
+  - `canonical_feature_schema_status=exact`
+- 当前报告口径已固定：
+  - `native aligned` 是当前真实部署边界
+  - `canonical exact` 是服务层契约化 payload 能力
+  - 不把 canonical exact 写成“原始上游输入 exact”
+  - 不重建上游接收器，不做原始大文件入仓
+
+### 已完成 P18-C：P16 图表同步刷新
+
+目标：P18 完成后，刷新 P16 thesis materials，让论文图表同步反映 P11/P17 的真实边界。
+
+本轮结果：
+
+- 刷新后的 thesis materials：
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/`
+- 当前 `weak_label_sweep_ablation.png/csv` 已增加：
+  - `summary_status`
+  - `derived_from_run_id`
+  - `blocked_at_run_index`
+  - `blocked_attempt_log_path_count`
+  - partial resume/blocker 注记
+- 当前 `runtime_semantic_case.png/csv` 已体现：
+  - `native_feature_schema_status=aligned`
+  - `canonical_feature_schema_status=exact`
+  - `expected_vehicle_feature_count=1930`
+  - `input_vehicle_feature_count=965`
+  - `missing_vehicle_feature_count=965`
+  - `native_missing_measurement_group_count=6`
+- 当前 `figure_manifest.json` 已记录：
+  - `runtime_schema_contract.json`
+  - `stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
+  - `stage-i-p11-live-influx-r4-partial/partial_summary.json`
 
 ## 中期前边界管理
 

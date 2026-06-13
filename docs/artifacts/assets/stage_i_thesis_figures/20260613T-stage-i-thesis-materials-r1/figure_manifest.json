@@ -1,0 +1,76 @@
+{
+  "run_id": "20260613T-stage-i-thesis-materials-r1",
+  "artifact_root": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1",
+  "figures": [
+    {
+      "figure_id": "evidence_layer_overview",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/evidence_layer_overview.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json"
+      ],
+      "evidence_layer": "cross_layer_index",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/evidence_layer_overview.csv",
+      "metric_definition": "One bar per stable artifact/task with color-coded evidence layer."
+    },
+    {
+      "figure_id": "weak_label_sweep_ablation",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/weak_label_sweep_ablation.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json",
+        "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json"
+      ],
+      "evidence_layer": "thesis_weak_label",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/weak_label_sweep_ablation.csv",
+      "metric_definition": "Compare proxy and live_influx sweep sample counts plus test_total rows."
+    },
+    {
+      "figure_id": "chronaris_opt_component_ablation",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/chronaris_opt_component_ablation.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json"
+      ],
+      "evidence_layer": "private_proxy",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/chronaris_opt_component_ablation.csv",
+      "metric_definition": "delta_vs_full uses the optimized private proxy candidate as reference."
+    },
+    {
+      "figure_id": "public_transfer_boundary",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/public_transfer_boundary.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json",
+        "docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json"
+      ],
+      "evidence_layer": "public_adapter_calibration",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/public_transfer_boundary.csv",
+      "metric_definition": "Boundary diagram separating public adapter, thesis weak-label, and private proxy evidence."
+    },
+    {
+      "figure_id": "runtime_semantic_case",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/runtime_semantic_case.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_summary.json",
+        "docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json"
+      ],
+      "evidence_layer": "runtime_semantic_support",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/runtime_semantic_case.csv",
+      "case_definition": "Top 12 windows from the most frequent replay view; compare workload/risk outputs with semantic attributions."
+    },
+    {
+      "figure_id": "rigid_body_rotation_audit",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/rigid_body_rotation_audit.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json",
+        "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json"
+      ],
+      "evidence_layer": "rigid_body_rotation_diagnostics",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/rigid_body_rotation_audit.csv",
+      "metric_definition": "Compare family-level rigid-body components and pitch/roll/yaw candidate coverage."
+    }
+  ]
+}
