@@ -47,9 +47,9 @@
 
 当前事实：
 
-- `main` 当前基线 `HEAD=57ca739 feat: expand stage i rigid-body support and runtime service`。
-- `origin/main=57ca739`，本地 Phase D/E/F 代码、文档与资产已经推送到远端。
-- 本轮文档重组前工作区干净；本轮会产生 `docs/STATE.md`、`docs/implementation/TASKS.md` 以及必要索引文档的未提交修改。
+- 本地 `main` 已同步推送到 `origin/main`。
+- `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
+- `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
   - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/`
   - `docs/artifacts/assets/stage_i_semantic_event_support/20260607T-stage-i-semantic-support-r2/`
@@ -59,12 +59,12 @@
   - `docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
   - `docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
 
-收敛顺序：
+后续收敛顺序：
 
-1. 先完成本轮 `STATE.md`、`TASKS.md` 和必要产物索引的事实同步。
-2. 再进入中期前主动任务队列：先统一 runner，再做论文本体深挖、private proxy 机制诊断、public adapter 有界校准、公开迁移边界表和 `rotation` 字段核验。
-3. 每个新增实验都必须明确 `evidence_layer`，不能把 public adapter、private proxy、thesis weak-label 混写。
-4. 推送前复查 `git status --short --untracked-files=all`，确保没有临时 stdout、半成品资产或大文件误入。
+1. 保持 `P10-P15` evidence runner 的 `skip-heavy / reuse-existing` 策略，避免文档同步阶段重复实跑历史稳定资产。
+2. 进入 `P16/P17`：统一论文表格导出、runtime/service 边界、错误样例和 smoke CLI。
+3. 如需更强 `P11` 证据，在现有 `stage_h_window_stats_proxy` bounded sweep 之外补一轮 `live_influx` sample collection，并并排记录边界。
+4. 若发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 
 验收：
 
