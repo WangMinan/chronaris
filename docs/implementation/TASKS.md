@@ -61,11 +61,12 @@
 
 后续收敛顺序：
 
-1. 保留当前 `P11 live_influx + P16 + P17` 稳定产物入口，避免后续文档同步阶段误指向 `stage_h_window_stats_proxy` 单一路线或旧 runtime demo。
-2. 先维护 `P18` 的 stable/partial/schema-contract 入口，避免后续继续回退到纯手工解释。
+1. 当前编码任务已收口；中期报告写作优先从 `docs/midterm/` 的事实清单、边界风险说明和 claims matrix 进入。
+2. 保留并维护 `P18` 的 `P11 stable/partial` 与 `P17 schema-contract` 当前入口，避免后续继续回退到纯手工解释或旧 r1 demo。
 3. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
 4. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 5. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
+6. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label 五组关键词搜索。
 
 验收：
 
@@ -824,6 +825,34 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `runtime_schema_contract.json`
   - `stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
   - `stage-i-p11-live-influx-r4-partial/partial_summary.json`
+
+## 已完成 P19：中期报告材料冻结与 docs 入口清理
+
+目标：在搜索论文和正式展开中期报告前，把当前可写事实、证据边界、风险说明和报告 claim 强度冻结成文档，供后续本地 clone 后直接作为中期报告写作基础。
+
+本轮结果：
+
+- 新增中期写作入口：
+  - `docs/midterm/README.md`
+  - `docs/midterm/midterm-fact-sheet-2026-06-13.md`
+  - `docs/midterm/boundaries-and-risks-2026-06-13.md`
+  - `docs/midterm/claims-matrix-2026-06-13.md`
+- 清理过时入口：
+  - `docs/artifacts/mid-term/README.md` 已从旧 `20260509` r2 中期包改指向当前 `20260607` r3 和 `docs/midterm/`。
+  - `docs/artifacts/mid-term/stage-i-midterm-20260509T071500Z-stage-i-midterm-r2.md` 兼容链接已删除。
+  - `docs/artifacts/mid-term/stage-i-midterm-20260607T-stage-i-midterm-r3.md` 兼容链接已新增。
+- 更新导航与状态：
+  - `docs/README.md` 已新增 `midterm` 目录说明。
+  - `docs/artifacts/ARTIFACTS.md` 已新增中期事实清单、边界说明和 claims matrix。
+  - `docs/artifacts/stage_i/README.md` 已把 P16/P17 当前入口改为 `r2-p18 / r2-contract`，首轮 r1 降为历史入口。
+  - `docs/STATE.md` 已把 P16/P17 r1 标为首轮历史，并补入 P18/p18 和中期写作材料入口。
+
+验收口径：
+
+- 中期报告写作先读 `docs/midterm/README.md`。
+- 当前事实引用先读 `docs/midterm/midterm-fact-sheet-2026-06-13.md`。
+- 边界和答辩风险先读 `docs/midterm/boundaries-and-risks-2026-06-13.md`。
+- 文献检索和正文 claim 先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束证据强度。
 
 ## 中期前边界管理
 

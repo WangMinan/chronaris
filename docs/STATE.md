@@ -61,14 +61,14 @@
       - 产物：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
       - 报告：`docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
       - 当前已确认 `BUS6000019110020.code1031 = 真航向` 可映射到 `yaw`，但 `yaw_rate` 仍缺失，因此 `rotation_status=disabled`。
-    - `P16 thesis materials` 已完成：
-      - 稳定 root：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
-      - 稳定报告：`docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
-      - 当前已导出 `6` 张稳定表、`6` 张 PNG 说明图，以及 `table_manifest.json / figure_manifest.json`。
-    - `P17 runtime service smoke` 已完成：
-      - 稳定 root：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
-      - 稳定报告：`docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
-      - 当前已支持 checkpoint 冷启动、单 view replay JSONL -> predictions JSONL / summary JSON，并固化 `missing_checkpoint / missing_fields / empty_window / schema_mismatch` 四类错误样例。
+    - `P16 thesis materials` 首轮已完成：
+      - 首轮 root：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
+      - 首轮报告：`docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
+      - 已导出 `6` 张稳定表、`6` 张 PNG 说明图，以及 `table_manifest.json / figure_manifest.json`；当前写作入口以 P18 刷新后的 `r2-p18` 为准。
+    - `P17 runtime service smoke` 首轮已完成：
+      - 首轮 root：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
+      - 首轮报告：`docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
+      - 已支持 checkpoint 冷启动、单 view replay JSONL -> predictions JSONL / summary JSON，并固化 `missing_checkpoint / missing_fields / empty_window / schema_mismatch` 四类错误样例；当前 schema contract 入口以 P18 `r2-contract` 为准。
     - `P18 P11/P17 风险收口优化` 已完成：
       - P11 stable resume：
         - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
@@ -113,17 +113,19 @@
   - 最新 runtime service r2：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_summary.json`
   - 最新主动 evidence runner：`docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`
   - 最新 bounded weak-label sweep：`docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json`
-  - 最新 live weak-label sweep：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json`
+  - 历史 live weak-label sweep r2：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json`
   - 最新 private component ablation：`docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json`
   - 最新 public adapter calibration：`docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json`
   - 最新 public transfer boundary：`docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json`
   - 最新 rotation audit：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
-  - 最新 thesis materials：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/figure_manifest.json`
-  - 最新 runtime service smoke：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/runtime_service_smoke_summary.json`
+  - 历史 thesis materials r1：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/figure_manifest.json`
+  - 历史 runtime service smoke r1：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/runtime_service_smoke_summary.json`
   - 最新 live weak-label stable resume：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
   - 最新 live weak-label partial blocked：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
   - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
   - 最新 thesis materials p18：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
+  - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
+  - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
 
 ## 当前主线事实
 
@@ -190,10 +192,10 @@
     - 当前 `sample_count=111`
     - 当前 `task_entry_count=333`
     - 当前 `combination_count=2`
-  - `P16 thesis materials`：
+  - `P16 thesis materials` 首轮：
     - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
     - `figure_manifest.json` 已列出 `evidence_layer_overview / weak_label_sweep_ablation / chronaris_opt_component_ablation / public_transfer_boundary / runtime_semantic_case / rigid_body_rotation_audit`
-  - `P17 runtime service smoke`：
+  - `P17 runtime service smoke` 首轮：
     - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
     - 当前 `input_sample_count=37`
     - 当前 `view_count=1`
@@ -212,6 +214,13 @@
     - 当前 `input_vehicle_feature_count=965`
     - 当前 `missing_vehicle_feature_count=965`
     - 当前 missing groups 已覆盖 `BUS6000019110021` 到 `BUS6000019110026`
+  - `P18 thesis materials 刷新`：
+    - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/`
+    - 当前 `figure_manifest.json` 已把 P11 stable/partial blocker 与 P17 native aligned/canonical exact schema contract 纳入图表源。
+  - `中期报告写作材料`：
+    - `docs/midterm/midterm-fact-sheet-2026-06-13.md`
+    - `docs/midterm/boundaries-and-risks-2026-06-13.md`
+    - `docs/midterm/claims-matrix-2026-06-13.md`
 
 ## 当前关键入口
 
