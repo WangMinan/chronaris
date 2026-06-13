@@ -62,11 +62,11 @@ _TRANSLATION_GROUP_TOKENS: Mapping[str, tuple[str, ...]] = {
 
 _ROTATION_AXIS_TOKENS: Mapping[str, tuple[str, ...]] = {
     "pitch": ("俯仰角", "pitch", "theta"),
-    "pitch_rate": ("俯仰角速度", "pitch rate", "pitch_rate"),
+    "pitch_rate": ("俯仰角速度", "俯仰速率", "pitch rate", "pitch_rate"),
     "roll": ("滚转角", "横滚角", "roll", "phi"),
-    "roll_rate": ("滚转角速度", "横滚角速度", "roll rate", "roll_rate"),
-    "yaw": ("偏航角", "yaw", "psi", "heading"),
-    "yaw_rate": ("偏航角速度", "yaw rate", "yaw_rate"),
+    "roll_rate": ("滚转角速度", "横滚角速度", "滚转速率", "roll rate", "roll_rate"),
+    "yaw": ("偏航角", "航向角", "真航向", "航向", "yaw", "psi", "heading"),
+    "yaw_rate": ("偏航角速度", "航向角速度", "航向速率", "yaw rate", "yaw_rate"),
 }
 
 _MATCH_ORDER = (

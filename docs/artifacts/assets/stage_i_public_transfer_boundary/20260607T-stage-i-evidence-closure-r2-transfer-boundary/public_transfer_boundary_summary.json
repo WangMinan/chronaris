@@ -1,0 +1,131 @@
+{
+  "run_id": "20260607T-stage-i-evidence-closure-r2-transfer-boundary",
+  "artifact_root": "docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary",
+  "evidence_layer": "transfer_boundary",
+  "source_paths": {
+    "calibration_summary_path": "docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json",
+    "public_mainline_summary_path": "docs/artifacts/assets/stage_i_public_mainline/20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1/public_mainline_summary.json",
+    "multitask_summary_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json",
+    "private_summary_path": "docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/private_benchmark_summary.json"
+  },
+  "private_mainline": {
+    "multitask_run_id": "20260607T-stage-i-multitask-real-closure-r2",
+    "private_proxy_run_id": "20260607T-stage-i-private-opt-package-r2",
+    "thesis_boundary": "weak_label_proxy_not_manual_ground_truth"
+  },
+  "public_mainline_status": "public opt closed",
+  "data_boundary_rows": [
+    {
+      "corpus": "private_stage_h",
+      "modality_pair": "real_physiology + real_vehicle_timeseries",
+      "labels": "risk_proxy/workload_proxy/event_replay_tag or T1/T2/T3",
+      "granularity": "window/view",
+      "time_reference": "Stage H unified timeline with sortie/pilot/view ids",
+      "evidence_role": "thesis_weak_label + private_proxy"
+    },
+    {
+      "corpus": "uab_workload_dataset",
+      "modality_pair": "physiology + task_context_proxy",
+      "labels": "subjective workload / public adapter target",
+      "granularity": "window",
+      "time_reference": "public prepared sequence timeline",
+      "evidence_role": "public_adapter/calibration"
+    },
+    {
+      "corpus": "nasa_csm",
+      "modality_pair": "physiology + scenario_context_proxy",
+      "labels": "attention_state / public adapter target",
+      "granularity": "window/sequence",
+      "time_reference": "public prepared sequence timeline",
+      "evidence_role": "public_adapter/calibration"
+    }
+  ],
+  "task_boundary_rows": [
+    {
+      "layer": "thesis_weak_label",
+      "task_scope": "risk_proxy / workload_proxy / event_replay_tag",
+      "note": "weak labels built from private Stage H aligned windows"
+    },
+    {
+      "layer": "private_proxy",
+      "task_scope": "T1/T2/T3",
+      "note": "private proxy benchmark diagnostics only"
+    },
+    {
+      "layer": "public_adapter/calibration",
+      "task_scope": "UAB/NASA public tasks",
+      "note": "context proxy only, not real vehicle stream"
+    }
+  ],
+  "performance_rows": [
+    {
+      "source_type": "public_adapter_baseline",
+      "backend": "sklearn",
+      "dataset_id": "uab_workload_dataset",
+      "run_id": "20260506T121000Z-stage-i-public-opt-uab",
+      "subset_id": "heat_the_chair",
+      "candidate_name": "physiology_persistence",
+      "primary_metric_name": "rmse",
+      "primary_metric_value": 1.4567585657677036,
+      "secondary_metric_name": "mae",
+      "secondary_metric_value": 1.1636927899776721,
+      "selected_subset": [],
+      "source_path": "docs/artifacts/assets/stage_i_public_opt/20260506T121000Z-stage-i-public-opt-uab/public_opt_summary.json"
+    },
+    {
+      "source_type": "calibration_baseline",
+      "backend": "sklearn",
+      "dataset_id": "uab_workload_dataset",
+      "run_id": "20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1",
+      "subset_id": "heat_the_chair",
+      "candidate_name": "target_prior_median",
+      "primary_metric_name": "rmse",
+      "primary_metric_value": 1.433140268927459,
+      "secondary_metric_name": "mae",
+      "secondary_metric_value": 1.073958345604878,
+      "selected_subset": [
+        "heat_the_chair"
+      ],
+      "source_path": "docs/artifacts/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_summary.json"
+    },
+    {
+      "source_type": "legacy_public_opt",
+      "backend": "sklearn",
+      "dataset_id": "nasa_csm",
+      "run_id": "20260506T161500Z-stage-i-public-opt-nasa-round1",
+      "subset_id": "benchmark_only",
+      "candidate_name": "balanced_linear_svc_context",
+      "primary_metric_name": "macro_f1",
+      "primary_metric_value": 0.7445135090687961,
+      "secondary_metric_name": "balanced_accuracy",
+      "secondary_metric_value": 0.758165694976977,
+      "selected_subset": [],
+      "source_path": "docs/artifacts/assets/stage_i_public_opt/20260506T161500Z-stage-i-public-opt-nasa-round1/public_opt_summary.json"
+    },
+    {
+      "source_type": "torch_uab",
+      "backend": "torch",
+      "dataset_id": "uab_workload_dataset",
+      "run_id": "20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1",
+      "subset_id": "heat_the_chair",
+      "candidate_name": "heat_residual_correction__lr0p0003__wd0p0001",
+      "primary_metric_name": "rmse",
+      "primary_metric_value": 1.4629949608517474,
+      "secondary_metric_name": "mae",
+      "secondary_metric_value": 1.15944445165349,
+      "selected_subset": [
+        "heat_the_chair"
+      ],
+      "source_path": "docs/artifacts/assets/stage_i_public_opt_torch/20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1/public_opt_torch_summary.json"
+    },
+    {
+      "source_type": "public_mainline_status",
+      "dataset_id": "public_mainline",
+      "subset_id": "summary",
+      "primary_metric_name": "status",
+      "primary_metric_value": 1.0,
+      "source_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1/public_opt_torch_summary.json"
+    }
+  ],
+  "boundary_note": "公开 UAB/NASA 结果只用于 adapter/calibration 与 transfer-boundary 说明，不能改写为论文私有双流本体 fully closed。"
+}

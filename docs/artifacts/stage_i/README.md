@@ -7,13 +7,24 @@
 ## 当前主入口
 
 - 中期证据整编：`stage-i-midterm-20260607T-stage-i-midterm-r3.md`
+- 主动 evidence runner：`stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md`
+- bounded weak-label sweep：`stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md`
 - 历史 Stage I closure：`stage-i-closure-2026-04-30.md`
 - Phase C thesis weak-label evidence：`thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
 - 当前公开主线：`stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
 - UAB robust-prior adapter：`stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md`
 - NASA enhanced round 1：`stage-i-public-opt-20260506T161500Z-stage-i-public-opt-nasa-round1.md`
 - UAB torch auto-cuda confirm：`stage-i-public-opt-20260506T165558Z-stage-i-public-opt-uab-torch-gpu.md`
-- Support：
+- private component ablation：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
+- public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
+- public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
+- rigid-body rotation audit：`stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
+- Phase D/E/F r2：
+  - `stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
+  - `stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
+  - `stage-i-semantic-event-support-20260607T-stage-i-semantic-support-r2.md`
+  - `stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md`
+- 历史 support：
   - `stage-i-alignment-support-20260506T120000Z-stage-i-support.md`
   - `stage-i-causal-support-20260506T120000Z-stage-i-support.md`
   - `stage-i-ablation-support-20260506T120000Z-stage-i-support.md`

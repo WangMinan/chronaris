@@ -1,0 +1,178 @@
+{
+  "run_id": "20260607T-stage-i-evidence-closure-r2-rotation",
+  "artifact_root": "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-evidence-closure-r2-rotation",
+  "evidence_layer": "rotation_diagnostics",
+  "source_rigid_body_summary_path": "docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json",
+  "source_sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+  "vehicle_field_metadata": {
+    "status": "loaded",
+    "field_count": 96,
+    "measurement": "BUS6000019110020",
+    "analysis_id": 6000019110020,
+    "access_rule_id": 6000019510066,
+    "error": null
+  },
+  "stage_h_feature_rotation_groups": {
+    "speed": [
+      {
+        "feature_name": "BUS6000019110020.code1027",
+        "label": "[TSPI数据][载机平台系速度][速度_北向][_速度]"
+      },
+      {
+        "feature_name": "BUS6000019110020.code1028",
+        "label": "[TSPI数据][载机平台系速度][速度_西向][_速度]"
+      }
+    ],
+    "acceleration": [
+      {
+        "feature_name": "BUS6000019110020.code1024",
+        "label": "[TSPI数据][载机平台系加速度][加速度_北向][_加速度]"
+      },
+      {
+        "feature_name": "BUS6000019110020.code1025",
+        "label": "[TSPI数据][载机平台系加速度][加速度_西向][_加速度]"
+      },
+      {
+        "feature_name": "BUS6000019110020.code1036",
+        "label": "[TSPI数据][载机法向过载][_过载]"
+      }
+    ],
+    "altitude": [
+      {
+        "feature_name": "BUS6000019110020.code1033",
+        "label": "[TSPI数据][载机海拔高度][_高度]"
+      },
+      {
+        "feature_name": "BUS6000019110020.code1043",
+        "label": "[TSPI数据][载机气压高度][_高度]"
+      },
+      {
+        "feature_name": "BUS6000019110020.code1044",
+        "label": "[TSPI数据][载机卫星高度][_高度]ICD_1"
+      }
+    ],
+    "vertical_speed": [
+      {
+        "feature_name": "BUS6000019110020.code1026",
+        "label": "[TSPI数据][载机平台系加速度][加速度_天向][_加速度]"
+      },
+      {
+        "feature_name": "BUS6000019110020.code1029",
+        "label": "[TSPI数据][载机平台系速度][速度_天向][_速度]"
+      }
+    ],
+    "pitch": [
+      {
+        "feature_name": "BUS6000019110020.code1030",
+        "label": "[TSPI数据][载机俯仰角][_角度_毫弧度]"
+      }
+    ],
+    "pitch_rate": [],
+    "roll": [
+      {
+        "feature_name": "BUS6000019110020.code1032",
+        "label": "[TSPI数据][载机横滚角][_角度_毫弧度]"
+      }
+    ],
+    "roll_rate": [],
+    "yaw": [
+      {
+        "feature_name": "BUS6000019110020.code1031",
+        "label": "[TSPI数据][载机真航向][_角度_毫弧度]"
+      }
+    ],
+    "yaw_rate": []
+  },
+  "stage_h_missing_requirements": {
+    "rotation": [
+      "pitch/pitch_rate",
+      "roll/roll_rate",
+      "yaw/yaw_rate"
+    ]
+  },
+  "mysql_rotation_candidates": {
+    "pitch": [
+      {
+        "field_name": "code1006",
+        "label": "[TSPI数据][目标TSPI数据_有效性][有效性_俯仰角]"
+      },
+      {
+        "field_name": "BUS6000019110020.code1006",
+        "label": "[TSPI数据][目标TSPI数据_有效性][有效性_俯仰角]"
+      },
+      {
+        "field_name": "code1030",
+        "label": "[TSPI数据][载机俯仰角][_角度_毫弧度]"
+      },
+      {
+        "field_name": "BUS6000019110020.code1030",
+        "label": "[TSPI数据][载机俯仰角][_角度_毫弧度]"
+      }
+    ],
+    "pitch_rate": [],
+    "roll": [
+      {
+        "field_name": "code1007",
+        "label": "[TSPI数据][目标TSPI数据_有效性][有效性_横滚角]"
+      },
+      {
+        "field_name": "BUS6000019110020.code1007",
+        "label": "[TSPI数据][目标TSPI数据_有效性][有效性_横滚角]"
+      },
+      {
+        "field_name": "code1032",
+        "label": "[TSPI数据][载机横滚角][_角度_毫弧度]"
+      },
+      {
+        "field_name": "BUS6000019110020.code1032",
+        "label": "[TSPI数据][载机横滚角][_角度_毫弧度]"
+      }
+    ],
+    "roll_rate": [],
+    "yaw": [
+      {
+        "field_name": "code1008",
+        "label": "[TSPI数据][目标TSPI数据_有效性][有效性_真航向]"
+      },
+      {
+        "field_name": "BUS6000019110020.code1008",
+        "label": "[TSPI数据][目标TSPI数据_有效性][有效性_真航向]"
+      },
+      {
+        "field_name": "code1031",
+        "label": "[TSPI数据][载机真航向][_角度_毫弧度]"
+      },
+      {
+        "field_name": "BUS6000019110020.code1031",
+        "label": "[TSPI数据][载机真航向][_角度_毫弧度]"
+      }
+    ],
+    "yaw_rate": []
+  },
+  "feature_rotation_candidates": {
+    "pitch": [
+      {
+        "field_name": "BUS6000019110020.code1030",
+        "label": "[TSPI数据][载机俯仰角][_角度_毫弧度]"
+      }
+    ],
+    "pitch_rate": [],
+    "roll": [
+      {
+        "field_name": "BUS6000019110020.code1032",
+        "label": "[TSPI数据][载机横滚角][_角度_毫弧度]"
+      }
+    ],
+    "roll_rate": [],
+    "yaw": [
+      {
+        "field_name": "BUS6000019110020.code1031",
+        "label": "[TSPI数据][载机真航向][_角度_毫弧度]"
+      }
+    ],
+    "yaw_rate": []
+  },
+  "rotation_enabled": false,
+  "rotation_status": "disabled",
+  "rotation_reading": "current sortie still lacks paired rate fields for pitch/roll/yaw"
+}

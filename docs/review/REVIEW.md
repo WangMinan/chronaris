@@ -18,10 +18,11 @@
 
 ## 当前建议
 
-当前最值得 review 的范围是 Stage I thesis mainline Phase C 的未提交工作区，尤其是：
+当前最值得 review 的范围已经切到中期前 `P10-P15` 主动任务队列，尤其是：
 
-- task heads
-- `L_task + L_causal` objective contract
-- thesis weak-label task builder
-- multitask train pipeline
-- private benchmark `proxy_evidence / thesis_task_evidence` 分层
+- `P10 evidence runner`：manifest、`evidence_layer`、失败保留 partial manifest、`--reuse-existing / --only` 行为。
+- `P11 thesis weak-label multitask sweep`：小网格是否有边界，是否保持 `risk_proxy / workload_proxy / event_replay_tag` 的 weak-label 表述。
+- `P12 chronaris_opt component ablation`：`T1/T2/T3` 是否始终写成 private proxy benchmark，不越界成人工真值。
+- `P13/P14 public adapter calibration / transfer boundary`：UAB/NASA 是否保持 public adapter / calibration evidence 边界。
+- `P15 rigid_body rotation audit`：字段启用或缺失诊断是否可复现，报告是否避免把缺失项写成已验证约束。
+- 所有新增产物是否能从 `docs/artifacts/ARTIFACTS.md` 或 `docs/implementation/TASKS.md` 追溯。

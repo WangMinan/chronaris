@@ -1,0 +1,32 @@
+{
+  "artifact_root": "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2",
+  "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+  "stage_name": "stage_i_rigid_body_rotation_audit",
+  "run_id": "20260607T-stage-i-rotation-audit-r2",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-07T12:45:09.891048Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-07T12:45:09.757965Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:45:09.889985Z",
+      "event": "feature_labels_loaded",
+      "feature_count": 21,
+      "metadata_status": "loaded"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:45:09.891048Z",
+      "event": "finished",
+      "summary_path": "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json",
+      "report_path": "docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md"
+    }
+  ],
+  "feature_count": 21,
+  "metadata_status": "loaded",
+  "summary_path": "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json",
+  "report_path": "docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md"
+}

@@ -23,9 +23,9 @@
 - `Stage E0/E/F/G(min)/H`：已完成并收口，作为历史基线与后续依赖。
 - `Stage I`：
   - `Phase A/B/C`：已接上统一骨干、真实 weak-label 联合训练、private/thesis 分层资产和中期证据包。
-  - `Phase D`：刚体运动物理约束补强代码已完成，首轮真实 smoke / ablation 已落盘。
-  - `Phase E`：语义事件融合补强代码已完成，真实 summary / support 产物已落盘。
-  - `Phase F`：runtime inference 代码已完成，真实 replay / runtime 报告已落盘。
+  - `Phase D`：刚体运动物理约束补强已完成二轮真实 smoke / ablation，`translation + vertical` 已真实启用。
+  - `Phase E`：语义事件融合补强已完成多 view support 产物，覆盖当前 Stage H `validation` profile 的 3 个双流 view。
+  - `Phase F`：runtime inference 已完成服务化 replay 补强，支持 `batch / incremental / both` 和 schema diagnostics。
 
 ## 默认工作方式
 
@@ -43,33 +43,34 @@
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python
 ```
 
-## 当前工作区收敛：文档与产物归档
+## 当前工作区与推送状态
 
 当前事实：
 
-- `main` 当前 `HEAD=0f4db72 feat: add stage i runtime sample exporter`。
-- `main...origin/main [ahead 2]`，领先提交为 `0f4db72` 和 `9ef4f64`；本地 Phase D/E/F 代码已经提交，但尚未推到 `origin/main`。
-- 当前没有未提交的 `src/` 或 `scripts/` 代码文件。
-- 当前未提交修改为 `docs/STATE.md`、`docs/implementation/TASKS.md`。
-- 当前未跟踪产物为本轮 Stage I 真实 replay/support/ablation 资产，主要位于：
-  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/`
-  - `docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r1/`
-  - `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r1/`
-  - `docs/artifacts/stage_i/assets/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1/`
-  - `docs/artifacts/stage_i/stage-i-*-20260607T-*.md`
+- `main` 当前基线 `HEAD=57ca739 feat: expand stage i rigid-body support and runtime service`。
+- `origin/main=57ca739`，本地 Phase D/E/F 代码、文档与资产已经推送到远端。
+- 本轮文档重组前工作区干净；本轮会产生 `docs/STATE.md`、`docs/implementation/TASKS.md` 以及必要索引文档的未提交修改。
+- 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
+  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/`
+  - `docs/artifacts/assets/stage_i_semantic_event_support/20260607T-stage-i-semantic-support-r2/`
+  - `docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/`
+  - `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/`
+  - `docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md`
+  - `docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
+  - `docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
 
 收敛顺序：
 
-1. 先提交 `STATE.md` 和 `TASKS.md` 的事实同步。
-2. 再决定新增产物是否整体进入 git 历史；建议至少保留 JSON/CSV/Markdown 报告，checkpoint 与 PNG 可按仓库容量再判断。
-3. 若本轮产物入库，同步更新 `docs/artifacts/ARTIFACTS.md` 的“当前最常引用产物”。
+1. 先完成本轮 `STATE.md`、`TASKS.md` 和必要产物索引的事实同步。
+2. 再进入中期前主动任务队列：先统一 runner，再做论文本体深挖、private proxy 机制诊断、public adapter 有界校准、公开迁移边界表和 `rotation` 字段核验。
+3. 每个新增实验都必须明确 `evidence_layer`，不能把 public adapter、private proxy、thesis weak-label 混写。
 4. 推送前复查 `git status --short --untracked-files=all`，确保没有临时 stdout、半成品资产或大文件误入。
 
 验收：
 
 - `git diff --check` 通过。
-- 状态文档中的 `HEAD`、领先远端状态、未跟踪产物和当前编码缺口一致。
-- 若提交产物，报告路径和 asset 路径必须能从 `ARTIFACTS.md` 或本文件追溯。
+- 状态文档中的 `HEAD`、远端同步状态、当前任务队列和编码缺口一致。
+- 新增报告路径和 asset 路径必须能从 `ARTIFACTS.md` 或本文件追溯。
 
 ## 已完成 P0：冻结 Phase D/E/F 工作区并提交
 
@@ -124,6 +125,8 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 
 - `0f4db72 feat: add stage i runtime sample exporter`
 - `9ef4f64 feat: add rigid-body physics semantic event runtime inference`
+- `890a315 docs: record stage i runtime semantic rigid-body artifacts`
+- `57ca739 feat: expand stage i rigid-body support and runtime service`
 
 ## 已完成 P1：补真实资产上的 Stage I multitask 联合训练证据
 
@@ -268,13 +271,14 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   - 本次更新后 `vehicle_field_metadata.status=loaded`、`field_count=96`。
   - `rigid_body` 的 `vehicle_rigid_body_translation=1.413177490234375`，`vehicle_rigid_body_vertical=0`，`vehicle_rigid_body_rotation=0`。
 
-## 中期前最小收敛顺序
+## 中期前主动推进顺序
 
-1. 直接引用最新 Phase C 真实联合训练证据与 private benchmark 分层资产。
-2. 直接引用最新中期证据包：`docs/artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md`。
-3. 直接引用本轮 runtime replay：`docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-replay-r1.md`。
-4. 直接引用本轮 semantic support：`docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r1.md`。
-5. 直接引用本轮 rigid_body ablation：`docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r1.md`。
+1. 先建立统一 evidence runner，避免后续五条线靠手工命令散跑。
+2. 深挖现有私有 Stage H 数据与论文本体模型：围绕 `risk_proxy / workload_proxy / event_replay_tag` 做小网格和消融表。
+3. 拆解 `chronaris_opt` 机制贡献：把它从“private proxy 最优结果”推进成“表示学习、对齐、因果掩码贡献可诊断”。
+4. 有界补做 CPU-heavy `sklearn` / UAB torch 候选：只作为 public adapter baseline / calibration baseline，不扩写成本体闭环。
+5. 整理 NASA/UAB 公开适配器迁移边界：用表格说明公开代理数据与私有双流数据的模态、标签、任务粒度和时间基准差异。
+6. 核验 `rigid_body rotation` 字段：能找到成对角速度字段就补 rotation ablation；找不到则固化为真实字段缺口诊断。
 
 ## 已完成 P7：扩充 rigid_body 的字段语义覆盖
 
@@ -371,9 +375,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `feature_schema_status=aligned`
 - `feature_schema_source=input_normalization_stats`
 
-## 当前 P10：统一论文闭环评测 harness
+## 已完成 P10：统一论文闭环评测 harness
 
-目标：把 Phase C/D/E/F 的真实命令整合成一个可重复跑的 evidence runner，减少后续论文补图、补表时的手工步骤。
+目标：把 Phase C/D/E/F 以及中期前新增的五条证据线整合成一个可重复跑的 evidence runner，减少后续论文补图、补表时的手工步骤。
 
 建议新增：
 
@@ -383,36 +387,222 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 职责：
 
-- 串联 Stage I multitask checkpoint、rigid_body ablation、semantic support、runtime replay。
+- 串联 Stage I multitask checkpoint、rigid_body ablation、semantic support、runtime replay、private proxy diagnostics、public adapter calibration summary。
 - 统一 run id 规则、artifact root、report root 和 manifest 输出。
-- 生成 `evidence_manifest.json`，记录输入、输出、命令参数、git commit、测试结果摘要。
-- 支持 `--skip-heavy`、`--reuse-existing`、`--only rigid_body|semantic|runtime|all`。
+- 生成 `evidence_manifest.json`，记录输入、输出、命令参数、git commit、测试结果摘要和 `evidence_layer`。
+- 支持 `--skip-heavy`、`--reuse-existing`、`--only multitask|rigid_body|semantic|runtime|private_proxy|public_adapter|rotation|all`。
+- 对 heavy public adapter 分支默认只登记已有产物；只有显式打开 `--run-heavy-public-adapter` 才真实执行。
 
-验收：
+本轮结果：
 
-- 一条命令能重建核心 JSON/CSV/Markdown。
-- 每个子任务失败时保留 partial manifest，且不会覆盖上一轮稳定产物。
-- `docs/artifacts/ARTIFACTS.md` 可直接链接最新 evidence manifest。
+- 统一入口：
+  - `src/chronaris/pipelines/stage_i/stage_i_evidence_runner.py`
+  - `scripts/run_stage_i_evidence_closure.py`
+  - `tests/test_stage_i_evidence_runner.py`
+- 稳定 manifest：
+  - `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`
+- 稳定报告：
+  - `docs/artifacts/stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md`
+- 当前 `r2` 已纳入：
+  - `multitask / rigid_body / semantic / runtime / private_proxy / public_adapter / rotation`
+- `skip-heavy` 已切到 bounded 路线：
+  - `multitask` 使用 `stage_h_window_stats_proxy`
+  - `rigid_body / semantic / runtime` 复用稳定资产
 
-## 下一步 P11：论文案例与消融表稳定化
+## 已完成 P11：私有 Stage H 论文本体模型深挖
 
-目标：把现有 evidence 转成论文可直接引用的表格与案例材料，减少后期靠手工复制指标。
+目标：围绕现有私有 Stage H 双流数据和 Phase C multitask checkpoint，把 `risk_proxy / workload_proxy / event_replay_tag` 做成更充分的 thesis weak-label evidence，而不是只保留一轮训练结果。
+
+建议新增或扩展：
+
+- `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py`
+- `scripts/run_stage_i_multitask_sweep.py`
+- `tests/test_stage_i_multitask_sweep.py`
+
+实验设计：
+
+- 小网格，不做无边界扩搜：
+  - `physics_constraint_family=minimal|full|rigid_body`
+  - `causal_weight=0|0.05|0.1`
+  - `task_loss_weight=0.5|1.0`
+  - `causal_lag_window_points=None|3`
+- 固定输入：
+  - `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json`
+  - `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json`
+- 每个 run 输出 `multitask_summary.json`、`thesis_task_manifest.jsonl`、`checkpoint_metadata`、训练/验证/测试指标。
+
+本轮结果：
+
+- 新增：
+  - `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py`
+  - `scripts/run_stage_i_multitask_sweep.py`
+  - `tests/test_stage_i_multitask_sweep.py`
+- 稳定产物：
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json`
+  - `docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/thesis_weak_label_multitask_ablation.csv`
+  - `docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md`
+- 当前 `skip-heavy` 路线说明：
+  - `sample_source=stage_h_window_stats_proxy`
+  - 仍明确写成 `thesis weak-label evidence`
+  - 不包装成人工真值任务
+
+## 已完成 P12：`chronaris_opt` 机制诊断
+
+代码落点：
+
+- `src/chronaris/pipelines/stage_i/stage_i_private_optimization.py`
+- `src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
+- `scripts/run_stage_i_private_benchmark.py`
+- `tests/test_stage_i_private_optimization.py`
+
+目标：
+
+- 把 `chronaris_opt` 从“private proxy benchmark 最优候选”推进成“机制贡献可诊断”的证据。
+- 在 `T1/T2/T3` 上拆解：
+  - 去掉因果掩码。
+  - 去掉时间残差或 lag-aware residual。
+  - 去掉 task-aware head。
+  - 仅保留 E/F/G/H 既有 baseline。
+- 输出 `chronaris_opt_component_ablation.csv/json` 和中文机制诊断报告。
+
+本轮结果：
+
+- 新增：
+  - `src/chronaris/pipelines/stage_i/stage_i_private_component_ablation.py`
+  - `scripts/run_stage_i_private_component_ablation.py`
+  - `tests/test_stage_i_private_component_ablation.py`
+- 稳定产物：
+  - `docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json`
+  - `docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.csv`
+  - `docs/artifacts/stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
+- 当前报告已拆出：
+  - `remove_causal_mask`
+  - `remove_time_residual`
+  - `remove_task_aware_head`
+
+## 已完成 P13：public adapter 有界校准 baseline
+
+目标：中期前补做有限预算的 CPU-heavy `sklearn` / UAB torch 候选，用于公开代理数据的 adapter baseline / calibration baseline，而不是改写成双流本体闭环。
+
+建议范围：
+
+- UAB：
+  - 默认仍以 torch heat-specialist / robust-prior 公开线为主。
+  - 只允许 3 到 5 个候选组合，固定 seed、固定 LOSO、固定 `selected_subset`。
+  - CPU-heavy `sklearn uab_hybrid` 必须显式 `--allow-cpu-heavy-sklearn`，并在 manifest 写入 `heavy_reason` 与 runtime。
+- NASA：
+  - 继续以 `NASA enhanced round 1` 为主。
+  - 只补必要的 calibration 对照，不扩成新的深度模型竞赛。
+
+建议落点：
+
+- 扩展 `scripts/run_stage_i_public_opt.py` 的 run manifest metadata。
+- 新增 `src/chronaris/pipelines/stage_i/stage_i_public_adapter_calibration.py` 或复用 public mainline report builder。
+- 新增 `tests/test_stage_i_public_opt.py` 中的 evidence layer / heavy guard 回归。
+
+本轮结果：
+
+- 新增：
+  - `src/chronaris/pipelines/stage_i/stage_i_public_adapter_calibration.py`
+  - `scripts/run_stage_i_public_adapter_calibration.py`
+  - `tests/test_stage_i_public_transfer_boundary.py`
+- 稳定产物：
+  - `docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json`
+  - `docs/artifacts/stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
+- 当前 summary 已区分：
+  - `public_adapter_baseline`
+  - `calibration_baseline`
+  - `legacy_public_opt`
+  - `torch_uab`
+
+## 已完成 P14：NASA/UAB 迁移与校准边界报告
+
+目标：把 NASA/UAB 公开适配器结果整理成论文可引用的“迁移边界”证据，说明公开代理数据和私有真实双流数据之间的差异。
+
+建议新增：
+
+- `src/chronaris/pipelines/stage_i/stage_i_public_transfer_boundary.py`
+- `scripts/build_stage_i_public_transfer_boundary.py`
+- `tests/test_stage_i_public_transfer_boundary.py`
+
+报告内容：
+
+- 数据边界表：
+  - 私有 Stage H：真实生理流 + 真实飞机时序流 + sortie/pilot/view。
+  - UAB：公开 physiology + task/context proxy + subjective workload。
+  - NASA：公开 physiology + scenario/context proxy + attention state。
+- 任务边界表：
+  - `risk_proxy / workload_proxy / event_replay_tag` 属于 thesis weak-label。
+  - `T1/T2/T3` 属于 private proxy。
+  - UAB/NASA 属于 public adapter / calibration evidence。
+- 性能表：
+  - 引用 `stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`。
+  - 引用新的 P13 calibration summary。
+
+本轮结果：
+
+- 新增：
+  - `src/chronaris/pipelines/stage_i/stage_i_public_transfer_boundary.py`
+  - `scripts/build_stage_i_public_transfer_boundary.py`
+- 稳定产物：
+  - `docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json`
+  - `docs/artifacts/stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
+- 当前报告已覆盖：
+  - 数据边界表
+  - 任务边界表
+  - public adapter/calibration 性能引用表
+
+## 已完成 P15：`rigid_body rotation` 字段核验与消融
+
+目标：中期前补完 `rigid_body` 的最后一个关键缺口：`rotation`。能找到真实成对角速度字段就补实验；找不到就把缺口固化成可引用诊断。
+
+建议落点：
+
+- `src/chronaris/models/alignment/physics_state_mapping.py`
+- `scripts/run_stage_e_relative_preview.py`
+- `tests/test_alignment_model_losses.py`
+
+核验顺序：
+
+1. 从 MySQL label 和 Stage H feature schema 中复查 `真航向`、俯仰、横滚、角速度、航向角速度等字段。
+2. 若存在可用 rate field，扩充 token 并重跑 `minimal / full / rigid_body`。
+3. 若只存在角度、没有 rate field，保留 `rotation` disabled，并输出 `missing_requirements.rotation` 诊断。
+
+本轮结果：
+
+- 代码与测试：
+  - `src/chronaris/models/alignment/physics_state_mapping.py`
+  - `src/chronaris/pipelines/stage_i/stage_i_rigid_body_rotation_audit.py`
+  - `scripts/run_stage_i_rigid_body_rotation_audit.py`
+  - `tests/test_alignment_model_losses.py`
+  - `tests/test_stage_i_rotation_audit.py`
+- 稳定产物：
+  - `docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
+  - `docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
+- 当前结论：
+  - `BUS6000019110020.code1031 = 真航向` 已归入 `yaw`
+  - `yaw_rate` 仍缺失
+  - `rotation_status=disabled`
+
+## 下一步 P16：论文案例与消融表稳定化
+
+目标：把现有和 P11-P15 新增 evidence 转成论文可直接引用的表格与案例材料，减少后期靠手工复制指标。
 
 代码落点：
 
 - `src/chronaris/evaluation/` 或 `src/chronaris/pipelines/stage_i/`
-  - 新增 report table builder：统一导出 ablation table、runtime prediction examples、semantic event attribution cases。
+  - 新增 report table builder：统一导出 thesis weak-label ablation、private proxy component ablation、public adapter calibration、transfer boundary、rigid_body rotation、runtime prediction examples、semantic event attribution cases。
   - 对每张表附带 `evidence_layer`、`source_path`、`metric_definition`。
 - `docs/artifacts/stage_i/`
   - 输出论文案例报告，保留中文解释、边界说明和引用路径。
 
 验收：
 
-- 至少生成三张稳定表：物理约束消融、语义事件 support、runtime replay 样例。
+- 至少生成六张稳定表：论文本体 weak-label 小网格、`chronaris_opt` 组件诊断、public adapter calibration、公开迁移边界、物理约束消融、runtime/semantic case。
 - 每张表都能追溯到 JSON/CSV 原始产物。
 - 表述不越界：public adapter、private proxy、thesis weak-label、case support 分层清楚。
 
-## 下一步 P12：系统封装与部署边界
+## 下一步 P17：系统封装与部署边界
 
 目标：为毕业设计系统实现章节补齐“离线/准实时推理服务”的工程闭环，而不是只停留在训练脚本和报告。
 
@@ -433,13 +623,15 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - 有错误样例：缺 checkpoint、缺字段、空窗口、schema mismatch。
 - 与 `tests.test_runtime_inference` 形成自动化覆盖。
 
-## 中期前降级处理
+## 中期前边界管理
 
-下面几类工作不是永久排除，而是中期答辩前不抢占主线投入；后续毕业论文整理和系统封装阶段，可以按边界清楚、证据分层、可复现的方式适当纳入。
+下面几类工作现在纳入中期前主动任务，但必须按证据分层写清楚，不能因为加做实验就改变论文边界。
 
-- CPU-heavy `sklearn` 或 UAB torch 候选搜索：中期前不再扩搜；论文封装阶段可作为公开 adapter baseline / calibration baseline 的补充材料。
-- NASA/UAB 公开数据适配器结果：中期前不改写成论文双流本体闭环；论文中可作为 public adapter evidence，用于说明方法在公开代理数据上的迁移与校准边界。
-- `chronaris_opt` 与 `T1/T2/T3`：中期前不写成人工真值 thesis task fully closed；论文中可作为 private proxy benchmark evidence，用于支撑表示学习、对齐和因果融合增益。
+- CPU-heavy `sklearn` 或 UAB torch 候选搜索：中期前允许有限预算复现/补跑；只能作为公开 adapter baseline / calibration baseline。
+- NASA/UAB 公开数据适配器结果：中期前要整理成 public adapter evidence 和 transfer boundary；不能改写成论文双流本体闭环。
+- `chronaris_opt` 与 `T1/T2/T3`：中期前要补机制诊断；仍只能写成 private proxy benchmark evidence，不能写成人工真值 thesis task fully closed。
+- `risk_proxy / workload_proxy / event_replay_tag`：中期前要补小网格与消融；仍只能写成 thesis weak-label evidence。
+- `rigid_body rotation`：中期前必须核验字段；启用或缺失都要以 diagnostics 形式固化。
 - 上游接收器、入库链路和原始大文件入仓：中期前不重建；论文系统封装时可说明现有 MySQL / InfluxDB 接入边界，必要时补轻量接口说明或部署文档。
 
 ## 历史计划入口
