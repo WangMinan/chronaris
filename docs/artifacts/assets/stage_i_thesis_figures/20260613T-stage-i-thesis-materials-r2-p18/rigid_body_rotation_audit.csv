@@ -1,0 +1,10 @@
+row_type,family,test_total,test_alignment,test_physics_total,vehicle_rigid_body_translation,vehicle_rigid_body_vertical,vehicle_rigid_body_rotation,source_path,evidence_layer,feature_candidate_count,mysql_candidate_count,rotation_status,rotation_enabled
+family_metric,minimal,1110.7086181640625,0.09487661719322205,11088.6591796875,0.0,0.0,0.0,docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json,rigid_body_rotation_diagnostics,,,,
+family_metric,full,2.1334598064422607,0.10848616063594818,2.6374268531799316,0.0,0.0,0.0,docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json,rigid_body_rotation_diagnostics,,,,
+family_metric,rigid_body,2.484066963195801,0.11162154376506805,6.105468273162842,1.133332371711731,3.9466116428375244,0.0,docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json,rigid_body_rotation_diagnostics,,,,
+rotation_requirement,pitch,,,,,,,docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json,rotation_diagnostics,1.0,4.0,disabled,False
+rotation_requirement,pitch_rate,,,,,,,docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json,rotation_diagnostics,0.0,0.0,disabled,False
+rotation_requirement,roll,,,,,,,docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json,rotation_diagnostics,1.0,4.0,disabled,False
+rotation_requirement,roll_rate,,,,,,,docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json,rotation_diagnostics,0.0,0.0,disabled,False
+rotation_requirement,yaw,,,,,,,docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json,rotation_diagnostics,1.0,4.0,disabled,False
+rotation_requirement,yaw_rate,,,,,,,docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json,rotation_diagnostics,0.0,0.0,disabled,False

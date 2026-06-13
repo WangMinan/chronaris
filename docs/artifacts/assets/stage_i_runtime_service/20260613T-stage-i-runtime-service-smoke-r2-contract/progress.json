@@ -1,0 +1,58 @@
+{
+  "artifact_root": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract",
+  "strict_feature_schema": true,
+  "export_canonical_payload": true,
+  "stage_name": "stage_i_runtime_service_smoke",
+  "run_id": "20260613T-stage-i-runtime-service-smoke-r2-contract",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-13T09:49:03.628653Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-13T09:47:30.740628Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract",
+      "strict_feature_schema": true,
+      "export_canonical_payload": true
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:47:34.135528Z",
+      "event": "input_loaded",
+      "sample_count": 37
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:47:43.697541Z",
+      "event": "schema_contract_written",
+      "schema_contract_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:48:33.595197Z",
+      "event": "runtime_inference_finished",
+      "runtime_summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:48:58.917743Z",
+      "event": "canonical_inference_finished",
+      "canonical_runtime_summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-canonical/runtime_inference_summary.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:49:03.211542Z",
+      "event": "error_cases_written",
+      "error_case_count": 5
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:49:03.628653Z",
+      "event": "finished",
+      "summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json",
+      "report_path": "docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md",
+      "figure_manifest_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/figure_manifest.json"
+    }
+  ],
+  "sample_count": 37,
+  "schema_contract_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json",
+  "runtime_summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json",
+  "canonical_runtime_summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-canonical/runtime_inference_summary.json",
+  "error_case_count": 5,
+  "summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json",
+  "report_path": "docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md",
+  "figure_manifest_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/figure_manifest.json"
+}

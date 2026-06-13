@@ -1,6 +1,6 @@
 # Stage I Artifacts Index
 
-更新时间：2026-06-07
+更新时间：2026-06-13
 
 本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
@@ -9,6 +9,12 @@
 - 中期证据整编：`stage-i-midterm-20260607T-stage-i-midterm-r3.md`
 - 主动 evidence runner：`stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md`
 - bounded weak-label sweep：`stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md`
+- live weak-label sweep：`stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r2.md`
+- live weak-label stable resume：`stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
+- thesis materials：`stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
+- runtime service smoke：`stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
+- thesis materials p18：`stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
+- runtime service smoke r2 contract：`stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
 - 历史 Stage I closure：`stage-i-closure-2026-04-30.md`
 - Phase C thesis weak-label evidence：`thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
 - 当前公开主线：`stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
