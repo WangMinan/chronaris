@@ -79,9 +79,9 @@ MulT 和 ContiFormer 保留为论文对照方向，不作为第一轮必须落�
 - src/chronaris/stage_i/features.py：EEG/ECG 统计特征、频带特征、窗口聚合
 - src/chronaris/stage_i/baselines.py：传统模型和轻量 MLP
 - src/chronaris/stage_i/evaluation.py：balanced accuracy、macro-F1、AUROC、混淆矩阵、subject-wise split
-- scripts/prepare_stage_i_dataset.py
-- scripts/run_stage_i_baseline.py
-- scripts/run_stage_i_case_study.py
+- scripts/stage_i/data/prepare_dataset.py
+- scripts/stage_i/legacy/run_baseline.py
+- scripts/stage_i/evidence/run_case_study.py
 - docs/implementation/notes/archive/stage_i/stage-i-data-plan-2026-04-29.md
 
 进入阶段 I 前你真正需要准备的东西

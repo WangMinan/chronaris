@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 from chronaris.dataset.stage_i_private_contracts import StageIPrivateTaskEntry
-from chronaris.pipelines.stage_i.stage_i_private_feature_utils import bucketize_score, none_if_empty
+from chronaris.pipelines.stage_i.private.feature_utils import bucketize_score, none_if_empty
 
 TASK_RISK_PROXY = "risk_proxy"
 TASK_WORKLOAD_PROXY = "workload_proxy"

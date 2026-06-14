@@ -39,12 +39,12 @@ from chronaris.pipelines import (  # noqa: E402
     run_stage_i_public_opt_torch_uab,
     run_stage_i_sequence_preparation,
 )
-from chronaris.pipelines.stage_i.stage_i_baseline_models import build_loso_splits  # noqa: E402
-from chronaris.pipelines.stage_i.stage_i_public_opt_data import (  # noqa: E402
+from chronaris.pipelines.stage_i.common.baseline_models import build_loso_splits  # noqa: E402
+from chronaris.pipelines.stage_i.public.opt_data import (  # noqa: E402
     build_stage_i_public_opt_feature_frame,
 )
-from chronaris.pipelines.stage_i import stage_i_public_opt_sklearn as stage_i_public_opt_sklearn_module  # noqa: E402
-from chronaris.pipelines.stage_i import stage_i_public_opt_torch as stage_i_public_opt_torch_module  # noqa: E402
+from chronaris.pipelines.stage_i.public import opt_sklearn as stage_i_public_opt_sklearn_module  # noqa: E402
+from chronaris.pipelines.stage_i.public import opt_torch as stage_i_public_opt_torch_module  # noqa: E402
 
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "stage_i_pipeline_helpers",
@@ -59,7 +59,7 @@ _write_mini_nasa_csm_dataset = _HELPER_MODULE._write_mini_nasa_csm_dataset
 
 _SCRIPT_SPEC = importlib.util.spec_from_file_location(
     "run_stage_i_public_opt_script",
-    Path(__file__).resolve().parents[1] / "scripts" / "run_stage_i_public_opt.py",
+    Path(__file__).resolve().parents[1] / "scripts" / "stage_i" / "public" / "run_opt.py",
 )
 if _SCRIPT_SPEC is None or _SCRIPT_SPEC.loader is None:  # pragma: no cover - import guard
     raise RuntimeError("failed to load run_stage_i_public_opt script")

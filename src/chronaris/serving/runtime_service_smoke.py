@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Mapping, Sequence
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-from chronaris.pipelines.stage_i.stage_i_run_observer import (
+from chronaris.pipelines.stage_i.common.run_observer import (
     StageIRunProgress,
     open_stage_i_run_observer,
 )

@@ -107,8 +107,8 @@
 - 更早的关键实现提交 `2055dec` 覆盖 Stage I thesis mainline `Phase A/B`：public adapter/proxy 边界、backbone train、Stage H checkpoint inference contract 和相关测试。
 - 当前 `Phase D/E/F` 主代码、runtime sample exporter、r2 产物和状态文档已经进入 git 历史；`P10-P15` evidence runner、bounded sweep、private component ablation、public adapter calibration、transfer boundary、rotation audit 已进入 git 历史。
   - 刚体物理：`physics_state_mapping.py`、`physics_residuals.py`、`physics.py`、`physics_features.py`、`run_stage_e_relative_preview.py`。
-  - 语义事件融合：`semantic_event.py`、`causal_fusion.py`、`stage_i_support_builders.py`、`stage_i_support_reporting.py`。
-  - runtime inference：`streaming_windows.py`、`runtime_inference.py`、`run_stage_i_runtime_inference.py`、`export_stage_i_runtime_samples.py`、`run_stage_i_semantic_event_support.py`。
+  - 语义事件融合：`semantic_event.py`、`causal_fusion.py`、`src/chronaris/pipelines/stage_i/evidence/support_builders.py`、`src/chronaris/pipelines/stage_i/evidence/support_reporting.py`。
+  - runtime inference：`streaming_windows.py`、`runtime_inference.py`、`scripts/stage_i/runtime/run_inference.py`、`scripts/stage_i/runtime/export_runtime_samples.py`、`scripts/stage_i/evidence/build_semantic_event_support.py`。
   - 测试覆盖：`tests/test_alignment_model_losses.py`、`tests/test_stage_i_support.py`、`tests/test_runtime_inference.py`。
 - 本轮工作区已收口为 `P10-P15` 主动证据闭环提交；主体功能与资产状态以 `70b651a` 为准，后续纯文档同步提交不改变该证据事实。
 - 已进入历史的关键前置产物：
@@ -144,6 +144,12 @@
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
 - 中期 P20 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run，并新增 agent-style prompt/harness v2 与切片整合；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核和解释层，不替代物理约束、因果融合或人工真值。
+
+## 当前代码组织事实
+
+- Stage I pipeline 源码已按职责拆分到 `src/chronaris/pipelines/stage_i/common/`、`training/`、`public/`、`private/`、`evidence/`、`llm/`、`legacy/`，不再继续新增单层 `stage_i_*.py` 主实现文件。
+- Stage I CLI 入口已按用途拆分到 `scripts/stage_i/<category>/`；根目录不再保留旧 `run_stage_i_*.py` / `build_stage_i_*.py` / `prepare_stage_i_*.py` / `export_stage_i_*.py` 文件。
+- 旧 Python 模块 import 路径通过 `chronaris.pipelines.stage_i` 的包级兼容映射解析到新子包；旧脚本命令不保留 wrapper，后续命令以 `scripts/README.md` 的 canonical 路径为准。
 
 ## 编码层面还需要做什么
 
@@ -275,12 +281,12 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 结果：`Ran 56 tests`，`OK`。此外，本轮真实命令已完成：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/export_stage_i_runtime_samples.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/export_runtime_samples.py \
   --run-id 20260607T-stage-i-runtime-replay-r1 \
   --run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json \
   --output-root docs/artifacts/assets/stage_i_runtime_inference
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_runtime_inference.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_inference.py \
   --run-id 20260607T-stage-i-runtime-replay-r1 \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
   --sample-jsonl docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl \
@@ -288,28 +294,28 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   --report-root docs/artifacts/stage_i \
   --device cpu
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_support.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/build_support.py \
   --run-id 20260607T-stage-i-support-semantic-r1 \
   --artifact-root docs/artifacts/assets/stage_i_support \
   --report-root docs/artifacts/stage_i \
   --causal-g-summary-path docs/artifacts/stage_i/assets/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1/causal_fusion_summary.json
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_private_component_ablation.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_private_component_ablation.py \
   --run-id 20260607T-stage-i-private-component-r1 \
   --e-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json \
   --f-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_public_adapter_calibration.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_public_adapter_calibration.py \
   --run-id 20260607T-stage-i-evidence-closure-r2-public-adapter
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/build_stage_i_public_transfer_boundary.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/build_public_transfer_boundary.py \
   --run-id 20260607T-stage-i-evidence-closure-r2-transfer-boundary \
   --calibration-summary-path docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_rigid_body_rotation_audit.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_rigid_body_rotation_audit.py \
   --run-id 20260607T-stage-i-rotation-audit-r2
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_evidence_closure.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_closure.py \
   --run-id 20260607T-stage-i-evidence-closure-r2 \
   --skip-heavy \
   --test-summary "Ran 56 tests across P10-P15 and related suites; OK"
@@ -328,11 +334,11 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 结果：`Ran 7 tests`，`OK`。此外，本轮真实命令已完成：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_thesis_materials.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/build_thesis_materials.py \
   --run-id 20260613T-stage-i-thesis-materials-r1 \
   --live-sweep-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_runtime_smoke.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_smoke.py \
   --run-id 20260613T-stage-i-runtime-service-smoke-r1 \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
   --sample-jsonl docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl \
@@ -364,7 +370,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 结果：`Ran 6 tests`，`OK`。此外，本轮真实命令已完成：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_multitask_sweep.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_weak_label_sweep.py \
   --run-id 20260613T-stage-i-p11-live-influx-r3-resume \
   --e-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json \
   --f-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json \
@@ -376,7 +382,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   --batch-size 8 \
   --device cpu
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_multitask_sweep.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_weak_label_sweep.py \
   --run-id 20260613T-stage-i-p11-live-influx-r4-partial \
   --e-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json \
   --f-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json \
@@ -389,7 +395,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   --batch-size 8 \
   --device cpu
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_runtime_smoke.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_smoke.py \
   --run-id 20260613T-stage-i-runtime-service-smoke-r2-contract \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
   --sample-jsonl docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl \
@@ -399,7 +405,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   --replay-mode both \
   --strict-feature-schema
 
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_thesis_materials.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/build_thesis_materials.py \
   --run-id 20260613T-stage-i-thesis-materials-r2-p18 \
   --live-sweep-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json \
   --live-partial-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json \

@@ -18,10 +18,10 @@
 | 文件 | 动作 | 验收 |
 | --- | --- | --- |
 | `src/chronaris/features/stage_i_sequences.py` | 把公开第二模态的论文口径统一为 `context_proxy`；保留 `task_context / scenario_context` 作为数据集内字段名，但在 metadata 中显式声明 `adapter/proxy` 语义。 | 导出的 `dataset_summary / sequence_schema / metadata` 不再把公开第二流写成真实航电流。 |
-| `src/chronaris/pipelines/stage_i/stage_i_deep_models.py` | 保留 `Stage G` 核心接口不动，但在 `ChronarisPublicFusionWrapper` 层补明确的 second-stream 语义边界，避免 thesis-facing 代码把它误称为 vehicle stream。 | public deep wrapper 的输入/输出说明与 `stage_i_sequences.py` 一致。 |
-| `src/chronaris/pipelines/stage_i/stage_i_public_mainline_report.py` | 把 `public opt closed` 重新表述为 `public adapter evidence`，显式区分 `public adapter`、`public fusion exploratory`、`private mainline`。 | 主报告不再把 `public opt` 直接写成 thesis dual-stream 主线闭环。 |
-| `src/chronaris/pipelines/stage_i/stage_i_public_opt_reporting.py` | 在 `UAB robust-prior`、`NASA round1` 等 report summary 中保留 adapter/calibration 边界。 | report wording 与 roadmap/gap 文档一致。 |
-| `src/chronaris/pipelines/stage_i/stage_i_private_benchmark_data.py` | 给 `T1/T2/T3` 增加 `proxy_task` 语义字段或独立 builder 标识。 | 任务 metadata 能区分 `proxy` 与后续 `thesis task`。 |
+| `src/chronaris/pipelines/stage_i/common/deep_models.py` | 保留 `Stage G` 核心接口不动，但在 `ChronarisPublicFusionWrapper` 层补明确的 second-stream 语义边界，避免 thesis-facing 代码把它误称为 vehicle stream。 | public deep wrapper 的输入/输出说明与 `stage_i_sequences.py` 一致。 |
+| `src/chronaris/pipelines/stage_i/public/mainline_report.py` | 把 `public opt closed` 重新表述为 `public adapter evidence`，显式区分 `public adapter`、`public fusion exploratory`、`private mainline`。 | 主报告不再把 `public opt` 直接写成 thesis dual-stream 主线闭环。 |
+| `src/chronaris/pipelines/stage_i/public/opt_reporting.py` | 在 `UAB robust-prior`、`NASA round1` 等 report summary 中保留 adapter/calibration 边界。 | report wording 与 roadmap/gap 文档一致。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark_data.py` | 给 `T1/T2/T3` 增加 `proxy_task` 语义字段或独立 builder 标识。 | 任务 metadata 能区分 `proxy` 与后续 `thesis task`。 |
 | `tests/test_stage_i_public_opt.py` | 新增 adapter/proxy metadata 与 report wording 合约测试。 | synthetic asset 下可校验新 metadata 键和值。 |
 | `tests/test_stage_i_deep_pipeline.py` | 校验公开双流 wrapper 的第二模态语义不会回退成 thesis-facing vehicle stream 描述。 | public deep path contract 通过。 |
 
@@ -30,11 +30,11 @@
 | 文件 | 动作 | 验收 |
 | --- | --- | --- |
 | `src/chronaris/pipelines/alignment_preview.py` | 抽出 shared backbone train/infer helper，避免 `Stage H export` 直接绑死 preview training。 | 训练与推理共享编码/导出逻辑，不再只能走 preview pipeline。 |
-| `src/chronaris/pipelines/stage_i/stage_i_backbone_train.py` | 新增统一 backbone 训练入口，负责 `E/F/G/H` 骨干训练、checkpoint、训练摘要。 | 可以从固定 config 训练并落盘可复用 checkpoint。 |
+| `src/chronaris/pipelines/stage_i/training/backbone_train.py` | 新增统一 backbone 训练入口，负责 `E/F/G/H` 骨干训练、checkpoint、训练摘要。 | 可以从固定 config 训练并落盘可复用 checkpoint。 |
 | `src/chronaris/pipelines/stage_h/export.py` | 新增 `checkpoint_path`、`inference_only`、`backbone_run_id` 等参数；保留 preview/research 路径但降为 secondary。 | 同一 checkpoint 可用于多 view 导出，不再 per-view 训练。 |
 | `src/chronaris/features/stage_h_bundle.py` | 在 run manifest / bundle metadata 中补 `export_mode`、`checkpoint_path`、`backbone_run_id`、`train_config_digest`。 | 下游能识别 bundle 来自 preview 还是 frozen inference。 |
 | `scripts/run_stage_h_export.py` | CLI 增加 frozen inference 入口和参数校验。 | CLI 可以切换 `preview_train` 与 `checkpoint_inference`。 |
-| `scripts/run_stage_i_backbone_train.py` | 新增 backbone train CLI。 | 单命令可训练骨干并产出 checkpoint。 |
+| `scripts/stage_i/training/train_backbone.py` | 新增 backbone train CLI。 | 单命令可训练骨干并产出 checkpoint。 |
 | `tests/test_stage_h_export.py` | 增加 checkpoint inference contract 测试。 | fake checkpoint / synthetic manifest 下通过。 |
 | `tests/test_alignment_pipeline.py` | 回归训练/推理 shared path。 | 原 preview 路径不回归，新增 infer path 可通过。 |
 
@@ -45,10 +45,10 @@
 | `src/chronaris/models/alignment/task_heads.py` | 新增多任务头定义，覆盖 classification / regression / retrieval 与后续 thesis-task heads。 | 单文件集中管理 task heads 和 output contract。 |
 | `src/chronaris/models/alignment/losses.py` | 在现有 objective 上增加 `task_loss` 汇总入口和权重配置。 | `StageEObjectiveBreakdown` 或并行 multitask breakdown 能输出 `L_task`。 |
 | `src/chronaris/dataset/stage_i_real_task_builders.py` | 新增 thesis-task builder，先实现 `risk_proxy`、`workload_proxy`、`event_replay_tag`。 | 可以从现有 `Stage H / private` 资产构建真实任务近似标签。 |
-| `src/chronaris/pipelines/stage_i/stage_i_multitask_train.py` | 新增统一训练入口，打通 `L_recon + L_align + L_phy + L_causal + L_task`。 | 至少一组私有弱标签 thesis task 能端到端训练并导出结果。 |
-| `src/chronaris/pipelines/stage_i/stage_i_private_benchmark_data.py` | 把 `T1/T2/T3` 的构造逻辑下沉到 `proxy task builder`，与真实 thesis-task builder 拆开。 | `proxy` 与 `thesis task` contract 不再混在一个入口。 |
-| `src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py` | 支持 benchmark 结果按 `proxy / thesis` 两层输出。 | 报告可单独说明代理任务和 thesis-task 证据。 |
-| `src/chronaris/pipelines/stage_i/stage_i_private_benchmark_models.py` | 允许共享 backbone + task head 的训练/评估路径，不再只消费导出特征表。 | deep/classical 路线可以和 multitask 路线并列比较。 |
+| `src/chronaris/pipelines/stage_i/training/multitask_train.py` | 新增统一训练入口，打通 `L_recon + L_align + L_phy + L_causal + L_task`。 | 至少一组私有弱标签 thesis task 能端到端训练并导出结果。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark_data.py` | 把 `T1/T2/T3` 的构造逻辑下沉到 `proxy task builder`，与真实 thesis-task builder 拆开。 | `proxy` 与 `thesis task` contract 不再混在一个入口。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark.py` | 支持 benchmark 结果按 `proxy / thesis` 两层输出。 | 报告可单独说明代理任务和 thesis-task 证据。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark_models.py` | 允许共享 backbone + task head 的训练/评估路径，不再只消费导出特征表。 | deep/classical 路线可以和 multitask 路线并列比较。 |
 | `tests/test_stage_i_private_optimization.py` | 保留旧 benchmark 回归，同时新增 `proxy/thesis task split` 合约测试。 | 历史 benchmark 不回归，新任务入口可验证。 |
 | `tests/test_stage_i_multitask_train.py` | 新增 multitask smoke test。 | synthetic 数据上能完成一次前向、loss 汇总与落盘。 |
 
@@ -69,9 +69,9 @@
 | --- | --- | --- |
 | `src/chronaris/models/fusion/causal.py` | 保留最小因果注意力路径，同时把 richer event fusion 的公共张量接口稳定下来。 | 原 `G(min)` 不回归，新路径可复用相同输入 contract。 |
 | `src/chronaris/models/fusion/semantic_event.py` | 新增 `SemanticQueryBank`、`EventTokenExtractor`、`CausalEventFusion`。 | 可输出 event token、query-to-event attention 与归因摘要。 |
-| `src/chronaris/pipelines/stage_i/stage_i_support_builders.py` | 支持导出语义事件级 support 工件。 | support 资产里出现 event token 和 query attribution。 |
-| `src/chronaris/pipelines/stage_i/stage_i_support.py` | 报告中增加语义事件级对照，而不是只写 attention heatmap。 | support 报告能区分时间步 attention 与事件级归因。 |
-| `src/chronaris/pipelines/stage_i/stage_i_anchor.py` | 关键工况导出补事件级解释。 | anchor 报告可以展示“哪个事件原型触发了关注”。 |
+| `src/chronaris/pipelines/stage_i/evidence/support_builders.py` | 支持导出语义事件级 support 工件。 | support 资产里出现 event token 和 query attribution。 |
+| `src/chronaris/pipelines/stage_i/evidence/support.py` | 报告中增加语义事件级对照，而不是只写 attention heatmap。 | support 报告能区分时间步 attention 与事件级归因。 |
+| `src/chronaris/pipelines/stage_i/evidence/anchors.py` | 关键工况导出补事件级解释。 | anchor 报告可以展示“哪个事件原型触发了关注”。 |
 | `tests/test_stage_i_support.py` | 新增 event-level support contract 测试。 | support builder/reporting 不回归。 |
 | `tests/test_stage_i_deep_pipeline.py` | 增加 semantic-event path 的最小 smoke test。 | 新 fusion path 可以前向并导出关键张量。 |
 
@@ -82,8 +82,8 @@
 | `src/chronaris/dataset/streaming_windows.py` | 新增流式时间基准与滑窗缓存工具。 | 可以按增量点流产出统一窗口。 |
 | `src/chronaris/serving/runtime_inference.py` | 新增 checkpoint 推理主入口，负责接入、缓存、推理、解释输出。 | CLI replay 或 mock stream 可连续输出预测。 |
 | `src/chronaris/serving/runtime_demo.py` | 保留离线报告角色，并显式说明 `not inference engine`。 | demo 与 inference 职责边界清晰。 |
-| `scripts/run_stage_i_runtime_inference.py` | 新增 runtime inference CLI。 | 可对本地回放流执行增量推理。 |
-| `scripts/run_stage_i_runtime_demo.py` | 更新帮助信息，强调其离线展示定位。 | CLI 文案与代码职责一致。 |
+| `scripts/stage_i/runtime/run_inference.py` | 新增 runtime inference CLI。 | 可对本地回放流执行增量推理。 |
+| `scripts/stage_i/runtime/run_demo.py` | 更新帮助信息，强调其离线展示定位。 | CLI 文案与代码职责一致。 |
 | `tests/test_runtime_inference.py` | 新增流式缓存与 checkpoint 推理 smoke test。 | mock stream 下能跑完整个增量闭环。 |
 
 ## 8. 文档回写文件

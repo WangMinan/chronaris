@@ -15,12 +15,12 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.dataset import build_stage_i_real_task_payload  # noqa: E402
-from chronaris.pipelines.stage_i.stage_i_multitask_sweep import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.weak_label_sweep import (  # noqa: E402
     StageIMultitaskSweepConfig,
     discover_existing_child_summary_paths,
     run_stage_i_multitask_sweep,
 )
-from chronaris.pipelines.stage_i.stage_i_private_benchmark_data import (  # noqa: E402
+from chronaris.pipelines.stage_i.private.benchmark_data import (  # noqa: E402
     load_aligned_private_records,
 )
 
@@ -121,7 +121,7 @@ class StageIMultitaskSweepTest(unittest.TestCase):
                 return _ORIGINAL_SWEEP_RUNNER(*args, **kwargs)
 
             with self.assertRaisesRegex(RuntimeError, "synthetic blocker"), mock.patch(
-                "chronaris.pipelines.stage_i.stage_i_multitask_sweep.run_stage_i_multitask_train",
+                "chronaris.pipelines.stage_i.evidence.weak_label_sweep.run_stage_i_multitask_train",
                 side_effect=flaky_runner,
             ):
                 run_stage_i_multitask_sweep(
@@ -156,7 +156,7 @@ class StageIMultitaskSweepTest(unittest.TestCase):
             self.assertEqual(len(existing_child_paths), 1)
 
             with mock.patch(
-                "chronaris.pipelines.stage_i.stage_i_multitask_sweep.run_stage_i_multitask_train",
+                "chronaris.pipelines.stage_i.evidence.weak_label_sweep.run_stage_i_multitask_train",
                 side_effect=AssertionError("resume should not rerun existing child summaries"),
             ):
                 resumed_result = run_stage_i_multitask_sweep(
@@ -203,7 +203,7 @@ class StageIMultitaskSweepTest(unittest.TestCase):
             samples = _build_synthetic_multitask_samples(records)
 
             with self.assertRaisesRegex(Exception, "runtime budget"), mock.patch(
-                "chronaris.pipelines.stage_i.stage_i_multitask_sweep.run_stage_i_multitask_train",
+                "chronaris.pipelines.stage_i.evidence.weak_label_sweep.run_stage_i_multitask_train",
                 side_effect=AssertionError("runtime budget guard should prevent child execution"),
             ):
                 run_stage_i_multitask_sweep(

@@ -17,7 +17,7 @@ if str(SRC) not in sys.path:
 
 from chronaris.features import load_stage_i_case_study_run
 from chronaris.pipelines import StageIAnchorConfig, run_stage_i_anchor
-from chronaris.pipelines.stage_i.stage_i_case_study import (
+from chronaris.pipelines.stage_i.evidence.case_study import (
     StageICaseStudyConfig,
     render_stage_i_case_study_report,
     run_stage_i_case_study,

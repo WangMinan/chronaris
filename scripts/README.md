@@ -4,319 +4,74 @@
 
 - 本文档涉及的所有 Python 脚本默认显式使用 `chronaris` 解释器：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`
 - 若命令前需要环境变量，例如 `CHRONARIS_MYSQL_HOST=127.0.0.1`，应写成 `CHRONARIS_MYSQL_HOST=127.0.0.1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python <script>`
-- Stage I 长任务默认要同时看 CLI `INFO` 输出、artifact 目录下的 `run.log` 与 `progress.json`；断连后优先从这两个文件判断 dataset/candidate/fold/输出路径进度。
+- Stage I 长任务默认同时看 CLI `INFO` 输出、artifact 目录下的 `run.log` 与 `progress.json`；断连后优先从这两个文件判断 dataset/candidate/fold/输出路径进度。
+- 脚本只承载 CLI 编排；可复用逻辑必须回收到 `src/chronaris`。
 
-这里放一次性或轻量脚本，例如：
+## 顶层脚本
 
-- 数据抽样
-- 临时核验
-- 批量导出
-- 环境检查
+- `run_stage_e_relative_preview.py`：Stage E/F/G(min) overlap-focused preview 与物理/因果融合对照。
+- `run_stage_h_export.py`：Stage H 标准化融合特征导出，支持 `preview / validation / full_clip` profile。
 
-如果脚本里出现了可复用逻辑，应回收到 `src/chronaris`，脚本只保留组装入口。
+## Stage I 脚本目录
 
-当前已提供：
+Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再保留 `run_stage_i_*.py`、`build_stage_i_*.py`、`prepare_stage_i_*.py`、`export_stage_i_*.py` 旧脚本文件。
 
-- `run_stage_e_relative_preview.py`
-  - 用 overlap-focused 配置直接运行一轮 Stage E baseline / Stage F preview / Stage G(min) preview
-  - 支持 `none / zscore_train` 两种输入归一化模式（`--input-normalization-mode`）
-  - 默认可按 Stage E 基线运行；开启 `--enable-physics-constraints` 后进入 Stage F
-  - 支持 `feature_first_with_latent_fallback / feature_only / latent_only` 约束模式
-  - 支持 `minimal / full` 物理约束族（`--physics-constraint-family`）
-  - 支持 `E baseline` vs `E+F(full)` 一次性对比（`--compare-with-physics-baseline`）
-  - 支持 Stage G 最小非对称因果融合（`--enable-causal-fusion`）
-  - 支持 `F baseline` vs `F+G(min)` 一次性对比（`--compare-with-causal-fusion-baseline`）
-  - 支持设置因果融合状态来源、注意力温度和事件偏置权重（`--causal-fusion-state-source`、`--causal-fusion-attention-temperature`、`--causal-fusion-event-bias-weight`）
-  - 支持从真实 MySQL 读取 RealBus 字段语义映射（可用 `CHRONARIS_MYSQL_HOST=127.0.0.1` 指向本机 MySQL）
-  - 支持设置 `--vehicle-physics-weight`、`--physiology-physics-weight`、`--physics-huber-delta`
-  - 支持设置飞机/生理包络分位 `--vehicle-envelope-quantile`、`--physiology-envelope-quantile`
-  - 自动从 `CHRONARIS_INFLUX_*` 或 `docs/SECRETS.md` 解析 Influx 连接信息
-  - 输出报告到 `docs/artifacts/` 并打印 JSON 摘要
-  - 自动追加 `Physics Constraint Diagnostics` 区块
-  - 自动追加样本级投影诊断区块（`Sample-Level Projection Diagnostics`）
-  - 支持诊断阈值模板与判定输出（`PASS / WARN`）
-  - 输出诊断产物到 `docs/artifacts/assets/<report-stem>/`：
-    - `projection_diagnostics_summary.json`
-    - `projection_diagnostics_samples.csv`
-    - causal fusion 开启时额外输出：
-      - `causal_fusion_summary.json`
-      - `causal_fusion_samples.csv`
-  - 额外输出可视化图片到 `docs/artifacts/assets/<report-stem>/`
-    - physics 开启时额外输出：
-      - `train_validation_physics_loss.png`
-      - `constraint_component_breakdown.png`
-    - causal fusion 开启时额外输出：
-      - `causal_attention_heatmap.png`
-  - 自动把图片链接追加到报告的 `Visual Artifacts` 区域
-  - 自动导出模型 checkpoint 到 `docs/artifacts/assets/<report-stem>/alignment_model_checkpoint.pt`
-  - 可选一次运行完成 `none` 与 `zscore_train` 对照（`--compare-with-zscore-train`）
+### data
 
-- `run_stage_h_export.py`
-  - 用 Stage H v1 frozen 配置批量导出当前两条真实 sortie 的 run/sortie/view 三级资产
-  - 当前 torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
-  - 默认导出：
-    - `20251005_四01_ACT-4_云_J20_22#01` 的 `1` 个 pilot view
-    - `20251002_单01_ACT-8_翼云_J16_12#01` 的 `2` 个 pilot view
-  - 默认写出 `docs/artifacts/assets/stage_h/<run_id>/` 机器资产和 `docs/artifacts/stage_h/stage-h-export-v1-<date>.md` 主报告；阶段 H 收口报告为 `docs/artifacts/stage_h/stage-h-closure-2026-04-27.md`
-  - 自动生成 `run_manifest.json`、`sortie_manifest.json`、`view_manifest.json`
-  - 每个 view 自动导出：
-    - `feature_bundle.npz`
-    - `intermediate_summary.json`
-    - `projection_diagnostics_summary.json`
-    - `causal_fusion_summary.json`
-    - `window_manifest.jsonl`
-  - 默认启用 `zscore_train + Stage F(full) + Stage G(min)` frozen 路径
-  - 默认 `--export-profile preview`，并使用 `--preview-point-limit 500` 作为每个 measurement 的查询防护上限；这是 preview-scale 运行保护，不是阶段 H 收口标准
-  - 可用 `--export-profile validation` 去掉默认 500 点上限，或用 `--export-profile full_clip` 同时去掉默认 preview 时间裁剪；阶段 H 收口采用 `validation` profile 和当前两条双流 sortie 的已验证时间范围
-  - 可用 `--physiology-point-limit`、`--vehicle-point-limit`、`--partial-vehicle-point-limit` 显式覆盖对应流的读取上限
-  - MySQL 可指向 Docker 暴露端口；需要自定义 CLI 时可用 `--mysql-binary`，Influx CLI 同理可用 `--influx-binary`
-  - 默认附带 partial-data sidecar，读取 `configs/partial-data/stage-h-seed-v1.jsonl`
-  - partial-data sidecar 已支持基于标准 entry 的 Influx vehicle-only reader、MySQL RealBus 字段过滤、Flux 侧 `5s window + 每字段最多 32 点` 下推；若 entry 缺 `bucket / time_range / measurement_family`，会保留为跳过状态而不会被误提升为 Stage H 双流导出
-  - 当前 `configs/partial-data/stage-h-seed-v1.jsonl` 已补齐 `20251110_单01_ACT-2_涛_J20_26#01` 的真实 vehicle-only 范围，并可生成 `vehicle_only_window_manifest.jsonl` 与 `vehicle_only_feature_bundle.npz`
-  - 可用 `--use-full-clip-scope` 改回 sortie 全 clip 范围；默认仍使用当前 preview-scale export scope
-  - 当前也支持私有 benchmark 所需的 all-window 导出参数：
-    - `--all-window-export`
-    - `--intermediate-partition all`
-    - `--intermediate-sample-limit all`
-    - `--disable-physics-constraints`
-    - `--disable-causal-fusion`
-    - `--disable-partial-data`
+- `scripts/stage_i/data/prepare_dataset.py`：构建公开 UAB/NASA `task_manifest.jsonl` 与 `feature_table.parquet`。
+- `scripts/stage_i/data/prepare_sequences.py`：构建 deep/public opt 所需 sequence contract。
 
-- `run_stage_i_private_benchmark.py`
-  - 消费一套 `E all-window` run manifest 和一套 `F all-window` run manifest，运行私有双流 benchmark
-  - 当前 deep torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
-  - 其中 `E` 必须是 `physics_constraints_enabled=false`，`F` 必须是 `physics_constraints_enabled=true`
-  - 自动构造：
-    - `T1 maneuver_intensity_class`
-    - `T2 next_window_physiology_response`
-    - `T3 paired_pilot_window_retrieval`
-  - 自动比较：
-    - `naive_sync / E baseline / F full / G min / G no causal mask`
-    - 可选 `--enable-optimized-chronaris` 后增加 `chronaris_opt / chronaris_opt_no_causal_mask`
-    - `classical / MulT / ContiFormer`
-  - 优化候选参数：
-    - `--target-variant-name`
-    - `--lag-window-points`
-    - `--residual-mode`
-    - 可选 `--export-optimized-package` 后额外固化 `optimized_candidate_package.json`
-  - 自动输出：
-    - `private_task_manifest.jsonl`
-    - `task_summary.json`
-    - `private_benchmark_summary.json`
-    - `private-alignment-support-<run_id>.md`
-    - `private-causal-fusion-support-<run_id>.md`
-    - `private-optimality-summary-<run_id>.md`
-    - 启用优化候选时额外输出 `private-optimization-summary-<run_id>.md`
-    - 启用优化候选时额外输出 `optimized_candidate_summary.json` 与 `optimized_candidate_metrics.csv`
-    - 启用 `--export-optimized-package` 时额外输出 `optimized_candidate_package.json` 与 `private-optimized-package-<run_id>.md`
+### training
 
-- `prepare_stage_i_dataset.py`
-  - 用本地 `uab_workload_dataset` 或 `nasa_csm` 构建阶段 I `task_manifest.jsonl` 与标准 `feature_table.parquet`
-  - 当前支持：
-    - `--dataset uab --profile session_v1`
-    - `--dataset uab --profile window_v2`
-    - `--dataset nasa_csm --profile window_v2`
-  - 当前固定输出：
-    - `task_manifest.jsonl`
-    - `feature_table.parquet`
-    - `feature_schema.json`
-    - `dataset_summary.json`
+- `scripts/stage_i/training/train_backbone.py`：从 Stage H view 样本训练可复用 alignment backbone。
+- `scripts/stage_i/training/train_multitask.py`：训练 thesis weak-label multitask checkpoint。
 
-- `run_stage_i_baseline.py`
-  - 消费 `prepare_stage_i_dataset.py` 产出的标准资产，按 `dataset/profile/task-family` 运行阶段 I baseline
-  - 当前支持：
-    - UAB workload：`session_v1` / `window_v2`
-    - NASA CSM attention-state：`window_v2`
-  - 当前固定使用 `Leave-One-Subject-Out` 分组
-  - 自动输出：
-    - `objective_metrics.json`
-    - `subjective_metrics.json`
-    - `fold_predictions.csv`
-    - confusion matrix / regression scatter PNG
-    - `docs/artifacts/stage_i/stage-i-<dataset>-<profile>-<date>.md`
+### public
 
-- `run_stage_i_phase3.py`
-  - 顺序执行阶段 I `Phase 3` 收口流程：
-    - UAB `window_v2` 数据准备
-    - NASA CSM `window_v2` 数据准备
-    - UAB workload 主线 + 消融
-    - NASA attention-state 主线 + 消融
-    - closure summary / 主报告 / planning gate note
-  - 自动输出：
-    - `docs/artifacts/assets/stage_i/<run_id>/uab_window/`
-    - `docs/artifacts/assets/stage_i/<run_id>/nasa_attention/`
-    - `docs/artifacts/assets/stage_i/<run_id>/closure_summary.json`
-    - `docs/artifacts/stage_i/stage-i-closure-<date>.md`
-    - `docs/planning/stage-i-closure-<date>.md`
+- `scripts/stage_i/public/run_opt.py`：公开 UAB/NASA public opt 统一入口。
+- `scripts/stage_i/public/run_opt_torch_uab.py`：UAB torch-native heat-specialist 分支。
+- `scripts/stage_i/public/run_deep_baseline.py`：单个 deep baseline。
+- `scripts/stage_i/public/run_deep_comparison.py`：固定顺序 deep comparison。
+- `scripts/stage_i/public/run_fusion_screen.py`：public fusion screening。
+- `scripts/stage_i/public/build_mainline_report.py`：public mainline report builder。
 
-- `run_stage_i_public_opt.py`
-  - 消费已准备好的公开 `sequence contract`，运行统一的 `chronaris public opt` 入口
-  - 当前 `backend=auto`：
-    - `dataset_id=uab_workload_dataset` 默认切到 torch-native UAB heat specialist 主线，CUDA fail-fast
-    - `dataset_id=nasa_csm` 保持 sklearn `NASA enhanced` 主线
-  - 当前支持：
-    - `dataset_id=uab_workload_dataset`
-      - `profile=window_v2`
-      - `track=subjective regression`
-      - `backend=torch|auto`：
-        - 默认 evaluation groups：`heat_the_chair`
-        - 当前 heat specialist 候选：`heat_linear_huber_lowdim / heat_mlp_lowdim / heat_residual_correction / heat_affine_calibrated_blend`
-        - 默认 `artifact_root`：`docs/artifacts/assets/stage_i_public_opt_torch`
-      - `backend=sklearn`：
-        - evaluation groups：`n_back / heat_the_chair`
-        - 当前增强 head：`physiology_persistence / ridge_residual_cv / elasticnet_residual / huber_residual`
-        - `head_catalog=uab_hybrid` 属于 CPU-heavy historical reproduction，必须显式加 `--allow-cpu-heavy-sklearn`
-        - 默认 `artifact_root`：`docs/artifacts/assets/stage_i_public_opt`
-    - `dataset_id=nasa_csm`
-      - `profile=window_v2`
-      - `track=attention_state classification`
-      - evaluation groups：`benchmark_only / loft_only / combined`
-      - 当前增强 head：`physiology_margin_balanced_logistic / balanced_logistic_context / balanced_linear_svc_context`
-  - 当前可调：
-    - `feature_profile=full|physiology_only|physiology_lowdim|physiology_scalar_only|context_only|residual_only`
-    - `head_catalog=minimal|expanded|uab_hybrid`
-    - `train_balance_policy=none|class_weight_balanced`
-    - `ensemble_policy=none|mean_top2|vote_top2`
-    - `prediction_aggregation_policy=none|session_mean_broadcast|session_median_broadcast`
-    - `winner_margin_policy=paper_gate|none`
-    - `backend=auto|sklearn|torch`
-    - `device=auto|cpu|cuda`（torch UAB；默认 `require_cuda`，只有 `--allow-cpu-debug` 才允许 CPU fallback）
-    - `torch_candidate_catalog=default|heat_specialist`（torch UAB）
-    - `selected_subset=n_back|heat_the_chair`（torch UAB；heat specialist 默认只跑 `heat_the_chair`）
-    - `torch_feature_profile=full|residual_only|physiology_only|physiology_lowdim|physiology_scalar_only`（torch UAB）
-    - `learning_rate / weight_decay / screen_max_folds / full_candidate_limit / full_group_winner_limit`（torch UAB）
-    - `supervision_granularity=window|session_pooled_broadcast`（torch UAB）
-  - 自动输出：
-    - sklearn：
-      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/public_opt_feature_frame.parquet`
-      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/public_opt_predictions.csv`
-      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/public_opt_summary.json`
-      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/run.log`
-      - `docs/artifacts/assets/stage_i_public_opt/<run_id>/progress.json`
-    - torch UAB：
-      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
-      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
-      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
-      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/run.log`
-      - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/progress.json`
-    - `docs/artifacts/stage_i/stage-i-public-opt-<run_id>.md`
-  - 当前定位：
-    - `NASA attention_state` 主线继续优先引用这里的 `NASA enhanced round 1`
-    - `UAB subjective` 当前默认走 heat-only torch-native GPU-first 主线；只有在需要历史复现时，才显式切回 `--backend sklearn`
+### private
 
-- `run_stage_i_public_opt_torch_uab.py`
-  - 消费同一套公开 `sequence contract` 与 `public opt` 特征帧，运行 GPU-preferred `UAB subjective` torch-native mainline
-  - CLI 会输出 `INFO` 级进度日志，并落盘 `run.log / progress.json`：设备解析、candidate 粗筛、subset/fold、full LOSO、final selection 与落盘路径
-  - 默认 `candidate_catalog=heat_specialist`，只跑 `selected_subset=heat_the_chair`
-  - default 候选族：
-    - `linear_huber`
-    - `mlp_huber_small`
-    - `mlp_huber_wide`
-    - `residual_gated_mlp`
-  - heat specialist 候选族：
-    - `heat_linear_huber_lowdim`
-    - `heat_mlp_lowdim`
-    - `heat_residual_correction`
-    - `heat_affine_calibrated_blend`
-  - 固定训练口径：
-    - `HuberLoss`
-    - `AdamW`
-    - `epochs=20`
-    - `patience=4`
-    - `batch_size=256`
-    - 默认 `device=auto`，但 paper-facing CLI 会要求 `runtime_device=cuda`；调试 CPU fallback 必须加 `--allow-cpu-debug`
-  - 默认先做 `max_folds=2` 粗筛，再对 top candidates 执行 full LOSO
-  - 当前可调：
-    - `feature_profile=full|residual_only|physiology_only|physiology_lowdim|physiology_scalar_only`
-    - `learning_rate`
-    - `weight_decay`
-    - `ensemble_policy=none|mean_top2`
-    - `prediction_aggregation_policy=none|session_mean_broadcast|session_median_broadcast`
-    - `supervision_granularity=window|session_pooled_broadcast`
-    - `full_candidate_limit|full_group_winner_limit`
-  - 自动输出：
-    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_feature_frame.parquet`
-    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/candidate_leaderboard.csv`
-    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_predictions.csv`
-    - `docs/artifacts/assets/stage_i_public_opt_torch/<run_id>/public_opt_torch_summary.json`
-    - `docs/artifacts/stage_i/stage-i-public-opt-<run_id>.md`
+- `scripts/stage_i/private/run_benchmark.py`：私有 Stage H `T1/T2/T3` proxy benchmark 与 `chronaris_opt` 证据。
 
-- `run_stage_i_deep_baseline.py`
-  - 当前已支持 `chronaris_public_fusion`
-  - 当前可调：
-    - `fusion_event_bias_weight`
-    - `fusion_lag_window_points`
-    - `fusion_normalize_states`
-    - `train_sampling_policy=none|balanced_class`
+### evidence
 
-- `run_stage_i_public_fusion_screen.py`
-  - 以 `chronaris_public_fusion` 为目标模型，按固定候选集执行 GPU-preferred 公共数据筛选
-  - CLI 会输出 `INFO` 级进度日志，并落盘 `run.log / progress.json`：dataset/candidate 进度、得分与最终落盘路径
-  - 当前固定：
-    - 候选集定义在 `src/chronaris/pipelines/stage_i/stage_i_public_fusion_screen.py`
-    - `NASA` 以 `combined macro-F1` 排序
-    - `UAB` 以 `mean RMSE` 排序
-    - 默认 `device=auto`，但 paper-facing CLI 会要求 `runtime_device=cuda`；调试 CPU fallback 必须加 `--allow-cpu-debug`
-    - NASA prepared asset 会先校验 `physiology + scenario_context`、`label_leakage_guard` 和 context feature 无标签泄漏
-    - follow-up 可显式加 `--train-sampling-policy balanced_class --epochs 10`
-  - 自动输出：
-    - `fusion_screen_summary.json`
-    - `candidate_leaderboard.csv`
-    - `run.log`
-    - `progress.json`
-    - `docs/artifacts/stage_i/stage-i-public-fusion-screen-<run_id>.md`
+- `scripts/stage_i/evidence/run_closure.py`：P10-P15/P18 evidence runner。
+- `scripts/stage_i/evidence/run_weak_label_sweep.py`：P11 thesis weak-label multitask sweep。
+- `scripts/stage_i/evidence/run_private_component_ablation.py`：P12 `chronaris_opt` 组件诊断。
+- `scripts/stage_i/evidence/run_public_adapter_calibration.py`：P13 public adapter calibration。
+- `scripts/stage_i/evidence/build_public_transfer_boundary.py`：P14 public transfer boundary 报告。
+- `scripts/stage_i/evidence/run_rigid_body_rotation_audit.py`：P15 rigid-body rotation audit。
+- `scripts/stage_i/evidence/build_thesis_materials.py`：P16 thesis tables/figures。
+- `scripts/stage_i/evidence/build_support.py`：Stage I support 聚合报告。
+- `scripts/stage_i/evidence/build_semantic_event_support.py`：多 view semantic event support。
+- `scripts/stage_i/evidence/build_midterm_evidence.py`：中期证据包整编。
+- `scripts/stage_i/evidence/export_anchors.py`：关键工况 anchor 导出。
+- `scripts/stage_i/evidence/run_case_study.py`：Stage I case study。
 
-- `run_stage_i_public_mainline_report.py`
-  - 聚合 `UAB`、`NASA`、`MulT / ContiFormer` 与当前 `public_fusion` 结果，生成统一公开主线报告
-  - 当前用于固化 `NASA closed, UAB partial` 这类 paper-facing 状态判断
-  - 自动输出：
-    - `docs/artifacts/assets/stage_i_public_mainline/<run_id>/public_mainline_summary.json`
-    - `docs/artifacts/stage_i/stage-i-public-mainline-<run_id>.md`
+### runtime
 
-- `run_stage_i_support.py`
-  - 聚合既有 `E/F/G/H + Phase 2 + private no-mask` 资产，生成论文证据 support / ablation 报告
-  - 当前固定输出：
-    - `support_summary.json`
-    - `support_matrix.csv`
-    - `ablation_matrix.csv`
-    - `support_overview.png`
-    - `docs/artifacts/stage_i/stage-i-alignment-support-<run_id>.md`
-    - `docs/artifacts/stage_i/stage-i-causal-support-<run_id>.md`
-    - `docs/artifacts/stage_i/stage-i-ablation-support-<run_id>.md`
+- `scripts/stage_i/runtime/export_runtime_samples.py`：从 Stage H manifest 导出 runtime replay JSONL。
+- `scripts/stage_i/runtime/run_inference.py`：checkpoint-backed runtime inference。
+- `scripts/stage_i/runtime/run_smoke.py`：runtime/service smoke 与 schema contract 边界。
+- `scripts/stage_i/runtime/run_demo.py`：历史 thesis-facing runtime demo。
 
-- `run_stage_i_runtime_demo.py`
-  - 运行 thesis-facing 最小 runtime/demo 入口
-  - CLI 会输出 `INFO` 级进度日志：source type 判定、summary/report 落盘路径
-  - 当前支持两类输入：
-    - `Stage H run manifest`
-    - `optimized_candidate_package.json`
-  - 自动输出：
-    - `runtime_demo_summary.json`
-    - 可选 `runtime_demo_windows.csv`
-    - `docs/artifacts/stage_i/stage-i-runtime-demo-<run_id>.md`
+### llm
 
-- `run_stage_i_anchor.py`
-  - 基于 frozen `Stage H` 真实双流资产导出关键工况锚点
-  - 当前复用 `Phase 2 case study` 的固定消融家族与 paired-pilot 对照
-  - CLI 会输出 `INFO` 级进度日志：view/anchor 选取概况与最终落盘路径
-  - 自动输出：
-    - `anchor_manifest.json`
-    - `anchor_windows.csv`
-    - `docs/artifacts/stage_i/stage-i-anchor-<run_id>.md`
+- `scripts/stage_i/llm/run_preprocessing.py`：P20 DeepSeek/OpenAI-compatible LLM preprocessing context、规则复核、semantic hints 与 runtime explanation。
 
-- `run_stage_i_case_study.py`
-  - 消费 `docs/artifacts/assets/stage_h/.../run_manifest.json` 与 view sidecar，运行阶段 I `Phase 2` 真实双流 case study
-  - 当前 causal-fusion torch 路径支持 `--device auto|cpu|cuda`；默认 `auto`
-  - 当前固定跑：
-    - `projection_refusion_baseline`
-    - `no_event_bias`
-    - `no_state_normalization`
-    - `vehicle_delta_suppressed`
-  - 当前固定纳入全部 `3` 个真实双流 view；`WARN` view 不放附录，而是在主报告中解释
-  - 自动输出：
-    - `case_study_summary.json`
-    - `view_summary.csv`
-    - `ablation_summary.csv`
-    - `window_rankings.csv`
-    - `docs/artifacts/stage_i/stage-i-case-study-phase2-<date>.md`
-  - 当前真实主线输出根目录：`docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase2-case-study/`
+### legacy
+
+- `scripts/stage_i/legacy/run_baseline.py`：历史 Stage I baseline suite。
+- `scripts/stage_i/legacy/run_phase3.py`：历史 public Phase 3 closure。
+
+## 维护规则
+
+- 新增 Stage I 脚本必须进入上面的分类目录，不要恢复根目录 `stage_i` 前缀脚本。
+- 长任务脚本必须保留 `run.log / progress.json` 或等价进度记录。
+- 新增输出路径应能从 `docs/artifacts/ARTIFACTS.md`、`docs/implementation/TASKS.md` 或对应报告 manifest 追溯。
