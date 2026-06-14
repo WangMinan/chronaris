@@ -16,7 +16,7 @@
 - 最终 closure run 根：`docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/`
 - UAB 资产来源：此前的 prepared dataset 与本轮真跑结果已吸收到 `docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window/`
 - NASA 资产来源：此前已完成的 attention baseline 资产已吸收到 `docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention/`
-- closure 组装方式：`run_stage_i_phase3.py --reuse-existing-artifacts`
+- closure 组装方式：历史命令对应当前 `scripts/stage_i/legacy/run_phase3.py --reuse-existing-artifacts`
 
 这样做的目的不是继续信任半成品 run 根，而是把“UAB 已补齐 + NASA 已完成”的两套资产收束到一个新的最终事实源。
 

@@ -13,7 +13,7 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i.stage_i_private_component_ablation import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.private_component_ablation import (  # noqa: E402
     StageIPrivateComponentAblationConfig,
     run_stage_i_private_component_ablation,
 )

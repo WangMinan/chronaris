@@ -13,7 +13,7 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i.stage_i_evidence_runner import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.closure_runner import (  # noqa: E402
     StageIEvidenceRunnerConfig,
     run_stage_i_evidence_closure,
 )
@@ -72,7 +72,7 @@ class StageIEvidenceRunnerTest(unittest.TestCase):
                 }
 
             with patch(
-                "chronaris.pipelines.stage_i.stage_i_evidence_runner._run_one_task",
+                "chronaris.pipelines.stage_i.evidence.closure_runner._run_one_task",
                 side_effect=_side_effect,
             ):
                 result = run_stage_i_evidence_closure(

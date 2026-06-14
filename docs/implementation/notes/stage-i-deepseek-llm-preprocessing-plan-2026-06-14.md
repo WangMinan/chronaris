@@ -40,8 +40,8 @@ P20 不新建上游接收器，不重建入库链路，复用当前已经闭环�
 - `src/chronaris/llm/provider.py`
 - `src/chronaris/llm/schemas.py`
 - `src/chronaris/llm/prompts.py`
-- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing.py`
-- `scripts/run_stage_i_llm_preprocessing.py`
+- `src/chronaris/pipelines/stage_i/llm/preprocessing.py`
+- `scripts/stage_i/llm/run_preprocessing.py`
 
 建议配置：
 

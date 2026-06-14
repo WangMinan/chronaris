@@ -63,12 +63,12 @@
 - 这里的“阶段 I 已完成收口”特指 `2026-04-30` 的 `Phase 0 + Phase 1 + Phase 2 + Phase 3` 历史 closure，不等于当前论文主线的所有增强与整编工作都已结束
 - 当前论文私有支撑证据：`chronaris_opt` 已闭合并完成 package 固化，但它仍是 `private proxy benchmark evidence`
 - 当前论文公开支撑证据：`public opt closed`；UAB 由 `n_back=legacy_public_opt/ridge_residual` 与 `heat_the_chair=uab_public_adapter/target_prior_median` 组成，不能把 robust-prior adapter 写成双流融合本体胜利
-- 已完成中期证据整编入口：`src/chronaris/pipelines/stage_i/stage_i_midterm_evidence.py`、`scripts/build_stage_i_midterm_evidence.py`、`docs/artifacts/assets/stage_i_midterm/20260509T071500Z-stage-i-midterm-r2/`
+- 已完成中期证据整编入口：`src/chronaris/pipelines/stage_i/evidence/midterm_pack.py`、`scripts/stage_i/evidence/build_midterm_evidence.py`、`docs/artifacts/assets/stage_i_midterm/20260509T071500Z-stage-i-midterm-r2/`
 - 当前 `chronaris_public_fusion` 仍只保留为 exploratory branch；当前可确认的主线判断仍以 `public opt closed` 与 `NASA combined macro-F1=0.3348 < 0.40` 的 promote 门槛边界为准
 - 当前最高优先级不再是继续扩 `public opt` 或重跑旧 benchmark，而是把现有研究原型收敛成更贴近选题报告的“统一骨干、联合训练、checkpoint 推理、真实 thesis task、在线入口”主线
 - `Stage I thesis mainline Phase A` 已完成首轮代码收敛：公开 sequence / deep wrapper / public report 已统一标注为 `context proxy / public adapter evidence`，私有 `T1/T2/T3` manifest / summary / report 已统一标注为 `private proxy benchmark / proxy task`，并通过 `tests.test_stage_i_public_opt` 与 `tests.test_stage_i_deep_pipeline`
 - `Stage I thesis mainline Phase B` 已完成首轮代码收敛：新增 `stage_i_backbone_train` 可复用骨干训练入口，`Stage H export` 已支持 `checkpoint_path + inference_only`，`run/view manifest` 与 `load_stage_h_feature_run()` 已记录并读取 `export_mode / backbone_lineage`
-- `Stage I thesis mainline Phase C` 已完成首轮代码收敛：新增 `src/chronaris/models/alignment/task_heads.py`、`L_task + L_causal` objective contract、`src/chronaris/dataset/stage_i_real_task_builders.py`、`src/chronaris/pipelines/stage_i/stage_i_multitask_train.py`，并把 private benchmark summary 分层为 `proxy_evidence` 与 `thesis_task_evidence`
+- `Stage I thesis mainline Phase C` 已完成首轮代码收敛：新增 `src/chronaris/models/alignment/task_heads.py`、`L_task + L_causal` objective contract、`src/chronaris/dataset/stage_i_real_task_builders.py`、`src/chronaris/pipelines/stage_i/training/multitask_train.py`，并把 private benchmark summary 分层为 `proxy_evidence` 与 `thesis_task_evidence`
 - `Stage I thesis mainline Phase C` 当前只说明“最小联合训练闭环 + weak-label thesis task builder”已经落地，不代表 `rigid-body physics`、`semantic event fusion` 或在线推理已经收口
 - 当前下一优先级已前移到：`Stage F rigid-body 补强 / Stage G semantic event fusion / 在线入口`，而不是继续补 `per-view training` 式导出
 - 面向毕业论文的当前主线文档改为：
@@ -558,9 +558,9 @@
 - Stage I task manifest contract、UAB 数据适配、session 级特征导出与 UAB 双轨 baseline
 - Stage I Phase 2 case-study asset loader、bundle-only 消融、`WARN` 解释与中文主报告
 - Stage I thesis-facing runtime/demo 入口：`src/chronaris/serving/runtime_demo.py`，可消费 `Stage H run manifest` 与 `optimized_candidate_package.json`
-- Stage I 关键工况锚定导出入口：`src/chronaris/pipelines/stage_i/stage_i_anchor.py`
-- Stage I 私有任务与 benchmark 编排入口：`src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
-- Stage I 私有优化候选：`src/chronaris/pipelines/stage_i/stage_i_private_optimization.py`，包含 `chronaris_opt / chronaris_opt_no_causal_mask`、lag-aware causal fusion residual 与 T1/T2/T3 任务感知头
+- Stage I 关键工况锚定导出入口：`src/chronaris/pipelines/stage_i/evidence/anchors.py`
+- Stage I 私有任务与 benchmark 编排入口：`src/chronaris/pipelines/stage_i/private/benchmark.py`
+- Stage I 私有优化候选：`src/chronaris/pipelines/stage_i/private/optimization.py`，包含 `chronaris_opt / chronaris_opt_no_causal_mask`、lag-aware causal fusion residual 与 T1/T2/T3 任务感知头
 
 对应代码：
 

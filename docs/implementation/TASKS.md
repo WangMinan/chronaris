@@ -22,10 +22,13 @@
 - `Stage D`：后置，保留为后续数据集工程化工作。
 - `Stage E0/E/F/G(min)/H`：已完成并收口，作为历史基线与后续依赖。
 - `Stage I`：
-  - `Phase A/B/C`：已接上统一骨干、真实 weak-label 联合训练、private/thesis 分层资产和中期证据包。
-  - `Phase D`：刚体运动物理约束补强已完成二轮真实 smoke / ablation，`translation + vertical` 已真实启用。
-  - `Phase E`：语义事件融合补强已完成多 view support 产物，覆盖当前 Stage H `validation` profile 的 3 个双流 view。
-  - `Phase F`：runtime inference 已完成服务化 replay 补强，支持 `batch / incremental / both` 和 schema diagnostics。
+  - `legacy public benchmark`：保留早期 `Phase 0/1/2/3` 公开 UAB/NASA benchmark 与 closure，当前代码入口归入 `src/chronaris/pipelines/stage_i/legacy/` 与 `scripts/stage_i/legacy/`。
+  - `thesis mainline training`：覆盖 `Phase A/B/C` 的统一骨干、真实 Stage H weak-label 联合训练和 checkpoint export，当前代码入口归入 `src/chronaris/pipelines/stage_i/training/`。
+  - `private proxy branch`：覆盖 `chronaris_opt`、`T1/T2/T3`、private benchmark 与组件诊断，当前代码入口归入 `src/chronaris/pipelines/stage_i/private/`，诊断报告编排归入 `evidence/`。
+  - `public adapter branch`：覆盖公开 UAB/NASA adapter、calibration、transfer boundary 与 public mainline 报告，当前代码入口归入 `src/chronaris/pipelines/stage_i/public/`。
+  - `evidence closure`：覆盖 P10-P18 的 evidence runner、weak-label sweep、support、rotation audit、thesis materials、midterm pack 和 runtime schema 边界说明，当前代码入口归入 `src/chronaris/pipelines/stage_i/evidence/`。
+  - `runtime/service`：核心推理服务位于 `src/chronaris/serving/`，Stage I 入口脚本归入 `scripts/stage_i/runtime/`。
+  - `LLM preprocessing`：P20 DeepSeek 在线时序数据预处理只作为 preprocessing context / rule review / semantic hints / runtime explanation，当前代码入口归入 `src/chronaris/pipelines/stage_i/llm/` 与 `scripts/stage_i/llm/`。
 
 ## 默认工作方式
 
@@ -42,6 +45,20 @@
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python
 ```
+
+## Stage I 代码与脚本组织
+
+当前 Stage I 源码不再继续堆放在单层 `stage_i_*.py` 文件里：
+
+- `src/chronaris/pipelines/stage_i/common/`：跨 public/private/evidence 复用的 observer、baseline split、deep model helper。
+- `src/chronaris/pipelines/stage_i/training/`：backbone 与 multitask 训练。
+- `src/chronaris/pipelines/stage_i/public/`：公开 UAB/NASA adapter、public opt、public fusion、mainline report。
+- `src/chronaris/pipelines/stage_i/private/`：private benchmark、`chronaris_opt`、代理任务和优化包。
+- `src/chronaris/pipelines/stage_i/evidence/`：P10-P18 主动证据、support、rotation audit、thesis materials 和 midterm pack。
+- `src/chronaris/pipelines/stage_i/llm/`：P20 LLM preprocessing pipeline、harness、slicing、reporting。
+- `src/chronaris/pipelines/stage_i/legacy/`：历史公开 Phase 0/1/2/3 与 baseline closure。
+
+脚本入口统一放到 `scripts/stage_i/<category>/`。根目录不再保留 `run_stage_i_*.py` / `build_stage_i_*.py` 旧脚本文件；需要执行旧命令时，应改用 `scripts/README.md` 里列出的 canonical 路径。Python 模块层保留旧 `chronaris.pipelines.stage_i.stage_i_*` import 的包级兼容映射，以便历史 notebook 或外部调用迁移时不需要立刻重写全部 import。
 
 ## 当前工作区与推送状态
 
@@ -98,16 +115,16 @@
   - `src/chronaris/models/fusion/semantic_event.py`
   - `src/chronaris/models/fusion/__init__.py`
   - `src/chronaris/pipelines/causal_fusion.py`
-  - `src/chronaris/pipelines/stage_i/stage_i_support_builders.py`
-  - `src/chronaris/pipelines/stage_i/stage_i_support_reporting.py`
+  - `src/chronaris/pipelines/stage_i/evidence/support_builders.py`
+  - `src/chronaris/pipelines/stage_i/evidence/support_reporting.py`
   - `tests/test_stage_i_support.py`
 - 保留并复查 `Phase F runtime inference` 关键文件：
   - `src/chronaris/dataset/streaming_windows.py`
   - `src/chronaris/dataset/__init__.py`
   - `src/chronaris/serving/runtime_inference.py`
   - `src/chronaris/serving/__init__.py`
-  - `scripts/run_stage_i_runtime_inference.py`
-  - `src/chronaris/pipelines/stage_i/stage_i_multitask_train.py`
+  - `scripts/stage_i/runtime/run_inference.py`
+  - `src/chronaris/pipelines/stage_i/training/multitask_train.py`
   - `tests/test_runtime_inference.py`
 - 确认新增代码默认输出路径统一落到 `docs/artifacts/assets/...`，Markdown 报告统一落到 `docs/artifacts/stage_i/...` 或既有阶段报告目录。
 - 本轮补跑并保留结果，完整覆盖 torch runtime 用例时需要显式开启测试开关：
@@ -137,7 +154,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 
 前置编码任务：
 
-- 已新增 `scripts/run_stage_i_multitask_train.py`。
+- 已新增 `scripts/stage_i/training/train_multitask.py`。
 - 已复用 `collect_stage_i_backbone_samples()` 路线并补 `view_id::raw_window_sample_id` sample-id contract，生成真实 `E0ExperimentSample`。
 - 已复用 `load_aligned_private_records()` 与 `build_stage_i_real_task_payload()` 构造 weak-label task entries。
 - 已修正 workload proxy 的归一化尺度，并把 event replay pair 调整为优先近邻配对，避免验证/测试分区丢失 retrieval 监督。
@@ -168,7 +185,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 建议命令形态：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/run_stage_i_private_benchmark.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/private/run_benchmark.py \
   --e-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json \
   --f-run-manifest docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json \
   --output-root docs/artifacts/assets/stage_i_private \
@@ -215,8 +232,8 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 - `src/chronaris/models/fusion/semantic_event.py`
 - `src/chronaris/models/fusion/__init__.py`
 - `src/chronaris/pipelines/causal_fusion.py`
-- `src/chronaris/pipelines/stage_i/stage_i_support_builders.py`
-- `src/chronaris/pipelines/stage_i/stage_i_support_reporting.py`
+- `src/chronaris/pipelines/stage_i/evidence/support_builders.py`
+- `src/chronaris/pipelines/stage_i/evidence/support_reporting.py`
 - `tests/test_stage_i_support.py`
 
 本轮验收：
@@ -236,8 +253,8 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 - `src/chronaris/dataset/__init__.py`
 - `src/chronaris/serving/runtime_inference.py`
 - `src/chronaris/serving/__init__.py`
-- `scripts/run_stage_i_runtime_inference.py`
-- `src/chronaris/pipelines/stage_i/stage_i_multitask_train.py`
+- `scripts/stage_i/runtime/run_inference.py`
+- `src/chronaris/pipelines/stage_i/training/multitask_train.py`
 - `tests/test_runtime_inference.py`
 
 本轮验收：
@@ -254,7 +271,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 本轮完成：
 
 - 已补 runtime sample exporter：
-  - `scripts/export_stage_i_runtime_samples.py`
+  - `scripts/stage_i/runtime/export_runtime_samples.py`
 - 已完成 runtime replay：
   - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl`
   - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_inference_summary.json`
@@ -323,7 +340,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮完成：
 
-- 新增 runner：`scripts/run_stage_i_semantic_event_support.py`
+- 新增 runner：`scripts/stage_i/evidence/build_semantic_event_support.py`
 - 新增多 view summary：
   - `docs/artifacts/assets/stage_i_semantic_event_support/20260607T-stage-i-semantic-support-r2/semantic_event_support_summary.json`
 - 新增 support 聚合：
@@ -384,8 +401,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 建议新增：
 
-- `src/chronaris/pipelines/stage_i/stage_i_evidence_runner.py`
-- `scripts/run_stage_i_evidence_closure.py`
+- `src/chronaris/pipelines/stage_i/evidence/closure_runner.py`
+- `scripts/stage_i/evidence/run_closure.py`
 - `tests/test_stage_i_evidence_runner.py`
 
 职责：
@@ -399,8 +416,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 本轮结果：
 
 - 统一入口：
-  - `src/chronaris/pipelines/stage_i/stage_i_evidence_runner.py`
-  - `scripts/run_stage_i_evidence_closure.py`
+  - `src/chronaris/pipelines/stage_i/evidence/closure_runner.py`
+  - `scripts/stage_i/evidence/run_closure.py`
   - `tests/test_stage_i_evidence_runner.py`
 - 稳定 manifest：
   - `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`
@@ -418,8 +435,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 建议新增或扩展：
 
-- `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py`
-- `scripts/run_stage_i_multitask_sweep.py`
+- `src/chronaris/pipelines/stage_i/evidence/weak_label_sweep.py`
+- `scripts/stage_i/evidence/run_weak_label_sweep.py`
 - `tests/test_stage_i_multitask_sweep.py`
 
 实验设计：
@@ -437,8 +454,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 本轮结果：
 
 - 新增：
-  - `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py`
-  - `scripts/run_stage_i_multitask_sweep.py`
+  - `src/chronaris/pipelines/stage_i/evidence/weak_label_sweep.py`
+  - `scripts/stage_i/evidence/run_weak_label_sweep.py`
   - `tests/test_stage_i_multitask_sweep.py`
 - 稳定产物：
   - `docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json`
@@ -478,9 +495,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 代码落点：
 
-- `src/chronaris/pipelines/stage_i/stage_i_private_optimization.py`
-- `src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
-- `scripts/run_stage_i_private_benchmark.py`
+- `src/chronaris/pipelines/stage_i/private/optimization.py`
+- `src/chronaris/pipelines/stage_i/private/benchmark.py`
+- `scripts/stage_i/private/run_benchmark.py`
 - `tests/test_stage_i_private_optimization.py`
 
 目标：
@@ -496,8 +513,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 本轮结果：
 
 - 新增：
-  - `src/chronaris/pipelines/stage_i/stage_i_private_component_ablation.py`
-  - `scripts/run_stage_i_private_component_ablation.py`
+  - `src/chronaris/pipelines/stage_i/evidence/private_component_ablation.py`
+  - `scripts/stage_i/evidence/run_private_component_ablation.py`
   - `tests/test_stage_i_private_component_ablation.py`
 - 稳定产物：
   - `docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json`
@@ -524,15 +541,15 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 建议落点：
 
-- 扩展 `scripts/run_stage_i_public_opt.py` 的 run manifest metadata。
-- 新增 `src/chronaris/pipelines/stage_i/stage_i_public_adapter_calibration.py` 或复用 public mainline report builder。
+- 扩展 `scripts/stage_i/public/run_opt.py` 的 run manifest metadata。
+- 新增 `src/chronaris/pipelines/stage_i/evidence/public_adapter_calibration.py` 或复用 public mainline report builder。
 - 新增 `tests/test_stage_i_public_opt.py` 中的 evidence layer / heavy guard 回归。
 
 本轮结果：
 
 - 新增：
-  - `src/chronaris/pipelines/stage_i/stage_i_public_adapter_calibration.py`
-  - `scripts/run_stage_i_public_adapter_calibration.py`
+  - `src/chronaris/pipelines/stage_i/evidence/public_adapter_calibration.py`
+  - `scripts/stage_i/evidence/run_public_adapter_calibration.py`
   - `tests/test_stage_i_public_transfer_boundary.py`
 - 稳定产物：
   - `docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json`
@@ -549,8 +566,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 建议新增：
 
-- `src/chronaris/pipelines/stage_i/stage_i_public_transfer_boundary.py`
-- `scripts/build_stage_i_public_transfer_boundary.py`
+- `src/chronaris/pipelines/stage_i/evidence/public_transfer_boundary.py`
+- `scripts/stage_i/evidence/build_public_transfer_boundary.py`
 - `tests/test_stage_i_public_transfer_boundary.py`
 
 报告内容：
@@ -570,8 +587,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 本轮结果：
 
 - 新增：
-  - `src/chronaris/pipelines/stage_i/stage_i_public_transfer_boundary.py`
-  - `scripts/build_stage_i_public_transfer_boundary.py`
+  - `src/chronaris/pipelines/stage_i/evidence/public_transfer_boundary.py`
+  - `scripts/stage_i/evidence/build_public_transfer_boundary.py`
 - 稳定产物：
   - `docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json`
   - `docs/artifacts/stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
@@ -600,8 +617,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 - 代码与测试：
   - `src/chronaris/models/alignment/physics_state_mapping.py`
-  - `src/chronaris/pipelines/stage_i/stage_i_rigid_body_rotation_audit.py`
-  - `scripts/run_stage_i_rigid_body_rotation_audit.py`
+  - `src/chronaris/pipelines/stage_i/evidence/rigid_body_rotation_audit.py`
+  - `scripts/stage_i/evidence/run_rigid_body_rotation_audit.py`
   - `tests/test_alignment_model_losses.py`
   - `tests/test_stage_i_rotation_audit.py`
 - 稳定产物：
@@ -618,8 +635,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 代码落点：
 
-- `src/chronaris/pipelines/stage_i/stage_i_thesis_materials.py`
-- `scripts/run_stage_i_thesis_materials.py`
+- `src/chronaris/pipelines/stage_i/evidence/thesis_materials.py`
+- `scripts/stage_i/evidence/build_thesis_materials.py`
 - `docs/artifacts/stage_i/`
   - 输出论文案例报告，保留中文解释、边界说明、图表引用路径。
 - `docs/artifacts/assets/stage_i_thesis_figures/<run_id>/`
@@ -659,7 +676,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `src/chronaris/serving/`
   - `src/chronaris/serving/runtime_service_smoke.py`
   - `src/chronaris/serving/__init__.py`
-- `scripts/run_stage_i_runtime_smoke.py`
+- `scripts/stage_i/runtime/run_smoke.py`
 - `tests/test_runtime_service_smoke.py`
 
 本轮结果：
@@ -707,11 +724,11 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 代码落点：
 
-- `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py`
+- `src/chronaris/pipelines/stage_i/evidence/weak_label_sweep.py`
   - 每个 child run 完成后即时写入 `partial_summary.json` 和临时 CSV。
   - 中断或失败时输出 `status=partial_blocked`、`completed_child_runs`、`blocked_at_run_index`、`blocker_log_path`。
   - 支持从已有 child run 恢复汇总，避免重复跑已完成组合。
-- `scripts/run_stage_i_multitask_sweep.py`
+- `scripts/stage_i/evidence/run_weak_label_sweep.py`
   - 增加 `--resume-existing` 与 `--resume-run-root`，允许从指定历史 run root 复用已完成 child run。
   - 增加 `--max-runtime-seconds` 或明确的预算 guard，避免 live_influx 大网格无限拖住。
 - `tests/test_stage_i_multitask_sweep.py`
@@ -758,7 +775,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `StageIRuntimeSmokeConfig` 增加 `strict_feature_schema: bool`。
   - summary 增加 `schema_contract_path`、`native_feature_schema_status`、`canonical_feature_schema_status`。
   - error cases 继续保留 `schema_mismatch`，但错误摘要优先输出分组统计，避免几百个字段刷屏。
-- 扩展 `scripts/run_stage_i_runtime_smoke.py`
+- 扩展 `scripts/stage_i/runtime/run_smoke.py`
   - 增加 `--strict-feature-schema`。
   - 增加 `--export-canonical-payload` 或等价参数，输出 `canonical_runtime_samples.jsonl`。
 - 测试：
@@ -880,11 +897,11 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `src/chronaris/llm/provider.py`
 - `src/chronaris/llm/schemas.py`
 - `src/chronaris/llm/prompts.py`
-- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing.py`
-- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing_harness.py`
-- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing_slicing.py`
-- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing_reporting.py`
-- `scripts/run_stage_i_llm_preprocessing.py`
+- `src/chronaris/pipelines/stage_i/llm/preprocessing.py`
+- `src/chronaris/pipelines/stage_i/llm/harness.py`
+- `src/chronaris/pipelines/stage_i/llm/slicing.py`
+- `src/chronaris/pipelines/stage_i/llm/reporting.py`
+- `scripts/stage_i/llm/run_preprocessing.py`
 - `tests/test_stage_i_llm_preprocessing.py`
 
 建议输入：

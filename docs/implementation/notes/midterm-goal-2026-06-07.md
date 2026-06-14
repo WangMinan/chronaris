@@ -69,11 +69,11 @@
 2. 保留新增文件：
    - `src/chronaris/models/alignment/task_heads.py`
    - `src/chronaris/dataset/stage_i_real_task_builders.py`
-   - `src/chronaris/pipelines/stage_i/stage_i_multitask_train.py`
+   - `src/chronaris/pipelines/stage_i/training/multitask_train.py`
    - `tests/test_stage_i_multitask_train.py`
 3. 保留并复查已修改文件中的 C 阶段合约：
    - `src/chronaris/models/alignment/losses.py`
-   - `src/chronaris/pipelines/stage_i/stage_i_private_benchmark*.py`
+   - `src/chronaris/pipelines/stage_i/private/benchmark*.py`
    - `docs/implementation/notes/*`
    - `docs/artifacts/stage_i/README.md`
    - `docs/README.md`
@@ -130,8 +130,8 @@
 
 - `src/chronaris/models/fusion/semantic_event.py`
 - `src/chronaris/models/fusion/causal.py`
-- `src/chronaris/pipelines/stage_i/stage_i_support_builders.py`
-- `src/chronaris/pipelines/stage_i/stage_i_support.py`
+- `src/chronaris/pipelines/stage_i/evidence/support_builders.py`
+- `src/chronaris/pipelines/stage_i/evidence/support.py`
 - `tests/test_stage_i_support.py`
 
 退出条件：
@@ -149,7 +149,7 @@
 
 - `src/chronaris/dataset/streaming_windows.py`
 - `src/chronaris/serving/runtime_inference.py`
-- `scripts/run_stage_i_runtime_inference.py`
+- `scripts/stage_i/runtime/run_inference.py`
 - `tests/test_runtime_inference.py`
 
 退出条件：

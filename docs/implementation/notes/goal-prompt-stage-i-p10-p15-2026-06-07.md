@@ -41,8 +41,8 @@
    - 确认没有用户未提交代码会被误改。
 
 2. 先做 `P10 evidence runner`，因为它是后续五项证据的基础设施：
-   - 新增或扩展 `src/chronaris/pipelines/stage_i/stage_i_evidence_runner.py`
-   - 新增 `scripts/run_stage_i_evidence_closure.py`
+   - 新增或扩展 `src/chronaris/pipelines/stage_i/evidence/closure_runner.py`
+   - 新增 `scripts/stage_i/evidence/run_closure.py`
    - 新增 `tests/test_stage_i_evidence_runner.py`
    - 支持 `--reuse-existing`、`--skip-heavy`、`--only multitask|rigid_body|semantic|runtime|private_proxy|public_adapter|rotation|all`
    - 输出 `evidence_manifest.json`
@@ -54,7 +54,7 @@
    - 固定输入：
      - `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json`
      - `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json`
-   - 建议新增 `src/chronaris/pipelines/stage_i/stage_i_multitask_sweep.py` 与 `scripts/run_stage_i_multitask_sweep.py`
+   - 建议新增 `src/chronaris/pipelines/stage_i/evidence/weak_label_sweep.py` 与 `scripts/stage_i/evidence/run_weak_label_sweep.py`
    - 小网格即可，不要无边界扩搜：
      - `physics_constraint_family=minimal|full|rigid_body`
      - `causal_weight=0|0.05|0.1`
@@ -66,9 +66,9 @@
 4. 做 `P12 chronaris_opt component ablation`：
    - 目标是把 `chronaris_opt` 从“private proxy 最优候选”推进成“机制贡献可诊断”。
    - 重点文件：
-     - `src/chronaris/pipelines/stage_i/stage_i_private_optimization.py`
-     - `src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
-     - `scripts/run_stage_i_private_benchmark.py`
+     - `src/chronaris/pipelines/stage_i/private/optimization.py`
+     - `src/chronaris/pipelines/stage_i/private/benchmark.py`
+     - `scripts/stage_i/private/run_benchmark.py`
      - `tests/test_stage_i_private_optimization.py`
    - 至少拆解：
      - 去掉因果掩码。
@@ -90,8 +90,8 @@
 6. 做 `P14 NASA/UAB transfer boundary`：
    - 目标是形成中文迁移边界报告，说明公开代理数据与私有真实双流数据的差异。
    - 建议新增：
-     - `src/chronaris/pipelines/stage_i/stage_i_public_transfer_boundary.py`
-     - `scripts/build_stage_i_public_transfer_boundary.py`
+     - `src/chronaris/pipelines/stage_i/evidence/public_transfer_boundary.py`
+     - `scripts/stage_i/evidence/build_public_transfer_boundary.py`
      - `tests/test_stage_i_public_transfer_boundary.py`
    - 报告至少包含：
      - 数据边界表：私有 Stage H、UAB、NASA 的模态、标签、任务粒度、时间基准。

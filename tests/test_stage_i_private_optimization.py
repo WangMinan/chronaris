@@ -19,7 +19,7 @@ from chronaris.pipelines import (  # noqa: E402
     StageIPrivateBenchmarkConfig,
     run_stage_i_private_benchmark,
 )
-from chronaris.pipelines.stage_i.stage_i_private_benchmark_data import (  # noqa: E402
+from chronaris.pipelines.stage_i.private.benchmark_data import (  # noqa: E402
     TASK_MANEUVER,
     TASK_RESPONSE,
     TASK_RETRIEVAL,

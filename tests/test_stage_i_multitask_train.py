@@ -26,7 +26,7 @@ from chronaris.features.experiment_input import E0ExperimentSample, NumericStrea
 from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig  # noqa: E402
 from chronaris.pipelines import StageIMultitaskTrainConfig, run_stage_i_multitask_train  # noqa: E402
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig  # noqa: E402
-from chronaris.pipelines.stage_i.stage_i_private_benchmark_data import (  # noqa: E402
+from chronaris.pipelines.stage_i.private.benchmark_data import (  # noqa: E402
     load_aligned_private_records,
 )
 from chronaris.schema.models import StreamKind  # noqa: E402

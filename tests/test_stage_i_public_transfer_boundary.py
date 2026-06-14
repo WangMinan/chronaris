@@ -12,11 +12,11 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i.stage_i_public_adapter_calibration import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.public_adapter_calibration import (  # noqa: E402
     StageIPublicAdapterCalibrationConfig,
     run_stage_i_public_adapter_calibration,
 )
-from chronaris.pipelines.stage_i.stage_i_public_transfer_boundary import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.public_transfer_boundary import (  # noqa: E402
     StageIPublicTransferBoundaryConfig,
     run_stage_i_public_transfer_boundary,
 )

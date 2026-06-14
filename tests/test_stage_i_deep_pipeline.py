@@ -45,15 +45,15 @@ from chronaris.pipelines import (  # noqa: E402
     run_stage_i_public_fusion_screen,
     run_stage_i_sequence_preparation,
 )
-from chronaris.pipelines.stage_i.stage_i_deep_baseline import (  # noqa: E402
+from chronaris.pipelines.stage_i.public.deep_baseline import (  # noqa: E402
     _sanitize_regression_outputs,
 )
-from chronaris.pipelines.stage_i.stage_i_deep_baseline_runtime import (  # noqa: E402
+from chronaris.pipelines.stage_i.public.deep_baseline_runtime import (  # noqa: E402
     _apply_classification_logit_adjustment,
     _classification_loss,
 )
-from chronaris.pipelines.stage_i.stage_i_deep_models import build_stage_i_deep_model  # noqa: E402
-from chronaris.pipelines.stage_i import stage_i_public_fusion_screen as public_fusion_module  # noqa: E402
+from chronaris.pipelines.stage_i.common.deep_models import build_stage_i_deep_model  # noqa: E402
+from chronaris.pipelines.stage_i.public import fusion_screen as public_fusion_module  # noqa: E402
 
 REAL_DATASET_ROOT = Path("/home/wangminan/dataset/chronaris")
 REAL_STAGE_H_RUN_MANIFEST = Path(

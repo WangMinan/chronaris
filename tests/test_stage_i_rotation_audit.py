@@ -13,7 +13,7 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i.stage_i_rigid_body_rotation_audit import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.rigid_body_rotation_audit import (  # noqa: E402
     StageIRigidBodyRotationAuditConfig,
     run_stage_i_rigid_body_rotation_audit,
 )
@@ -47,7 +47,7 @@ class StageIRotationAuditTest(unittest.TestCase):
             )
 
             with patch(
-                "chronaris.pipelines.stage_i.stage_i_rigid_body_rotation_audit._resolve_vehicle_field_labels",
+                "chronaris.pipelines.stage_i.evidence.rigid_body_rotation_audit._resolve_vehicle_field_labels",
                 return_value=(
                     {
                         "BUS.code1031": "[TSPI数据][载机真航向][_角度_毫弧度]",

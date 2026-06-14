@@ -145,267 +145,267 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "render_stage_h_report",
     ),
     "StageIBaselineArtifacts": (
-        "chronaris.pipelines.stage_i.stage_i_baseline",
+        "chronaris.pipelines.stage_i.legacy.baseline",
         "StageIBaselineArtifacts",
     ),
     "render_stage_i_baseline_report": (
-        "chronaris.pipelines.stage_i.stage_i_baseline",
+        "chronaris.pipelines.stage_i.legacy.baseline",
         "render_stage_i_baseline_report",
     ),
     "render_uab_baseline_report": (
-        "chronaris.pipelines.stage_i.stage_i_baseline",
+        "chronaris.pipelines.stage_i.legacy.baseline",
         "render_uab_baseline_report",
     ),
     "run_stage_i_baselines": (
-        "chronaris.pipelines.stage_i.stage_i_baseline",
+        "chronaris.pipelines.stage_i.legacy.baseline",
         "run_stage_i_baselines",
     ),
     "run_uab_baselines": (
-        "chronaris.pipelines.stage_i.stage_i_baseline",
+        "chronaris.pipelines.stage_i.legacy.baseline",
         "run_uab_baselines",
     ),
     "write_baseline_artifacts": (
-        "chronaris.pipelines.stage_i.stage_i_baseline",
+        "chronaris.pipelines.stage_i.legacy.baseline",
         "write_baseline_artifacts",
     ),
     "StageICaseStudyConfig": (
-        "chronaris.pipelines.stage_i.stage_i_case_study",
+        "chronaris.pipelines.stage_i.evidence.case_study",
         "StageICaseStudyConfig",
     ),
     "StageICaseStudyRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_case_study",
+        "chronaris.pipelines.stage_i.evidence.case_study",
         "StageICaseStudyRunResult",
     ),
     "render_stage_i_case_study_report": (
-        "chronaris.pipelines.stage_i.stage_i_case_study",
+        "chronaris.pipelines.stage_i.evidence.case_study",
         "render_stage_i_case_study_report",
     ),
     "run_stage_i_case_study": (
-        "chronaris.pipelines.stage_i.stage_i_case_study",
+        "chronaris.pipelines.stage_i.evidence.case_study",
         "run_stage_i_case_study",
     ),
     "write_stage_i_case_study_report": (
-        "chronaris.pipelines.stage_i.stage_i_case_study",
+        "chronaris.pipelines.stage_i.evidence.case_study",
         "write_stage_i_case_study_report",
     ),
     "StageIDeepBaselineConfig": (
-        "chronaris.pipelines.stage_i.stage_i_deep_baseline",
+        "chronaris.pipelines.stage_i.public.deep_baseline",
         "StageIDeepBaselineConfig",
     ),
     "StageIDeepBaselineRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_deep_baseline",
+        "chronaris.pipelines.stage_i.public.deep_baseline",
         "StageIDeepBaselineRunResult",
     ),
     "StageIBackboneTrainConfig": (
-        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "chronaris.pipelines.stage_i.training.backbone_train",
         "StageIBackboneTrainConfig",
     ),
     "StageIBackboneTrainPipeline": (
-        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "chronaris.pipelines.stage_i.training.backbone_train",
         "StageIBackboneTrainPipeline",
     ),
     "StageIBackboneTrainRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "chronaris.pipelines.stage_i.training.backbone_train",
         "StageIBackboneTrainRunResult",
     ),
     "collect_stage_i_backbone_samples": (
-        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "chronaris.pipelines.stage_i.training.backbone_train",
         "collect_stage_i_backbone_samples",
     ),
     "collect_stage_i_multitask_samples": (
-        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "chronaris.pipelines.stage_i.training.backbone_train",
         "collect_stage_i_multitask_samples",
     ),
     "run_stage_i_backbone_train": (
-        "chronaris.pipelines.stage_i.stage_i_backbone_train",
+        "chronaris.pipelines.stage_i.training.backbone_train",
         "run_stage_i_backbone_train",
     ),
     "StageIMultitaskTrainConfig": (
-        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "chronaris.pipelines.stage_i.training.multitask_train",
         "StageIMultitaskTrainConfig",
     ),
     "StageIMultitaskTrainPipeline": (
-        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "chronaris.pipelines.stage_i.training.multitask_train",
         "StageIMultitaskTrainPipeline",
     ),
     "StageIMultitaskTrainRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "chronaris.pipelines.stage_i.training.multitask_train",
         "StageIMultitaskTrainRunResult",
     ),
     "run_stage_i_multitask_train": (
-        "chronaris.pipelines.stage_i.stage_i_multitask_train",
+        "chronaris.pipelines.stage_i.training.multitask_train",
         "run_stage_i_multitask_train",
     ),
     "StageILLMPreprocessingConfig": (
-        "chronaris.pipelines.stage_i.stage_i_llm_preprocessing",
+        "chronaris.pipelines.stage_i.llm.preprocessing",
         "StageILLMPreprocessingConfig",
     ),
     "StageILLMPreprocessingRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_llm_preprocessing",
+        "chronaris.pipelines.stage_i.llm.preprocessing",
         "StageILLMPreprocessingRunResult",
     ),
     "run_stage_i_llm_preprocessing": (
-        "chronaris.pipelines.stage_i.stage_i_llm_preprocessing",
+        "chronaris.pipelines.stage_i.llm.preprocessing",
         "run_stage_i_llm_preprocessing",
     ),
     "StageIDeepComparisonConfig": (
-        "chronaris.pipelines.stage_i.stage_i_deep_baseline",
+        "chronaris.pipelines.stage_i.public.deep_baseline",
         "StageIDeepComparisonConfig",
     ),
     "StageIDeepComparisonRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_deep_baseline",
+        "chronaris.pipelines.stage_i.public.deep_baseline",
         "StageIDeepComparisonRunResult",
     ),
     "run_stage_i_deep_baseline": (
-        "chronaris.pipelines.stage_i.stage_i_deep_baseline",
+        "chronaris.pipelines.stage_i.public.deep_baseline",
         "run_stage_i_deep_baseline",
     ),
     "run_stage_i_deep_comparison": (
-        "chronaris.pipelines.stage_i.stage_i_deep_baseline",
+        "chronaris.pipelines.stage_i.public.deep_baseline",
         "run_stage_i_deep_comparison",
     ),
     "StageIPhase3Config": (
-        "chronaris.pipelines.stage_i.stage_i_phase3",
+        "chronaris.pipelines.stage_i.legacy.phase3",
         "StageIPhase3Config",
     ),
     "StageIPhase3RunResult": (
-        "chronaris.pipelines.stage_i.stage_i_phase3",
+        "chronaris.pipelines.stage_i.legacy.phase3",
         "StageIPhase3RunResult",
     ),
     "build_stage_i_dataset_summary": (
-        "chronaris.pipelines.stage_i.stage_i_phase3",
+        "chronaris.pipelines.stage_i.legacy.phase3",
         "build_stage_i_dataset_summary",
     ),
     "compose_stage_i_phase3_closure": (
-        "chronaris.pipelines.stage_i.stage_i_phase3",
+        "chronaris.pipelines.stage_i.legacy.phase3",
         "compose_stage_i_phase3_closure",
     ),
     "render_stage_i_phase3_report": (
-        "chronaris.pipelines.stage_i.stage_i_phase3",
+        "chronaris.pipelines.stage_i.legacy.phase3",
         "render_stage_i_phase3_report",
     ),
     "run_stage_i_phase3": (
-        "chronaris.pipelines.stage_i.stage_i_phase3",
+        "chronaris.pipelines.stage_i.legacy.phase3",
         "run_stage_i_phase3",
     ),
     "StageIPublicOptConfig": (
-        "chronaris.pipelines.stage_i.stage_i_public_opt",
+        "chronaris.pipelines.stage_i.public.opt",
         "StageIPublicOptConfig",
     ),
     "StageIPublicOptRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_public_opt",
+        "chronaris.pipelines.stage_i.public.opt",
         "StageIPublicOptRunResult",
     ),
     "run_stage_i_public_opt": (
-        "chronaris.pipelines.stage_i.stage_i_public_opt",
+        "chronaris.pipelines.stage_i.public.opt",
         "run_stage_i_public_opt",
     ),
     "StageIPublicOptTorchUABConfig": (
-        "chronaris.pipelines.stage_i.stage_i_public_opt_torch",
+        "chronaris.pipelines.stage_i.public.opt_torch",
         "StageIPublicOptTorchUABConfig",
     ),
     "StageIPublicOptTorchUABRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_public_opt_torch",
+        "chronaris.pipelines.stage_i.public.opt_torch",
         "StageIPublicOptTorchUABRunResult",
     ),
     "run_stage_i_public_opt_torch_uab": (
-        "chronaris.pipelines.stage_i.stage_i_public_opt_torch",
+        "chronaris.pipelines.stage_i.public.opt_torch",
         "run_stage_i_public_opt_torch_uab",
     ),
     "StageIPublicMainlineReportConfig": (
-        "chronaris.pipelines.stage_i.stage_i_public_mainline_report",
+        "chronaris.pipelines.stage_i.public.mainline_report",
         "StageIPublicMainlineReportConfig",
     ),
     "StageIPublicMainlineReportRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_public_mainline_report",
+        "chronaris.pipelines.stage_i.public.mainline_report",
         "StageIPublicMainlineReportRunResult",
     ),
     "run_stage_i_public_mainline_report": (
-        "chronaris.pipelines.stage_i.stage_i_public_mainline_report",
+        "chronaris.pipelines.stage_i.public.mainline_report",
         "run_stage_i_public_mainline_report",
     ),
     "DEFAULT_PUBLIC_FUSION_CANDIDATES": (
-        "chronaris.pipelines.stage_i.stage_i_public_fusion_screen",
+        "chronaris.pipelines.stage_i.public.fusion_screen",
         "DEFAULT_PUBLIC_FUSION_CANDIDATES",
     ),
     "StageIPublicFusionCandidate": (
-        "chronaris.pipelines.stage_i.stage_i_public_fusion_screen",
+        "chronaris.pipelines.stage_i.public.fusion_screen",
         "StageIPublicFusionCandidate",
     ),
     "StageIPublicFusionScreenConfig": (
-        "chronaris.pipelines.stage_i.stage_i_public_fusion_screen",
+        "chronaris.pipelines.stage_i.public.fusion_screen",
         "StageIPublicFusionScreenConfig",
     ),
     "StageIPublicFusionScreenRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_public_fusion_screen",
+        "chronaris.pipelines.stage_i.public.fusion_screen",
         "StageIPublicFusionScreenRunResult",
     ),
     "run_stage_i_public_fusion_screen": (
-        "chronaris.pipelines.stage_i.stage_i_public_fusion_screen",
+        "chronaris.pipelines.stage_i.public.fusion_screen",
         "run_stage_i_public_fusion_screen",
     ),
     "StageIPrivateBenchmarkConfig": (
-        "chronaris.pipelines.stage_i.stage_i_private_benchmark",
+        "chronaris.pipelines.stage_i.private.benchmark",
         "StageIPrivateBenchmarkConfig",
     ),
     "StageIPrivateBenchmarkRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_private_benchmark",
+        "chronaris.pipelines.stage_i.private.benchmark",
         "StageIPrivateBenchmarkRunResult",
     ),
     "run_stage_i_private_benchmark": (
-        "chronaris.pipelines.stage_i.stage_i_private_benchmark",
+        "chronaris.pipelines.stage_i.private.benchmark",
         "run_stage_i_private_benchmark",
     ),
     "StageIPrivateOptimizedPackageResult": (
-        "chronaris.pipelines.stage_i.stage_i_private_optimized_package",
+        "chronaris.pipelines.stage_i.private.optimized_package",
         "StageIPrivateOptimizedPackageResult",
     ),
     "StageISequencePreparationConfig": (
-        "chronaris.pipelines.stage_i.stage_i_sequence_preparation",
+        "chronaris.pipelines.stage_i.public.sequence_preparation",
         "StageISequencePreparationConfig",
     ),
     "StageISequencePreparationRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_sequence_preparation",
+        "chronaris.pipelines.stage_i.public.sequence_preparation",
         "StageISequencePreparationRunResult",
     ),
     "run_stage_i_sequence_preparation": (
-        "chronaris.pipelines.stage_i.stage_i_sequence_preparation",
+        "chronaris.pipelines.stage_i.public.sequence_preparation",
         "run_stage_i_sequence_preparation",
     ),
     "StageISupportConfig": (
-        "chronaris.pipelines.stage_i.stage_i_support",
+        "chronaris.pipelines.stage_i.evidence.support",
         "StageISupportConfig",
     ),
     "StageISupportRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_support",
+        "chronaris.pipelines.stage_i.evidence.support",
         "StageISupportRunResult",
     ),
     "run_stage_i_support": (
-        "chronaris.pipelines.stage_i.stage_i_support",
+        "chronaris.pipelines.stage_i.evidence.support",
         "run_stage_i_support",
     ),
     "StageIAnchorConfig": (
-        "chronaris.pipelines.stage_i.stage_i_anchor",
+        "chronaris.pipelines.stage_i.evidence.anchors",
         "StageIAnchorConfig",
     ),
     "StageIAnchorRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_anchor",
+        "chronaris.pipelines.stage_i.evidence.anchors",
         "StageIAnchorRunResult",
     ),
     "run_stage_i_anchor": (
-        "chronaris.pipelines.stage_i.stage_i_anchor",
+        "chronaris.pipelines.stage_i.evidence.anchors",
         "run_stage_i_anchor",
     ),
     "StageIMidtermEvidenceConfig": (
-        "chronaris.pipelines.stage_i.stage_i_midterm_evidence",
+        "chronaris.pipelines.stage_i.evidence.midterm_pack",
         "StageIMidtermEvidenceConfig",
     ),
     "StageIMidtermEvidenceRunResult": (
-        "chronaris.pipelines.stage_i.stage_i_midterm_evidence",
+        "chronaris.pipelines.stage_i.evidence.midterm_pack",
         "StageIMidtermEvidenceRunResult",
     ),
     "run_stage_i_midterm_evidence": (
-        "chronaris.pipelines.stage_i.stage_i_midterm_evidence",
+        "chronaris.pipelines.stage_i.evidence.midterm_pack",
         "run_stage_i_midterm_evidence",
     ),
 }

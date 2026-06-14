@@ -57,7 +57,7 @@
 1. `src/chronaris/models/alignment/task_heads.py` 已统一 `classification / regression / retrieval` head contract。
 2. `build_stage_e_objective()` 已支持把 `L_task` 与 `L_causal` 汇总进总目标。
 3. `src/chronaris/dataset/stage_i_real_task_builders.py` 已补出 `risk_proxy / workload_proxy / event_replay_tag` 三类 thesis-facing weak-label tasks。
-4. `src/chronaris/pipelines/stage_i/stage_i_multitask_train.py` 已可在最小 synthetic/private-style 样本上跑通一次 `backbone + causal fusion + task heads` 端到端训练并落盘。
+4. `src/chronaris/pipelines/stage_i/training/multitask_train.py` 已可在最小 synthetic/private-style 样本上跑通一次 `backbone + causal fusion + task heads` 端到端训练并落盘。
 5. `stage_i_private_benchmark` 已把 `proxy_evidence` 与 `thesis_task_evidence` 分层写入 summary/manifest。
 
 这意味着：
