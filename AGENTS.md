@@ -71,7 +71,7 @@
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python
 ```
 
-不要因为 shell 停在 `base` 就直接运行 `python`。如需 MySQL 密码、InfluxDB token、连接串或 sudo 信息，可参考已被 `.gitignore` 纳管的 `docs/SECRETS.md`，但不要把其中内容写入其他文件。
+不要因为 shell 停在 `base` 就直接运行 `python`。如需 MySQL 密码、InfluxDB token、连接串、LLM API KEY 或 sudo 信息，可参考已被 `.gitignore` 纳管的 `docs/SECRETS.md`，但不要把其中内容写入其他文件。
 
 当前数据库服务默认按 Docker 映射到本机端口处理：MySQL `127.0.0.1:3306`，InfluxDB `127.0.0.1:8086`。
 
