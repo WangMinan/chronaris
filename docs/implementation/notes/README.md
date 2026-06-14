@@ -1,6 +1,6 @@
 # Implementation Notes
 
-更新时间：2026-06-07
+更新时间：2026-06-14
 
 本目录保存旧 `docs/implementation/notes` 的计划、阶段收口记录和必要进度笔记。当前主动执行入口已经统一到 [../TASKS.md](../TASKS.md)。
 
@@ -11,6 +11,7 @@
 - [stage-i-thesis-mainline-coding-plan-2026-05-15.md](stage-i-thesis-mainline-coding-plan-2026-05-15.md)：文件级编码计划。
 - [thesis-coding-gap.md](thesis-coding-gap.md)：论文主线编码缺口。
 - [midterm-goal-2026-06-07.md](midterm-goal-2026-06-07.md)：中期前最小收敛历史快照；当前 P10-P15 主动任务以 [../TASKS.md](../TASKS.md) 为准。
+- [stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)：P20 DeepSeek 在线时序数据预处理计划，当前只冻结文档方案，尚未更新代码或调用 API。
 - [goal-prompt-stage-i-p10-p15-2026-06-07.md](goal-prompt-stage-i-p10-p15-2026-06-07.md)：用于新 session goal 模式推进 P10-P15 的长程 prompt。
 - [iteration-playbook.md](iteration-playbook.md)：跨阶段执行模板。
 
