@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from dataclasses import replace
 from typing import Mapping, Sequence
 
 import numpy as np
@@ -35,6 +36,42 @@ THESIS_TASK_DEFINITIONS = {
         "weak_label_note": "event replay tag uses derived event groups, not expert replay annotations",
     },
 }
+
+
+def attach_llm_preprocessing_context_to_task_entries(
+    entries: Sequence[StageIPrivateTaskEntry],
+    llm_preprocessing_context: Mapping[str, object],
+) -> tuple[StageIPrivateTaskEntry, ...]:
+    """Attach audited LLM preprocessing context without changing labels."""
+
+    if not entries:
+        return ()
+    review_by_task = {
+        str(row.get("task_name")): dict(row)
+        for row in llm_preprocessing_context.get("weak_label_rule_review", [])
+        if isinstance(row, Mapping) and row.get("task_name")
+    }
+    context_ref = {
+        "run_id": llm_preprocessing_context.get("run_id"),
+        "schema_version": llm_preprocessing_context.get("schema_version"),
+        "field_semantic_dictionary_path": llm_preprocessing_context.get("field_semantic_dictionary_path"),
+        "context_path": llm_preprocessing_context.get("context_path"),
+        "boundary": "llm_preprocessing_context_not_ground_truth",
+    }
+    attached: list[StageIPrivateTaskEntry] = []
+    for entry in entries:
+        task_review = review_by_task.get(entry.task_name)
+        attached.append(
+            replace(
+                entry,
+                context_payload={
+                    **dict(entry.context_payload),
+                    "llm_preprocessing_context": context_ref,
+                    "llm_weak_label_rule_review": task_review,
+                },
+            )
+        )
+    return tuple(attached)
 
 
 def build_stage_i_real_task_payload(records: pd.DataFrame) -> dict[str, object]:

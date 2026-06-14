@@ -236,6 +236,18 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.stage_i.stage_i_multitask_train",
         "run_stage_i_multitask_train",
     ),
+    "StageILLMPreprocessingConfig": (
+        "chronaris.pipelines.stage_i.stage_i_llm_preprocessing",
+        "StageILLMPreprocessingConfig",
+    ),
+    "StageILLMPreprocessingRunResult": (
+        "chronaris.pipelines.stage_i.stage_i_llm_preprocessing",
+        "StageILLMPreprocessingRunResult",
+    ),
+    "run_stage_i_llm_preprocessing": (
+        "chronaris.pipelines.stage_i.stage_i_llm_preprocessing",
+        "run_stage_i_llm_preprocessing",
+    ),
     "StageIDeepComparisonConfig": (
         "chronaris.pipelines.stage_i.stage_i_deep_baseline",
         "StageIDeepComparisonConfig",

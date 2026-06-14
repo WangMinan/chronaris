@@ -22,6 +22,7 @@ from chronaris.dataset.stage_i_real_task_builders import (
     THESIS_WEAK_LABEL_BENCHMARK_ROLE,
     THESIS_WEAK_LABEL_BOUNDARY,
     THESIS_WEAK_LABEL_ROLE,
+    attach_llm_preprocessing_context_to_task_entries,
     build_stage_i_real_task_payload,
 )
 from chronaris.dataset.stage_i_sequence_contracts import (
@@ -68,6 +69,7 @@ __all__ = [
     "TimebasePolicy",
     "UABPreparedTaskSet",
     "align_sortie_bundle",
+    "attach_llm_preprocessing_context_to_task_entries",
     "build_sample_windows",
     "build_nasa_csm_task_entries",
     "build_stage_i_real_task_payload",

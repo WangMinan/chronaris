@@ -8,6 +8,15 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+LLM_SEMANTIC_QUERY_RECIPE_WHITELIST = frozenset(
+    {
+        "coordination_gap",
+        "gap_plus_event",
+        "physiology_plus_gap",
+        "vehicle_plus_event",
+    }
+)
+
 
 @dataclass(frozen=True, slots=True)
 class SemanticQuerySpec:
@@ -44,6 +53,35 @@ class CausalEventFusionConfig:
             raise ValueError("event_score_quantile must be in (0, 1].")
         if not self.query_specs:
             raise ValueError("query_specs must not be empty.")
+
+
+def semantic_query_specs_from_llm_hints(
+    hints: object,
+    *,
+    include_defaults: bool = True,
+) -> tuple[SemanticQuerySpec, ...]:
+    """Convert audited LLM query hints into deterministic whitelisted specs."""
+
+    specs: list[SemanticQuerySpec] = []
+    seen_names: set[str] = set()
+    if include_defaults:
+        for spec in CausalEventFusionConfig().query_specs:
+            specs.append(spec)
+            seen_names.add(spec.name)
+    if not isinstance(hints, (list, tuple)):
+        return tuple(specs)
+    for row in hints:
+        if not isinstance(row, dict):
+            continue
+        name = str(row.get("name") or row.get("query_name") or "").strip()
+        recipe = str(row.get("recipe") or "").strip()
+        if not name or name in seen_names:
+            continue
+        if recipe not in LLM_SEMANTIC_QUERY_RECIPE_WHITELIST:
+            continue
+        specs.append(SemanticQuerySpec(name=name, recipe=recipe))
+        seen_names.add(name)
+    return tuple(specs)
 
 
 @dataclass(frozen=True, slots=True)

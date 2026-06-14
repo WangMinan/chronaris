@@ -1,0 +1,4 @@
+task_name,baseline_label_source,sample_count,review_decision,agreement_count,conflict_count,needs_human_review_count,label_agreement_rate,boundary
+event_replay_tag,derived_event_tag_group_pairing,111,needs_human_review,0,0,111,0.0,llm_review_not_ground_truth
+risk_proxy,vehicle_intensity_plus_physiology_variation,111,keep_current_rule,111,0,0,1.0,llm_review_not_ground_truth
+workload_proxy,physiology_variation_plus_vehicle_intensity,111,keep_current_rule,111,0,0,1.0,llm_review_not_ground_truth
