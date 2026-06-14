@@ -78,13 +78,14 @@
 
 后续收敛顺序：
 
-1. 当前 P20 已完成 DeepSeek 在线时序数据预处理、agent-style prompt/harness v2、切片整合和小样本真实 r3-sliced run；后续优先做 baseline vs LLM-context 对比、semantic query bank 对比、runtime 解释完整性对比和小样本人工复核收益评估。
-2. 中期报告写作优先从 `docs/midterm/` 的事实清单、边界风险说明和 claims matrix 进入；P20 当前可写成已实现在线 LLM preprocessing context，但不能写成真值标注、OpenAI 默认接入或核心因果证据。
-3. 保留并维护 `P18` 的 `P11 stable/partial` 与 `P17 schema-contract` 当前入口，避免后续继续回退到纯手工解释或旧 r1 demo。
-4. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
-5. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
-6. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
-7. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
+1. P21 已完成 LLM preprocessing 融入 Stage I 数据融合管线的对比实验，并把结果落到 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`，可供中期报告直接引用。
+2. P20 已完成 DeepSeek 在线时序数据预处理、agent-style prompt/harness v2、切片整合和小样本真实 r3-sliced run；P21 已在此基础上比较 baseline vs LLM-context、semantic query bank vs LLM hints、runtime report with/without LLM explanation，以及小样本人工复核 packet。
+3. 中期报告写作优先从 `docs/midterm/` 的事实清单、边界风险说明和 claims matrix 进入；P20/P21 只能写成 LLM preprocessing context 与对比证据，不能写成真值标注、OpenAI 默认接入或核心因果证据。
+4. 保留并维护 `P18` 的 `P11 stable/partial` 与 `P17 schema-contract` 当前入口，避免后续继续回退到纯手工解释或旧 r1 demo。
+5. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
+6. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
+7. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
+8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
 
 验收：
 
@@ -939,6 +940,75 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `A2 llm_semantic_hints`：在 event fusion support 中加入 whitelisted LLM semantic query hints，对比 query coverage、view ranking 和 attribution 分布。
 - `A3 runtime_explanation`：对比 runtime replay 报告中有/无 LLM explanation 的 schema gap、weak-label boundary 和 semantic attribution 完整性。
 - `A4 human_review`：抽取小样本字段/规则人工复核，统计 LLM 是否减少人工查表和规则解释成本。
+
+## 已完成 P21：LLM preprocessing 融入管线的对比实验与中期结果落地
+
+目标：在 P20 `llm_preprocessing_context` 已真实生成的基础上，用 A0-A4 对比实验说明 LLM 接入现有 Stage I 数据融合管线的增量价值，并把结果写成中期报告可直接引用的 summary。
+
+结果：
+
+- A1 `llm_context`：`333/333` 条 Stage I weak-label task entries 已 attach P20 context，代码逐 entry 检查 `label_changed_count=0`、`label_unchanged=true`。
+- A2 `llm_semantic_hints`：内置 semantic query bank 从 `3` 条扩展到 `7` 条，新增 `4` 条 P20 hints 均通过 recipe whitelist；本轮没有从现有 summary 伪造 view ranking/top attribution 重算。
+- A3 `llm_runtime_explanation`：`12` 条 runtime semantic cases 中 `4` 条有 P20 LLM explanation，解释子集四项完整性 `model_prediction / semantic_attribution / schema_gap_note / weak_label_boundary = 1.0`。
+- A4 `human_review_packet`：生成 `15` 条人工复核材料，覆盖字段语义 `6`、weak-label rule `3`、schema gap policy `6`；`human_review_completed=false`，人工未填写前不写成验证完成。
+
+计划入口：
+
+- `docs/midterm/llm-preprocessing-comparison-plan-2026-06-14.md`
+- 下一轮工作 prompt：`docs/implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md`
+
+默认输入：
+
+- P20 context：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
+- Stage I task manifest：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
+- semantic support summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
+- runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
+- runtime semantic case table：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
+
+实际新增实现：
+
+- `src/chronaris/pipelines/stage_i/llm/comparison.py`
+- `src/chronaris/pipelines/stage_i/llm/comparison_reporting.py`
+- `scripts/stage_i/llm/run_preprocessing_comparison.py`
+- `tests/test_stage_i_llm_comparison.py`
+
+实验条件：
+
+- `A0 baseline`：不接 LLM context；复用当前 Stage I task entries 与内置 semantic query bank。
+- `A1 llm_context`：attach P20 context 到 Stage I task entries；已验证 `label_unchanged=true`。
+- `A2 llm_semantic_hints`：只通过 recipe whitelist 接入 LLM semantic hints；已完成 query coverage 对比，ranking/attribution 重算需后续基于 Stage H tensor 复跑。
+- `A3 llm_runtime_explanation`：已对比 runtime cases 有/无 LLM explanation 的报告完整性。
+- `A4 human_review_packet`：已生成字段/规则/schema gap 小样本人工复核表；没有人工填写前只能写成 review packet，不写成人工验证完成。
+
+必须落盘的工程产物：
+
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/condition_manifest.json`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/task_context_comparison.csv`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/semantic_hint_comparison.csv`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/runtime_explanation_comparison.csv`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/human_review_packet.csv`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/midterm_claims_payload.json`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/progress.json`
+- `docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/run.log`
+- `docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md`
+
+必须落到 `docs/midterm/` 的写作产物：
+
+- `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
+- 已更新 `docs/midterm/README.md`，加入 P21 result summary。
+- 已更新 `docs/midterm/claims-matrix-2026-06-13.md`，新增 “LLM 接入带来可解释性/复核效率增量” 限域 claim。
+- 已更新 `docs/midterm/boundaries-and-risks-2026-06-13.md`，保持 “LLM 不替代人工真值” 与 “human review 未完成” 边界。
+
+验收：
+
+- A0-A4 已生成本地可追溯记录。
+- `label_unchanged=true` 已由代码检查得出。
+- LLM semantic hints 已走 whitelist；自由文本 prompt 未进入融合模块。
+- runtime explanation completeness 已检查 `model_prediction / semantic_attribution / schema_gap_note / weak_label_boundary` 四项。
+- `human_review_packet.csv` 只作为人工复核材料；人工未填写前不得写成验证结论。
+- `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md` 已存在，并能直接给中期报告引用。
+- 相关测试通过；最终 `git diff --check` 作为本轮收口门禁。
 
 ## 中期前边界管理
 

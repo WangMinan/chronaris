@@ -248,6 +248,18 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.stage_i.llm.preprocessing",
         "run_stage_i_llm_preprocessing",
     ),
+    "StageILLMComparisonConfig": (
+        "chronaris.pipelines.stage_i.llm.comparison",
+        "StageILLMComparisonConfig",
+    ),
+    "StageILLMComparisonRunResult": (
+        "chronaris.pipelines.stage_i.llm.comparison",
+        "StageILLMComparisonRunResult",
+    ),
+    "run_stage_i_llm_comparison": (
+        "chronaris.pipelines.stage_i.llm.comparison",
+        "run_stage_i_llm_comparison",
+    ),
     "StageIDeepComparisonConfig": (
         "chronaris.pipelines.stage_i.public.deep_baseline",
         "StageIDeepComparisonConfig",

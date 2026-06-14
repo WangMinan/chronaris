@@ -1,0 +1,46 @@
+{
+  "artifact_root": "docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1",
+  "llm_context_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json",
+  "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
+  "stage_name": "stage_i_llm_comparison",
+  "run_id": "20260614T-stage-i-p21-llm-comparison-r1",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-14T15:29:17.376831Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-14T15:29:17.262919Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1",
+      "llm_context_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json",
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl"
+    },
+    {
+      "timestamp_utc": "2026-06-14T15:29:17.373574Z",
+      "event": "sources_loaded",
+      "task_entry_count": 333,
+      "runtime_case_count": 12
+    },
+    {
+      "timestamp_utc": "2026-06-14T15:29:17.375314Z",
+      "event": "comparisons_built",
+      "label_unchanged": true,
+      "semantic_added_query_count": 4,
+      "llm_explained_case_count": 4,
+      "human_review_item_count": 15
+    },
+    {
+      "timestamp_utc": "2026-06-14T15:29:17.376831Z",
+      "event": "finished",
+      "summary_path": "docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json",
+      "report_path": "docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md"
+    }
+  ],
+  "task_entry_count": 333,
+  "runtime_case_count": 12,
+  "label_unchanged": true,
+  "semantic_added_query_count": 4,
+  "llm_explained_case_count": 4,
+  "human_review_item_count": 15,
+  "summary_path": "docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json",
+  "report_path": "docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md"
+}

@@ -1,0 +1,4 @@
+condition,baseline_condition,task_name,baseline_entry_count,llm_context_attached_entry_count,llm_context_coverage_rate,weak_label_review_present,weak_label_review_decision,weak_label_review_needs_human_review,label_unchanged,label_changed_count,label_source_unchanged,label_source_changed_count,boundary
+A1_llm_context,A0_baseline,event_replay_tag,111,111,1.0,true,keep_current_rule,true,true,0,true,0,llm_context_attached_without_label_overwrite
+A1_llm_context,A0_baseline,risk_proxy,111,111,1.0,true,keep_current_rule,true,true,0,true,0,llm_context_attached_without_label_overwrite
+A1_llm_context,A0_baseline,workload_proxy,111,111,1.0,true,keep_current_rule,true,true,0,true,0,llm_context_attached_without_label_overwrite
