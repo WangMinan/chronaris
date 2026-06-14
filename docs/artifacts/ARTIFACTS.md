@@ -58,6 +58,7 @@
 - Midterm boundaries and risks：[../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
 - Midterm claims matrix：[../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
 - P20 DeepSeek 在线时序数据预处理计划：[../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
+- P20 DeepSeek 在线时序数据预处理 run：[stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md](stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md)
 - 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
 - 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json)
@@ -73,4 +74,4 @@
 - 引用执行入口先看 [../implementation/TASKS.md](../implementation/TASKS.md)。
 - 引用论文能力要求先看 [../requirements/SPEC.md](../requirements/SPEC.md)。
 - 历史报告可以引用，但必须说明是历史快照、公开适配器证据、私有代理证据还是 thesis weak-label evidence。
-- P20 DeepSeek 文档当前是计划，不是运行产物；只有未来生成 `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-<run_id>.md` 后，才能写成已完成 LLM 预处理证据。
+- P20 DeepSeek 已生成小样本真实 run 产物：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md`。引用时必须写成 LLM preprocessing context / rule review / semantic hints / runtime explanation，不得写成人工真值或核心因果证据。

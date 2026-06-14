@@ -19,7 +19,7 @@
 - 原始上游 runtime schema 已完全 exact。
 - 完整旋转刚体约束已启用。
 - public adapter 等价于论文私有双流主线的直接胜利。
-- P20 DeepSeek 在线 LLM 预处理已经代码实现或已替代人工真值。
+- 把 P20 DeepSeek 在线 LLM 预处理写成替代人工真值。
 
 ## 2. 证据层级边界
 
@@ -31,7 +31,7 @@
 | rigid_body_support | 物理一致性约束 | “translation + vertical 已启用，rotation 受字段限制保留 diagnostics” | “完整 6DoF 刚体旋转约束已经实现并验证” |
 | semantic_support | 语义事件融合 support | “在 3 个双流 view 上形成 view-level ranking 和 attribution” | “专家语义事件复盘标注验证完成” |
 | runtime_replay/service_contract | runtime replay、服务化 smoke、schema contract | “native aligned，canonical exact；错误样例与 contract 已固化” | “原始上游输入已 native exact schema” |
-| llm_preprocessing_plan | DeepSeek 在线时序数据预处理计划 | “已形成 DeepSeek 在线 LLM 预处理方案，计划用于字段语义、weak-label 复核、schema gap policy 和 runtime 解释” | “DeepSeek 已替代人工标注或已经完成代码实现” |
+| llm_preprocessing_context | DeepSeek 在线时序数据预处理 context | “已实现 DeepSeek 在线 LLM 预处理模块，并完成小样本字段语义、weak-label 复核、schema gap policy 和 runtime 解释落盘审计” | “DeepSeek 已替代人工标注、LLM 输出等同人工真值或证明核心因果结论” |
 
 ## 3. P11 风险：live_influx sweep 的完成度
 
@@ -293,27 +293,29 @@ semantic support 覆盖：
 - 中期后优先扩展更多 sortie/view。
 - 在扩展前保持当前 evidence runner 与 schema contract，避免新增样本破坏可复现性。
 
-## 11. P20 风险：DeepSeek 在线 LLM 预处理还不是已完成实现
+## 11. P20 风险：DeepSeek 在线 LLM 预处理不是人工真值
 
 ### 当前事实
 
 - 已形成文档计划：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`。
-- 中期默认 provider 计划为 DeepSeek v4-pro，不默认使用 OpenAI。
-- 计划输入来自现有 MySQL / InfluxDB 派生链路：
+- 已实现 DeepSeek v4-pro 在线 preprocessing pipeline，不默认使用 OpenAI。
+- 已完成真实小样本 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_preprocessing_summary.json`。
+- 当前 `request_count=5`、`error_count=0`、`field_semantic_count=24`、`weak_label_review_count=3`、`semantic_query_hint_count=4`、`runtime_explanation_count=4`。
+- 输入来自现有 MySQL / InfluxDB 派生链路：
   - MySQL 字段 label、measurement metadata、sortie / view 元信息。
   - InfluxDB 派生的 Stage H 窗口统计摘要。
   - 当前 2 个 sortie、3 个双流 view、111 个窗口样本的 weak-label 和 runtime 证据。
-- 当前尚未更新代码，尚未调用 API，尚未生成 `stage_i_llm_preprocessing` 资产。
+- 当前没有发送原始全量高频时序，只发送 schema card、window summary card 和 runtime case card。
 
 ### 风险
 
-老师可能问：既然要加 LLM，是否已经调用大模型处理过私有数据？是否把原始数据发给了外部 API？
+老师可能问：LLM 是否已经接入？是否把原始数据发给了外部 API？能否替代人工标签？
 
 ### 回答口径
 
 可以回答：
 
-> 当前已形成 DeepSeek 在线大模型辅助时序数据预处理方案，计划先围绕 MySQL 字段语义、Stage H 窗口统计、weak-label 规则复核、runtime schema gap 和案例解释做小样本在线调用。中期文档当前只把它写成后续计划；真正实现后会保留请求、响应、prompt version、input hash、错误样例和成本/延迟摘要。默认 payload 是 schema card、window summary card 和 runtime case card，不直接发送原始全量高频时序。
+> 当前已实现 DeepSeek 在线大模型辅助时序数据预处理模块，并在现有 Stage H / Stage I 证据链上完成小样本真实调用。请求、响应、prompt version、input hash、latency、retry 和 error summary 已落盘审计。默认 payload 是 schema card、window summary card 和 runtime case card，没有直接发送原始全量高频时序。LLM 输出只作为 preprocessing context、semantic hints、rule review 和 runtime explanation，不作为人工真值。
 
 不要回答：
 
@@ -321,15 +323,15 @@ semantic support 覆盖：
 
 后续计划：
 
-- 先实现 mock provider 和 DeepSeek provider contract。
-- 先用 3 个 view、111 个窗口摘要做小样本真实 run。
-- 把输出限制为字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释，不替代人工真值。
+- 中期后可扩展更多 schema/window/runtime cards。
+- 对 field semantics、weak-label review 和 schema gap policy 做人工抽检。
+- 继续把输出限制为字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释，不替代人工真值。
 
 ## 12. 中期报告中的推荐风险章节写法
 
 可在“存在问题与下一步计划”中写：
 
-> 当前工作已经完成人机异构时序数据从接入、标准化、双流建模、物理约束、因果融合、语义支撑到运行时验证的闭环，但仍存在五类边界。第一，风险、负荷和事件复盘任务目前采用 weak-label 构造，尚未引入专家人工标注；第二，公开 UAB/NASA 数据仅用于 adapter 和 calibration 支撑，不能等同于私有航空双流主线的泛化证明；第三，runtime 原生输入目前为 aligned schema，service contract 可通过 canonical payload 达到 exact，后续需补齐 native replay payload 的 vehicle measurement groups；第四，刚体旋转项受角速度字段缺失限制，当前保留为 diagnostics；第五，DeepSeek 在线 LLM 预处理目前已形成方案但尚未完成代码实现和真实调用，后续将先作为字段语义、规则复核和结果解释工具接入。后续将围绕人工复核样本、更多 sortie/view、native exact schema、可用角速度字段和 DeepSeek 小样本在线预处理继续推进。
+> 当前工作已经完成人机异构时序数据从接入、标准化、双流建模、物理约束、因果融合、语义支撑到运行时验证的闭环，但仍存在五类边界。第一，风险、负荷和事件复盘任务目前采用 weak-label 构造，尚未引入专家人工标注；第二，公开 UAB/NASA 数据仅用于 adapter 和 calibration 支撑，不能等同于私有航空双流主线的泛化证明；第三，runtime 原生输入目前为 aligned schema，service contract 可通过 canonical payload 达到 exact，后续需补齐 native replay payload 的 vehicle measurement groups；第四，刚体旋转项受角速度字段缺失限制，当前保留为 diagnostics；第五，DeepSeek 在线 LLM 预处理已完成小样本真实接入，但输出仍是字段语义、规则复核、schema gap policy 和结果解释工具，不是人工真值或因果证明。后续将围绕人工复核样本、更多 sortie/view、native exact schema、可用角速度字段和 DeepSeek 预处理人工复核封装继续推进。
 
 ## 13. 答辩问答速记
 
@@ -342,4 +344,4 @@ semantic support 覆盖：
 | public 数据能证明什么？ | 证明 adapter/calibration 支撑线，不能证明私有双流主线 fully closed。 |
 | private proxy 指标能当论文主结果吗？ | 不能直接当主结果；可作为模块消融和代理 benchmark。 |
 | 样本量是否足够？ | 足够支撑中期闭环展示，不足以支撑大规模泛化结论。 |
-| LLM 有没有已经接入？ | 当前已形成 DeepSeek 在线预处理计划，尚未代码实现或调用 API；后续默认不走 OpenAI。 |
+| LLM 有没有已经接入？ | 已接入 DeepSeek v4-pro 并完成小样本真实 run；默认不走 OpenAI；输出是 preprocessing context，不是人工真值。 |

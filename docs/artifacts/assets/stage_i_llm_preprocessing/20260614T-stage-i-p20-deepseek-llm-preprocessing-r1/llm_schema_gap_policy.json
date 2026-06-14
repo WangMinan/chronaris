@@ -1,0 +1,49 @@
+{
+  "status": "draft_policy",
+  "canonical_exact_boundary": "canonical exact is a service payload contract, not native exact evidence",
+  "native_exact_claim_allowed": false,
+  "policies": [
+    {
+      "measurement_group": "BUS6000019110021",
+      "policy_type": "canonical_fill_nan",
+      "reason": "missing BUS group remains explicit",
+      "allows_value_fabrication": false,
+      "needs_human_review": false
+    },
+    {
+      "measurement_group": "BUS6000019110022",
+      "policy_type": "canonical_fill_nan",
+      "reason": "missing BUS group remains explicit",
+      "allows_value_fabrication": false,
+      "needs_human_review": false
+    },
+    {
+      "measurement_group": "BUS6000019110023",
+      "policy_type": "canonical_fill_nan",
+      "reason": "missing BUS group remains explicit",
+      "allows_value_fabrication": false,
+      "needs_human_review": false
+    },
+    {
+      "measurement_group": "BUS6000019110024",
+      "policy_type": "canonical_fill_nan",
+      "reason": "missing BUS group remains explicit",
+      "allows_value_fabrication": false,
+      "needs_human_review": false
+    },
+    {
+      "measurement_group": "BUS6000019110025",
+      "policy_type": "canonical_fill_nan",
+      "reason": "missing BUS group remains explicit",
+      "allows_value_fabrication": false,
+      "needs_human_review": false
+    },
+    {
+      "measurement_group": "BUS6000019110026",
+      "policy_type": "canonical_fill_nan",
+      "reason": "missing BUS group remains explicit",
+      "allows_value_fabrication": false,
+      "needs_human_review": false
+    }
+  ]
+}

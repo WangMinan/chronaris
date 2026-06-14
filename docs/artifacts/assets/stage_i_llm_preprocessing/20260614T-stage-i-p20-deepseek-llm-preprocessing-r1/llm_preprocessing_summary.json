@@ -1,0 +1,82 @@
+{
+  "run_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r1",
+  "status": "success",
+  "mode": "build-and-evaluate",
+  "artifact_root": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1",
+  "context_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_preprocessing_context.json",
+  "field_semantic_dictionary_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/field_semantic_dictionary.csv",
+  "weak_label_review_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_weak_label_review.jsonl",
+  "weak_label_comparison_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/weak_label_llm_comparison.csv",
+  "schema_gap_policy_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_schema_gap_policy.json",
+  "runtime_llm_explanations_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/runtime_llm_explanations.jsonl",
+  "audit_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_request_response_audit.jsonl",
+  "error_cases_path": "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_error_cases.json",
+  "report_path": "docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md",
+  "request_count": 5,
+  "error_count": 0,
+  "field_semantic_count": 24,
+  "weak_label_review_count": 3,
+  "semantic_query_hint_count": 4,
+  "runtime_explanation_count": 4,
+  "comparison": {
+    "sample_count": 333,
+    "agreement_count": 222,
+    "conflict_count": 0,
+    "needs_human_review_count": 111,
+    "label_agreement_rate": 0.6666666666666666
+  },
+  "downstream_consumption": {
+    "evaluation_enabled": true,
+    "task_builder_context_attached_entry_count": 333,
+    "semantic_query_spec_count": 7,
+    "semantic_query_specs": [
+      {
+        "name": "risk_proxy",
+        "recipe": "gap_plus_event"
+      },
+      {
+        "name": "workload_proxy",
+        "recipe": "physiology_plus_gap"
+      },
+      {
+        "name": "event_replay_tag",
+        "recipe": "vehicle_plus_event"
+      },
+      {
+        "name": "multi_pilot_coordination_gap",
+        "recipe": "coordination_gap"
+      },
+      {
+        "name": "physiological_data_gap",
+        "recipe": "physiology_plus_gap"
+      },
+      {
+        "name": "vehicle_event_gap",
+        "recipe": "vehicle_plus_event"
+      },
+      {
+        "name": "missing_event_gap",
+        "recipe": "gap_plus_event"
+      }
+    ],
+    "runtime_explanation_count": 4,
+    "comparison": {
+      "sample_count": 333,
+      "agreement_count": 222,
+      "conflict_count": 0,
+      "needs_human_review_count": 111,
+      "label_agreement_rate": 0.6666666666666666
+    },
+    "boundary": "optional downstream context only; no label overwrite"
+  },
+  "source_paths": {
+    "multitask_summary_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json",
+    "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
+    "live_sweep_summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json",
+    "support_summary_path": "docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json",
+    "runtime_schema_contract_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json",
+    "runtime_service_summary_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json",
+    "runtime_case_table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv"
+  },
+  "boundary": "DeepSeek/LLM outputs are preprocessing context, not manual truth."
+}
