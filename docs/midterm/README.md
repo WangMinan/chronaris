@@ -10,7 +10,7 @@
 2. 再读 [boundaries-and-risks-2026-06-13.md](boundaries-and-risks-2026-06-13.md)：明确哪些结论能讲、哪些只能作为边界或风险说明。
 3. 写正文或答辩 PPT 前读 [claims-matrix-2026-06-13.md](claims-matrix-2026-06-13.md)：逐条核对论断强度、证据层级和禁止表述。
 4. 引用实验材料时回到 [../artifacts/ARTIFACTS.md](../artifacts/ARTIFACTS.md) 和 [../artifacts/stage_i/README.md](../artifacts/stage_i/README.md) 找原始报告与资产。
-5. 讨论中期 LLM 内容时读 [../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)，当前只能写成 DeepSeek 在线预处理计划，尚不能写成已完成代码成果。
+5. 讨论中期 LLM 内容时读 [../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md) 和 [../artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md](../artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md)，当前可写成 DeepSeek 在线 preprocessing context 已完成小样本真实切片 run，但不能写成人工真值或核心因果证据。
 
 ## 当前中期核心事实
 
@@ -20,7 +20,7 @@
 - 当前公开支撑线：UAB/NASA public adapter 与 calibration，只能写成 `public adapter / calibration evidence`。
 - 当前 runtime：`native aligned` 是真实输入边界；`canonical exact` 是服务层契约化 payload 能力。
 - 当前刚体旋转：`translation + vertical` 已启用；`rotation` 因缺少成对角速度字段保持 disabled diagnostics。
-- 当前 LLM 计划：中期优先 DeepSeek 在线时序数据预处理，用于字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释；当前只是文档计划，不是已完成实现。
+- 当前 LLM 实现：P20 已完成 DeepSeek 在线时序数据预处理小样本真实切片 run，用于字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释；输出是 preprocessing context，不是人工真值。
 
 ## 当前最重要入口
 
@@ -31,3 +31,4 @@
 - Stage I 报告索引：[../artifacts/stage_i/README.md](../artifacts/stage_i/README.md)
 - 中期证据包历史入口：[../artifacts/mid-term/README.md](../artifacts/mid-term/README.md)
 - P20 DeepSeek 在线时序数据预处理计划：[../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
+- P20 DeepSeek 在线时序数据预处理 run：[../artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md](../artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md)

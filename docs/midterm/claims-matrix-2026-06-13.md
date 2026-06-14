@@ -23,7 +23,7 @@
 | runtime native input 当前是 aligned schema | 强 | runtime_service_contract | `runtime_service_smoke_summary.json`; `runtime_schema_contract.json` | native exact 已完成 |
 | canonical payload 可达到 exact service contract | 强但限域 | runtime_service_contract | `canonical_runtime_samples.jsonl`; `runtime_schema_contract.json`; `stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md` | 原始上游输入 exact |
 | P16/P18 已产出中期说明图表 | 强 | thesis_materials | `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`; `stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md` | 图表覆盖所有可能实验 |
-| P20 已实现 DeepSeek 在线时序数据预处理 context | 中强但限域 | llm_preprocessing_context | `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_preprocessing_summary.json`; `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md`; `docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md` | DeepSeek 已替代人工标注；LLM 输出等同人工真值；OpenAI 是默认 provider；原始全量高频时序已外发；LLM 证明核心因果结论 |
+| P20 已实现 DeepSeek 在线时序数据预处理 context | 中强但限域 | llm_preprocessing_context | `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`; `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_harness_summary.json`; `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`; `docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md` | DeepSeek 已替代人工标注；LLM 输出等同人工真值；OpenAI 是默认 provider；原始全量高频时序已外发；LLM 证明核心因果结论 |
 | 当前仓库具备中期报告材料基础 | 强 | cross_layer_index | `docs/STATE.md`; `docs/artifacts/ARTIFACTS.md`; `docs/midterm/midterm-fact-sheet-2026-06-13.md` | 毕业论文最终实验已全部完成 |
 
 ## 建议正文映射
@@ -35,7 +35,7 @@
 | 已完成工作 | Phase C 训练、P11 sweep、P12-P15、P16-P18 |
 | 实验结果与分析 | P11、P12、P13/P14、rigid_body、semantic、runtime |
 | 存在问题 | weak-label、partial live grid、native aligned、rotation disabled、样本规模 |
-| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、DeepSeek 预处理人工复核封装 |
+| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、DeepSeek 预处理对比实验与人工复核封装 |
 
 ## 文献检索映射
 
