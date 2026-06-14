@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
 
 ## 当前阶段
 
@@ -91,10 +91,17 @@
       - 当前 harness：`prompt_version=stage_i_llm_preprocessing.agent_guardrails.v2`、`schema_repair_attempt_count=0`、`final_invalid_task_count=0`。
       - 当前切片：`field_semantics` 按 12+12、`schema_gap_policy` 按 3+3、`runtime_explanations` 按 2+2 切片，并在本地按 stable identifier 合并。
       - 当前定位：DeepSeek v4-pro 只作为字段语义归一、weak-label 规则复核、schema gap 预处理建议和 runtime 解释层；不替代人工真值、物理约束或因果融合主线。
+    - `P21 LLM preprocessing 对比实验` 已完成：
+      - 工程资产：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json`
+      - 条件 manifest：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/condition_manifest.json`
+      - 工程报告：`docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md`
+      - 中期 summary：`docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
+      - 当前结果：A1 `333/333` task entries 已 attach P20 context，`label_unchanged=true`；A2 semantic query coverage 从 `3` 扩到 `7`，且仅使用 whitelisted recipes；A3 `4/12` runtime cases 有 LLM explanation，解释子集四项完整性达到 `1.0`；A4 生成 `15` 条 `pending_human_review` 复核 packet。
+      - 当前边界：A2 没有从 summary 伪造 view ranking/top attribution 重算；A4 没有写成人工验证完成。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，本地 `main` 相对 `origin/main` 存在未推送提交；最新 P20 r3-sliced 代码与产物以本文件列出的本地路径为准，推送后进入远端历史。
+- 当前分支为 `main`，本地 `main` 已有 P20/P21 文档、代码和产物工作区改动；最新 P20 r3-sliced 与 P21 r1 comparison 以本文件列出的本地路径为准，提交/推送后进入远端历史。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
   - `70b651a feat: add stage i evidence closure tools`
@@ -135,6 +142,7 @@
   - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
   - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
   - 最新 P20 DeepSeek LLM preprocessing package：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
+  - 最新 P21 LLM preprocessing comparison package：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json`
 
 ## 当前主线事实
 
@@ -143,7 +151,7 @@
 - 当前公开第二模态应写成 `context proxy / public adapter evidence`，不是论文严格意义上的真实航电流。
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
-- 中期 P20 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run，并新增 agent-style prompt/harness v2 与切片整合；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核和解释层，不替代物理约束、因果融合或人工真值。
+- 中期 P20/P21 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run 与 A0-A4 对比实验；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核、whitelisted semantic hints、runtime explanation 和人工复核 packet，不替代物理约束、因果融合或人工真值。
 
 ## 当前代码组织事实
 
@@ -153,7 +161,7 @@
 
 ## 编码层面还需要做什么
 
-1. P20 后续优先做对比实验：baseline Stage I task entries vs LLM-context-attached entries、内置 semantic query bank vs 内置+LLM whitelisted hints、runtime report with/without LLM explanation，以及小样本人工复核节省量；当前 provider contract、agent-style schema harness、切片整合、mock/repair 测试和小样本真实 DeepSeek run 已完成。
+1. P21 已完成 LLM preprocessing 融入管线的 A0-A4 对比实验；后续若要升级结论强度，优先填写 `human_review_packet.csv` 并基于 Stage H tensor 复跑带 LLM query specs 的 semantic support，而不是从现有 summary 倒推 ranking 变化。
 2. 维护当前 `P11 stable resume / partial blocked / blocker log` 三段证据链，避免后续又退回到“完成两点 + 口头说明”的状态。
 3. 若后续要补更大的 `live_influx` 网格，先明确预算，再从当前 `2` 组合 stable resume 版继续扩展，而不是覆盖现有 stable summary。
 4. 若后续发现可用角速度字段，需要在 `rotation audit` 的基础上补 `minimal / full / rigid_body` 复跑；若没有，则继续保持 `rotation disabled` 的 diagnostics 口径。

@@ -33,6 +33,8 @@
 - [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
 - [../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
 - [../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
+- [../midterm/llm-preprocessing-comparison-plan-2026-06-14.md](../midterm/llm-preprocessing-comparison-plan-2026-06-14.md)
+- [../midterm/llm-preprocessing-comparison-summary-2026-06-14.md](../midterm/llm-preprocessing-comparison-summary-2026-06-14.md)
 
 ## 4. 当前最常引用产物
 
@@ -59,6 +61,10 @@
 - Midterm claims matrix：[../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
 - P20 DeepSeek 在线时序数据预处理计划：[../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
 - P20 DeepSeek 在线时序数据预处理 run：[stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md](stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md)
+- P21 LLM preprocessing 对比实验计划：[../midterm/llm-preprocessing-comparison-plan-2026-06-14.md](../midterm/llm-preprocessing-comparison-plan-2026-06-14.md)
+- P21 LLM preprocessing 对比实验 run：[stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md](stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md)
+- P21 中期结果摘要：[../midterm/llm-preprocessing-comparison-summary-2026-06-14.md](../midterm/llm-preprocessing-comparison-summary-2026-06-14.md)
+- P21 执行 prompt（历史追溯）：[../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md](../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md)
 - 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
 - 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json)
@@ -67,6 +73,7 @@
 - 当前 live weak-label partial summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json)
 - 当前 runtime schema contract：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json)
 - 当前 thesis figure manifest p18：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json)
+- 当前 P21 LLM comparison summary：[assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json](assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json)
 
 ## 5. 引用规则
 
@@ -75,3 +82,4 @@
 - 引用论文能力要求先看 [../requirements/SPEC.md](../requirements/SPEC.md)。
 - 历史报告可以引用，但必须说明是历史快照、公开适配器证据、私有代理证据还是 thesis weak-label evidence。
 - P20 DeepSeek 已生成小样本真实切片 run 产物：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`。引用时必须写成 LLM preprocessing context / rule review / semantic hints / runtime explanation / bounded slicing，不得写成人工真值、核心因果证据或原始全量高频时序外发。
+- P21 LLM comparison 已生成 A0-A4 对比产物：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/`、`docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md` 和 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。引用时必须保留 `label_unchanged=true`、semantic hints whitelist、runtime explanation bounded subset、`human_review_completed=false` 四个边界。

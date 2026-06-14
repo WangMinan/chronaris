@@ -1,0 +1,48 @@
+{
+  "run_id": "20260614T-stage-i-p21-llm-comparison-r1",
+  "conditions": [
+    {
+      "condition_id": "A0",
+      "name": "baseline",
+      "status": "completed",
+      "control": "No LLM context attached; built-in semantic query bank only."
+    },
+    {
+      "condition_id": "A1",
+      "name": "llm_context",
+      "status": "completed",
+      "label_unchanged": true,
+      "attached_entry_count": 333
+    },
+    {
+      "condition_id": "A2",
+      "name": "llm_semantic_hints",
+      "status": "completed_coverage_only",
+      "whitelist": [
+        "coordination_gap",
+        "gap_plus_event",
+        "physiology_plus_gap",
+        "vehicle_plus_event"
+      ],
+      "view_ranking_recomputed": false
+    },
+    {
+      "condition_id": "A3",
+      "name": "llm_runtime_explanation",
+      "status": "success_bounded_explained_subset",
+      "required_fields": [
+        "model_prediction",
+        "semantic_attribution",
+        "schema_gap_note",
+        "weak_label_boundary"
+      ]
+    },
+    {
+      "condition_id": "A4",
+      "name": "human_review_packet",
+      "status": "pending_human_review",
+      "human_review_completed": false
+    }
+  ],
+  "boundary": "LLM outputs remain preprocessing context and review material."
+}
