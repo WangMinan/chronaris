@@ -61,7 +61,7 @@
 
 后续收敛顺序：
 
-1. 当前 P20 已完成 DeepSeek 在线时序数据预处理首轮实现、小样本真实 run 与 schema harness；后续若继续编码，优先扩展更多 cards 和人工复核封装。
+1. 当前 P20 已完成 DeepSeek 在线时序数据预处理、agent-style prompt/harness v2、切片整合和小样本真实 r3-sliced run；后续优先做 baseline vs LLM-context 对比、semantic query bank 对比、runtime 解释完整性对比和小样本人工复核收益评估。
 2. 中期报告写作优先从 `docs/midterm/` 的事实清单、边界风险说明和 claims matrix 进入；P20 当前可写成已实现在线 LLM preprocessing context，但不能写成真值标注、OpenAI 默认接入或核心因果证据。
 3. 保留并维护 `P18` 的 `P11 stable/partial` 与 `P17 schema-contract` 当前入口，避免后续继续回退到纯手工解释或旧 r1 demo。
 4. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
@@ -862,10 +862,12 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 当前状态：
 
 - 已完成文档计划：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`。
-- 已新增 DeepSeek/OpenAI-compatible provider contract、strict response contract、schema-repair harness 和下游消费 helper。
-- 已完成 mock provider 测试，并覆盖 schema repair retry。
-- 已完成 DeepSeek v4-pro 小样本真实 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_preprocessing_summary.json`。
-- 当前真实 run `request_count=5`、`error_count=0`、`field_semantic_count=24`、`weak_label_review_count=3`、`semantic_query_hint_count=4`、`runtime_explanation_count=4`。
+- 已新增 DeepSeek/OpenAI-compatible provider contract、strict response contract、agent-style prompt/harness v2、schema-repair harness、切片整合和下游消费 helper。
+- 已完成 mock provider 测试，并覆盖 schema repair retry、prompt protocol、payload slicing 与 local merge。
+- 已完成 DeepSeek v4-pro 小样本真实切片 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`。
+- 当前真实 run `request_count=8`、`error_count=0`、`field_semantic_count=24`、`weak_label_review_count=3`、`semantic_query_hint_count=4`、`runtime_explanation_count=4`。
+- 当前 harness `prompt_version=stage_i_llm_preprocessing.agent_guardrails.v2`、`schema_version=stage_i_llm_preprocessing_context.v2`、`schema_repair_attempt_count=0`、`final_invalid_task_count=0`。
+- 当前 slicing `field_semantics=2`、`schema_gap_policy=2`、`runtime_explanations=2`，大 payload 按 stable identifier 本地合并，不把全量高频时序一次外发。
 
 默认 provider：
 
@@ -879,6 +881,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `src/chronaris/llm/schemas.py`
 - `src/chronaris/llm/prompts.py`
 - `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing.py`
+- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing_harness.py`
+- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing_slicing.py`
+- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing_reporting.py`
 - `scripts/run_stage_i_llm_preprocessing.py`
 - `tests/test_stage_i_llm_preprocessing.py`
 
@@ -891,23 +896,32 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 建议输出：
 
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_preprocessing_context.json`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_field_semantics.jsonl`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/field_semantic_dictionary.csv`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_weak_label_review.jsonl`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/weak_label_llm_comparison.csv`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_schema_gap_policy.json`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/runtime_llm_explanations.jsonl`
-- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_request_response_audit.jsonl`
-- `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_field_semantics.jsonl`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/field_semantic_dictionary.csv`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_weak_label_review.jsonl`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/weak_label_llm_comparison.csv`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_schema_gap_policy.json`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/runtime_llm_explanations.jsonl`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_harness_summary.json`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_request_response_audit.jsonl`
+- `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`
 
 验收：
 
 - mock provider 测试通过，离线环境不依赖真实 API。
-- DeepSeek 小样本真实 run 完成并落盘。
-- 请求、响应、prompt version、input hash、错误样例、成本/延迟摘要可追溯。
+- DeepSeek 小样本真实切片 run 完成并落盘。
+- 请求、响应、prompt version、input hash、harness verdict、slicing summary、错误样例、成本/延迟摘要可追溯。
 - 输出只作为字段语义、预处理建议、weak-label 复核和 runtime 解释证据，不替代人工真值或核心因果证据。
 - 文档回写 `docs/STATE.md`、本文件、`docs/artifacts/ARTIFACTS.md` 和 `docs/midterm/claims-matrix-*.md`。
+
+下一步对比实验：
+
+- `A0 baseline`：不接 LLM context，复用当前 Stage I task entries 与内置 semantic query bank。
+- `A1 llm_context`：只把 `llm_preprocessing_context` attach 到 task entries，标签值保持不变，检查训练/eval 指标和报告可解释性变化。
+- `A2 llm_semantic_hints`：在 event fusion support 中加入 whitelisted LLM semantic query hints，对比 query coverage、view ranking 和 attribution 分布。
+- `A3 runtime_explanation`：对比 runtime replay 报告中有/无 LLM explanation 的 schema gap、weak-label boundary 和 semantic attribution 完整性。
+- `A4 human_review`：抽取小样本字段/规则人工复核，统计 LLM 是否减少人工查表和规则解释成本。
 
 ## 中期前边界管理
 
@@ -917,7 +931,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - NASA/UAB 公开数据适配器结果：中期前要整理成 public adapter evidence 和 transfer boundary；不能改写成论文双流本体闭环。
 - `chronaris_opt` 与 `T1/T2/T3`：中期前要补机制诊断；仍只能写成 private proxy benchmark evidence，不能写成人工真值 thesis task fully closed。
 - `risk_proxy / workload_proxy / event_replay_tag`：中期前要补小网格与消融；仍只能写成 thesis weak-label evidence。
-- DeepSeek 在线 LLM 预处理：P20 已接入字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释；仍不能写成 OpenAI 默认接入、人工真值替代、原始全量数据外发或核心因果证据。
+- DeepSeek 在线 LLM 预处理：P20 已接入字段语义归一、weak-label 复核、schema gap policy、runtime 解释和切片整合；仍不能写成 OpenAI 默认接入、人工真值替代、原始全量数据外发或核心因果证据。
 - `rigid_body rotation`：中期前必须核验字段；启用或缺失都要以 diagnostics 形式固化。
 - 上游接收器、入库链路和原始大文件入仓：中期前不重建；论文系统封装时可说明现有 MySQL / InfluxDB 接入边界，必要时补轻量接口说明或部署文档。
 

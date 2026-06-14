@@ -16,9 +16,18 @@ from chronaris.dataset import (
 )
 from chronaris.llm import LLMProvider, resolve_llm_provider
 from chronaris.llm.schemas import (
+    PROMPT_VERSION,
     SCHEMA_VERSION,
 )
-from chronaris.pipelines.stage_i.stage_i_llm_preprocessing_harness import run_preprocessing_llm_task
+from chronaris.pipelines.stage_i.stage_i_llm_preprocessing_harness import (
+    build_harness_summary,
+    run_preprocessing_llm_task,
+)
+from chronaris.pipelines.stage_i.stage_i_llm_preprocessing_slicing import (
+    build_sliced_llm_task_calls,
+    build_slicing_summary,
+    merge_sliced_task_output,
+)
 from chronaris.models.fusion import semantic_query_specs_from_llm_hints
 from chronaris.pipelines.stage_i.stage_i_llm_preprocessing_reporting import (
     render_stage_i_llm_preprocessing_report,
@@ -85,6 +94,10 @@ class StageILLMPreprocessingConfig:
     max_schema_fields: int = 36
     max_window_cards: int = 12
     max_runtime_cases: int = 12
+    schema_field_chunk_size: int = 24
+    weak_label_task_chunk_size: int = 3
+    schema_gap_group_chunk_size: int = 8
+    runtime_case_chunk_size: int = 4
 
     def __post_init__(self) -> None:
         if self.mode not in LLM_PREPROCESSING_MODES:
@@ -95,6 +108,14 @@ class StageILLMPreprocessingConfig:
             raise ValueError("max_window_cards must be positive.")
         if self.max_runtime_cases <= 0:
             raise ValueError("max_runtime_cases must be positive.")
+        if self.schema_field_chunk_size <= 0:
+            raise ValueError("schema_field_chunk_size must be positive.")
+        if self.weak_label_task_chunk_size <= 0:
+            raise ValueError("weak_label_task_chunk_size must be positive.")
+        if self.schema_gap_group_chunk_size <= 0:
+            raise ValueError("schema_gap_group_chunk_size must be positive.")
+        if self.runtime_case_chunk_size <= 0:
+            raise ValueError("runtime_case_chunk_size must be positive.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -166,22 +187,23 @@ def _run_observed(
         "schema_gap_policy": {},
         "runtime_case_explanations": [],
     }
-    task_order = (
-        "field_semantics",
-        "weak_label_review",
-        "semantic_query_hints",
-        "schema_gap_policy",
-        "runtime_explanations",
+    task_calls = build_sliced_llm_task_calls(
+        cards=cards,
+        schema_field_chunk_size=config.schema_field_chunk_size,
+        weak_label_task_chunk_size=config.weak_label_task_chunk_size,
+        schema_gap_group_chunk_size=config.schema_gap_group_chunk_size,
+        runtime_case_chunk_size=config.runtime_case_chunk_size,
     )
-    for index, task_name in enumerate(task_order, start=1):
+    progress.update("llm_task_calls_built", task_call_count=len(task_calls))
+    for index, (task_name, input_payload) in enumerate(task_calls, start=1):
         output_key, output_value, task_audits, task_errors = run_preprocessing_llm_task(
             run_id=config.run_id,
             provider=resolved_provider,
             index=index,
             task_name=task_name,
-            input_payload=cards[task_name],
+            input_payload=input_payload,
         )
-        outputs[output_key] = output_value
+        outputs[output_key] = merge_sliced_task_output(task_name, outputs[output_key], output_value)
         audit_rows.extend(task_audits)
         error_cases.extend(task_errors)
     progress.update("llm_requests_finished", request_count=len(audit_rows), error_count=len(error_cases))
@@ -356,14 +378,18 @@ def _write_outputs(
     comparison_path = run_root / "weak_label_llm_comparison.csv"
     schema_gap_path = run_root / "llm_schema_gap_policy.json"
     runtime_explanations_path = run_root / "runtime_llm_explanations.jsonl"
+    harness_summary_path = run_root / "llm_harness_summary.json"
     summary_path = run_root / "llm_preprocessing_summary.json"
     audit_path = run_root / "llm_request_response_audit.jsonl"
     error_cases_path = run_root / "llm_error_cases.json"
     report_path = report_root / f"stage-i-llm-preprocessing-{config.run_id}.md"
+    harness_summary = build_harness_summary(audit_rows)
+    slicing_summary = build_slicing_summary(audit_rows)
 
     context = {
         "run_id": config.run_id,
         "schema_version": SCHEMA_VERSION,
+        "prompt_version": PROMPT_VERSION,
         "status": _resolve_status(audit_rows, error_cases),
         "mode": config.mode,
         "provider": _provider_from_audit(audit_rows),
@@ -375,6 +401,9 @@ def _write_outputs(
         "semantic_query_hints": query_hints,
         "schema_gap_policy": schema_gap_policy,
         "runtime_case_explanations_path": str(runtime_explanations_path),
+        "harness_summary_path": str(harness_summary_path),
+        "harness_summary": harness_summary,
+        "slicing_summary": slicing_summary,
         "downstream_consumption": downstream_summary,
         "source_paths": dict(_as_mapping(sources["source_paths"])),
         "boundary": "llm_preprocessing_context_not_ground_truth",
@@ -416,6 +445,10 @@ def _write_outputs(
     )
     _write_jsonl(runtime_explanations_path, runtime_explanations)
     _write_jsonl(audit_path, audit_rows)
+    harness_summary_path.write_text(
+        json.dumps(harness_summary, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     error_cases_path.write_text(
         json.dumps(list(error_cases), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -430,11 +463,14 @@ def _write_outputs(
         "mode": config.mode,
         "artifact_root": str(run_root),
         "context_path": str(context_path),
+        "prompt_version": PROMPT_VERSION,
+        "schema_version": SCHEMA_VERSION,
         "field_semantic_dictionary_path": str(field_csv_path),
         "weak_label_review_path": str(weak_review_path),
         "weak_label_comparison_path": str(comparison_path),
         "schema_gap_policy_path": str(schema_gap_path),
         "runtime_llm_explanations_path": str(runtime_explanations_path),
+        "harness_summary_path": str(harness_summary_path),
         "audit_path": str(audit_path),
         "error_cases_path": str(error_cases_path),
         "report_path": str(report_path),
@@ -444,6 +480,8 @@ def _write_outputs(
         "weak_label_review_count": len(weak_review_rows),
         "semantic_query_hint_count": len(query_hints),
         "runtime_explanation_count": len(runtime_explanations),
+        "harness_summary": harness_summary,
+        "slicing_summary": slicing_summary,
         "comparison": comparison_stats,
         "downstream_consumption": downstream_summary,
         "source_paths": dict(_as_mapping(sources["source_paths"])),

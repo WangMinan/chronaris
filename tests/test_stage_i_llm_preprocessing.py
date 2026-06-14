@@ -18,6 +18,8 @@ from chronaris.dataset import (  # noqa: E402
     dump_stage_i_private_task_entries,
 )
 from chronaris.llm import LLMProvider, LLMTaskRequest, LLMTaskResponse, MockLLMProvider  # noqa: E402
+from chronaris.llm.prompts import build_llm_task_request  # noqa: E402
+from chronaris.llm.schemas import PROMPT_VERSION, SCHEMA_VERSION  # noqa: E402
 from chronaris.models.fusion import semantic_query_specs_from_llm_hints  # noqa: E402
 from chronaris.pipelines import StageILLMPreprocessingConfig, run_stage_i_llm_preprocessing  # noqa: E402
 
@@ -52,9 +54,14 @@ class StageILLMPreprocessingTest(unittest.TestCase):
             self.assertEqual(result.status, "success")
             summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
             context = json.loads(Path(result.context_path).read_text(encoding="utf-8"))
+            harness_summary = json.loads(Path(summary["harness_summary_path"]).read_text(encoding="utf-8"))
             self.assertEqual(summary["field_semantic_count"], 4)
             self.assertEqual(summary["weak_label_review_count"], 3)
             self.assertEqual(summary["runtime_explanation_count"], 2)
+            self.assertEqual(summary["prompt_version"], PROMPT_VERSION)
+            self.assertEqual(context["schema_version"], SCHEMA_VERSION)
+            self.assertEqual(harness_summary["schema_repair_attempt_count"], 0)
+            self.assertEqual(harness_summary["final_invalid_task_count"], 0)
             self.assertEqual(summary["comparison"]["sample_count"], 6)
             self.assertEqual(summary["downstream_consumption"]["task_builder_context_attached_entry_count"], 6)
             self.assertIn("field_semantic_dictionary", context)
@@ -97,6 +104,7 @@ class StageILLMPreprocessingTest(unittest.TestCase):
             summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
             error_cases = json.loads(Path(summary["error_cases_path"]).read_text(encoding="utf-8"))
             self.assertEqual(len(error_cases), 5)
+            self.assertEqual(summary["harness_summary"]["provider_failure_attempt_count"], 5)
             schema_policy = json.loads(Path(summary["schema_gap_policy_path"]).read_text(encoding="utf-8"))
             self.assertEqual(schema_policy["status"], "fallback_policy")
 
@@ -130,6 +138,73 @@ class StageILLMPreprocessingTest(unittest.TestCase):
             self.assertEqual(summary["request_count"], 6)
             self.assertEqual(summary["error_count"], 0)
             self.assertEqual(summary["semantic_query_hint_count"], 1)
+            self.assertEqual(summary["harness_summary"]["schema_repair_attempt_count"], 1)
+            self.assertEqual(summary["harness_summary"]["failed_initial_attempt_count"], 1)
+
+    def test_large_payloads_are_sliced_and_merged_locally(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            sources = _write_sources(root)
+            result = run_stage_i_llm_preprocessing(
+                StageILLMPreprocessingConfig(
+                    run_id="stage-i-llm-preprocessing-slicing-test",
+                    mode="build-and-evaluate",
+                    artifact_root=str(root / "artifacts"),
+                    report_root=str(root / "reports"),
+                    provider_name="mock",
+                    model="mock-stage-i-llm",
+                    multitask_summary_path=str(sources["multitask_summary"]),
+                    task_manifest_path=str(sources["task_manifest"]),
+                    live_sweep_summary_path=str(sources["live_sweep_summary"]),
+                    support_summary_path=str(sources["support_summary"]),
+                    runtime_schema_contract_path=str(sources["runtime_schema_contract"]),
+                    runtime_service_summary_path=str(sources["runtime_service_summary"]),
+                    runtime_case_table_path=str(sources["runtime_case_table"]),
+                    max_schema_fields=4,
+                    max_window_cards=2,
+                    max_runtime_cases=2,
+                    schema_field_chunk_size=2,
+                    weak_label_task_chunk_size=2,
+                    runtime_case_chunk_size=1,
+                ),
+                provider=MockLLMProvider(),
+            )
+
+            self.assertEqual(result.status, "success")
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertEqual(summary["request_count"], 8)
+            self.assertEqual(summary["field_semantic_count"], 4)
+            self.assertEqual(summary["weak_label_review_count"], 3)
+            self.assertEqual(summary["runtime_explanation_count"], 2)
+            self.assertEqual(summary["slicing_summary"]["sliced_task_count"], 3)
+            self.assertEqual(summary["harness_summary"]["final_invalid_task_count"], 0)
+
+    def test_prompt_declares_agent_protocol_and_local_gates(self) -> None:
+        request = build_llm_task_request(
+            run_id="prompt-test",
+            request_id="prompt-test-01-field-semantics",
+            task_name="field_semantics",
+            provider="deepseek",
+            model="deepseek-v4-pro",
+            input_payload={
+                "fields": [
+                    {
+                        "stream_kind": "vehicle",
+                        "measurement_group": "BUS6000019110020",
+                        "feature_name": "BUS6000019110020.code1030",
+                    }
+                ]
+            },
+        )
+        payload = json.loads(request.messages[1].content)
+        self.assertEqual(payload["prompt_version"], PROMPT_VERSION)
+        self.assertEqual(payload["output_schema_version"], SCHEMA_VERSION)
+        self.assertIn("agent_protocol", payload)
+        self.assertIn("feature_name_coverage_exact", payload["local_harness_gates"])
+        self.assertEqual(
+            payload["response_contract"]["allowed_top_level_keys"],
+            ["field_semantics"],
+        )
 
     def test_downstream_helpers_keep_llm_context_optional_and_whitelisted(self) -> None:
         entries = _task_entries()

@@ -1,0 +1,78 @@
+{
+  "prompt_version": "stage_i_llm_preprocessing.agent_guardrails.v2",
+  "schema_version": "stage_i_llm_preprocessing_context.v2",
+  "attempt_count": 8,
+  "validated_attempt_count": 8,
+  "provider_failure_attempt_count": 0,
+  "schema_repair_attempt_count": 0,
+  "failed_initial_attempt_count": 0,
+  "final_invalid_task_count": 0,
+  "final_invalid_tasks": [],
+  "task_verdicts": [
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-01-field_semantics",
+      "task_name": "field_semantics",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 12,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-02-field_semantics",
+      "task_name": "field_semantics",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 12,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-03-weak_label_review",
+      "task_name": "weak_label_review",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 3,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-04-semantic_query_hints",
+      "task_name": "semantic_query_hints",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 4,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-05-schema_gap_policy",
+      "task_name": "schema_gap_policy",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 3,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-06-schema_gap_policy",
+      "task_name": "schema_gap_policy",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 3,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-07-runtime_explanations",
+      "task_name": "runtime_explanations",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 2,
+      "failed_gates": []
+    },
+    {
+      "request_id": "20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced-08-runtime_explanations",
+      "task_name": "runtime_explanations",
+      "attempt": "initial",
+      "valid": true,
+      "output_count": 2,
+      "failed_gates": []
+    }
+  ],
+  "boundary": "local harness validates LLM JSON shape and identifier coverage before downstream consumption"
+}

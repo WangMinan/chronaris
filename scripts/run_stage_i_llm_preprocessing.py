@@ -54,6 +54,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-schema-fields", type=int, default=36)
     parser.add_argument("--max-window-cards", type=int, default=12)
     parser.add_argument("--max-runtime-cases", type=int, default=12)
+    parser.add_argument("--schema-field-chunk-size", type=int, default=24)
+    parser.add_argument("--weak-label-task-chunk-size", type=int, default=3)
+    parser.add_argument("--schema-gap-group-chunk-size", type=int, default=8)
+    parser.add_argument("--runtime-case-chunk-size", type=int, default=4)
     parser.add_argument("--deepseek-base-url", default=os.environ.get("CHRONARIS_LLM_BASE_URL"))
     parser.add_argument("--secrets-path", default=str(REPO_ROOT / "docs" / "SECRETS.md"))
     parser.add_argument("--no-secrets-file", action="store_true")
@@ -89,6 +93,10 @@ def main() -> int:
             max_schema_fields=args.max_schema_fields,
             max_window_cards=args.max_window_cards,
             max_runtime_cases=args.max_runtime_cases,
+            schema_field_chunk_size=args.schema_field_chunk_size,
+            weak_label_task_chunk_size=args.weak_label_task_chunk_size,
+            schema_gap_group_chunk_size=args.schema_gap_group_chunk_size,
+            runtime_case_chunk_size=args.runtime_case_chunk_size,
         ),
         provider=provider,
     )

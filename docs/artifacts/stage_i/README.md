@@ -12,6 +12,7 @@
 - live weak-label stable resume：`stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
 - thesis materials p18：`stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
 - runtime service smoke r2 contract：`stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
+- DeepSeek LLM preprocessing r3 sliced：`stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`
 - 中期事实清单：`../../midterm/midterm-fact-sheet-2026-06-13.md`
 - 中期边界说明：`../../midterm/boundaries-and-risks-2026-06-13.md`
 - 历史 Stage I closure：`stage-i-closure-2026-04-30.md`
@@ -51,4 +52,5 @@
 - `public opt closed` 仍是公开支撑证据，但 UAB `target_prior_median` 只能写成 `public adapter / calibration evidence`。
 - UAB/NASA 第二模态统一写成 `context proxy / public adapter evidence`。
 - 私有分支需要区分 `T1/T2/T3 = private proxy benchmark / proxy evidence` 与 `risk_proxy / workload_proxy / event_replay_tag = thesis weak-label evidence`。
+- P20 DeepSeek LLM preprocessing 只能写成 preprocessing context、rule review、semantic hints、runtime explanation 和 bounded slicing；不能写成人工真值、OpenAI 默认接入或核心因果证据。
 - 历史 archive 只用于追溯，不作为当前状态入口。

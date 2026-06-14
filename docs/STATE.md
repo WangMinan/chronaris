@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、schema harness、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入。
 
 ## 当前阶段
 
@@ -83,16 +83,18 @@
       - P16 刷新图表：
         - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
         - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
-    - `P20 DeepSeek 在线时序数据预处理` 已完成首轮代码与真实小样本 run：
+    - `P20 DeepSeek 在线时序数据预处理` 已完成 agent-style harness v2、切片整合与真实小样本 run：
       - 计划入口：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`
-      - 真实 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r1/llm_preprocessing_summary.json`
-      - 报告：`docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md`
-      - 当前结果：`request_count=5`、`error_count=0`、`field_semantic_count=24`、`weak_label_review_count=3`、`semantic_query_hint_count=4`、`runtime_explanation_count=4`。
+      - 当前真实 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
+      - 当前报告：`docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`
+      - 当前结果：`request_count=8`、`error_count=0`、`field_semantic_count=24`、`weak_label_review_count=3`、`semantic_query_hint_count=4`、`runtime_explanation_count=4`。
+      - 当前 harness：`prompt_version=stage_i_llm_preprocessing.agent_guardrails.v2`、`schema_repair_attempt_count=0`、`final_invalid_task_count=0`。
+      - 当前切片：`field_semantics` 按 12+12、`schema_gap_policy` 按 3+3、`runtime_explanations` 按 2+2 切片，并在本地按 stable identifier 合并。
       - 当前定位：DeepSeek v4-pro 只作为字段语义归一、weak-label 规则复核、schema gap 预处理建议和 runtime 解释层；不替代人工真值、物理约束或因果融合主线。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，本地 `main` 已同步推送到 `origin/main`。
+- 当前分支为 `main`，本地 `main` 相对 `origin/main` 存在未推送提交；最新 P20 r3-sliced 代码与产物以本文件列出的本地路径为准，推送后进入远端历史。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
   - `70b651a feat: add stage i evidence closure tools`
@@ -132,6 +134,7 @@
   - 最新 thesis materials p18：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
   - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
   - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
+  - 最新 P20 DeepSeek LLM preprocessing package：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
 
 ## 当前主线事实
 
@@ -140,11 +143,11 @@
 - 当前公开第二模态应写成 `context proxy / public adapter evidence`，不是论文严格意义上的真实航电流。
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
-- 中期 P20 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核和解释层，不替代物理约束、因果融合或人工真值。
+- 中期 P20 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run，并新增 agent-style prompt/harness v2 与切片整合；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核和解释层，不替代物理约束、因果融合或人工真值。
 
 ## 编码层面还需要做什么
 
-1. 若中期前继续编码，P20 后续优先扩展更多 schema/window/runtime cards，并把 field semantics 与 schema gap policy 的人工复核流程适当封装；当前 provider contract、schema harness、mock/repair 测试和小样本真实 DeepSeek run 已完成。
+1. P20 后续优先做对比实验：baseline Stage I task entries vs LLM-context-attached entries、内置 semantic query bank vs 内置+LLM whitelisted hints、runtime report with/without LLM explanation，以及小样本人工复核节省量；当前 provider contract、agent-style schema harness、切片整合、mock/repair 测试和小样本真实 DeepSeek run 已完成。
 2. 维护当前 `P11 stable resume / partial blocked / blocker log` 三段证据链，避免后续又退回到“完成两点 + 口头说明”的状态。
 3. 若后续要补更大的 `live_influx` 网格，先明确预算，再从当前 `2` 组合 stable resume 版继续扩展，而不是覆盖现有 stable summary。
 4. 若后续发现可用角速度字段，需要在 `rotation audit` 的基础上补 `minimal / full / rigid_body` 复跑；若没有，则继续保持 `rotation disabled` 的 diagnostics 口径。
@@ -237,7 +240,7 @@
 - 产物索引：[artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)
 - 中期前目标笔记：[implementation/notes/midterm-goal-2026-06-07.md](implementation/notes/midterm-goal-2026-06-07.md)
 - P20 DeepSeek 在线时序数据预处理计划：[implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
-- P20 DeepSeek 在线时序数据预处理 run：[artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md](artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r1.md)
+- P20 DeepSeek 在线时序数据预处理 run：[artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md](artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md)
 
 ## 本轮验证
 
@@ -422,6 +425,6 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 - NASA/UAB 公开数据适配器结果：中期前整理成 public adapter evidence 和 transfer boundary；不能改写成论文双流本体闭环。
 - `chronaris_opt` 与 `T1/T2/T3`：中期前补机制诊断；仍只能写成 private proxy benchmark evidence，不能写成人工真值 thesis task fully closed。
 - `risk_proxy / workload_proxy / event_replay_tag`：中期前补小网格和消融；仍只能写成 thesis weak-label evidence。
-- DeepSeek 在线 LLM 预处理：P20 已接入字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释；仍不能写成 OpenAI 接入、人工真值替代或因果证据。
+- DeepSeek 在线 LLM 预处理：P20 已接入字段语义归一、weak-label 复核、schema gap policy、runtime 解释和切片整合；仍不能写成 OpenAI 接入、人工真值替代、原始全量数据外发或因果证据。
 - `rigid_body rotation`：中期前必须核验真实字段；启用或缺失都要以 diagnostics 形式固化。
 - 上游接收器、入库链路和原始大文件入仓：中期前不重建；论文系统封装时可说明现有 MySQL / InfluxDB 接入边界，必要时补轻量接口说明或部署文档。
