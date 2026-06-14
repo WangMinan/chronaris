@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-06-13
+更新时间：2026-06-14
 
 ## 文档定位
 
@@ -61,12 +61,13 @@
 
 后续收敛顺序：
 
-1. 当前编码任务已收口；中期报告写作优先从 `docs/midterm/` 的事实清单、边界风险说明和 claims matrix 进入。
-2. 保留并维护 `P18` 的 `P11 stable/partial` 与 `P17 schema-contract` 当前入口，避免后续继续回退到纯手工解释或旧 r1 demo。
-3. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
-4. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
-5. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
-6. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label 五组关键词搜索。
+1. 当前 P20 已冻结 DeepSeek 在线时序数据预处理方案；若继续中期前编码，优先按 `docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md` 做 provider contract、mock provider 测试和小样本真实 run。
+2. 中期报告写作优先从 `docs/midterm/` 的事实清单、边界风险说明和 claims matrix 进入；P20 当前只能写成计划，不能写成已实现结果。
+3. 保留并维护 `P18` 的 `P11 stable/partial` 与 `P17 schema-contract` 当前入口，避免后续继续回退到纯手工解释或旧 r1 demo。
+4. 持续维护 evidence runner 的 `skip-heavy / reuse-existing` 策略；如需更大 `live_influx` 网格，先明确预算，再从当前 `2` 组合稳定版扩展。
+5. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
+6. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
+7. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
 
 验收：
 
@@ -854,6 +855,57 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - 边界和答辩风险先读 `docs/midterm/boundaries-and-risks-2026-06-13.md`。
 - 文献检索和正文 claim 先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束证据强度。
 
+## 待办 P20：DeepSeek 在线时序数据预处理
+
+目标：在现有 MySQL / InfluxDB 私有数据链路和 Stage H / Stage I 资产之上，接入 DeepSeek 在线大模型，形成中期可写的 LLM 辅助时序数据预处理能力。
+
+当前状态：
+
+- 仅完成文档计划：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`。
+- 尚未修改代码。
+- 尚未调用 DeepSeek API。
+- 尚未生成 `stage_i_llm_preprocessing` 运行产物。
+
+默认 provider：
+
+- `CHRONARIS_LLM_PROVIDER=deepseek`
+- `CHRONARIS_LLM_MODEL=deepseek-v4-pro`
+- 不默认使用 OpenAI，除非用户后续明确解除信息安全顾虑。
+
+建议未来代码落点：
+
+- `src/chronaris/llm/provider.py`
+- `src/chronaris/llm/schemas.py`
+- `src/chronaris/llm/prompts.py`
+- `src/chronaris/pipelines/stage_i/stage_i_llm_preprocessing.py`
+- `scripts/run_stage_i_llm_preprocessing.py`
+- `tests/test_stage_i_llm_preprocessing.py`
+
+建议输入：
+
+- MySQL 字段 label、measurement id、code id、sortie / view 元信息。
+- InfluxDB 派生的 Stage H 窗口统计摘要。
+- 当前 `2` 个 sortie、`3` 个双流 view、`111` 个窗口样本的 weak-label task summary。
+- runtime schema contract、runtime semantic case 和 schema gap summary。
+
+建议输出：
+
+- `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/llm_field_semantics.jsonl`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/field_semantic_dictionary.csv`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/llm_weak_label_review.jsonl`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/weak_label_llm_comparison.csv`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/llm_schema_gap_policy.json`
+- `docs/artifacts/assets/stage_i_llm_preprocessing/<run_id>/runtime_llm_explanations.jsonl`
+- `docs/artifacts/stage_i/stage-i-llm-preprocessing-<run_id>.md`
+
+验收：
+
+- mock provider 测试通过，离线环境不依赖真实 API。
+- DeepSeek 小样本真实 run 完成并落盘。
+- 请求、响应、prompt version、input hash、错误样例、成本/延迟摘要可追溯。
+- 输出只作为字段语义、预处理建议、weak-label 复核和 runtime 解释证据，不替代人工真值或核心因果证据。
+- 文档回写 `docs/STATE.md`、本文件、`docs/artifacts/ARTIFACTS.md` 和 `docs/midterm/claims-matrix-*.md`。
+
 ## 中期前边界管理
 
 下面几类工作现在纳入中期前主动任务，但必须按证据分层写清楚，不能因为加做实验就改变论文边界。
@@ -862,6 +914,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - NASA/UAB 公开数据适配器结果：中期前要整理成 public adapter evidence 和 transfer boundary；不能改写成论文双流本体闭环。
 - `chronaris_opt` 与 `T1/T2/T3`：中期前要补机制诊断；仍只能写成 private proxy benchmark evidence，不能写成人工真值 thesis task fully closed。
 - `risk_proxy / workload_proxy / event_replay_tag`：中期前要补小网格与消融；仍只能写成 thesis weak-label evidence。
+- DeepSeek 在线 LLM 预处理：中期前可接入字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释；仍不能写成 OpenAI 默认接入、人工真值替代、原始全量数据外发或核心因果证据。
 - `rigid_body rotation`：中期前必须核验字段；启用或缺失都要以 diagnostics 形式固化。
 - 上游接收器、入库链路和原始大文件入仓：中期前不重建；论文系统封装时可说明现有 MySQL / InfluxDB 接入边界，必要时补轻量接口说明或部署文档。
 

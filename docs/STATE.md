@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-06-13
+更新时间：2026-06-14
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。中期新增 P20 DeepSeek 在线时序数据预处理计划，当前只冻结文档方案，尚未更新代码或调用 API。
 
 ## 当前阶段
 
@@ -83,6 +83,10 @@
       - P16 刷新图表：
         - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
         - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
+    - `P20 DeepSeek 在线时序数据预处理` 已形成文档计划：
+      - 计划入口：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`
+      - 当前定位：中期先接 DeepSeek v4-pro 在线服务，用于字段语义归一、weak-label 规则复核、schema gap 预处理建议和 runtime 解释。
+      - 当前状态：文档方案已冻结；尚未修改代码、尚未调用 DeepSeek、尚未生成 `stage_i_llm_preprocessing` 运行产物。
 
 ## Git 与工作区核对
 
@@ -134,13 +138,15 @@
 - 当前公开第二模态应写成 `context proxy / public adapter evidence`，不是论文严格意义上的真实航电流。
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
+- 中期新增 LLM 计划默认使用 DeepSeek，不默认使用 OpenAI；LLM 仅作为在线时序数据预处理、规则复核和解释层，不替代物理约束、因果融合或人工真值。
 
 ## 编码层面还需要做什么
 
-1. 维护当前 `P11 stable resume / partial blocked / blocker log` 三段证据链，避免后续又退回到“完成两点 + 口头说明”的状态。
-2. 若后续要补更大的 `live_influx` 网格，先明确预算，再从当前 `2` 组合 stable resume 版继续扩展，而不是覆盖现有 stable summary。
-3. 若后续发现可用角速度字段，需要在 `rotation audit` 的基础上补 `minimal / full / rigid_body` 复跑；若没有，则继续保持 `rotation disabled` 的 diagnostics 口径。
-4. 若后续要把 runtime/service 收紧到 `native exact schema`，优先补齐上游 view replay payload 的 vehicle measurement groups；当前 `native aligned / canonical exact` 已经把部署边界写清，不需要重建上游接收器。
+1. 若中期前继续编码，优先按 `docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md` 做 P20 DeepSeek 在线时序数据预处理；先完成 provider contract、mock provider 测试和小样本真实 run。
+2. 维护当前 `P11 stable resume / partial blocked / blocker log` 三段证据链，避免后续又退回到“完成两点 + 口头说明”的状态。
+3. 若后续要补更大的 `live_influx` 网格，先明确预算，再从当前 `2` 组合 stable resume 版继续扩展，而不是覆盖现有 stable summary。
+4. 若后续发现可用角速度字段，需要在 `rotation audit` 的基础上补 `minimal / full / rigid_body` 复跑；若没有，则继续保持 `rotation disabled` 的 diagnostics 口径。
+5. 若后续要把 runtime/service 收紧到 `native exact schema`，优先补齐上游 view replay payload 的 vehicle measurement groups；当前 `native aligned / canonical exact` 已经把部署边界写清，不需要重建上游接收器。
 
 ## 实验层面还需要做什么
 
@@ -228,6 +234,7 @@
 - 论文需求入口：[requirements/SPEC.md](requirements/SPEC.md)
 - 产物索引：[artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)
 - 中期前目标笔记：[implementation/notes/midterm-goal-2026-06-07.md](implementation/notes/midterm-goal-2026-06-07.md)
+- P20 DeepSeek 在线时序数据预处理计划：[implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
 
 ## 本轮验证
 
@@ -412,5 +419,6 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 - NASA/UAB 公开数据适配器结果：中期前整理成 public adapter evidence 和 transfer boundary；不能改写成论文双流本体闭环。
 - `chronaris_opt` 与 `T1/T2/T3`：中期前补机制诊断；仍只能写成 private proxy benchmark evidence，不能写成人工真值 thesis task fully closed。
 - `risk_proxy / workload_proxy / event_replay_tag`：中期前补小网格和消融；仍只能写成 thesis weak-label evidence。
+- DeepSeek 在线 LLM 预处理：中期前可接入字段语义归一、weak-label 复核、schema gap policy 和 runtime 解释；仍不能写成 OpenAI 接入、人工真值替代或因果证据。
 - `rigid_body rotation`：中期前必须核验真实字段；启用或缺失都要以 diagnostics 形式固化。
 - 上游接收器、入库链路和原始大文件入仓：中期前不重建；论文系统封装时可说明现有 MySQL / InfluxDB 接入边界，必要时补轻量接口说明或部署文档。

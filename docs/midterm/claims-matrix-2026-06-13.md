@@ -1,6 +1,6 @@
 # Chronaris 中期 Claims Matrix
 
-更新时间：2026-06-13
+更新时间：2026-06-14
 
 本矩阵用于写中期报告、PPT 和后续论文综述时核对表述强度。每条 claim 都应同时满足：有证据路径、有证据层级、有禁止表述。
 
@@ -23,6 +23,7 @@
 | runtime native input 当前是 aligned schema | 强 | runtime_service_contract | `runtime_service_smoke_summary.json`; `runtime_schema_contract.json` | native exact 已完成 |
 | canonical payload 可达到 exact service contract | 强但限域 | runtime_service_contract | `canonical_runtime_samples.jsonl`; `runtime_schema_contract.json`; `stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md` | 原始上游输入 exact |
 | P16/P18 已产出中期说明图表 | 强 | thesis_materials | `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`; `stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md` | 图表覆盖所有可能实验 |
+| P20 已形成 DeepSeek 在线时序数据预处理方案 | 计划 | llm_preprocessing_plan | `docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md` | DeepSeek 版本已经代码实现；已经调用 API；OpenAI 是默认 provider；LLM 输出等同人工真值 |
 | 当前仓库具备中期报告材料基础 | 强 | cross_layer_index | `docs/STATE.md`; `docs/artifacts/ARTIFACTS.md`; `docs/midterm/midterm-fact-sheet-2026-06-13.md` | 毕业论文最终实验已全部完成 |
 
 ## 建议正文映射
@@ -34,7 +35,7 @@
 | 已完成工作 | Phase C 训练、P11 sweep、P12-P15、P16-P18 |
 | 实验结果与分析 | P11、P12、P13/P14、rigid_body、semantic、runtime |
 | 存在问题 | weak-label、partial live grid、native aligned、rotation disabled、样本规模 |
-| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验 |
+| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、DeepSeek 在线时序预处理 |
 
 ## 文献检索映射
 
@@ -49,3 +50,4 @@
 | 飞行员风险/负荷/事件复盘 | pilot workload assessment, physiological monitoring aviation, flight event replay |
 | weak-label 与代理任务 | weak supervision, proxy labels, self-supervised event labeling |
 | runtime schema contract | model serving schema validation, ML data contract, online inference contract |
+| LLM 辅助时序数据预处理 | LLM for time series preprocessing, language model assisted imputation, time series natural language alignment, automated labeling with LLM |
