@@ -15,6 +15,7 @@ def build_thesis_table_rows(
     return {
         "evidence_layer_overview.csv": build_evidence_layer_rows(sources),
         "runtime_payload_schema.csv": build_runtime_payload_schema_rows(sources),
+        "runtime_semantic_case.csv": build_runtime_semantic_case_rows(sources),
         "rigid_body_rotation_audit.csv": build_rigid_body_rotation_rows(sources),
         "weak_label_sweep_ablation.csv": build_weak_label_rows(sources),
         "chronaris_opt_component_ablation.csv": build_private_component_rows(sources),
@@ -213,6 +214,55 @@ def build_runtime_payload_schema_rows(
             ),
         },
     ]
+    return rows
+
+
+def build_runtime_semantic_case_rows(
+    sources: Mapping[str, Mapping[str, object]],
+) -> list[dict[str, object]]:
+    payload = _payload(sources, "runtime_case_table")
+    rows: list[dict[str, object]] = []
+    for order, row_value in enumerate(_as_list(payload.get("rows"))):
+        row = _as_mapping(row_value)
+        sample_id = str(row.get("sample_id") or "")
+        window_label = sample_id.rsplit(":", 1)[-1] if ":" in sample_id else f"{order:04d}"
+        source_paths = [
+            _source_path(sources, "runtime_case_table"),
+            row.get("support_source_path"),
+            row.get("runtime_service_source_path"),
+            row.get("runtime_schema_contract_source_path"),
+        ]
+        rows.append(
+            {
+                "window_order": order,
+                "window_label": window_label,
+                "sample_id": sample_id,
+                "view_id": row.get("view_id"),
+                "semantic_top_query_name": row.get("semantic_top_query_name"),
+                "semantic_top_event_attribution": _number(row.get("semantic_top_event_attribution")),
+                "semantic_top_query_event_offset_s": _number(row.get("semantic_top_query_event_offset_s")),
+                "top_contribution_score": _number(row.get("top_contribution_score")),
+                "risk_proxy_prediction": row.get("risk_proxy_prediction"),
+                "risk_proxy_confidence": _number(row.get("risk_proxy_confidence")),
+                "workload_proxy_prediction": _number(row.get("workload_proxy_prediction")),
+                "event_replay_tag_score": _number(row.get("event_replay_tag_score")),
+                "native_feature_schema_status": row.get("native_feature_schema_status"),
+                "canonical_feature_schema_status": row.get("canonical_feature_schema_status"),
+                "expected_vehicle_feature_count": _number(row.get("expected_vehicle_feature_count")),
+                "input_vehicle_feature_count": _number(row.get("input_vehicle_feature_count")),
+                "missing_vehicle_feature_count": _number(row.get("missing_vehicle_feature_count")),
+                "native_missing_measurement_group_count": _number(
+                    row.get("native_missing_measurement_group_count")
+                ),
+                "schema_hash": row.get("schema_hash"),
+                "source_path": _join_paths(source_paths),
+                "evidence_layer": row.get("evidence_layer", "runtime_semantic_support"),
+                "case_definition": row.get(
+                    "case_definition",
+                    "runtime windows with semantic attribution and schema status",
+                ),
+            }
+        )
     return rows
 
 

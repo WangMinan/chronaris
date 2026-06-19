@@ -86,7 +86,7 @@
 6. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 7. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
 8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
-9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 输入表。
+9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
 
 验收：
 
@@ -646,10 +646,10 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 首轮图包已被 P22 的 `20260619T-stage-i-thesis-materials-r3-figure-refresh` 替代，并已从 docs 产物目录清理。
+- 首轮图包已被 P22/r3 与本轮 `20260619T-stage-i-thesis-materials-r4-runtime-case-refresh` 替代，并已从 docs 产物目录清理。
 - 当前中期图表入口只使用：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
 - P20/P21 LLM preprocessing 仍复用的 runtime case 输入表保留在：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 
@@ -809,9 +809,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 刷新后的 thesis materials 已被 P22/r3 图包替代：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+- 刷新后的 thesis materials 已被本轮 r4 图包接管为当前入口：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
 - 旧 r2-p18 图、manifest 和报告已清理；仅保留 LLM preprocessing 历史输入表：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 - 当前 `weak_label_sweep_ablation.png/csv` 已增加：
@@ -820,7 +820,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `blocked_at_run_index`
   - `blocked_attempt_log_path_count`
   - partial resume/blocker 注记
-- 当前 `runtime_semantic_case.png/csv` 已体现：
+- 当前 `runtime_semantic_case.png/csv` 已由 r4 重新纳入 thesis materials 生成链路，并体现：
   - `native_feature_schema_status=aligned`
   - `canonical_feature_schema_status=exact`
   - `expected_vehicle_feature_count=1930`
@@ -831,6 +831,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `runtime_schema_contract.json`
   - `stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
   - `stage-i-p11-live-influx-r4-partial/partial_summary.json`
+  - r4 `runtime_semantic_case` 图表替代说明与 `figure_quality_audit.csv`
 
 ## 已完成 P19：中期报告材料冻结与 docs 入口清理
 
@@ -1038,6 +1039,30 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `build_thesis_materials.py` 已用 run_id `20260619T-stage-i-thesis-materials-r3-figure-refresh` 实跑。
 - PIL/pandas 验证已确认 `8` 个 PNG 非空且可读取、`8` 个 CSV 有行且关键字段存在、`figure_manifest.json/table_manifest.json` 均为 `8` 项、报告中图表路径可解析。
 - 2026-06-19 复核后，旧 r1 与 r2-p18 thesis-materials PNG/manifest/report 已清理，避免中期写作误用；`r2-p18/runtime_semantic_case.csv` 因仍被 P20/P21 LLM preprocessing 复现实验引用而保留。
+
+## 已完成 P23：runtime semantic case r4 图表质量刷新
+
+目标：把 r2-p18 仅保留为 P20/P21 历史输入的 `runtime_semantic_case.csv` 重新纳入当前 thesis materials 生成链路，并替换旧 runtime/semantic case 中近乎平坦折线、重复归因柱和大号 965 vs 1930 字段数对比。
+
+结果：
+
+- 新 run：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
+- 本轮输出 `9` 张 PNG 与 `9` 张 CSV，新增 `runtime_semantic_case.png/csv`。
+- `runtime_semantic_case` 图改为：
+  - 顶部 case card：view_id、展示窗口数、native/canonical 状态、vehicle 字段数、missing groups。
+  - 中部 lollipop/dot plot：按窗口展示 `semantic_top_event_attribution`，只标注变化点和最高值，并按 `semantic_top_query_name` 着色。
+  - 侧边 query 类型分布。
+  - 底部 risk/workload/event score 范围 chip 与 schema 状态摘要。
+- `figure_manifest.json` 与 `table_manifest.json` 均包含 `runtime_semantic_case`。
+- 新增 `figure_quality_audit.csv`，记录 9 张当前图的 issue/action/replacement/qa_status。
+
+边界：
+
+- r2-p18 `runtime_semantic_case.csv` 继续保留为 P20/P21 LLM preprocessing 历史输入表；r4 只是把该表作为当前中期图表生成输入，不改写历史 LLM summary。
+- runtime 仍写成 `native aligned / canonical exact`；不声称原生 replay payload 已 exact，也不声称生产级在线服务。
+- LLM 仍只作为 preprocessing context / whitelisted hints / runtime explanation / pending review packet，不写成人工真值或核心因果证据。
 
 ## 中期前边界管理
 

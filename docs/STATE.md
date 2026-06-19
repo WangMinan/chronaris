@@ -61,9 +61,9 @@
       - 产物：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
       - 报告：`docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
       - 当前已确认 `BUS6000019110020.code1031 = 真航向` 可映射到 `yaw`，但 `yaw_rate` 仍缺失，因此 `rotation_status=disabled`。
-    - `P16 thesis materials` 已由 2026-06-19 的 `r3-figure-refresh` 接管为当前入口：
+    - `P16 thesis materials` 已由 2026-06-19 的 `r4-runtime-case-refresh` 接管为当前入口：
       - 旧 r1 图包已清理，不再作为 docs 下可打开产物。
-      - 当前写作入口以 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json` 为准。
+      - 当前写作入口以 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json` 为准。
     - `P17 runtime service smoke` 首轮已完成：
       - 首轮 root：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
       - 首轮报告：`docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
@@ -80,14 +80,15 @@
         - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
         - raw canonical payload 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理；exact contract 证据保留在 schema contract 与 canonical runtime summary。
       - P16/P18 旧刷新图包：
-        - 已被 `20260619T-stage-i-thesis-materials-r3-figure-refresh` 替代并清理旧 PNG/manifest/report。
+        - r3 图包已被 `20260619T-stage-i-thesis-materials-r4-runtime-case-refresh` 接管为当前中期图表入口。
         - 仅保留 `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 的历史输入表。
-      - P16/P21 中期图表质量刷新：
+      - P16/P21/r4 中期图表质量刷新：
         - `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
-        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
-        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/table_manifest.json`
-        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
-        - 当前结果：`8` 张 PNG 与 `8` 张 CSV，覆盖 evidence layer matrix、runtime payload schema、rigid-body/rotation、weak-label sweep、private component ablation、public transfer boundary、semantic event fusion 和 LLM A0-A4 comparison。
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/table_manifest.json`
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_quality_audit.csv`
+        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
+        - 当前结果：`9` 张 PNG 与 `9` 张 CSV，覆盖 evidence layer matrix、runtime payload schema、runtime semantic case、rigid-body/rotation、weak-label sweep、private component ablation、public transfer boundary、semantic event fusion 和 LLM A0-A4 comparison。
     - `P20 DeepSeek 在线时序数据预处理` 已完成 agent-style harness v2、切片整合与真实小样本 run：
       - 计划入口：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`
       - 当前真实 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
@@ -144,7 +145,7 @@
   - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
   - 最新 docs LFS 清理记录：`docs/artifacts/cleanup/20260619-lfs-docs-prune.md`
   - P20/P21 LLM runtime case 输入表：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
-  - 最新 thesis materials r3 figure refresh：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
+  - 最新 thesis materials r4 runtime case refresh：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`
   - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
   - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
   - 最新 P20 DeepSeek LLM preprocessing package：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
@@ -225,7 +226,7 @@
     - 当前 `combination_count=2`
   - `P16 thesis materials` 首轮：
     - 旧 r1 图包已由 P22/r3 替代并清理。
-    - 当前中期图表只引用 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`。
+    - 当前中期图表只引用 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/`。
   - `P17 runtime service smoke` 首轮：
     - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
     - 当前 `input_sample_count=37`
@@ -246,11 +247,11 @@
     - 当前 `missing_vehicle_feature_count=965`
     - 当前 missing groups 已覆盖 `BUS6000019110021` 到 `BUS6000019110026`
   - `P18 thesis materials 刷新`：
-    - 旧 r2-p18 图包已由 P22/r3 替代并清理。
+    - 旧 r2-p18 图包已由 P22/r3 与本轮 r4 替代并清理。
     - 保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
-  - `P16/P21 thesis materials r3 图表质量刷新`：
-    - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`
-    - 当前 `figure_manifest.json` 已把低信息图替换为 evidence matrix、schema contract 对照、rotation availability matrix、weak-label 小网格/status、分任务 private ablation、中文 public transfer、semantic event fusion 和 LLM A0-A4 review flow。
+  - `P16/P21 thesis materials r4 图表质量刷新`：
+    - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/`
+    - 当前 `figure_manifest.json` 已把低信息图替换为 evidence matrix、schema contract 对照、runtime semantic case 复盘、rotation availability matrix、weak-label 小网格/status、分任务 private ablation、中文 public transfer、semantic event fusion 和 LLM A0-A4 review flow。
   - `中期报告写作材料`：
     - `docs/midterm/midterm-fact-sheet-2026-06-13.md`
     - `docs/midterm/boundaries-and-risks-2026-06-13.md`

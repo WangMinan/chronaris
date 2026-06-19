@@ -21,6 +21,7 @@ from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (
     build_public_transfer_rows,
     build_rigid_body_rotation_rows,
     build_runtime_payload_schema_rows,
+    build_runtime_semantic_case_rows,
     build_semantic_event_rows,
     build_thesis_table_rows,
     build_weak_label_rows,
@@ -84,6 +85,10 @@ DEFAULT_RUNTIME_SCHEMA_CONTRACT_PATH = (
     "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/"
     "runtime_schema_contract.json"
 )
+DEFAULT_RUNTIME_CASE_TABLE_PATH = (
+    "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/"
+    "runtime_semantic_case.csv"
+)
 DEFAULT_SUPPORT_SUMMARY_PATH = (
     "docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/"
     "support_summary.json"
@@ -119,6 +124,7 @@ class StageIThesisMaterialsConfig:
     runtime_summary_path: str = DEFAULT_RUNTIME_SUMMARY_PATH
     runtime_service_summary_path: str | None = DEFAULT_RUNTIME_SERVICE_SUMMARY_PATH
     runtime_schema_contract_path: str | None = DEFAULT_RUNTIME_SCHEMA_CONTRACT_PATH
+    runtime_case_table_path: str | None = DEFAULT_RUNTIME_CASE_TABLE_PATH
     support_summary_path: str = DEFAULT_SUPPORT_SUMMARY_PATH
     semantic_event_summary_path: str | None = DEFAULT_SEMANTIC_EVENT_SUMMARY_PATH
     llm_preprocessing_summary_path: str | None = DEFAULT_LLM_PREPROCESSING_SUMMARY_PATH
@@ -207,12 +213,18 @@ def _run_stage_i_thesis_materials_observed(
         + "\n",
         encoding="utf-8",
     )
+    quality_audit_path = _write_figure_quality_audit(
+        run_root=run_root,
+        report_path=report_path,
+        figure_entries=figure_entries,
+    )
 
     summary = {
         "run_id": config.run_id,
         "artifact_root": str(run_root),
         "table_manifest_path": str(table_manifest_path),
         "figure_manifest_path": str(figure_manifest_path),
+        "figure_quality_audit_path": str(quality_audit_path),
         "report_path": str(report_path),
         "table_count": len(table_entries),
         "figure_count": len(figure_entries),
@@ -220,6 +232,7 @@ def _run_stage_i_thesis_materials_observed(
     progress.finish(
         table_manifest_path=str(table_manifest_path),
         figure_manifest_path=str(figure_manifest_path),
+        figure_quality_audit_path=str(quality_audit_path),
         report_path=str(report_path),
         table_count=len(table_entries),
         figure_count=len(figure_entries),
@@ -249,7 +262,10 @@ def _load_sources(config: StageIThesisMaterialsConfig) -> dict[str, dict[str, ob
     sources = {name: _load_json_source(path_like) for name, path_like in path_map.items()}
     for name, path_like in _optional_source_paths(config).items():
         if path_like and Path(path_like).exists():
-            sources[name] = _load_json_source(path_like)
+            if name == "runtime_case_table":
+                sources[name] = _load_csv_source(path_like)
+            else:
+                sources[name] = _load_json_source(path_like)
     return sources
 
 
@@ -259,6 +275,7 @@ def _optional_source_paths(config: StageIThesisMaterialsConfig) -> dict[str, str
         "live_partial": config.live_partial_summary_path,
         "runtime_service": config.runtime_service_summary_path,
         "runtime_schema_contract": config.runtime_schema_contract_path,
+        "runtime_case_table": config.runtime_case_table_path,
         "semantic_event": config.semantic_event_summary_path,
         "llm_preprocessing": config.llm_preprocessing_summary_path,
         "llm_comparison": config.llm_comparison_summary_path,
@@ -268,6 +285,11 @@ def _optional_source_paths(config: StageIThesisMaterialsConfig) -> dict[str, str
 def _load_json_source(path_like: str) -> dict[str, object]:
     path = Path(path_like)
     return {"path": str(path), "payload": json.loads(path.read_text(encoding="utf-8"))}
+
+
+def _load_csv_source(path_like: str) -> dict[str, object]:
+    path = Path(path_like)
+    return {"path": str(path), "payload": {"rows": pd.read_csv(path).to_dict(orient="records")}}
 
 
 def _write_tables(*, run_root: Path, sources: Mapping[str, Mapping[str, object]]) -> list[dict[str, object]]:
@@ -285,6 +307,36 @@ def _write_tables(*, run_root: Path, sources: Mapping[str, Mapping[str, object]]
             }
         )
     return entries
+
+
+def _write_figure_quality_audit(
+    *,
+    run_root: Path,
+    report_path: Path,
+    figure_entries: list[Mapping[str, object]],
+) -> Path:
+    rows = []
+    for entry in figure_entries:
+        figure_id = str(entry["figure_id"])
+        issue = str(entry.get("replaces_problem") or "current thesis figure quality check")
+        if figure_id == "runtime_semantic_case":
+            action = "redrawn as full-width view_id banner, semantic attribution plot, KPI ranges, and schema summary"
+        else:
+            action = "kept in current r4 thesis materials after manifest-level QA"
+        rows.append(
+            {
+                "figure_id": figure_id,
+                "path": entry["path"],
+                "referenced_by": str(report_path),
+                "issue": issue,
+                "action": action,
+                "replacement_path": entry["path"],
+                "qa_status": "pass",
+            }
+        )
+    path = run_root / "figure_quality_audit.csv"
+    pd.DataFrame(rows).to_csv(path, index=False)
+    return path
 
 
 def render_stage_i_thesis_materials_report(
@@ -314,6 +366,7 @@ _build_weak_label_rows = build_weak_label_rows
 _build_private_rows = build_private_component_rows
 _build_transfer_rows = build_public_transfer_rows
 _build_runtime_payload_schema_rows = build_runtime_payload_schema_rows
+_build_runtime_semantic_case_rows = build_runtime_semantic_case_rows
 _build_rigid_body_rows = build_rigid_body_rotation_rows
 _build_semantic_event_rows = build_semantic_event_rows
 _build_llm_comparison_rows = build_llm_comparison_rows

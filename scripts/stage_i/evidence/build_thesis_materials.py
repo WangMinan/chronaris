@@ -35,6 +35,7 @@ def main() -> None:
     parser.add_argument("--runtime-summary-path")
     parser.add_argument("--runtime-service-summary-path")
     parser.add_argument("--runtime-schema-contract-path")
+    parser.add_argument("--runtime-case-table-path")
     parser.add_argument("--support-summary-path")
     parser.add_argument("--semantic-event-summary-path")
     parser.add_argument("--llm-preprocessing-summary-path")
@@ -58,6 +59,7 @@ def main() -> None:
         runtime_summary_path=args.runtime_summary_path or base_config.runtime_summary_path,
         runtime_service_summary_path=args.runtime_service_summary_path or base_config.runtime_service_summary_path,
         runtime_schema_contract_path=args.runtime_schema_contract_path or base_config.runtime_schema_contract_path,
+        runtime_case_table_path=args.runtime_case_table_path or base_config.runtime_case_table_path,
         support_summary_path=args.support_summary_path or base_config.support_summary_path,
         semantic_event_summary_path=args.semantic_event_summary_path or base_config.semantic_event_summary_path,
         llm_preprocessing_summary_path=args.llm_preprocessing_summary_path or base_config.llm_preprocessing_summary_path,
