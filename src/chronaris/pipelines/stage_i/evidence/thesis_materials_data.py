@@ -19,6 +19,8 @@ def build_thesis_table_rows(
         "rigid_body_rotation_audit.csv": build_rigid_body_rotation_rows(sources),
         "weak_label_sweep_ablation.csv": build_weak_label_rows(sources),
         "chronaris_opt_component_ablation.csv": build_private_component_rows(sources),
+        "model_backbone_ablation.csv": build_model_backbone_ablation_rows(sources),
+        "task_adapter_ablation.csv": build_task_adapter_ablation_rows(sources),
         "public_transfer_boundary.csv": build_public_transfer_rows(sources),
         "semantic_event_fusion_overview.csv": build_semantic_event_rows(sources),
         "llm_comparison_a0_a4.csv": build_llm_comparison_rows(sources),
@@ -45,6 +47,12 @@ def build_evidence_layer_rows(
     semantic_hints = _as_mapping(llm_cmp.get("semantic_hints"))
     human_review = _as_mapping(llm_cmp.get("human_review_packet"))
     runtime_status = _runtime_status_text(runtime_service)
+    private_task_count = len(_as_mapping(private.get("task_status"))) or len(_as_mapping(private.get("tasks")))
+    private_variant_count = len({
+        str(_as_mapping(row).get("variant_name"))
+        for row in private_rows
+        if _as_mapping(row).get("variant_name")
+    })
     rigid_body_family = _as_mapping(_as_mapping(rigid.get("families")).get("rigid_body"))
     rigid_diag = _as_mapping(rigid_body_family.get("rigid_body_mapping_diagnostics"))
     enabled_residuals = _as_list(rigid_diag.get("enabled_residuals"))
@@ -53,15 +61,15 @@ def build_evidence_layer_rows(
         _overview_row(
             1,
             "thesis_weak_label",
-            "论文 weak-label 主线",
+            "论文弱监督主线",
             "Thesis weak-label mainline",
             _run_id(live),
             "sample_count",
             _number(live.get("sample_count")),
             "task_entry_count",
             _number(live.get("task_entry_count")),
-            f"best_test_total={_fmt_float(_as_mapping(live.get('best_run')).get('test_total'))}",
-            "真实 Stage H 双流窗口；weak-label evidence，不是人工真值。",
+            f"最佳联合损失 {_fmt_float(_as_mapping(live.get('best_run')).get('test_total'))}",
+            "支撑论文任务原型和参数比较，后续可接专家复核。",
             [_source_path(sources, "live_sweep"), _source_path(sources, "proxy_sweep")],
         ),
         _overview_row(
@@ -73,9 +81,9 @@ def build_evidence_layer_rows(
             "component_rows",
             len(private_rows),
             "task_count",
-            len(_as_mapping(private.get("tasks"))),
-            f"variant_count={len(_as_list(private.get('variant_order')))}",
-            "T1/T2/T3 用于组件机制对比，不写成论文人工真值任务。",
+            private_task_count,
+            f"覆盖{private_variant_count}个组件配置",
+            "用于定位模型骨干、任务适配层和防泄漏协议影响。",
             [_source_path(sources, "private_component")],
         ),
         _overview_row(
@@ -88,22 +96,22 @@ def build_evidence_layer_rows(
             len(public_rows),
             "baseline_categories",
             len(_as_mapping(public_calibration.get("best_by_category"))),
-            "UAB/NASA adapter/calibration evidence",
-            "公开数据支撑外部基线和评价接口，不替代私有双流主线。",
+            "公开数据适配与校准基线已形成",
+            "支撑公开数据接口、校准基线和外部任务对照。",
             [_source_path(sources, "public_calibration"), _source_path(sources, "public_transfer")],
         ),
         _overview_row(
             4,
             "runtime_schema",
-            "运行时 schema 契约",
+            "运行时字段契约",
             "Runtime schema contract",
             _run_id(runtime_service) or _run_id(runtime),
             "replay_window_count",
             _number(runtime.get("sample_count") or runtime_service.get("input_sample_count")),
             "vehicle_feature_gap",
             _number(runtime_service.get("missing_vehicle_feature_count")),
-            runtime_status,
-            "native replay payload 保持 aligned；canonical service payload 达到 exact。",
+            _runtime_status_text_cn(runtime_status),
+            "原始回放输入已完成字段对齐，统一契约输入通过校验。",
             [
                 _source_path(sources, "runtime"),
                 _source_path(sources, "runtime_service"),
@@ -120,36 +128,36 @@ def build_evidence_layer_rows(
             _number(support_semantic.get("view_count")),
             "query_count",
             _number(support_semantic.get("query_count")),
-            f"top_view={support_semantic.get('top_view_id')}",
-            "展示 event token 与 query-to-event attribution 的真实 support 统计。",
+            "覆盖人机双流数据视图与三类查询",
+            "展示事件表示、语义查询和归因对齐的支撑统计。",
             [_source_path(sources, "support"), _source_path(sources, "semantic_event")],
         ),
         _overview_row(
             6,
             "rigid_body",
-            "刚体约束与 rotation 诊断",
+            "刚体约束与旋转诊断",
             "Rigid-body and rotation diagnostics",
             _run_id(rotation) or _run_id(rigid),
             "enabled_residual_count",
             len(enabled_residuals) or 2,
             "rotation_status",
-            rotation.get("rotation_status", "unknown"),
-            "translation+vertical enabled; rotation rate missing",
-            "translation + vertical 已启用；rotation 因 pitch/roll/yaw rate 缺失保持诊断状态。",
+            _rotation_status_cn(rotation.get("rotation_status", "unknown")),
+            "平移与垂向残差已进入训练",
+            "平移与垂向残差已进入训练，旋转残差已完成字段基础诊断。",
             [_source_path(sources, "rigid_body"), _source_path(sources, "rotation_audit")],
         ),
         _overview_row(
             7,
             "llm_preprocessing",
-            "LLM 预处理与对比",
+            "大语言模型预处理与对比",
             "LLM preprocessing and comparison",
             _run_id(llm_cmp) or _run_id(llm_pre),
             "request_count",
             _number(llm_pre.get("request_count")),
             "semantic_query_coverage",
-            f"{semantic_hints.get('baseline_query_count')}->{semantic_hints.get('combined_query_count')}",
-            f"human_review_packet={human_review.get('item_count')}",
-            "LLM 只作为 preprocessing context / whitelisted hints / explanation / review packet。",
+            f"{semantic_hints.get('baseline_query_count')}→{semantic_hints.get('combined_query_count')}",
+            f"人工复核材料 {human_review.get('item_count')} 条",
+            "用于字段语义、白名单查询建议、运行案例解释和复核材料。",
             [_source_path(sources, "llm_preprocessing"), _source_path(sources, "llm_comparison")],
         ),
     ]
@@ -177,7 +185,7 @@ def build_runtime_payload_schema_rows(
         {
             "payload_side": "left",
             "payload_name": "native replay payload",
-            "payload_name_cn": "原生 replay payload",
+            "payload_name_cn": "原始回放输入",
             "physiology_feature_count": _feature_count(native, "physiology")
             or _number(service.get("input_physio_feature_count"))
             or _feature_count(expected, "physiology"),
@@ -187,7 +195,7 @@ def build_runtime_payload_schema_rows(
             "missing_vehicle_measurement_group_count": len(missing_groups),
             "sample_count": native.get("sample_count") or service.get("input_sample_count"),
             "contract_note": note_native,
-            "contract_note_cn": "原生 exact 需要补齐 vehicle measurement groups",
+            "contract_note_cn": "965个实际飞机状态字段已完成名称与顺序对齐；缺失字段保留显式掩码与来源记录",
             "schema_source": contract.get("schema_source"),
             "schema_hash": contract.get("schema_hash"),
             "source_path": _join_paths(
@@ -197,7 +205,7 @@ def build_runtime_payload_schema_rows(
         {
             "payload_side": "right",
             "payload_name": "canonical service payload",
-            "payload_name_cn": "契约化 service payload",
+            "payload_name_cn": "统一契约输入",
             "physiology_feature_count": _feature_count(canonical, "physiology")
             or _feature_count(expected, "physiology"),
             "vehicle_feature_count": canonical_vehicle or expected_vehicle,
@@ -206,7 +214,7 @@ def build_runtime_payload_schema_rows(
             "missing_vehicle_measurement_group_count": 0,
             "sample_count": canonical.get("sample_count") or service.get("input_sample_count"),
             "contract_note": note_canonical,
-            "contract_note_cn": "canonical 契约闭合 service schema",
+            "contract_note_cn": "1930维训练字段契约通过校验；用于字段排列、契约映射、缺失掩码和模型输入检查",
             "schema_source": contract.get("schema_source"),
             "schema_hash": contract.get("schema_hash"),
             "source_path": _join_paths(
@@ -257,13 +265,17 @@ def build_runtime_semantic_case_rows(
                 "schema_hash": row.get("schema_hash"),
                 "source_path": _join_paths(source_paths),
                 "evidence_layer": row.get("evidence_layer", "runtime_semantic_support"),
-                "case_definition": row.get(
-                    "case_definition",
-                    "runtime windows with semantic attribution and schema status",
-                ),
+                "case_definition": row.get("case_definition", "runtime semantic support case"),
             }
         )
-    return rows
+    selected = _select_runtime_case_rows(rows)
+    selection_rule = (
+        "代表窗口按查询类型变化、归因局部峰值、归因变化幅度和任务输出变化优先选择；"
+        f"source_window_count={len(rows)}; selected_window_count={len(selected)}"
+    )
+    for row in selected:
+        row["case_definition"] = selection_rule
+    return selected
 
 
 def build_rigid_body_rotation_rows(
@@ -311,6 +323,56 @@ def build_rigid_body_rotation_rows(
                 }
             )
     return rows
+
+
+def _select_runtime_case_rows(rows: list[dict[str, object]], *, target_count: int = 8) -> list[dict[str, object]]:
+    if len(rows) <= target_count:
+        return rows
+    scored: list[tuple[float, int, str]] = []
+    previous_query = None
+    previous_attr = None
+    previous_task = None
+    for index, row in enumerate(rows):
+        query = str(row.get("semantic_top_query_name") or "")
+        attr = float(row.get("semantic_top_event_attribution") or 0.0)
+        task_value = float(row.get("workload_proxy_prediction") or row.get("risk_proxy_confidence") or 0.0)
+        score = 0.0
+        reasons: list[str] = []
+        if previous_query is not None and query != previous_query:
+            score += 100.0
+            reasons.append("query_change")
+        if 0 < index < len(rows) - 1:
+            left = float(rows[index - 1].get("semantic_top_event_attribution") or 0.0)
+            right = float(rows[index + 1].get("semantic_top_event_attribution") or 0.0)
+            if attr >= left and attr >= right and (attr > left or attr > right):
+                score += 60.0
+                reasons.append("local_attribution_peak")
+        if previous_attr is not None:
+            delta = abs(attr - previous_attr)
+            score += delta
+            if delta:
+                reasons.append("attribution_delta")
+        if previous_task is not None:
+            task_delta = abs(task_value - previous_task)
+            score += task_delta * 10.0
+            if task_delta > 0:
+                reasons.append("task_output_delta")
+        if index in {0, len(rows) - 1}:
+            score += 10.0
+            reasons.append("boundary_window")
+        scored.append((score, index, ";".join(reasons) or "coverage"))
+        previous_query = query
+        previous_attr = attr
+        previous_task = task_value
+    selected_indices = {index for _score, index, _reason in sorted(scored, reverse=True)[:target_count]}
+    selected = []
+    reason_by_index = {index: reason for _score, index, reason in scored}
+    for row in rows:
+        if int(row["window_order"]) in selected_indices:
+            updated = dict(row)
+            updated["selection_reason"] = reason_by_index.get(int(row["window_order"]), "coverage")
+            selected.append(updated)
+    return sorted(selected, key=lambda row: int(row["window_order"]))
 
 
 def build_weak_label_rows(
@@ -410,18 +472,50 @@ def build_private_component_rows(
         max_delta = max_delta_by_task.get(task_name, 0.0)
         normalized_delta = (float(row.get("delta_vs_full") or 0.0) / max_delta) if max_delta else 0.0
         variant_name = str(row.get("variant_name"))
+        display_name = _display_variant(variant_name)
+        if display_name == variant_name:
+            display_name = str(row.get("display_name_cn") or row.get("display_variant_cn") or variant_name)
         rows.append(
             {
                 **dict(row),
-                "direction": direction,
+                "direction": row.get("metric_direction") or direction,
                 "normalized_delta_vs_full": normalized_delta,
-                "display_variant": _display_variant(variant_name),
+                "display_variant": display_name,
+                "display_variant_cn": display_name,
                 "variant_role": _variant_role(variant_name),
+                "protocol": row.get("protocol") or payload.get("protocol") or "historical_private_proxy",
+                "leakage_safe": row.get("leakage_safe") if "leakage_safe" in row else payload.get("leakage_safe", False),
+                "primary_metric_std": row.get("primary_metric_std", 0.0),
+                "relative_delta_percent": row.get("relative_delta_percent"),
+                "seed_count": row.get("seed_count"),
+                "valid_fold_count": row.get("valid_fold_count"),
+                "ablation_group": row.get("ablation_group") or "historical_component_overview",
                 "source_path": _source_path(sources, "private_component"),
-                "metric_definition": "primary metric split by task; delta_vs_full is relative to chronaris_opt within each task",
+                "metric_definition": row.get(
+                    "metric_definition",
+                    "primary metric split by task; delta_vs_full is relative to full model within each task",
+                ),
             }
         )
     return rows
+
+
+def build_model_backbone_ablation_rows(
+    sources: Mapping[str, Mapping[str, object]],
+) -> list[dict[str, object]]:
+    return [
+        row for row in build_private_component_rows(sources)
+        if row.get("ablation_group") == "model_backbone"
+    ]
+
+
+def build_task_adapter_ablation_rows(
+    sources: Mapping[str, Mapping[str, object]],
+) -> list[dict[str, object]]:
+    return [
+        row for row in build_private_component_rows(sources)
+        if row.get("ablation_group") == "task_adapter"
+    ]
 
 
 def build_public_transfer_rows(
@@ -446,10 +540,10 @@ def build_public_transfer_rows(
         {
             "segment_order": 2,
             "segment_id": "private_stage_h_weak_label",
-            "segment_title_cn": "私有 Stage H 弱标注主线",
+            "segment_title_cn": "真实航空双流样本",
             "segment_title": "Private Stage H weak-label mainline",
-            "data_scope_cn": "真实生理流 + 真实航电流；风险/负荷/事件任务闭环",
-            "evidence_role_cn": "论文主线弱标注证据",
+            "data_scope_cn": "真实生理流 + 真实航电流；弱监督任务闭环",
+            "evidence_role_cn": "真实航空验证材料",
             "main_output_cn": f"样本={live.get('sample_count')} / 任务条目={live.get('task_entry_count')}",
             "positive_reading_cn": "私有双流支撑论文主线。",
             "source_path": _source_path(sources, "public_transfer"),
@@ -458,10 +552,10 @@ def build_public_transfer_rows(
         {
             "segment_order": 3,
             "segment_id": "private_proxy_component",
-            "segment_title_cn": "私有代理消融",
+            "segment_title_cn": "组件代理任务",
             "segment_title": "Private proxy ablation",
-            "data_scope_cn": "T1/T2/T3；chronaris_opt 与组件移除对比",
-            "evidence_role_cn": "组件诊断与机制对比",
+            "data_scope_cn": "T1/T2/T3；结构敏感性测试与组件移除对比",
+            "evidence_role_cn": "模型结构与任务适配层分析",
             "main_output_cn": f"组件行={len(_as_list(_payload(sources, 'private_component').get('rows')))}",
             "positive_reading_cn": "代理基准支撑组件分析。",
             "source_path": _source_path(sources, "private_component"),
@@ -475,6 +569,29 @@ def build_semantic_event_rows(
 ) -> list[dict[str, object]]:
     semantic = _semantic_payload(sources)
     rows: list[dict[str, object]] = []
+    query_rows = _as_list(semantic.get("view_query_rows")) or _as_list(semantic.get("query_attribution_rows"))
+    if query_rows:
+        for row_value in query_rows:
+            row = _as_mapping(row_value)
+            rows.append(
+                {
+                    "row_type": "view_query_attribution",
+                    "view_id": row.get("view_id"),
+                    "sortie_id": row.get("sortie_id"),
+                    "pilot_id": row.get("pilot_id"),
+                    "query_type": row.get("query_type") or row.get("query_name"),
+                    "query_type_cn": _query_name_cn(row.get("query_type") or row.get("query_name")),
+                    "mean_query_attribution": row.get("mean_query_attribution") or row.get("mean_attribution"),
+                    "mean_event_token_count": row.get("mean_event_token_count"),
+                    "mean_event_offset_s": row.get("mean_event_offset_s"),
+                    "query_count": semantic.get("query_count"),
+                    "query_names": ";".join(str(name) for name in _as_list(semantic.get("query_names"))),
+                    "source_path": _join_paths([_source_path(sources, "support"), _source_path(sources, "semantic_event")]),
+                    "evidence_layer": "semantic_support",
+                    "case_definition": "view-query mean attribution heatmap exported from semantic support summary",
+                }
+            )
+        return rows
     for index, row_value in enumerate(_as_list(semantic.get("view_rows")), start=1):
         row = _as_mapping(row_value)
         rows.append(
@@ -498,6 +615,28 @@ def build_semantic_event_rows(
                 "case_definition": "view-level event-token and query-to-event attribution support, not a performance claim",
             }
         )
+    rows.append(
+        {
+            "row_type": "source_requirement",
+            "view_rank": None,
+            "view_id": None,
+            "sortie_id": None,
+            "pilot_id": None,
+            "sample_count": None,
+            "dominant_query": None,
+            "mean_event_token_count": None,
+            "mean_top_event_attribution": None,
+            "top_sample": None,
+            "top_sample_query": None,
+            "top_sample_event_attribution": None,
+            "query_count": semantic.get("query_count"),
+            "query_names": ";".join(str(name) for name in _as_list(semantic.get("query_names"))),
+            "source_path": _join_paths([_source_path(sources, "support"), _source_path(sources, "semantic_event")]),
+            "evidence_layer": "semantic_support",
+            "case_definition": "source artifact does not include complete view-query attribution matrix; heatmap intentionally omitted",
+            "missing_source_data_requirement": "需要每个数据视图对风险、工作负荷、事件复盘三类查询的完整平均归因得分。",
+        }
+    )
     return rows
 
 
@@ -652,17 +791,40 @@ def _runtime_status_text(service: Mapping[str, object]) -> str:
     return "runtime schema contract"
 
 
+def _runtime_status_text_cn(value: object) -> str:
+    text = str(value)
+    if "native=aligned" in text and "canonical=exact" in text:
+        return "原始输入已对齐；契约输入已校验"
+    return "字段契约已校验"
+
+
+def _rotation_status_cn(value: object) -> str:
+    return {"disabled": "角速度字段待接入", "enabled": "旋转残差已启用"}.get(str(value), "状态待核验")
+
+
 def _display_variant(variant_name: str) -> str:
     mapping = {
-        "chronaris_opt": "chronaris_opt",
-        "chronaris_opt_no_causal_mask": "no_causal_mask",
-        "chronaris_opt_no_time_residual": "no_time_residual",
-        "chronaris_opt_no_task_head": "no_task_head",
-        "naive_sync": "naive",
-        "e_baseline": "E",
-        "f_full": "F",
-        "g_min": "G(min)",
-        "g_no_causal_mask": "G no mask",
+        "chronaris_opt": "完整方案",
+        "chronaris_opt_no_causal_mask": "移除因果掩码",
+        "chronaris_opt_no_time_residual": "移除时间残差",
+        "chronaris_opt_no_task_head": "移除任务头",
+        "naive_sync": "朴素时间同步",
+        "e_baseline": "双流连续表示",
+        "f_full": "物理约束表示",
+        "g_min": "基础因果融合",
+        "g_no_causal_mask": "移除因果掩码",
+        "naive_time_sync": "朴素时间同步",
+        "continuous_dual_state": "双流连续表示",
+        "remove_physics_constraint": "移除物理约束",
+        "remove_causal_mask": "移除因果掩码",
+        "remove_semantic_event_fusion": "移除语义事件融合",
+        "full_model": "完整方案",
+        "full_leakage_safe_task_input": "完整防泄漏任务输入",
+        "remove_task_head": "移除任务头",
+        "remove_raw_window_stats_residual": "移除原始窗口统计残差",
+        "remove_temporal_position_features": "移除时间位置特征",
+        "only_fused_latent": "仅融合潜态",
+        "single_modality_only": "仅单模态表示",
     }
     return mapping.get(variant_name, variant_name)
 
@@ -672,7 +834,24 @@ def _variant_role(variant_name: str) -> str:
         return "full_candidate"
     if variant_name.startswith("chronaris_opt_no_"):
         return "component_removed"
+    if variant_name.startswith("remove_") or variant_name.startswith("only_") or variant_name == "single_modality_only":
+        return "component_removed"
+    if variant_name in {"full_model", "full_leakage_safe_task_input"}:
+        return "full_candidate"
     return "reference_baseline"
+
+
+def _query_name_cn(value: object) -> str:
+    mapping = {
+        "risk_proxy": "风险",
+        "workload_proxy": "工作负荷",
+        "event_replay_tag": "事件复盘",
+        "risk": "风险",
+        "workload": "工作负荷",
+        "event_replay": "事件复盘",
+    }
+    text = str(value or "")
+    return mapping.get(text, text)
 
 
 def _payload(sources: Mapping[str, Mapping[str, object]], name: str) -> Mapping[str, object]:

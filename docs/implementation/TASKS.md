@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 本地 `main` 已同步推送到 `origin/main`。
+- 历史基线 `main` 已同步推送到 `origin/main`；本轮 leakage-safe r2 与 thesis materials r5 仍是本地新增工作，提交/推送后进入远端历史。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -86,7 +86,7 @@
 6. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 7. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
 8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
-9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
+9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理。
 
 验收：
 
@@ -275,21 +275,23 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 - 已补 runtime sample exporter：
   - `scripts/stage_i/runtime/export_runtime_samples.py`
 - 已完成 runtime replay：
-  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_inference_summary.json`
-  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_inference_predictions.csv`
-  - `docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-replay-r1.md`
+  - 首轮 r1 产物已由 service r2 接管并清理，仅保留在 git 历史中。
+  - 当前入口：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_summary.json`
+  - 当前报告：`docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md`
   - raw `runtime_samples.jsonl` 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理，需要复跑时重新生成。
   - 当前 replay 规模：`111` 个样本、`3` 个 view、`2` 个 sortie，`sample_id_mode=view_prefixed`。
   - 当前 runtime task heads：`risk_proxy` 分类、`workload_proxy` 回归、`event_replay_tag` 检索。
 - 已完成语义事件融合 preview + support：
   - `docs/artifacts/stage_i/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1.md`
   - `docs/artifacts/stage_i/assets/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1/causal_fusion_summary.json`
-  - `docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r1/support_summary.json`
-  - `docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r1.md`
+  - 首轮 support r1 产物已由 r2 接管并清理，仅保留在 git 历史中。
+  - 当前 support summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
+  - 当前 support 报告：`docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
   - `support_summary.json` 已包含 `alignment_support`、`causal_support.semantic_event`、`main_ablation_rows` 和 overview plot。
 - 已完成 `minimal / full / rigid_body` 真实 smoke / ablation：
-  - `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r1/rigid_body_ablation_summary.json`
-  - `docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r1.md`
+  - 首轮 rigid-body r1 产物已由 r2 接管并清理，仅保留在 git 历史中。
+  - 当前 rigid-body summary：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json`
+  - 当前 rigid-body 报告：`docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
   - 本次更新后 `vehicle_field_metadata.status=loaded`、`field_count=96`。
   - `rigid_body` 的 `vehicle_rigid_body_translation=1.413177490234375`，`vehicle_rigid_body_vertical=0`，`vehicle_rigid_body_rotation=0`。
 
@@ -478,10 +480,10 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json`
   - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json`
 - 稳定汇总产物：
-  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json`
-  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/thesis_weak_label_multitask_ablation.csv`
-  - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/proxy_vs_live_influx_comparison.csv`
-  - `docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r2.md`
+  - r2 汇总已由 r3 resume 接管并清理，仅保留在 git 历史中。
+  - 当前 summary：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
+  - 当前表：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/thesis_weak_label_multitask_ablation.csv`
+  - 当前报告：`docs/artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
 - 当前对比口径：
   - `sample_source=live_influx`
   - `sample_count=111`
@@ -646,10 +648,10 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 首轮图包已被 P22/r3 与本轮 `20260619T-stage-i-thesis-materials-r4-runtime-case-refresh` 替代，并已从 docs 产物目录清理。
+- 首轮图包已被 P22/r3、P23/r4 和 P25/r5 逐步替代，并已从 docs 产物目录清理。
 - 当前中期图表入口只使用：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
 - P20/P21 LLM preprocessing 仍复用的 runtime case 输入表保留在：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 
@@ -672,14 +674,14 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - 当前 `view_id=20251005_四01_ACT-4_云_J20_22#01__pilot_10033`
   - 当前 `sample_count=37`
 - 稳定服务 smoke root：
-  - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
+  - 首轮 r1 已由 r2-contract 接管并清理，仅保留在 git 历史中。
+  - 当前入口：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/`
 - 关键输出：
   - `runtime_service_smoke_summary.json`
-  - `runtime_inference/20260613T-stage-i-runtime-service-smoke-r1-runtime/runtime_inference_predictions.jsonl`
-  - `runtime_inference/20260613T-stage-i-runtime-service-smoke-r1-runtime/runtime_inference_summary.json`
+  - r1 runtime inference payload 已清理；当前 runtime summary 保留在 r2-contract 入口。
   - `runtime_error_cases.json`
   - `figure_manifest.json`
-  - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
+  - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
 - 三张系统说明图：
   - `runtime_service_flow.png`
   - `runtime_payload_schema.png`
@@ -809,9 +811,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 刷新后的 thesis materials 已被本轮 r4 图包接管为当前入口：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
+- 刷新后的 thesis materials 已被 P25/r5 图包接管为当前入口：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
 - 旧 r2-p18 图、manifest 和报告已清理；仅保留 LLM preprocessing 历史输入表：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 - 当前 `weak_label_sweep_ablation.png/csv` 已增加：
@@ -820,7 +822,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `blocked_at_run_index`
   - `blocked_attempt_log_path_count`
   - partial resume/blocker 注记
-- 当前 `runtime_semantic_case.png/csv` 已由 r4 重新纳入 thesis materials 生成链路，并体现：
+- 当前 `runtime_semantic_case.png/csv` 已由 r5 重新纳入 thesis materials 生成链路，并体现：
   - `native_feature_schema_status=aligned`
   - `canonical_feature_schema_status=exact`
   - `expected_vehicle_feature_count=1930`
@@ -831,7 +833,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `runtime_schema_contract.json`
   - `stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
   - `stage-i-p11-live-influx-r4-partial/partial_summary.json`
-  - r4 `runtime_semantic_case` 图表替代说明与 `figure_quality_audit.csv`
+  - r5 `runtime_semantic_case` 图表替代说明与 `figure_quality_audit.csv`
 
 ## 已完成 P19：中期报告材料冻结与 docs 入口清理
 
@@ -1000,7 +1002,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 ## 已完成 P22：中期 thesis materials r3 图表质量刷新
 
-目标：修复 P16/P18 thesis materials 中低信息或易误读图表，先生成 r3 图表包验证新版构图，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚；该图包现已由 r4 runtime case refresh 接管并清理。
+目标：修复 P16/P18 thesis materials 中低信息或易误读图表，先生成 r3 图表包验证新版构图，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚；该图包后续由 r4 接管，当前已由 r5 接管并清理。
 
 结果：
 
@@ -1011,7 +1013,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `src/chronaris/pipelines/stage_i/evidence/thesis_materials_report.py`
   - `scripts/stage_i/evidence/build_thesis_materials.py`
   - `tests/test_stage_i_thesis_materials.py`
-- r3 run 已由 r4 接管并从 docs 产物目录清理，当前 thesis materials 入口见 P23 的 `20260619T-stage-i-thesis-materials-r4-runtime-case-refresh`。
+- r3/r4 run 已由 r5 接管并从 docs 产物目录清理，当前 thesis materials 入口见 P25 的 `20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh`。
 - 本轮输出 `8` 张 PNG 与 `8` 张 CSV：
   - `evidence_layer_overview`：从 artifact present=1 改为证据层级矩阵。
   - `runtime_payload_schema`：改为 native replay payload 与 canonical service payload 字段契约对照。
@@ -1034,7 +1036,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 验收：
 
 - `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_thesis_materials tests.test_stage_i_support tests.test_runtime_service_smoke tests.test_stage_i_llm_preprocessing tests.test_stage_i_llm_comparison`：`Ran 16 tests in 2.878s`，`OK`。
-- `build_thesis_materials.py` 已用 r3 run_id 实跑；r3 输出已由 P23/r4 图包替代并清理。
+- `build_thesis_materials.py` 已用 r3 run_id 实跑；r3/r4 输出已由 P25/r5 图包替代并清理。
 - PIL/pandas 验证已确认 `8` 个 PNG 非空且可读取、`8` 个 CSV 有行且关键字段存在、`figure_manifest.json/table_manifest.json` 均为 `8` 项、报告中图表路径可解析。
 - 2026-06-19 复核后，旧 r1、r2-p18 thesis-materials PNG/manifest/report 与 r3 thesis-materials 图包已清理，避免中期写作误用；`r2-p18/runtime_semantic_case.csv` 因仍被 P20/P21 LLM preprocessing 复现实验引用而保留。
 
@@ -1044,23 +1046,96 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 结果：
 
-- 新 run：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
-- 本轮输出 `9` 张 PNG 与 `9` 张 CSV，新增 `runtime_semantic_case.png/csv`。
+- r4 run 已完成验证，随后被 P25/r5 接管并从 docs 产物目录清理。
+- 当前 run：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
+- r4 输出过 `9` 张 PNG 与 `9` 张 CSV；当前 r5 输出 `11` 张 PNG 与 `11` 张 CSV，并保留修复后的 `runtime_semantic_case.png/csv`。
 - `runtime_semantic_case` 图改为：
   - 顶部 case card：view_id、展示窗口数、native/canonical 状态、vehicle 字段数、missing groups。
   - 中部 lollipop/dot plot：按窗口展示 `semantic_top_event_attribution`，只标注变化点和最高值，并按 `semantic_top_query_name` 着色。
   - 侧边 query 类型分布。
   - 底部 risk/workload/event score 范围 chip 与 schema 状态摘要。
-- `figure_manifest.json` 与 `table_manifest.json` 均包含 `runtime_semantic_case`。
-- 新增 `figure_quality_audit.csv`，记录 9 张当前图的 issue/action/replacement/qa_status。
+- 当前 `figure_manifest.json` 与 `table_manifest.json` 均包含 `runtime_semantic_case`。
+- 当前 `figure_quality_audit.csv` 记录 11 张当前图的 issue/action/replacement/qa_status。
 
 边界：
 
-- r2-p18 `runtime_semantic_case.csv` 继续保留为 P20/P21 LLM preprocessing 历史输入表；r4 只是把该表作为当前中期图表生成输入，不改写历史 LLM summary。
+- r2-p18 `runtime_semantic_case.csv` 继续保留为 P20/P21 LLM preprocessing 历史输入表；r5 只是把该表作为当前中期图表生成输入，不改写历史 LLM summary。
 - runtime 仍写成 `native aligned / canonical exact`；不声称原生 replay payload 已 exact，也不声称生产级在线服务。
 - LLM 仍只作为 preprocessing context / whitelisted hints / runtime explanation / pending review packet，不写成人工真值或核心因果证据。
+
+## 已完成 P24：leakage-safe private component ablation
+
+目标：在不改写历史 private proxy 结果的前提下，新增 `protocol=leakage_safe_v1` 的 T1/T2/T3 组件消融协议，审计标签来源字段与输入特征同源风险，并把模型骨干结构消融和任务适配层消融拆分为独立产物。
+
+结果：
+
+- 新增代码：
+  - `src/chronaris/pipelines/stage_i/private/leakage_audit.py`
+  - `src/chronaris/pipelines/stage_i/private/leakage_safe_ablation.py`
+  - `scripts/stage_i/private/run_leakage_safe_ablation.py`
+  - `tests/test_stage_i_leakage_safe_ablation.py`
+- 新 run：
+  - `docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/`
+  - `docs/artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md`
+- 输出包括：
+  - `ablation_summary.json`
+  - `label_feature_overlap_audit.json/csv`
+  - `seed_metrics.csv`
+  - `split_manifest.json`
+  - `cross_view_metrics.csv`
+  - `cross_sortie_metrics.csv`
+  - `model_backbone_ablation.csv/json/png`
+  - `task_adapter_ablation.csv/json/png`
+  - `t2_error_distribution.png`
+  - `t3_similarity_distribution.csv/png`
+
+当前结果：
+
+- `audit_status=pass`，未发现直接标签源重叠、标签确定性派生特征输入或身份/时间位置字段输入。
+- records：`sample_count=111`、`view_count=3`、`sortie_count=2`。
+- T1/T2/T3 seed rows 均完成；T3 对单飞行员视图记录 skipped fold，不生成伪正样本。
+- 完整防泄漏任务输入：
+  - T1 macro-F1=`0.17333333333333334`，balanced accuracy=`0.3333333333333333`。
+  - T2 RMSE=`862.6941748579226`，NRMSE=`0.3695127256456088`，persistence RMSE=`201.4895651832178`，相对持久性基线改进率=`-3.281582393973904`。
+  - T3 Top-1=`0.0`，Top-3=`0.0`，Top-5=`0.0`，MRR=`0.0114187054292705`，valid query=`74`，candidate=`8140`。
+- `t3_similarity_distribution.csv` 对原始 `488400` 行进行确定性压缩，保留全部正样本并抽样负样本，写出 `20000` 行。
+
+边界：
+
+- 历史 private component ablation r2 仍保留为历史 private proxy 诊断；论文实验章节优先引用本轮 `leakage_safe_v1` 结果。
+- T3 严格协议下已完成评价，但当前安全向量 Top-1/Top-3/Top-5 均为 `0.0`，不能写成已解决配对检索。
+
+## 已完成 P25：thesis materials r5 leakage-safe refresh
+
+目标：在 r4 runtime case refresh 基础上，把论文图件全部改为 A4 中期报告可用的中文 300dpi 图，并接入 P24 的 leakage-safe 消融结果。
+
+结果：
+
+- 新 run：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
+- 当前输出 `11` 张 PNG 与 `11` 张 CSV：
+  - `evidence_layer_overview`
+  - `runtime_payload_schema`
+  - `runtime_semantic_case`
+  - `rigid_body_rotation_audit`
+  - `weak_label_sweep_ablation`
+  - `chronaris_opt_component_ablation`
+  - `model_backbone_ablation`
+  - `task_adapter_ablation`
+  - `public_transfer_boundary`
+  - `semantic_event_fusion_overview`
+  - `llm_comparison_a0_a4`
+- `figure_quality_audit.csv` 已确认 11 张 PNG 均存在、非空、DPI 约 `300`，并与 table/figure manifest 数量匹配。
+- r5 图件可见文字已中文化；内部 protocol、run id、source path 和枚举保留在 CSV/JSON/manifest 中用于追溯。
+
+边界：
+
+- `semantic_event_fusion_overview` 没有伪造完整 view-query 归因热力图；当前源产物缺少完整“数据视图 × 查询类型”矩阵时，图中显示缺源需求。
+- `runtime_semantic_case` 只展示当前真实覆盖的风险与工作负荷查询，不生成不存在的事件复盘查询。
+- `chronaris_opt_component_ablation` 作为兼容总览图保留；正式组件消融推荐使用 `model_backbone_ablation.png` 与 `task_adapter_ablation.png`。
 
 ## 中期前边界管理
 

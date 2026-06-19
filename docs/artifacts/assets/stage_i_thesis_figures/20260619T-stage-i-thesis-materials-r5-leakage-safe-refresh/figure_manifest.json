@@ -1,0 +1,159 @@
+{
+  "run_id": "20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh",
+  "artifact_root": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh",
+  "figures": [
+    {
+      "figure_id": "evidence_layer_overview",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/evidence_layer_overview.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json",
+        "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json",
+        "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json",
+        "docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json",
+        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json",
+        "docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json",
+        "docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json",
+        "docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json"
+      ],
+      "evidence_layer": "cross_layer_index",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/evidence_layer_overview.csv",
+      "metric_definition": "Evidence-layer matrix with source-derived counts/statuses; replaces artifact-present bars.",
+      "recommended_placement": "appendix_or_supporting",
+      "replaces_problem": "evidence_layer_overview no longer uses all-one artifact-present bars."
+    },
+    {
+      "figure_id": "runtime_payload_schema",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/runtime_payload_schema.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json",
+        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json"
+      ],
+      "evidence_layer": "runtime_schema",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/runtime_payload_schema.csv",
+      "metric_definition": "Native replay payload records field ordering and explicit missing masks; canonical payload validates the 1930-dimension training-field contract.",
+      "replaces_problem": "runtime_payload_schema is rendered as a contract comparison instead of a generic schema plot."
+    },
+    {
+      "figure_id": "runtime_semantic_case",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/runtime_semantic_case.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv",
+        "docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json",
+        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json",
+        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json"
+      ],
+      "evidence_layer": "runtime_semantic_support",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/runtime_semantic_case.csv",
+      "metric_definition": "Runtime case values are selected from runtime_semantic_case.csv and shown as dominant query, semantic attribution, and task output ranges.",
+      "case_definition": "代表窗口按查询类型变化、归因局部峰值、归因变化幅度和任务输出变化优先选择；source_window_count=12; selected_window_count=8",
+      "replaces_problem": "uses a compact selected-window axis and replaces near-flat/repeated attribution bars with case-level semantic attribution and task-output ranges."
+    },
+    {
+      "figure_id": "rigid_body_rotation_audit",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/rigid_body_rotation_audit.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json",
+        "docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json"
+      ],
+      "evidence_layer": "rigid_body_rotation_diagnostics",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/rigid_body_rotation_audit.csv",
+      "metric_definition": "三类损失分开显示并使用对数尺度；旋转矩阵标记角度和角速度字段可用性，当前数据缺少成对角速度字段。",
+      "replaces_problem": "rotation rate absence is shown as a matrix, not empty bars."
+    },
+    {
+      "figure_id": "weak_label_sweep_ablation",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/weak_label_sweep_ablation.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json",
+        "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json",
+        "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json"
+      ],
+      "evidence_layer": "thesis_weak_label",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/weak_label_sweep_ablation.csv",
+      "metric_definition": "小规模弱监督参数组合按数据读取方式和滞后窗口参数比较；部分执行与续跑状态仅保留在结构化表和清单中。",
+      "replaces_problem": "weak-label sweep no longer uses two near-identical bars."
+    },
+    {
+      "figure_id": "chronaris_opt_component_ablation",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/chronaris_opt_component_ablation.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json"
+      ],
+      "evidence_layer": "private_proxy",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/chronaris_opt_component_ablation.csv",
+      "metric_definition": "Task metrics are shown on native scales and component-by-task degradation is shown as raw and relative delta.",
+      "recommended_placement": "supporting_overview",
+      "replaces_problem": "mixed-unit delta bars are replaced by task facets plus normalized contribution."
+    },
+    {
+      "figure_id": "model_backbone_ablation",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/model_backbone_ablation.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json"
+      ],
+      "evidence_layer": "private_proxy_leakage_safe",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/model_backbone_ablation.csv",
+      "metric_definition": "Leakage-safe model-backbone ablation with raw delta and relative percent degradation by task.",
+      "recommended_placement": "main_experiment_component_analysis"
+    },
+    {
+      "figure_id": "task_adapter_ablation",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/task_adapter_ablation.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json"
+      ],
+      "evidence_layer": "private_proxy_leakage_safe",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/task_adapter_ablation.csv",
+      "metric_definition": "Leakage-safe task-adapter ablation with seed mean/std and component-by-task degradation.",
+      "recommended_placement": "main_experiment_component_analysis"
+    },
+    {
+      "figure_id": "public_transfer_boundary",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/public_transfer_boundary.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json",
+        "docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json",
+        "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json"
+      ],
+      "evidence_layer": "transfer_boundary",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/public_transfer_boundary.csv",
+      "metric_definition": "Chinese positive role diagram separating public adapter, private weak-label mainline, and private proxy diagnostics.",
+      "replaces_problem": "defensive boundary copy is replaced by positive Chinese role wording."
+    },
+    {
+      "figure_id": "semantic_event_fusion_overview",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/semantic_event_fusion_overview.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json",
+        "docs/artifacts/assets/stage_i_semantic_event_support/20260607T-stage-i-semantic-support-r2/semantic_event_support_summary.json"
+      ],
+      "evidence_layer": "semantic_support",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/semantic_event_fusion_overview.csv",
+      "case_definition": "Pipeline diagram plus view-query heatmap when complete source scores exist; otherwise records the source-data requirement.",
+      "replaces_problem": "replaces the old Stage G minimal causal-mask heatmap as the main semantic fusion figure."
+    },
+    {
+      "figure_id": "llm_comparison_a0_a4",
+      "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/llm_comparison_a0_a4.png",
+      "exists": true,
+      "source_path": [
+        "docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json",
+        "docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json"
+      ],
+      "evidence_layer": "llm_preprocessing_comparison",
+      "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/llm_comparison_a0_a4.csv",
+      "metric_definition": "A0-A4 comparison from the LLM preprocessing comparison summary; LLM hints show coverage only, not attribution improvement.",
+      "replaces_problem": "adds LLM preprocessing/comparison evidence without treating LLM output as truth."
+    }
+  ]
+}

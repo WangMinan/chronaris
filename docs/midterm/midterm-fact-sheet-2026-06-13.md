@@ -1,6 +1,6 @@
 # Chronaris 中期事实清单
 
-更新时间：2026-06-13
+更新时间：2026-06-19
 
 本清单冻结当前中期报告可引用事实。所有实验事实必须能追溯到 `docs/artifacts/` 下的报告、CSV、JSON 或 PNG。写中期报告时，优先引用本清单中的当前入口；历史报告只作为追溯材料，不从旧报告倒推当前状态。
 
@@ -26,7 +26,7 @@
 | 物理一致性约束时间对齐 | translation + vertical 约束已在真实链路启用；rotation disabled diagnostics 已落盘 | [../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md) |
 | 因果掩码与语义事件融合 | 语义 support 覆盖 3 个双流 view | [../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md) |
 | 标准化融合特征与中间态接口 | Stage H 与 runtime replay 已形成样本、checkpoint、prediction 输出 | [../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md) |
-| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和图表 | [../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md) |
+| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r5 图表；private T1/T2/T3 另有 leakage-safe 组件诊断 | [../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md) |
 
 ## 3. 数据与样本事实
 
@@ -217,6 +217,37 @@ live stable 的两个完成 child run：
 
 - T1/T2/T3 是 private proxy benchmark，不是论文三类 weak-label task。
 - 这组结果可用于说明模块组合与消融价值，不能写成公开泛化或人工真值验证。
+
+### P12.2 leakage-safe private component ablation
+
+当前新增协议入口：
+
+- Summary：`docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json`
+- 报告：[../artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](../artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
+- protocol：`leakage_safe_v1`
+- audit_status：`pass`
+- records：sample_count=`111`, view_count=`3`, sortie_count=`2`
+- seeds：`17, 29, 43, 71, 97`
+- split_strategy：T1/T2 使用 leave-one-view-out 与 leave-one-sortie-out；聚合图表默认引用 leave-one-view-out。T3 只使用具备跨飞行员正样本的数据视图，不为单飞行员视图生成伪配对。
+
+标签-特征同源审计：
+
+- 直接字段重叠、标签确定性派生特征、样本/飞行员/窗口位置和原始时间身份字段均已审计。
+- 审计产物：`label_feature_overlap_audit.json` 与 `label_feature_overlap_audit.csv`。
+- T3 正负样本相似度分布原始 `488400` 行，结构化写出 `20000` 行；保留全部正样本并确定性抽样负样本。
+
+完整防泄漏任务输入的当前指标：
+
+| task | metric | value | 说明 |
+| --- | --- | --- | --- |
+| T1_maneuver_intensity_class | macro_f1 | `0.17333333333333334` | balanced_accuracy=`0.3333333333333333` |
+| T2_next_window_physiology_response | rmse | `862.6941748579226` | persistence_rmse=`201.4895651832178`, nrmse=`0.3695127256456088`, persistence_improvement_rate=`-3.281582393973904` |
+| T3_paired_pilot_window_retrieval | top1_accuracy | `0.0` | top3=`0.0`, top5=`0.0`, mrr=`0.0114187054292705`, valid_query_count=`74`, candidate_count=`8140` |
+
+写法建议：
+
+- 可以写“历史 private proxy 满分结果已新增 leakage-safe 审计与消融协议复核，排除了标签源同源特征和身份/时间位置泄漏，结果更适合论文实验章节作为组件诊断引用”。
+- 不应写“leakage-safe T3 已完成有效检索”或“历史满分指标仍可直接作为论文主实验结果”。当前 T3 评价完成，但安全向量 Top-1/Top-3/Top-5 均为 `0.0`，这应写成严格协议下的限制和后续改进方向。
 
 ## 8. P13/P14 public adapter 与 transfer boundary
 
@@ -414,16 +445,16 @@ Native 缺失的 vehicle measurement groups：
 - 必须同时写“native runtime input 仍是 aligned，缺少 965 个 vehicle features，集中在 6 个 BUS measurement groups”。
 - 不应写“原始上游输入已 native exact”。
 
-## 12. P16/P18/r4 thesis figures
+## 12. P16/P18/r5 thesis figures
 
 当前图表入口：
 
-- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md)
-- figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json`
-- table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/table_manifest.json`
-- QA 清单：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_quality_audit.csv`
+- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md)
+- figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`
+- table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/table_manifest.json`
+- QA 清单：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_quality_audit.csv`
 
-当前 9 张 PNG 说明图：
+当前 11 张 PNG 说明图：
 
 | figure_id | PNG | CSV | evidence_layer | 用途 |
 | --- | --- | --- | --- | --- |
@@ -432,7 +463,9 @@ Native 缺失的 vehicle measurement groups：
 | runtime_semantic_case | `runtime_semantic_case.png` | `runtime_semantic_case.csv` | runtime_semantic_support | 展示 runtime case card、窗口级语义归因、query 分布、范围 chip 与 schema 状态摘要 |
 | rigid_body_rotation_audit | `rigid_body_rotation_audit.png` | `rigid_body_rotation_audit.csv` | rigid_body_rotation_diagnostics | 展示 family loss 与 pitch/roll/yaw angle/rate 可用性矩阵 |
 | weak_label_sweep_ablation | `weak_label_sweep_ablation.png` | `weak_label_sweep_ablation.csv` | thesis_weak_label | 对比 proxy/live best metrics、运行状态和小网格 lag |
-| chronaris_opt_component_ablation | `chronaris_opt_component_ablation.png` | `chronaris_opt_component_ablation.csv` | private_proxy | T1/T2/T3 分任务尺度展示 private proxy component ablation |
+| chronaris_opt_component_ablation | `chronaris_opt_component_ablation.png` | `chronaris_opt_component_ablation.csv` | private_proxy | 兼容总览图，分任务尺度展示防泄漏组件消融 |
+| model_backbone_ablation | `model_backbone_ablation.png` | `model_backbone_ablation.csv` | private_proxy_leakage_safe | 模型骨干结构消融，推荐用于论文实验章节 |
+| task_adapter_ablation | `task_adapter_ablation.png` | `task_adapter_ablation.csv` | private_proxy_leakage_safe | 任务适配层消融，推荐用于论文实验章节 |
 | public_transfer_boundary | `public_transfer_boundary.png` | `public_transfer_boundary.csv` | transfer_boundary | 中文展示公开适配、私有弱标注主线、私有代理消融的正向分工 |
 | semantic_event_fusion_overview | `semantic_event_fusion_overview.png` | `semantic_event_fusion_overview.csv` | semantic_support | 展示双流 semantic event fusion 与 query-to-event attribution |
 | llm_comparison_a0_a4 | `llm_comparison_a0_a4.png` | `llm_comparison_a0_a4.csv` | llm_preprocessing_comparison | 展示 LLM A0-A4 对比与待人工复核边界 |
@@ -443,10 +476,12 @@ Native 缺失的 vehicle measurement groups：
 2. 数据链路 / 运行时 schema：`runtime_payload_schema.png`。
 3. 模型链路 / 语义融合：`semantic_event_fusion_overview.png`。
 4. 实验链路 / weak-label：`weak_label_sweep_ablation.png`。
-5. 组件诊断：`chronaris_opt_component_ablation.png`。
-6. 物理约束与字段边界：`rigid_body_rotation_audit.png`。
-7. 公开适配与私有主线分工：`public_transfer_boundary.png`。
-8. LLM 预处理复核材料链路：`llm_comparison_a0_a4.png`。
+5. 组件诊断总览：`chronaris_opt_component_ablation.png`。
+6. 模型骨干结构消融：`model_backbone_ablation.png`。
+7. 任务适配层消融：`task_adapter_ablation.png`。
+8. 物理约束与字段边界：`rigid_body_rotation_audit.png`。
+9. 公开适配与私有主线分工：`public_transfer_boundary.png`。
+10. LLM 预处理复核材料链路：`llm_comparison_a0_a4.png`。
 
 ## 13. 中期历史证据包
 
@@ -458,7 +493,7 @@ Native 缺失的 vehicle measurement groups：
 - Figure index：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_figure_index.csv`
 - Metrics：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_metrics.csv`
 
-该证据包形成于 P10-P18 之前，仍可作为历史整编入口；正式写当前中期报告时，应优先使用 P23 更新后的 `docs/midterm/` 与 `stage_i_thesis_figures r4-runtime-case-refresh`。
+该证据包形成于 P10-P18 之前，仍可作为历史整编入口；正式写当前中期报告时，应优先使用本清单与 `stage_i_thesis_figures r5-leakage-safe-refresh`。
 
 ## 14. 当前可直接写入报告的贡献描述
 

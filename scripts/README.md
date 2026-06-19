@@ -38,6 +38,7 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 ### private
 
 - `scripts/stage_i/private/run_benchmark.py`：私有 Stage H `T1/T2/T3` proxy benchmark 与 `chronaris_opt` 证据。
+- `scripts/stage_i/private/run_leakage_safe_ablation.py`：P24 `protocol=leakage_safe_v1` 标签-特征审计与防泄漏组件消融。
 
 ### evidence
 
