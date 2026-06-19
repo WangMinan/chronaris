@@ -5,83 +5,83 @@
   "stage_name": "stage_i_private_leakage_safe_ablation",
   "run_id": "20260619T-stage-i-leakage-safe-ablation-r2",
   "last_event": "finished",
-  "updated_at_utc": "2026-06-19T08:13:26.886205Z",
+  "updated_at_utc": "2026-06-19T09:58:21.863028Z",
   "events": [
     {
-      "timestamp_utc": "2026-06-19T08:11:45.828489Z",
+      "timestamp_utc": "2026-06-19T09:56:49.038284Z",
       "event": "start",
       "artifact_root": "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2",
       "protocol": "leakage_safe_v1",
       "seed_count": 5
     },
     {
-      "timestamp_utc": "2026-06-19T08:11:56.139507Z",
+      "timestamp_utc": "2026-06-19T09:56:59.123703Z",
       "event": "sources_loaded",
       "sample_count": 111,
       "task_count": 3
     },
     {
-      "timestamp_utc": "2026-06-19T08:11:59.475061Z",
+      "timestamp_utc": "2026-06-19T09:57:02.271335Z",
       "event": "ablation_spec_finished",
       "variant_name": "naive_time_sync"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:02.893805Z",
+      "timestamp_utc": "2026-06-19T09:57:05.312453Z",
       "event": "ablation_spec_finished",
       "variant_name": "continuous_dual_state"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:06.301760Z",
+      "timestamp_utc": "2026-06-19T09:57:08.476859Z",
       "event": "ablation_spec_finished",
       "variant_name": "remove_physics_constraint"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:15.673430Z",
+      "timestamp_utc": "2026-06-19T09:57:17.200564Z",
       "event": "ablation_spec_finished",
       "variant_name": "remove_causal_mask"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:24.982063Z",
+      "timestamp_utc": "2026-06-19T09:57:25.689377Z",
       "event": "ablation_spec_finished",
       "variant_name": "remove_semantic_event_fusion"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:34.575392Z",
+      "timestamp_utc": "2026-06-19T09:57:34.403947Z",
       "event": "ablation_spec_finished",
       "variant_name": "full_model"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:44.128853Z",
+      "timestamp_utc": "2026-06-19T09:57:43.227016Z",
       "event": "ablation_spec_finished",
       "variant_name": "full_leakage_safe_task_input"
     },
     {
-      "timestamp_utc": "2026-06-19T08:12:53.759094Z",
+      "timestamp_utc": "2026-06-19T09:57:52.084145Z",
       "event": "ablation_spec_finished",
       "variant_name": "remove_task_head"
     },
     {
-      "timestamp_utc": "2026-06-19T08:13:03.278109Z",
+      "timestamp_utc": "2026-06-19T09:58:00.925091Z",
       "event": "ablation_spec_finished",
       "variant_name": "remove_raw_window_stats_residual"
     },
     {
-      "timestamp_utc": "2026-06-19T08:13:12.985087Z",
+      "timestamp_utc": "2026-06-19T09:58:09.641612Z",
       "event": "ablation_spec_finished",
       "variant_name": "remove_temporal_position_features"
     },
     {
-      "timestamp_utc": "2026-06-19T08:13:22.912064Z",
+      "timestamp_utc": "2026-06-19T09:58:18.426306Z",
       "event": "ablation_spec_finished",
       "variant_name": "only_fused_latent"
     },
     {
-      "timestamp_utc": "2026-06-19T08:13:25.196535Z",
+      "timestamp_utc": "2026-06-19T09:58:20.578318Z",
       "event": "ablation_spec_finished",
       "variant_name": "single_modality_only"
     },
     {
-      "timestamp_utc": "2026-06-19T08:13:26.886205Z",
+      "timestamp_utc": "2026-06-19T09:58:21.863028Z",
       "event": "finished",
       "summary_path": "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json",
       "report_path": "docs/artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md",

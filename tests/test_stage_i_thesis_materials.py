@@ -19,9 +19,17 @@ from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (  # noqa
     build_runtime_semantic_case_rows,
     build_thesis_table_rows,
 )
+from chronaris.pipelines.stage_i.evidence.thesis_materials import StageIThesisMaterialsConfig  # noqa: E402
 
 
 class StageIThesisMaterialsDataTest(unittest.TestCase):
+    def test_default_sources_point_to_current_leakage_safe_materials(self) -> None:
+        config = StageIThesisMaterialsConfig(run_id="test")
+
+        self.assertIn("stage_i_private_leakage_safe_ablation", config.private_component_summary_path)
+        self.assertTrue(config.private_component_summary_path.endswith("ablation_summary.json"))
+        self.assertIn("20260619T-stage-i-rotation-audit-r3-figure-refresh", config.rotation_audit_summary_path)
+
     def test_runtime_payload_schema_distinguishes_native_and_canonical(self) -> None:
         rows = build_runtime_payload_schema_rows(_sources())
 

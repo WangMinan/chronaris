@@ -228,13 +228,13 @@ live stable 的两个完成 child run：
 - audit_status：`pass`
 - records：sample_count=`111`, view_count=`3`, sortie_count=`2`
 - seeds：`17, 29, 43, 71, 97`
-- split_strategy：T1/T2 使用 leave-one-view-out 与 leave-one-sortie-out；聚合图表默认引用 leave-one-view-out。T3 只使用具备跨飞行员正样本的数据视图，不为单飞行员视图生成伪配对。
+- split_strategy：T1/T2 使用 leave-one-view-out 与 leave-one-sortie-out；聚合图表默认引用 leave-one-view-out。T3 只使用具备跨飞行员正样本的数据视图，不为单飞行员视图生成伪配对；候选池限定为 `same_sortie_cross_pilot`，即同一 sortie 的另一名飞行员窗口，`pilot_id/window_index` 不进入特征向量。
 
 标签-特征同源审计：
 
 - 直接字段重叠、标签确定性派生特征、样本/飞行员/窗口位置和原始时间身份字段均已审计。
 - 审计产物：`label_feature_overlap_audit.json` 与 `label_feature_overlap_audit.csv`。
-- T3 正负样本相似度分布原始 `488400` 行，结构化写出 `20000` 行；保留全部正样本并确定性抽样负样本。
+- T3 正负样本相似度分布原始 `164280` 行，结构化写出 `20000` 行；保留全部正样本并确定性抽样负样本。
 
 完整防泄漏任务输入的当前指标：
 
@@ -242,12 +242,14 @@ live stable 的两个完成 child run：
 | --- | --- | --- | --- |
 | T1_maneuver_intensity_class | macro_f1 | `0.17333333333333334` | balanced_accuracy=`0.3333333333333333` |
 | T2_next_window_physiology_response | rmse | `862.6941748579226` | persistence_rmse=`201.4895651832178`, nrmse=`0.3695127256456088`, persistence_improvement_rate=`-3.281582393973904` |
-| T3_paired_pilot_window_retrieval | top1_accuracy | `0.0` | top3=`0.0`, top5=`0.0`, mrr=`0.0114187054292705`, valid_query_count=`74`, candidate_count=`8140` |
+| T3_paired_pilot_window_retrieval | top1_accuracy | `0.02702702702702703` | top3=`0.0945945945945946`, top5=`0.14864864864864866`, mrr=`0.11994791108940953`, valid_query_count=`74`, candidate_count=`2738`, candidate_pool_policy=`same_sortie_cross_pilot` |
+
+当前组件总览中 T3 最佳为 `continuous_dual_state / naive_time_sync`，Top-1=`0.06756756756756757`，Top-5=`0.17567567567567569`，MRR=`0.15295949410099255`。
 
 写法建议：
 
 - 可以写“历史 private proxy 满分结果已新增 leakage-safe 审计与消融协议复核，排除了标签源同源特征和身份/时间位置泄漏，结果更适合论文实验章节作为组件诊断引用”。
-- 不应写“leakage-safe T3 已完成有效检索”或“历史满分指标仍可直接作为论文主实验结果”。当前 T3 评价完成，但安全向量 Top-1/Top-3/Top-5 均为 `0.0`，这应写成严格协议下的限制和后续改进方向。
+- 不应写“leakage-safe T3 已经达到历史满分”或“历史满分指标仍可直接作为论文主实验结果”。当前 T3 在同 sortie 跨飞行员候选池下已经有非零命中，但 Top-1 仍只有 `0.0270` 到 `0.0676`，应写成严格协议下的初步补齐和后续改进方向。
 
 ## 8. P13/P14 public adapter 与 transfer boundary
 

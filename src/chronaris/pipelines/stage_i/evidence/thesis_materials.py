@@ -54,8 +54,8 @@ DEFAULT_LIVE_PARTIAL_SUMMARY_PATH = (
     "partial_summary.json"
 )
 DEFAULT_PRIVATE_COMPONENT_SUMMARY_PATH = (
-    "docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/"
-    "chronaris_opt_component_ablation.json"
+    "docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/"
+    "ablation_summary.json"
 )
 DEFAULT_PUBLIC_CALIBRATION_SUMMARY_PATH = (
     "docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/"
@@ -70,7 +70,7 @@ DEFAULT_RIGID_BODY_SUMMARY_PATH = (
     "rigid_body_ablation_summary.json"
 )
 DEFAULT_ROTATION_AUDIT_SUMMARY_PATH = (
-    "docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/"
+    "docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/"
     "rigid_body_rotation_audit_summary.json"
 )
 DEFAULT_RUNTIME_SUMMARY_PATH = (
