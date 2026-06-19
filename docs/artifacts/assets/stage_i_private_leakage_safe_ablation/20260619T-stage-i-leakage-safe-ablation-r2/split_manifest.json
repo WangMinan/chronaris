@@ -1,0 +1,47 @@
+{
+  "strategies": {
+    "leave_one_view_out": [
+      {
+        "split_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+        "train_count": 74,
+        "test_count": 37
+      },
+      {
+        "split_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+        "train_count": 74,
+        "test_count": 37
+      },
+      {
+        "split_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+        "train_count": 74,
+        "test_count": 37
+      }
+    ],
+    "leave_one_sortie_out": [
+      {
+        "split_group": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "train_count": 37,
+        "test_count": 74
+      },
+      {
+        "split_group": "20251005_四01_ACT-4_云_J20_22#01",
+        "train_count": 74,
+        "test_count": 37
+      }
+    ]
+  },
+  "task_label_counts": {
+    "T1_maneuver_intensity_class": {
+      "entry_count": 111,
+      "valid_label_count": 111
+    },
+    "T2_next_window_physiology_response": {
+      "entry_count": 111,
+      "valid_label_count": 108
+    },
+    "T3_paired_pilot_window_retrieval": {
+      "entry_count": 111,
+      "valid_label_count": 74
+    }
+  }
+}

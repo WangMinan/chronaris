@@ -48,6 +48,8 @@ _COMPAT_MODULE_ALIASES = {
     f"{__name__}.stage_i_private_benchmark_models": f"{__name__}.private.benchmark_models",
     f"{__name__}.stage_i_private_component_ablation": f"{__name__}.evidence.private_component_ablation",
     f"{__name__}.stage_i_private_feature_utils": f"{__name__}.private.feature_utils",
+    f"{__name__}.stage_i_private_leakage_audit": f"{__name__}.private.leakage_audit",
+    f"{__name__}.stage_i_private_leakage_safe_ablation": f"{__name__}.private.leakage_safe_ablation",
     f"{__name__}.stage_i_private_optimization": f"{__name__}.private.optimization",
     f"{__name__}.stage_i_private_optimized_package": f"{__name__}.private.optimized_package",
     f"{__name__}.stage_i_public_adapter_calibration": f"{__name__}.evidence.public_adapter_calibration",

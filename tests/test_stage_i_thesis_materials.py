@@ -77,7 +77,7 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         a4 = next(row for row in llm_rows if row["condition"] == "A4_human_review_packet")
         self.assertIn("未完成", a4["boundary_cn"])
         self.assertIn("human_review_completed=False", a4["metric_note"])
-        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开数据适配与校准", "私有 Stage H 弱标注主线", "私有代理消融"])
+        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开数据适配与校准", "真实航空双流样本", "组件代理任务"])
         self.assertTrue(all("不能" not in row["positive_reading_cn"] for row in transfer_rows))
 
     def test_table_contract_includes_required_outputs(self) -> None:
@@ -92,6 +92,8 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
                 "rigid_body_rotation_audit.csv",
                 "weak_label_sweep_ablation.csv",
                 "chronaris_opt_component_ablation.csv",
+                "model_backbone_ablation.csv",
+                "task_adapter_ablation.csv",
                 "public_transfer_boundary.csv",
                 "semantic_event_fusion_overview.csv",
                 "llm_comparison_a0_a4.csv",
