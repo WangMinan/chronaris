@@ -26,7 +26,7 @@
 | 物理一致性约束时间对齐 | translation + vertical 约束已在真实链路启用；rotation disabled diagnostics 已落盘 | [../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md) |
 | 因果掩码与语义事件融合 | 语义 support 覆盖 3 个双流 view | [../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md) |
 | 标准化融合特征与中间态接口 | Stage H 与 runtime replay 已形成样本、checkpoint、prediction 输出 | [../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md) |
-| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和图表 | [../artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md](../artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md) |
+| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和图表 | [../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md) |
 
 ## 3. 数据与样本事实
 
@@ -291,8 +291,8 @@ rigid_body 已启用 residual：
 
 当前入口：
 
-- Summary：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md](../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md)
+- Summary：`docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
+- 报告：[../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md](../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md)
 - evidence_layer：`rotation_diagnostics`
 - rotation_enabled：`false`
 - rotation_status：`disabled`
@@ -414,33 +414,37 @@ Native 缺失的 vehicle measurement groups：
 - 必须同时写“native runtime input 仍是 aligned，缺少 965 个 vehicle features，集中在 6 个 BUS measurement groups”。
 - 不应写“原始上游输入已 native exact”。
 
-## 12. P16/P18 thesis figures
+## 12. P16/P18/r3 thesis figures
 
 当前图表入口：
 
-- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md](../artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md)
-- figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
-- table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/table_manifest.json`
+- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md)
+- figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
+- table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/table_manifest.json`
 
-当前 6 张 PNG 说明图：
+当前 8 张 PNG 说明图：
 
 | figure_id | PNG | CSV | evidence_layer | 用途 |
 | --- | --- | --- | --- | --- |
-| evidence_layer_overview | `evidence_layer_overview.png` | `evidence_layer_overview.csv` | cross_layer_index | 展示 stable artifact/task 与证据层级 |
-| weak_label_sweep_ablation | `weak_label_sweep_ablation.png` | `weak_label_sweep_ablation.csv` | thesis_weak_label | 对比 proxy 与 live_influx sweep，并保留 partial/resume blocker 注记 |
-| chronaris_opt_component_ablation | `chronaris_opt_component_ablation.png` | `chronaris_opt_component_ablation.csv` | private_proxy | 展示 private proxy component ablation |
-| public_transfer_boundary | `public_transfer_boundary.png` | `public_transfer_boundary.csv` | public_adapter_calibration | 展示 public adapter / thesis weak-label / private proxy 边界 |
-| runtime_semantic_case | `runtime_semantic_case.png` | `runtime_semantic_case.csv` | runtime_semantic_support | 展示 runtime prediction、semantic attribution 与 schema gap |
-| rigid_body_rotation_audit | `rigid_body_rotation_audit.png` | `rigid_body_rotation_audit.csv` | rigid_body_rotation_diagnostics | 展示 rigid-body component 与 rotation audit |
+| evidence_layer_overview | `evidence_layer_overview.png` | `evidence_layer_overview.csv` | cross_layer_index | 展示 Stage I 证据层级矩阵，替代 artifact present=1 柱状图 |
+| runtime_payload_schema | `runtime_payload_schema.png` | `runtime_payload_schema.csv` | runtime_schema | 对照 native replay payload 与 canonical service payload 字段契约 |
+| rigid_body_rotation_audit | `rigid_body_rotation_audit.png` | `rigid_body_rotation_audit.csv` | rigid_body_rotation_diagnostics | 展示 family loss 与 pitch/roll/yaw angle/rate 可用性矩阵 |
+| weak_label_sweep_ablation | `weak_label_sweep_ablation.png` | `weak_label_sweep_ablation.csv` | thesis_weak_label | 对比 proxy/live best metrics、运行状态和小网格 lag |
+| chronaris_opt_component_ablation | `chronaris_opt_component_ablation.png` | `chronaris_opt_component_ablation.csv` | private_proxy | T1/T2/T3 分任务尺度展示 private proxy component ablation |
+| public_transfer_boundary | `public_transfer_boundary.png` | `public_transfer_boundary.csv` | transfer_boundary | 中文展示公开适配、私有弱标注主线、私有代理消融的正向分工 |
+| semantic_event_fusion_overview | `semantic_event_fusion_overview.png` | `semantic_event_fusion_overview.csv` | semantic_support | 展示双流 semantic event fusion 与 query-to-event attribution |
+| llm_comparison_a0_a4 | `llm_comparison_a0_a4.png` | `llm_comparison_a0_a4.csv` | llm_preprocessing_comparison | 展示 P20/P21 A0-A4 对比与待人工复核边界 |
 
 建议用于中期报告的图：
 
-1. 技术路线图：可从 `evidence_layer_overview.png` 与报告正文重绘。
-2. 实验证据分层图：直接引用 `evidence_layer_overview.png`。
-3. weak-label sweep 对比图：引用 `weak_label_sweep_ablation.png`。
-4. 私有代理消融图：引用 `chronaris_opt_component_ablation.png`。
-5. runtime/schema 案例图：引用 `runtime_semantic_case.png` 或 `runtime_payload_schema.png`。
-6. rotation audit 图：引用 `rigid_body_rotation_audit.png`。
+1. 总览：`evidence_layer_overview.png`。
+2. 数据链路 / 运行时 schema：`runtime_payload_schema.png`。
+3. 模型链路 / 语义融合：`semantic_event_fusion_overview.png`。
+4. 实验链路 / weak-label：`weak_label_sweep_ablation.png`。
+5. 组件诊断：`chronaris_opt_component_ablation.png`。
+6. 物理约束与字段边界：`rigid_body_rotation_audit.png`。
+7. 公开适配与私有主线分工：`public_transfer_boundary.png`。
+8. LLM 预处理复核材料链路：`llm_comparison_a0_a4.png`。
 
 ## 13. 中期历史证据包
 
@@ -452,7 +456,7 @@ Native 缺失的 vehicle measurement groups：
 - Figure index：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_figure_index.csv`
 - Metrics：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_metrics.csv`
 
-该证据包形成于 P10-P18 之前，仍可作为历史整编入口；正式写当前中期报告时，应优先使用 P18 后的 `docs/midterm/` 与 `stage_i_thesis_figures r2-p18`。
+该证据包形成于 P10-P18 之前，仍可作为历史整编入口；正式写当前中期报告时，应优先使用 P22 更新后的 `docs/midterm/` 与 `stage_i_thesis_figures r3-figure-refresh`。
 
 ## 14. 当前可直接写入报告的贡献描述
 

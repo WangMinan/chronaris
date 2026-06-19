@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-06-14
+更新时间：2026-06-19
 
 ## 文档定位
 
@@ -86,6 +86,7 @@
 6. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 7. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
 8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
+9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 输入表。
 
 验收：
 
@@ -645,28 +646,12 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 稳定报告：
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
-- 稳定 manifest：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/table_manifest.json`
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/figure_manifest.json`
-- 六张稳定表：
-  - `evidence_layer_overview.csv`
-  - `weak_label_sweep_ablation.csv`
-  - `chronaris_opt_component_ablation.csv`
-  - `public_transfer_boundary.csv`
-  - `runtime_semantic_case.csv`
-  - `rigid_body_rotation_audit.csv`
-- 六张稳定说明图：
-  - `evidence_layer_overview.png`
-  - `weak_label_sweep_ablation.png`
-  - `chronaris_opt_component_ablation.png`
-  - `public_transfer_boundary.png`
-  - `runtime_semantic_case.png`
-  - `rigid_body_rotation_audit.png`
-- 当前 stable root：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
-- 当前说明图和表共用同一批 source path，`figure_manifest.json` 已分别记录 `metric_definition` 或 `case_definition`，并保持 `public adapter / private proxy / thesis weak-label / runtime support` 分层清楚。
+- 首轮图包已被 P22 的 `20260619T-stage-i-thesis-materials-r3-figure-refresh` 替代，并已从 docs 产物目录清理。
+- 当前中期图表入口只使用：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+- P20/P21 LLM preprocessing 仍复用的 runtime case 输入表保留在：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 
 ## 已完成 P17：系统封装与部署边界
 
@@ -824,9 +809,11 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 刷新后的 thesis materials：
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/`
+- 刷新后的 thesis materials 已被 P22/r3 图包替代：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+- 旧 r2-p18 图、manifest 和报告已清理；仅保留 LLM preprocessing 历史输入表：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 - 当前 `weak_label_sweep_ablation.png/csv` 已增加：
   - `summary_status`
   - `derived_from_run_id`
@@ -1009,6 +996,48 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `human_review_packet.csv` 只作为人工复核材料；人工未填写前不得写成验证结论。
 - `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md` 已存在，并能直接给中期报告引用。
 - 相关测试通过；最终 `git diff --check` 作为本轮收口门禁。
+
+## 已完成 P22：中期 thesis materials r3 图表质量刷新
+
+目标：修复 P16/P18 thesis materials 中低信息或易误读图表，生成可直接用于中期报告和答辩 PPT 的 r3 图表包，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚。
+
+结果：
+
+- 新增/刷新代码：
+  - `src/chronaris/pipelines/stage_i/evidence/thesis_materials.py`
+  - `src/chronaris/pipelines/stage_i/evidence/thesis_materials_data.py`
+  - `src/chronaris/pipelines/stage_i/evidence/thesis_materials_figures.py`
+  - `src/chronaris/pipelines/stage_i/evidence/thesis_materials_report.py`
+  - `scripts/stage_i/evidence/build_thesis_materials.py`
+  - `tests/test_stage_i_thesis_materials.py`
+- 新 run：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+- 本轮输出 `8` 张 PNG 与 `8` 张 CSV：
+  - `evidence_layer_overview`：从 artifact present=1 改为证据层级矩阵。
+  - `runtime_payload_schema`：改为 native replay payload 与 canonical service payload 字段契约对照。
+  - `rigid_body_rotation_audit`：改为 family loss log-scale 对比 + pitch/roll/yaw angle/rate 可用性矩阵。
+  - `weak_label_sweep_ablation`：改为 proxy/live best metrics、completed/partial 状态和小网格 lag heatmap。
+  - `chronaris_opt_component_ablation`：改为 T1/T2/T3 分任务面板 + normalized delta 贡献。
+  - `public_transfer_boundary`：完全中文化，改为公开适配、私有弱标注主线、私有代理消融的正向分工图。
+  - `semantic_event_fusion_overview`：改为双流输入、causal mask、event token、semantic query、query-to-event attribution 和 view-level attribution。
+  - `llm_comparison_a0_a4`：纳入 P20/P21 A0-A4 对比，明确 LLM 仅作为 preprocessing context / whitelisted hints / runtime explanation / pending review packet。
+
+增强项实际执行：
+
+- 已重新运行 rotation metadata audit：
+  - `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
+  - 结果仍为 `rotation_status=disabled`；pitch/roll/yaw angle 有候选，pitch_rate/roll_rate/yaw_rate 仍缺失。
+- private component ablation 使用已有 `27` 行 r2 artifact 重绘，未重跑。
+- weak-label sweep 使用已有 stable/partial artifacts 重绘，未扩大 live_influx 网格。
+- semantic 与 LLM 使用已有 Stage I semantic support、P20/P21 artifacts 重绘；未从 summary 倒推 attribution 改善，也未声称人工复核完成。
+
+验收：
+
+- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_thesis_materials tests.test_stage_i_support tests.test_runtime_service_smoke tests.test_stage_i_llm_preprocessing tests.test_stage_i_llm_comparison`：`Ran 16 tests in 2.878s`，`OK`。
+- `build_thesis_materials.py` 已用 run_id `20260619T-stage-i-thesis-materials-r3-figure-refresh` 实跑。
+- PIL/pandas 验证已确认 `8` 个 PNG 非空且可读取、`8` 个 CSV 有行且关键字段存在、`figure_manifest.json/table_manifest.json` 均为 `8` 项、报告中图表路径可解析。
+- 2026-06-19 复核后，旧 r1 与 r2-p18 thesis-materials PNG/manifest/report 已清理，避免中期写作误用；`r2-p18/runtime_semantic_case.csv` 因仍被 P20/P21 LLM preprocessing 复现实验引用而保留。
 
 ## 中期前边界管理
 

@@ -1,0 +1,277 @@
+"""Tests for Stage I thesis materials data contracts."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+import unittest
+
+SRC = Path(__file__).resolve().parents[1] / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (  # noqa: E402
+    build_llm_comparison_rows,
+    build_private_component_rows,
+    build_public_transfer_rows,
+    build_rigid_body_rotation_rows,
+    build_runtime_payload_schema_rows,
+    build_thesis_table_rows,
+)
+
+
+class StageIThesisMaterialsDataTest(unittest.TestCase):
+    def test_runtime_payload_schema_distinguishes_native_and_canonical(self) -> None:
+        rows = build_runtime_payload_schema_rows(_sources())
+
+        self.assertEqual(len(rows), 2)
+        native, canonical = rows
+        self.assertEqual(native["payload_name"], "native replay payload")
+        self.assertEqual(native["schema_status"], "aligned")
+        self.assertEqual(native["physiology_feature_count"], 12)
+        self.assertEqual(native["vehicle_feature_count"], 965)
+        self.assertEqual(native["missing_vehicle_feature_count"], 965)
+        self.assertEqual(canonical["payload_name"], "canonical service payload")
+        self.assertEqual(canonical["schema_status"], "exact")
+        self.assertEqual(canonical["vehicle_feature_count"], 1930)
+        self.assertEqual(canonical["missing_vehicle_feature_count"], 0)
+
+    def test_rotation_rows_use_availability_matrix_for_missing_rates(self) -> None:
+        rows = build_rigid_body_rotation_rows(_sources())
+        matrix_rows = [row for row in rows if row["row_type"] == "rotation_field_matrix"]
+
+        self.assertEqual(len(matrix_rows), 6)
+        angle_rows = [row for row in matrix_rows if row["field_type"] == "angle"]
+        rate_rows = [row for row in matrix_rows if row["field_type"] == "rate"]
+        self.assertTrue(all(row["available"] for row in angle_rows))
+        self.assertFalse(any(row["available"] for row in rate_rows))
+        self.assertTrue(all(row["rotation_status"] == "disabled" for row in matrix_rows))
+
+    def test_private_component_rows_keep_task_direction_and_normalized_delta(self) -> None:
+        rows = build_private_component_rows(_sources())
+
+        by_metric = {row["primary_metric_name"]: row["direction"] for row in rows}
+        self.assertEqual(by_metric["macro_f1"], "higher_is_better")
+        self.assertEqual(by_metric["rmse"], "lower_is_better")
+        self.assertTrue(all(0.0 <= float(row["normalized_delta_vs_full"]) <= 1.0 for row in rows))
+        self.assertIn("source_path", rows[0])
+
+    def test_llm_and_transfer_rows_preserve_boundary_language(self) -> None:
+        llm_rows = build_llm_comparison_rows(_sources())
+        transfer_rows = build_public_transfer_rows(_sources())
+
+        a4 = next(row for row in llm_rows if row["condition"] == "A4_human_review_packet")
+        self.assertIn("未完成", a4["boundary_cn"])
+        self.assertIn("human_review_completed=False", a4["metric_note"])
+        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开数据适配与校准", "私有 Stage H 弱标注主线", "私有代理消融"])
+        self.assertTrue(all("不能" not in row["positive_reading_cn"] for row in transfer_rows))
+
+    def test_table_contract_includes_required_outputs(self) -> None:
+        tables = build_thesis_table_rows(_sources())
+
+        self.assertEqual(
+            set(tables),
+            {
+                "evidence_layer_overview.csv",
+                "runtime_payload_schema.csv",
+                "rigid_body_rotation_audit.csv",
+                "weak_label_sweep_ablation.csv",
+                "chronaris_opt_component_ablation.csv",
+                "public_transfer_boundary.csv",
+                "semantic_event_fusion_overview.csv",
+                "llm_comparison_a0_a4.csv",
+            },
+        )
+
+
+def _sources() -> dict[str, dict[str, object]]:
+    return {
+        "runtime_service": {
+            "path": "runtime_service.json",
+            "payload": {
+                "run_id": "runtime-r2",
+                "input_sample_count": 12,
+                "native_feature_schema_status": "aligned",
+                "canonical_feature_schema_status": "exact",
+                "input_vehicle_feature_count": 965,
+                "canonical_vehicle_feature_count": 1930,
+                "missing_vehicle_feature_count": 965,
+                "missing_vehicle_measurement_group_counts": {"BUS2": 221},
+            },
+        },
+        "runtime_schema_contract": {
+            "path": "runtime_schema_contract.json",
+            "payload": {
+                "schema_source": "input_normalization_stats",
+                "schema_hash": "abc",
+                "native_input": {
+                    "sample_count": 12,
+                    "physiology": {"feature_count": 12},
+                    "vehicle": {"feature_count": 965},
+                },
+                "canonical_payload": {
+                    "sample_count": 12,
+                    "physiology": {"feature_count": 12},
+                    "vehicle": {"feature_count": 1930},
+                },
+                "expected_schema": {
+                    "physiology": {"feature_count": 12},
+                    "vehicle": {"feature_count": 1930},
+                },
+            },
+        },
+        "rigid_body": {
+            "path": "rigid.json",
+            "payload": {
+                "run_id": "rigid-r2",
+                "families": {
+                    "minimal": {"test_total": 10.0, "test_alignment": 0.1, "test_physics_total": 100.0},
+                    "full": {"test_total": 2.0, "test_alignment": 0.2, "test_physics_total": 3.0},
+                    "rigid_body": {
+                        "test_total": 3.0,
+                        "test_alignment": 0.3,
+                        "test_physics_total": 4.0,
+                        "rigid_body_mapping_diagnostics": {"enabled_residuals": ["translation", "vertical"]},
+                    },
+                },
+            },
+        },
+        "rotation_audit": {
+            "path": "rotation.json",
+            "payload": {
+                "run_id": "rotation-r3",
+                "evidence_layer": "rotation_diagnostics",
+                "rotation_status": "disabled",
+                "rotation_reading": "current sortie still lacks paired rate fields for pitch/roll/yaw",
+                "feature_rotation_candidates": {"pitch": [1], "pitch_rate": [], "roll": [1], "roll_rate": [], "yaw": [1], "yaw_rate": []},
+                "mysql_rotation_candidates": {"pitch": [1], "pitch_rate": [], "roll": [1], "roll_rate": [], "yaw": [1], "yaw_rate": []},
+            },
+        },
+        "private_component": {
+            "path": "private.json",
+            "payload": {
+                "run_id": "private-r2",
+                "rows": [
+                    {"task_name": "T1", "variant_name": "chronaris_opt", "component": "full_candidate", "primary_metric_name": "macro_f1", "primary_metric_value": 1.0, "delta_vs_full": 0.0},
+                    {"task_name": "T1", "variant_name": "chronaris_opt_no_causal_mask", "component": "remove_causal_mask", "primary_metric_name": "macro_f1", "primary_metric_value": 0.5, "delta_vs_full": 0.5},
+                    {"task_name": "T2", "variant_name": "chronaris_opt", "component": "full_candidate", "primary_metric_name": "rmse", "primary_metric_value": 10.0, "delta_vs_full": 0.0},
+                    {"task_name": "T2", "variant_name": "chronaris_opt_no_task_head", "component": "remove_task_head", "primary_metric_name": "rmse", "primary_metric_value": 20.0, "delta_vs_full": 10.0},
+                ],
+                "tasks": {"T1": {}, "T2": {}},
+                "variant_order": ["chronaris_opt", "chronaris_opt_no_causal_mask", "chronaris_opt_no_task_head"],
+            },
+        },
+        "proxy_sweep": {
+            "path": "proxy.json",
+            "payload": _sweep_payload("proxy-run", "stage_h_window_stats_proxy", 100.0),
+        },
+        "live_sweep": {
+            "path": "live.json",
+            "payload": _sweep_payload("live-run", "live_influx", 110.0),
+        },
+        "live_partial": {
+            "path": "partial.json",
+            "payload": {
+                **_sweep_payload("partial-run", "live_influx", 110.0),
+                "status": "partial_blocked",
+                "target_combination_count": 4,
+                "combination_count_completed": 2,
+                "blocked_at_run_index": 3,
+                "blocked_attempt_log_paths": ["blocked.log"],
+            },
+        },
+        "public_calibration": {
+            "path": "public_calibration.json",
+            "payload": {"run_id": "public-r2", "rows": [{}, {}], "best_by_category": {"public": {}}},
+        },
+        "public_transfer": {
+            "path": "public_transfer.json",
+            "payload": {"run_id": "transfer-r2", "private_mainline": {"thesis_boundary": "weak label"}},
+        },
+        "support": {
+            "path": "support.json",
+            "payload": {
+                "run_id": "support-r2",
+                "causal_support": {"semantic_event": _semantic_payload()},
+            },
+        },
+        "semantic_event": {
+            "path": "semantic.json",
+            "payload": _semantic_payload(),
+        },
+        "runtime": {
+            "path": "runtime.json",
+            "payload": {"run_id": "runtime-replay", "sample_count": 40},
+        },
+        "evidence_manifest": {
+            "path": "evidence.json",
+            "payload": {"run_id": "evidence-r2", "tasks": {}},
+        },
+        "llm_preprocessing": {
+            "path": "llm_pre.json",
+            "payload": {"run_id": "p20", "request_count": 8, "error_count": 0, "semantic_query_hint_count": 4, "runtime_explanation_count": 4},
+        },
+        "llm_comparison": {
+            "path": "llm_cmp.json",
+            "payload": {
+                "run_id": "p21",
+                "task_context": {"attached_entry_count": 333, "label_unchanged": True, "label_changed_count": 0},
+                "semantic_hints": {"baseline_query_count": 3, "combined_query_count": 7, "added_query_count": 4},
+                "runtime_explanations": {"llm_explained_case_count": 4, "runtime_case_count": 12, "with_llm_average_completeness_for_explained_cases": 1.0},
+                "human_review_packet": {"item_count": 15, "human_review_completed": False},
+            },
+        },
+    }
+
+
+def _sweep_payload(run_id: str, sample_source: str, test_total: float) -> dict[str, object]:
+    return {
+        "run_id": run_id,
+        "status": "completed",
+        "evidence_layer": "thesis_weak_label",
+        "sample_count": 111,
+        "task_entry_count": 333,
+        "combination_count": 2,
+        "source_summary": {"sample_collection": {"sample_source": sample_source}},
+        "best_run": {"child_run_id": f"{run_id}-01", "test_total": test_total},
+        "rows": [
+            {
+                "child_run_id": f"{run_id}-01",
+                "physics_constraint_family": "minimal",
+                "causal_weight": 0.0,
+                "task_loss_weight": 0.5,
+                "causal_lag_window_points": None,
+                "test_total": test_total,
+                "test_task_total": 2.5,
+                "test_causal_total": 0.9,
+            }
+        ],
+    }
+
+
+def _semantic_payload() -> dict[str, object]:
+    return {
+        "run_id": "semantic-r2",
+        "query_count": 3,
+        "query_names": ["risk_proxy", "workload_proxy", "event_replay_tag"],
+        "view_count": 1,
+        "top_view_id": "view-1",
+        "view_rows": [
+            {
+                "view_id": "view-1",
+                "sortie_id": "sortie-1",
+                "pilot_id": 10033,
+                "sample_count": 37,
+                "dominant_query_name": "risk_proxy",
+                "mean_event_token_count": 1.0,
+                "mean_top_event_attribution": 7.5,
+                "top_sample_id": "sample-1",
+                "top_sample_query_name": "risk_proxy",
+                "top_sample_event_attribution": 8.0,
+            }
+        ],
+    }
+
+
+if __name__ == "__main__":
+    unittest.main()

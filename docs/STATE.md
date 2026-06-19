@@ -1,6 +1,6 @@
 # Chronaris 当前状态
 
-更新时间：2026-06-14
+更新时间：2026-06-19
 
 ## 一句话状态
 
@@ -61,10 +61,9 @@
       - 产物：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
       - 报告：`docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
       - 当前已确认 `BUS6000019110020.code1031 = 真航向` 可映射到 `yaw`，但 `yaw_rate` 仍缺失，因此 `rotation_status=disabled`。
-    - `P16 thesis materials` 首轮已完成：
-      - 首轮 root：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
-      - 首轮报告：`docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
-      - 已导出 `6` 张稳定表、`6` 张 PNG 说明图，以及 `table_manifest.json / figure_manifest.json`；当前写作入口以 P18 刷新后的 `r2-p18` 为准。
+    - `P16 thesis materials` 已由 2026-06-19 的 `r3-figure-refresh` 接管为当前入口：
+      - 旧 r1 图包已清理，不再作为 docs 下可打开产物。
+      - 当前写作入口以 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json` 为准。
     - `P17 runtime service smoke` 首轮已完成：
       - 首轮 root：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
       - 首轮报告：`docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
@@ -80,9 +79,15 @@
         - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
         - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/canonical_runtime_samples.jsonl`
         - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
-      - P16 刷新图表：
-        - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
-        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
+      - P16/P18 旧刷新图包：
+        - 已被 `20260619T-stage-i-thesis-materials-r3-figure-refresh` 替代并清理旧 PNG/manifest/report。
+        - 仅保留 `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 的历史输入表。
+      - P16/P21 中期图表质量刷新：
+        - `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/table_manifest.json`
+        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+        - 当前结果：`8` 张 PNG 与 `8` 张 CSV，覆盖 evidence layer matrix、runtime payload schema、rigid-body/rotation、weak-label sweep、private component ablation、public transfer boundary、semantic event fusion 和 LLM A0-A4 comparison。
     - `P20 DeepSeek 在线时序数据预处理` 已完成 agent-style harness v2、切片整合与真实小样本 run：
       - 计划入口：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`
       - 当前真实 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
@@ -101,7 +106,7 @@
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，本地 `main` 已有 P20/P21 文档、代码和产物工作区改动；最新 P20 r3-sliced 与 P21 r1 comparison 以本文件列出的本地路径为准，提交/推送后进入远端历史。
+- 当前分支为 `main`；最新 P16/P21 图表质量刷新、P20 r3-sliced 与 P21 r1 comparison 以本文件列出的本地路径为准，提交/推送后进入远端历史。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
   - `70b651a feat: add stage i evidence closure tools`
@@ -132,13 +137,13 @@
   - 最新 private component ablation：`docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json`
   - 最新 public adapter calibration：`docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json`
   - 最新 public transfer boundary：`docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json`
-  - 最新 rotation audit：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
-  - 历史 thesis materials r1：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/figure_manifest.json`
+  - 最新 rotation audit：`docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
   - 历史 runtime service smoke r1：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/runtime_service_smoke_summary.json`
   - 最新 live weak-label stable resume：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
   - 最新 live weak-label partial blocked：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
   - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
-  - 最新 thesis materials p18：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json`
+  - P20/P21 LLM runtime case 输入表：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
+  - 最新 thesis materials r3 figure refresh：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
   - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
   - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
   - 最新 P20 DeepSeek LLM preprocessing package：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
@@ -218,8 +223,8 @@
     - 当前 `task_entry_count=333`
     - 当前 `combination_count=2`
   - `P16 thesis materials` 首轮：
-    - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r1/`
-    - `figure_manifest.json` 已列出 `evidence_layer_overview / weak_label_sweep_ablation / chronaris_opt_component_ablation / public_transfer_boundary / runtime_semantic_case / rigid_body_rotation_audit`
+    - 旧 r1 图包已由 P22/r3 替代并清理。
+    - 当前中期图表只引用 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`。
   - `P17 runtime service smoke` 首轮：
     - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/`
     - 当前 `input_sample_count=37`
@@ -240,8 +245,11 @@
     - 当前 `missing_vehicle_feature_count=965`
     - 当前 missing groups 已覆盖 `BUS6000019110021` 到 `BUS6000019110026`
   - `P18 thesis materials 刷新`：
-    - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/`
-    - 当前 `figure_manifest.json` 已把 P11 stable/partial blocker 与 P17 native aligned/canonical exact schema contract 纳入图表源。
+    - 旧 r2-p18 图包已由 P22/r3 替代并清理。
+    - 保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
+  - `P16/P21 thesis materials r3 图表质量刷新`：
+    - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`
+    - 当前 `figure_manifest.json` 已把低信息图替换为 evidence matrix、schema contract 对照、rotation availability matrix、weak-label 小网格/status、分任务 private ablation、中文 public transfer、semantic event fusion 和 LLM A0-A4 review flow。
   - `中期报告写作材料`：
     - `docs/midterm/midterm-fact-sheet-2026-06-13.md`
     - `docs/midterm/boundaries-and-risks-2026-06-13.md`
@@ -342,10 +350,6 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 结果：`Ran 7 tests`，`OK`。此外，本轮真实命令已完成：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/build_thesis_materials.py \
-  --run-id 20260613T-stage-i-thesis-materials-r1 \
-  --live-sweep-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r2/multitask_sweep_summary.json
-
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_smoke.py \
   --run-id 20260613T-stage-i-runtime-service-smoke-r1 \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
@@ -412,14 +416,6 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   --device cpu \
   --replay-mode both \
   --strict-feature-schema
-
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/build_thesis_materials.py \
-  --run-id 20260613T-stage-i-thesis-materials-r2-p18 \
-  --live-sweep-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json \
-  --live-partial-summary-path docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json \
-  --runtime-summary-path docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json \
-  --runtime-service-summary-path docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json \
-  --runtime-schema-contract-path docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json
 ```
 
 当前 `P18` 关键结果：

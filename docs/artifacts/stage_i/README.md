@@ -1,6 +1,6 @@
 # Stage I Artifacts Index
 
-更新时间：2026-06-14
+更新时间：2026-06-19
 
 本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
@@ -10,7 +10,7 @@
 - 主动 evidence runner：`stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md`
 - bounded weak-label sweep：`stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md`
 - live weak-label stable resume：`stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
-- thesis materials p18：`stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md`
+- thesis materials r3 figure refresh：`stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
 - runtime service smoke r2 contract：`stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
 - DeepSeek LLM preprocessing r3 sliced：`stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`
 - LLM preprocessing comparison r1：`stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md`
@@ -26,7 +26,7 @@
 - private component ablation：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
 - public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
 - public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
-- rigid-body rotation audit：`stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
+- rigid-body rotation audit r3：`stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md`
 - Phase D/E/F r2：
   - `stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
   - `stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
@@ -40,10 +40,11 @@
   - `stage-i-runtime-demo-20260506T165435Z-stage-i-runtime-demo.md`
   - `stage-i-anchor-20260506T165435Z-stage-i-anchor.md`
 
-历史 P16/P17 首轮：
+历史 P16/P17 图表与 runtime：
 
-- `stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r1.md`
 - `stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
+- `stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
+- 旧 P16/P18 thesis materials 图包已由 r3 替代并清理；仅保留 `../assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
 
 历史 P11 live 首轮：
 

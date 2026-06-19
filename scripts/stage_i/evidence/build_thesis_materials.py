@@ -36,6 +36,9 @@ def main() -> None:
     parser.add_argument("--runtime-service-summary-path")
     parser.add_argument("--runtime-schema-contract-path")
     parser.add_argument("--support-summary-path")
+    parser.add_argument("--semantic-event-summary-path")
+    parser.add_argument("--llm-preprocessing-summary-path")
+    parser.add_argument("--llm-comparison-summary-path")
     args = parser.parse_args()
 
     base_config = StageIThesisMaterialsConfig(run_id=args.run_id)
@@ -45,17 +48,20 @@ def main() -> None:
         report_root=args.report_root,
         evidence_manifest_path=args.evidence_manifest_path or base_config.evidence_manifest_path,
         proxy_sweep_summary_path=args.proxy_sweep_summary_path or base_config.proxy_sweep_summary_path,
-        live_sweep_summary_path=args.live_sweep_summary_path,
-        live_partial_summary_path=args.live_partial_summary_path,
+        live_sweep_summary_path=args.live_sweep_summary_path or base_config.live_sweep_summary_path,
+        live_partial_summary_path=args.live_partial_summary_path or base_config.live_partial_summary_path,
         private_component_summary_path=args.private_component_summary_path or base_config.private_component_summary_path,
         public_calibration_summary_path=args.public_calibration_summary_path or base_config.public_calibration_summary_path,
         public_transfer_summary_path=args.public_transfer_summary_path or base_config.public_transfer_summary_path,
         rigid_body_summary_path=args.rigid_body_summary_path or base_config.rigid_body_summary_path,
         rotation_audit_summary_path=args.rotation_audit_summary_path or base_config.rotation_audit_summary_path,
         runtime_summary_path=args.runtime_summary_path or base_config.runtime_summary_path,
-        runtime_service_summary_path=args.runtime_service_summary_path,
-        runtime_schema_contract_path=args.runtime_schema_contract_path,
+        runtime_service_summary_path=args.runtime_service_summary_path or base_config.runtime_service_summary_path,
+        runtime_schema_contract_path=args.runtime_schema_contract_path or base_config.runtime_schema_contract_path,
         support_summary_path=args.support_summary_path or base_config.support_summary_path,
+        semantic_event_summary_path=args.semantic_event_summary_path or base_config.semantic_event_summary_path,
+        llm_preprocessing_summary_path=args.llm_preprocessing_summary_path or base_config.llm_preprocessing_summary_path,
+        llm_comparison_summary_path=args.llm_comparison_summary_path or base_config.llm_comparison_summary_path,
     )
     result = run_stage_i_thesis_materials(config)
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))
