@@ -573,8 +573,12 @@ def _plot_private_component(path: Path, sources, font, table_paths):
         task_rows = frame.loc[frame["task_name"] == task].copy()
         task_rows["order"] = task_rows["variant_name"].map({name: idx for idx, name in enumerate(preferred)})
         task_rows = task_rows.sort_values("order", ascending=False)
+        values = task_rows["primary_metric_value"].astype(float)
+        if not task_rows.empty and bool(np.isclose(values.to_numpy(dtype=float), 0.0).all()):
+            _draw_zero_metric_panel(ax, task_rows, title, font)
+            continue
         colors = [_variant_color(role) for role in task_rows["variant_role"]]
-        ax.barh(task_rows["display_variant_cn"], task_rows["primary_metric_value"], color=colors, edgecolor=INK, linewidth=0.4)
+        ax.barh(task_rows["display_variant_cn"], values, color=colors, edgecolor=INK, linewidth=0.4)
         if log_x:
             ax.set_xscale("log")
             ax.xaxis.set_major_formatter(_ascii_tick_formatter())
@@ -600,7 +604,7 @@ def _plot_private_component(path: Path, sources, font, table_paths):
         table_path=table_paths["chronaris_opt_component_ablation"],
         metric_definition="Task metrics are shown on native scales and component-by-task degradation is shown as raw and relative delta.",
         recommended_placement="supporting_overview",
-        replaces_problem="mixed-unit delta bars are replaced by task facets plus normalized contribution.",
+        replaces_problem="mixed-unit delta bars are replaced by task facets plus normalized contribution; all-zero task panels are rendered as diagnostics instead of blank bars.",
     )
 
 
@@ -945,8 +949,77 @@ def _availability_cmap():
     return colors.ListedColormap(["#fde8e2", "#e6f4ea"])
 
 
+def _draw_zero_metric_panel(ax, task_rows: pd.DataFrame, title: str, font: PlotFontSelection) -> None:
+    from matplotlib.patches import Rectangle
+
+    metric_name = str(task_rows["primary_metric_name"].iloc[0]).replace("_", " ")
+    metric_name_cn = _metric_title_cn(metric_name)
+    protocol = str(task_rows.get("protocol", pd.Series([""])).iloc[0] or "")
+    split_strategy = str(task_rows.get("split_strategy", pd.Series([""])).iloc[0] or "")
+    seed_count = int(task_rows.get("seed_count", pd.Series([0])).max() or 0)
+    variant_count = int(task_rows["variant_name"].nunique())
+    ax.set_axis_off()
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_title(title, fontsize=10.5, weight="bold", pad=9)
+    ax.add_patch(
+        Rectangle(
+            (0.04, 0.14),
+            0.92,
+            0.72,
+            facecolor=PALE,
+            edgecolor=GRID,
+            linewidth=1.0,
+        )
+    )
+    ax.text(
+        0.5,
+        0.63,
+        _label(font, f"所有变体 {metric_name_cn} = 0", f"All variants {metric_name} = 0"),
+        ha="center",
+        va="center",
+        fontsize=15,
+        weight="bold",
+        color=INK,
+    )
+    ax.text(
+        0.5,
+        0.48,
+        _label(font, "严格候选池下未命中；不是缺失数据", "Strict candidate pool: no hits; data is present"),
+        ha="center",
+        va="center",
+        fontsize=9.8,
+        color=MUTED,
+    )
+    detail = _label(
+        font,
+        f"变体数={variant_count} | 种子数={seed_count} | 协议={protocol or 'unknown'}",
+        f"variants={variant_count} | seeds={seed_count} | protocol={protocol or 'unknown'}",
+    )
+    ax.text(0.5, 0.33, detail, ha="center", va="center", fontsize=8.4, color=MUTED)
+    if split_strategy:
+        ax.text(
+            0.5,
+            0.23,
+            _label(font, f"评价方式：{split_strategy} / {metric_name}", f"evaluation: {split_strategy} / {metric_name}"),
+            ha="center",
+            va="center",
+            fontsize=8.0,
+            color=MUTED,
+        )
+
+
 def _label(font: PlotFontSelection, cn_label: str, ascii_label: str) -> str:
     return ascii_label if font.ascii_only else cn_label
+
+
+def _metric_title_cn(value: str) -> str:
+    mapping = {
+        "macro f1": "宏平均F1",
+        "rmse": "RMSE",
+        "top1 accuracy": "Top-1",
+    }
+    return mapping.get(value, value)
 
 
 def _metric_cell(ax, x: float, y: float, name: object, value: object, color: str) -> None:

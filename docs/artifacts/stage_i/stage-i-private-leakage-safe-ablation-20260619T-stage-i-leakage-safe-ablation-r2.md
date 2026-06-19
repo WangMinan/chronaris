@@ -17,40 +17,59 @@
 | --- | --- | --- | --- | ---: | ---: | ---: |
 | `model_backbone` | `T1_maneuver_intensity_class` | 双流连续表示 | `macro_f1` | 0.276605 | 0.000000 | -59.580 |
 | `model_backbone` | `T2_next_window_physiology_response` | 双流连续表示 | `rmse` | 498.662419 | 0.000000 | -42.197 |
-| `model_backbone` | `T3_paired_pilot_window_retrieval` | 双流连续表示 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
-| `task_adapter` | `T1_maneuver_intensity_class` | 完整leakage-safe任务输入 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
-| `task_adapter` | `T2_next_window_physiology_response` | 完整leakage-safe任务输入 | `rmse` | 862.694175 | 0.000000 | 0.000 |
-| `task_adapter` | `T3_paired_pilot_window_retrieval` | 完整leakage-safe任务输入 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `model_backbone` | `T3_paired_pilot_window_retrieval` | 双流连续表示 | `top1_accuracy` | 0.067568 | 0.000000 | -150.000 |
+| `task_adapter` | `T1_maneuver_intensity_class` | 完整防泄漏任务输入 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
+| `task_adapter` | `T2_next_window_physiology_response` | 完整防泄漏任务输入 | `rmse` | 862.694175 | 0.000000 | 0.000 |
+| `task_adapter` | `T3_paired_pilot_window_retrieval` | 完整防泄漏任务输入 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `model_backbone` | `T1_maneuver_intensity_class` | 完整方案 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `model_backbone` | `T2_next_window_physiology_response` | 完整方案 | `rmse` | 862.694175 | 0.000000 | 0.000 |
-| `model_backbone` | `T3_paired_pilot_window_retrieval` | 完整方案 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `model_backbone` | `T3_paired_pilot_window_retrieval` | 完整方案 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `model_backbone` | `T1_maneuver_intensity_class` | 朴素时间同步 | `macro_f1` | 0.276605 | 0.000000 | -59.580 |
 | `model_backbone` | `T2_next_window_physiology_response` | 朴素时间同步 | `rmse` | 498.662419 | 0.000000 | -42.197 |
-| `model_backbone` | `T3_paired_pilot_window_retrieval` | 朴素时间同步 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `model_backbone` | `T3_paired_pilot_window_retrieval` | 朴素时间同步 | `top1_accuracy` | 0.067568 | 0.000000 | -150.000 |
 | `task_adapter` | `T1_maneuver_intensity_class` | 仅融合潜态 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `task_adapter` | `T2_next_window_physiology_response` | 仅融合潜态 | `rmse` | 1047.354460 | 0.000000 | 21.405 |
-| `task_adapter` | `T3_paired_pilot_window_retrieval` | 仅融合潜态 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `task_adapter` | `T3_paired_pilot_window_retrieval` | 仅融合潜态 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `model_backbone` | `T1_maneuver_intensity_class` | 移除因果掩码 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `model_backbone` | `T2_next_window_physiology_response` | 移除因果掩码 | `rmse` | 862.823712 | 0.000000 | 0.015 |
-| `model_backbone` | `T3_paired_pilot_window_retrieval` | 移除因果掩码 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `model_backbone` | `T3_paired_pilot_window_retrieval` | 移除因果掩码 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `model_backbone` | `T1_maneuver_intensity_class` | 移除物理约束 | `macro_f1` | 0.170022 | 0.000000 | 1.910 |
 | `model_backbone` | `T2_next_window_physiology_response` | 移除物理约束 | `rmse` | 3281.980439 | 0.000000 | 280.434 |
-| `model_backbone` | `T3_paired_pilot_window_retrieval` | 移除物理约束 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `model_backbone` | `T3_paired_pilot_window_retrieval` | 移除物理约束 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `task_adapter` | `T1_maneuver_intensity_class` | 移除原始窗口统计残差 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `task_adapter` | `T2_next_window_physiology_response` | 移除原始窗口统计残差 | `rmse` | 862.694175 | 0.000000 | 0.000 |
-| `task_adapter` | `T3_paired_pilot_window_retrieval` | 移除原始窗口统计残差 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `task_adapter` | `T3_paired_pilot_window_retrieval` | 移除原始窗口统计残差 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `model_backbone` | `T1_maneuver_intensity_class` | 移除语义事件融合 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `model_backbone` | `T2_next_window_physiology_response` | 移除语义事件融合 | `rmse` | 821.828927 | 0.000000 | -4.737 |
-| `model_backbone` | `T3_paired_pilot_window_retrieval` | 移除语义事件融合 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `model_backbone` | `T3_paired_pilot_window_retrieval` | 移除语义事件融合 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `task_adapter` | `T1_maneuver_intensity_class` | 移除任务头 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `task_adapter` | `T2_next_window_physiology_response` | 移除任务头 | `rmse` | 201.489565 | 0.000000 | -76.644 |
-| `task_adapter` | `T3_paired_pilot_window_retrieval` | 移除任务头 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `task_adapter` | `T3_paired_pilot_window_retrieval` | 移除任务头 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `task_adapter` | `T1_maneuver_intensity_class` | 移除时间位置特征 | `macro_f1` | 0.173333 | 0.000000 | 0.000 |
 | `task_adapter` | `T2_next_window_physiology_response` | 移除时间位置特征 | `rmse` | 862.694175 | 0.000000 | 0.000 |
-| `task_adapter` | `T3_paired_pilot_window_retrieval` | 移除时间位置特征 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `task_adapter` | `T3_paired_pilot_window_retrieval` | 移除时间位置特征 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
 | `task_adapter` | `T1_maneuver_intensity_class` | 仅单模态表示 | `macro_f1` | 0.262981 | 0.000000 | -51.720 |
 | `task_adapter` | `T2_next_window_physiology_response` | 仅单模态表示 | `rmse` | 665.161615 | 0.000000 | -22.897 |
-| `task_adapter` | `T3_paired_pilot_window_retrieval` | 仅单模态表示 | `top1_accuracy` | 0.000000 | 0.000000 | 0.000 |
+| `task_adapter` | `T3_paired_pilot_window_retrieval` | 仅单模态表示 | `top1_accuracy` | 0.027027 | 0.000000 | 0.000 |
+
+## T3 检索诊断
+
+T3 使用 `same_sortie_cross_pilot` 候选池：候选集合限定为同一 sortie 的另一名飞行员窗口；`pilot_id/window_index` 仍不进入特征向量。
+
+| component | candidate_policy | query_count | candidate_count | top1 | top3 | top5 | mrr |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 双流连续表示 | `same_sortie_cross_pilot` | 74 | 2738 | 0.067568 | 0.121622 | 0.175676 | 0.152959 |
+| 朴素时间同步 | `same_sortie_cross_pilot` | 74 | 2738 | 0.067568 | 0.121622 | 0.175676 | 0.152959 |
+| 完整防泄漏任务输入 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.094595 | 0.148649 | 0.119948 |
+| 完整方案 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.094595 | 0.148649 | 0.119948 |
+| 仅融合潜态 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.081081 | 0.135135 | 0.113556 |
+| 移除因果掩码 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.108108 | 0.162162 | 0.124087 |
+| 移除物理约束 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.081081 | 0.135135 | 0.113546 |
+| 移除原始窗口统计残差 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.094595 | 0.148649 | 0.119948 |
+| 移除语义事件融合 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.067568 | 0.121622 | 0.107175 |
+| 移除任务头 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.094595 | 0.148649 | 0.119948 |
+| 移除时间位置特征 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.094595 | 0.148649 | 0.119948 |
+| 仅单模态表示 | `same_sortie_cross_pilot` | 74 | 2738 | 0.027027 | 0.094595 | 0.148649 | 0.119948 |
 
 ## 产物
 

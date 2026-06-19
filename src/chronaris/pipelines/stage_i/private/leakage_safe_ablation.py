@@ -348,7 +348,11 @@ def _evaluate_retrieval(entries, frame: pd.DataFrame, *, spec: _AblationSpec, se
         if not row.paired_sample_id:
             invalid_single_view += 1
             continue
-        candidates = merged.loc[merged["sample_id"] != row.sample_id].copy()
+        candidates = merged.loc[
+            (merged["sample_id"] != row.sample_id)
+            & (merged["sortie_id"] == row.sortie_id)
+            & (merged["pilot_id"] != row.pilot_id)
+        ].copy()
         if row.paired_sample_id not in set(candidates["sample_id"]):
             invalid_single_view += 1
             continue
@@ -379,6 +383,7 @@ def _evaluate_retrieval(entries, frame: pd.DataFrame, *, spec: _AblationSpec, se
         "primary_metric_name": "top1_accuracy",
         "primary_metric_value": float(np.mean([row["top1"] for row in rows])),
         "metric_direction": "higher_is_better",
+        "candidate_pool_policy": "same_sortie_cross_pilot",
         "top1_accuracy": float(np.mean([row["top1"] for row in rows])),
         "top3_accuracy": float(np.mean([row["top3"] for row in rows])),
         "top5_accuracy": float(np.mean([row["top5"] for row in rows])),
@@ -524,8 +529,27 @@ def _aggregate_ablation_rows(seed_rows: Sequence[Mapping[str, object]]) -> list[
             "split_strategy": first["split_strategy"],
             "evidence_layer": "private_proxy_leakage_safe",
             "metric_definition": _metric_definition(str(task_name), str(first["primary_metric_name"])),
+            **_retrieval_summary_metrics(rows),
         })
     return output
+
+
+def _retrieval_summary_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, object]:
+    first = rows[0]
+    if first.get("task_type") != "retrieval":
+        return {}
+    metrics: dict[str, object] = {}
+    for key in ("top1_accuracy", "top3_accuracy", "top5_accuracy", "mrr", "positive_similarity_mean", "negative_similarity_mean"):
+        values = [float(row[key]) for row in rows if row.get(key) is not None]
+        if values:
+            metrics[key] = float(np.mean(values))
+    for key in ("valid_query_count", "candidate_count"):
+        values = [float(row[key]) for row in rows if row.get(key) is not None]
+        if values:
+            metrics[key] = int(round(float(np.mean(values))))
+    if first.get("candidate_pool_policy"):
+        metrics["candidate_pool_policy"] = first["candidate_pool_policy"]
+    return metrics
 
 
 def _build_summary(
@@ -588,6 +612,28 @@ def render_leakage_safe_ablation_report(summary: Mapping[str, object]) -> str:
             f"`{row['primary_metric_name']}` | {float(row['primary_metric_value']):.6f} | "
             f"{float(row['primary_metric_std']):.6f} | {float(row['relative_delta_percent']):.3f} |"
         )
+    t3_rows = [row for row in summary.get("rows", []) if row.get("task_name") == TASK_RETRIEVAL]
+    if t3_rows:
+        lines.extend(
+            [
+                "",
+                "## T3 检索诊断",
+                "",
+                "T3 使用 `same_sortie_cross_pilot` 候选池：候选集合限定为同一 sortie 的另一名飞行员窗口；`pilot_id/window_index` 仍不进入特征向量。",
+                "",
+                "| component | candidate_policy | query_count | candidate_count | top1 | top3 | top5 | mrr |",
+                "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+            ]
+        )
+        for row in sorted(t3_rows, key=lambda item: float(item.get("primary_metric_value") or 0.0), reverse=True):
+            lines.append(
+                f"| {row['display_name_cn']} | `{row.get('candidate_pool_policy', 'candidate_pool')}` | "
+                f"{int(row.get('valid_query_count') or 0)} | {int(row.get('candidate_count') or 0)} | "
+                f"{float(row.get('top1_accuracy') or 0.0):.6f} | "
+                f"{float(row.get('top3_accuracy') or 0.0):.6f} | "
+                f"{float(row.get('top5_accuracy') or 0.0):.6f} | "
+                f"{float(row.get('mrr') or 0.0):.6f} |"
+            )
     lines.extend(["", "## 产物", ""])
     for key, value in summary.get("paths", {}).items():
         lines.append(f"- {key}: `{value}`")

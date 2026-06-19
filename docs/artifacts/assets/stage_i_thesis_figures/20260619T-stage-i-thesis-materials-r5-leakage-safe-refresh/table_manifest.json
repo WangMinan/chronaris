@@ -36,19 +36,19 @@
       "table_id": "chronaris_opt_component_ablation",
       "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/chronaris_opt_component_ablation.csv",
       "row_count": 36,
-      "column_count": 27
+      "column_count": 36
     },
     {
       "table_id": "model_backbone_ablation",
       "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/model_backbone_ablation.csv",
       "row_count": 18,
-      "column_count": 27
+      "column_count": 36
     },
     {
       "table_id": "task_adapter_ablation",
       "path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/task_adapter_ablation.csv",
       "row_count": 18,
-      "column_count": 27
+      "column_count": 36
     },
     {
       "table_id": "public_transfer_boundary",

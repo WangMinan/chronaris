@@ -148,6 +148,8 @@ class StageILeakageSafeAblationTest(unittest.TestCase):
             t3_rows = seed_metrics.loc[seed_metrics["task_name"] == "T3_paired_pilot_window_retrieval"]
             self.assertTrue((t3_rows["valid_query_count"].dropna() > 0).any())
             self.assertTrue((t3_rows["skipped_fold_count"].dropna() > 0).any())
+            self.assertTrue((t3_rows["candidate_pool_policy"].dropna() == "same_sortie_cross_pilot").any())
+            self.assertTrue(any("top5_accuracy" in row for row in summary["rows"] if row["task_name"] == "T3_paired_pilot_window_retrieval"))
 
     def test_same_seed_reproduces_summary_rows(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

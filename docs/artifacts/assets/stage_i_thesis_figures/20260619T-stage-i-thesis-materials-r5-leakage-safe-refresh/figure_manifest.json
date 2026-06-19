@@ -89,7 +89,7 @@
       "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/chronaris_opt_component_ablation.csv",
       "metric_definition": "Task metrics are shown on native scales and component-by-task degradation is shown as raw and relative delta.",
       "recommended_placement": "supporting_overview",
-      "replaces_problem": "mixed-unit delta bars are replaced by task facets plus normalized contribution."
+      "replaces_problem": "mixed-unit delta bars are replaced by task facets plus normalized contribution; all-zero task panels are rendered as diagnostics instead of blank bars."
     },
     {
       "figure_id": "model_backbone_ablation",
