@@ -524,7 +524,7 @@ def build_llm_comparison_rows(
         _llm_row(
             "A1_llm_context",
             "attach preprocessing context",
-            "接入 P20 context",
+            "接入 LLM context",
             "attached_entry_count",
             task.get("attached_entry_count"),
             f"label_unchanged={task.get('label_unchanged')}; label_changed_count={task.get('label_changed_count')}",
@@ -564,9 +564,9 @@ def build_llm_comparison_rows(
     ]
     rows.append(
         _llm_row(
-            "P20_preprocessing_run",
+            "llm_preprocessing_run",
             "LLM preprocessing harness",
-            "P20 预处理 harness",
+            "LLM 预处理 harness",
             "request_count",
             pre.get("request_count"),
             f"errors={pre.get('error_count')}; hints={pre.get('semantic_query_hint_count')}; runtime_explanations={pre.get('runtime_explanation_count')}",

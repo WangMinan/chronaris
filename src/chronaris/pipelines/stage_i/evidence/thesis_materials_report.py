@@ -108,7 +108,7 @@ def render_stage_i_thesis_materials_report(
             "- rotation：本轮已重新检查 MySQL metadata，pitch/roll/yaw angle 有候选，pitch_rate/roll_rate/yaw_rate 仍缺失，因此不复跑 rotation-enabled rigid-body 对照。",
             "- runtime：当前保持 native aligned / canonical exact；未声称生产级在线服务，也未声称原生 replay payload 已 exact。",
             "- weak-label sweep：本轮使用已有 stable/partial artifacts 重绘，不包装成大规模搜索。",
-            "- LLM semantic hints：P21 已证明 query coverage `3 -> 7`，但没有从 summary 倒推出 view ranking 或 attribution 改善。",
+            "- LLM semantic hints：当前对比只证明 query coverage `3 -> 7`，没有从 summary 倒推出 view ranking 或 attribution 改善。",
         ]
     )
     if font_note:

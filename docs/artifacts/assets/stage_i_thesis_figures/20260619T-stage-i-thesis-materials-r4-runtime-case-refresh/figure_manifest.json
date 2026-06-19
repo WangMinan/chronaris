@@ -126,7 +126,7 @@
       ],
       "evidence_layer": "llm_preprocessing_comparison",
       "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/llm_comparison_a0_a4.csv",
-      "metric_definition": "A0-A4 comparison from P21 summary; LLM hints show coverage only, not attribution improvement.",
+      "metric_definition": "A0-A4 comparison from the LLM preprocessing comparison summary; LLM hints show coverage only, not attribution improvement.",
       "replaces_problem": "adds LLM preprocessing/comparison evidence without treating LLM output as truth."
     }
   ]

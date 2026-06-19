@@ -1000,7 +1000,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 ## 已完成 P22：中期 thesis materials r3 图表质量刷新
 
-目标：修复 P16/P18 thesis materials 中低信息或易误读图表，生成可直接用于中期报告和答辩 PPT 的 r3 图表包，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚。
+目标：修复 P16/P18 thesis materials 中低信息或易误读图表，先生成 r3 图表包验证新版构图，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚；该图包现已由 r4 runtime case refresh 接管并清理。
 
 结果：
 
@@ -1011,9 +1011,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `src/chronaris/pipelines/stage_i/evidence/thesis_materials_report.py`
   - `scripts/stage_i/evidence/build_thesis_materials.py`
   - `tests/test_stage_i_thesis_materials.py`
-- 新 run：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+- r3 run 已由 r4 接管并从 docs 产物目录清理，当前 thesis materials 入口见 P23 的 `20260619T-stage-i-thesis-materials-r4-runtime-case-refresh`。
 - 本轮输出 `8` 张 PNG 与 `8` 张 CSV：
   - `evidence_layer_overview`：从 artifact present=1 改为证据层级矩阵。
   - `runtime_payload_schema`：改为 native replay payload 与 canonical service payload 字段契约对照。
@@ -1036,9 +1034,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 验收：
 
 - `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m unittest tests.test_stage_i_thesis_materials tests.test_stage_i_support tests.test_runtime_service_smoke tests.test_stage_i_llm_preprocessing tests.test_stage_i_llm_comparison`：`Ran 16 tests in 2.878s`，`OK`。
-- `build_thesis_materials.py` 已用 run_id `20260619T-stage-i-thesis-materials-r3-figure-refresh` 实跑。
+- `build_thesis_materials.py` 已用 r3 run_id 实跑；r3 输出已由 P23/r4 图包替代并清理。
 - PIL/pandas 验证已确认 `8` 个 PNG 非空且可读取、`8` 个 CSV 有行且关键字段存在、`figure_manifest.json/table_manifest.json` 均为 `8` 项、报告中图表路径可解析。
-- 2026-06-19 复核后，旧 r1 与 r2-p18 thesis-materials PNG/manifest/report 已清理，避免中期写作误用；`r2-p18/runtime_semantic_case.csv` 因仍被 P20/P21 LLM preprocessing 复现实验引用而保留。
+- 2026-06-19 复核后，旧 r1、r2-p18 thesis-materials PNG/manifest/report 与 r3 thesis-materials 图包已清理，避免中期写作误用；`r2-p18/runtime_semantic_case.csv` 因仍被 P20/P21 LLM preprocessing 复现实验引用而保留。
 
 ## 已完成 P23：runtime semantic case r4 图表质量刷新
 

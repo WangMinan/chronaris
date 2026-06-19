@@ -506,23 +506,45 @@ def _plot_runtime_service_flow(path: Path, font: PlotFontSelection, config: Stag
     plt, _ = _import_matplotlib(font)
     from matplotlib.patches import FancyBboxPatch
 
-    fig, ax = plt.subplots(figsize=(11, 3.2))
+    fig, ax = plt.subplots(figsize=(12.4, 2.45))
+    box_w = 1.55
+    box_h = 0.48
+    box_y = 0.86
+    arrow_y = box_y + box_h / 2
     stages = [
-        (0.4, "checkpoint", Path(config.checkpoint_path).name),
-        (2.8, "native jsonl", Path(config.sample_jsonl_path).name),
-        (5.2, "schema contract", Path(str(schema_contract["checkpoint_path"])).name),
-        (7.6, "service smoke", Path(runtime_result.predictions_jsonl_path or "").name or "predictions"),
+        (0.55, "checkpoint", "model weights"),
+        (3.55, "native jsonl", "runtime samples"),
+        (6.55, "schema contract", "native + canonical"),
+        (9.55, "service replay", "prediction JSONL"),
     ]
     for x0, title, subtitle in stages:
-        ax.add_patch(FancyBboxPatch((x0, 0.6), 2.1, 0.85, boxstyle="round,pad=0.08", facecolor="#dcebdc", edgecolor="#355b3e"))
-        ax.text(x0 + 1.05, 1.08, title, ha="center", va="center", fontsize=10, fontweight="bold")
-        ax.text(x0 + 1.05, 0.82, subtitle, ha="center", va="center", fontsize=8)
-    for x0 in (2.45, 4.85, 7.25):
-        ax.annotate("", xy=(x0 + 0.35, 1.02), xytext=(x0, 1.02), arrowprops={"arrowstyle": "->", "lw": 1.4, "color": "#355b3e"})
-    ax.set_xlim(0, 10.3)
-    ax.set_ylim(0.3, 1.8)
+        ax.add_patch(
+            FancyBboxPatch(
+                (x0, box_y),
+                box_w,
+                box_h,
+                boxstyle="round,pad=0.05,rounding_size=0.04",
+                facecolor="#dcebdc",
+                edgecolor="#355b3e",
+                linewidth=1.25,
+                zorder=2,
+            )
+        )
+        ax.text(x0 + box_w / 2, box_y + 0.31, title, ha="center", va="center", fontsize=8.8, fontweight="bold", color="#1f3d2b", zorder=3)
+        ax.text(x0 + box_w / 2, box_y + 0.14, subtitle, ha="center", va="center", fontsize=6.8, color="#40564a", zorder=3)
+    for idx, (x0, _, _) in enumerate(stages[:-1]):
+        next_x = stages[idx + 1][0]
+        ax.annotate(
+            "",
+            xy=(next_x - 0.22, arrow_y),
+            xytext=(x0 + box_w + 0.22, arrow_y),
+            arrowprops={"arrowstyle": "->", "lw": 1.55, "color": "#355b3e", "shrinkA": 0, "shrinkB": 0},
+            zorder=1,
+        )
+    ax.set_xlim(0, 11.65)
+    ax.set_ylim(0.68, 1.54)
     ax.set_axis_off()
-    ax.set_title(_pick_label(font, "runtime/service 流程", "Runtime Service Flow"), fontsize=12)
+    ax.set_title(_pick_label(font, "runtime/service 流程", "Runtime Service Flow"), fontsize=12, pad=8)
     fig.tight_layout()
     fig.savefig(path, dpi=160, bbox_inches="tight")
     plt.close(fig)
