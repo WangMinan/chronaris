@@ -435,7 +435,7 @@ Native 缺失的 vehicle measurement groups：
 | chronaris_opt_component_ablation | `chronaris_opt_component_ablation.png` | `chronaris_opt_component_ablation.csv` | private_proxy | T1/T2/T3 分任务尺度展示 private proxy component ablation |
 | public_transfer_boundary | `public_transfer_boundary.png` | `public_transfer_boundary.csv` | transfer_boundary | 中文展示公开适配、私有弱标注主线、私有代理消融的正向分工 |
 | semantic_event_fusion_overview | `semantic_event_fusion_overview.png` | `semantic_event_fusion_overview.csv` | semantic_support | 展示双流 semantic event fusion 与 query-to-event attribution |
-| llm_comparison_a0_a4 | `llm_comparison_a0_a4.png` | `llm_comparison_a0_a4.csv` | llm_preprocessing_comparison | 展示 P20/P21 A0-A4 对比与待人工复核边界 |
+| llm_comparison_a0_a4 | `llm_comparison_a0_a4.png` | `llm_comparison_a0_a4.csv` | llm_preprocessing_comparison | 展示 LLM A0-A4 对比与待人工复核边界 |
 
 建议用于中期报告的图：
 

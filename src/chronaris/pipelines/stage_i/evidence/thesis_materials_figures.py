@@ -781,53 +781,90 @@ def _plot_semantic_event_fusion(path: Path, sources, font, table_paths):
 def _plot_llm_comparison(path: Path, sources, font, table_paths):
     frame = pd.DataFrame(build_llm_comparison_rows(sources))
     plt, patches = _import_matplotlib(font)
-    fig, ax = plt.subplots(figsize=(14.2, 6.1))
+    fig, ax = plt.subplots(figsize=(15.2, 6.35))
     ax.set_axis_off()
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 5.25)
+    ax.set_xlim(0, 14.4)
+    ax.set_ylim(0, 5.45)
     card_rows = frame.loc[frame["condition"].str.startswith("A")].copy()
-    x_positions = [0.35, 2.73, 5.11, 7.49, 9.87]
-    card_w = 1.74
-    card_h = 2.65
+    x_positions = [0.5, 3.35, 6.2, 9.05, 11.9]
+    card_w = 2.0
+    card_h = 2.64
+    card_y = 1.45
+    mid_y = card_y + 1.33
     colors = [BLUE, GREEN, GOLD, PURPLE, ORANGE]
+    condition_labels = {
+        "A0_baseline": "A0\nbaseline",
+        "A1_llm_context": "A1\ncontext",
+        "A2_llm_semantic_hints": "A2\nsemantic hints",
+        "A3_llm_runtime_explanation": "A3\nruntime explanation",
+        "A4_human_review_packet": "A4\nreview packet",
+    }
     for idx, row in enumerate(card_rows.to_dict(orient="records")):
         x = x_positions[idx]
         ax.add_patch(
             patches.FancyBboxPatch(
-                (x, 1.38),
+                (x, card_y),
                 card_w,
                 card_h,
-                boxstyle="round,pad=0.07,rounding_size=0.06",
+                boxstyle="round,pad=0.06,rounding_size=0.07",
                 facecolor="#fbfdff",
                 edgecolor=colors[idx],
                 lw=1.6,
             )
         )
-        ax.text(x + card_w / 2, 3.72, row["condition"].replace("_", "\n"), ha="center", fontsize=10.2, weight="bold", color=colors[idx])
-        ax.text(x + card_w / 2, 3.06, _wrap_text(_label(font, row["stage_cn"], row["stage"]), 14), ha="center", va="center", fontsize=8.8, color=INK)
-        ax.text(x + card_w / 2, 2.4, f"{row['metric_name']}", ha="center", fontsize=7.9, color=MUTED)
-        ax.text(x + card_w / 2, 2.02, _short(row["metric_value"], 16), ha="center", fontsize=15.2, weight="bold", color=INK)
-        ax.text(x + card_w / 2, 1.6, _wrap_text(_llm_card_note(font, row), 18), ha="center", va="center", fontsize=7.4, color=MUTED)
+        ax.text(
+            x + card_w / 2,
+            card_y + card_h - 0.28,
+            condition_labels.get(str(row["condition"]), str(row["condition"])),
+            ha="center",
+            va="top",
+            fontsize=8.6,
+            weight="bold",
+            color=colors[idx],
+            linespacing=1.12,
+        )
+        ax.text(
+            x + card_w / 2,
+            card_y + card_h - 0.98,
+            _wrap_text(_label(font, row["stage_cn"], row["stage"]), 18),
+            ha="center",
+            va="center",
+            fontsize=8.2,
+            color=INK,
+            linespacing=1.15,
+        )
+        ax.text(x + card_w / 2, card_y + 1.12, f"{row['metric_name']}", ha="center", fontsize=7.7, color=MUTED)
+        ax.text(x + card_w / 2, card_y + 0.78, _short(row["metric_value"], 16), ha="center", fontsize=14.6, weight="bold", color=INK)
+        ax.text(
+            x + card_w / 2,
+            card_y + 0.31,
+            _wrap_text(_llm_card_note(font, row), 22),
+            ha="center",
+            va="center",
+            fontsize=7.2,
+            color=MUTED,
+            linespacing=1.12,
+        )
         if idx < len(x_positions) - 1:
-            _draw_arrow(ax, patches, (x + card_w + 0.13, 2.68), (x_positions[idx + 1] - 0.13, 2.68), lw=1.9, mutation_scale=15)
-    pre_row = frame.loc[frame["condition"] == "P20_preprocessing_run"].iloc[0].to_dict()
+            _draw_arrow(ax, patches, (x + card_w + 0.18, mid_y), (x_positions[idx + 1] - 0.18, mid_y), lw=1.8, mutation_scale=14)
+    pre_row = frame.loc[frame["condition"].str.endswith("preprocessing_run")].iloc[0].to_dict()
     ax.text(
-        0.35,
-        0.66,
-        _label(font, "P20 DeepSeek 预处理：", "P20 DeepSeek preprocessing: ")
+        0.5,
+        0.76,
+        _label(font, "DeepSeek 预处理：", "DeepSeek preprocessing: ")
         + f"{pre_row['metric_name']}={pre_row['metric_value']} | {pre_row['metric_note']}",
         fontsize=9.5,
         color=INK,
         weight="bold",
     )
     ax.text(
-        0.35,
-        0.26,
+        0.5,
+        0.33,
         _label(font, "边界：LLM 输出只作为 preprocessing context、白名单 semantic hints、runtime explanation 和待人工复核材料。", "Boundary: LLM output is preprocessing context, whitelisted semantic hints, runtime explanation, and pending human-review material."),
         fontsize=8.5,
         color=MUTED,
     )
-    ax.set_title(_label(font, "P20/P21 LLM 预处理 A0-A4 对比流", "P20/P21 LLM Preprocessing A0-A4 Comparison Flow"), fontsize=15, weight="bold", color=INK)
+    ax.set_title(_label(font, "LLM 预处理 A0-A4 对比流", "LLM Preprocessing A0-A4 Comparison Flow"), fontsize=15, weight="bold", color=INK, pad=14)
     fig.tight_layout()
     fig.savefig(path, dpi=180, bbox_inches="tight")
     plt.close(fig)
@@ -837,7 +874,7 @@ def _plot_llm_comparison(path: Path, sources, font, table_paths):
         source_paths=_source_paths(sources, "llm_preprocessing", "llm_comparison"),
         evidence_layer="llm_preprocessing_comparison",
         table_path=table_paths["llm_comparison_a0_a4"],
-        metric_definition="A0-A4 comparison from P21 summary; LLM hints show coverage only, not attribution improvement.",
+        metric_definition="A0-A4 comparison from the LLM preprocessing comparison summary; LLM hints show coverage only, not attribution improvement.",
         replaces_problem="adds LLM preprocessing/comparison evidence without treating LLM output as truth.",
     )
 
