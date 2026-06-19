@@ -7,7 +7,7 @@
       "path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_flow.png",
       "exists": true,
       "source_path": [
-        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl",
+        "docs/artifacts/cleanup/20260619-lfs-docs-prune.md",
         "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt",
         "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json"
       ],
@@ -19,7 +19,7 @@
       "path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_payload_schema.png",
       "exists": true,
       "source_path": [
-        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl",
+        "docs/artifacts/cleanup/20260619-lfs-docs-prune.md",
         "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-canonical/runtime_inference_predictions.jsonl",
         "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json"
       ],
@@ -31,7 +31,7 @@
       "path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_error_cases.png",
       "exists": true,
       "source_path": [
-        "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl",
+        "docs/artifacts/cleanup/20260619-lfs-docs-prune.md",
         "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json",
         "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json"
       ],

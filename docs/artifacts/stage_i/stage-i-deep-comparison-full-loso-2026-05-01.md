@@ -7,6 +7,7 @@
   - `Stage H`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/stage_h_case_sequences`
   - `UAB`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/uab_sequences`
   - `NASA`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/nasa_sequences`
+- Prepared raw `task_manifest.jsonl` and `sequence_bundle.npz` under these sequence roots were pruned from docs/LFS on 2026-06-19; this report and comparison summaries remain the citation source.
 
 ## 1. 本轮口径
 

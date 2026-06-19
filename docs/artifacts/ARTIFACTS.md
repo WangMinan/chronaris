@@ -6,6 +6,8 @@
 
 本目录用于组织报告、图、CSV、JSON、checkpoint、manifest 等可引用产物。
 
+LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)。该清理删除了历史 raw replay / prepared bundle / 大型 JSONL 与 NPZ 载荷，保留报告、summary、schema contract 和中期写作入口。
+
 ## 2. 阶段产物
 
 阶段产物按 [../implementation/TASKS.md](../implementation/TASKS.md) 的阶段划分：
@@ -74,6 +76,7 @@
 - 当前 live weak-label stable resume summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json)
 - 当前 live weak-label partial summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json)
 - 当前 runtime schema contract：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json)
+- 当前 docs LFS 清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)
 - P20/P21 LLM runtime case 输入表：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv)
 - 当前 P21 LLM comparison summary：[assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json](assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json)
 
@@ -83,5 +86,6 @@
 - 引用执行入口先看 [../implementation/TASKS.md](../implementation/TASKS.md)。
 - 引用论文能力要求先看 [../requirements/SPEC.md](../requirements/SPEC.md)。
 - 历史报告可以引用，但必须说明是历史快照、公开适配器证据、私有代理证据还是 thesis weak-label evidence。
+- 2026-06-19 起，若历史报告提到已清理的 raw JSONL / NPZ / prepared bundle，应按 [cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md) 处理：引用保留的 summary/report，复跑时重新生成 raw payload。
 - P20 DeepSeek 已生成小样本真实切片 run 产物：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`。引用时必须写成 LLM preprocessing context / rule review / semantic hints / runtime explanation / bounded slicing，不得写成人工真值、核心因果证据或原始全量高频时序外发。
 - P21 LLM comparison 已生成 A0-A4 对比产物：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/`、`docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md` 和 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。引用时必须保留 `label_unchanged=true`、semantic hints whitelist、runtime explanation bounded subset、`human_review_completed=false` 四个边界。

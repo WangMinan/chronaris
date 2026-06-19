@@ -2,7 +2,9 @@
   "generated_at_utc": "2026-06-07T09:44:49.383582Z",
   "run_id": "20260607T-stage-i-runtime-replay-r1",
   "run_manifest_path": "docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json",
-  "sample_jsonl_path": "docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl",
+  "sample_jsonl_path": null,
+  "sample_jsonl_path_pruned_at_utc": "2026-06-19T00:00:00Z",
+  "sample_jsonl_path_prune_note": "Raw runtime_samples.jsonl was pruned from docs/LFS; regenerate with scripts/stage_i/runtime/export_runtime_samples.py if replay input is needed.",
   "sample_count": 111,
   "sample_id_mode": "view_prefixed",
   "source_summary": {

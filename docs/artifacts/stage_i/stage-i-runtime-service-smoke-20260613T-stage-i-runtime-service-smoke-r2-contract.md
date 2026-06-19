@@ -1,7 +1,7 @@
 # Stage I Runtime Service Smoke - 20260613T-stage-i-runtime-service-smoke-r2-contract
 
 - checkpoint_path: `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt`
-- sample_jsonl_path: `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl`
+- sample_jsonl_path: raw input JSONL pruned from docs/LFS on 2026-06-19; see `docs/artifacts/cleanup/20260619-lfs-docs-prune.md`
 - input_sample_count: `37`
 - view_ids: `['20251005_四01_ACT-4_云_J20_22#01__pilot_10033']`
 - runtime_summary_path: `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-runtime/runtime_inference_summary.json`

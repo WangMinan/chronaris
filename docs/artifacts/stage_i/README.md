@@ -17,6 +17,7 @@
 - 中期事实清单：`../../midterm/midterm-fact-sheet-2026-06-13.md`
 - 中期边界说明：`../../midterm/boundaries-and-risks-2026-06-13.md`
 - P21 中期结果摘要：`../../midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
+- docs LFS 清理记录：`../cleanup/20260619-lfs-docs-prune.md`
 - 历史 Stage I closure：`stage-i-closure-2026-04-30.md`
 - Phase C thesis weak-label evidence：`thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
 - 当前公开主线：`stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
@@ -57,3 +58,4 @@
 - 私有分支需要区分 `T1/T2/T3 = private proxy benchmark / proxy evidence` 与 `risk_proxy / workload_proxy / event_replay_tag = thesis weak-label evidence`。
 - P20/P21 DeepSeek LLM preprocessing 只能写成 preprocessing context、rule review、whitelisted semantic hints、runtime explanation、bounded comparison 和 pending human review packet；不能写成人工真值、OpenAI 默认接入、核心因果证据或人工验证完成。
 - 历史 archive 只用于追溯，不作为当前状态入口。
+- 历史 raw replay、prepared bundle 和大型 manifest 已按 `../cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 中清理；引用旧实验时优先看报告、summary、plots 和当前索引。

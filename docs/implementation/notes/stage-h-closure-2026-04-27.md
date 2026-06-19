@@ -72,8 +72,8 @@
 partial-data 结果：
 
 - manifest：`docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/partial_data_manifest.jsonl`
-- window manifest：`docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_window_manifest.jsonl`
-- feature bundle：`docs/artifacts/assets/stage_h/20260427T000000Z-stage-h-closure/partial_data/vehicle_only_feature_bundle.npz`
+- window manifest：2026-06-19 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理。
+- feature bundle：2026-06-19 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理。
 - `built_entry_count=1`
 - `skipped_entry_count=0`
 - `vehicle_only_window_manifest` 行数：`1478`
