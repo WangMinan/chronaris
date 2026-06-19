@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-06-14
+更新时间：2026-06-19
 
 ## 1. 目录定位
 
@@ -29,6 +29,7 @@
 当前中期主入口：
 
 - [stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
+- [stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md)
 - [../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
 - [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
 - [../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
@@ -44,6 +45,7 @@
 - Stage I evidence runner r2：[stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md)
 - Stage I bounded weak-label sweep r2：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
 - Stage I live weak-label stable resume：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md)
+- Stage I thesis materials r3 figure refresh：[stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md)
 - Stage I public mainline：[stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
 - Stage I support ablation：[stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md](stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
 - Stage I rigid-body r2：[stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md)
@@ -53,8 +55,8 @@
 - Stage I private component ablation r2：[stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md](stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md)
 - Stage I public adapter calibration r2：[stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md](stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md)
 - Stage I public transfer boundary r2：[stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md](stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md)
-- Stage I rotation audit r2：[stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md](stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md)
-- Stage I thesis materials p18：[stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md](stage_i/stage-i-thesis-materials-20260613T-stage-i-thesis-materials-r2-p18.md)
+- Stage I rotation audit r3 figure refresh：[stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md](stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md)
+- Stage I rotation audit r2 历史入口：[stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md](stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md)
 - Stage I runtime service smoke r2 contract：[stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md)
 - Midterm fact sheet：[../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
 - Midterm boundaries and risks：[../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
@@ -67,12 +69,12 @@
 - P21 执行 prompt（历史追溯）：[../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md](../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md)
 - 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
-- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json)
+- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json](assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json)
 - 当前 runtime service smoke summary：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json)
 - 当前 live weak-label stable resume summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json)
 - 当前 live weak-label partial summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json)
 - 当前 runtime schema contract：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json)
-- 当前 thesis figure manifest p18：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/figure_manifest.json)
+- P20/P21 LLM runtime case 输入表：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv)
 - 当前 P21 LLM comparison summary：[assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json](assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json)
 
 ## 5. 引用规则
