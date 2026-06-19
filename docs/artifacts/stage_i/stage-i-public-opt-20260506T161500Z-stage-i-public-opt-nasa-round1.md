@@ -12,6 +12,7 @@
 - track：`objective`
 - task_type：`classification`
 - prepared asset root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260506T124000Z-stage-i-public-opt-nasa-prepared`
+- prepared raw `task_manifest.jsonl` and `sequence_bundle.npz` were pruned from docs/LFS on 2026-06-19; the downstream public opt summary/report remains the citation source.
 - output artifact root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260506T161500Z-stage-i-public-opt-nasa-round1`
 - generated_at_utc：`2026-05-06T04:14:21.519837Z`
 

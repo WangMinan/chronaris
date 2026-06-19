@@ -3,7 +3,9 @@
   "status": "success",
   "artifact_root": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1",
   "checkpoint_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt",
-  "sample_jsonl_path": "docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl",
+  "sample_jsonl_path": null,
+  "sample_jsonl_path_pruned_at_utc": "2026-06-19T00:00:00Z",
+  "sample_jsonl_path_prune_note": "Raw input_view_runtime_samples.jsonl was pruned from docs/LFS; regenerate runtime smoke input before replaying this exact run.",
   "input_sample_count": 37,
   "view_count": 1,
   "view_ids": [

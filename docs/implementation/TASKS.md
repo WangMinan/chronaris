@@ -275,10 +275,10 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 - 已补 runtime sample exporter：
   - `scripts/stage_i/runtime/export_runtime_samples.py`
 - 已完成 runtime replay：
-  - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl`
   - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_inference_summary.json`
   - `docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_inference_predictions.csv`
   - `docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-replay-r1.md`
+  - raw `runtime_samples.jsonl` 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理，需要复跑时重新生成。
   - 当前 replay 规模：`111` 个样本、`3` 个 view、`2` 个 sortie，`sample_id_mode=view_prefixed`。
   - 当前 runtime task heads：`risk_proxy` 分类、`workload_proxy` 回归、`event_replay_tag` 检索。
 - 已完成语义事件融合 preview + support：
@@ -668,7 +668,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 本轮结果：
 
 - 真实单 view 输入：
-  - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl`
+  - raw `input_view_runtime_samples.jsonl` 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理，需要复跑时重新生成。
   - 当前 `view_id=20251005_四01_ACT-4_云_J20_22#01__pilot_10033`
   - 当前 `sample_count=37`
 - 稳定服务 smoke root：
@@ -763,7 +763,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - error cases 继续保留 `schema_mismatch`，但错误摘要优先输出分组统计，避免几百个字段刷屏。
 - 扩展 `scripts/stage_i/runtime/run_smoke.py`
   - 增加 `--strict-feature-schema`。
-  - 增加 `--export-canonical-payload` 或等价参数，输出 `canonical_runtime_samples.jsonl`。
+  - 增加 `--export-canonical-payload` 或等价参数，验证 canonical payload 路线；raw JSONL 已在 LFS 清理中移出 docs。
 - 测试：
   - `tests/test_runtime_service_smoke.py`
   - 新增 `tests/test_runtime_schema_contract.py`
@@ -775,9 +775,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - 关键产物：
   - `runtime_service_smoke_summary.json`
   - `runtime_schema_contract.json`
-  - `canonical_runtime_samples.jsonl`
   - `runtime_inference/20260613T-stage-i-runtime-service-smoke-r2-contract-canonical/runtime_inference_summary.json`
   - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
+  - raw `canonical_runtime_samples.jsonl` 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 清理，contract 与 canonical runtime summary 保留。
 - 当前 native 单 view 输入已清楚记录：
   - `native_feature_schema_status=aligned`
   - `expected_vehicle_feature_count=1930`
@@ -794,9 +794,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `runtime_error_cases.json`
   - `strict_native_feature_schema_probe`
 - canonical payload 路线已生成：
-  - `canonical_runtime_samples.jsonl`
   - `runtime_schema_contract.json`
   - `canonical_feature_schema_status=exact`
+  - raw canonical JSONL 已从 docs/LFS 清理；需要复跑时由 `run_smoke.py` 重新导出。
 - 当前报告口径已固定：
   - `native aligned` 是当前真实部署边界
   - `canonical exact` 是服务层契约化 payload 能力

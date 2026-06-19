@@ -14,6 +14,7 @@
 ## UAB Window 主线
 
 - artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/uab_window`
+- heavy `fold_predictions.csv`, `task_manifest.jsonl`, and `feature_table.parquet` under this root were pruned from docs/LFS on 2026-06-19; summary, metric JSON, and plots remain.
 - entry_count: `34748`
 - recording_count: `87`
 - window_count: `34748`
@@ -40,6 +41,7 @@
 ## NASA Attention 主线
 
 - artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/nasa_attention`
+- heavy `fold_predictions.csv`, `task_manifest.jsonl`, and `feature_table.parquet` under this root were pruned from docs/LFS on 2026-06-19; summary, metric JSON, and plots remain.
 - entry_count: `16609`
 - recording_count: `68`
 - window_count: `16609`
@@ -75,4 +77,3 @@
 - `phase3_window_counts`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/phase3_window_counts.png`
 - `uab_session_vs_window_objective`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_objective.png`
 - `uab_session_vs_window_subjective`: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i/20260430T035013Z-stage-i-phase3-closure/plots/uab_session_vs_window_subjective.png`
-

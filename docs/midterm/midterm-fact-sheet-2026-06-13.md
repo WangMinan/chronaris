@@ -369,7 +369,7 @@ rigid_body 已启用 residual：
 
 - Summary：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json`
 - Schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
-- canonical payload：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/canonical_runtime_samples.jsonl`
+- canonical payload route：已验证 `canonical_feature_schema_status=exact`；raw JSONL 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理，当前引用以 `runtime_schema_contract.json` 和 r2 contract 报告为准。
 - 报告：[../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md)
 - checkpoint：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt`
 - input_sample_count：`37`

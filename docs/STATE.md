@@ -77,8 +77,8 @@
         - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/thesis_weak_label_multitask_ablation.partial.csv`
       - P17 runtime schema contract：
         - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
-        - `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/canonical_runtime_samples.jsonl`
         - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
+        - raw canonical payload 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理；exact contract 证据保留在 schema contract 与 canonical runtime summary。
       - P16/P18 旧刷新图包：
         - 已被 `20260619T-stage-i-thesis-materials-r3-figure-refresh` 替代并清理旧 PNG/manifest/report。
         - 仅保留 `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 的历史输入表。
@@ -142,6 +142,7 @@
   - 最新 live weak-label stable resume：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
   - 最新 live weak-label partial blocked：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
   - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
+  - 最新 docs LFS 清理记录：`docs/artifacts/cleanup/20260619-lfs-docs-prune.md`
   - P20/P21 LLM runtime case 输入表：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
   - 最新 thesis materials r3 figure refresh：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json`
   - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
@@ -305,7 +306,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_inference.py \
   --run-id 20260607T-stage-i-runtime-replay-r1 \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
-  --sample-jsonl docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-replay-r1/runtime_samples.jsonl \
+  --sample-jsonl <regenerated-runtime-samples-jsonl> \
   --artifact-root docs/artifacts/assets/stage_i_runtime_inference \
   --report-root docs/artifacts/stage_i \
   --device cpu
@@ -353,7 +354,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_smoke.py \
   --run-id 20260613T-stage-i-runtime-service-smoke-r1 \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
-  --sample-jsonl docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl \
+  --sample-jsonl <regenerated-input-view-runtime-samples-jsonl> \
   --artifact-root docs/artifacts/assets/stage_i_runtime_service \
   --report-root docs/artifacts/stage_i \
   --device cpu \
@@ -410,7 +411,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_smoke.py \
   --run-id 20260613T-stage-i-runtime-service-smoke-r2-contract \
   --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
-  --sample-jsonl docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r1/input_view_runtime_samples.jsonl \
+  --sample-jsonl <regenerated-input-view-runtime-samples-jsonl> \
   --artifact-root docs/artifacts/assets/stage_i_runtime_service \
   --report-root docs/artifacts/stage_i \
   --device cpu \

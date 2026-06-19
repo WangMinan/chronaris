@@ -13,6 +13,7 @@
 - track：`subjective`
 - task_type：`regression`
 - prepared asset root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260504T161500Z-stage-i-public-opt-uab-prepared`
+- prepared raw `task_manifest.jsonl` and `sequence_bundle.npz` were pruned from docs/LFS on 2026-06-19; the downstream public opt summary/report remains the citation source.
 - output artifact root：`/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1`
 - generated_at_utc：`2026-05-08T13:17:24.354524Z`
 
