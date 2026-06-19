@@ -9,6 +9,7 @@ import pandas as pd
 from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (
     build_llm_comparison_rows,
     build_runtime_payload_schema_rows,
+    build_runtime_semantic_case_rows,
     build_semantic_event_rows,
     build_weak_label_rows,
 )
@@ -30,6 +31,7 @@ def render_stage_i_thesis_materials_report(
     else:
         best_rows = pd.DataFrame()
     runtime_rows = build_runtime_payload_schema_rows(sources)
+    runtime_case_rows = build_runtime_semantic_case_rows(sources)
     semantic_rows = build_semantic_event_rows(sources)
     llm_rows = build_llm_comparison_rows(sources)
     rotation = sources["rotation_audit"]["payload"]
@@ -39,7 +41,7 @@ def render_stage_i_thesis_materials_report(
         "",
         "## 概览",
         "",
-        "- 本轮将中期报告/PPT 图表刷新为 `8` 张 PNG 与对应 `8` 张 CSV，所有数值来自已有 artifact JSON/CSV 或本轮 rotation metadata audit。",
+        f"- 本轮将中期报告/PPT 图表刷新为 `{len(figure_entries)}` 张 PNG 与对应 `{len(table_entries)}` 张 CSV，所有数值来自已有 artifact JSON/CSV 或本轮 rotation metadata audit。",
         "- 证据层级继续分开：thesis weak-label、private proxy、public adapter、runtime/schema、semantic support、rigid-body/rotation、LLM preprocessing/comparison 不合并为同一层结论。",
     ]
     for row in best_rows.to_dict(orient="records"):
@@ -53,6 +55,13 @@ def render_stage_i_thesis_materials_report(
         lines.append(
             f"- runtime/schema: native=`{native.get('schema_status')}` with vehicle `{native.get('vehicle_feature_count')}`, "
             f"canonical=`{canonical.get('schema_status')}` with vehicle `{canonical.get('vehicle_feature_count')}`。"
+        )
+    if runtime_case_rows:
+        first_case = runtime_case_rows[0]
+        query_names = sorted({str(row.get("semantic_top_query_name")) for row in runtime_case_rows})
+        lines.append(
+            f"- runtime semantic case: view_id=`{first_case.get('view_id')}`，windows=`{len(runtime_case_rows)}`，"
+            f"query_types=`{','.join(query_names)}`，schema=`native {first_case.get('native_feature_schema_status')} / canonical {first_case.get('canonical_feature_schema_status')}`。"
         )
     if semantic_rows:
         lines.append(

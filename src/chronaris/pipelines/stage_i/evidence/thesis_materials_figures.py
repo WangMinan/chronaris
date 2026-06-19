@@ -17,6 +17,7 @@ from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (
     build_public_transfer_rows,
     build_rigid_body_rotation_rows,
     build_runtime_payload_schema_rows,
+    build_runtime_semantic_case_rows,
     build_semantic_event_rows,
     build_weak_label_rows,
 )
@@ -83,6 +84,7 @@ def write_thesis_figures(
     return [
         _plot_evidence_layer_overview(run_root / "evidence_layer_overview.png", sources, font, table_paths),
         _plot_runtime_payload_schema(run_root / "runtime_payload_schema.png", sources, font, table_paths),
+        _plot_runtime_semantic_case(run_root / "runtime_semantic_case.png", sources, font, table_paths),
         _plot_rigid_body_rotation(run_root / "rigid_body_rotation_audit.png", sources, font, table_paths),
         _plot_weak_label_sweep(run_root / "weak_label_sweep_ablation.png", sources, font, table_paths),
         _plot_private_component(run_root / "chronaris_opt_component_ablation.png", sources, font, table_paths),
@@ -246,6 +248,216 @@ def _plot_runtime_payload_schema(path: Path, sources, font, table_paths):
         table_path=table_paths["runtime_payload_schema"],
         metric_definition="Native replay payload remains aligned; canonical service payload reaches exact schema.",
         replaces_problem="runtime_payload_schema is rendered as a contract comparison instead of a generic schema plot.",
+    )
+
+
+def _plot_runtime_semantic_case(path: Path, sources, font, table_paths):
+    frame = pd.DataFrame(build_runtime_semantic_case_rows(sources))
+    if frame.empty:
+        raise ValueError("runtime_semantic_case requires a non-empty runtime_case_table source")
+    numeric_columns = [
+        "window_order",
+        "semantic_top_event_attribution",
+        "top_contribution_score",
+        "risk_proxy_confidence",
+        "workload_proxy_prediction",
+        "event_replay_tag_score",
+    ]
+    for column in numeric_columns:
+        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+    frame = frame.sort_values("window_order").reset_index(drop=True)
+    case = frame.iloc[0].to_dict()
+    query_names = frame["semantic_top_query_name"].fillna("unknown").astype(str)
+    point_colors = [_query_color(name) for name in query_names]
+    plt, patches = _import_matplotlib(font)
+    fig = plt.figure(figsize=(14.8, 8.8))
+    grid = fig.add_gridspec(3, 4, height_ratios=[1.25, 2.45, 1.25], hspace=0.52, wspace=0.36)
+
+    ax_cards = fig.add_subplot(grid[0, :])
+    ax_cards.set_axis_off()
+    ax_cards.set_xlim(0, 12)
+    ax_cards.set_ylim(0, 2)
+    ax_cards.add_patch(
+        patches.FancyBboxPatch(
+            (0.22, 1.05),
+            11.45,
+            0.72,
+            boxstyle="round,pad=0.05,rounding_size=0.06",
+            facecolor="#fbfdff",
+            edgecolor=BLUE,
+            lw=1.35,
+        )
+    )
+    ax_cards.text(0.42, 1.58, _label(font, "view_id / 架次", "view_id / sortie"), fontsize=8.2, color=MUTED, va="center")
+    ax_cards.text(
+        0.42,
+        1.29,
+        _runtime_case_view_label(case.get("view_id")),
+        fontsize=9.8,
+        weight="bold",
+        color=INK,
+        va="center",
+        linespacing=1.0,
+    )
+    cards = [
+        (_label(font, "展示窗口", "windows"), str(len(frame)), GREEN),
+        (
+            _label(font, "native / canonical", "native / canonical"),
+            f"{case.get('native_feature_schema_status')} / {case.get('canonical_feature_schema_status')}",
+            PURPLE,
+        ),
+        (
+            _label(font, "vehicle 字段", "vehicle fields"),
+            f"{_fmt_metric(case.get('input_vehicle_feature_count'), 0)} -> {_fmt_metric(case.get('expected_vehicle_feature_count'), 0)}",
+            ORANGE,
+        ),
+        (
+            _label(font, "缺失 groups", "missing groups"),
+            _fmt_metric(case.get("native_missing_measurement_group_count"), 0),
+            GOLD,
+        ),
+    ]
+    for idx, (title, value, color) in enumerate(cards):
+        x = 0.22 + idx * 2.88
+        ax_cards.add_patch(
+            patches.FancyBboxPatch(
+                (x, 0.16),
+                2.65,
+                0.62,
+                boxstyle="round,pad=0.05,rounding_size=0.06",
+                facecolor="#fbfdff",
+                edgecolor=color,
+                lw=1.35,
+            )
+        )
+        ax_cards.text(x + 0.16, 0.57, title, fontsize=8.2, color=MUTED, va="center")
+        ax_cards.text(x + 0.16, 0.32, value, fontsize=10.8, weight="bold", color=INK, va="center")
+
+    ax_attr = fig.add_subplot(grid[1, :3])
+    x_values = frame["window_order"].fillna(0).astype(int).tolist()
+    y_values = frame["semantic_top_event_attribution"].fillna(0.0).astype(float).tolist()
+    for x_value, y_value, color in zip(x_values, y_values, point_colors, strict=True):
+        ax_attr.vlines(x_value, 0, y_value, color=color, alpha=0.35, lw=2.2)
+    ax_attr.scatter(x_values, y_values, s=74, c=point_colors, edgecolor=INK, linewidth=0.6, zorder=4)
+    ax_attr.set_xticks(x_values, frame["window_label"].astype(str).tolist(), rotation=0)
+    ax_attr.set_ylabel("semantic_top_event_attribution")
+    ax_attr.set_xlabel(_label(font, "runtime replay 窗口", "runtime replay window"))
+    ax_attr.set_title(
+        _label(font, "窗口级语义归因：只标注变化点与最高值", "Window-level semantic attribution: changes and peak only"),
+        fontsize=11,
+        weight="bold",
+    )
+    ax_attr.grid(axis="y", color=GRID, lw=0.8)
+    ax_attr.set_axisbelow(True)
+    legend_names = list(dict.fromkeys(query_names.tolist()))
+    if len(legend_names) > 1:
+        from matplotlib.lines import Line2D
+
+        handles = [
+            Line2D([0], [0], marker="o", color="w", label=name, markerfacecolor=_query_color(name), markeredgecolor=INK, markersize=7)
+            for name in legend_names
+        ]
+        ax_attr.legend(handles=handles, fontsize=8, frameon=False, loc="upper left")
+    annotation_indices = _runtime_annotation_indices(frame)
+    for idx in annotation_indices:
+        row = frame.iloc[idx]
+        ax_attr.annotate(
+            f"{row['window_label']}\n{row['semantic_top_query_name']}",
+            xy=(int(row["window_order"]), float(row["semantic_top_event_attribution"])),
+            xytext=(0, 12),
+            textcoords="offset points",
+            ha="center",
+            fontsize=7.8,
+            color=INK,
+            arrowprops={"arrowstyle": "-", "color": MUTED, "lw": 0.8},
+        )
+
+    ax_dist = fig.add_subplot(grid[1, 3])
+    counts = query_names.value_counts().sort_values()
+    ax_dist.barh(counts.index.tolist(), counts.values.tolist(), color=[_query_color(name) for name in counts.index], edgecolor=INK, linewidth=0.4)
+    ax_dist.set_title(_label(font, "query 类型分布", "Query distribution"), fontsize=11, weight="bold")
+    ax_dist.set_xlabel(_label(font, "窗口数", "windows"))
+    ax_dist.grid(axis="x", color=GRID, lw=0.8)
+    ax_dist.set_axisbelow(True)
+    for y, value in enumerate(counts.values.tolist()):
+        ax_dist.text(value, y, f" {value}", va="center", fontsize=8.2, color=INK)
+
+    ax_ranges = fig.add_subplot(grid[2, :2])
+    ax_ranges.set_axis_off()
+    ax_ranges.set_xlim(0, 6)
+    ax_ranges.set_ylim(-0.12, 1.8)
+    range_cards = [
+        ("risk_proxy_confidence", _range_text(frame["risk_proxy_confidence"]), BLUE),
+        ("workload_proxy_prediction", _range_text(frame["workload_proxy_prediction"]), GREEN),
+        ("event_replay_tag_score", _range_text(frame["event_replay_tag_score"]), PURPLE),
+    ]
+    for idx, (name, value, color) in enumerate(range_cards):
+        y = 1.24 - idx * 0.52
+        ax_ranges.add_patch(
+            patches.FancyBboxPatch(
+                (0.08, y - 0.23),
+                5.55,
+                0.39,
+                boxstyle="round,pad=0.035,rounding_size=0.045",
+                facecolor=PALE,
+                edgecolor=GRID,
+                lw=0.9,
+            )
+        )
+        ax_ranges.text(0.25, y, name, fontsize=8.4, color=MUTED, va="center")
+        ax_ranges.text(5.35, y, value, fontsize=10.5, color=color, weight="bold", ha="right", va="center")
+    ax_ranges.set_title(_label(font, "近乎平稳序列改用范围值", "Near-flat series shown as ranges"), fontsize=10.8, weight="bold", color=INK)
+
+    ax_schema = fig.add_subplot(grid[2, 2:])
+    ax_schema.set_axis_off()
+    ax_schema.set_xlim(0, 6)
+    ax_schema.set_ylim(-0.12, 1.8)
+    schema_lines = [
+        (
+            _label(font, "原生 replay payload", "native replay payload"),
+            f"{case.get('native_feature_schema_status')} | vehicle={_fmt_metric(case.get('input_vehicle_feature_count'), 0)}",
+            ORANGE,
+        ),
+        (
+            _label(font, "契约化 service payload", "canonical service payload"),
+            f"{case.get('canonical_feature_schema_status')} | expected={_fmt_metric(case.get('expected_vehicle_feature_count'), 0)}",
+            GREEN,
+        ),
+        (
+            _label(font, "schema gap 摘要", "schema gap summary"),
+            f"missing vehicle={_fmt_metric(case.get('missing_vehicle_feature_count'), 0)} | groups={_fmt_metric(case.get('native_missing_measurement_group_count'), 0)}",
+            PURPLE,
+        ),
+    ]
+    for idx, (label, value, color) in enumerate(schema_lines):
+        y = 1.24 - idx * 0.52
+        ax_schema.add_patch(
+            patches.FancyBboxPatch(
+                (0.1, y - 0.23),
+                5.6,
+                0.39,
+                boxstyle="round,pad=0.035,rounding_size=0.045",
+                facecolor=PALE,
+                edgecolor=GRID,
+                lw=0.9,
+            )
+        )
+        ax_schema.text(0.27, y, label, fontsize=8.4, color=MUTED, va="center")
+        ax_schema.text(5.48, y, value, fontsize=10.1, color=color, weight="bold", ha="right", va="center")
+    ax_schema.set_title(_label(font, "schema 状态摘要", "Schema status summary"), fontsize=10.8, weight="bold", color=INK)
+
+    fig.suptitle(_label(font, "runtime 与语义事件案例复盘", "Runtime and Semantic Event Case Review"), fontsize=15.2, weight="bold", color=INK)
+    fig.savefig(path, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+    return _figure_entry(
+        figure_id="runtime_semantic_case",
+        path=path,
+        source_paths=_source_paths(sources, "runtime_case_table", "support", "runtime_service", "runtime_schema_contract"),
+        evidence_layer="runtime_semantic_support",
+        table_path=table_paths["runtime_semantic_case"],
+        metric_definition="Runtime case values are copied from runtime_semantic_case.csv and shown as semantic attribution, query distribution, KPI ranges, and schema status.",
+        case_definition=str(case.get("case_definition") or "runtime semantic support case"),
+        replaces_problem="replaces near-flat line and repeated attribution bars with case-level semantic attribution and schema-status summary.",
     )
 
 
@@ -534,7 +746,7 @@ def _plot_semantic_event_fusion(path: Path, sources, font, table_paths):
     ax_flow.set_title(_label(font, "双流语义事件融合链路", "Dual-Stream Semantic Event Fusion Path"), fontsize=13, weight="bold", color=INK)
     ax = fig.add_subplot(grid[1])
     frame = frame.sort_values("mean_top_event_attribution", ascending=True)
-    labels = [_short(view, 34) for view in frame["view_id"]]
+    labels = [_identifier_label(view, width=32) for view in frame["view_id"]]
     y_positions = list(range(len(frame)))
     ax.barh(y_positions, frame["mean_top_event_attribution"], color=PURPLE, edgecolor=INK, linewidth=0.4)
     ax.set_yticks(y_positions, labels)
@@ -726,6 +938,108 @@ def _llm_card_note(font: PlotFontSelection, row: Mapping[str, object]) -> str:
     if condition.startswith("A4"):
         return _label(font, "人工复核未完成", metric_note.replace("_", " "))
     return metric_note.replace("_", " ")
+
+
+def _runtime_annotation_indices(frame: pd.DataFrame) -> list[int]:
+    selected: list[int] = []
+    previous_query = None
+    previous_value = None
+    for idx, row in frame.iterrows():
+        query = str(row.get("semantic_top_query_name") or "")
+        value = float(row.get("semantic_top_event_attribution") or 0.0)
+        changed_query = previous_query is not None and query != previous_query
+        changed_value = previous_value is not None and abs(value - previous_value) > 1e-6
+        if idx == 0 or changed_query or changed_value:
+            selected.append(int(idx))
+        previous_query = query
+        previous_value = value
+    top_idx = int(frame["semantic_top_event_attribution"].fillna(0.0).idxmax())
+    result: list[int] = []
+    for idx in selected[:2]:
+        if idx not in result:
+            result.append(idx)
+    if top_idx not in result:
+        result.append(top_idx)
+    for idx in selected[2:]:
+        if len(result) >= 3:
+            break
+        if idx not in result:
+            result.append(idx)
+    return result[:3]
+
+
+def _query_color(name: object) -> str:
+    value = str(name)
+    if value == "risk_proxy":
+        return BLUE
+    if value == "workload_proxy":
+        return GREEN
+    if value == "event_replay_tag":
+        return GOLD
+    return PURPLE
+
+
+def _fmt_metric(value: object, digits: int = 3) -> str:
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return "NA"
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return str(value)
+    if pd.isna(number):
+        return "NA"
+    if digits == 0:
+        return str(int(round(number)))
+    return f"{number:.{digits}f}".rstrip("0").rstrip(".")
+
+
+def _range_text(series: pd.Series) -> str:
+    values = pd.to_numeric(series, errors="coerce").dropna()
+    if values.empty:
+        return "NA"
+    low = float(values.min())
+    high = float(values.max())
+    if abs(high - low) < 1e-9:
+        return _fmt_metric(low)
+    return f"{_fmt_metric(low)} - {_fmt_metric(high)}"
+
+
+def _identifier_label(value: object, width: int) -> str:
+    text = "" if value is None else str(value)
+    if not text:
+        return ""
+    text = text.replace("__pilot_", "\npilot_")
+    lines: list[str] = []
+    for part in text.splitlines():
+        lines.extend(_split_identifier_part(part, width))
+    return "\n".join(lines)
+
+
+def _runtime_case_view_label(value: object) -> str:
+    text = "" if value is None else str(value)
+    if "__pilot_" in text:
+        sortie_id, pilot_id = text.split("__pilot_", 1)
+        return f"架次: {sortie_id}\npilot: {pilot_id}"
+    return _identifier_label(text, width=70)
+
+
+def _split_identifier_part(text: str, width: int) -> list[str]:
+    if len(text) <= width:
+        return [text]
+    lines: list[str] = []
+    remaining = text
+    separators = ("_", ":", "#", "-")
+    while len(remaining) > width:
+        split_at = max(remaining.rfind(separator, 0, width + 1) for separator in separators)
+        if split_at < max(8, width // 2):
+            split_at = width
+        else:
+            split_at += 1
+        lines.append(remaining[:split_at])
+        remaining = remaining[split_at:]
+    if remaining:
+        lines.append(remaining)
+    return lines
 
 
 def _short(value: object, width: int) -> str:

@@ -31,7 +31,7 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 当前中期主入口：
 
 - [stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
-- [stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md)
+- [stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md)
 - [../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
 - [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
 - [../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
@@ -47,7 +47,7 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - Stage I evidence runner r2：[stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md)
 - Stage I bounded weak-label sweep r2：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
 - Stage I live weak-label stable resume：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md)
-- Stage I thesis materials r3 figure refresh：[stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md)
+- Stage I thesis materials r4 runtime case refresh：[stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md)
 - Stage I public mainline：[stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
 - Stage I support ablation：[stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md](stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
 - Stage I rigid-body r2：[stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md)
@@ -71,7 +71,8 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - P21 执行 prompt（历史追溯）：[../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md](../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md)
 - 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
-- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json](assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r3-figure-refresh/figure_manifest.json)
+- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json](assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_manifest.json)
+- 当前 thesis figure quality audit：[assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_quality_audit.csv](assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r4-runtime-case-refresh/figure_quality_audit.csv)
 - 当前 runtime service smoke summary：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json)
 - 当前 live weak-label stable resume summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json)
 - 当前 live weak-label partial summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json)

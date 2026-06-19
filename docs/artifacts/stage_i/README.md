@@ -10,7 +10,7 @@
 - 主动 evidence runner：`stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md`
 - bounded weak-label sweep：`stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md`
 - live weak-label stable resume：`stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md`
-- thesis materials r3 figure refresh：`stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r3-figure-refresh.md`
+- thesis materials r4 runtime case refresh：`stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r4-runtime-case-refresh.md`
 - runtime service smoke r2 contract：`stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
 - DeepSeek LLM preprocessing r3 sliced：`stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`
 - LLM preprocessing comparison r1：`stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md`
@@ -45,7 +45,7 @@
 
 - `stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r1.md`
 - `stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
-- 旧 P16/P18 thesis materials 图包已由 r3 替代并清理；仅保留 `../assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
+- 旧 P16/P18 thesis materials 图包已由 r4 接管为当前入口；仅保留 `../assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
 
 历史 P11 live 首轮：
 

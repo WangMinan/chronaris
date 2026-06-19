@@ -16,6 +16,7 @@ from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (  # noqa
     build_public_transfer_rows,
     build_rigid_body_rotation_rows,
     build_runtime_payload_schema_rows,
+    build_runtime_semantic_case_rows,
     build_thesis_table_rows,
 )
 
@@ -47,6 +48,19 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         self.assertFalse(any(row["available"] for row in rate_rows))
         self.assertTrue(all(row["rotation_status"] == "disabled" for row in matrix_rows))
 
+    def test_runtime_semantic_case_rows_copy_case_values(self) -> None:
+        rows = build_runtime_semantic_case_rows(_sources())
+
+        self.assertEqual(len(rows), 3)
+        self.assertEqual([row["window_label"] for row in rows], ["0000", "0001", "0002"])
+        self.assertEqual(rows[0]["view_id"], "view-runtime")
+        self.assertEqual(rows[0]["native_feature_schema_status"], "aligned")
+        self.assertEqual(rows[0]["canonical_feature_schema_status"], "exact")
+        self.assertEqual(rows[0]["input_vehicle_feature_count"], 965)
+        self.assertEqual(rows[0]["expected_vehicle_feature_count"], 1930)
+        self.assertEqual(rows[0]["native_missing_measurement_group_count"], 6)
+        self.assertIn("runtime_case.csv", rows[0]["source_path"])
+
     def test_private_component_rows_keep_task_direction_and_normalized_delta(self) -> None:
         rows = build_private_component_rows(_sources())
 
@@ -74,6 +88,7 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
             {
                 "evidence_layer_overview.csv",
                 "runtime_payload_schema.csv",
+                "runtime_semantic_case.csv",
                 "rigid_body_rotation_audit.csv",
                 "weak_label_sweep_ablation.csv",
                 "chronaris_opt_component_ablation.csv",
@@ -203,6 +218,16 @@ def _sources() -> dict[str, dict[str, object]]:
             "path": "runtime.json",
             "payload": {"run_id": "runtime-replay", "sample_count": 40},
         },
+        "runtime_case_table": {
+            "path": "runtime_case.csv",
+            "payload": {
+                "rows": [
+                    _runtime_case_row("0000", "workload_proxy", 4.3, 0.386, 0.195),
+                    _runtime_case_row("0001", "risk_proxy", 4.6, 0.392, 0.222),
+                    _runtime_case_row("0002", "risk_proxy", 8.36, 0.393, 0.222),
+                ]
+            },
+        },
         "evidence_manifest": {
             "path": "evidence.json",
             "payload": {"run_id": "evidence-r2", "tasks": {}},
@@ -221,6 +246,39 @@ def _sources() -> dict[str, dict[str, object]]:
                 "human_review_packet": {"item_count": 15, "human_review_completed": False},
             },
         },
+    }
+
+
+def _runtime_case_row(
+    window_label: str,
+    query_name: str,
+    attribution: float,
+    risk_confidence: float,
+    workload_prediction: float,
+) -> dict[str, object]:
+    return {
+        "sample_id": f"view-runtime::sortie:{window_label}",
+        "view_id": "view-runtime",
+        "semantic_top_query_name": query_name,
+        "semantic_top_event_attribution": attribution,
+        "semantic_top_query_event_offset_s": 0.33,
+        "top_contribution_score": attribution / 2,
+        "risk_proxy_prediction": "medium",
+        "risk_proxy_confidence": risk_confidence,
+        "workload_proxy_prediction": workload_prediction,
+        "event_replay_tag_score": 1.0,
+        "native_feature_schema_status": "aligned",
+        "canonical_feature_schema_status": "exact",
+        "expected_vehicle_feature_count": 1930,
+        "input_vehicle_feature_count": 965,
+        "missing_vehicle_feature_count": 965,
+        "native_missing_measurement_group_count": 6,
+        "schema_hash": "abc",
+        "support_source_path": "support.json",
+        "runtime_service_source_path": "runtime_service.json",
+        "runtime_schema_contract_source_path": "runtime_schema_contract.json",
+        "evidence_layer": "runtime_semantic_support",
+        "case_definition": "fixture runtime case",
     }
 
 
