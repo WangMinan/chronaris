@@ -16,6 +16,7 @@ from chronaris.pipelines.stage_i.evidence.thesis_materials_data import (  # noqa
     build_public_transfer_rows,
     build_rigid_body_rotation_rows,
     build_runtime_payload_schema_rows,
+    build_runtime_service_flow_rows,
     build_runtime_semantic_case_rows,
     build_thesis_table_rows,
 )
@@ -45,6 +46,17 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         self.assertEqual(canonical["vehicle_feature_count"], 1930)
         self.assertEqual(canonical["missing_vehicle_feature_count"], 0)
 
+    def test_runtime_service_flow_rows_describe_four_report_steps(self) -> None:
+        rows = build_runtime_service_flow_rows(_sources())
+
+        self.assertEqual(
+            [row["step_title_cn"] for row in rows],
+            ["模型参数加载", "原始回放窗口输入", "运行字段规范检查", "批量推理与结果归档"],
+        )
+        self.assertIn("已读取飞机状态字段965", rows[1]["detail_cn"])
+        self.assertIn("1930维", rows[2]["detail_cn"])
+        self.assertIn("任务输出", rows[3]["output_items_cn"])
+
     def test_rotation_rows_use_availability_matrix_for_missing_rates(self) -> None:
         rows = build_rigid_body_rotation_rows(_sources())
         matrix_rows = [row for row in rows if row["row_type"] == "rotation_field_matrix"]
@@ -55,12 +67,14 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         self.assertTrue(all(row["available"] for row in angle_rows))
         self.assertFalse(any(row["available"] for row in rate_rows))
         self.assertTrue(all(row["rotation_status"] == "disabled" for row in matrix_rows))
+        self.assertTrue(all("角速度字段" in row["rotation_disabled_reason_cn"] for row in matrix_rows))
 
     def test_runtime_semantic_case_rows_copy_case_values(self) -> None:
         rows = build_runtime_semantic_case_rows(_sources())
 
         self.assertEqual(len(rows), 3)
         self.assertEqual([row["window_label"] for row in rows], ["0000", "0001", "0002"])
+        self.assertEqual([row["window_label_cn"] for row in rows], ["窗口1", "窗口2", "窗口3"])
         self.assertEqual(rows[0]["view_id"], "view-runtime")
         self.assertEqual(rows[0]["native_feature_schema_status"], "aligned")
         self.assertEqual(rows[0]["canonical_feature_schema_status"], "exact")
@@ -76,6 +90,8 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         self.assertEqual(by_metric["macro_f1"], "higher_is_better")
         self.assertEqual(by_metric["rmse"], "lower_is_better")
         self.assertTrue(all(0.0 <= float(row["normalized_delta_vs_full"]) <= 1.0 for row in rows))
+        self.assertEqual({row["task_name_cn"] for row in rows}, {"风险预测", "工作负荷预测"})
+        self.assertTrue(all(row["report_protocol_cn"] == "严格评价协议" for row in rows))
         self.assertIn("source_path", rows[0])
 
     def test_llm_and_transfer_rows_preserve_boundary_language(self) -> None:
@@ -83,9 +99,9 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         transfer_rows = build_public_transfer_rows(_sources())
 
         a4 = next(row for row in llm_rows if row["condition"] == "A4_human_review_packet")
-        self.assertIn("未完成", a4["boundary_cn"])
+        self.assertIn("待复核", a4["boundary_cn"])
         self.assertIn("human_review_completed=False", a4["metric_note"])
-        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开数据适配与校准", "真实航空双流样本", "组件代理任务"])
+        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开适配", "私有弱标注主线", "私有代理消融"])
         self.assertTrue(all("不能" not in row["positive_reading_cn"] for row in transfer_rows))
 
     def test_table_contract_includes_required_outputs(self) -> None:
@@ -96,6 +112,7 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
             {
                 "evidence_layer_overview.csv",
                 "runtime_payload_schema.csv",
+                "runtime_service_flow.csv",
                 "runtime_semantic_case.csv",
                 "rigid_body_rotation_audit.csv",
                 "weak_label_sweep_ablation.csv",

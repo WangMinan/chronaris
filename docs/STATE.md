@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-06-19
+更新时间：2026-06-21
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。本轮新增 `P24 leakage-safe private component ablation` 与 `P25 thesis materials r5 leakage-safe refresh`，把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断，并生成 11 张 300dpi 中文图件。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。本轮新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh` 与 `P26 thesis materials r6 report figure polish`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
 
 ## 当前阶段
 
@@ -65,9 +65,9 @@
       - 产物：`docs/artifacts/assets/stage_i_rotation_audit/20260607T-stage-i-rotation-audit-r2/rigid_body_rotation_audit_summary.json`
       - 报告：`docs/artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md`
       - 当前已确认 `BUS6000019110020.code1031 = 真航向` 可映射到 `yaw`，但 `yaw_rate` 仍缺失，因此 `rotation_status=disabled`。
-    - `P16 thesis materials` 已由 2026-06-19 的 `r5-leakage-safe-refresh` 接管为当前入口：
+    - `P16 thesis materials` 已由 2026-06-21 的 `r6-report-figure-polish` 接管为当前入口：
       - 旧 r1 图包已清理，不再作为 docs 下可打开产物。
-      - 当前写作入口以 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json` 为准。
+      - 当前写作入口以 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json` 为准。
     - `P17 runtime service smoke` 首轮已完成：
       - 首轮 r1 产物已由 P18 `r2-contract` 接管并清理，仅保留在 git 历史中。
       - 已支持 checkpoint 冷启动、单 view replay JSONL -> predictions JSONL / summary JSON，并固化 `missing_checkpoint / missing_fields / empty_window / schema_mismatch` 四类错误样例；当前 schema contract 入口以 P18 `r2-contract` 为准。
@@ -83,15 +83,15 @@
         - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
         - raw canonical payload 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理；exact contract 证据保留在 schema contract 与 canonical runtime summary。
       - P16/P18 旧刷新图包：
-        - r3/r4 图包已由 `20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh` 接管并从 docs 产物目录清理。
+        - r3/r4 图包已由 `20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh` 接管并从 docs 产物目录清理；当前入口已由 `20260621T-stage-i-thesis-materials-r6-report-figure-polish` 接管。
         - 仅保留 `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 的历史输入表。
-      - P16/P21/P24 中期图表质量刷新：
+      - P16/P21/P24/P26 中期图表质量刷新：
         - `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
-        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`
-        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/table_manifest.json`
-        - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_quality_audit.csv`
-        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
-        - 当前结果：`11` 张 PNG 与 `11` 张 CSV，覆盖 evidence layer matrix、runtime payload schema、runtime semantic case、rigid-body/rotation、weak-label sweep、兼容 private component overview、model backbone ablation、task adapter ablation、public transfer boundary、semantic event fusion 和 LLM A0-A4 comparison。
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/table_manifest.json`
+        - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv`
+        - `docs/artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md`
+        - 当前结果：`12` 张 PNG 与 `12` 张 CSV，覆盖 evidence layer overview、runtime payload schema、runtime service flow、runtime semantic case、rigid-body/rotation、weak-label sweep、private component overview、model backbone ablation、task adapter ablation、public transfer boundary、semantic event fusion 和 LLM comparison。
     - `P20 DeepSeek 在线时序数据预处理` 已完成 agent-style harness v2、切片整合与真实小样本 run：
       - 计划入口：`docs/implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md`
       - 当前真实 run：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
@@ -110,7 +110,7 @@
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`；历史 P16/P21 图表质量刷新、P20 r3-sliced 与 P21 r1 comparison 已有本地/历史入口。本轮新增的 leakage-safe r2 与 thesis materials r5 以本文件列出的本地路径为准，提交/推送后进入远端历史。
+- 当前分支为 `main`；历史 P16/P21 图表质量刷新、P20 r3-sliced 与 P21 r1 comparison 已有本地/历史入口。本轮新增的 P26 thesis materials r6 以本文件列出的本地路径为准，提交/推送后进入远端历史。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
   - `70b651a feat: add stage i evidence closure tools`
@@ -146,7 +146,7 @@
   - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
   - 最新 docs LFS 清理记录：`docs/artifacts/cleanup/20260619-lfs-docs-prune.md`
   - P20/P21 LLM runtime case 输入表：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
-  - 最新 thesis materials r5 leakage-safe refresh：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`
+  - 最新 thesis materials r6 report figure polish：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
   - 最新 leakage-safe private component ablation：`docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json`
   - 最新中期事实清单：`docs/midterm/midterm-fact-sheet-2026-06-13.md`
   - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
@@ -228,7 +228,7 @@
     - 当前 `combination_count=2`
   - `P16 thesis materials` 首轮：
     - 旧 r1 图包已由 P22/r3 替代并清理。
-    - 当前中期图表只引用 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`。
+    - 当前中期图表只引用 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/`。
   - `P17 runtime service smoke`：
     - 首轮 r1 已清理；当前入口为 `docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/`
     - 当前 `input_sample_count=37`
@@ -254,6 +254,9 @@
   - `P16/P21/P24 thesis materials r5 图表质量刷新`：
     - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
     - 当前 `figure_manifest.json` 已把低信息图替换为 evidence matrix、schema contract 对照、runtime semantic case 复盘、rotation availability matrix、weak-label 小网格、分任务 private ablation、model backbone ablation、task adapter ablation、中文 public transfer、semantic event fusion 和 LLM A0-A4 review flow。
+  - `P26 thesis materials r6 报告图重绘`：
+    - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/`
+    - 当前 `figure_manifest.json` 与 `figure_quality_audit.csv` 已记录 12 张 PNG、12 张 CSV、图片宽高、最小字号、中文标签策略、内部词检查和长 ID 处理策略；新增 `runtime_service_flow.png`，并把语义融合缺源情况降级为覆盖/支撑状态展示。
   - `中期报告写作材料`：
     - `docs/midterm/midterm-fact-sheet-2026-06-13.md`
     - `docs/midterm/boundaries-and-risks-2026-06-13.md`
@@ -298,7 +301,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
   tests.test_stage_i_public_opt
 ```
 
-结果：`Ran 56 tests`，`OK`。历史 P10-P15 命令已真实执行；2026-06-19 深度清理后，runtime replay r1、support r1、rigid-body r1 等首轮产物不再作为 docs 下可打开入口，当前入口以 r2/r3/r5 summary、manifest 和报告为准。
+结果：`Ran 56 tests`，`OK`。历史 P10-P15 命令已真实执行；2026-06-19 深度清理后，runtime replay r1、support r1、rigid-body r1 等首轮产物不再作为 docs 下可打开入口，当前入口以 r2/r3/r6 summary、manifest 和报告为准。
 
 本轮新增回归与 `P11+/P16/P17` 验证已完成：
 

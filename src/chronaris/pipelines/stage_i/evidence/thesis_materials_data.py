@@ -15,6 +15,7 @@ def build_thesis_table_rows(
     return {
         "evidence_layer_overview.csv": build_evidence_layer_rows(sources),
         "runtime_payload_schema.csv": build_runtime_payload_schema_rows(sources),
+        "runtime_service_flow.csv": build_runtime_service_flow_rows(sources),
         "runtime_semantic_case.csv": build_runtime_semantic_case_rows(sources),
         "rigid_body_rotation_audit.csv": build_rigid_body_rotation_rows(sources),
         "weak_label_sweep_ablation.csv": build_weak_label_rows(sources),
@@ -25,6 +26,65 @@ def build_thesis_table_rows(
         "semantic_event_fusion_overview.csv": build_semantic_event_rows(sources),
         "llm_comparison_a0_a4.csv": build_llm_comparison_rows(sources),
     }
+
+
+def build_runtime_service_flow_rows(
+    sources: Mapping[str, Mapping[str, object]],
+) -> list[dict[str, object]]:
+    service = _payload(sources, "runtime_service")
+    contract = _payload(sources, "runtime_schema_contract")
+    runtime = _payload(sources, "runtime")
+    expected = _as_mapping(contract.get("expected_schema"))
+    native = _as_mapping(contract.get("native_input"))
+    canonical = _as_mapping(contract.get("canonical_payload"))
+    native_vehicle = _feature_count(native, "vehicle") or _number(service.get("input_vehicle_feature_count"))
+    expected_vehicle = _feature_count(expected, "vehicle") or _number(service.get("expected_vehicle_feature_count"))
+    input_count = service.get("input_sample_count") or _number(runtime.get("sample_count"))
+    missing_groups = _as_mapping(service.get("missing_vehicle_measurement_group_counts"))
+    native_status = service.get("native_feature_schema_status") or native.get("status")
+    canonical_status = service.get("canonical_feature_schema_status") or canonical.get("status")
+    return [
+        {
+            "step_order": 1,
+            "step_title_cn": "模型参数加载",
+            "core_quantity_cn": "已加载联合训练模型参数",
+            "detail_cn": "复用当前 Stage H 到 Stage I 的联合训练权重，不重跑训练。",
+            "output_items_cn": "任务头;融合表示",
+            "status_cn": "已归档",
+            "source_path": _source_path(sources, "runtime_service"),
+            "evidence_layer": "runtime_schema",
+        },
+        {
+            "step_order": 2,
+            "step_title_cn": "原始回放窗口输入",
+            "core_quantity_cn": f"代表回放窗口{input_count}个",
+            "detail_cn": f"已读取飞机状态字段{native_vehicle}，保留窗口顺序与双流来源。",
+            "output_items_cn": "原始窗口;字段列表",
+            "status_cn": "已读取",
+            "source_path": _source_path(sources, "runtime_service"),
+            "evidence_layer": "runtime_schema",
+        },
+        {
+            "step_order": 3,
+            "step_title_cn": "运行字段规范检查",
+            "core_quantity_cn": f"待补齐范围：{len(missing_groups)}个测量组",
+            "detail_cn": f"统一格式按{expected_vehicle}维保留缺失标记；原始输入{_schema_status_cn(native_status)}，统一输入{_schema_status_cn(canonical_status)}。",
+            "output_items_cn": "字段检查结果;缺失标记",
+            "status_cn": "已检查",
+            "source_path": _source_path(sources, "runtime_schema_contract"),
+            "evidence_layer": "runtime_schema",
+        },
+        {
+            "step_order": 4,
+            "step_title_cn": "批量推理与结果归档",
+            "core_quantity_cn": "输出清单已落盘",
+            "detail_cn": "结果包括任务输出、融合表示、事件贡献和字段检查结果。",
+            "output_items_cn": "任务输出;融合表示;事件贡献;字段检查结果",
+            "status_cn": "已归档",
+            "source_path": _source_path(sources, "runtime_service"),
+            "evidence_layer": "runtime_schema",
+        },
+    ]
 
 
 def build_evidence_layer_rows(
@@ -83,7 +143,7 @@ def build_evidence_layer_rows(
             "task_count",
             private_task_count,
             f"覆盖{private_variant_count}个组件配置",
-            "用于定位模型骨干、任务适配层和防泄漏协议影响。",
+            "用于定位模型骨干、任务适配层和严格评价协议影响。",
             [_source_path(sources, "private_component")],
         ),
         _overview_row(
@@ -244,6 +304,7 @@ def build_runtime_semantic_case_rows(
             {
                 "window_order": order,
                 "window_label": window_label,
+                "window_label_cn": f"窗口{order + 1}",
                 "sample_id": sample_id,
                 "view_id": row.get("view_id"),
                 "semantic_top_query_name": row.get("semantic_top_query_name"),
@@ -296,6 +357,7 @@ def build_rigid_body_rotation_rows(
                     "translation_vertical_enabled": True,
                     "rotation_status": rotation.get("rotation_status"),
                     "rotation_disabled_reason": rotation.get("rotation_reading"),
+                    "rotation_disabled_reason_cn": "缺少成对 pitch/roll/yaw 角速度字段；旋转残差未启用",
                     "source_path": _source_path(sources, "rigid_body"),
                     "evidence_layer": "rigid_body_rotation_diagnostics",
                 }
@@ -318,6 +380,7 @@ def build_rigid_body_rotation_rows(
                     "translation_vertical_enabled": True,
                     "rotation_status": rotation.get("rotation_status"),
                     "rotation_disabled_reason": rotation.get("rotation_reading"),
+                    "rotation_disabled_reason_cn": "缺少成对 pitch/roll/yaw 角速度字段；标记为字段边界",
                     "source_path": _source_path(sources, "rotation_audit"),
                     "evidence_layer": rotation.get("evidence_layer", "rotation_diagnostics"),
                 }
@@ -407,6 +470,7 @@ def build_weak_label_rows(
                     "causal_lag_window_points": row_map.get("causal_lag_window_points"),
                     "lag_label": "none" if row_map.get("causal_lag_window_points") is None else row_map.get("causal_lag_window_points"),
                     "test_total": row_map.get("test_total"),
+                    "test_total_loss": row_map.get("test_total"),
                     "test_task_total": row_map.get("test_task_total"),
                     "test_causal_total": row_map.get("test_causal_total"),
                     "best_child_run_id": _as_mapping(payload.get("best_run")).get("child_run_id"),
@@ -415,6 +479,8 @@ def build_weak_label_rows(
                     "source_path": _source_path(sources, source_name),
                     "evidence_layer": payload.get("evidence_layer", "thesis_weak_label"),
                     "metric_definition": "bounded weak-label sweep metrics; lower test_total is better",
+                    "metric_name_cn": "联合训练损失",
+                    "coverage_metric_cn": "任务记录覆盖率",
                 }
             )
     if "live_partial" in sources:
@@ -441,6 +507,7 @@ def build_weak_label_rows(
                 "causal_lag_window_points": None,
                 "lag_label": None,
                 "test_total": None,
+                "test_total_loss": None,
                 "test_task_total": None,
                 "test_causal_total": None,
                 "best_child_run_id": _as_mapping(partial.get("best_run")).get("child_run_id"),
@@ -449,6 +516,8 @@ def build_weak_label_rows(
                 "source_path": _source_path(sources, "live_partial"),
                 "evidence_layer": partial.get("evidence_layer", "thesis_weak_label"),
                 "metric_definition": "partial summary captures completed child runs and blocker logs for resume boundary",
+                "metric_name_cn": "联合训练损失",
+                "coverage_metric_cn": "任务记录覆盖率",
             }
         )
     return rows
@@ -478,10 +547,16 @@ def build_private_component_rows(
         rows.append(
             {
                 **dict(row),
+                "task_name_cn": _task_name_cn(task_name),
                 "direction": row.get("metric_direction") or direction,
                 "normalized_delta_vs_full": normalized_delta,
                 "display_variant": display_name,
                 "display_variant_cn": display_name,
+                "report_protocol_cn": "严格评价协议",
+                "task_adapter_note_cn": (
+                    "事件复盘：当前配置下无区分度"
+                    if row.get("ablation_group") == "task_adapter" else ""
+                ),
                 "variant_role": _variant_role(variant_name),
                 "protocol": row.get("protocol") or payload.get("protocol") or "historical_private_proxy",
                 "leakage_safe": row.get("leakage_safe") if "leakage_safe" in row else payload.get("leakage_safe", False),
@@ -528,7 +603,7 @@ def build_public_transfer_rows(
         {
             "segment_order": 1,
             "segment_id": "public_adapter_calibration",
-            "segment_title_cn": "公开数据适配与校准",
+            "segment_title_cn": "公开适配",
             "segment_title": "Public adapter and calibration",
             "data_scope_cn": "UAB/NASA；验证数据转换、公开基线、评价接口",
             "evidence_role_cn": "外部公开基线与校准支撑",
@@ -540,7 +615,7 @@ def build_public_transfer_rows(
         {
             "segment_order": 2,
             "segment_id": "private_stage_h_weak_label",
-            "segment_title_cn": "真实航空双流样本",
+            "segment_title_cn": "私有弱标注主线",
             "segment_title": "Private Stage H weak-label mainline",
             "data_scope_cn": "真实生理流 + 真实航电流；弱监督任务闭环",
             "evidence_role_cn": "真实航空验证材料",
@@ -552,7 +627,7 @@ def build_public_transfer_rows(
         {
             "segment_order": 3,
             "segment_id": "private_proxy_component",
-            "segment_title_cn": "组件代理任务",
+            "segment_title_cn": "私有代理消融",
             "segment_title": "Private proxy ablation",
             "data_scope_cn": "T1/T2/T3；结构敏感性测试与组件移除对比",
             "evidence_role_cn": "模型结构与任务适配层分析",
@@ -589,6 +664,7 @@ def build_semantic_event_rows(
                     "source_path": _join_paths([_source_path(sources, "support"), _source_path(sources, "semantic_event")]),
                     "evidence_layer": "semantic_support",
                     "case_definition": "view-query mean attribution heatmap exported from semantic support summary",
+                    "coverage_status_cn": "支撑",
                 }
             )
         return rows
@@ -613,6 +689,7 @@ def build_semantic_event_rows(
                 "source_path": _join_paths([_source_path(sources, "support"), _source_path(sources, "semantic_event")]),
                 "evidence_layer": "semantic_support",
                 "case_definition": "view-level event-token and query-to-event attribution support, not a performance claim",
+                "coverage_status_cn": "支撑",
             }
         )
     rows.append(
@@ -635,6 +712,7 @@ def build_semantic_event_rows(
             "evidence_layer": "semantic_support",
             "case_definition": "source artifact does not include complete view-query attribution matrix; heatmap intentionally omitted",
             "missing_source_data_requirement": "需要每个数据视图对风险、工作负荷、事件复盘三类查询的完整平均归因得分。",
+            "coverage_status_cn": "缺源待复核",
         }
     )
     return rows
@@ -653,7 +731,7 @@ def build_llm_comparison_rows(
         _llm_row(
             "A0_baseline",
             "baseline query bank",
-            "内置 query bank",
+            "基础查询",
             "baseline_query_count",
             hints.get("baseline_query_count"),
             "built_in_query_bank",
@@ -663,7 +741,7 @@ def build_llm_comparison_rows(
         _llm_row(
             "A1_llm_context",
             "attach preprocessing context",
-            "接入 LLM context",
+            "语义上下文接入",
             "attached_entry_count",
             task.get("attached_entry_count"),
             f"label_unchanged={task.get('label_unchanged')}; label_changed_count={task.get('label_changed_count')}",
@@ -673,17 +751,17 @@ def build_llm_comparison_rows(
         _llm_row(
             "A2_llm_semantic_hints",
             "whitelisted semantic hints",
-            "白名单语义 hints",
+            "查询建议",
             "query_count",
             hints.get("combined_query_count"),
             f"{hints.get('baseline_query_count')}->{hints.get('combined_query_count')}; added={hints.get('added_query_count')}",
-            "仅通过 recipe whitelist 扩展 query coverage；未重算 attribution 改善。",
+            "经规则校验扩展查询覆盖；未重算归因改善。",
             _source_path(sources, "llm_comparison"),
         ),
         _llm_row(
             "A3_llm_runtime_explanation",
             "runtime explanation subset",
-            "runtime 解释子集",
+            "案例解释",
             "explained_case_count",
             runtime.get("llm_explained_case_count"),
             f"{runtime.get('llm_explained_case_count')}/{runtime.get('runtime_case_count')}; completeness={runtime.get('with_llm_average_completeness_for_explained_cases')}",
@@ -693,11 +771,11 @@ def build_llm_comparison_rows(
         _llm_row(
             "A4_human_review_packet",
             "human review packet",
-            "人工复核 packet",
+            "复核材料",
             "review_item_count",
             review.get("item_count"),
             f"human_review_completed={review.get('human_review_completed')}",
-            "已生成待复核材料；人工复核未完成前不写成验证完成。",
+            "已生成待复核材料；复核完成前不写成验证完成。",
             _source_path(sources, "llm_comparison"),
         ),
     ]
@@ -705,10 +783,16 @@ def build_llm_comparison_rows(
         _llm_row(
             "llm_preprocessing_run",
             "LLM preprocessing harness",
-            "LLM 预处理 harness",
+            "预处理运行",
             "request_count",
             pre.get("request_count"),
-            f"errors={pre.get('error_count')}; hints={pre.get('semantic_query_hint_count')}; runtime_explanations={pre.get('runtime_explanation_count')}",
+            (
+                f"errors={pre.get('error_count')}; "
+                f"field_semantics={pre.get('field_semantic_count')}; "
+                f"weak_label_reviews={pre.get('weak_label_review_count')}; "
+                f"hints={pre.get('semantic_query_hint_count')}; "
+                f"runtime_explanations={pre.get('runtime_explanation_count')}"
+            ),
             "DeepSeek 输出是 preprocessing context，不是人工真值。",
             _source_path(sources, "llm_preprocessing"),
         )
@@ -798,6 +882,10 @@ def _runtime_status_text_cn(value: object) -> str:
     return "字段契约已校验"
 
 
+def _schema_status_cn(value: object) -> str:
+    return {"aligned": "已对齐", "exact": "已通过", "missing": "缺失"}.get(str(value), str(value))
+
+
 def _rotation_status_cn(value: object) -> str:
     return {"disabled": "角速度字段待接入", "enabled": "旋转残差已启用"}.get(str(value), "状态待核验")
 
@@ -819,12 +907,12 @@ def _display_variant(variant_name: str) -> str:
         "remove_causal_mask": "移除因果掩码",
         "remove_semantic_event_fusion": "移除语义事件融合",
         "full_model": "完整方案",
-        "full_leakage_safe_task_input": "完整防泄漏任务输入",
         "remove_task_head": "移除任务头",
         "remove_raw_window_stats_residual": "移除原始窗口统计残差",
         "remove_temporal_position_features": "移除时间位置特征",
         "only_fused_latent": "仅融合潜态",
         "single_modality_only": "仅单模态表示",
+        "full_leakage_safe_task_input": "完整任务输入",
     }
     return mapping.get(variant_name, variant_name)
 
@@ -849,6 +937,19 @@ def _query_name_cn(value: object) -> str:
         "risk": "风险",
         "workload": "工作负荷",
         "event_replay": "事件复盘",
+    }
+    text = str(value or "")
+    return mapping.get(text, text)
+
+
+def _task_name_cn(value: object) -> str:
+    mapping = {
+        "T1": "风险预测",
+        "T2": "工作负荷预测",
+        "T3": "事件复盘",
+        "T1_maneuver_intensity_class": "风险预测",
+        "T2_next_window_physiology_response": "工作负荷预测",
+        "T3_paired_pilot_window_retrieval": "事件复盘",
     }
     text = str(value or "")
     return mapping.get(text, text)
