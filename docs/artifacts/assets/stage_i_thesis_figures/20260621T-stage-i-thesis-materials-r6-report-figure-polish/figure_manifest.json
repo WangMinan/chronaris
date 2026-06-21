@@ -116,7 +116,7 @@
       "min_font_pt": 8.8,
       "metric_definition": "Task absolute metrics are shown on native scales; relative component changes are centered at zero with positive values meaning worse performance after removal.",
       "recommended_placement": "supporting_overview",
-      "replaces_problem": "mixed-unit dense component bars are replaced by task absolute metrics and a compact signed relative-change overview."
+      "replaces_problem": "redundant full-candidate bars are replaced by baseline metric cards and a compact signed relative-change overview."
     },
     {
       "figure_id": "model_backbone_ablation",

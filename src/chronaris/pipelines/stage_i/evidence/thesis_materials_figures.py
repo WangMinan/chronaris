@@ -649,37 +649,89 @@ def _plot_weak_label_sweep(path: Path, sources, font, table_paths):
 
 def _plot_private_component(path: Path, sources, font, table_paths):
     frame = pd.DataFrame(build_private_component_rows(sources))
-    plt, _ = _import_matplotlib(font)
-    fig = plt.figure(figsize=(14.2, 8.6))
-    grid = fig.add_gridspec(2, 3, height_ratios=[0.88, 1.2], hspace=0.42, wspace=0.28)
+    plt, patches = _import_matplotlib(font)
+    fig = plt.figure(figsize=(14.2, 8.3))
+    grid = fig.add_gridspec(2, 1, height_ratios=[0.48, 1.2], hspace=0.26)
     tasks = [
         ("T1_maneuver_intensity_class", "macro_f1", "宏平均F1", "越高越好", BLUE),
         ("T2_next_window_physiology_response", "rmse", "RMSE", "越低越好", ORANGE),
         ("T3_paired_pilot_window_retrieval", "top1_accuracy", "Top-1准确率", "越高越好", GREEN),
     ]
-    for idx, (task, metric_name, metric_cn, direction, color) in enumerate(tasks):
-        ax = fig.add_subplot(grid[0, idx])
+    ax_cards = fig.add_subplot(grid[0])
+    ax_cards.set_axis_off()
+    ax_cards.set_xlim(0, 1)
+    ax_cards.set_ylim(0, 1)
+    full_candidate_note = False
+    card_rows = []
+    for task, metric_name, metric_cn, direction, color in tasks:
         task_rows = frame.loc[(frame["task_name"] == task) & (frame["primary_metric_name"] == metric_name)].copy()
         full_rows = task_rows.loc[task_rows["variant_role"] == "full_candidate"].copy()
         if full_rows.empty:
             full_rows = task_rows.head(1)
-        full_rows = full_rows.sort_values("variant_name", key=lambda col: col.map(_variant_sort_key))
-        labels = [str(row.get("display_variant_cn") or row.get("display_variant")) for row in full_rows.to_dict(orient="records")]
-        values = [float(value) for value in full_rows["primary_metric_value"].tolist()]
-        bars = ax.bar(labels, values, color=color, edgecolor=INK, linewidth=0.5)
-        ax.set_title(f"{_task_label_cn(task)}\n{metric_cn}（{direction}）", fontsize=11.4, weight="bold")
-        ax.grid(axis="y", color=GRID, lw=0.8)
-        ax.set_axisbelow(True)
-        for tick in ax.get_xticklabels():
-            tick.set_fontsize(8.8)
-            tick.set_rotation(12)
-            tick.set_ha("right")
-        for bar, value in zip(bars, values, strict=True):
-            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height(), _fmt_metric(value, digits=3), ha="center", va="bottom", fontsize=9.2, color=INK)
-    ax_heat = fig.add_subplot(grid[1, :])
+        full_candidate_note = full_candidate_note or (
+            len(full_rows) > 1 and full_rows["primary_metric_value"].nunique(dropna=False) == 1
+        )
+        preferred_rows = full_rows.loc[full_rows["variant_name"] == "full_model"]
+        baseline_row = preferred_rows.iloc[0] if not preferred_rows.empty else full_rows.iloc[0]
+        card_rows.append(
+            {
+                "task": _task_label_cn(task),
+                "metric": f"{metric_cn}（{direction}）",
+                "value": _fmt_metric(float(baseline_row["primary_metric_value"]), digits=3),
+                "protocol": str(baseline_row.get("report_protocol_cn") or "严格评价协议"),
+                "seed_count": baseline_row.get("seed_count"),
+                "color": color,
+            }
+        )
+    for idx, card in enumerate(card_rows):
+        x = 0.02 + idx * 0.326
+        y = 0.18
+        w = 0.294
+        h = 0.74
+        color = str(card["color"])
+        ax_cards.add_patch(
+            patches.FancyBboxPatch(
+                (x, y),
+                w,
+                h,
+                boxstyle="round,pad=0.018,rounding_size=0.025",
+                facecolor="#ffffff",
+                edgecolor=GRID,
+                lw=1.0,
+            )
+        )
+        ax_cards.add_patch(patches.Rectangle((x, y + h - 0.065), w, 0.065, facecolor=color, edgecolor="none"))
+        ax_cards.text(x + 0.026, y + h - 0.14, str(card["task"]), fontsize=11.2, weight="bold", color=INK, va="top")
+        ax_cards.text(x + 0.026, y + h - 0.29, str(card["metric"]), fontsize=9.4, color=MUTED, va="top")
+        ax_cards.text(x + 0.026, y + 0.21, str(card["value"]), fontsize=17.0, weight="bold", color=color, va="bottom")
+        seed_count = card.get("seed_count")
+        seed_text = f"{int(seed_count)} seeds" if pd.notna(seed_count) else "seed count NA"
+        ax_cards.text(
+            x + w - 0.026,
+            y + 0.22,
+            _label(font, f"{card['protocol']} / {seed_text}", f"{card['protocol']} / {seed_text}"),
+            fontsize=8.5,
+            color=MUTED,
+            ha="right",
+            va="bottom",
+        )
+    if full_candidate_note:
+        ax_cards.text(
+            0.02,
+            0.03,
+            _label(
+                font,
+                "注：CSV 中“完整任务输入”和“完整方案”同属 chronaris_opt / full_safe 基线，本图只保留一次基线读数；组件差异看下方相对变化热图。",
+                "Note: full task input and full model are the same chronaris_opt / full_safe baseline; only one baseline readout is kept here.",
+            ),
+            fontsize=8.8,
+            color=MUTED,
+            va="bottom",
+        )
+    ax_heat = fig.add_subplot(grid[1])
     _draw_component_overview_heatmap(ax_heat, frame, font)
-    fig.suptitle(_label(font, "组件消融总览：任务绝对指标与相对变化", "Component ablation overview"), fontsize=15, weight="bold", color=INK)
-    fig.subplots_adjust(top=0.88, bottom=0.13, left=0.08, right=0.94, hspace=0.52, wspace=0.28)
+    fig.suptitle(_label(font, "组件消融总览：完整基线与相对变化", "Component ablation overview"), fontsize=15, weight="bold", color=INK)
+    fig.subplots_adjust(top=0.88, bottom=0.13, left=0.08, right=0.94, hspace=0.26)
     fig.savefig(path, dpi=300, bbox_inches="tight")
     plt.close(fig)
     return _figure_entry(
@@ -690,7 +742,7 @@ def _plot_private_component(path: Path, sources, font, table_paths):
         table_path=table_paths["chronaris_opt_component_ablation"],
         metric_definition="Task absolute metrics are shown on native scales; relative component changes are centered at zero with positive values meaning worse performance after removal.",
         recommended_placement="supporting_overview",
-        replaces_problem="mixed-unit dense component bars are replaced by task absolute metrics and a compact signed relative-change overview.",
+        replaces_problem="redundant full-candidate bars are replaced by baseline metric cards and a compact signed relative-change overview.",
         min_font_pt=8.8,
     )
 
