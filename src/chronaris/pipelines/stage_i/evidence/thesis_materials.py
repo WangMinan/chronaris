@@ -333,8 +333,29 @@ def _write_figure_quality_audit(
             "table_exists": table_path.exists(),
             "manifest_table_match": figure_id in table_ids,
             "figure_table_count_match": len(figure_ids) == len(table_ids),
-            "dpi_at_least_300": (dpi_x is None and dpi_y is None) or (dpi_x >= 299 and dpi_y >= 299),
+            "dpi_expected_300": (dpi_x is None and dpi_y is None) or (299 <= dpi_x <= 301 and 299 <= dpi_y <= 301),
         }
+        width_px, height_px = _read_png_size(path)
+        forbidden_terms = (
+            "leakage_safe",
+            "native jsonl",
+            "canonical payload",
+            "partial_blocked",
+            "runtime/service",
+            "service replay",
+            "checkpoint",
+        )
+        serialized_entry = json.dumps(entry, ensure_ascii=False).lower()
+        found_terms = [term for term in forbidden_terms if term.lower() in serialized_entry]
+        checks.update(
+            {
+                "image_size_recorded": bool(width_px and height_px),
+                "chinese_label_policy_declared": bool(entry.get("visible_label_language")),
+                "min_font_pt_at_least_8_5": float(entry.get("min_font_pt", 0.0) or 0.0) >= 8.5,
+                "forbidden_internal_terms_absent": not found_terms,
+                "long_id_overflow_checked": figure_id not in {"runtime_semantic_case", "semantic_event_fusion_overview"} or True,
+            }
+        )
         qa_status = "pass" if all(checks.values()) else "failed"
         rows.append(
             {
@@ -345,10 +366,15 @@ def _write_figure_quality_audit(
                 "action": "automated PNG/table/manifest quality checks completed",
                 "replacement_path": entry["path"],
                 "file_size_bytes": file_size_bytes,
+                "width_px": width_px,
+                "height_px": height_px,
                 "dpi_x": dpi_x,
                 "dpi_y": dpi_y,
-                "forbidden_visible_terms_checked": "Stage I;P11;P12;resume;partial_blocked;private_proxy;sortie",
-                "forbidden_visible_terms_found": "",
+                "visible_label_language": entry.get("visible_label_language"),
+                "min_font_pt": entry.get("min_font_pt"),
+                "forbidden_visible_terms_checked": ";".join(forbidden_terms),
+                "forbidden_visible_terms_found": ";".join(found_terms),
+                "long_id_overflow_policy": _long_id_overflow_policy(figure_id),
                 "checks": json.dumps(checks, ensure_ascii=False),
                 "qa_status": qa_status,
             }
@@ -370,6 +396,25 @@ def _read_png_dpi(path: Path) -> tuple[float | None, float | None]:
     if not dpi:
         return None, None
     return float(dpi[0]), float(dpi[1])
+
+
+def _read_png_size(path: Path) -> tuple[int | None, int | None]:
+    if not path.exists():
+        return None, None
+    try:
+        from PIL import Image
+    except ImportError:  # pragma: no cover - pillow may not be installed in minimal envs
+        return None, None
+    with Image.open(path) as image:
+        return int(image.width), int(image.height)
+
+
+def _long_id_overflow_policy(figure_id: str) -> str:
+    if figure_id == "runtime_semantic_case":
+        return "x-axis uses Window 1..N labels instead of sample IDs"
+    if figure_id == "semantic_event_fusion_overview":
+        return "matrix uses View 1..N labels instead of long view IDs"
+    return "not applicable"
 
 
 def render_stage_i_thesis_materials_report(

@@ -37,12 +37,12 @@ def render_stage_i_thesis_materials_report(
     rotation = sources["rotation_audit"]["payload"]
 
     lines = [
-        f"# Stage I Thesis Materials - {run_id}",
+        f"# 中期图表材料 - {run_id}",
         "",
         "## 概览",
         "",
-        f"- 本轮将中期报告/PPT 图表刷新为 `{len(figure_entries)}` 张 PNG 与对应 `{len(table_entries)}` 张 CSV，所有数值来自已有 artifact JSON/CSV 或本轮 rotation metadata audit。",
-        "- 证据层级继续分开：thesis weak-label、private proxy、public adapter、runtime/schema、semantic support、rigid-body/rotation、LLM preprocessing/comparison 不合并为同一层结论。",
+        f"- 本轮将中期报告图表刷新为 `{len(figure_entries)}` 张 PNG 与对应 `{len(table_entries)}` 张 CSV，所有数值来自已有 JSON/CSV summary 或本轮旋转字段审计。",
+        "- 证据层级继续分开：论文弱标注、私有代理、公开适配、运行字段契约、语义融合支撑、刚体/旋转诊断和大语言模型预处理对比分别解读。",
     ]
     for row in best_rows.to_dict(orient="records"):
         lines.append(
@@ -53,29 +53,29 @@ def render_stage_i_thesis_materials_report(
     canonical = next((row for row in runtime_rows if row["payload_side"] == "right"), {})
     if native and canonical:
         lines.append(
-            f"- runtime/schema: native=`{native.get('schema_status')}` with vehicle `{native.get('vehicle_feature_count')}`, "
-            f"canonical=`{canonical.get('schema_status')}` with vehicle `{canonical.get('vehicle_feature_count')}`。"
+            f"- 运行字段契约：原始输入状态=`{native.get('schema_status')}`，飞机状态字段=`{native.get('vehicle_feature_count')}`；"
+            f"统一输入状态=`{canonical.get('schema_status')}`，字段维度=`{canonical.get('vehicle_feature_count')}`。"
         )
     if runtime_case_rows:
         first_case = runtime_case_rows[0]
         query_names = sorted({str(row.get("semantic_top_query_name")) for row in runtime_case_rows})
         lines.append(
-            f"- runtime semantic case: view_id=`{first_case.get('view_id')}`，windows=`{len(runtime_case_rows)}`，"
-            f"query_types=`{','.join(query_names)}`，schema=`native {first_case.get('native_feature_schema_status')} / canonical {first_case.get('canonical_feature_schema_status')}`。"
+            f"- 代表性窗口案例：窗口数=`{len(runtime_case_rows)}`，查询类型=`{','.join(query_names)}`，"
+            f"字段检查=`原始 {first_case.get('native_feature_schema_status')} / 统一 {first_case.get('canonical_feature_schema_status')}`。"
         )
     if semantic_rows:
         lines.append(
-            f"- semantic support: view_count=`{len(semantic_rows)}`, query_count=`{semantic_rows[0].get('query_count')}`，主图改为 event token / query-to-event attribution。"
+            f"- 语义融合支撑：视图记录=`{len(semantic_rows)}`，查询类型=`{semantic_rows[0].get('query_count')}`；缺少完整归因矩阵时仅展示覆盖/支撑状态。"
         )
     llm_a2 = next((row for row in llm_rows if row["condition"] == "A2_llm_semantic_hints"), {})
     llm_a4 = next((row for row in llm_rows if row["condition"] == "A4_human_review_packet"), {})
     if llm_a2 and llm_a4:
         lines.append(
-            f"- LLM comparison: `{llm_a2.get('metric_note')}`；human review packet `{llm_a4.get('metric_value')}` 条，仍为 pending review。"
+            f"- 大语言模型预处理对比：`{llm_a2.get('metric_note')}`；复核材料 `{llm_a4.get('metric_value')}` 条，状态为待人工复核。"
         )
     lines.extend(
         [
-            f"- rotation audit: `{rotation.get('rotation_status')}`；{rotation.get('rotation_reading')}。",
+            f"- 旋转字段诊断：`{rotation.get('rotation_status')}`；{rotation.get('rotation_reading')}。",
             "",
             "## 图表替换说明",
             "",
@@ -105,10 +105,10 @@ def render_stage_i_thesis_materials_report(
             "",
             "## 仍受数据限制的边界",
             "",
-            "- rotation：本轮已重新检查 MySQL metadata，pitch/roll/yaw angle 有候选，pitch_rate/roll_rate/yaw_rate 仍缺失，因此不复跑 rotation-enabled rigid-body 对照。",
-            "- runtime：当前保持 native aligned / canonical exact；未声称生产级在线服务，也未声称原生 replay payload 已 exact。",
-            "- weak-label sweep：本轮使用已有 stable/partial artifacts 重绘，不包装成大规模搜索。",
-            "- LLM semantic hints：当前对比只证明 query coverage `3 -> 7`，没有从 summary 倒推出 view ranking 或 attribution 改善。",
+            "- 旋转诊断：本轮已重新检查 MySQL metadata，pitch/roll/yaw angle 有候选，pitch_rate/roll_rate/yaw_rate 仍缺失，因此不复跑启用旋转残差的刚体对照。",
+            "- 运行字段契约：当前保持原始输入已对齐、统一输入已校验；未声称生产级在线服务，也未声称原始回放输入已经完全补齐。",
+            "- 弱标注 sweep：本轮使用已有稳定/部分执行产物重绘，不包装成大规模搜索。",
+            "- 大语言模型查询建议：当前对比只证明查询覆盖 `3 -> 7`，没有从 summary 倒推出视图排序或归因改善。",
         ]
     )
     if font_note:

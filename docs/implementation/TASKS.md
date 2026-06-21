@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-06-19
+更新时间：2026-06-21
 
 ## 文档定位
 
@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 历史基线 `main` 已同步推送到 `origin/main`；本轮 leakage-safe r2 与 thesis materials r5 仍是本地新增工作，提交/推送后进入远端历史。
+- 历史基线 `main` 已同步推送到 `origin/main`；本轮 P26 thesis materials r6 report figure polish 仍是本地新增工作，提交/推送后进入远端历史。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -86,7 +86,7 @@
 6. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 7. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
 8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
-9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理。
+9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理，r5 已由 r6 报告重绘图包接管。
 
 验收：
 
@@ -648,10 +648,10 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 首轮图包已被 P22/r3、P23/r4 和 P25/r5 逐步替代，并已从 docs 产物目录清理。
+- 首轮图包已被 P22/r3、P23/r4、P25/r5 和 P26/r6 逐步替代，并已从 docs 产物目录清理。
 - 当前中期图表入口只使用：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md`
 - P20/P21 LLM preprocessing 仍复用的 runtime case 输入表保留在：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 
@@ -811,9 +811,9 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 本轮结果：
 
-- 刷新后的 thesis materials 已被 P25/r5 图包接管为当前入口：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
+- 刷新后的 thesis materials 曾被 P25/r5 图包接管，当前入口已由 P26/r6 接管：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md`
 - 旧 r2-p18 图、manifest 和报告已清理；仅保留 LLM preprocessing 历史输入表：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
 - 当前 `weak_label_sweep_ablation.png/csv` 已增加：
@@ -822,7 +822,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `blocked_at_run_index`
   - `blocked_attempt_log_path_count`
   - partial resume/blocker 注记
-- 当前 `runtime_semantic_case.png/csv` 已由 r5 重新纳入 thesis materials 生成链路，并体现：
+- 当前 `runtime_semantic_case.png/csv` 已由 r6 重新纳入 thesis materials 生成链路，并体现：
   - `native_feature_schema_status=aligned`
   - `canonical_feature_schema_status=exact`
   - `expected_vehicle_feature_count=1930`
@@ -1002,7 +1002,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 ## 已完成 P22：中期 thesis materials r3 图表质量刷新
 
-目标：修复 P16/P18 thesis materials 中低信息或易误读图表，先生成 r3 图表包验证新版构图，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚；该图包后续由 r4 接管，当前已由 r5 接管并清理。
+目标：修复 P16/P18 thesis materials 中低信息或易误读图表，先生成 r3 图表包验证新版构图，同时保持 evidence layer、runtime schema、rotation、LLM 边界清楚；该图包后续由 r4/r5 接管，当前已由 P26/r6 接管。
 
 结果：
 
@@ -1013,7 +1013,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `src/chronaris/pipelines/stage_i/evidence/thesis_materials_report.py`
   - `scripts/stage_i/evidence/build_thesis_materials.py`
   - `tests/test_stage_i_thesis_materials.py`
-- r3/r4 run 已由 r5 接管并从 docs 产物目录清理，当前 thesis materials 入口见 P25 的 `20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh`。
+- r3/r4 run 已由 r5 接管并从 docs 产物目录清理；当前 thesis materials 入口见 P26 的 `20260621T-stage-i-thesis-materials-r6-report-figure-polish`。
 - 本轮输出 `8` 张 PNG 与 `8` 张 CSV：
   - `evidence_layer_overview`：从 artifact present=1 改为证据层级矩阵。
   - `runtime_payload_schema`：改为 native replay payload 与 canonical service payload 字段契约对照。
@@ -1046,22 +1046,21 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 结果：
 
-- r4 run 已完成验证，随后被 P25/r5 接管并从 docs 产物目录清理。
-- 当前 run：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
-- r4 输出过 `9` 张 PNG 与 `9` 张 CSV；当前 r5 输出 `11` 张 PNG 与 `11` 张 CSV，并保留修复后的 `runtime_semantic_case.png/csv`。
+- r4 run 已完成验证，随后被 P25/r5 接管并从 docs 产物目录清理；当前 run 见 P26/r6：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md`
+- r4 输出过 `9` 张 PNG 与 `9` 张 CSV；r5 输出 `11` 张 PNG 与 `11` 张 CSV；当前 r6 输出 `12` 张 PNG 与 `12` 张 CSV，并保留修复后的 `runtime_semantic_case.png/csv`。
 - `runtime_semantic_case` 图改为：
   - 顶部 case card：view_id、展示窗口数、native/canonical 状态、vehicle 字段数、missing groups。
   - 中部 lollipop/dot plot：按窗口展示 `semantic_top_event_attribution`，只标注变化点和最高值，并按 `semantic_top_query_name` 着色。
   - 侧边 query 类型分布。
   - 底部 risk/workload/event score 范围 chip 与 schema 状态摘要。
 - 当前 `figure_manifest.json` 与 `table_manifest.json` 均包含 `runtime_semantic_case`。
-- 当前 `figure_quality_audit.csv` 记录 11 张当前图的 issue/action/replacement/qa_status。
+- 当前 `figure_quality_audit.csv` 记录 12 张当前图的 issue/action/replacement/qa_status、宽高、最小字号和内部词检查。
 
 边界：
 
-- r2-p18 `runtime_semantic_case.csv` 继续保留为 P20/P21 LLM preprocessing 历史输入表；r5 只是把该表作为当前中期图表生成输入，不改写历史 LLM summary。
+- r2-p18 `runtime_semantic_case.csv` 继续保留为 P20/P21 LLM preprocessing 历史输入表；r6 只是把该表作为当前中期图表生成输入，不改写历史 LLM summary。
 - runtime 仍写成 `native aligned / canonical exact`；不声称原生 replay payload 已 exact，也不声称生产级在线服务。
 - LLM 仍只作为 preprocessing context / whitelisted hints / runtime explanation / pending review packet，不写成人工真值或核心因果证据。
 
@@ -1136,6 +1135,37 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `semantic_event_fusion_overview` 没有伪造完整 view-query 归因热力图；当前源产物缺少完整“数据视图 × 查询类型”矩阵时，图中显示缺源需求。
 - `runtime_semantic_case` 只展示当前真实覆盖的风险与工作负荷查询，不生成不存在的事件复盘查询。
 - `chronaris_opt_component_ablation` 作为兼容总览图保留；正式组件消融推荐使用 `model_backbone_ablation.png` 与 `task_adapter_ablation.png`。
+
+## 已完成 P26：thesis materials r6 report figure polish
+
+目标：在 r5 基础上按中期报告 A4 落版可读性重绘 Chronaris 侧图件，不处理本地论文工作区的 imagegen 框图，不覆盖旧 r5 图包。
+
+结果：
+
+- 新 run：
+  - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/`
+  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md`
+- 当前输出 `12` 张 PNG 与 `12` 张 CSV：
+  - `evidence_layer_overview`
+  - `runtime_payload_schema`
+  - `runtime_service_flow`
+  - `runtime_semantic_case`
+  - `rigid_body_rotation_audit`
+  - `weak_label_sweep_ablation`
+  - `chronaris_opt_component_ablation`
+  - `model_backbone_ablation`
+  - `task_adapter_ablation`
+  - `public_transfer_boundary`
+  - `semantic_event_fusion_overview`
+  - `llm_comparison_a0_a4`
+- `figure_quality_audit.csv` 已确认 12 张 PNG 均存在、非空、DPI 约 `300`，并记录宽高、中文标签策略、最小字号、内部词检查和长 ID 处理策略，所有 `qa_status=pass`。
+- `figure_manifest.json` 不再写入 `leakage_safe` 路径串；消融图图内与 manifest 使用“严格评价协议/严格评价”口径，源产物路径仍保留在 CSV/summary 层用于追溯。
+
+边界：
+
+- `semantic_event_fusion_overview` 仍不伪造完整视图 × 查询类型归因数值；当前缺完整归因矩阵时只画覆盖/支撑状态。
+- `weak_label_sweep_ablation` 未补不存在的风险阈值/负荷阈值网格；图中只展示已落盘的滞后窗口趋势与参数组合覆盖。
+- `runtime_service_flow` 基于现有 runtime service summary 与 schema contract 重绘；不依赖已从 docs/LFS 清理的原始 sample JSONL。
 
 ## 中期前边界管理
 

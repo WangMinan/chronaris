@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-06-19
+更新时间：2026-06-21
 
 ## 1. 目录定位
 
@@ -31,7 +31,7 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 当前中期主入口：
 
 - [stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
-- [stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md)
+- [stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
 - [stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
 - [../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
 - [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
@@ -48,7 +48,7 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - Stage I evidence runner r2：[stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md)
 - Stage I bounded weak-label sweep r2：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
 - Stage I live weak-label stable resume：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md)
-- Stage I thesis materials r5 leakage-safe refresh：[stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md](stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md)
+- Stage I thesis materials r6 report figure polish：[stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
 - Stage I leakage-safe private proxy ablation r2：[stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
 - Stage I public mainline：[stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
 - Stage I support ablation：[stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md](stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
@@ -73,8 +73,8 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - P21 执行 prompt（历史追溯）：[../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md](../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md)
 - 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
-- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json](assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json)
-- 当前 thesis figure quality audit：[assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_quality_audit.csv](assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_quality_audit.csv)
+- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json](assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json)
+- 当前 thesis figure quality audit：[assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv](assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv)
 - 当前 leakage-safe private ablation summary：[assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json](assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json)
 - 当前 runtime service smoke summary：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json)
 - 当前 live weak-label stable resume summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json)
@@ -91,7 +91,7 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - 引用论文能力要求先看 [../requirements/SPEC.md](../requirements/SPEC.md)。
 - 历史报告可以引用，但必须说明是历史快照、公开适配器证据、私有代理证据还是 thesis weak-label evidence。
 - 2026-06-19 起，若历史报告提到已清理的 raw JSONL / NPZ / prepared bundle，应按 [cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md) 处理：引用保留的 summary/report，复跑时重新生成 raw payload。
-- 2026-06-19 深度清理后，P20 LLM preprocessing r1、P11 live r2、rigid-body r1、runtime replay r1、semantic support r1、runtime service smoke r1 和 thesis materials r4 仅保留在 git 历史中；当前文档入口统一使用本索引列出的 r3/r5/r2-contract 稳定产物。
+- 2026-06-19 深度清理后，P20 LLM preprocessing r1、P11 live r2、rigid-body r1、runtime replay r1、semantic support r1、runtime service smoke r1 和 thesis materials r4 仅保留在 git 历史中；当前文档入口统一使用本索引列出的 r3/r6/r2-contract 稳定产物。
 - P20 DeepSeek 已生成小样本真实切片 run 产物：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`。引用时必须写成 LLM preprocessing context / rule review / semantic hints / runtime explanation / bounded slicing，不得写成人工真值、核心因果证据或原始全量高频时序外发。
 - P21 LLM comparison 已生成 A0-A4 对比产物：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/`、`docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md` 和 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。引用时必须保留 `label_unchanged=true`、semantic hints whitelist、runtime explanation bounded subset、`human_review_completed=false` 四个边界。
 - `stage_i_private_component_ablation` 的历史满分结果与 `stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/` 是不同协议。论文实验章节优先引用 `protocol=leakage_safe_v1` 的 r2 消融；历史结果只能作为 private proxy 历史对照，不得与防泄漏结果混成同一柱状结论。
