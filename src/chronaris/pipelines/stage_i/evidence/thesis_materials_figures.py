@@ -104,14 +104,81 @@ def write_thesis_figures(
 def _plot_evidence_layer_overview(path: Path, sources, font, table_paths):
     frame = pd.DataFrame(build_evidence_layer_rows(sources)).sort_values("display_order")
     plt, patches = _import_matplotlib(font)
-    fig, ax = plt.subplots(figsize=(13.8, 7.8))
+    fig, ax = plt.subplots(figsize=(14.6, 8.8))
     ax.set_axis_off()
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 6.4)
-    card_w = 2.72
-    card_h = 2.05
-    x_positions = [0.35, 3.25, 6.15, 9.05]
-    y_positions = [3.55, 1.18]
+    ax.set_xlim(0, 12.8)
+    ax.set_ylim(0, 7.35)
+    card_w = 2.82
+    card_h = 2.58
+    x_positions = [0.35, 3.45, 6.55, 9.65]
+    y_positions = [4.25, 1.35]
+
+    def draw_card(
+        *,
+        x: float,
+        y: float,
+        headline: str,
+        quantity: str,
+        role: str,
+        color: str,
+        facecolor: str = "#ffffff",
+        linestyle: str = "-",
+    ) -> None:
+        ax.add_patch(
+            patches.FancyBboxPatch(
+                (x, y),
+                card_w,
+                card_h,
+                boxstyle="round,pad=0.055,rounding_size=0.06",
+                facecolor=facecolor,
+                edgecolor=GRID,
+                lw=1.15,
+                linestyle=linestyle,
+            )
+        )
+        ax.add_patch(
+            patches.Rectangle((x, y + card_h - 0.2), card_w, 0.2, facecolor=color, edgecolor="none")
+        )
+        ax.text(
+            x + 0.18,
+            y + card_h - 0.34,
+            _wrap_text_limited(headline, 12, 2),
+            fontsize=11.2,
+            weight="bold",
+            color=INK,
+            va="top",
+            linespacing=1.1,
+        )
+        ax.text(
+            x + 0.18,
+            y + card_h - 1.16,
+            _wrap_text_limited(quantity, 14, 2),
+            fontsize=10.0,
+            weight="bold",
+            color=color,
+            va="top",
+            linespacing=1.08,
+        )
+        ax.add_patch(
+            patches.FancyBboxPatch(
+                (x + 0.14, y + 0.18),
+                card_w - 0.28,
+                0.78,
+                boxstyle="round,pad=0.035,rounding_size=0.035",
+                facecolor="#f8fafc",
+                edgecolor="none",
+            )
+        )
+        ax.text(
+            x + 0.2,
+            y + 0.82,
+            _wrap_text_limited(role, 14, 3),
+            fontsize=8.8,
+            color=MUTED,
+            va="top",
+            linespacing=1.12,
+        )
+
     rows = frame.to_dict(orient="records")
     for index, row in enumerate(rows):
         row_idx, col_idx = divmod(index, 4)
@@ -119,70 +186,28 @@ def _plot_evidence_layer_overview(path: Path, sources, font, table_paths):
         y = y_positions[row_idx]
         color = LAYER_COLORS.get(str(row["evidence_layer"]), "#7a8793")
         headline, quantity, role = _evidence_card_text(row, font)
-        ax.add_patch(
-            patches.FancyBboxPatch(
-                (x, y),
-                card_w,
-                card_h,
-                boxstyle="round,pad=0.055,rounding_size=0.06",
-                facecolor="#ffffff",
-                edgecolor=GRID,
-                lw=1.15,
-            )
-        )
-        ax.add_patch(
-            patches.Rectangle((x, y + card_h - 0.22), card_w, 0.22, facecolor=color, edgecolor="none")
-        )
-        ax.text(x + 0.18, y + card_h - 0.54, headline, fontsize=12.0, weight="bold", color=INK, va="center")
-        ax.text(
-            x + 0.18,
-            y + card_h - 1.08,
-            _wrap_text(quantity, 18),
-            fontsize=11.2,
-            weight="bold",
-            color=color,
-            va="center",
-            linespacing=1.12,
-        )
-        ax.text(
-            x + 0.18,
-            y + 0.28,
-            _wrap_text(role, 22),
-            fontsize=9.4,
-            color=MUTED,
-            va="bottom",
-            linespacing=1.18,
-        )
-    x = x_positions[3]
-    y = y_positions[1]
-    ax.add_patch(
-        patches.FancyBboxPatch(
-            (x, y),
-            card_w,
-            card_h,
-            boxstyle="round,pad=0.055,rounding_size=0.06",
-            facecolor=PALE,
-            edgecolor=GRID,
-            lw=1.0,
-            linestyle="--",
-        )
-    )
-    ax.text(x + 0.18, y + 1.48, _label(font, "证据边界", "Evidence boundary"), fontsize=12.0, weight="bold", color=INK)
-    ax.text(
-        x + 0.18,
-        y + 0.72,
-        _label(font, "弱标注、私有代理、公开适配、运行契约、语义支撑与预处理输出分别解读。", "Evidence layers are interpreted separately."),
-        fontsize=9.5,
-        color=MUTED,
-        va="center",
-        linespacing=1.18,
+        draw_card(x=x, y=y, headline=headline, quantity=quantity, role=role, color=color)
+
+    draw_card(
+        x=x_positions[3],
+        y=y_positions[1],
+        headline=_label(font, "证据边界", "Evidence boundary"),
+        quantity=_label(font, "分层解读\n不合并结论", "Separate layers\nNo merged conclusion"),
+        role=_label(
+            font,
+            "弱标注、代理、适配、契约、语义与预处理输出分别解读。",
+            "Weak labels, proxies, adapters, contracts, semantics, and preprocessing stay separate.",
+        ),
+        color="#94a3b8",
+        facecolor=PALE,
+        linestyle="--",
     )
     ax.set_title(_label(font, "中期报告证据层总览", "Midterm Evidence Layer Overview"), fontsize=16, weight="bold", color=INK, pad=14)
     ax.text(
-        0.15,
-        0.38,
+        0.35,
+        0.55,
         _label(font, "所有数值来自现有结构化产物；不同证据层不合并为同一结论。", "All values are parsed from existing artifacts; evidence layers remain separate."),
-        fontsize=9.5,
+        fontsize=9.2,
         color=MUTED,
     )
     fig.tight_layout()
@@ -197,7 +222,7 @@ def _plot_evidence_layer_overview(path: Path, sources, font, table_paths):
         metric_definition="Evidence-layer card overview with source-derived counts and report roles.",
         recommended_placement="appendix_or_supporting",
         replaces_problem="evidence_layer_overview is redrawn as a 2x4 report-readable card overview.",
-        min_font_pt=9.4,
+        min_font_pt=8.8,
     )
 
 
@@ -1150,16 +1175,43 @@ def _evidence_card_text(row: Mapping[str, object], font: PlotFontSelection) -> t
     layer = str(row.get("evidence_layer") or "")
     headline = _label(font, str(row.get("layer_title_cn")), str(row.get("layer_title")))
     if layer == "thesis_weak_label":
-        quantity = f"{row.get('primary_metric_value')}个窗口、{row.get('secondary_metric_value')}条任务记录已形成联合训练闭环"
+        quantity = f"{row.get('primary_metric_value')}个窗口\n{row.get('secondary_metric_value')}条任务记录"
     elif layer == "runtime_schema":
-        quantity = f"原始回放飞机状态字段{row.get('secondary_metric_value')}"
+        quantity = f"{row.get('primary_metric_value')}个回放窗口\n{row.get('secondary_metric_value')}个字段差异已校验"
     elif layer == "llm_preprocessing":
         review_count = _extract_first_int(row.get("key_status"))
-        quantity = f"{review_count}条待人工判定的结构化复核材料" if review_count is not None else str(row.get("key_status"))
+        quantity = f"{review_count}条人工复核材料\nLLM仅作预处理" if review_count is not None else str(row.get("key_status"))
     else:
-        quantity = f"{_metric_name_cn(row.get('primary_metric_name'))}：{row.get('primary_metric_value')}；{_metric_name_cn(row.get('secondary_metric_name'))}：{row.get('secondary_metric_value')}"
-    role = str(row.get("boundary_cn") or row.get("key_status") or "")
+        quantity = (
+            f"{_metric_name_cn(row.get('primary_metric_name'))}：{row.get('primary_metric_value')}\n"
+            f"{_metric_name_cn(row.get('secondary_metric_name'))}：{row.get('secondary_metric_value')}"
+        )
+    role = _evidence_card_role(row, font)
     return headline, quantity, role
+
+
+def _evidence_card_role(row: Mapping[str, object], font: PlotFontSelection) -> str:
+    layer = str(row.get("evidence_layer") or "")
+    fallback = str(row.get("boundary_cn") or row.get("key_status") or "")
+    compact_cn = {
+        "thesis_weak_label": "论文任务原型与参数比较；后续接专家复核。",
+        "private_proxy": "定位模型骨干、任务适配层和严格评价协议影响。",
+        "public_adapter_calibration": "支撑公开数据接口、校准基线和外部任务对照。",
+        "runtime_schema": "原始回放已对齐；统一契约输入通过校验。",
+        "semantic_support": "展示事件表示、语义查询和归因对齐支撑。",
+        "rigid_body": "平移/垂向已入训；旋转保留字段诊断。",
+        "llm_preprocessing": "字段语义、查询建议、案例解释与复核材料。",
+    }
+    compact_ascii = {
+        "thesis_weak_label": "Prototype and parameter evidence; expert review remains separate.",
+        "private_proxy": "Locates backbone, task input, and strict protocol effects.",
+        "public_adapter_calibration": "Supports public adapters, calibration baselines, and external task checks.",
+        "runtime_schema": "Replay inputs are aligned; canonical contract passes validation.",
+        "semantic_support": "Shows event representation, semantic query, and attribution support.",
+        "rigid_body": "Translation and vertical residuals are active; rotation remains diagnostic.",
+        "llm_preprocessing": "Field semantics, query advice, case explanation, and review packets.",
+    }
+    return _label(font, compact_cn.get(layer, fallback), compact_ascii.get(layer, fallback))
 
 
 def _extract_first_int(value: object) -> int | None:
@@ -1570,6 +1622,33 @@ def _wrap_text(text: str, width: int) -> str:
             wrap(value, width=width, break_long_words=False, break_on_hyphens=False)[:3]
         )
     return "\n".join(value[index : index + width] for index in range(0, min(len(value), width * 3), width))
+
+
+def _wrap_text_limited(text: str, width: int, max_lines: int) -> str:
+    value = str(text or "")
+    lines: list[str] = []
+    for part in value.splitlines() or [""]:
+        if not part:
+            lines.append("")
+        elif " " in part:
+            lines.extend(wrap(part, width=width, break_long_words=False, break_on_hyphens=False))
+        else:
+            lines.extend(part[index : index + width] for index in range(0, len(part), width))
+    if len(lines) <= max_lines:
+        return "\n".join(lines)
+    clipped = lines[:max_lines]
+    clipped[-1] = _truncate_text_line(clipped[-1], width)
+    return "\n".join(clipped)
+
+
+def _truncate_text_line(text: str, width: int) -> str:
+    if len(text) <= width:
+        return text
+    if width <= 3:
+        return "." * width
+    if " " in text:
+        return shorten(text, width=width, placeholder="...")
+    return f"{text[: width - 3]}..."
 
 
 def _variant_color(role: str) -> str:
