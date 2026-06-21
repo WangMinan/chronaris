@@ -3,15 +3,15 @@
   "stage_name": "stage_i_thesis_materials",
   "run_id": "20260621T-stage-i-thesis-materials-r6-report-figure-polish",
   "last_event": "finished",
-  "updated_at_utc": "2026-06-21T06:27:42.465254Z",
+  "updated_at_utc": "2026-06-21T06:51:58.168927Z",
   "events": [
     {
-      "timestamp_utc": "2026-06-21T06:27:38.374580Z",
+      "timestamp_utc": "2026-06-21T06:51:54.137728Z",
       "event": "start",
       "artifact_root": "docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish"
     },
     {
-      "timestamp_utc": "2026-06-21T06:27:38.383689Z",
+      "timestamp_utc": "2026-06-21T06:51:54.153835Z",
       "event": "sources_loaded",
       "source_count": 17,
       "optional_sources": [
@@ -26,23 +26,23 @@
       ]
     },
     {
-      "timestamp_utc": "2026-06-21T06:27:38.433952Z",
+      "timestamp_utc": "2026-06-21T06:51:54.196731Z",
       "event": "font_selected",
       "ascii_only": false,
       "font_family": "WenQuanYi Zen Hei"
     },
     {
-      "timestamp_utc": "2026-06-21T06:27:38.450189Z",
+      "timestamp_utc": "2026-06-21T06:51:54.212631Z",
       "event": "tables_written",
       "table_count": 12
     },
     {
-      "timestamp_utc": "2026-06-21T06:27:42.457090Z",
+      "timestamp_utc": "2026-06-21T06:51:58.137233Z",
       "event": "figures_written",
       "figure_count": 12
     },
     {
-      "timestamp_utc": "2026-06-21T06:27:42.465254Z",
+      "timestamp_utc": "2026-06-21T06:51:58.168927Z",
       "event": "finished",
       "table_manifest_path": "docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/table_manifest.json",
       "figure_manifest_path": "docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json",

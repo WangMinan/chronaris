@@ -19,7 +19,7 @@
       "evidence_layer": "cross_layer_index",
       "table_path": "docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/evidence_layer_overview.csv",
       "visible_label_language": "zh_cn_or_report_abbrev",
-      "min_font_pt": 9.4,
+      "min_font_pt": 8.8,
       "metric_definition": "Evidence-layer card overview with source-derived counts and report roles.",
       "recommended_placement": "appendix_or_supporting",
       "replaces_problem": "evidence_layer_overview is redrawn as a 2x4 report-readable card overview."
