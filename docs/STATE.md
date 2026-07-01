@@ -114,10 +114,15 @@
       - P27 comparison 产物：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/model_comparison_wide.csv`
       - P27 报告：`docs/artifacts/stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`
       - P27 manifest：`p28_refresh_included=true`、`missing_metrics=[]`，图件覆盖 NASA macro-F1/BA、UAB RMSE、delta heatmap 和 W/T/L summary。
+    - `P28-GPUOPT chronaris_public_fusion training efficiency profiling` 已完成：
+      - 产物：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_summary.json`
+      - 报告：`docs/artifacts/stage_i/stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md`
+      - 当前结果：代表性 fold profiling 中 tensor cache `auto` + auto batch `2048` + AMP `bf16` 把吞吐从 `559.52` 提升到 `5090.93` samples/sec，speedup `9.10x`；显存峰值从 `0.276 GB` 提升到 `3.913 GB`，nvidia-smi GPU utilization 快照从 `11.67%` 到 `15.83%`。
+      - 边界：本轮未重跑完整 P28 full LOSO，不替代 P28 confirmed metrics；`gpu_optimization/resume_command.txt` 只用于恢复 GPUOPT profiling。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，当前 HEAD 为 `59851e8 [DOC]update component pic`；P26 thesis materials r6 已在当前工作树中作为最新图表入口。本轮深度清理删除 r5 图包/报告并刷新 docs，提交前以本文件和 `docs/artifacts/cleanup/20260621-deep-cleanup.md` 列出的本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；P28-GPUOPT 效率 profiling 已在当前工作树中作为 P28 后续训练效率证据入口。本轮不改变 P27/P28 confirmed metrics，提交前以本地 diff 为准。
 - 本轮 2026-07-01 继续清理 archive-only 早期 public 产物和本地 Python 编译缓存；提交前以 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md` 为删除边界。LFS 历史审计显示 `docs/**` 历史 LFS objects 约 `165 MB`，未执行 git 历史重写。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
@@ -162,6 +167,7 @@
   - 最新 P20 DeepSeek LLM preprocessing package：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
   - 最新 P21 LLM preprocessing comparison package：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json`
   - 最新 public fusion refresh package：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json`
+  - 最新 public fusion GPU optimization package：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_summary.json`
   - 最新 public model comparison package：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json`
 
 ## 当前主线事实

@@ -17,6 +17,7 @@
 - LLM preprocessing comparison r1：`stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md`
 - Public model comparison r1：`stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`
 - Public fusion refresh r1：`stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md`
+- Public fusion GPU optimization r1：`stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md`
 - 中期事实清单：`../../midterm/midterm-fact-sheet-2026-06-13.md`
 - 中期边界说明：`../../midterm/boundaries-and-risks-2026-06-13.md`
 - P21 中期结果摘要：`../../midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
@@ -40,6 +41,13 @@
   - CSV/JSON：`screen_leaderboard.csv`、`confirm_leaderboard.csv`、`fold_metrics.csv`、`training_curves.csv`、`best_by_dataset_task.json`、`fusion_refresh_summary.json`
   - figures：`fig_public_fusion_refresh_confirm_vs_baselines.png`、`fig_public_fusion_refresh_delta_heatmap.png`、`fig_public_fusion_config_sensitivity.png`、`fig_public_fusion_training_curves_best.png`、`fig_public_fusion_win_summary.png`
   - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`
+- Public-P28 GPUOPT 效率资产：
+  - assets root：`../assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/`
+  - base run：`20260701T-stage-i-public-fusion-refresh-r1`
+  - report：`stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md`
+  - summary/log/progress：`optimization_summary.json`、`gpu_perf_summary.json`、`optimization_run.log`、`optimization_progress.json`
+  - CSV：`gpu_perf_batches.csv`、`gpu_perf_fold_summary.csv`、`fold_metrics.gpuopt.csv`、`training_curves.gpuopt.csv`
+  - figures：`plots/fig_gpu_throughput_before_after.png`、`plots/fig_gpu_batch_timing_breakdown.png`、`plots/fig_gpu_memory_and_batch_size.png`、`plots/fig_gpu_cache_effect.png`、`plots/fig_gpu_training_progress_heartbeat.png`
 - private component ablation（历史协议）：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
 - public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
 - public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
