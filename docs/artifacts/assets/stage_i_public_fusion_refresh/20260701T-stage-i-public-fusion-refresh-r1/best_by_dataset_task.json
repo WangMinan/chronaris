@@ -1,0 +1,72 @@
+{
+  "nasa_csm": {
+    "benchmark_only": {
+      "candidate_id": "fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05",
+      "seed": 42,
+      "macro_f1": 0.6558222022372738,
+      "balanced_accuracy": 0.6767944028763925,
+      "sample_count": 1451,
+      "fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42",
+      "protocol": "p28_refresh_full_loso_confirm",
+      "confusion_matrix_plot": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/plots/objective_benchmark_only_confusion_matrix.png"
+    },
+    "loft_only": {
+      "candidate_id": "fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05",
+      "seed": 42,
+      "macro_f1": 0.6480860136797442,
+      "balanced_accuracy": 0.6417003395561123,
+      "sample_count": 1359,
+      "fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42",
+      "protocol": "p28_refresh_full_loso_confirm",
+      "confusion_matrix_plot": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/plots/objective_loft_only_confusion_matrix.png"
+    },
+    "combined": {
+      "candidate_id": "fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05",
+      "seed": 42,
+      "macro_f1": 0.5657317313970226,
+      "balanced_accuracy": 0.56349066834828,
+      "sample_count": 2810,
+      "fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42",
+      "protocol": "p28_refresh_full_loso_confirm",
+      "confusion_matrix_plot": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/plots/objective_combined_confusion_matrix.png"
+    }
+  },
+  "uab_workload_dataset": {
+    "n_back": {
+      "candidate_id": "fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05",
+      "seed": 42,
+      "rmse": 5.163878884109296,
+      "mae": 4.073223467107236,
+      "sample_count": 28052,
+      "fold_count": 16,
+      "objective_macro_f1": 0.32022952206199085,
+      "objective_balanced_accuracy": 0.34282534476789955,
+      "objective_sample_count": 28052,
+      "objective_fold_count": 16,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42",
+      "protocol": "p28_refresh_full_loso_confirm"
+    },
+    "heat_the_chair": {
+      "candidate_id": "fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05",
+      "seed": 42,
+      "rmse": 1.4557918272975465,
+      "mae": 1.1512073343729272,
+      "sample_count": 5440,
+      "fold_count": 17,
+      "objective_macro_f1": 0.504835572580152,
+      "objective_balanced_accuracy": 0.5334708860334147,
+      "objective_sample_count": 5440,
+      "objective_fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42",
+      "protocol": "p28_refresh_full_loso_confirm"
+    }
+  }
+}

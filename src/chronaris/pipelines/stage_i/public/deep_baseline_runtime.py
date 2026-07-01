@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import json
+import logging
+from datetime import datetime, timezone
 from pathlib import Path
+import time
 from typing import TYPE_CHECKING, Mapping, Sequence
 
 import numpy as np
@@ -26,9 +29,16 @@ from chronaris.pipelines.torch_runtime import resolve_torch_device_name, seed_to
 if TYPE_CHECKING:
     from chronaris.pipelines.stage_i.public.deep_baseline import StageIDeepBaselineConfig
 
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
 
 def _deep_model_config_dict(config: "StageIDeepBaselineConfig") -> dict[str, object]:
-    return {
+    payload = {
         "hidden_dim": int(config.hidden_dim),
         "num_heads": int(config.num_heads),
         "layers": int(config.layers),
@@ -44,7 +54,19 @@ def _deep_model_config_dict(config: "StageIDeepBaselineConfig") -> dict[str, obj
         ),
         "fusion_normalize_states": bool(config.fusion_normalize_states),
         "train_sampling_policy": str(config.train_sampling_policy),
+        "regression_loss": str(config.regression_loss),
+        "huber_delta": float(config.huber_delta),
+        "target_transform": str(config.target_transform),
+        "gradient_clip_max_norm": (
+            float(config.gradient_clip_max_norm)
+            if config.gradient_clip_max_norm is not None
+            else None
+        ),
+        "weight_decay": float(config.weight_decay),
+        "heartbeat_seconds": float(config.heartbeat_seconds),
+        "batch_log_interval": int(config.batch_log_interval),
     }
+    return payload
 
 
 def _fit_predict_classification(
@@ -61,12 +83,13 @@ def _fit_predict_classification(
 ) -> pd.DataFrame:
     label_to_index = {int(label): position for position, label in enumerate(label_order)}
     frames: list[pd.DataFrame] = []
-    for split in loso_splits:
+    curve_rows: list[dict[str, object]] = []
+    for fold_index, split in enumerate(loso_splits, start=1):
         train_label_indices = np.asarray(
             [label_to_index[int(value)] for value in labels[split.train_indices]],
             dtype=int,
         )
-        model = _train_model(
+        model, fold_curve_rows = _train_model(
             model_name=config.model_name,
             ordered_modalities=ordered_modalities,
             modality_arrays=bundle.modality_arrays,
@@ -77,6 +100,24 @@ def _fit_predict_classification(
             output_dim=len(label_order),
             task="classification",
             config=config,
+            progress_context={
+                "dataset_id": config.dataset_id,
+                "track": "objective",
+                "evaluation_group": evaluation_group,
+                "fold_index": fold_index,
+                "fold_count": len(loso_splits),
+                "split_group": split.split_group,
+            },
+        )
+        curve_rows.extend(
+            _attach_curve_context(
+                fold_curve_rows,
+                track="objective",
+                evaluation_group=evaluation_group,
+                fold_index=fold_index,
+                split_group=split.split_group,
+                seed=config.seed,
+            )
         )
         output = _forward_dataset(
             model=model,
@@ -113,7 +154,9 @@ def _fit_predict_classification(
                 y_pred=predicted_labels,
             ),
         )
-    return pd.concat(frames, axis=0, ignore_index=True) if frames else pd.DataFrame()
+    predictions = pd.concat(frames, axis=0, ignore_index=True) if frames else pd.DataFrame()
+    predictions.attrs["training_curves"] = curve_rows
+    return predictions
 
 
 def _fit_predict_regression(
@@ -128,18 +171,48 @@ def _fit_predict_regression(
     evaluation_group: str,
 ) -> pd.DataFrame:
     frames: list[pd.DataFrame] = []
-    for split in loso_splits:
-        model = _train_model(
+    curve_rows: list[dict[str, object]] = []
+    for fold_index, split in enumerate(loso_splits, start=1):
+        target_transform = _fit_target_transform(
+            targets[split.train_indices],
+            transform_name=config.target_transform,
+        )
+        transformed_train_targets = _transform_targets(
+            targets[split.train_indices],
+            target_transform,
+        )
+        model, fold_curve_rows = _train_model(
             model_name=config.model_name,
             ordered_modalities=ordered_modalities,
             modality_arrays=bundle.modality_arrays,
             modality_masks=bundle.modality_masks,
             time_axis=bundle.time_axis,
             train_indices=indices[split.train_indices],
-            train_targets=targets[split.train_indices],
+            train_targets=transformed_train_targets,
             output_dim=1,
             task="regression",
             config=config,
+            progress_context={
+                "dataset_id": config.dataset_id,
+                "track": "subjective",
+                "evaluation_group": evaluation_group,
+                "fold_index": fold_index,
+                "fold_count": len(loso_splits),
+                "split_group": split.split_group,
+                "target_transform_name": target_transform["name"],
+                "target_transform_center": target_transform["center"],
+                "target_transform_scale": target_transform["scale"],
+            },
+        )
+        curve_rows.extend(
+            _attach_curve_context(
+                fold_curve_rows,
+                track="subjective",
+                evaluation_group=evaluation_group,
+                fold_index=fold_index,
+                split_group=split.split_group,
+                seed=config.seed,
+            )
         )
         output = _forward_dataset(
             model=model,
@@ -154,9 +227,13 @@ def _fit_predict_regression(
             time_axis=bundle.time_axis,
             indices=indices[split.test_indices],
         )
-        prediction_values, nonfinite_mask = _sanitize_regression_outputs(
+        transformed_prediction_values, nonfinite_mask = _sanitize_regression_outputs(
             output.logits.detach().cpu().numpy().reshape(-1),
-            fallback_value=_safe_regression_fallback(targets[split.train_indices]),
+            fallback_value=_safe_regression_fallback(transformed_train_targets),
+        )
+        prediction_values = _inverse_transform_targets(
+            transformed_prediction_values,
+            target_transform,
         )
         frames.append(
             _build_prediction_frame(
@@ -168,10 +245,19 @@ def _fit_predict_regression(
                 y_pred=prediction_values,
                 extra_columns={
                     "prediction_was_nonfinite": nonfinite_mask.astype(int),
+                    "target_transform": [target_transform["name"]] * len(nonfinite_mask),
+                    "target_transform_center": [
+                        target_transform["center"]
+                    ] * len(nonfinite_mask),
+                    "target_transform_scale": [
+                        target_transform["scale"]
+                    ] * len(nonfinite_mask),
                 },
             ),
         )
-    return pd.concat(frames, axis=0, ignore_index=True) if frames else pd.DataFrame()
+    predictions = pd.concat(frames, axis=0, ignore_index=True) if frames else pd.DataFrame()
+    predictions.attrs["training_curves"] = curve_rows
+    return predictions
 
 
 def _train_model(
@@ -186,7 +272,9 @@ def _train_model(
     output_dim: int,
     task: str,
     config: "StageIDeepBaselineConfig",
-) -> nn.Module:
+    progress_context: Mapping[str, object] | None = None,
+) -> tuple[nn.Module, list[dict[str, object]]]:
+    context = dict(progress_context or {})
     runtime_device = resolve_torch_device_name(config.device)
     normalized_arrays = _normalize_modalities(
         modality_arrays=modality_arrays,
@@ -211,7 +299,11 @@ def _train_model(
         fusion_lag_window_points=config.fusion_lag_window_points,
         fusion_normalize_states=config.fusion_normalize_states,
     ).to(device=runtime_device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=config.learning_rate,
+        weight_decay=float(config.weight_decay),
+    )
     criterion = (
         _classification_loss(
             train_targets,
@@ -220,18 +312,86 @@ def _train_model(
             sampling_policy=config.train_sampling_policy,
         )
         if task == "classification"
-        else nn.MSELoss()
+        else _regression_loss(config.regression_loss, huber_delta=config.huber_delta)
     )
     if len(train_indices) == 0:
-        return model
+        return model, []
+    curve_rows: list[dict[str, object]] = []
+    checkpoint_dir = Path(config.artifact_root) / "checkpoints"
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    fold_index = int(context.get("fold_index", 1))
+    fold_count = int(context.get("fold_count", 1))
+    batch_log_interval = max(int(config.batch_log_interval), 1)
+    heartbeat_seconds = max(float(config.heartbeat_seconds), 1.0)
+    LOGGER.info(
+        "deep_train fold_start dataset=%s model=%s track=%s group=%s seed=%s fold=%03d/%03d split_group=%s task=%s train_count=%d epochs=%d batch_size=%d",
+        context.get("dataset_id", config.dataset_id),
+        model_name,
+        context.get("track", task),
+        context.get("evaluation_group", "unknown"),
+        config.seed,
+        fold_index,
+        fold_count,
+        context.get("split_group", "unknown"),
+        task,
+        len(train_indices),
+        config.epochs,
+        config.batch_size,
+    )
+    _write_training_progress(
+        config,
+        "fold_start",
+        **_context_progress_fields(context),
+        model_name=model_name,
+        task=task,
+        seed=config.seed,
+        fold_index=fold_index,
+        fold_count=fold_count,
+        train_count=len(train_indices),
+        epochs=config.epochs,
+        batch_size=config.batch_size,
+    )
+    fold_started_at = time.monotonic()
     for epoch in range(config.epochs):
-        for batch_indices in _iter_batches(
+        epoch_started_at = time.monotonic()
+        last_heartbeat_at = epoch_started_at
+        last_loss = float("nan")
+        batch_losses: list[float] = []
+        batches = _iter_batches(
             len(train_indices),
             batch_size=config.batch_size,
             seed=config.seed + epoch,
             sampling_policy=config.train_sampling_policy,
             labels=train_targets if task == "classification" else None,
-        ):
+        )
+        batch_count = len(batches)
+        LOGGER.info(
+            "deep_train epoch_start dataset=%s model=%s track=%s group=%s seed=%s fold=%03d/%03d epoch=%03d/%03d batch_count=%d",
+            context.get("dataset_id", config.dataset_id),
+            model_name,
+            context.get("track", task),
+            context.get("evaluation_group", "unknown"),
+            config.seed,
+            fold_index,
+            fold_count,
+            epoch + 1,
+            config.epochs,
+            batch_count,
+        )
+        _write_training_progress(
+            config,
+            "epoch_start",
+            **_context_progress_fields(context),
+            model_name=model_name,
+            task=task,
+            seed=config.seed,
+            fold_index=fold_index,
+            fold_count=fold_count,
+            epoch=epoch + 1,
+            epochs=config.epochs,
+            batch_count=batch_count,
+        )
+        for batch_number, batch_indices in enumerate(batches, start=1):
             global_batch = train_indices[batch_indices]
             batch_targets = train_targets[batch_indices]
             optimizer.zero_grad()
@@ -262,8 +422,308 @@ def _train_model(
                 ).view(-1, 1)
                 loss = criterion(logits, target_tensor)
             loss.backward()
+            if (
+                config.gradient_clip_max_norm is not None
+                and float(config.gradient_clip_max_norm) > 0.0
+            ):
+                nn.utils.clip_grad_norm_(
+                    model.parameters(),
+                    max_norm=float(config.gradient_clip_max_norm),
+                )
             optimizer.step()
-    return model
+            last_loss = float(loss.detach().cpu().item())
+            if not np.isfinite(last_loss):
+                LOGGER.warning(
+                    "deep_train nonfinite_loss dataset=%s model=%s track=%s group=%s seed=%s fold=%03d/%03d epoch=%03d/%03d batch=%03d/%03d loss=%s",
+                    context.get("dataset_id", config.dataset_id),
+                    model_name,
+                    context.get("track", task),
+                    context.get("evaluation_group", "unknown"),
+                    config.seed,
+                    fold_index,
+                    fold_count,
+                    epoch + 1,
+                    config.epochs,
+                    batch_number,
+                    batch_count,
+                    last_loss,
+                )
+                _write_training_progress(
+                    config,
+                    "nonfinite_loss",
+                    **_context_progress_fields(context),
+                    model_name=model_name,
+                    task=task,
+                    seed=config.seed,
+                    fold_index=fold_index,
+                    fold_count=fold_count,
+                    epoch=epoch + 1,
+                    epochs=config.epochs,
+                    batch=batch_number,
+                    batch_count=batch_count,
+                    loss=last_loss,
+                )
+            batch_losses.append(last_loss)
+            now = time.monotonic()
+            should_log_batch = (
+                batch_number == 1
+                or batch_number == batch_count
+                or batch_number % batch_log_interval == 0
+            )
+            should_heartbeat = now - last_heartbeat_at >= heartbeat_seconds
+            if should_log_batch or should_heartbeat:
+                LOGGER.info(
+                    "%s dataset=%s model=%s track=%s group=%s seed=%s fold=%03d/%03d epoch=%03d/%03d batch=%03d/%03d loss=%.6f elapsed_s=%.1f status=running",
+                    "deep_train heartbeat" if should_heartbeat and not should_log_batch else "deep_train batch",
+                    context.get("dataset_id", config.dataset_id),
+                    model_name,
+                    context.get("track", task),
+                    context.get("evaluation_group", "unknown"),
+                    config.seed,
+                    fold_index,
+                    fold_count,
+                    epoch + 1,
+                    config.epochs,
+                    batch_number,
+                    batch_count,
+                    last_loss,
+                    now - fold_started_at,
+                )
+                _write_training_progress(
+                    config,
+                    "heartbeat" if should_heartbeat else "batch_progress",
+                    **_context_progress_fields(context),
+                    model_name=model_name,
+                    task=task,
+                    seed=config.seed,
+                    fold_index=fold_index,
+                    fold_count=fold_count,
+                    epoch=epoch + 1,
+                    epochs=config.epochs,
+                    batch=batch_number,
+                    batch_count=batch_count,
+                    loss=last_loss,
+                    elapsed_s=now - fold_started_at,
+                )
+                if should_heartbeat:
+                    last_heartbeat_at = now
+        epoch_loss = float(np.mean(batch_losses)) if batch_losses else float("nan")
+        LOGGER.info(
+            "deep_train epoch_done dataset=%s model=%s track=%s group=%s seed=%s fold=%03d/%03d epoch=%03d/%03d train_loss=%.6f elapsed_s=%.1f",
+            context.get("dataset_id", config.dataset_id),
+            model_name,
+            context.get("track", task),
+            context.get("evaluation_group", "unknown"),
+            config.seed,
+            fold_index,
+            fold_count,
+            epoch + 1,
+            config.epochs,
+            epoch_loss,
+            time.monotonic() - epoch_started_at,
+        )
+        checkpoint_payload = {
+            "model_state_dict": model.state_dict(),
+            "optimizer_state_dict": optimizer.state_dict(),
+            "epoch": int(epoch + 1),
+            "train_loss": epoch_loss,
+            "config": _deep_model_config_dict(config),
+            "progress_context": context,
+        }
+        torch.save(checkpoint_payload, checkpoint_dir / "checkpoint_last.pt")
+        fold_checkpoint_path = (
+            checkpoint_dir
+            / (
+                f"checkpoint_last_{context.get('track', task)}_"
+                f"{context.get('evaluation_group', 'group')}_fold{fold_index:03d}.pt"
+            )
+        )
+        torch.save(
+            checkpoint_payload,
+            fold_checkpoint_path,
+        )
+        _write_training_progress(
+            config,
+            "epoch_done",
+            **_context_progress_fields(context),
+            model_name=model_name,
+            task=task,
+            seed=config.seed,
+            fold_index=fold_index,
+            fold_count=fold_count,
+            epoch=epoch + 1,
+            epochs=config.epochs,
+            train_loss=epoch_loss,
+            checkpoint_last_path=str(checkpoint_dir / "checkpoint_last.pt"),
+            checkpoint_fold_path=str(fold_checkpoint_path),
+        )
+        curve_rows.append(
+            {
+                "epoch": int(epoch + 1),
+                "train_loss": epoch_loss,
+                "batch_count": int(len(batch_losses)),
+                "task": task,
+                "model_name": model_name,
+                "learning_rate": float(config.learning_rate),
+                "batch_size": int(config.batch_size),
+                "weight_decay": float(config.weight_decay),
+                "regression_loss": str(config.regression_loss),
+                "target_transform": str(config.target_transform),
+                "checkpoint_last_path": str(checkpoint_dir / "checkpoint_last.pt"),
+            }
+        )
+    LOGGER.info(
+        "deep_train fold_done dataset=%s model=%s track=%s group=%s seed=%s fold=%03d/%03d elapsed_s=%.1f",
+        context.get("dataset_id", config.dataset_id),
+        model_name,
+        context.get("track", task),
+        context.get("evaluation_group", "unknown"),
+        config.seed,
+        fold_index,
+        fold_count,
+        time.monotonic() - fold_started_at,
+    )
+    _write_training_progress(
+        config,
+        "fold_done",
+        **_context_progress_fields(context),
+        model_name=model_name,
+        task=task,
+        seed=config.seed,
+        fold_index=fold_index,
+        fold_count=fold_count,
+        elapsed_s=time.monotonic() - fold_started_at,
+    )
+    return model, curve_rows
+
+
+def _write_training_progress(
+    config: "StageIDeepBaselineConfig",
+    event: str,
+    **fields: object,
+) -> None:
+    progress_path = Path(config.artifact_root) / "progress.json"
+    try:
+        state = (
+            json.loads(progress_path.read_text(encoding="utf-8"))
+            if progress_path.exists()
+            else {}
+        )
+    except json.JSONDecodeError:
+        state = {}
+    record = {
+        "timestamp_utc": _utc_now(),
+        "event": event,
+        **{key: _jsonable(value) for key, value in fields.items()},
+    }
+    events = list(state.get("events") or [])
+    events.append(record)
+    state.update(record)
+    state["last_event"] = event
+    state["updated_at_utc"] = record["timestamp_utc"]
+    state["events"] = events[-200:]
+    progress_path.write_text(
+        json.dumps(state, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _context_progress_fields(context: Mapping[str, object]) -> dict[str, object]:
+    return {
+        key: value
+        for key, value in context.items()
+        if key not in {"fold_index", "fold_count"}
+    }
+
+
+def _jsonable(value: object) -> object:
+    if isinstance(value, (np.integer,)):
+        return int(value)
+    if isinstance(value, (np.floating,)):
+        return float(value)
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, Path):
+        return str(value)
+    return value
+
+
+def _regression_loss(loss_name: str, *, huber_delta: float) -> nn.Module:
+    normalized = loss_name.strip().lower()
+    if normalized == "mse":
+        return nn.MSELoss()
+    if normalized == "smooth_l1":
+        return nn.SmoothL1Loss(beta=float(huber_delta))
+    if normalized == "huber":
+        return nn.HuberLoss(delta=float(huber_delta))
+    raise ValueError(f"unsupported regression loss: {loss_name}")
+
+
+def _fit_target_transform(
+    train_targets: np.ndarray,
+    *,
+    transform_name: str,
+) -> dict[str, float | str]:
+    normalized = transform_name.strip().lower()
+    finite = np.asarray(train_targets, dtype=np.float32)
+    finite = finite[np.isfinite(finite)]
+    if finite.size == 0 or normalized == "none":
+        return {"name": "none", "center": 0.0, "scale": 1.0}
+    if normalized == "zscore_train":
+        center = float(finite.mean())
+        scale = float(finite.std())
+    elif normalized == "robust_train":
+        center = float(np.median(finite))
+        q25, q75 = np.percentile(finite, [25, 75])
+        scale = float(q75 - q25)
+    else:
+        raise ValueError(f"unsupported target transform: {transform_name}")
+    if not np.isfinite(scale) or abs(scale) < 1e-6:
+        scale = 1.0
+    return {"name": normalized, "center": center, "scale": scale}
+
+
+def _transform_targets(
+    values: np.ndarray,
+    target_transform: Mapping[str, float | str],
+) -> np.ndarray:
+    center = float(target_transform["center"])
+    scale = float(target_transform["scale"])
+    return ((np.asarray(values, dtype=np.float32) - center) / scale).astype(np.float32)
+
+
+def _inverse_transform_targets(
+    values: np.ndarray,
+    target_transform: Mapping[str, float | str],
+) -> np.ndarray:
+    center = float(target_transform["center"])
+    scale = float(target_transform["scale"])
+    return (np.asarray(values, dtype=np.float32) * scale + center).astype(np.float32)
+
+
+def _attach_curve_context(
+    rows: Sequence[Mapping[str, object]],
+    *,
+    track: str,
+    evaluation_group: str,
+    fold_index: int,
+    split_group: str,
+    seed: int,
+) -> list[dict[str, object]]:
+    enriched: list[dict[str, object]] = []
+    for row in rows:
+        payload = dict(row)
+        payload.update(
+            {
+                "track": track,
+                "evaluation_group": evaluation_group,
+                "fold_index": int(fold_index),
+                "split_group": split_group,
+                "seed": int(seed),
+            }
+        )
+        enriched.append(payload)
+    return enriched
 
 
 def _classification_loss(

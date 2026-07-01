@@ -58,6 +58,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-folds", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
+    parser.add_argument(
+        "--train-sampling-policy",
+        choices=("none", "balanced_class"),
+        default="none",
+    )
+    parser.add_argument(
+        "--regression-loss",
+        choices=("mse", "smooth_l1", "huber"),
+        default="mse",
+    )
+    parser.add_argument("--huber-delta", type=float, default=1.0)
+    parser.add_argument(
+        "--target-transform",
+        choices=("none", "zscore_train", "robust_train"),
+        default="none",
+    )
+    parser.add_argument("--gradient-clip-max-norm", type=float, default=None)
+    parser.add_argument("--weight-decay", type=float, default=0.0)
+    parser.add_argument("--heartbeat-seconds", type=float, default=60.0)
+    parser.add_argument("--batch-log-interval", type=int, default=20)
     return parser.parse_args()
 
 
@@ -100,6 +120,14 @@ def main() -> int:
             max_folds=args.max_folds,
             seed=args.seed,
             device=args.device,
+            train_sampling_policy=args.train_sampling_policy,
+            regression_loss=args.regression_loss,
+            huber_delta=args.huber_delta,
+            target_transform=args.target_transform,
+            gradient_clip_max_norm=args.gradient_clip_max_norm,
+            weight_decay=args.weight_decay,
+            heartbeat_seconds=args.heartbeat_seconds,
+            batch_log_interval=args.batch_log_interval,
         ),
     )
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))
