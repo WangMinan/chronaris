@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `59851e8 [DOC]update component pic`；P26 thesis materials r6 report figure polish 已是当前最新中期图表入口。本轮继续完成 P27/P28 公开模型对比、archive-only public 旧产物清理和 LFS 状态核对，提交前以本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，作为 P28 后续效率证据入口。本轮不改变 P27/P28 confirmed metrics，提交前以本地 diff 为准。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -88,7 +88,8 @@
 8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
 9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理，r5 已由 r6 报告重绘图包接管并在 2026-06-21 深度清理中从 docs 产物目录删除。
 10. Public-P27/P28 已完成 public model comparison 与 chronaris_public_fusion refresh；中期公开模型对比优先引用 `docs/artifacts/stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`、`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/improvement_summary.csv` 和 P28 `fusion_refresh_summary.json`。
-11. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
+11. P28-GPUOPT 已完成代表性 fold GPU efficiency profiling；效率证据优先引用 `docs/artifacts/stage_i/stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_summary.json`。该结果只说明训练吞吐、显存和 resume 状态，不替代 P28 full LOSO confirmed metrics。
+12. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
 
 验收：
 
