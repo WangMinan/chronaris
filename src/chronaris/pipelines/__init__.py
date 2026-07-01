@@ -356,6 +356,34 @@ _EXPORTS: dict[str, tuple[str, str]] = {
         "chronaris.pipelines.stage_i.public.fusion_screen",
         "run_stage_i_public_fusion_screen",
     ),
+    "PublicFusionRefreshCandidate": (
+        "chronaris.pipelines.stage_i.public.fusion_refresh",
+        "PublicFusionRefreshCandidate",
+    ),
+    "StageIPublicFusionRefreshConfig": (
+        "chronaris.pipelines.stage_i.public.fusion_refresh",
+        "StageIPublicFusionRefreshConfig",
+    ),
+    "StageIPublicFusionRefreshResult": (
+        "chronaris.pipelines.stage_i.public.fusion_refresh",
+        "StageIPublicFusionRefreshResult",
+    ),
+    "run_stage_i_public_fusion_refresh": (
+        "chronaris.pipelines.stage_i.public.fusion_refresh",
+        "run_stage_i_public_fusion_refresh",
+    ),
+    "StageIPublicModelComparisonConfig": (
+        "chronaris.pipelines.stage_i.public.model_comparison",
+        "StageIPublicModelComparisonConfig",
+    ),
+    "StageIPublicModelComparisonResult": (
+        "chronaris.pipelines.stage_i.public.model_comparison",
+        "StageIPublicModelComparisonResult",
+    ),
+    "build_stage_i_public_model_comparison": (
+        "chronaris.pipelines.stage_i.public.model_comparison",
+        "build_stage_i_public_model_comparison",
+    ),
     "StageIPrivateBenchmarkConfig": (
         "chronaris.pipelines.stage_i.private.benchmark",
         "StageIPrivateBenchmarkConfig",

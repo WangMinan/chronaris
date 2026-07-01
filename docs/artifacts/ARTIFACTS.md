@@ -1,12 +1,16 @@
 # Chronaris 产物索引
 
-更新时间：2026-06-21
+更新时间：2026-07-01
 
 ## 1. 目录定位
 
 本目录用于组织报告、图、CSV、JSON、checkpoint、manifest 等可引用产物。
 
-LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)。该清理删除了历史 raw replay / prepared bundle / 大型 JSONL 与 NPZ 载荷，保留报告、summary、schema contract 和中期写作入口。
+清理记录：
+
+- [cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)：删除历史 raw replay / prepared bundle / 大型 JSONL 与 NPZ 载荷，保留报告、summary、schema contract 和中期写作入口。
+- [cleanup/20260621-deep-cleanup.md](cleanup/20260621-deep-cleanup.md)：删除已由 r6 接管的 r5 thesis figure 图包/报告、空目录和本地 Python 编译缓存，并记录仍需保留的 public adapter、P11 live child run 与 LLM runtime case 输入表。
+- [cleanup/20260701-src-docs-artifact-prune.md](cleanup/20260701-src-docs-artifact-prune.md)：删除 `src/tests/scripts` 本地 Python 编译缓存和 archive-only public torch/mainline/fusion screen 旧产物；保留当前 P27/P28 与仍被代码/报告引用的 public adapter 基线。
 
 ## 2. 阶段产物
 
@@ -33,6 +37,8 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - [stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
 - [stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
 - [stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
+- [stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md](stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md)
+- [stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md](stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md)
 - [../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
 - [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
 - [../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
@@ -51,6 +57,8 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - Stage I thesis materials r6 report figure polish：[stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
 - Stage I leakage-safe private proxy ablation r2：[stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
 - Stage I public mainline：[stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
+- Stage I public model comparison r1：[stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md](stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md)
+- Stage I public fusion refresh r1：[stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md](stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md)
 - Stage I support ablation：[stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md](stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
 - Stage I rigid-body r2：[stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md)
 - Stage I semantic support r2：[stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md)
@@ -75,12 +83,22 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
 - 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json](assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json)
 - 当前 thesis figure quality audit：[assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv](assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv)
+- 当前 public model comparison assets：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/)
+- 当前 public model comparison CSV：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/model_comparison_wide.csv](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/model_comparison_wide.csv)、[improvement_summary.csv](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/improvement_summary.csv)
+- 当前 public model comparison figures：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_leaderboard_nasa_macro_f1.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_leaderboard_nasa_macro_f1.png)、[fig_public_model_delta_heatmap.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_delta_heatmap.png)、[fig_uab_subjective_rmse_comparison.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_uab_subjective_rmse_comparison.png)、[fig_public_model_win_summary.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_win_summary.png)
+- 当前 public model comparison manifest：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json)
+- 当前 public fusion refresh assets：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/)
+- 当前 public fusion refresh CSV/summary：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm_leaderboard.csv](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm_leaderboard.csv)、[fusion_refresh_summary.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json)、[fold_metrics.csv](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fold_metrics.csv)、[training_curves.csv](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/training_curves.csv)
+- 当前 public fusion refresh figures：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_refresh_confirm_vs_baselines.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_refresh_confirm_vs_baselines.png)、[fig_public_fusion_config_sensitivity.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_config_sensitivity.png)、[fig_public_fusion_training_curves_best.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_training_curves_best.png)
+- 当前 public fusion refresh manifest/log/progress：[evidence_manifest.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/evidence_manifest.json)、[run.log](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/run.log)、[progress.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/progress.json)
 - 当前 leakage-safe private ablation summary：[assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json](assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json)
 - 当前 runtime service smoke summary：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json)
 - 当前 live weak-label stable resume summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json)
 - 当前 live weak-label partial summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json)
 - 当前 runtime schema contract：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json)
 - 当前 docs LFS 清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)
+- 当前 docs 深度清理记录：[cleanup/20260621-deep-cleanup.md](cleanup/20260621-deep-cleanup.md)
+- 当前 src/docs artifact prune 记录：[cleanup/20260701-src-docs-artifact-prune.md](cleanup/20260701-src-docs-artifact-prune.md)
 - P20/P21 LLM runtime case 输入表：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv)
 - 当前 P21 LLM comparison summary：[assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json](assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json)
 
@@ -92,6 +110,9 @@ LFS 配额清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-l
 - 历史报告可以引用，但必须说明是历史快照、公开适配器证据、私有代理证据还是 thesis weak-label evidence。
 - 2026-06-19 起，若历史报告提到已清理的 raw JSONL / NPZ / prepared bundle，应按 [cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md) 处理：引用保留的 summary/report，复跑时重新生成 raw payload。
 - 2026-06-19 深度清理后，P20 LLM preprocessing r1、P11 live r2、rigid-body r1、runtime replay r1、semantic support r1、runtime service smoke r1 和 thesis materials r4 仅保留在 git 历史中；当前文档入口统一使用本索引列出的 r3/r6/r2-contract 稳定产物。
+- 2026-06-21 深度清理后，P25 thesis materials r5 图包与报告仅保留在 git 历史；当前中期图表统一引用 P26 r6 report figure polish。不要继续链接已清理的 r5 路径。
+- 2026-07-01 src/docs artifact prune 后，archive-only 的早期 public torch/mainline/fusion screen 迭代产物仅保留在 git 历史；当前公开实验入口统一引用 P27/P28、UAB robust-prior、NASA round1、UAB torch auto-cuda confirm 和仍被 midterm pack 引用的 fusion screen round2。
 - P20 DeepSeek 已生成小样本真实切片 run 产物：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`。引用时必须写成 LLM preprocessing context / rule review / semantic hints / runtime explanation / bounded slicing，不得写成人工真值、核心因果证据或原始全量高频时序外发。
 - P21 LLM comparison 已生成 A0-A4 对比产物：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/`、`docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md` 和 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。引用时必须保留 `label_unchanged=true`、semantic hints whitelist、runtime explanation bounded subset、`human_review_completed=false` 四个边界。
+- Public-P27/P28 产物属于 `public adapter / calibration / context-proxy evidence`。引用 `stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/` 时优先使用 P27 宽表、improvement summary 和图件；P28 `20260701T-stage-i-public-fusion-refresh-r1` 已完成 CUDA screen + full LOSO confirm，并通过 `run.log` / `progress.json` / `evidence_manifest.json` 保留复现路径。
 - `stage_i_private_component_ablation` 的历史满分结果与 `stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/` 是不同协议。论文实验章节优先引用 `protocol=leakage_safe_v1` 的 r2 消融；历史结果只能作为 private proxy 历史对照，不得与防泄漏结果混成同一柱状结论。

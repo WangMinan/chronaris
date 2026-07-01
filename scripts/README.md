@@ -33,6 +33,8 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 - `scripts/stage_i/public/run_deep_baseline.py`：单个 deep baseline。
 - `scripts/stage_i/public/run_deep_comparison.py`：固定顺序 deep comparison。
 - `scripts/stage_i/public/run_fusion_screen.py`：public fusion screening。
+- `scripts/stage_i/public/run_public_fusion_refresh.py`：P28 `chronaris_public_fusion` screen + confirm refresh。
+- `scripts/stage_i/public/build_public_model_comparison.py`：P27 public model comparison 图表/CSV/报告整编。
 - `scripts/stage_i/public/build_mainline_report.py`：public mainline report builder。
 
 ### private

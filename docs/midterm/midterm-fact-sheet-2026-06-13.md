@@ -1,6 +1,6 @@
 # Chronaris 中期事实清单
 
-更新时间：2026-06-19
+更新时间：2026-06-21
 
 本清单冻结当前中期报告可引用事实。所有实验事实必须能追溯到 `docs/artifacts/` 下的报告、CSV、JSON 或 PNG。写中期报告时，优先引用本清单中的当前入口；历史报告只作为追溯材料，不从旧报告倒推当前状态。
 
@@ -26,7 +26,7 @@
 | 物理一致性约束时间对齐 | translation + vertical 约束已在真实链路启用；rotation disabled diagnostics 已落盘 | [../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md) |
 | 因果掩码与语义事件融合 | 语义 support 覆盖 3 个双流 view | [../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md) |
 | 标准化融合特征与中间态接口 | Stage H 与 runtime replay 已形成样本、checkpoint、prediction 输出 | [../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md) |
-| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r5 图表；private T1/T2/T3 另有 leakage-safe 组件诊断 | [../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md) |
+| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r6 图表；private T1/T2/T3 另有 leakage-safe 组件诊断 | [../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md) |
 
 ## 3. 数据与样本事实
 
@@ -447,21 +447,22 @@ Native 缺失的 vehicle measurement groups：
 - 必须同时写“native runtime input 仍是 aligned，缺少 965 个 vehicle features，集中在 6 个 BUS measurement groups”。
 - 不应写“原始上游输入已 native exact”。
 
-## 12. P16/P18/r5 thesis figures
+## 12. P16/P18/P26 thesis figures
 
 当前图表入口：
 
-- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md](../artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md)
-- figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_manifest.json`
-- table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/table_manifest.json`
-- QA 清单：`docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/figure_quality_audit.csv`
+- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
+- figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
+- table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/table_manifest.json`
+- QA 清单：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv`
 
-当前 11 张 PNG 说明图：
+当前 12 张 PNG 说明图：
 
 | figure_id | PNG | CSV | evidence_layer | 用途 |
 | --- | --- | --- | --- | --- |
 | evidence_layer_overview | `evidence_layer_overview.png` | `evidence_layer_overview.csv` | cross_layer_index | 展示 Stage I 证据层级矩阵，替代 artifact present=1 柱状图 |
 | runtime_payload_schema | `runtime_payload_schema.png` | `runtime_payload_schema.csv` | runtime_schema | 对照 native replay payload 与 canonical service payload 字段契约 |
+| runtime_service_flow | `runtime_service_flow.png` | `runtime_service_flow.csv` | runtime_schema | 展示当前 runtime service 的输入、契约、推理和边界闭环 |
 | runtime_semantic_case | `runtime_semantic_case.png` | `runtime_semantic_case.csv` | runtime_semantic_support | 展示 runtime case card、窗口级语义归因、query 分布、范围 chip 与 schema 状态摘要 |
 | rigid_body_rotation_audit | `rigid_body_rotation_audit.png` | `rigid_body_rotation_audit.csv` | rigid_body_rotation_diagnostics | 展示 family loss 与 pitch/roll/yaw angle/rate 可用性矩阵 |
 | weak_label_sweep_ablation | `weak_label_sweep_ablation.png` | `weak_label_sweep_ablation.csv` | thesis_weak_label | 对比 proxy/live best metrics、运行状态和小网格 lag |
@@ -495,7 +496,7 @@ Native 缺失的 vehicle measurement groups：
 - Figure index：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_figure_index.csv`
 - Metrics：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_metrics.csv`
 
-该证据包形成于 P10-P18 之前，仍可作为历史整编入口；正式写当前中期报告时，应优先使用本清单与 `stage_i_thesis_figures r5-leakage-safe-refresh`。
+该证据包形成于 P10-P18 之前，仍可作为历史整编入口；正式写当前中期报告时，应优先使用本清单与 `stage_i_thesis_figures r6-report-figure-polish`。
 
 ## 14. 当前可直接写入报告的贡献描述
 

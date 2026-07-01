@@ -71,6 +71,13 @@ class StageIDeepBaselineConfig:
     seed: int = 42
     device: str = "auto"
     train_sampling_policy: str = "none"
+    regression_loss: str = "mse"
+    huber_delta: float = 1.0
+    target_transform: str = "none"
+    gradient_clip_max_norm: float | None = None
+    weight_decay: float = 0.0
+    heartbeat_seconds: float = 60.0
+    batch_log_interval: int = 20
 
 
 @dataclass(frozen=True, slots=True)
@@ -104,6 +111,13 @@ class StageIDeepComparisonConfig:
     seed: int = 42
     device: str = "auto"
     train_sampling_policy: str = "none"
+    regression_loss: str = "mse"
+    huber_delta: float = 1.0
+    target_transform: str = "none"
+    gradient_clip_max_norm: float | None = None
+    weight_decay: float = 0.0
+    heartbeat_seconds: float = 60.0
+    batch_log_interval: int = 20
 
 
 @dataclass(frozen=True, slots=True)
@@ -136,6 +150,10 @@ def run_stage_i_deep_baseline(
             "model_name": config.model_name,
             "requested_device": config.device,
             "artifact_root": str(artifact_root),
+            "epochs": config.epochs,
+            "max_folds": config.max_folds,
+            "heartbeat_seconds": config.heartbeat_seconds,
+            "batch_log_interval": config.batch_log_interval,
         },
     ) as progress:
         dataset = _load_prepared_sequence_dataset(config.prepared_artifact_root)
@@ -152,6 +170,11 @@ def run_stage_i_deep_baseline(
             summary, predictions = _run_real_sortie_case_study(dataset=dataset, config=config)
         else:
             summary, predictions = _run_public_deep_baseline(dataset=dataset, config=config)
+        training_curves = _extract_training_curves(summary)
+        training_curves_path = artifact_root / "training_curves.csv"
+        pd.DataFrame(training_curves).to_csv(training_curves_path, index=False)
+        summary["training_curves_path"] = str(training_curves_path)
+        summary["training_curve_count"] = len(training_curves)
         summary_path = artifact_root / "deep_baseline_summary.json"
         report_path = artifact_root / "deep_baseline_report.md"
         predictions_path = artifact_root / "fold_predictions.csv"
@@ -218,6 +241,13 @@ def run_stage_i_deep_comparison(
                     seed=config.seed,
                     device=config.device,
                     train_sampling_policy=config.train_sampling_policy,
+                    regression_loss=config.regression_loss,
+                    huber_delta=config.huber_delta,
+                    target_transform=config.target_transform,
+                    gradient_clip_max_norm=config.gradient_clip_max_norm,
+                    weight_decay=config.weight_decay,
+                    heartbeat_seconds=config.heartbeat_seconds,
+                    batch_log_interval=config.batch_log_interval,
                 ),
             )
             dataset_model_results[model_name] = {
@@ -361,6 +391,7 @@ def _run_public_track(
     predictions_frames: list[pd.DataFrame] = []
     group_metrics: dict[str, object] = {}
     plot_paths: dict[str, str] = {}
+    training_curves: list[dict[str, object]] = []
     for group_name, indices in evaluation_groups.items():
         if len(indices) == 0:
             continue
@@ -418,6 +449,12 @@ def _run_public_track(
                 path=plot_root / f"{plot_key}.png",
                 title=f"{config.model_name} {group_name}",
             )
+        training_curves.extend(
+            [
+                dict(row, dataset_id=config.dataset_id, model_name=config.model_name)
+                for row in predictions.attrs.get("training_curves", [])
+            ]
+        )
         predictions_frames.append(predictions)
         group_metrics[group_name] = metrics
     if track == "objective":
@@ -460,6 +497,7 @@ def _run_public_track(
         "model_name": config.model_name,
         "groups": group_metrics,
         "plot_paths": plot_paths,
+        "training_curves": training_curves,
     }, predictions_frame
 
 
@@ -469,3 +507,18 @@ def _run_real_sortie_case_study(
     config: StageIDeepBaselineConfig,
 ) -> tuple[dict[str, object], pd.DataFrame]:
     return _run_real_sortie_case_study_impl(dataset=dataset, config=config)
+
+
+def _extract_training_curves(summary: Mapping[str, object]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for track in ("objective", "subjective"):
+        payload = summary.get(track)
+        if not isinstance(payload, Mapping):
+            continue
+        for row in payload.get("training_curves", []):
+            if isinstance(row, Mapping):
+                rows.append(dict(row))
+    for row in summary.get("training_curves", []):
+        if isinstance(row, Mapping):
+            rows.append(dict(row))
+    return rows

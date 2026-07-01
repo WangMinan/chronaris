@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-06-21
+更新时间：2026-07-01
 
 ## 文档定位
 
@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 历史基线 `main` 已同步推送到 `origin/main`；本轮 P26 thesis materials r6 report figure polish 仍是本地新增工作，提交/推送后进入远端历史。
+- 当前分支为 `main`，当前 HEAD 为 `59851e8 [DOC]update component pic`；P26 thesis materials r6 report figure polish 已是当前最新中期图表入口。本轮继续完成 P27/P28 公开模型对比、archive-only public 旧产物清理和 LFS 状态核对，提交前以本地 diff 为准。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -86,13 +86,16 @@
 6. 若后续发现可用角速度字段，在 `rotation audit` 基础上复跑 `minimal / full / rigid_body`；若没有，继续保持 `rotation disabled` diagnostics 口径。
 7. 若后续要把 runtime/service 继续收紧到“exact schema only”，优先围绕当前 `native_feature_schema_status=aligned` 的 missing vehicle groups 做采样契约补齐，而不是重建上游接收器。
 8. 展开文献检索前，先用 `docs/midterm/claims-matrix-2026-06-13.md` 约束论文 claim 强度，再按异构时序对齐、连续潜态、物理约束、因果融合、航空人因 weak-label、LLM 辅助时序预处理六组关键词搜索。
-9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理，r5 已由 r6 报告重绘图包接管。
+9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理，r5 已由 r6 报告重绘图包接管并在 2026-06-21 深度清理中从 docs 产物目录删除。
+10. Public-P27/P28 已完成 public model comparison 与 chronaris_public_fusion refresh；中期公开模型对比优先引用 `docs/artifacts/stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`、`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/improvement_summary.csv` 和 P28 `fusion_refresh_summary.json`。
+11. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
 
 验收：
 
 - `git diff --check` 通过。
 - 状态文档中的 `HEAD`、远端同步状态、当前任务队列和编码缺口一致。
 - 新增报告路径和 asset 路径必须能从 `ARTIFACTS.md` 或本文件追溯。
+- 清理后 `git lfs status` 需保持正常，且若 `git lfs migrate info --include-ref=refs/heads/main --include='docs/**'` 未显示异常历史膨胀，则不做历史重写。
 
 ## 已完成 P0：冻结 Phase D/E/F 工作区并提交
 
@@ -1112,10 +1115,8 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 结果：
 
-- 新 run：
-  - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
-  - `docs/artifacts/stage_i/stage-i-thesis-materials-20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh.md`
-- 当前输出 `11` 张 PNG 与 `11` 张 CSV：
+- r5 曾输出 `11` 张 PNG 与 `11` 张 CSV，并已在 2026-06-21 深度清理中由 P26/r6 接管后从 docs 产物目录删除；如需追溯 r5，请从 git 历史读取。
+- r5 输出内容包括：
   - `evidence_layer_overview`
   - `runtime_payload_schema`
   - `runtime_semantic_case`
@@ -1127,7 +1128,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
   - `public_transfer_boundary`
   - `semantic_event_fusion_overview`
   - `llm_comparison_a0_a4`
-- `figure_quality_audit.csv` 已确认 11 张 PNG 均存在、非空、DPI 约 `300`，并与 table/figure manifest 数量匹配。
+- `figure_quality_audit.csv` 曾确认 11 张 PNG 均存在、非空、DPI 约 `300`，并与 table/figure manifest 数量匹配；当前图表 QA 以 P26/r6 的 `figure_quality_audit.csv` 为准。
 - r5 图件可见文字已中文化；内部 protocol、run id、source path 和枚举保留在 CSV/JSON/manifest 中用于追溯。
 
 边界：
@@ -1138,7 +1139,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 ## 已完成 P26：thesis materials r6 report figure polish
 
-目标：在 r5 基础上按中期报告 A4 落版可读性重绘 Chronaris 侧图件，不处理本地论文工作区的 imagegen 框图，不覆盖旧 r5 图包。
+目标：在 r5 基础上按中期报告 A4 落版可读性重绘 Chronaris 侧图件，不处理本地论文工作区的 imagegen 框图；r6 验证通过后，r5 已在 2026-06-21 深度清理中从 docs 产物目录移除。
 
 结果：
 
@@ -1166,6 +1167,99 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 - `semantic_event_fusion_overview` 仍不伪造完整视图 × 查询类型归因数值；当前缺完整归因矩阵时只画覆盖/支撑状态。
 - `weak_label_sweep_ablation` 未补不存在的风险阈值/负荷阈值网格；图中只展示已落盘的滞后窗口趋势与参数组合覆盖。
 - `runtime_service_flow` 基于现有 runtime service summary 与 schema contract 重绘；不依赖已从 docs/LFS 清理的原始 sample JSONL。
+
+## 已完成维护 P27：源码、脚本与 docs/artifacts 深度清理
+
+目标：对 `src/` 中无用源码缓存、Stage I 脚本入口和 `docs/artifacts/` 冗余产物做一次保守深度清理，并把 docs 入口统一到当前 r6 图包。
+
+结果：
+
+- 清理记录：`docs/artifacts/cleanup/20260621-deep-cleanup.md`。
+- 已删除被 P26/r6 接管的 P25/r5 thesis figure 图包与报告；当前中期图表入口只保留 r6。
+- 已删除 P11 stable/partial 目录下两个空 `runs/` 子目录。
+- 已清理本地 `src/`、`tests/`、`third_party/` 的 Python 编译缓存；这些缓存由 `.gitignore` 覆盖，不属于可提交源码。
+- 已完成 tracked `src/chronaris` 与 `scripts/stage_i` 引用扫描；当前 canonical 源码与脚本仍被 tests、docs 或 evidence runner 依赖，本轮不删除 tracked canonical 入口。
+
+保留边界：
+
+- `20260613T-stage-i-p11-live-influx-r1` 的 child run/checkpoint/log 被 r3 resume 和 r4 partial summary 引用，保留。
+- `20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 是 P20/P21 LLM preprocessing 历史输入表，保留。
+- public adapter 的 `20260508T125651Z` sklearn baseline 与 `20260508T090700Z` torch baseline 被 public calibration/transfer boundary 与代码常量引用，保留。
+
+## 已完成 Public-P27/Public-P28：public model comparison and fusion refresh
+
+目标：面向中期报告补齐公开 UAB/NASA 模型对比、chronaris_public_fusion 长程 refresh、resume/partial/log/progress contract，并在 P28 后重新运行 P27 生成最终图表。
+
+代码入口：
+
+- P27 builder：`src/chronaris/pipelines/stage_i/public/model_comparison.py`
+- P27 CLI：`scripts/stage_i/public/build_public_model_comparison.py`
+- P28 refresh：`src/chronaris/pipelines/stage_i/public/fusion_refresh.py`
+- P28 CLI：`scripts/stage_i/public/run_public_fusion_refresh.py`
+- 长程训练日志与 checkpoint 补强：`src/chronaris/pipelines/stage_i/public/deep_baseline.py`、`src/chronaris/pipelines/stage_i/public/deep_baseline_runtime.py`
+
+P28 输出：
+
+- asset root：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/`
+- report：`docs/artifacts/stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md`
+- status：`completed`
+- core files：`fusion_refresh_summary.json`、`screen_leaderboard.csv`、`confirm_leaderboard.csv`、`fold_metrics.csv`、`training_curves.csv`、`best_by_dataset_task.json`、`evidence_manifest.json`、`run.log`、`progress.json`
+- figures：`fig_public_fusion_refresh_confirm_vs_baselines.png`、`fig_public_fusion_refresh_delta_heatmap.png`、`fig_public_fusion_config_sensitivity.png`、`fig_public_fusion_training_curves_best.png`、`fig_public_fusion_win_summary.png`
+
+P27 输出：
+
+- asset root：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/`
+- report：`docs/artifacts/stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`
+- core files：`model_comparison_long.csv`、`model_comparison_wide.csv`、`improvement_summary.csv`、`evidence_manifest.json`
+- figures：`fig_public_model_leaderboard_nasa_macro_f1.png`、`fig_public_model_leaderboard_nasa_balanced_accuracy.png`、`fig_uab_subjective_rmse_comparison.png`、`fig_uab_objective_macro_f1_comparison.png`、`fig_public_model_delta_heatmap.png`、`fig_public_model_win_summary.png`
+- manifest：`p28_refresh_included=true`、`missing_metrics=[]`
+
+实际命令：
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/public/run_public_fusion_refresh.py \
+  --run-id 20260701T-stage-i-public-fusion-refresh-r1 \
+  --prepare-sequences \
+  --datasets nasa_csm uab_workload_dataset \
+  --screen-epochs 5 \
+  --confirm-epochs 20 \
+  --screen-max-folds 2 \
+  --screen-candidate-limit 2 \
+  --confirm-top-k 1 \
+  --confirm-seeds 42 \
+  --device cuda
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/public/run_public_fusion_refresh.py \
+  --run-id 20260701T-stage-i-public-fusion-refresh-r1 \
+  --nasa-root /tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm \
+  --uab-root /tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/uab_workload_dataset \
+  --datasets nasa_csm uab_workload_dataset \
+  --screen-epochs 5 \
+  --confirm-epochs 20 \
+  --screen-max-folds 2 \
+  --confirm-max-folds none \
+  --screen-candidate-limit 2 \
+  --confirm-top-k 1 \
+  --confirm-seeds 42 \
+  --device cuda \
+  --resume \
+  --skip-completed \
+  --allow-partial \
+  --confirm-only \
+  --heartbeat-seconds 60 \
+  --batch-log-interval 20
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/public/build_public_model_comparison.py \
+  --run-id 20260701T-stage-i-public-model-comparison-r1 \
+  --refresh-summary docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json
+```
+
+验收：
+
+- `compileall src/chronaris/pipelines scripts/stage_i/public` 通过。
+- `unittest tests.test_stage_i_public_model_comparison tests.test_stage_i_public_fusion_refresh tests.test_stage_i_deep_pipeline` 通过：`Ran 22 tests`，`OK (skipped=2)`。
+- P28 `missing_figures=[]`，P27 `missing_metrics=[]`。
+- public 数据集仍按 `public adapter / calibration / context-proxy evidence` 引用，不改标签、不改 split、不使用 test fold 统计量做训练归一化或调参。
 
 ## 中期前边界管理
 

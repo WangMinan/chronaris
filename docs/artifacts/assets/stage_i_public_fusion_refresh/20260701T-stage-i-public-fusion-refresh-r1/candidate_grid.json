@@ -1,0 +1,108 @@
+{
+  "grid_spec": {
+    "hidden_dim": [
+      64,
+      96,
+      128
+    ],
+    "layers": [
+      2,
+      3
+    ],
+    "num_heads": [
+      4
+    ],
+    "dropout": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "fusion_event_bias_weight": [
+      0.0,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "fusion_lag_window_points": [
+      null,
+      4,
+      8,
+      16
+    ],
+    "fusion_normalize_states": [
+      true
+    ],
+    "learning_rate": [
+      0.001,
+      0.0003
+    ],
+    "batch_size": [
+      128,
+      256
+    ],
+    "regression_loss": [
+      "mse",
+      "smooth_l1",
+      "huber"
+    ],
+    "huber_delta": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "target_transform": [
+      "none",
+      "zscore_train",
+      "robust_train"
+    ],
+    "weight_decay": [
+      0.0,
+      1e-05,
+      0.0001
+    ],
+    "gradient_clip_max_norm": [
+      1.0
+    ]
+  },
+  "full_candidate_count": 93312,
+  "screen_candidate_policy": "focused_midterm_refresh_subset",
+  "screen_candidate_limit": 2,
+  "batch_size_override": null,
+  "learning_rate_override": null,
+  "screen_candidates": [
+    {
+      "candidate_id": "fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0",
+      "hidden_dim": 96,
+      "layers": 2,
+      "num_heads": 4,
+      "dropout": 0.2,
+      "fusion_event_bias_weight": 0.5,
+      "fusion_lag_window_points": 8,
+      "fusion_normalize_states": true,
+      "learning_rate": 0.001,
+      "batch_size": 128,
+      "regression_loss": "mse",
+      "huber_delta": 1.0,
+      "target_transform": "none",
+      "weight_decay": 0.0,
+      "gradient_clip_max_norm": 1.0
+    },
+    {
+      "candidate_id": "fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05",
+      "hidden_dim": 64,
+      "layers": 2,
+      "num_heads": 4,
+      "dropout": 0.1,
+      "fusion_event_bias_weight": 0.25,
+      "fusion_lag_window_points": 16,
+      "fusion_normalize_states": true,
+      "learning_rate": 0.001,
+      "batch_size": 128,
+      "regression_loss": "smooth_l1",
+      "huber_delta": 1.0,
+      "target_transform": "zscore_train",
+      "weight_decay": 1e-05,
+      "gradient_clip_max_norm": 1.0
+    }
+  ]
+}

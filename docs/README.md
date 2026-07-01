@@ -1,6 +1,6 @@
 # Chronaris 文档入口
 
-更新时间：2026-06-13
+更新时间：2026-06-21
 
 本目录按 AI coding 使用方式重新组织。顶层只承担导航和状态入口；具体计划、需求、产物、review 记录分别下沉到专门目录。
 
@@ -37,6 +37,7 @@
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：当前产物索引和引用规则。
 - [artifacts/stage/](artifacts/stage/)：按 [implementation/TASKS.md](implementation/TASKS.md) 的阶段组织产物。
 - [artifacts/mid-term/](artifacts/mid-term/)：中期答辩证据包。
+- [artifacts/cleanup/](artifacts/cleanup/)：docs 产物清理记录，说明已清理内容和保留边界。
 
 ### midterm
 

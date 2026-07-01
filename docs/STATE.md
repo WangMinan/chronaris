@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-06-21
+更新时间：2026-07-01
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。本轮新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh` 与 `P26 thesis materials r6 report figure polish`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish` 与本轮 `Public-P27/Public-P28`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
 
 ## 当前阶段
 
@@ -83,7 +83,7 @@
         - `docs/artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md`
         - raw canonical payload 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理；exact contract 证据保留在 schema contract 与 canonical runtime summary。
       - P16/P18 旧刷新图包：
-        - r3/r4 图包已由 `20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh` 接管并从 docs 产物目录清理；当前入口已由 `20260621T-stage-i-thesis-materials-r6-report-figure-polish` 接管。
+        - r3/r4 图包曾由 P25/r5 接管并从 docs 产物目录清理；当前入口已由 `20260621T-stage-i-thesis-materials-r6-report-figure-polish` 接管，r5 也已从 docs 当前产物目录清理。
         - 仅保留 `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 的历史输入表。
       - P16/P21/P24/P26 中期图表质量刷新：
         - `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
@@ -107,10 +107,18 @@
       - 中期 summary：`docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
       - 当前结果：A1 `333/333` task entries 已 attach P20 context，`label_unchanged=true`；A2 semantic query coverage 从 `3` 扩到 `7`，且仅使用 whitelisted recipes；A3 `4/12` runtime cases 有 LLM explanation，解释子集四项完整性达到 `1.0`；A4 生成 `15` 条 `pending_human_review` 复核 packet。
       - 当前边界：A2 没有从 summary 伪造 view ranking/top attribution 重算；A4 没有写成人工验证完成。
+    - `Public-P27/Public-P28 public model comparison + fusion refresh` 已完成：
+      - P28 refresh 产物：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json`
+      - P28 报告：`docs/artifacts/stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md`
+      - P28 状态：`status=completed`，CUDA screen 后 top-1 full LOSO confirm；`run.log` 与 `progress.json` 已落盘。
+      - P27 comparison 产物：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/model_comparison_wide.csv`
+      - P27 报告：`docs/artifacts/stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`
+      - P27 manifest：`p28_refresh_included=true`、`missing_metrics=[]`，图件覆盖 NASA macro-F1/BA、UAB RMSE、delta heatmap 和 W/T/L summary。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`；历史 P16/P21 图表质量刷新、P20 r3-sliced 与 P21 r1 comparison 已有本地/历史入口。本轮新增的 P26 thesis materials r6 以本文件列出的本地路径为准，提交/推送后进入远端历史。
+- 当前分支为 `main`，当前 HEAD 为 `59851e8 [DOC]update component pic`；P26 thesis materials r6 已在当前工作树中作为最新图表入口。本轮深度清理删除 r5 图包/报告并刷新 docs，提交前以本文件和 `docs/artifacts/cleanup/20260621-deep-cleanup.md` 列出的本地 diff 为准。
+- 本轮 2026-07-01 继续清理 archive-only 早期 public 产物和本地 Python 编译缓存；提交前以 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md` 为删除边界。LFS 历史审计显示 `docs/**` 历史 LFS objects 约 `165 MB`，未执行 git 历史重写。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
   - `70b651a feat: add stage i evidence closure tools`
@@ -145,6 +153,7 @@
   - 最新 live weak-label partial blocked：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json`
   - 最新 runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
   - 最新 docs LFS 清理记录：`docs/artifacts/cleanup/20260619-lfs-docs-prune.md`
+  - 最新 src/docs artifact prune 记录：`docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`
   - P20/P21 LLM runtime case 输入表：`docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`
   - 最新 thesis materials r6 report figure polish：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
   - 最新 leakage-safe private component ablation：`docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json`
@@ -152,6 +161,8 @@
   - 最新中期边界说明：`docs/midterm/boundaries-and-risks-2026-06-13.md`
   - 最新 P20 DeepSeek LLM preprocessing package：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_summary.json`
   - 最新 P21 LLM preprocessing comparison package：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json`
+  - 最新 public fusion refresh package：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json`
+  - 最新 public model comparison package：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json`
 
 ## 当前主线事实
 
@@ -249,14 +260,19 @@
     - 当前 `missing_vehicle_feature_count=965`
     - 当前 missing groups 已覆盖 `BUS6000019110021` 到 `BUS6000019110026`
   - `P18 thesis materials 刷新`：
-    - 旧 r2-p18/r3/r4 图包已由 P25 r5 替代并清理。
+    - 旧 r2-p18/r3/r4 图包已由 P25 r5 替代并清理；r5 又已由 P26 r6 接管并在 2026-06-21 深度清理中从 docs 产物目录删除。
     - 保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表。
   - `P16/P21/P24 thesis materials r5 图表质量刷新`：
-    - `docs/artifacts/assets/stage_i_thesis_figures/20260619T-stage-i-thesis-materials-r5-leakage-safe-refresh/`
-    - 当前 `figure_manifest.json` 已把低信息图替换为 evidence matrix、schema contract 对照、runtime semantic case 复盘、rotation availability matrix、weak-label 小网格、分任务 private ablation、model backbone ablation、task adapter ablation、中文 public transfer、semantic event fusion 和 LLM A0-A4 review flow。
+    - r5 曾把低信息图替换为 evidence matrix、schema contract 对照、runtime semantic case 复盘、rotation availability matrix、weak-label 小网格、分任务 private ablation、model backbone ablation、task adapter ablation、中文 public transfer、semantic event fusion 和 LLM A0-A4 review flow。
+    - 当前 r5 图包/报告已由 P26 r6 接管并按 `docs/artifacts/cleanup/20260621-deep-cleanup.md` 清理，仅保留在 git 历史中。
   - `P26 thesis materials r6 报告图重绘`：
     - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/`
     - 当前 `figure_manifest.json` 与 `figure_quality_audit.csv` 已记录 12 张 PNG、12 张 CSV、图片宽高、最小字号、中文标签策略、内部词检查和长 ID 处理策略；新增 `runtime_service_flow.png`，并把语义融合缺源情况降级为覆盖/支撑状态展示。
+  - `2026-06-21 深度清理`：
+    - 清理记录：`docs/artifacts/cleanup/20260621-deep-cleanup.md`
+    - 已删除 P25 r5 thesis figure 图包和对应 Stage I 报告。
+    - 已删除 P11 r3/r4 下两个空 `runs/` 目录，并清理本地 `src/tests/third_party` Python 编译缓存。
+    - 明确保留 P11 live r1 child run、P20/P21 runtime case 输入表、public adapter baseline summary 和 canonical Stage I src/scripts 入口。
   - `中期报告写作材料`：
     - `docs/midterm/midterm-fact-sheet-2026-06-13.md`
     - `docs/midterm/boundaries-and-risks-2026-06-13.md`

@@ -1,0 +1,117 @@
+"""Tests for P28 public fusion refresh workflow."""
+
+from __future__ import annotations
+
+import importlib.util
+import json
+import sys
+import tempfile
+from pathlib import Path
+import unittest
+
+import pandas as pd
+
+SRC = Path(__file__).resolve().parents[1] / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from chronaris.pipelines.stage_i.public.fusion_refresh import (  # noqa: E402
+    StageIPublicFusionRefreshConfig,
+    build_public_fusion_refresh_candidates,
+    run_stage_i_public_fusion_refresh,
+)
+from chronaris.pipelines.stage_i.public.sequence_preparation import (  # noqa: E402
+    StageISequencePreparationConfig,
+    run_stage_i_sequence_preparation,
+)
+
+_HELPER_SPEC = importlib.util.spec_from_file_location(
+    "stage_i_pipeline_helpers",
+    Path(__file__).resolve().with_name("test_stage_i_pipeline.py"),
+)
+if _HELPER_SPEC is None or _HELPER_SPEC.loader is None:  # pragma: no cover
+    raise RuntimeError("failed to load Stage I synthetic dataset helpers")
+_HELPER_MODULE = importlib.util.module_from_spec(_HELPER_SPEC)
+_HELPER_SPEC.loader.exec_module(_HELPER_MODULE)
+_write_mini_uab_dataset = _HELPER_MODULE._write_mini_uab_dataset
+_write_mini_nasa_csm_dataset = _HELPER_MODULE._write_mini_nasa_csm_dataset
+
+
+class StageIPublicFusionRefreshTest(unittest.TestCase):
+    def test_candidate_grid_records_required_refresh_dimensions(self) -> None:
+        candidates, grid = build_public_fusion_refresh_candidates(limit=2)
+        self.assertEqual(len(candidates), 2)
+        self.assertIn(128, grid["grid_spec"]["hidden_dim"])
+        self.assertIn("huber", grid["grid_spec"]["regression_loss"])
+        self.assertIn("robust_train", grid["grid_spec"]["target_transform"])
+        self.assertGreater(grid["full_candidate_count"], len(candidates))
+
+    def test_refresh_runs_screen_and_confirm_on_synthetic_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            dataset_root = root / "datasets"
+            _write_mini_uab_dataset(dataset_root)
+            _write_mini_nasa_csm_dataset(dataset_root)
+            uab_root = root / "uab_sequences"
+            nasa_root = root / "nasa_sequences"
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="uab_workload_dataset",
+                    artifact_root=str(uab_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=16,
+                )
+            )
+            run_stage_i_sequence_preparation(
+                StageISequencePreparationConfig(
+                    dataset_id="nasa_csm",
+                    artifact_root=str(nasa_root),
+                    dataset_root=str(dataset_root),
+                    profile="window_v2",
+                    target_steps=16,
+                )
+            )
+
+            result = run_stage_i_public_fusion_refresh(
+                StageIPublicFusionRefreshConfig(
+                    run_id="test-public-fusion-refresh",
+                    dataset_prepared_roots={
+                        "nasa_csm": str(nasa_root),
+                        "uab_workload_dataset": str(uab_root),
+                    },
+                    artifact_root=str(root / "refresh"),
+                    report_root=str(root / "reports"),
+                    screen_epochs=1,
+                    confirm_epochs=1,
+                    screen_max_folds=1,
+                    confirm_max_folds=1,
+                    screen_candidate_limit=1,
+                    confirm_top_k=1,
+                    device="cpu",
+                    require_cuda=False,
+                )
+            )
+            summary = json.loads(Path(result.summary_path).read_text(encoding="utf-8"))
+            self.assertIn("nasa_csm", summary["best_by_dataset_task"])
+            self.assertIn("uab_workload_dataset", summary["best_by_dataset_task"])
+            self.assertTrue(Path(summary["screen_leaderboard_csv"]).exists())
+            self.assertTrue(Path(summary["confirm_leaderboard_csv"]).exists())
+            self.assertTrue(Path(summary["fold_metrics_csv"]).exists())
+            self.assertTrue(Path(summary["training_curves_csv"]).exists())
+            self.assertTrue(Path(summary["progress_path"]).exists())
+            self.assertTrue(Path(summary["run_log_path"]).exists())
+            self.assertIn(summary["status"], {"completed", "partial"})
+            self.assertIn("fig_public_fusion_win_summary", summary["figure_paths"])
+            self.assertTrue(Path(summary["figure_paths"]["fig_public_fusion_win_summary"]).exists())
+            self.assertTrue(Path(result.evidence_manifest_path).exists())
+            self.assertTrue(Path(result.report_path).exists())
+            confirm = pd.read_csv(summary["confirm_leaderboard_csv"])
+            self.assertEqual(set(confirm["dataset_id"]), {"nasa_csm", "uab_workload_dataset"})
+            for candidate_root in confirm["artifact_root"]:
+                self.assertTrue((Path(candidate_root) / "config.json").exists())
+                self.assertTrue((Path(candidate_root) / "fold_metrics.csv").exists())
+
+
+if __name__ == "__main__":
+    unittest.main()

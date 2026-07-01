@@ -42,7 +42,7 @@ def _run_real_sortie_case_study(
         train_indices=np.arange(bundle.entry_count, dtype=int),
     )
     labels = bundle.objective_label_values.astype(int)
-    model = _train_model(
+    model, training_curves = _train_model(
         model_name=config.model_name,
         ordered_modalities=ordered_modalities,
         modality_arrays=normalized_arrays,
@@ -129,6 +129,19 @@ def _run_real_sortie_case_study(
         "verdict_counts": (
             sample_frame["projection_diagnostics_verdict"].value_counts().to_dict()
         ),
+        "training_curves": [
+            dict(
+                row,
+                dataset_id=STAGE_H_CASE_DATASET_ID,
+                model_name=config.model_name,
+                track="objective",
+                evaluation_group="real_sortie_case",
+                fold_index=1,
+                split_group="all",
+                seed=config.seed,
+            )
+            for row in training_curves
+        ],
     }
     sample_frame.to_csv(artifact_root / "sample_summary.csv", index=False)
     view_summary.to_csv(artifact_root / "view_summary.csv", index=False)
