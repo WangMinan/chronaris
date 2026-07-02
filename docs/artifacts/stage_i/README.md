@@ -72,6 +72,35 @@
   - CSV/JSON/MD：`cross_evidence_matrix.csv`、`cross_evidence_matrix.json`、`cross_evidence_summary.md`
   - figures：`fig_cross_evidence_matrix.png`、`fig_cross_evidence_metric_overview.png`、`fig_private_public_evidence_roles.png`、`fig_private_public_result_summary.png`、`fig_method_claim_support_map.png`
   - manifest：`evidence_manifest.json`
+- P34 task-aware heads confirm 资产：
+  - assets root：`../assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/`
+  - status：`completed`
+  - report：`stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md`
+  - CSV/JSON：`task_head_metrics_long.csv`、`task_head_metrics_wide.csv`、`improvement_vs_p30.csv`、`gate_contribution_summary.csv`、`t2_residual_decomposition.csv`、`contrastive_diagnostics.csv`、`gpu_perf_summary.json`
+  - figures：`fig_p34_t1_macro_f1_leaderboard.png`、`fig_p34_t2_rmse_leaderboard.png`、`fig_p34_t3_retrieval_leaderboard.png`、`fig_p34_delta_vs_p30_heatmap.png`
+  - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`
+- P35 stream-role-aware fusion completed 资产：
+  - assets root：`../assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/`
+  - status：`completed`
+  - report：`stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md`
+  - CSV/JSON：`route_manifest.json`、`gate_statistics.csv`、`route_decision_summary.csv`、`private_metrics.csv`、`public_metrics.csv`、`comparison_vs_p31.csv`、`comparison_vs_p34.csv`、`fold_metrics.csv`、`training_curves.csv`、`gpu_perf_summary.json`
+  - figures：`fig_p35_route_gate_statistics.png`、`fig_p35_private_task_delta.png`、`fig_p35_public_ablation_comparison.png`、`fig_p35_context_vs_vehicle_gate.png`、`fig_p35_nasa_macro_f1_route_comparison.png`、`fig_p35_uab_rmse_route_comparison.png`、`fig_p35_stream_role_decision_map.png`
+  - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`
+  - 2026-07-02 cleanup 后，nested public/private confirm 的 per-candidate dense predictions、partial CSV 和 checkpoint 不再作为 git 资产；aggregate metrics、figures、summary 和 trimmed logs 保留。
+- P36 optimized Chronaris re-evaluation completed 资产：
+  - assets root：`../assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/`
+  - status：`completed`
+  - report：`stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md`
+  - CSV/JSON：`optimized_private_comparison.csv`、`optimized_public_comparison.csv`、`optimized_delta_vs_p30.csv`、`optimized_delta_vs_p31.csv`、`optimized_delta_vs_p27_p28.csv`、`optimized_cross_evidence_matrix.csv`、`model_selection_summary.json`
+  - figures：`fig_p36_private_before_after.png`、`fig_p36_private_vs_thirdparty_delta.png`、`fig_p36_public_before_after.png`、`fig_p36_taskwise_win_summary.png`、`fig_p36_cross_evidence_matrix_v2.png`、`fig_p36_method_claim_support_map.png`
+  - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_command.txt`
+- Optimized model summary completed 资产：
+  - assets root：`../assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/`
+  - status：`completed`
+  - report：`stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md`
+  - CSV/JSON：`optimized_model_summary.json`、`optimized_model_summary.csv`、`key_metric_summary.csv`、`stream_role_gate_summary.csv`、`gpu_runtime_summary.csv`、`claim_boundary_summary.csv`
+  - figures：`fig_model_summary_status.png`、`fig_model_summary_metric_delta.png`、`fig_model_summary_gate_profile.png`、`fig_model_summary_gpu_runtime.png`
+  - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_commands.txt`
 - private component ablation（历史协议）：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
 - public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
 - public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
@@ -111,6 +140,8 @@
 - P30 private third-party comparison 只能写成 T1/T2/T3 private proxy task 的第三方对比；当前结果是混合结果，不能写成 Chronaris 全面胜出。
 - P31 public fusion ablation 只能写成 public adapter / context proxy 上的组件敏感性诊断；不替代 P28 confirmed metrics，也不证明 public 第二模态等价于私有航电流。
 - P32 cross-evidence matrix 用于 private/public/proxy/component 四层证据分工；不要把四层指标混成单一排行榜。
+- P34/P35/P36 与 optimized model summary 当前为 optimized v2/v3 CUDA confirm / completed aggregation / summary，不替代 P30/P31/P32 completed 结果；引用时必须写明 P34 是 20-epoch confirm、P35 是 requested private/public v3 confirm、public 第二流仍是 context proxy，也不得写成 optimized Chronaris 全面超过全部 baseline。
+- 2026-07-02 后，本轮 P34/P35/P36/summary 柱状图已基于现有 CSV/JSON 重绘并增加短数值标签；future run 默认使用 `checkpoint_policy=last`，checkpoint binary 和 dense prediction CSV 不进入 git。清理/profiling 入口：`../cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md`。
 - 历史 archive 只用于追溯，不作为当前状态入口。
 - 历史 raw replay、prepared bundle 和大型 manifest 已按 `../cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 中清理；引用旧实验时优先看报告、summary、plots 和当前索引。
 - 2026-07-01 后，不要继续链接已清理的早期 public torch/mainline/fusion screen round1 archive-only 路径；如需复跑，使用当前 `scripts/stage_i/public/` 入口重新生成。

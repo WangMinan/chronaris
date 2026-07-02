@@ -1,0 +1,196 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3",
+  "models": [
+    "chronaris_v3_stream_role_fusion",
+    "v3_no_role_gate",
+    "v3_fixed_causal_lag"
+  ],
+  "seeds": [
+    42,
+    17,
+    29
+  ],
+  "split_strategy": [
+    "leave_one_view_out",
+    "leave_one_sortie_out"
+  ],
+  "evidence_role": "private_real_dual_stream",
+  "resume": false,
+  "skip_completed": true,
+  "gpuopt_enabled": true,
+  "tensor_cache": "auto",
+  "auto_batch_size": true,
+  "amp": "bf16",
+  "torch_compile": "off",
+  "num_workers": 24,
+  "parallel_fold_prep": 8,
+  "stage_name": "stage_i_private_thirdparty_comparison",
+  "run_id": "20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-02T03:49:24.599224Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-02T03:43:43.515916Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3",
+      "models": [
+        "chronaris_v3_stream_role_fusion",
+        "v3_no_role_gate",
+        "v3_fixed_causal_lag"
+      ],
+      "seeds": [
+        42,
+        17,
+        29
+      ],
+      "split_strategy": [
+        "leave_one_view_out",
+        "leave_one_sortie_out"
+      ],
+      "evidence_role": "private_real_dual_stream",
+      "resume": false,
+      "skip_completed": true,
+      "gpuopt_enabled": true,
+      "tensor_cache": "auto",
+      "auto_batch_size": true,
+      "amp": "bf16",
+      "torch_compile": "off",
+      "num_workers": 24,
+      "parallel_fold_prep": 8
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:43:48.525128Z",
+      "event": "sources_loaded",
+      "sample_count": 111,
+      "task_entry_count": 333,
+      "view_count": 3,
+      "sortie_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:43:50.484341Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "chronaris_v3_stream_role_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:44:46.888109Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "chronaris_v3_stream_role_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:44:46.888319Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "v3_no_role_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:45:40.819897Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "v3_no_role_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:45:40.820095Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "v3_fixed_causal_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:46:35.011619Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "v3_fixed_causal_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:46:35.011871Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "chronaris_v3_stream_role_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:47:29.820718Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "chronaris_v3_stream_role_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:47:29.820932Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "v3_no_role_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:48:24.427506Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "v3_no_role_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:48:24.484964Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "v3_fixed_causal_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:18.398403Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "v3_fixed_causal_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:18.398977Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "chronaris_v3_stream_role_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:18.985452Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "chronaris_v3_stream_role_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:18.985728Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "v3_no_role_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:19.370195Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "v3_no_role_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:19.370455Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "v3_fixed_causal_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:19.758275Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "v3_fixed_causal_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-02T03:49:24.599224Z",
+      "event": "finished",
+      "status": "completed",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3/private_thirdparty_summary.json",
+      "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3/evidence_manifest.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/nested_reports/stage-i-private-thirdparty-comparison-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3.md"
+    }
+  ],
+  "sample_count": 111,
+  "task_entry_count": 333,
+  "view_count": 3,
+  "sortie_count": 2,
+  "task_name": "T3_paired_pilot_window_retrieval",
+  "model_name": "v3_fixed_causal_lag",
+  "status": "completed",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3/private_thirdparty_summary.json",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/nested_reports/stage-i-private-thirdparty-comparison-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3.md"
+}

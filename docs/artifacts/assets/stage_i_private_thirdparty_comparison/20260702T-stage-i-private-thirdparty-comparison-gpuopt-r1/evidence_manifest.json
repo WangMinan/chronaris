@@ -26,7 +26,7 @@
   "seed_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/seed_metrics.csv",
   "training_curves_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/training_curves.csv",
   "candidate_leaderboard_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/candidate_leaderboard.csv",
-  "fold_predictions_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fold_predictions.csv",
+  "fold_predictions_csv": null,
   "gpu_perf_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/gpu_perf_summary.json",
   "gpu_perf_batches_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/gpu_perf_batches.csv",
   "gpu_perf_fold_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/gpu_perf_fold_summary.csv",
@@ -92,7 +92,7 @@
   "private_third_party_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_third_party_long.csv",
   "private_third_party_wide_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_third_party_wide.csv",
   "private_third_party_leaderboard_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_third_party_leaderboard.csv",
-  "predictions_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fold_predictions.csv",
+  "predictions_csv": null,
   "resume_command_txt": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/resume_command.txt",
   "gpuopt_enabled": true,
   "gpuopt_config": {
@@ -126,5 +126,6 @@
     ],
     "label_policy": "labels unchanged; test fold statistics excluded from normalization and target transforms",
     "candidate_policy": "T3 same_sortie_cross_pilot"
-  }
+  },
+  "prediction_exports_pruned": true
 }

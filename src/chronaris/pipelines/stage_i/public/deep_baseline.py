@@ -90,6 +90,7 @@ class StageIDeepBaselineConfig:
     torch_compile: str = "off"
     profile_gpu: bool = False
     eval_batch_size: int | None = None
+    checkpoint_policy: str = "last"
 
 
 @dataclass(frozen=True, slots=True)
@@ -142,6 +143,7 @@ class StageIDeepComparisonConfig:
     torch_compile: str = "off"
     profile_gpu: bool = False
     eval_batch_size: int | None = None
+    checkpoint_policy: str = "last"
 
 
 @dataclass(frozen=True, slots=True)
@@ -178,6 +180,7 @@ def run_stage_i_deep_baseline(
             "max_folds": config.max_folds,
             "heartbeat_seconds": config.heartbeat_seconds,
             "batch_log_interval": config.batch_log_interval,
+            "checkpoint_policy": config.checkpoint_policy,
         },
     ) as progress:
         dataset = _load_prepared_sequence_dataset(config.prepared_artifact_root)
@@ -284,6 +287,7 @@ def run_stage_i_deep_comparison(
                     torch_compile=config.torch_compile,
                     profile_gpu=config.profile_gpu,
                     eval_batch_size=config.eval_batch_size,
+                    checkpoint_policy=config.checkpoint_policy,
                 ),
             )
             dataset_model_results[model_name] = {

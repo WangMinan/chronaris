@@ -8,7 +8,7 @@
 | --- | --- | --- | --- | --- |
 | 仓库已完成从私有 MySQL/InfluxDB 到 Stage H 双流 view 的样本组织 | 强 | data_contract / stage_h | `docs/artifacts/stage_h/stage-h-closure-2026-04-27.md`; `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json`; `docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json` | 全量数据集工程化完成 |
 | 当前中期私有样本覆盖 2 个 sortie、3 个双流 view、111 个窗口样本 | 强 | private_stage_h | `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`; `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json` | 覆盖全部架次和全部飞行数据 |
-| Phase C 已完成真实 Stage H weak-label 联合训练 | 强 | thesis_weak_label | `docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`; `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt` | 人工真值风险/负荷/事件任务已完成 |
+| Phase C 已完成真实 Stage H weak-label 联合训练 | 强 | thesis_weak_label | `docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`; `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`；checkpoint binary 为远程开发机 local-only 资产，不进入 git | 人工真值风险/负荷/事件任务已完成 |
 | risk_proxy/workload_proxy/event_replay_tag 可用于验证论文任务原型 | 中强 | thesis_weak_label | `multitask_summary.json`; `stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md` | 三个任务就是最终人工标注任务 |
 | P11 已完成 bounded proxy 与 live_influx stable/resume sweep | 强 | thesis_weak_label | `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`; `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json` | 4 组合 live_influx 大网格全部完成 |
 | P11 对更大 live_influx 尝试没有伪造成成功，保留 partial blocker | 强 | reproducibility_boundary | `partial_summary.json`; `run.log`; `blocked_at_run_index=3` | blocker 已经被解决或可以忽略 |
@@ -20,6 +20,7 @@
 | P30 已完成 private T1/T2/T3 third-party comparison | 中强但限域 | private_proxy / private_thirdparty_comparison | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_thirdparty_summary.json`; `docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md` | Chronaris 在所有 private proxy 任务上全面胜出；T1/T2/T3 是论文最终人工真值任务 |
 | P31 已完成 public fusion component ablation | 中强但限域 | public_component_ablation / context_proxy | `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`; `docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md` | full fusion 在 public context proxy 上全面最优；public context proxy 等价于私有航电流 |
 | P32 已把 private/public/proxy/component 证据组织为 cross-evidence matrix | 强 | cross_layer_index | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`; `docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md` | 把 private Stage H、private proxy、public adapter 和 public component ablation 混成单一排行榜 |
+| P34/P35/P36 已把 P30/P31 诊断转化为 optimized Chronaris CUDA confirm 与统一 summary | 中强但限域 | optimized_confirm / stream_role_confirm / aggregation | `docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/evidence_manifest.json`; `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/evidence_manifest.json`; `docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/evidence_manifest.json`; `docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/evidence_manifest.json` | 写成 optimized Chronaris 全面超过全部 baseline；忽略 T3 当前 mixed 结果、private proxy benchmark 或 public context proxy 边界 |
 | rigid_body translation + vertical 已启用 | 强 | rigid_body_support | `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json` | 完整 6DoF 已启用 |
 | rotation disabled 是字段缺失诊断，不是忘做 | 强 | rotation_diagnostics | `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json` | rotation 已完整验证 |
 | semantic event support 已覆盖 3 个双流 view | 强 | semantic_support | `docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`; `stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md` | 已完成专家语义事件标注体系 |
@@ -37,10 +38,10 @@
 | --- | --- |
 | 研究背景与问题 | 数据接入、双流 view、异构时序对齐需求 |
 | 研究内容与技术路线 | Stage H、Phase C、Phase D/E/F、P10-P18 |
-| 已完成工作 | Phase C 训练、P11 sweep、P12-P15、P16-P18、P20-P21、P27/P28、P30-P32 |
-| 实验结果与分析 | P11、P12、P13/P14、P27/P28、P30/P31、P32、rigid_body、semantic、runtime |
-| 存在问题 | weak-label、partial live grid、native aligned、rotation disabled、样本规模、public context proxy 与 private real dual-stream 不等价、P30/P31 混合结果 |
-| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、P21 human review packet 填写、semantic support 带 LLM query specs 复跑、围绕 P30/P31 混合结果做模型/数据诊断 |
+| 已完成工作 | Phase C 训练、P11 sweep、P12-P15、P16-P18、P20-P21、P27/P28、P30-P32、P34-P36 optimized confirm |
+| 实验结果与分析 | P11、P12、P13/P14、P27/P28、P30/P31、P32、P34/P35/P36 summary、rigid_body、semantic、runtime |
+| 存在问题 | weak-label、partial live grid、native aligned、rotation disabled、样本规模、public context proxy 与 private real dual-stream 不等价、P30/P31 混合结果、T3 optimized confirm 仍混合 |
+| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、P21 human review packet 填写、semantic support 带 LLM query specs 复跑、围绕 P34/P35/P36 completed evidence 做论文表格与讨论打磨 |
 
 ## 文献检索映射
 

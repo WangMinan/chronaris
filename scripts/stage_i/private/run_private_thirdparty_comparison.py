@@ -100,6 +100,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--parallel-fold-prep", type=int, default=8)
     parser.add_argument("--profile-gpu", action="store_true", default=True)
     parser.add_argument("--no-profile-gpu", dest="profile_gpu", action="store_false")
+    parser.add_argument("--checkpoint-policy", choices=("off", "last", "epoch_and_fold"), default="last")
     return parser.parse_args()
 
 
@@ -156,6 +157,7 @@ def main() -> int:
             eval_batch_size=_parse_optional_int(args.eval_batch_size),
             num_workers=args.num_workers,
             parallel_fold_prep=args.parallel_fold_prep,
+            checkpoint_policy=args.checkpoint_policy,
         )
     )
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))

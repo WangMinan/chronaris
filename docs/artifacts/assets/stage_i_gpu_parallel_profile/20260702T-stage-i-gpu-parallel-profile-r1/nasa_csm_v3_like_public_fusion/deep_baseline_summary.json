@@ -1,0 +1,271 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "model_name": "chronaris_public_fusion",
+  "model_config": {
+    "hidden_dim": 64,
+    "num_heads": 4,
+    "layers": 2,
+    "dropout": 0.1,
+    "epochs": 1,
+    "learning_rate": 0.001,
+    "batch_size": 2048,
+    "fusion_event_bias_weight": 0.25,
+    "fusion_lag_window_points": 16,
+    "fusion_normalize_states": true,
+    "train_sampling_policy": "balanced_class",
+    "regression_loss": "mse",
+    "huber_delta": 1.0,
+    "target_transform": "none",
+    "gradient_clip_max_norm": null,
+    "weight_decay": 0.0,
+    "heartbeat_seconds": 60.0,
+    "batch_log_interval": 20,
+    "tensor_cache": "auto",
+    "max_cache_gb": 18.0,
+    "pin_memory": true,
+    "non_blocking_copy": true,
+    "auto_batch_size": true,
+    "batch_size_candidates": [
+      2048,
+      1024,
+      512,
+      256,
+      128
+    ],
+    "amp": "bf16",
+    "amp_eval": true,
+    "torch_compile": "off",
+    "profile_gpu": true,
+    "eval_batch_size": 2048,
+    "checkpoint_policy": "off"
+  },
+  "runtime_device": "cuda",
+  "artifact_root": "docs/artifacts/assets/stage_i_gpu_parallel_profile/20260702T-stage-i-gpu-parallel-profile-r1/nasa_csm_v3_like_public_fusion",
+  "prepared_artifact_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
+  "objective": {
+    "track": "objective",
+    "model_name": "chronaris_public_fusion",
+    "groups": {
+      "benchmark_only": {
+        "sample_count": 87,
+        "fold_count": 1,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.29957805907172996,
+        "balanced_accuracy": 0.3333333333333333,
+        "per_class_recall": {
+          "1": 0.0,
+          "2": 1.0,
+          "5": 0.0
+        },
+        "confusion_matrix": [
+          [
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            71,
+            0
+          ],
+          [
+            0,
+            10,
+            0
+          ]
+        ]
+      },
+      "loft_only": {
+        "sample_count": 100,
+        "fold_count": 1,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.3082437275985663,
+        "balanced_accuracy": 0.3333333333333333,
+        "per_class_recall": {
+          "1": 0.0,
+          "2": 1.0,
+          "5": 0.0
+        },
+        "confusion_matrix": [
+          [
+            0,
+            6,
+            0
+          ],
+          [
+            0,
+            86,
+            0
+          ],
+          [
+            0,
+            8,
+            0
+          ]
+        ]
+      },
+      "combined": {
+        "sample_count": 187,
+        "fold_count": 1,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.30426356589147285,
+        "balanced_accuracy": 0.3333333333333333,
+        "per_class_recall": {
+          "1": 0.0,
+          "2": 1.0,
+          "5": 0.0
+        },
+        "confusion_matrix": [
+          [
+            0,
+            12,
+            0
+          ],
+          [
+            0,
+            157,
+            0
+          ],
+          [
+            0,
+            18,
+            0
+          ]
+        ]
+      }
+    },
+    "plot_paths": {
+      "objective_benchmark_only_confusion_matrix": "docs/artifacts/assets/stage_i_gpu_parallel_profile/20260702T-stage-i-gpu-parallel-profile-r1/nasa_csm_v3_like_public_fusion/plots/objective_benchmark_only_confusion_matrix.png",
+      "objective_loft_only_confusion_matrix": "docs/artifacts/assets/stage_i_gpu_parallel_profile/20260702T-stage-i-gpu-parallel-profile-r1/nasa_csm_v3_like_public_fusion/plots/objective_loft_only_confusion_matrix.png",
+      "objective_combined_confusion_matrix": "docs/artifacts/assets/stage_i_gpu_parallel_profile/20260702T-stage-i-gpu-parallel-profile-r1/nasa_csm_v3_like_public_fusion/plots/objective_combined_confusion_matrix.png",
+      "objective_primary_metrics": "docs/artifacts/assets/stage_i_gpu_parallel_profile/20260702T-stage-i-gpu-parallel-profile-r1/nasa_csm_v3_like_public_fusion/plots/objective_primary_metrics.png"
+    },
+    "training_curves": [
+      {
+        "epoch": 1,
+        "train_loss": 1.1015625,
+        "batch_count": 1,
+        "task": "classification",
+        "model_name": "chronaris_public_fusion",
+        "learning_rate": 0.001,
+        "batch_size": 2048,
+        "requested_batch_size": 2048,
+        "weight_decay": 0.0,
+        "regression_loss": "mse",
+        "target_transform": "none",
+        "checkpoint_last_path": null,
+        "checkpoint_policy": "off",
+        "tensor_cache_mode": "cuda",
+        "requested_tensor_cache": "auto",
+        "cache_build_time_s": 0.20167382480576634,
+        "estimated_cache_gb": 0.11489880457520485,
+        "actual_cache_gb": 0.11489880457520485,
+        "cache_fallback_reason": null,
+        "amp_mode": "bf16",
+        "amp_fallback_reason": null,
+        "auto_batch_size": true,
+        "batch_size_attempts": "[{\"batch_size\": 2048, \"sample_size\": 1364, \"status\": \"ok\", \"elapsed_s\": 0.06599850906059146, \"samples_per_sec\": 20667.13353702806, \"estimated_epoch_s\": 0.06599850906059146, \"loss\": 1.0295345783233643, \"gpu_peak_allocated_gb\": 2.0853867530822754, \"gpu_peak_reserved_gb\": 2.375, \"gpu_memory_pressure\": 0.16656828220734016, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 1024, \"sample_size\": 1024, \"status\": \"ok\", \"elapsed_s\": 0.0516505129635334, \"samples_per_sec\": 19825.553343932334, \"estimated_epoch_s\": 0.1033010259270668, \"loss\": 1.0325889587402344, \"gpu_peak_allocated_gb\": 1.5858983993530273, \"gpu_peak_reserved_gb\": 1.8203125, \"gpu_memory_pressure\": 0.1434445416980479, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 512, \"sample_size\": 512, \"status\": \"ok\", \"elapsed_s\": 0.03192810108885169, \"samples_per_sec\": 16036.030410176027, \"estimated_epoch_s\": 0.09578430326655507, \"loss\": 1.0236968994140625, \"gpu_peak_allocated_gb\": 0.859837532043457, \"gpu_peak_reserved_gb\": 0.970703125, \"gpu_memory_pressure\": 0.10802613634050522, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 256, \"sample_size\": 256, \"status\": \"ok\", \"elapsed_s\": 0.025594748090952635, \"samples_per_sec\": 10002.05194793428, \"estimated_epoch_s\": 0.1535684885457158, \"loss\": 1.0274810791015625, \"gpu_peak_allocated_gb\": 0.4970412254333496, \"gpu_peak_reserved_gb\": 0.546875, \"gpu_memory_pressure\": 0.09035764447248967, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 128, \"sample_size\": 128, \"status\": \"ok\", \"elapsed_s\": 0.02319162804633379, \"samples_per_sec\": 5519.233050145208, \"estimated_epoch_s\": 0.2551079085096717, \"loss\": 1.02105712890625, \"gpu_peak_allocated_gb\": 0.31516313552856445, \"gpu_peak_reserved_gb\": 0.34375, \"gpu_memory_pressure\": 0.08188979583528407, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 2048, \"status\": \"selected\", \"selection_policy\": \"min_estimated_epoch_seconds_with_memory_pressure_filter\"}]",
+        "torch_compile": "off",
+        "compile_mode": "off",
+        "compile_status": "off",
+        "compile_warmup_time_s": 0.0,
+        "compile_fallback_reason": null,
+        "track": "objective",
+        "evaluation_group": "benchmark_only",
+        "fold_index": 1,
+        "split_group": "subject_10",
+        "seed": 42,
+        "dataset_id": "nasa_csm"
+      },
+      {
+        "epoch": 1,
+        "train_loss": 1.109375,
+        "batch_count": 1,
+        "task": "classification",
+        "model_name": "chronaris_public_fusion",
+        "learning_rate": 0.001,
+        "batch_size": 2048,
+        "requested_batch_size": 2048,
+        "weight_decay": 0.0,
+        "regression_loss": "mse",
+        "target_transform": "none",
+        "checkpoint_last_path": null,
+        "checkpoint_policy": "off",
+        "tensor_cache_mode": "cuda",
+        "requested_tensor_cache": "auto",
+        "cache_build_time_s": 0.10931463586166501,
+        "estimated_cache_gb": 0.11489880457520485,
+        "actual_cache_gb": 0.11489880457520485,
+        "cache_fallback_reason": null,
+        "amp_mode": "bf16",
+        "amp_fallback_reason": null,
+        "auto_batch_size": true,
+        "batch_size_attempts": "[{\"batch_size\": 2048, \"sample_size\": 1259, \"status\": \"ok\", \"elapsed_s\": 0.0598801770247519, \"samples_per_sec\": 21025.321943847684, \"estimated_epoch_s\": 0.0598801770247519, \"loss\": 1.0361491441726685, \"gpu_peak_allocated_gb\": 1.9380455017089844, \"gpu_peak_reserved_gb\": 2.27734375, \"gpu_memory_pressure\": 0.16249720113176053, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 1024, \"sample_size\": 1024, \"status\": \"ok\", \"elapsed_s\": 0.049928491935133934, \"samples_per_sec\": 20509.331652363137, \"estimated_epoch_s\": 0.09985698387026787, \"loss\": 1.0401802062988281, \"gpu_peak_allocated_gb\": 1.5854101181030273, \"gpu_peak_reserved_gb\": 1.8203125, \"gpu_memory_pressure\": 0.1434445416980479, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 512, \"sample_size\": 512, \"status\": \"ok\", \"elapsed_s\": 0.030382775701582432, \"samples_per_sec\": 16851.653220523014, \"estimated_epoch_s\": 0.0911483271047473, \"loss\": 1.0338592529296875, \"gpu_peak_allocated_gb\": 0.860692024230957, \"gpu_peak_reserved_gb\": 0.966796875, \"gpu_memory_pressure\": 0.10786329309748204, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 256, \"sample_size\": 256, \"status\": \"ok\", \"elapsed_s\": 0.023701316211372614, \"samples_per_sec\": 10801.087910770264, \"estimated_epoch_s\": 0.11850658105686307, \"loss\": 1.034820556640625, \"gpu_peak_allocated_gb\": 0.49697256088256836, \"gpu_peak_reserved_gb\": 0.546875, \"gpu_memory_pressure\": 0.09035764447248967, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 128, \"sample_size\": 128, \"status\": \"ok\", \"elapsed_s\": 0.023848550859838724, \"samples_per_sec\": 5367.202424678712, \"estimated_epoch_s\": 0.23848550859838724, \"loss\": 1.032196044921875, \"gpu_peak_allocated_gb\": 0.31519365310668945, \"gpu_peak_reserved_gb\": 0.34375, \"gpu_memory_pressure\": 0.08188979583528407, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 2048, \"status\": \"selected\", \"selection_policy\": \"min_estimated_epoch_seconds_with_memory_pressure_filter\"}]",
+        "torch_compile": "off",
+        "compile_mode": "off",
+        "compile_status": "off",
+        "compile_warmup_time_s": 0.0,
+        "compile_fallback_reason": null,
+        "track": "objective",
+        "evaluation_group": "loft_only",
+        "fold_index": 1,
+        "split_group": "subject_10",
+        "seed": 42,
+        "dataset_id": "nasa_csm"
+      },
+      {
+        "epoch": 1,
+        "train_loss": 1.1067708333333333,
+        "batch_count": 3,
+        "task": "classification",
+        "model_name": "chronaris_public_fusion",
+        "learning_rate": 0.001,
+        "batch_size": 1024,
+        "requested_batch_size": 2048,
+        "weight_decay": 0.0,
+        "regression_loss": "mse",
+        "target_transform": "none",
+        "checkpoint_last_path": null,
+        "checkpoint_policy": "off",
+        "tensor_cache_mode": "cuda",
+        "requested_tensor_cache": "auto",
+        "cache_build_time_s": 0.17274129763245583,
+        "estimated_cache_gb": 0.11489880457520485,
+        "actual_cache_gb": 0.11489880457520485,
+        "cache_fallback_reason": null,
+        "amp_mode": "bf16",
+        "amp_fallback_reason": null,
+        "auto_batch_size": true,
+        "batch_size_attempts": "[{\"batch_size\": 2048, \"sample_size\": 2048, \"status\": \"ok\", \"elapsed_s\": 0.08860798785462976, \"samples_per_sec\": 23113.040365615212, \"estimated_epoch_s\": 0.1772159757092595, \"loss\": 1.043100357055664, \"gpu_peak_allocated_gb\": 3.0381455421447754, \"gpu_peak_reserved_gb\": 3.39453125, \"gpu_memory_pressure\": 0.2090703686363914, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 1024, \"sample_size\": 1024, \"status\": \"ok\", \"elapsed_s\": 0.050018503330647945, \"samples_per_sec\": 20472.423839450676, \"estimated_epoch_s\": 0.15005550999194384, \"loss\": 1.0436973571777344, \"gpu_peak_allocated_gb\": 1.5854101181030273, \"gpu_peak_reserved_gb\": 1.8203125, \"gpu_memory_pressure\": 0.1434445416980479, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 512, \"sample_size\": 512, \"status\": \"ok\", \"elapsed_s\": 0.030496607068926096, \"samples_per_sec\": 16788.752887913623, \"estimated_epoch_s\": 0.18297964241355658, \"loss\": 1.0451583862304688, \"gpu_peak_allocated_gb\": 0.860692024230957, \"gpu_peak_reserved_gb\": 0.966796875, \"gpu_memory_pressure\": 0.10786329309748204, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 256, \"sample_size\": 256, \"status\": \"ok\", \"elapsed_s\": 0.025387828703969717, \"samples_per_sec\": 10083.572052775473, \"estimated_epoch_s\": 0.2792661157436669, \"loss\": 1.05548095703125, \"gpu_peak_allocated_gb\": 0.49697256088256836, \"gpu_peak_reserved_gb\": 0.546875, \"gpu_memory_pressure\": 0.09035764447248967, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 128, \"sample_size\": 128, \"status\": \"ok\", \"elapsed_s\": 0.024442371912300587, \"samples_per_sec\": 5236.807641225039, \"estimated_epoch_s\": 0.5132898101583123, \"loss\": 1.05047607421875, \"gpu_peak_allocated_gb\": 0.31519365310668945, \"gpu_peak_reserved_gb\": 0.34375, \"gpu_memory_pressure\": 0.08188979583528407, \"memory_pressure_limit\": 0.88}, {\"batch_size\": 1024, \"status\": \"selected\", \"selection_policy\": \"min_estimated_epoch_seconds_with_memory_pressure_filter\"}]",
+        "torch_compile": "off",
+        "compile_mode": "off",
+        "compile_status": "off",
+        "compile_warmup_time_s": 0.0,
+        "compile_fallback_reason": null,
+        "track": "objective",
+        "evaluation_group": "combined",
+        "fold_index": 1,
+        "split_group": "subject_10",
+        "seed": 42,
+        "dataset_id": "nasa_csm"
+      }
+    ]
+  },
+  "subjective": null,
+  "reference_comparison": null,
+  "training_curves_path": "docs/artifacts/assets/stage_i_gpu_parallel_profile/20260702T-stage-i-gpu-parallel-profile-r1/nasa_csm_v3_like_public_fusion/training_curves.csv",
+  "training_curve_count": 3
+}

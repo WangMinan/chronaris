@@ -24,8 +24,6 @@
     "removed_paths": [
       "screen/",
       "confirm/",
-      "fold_predictions.csv",
-      "predictions.csv",
       "training_curves.partial.csv",
       "fold_metrics.partial.csv",
       "screen_leaderboard.partial.csv",
@@ -46,7 +44,8 @@
       "resume_command.txt",
       "run.log",
       "progress.json"
-    ]
+    ],
+    "prediction_exports_pruned": true
   },
   "public_ablation_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_ablation_config.json",
   "public_fusion_ablation_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_config.json",
@@ -119,5 +118,6 @@
     "evidence_role": "public_adapter_context_proxy_evidence",
     "data_role": "public_context_proxy",
     "target_transform_policy": "fit on train fold only"
-  }
+  },
+  "prediction_exports_pruned": true
 }

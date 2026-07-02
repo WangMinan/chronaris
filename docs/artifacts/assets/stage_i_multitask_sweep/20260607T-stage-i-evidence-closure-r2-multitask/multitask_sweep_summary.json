@@ -2054,7 +2054,7 @@
       "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/thesis_task_manifest.jsonl",
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
       "evidence_layer": "thesis_weak_label",
       "git_commit": "57ca739638d65d4f17845e2cc0cf6da6dffb0793",
       "source_manifests": {
@@ -2068,14 +2068,15 @@
       "test_total": 1024.8099895974865,
       "test_task_total": 2.9292924715125044,
       "test_causal_total": 0.9343596334042756,
-      "validation_total": 1024.7279829545455
+      "validation_total": 1024.7279829545455,
+      "prediction_exports_pruned": true
     },
     {
       "child_run_id": "20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3",
       "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/thesis_task_manifest.jsonl",
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
       "evidence_layer": "thesis_weak_label",
       "git_commit": "57ca739638d65d4f17845e2cc0cf6da6dffb0793",
       "source_manifests": {
@@ -2089,7 +2090,8 @@
       "test_total": 1025.0848388671875,
       "test_task_total": 2.957319394401882,
       "test_causal_total": 0.9351752607718758,
-      "validation_total": 1025.0086780894887
+      "validation_total": 1025.0086780894887,
+      "prediction_exports_pruned": true
     }
   ],
   "child_runs": [
@@ -2097,13 +2099,15 @@
       "run_id": "20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/thesis_task_manifest.jsonl"
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
+      "prediction_exports_pruned": true
     },
     {
       "run_id": "20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/thesis_task_manifest.jsonl"
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
+      "prediction_exports_pruned": true
     }
   ],
   "best_run": {
@@ -2111,7 +2115,7 @@
     "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone",
     "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json",
     "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
-    "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/thesis_task_manifest.jsonl",
+    "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
     "evidence_layer": "thesis_weak_label",
     "git_commit": "57ca739638d65d4f17845e2cc0cf6da6dffb0793",
     "source_manifests": {
@@ -2125,6 +2129,8 @@
     "test_total": 1024.8099895974865,
     "test_task_total": 2.9292924715125044,
     "test_causal_total": 0.9343596334042756,
-    "validation_total": 1024.7279829545455
-  }
+    "validation_total": 1024.7279829545455,
+    "prediction_exports_pruned": true
+  },
+  "prediction_exports_pruned": true
 }

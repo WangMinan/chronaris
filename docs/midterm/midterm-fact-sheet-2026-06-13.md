@@ -11,7 +11,7 @@
 - 数据链路层：Stage E/F/G(min)/H 历史真实链路已经收口，Stage H 可稳定导出标准化融合特征。
 - 模型主线层：Stage I Phase A/B/C 已完成统一骨干、真实 Stage H weak-label 联合训练、checkpoint 导出和 private/thesis 分层资产。
 - 证据补强层：Phase D/E/F 已完成刚体物理约束、语义事件融合 support、runtime replay/service 补强。
-- 主动证据层：P10-P18、P27/P28 与 P30/P31/P32 已完成，覆盖 evidence runner、P11 weak-label sweep、private component ablation、public adapter/model comparison、private third-party comparison、public fusion ablation、transfer boundary、rotation audit、thesis figures、runtime smoke、schema contract 和 cross-evidence matrix。
+- 主动证据层：P10-P18、P27/P28、P30/P31/P32 与 P34/P35/P36 optimized confirm 已完成，覆盖 evidence runner、P11 weak-label sweep、private component ablation、public adapter/model comparison、private third-party comparison、public fusion ablation、transfer boundary、rotation audit、thesis figures、runtime smoke、schema contract、cross-evidence matrix 和 optimized model summary。
 - 文档与索引层：当前状态、任务队列、产物索引和 Stage I 报告入口已经同步到 `docs/STATE.md`、`docs/implementation/TASKS.md`、`docs/artifacts/ARTIFACTS.md`、`docs/artifacts/stage_i/README.md`。
 
 ## 2. 当前论文目标与仓库能力
@@ -60,7 +60,7 @@
 
 - 报告：[../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md)
 - Summary：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`
-- Checkpoint：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt`
+- Checkpoint binary：远程开发机 local-only / 可重新生成资产；repo 内引用 `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json` 与对应报告，不再把 `.pt` 写入 git。
 
 关键指标：
 
@@ -294,7 +294,7 @@ best_by_category：
 - UAB/NASA 第二模态是 context proxy，不是论文严格意义上的真实航电流。
 - 不能把 public adapter 结果改写为私有双流连续对齐主线 fully closed。
 
-### 8.5 P27/P28/P30/P31/P32 public/private comparison 与 cross-evidence matrix
+### 8.5 P27/P28/P30/P31/P32/P34-P36 public/private comparison 与 optimized summary
 
 当前新增比较实验入口：
 
@@ -303,6 +303,10 @@ best_by_category：
 - P30 private third-party comparison：`docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_thirdparty_summary.json`
 - P31 public fusion ablation：`docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`
 - P32 cross-evidence matrix：`docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`
+- P34 task-aware heads：`docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/evidence_manifest.json`
+- P35 stream-role fusion：`docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/evidence_manifest.json`
+- P36 optimized re-evaluation：`docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/evidence_manifest.json`
+- Optimized model summary：`docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/evidence_manifest.json`
 
 P30 private third-party comparison 使用 private real dual-stream Stage H 的 `111` 个窗口、`3` 个 view、`2` 个 sortie，对 `chronaris_full`、`mult`、`contiformer`、`naive_time_sync` 和 `classical_baseline` 做 T1/T2/T3 proxy task 对比。当前结果是混合对比：`chronaris_full` 在 T3 top3/top5/MRR 上优于 `naive_time_sync`，但 T1 macro-F1 低于 MulT/ContiFormer/classical，T2 RMSE 也未全面领先 MulT/ContiFormer；不能写成 Chronaris 全面胜出或人工真值任务闭环。
 
@@ -316,10 +320,12 @@ P31 public fusion ablation 在 NASA CSM 与 UAB workload public context proxy �
 
 P32 cross-evidence matrix 将 private/public/proxy/component 证据统一成 `292` 行矩阵：`private_thirdparty_comparison=72`、`private_component_ablation=36`、`public_model_comparison=80`、`public_component_ablation=104`。中期报告可以用它说明证据层级和边界，但不能把 private Stage H、private proxy、public adapter、public context proxy 结果混成同一个胜负排行榜。
 
+P34/P35/P36 基于 P30/P31 的诊断结论做 optimized Chronaris CUDA confirm 与统一聚合：P34 引入任务感知头、T2 残差回归和 T3 对比检索，当前 r3 覆盖 3 seeds、`leave_one_view_out` + `leave_one_sortie_out`、20 epochs，`status=completed`；T1 两个 split 小幅改善，T2 在两个 split 上明显改善，T3 仍为混合结果。P35 引入 stream-role-aware routing，当前 r4 `status=completed`，private 分支比较 `chronaris_v3_stream_role_fusion`、`v3_no_role_gate`、`v3_fixed_causal_lag` 在 T1/T2/T3 上的结果，public 分支比较 `v3_stream_role`、`v3_no_role_gate`、`v3_force_private_causal`、`v3_context_adapter_only` 在 NASA/UAB context-proxy 上的结果；24 个 public dataset/variant/seed 组合无缺失。P36 与 optimized model summary `status=completed`，读取固定 P30/P31/P32 reference 并汇总 P34/P35/P36 的关键指标、gate、GPU runtime 和 claim boundary。当前可写成“模型结构优化方向与 CUDA 复验包已形成”；仍不能写成公开数据证明私有航电流、T1/T2/T3 等于论文最终人工真值，或 optimized Chronaris 全面超过全部 baseline。
+
 写法建议：
 
-- 可以写“本阶段新增第三方对比、公开组件消融和跨证据矩阵，把 private real dual-stream、private proxy、public adapter 和 public component ablation 分层组织为可追溯证据”。
-- 不应写“公开数据已证明私有航电双流泛化成功”或“P30/P31 证明 Chronaris 在所有任务上优于第三方模型”。
+- 可以写“本阶段新增第三方对比、公开组件消融、跨证据矩阵与 optimized CUDA confirm，把 private real dual-stream、private proxy、public adapter、public component ablation 和模型优化诊断分层组织为可追溯证据”。
+- 不应写“公开数据已证明私有航电双流泛化成功”、“P30/P31 证明 Chronaris 在所有任务上优于第三方模型”或“P34/P35/P36 证明 optimized Chronaris 已全面胜过全部 baseline”。
 
 ## 9. P15/Phase D rigid-body 与 rotation audit
 
@@ -431,7 +437,7 @@ rigid_body 已启用 residual：
 - Schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
 - canonical payload route：已验证 `canonical_feature_schema_status=exact`；raw JSONL 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理，当前引用以 `runtime_schema_contract.json` 和 r2 contract 报告为准。
 - 报告：[../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md)
-- checkpoint：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt`
+- checkpoint：远程开发机 local-only / 可重新生成资产；repo 内保留 `multitask_summary.json`、runtime schema contract 和报告作为可引用证据。
 - input_sample_count：`37`
 - view_count：`1`
 - view_id：`20251005_四01_ACT-4_云_J20_22#01__pilot_10033`

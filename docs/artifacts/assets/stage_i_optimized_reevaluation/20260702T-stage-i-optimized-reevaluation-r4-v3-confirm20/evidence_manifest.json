@@ -1,0 +1,33 @@
+{
+  "run_id": "20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20",
+  "status": "completed",
+  "runtime_device": "cuda",
+  "generated_at_utc": "2026-07-02T06:44:55.742286Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20",
+  "p30_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1",
+  "p31_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1",
+  "p32_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1",
+  "p34_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20",
+  "p35_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20",
+  "optimized_reevaluation_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_reevaluation_config.json",
+  "optimized_private_comparison_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_private_comparison.csv",
+  "optimized_public_comparison_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_public_comparison.csv",
+  "optimized_delta_vs_p30_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_delta_vs_p30.csv",
+  "optimized_delta_vs_p31_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_delta_vs_p31.csv",
+  "optimized_delta_vs_p27_p28_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_delta_vs_p27_p28.csv",
+  "optimized_cross_evidence_matrix_csv": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_cross_evidence_matrix.csv",
+  "model_selection_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/model_selection_summary.json",
+  "figure_paths": {
+    "fig_p36_private_before_after": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/fig_p36_private_before_after.png",
+    "fig_p36_private_vs_thirdparty_delta": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/fig_p36_private_vs_thirdparty_delta.png",
+    "fig_p36_public_before_after": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/fig_p36_public_before_after.png",
+    "fig_p36_taskwise_win_summary": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/fig_p36_taskwise_win_summary.png",
+    "fig_p36_cross_evidence_matrix_v2": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/fig_p36_cross_evidence_matrix_v2.png",
+    "fig_p36_method_claim_support_map": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/fig_p36_method_claim_support_map.png"
+  },
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md",
+  "protocol_boundary": "P36 aggregates completed P34 task-head confirm and completed requested P35 private/public v3 confirm with fixed P30/P31/P32 references; it does not overwrite historical results.",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_reevaluation_summary.json",
+  "stage": "P36"
+}

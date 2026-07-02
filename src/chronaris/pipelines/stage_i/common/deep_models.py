@@ -21,6 +21,8 @@ from chronaris.models.fusion import (
     CausalFusionTensorInput,
     CausalMaskedCrossModalFusion,
 )
+from chronaris.pipelines.stage_i.common.deep_role_aware import ChronarisRoleAwareFusionWrapper
+from chronaris.pipelines.stage_i.common.deep_task_aware import ChronarisPrivateTaskAwareWrapper
 
 PUBLIC_ADAPTER_EVIDENCE_ROLE = "public_adapter_evidence"
 PUBLIC_CONTEXT_PROXY_ROLE = "context_proxy"
@@ -555,6 +557,7 @@ def build_stage_i_deep_model(
     fusion_event_bias_weight: float = 0.25,
     fusion_lag_window_points: int | None = None,
     fusion_normalize_states: bool = True,
+    dataset_id: str | None = None,
 ) -> nn.Module:
     normalized = model_name.strip().lower()
     if normalized == "mult":
@@ -589,6 +592,46 @@ def build_stage_i_deep_model(
             fusion_event_bias_weight=fusion_event_bias_weight,
             fusion_lag_window_points=fusion_lag_window_points,
             fusion_normalize_states=fusion_normalize_states,
+        )
+    if normalized in {
+        "chronaris_v2_task_heads",
+        "v2_no_vehicle_aux_head",
+        "v2_no_vehicle_aux",
+        "v2_no_residual_t2_head",
+        "v2_no_residual_t2",
+        "v2_no_contrastive_t3_loss",
+    }:
+        return ChronarisPrivateTaskAwareWrapper(
+            ordered_modalities=ordered_modalities,
+            modality_input_dims=modality_input_dims,
+            hidden_dim=hidden_dim,
+            num_heads=num_heads,
+            layers=layers,
+            dropout=dropout,
+            output_dim=output_dim,
+            variant=normalized,
+        )
+    if normalized in {
+        "chronaris_v3_stream_role",
+        "chronaris_v3_stream_role_fusion",
+        "v3_stream_role",
+        "v3_stream_role_fusion",
+        "v3_stream_role_adaptive",
+        "v3_no_role_gate",
+        "v3_fixed_causal_lag",
+        "v3_force_private_causal",
+        "v3_context_adapter_only",
+    }:
+        return ChronarisRoleAwareFusionWrapper(
+            ordered_modalities=ordered_modalities,
+            modality_input_dims=modality_input_dims,
+            hidden_dim=hidden_dim,
+            num_heads=num_heads,
+            layers=layers,
+            dropout=dropout,
+            output_dim=output_dim,
+            dataset_id=dataset_id or "nasa_csm",
+            variant=normalized,
         )
     if normalized in {"chronaris_public_fusion_physiology_only", "physiology_only"}:
         return ChronarisSingleStreamWrapper(

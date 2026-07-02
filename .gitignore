@@ -37,3 +37,21 @@ Thumbs.db
 Desktop.ini
 
 docs/SECRETS.md
+
+# Generated model/runtime artifacts kept on the development host only
+docs/artifacts/assets/**/checkpoints/
+docs/artifacts/assets/**/*.pt
+docs/artifacts/assets/**/*.pth
+docs/artifacts/assets/**/*.ckpt
+docs/artifacts/assets/**/*.safetensors
+docs/artifacts/assets/**/*.onnx
+docs/artifacts/assets/**/*.pkl
+docs/artifacts/assets/**/*.pickle
+
+# Dense generated exports; keep compact metrics/figures/manifests in git instead
+docs/artifacts/assets/**/fold_predictions.csv
+docs/artifacts/assets/**/predictions.csv
+docs/artifacts/assets/**/public_opt_predictions.csv
+docs/artifacts/assets/**/public_opt_torch_predictions.csv
+docs/artifacts/assets/**/predictions.gpuopt.csv
+docs/artifacts/assets/**/*.partial.csv

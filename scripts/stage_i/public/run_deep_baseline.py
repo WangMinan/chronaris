@@ -77,6 +77,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--weight-decay", type=float, default=0.0)
     parser.add_argument("--heartbeat-seconds", type=float, default=60.0)
     parser.add_argument("--batch-log-interval", type=int, default=20)
+    parser.add_argument("--checkpoint-policy", choices=("off", "last", "epoch_and_fold"), default="last")
     return parser.parse_args()
 
 
@@ -116,6 +117,7 @@ def main() -> int:
             weight_decay=args.weight_decay,
             heartbeat_seconds=args.heartbeat_seconds,
             batch_log_interval=args.batch_log_interval,
+            checkpoint_policy=args.checkpoint_policy,
         ),
     )
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))

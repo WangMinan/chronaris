@@ -1,0 +1,9 @@
+{
+  "private_rows": 170,
+  "public_rows": 14,
+  "delta_vs_p30_rows": 14,
+  "delta_vs_p31_rows": 14,
+  "selection_status": "completed_requested_p35_v3_confirm",
+  "positive_delta_convention": "classification/retrieval optimized-baseline; regression baseline-optimized",
+  "runtime_device": "cuda"
+}

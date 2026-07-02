@@ -2093,7 +2093,7 @@
       "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/thesis_task_manifest.jsonl",
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
       "evidence_layer": "thesis_weak_label",
       "git_commit": "4c9145270bdb986f1ef74663d5056b5914f9a048",
       "source_manifests": {
@@ -2107,14 +2107,15 @@
       "test_total": 1153.8985701851223,
       "test_task_total": 2.9328195634095566,
       "test_causal_total": 0.9324899289918982,
-      "validation_total": 1153.847811612216
+      "validation_total": 1153.847811612216,
+      "prediction_exports_pruned": true
     },
     {
       "child_run_id": "20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3",
       "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/thesis_task_manifest.jsonl",
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
       "evidence_layer": "thesis_weak_label",
       "git_commit": "4c9145270bdb986f1ef74663d5056b5914f9a048",
       "source_manifests": {
@@ -2128,7 +2129,8 @@
       "test_total": 1154.1565790591033,
       "test_task_total": 2.9376385522925337,
       "test_causal_total": 0.9344574420348458,
-      "validation_total": 1153.994540127841
+      "validation_total": 1153.994540127841,
+      "prediction_exports_pruned": true
     }
   ],
   "child_runs": [
@@ -2136,13 +2138,15 @@
       "run_id": "20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/thesis_task_manifest.jsonl"
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
+      "prediction_exports_pruned": true
     },
     {
       "run_id": "20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3",
       "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json",
       "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_checkpoint.pt",
-      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/thesis_task_manifest.jsonl"
+      "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
+      "prediction_exports_pruned": true
     }
   ],
   "best_run": {
@@ -2150,7 +2154,7 @@
     "artifact_root": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone",
     "summary_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json",
     "checkpoint_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
-    "task_manifest_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/thesis_task_manifest.jsonl",
+    "task_manifest_path": "docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl",
     "evidence_layer": "thesis_weak_label",
     "git_commit": "4c9145270bdb986f1ef74663d5056b5914f9a048",
     "source_manifests": {
@@ -2164,7 +2168,8 @@
     "test_total": 1153.8985701851223,
     "test_task_total": 2.9328195634095566,
     "test_causal_total": 0.9324899289918982,
-    "validation_total": 1153.847811612216
+    "validation_total": 1153.847811612216,
+    "prediction_exports_pruned": true
   },
   "completed_child_runs": [
     "20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone",
@@ -2184,5 +2189,6 @@
   "resume_progress_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json",
   "target_combination_count": 4,
   "combination_count_completed": 2,
-  "partial_table_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/thesis_weak_label_multitask_ablation.partial.csv"
+  "partial_table_path": "docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/thesis_weak_label_multitask_ablation.partial.csv",
+  "prediction_exports_pruned": true
 }
