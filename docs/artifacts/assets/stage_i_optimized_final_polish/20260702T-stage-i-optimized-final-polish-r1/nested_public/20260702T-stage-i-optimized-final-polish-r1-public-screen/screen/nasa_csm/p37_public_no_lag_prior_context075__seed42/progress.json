@@ -1,0 +1,48 @@
+{
+  "dataset_id": "nasa_csm",
+  "model_name": "p37_public_no_lag_prior_context075",
+  "requested_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42",
+  "epochs": 5,
+  "max_folds": 2,
+  "heartbeat_seconds": 60.0,
+  "batch_log_interval": 20,
+  "checkpoint_policy": "last",
+  "stage_name": "stage_i_deep_baseline",
+  "run_id": "p37_public_no_lag_prior_context075__seed42",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-02T09:14:36.002548Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-02T09:13:39.762619Z",
+      "event": "start",
+      "dataset_id": "nasa_csm",
+      "model_name": "p37_public_no_lag_prior_context075",
+      "requested_device": "cuda",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42",
+      "epochs": 5,
+      "max_folds": 2,
+      "heartbeat_seconds": 60.0,
+      "batch_log_interval": 20,
+      "checkpoint_policy": "last"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:13:41.616581Z",
+      "event": "dataset_loaded",
+      "prepared_artifact_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
+      "runtime_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:14:36.002548Z",
+      "event": "finished",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42/deep_baseline_report.md",
+      "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42/fold_predictions.csv"
+    }
+  ],
+  "prepared_artifact_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
+  "runtime_device": "cuda",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42/deep_baseline_summary.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42/deep_baseline_report.md",
+  "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/screen/nasa_csm/p37_public_no_lag_prior_context075__seed42/fold_predictions.csv"
+}

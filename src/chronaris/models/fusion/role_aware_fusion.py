@@ -39,14 +39,20 @@ class RoleAwareCausalFusion(nn.Module):
         *,
         hidden_dim: int,
         causal_config: CausalFusionConfig | None = None,
+        context_adapter_hidden_multiplier: int = 1,
+        context_adapter_dropout: float = 0.0,
     ) -> None:
         super().__init__()
+        if int(context_adapter_hidden_multiplier) <= 0:
+            raise ValueError("context_adapter_hidden_multiplier must be positive.")
         self.causal_fusion = CausalMaskedCrossModalFusion(causal_config or CausalFusionConfig(lag_window_points=16))
         self.router = AdaptiveFusionRouter(hidden_dim=hidden_dim)
+        adapter_hidden = hidden_dim * int(context_adapter_hidden_multiplier)
         self.context_adapter = nn.Sequential(
-            nn.Linear(hidden_dim * 2, hidden_dim),
+            nn.Linear(hidden_dim * 2, adapter_hidden),
             nn.GELU(),
-            nn.Linear(hidden_dim, hidden_dim),
+            nn.Dropout(float(context_adapter_dropout)) if context_adapter_dropout > 0 else nn.Identity(),
+            nn.Linear(adapter_hidden, hidden_dim),
         )
 
     def forward(
@@ -69,6 +75,7 @@ class RoleAwareCausalFusion(nn.Module):
             second_stream_roles=roles,
             hard_route=hard_route,
         )
+        decision = _calibrate_public_route(decision, metadata=metadata, variant=variant)
         if decision.route in {
             FusionRoute.CAUSAL_LAGGED_VEHICLE_TO_PHYSIO,
             FusionRoute.FORCE_PRIVATE_CAUSAL,
@@ -104,6 +111,18 @@ class RoleAwareCausalFusion(nn.Module):
 def _variant_route(variant: str) -> FusionRoute | None:
     normalized = variant.strip().lower()
     if normalized in {
+        "p37_public_context_adapter_only_auto",
+        "p37_public_context_adapter_only_cap2x_do0p2",
+    }:
+        return FusionRoute.CONTEXT_ADAPTER_ONLY
+    if normalized in {
+        "p37_public_no_lag_prior_context075",
+        "p37_public_no_lag_prior_context085",
+        "p37_public_force_adaptive_context_gate",
+        "p37_public_entropy_context085",
+    }:
+        return FusionRoute.ADAPTIVE_CONTEXT_GATE
+    if normalized in {
         "v3_fixed_causal_lag",
         "fixed_causal_lag",
         "v3_force_private_causal",
@@ -123,6 +142,37 @@ def _variant_route(variant: str) -> FusionRoute | None:
     }:
         return None
     return None
+
+
+def _calibrate_public_route(
+    decision: FusionRouteDecision,
+    *,
+    metadata: StreamRoleMetadata,
+    variant: str,
+) -> FusionRouteDecision:
+    normalized = variant.strip().lower()
+    if metadata.second_stream_is_real_vehicle:
+        return decision
+    context_floor = None
+    if "context085" in normalized or "context_adapter_only" in normalized:
+        context_floor = 0.85
+    elif "context075" in normalized or normalized.startswith("p37_public"):
+        context_floor = 0.75
+    if context_floor is None:
+        return decision
+    context_gate = torch.clamp(decision.context_gate, min=float(context_floor))
+    lag_scale = 0.5 if "no_lag_prior" in normalized else 1.0
+    lag_gate = decision.lag_gate * lag_scale
+    vehicle_gate = decision.vehicle_gate * 0.75
+    causal_gate = decision.causal_gate * 0.75
+    return FusionRouteDecision(
+        route=decision.route,
+        route_logits=decision.route_logits,
+        lag_gate=lag_gate,
+        context_gate=context_gate,
+        vehicle_gate=vehicle_gate,
+        causal_gate=causal_gate,
+    )
 
 
 def _identity_attention(states: torch.Tensor) -> torch.Tensor:

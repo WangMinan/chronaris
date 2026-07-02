@@ -600,7 +600,7 @@ def build_stage_i_deep_model(
         "v2_no_residual_t2_head",
         "v2_no_residual_t2",
         "v2_no_contrastive_t3_loss",
-    }:
+    } or normalized.startswith("p37_t1_") or normalized.startswith("p37_t3_"):
         return ChronarisPrivateTaskAwareWrapper(
             ordered_modalities=ordered_modalities,
             modality_input_dims=modality_input_dims,
@@ -621,7 +621,7 @@ def build_stage_i_deep_model(
         "v3_fixed_causal_lag",
         "v3_force_private_causal",
         "v3_context_adapter_only",
-    }:
+    } or normalized.startswith("p37_public_"):
         return ChronarisRoleAwareFusionWrapper(
             ordered_modalities=ordered_modalities,
             modality_input_dims=modality_input_dims,

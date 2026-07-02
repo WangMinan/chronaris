@@ -1,0 +1,99 @@
+{
+  "runtime_device": "cuda",
+  "best_batch_size": 128,
+  "amp_mode": "bf16",
+  "tensor_cache_mode": "auto",
+  "auto_batch_size": true,
+  "batch_size_candidates": [
+    2048,
+    1024,
+    512,
+    256,
+    128
+  ],
+  "torch_compile_mode": "default",
+  "num_workers": 24,
+  "parallel_fold_prep": 8,
+  "oom_fallback_count": 0,
+  "batch_rows": [
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "epoch": 0,
+      "train_loss": NaN
+    },
+    {
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2",
+      "split_strategy": "leave_one_view_out",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "epoch": 0,
+      "train_loss": NaN
+    }
+  ],
+  "fold_rows": [],
+  "torch_version": "2.11.0+cu130",
+  "cuda_version": "13.0",
+  "cuda_available": true,
+  "gpu_name": "NVIDIA GeForce RTX 4090",
+  "max_memory_allocated_gb": 0.012952327728271484,
+  "max_memory_reserved_gb": 0.02734375
+}

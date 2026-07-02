@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `9432507 feat: add more tests on P30 and P31`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix。本轮 P34/P35/P36 与 optimized model summary r4 confirm20 资产仍在工作树中。本轮不改变 P27/P28/P30/P31/P32 confirmed metrics，提交前以本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `e8d367d feat: optimize stage i gpu outputs and docs cleanup`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix，P34/P35/P36 与 optimized model summary r4 confirm20 已进入当前历史。本轮 P37 optimized final polish 资产仍在工作树中待提交。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36 confirmed metrics，提交前以本地 diff 为准。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -99,7 +99,14 @@
    - Optimized model summary：`docs/artifacts/stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md`，资产根 `docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/`。
    - 当前状态：P34 `status=completed`，为 CUDA 20-epoch confirm（3 seeds / `leave_one_view_out` + `leave_one_sortie_out` / 20 epochs），T1 两个 split 小幅改善，T2 明显改善，T3 混合；P35 `status=completed`，完成 requested private/public v3 confirm，private 分支比较 `chronaris_v3_stream_role_fusion` / `v3_no_role_gate` / `v3_fixed_causal_lag`，public 分支比较 `v3_stream_role` / `v3_no_role_gate` / `v3_force_private_causal` / `v3_context_adapter_only`，public 24 个 dataset/variant/seed 组合无缺失；P36 与 optimized model summary 为 `completed` aggregation，读取固定 P30/P31/P32 reference 并汇总 P34/P35/P36 的关键指标、GPU runtime、gate 和 claim boundary。后续论文表述仍需保留 public context proxy、private proxy benchmark、T3 mixed 和“不是全面胜出”边界。
 16. 2026-07-02 P34/P35/P36 后处理已完成：基于既有 CSV/JSON 重绘本轮柱状图并加入短数值标签；新增 `checkpoint_policy` future-run 输出策略；独立 CUDA profiling 记录表明当前 public context-proxy 小折 tensor cache 约 `0.115 GB`、auto batch 选 `2048/1024`、memory pressure 低于 `0.21`；清理过渡 run、dense predictions、partial CSV、checkpoint 和大日志，dense prediction CSV / checkpoint 已外置备份，重复 weak-label manifest 副本已回指 canonical。清理与 profiling 边界见 `docs/artifacts/cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md`。本项不改变 P34/P35/P36 或 P30/P31/P32 confirmed metrics。
-17. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
+17. P37 optimized final polish 已完成，入口为 `docs/artifacts/stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md`，资产根 `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/`。
+   - 当前状态：`status=completed`，P30/P31/P34/P35/P36 固定为 reference，未重跑或改写；CUDA required，tensor cache `auto`，AMP `bf16`，auto batch，torch compile `default`，heartbeat/progress/resume/skip-completed 已落盘。
+   - T3：`p37_t3_info_nce_temp0p05_hardw2` 与 P34 在 `top1=0.0315315`、`top3=0.0855856`、`top5=0.139640`、`mrr=0.117939` 上持平，P37 T3 rejected，后续仍引用 P34 confirmed retrieval。
+   - T1：accepted；`leave_one_view_out` macro-F1 `0.204614` vs P34 `0.187489`（+`0.017125`），`leave_one_sortie_out` macro-F1 `0.220099` vs P34 `0.216065`（+`0.004034`）。
+   - public route：accepted；`p37_public_force_adaptive_context_gate` NASA combined macro-F1 `0.443919` vs P35 `0.432193`（+`0.011726`），UAB mean RMSE `3.191811` vs P35 `3.374779`（改善 `0.182968`）。该分支仍是 public adapter / context-proxy evidence。
+18. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
+
+引用边界：P37 final polish 只在固定 P30/P31/P34/P35/P36 reference 上做局部收束；T1 calibration 与 public route calibration 可写成 accepted improvement，T3 retrieval 仍沿用 P34 confirmed retrieval，public 分支继续写成 public adapter / context-proxy evidence。
 
 验收：
 

@@ -1,0 +1,11 @@
+{
+  "run_id": "20260702T-stage-i-optimized-final-polish-r1-public-screen",
+  "status": "blocked",
+  "generated_at_utc": "2026-07-02T09:44:24.643245Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen",
+  "blocked_reason": "'metric'",
+  "blocked_type": "KeyError",
+  "resume_command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/public/run_public_fusion_ablation.py --run-id 20260702T-stage-i-optimized-final-polish-r1-public-screen --datasets nasa_csm uab_workload_dataset --screen-epochs 5 --confirm-epochs 5 --screen-max-folds 2 --confirm-max-folds 2 --seed 42 --device cuda --require-cuda --resume --skip-completed --allow-partial --tensor-cache auto --max-cache-gb 18.0 --amp bf16 --torch-compile default --num-workers 24 --parallel-fold-prep 8 --parallel-candidates 1 --checkpoint-policy last --auto-batch-size --batch-size-candidates 2048 1024 512 256 128 --variants p37_public_no_lag_prior_context075 p37_public_no_lag_prior_context085 p37_public_context_adapter_only_cap2x_do0p2 p37_public_force_adaptive_context_gate --base-run-id 20260702T-stage-i-optimized-final-polish-r1",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/20260702T-stage-i-optimized-final-polish-r1-public-screen/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_reports/stage-i-public-fusion-ablation-20260702T-stage-i-optimized-final-polish-r1-public-screen.md"
+}

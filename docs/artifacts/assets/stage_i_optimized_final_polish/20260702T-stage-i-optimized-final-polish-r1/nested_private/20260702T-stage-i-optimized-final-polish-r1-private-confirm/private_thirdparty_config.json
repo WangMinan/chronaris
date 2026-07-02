@@ -1,0 +1,85 @@
+{
+  "run_id": "20260702T-stage-i-optimized-final-polish-r1-private-confirm",
+  "runtime_device": "cuda",
+  "gpuopt_enabled": true,
+  "gpuopt_config": {
+    "tensor_cache": "auto",
+    "max_cache_gb": 18.0,
+    "auto_batch_size": true,
+    "batch_size_candidates": [
+      2048,
+      1024,
+      512,
+      256,
+      128
+    ],
+    "amp": "bf16",
+    "amp_eval": true,
+    "torch_compile": "default",
+    "profile_gpu": true,
+    "num_workers": 24,
+    "parallel_fold_prep": 8,
+    "checkpoint_policy": "last"
+  },
+  "config": {
+    "run_id": "20260702T-stage-i-optimized-final-polish-r1-private-confirm",
+    "e_run_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-e-allwindow-clean/run_manifest.json",
+    "f_run_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json",
+    "output_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private",
+    "report_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_reports",
+    "models": [
+      "p37_t3_info_nce_temp0p05_hardw2",
+      "p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10",
+      "p37_t1_focal_gamma1_gate0p65_ls0p05"
+    ],
+    "seeds": [
+      42,
+      17,
+      29
+    ],
+    "split_strategy": [
+      "leave_one_view_out",
+      "leave_one_sortie_out"
+    ],
+    "epochs": 20,
+    "screen_epochs": 20,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "hidden_dim": 64,
+    "num_heads": 4,
+    "layers": 2,
+    "dropout": 0.1,
+    "weight_decay": 1e-05,
+    "grad_clip_norm": 1.0,
+    "device": "cuda",
+    "require_cuda": true,
+    "resume": true,
+    "skip_completed": true,
+    "allow_partial": true,
+    "screen_only": false,
+    "confirm_only": false,
+    "heartbeat_seconds": 60.0,
+    "batch_log_interval": 20,
+    "tensor_cache": "auto",
+    "max_cache_gb": 18.0,
+    "pin_memory": true,
+    "non_blocking_copy": true,
+    "auto_batch_size": true,
+    "batch_size_candidates": [
+      2048,
+      1024,
+      512,
+      256,
+      128
+    ],
+    "amp": "bf16",
+    "grad_scaler": true,
+    "amp_eval": true,
+    "torch_compile": "default",
+    "profile_gpu": true,
+    "eval_batch_size": null,
+    "num_workers": 24,
+    "parallel_fold_prep": 8,
+    "checkpoint_policy": "last"
+  }
+}
