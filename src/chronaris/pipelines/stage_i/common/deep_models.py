@@ -378,6 +378,170 @@ class ChronarisPublicFusionWrapper(nn.Module):
         return self.temporal_blocks[modality_name](sequence).transpose(0, 1)
 
 
+class ChronarisSingleStreamWrapper(nn.Module):
+    """Single-stream public ablation wrapper using one prepared modality only."""
+
+    def __init__(
+        self,
+        *,
+        ordered_modalities: Sequence[str],
+        modality_input_dims: Mapping[str, int],
+        stream_index: int,
+        hidden_dim: int = 64,
+        num_heads: int = 4,
+        layers: int = 2,
+        dropout: float = 0.1,
+        output_dim: int | None = None,
+    ) -> None:
+        super().__init__()
+        self.ordered_modalities = tuple(ordered_modalities)
+        if not self.ordered_modalities:
+            raise ValueError("ChronarisSingleStreamWrapper requires at least one modality.")
+        if stream_index >= len(self.ordered_modalities):
+            raise ValueError(
+                f"stream_index={stream_index} is out of range for {self.ordered_modalities}."
+            )
+        self.stream_name = self.ordered_modalities[stream_index]
+        self.projection = nn.Linear(
+            modality_input_dims[self.stream_name] + 2,
+            hidden_dim,
+        )
+        self.encoder = TransformerEncoder(
+            embed_dim=hidden_dim,
+            num_heads=num_heads,
+            layers=max(layers, 1),
+            attn_dropout=dropout,
+            relu_dropout=dropout,
+            res_dropout=dropout,
+            embed_dropout=dropout,
+            attn_mask=False,
+        )
+        self.output_head = (
+            nn.Sequential(
+                nn.LayerNorm(hidden_dim),
+                nn.Linear(hidden_dim, hidden_dim),
+                nn.GELU(),
+                nn.Dropout(dropout),
+                nn.Linear(hidden_dim, output_dim),
+            )
+            if output_dim is not None
+            else None
+        )
+
+    def forward(
+        self,
+        modality_arrays: Mapping[str, torch.Tensor],
+        *,
+        time_axis: torch.Tensor,
+        modality_masks: Mapping[str, torch.Tensor],
+    ) -> StageIDeepForwardResult:
+        mask = modality_masks[self.stream_name]
+        values = self.projection(
+            _append_time_features(modality_arrays[self.stream_name], time_axis),
+        )
+        values = values * mask.unsqueeze(-1)
+        encoded = self.encoder(values.transpose(0, 1)).transpose(0, 1)
+        pooled = masked_mean_pool(encoded, mask)
+        logits = self.output_head(pooled) if self.output_head is not None else None
+        return StageIDeepForwardResult(
+            pooled_embedding=pooled,
+            sequence_embedding=encoded,
+            attention_map=_empty_attention(encoded),
+            logits=logits,
+        )
+
+
+class ChronarisSimpleDualStreamConcatWrapper(nn.Module):
+    """Dual-stream ablation with temporal encoders and late concat, no causal fusion."""
+
+    def __init__(
+        self,
+        *,
+        ordered_modalities: Sequence[str],
+        modality_input_dims: Mapping[str, int],
+        hidden_dim: int = 64,
+        num_heads: int = 4,
+        layers: int = 2,
+        dropout: float = 0.1,
+        output_dim: int | None = None,
+    ) -> None:
+        super().__init__()
+        self.ordered_modalities = tuple(ordered_modalities)
+        if len(self.ordered_modalities) != 2:
+            raise ValueError(
+                "ChronarisSimpleDualStreamConcatWrapper expects exactly two modalities."
+            )
+        self.projections = nn.ModuleDict(
+            {
+                modality_name: nn.Linear(
+                    modality_input_dims[modality_name] + 2,
+                    hidden_dim,
+                )
+                for modality_name in self.ordered_modalities
+            }
+        )
+        self.encoders = nn.ModuleDict(
+            {
+                modality_name: TransformerEncoder(
+                    embed_dim=hidden_dim,
+                    num_heads=num_heads,
+                    layers=max(layers, 1),
+                    attn_dropout=dropout,
+                    relu_dropout=dropout,
+                    res_dropout=dropout,
+                    embed_dropout=dropout,
+                    attn_mask=False,
+                )
+                for modality_name in self.ordered_modalities
+            }
+        )
+        self.output_head = (
+            nn.Sequential(
+                nn.LayerNorm(hidden_dim * 2),
+                nn.Linear(hidden_dim * 2, hidden_dim * 2),
+                nn.GELU(),
+                nn.Dropout(dropout),
+                nn.Linear(hidden_dim * 2, output_dim),
+            )
+            if output_dim is not None
+            else None
+        )
+
+    def forward(
+        self,
+        modality_arrays: Mapping[str, torch.Tensor],
+        *,
+        time_axis: torch.Tensor,
+        modality_masks: Mapping[str, torch.Tensor],
+    ) -> StageIDeepForwardResult:
+        pooled_parts = []
+        encoded_parts = []
+        for modality_name in self.ordered_modalities:
+            mask = modality_masks[modality_name]
+            values = self.projections[modality_name](
+                _append_time_features(modality_arrays[modality_name], time_axis),
+            )
+            values = values * mask.unsqueeze(-1)
+            encoded = self.encoders[modality_name](values.transpose(0, 1)).transpose(0, 1)
+            encoded_parts.append(encoded)
+            pooled_parts.append(masked_mean_pool(encoded, mask))
+        pooled = torch.cat(pooled_parts, dim=-1)
+        sequence_embedding = torch.cat(encoded_parts, dim=-1)
+        logits = self.output_head(pooled) if self.output_head is not None else None
+        attention_map = _scaled_attention_map(
+            encoded_parts[0],
+            encoded_parts[1],
+            modality_masks[self.ordered_modalities[0]],
+            modality_masks[self.ordered_modalities[1]],
+        )
+        return StageIDeepForwardResult(
+            pooled_embedding=pooled,
+            sequence_embedding=sequence_embedding,
+            attention_map=attention_map,
+            logits=logits,
+        )
+
+
 def build_stage_i_deep_model(
     *,
     model_name: str,
@@ -425,6 +589,42 @@ def build_stage_i_deep_model(
             fusion_event_bias_weight=fusion_event_bias_weight,
             fusion_lag_window_points=fusion_lag_window_points,
             fusion_normalize_states=fusion_normalize_states,
+        )
+    if normalized in {"chronaris_public_fusion_physiology_only", "physiology_only"}:
+        return ChronarisSingleStreamWrapper(
+            ordered_modalities=ordered_modalities,
+            modality_input_dims=modality_input_dims,
+            stream_index=0,
+            hidden_dim=hidden_dim,
+            num_heads=num_heads,
+            layers=layers,
+            dropout=dropout,
+            output_dim=output_dim,
+        )
+    if normalized in {"chronaris_public_fusion_context_only", "context_only"}:
+        return ChronarisSingleStreamWrapper(
+            ordered_modalities=ordered_modalities,
+            modality_input_dims=modality_input_dims,
+            stream_index=1,
+            hidden_dim=hidden_dim,
+            num_heads=num_heads,
+            layers=layers,
+            dropout=dropout,
+            output_dim=output_dim,
+        )
+    if normalized in {
+        "chronaris_public_fusion_simple_concat",
+        "simple_dual_stream_concat",
+        "late_concat_no_causal_fusion",
+    }:
+        return ChronarisSimpleDualStreamConcatWrapper(
+            ordered_modalities=ordered_modalities,
+            modality_input_dims=modality_input_dims,
+            hidden_dim=hidden_dim,
+            num_heads=num_heads,
+            layers=layers,
+            dropout=dropout,
+            output_dim=output_dim,
         )
     raise ValueError(f"unsupported deep baseline model: {model_name}")
 

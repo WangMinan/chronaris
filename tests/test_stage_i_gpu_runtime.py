@@ -13,7 +13,7 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i.public.gpu_runtime import (  # noqa: E402
+from chronaris.pipelines.stage_i.common.gpu_runtime import (  # noqa: E402
     choose_auto_batch_size,
     completed_profile_key,
     compute_fold_normalization_stats,

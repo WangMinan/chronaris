@@ -1,0 +1,9 @@
+stage,dataset_id,variant_id,seed,track,evaluation_group,split_group,sample_count,macro_f1,balanced_accuracy,rmse,mae
+screen,uab_workload_dataset,no_lag_window,42,objective,n_back,subject_01,1888,0.31716040646936344,0.3747316974678307,,
+screen,uab_workload_dataset,no_lag_window,42,objective,n_back,subject_02,1876,0.3018409046498786,0.33288115811685454,,
+screen,uab_workload_dataset,no_lag_window,42,objective,heat_the_chair,subject_01,324,0.5014189216195691,0.5274390243902439,,
+screen,uab_workload_dataset,no_lag_window,42,objective,heat_the_chair,subject_02,314,0.39784408313977726,0.4754710851202079,,
+screen,uab_workload_dataset,no_lag_window,42,subjective,n_back,subject_01,1888,,,5.8574838964031795,5.204234437827589
+screen,uab_workload_dataset,no_lag_window,42,subjective,n_back,subject_02,1876,,,6.298660566409547,5.939493415293409
+screen,uab_workload_dataset,no_lag_window,42,subjective,heat_the_chair,subject_01,324,,,2.024893155827479,1.8810714689301855
+screen,uab_workload_dataset,no_lag_window,42,subjective,heat_the_chair,subject_02,314,,,2.1445410090696444,1.6765429745813845
