@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/private/run_task_head_optimization.py --resume --resume-run-id 20260702T-stage-i-task-heads-optimization-r3-confirm20 --device cuda --require-cuda --tensor-cache auto --auto-batch-size --amp bf16 --skip-completed

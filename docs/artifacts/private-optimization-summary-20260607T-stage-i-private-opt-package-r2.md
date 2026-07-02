@@ -2,7 +2,7 @@
 
 - benchmark_role: `private_proxy_benchmark`
 - `T1/T2/T3` 的最优性只说明 private proxy benchmark 收敛，不代表论文真值任务已经闭环。
-- thesis weak-label manifest: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/thesis_task_manifest.jsonl`
+- thesis weak-label manifest: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
 - target variant: `chronaris_opt`
 - no-mask variant: `chronaris_opt_no_causal_mask`
 - private optimality supported: `True`

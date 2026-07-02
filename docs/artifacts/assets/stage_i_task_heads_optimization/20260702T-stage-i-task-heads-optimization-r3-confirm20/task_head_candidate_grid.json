@@ -1,0 +1,8 @@
+{
+  "models": [
+    "chronaris_v2_task_heads",
+    "v2_no_vehicle_aux_head",
+    "v2_no_residual_t2_head",
+    "v2_no_contrastive_t3_loss"
+  ]
+}

@@ -1,9 +1,0 @@
-stage,dataset_id,variant_id,seed,track,evaluation_group,split_group,sample_count,macro_f1,balanced_accuracy,rmse,mae
-screen,uab_workload_dataset,event_bias_0p5,42,objective,n_back,subject_01,1888,0.3065289378286528,0.33323519285827147,,
-screen,uab_workload_dataset,event_bias_0p5,42,objective,n_back,subject_02,1876,0.3016442305077371,0.3324635927167108,,
-screen,uab_workload_dataset,event_bias_0p5,42,objective,heat_the_chair,subject_01,324,0.5014189216195691,0.5274390243902439,,
-screen,uab_workload_dataset,event_bias_0p5,42,objective,heat_the_chair,subject_02,314,0.36112710660677955,0.4796133853151397,,
-screen,uab_workload_dataset,event_bias_0p5,42,subjective,n_back,subject_01,1888,,,5.816161506220933,5.052692826426888
-screen,uab_workload_dataset,event_bias_0p5,42,subjective,n_back,subject_02,1876,,,6.303396112230369,5.941778794121641
-screen,uab_workload_dataset,event_bias_0p5,42,subjective,heat_the_chair,subject_01,324,,,2.0325835822097424,1.8893543525978371
-screen,uab_workload_dataset,event_bias_0p5,42,subjective,heat_the_chair,subject_02,314,,,2.1606914080680424,1.696383111795802

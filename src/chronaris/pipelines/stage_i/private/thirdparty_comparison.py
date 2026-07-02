@@ -39,6 +39,11 @@ from chronaris.pipelines.stage_i.common.run_observer import (
     StageIRunProgress,
     open_stage_i_run_observer,
 )
+from chronaris.pipelines.stage_i.common.plot_labels import (
+    label_horizontal_bars,
+    label_stack_totals,
+    label_vertical_bars,
+)
 from chronaris.pipelines.stage_i.private.benchmark_data import (
     CLASS_LABEL_TO_ID,
     TASK_MANEUVER,
@@ -79,7 +84,25 @@ MODEL_ORDER = (
     "naive_time_sync",
     "classical_baseline",
 )
-DEEP_MODEL_NAMES = {"mult", "contiformer"}
+DEEP_MODEL_NAMES = {
+    "mult",
+    "contiformer",
+    "chronaris_v2_task_heads",
+    "v2_no_vehicle_aux_head",
+    "v2_no_vehicle_aux",
+    "v2_no_residual_t2_head",
+    "v2_no_residual_t2",
+    "v2_no_contrastive_t3_loss",
+    "chronaris_v3_stream_role",
+    "chronaris_v3_stream_role_fusion",
+    "v3_stream_role",
+    "v3_stream_role_fusion",
+    "v3_stream_role_adaptive",
+    "v3_no_role_gate",
+    "v3_fixed_causal_lag",
+    "v3_force_private_causal",
+    "v3_context_adapter_only",
+}
 FEATURE_MODEL_SOURCES = {
     "chronaris_full": ("chronaris_opt", "full_safe"),
     "naive_time_sync": ("naive_sync", "dual_projection"),
@@ -130,6 +153,7 @@ class StageIPrivateThirdPartyComparisonConfig:
     eval_batch_size: int | None = None
     num_workers: int = 24
     parallel_fold_prep: int = 8
+    checkpoint_policy: str = "last"
 
 
 @dataclass(frozen=True, slots=True)
@@ -858,7 +882,7 @@ def _run_deep_supervised(
                         y_pred=pred,
                     )
                 )
-                _save_checkpoint(run_root, model, task_name, model_name, strategy, seed, fold_index)
+                _save_checkpoint(config, run_root, model, task_name, model_name, strategy, seed, fold_index)
     return fold_rows, curve_rows, prediction_rows
 
 
@@ -920,7 +944,7 @@ def _run_deep_retrieval(
                 for row in preds:
                     row.update({"model_name": model_name, "split_strategy": strategy, "seed": seed, "fold_index": fold_index})
                 prediction_rows.extend(preds)
-                _save_checkpoint(run_root, model, task_name, model_name, strategy, seed, fold_index)
+                _save_checkpoint(config, run_root, model, task_name, model_name, strategy, seed, fold_index)
     return fold_rows, curve_rows, prediction_rows
 
 
@@ -958,6 +982,7 @@ def _build_private_model(
         num_heads=config.num_heads,
         layers=config.layers,
         dropout=config.dropout,
+        dataset_id=DATASET_ID,
     ).to(runtime_device)
 
 
@@ -1656,6 +1681,7 @@ def _private_task_leaderboard(frame: pd.DataFrame, path: str) -> None:
         for column in normalized.columns:
             axis.bar(x, normalized[column], bottom=bottom, label=column)
             bottom += normalized[column].to_numpy(dtype=float)
+        label_stack_totals(axis, x, bottom)
         axis.set_xticks(x)
         axis.set_xticklabels(normalized.index, rotation=20, ha="right")
         axis.set_ylabel("normalized score; higher is better")
@@ -1699,7 +1725,9 @@ def _private_gpu_throughput(frame: pd.DataFrame, path: str) -> None:
             )
             .sort_values("selected_batch_size", ascending=False)
         )
-        axis.barh(np.arange(len(grouped)), grouped["selected_batch_size"].astype(float), color="#2f6f9f")
+        values = grouped["selected_batch_size"].astype(float)
+        bars = axis.barh(np.arange(len(grouped)), values, color="#2f6f9f")
+        label_horizontal_bars(axis, bars, values)
         axis.set_yticks(np.arange(len(grouped)))
         axis.set_yticklabels(grouped.index)
         axis.invert_yaxis()
@@ -1720,14 +1748,14 @@ def _metric_bar(frame: pd.DataFrame, task: str, metric: str, path: str, title: s
         axis.axis("off")
     else:
         grouped = subset.groupby("model_name", sort=False)["value_mean"].mean().sort_values(ascending=not higher)
-        axis.barh(np.arange(len(grouped)), grouped.values, color="#2f6f9f")
+        values = grouped.values
+        bars = axis.barh(np.arange(len(grouped)), values, color="#2f6f9f")
+        label_horizontal_bars(axis, bars, values)
         axis.set_yticks(np.arange(len(grouped)))
         axis.set_yticklabels(grouped.index)
         axis.invert_yaxis()
         axis.set_title(title)
         axis.set_xlabel(metric)
-        for index, value in enumerate(grouped.values):
-            axis.text(value, index, f"{value:.4f}", va="center", fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=220)
     plt.close(fig)
@@ -1745,7 +1773,9 @@ def _retrieval_grouped(frame: pd.DataFrame, path: str) -> None:
         x = np.arange(len(pivot))
         width = 0.8 / max(len(metrics), 1)
         for offset, metric in enumerate(metrics):
-            axis.bar(x + offset * width, pivot[metric], width, label=metric)
+            values = pivot[metric].astype(float)
+            bars = axis.bar(x + offset * width, values, width, label=metric)
+            label_vertical_bars(axis, bars, values)
         axis.set_xticks(x + width * (len(metrics) - 1) / 2)
         axis.set_xticklabels(pivot.index, rotation=20, ha="right")
         axis.set_ylim(0, 1.05)
@@ -1875,13 +1905,31 @@ def _t3_curve(frame: pd.DataFrame, path: str) -> None:
     plt.close(fig)
 
 
-def _save_checkpoint(run_root: Path, model, task_name: str, model_name: str, split_strategy: str, seed: int, fold_index: int) -> None:
-    checkpoint_root = run_root / "checkpoints" / task_name / model_name
+def _save_checkpoint(config: StageIPrivateThirdPartyComparisonConfig, run_root: Path, model, task_name: str, model_name: str, split_strategy: str, seed: int, fold_index: int) -> None:
+    policy = _checkpoint_policy(config.checkpoint_policy)
+    if policy == "off":
+        return
+    checkpoint_root = run_root / "checkpoints"
+    if policy == "epoch_and_fold":
+        checkpoint_root = checkpoint_root / task_name / model_name
     checkpoint_root.mkdir(parents=True, exist_ok=True)
+    checkpoint_name = (
+        f"{split_strategy}_seed{seed}_fold{fold_index:03d}.pt"
+        if policy == "epoch_and_fold"
+        else "checkpoint_last.pt"
+    )
     torch.save(
         {"model_state_dict": model.state_dict(), "task_name": task_name, "model_name": model_name, "split_strategy": split_strategy, "seed": seed, "fold_index": fold_index},
-        checkpoint_root / f"{split_strategy}_seed{seed}_fold{fold_index:03d}.pt",
+        checkpoint_root / checkpoint_name,
     )
+
+
+def _checkpoint_policy(value: str) -> str:
+    normalized = str(value).strip().lower()
+    choices = {"off", "last", "epoch_and_fold"}
+    if normalized not in choices:
+        raise ValueError(f"unsupported checkpoint_policy '{value}'; expected one of {tuple(sorted(choices))}")
+    return normalized
 
 
 def _gpu_perf_summary(
@@ -1979,6 +2027,7 @@ def _gpuopt_config(config: StageIPrivateThirdPartyComparisonConfig) -> dict[str,
         "profile_gpu": bool(config.profile_gpu),
         "num_workers": int(config.num_workers),
         "parallel_fold_prep": int(config.parallel_fold_prep),
+        "checkpoint_policy": str(config.checkpoint_policy),
     }
 
 
@@ -2006,6 +2055,8 @@ def _resume_command(config: StageIPrivateThirdPartyComparisonConfig) -> str:
         str(config.num_workers),
         "--parallel-fold-prep",
         str(config.parallel_fold_prep),
+        "--checkpoint-policy",
+        config.checkpoint_policy,
     ]
     if config.auto_batch_size:
         parts.append("--auto-batch-size")

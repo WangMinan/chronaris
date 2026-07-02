@@ -1,0 +1,2 @@
+top1,top3,top5,mrr,positive_negative_margin,score_std,info_nce_loss,temperature
+1.0,1.0,1.0,1.0,0.29302355647087097,0.25379616022109985,0.04684906452894211,0.07

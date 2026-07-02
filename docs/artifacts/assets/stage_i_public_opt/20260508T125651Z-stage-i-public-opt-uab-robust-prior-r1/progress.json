@@ -38,9 +38,10 @@
       "timestamp_utc": "2026-05-08T13:17:20.143487Z",
       "event": "output_paths_ready",
       "feature_frame_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_feature_frame.parquet",
-      "predictions_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_predictions.csv",
+      "predictions_path": null,
       "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_summary.json",
-      "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md"
+      "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md",
+      "prediction_exports_pruned": true
     },
     {
       "timestamp_utc": "2026-05-08T13:17:20.151206Z",
@@ -1406,7 +1407,8 @@
       "event": "finished",
       "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_summary.json",
       "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md",
-      "predictions_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_predictions.csv"
+      "predictions_path": null,
+      "prediction_exports_pruned": true
     }
   ],
   "feature_frame_shape": [
@@ -1418,7 +1420,7 @@
     "n_back"
   ],
   "feature_frame_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_feature_frame.parquet",
-  "predictions_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_predictions.csv",
+  "predictions_path": null,
   "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_summary.json",
   "report_path": "/home/wangminan/projects/chronaris/docs/reports/stage_i/stage-i-public-opt-20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1.md",
   "subset": "heat_the_chair",
@@ -1433,5 +1435,6 @@
   "rmse": 1.5076881916149842,
   "mae": 1.197920497433812,
   "best_candidate": "target_prior_median",
-  "best_head": "target_prior_median"
+  "best_head": "target_prior_median",
+  "prediction_exports_pruned": true
 }

@@ -8,7 +8,7 @@
   "artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu",
   "feature_frame_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/public_opt_torch_feature_frame.parquet",
   "leaderboard_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/candidate_leaderboard.csv",
-  "predictions_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/public_opt_torch_predictions.csv",
+  "predictions_path": null,
   "screen_config": {
     "screen_max_folds": 2,
     "full_max_folds": null,
@@ -1409,5 +1409,6 @@
     },
     "all_passed": false
   },
-  "public_mainline_status": "NASA closed, UAB partial"
+  "public_mainline_status": "NASA closed, UAB partial",
+  "prediction_exports_pruned": true
 }

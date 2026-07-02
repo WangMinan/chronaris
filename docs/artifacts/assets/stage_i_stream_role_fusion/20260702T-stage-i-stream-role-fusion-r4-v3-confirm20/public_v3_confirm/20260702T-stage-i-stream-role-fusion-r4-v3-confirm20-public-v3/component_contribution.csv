@@ -1,0 +1,14 @@
+dataset_id,metric,ablation_family,component_delta_abs_mean,component_delta_abs_max,component_delta_rel_pct_mean,row_count,positive_delta_means
+nasa_csm,combined_macro_f1,stream_role,,,,0,full_better
+nasa_csm,combined_balanced_accuracy,stream_role,,,,0,full_better
+nasa_csm,benchmark_only_macro_f1,stream_role,,,,0,full_better
+nasa_csm,loft_only_macro_f1,stream_role,,,,0,full_better
+uab_workload_dataset,n_back_rmse,stream_role,,,,0,full_better
+uab_workload_dataset,n_back_mae,stream_role,,,,0,full_better
+uab_workload_dataset,heat_the_chair_rmse,stream_role,,,,0,full_better
+uab_workload_dataset,heat_the_chair_mae,stream_role,,,,0,full_better
+uab_workload_dataset,n_back_macro_f1,stream_role,,,,0,full_better
+uab_workload_dataset,n_back_balanced_accuracy,stream_role,,,,0,full_better
+uab_workload_dataset,heat_the_chair_macro_f1,stream_role,,,,0,full_better
+uab_workload_dataset,heat_the_chair_balanced_accuracy,stream_role,,,,0,full_better
+uab_workload_dataset,mean_rmse,stream_role,,,,0,full_better

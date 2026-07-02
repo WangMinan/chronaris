@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish`、`Public-P27/Public-P28` 与本轮 `P30/P31/P32`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表；P30/P31/P32 进一步补齐 private third-party comparison、public fusion ablation 和跨证据矩阵。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28、P31 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish`、`Public-P27/Public-P28` 与本轮 `P30/P31/P32/P34/P35/P36`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表；P30/P31/P32 进一步补齐 private third-party comparison、public fusion ablation 和跨证据矩阵；P34/P35/P36 进一步把诊断转化为 optimized Chronaris CUDA confirm、stream-role v3 confirm 和统一聚合 summary。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28、P31 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
 
 ## 当前阶段
 
@@ -133,11 +133,22 @@
       - 产物：`docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`
       - 报告：`docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md`
       - 当前结果：`status=completed`，矩阵共 `292` 行，覆盖 `private_thirdparty_comparison=72`、`private_component_ablation=36`、`public_model_comparison=80`、`public_component_ablation=104` 四个象限。
+    - `P34/P35/P36 optimized Chronaris v2/v3 confirm` 与 optimized model summary 已新增，当前入口为 P34 r3 + P35/P36 r4 confirm20：
+      - P34 task-aware heads 产物：`docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/evidence_manifest.json`
+      - P34 报告：`docs/artifacts/stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md`
+      - P35 stream-role fusion 产物：`docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/evidence_manifest.json`
+      - P35 报告：`docs/artifacts/stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md`
+      - P36 optimized re-evaluation 产物：`docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/evidence_manifest.json`
+      - P36 报告：`docs/artifacts/stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md`
+      - Optimized model summary 产物：`docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/evidence_manifest.json`
+      - Optimized model summary 报告：`docs/artifacts/stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md`
+      - 当前结果：P34 `status=completed`，为 CUDA 20-epoch confirm（3 seeds / `leave_one_view_out` + `leave_one_sortie_out` / 20 epochs），T1 两个 split 小幅改善，T2 在两个 split 上明显改善，T3 仍为混合结果；P35 `status=completed`，完成 requested private/public v3 confirm，private 分支比较 `chronaris_v3_stream_role_fusion`、`v3_no_role_gate`、`v3_fixed_causal_lag` 在 T1/T2/T3 上的结果，public 分支比较 `v3_stream_role`、`v3_no_role_gate`、`v3_force_private_causal`、`v3_context_adapter_only` 在 NASA/UAB context-proxy 上的结果，24 个 public dataset/variant/seed 组合无缺失；P36 与 optimized model summary `status=completed`，P36 private comparison 汇总 P30=72、P34=56、P35_v3_confirm=42 行，public comparison 汇总 P31=6、P35_v3_confirm=8 行。它们不覆盖 P30/P31/P32 confirmed metrics；公开第二流仍是 context proxy，不能写成私有航电流，也不能写成 optimized Chronaris 全面胜出。
+      - 2026-07-02 后处理：基于既有 CSV/JSON 重绘 P34/P35/P36/summary 柱状图并增加短数值标签；新增 future-run `checkpoint_policy`（`off` / `last` / `epoch_and_fold`），默认只保留 last checkpoint；清理记录见 `docs/artifacts/cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md`。本次不改变 P34/P35/P36 metrics。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；本轮 P30/P31/P32 仍在工作树中，提交前以本地 diff 为准。本轮不改变 P27/P28 confirmed metrics，P31 是独立 public component ablation。
-- 本轮 2026-07-01 继续清理 archive-only 早期 public 产物和本地 Python 编译缓存；提交前以 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md` 为删除边界。LFS 历史审计显示 `docs/**` 历史 LFS objects 约 `165 MB`，未执行 git 历史重写。
+- 当前分支为 `main`；本轮 P34/P35/P36 与 optimized model summary r4 confirm20 资产已完成图表重绘、large docs cleanup 和 future-run GPU/checkpoint 输出策略补强，提交前以本地 diff 为准。本轮不改变 P27/P28/P30/P31/P32 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，但 public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
+- 本轮 2026-07-02 清理删除 P34/P35/P36 过渡 run、P31 superseded r1，以及 current r4 nested dense prediction/checkpoint/partial CSV；压缩 P35/P31 training curves 和大日志；dense prediction CSV 已备份到远程开发机仓库外 `/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/`，重复 weak-label manifest 副本已回指 canonical；`.pt` checkpoint 已备份到 `/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/`，提交后使用 `git filter-repo` 从 git 历史移除 checkpoint binary。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
   - `70b651a feat: add stage i evidence closure tools`
@@ -404,7 +415,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/runtime/run_smoke.py \
   --run-id 20260613T-stage-i-runtime-service-smoke-r2-contract \
-  --checkpoint-path docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt \
+  --checkpoint-path <local-only-checkpoint-backup-or-regenerated-multitask-checkpoint.pt> \
   --sample-jsonl <regenerated-input-view-runtime-samples-jsonl> \
   --artifact-root docs/artifacts/assets/stage_i_runtime_service \
   --report-root docs/artifacts/stage_i \

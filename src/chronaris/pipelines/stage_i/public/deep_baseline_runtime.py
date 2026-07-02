@@ -94,6 +94,7 @@ def _deep_model_config_dict(config: "StageIDeepBaselineConfig") -> dict[str, obj
             if config.eval_batch_size is not None
             else None
         ),
+        "checkpoint_policy": str(config.checkpoint_policy),
     }
     return payload
 
@@ -309,6 +310,7 @@ def _train_model(
         fusion_event_bias_weight=config.fusion_event_bias_weight,
         fusion_lag_window_points=config.fusion_lag_window_points,
         fusion_normalize_states=config.fusion_normalize_states,
+        dataset_id=config.dataset_id,
     ).to(device=runtime_device)
     optimizer = torch.optim.Adam(
         model.parameters(),
@@ -384,8 +386,10 @@ def _train_model(
         runtime_device=runtime_device,
     )
     curve_rows: list[dict[str, object]] = []
+    checkpoint_policy = _checkpoint_policy(config.checkpoint_policy)
     checkpoint_dir = Path(config.artifact_root) / "checkpoints"
-    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+    if checkpoint_policy != "off":
+        checkpoint_dir.mkdir(parents=True, exist_ok=True)
     fold_index = int(context.get("fold_index", 1))
     fold_count = int(context.get("fold_count", 1))
     batch_log_interval = max(int(config.batch_log_interval), 1)
@@ -616,35 +620,37 @@ def _train_model(
             epoch_loss,
             time.monotonic() - epoch_started_at,
         )
-        checkpoint_payload = {
-            "model_state_dict": model.state_dict(),
-            "optimizer_state_dict": optimizer.state_dict(),
-            "epoch": int(epoch + 1),
-            "train_loss": epoch_loss,
-            "config": _deep_model_config_dict(config),
-            "progress_context": context,
-            "gpuopt": {
-                "tensor_cache_mode": prepared.tensor_cache_mode,
-                "amp_mode": amp.resolved_mode,
-                "auto_batch_size": bool(config.auto_batch_size),
-                "selected_batch_size": int(selected_batch_size),
-                "requested_batch_size": int(config.batch_size),
-                "batch_size_attempts": batch_attempts,
-                **compile_info,
-            },
-        }
-        torch.save(checkpoint_payload, checkpoint_dir / "checkpoint_last.pt")
-        fold_checkpoint_path = (
-            checkpoint_dir
-            / (
-                f"checkpoint_last_{context.get('track', task)}_"
-                f"{context.get('evaluation_group', 'group')}_fold{fold_index:03d}.pt"
-            )
-        )
-        torch.save(
-            checkpoint_payload,
-            fold_checkpoint_path,
-        )
+        checkpoint_last_path: Path | None = None
+        checkpoint_fold_path: Path | None = None
+        if checkpoint_policy != "off":
+            checkpoint_payload = {
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "epoch": int(epoch + 1),
+                "train_loss": epoch_loss,
+                "config": _deep_model_config_dict(config),
+                "progress_context": context,
+                "gpuopt": {
+                    "tensor_cache_mode": prepared.tensor_cache_mode,
+                    "amp_mode": amp.resolved_mode,
+                    "auto_batch_size": bool(config.auto_batch_size),
+                    "selected_batch_size": int(selected_batch_size),
+                    "requested_batch_size": int(config.batch_size),
+                    "batch_size_attempts": batch_attempts,
+                    **compile_info,
+                },
+            }
+            checkpoint_last_path = checkpoint_dir / "checkpoint_last.pt"
+            torch.save(checkpoint_payload, checkpoint_last_path)
+            if checkpoint_policy == "epoch_and_fold":
+                checkpoint_fold_path = (
+                    checkpoint_dir
+                    / (
+                        f"checkpoint_last_{context.get('track', task)}_"
+                        f"{context.get('evaluation_group', 'group')}_fold{fold_index:03d}.pt"
+                    )
+                )
+                torch.save(checkpoint_payload, checkpoint_fold_path)
         _write_training_progress(
             config,
             "epoch_done",
@@ -657,8 +663,9 @@ def _train_model(
             epoch=epoch + 1,
             epochs=config.epochs,
             train_loss=epoch_loss,
-            checkpoint_last_path=str(checkpoint_dir / "checkpoint_last.pt"),
-            checkpoint_fold_path=str(fold_checkpoint_path),
+            checkpoint_policy=checkpoint_policy,
+            checkpoint_last_path=str(checkpoint_last_path) if checkpoint_last_path else None,
+            checkpoint_fold_path=str(checkpoint_fold_path) if checkpoint_fold_path else None,
         )
         curve_rows.append(
             {
@@ -673,7 +680,8 @@ def _train_model(
                 "weight_decay": float(config.weight_decay),
                 "regression_loss": str(config.regression_loss),
                 "target_transform": str(config.target_transform),
-                "checkpoint_last_path": str(checkpoint_dir / "checkpoint_last.pt"),
+                "checkpoint_last_path": str(checkpoint_last_path) if checkpoint_last_path else None,
+                "checkpoint_policy": checkpoint_policy,
                 "tensor_cache_mode": prepared.tensor_cache_mode,
                 "requested_tensor_cache": str(config.tensor_cache),
                 "cache_build_time_s": float(prepared.cache_build_time_s),
@@ -1090,6 +1098,14 @@ def _concat_forward_outputs(outputs: Sequence[StageIDeepForwardResult]) -> Stage
 def _sync_runtime(device: str) -> None:
     if device == "cuda" and torch.cuda.is_available():
         torch.cuda.synchronize()
+
+
+def _checkpoint_policy(value: str) -> str:
+    normalized = str(value).strip().lower()
+    choices = {"off", "last", "epoch_and_fold"}
+    if normalized not in choices:
+        raise ValueError(f"unsupported checkpoint_policy '{value}'; expected one of {tuple(sorted(choices))}")
+    return normalized
 
 
 def _write_training_progress(

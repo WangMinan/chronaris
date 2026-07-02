@@ -1,7 +1,0 @@
-stage,dataset_id,variant_id,seed,track,evaluation_group,split_group,sample_count,macro_f1,balanced_accuracy
-screen,nasa_csm,event_bias_0p5,42,objective,benchmark_only,subject_10,87,0.6315083860023529,0.7261345852895148
-screen,nasa_csm,event_bias_0p5,42,objective,benchmark_only,subject_11,85,0.6378412421577889,0.6645539906103287
-screen,nasa_csm,event_bias_0p5,42,objective,loft_only,subject_10,100,0.6468837030634783,0.5833333333333334
-screen,nasa_csm,event_bias_0p5,42,objective,loft_only,subject_11,80,0.6484018264840182,0.6666666666666666
-screen,nasa_csm,event_bias_0p5,42,objective,combined,subject_10,187,0.4402737047898338,0.4166666666666667
-screen,nasa_csm,event_bias_0p5,42,objective,combined,subject_11,165,0.47972972972972966,0.5214285714285715

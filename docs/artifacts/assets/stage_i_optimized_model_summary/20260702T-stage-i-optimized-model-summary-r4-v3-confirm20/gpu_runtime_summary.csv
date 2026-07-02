@@ -1,0 +1,3 @@
+stage,runtime_device,gpu_name,torch_version,cuda_version,tensor_cache_mode,best_batch_size,batch_size,amp_mode,torch_compile_mode,max_gpu_memory_gb,samples_per_sec,batch_time_sec,copy_time_sec,forward_time_sec,backward_time_sec,step_time_sec,gpu_util_pct,gpu_memory_used_gb,gpu_memory_total_gb
+P34,cuda,NVIDIA GeForce RTX 4090,2.11.0+cu130,13.0,auto,2048.0,,bf16,off,0.021744251251220703,14.144044207683454,0.5656090918928385,,0.5656090918928385,,,,,
+P35,cuda,NVIDIA GeForce RTX 4090,2.11.0+cu130,13.0,auto,,,bf16,off,4.6632981300354,36.15378028463405,0.8297887458465993,,0.8297887458465993,,,1.0,6.11328125,23.98828125

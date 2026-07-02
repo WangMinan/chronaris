@@ -29,6 +29,11 @@ from chronaris.pipelines.stage_i.common.run_observer import (
     StageIRunProgress,
     open_stage_i_run_observer,
 )
+from chronaris.pipelines.stage_i.common.plot_labels import (
+    label_horizontal_bars,
+    label_stack_totals,
+    label_vertical_bars,
+)
 from chronaris.pipelines.stage_i.public.deep_baseline import (
     StageIDeepBaselineConfig,
     StageIDeepBaselineRunResult,
@@ -112,6 +117,7 @@ class StageIPublicFusionAblationConfig:
     num_workers: int = 24
     parallel_fold_prep: int = 8
     parallel_candidates: int = 1
+    checkpoint_policy: str = "last"
     base_run_id: str | None = None
 
 
@@ -133,6 +139,34 @@ def default_public_fusion_ablation_variants() -> tuple[PublicFusionAblationVaria
     )
     return (
         full,
+        replace(
+            full,
+            variant_id="v3_stream_role",
+            description="P35 stream-role-aware adaptive route for public context-proxy streams.",
+            model_name="chronaris_v3_stream_role",
+            ablation_family="stream_role",
+        ),
+        replace(
+            full,
+            variant_id="v3_no_role_gate",
+            description="P35 stream-role-aware wrapper without a forced role route.",
+            model_name="v3_no_role_gate",
+            ablation_family="stream_role",
+        ),
+        replace(
+            full,
+            variant_id="v3_force_private_causal",
+            description="Force the private causal vehicle route on public context-proxy streams.",
+            model_name="v3_force_private_causal",
+            ablation_family="stream_role",
+        ),
+        replace(
+            full,
+            variant_id="v3_context_adapter_only",
+            description="Force the public context-adapter route for context-proxy streams.",
+            model_name="v3_context_adapter_only",
+            ablation_family="stream_role",
+        ),
         replace(
             full,
             variant_id="no_lag_window",
@@ -597,7 +631,7 @@ def _run_observed(
     )
     _gpu_perf_batches(curve_frame).to_csv(gpu_perf_batches_path, index=False)
     _gpu_perf_fold_summary(curve_frame).to_csv(gpu_perf_fold_path, index=False)
-    status = "completed" if not confirm_frame.empty and _is_full_confirm(confirm_frame) else "partial"
+    status = "completed" if not confirm_frame.empty and _is_full_confirm(confirm_frame, config) else "partial"
     confirm_fold_frame = _stage_fold_frame(fold_frame, "confirm")
     screen_fold_frame = _stage_fold_frame(fold_frame, "screen")
     completed_fold_count = _completed_fold_count(confirm_fold_frame)
@@ -799,6 +833,7 @@ def _run_variant(
             torch_compile=config.torch_compile,
             profile_gpu=config.profile_gpu,
             eval_batch_size=config.eval_batch_size,
+            checkpoint_policy=config.checkpoint_policy,
         )
     )
 
@@ -1150,14 +1185,14 @@ def _bar_metric(frame: pd.DataFrame, path: str, dataset_id: str, metric: str, ti
         axis.axis("off")
     else:
         subset = subset.sort_values(metric, ascending=not higher)
-        axis.barh(np.arange(len(subset)), subset[metric].astype(float), color="#2f6f9f")
+        values = subset[metric].astype(float)
+        bars = axis.barh(np.arange(len(subset)), values, color="#2f6f9f")
+        label_horizontal_bars(axis, bars, values)
         axis.set_yticks(np.arange(len(subset)))
         axis.set_yticklabels(subset["variant_id"], fontsize=8)
         axis.invert_yaxis()
         axis.set_xlabel(metric)
         axis.set_title(title)
-        for index, value in enumerate(subset[metric].astype(float)):
-            axis.text(value, index, f"{value:.4f}", va="center", fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=220)
     plt.close(fig)
@@ -1177,8 +1212,12 @@ def _uab_rmse_plot(frame: pd.DataFrame, path: str) -> None:
         subset = subset.sort_values("mean_rmse")
         x = np.arange(len(subset))
         width = 0.38
-        axis.bar(x - width / 2, subset["n_back_rmse"], width, label="n_back", color="#38761d")
-        axis.bar(x + width / 2, subset["heat_the_chair_rmse"], width, label="heat_the_chair", color="#b45f06")
+        n_back = subset["n_back_rmse"].astype(float)
+        heat = subset["heat_the_chair_rmse"].astype(float)
+        bars_n = axis.bar(x - width / 2, n_back, width, label="n_back", color="#38761d")
+        bars_h = axis.bar(x + width / 2, heat, width, label="heat_the_chair", color="#b45f06")
+        label_vertical_bars(axis, bars_n, n_back)
+        label_vertical_bars(axis, bars_h, heat)
         axis.set_xticks(x)
         axis.set_xticklabels(subset["variant_id"], rotation=35, ha="right", fontsize=8)
         axis.set_ylabel("RMSE")
@@ -1246,7 +1285,8 @@ def _win_summary(frame: pd.DataFrame, path: str) -> None:
         for status in ("W", "T", "L"):
             axis.bar(table.index, table[status], bottom=bottom, label=status, color=colors[status])
             bottom += table[status].to_numpy()
-        axis.set_xticklabels(table.index, rotation=35, ha="right", fontsize=8)
+        label_stack_totals(axis, table.index, bottom)
+        axis.set_xticks(np.arange(len(table)), table.index, rotation=35, ha="right", fontsize=8)
         axis.set_ylabel("metric count")
         axis.set_title("Full vs ablation W/T/L summary")
         axis.legend()
@@ -1313,7 +1353,9 @@ def _component_contribution_plot(frame: pd.DataFrame, path: str) -> None:
             .sort_values(ascending=False)
         )
         colors = ["#3c8d3c" if value >= 0 else "#c0504d" for value in grouped.to_numpy(dtype=float)]
-        axis.barh(np.arange(len(grouped)), grouped.to_numpy(dtype=float), color=colors)
+        values = grouped.to_numpy(dtype=float)
+        bars = axis.barh(np.arange(len(grouped)), values, color=colors)
+        label_horizontal_bars(axis, bars, values)
         axis.set_yticks(np.arange(len(grouped)))
         axis.set_yticklabels(grouped.index, fontsize=8)
         axis.invert_yaxis()
@@ -1330,7 +1372,9 @@ def _plot_small_axis(axis, frame: pd.DataFrame, metric: str, title: str) -> None
         axis.text(0.5, 0.5, "no rows", ha="center", va="center")
         axis.axis("off")
         return
-    axis.bar(frame["variant_id"], frame[metric].astype(float), color="#4f81bd")
+    values = frame[metric].astype(float)
+    bars = axis.bar(frame["variant_id"], values, color="#4f81bd")
+    label_vertical_bars(axis, bars, values)
     axis.set_title(title)
     axis.tick_params(axis="x", rotation=35, labelsize=8)
 
@@ -1383,7 +1427,9 @@ def _gpu_throughput_plot(curve_frame: pd.DataFrame, path: str) -> None:
         grouped["label"] = grouped[group_cols].astype(str).agg(" / ".join, axis=1)
         grouped = grouped.sort_values("selected_batch_size", ascending=False).head(20)
         y = np.arange(len(grouped))
-        axis.barh(y, grouped["selected_batch_size"].astype(float), color="#2f6f9f")
+        values = grouped["selected_batch_size"].astype(float)
+        bars = axis.barh(y, values, color="#2f6f9f")
+        label_horizontal_bars(axis, bars, values)
         axis.set_yticks(y)
         axis.set_yticklabels(grouped["label"], fontsize=7)
         axis.invert_yaxis()
@@ -1406,8 +1452,26 @@ def _lower_is_better(metric: str) -> bool:
     return metric.endswith("_rmse") or metric.endswith("_mae") or metric == "mean_rmse"
 
 
-def _is_full_confirm(confirm_frame: pd.DataFrame) -> bool:
+def _is_full_confirm(confirm_frame: pd.DataFrame, config: StageIPublicFusionAblationConfig) -> bool:
     if confirm_frame.empty:
+        return False
+    required_columns = {"dataset_id", "variant_id", "seed"}
+    if not required_columns.issubset(confirm_frame.columns):
+        return False
+    expected_datasets = set(config.datasets)
+    expected_variants = {variant.variant_id for variant in _select_variants(config.variants)}
+    expected_seeds = {int(config.seed), *[int(seed) for seed in config.extra_confirm_seeds]}
+    observed = {
+        (str(row["dataset_id"]), str(row["variant_id"]), int(row["seed"]))
+        for row in confirm_frame[list(required_columns)].dropna().to_dict(orient="records")
+    }
+    expected = {
+        (dataset_id, variant_id, seed)
+        for dataset_id in expected_datasets
+        for variant_id in expected_variants
+        for seed in expected_seeds
+    }
+    if not expected.issubset(observed):
         return False
     nasa = confirm_frame[confirm_frame["dataset_id"] == "nasa_csm"]
     if not nasa.empty and int(nasa["fold_count"].max()) < 16:
@@ -1683,6 +1747,8 @@ def _resume_command(config: StageIPublicFusionAblationConfig) -> str:
         str(config.parallel_fold_prep),
         "--parallel-candidates",
         str(config.parallel_candidates),
+        "--checkpoint-policy",
+        str(config.checkpoint_policy),
     ]
     if config.auto_batch_size:
         parts.append("--auto-batch-size")
@@ -1713,6 +1779,7 @@ def _gpuopt_config_delta(config: StageIPublicFusionAblationConfig) -> dict[str, 
         "num_workers": int(config.num_workers),
         "parallel_fold_prep": int(config.parallel_fold_prep),
         "parallel_candidates": int(config.parallel_candidates),
+        "checkpoint_policy": str(config.checkpoint_policy),
         "config_lineage": "gpuopt rerun uses same prepared roots, labels and split construction; it must not be merged into base run leaderboards without protocol/config columns.",
     }
 

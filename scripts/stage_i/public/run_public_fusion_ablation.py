@@ -88,6 +88,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--parallel-candidates", type=int, default=1)
     parser.add_argument("--profile-gpu", action="store_true", default=True)
     parser.add_argument("--no-profile-gpu", dest="profile_gpu", action="store_false")
+    parser.add_argument("--checkpoint-policy", choices=("off", "last", "epoch_and_fold"), default="last")
     return parser.parse_args()
 
 
@@ -146,6 +147,7 @@ def main() -> int:
             num_workers=args.num_workers,
             parallel_fold_prep=args.parallel_fold_prep,
             parallel_candidates=args.parallel_candidates,
+            checkpoint_policy=args.checkpoint_policy,
             base_run_id=args.base_run_id,
         )
     )

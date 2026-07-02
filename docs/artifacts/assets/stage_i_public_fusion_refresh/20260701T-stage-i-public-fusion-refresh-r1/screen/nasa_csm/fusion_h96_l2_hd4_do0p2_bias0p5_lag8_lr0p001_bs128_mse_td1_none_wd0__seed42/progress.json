@@ -27,12 +27,14 @@
       "event": "finished",
       "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/deep_baseline_summary.json",
       "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/deep_baseline_report.md",
-      "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/fold_predictions.csv"
+      "predictions_path": null,
+      "prediction_exports_pruned": true
     }
   ],
   "prepared_artifact_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
   "runtime_device": "cuda",
   "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/deep_baseline_summary.json",
   "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/deep_baseline_report.md",
-  "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/fold_predictions.csv"
+  "predictions_path": null,
+  "prediction_exports_pruned": true
 }

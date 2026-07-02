@@ -1,0 +1,5 @@
+claim,allowed_strength,required_boundary
+P34/P35 convert P30/P31 diagnostics into model changes.,Use each artifact status: P34 confirm and P35 requested v3 confirm when completed; otherwise partial/route-only.,Do not write partial or route-only evidence as completed/full LOSO.
+Task-aware heads improve T1/T2 in current private confirm; T3 remains mixed.,metric-backed but limited,T3 mixed/regressed metrics must be reported; do not claim broad superiority.
+Stream-role routing separates real vehicle streams from context proxy streams.,route/gate smoke evidence,Public context proxy is not real vehicle telemetry.
+P36 summarizes optimized Chronaris against fixed references.,aggregation package,Do not overwrite or reinterpret P30/P31/P32 confirmed artifacts.

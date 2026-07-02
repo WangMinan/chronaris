@@ -27,12 +27,14 @@
       "event": "finished",
       "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_summary.json",
       "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_report.md",
-      "predictions_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/fold_predictions.csv"
+      "predictions_path": null,
+      "prediction_exports_pruned": true
     }
   ],
   "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_public_opt/20260508T080318Z-stage-i-public-opt-nasa-prepared-v2",
   "runtime_device": "cuda",
   "summary_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_summary.json",
   "report_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/deep_baseline_report.md",
-  "predictions_path": "/home/wangminan/projects/chronaris/docs/reports/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/fold_predictions.csv"
+  "predictions_path": null,
+  "prediction_exports_pruned": true
 }

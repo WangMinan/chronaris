@@ -1,9 +1,0 @@
-stage,dataset_id,variant_id,seed,track,evaluation_group,split_group,sample_count,macro_f1,balanced_accuracy,rmse,mae
-screen,uab_workload_dataset,physiology_only,42,objective,n_back,subject_01,1888,0.295288287627389,0.350685734104256,,
-screen,uab_workload_dataset,physiology_only,42,objective,n_back,subject_02,1876,0.22086398938523363,0.3273187323709972,,
-screen,uab_workload_dataset,physiology_only,42,objective,heat_the_chair,subject_01,324,0.4098360655737705,0.5270579268292683,,
-screen,uab_workload_dataset,physiology_only,42,objective,heat_the_chair,subject_02,314,0.35150090274981494,0.4792072774528915,,
-screen,uab_workload_dataset,physiology_only,42,subjective,n_back,subject_01,1888,,,5.924562119909982,5.112618728619763
-screen,uab_workload_dataset,physiology_only,42,subjective,n_back,subject_02,1876,,,5.907128822921936,5.364594654837397
-screen,uab_workload_dataset,physiology_only,42,subjective,heat_the_chair,subject_01,324,,,2.030279019096288,1.8875849305847545
-screen,uab_workload_dataset,physiology_only,42,subjective,heat_the_chair,subject_02,314,,,2.15589537215821,1.6909357757325385

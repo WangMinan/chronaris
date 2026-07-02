@@ -1,0 +1,15 @@
+dataset_id,task_group,metric,variant_id,ablation_family,value_mean,value_std,value_count,full_value_mean,full_value_std,full_value_count,delta_abs_mean,delta_abs_std,delta_abs_count,delta_rel_pct_mean,delta_rel_pct_std,delta_rel_pct_count,source_stage,p35_status
+nasa_csm,combined,combined_macro_f1,no_lag_window,lag_window,0.3941030062837564,,1,0.3271916543041203,,1,-0.0669113519796361,,1,-16.978137926575354,,1,P31_reference,reference_only
+nasa_csm,combined,combined_macro_f1,full,full,0.3271916543041203,,1,0.3271916543041203,,1,0.0,,1,0.0,,1,P31_reference,reference_only
+nasa_csm,combined,combined_macro_f1,context_only,stream,0.3023466874108648,,1,0.3271916543041203,,1,0.0248449668932555,,1,8.217376914566039,,1,P31_reference,reference_only
+uab_workload_dataset,uab_mean,mean_rmse,context_only,stream,3.0666331403116778,,1,3.279089823942797,,1,-0.2124566836311197,,1,-6.479135828480005,,1,P31_reference,reference_only
+uab_workload_dataset,uab_mean,mean_rmse,full,full,3.279089823942797,,1,3.279089823942797,,1,0.0,,1,0.0,,1,P31_reference,reference_only
+uab_workload_dataset,uab_mean,mean_rmse,no_lag_window,lag_window,3.3560502358302875,,1,3.279089823942797,,1,0.07696041188749,,1,2.3470052977979226,,1,P31_reference,reference_only
+nasa_csm,combined,combined_macro_f1,v3_force_private_causal,stream_role,0.4622019139053777,0.0230331245120426,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+nasa_csm,combined,combined_macro_f1,v3_no_role_gate,stream_role,0.4321928935442479,0.0322023884155694,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+nasa_csm,combined,combined_macro_f1,v3_stream_role,stream_role,0.4321928935442479,0.0322023884155694,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+nasa_csm,combined,combined_macro_f1,v3_context_adapter_only,stream_role,0.4346868846970449,0.0332995034934353,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+uab_workload_dataset,uab_mean,mean_rmse,v3_force_private_causal,stream_role,3.2368653589898417,0.0126724696575229,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+uab_workload_dataset,uab_mean,mean_rmse,v3_context_adapter_only,stream_role,3.2884738672241967,0.0537391720854079,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+uab_workload_dataset,uab_mean,mean_rmse,v3_stream_role,stream_role,3.374778828202585,0.0276675616030863,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm
+uab_workload_dataset,uab_mean,mean_rmse,v3_no_role_gate,stream_role,3.359988263762973,0.0266689418987035,3,,,0,,,0,,,0,P35_v3_confirm,v3_confirm

@@ -1,0 +1,2 @@
+[heartbeat] run_id=20260702T-stage-i-stream-role-fusion-r4-v3-confirm20 stage=P35 device=cuda route_smoke=completed
+[finish] run_id=20260702T-stage-i-stream-role-fusion-r4-v3-confirm20 stage=P35 status=completed private_confirm=True public_confirm=True

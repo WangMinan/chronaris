@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已在当前工作树完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix。本轮不改变 P27/P28 confirmed metrics，提交前以本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `9432507 feat: add more tests on P30 and P31`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix。本轮 P34/P35/P36 与 optimized model summary r4 confirm20 资产仍在工作树中。本轮不改变 P27/P28/P30/P31/P32 confirmed metrics，提交前以本地 diff 为准。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -92,7 +92,14 @@
 12. P30 已完成 private real dual-stream Stage H third-party comparison；入口为 `docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/evidence_manifest.json`。该结果是 private T1/T2/T3 proxy task 的第三方对比，不能写成论文最终人工真值任务。
 13. P31 已完成 public fusion ablation；入口为 `docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`。该结果属于 public adapter / context-proxy component ablation，不替代 P28 confirmed refresh，也不证明 public 第二模态等价于私有航电流。
 14. P32 已完成 cross-evidence matrix；入口为 `docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`。中期报告可用它说明 private/public/proxy/component 四层证据分工。
-15. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
+15. P34/P35/P36 与 optimized model summary 已新增 optimized Chronaris CUDA confirm / aggregation，当前入口为 P34 r3 + P35/P36 r4：
+   - P34：`docs/artifacts/stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md`，资产根 `docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/`。
+   - P35：`docs/artifacts/stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md`，资产根 `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/`。
+   - P36：`docs/artifacts/stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md`，资产根 `docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/`。
+   - Optimized model summary：`docs/artifacts/stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md`，资产根 `docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/`。
+   - 当前状态：P34 `status=completed`，为 CUDA 20-epoch confirm（3 seeds / `leave_one_view_out` + `leave_one_sortie_out` / 20 epochs），T1 两个 split 小幅改善，T2 明显改善，T3 混合；P35 `status=completed`，完成 requested private/public v3 confirm，private 分支比较 `chronaris_v3_stream_role_fusion` / `v3_no_role_gate` / `v3_fixed_causal_lag`，public 分支比较 `v3_stream_role` / `v3_no_role_gate` / `v3_force_private_causal` / `v3_context_adapter_only`，public 24 个 dataset/variant/seed 组合无缺失；P36 与 optimized model summary 为 `completed` aggregation，读取固定 P30/P31/P32 reference 并汇总 P34/P35/P36 的关键指标、GPU runtime、gate 和 claim boundary。后续论文表述仍需保留 public context proxy、private proxy benchmark、T3 mixed 和“不是全面胜出”边界。
+16. 2026-07-02 P34/P35/P36 后处理已完成：基于既有 CSV/JSON 重绘本轮柱状图并加入短数值标签；新增 `checkpoint_policy` future-run 输出策略；独立 CUDA profiling 记录表明当前 public context-proxy 小折 tensor cache 约 `0.115 GB`、auto batch 选 `2048/1024`、memory pressure 低于 `0.21`；清理过渡 run、dense predictions、partial CSV、checkpoint 和大日志，dense prediction CSV / checkpoint 已外置备份，重复 weak-label manifest 副本已回指 canonical。清理与 profiling 边界见 `docs/artifacts/cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md`。本项不改变 P34/P35/P36 或 P30/P31/P32 confirmed metrics。
+17. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
 
 验收：
 
@@ -176,7 +183,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 
 本轮输出：
 
-- `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt`
+- Stage I multitask checkpoint binary 已从 git 保留范围移出；当前仅在远程开发机仓库外备份或由训练重新生成，repo 内引用 `multitask_summary.json` / report / schema contract。
 - `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`
 - `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
 - `docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
@@ -207,7 +214,7 @@ CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS=1 \
 
 - 已生成 `docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/private_proxy_task_manifest.jsonl`。
 - 已生成 `docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/private_proxy_task_summary.json`。
-- 已生成 `docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/thesis_task_manifest.jsonl`。
+- 已生成 `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`。
 - 已生成 `docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/thesis_task_summary.json`。
 - `private_benchmark_summary.json` 已包含 `evidence_layers.proxy_evidence` 和 `evidence_layers.thesis_task_evidence`。
 - CLI 已打印 thesis task manifest / summary 路径。
@@ -1186,7 +1193,7 @@ CHRONARIS_MYSQL_USER=wangminan CHRONARIS_MYSQL_PASSWORD=... \
 
 保留边界：
 
-- `20260613T-stage-i-p11-live-influx-r1` 的 child run/checkpoint/log 被 r3 resume 和 r4 partial summary 引用，保留。
+- `20260613T-stage-i-p11-live-influx-r1` 的 child run summary/log 被 r3 resume 和 r4 partial summary 引用，保留；checkpoint binary 仅保留在远程开发机本地备份或重新生成，不进入 git。
 - `20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv` 是 P20/P21 LLM preprocessing 历史输入表，保留。
 - public adapter 的 `20260508T125651Z` sklearn baseline 与 `20260508T090700Z` torch baseline 被 public calibration/transfer boundary 与代码常量引用，保留。
 
