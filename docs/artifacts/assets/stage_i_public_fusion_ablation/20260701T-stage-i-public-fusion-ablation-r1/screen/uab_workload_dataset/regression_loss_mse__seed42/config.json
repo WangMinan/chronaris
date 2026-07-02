@@ -1,0 +1,28 @@
+{
+  "stage": "screen",
+  "dataset_id": "uab_workload_dataset",
+  "variant": {
+    "variant_id": "regression_loss_mse",
+    "description": "Use MSE for UAB regression.",
+    "model_name": "chronaris_public_fusion",
+    "hidden_dim": 64,
+    "layers": 2,
+    "num_heads": 4,
+    "dropout": 0.1,
+    "fusion_event_bias_weight": 0.25,
+    "fusion_lag_window_points": 16,
+    "fusion_normalize_states": true,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "regression_loss": "mse",
+    "huber_delta": 1.0,
+    "target_transform": "zscore_train",
+    "weight_decay": 1e-05,
+    "gradient_clip_max_norm": 1.0,
+    "ablation_family": "regression_loss"
+  },
+  "seed": 42,
+  "epochs": 5,
+  "max_folds": 2,
+  "prepared_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/uab_workload_dataset"
+}

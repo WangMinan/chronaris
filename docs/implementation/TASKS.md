@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-01
+更新时间：2026-07-02
 
 ## 文档定位
 
@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，作为 P28 后续效率证据入口。本轮不改变 P27/P28 confirmed metrics，提交前以本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已在当前工作树完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix。本轮不改变 P27/P28 confirmed metrics，提交前以本地 diff 为准。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -89,7 +89,10 @@
 9. 中期图表当前入口为 `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`；旧 `r2-p18` 图包已清理，仅保留 `runtime_semantic_case.csv` 作为 P20/P21 LLM preprocessing 历史输入表，r4 runtime case refresh 已由 r5 接管并清理，r5 已由 r6 报告重绘图包接管并在 2026-06-21 深度清理中从 docs 产物目录删除。
 10. Public-P27/P28 已完成 public model comparison 与 chronaris_public_fusion refresh；中期公开模型对比优先引用 `docs/artifacts/stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`、`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/improvement_summary.csv` 和 P28 `fusion_refresh_summary.json`。
 11. P28-GPUOPT 已完成代表性 fold GPU efficiency profiling；效率证据优先引用 `docs/artifacts/stage_i/stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_summary.json`。该结果只说明训练吞吐、显存和 resume 状态，不替代 P28 full LOSO confirmed metrics。
-12. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
+12. P30 已完成 private real dual-stream Stage H third-party comparison；入口为 `docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/evidence_manifest.json`。该结果是 private T1/T2/T3 proxy task 的第三方对比，不能写成论文最终人工真值任务。
+13. P31 已完成 public fusion ablation；入口为 `docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`。该结果属于 public adapter / context-proxy component ablation，不替代 P28 confirmed refresh，也不证明 public 第二模态等价于私有航电流。
+14. P32 已完成 cross-evidence matrix；入口为 `docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md` 与 `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`。中期报告可用它说明 private/public/proxy/component 四层证据分工。
+15. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
 
 验收：
 

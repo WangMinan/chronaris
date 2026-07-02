@@ -1,0 +1,46 @@
+{
+  "dataset_id": "nasa_csm",
+  "model_name": "chronaris_public_fusion",
+  "requested_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42",
+  "epochs": 20,
+  "max_folds": null,
+  "heartbeat_seconds": 60.0,
+  "batch_log_interval": 20,
+  "stage_name": "stage_i_deep_baseline",
+  "run_id": "no_event_bias__seed42",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-01T17:46:45.819658Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-01T17:41:45.852045Z",
+      "event": "start",
+      "dataset_id": "nasa_csm",
+      "model_name": "chronaris_public_fusion",
+      "requested_device": "cuda",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42",
+      "epochs": 20,
+      "max_folds": null,
+      "heartbeat_seconds": 60.0,
+      "batch_log_interval": 20
+    },
+    {
+      "timestamp_utc": "2026-07-01T17:41:46.703203Z",
+      "event": "dataset_loaded",
+      "prepared_artifact_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
+      "runtime_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-07-01T17:46:45.819658Z",
+      "event": "finished",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42/deep_baseline_report.md",
+      "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42/fold_predictions.csv"
+    }
+  ],
+  "prepared_artifact_root": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
+  "runtime_device": "cuda",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42/deep_baseline_summary.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42/deep_baseline_report.md",
+  "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260701T-stage-i-public-fusion-ablation-r1/confirm/nasa_csm/no_event_bias__seed42/fold_predictions.csv"
+}

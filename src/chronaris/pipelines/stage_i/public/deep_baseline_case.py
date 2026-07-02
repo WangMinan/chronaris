@@ -14,10 +14,12 @@ from chronaris.evaluation import save_bar_plot
 from chronaris.features.stage_i_sequences import STAGE_H_CASE_DATASET_ID
 from chronaris.pipelines.stage_i.public.deep_baseline_runtime import (
     _deep_model_config_dict,
-    _forward_dataset,
-    _normalize_modalities,
+    _eval_amp,
+    _forward_prepared_dataset,
+    _resolve_eval_batch_size,
     _train_model,
 )
+from chronaris.pipelines.stage_i.common.gpu_runtime import prepare_fold_tensors
 from chronaris.pipelines.torch_runtime import resolve_torch_device_name
 
 if TYPE_CHECKING:
@@ -35,45 +37,53 @@ def _run_real_sortie_case_study(
     plot_root = artifact_root / "plots"
     plot_root.mkdir(parents=True, exist_ok=True)
     ordered_modalities = tuple(entries[0].modality_schema)
-    normalized_arrays = _normalize_modalities(
-        modality_arrays=bundle.modality_arrays,
-        modality_masks=bundle.modality_masks,
-        ordered_modalities=ordered_modalities,
-        train_indices=np.arange(bundle.entry_count, dtype=int),
-    )
     labels = bundle.objective_label_values.astype(int)
-    model, training_curves = _train_model(
+    all_indices = np.arange(bundle.entry_count, dtype=int)
+    model, training_curves, prepared = _train_model(
         model_name=config.model_name,
         ordered_modalities=ordered_modalities,
-        modality_arrays=normalized_arrays,
+        modality_arrays=bundle.modality_arrays,
         modality_masks=bundle.modality_masks,
         time_axis=bundle.time_axis,
-        train_indices=np.arange(bundle.entry_count, dtype=int),
+        train_indices=all_indices,
         train_targets=labels,
         output_dim=max(int(labels.max()) + 1, 2),
         task="classification",
         config=config,
     )
-    base_output = _forward_dataset(
+    runtime_device = resolve_torch_device_name(config.device)
+    base_output = _forward_prepared_dataset(
         model=model,
-        ordered_modalities=ordered_modalities,
-        modality_arrays=normalized_arrays,
-        modality_masks=bundle.modality_masks,
-        time_axis=bundle.time_axis,
-        indices=np.arange(bundle.entry_count, dtype=int),
+        prepared=prepared,
+        indices=all_indices,
+        batch_size=_resolve_eval_batch_size(config),
+        amp=_eval_amp(config, runtime_device),
     )
     perturbed_vehicle_values, perturbed_vehicle_masks = _mask_top_event_steps(bundle)
-    perturbed_arrays = dict(normalized_arrays)
+    perturbed_arrays = dict(bundle.modality_arrays)
     perturbed_arrays["vehicle"] = perturbed_vehicle_values
     perturbed_masks = dict(bundle.modality_masks)
     perturbed_masks["vehicle"] = perturbed_vehicle_masks
-    perturbed_output = _forward_dataset(
-        model=model,
-        ordered_modalities=ordered_modalities,
+    perturbed_target_full = labels.astype(np.float32)
+    perturbed_prepared = prepare_fold_tensors(
         modality_arrays=perturbed_arrays,
         modality_masks=perturbed_masks,
         time_axis=bundle.time_axis,
-        indices=np.arange(bundle.entry_count, dtype=int),
+        ordered_modalities=ordered_modalities,
+        train_indices=all_indices,
+        targets=perturbed_target_full,
+        requested_mode=config.tensor_cache,
+        device=runtime_device,
+        max_cache_gb=config.max_cache_gb,
+        pin_memory=config.pin_memory,
+        non_blocking_copy=config.non_blocking_copy,
+    )
+    perturbed_output = _forward_prepared_dataset(
+        model=model,
+        prepared=perturbed_prepared,
+        indices=all_indices,
+        batch_size=_resolve_eval_batch_size(config),
+        amp=_eval_amp(config, runtime_device),
     )
     sample_frame = _build_real_sortie_sample_frame(
         entries=entries,

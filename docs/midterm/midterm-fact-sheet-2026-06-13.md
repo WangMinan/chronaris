@@ -1,6 +1,6 @@
 # Chronaris 中期事实清单
 
-更新时间：2026-06-21
+更新时间：2026-07-02
 
 本清单冻结当前中期报告可引用事实。所有实验事实必须能追溯到 `docs/artifacts/` 下的报告、CSV、JSON 或 PNG。写中期报告时，优先引用本清单中的当前入口；历史报告只作为追溯材料，不从旧报告倒推当前状态。
 
@@ -11,7 +11,7 @@
 - 数据链路层：Stage E/F/G(min)/H 历史真实链路已经收口，Stage H 可稳定导出标准化融合特征。
 - 模型主线层：Stage I Phase A/B/C 已完成统一骨干、真实 Stage H weak-label 联合训练、checkpoint 导出和 private/thesis 分层资产。
 - 证据补强层：Phase D/E/F 已完成刚体物理约束、语义事件融合 support、runtime replay/service 补强。
-- 主动证据层：P10-P18 已完成，覆盖 evidence runner、P11 weak-label sweep、private component ablation、public adapter calibration、transfer boundary、rotation audit、thesis figures、runtime smoke 和 schema contract。
+- 主动证据层：P10-P18、P27/P28 与 P30/P31/P32 已完成，覆盖 evidence runner、P11 weak-label sweep、private component ablation、public adapter/model comparison、private third-party comparison、public fusion ablation、transfer boundary、rotation audit、thesis figures、runtime smoke、schema contract 和 cross-evidence matrix。
 - 文档与索引层：当前状态、任务队列、产物索引和 Stage I 报告入口已经同步到 `docs/STATE.md`、`docs/implementation/TASKS.md`、`docs/artifacts/ARTIFACTS.md`、`docs/artifacts/stage_i/README.md`。
 
 ## 2. 当前论文目标与仓库能力
@@ -26,7 +26,7 @@
 | 物理一致性约束时间对齐 | translation + vertical 约束已在真实链路启用；rotation disabled diagnostics 已落盘 | [../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md) |
 | 因果掩码与语义事件融合 | 语义 support 覆盖 3 个双流 view | [../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md) |
 | 标准化融合特征与中间态接口 | Stage H 与 runtime replay 已形成样本、checkpoint、prediction 输出 | [../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md) |
-| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r6 图表；private T1/T2/T3 另有 leakage-safe 组件诊断 | [../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md) |
+| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r6 图表；private T1/T2/T3 另有 leakage-safe 组件诊断、third-party comparison 与 cross-evidence matrix | [../artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md](../artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md) |
 
 ## 3. 数据与样本事实
 
@@ -294,6 +294,33 @@ best_by_category：
 - UAB/NASA 第二模态是 context proxy，不是论文严格意义上的真实航电流。
 - 不能把 public adapter 结果改写为私有双流连续对齐主线 fully closed。
 
+### 8.5 P27/P28/P30/P31/P32 public/private comparison 与 cross-evidence matrix
+
+当前新增比较实验入口：
+
+- P27 public model comparison：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json`
+- P28 public fusion refresh：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json`
+- P30 private third-party comparison：`docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_thirdparty_summary.json`
+- P31 public fusion ablation：`docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`
+- P32 cross-evidence matrix：`docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`
+
+P30 private third-party comparison 使用 private real dual-stream Stage H 的 `111` 个窗口、`3` 个 view、`2` 个 sortie，对 `chronaris_full`、`mult`、`contiformer`、`naive_time_sync` 和 `classical_baseline` 做 T1/T2/T3 proxy task 对比。当前结果是混合对比：`chronaris_full` 在 T3 top3/top5/MRR 上优于 `naive_time_sync`，但 T1 macro-F1 低于 MulT/ContiFormer/classical，T2 RMSE 也未全面领先 MulT/ContiFormer；不能写成 Chronaris 全面胜出或人工真值任务闭环。
+
+P31 public fusion ablation 在 NASA CSM 与 UAB workload public context proxy 上比较 `full`、`no_lag_window`、`no_event_bias`、`physiology_only`、`context_only`、`no_causal_fusion`、`no_target_transform` 和 `mse_loss`。关键读数如下：
+
+| dataset / task | full | 最佳 ablation | 说明 |
+| --- | --- | --- | --- |
+| NASA combined macro-F1 | `0.327192` | `no_lag_window=0.394103` | full 不是 public context proxy 上的最优项 |
+| NASA combined balanced_accuracy | `0.346014` | `no_lag_window=0.385870` | 体现 lag-window 组件敏感性 |
+| UAB mean RMSE | `3.279090` | `context_only=3.066633` | lower is better，context proxy 在 UAB 上占主导 |
+
+P32 cross-evidence matrix 将 private/public/proxy/component 证据统一成 `292` 行矩阵：`private_thirdparty_comparison=72`、`private_component_ablation=36`、`public_model_comparison=80`、`public_component_ablation=104`。中期报告可以用它说明证据层级和边界，但不能把 private Stage H、private proxy、public adapter、public context proxy 结果混成同一个胜负排行榜。
+
+写法建议：
+
+- 可以写“本阶段新增第三方对比、公开组件消融和跨证据矩阵，把 private real dual-stream、private proxy、public adapter 和 public component ablation 分层组织为可追溯证据”。
+- 不应写“公开数据已证明私有航电双流泛化成功”或“P30/P31 证明 Chronaris 在所有任务上优于第三方模型”。
+
 ## 9. P15/Phase D rigid-body 与 rotation audit
 
 ### Phase D rigid-body r2
@@ -504,13 +531,15 @@ Native 缺失的 vehicle measurement groups：
 
 1. 数据与样本组织：面向私有航空人机时序数据，完成 MySQL/InfluxDB 接入、跨源时间基准、Stage H 标准化窗口和双流 view 组织。
 2. 模型主线：建立生理流和飞机流双流连续潜态建模框架，接入物理约束、因果掩码、语义事件融合和任务头。
-3. 实验与验证：在 2 个 sortie、3 个双流 view、111 个窗口样本上完成 weak-label thesis task 训练、live/proxy sweep、private proxy 消融、public adapter 边界和 runtime smoke。
+3. 实验与验证：在 2 个 sortie、3 个双流 view、111 个窗口样本上完成 weak-label thesis task 训练、live/proxy sweep、private proxy 消融、private third-party comparison、public adapter/model comparison、public fusion ablation、cross-evidence matrix 和 runtime smoke。
 4. 工程与可复现：形成 evidence runner、manifest、schema contract、错误样例、图表和文档索引，使中期报告材料可追溯、可复跑、可解释。
 
 ## 15. 当前不应扩写成结论的内容
 
 - 不应声称当前已完成人工标注风险、负荷、事件复盘真值验证。
 - 不应声称 public adapter 证明私有双流主线泛化成功。
+- 不应声称 public fusion ablation 证明 public context proxy 等价于私有航电流。
+- 不应声称 P30/P31 证明 Chronaris 在全部任务上全面胜出。
 - 不应声称 T1/T2/T3 是论文最终任务，只能作为 private proxy。
 - 不应声称原始 runtime upstream input 已 native exact schema。
 - 不应声称完整 6DoF rotation residual 已启用。

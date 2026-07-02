@@ -1,6 +1,6 @@
 # Chronaris 中期 Claims Matrix
 
-更新时间：2026-06-21
+更新时间：2026-07-02
 
 本矩阵用于写中期报告、PPT 和后续论文综述时核对表述强度。每条 claim 都应同时满足：有证据路径、有证据层级、有禁止表述。
 
@@ -16,6 +16,10 @@
 | 因果掩码、时间残差、任务头对 private proxy 有诊断价值 | 中强 | private_proxy | `chronaris_opt_component_ablation.json`; `chronaris_opt_component_ablation.png` | 这些组件已在公开数据上证明泛化 |
 | UAB/NASA 公开数据可作为 adapter/calibration 支撑 | 中强 | public_adapter_calibration | `public_adapter_calibration_summary.json`; `public_transfer_boundary_summary.json` | 公开数据证明私有航空双流主线 fully closed |
 | public 第二模态是 context proxy，不是真实航电流 | 强 | transfer_boundary | `docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json` | public 数据具有与私有航电流等价的模态结构 |
+| Public-P27/P28 已完成 public model comparison 与 fusion refresh | 中强但限域 | public_adapter / context_proxy | `docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json`; `docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json` | P27/P28 证明私有双流泛化 fully closed |
+| P30 已完成 private T1/T2/T3 third-party comparison | 中强但限域 | private_proxy / private_thirdparty_comparison | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_thirdparty_summary.json`; `docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md` | Chronaris 在所有 private proxy 任务上全面胜出；T1/T2/T3 是论文最终人工真值任务 |
+| P31 已完成 public fusion component ablation | 中强但限域 | public_component_ablation / context_proxy | `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`; `docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md` | full fusion 在 public context proxy 上全面最优；public context proxy 等价于私有航电流 |
+| P32 已把 private/public/proxy/component 证据组织为 cross-evidence matrix | 强 | cross_layer_index | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`; `docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md` | 把 private Stage H、private proxy、public adapter 和 public component ablation 混成单一排行榜 |
 | rigid_body translation + vertical 已启用 | 强 | rigid_body_support | `docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json` | 完整 6DoF 已启用 |
 | rotation disabled 是字段缺失诊断，不是忘做 | 强 | rotation_diagnostics | `docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json` | rotation 已完整验证 |
 | semantic event support 已覆盖 3 个双流 view | 强 | semantic_support | `docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`; `stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md` | 已完成专家语义事件标注体系 |
@@ -33,10 +37,10 @@
 | --- | --- |
 | 研究背景与问题 | 数据接入、双流 view、异构时序对齐需求 |
 | 研究内容与技术路线 | Stage H、Phase C、Phase D/E/F、P10-P18 |
-| 已完成工作 | Phase C 训练、P11 sweep、P12-P15、P16-P18、P20-P21 |
-| 实验结果与分析 | P11、P12、P13/P14、rigid_body、semantic、runtime |
-| 存在问题 | weak-label、partial live grid、native aligned、rotation disabled、样本规模 |
-| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、P21 human review packet 填写与 semantic support 带 LLM query specs 复跑 |
+| 已完成工作 | Phase C 训练、P11 sweep、P12-P15、P16-P18、P20-P21、P27/P28、P30-P32 |
+| 实验结果与分析 | P11、P12、P13/P14、P27/P28、P30/P31、P32、rigid_body、semantic、runtime |
+| 存在问题 | weak-label、partial live grid、native aligned、rotation disabled、样本规模、public context proxy 与 private real dual-stream 不等价、P30/P31 混合结果 |
+| 下一步计划 | 文献综述、更多 sortie/view、专家复核、native exact、角速度字段核验、P21 human review packet 填写、semantic support 带 LLM query specs 复跑、围绕 P30/P31 混合结果做模型/数据诊断 |
 
 ## 文献检索映射
 

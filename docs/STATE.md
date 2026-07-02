@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-01
+更新时间：2026-07-02
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish` 与本轮 `Public-P27/Public-P28`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish`、`Public-P27/Public-P28` 与本轮 `P30/P31/P32`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表；P30/P31/P32 进一步补齐 private third-party comparison、public fusion ablation 和跨证据矩阵。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28、P31 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
 
 ## 当前阶段
 
@@ -119,10 +119,24 @@
       - 报告：`docs/artifacts/stage_i/stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md`
       - 当前结果：代表性 fold profiling 中 tensor cache `auto` + auto batch `2048` + AMP `bf16` 把吞吐从 `559.52` 提升到 `5090.93` samples/sec，speedup `9.10x`；显存峰值从 `0.276 GB` 提升到 `3.913 GB`，nvidia-smi GPU utilization 快照从 `11.67%` 到 `15.83%`。
       - 边界：本轮未重跑完整 P28 full LOSO，不替代 P28 confirmed metrics；`gpu_optimization/resume_command.txt` 只用于恢复 GPUOPT profiling。
+    - `P30 private third-party comparison` 已完成：
+      - 产物：`docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_thirdparty_summary.json`
+      - 报告：`docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md`
+      - 当前结果：`status=completed`，private real dual-stream Stage H 样本为 `111` windows / `3` views / `2` sorties，完成 `159/195` protocol fold rows；T1/T2/T3 与 MulT、ContiFormer、naive time sync、classical baseline 对比为混合结果，不包装成 Chronaris 全面胜出。
+      - GPUOPT：CUDA required，RTX 4090，torch `2.11.0+cu130` / CUDA `13.0`，tensor cache `auto(cuda)`、AMP `bf16`、auto batch best `2048`，OOM/cache fallback 均为 `0`。
+    - `P31 public fusion ablation` 已完成：
+      - 产物：`docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json`
+      - 报告：`docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md`
+      - 当前结果：`status=completed`，screen `112` fold rows，confirm `936/952` fold rows；NASA `full` combined macro-F1=`0.327192`、BA=`0.346014`，`no_lag_window` 在 NASA combined macro-F1=`0.394103`；UAB `full` mean RMSE=`3.279090`，`context_only` mean RMSE=`3.066633`。
+      - GPUOPT：P31 正式 run 经 tensor cache、AMP `bf16`、吞吐型 auto batch、heartbeat/progress/resume 收口；候选级多进程并发曾触发 CUDA launch failure，最终完成版采用稳定串行 candidate 执行，保留 blocked/resume 日志在 run.log 中。
+    - `P32 cross-evidence matrix` 已完成：
+      - 产物：`docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`
+      - 报告：`docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md`
+      - 当前结果：`status=completed`，矩阵共 `292` 行，覆盖 `private_thirdparty_comparison=72`、`private_component_ablation=36`、`public_model_comparison=80`、`public_component_ablation=104` 四个象限。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；P28-GPUOPT 效率 profiling 已在当前工作树中作为 P28 后续训练效率证据入口。本轮不改变 P27/P28 confirmed metrics，提交前以本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `2c267f8 feat: refresh public evidence and prune artifacts`；本轮 P30/P31/P32 仍在工作树中，提交前以本地 diff 为准。本轮不改变 P27/P28 confirmed metrics，P31 是独立 public component ablation。
 - 本轮 2026-07-01 继续清理 archive-only 早期 public 产物和本地 Python 编译缓存；提交前以 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md` 为删除边界。LFS 历史审计显示 `docs/**` 历史 LFS objects 约 `165 MB`，未执行 git 历史重写。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
@@ -169,12 +183,16 @@
   - 最新 public fusion refresh package：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json`
   - 最新 public fusion GPU optimization package：`docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_summary.json`
   - 最新 public model comparison package：`docs/artifacts/assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json`
+  - 最新 private third-party comparison package：`docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/evidence_manifest.json`
+  - 最新 public fusion ablation package：`docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/evidence_manifest.json`
+  - 最新 cross-evidence matrix package：`docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`
 
 ## 当前主线事实
 
 - 当前鼎新私有任务验证主线仍是 `chronaris_opt`，但它属于 `private proxy benchmark / proxy evidence`。
 - 当前公开支撑线为 `public opt closed`，但 `UAB robust-prior adapter / target_prior_median` 只能写成 `public adapter / calibration evidence`，不能写成双流连续对齐或因果融合模块本体的直接胜利。
 - 当前公开第二模态应写成 `context proxy / public adapter evidence`，不是论文严格意义上的真实航电流。
+- P30/P31/P32 已把 private real dual-stream、private leakage-safe proxy、public model comparison、public component ablation 四层证据放入同一 cross-evidence matrix；该矩阵用于中期报告的证据分层，不用于把 public context proxy 伪写成私有航电流。
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
 - 中期 P20/P21 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run 与 A0-A4 对比实验；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核、whitelisted semantic hints、runtime explanation 和人工复核 packet，不替代物理约束、因果融合或人工真值。

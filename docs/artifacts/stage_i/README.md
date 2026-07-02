@@ -1,6 +1,6 @@
 # Stage I Artifacts Index
 
-更新时间：2026-07-01
+更新时间：2026-07-02
 
 本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
@@ -18,6 +18,9 @@
 - Public model comparison r1：`stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md`
 - Public fusion refresh r1：`stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md`
 - Public fusion GPU optimization r1：`stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md`
+- Private third-party comparison GPUOPT r1：`stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md`
+- Public fusion ablation GPUOPT r1：`stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md`
+- Cross-evidence matrix GPUOPT r1：`stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md`
 - 中期事实清单：`../../midterm/midterm-fact-sheet-2026-06-13.md`
 - 中期边界说明：`../../midterm/boundaries-and-risks-2026-06-13.md`
 - P21 中期结果摘要：`../../midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
@@ -48,6 +51,27 @@
   - summary/log/progress：`optimization_summary.json`、`gpu_perf_summary.json`、`optimization_run.log`、`optimization_progress.json`
   - CSV：`gpu_perf_batches.csv`、`gpu_perf_fold_summary.csv`、`fold_metrics.gpuopt.csv`、`training_curves.gpuopt.csv`
   - figures：`plots/fig_gpu_throughput_before_after.png`、`plots/fig_gpu_batch_timing_breakdown.png`、`plots/fig_gpu_memory_and_batch_size.png`、`plots/fig_gpu_cache_effect.png`、`plots/fig_gpu_training_progress_heartbeat.png`
+- Private-P30 third-party comparison 资产：
+  - assets root：`../assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/`
+  - status：`completed`
+  - report：`stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md`
+  - CSV/JSON：`private_thirdparty_summary.json`、`model_comparison_wide.csv`、`private_thirdparty_config.json`、`gpu_perf_summary.json`
+  - figures：`fig_private_thirdparty_t1_macro_f1.png`、`fig_private_thirdparty_t2_rmse.png`、`fig_private_thirdparty_t3_retrieval.png`、`fig_private_thirdparty_delta_heatmap.png`
+  - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`
+- Public-P31 fusion ablation 资产：
+  - assets root：`../assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/`
+  - status：`completed`
+  - report：`stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md`
+  - CSV/JSON：`public_fusion_ablation_summary.json`、`ablation_summary.csv`、`component_contribution.csv`、`gpu_perf_summary.json`
+  - figures：`fig_public_ablation_nasa_macro_f1.png`、`fig_public_ablation_nasa_balanced_accuracy.png`、`fig_public_ablation_uab_rmse.png`、`fig_public_ablation_delta_heatmap.png`、`fig_public_ablation_gpu_throughput.png`
+  - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`
+- P32 cross-evidence matrix 资产：
+  - assets root：`../assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/`
+  - status：`completed`
+  - report：`stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md`
+  - CSV/JSON/MD：`cross_evidence_matrix.csv`、`cross_evidence_matrix.json`、`cross_evidence_summary.md`
+  - figures：`fig_cross_evidence_matrix.png`、`fig_cross_evidence_metric_overview.png`、`fig_private_public_evidence_roles.png`、`fig_private_public_result_summary.png`、`fig_method_claim_support_map.png`
+  - manifest：`evidence_manifest.json`
 - private component ablation（历史协议）：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
 - public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
 - public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
@@ -84,6 +108,9 @@
 - 私有分支需要区分 `T1/T2/T3 = private proxy benchmark / proxy evidence` 与 `risk_proxy / workload_proxy / event_replay_tag = thesis weak-label evidence`。
 - `stage_i_private_leakage_safe_ablation` r2 是 `protocol=leakage_safe_v1` 的新增协议；历史 private component ablation 只能作为历史代理诊断，不与 r2 防泄漏结果混成同一实验结论。
 - P20/P21 DeepSeek LLM preprocessing 只能写成 preprocessing context、rule review、whitelisted semantic hints、runtime explanation、bounded comparison 和 pending human review packet；不能写成人工真值、OpenAI 默认接入、核心因果证据或人工验证完成。
+- P30 private third-party comparison 只能写成 T1/T2/T3 private proxy task 的第三方对比；当前结果是混合结果，不能写成 Chronaris 全面胜出。
+- P31 public fusion ablation 只能写成 public adapter / context proxy 上的组件敏感性诊断；不替代 P28 confirmed metrics，也不证明 public 第二模态等价于私有航电流。
+- P32 cross-evidence matrix 用于 private/public/proxy/component 四层证据分工；不要把四层指标混成单一排行榜。
 - 历史 archive 只用于追溯，不作为当前状态入口。
 - 历史 raw replay、prepared bundle 和大型 manifest 已按 `../cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 中清理；引用旧实验时优先看报告、summary、plots 和当前索引。
 - 2026-07-01 后，不要继续链接已清理的早期 public torch/mainline/fusion screen round1 archive-only 路径；如需复跑，使用当前 `scripts/stage_i/public/` 入口重新生成。

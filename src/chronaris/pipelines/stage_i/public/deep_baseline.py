@@ -78,6 +78,18 @@ class StageIDeepBaselineConfig:
     weight_decay: float = 0.0
     heartbeat_seconds: float = 60.0
     batch_log_interval: int = 20
+    tensor_cache: str = "off"
+    max_cache_gb: float = 18.0
+    pin_memory: bool = True
+    non_blocking_copy: bool = True
+    auto_batch_size: bool = False
+    batch_size_candidates: tuple[int, ...] = (24576, 16384, 8192, 4096, 2048, 1024, 512, 256, 128)
+    amp: str = "off"
+    grad_scaler: bool = True
+    amp_eval: bool = True
+    torch_compile: str = "off"
+    profile_gpu: bool = False
+    eval_batch_size: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -118,6 +130,18 @@ class StageIDeepComparisonConfig:
     weight_decay: float = 0.0
     heartbeat_seconds: float = 60.0
     batch_log_interval: int = 20
+    tensor_cache: str = "off"
+    max_cache_gb: float = 18.0
+    pin_memory: bool = True
+    non_blocking_copy: bool = True
+    auto_batch_size: bool = False
+    batch_size_candidates: tuple[int, ...] = (24576, 16384, 8192, 4096, 2048, 1024, 512, 256, 128)
+    amp: str = "off"
+    grad_scaler: bool = True
+    amp_eval: bool = True
+    torch_compile: str = "off"
+    profile_gpu: bool = False
+    eval_batch_size: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -248,6 +272,18 @@ def run_stage_i_deep_comparison(
                     weight_decay=config.weight_decay,
                     heartbeat_seconds=config.heartbeat_seconds,
                     batch_log_interval=config.batch_log_interval,
+                    tensor_cache=config.tensor_cache,
+                    max_cache_gb=config.max_cache_gb,
+                    pin_memory=config.pin_memory,
+                    non_blocking_copy=config.non_blocking_copy,
+                    auto_batch_size=config.auto_batch_size,
+                    batch_size_candidates=config.batch_size_candidates,
+                    amp=config.amp,
+                    grad_scaler=config.grad_scaler,
+                    amp_eval=config.amp_eval,
+                    torch_compile=config.torch_compile,
+                    profile_gpu=config.profile_gpu,
+                    eval_batch_size=config.eval_batch_size,
                 ),
             )
             dataset_model_results[model_name] = {

@@ -1,0 +1,499 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1",
+  "datasets": [
+    "nasa_csm",
+    "uab_workload_dataset"
+  ],
+  "variants": [
+    "full",
+    "no_lag_window",
+    "no_event_bias",
+    "physiology_only",
+    "context_only",
+    "no_causal_fusion",
+    "no_target_transform",
+    "mse_loss"
+  ],
+  "screen_epochs": 5,
+  "confirm_epochs": 20,
+  "resume": true,
+  "skip_completed": true,
+  "evidence_role": "public_adapter_context_proxy_evidence",
+  "gpuopt_enabled": true,
+  "base_run_id": "20260701T-stage-i-public-fusion-ablation-r1",
+  "tensor_cache": "auto",
+  "auto_batch_size": true,
+  "amp": "bf16",
+  "torch_compile": "off",
+  "num_workers": 24,
+  "parallel_fold_prep": 8,
+  "stage_name": "stage_i_public_fusion_ablation",
+  "run_id": "20260702T-stage-i-public-fusion-ablation-gpuopt-r1",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-01T22:29:09.392970Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-01T21:22:44.810523Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1",
+      "datasets": [
+        "nasa_csm",
+        "uab_workload_dataset"
+      ],
+      "variants": [
+        "full",
+        "no_lag_window",
+        "no_event_bias",
+        "physiology_only",
+        "context_only",
+        "no_causal_fusion",
+        "no_target_transform",
+        "mse_loss"
+      ],
+      "screen_epochs": 5,
+      "confirm_epochs": 20,
+      "resume": true,
+      "skip_completed": true,
+      "evidence_role": "public_adapter_context_proxy_evidence",
+      "gpuopt_enabled": true,
+      "base_run_id": "20260701T-stage-i-public-fusion-ablation-r1",
+      "tensor_cache": "auto",
+      "auto_batch_size": true,
+      "amp": "bf16",
+      "torch_compile": "off",
+      "num_workers": 24,
+      "parallel_fold_prep": 8
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:44.921696Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.287964Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.288115Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_lag_window"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.352509Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_lag_window"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.353063Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_event_bias"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.431599Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_event_bias"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.431786Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.485186Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.485338Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "context_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.537340Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "context_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.537502Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_causal_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.581082Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_causal_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.581247Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_target_transform"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.629433Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_target_transform"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.629603Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "mse_loss"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.670272Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "mse_loss"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.670448Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.797534Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.797725Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_lag_window"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.874370Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_lag_window"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.874579Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_event_bias"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.975771Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_event_bias"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:45.975954Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.073420Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.073630Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "context_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.135934Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "context_only"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.136157Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_causal_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.312865Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_causal_fusion"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.313090Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_target_transform"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.472488Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_target_transform"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.472708Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "mse_loss"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.570637Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "mse_loss"
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.570896Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "full",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.820430Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "full",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:46.820723Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_lag_window",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:47.114832Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_lag_window",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:47.115148Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_event_bias",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:47.393274Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_event_bias",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:47.393580Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "physiology_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:47.668867Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "physiology_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:47.669209Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "context_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:48.014380Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "context_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:48.014701Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_causal_fusion",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:48.508963Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_causal_fusion",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:48.509276Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_target_transform",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:49.054698Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "no_target_transform",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:49.055038Z",
+      "event": "confirm_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "mse_loss",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:49.513594Z",
+      "event": "confirm_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "mse_loss",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:49.513958Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "full",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:50.462386Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "full",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:50.462751Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_lag_window",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:51.371595Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_lag_window",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:22:51.372007Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_event_bias",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:36:55.741795Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_event_bias",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:36:55.794844Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "physiology_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:42:47.437835Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "physiology_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:42:47.438238Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "context_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:48:44.853991Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "context_only",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T21:48:44.854465Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_causal_fusion",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T22:00:21.922415Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_causal_fusion",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T22:00:21.922909Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_target_transform",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T22:14:44.385569Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "no_target_transform",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T22:14:44.386095Z",
+      "event": "confirm_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "mse_loss",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T22:28:55.593653Z",
+      "event": "confirm_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "mse_loss",
+      "seed": 42
+    },
+    {
+      "timestamp_utc": "2026-07-01T22:29:09.392970Z",
+      "event": "finished",
+      "status": "completed",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json",
+      "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/evidence_manifest.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md"
+    }
+  ],
+  "dataset_id": "uab_workload_dataset",
+  "variant_id": "mse_loss",
+  "seed": 42,
+  "status": "completed",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md"
+}
