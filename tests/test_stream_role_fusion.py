@@ -59,6 +59,8 @@ class StreamRoleFusionTest(unittest.TestCase):
             "v3_fixed_causal_lag",
             "v3_force_private_causal",
             "v3_context_adapter_only",
+            "p37_public_no_lag_prior_context085",
+            "p37_public_context_adapter_only_cap2x_do0p2",
         ):
             output = model(
                 physiology_states=physiology,
@@ -69,6 +71,9 @@ class StreamRoleFusionTest(unittest.TestCase):
                 variant=variant,
             )
             self.assertEqual(tuple(output.fused_states.shape), (3, 4, 18))
+            if variant.startswith("p37_public"):
+                self.assertFalse(output.metadata.second_stream_is_real_vehicle)
+                self.assertGreaterEqual(float(output.route_decision.context_gate.mean()), 0.75)
 
     def test_deep_factory_threads_private_stream_metadata(self) -> None:
         model = build_stage_i_deep_model(
@@ -89,6 +94,8 @@ class StreamRoleFusionTest(unittest.TestCase):
                 "v3_no_role_gate",
                 "v3_force_private_causal",
                 "v3_context_adapter_only",
+                "p37_public_no_lag_prior_context075",
+                "p37_public_context_adapter_only_cap2x_do0p2",
             )
         )
         self.assertEqual(
@@ -98,6 +105,8 @@ class StreamRoleFusionTest(unittest.TestCase):
                 "v3_no_role_gate",
                 "v3_force_private_causal",
                 "v3_context_adapter_only",
+                "p37_public_no_lag_prior_context075",
+                "p37_public_context_adapter_only_cap2x_do0p2",
             },
         )
 

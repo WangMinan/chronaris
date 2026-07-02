@@ -1,0 +1,12 @@
+{
+  "accepted": [
+    {
+      "scope": "T1",
+      "reason": "P37 improves macro-F1 on at least one split."
+    },
+    {
+      "scope": "public_route",
+      "reason": "P37 public route improves at least one P35 public metric."
+    }
+  ]
+}

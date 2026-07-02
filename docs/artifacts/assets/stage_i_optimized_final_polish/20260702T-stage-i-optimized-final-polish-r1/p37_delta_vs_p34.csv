@@ -1,0 +1,5 @@
+task_name,split_strategy,metric,p34_value,p37_model,p37_value,delta_positive_is_better
+T3_paired_pilot_window_retrieval,leave_one_view_out,top1,0.0315315315315315,p37_t3_info_nce_temp0p05_hardw2,0.0315315315315315,0.0
+T3_paired_pilot_window_retrieval,leave_one_view_out,top3,0.0855855855855856,p37_t3_info_nce_temp0p05_hardw2,0.0855855855855856,0.0
+T3_paired_pilot_window_retrieval,leave_one_view_out,top5,0.1396396396396396,p37_t3_info_nce_temp0p05_hardw2,0.1396396396396396,0.0
+T3_paired_pilot_window_retrieval,leave_one_view_out,mrr,0.1179391455671304,p37_t3_info_nce_temp0p05_hardw2,0.1179391455671304,0.0

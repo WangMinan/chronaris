@@ -1,0 +1,16 @@
+task_name,model_name,split_strategy,seed,completed_fold_count,sample_count,macro_f1,balanced_accuracy,top1,top3,top5,mrr
+T1_maneuver_intensity_class,p37_t1_focal_gamma1_gate0p65_ls0p05,leave_one_sortie_out,17,2,111,0.21598949233609654,0.3333333333333333,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma1_gate0p65_ls0p05,leave_one_sortie_out,29,2,111,0.23138635375923514,0.34615384615384615,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma1_gate0p65_ls0p05,leave_one_sortie_out,42,2,111,0.21292132672277952,0.3333333333333333,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10,leave_one_sortie_out,17,2,111,0.21598949233609654,0.3333333333333333,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10,leave_one_sortie_out,29,2,111,0.22737994350282487,0.3397435897435897,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10,leave_one_sortie_out,42,2,111,0.16326530612244897,0.3333333333333333,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma1_gate0p65_ls0p05,leave_one_view_out,17,3,111,0.20063492063492064,0.35042735042735046,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma1_gate0p65_ls0p05,leave_one_view_out,29,3,111,0.19403073286052008,0.3333333333333333,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma1_gate0p65_ls0p05,leave_one_view_out,42,3,111,0.19727891156462585,0.35042735042735046,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10,leave_one_view_out,17,3,111,0.21221755841816628,0.358974358974359,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10,leave_one_view_out,29,3,111,0.19970055161544523,0.35042735042735035,,,,
+T1_maneuver_intensity_class,p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10,leave_one_view_out,42,3,111,0.20192277383766744,0.35042735042735035,,,,
+T3_paired_pilot_window_retrieval,p37_t3_info_nce_temp0p05_hardw2,leave_one_view_out,17,2,74,,,0.02702702702702703,0.08108108108108109,0.13513513513513514,0.1135563844276126
+T3_paired_pilot_window_retrieval,p37_t3_info_nce_temp0p05_hardw2,leave_one_view_out,29,2,74,,,0.04054054054054054,0.08108108108108109,0.13513513513513514,0.12031314118436935
+T3_paired_pilot_window_retrieval,p37_t3_info_nce_temp0p05_hardw2,leave_one_view_out,42,2,74,,,0.02702702702702703,0.0945945945945946,0.14864864864864866,0.11994791108940953

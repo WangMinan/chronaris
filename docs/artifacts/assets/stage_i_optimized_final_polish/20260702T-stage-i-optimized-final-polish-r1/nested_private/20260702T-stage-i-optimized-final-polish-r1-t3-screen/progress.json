@@ -1,0 +1,230 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/20260702T-stage-i-optimized-final-polish-r1-t3-screen",
+  "models": [
+    "p37_t3_info_nce_temp0p05_hardw2",
+    "p37_t3_info_nce_temp0p10_hardw2",
+    "p37_t3_info_nce_temp0p20_hardw1",
+    "p37_t3_supcon_margin0p10_hardw2"
+  ],
+  "seeds": [
+    42
+  ],
+  "split_strategy": [
+    "leave_one_view_out",
+    "leave_one_sortie_out"
+  ],
+  "evidence_role": "private_real_dual_stream",
+  "resume": true,
+  "skip_completed": true,
+  "gpuopt_enabled": true,
+  "tensor_cache": "auto",
+  "auto_batch_size": true,
+  "amp": "bf16",
+  "torch_compile": "default",
+  "num_workers": 24,
+  "parallel_fold_prep": 8,
+  "stage_name": "stage_i_private_thirdparty_comparison",
+  "run_id": "20260702T-stage-i-optimized-final-polish-r1-t3-screen",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-02T09:41:43.468950Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-02T09:41:28.467556Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/20260702T-stage-i-optimized-final-polish-r1-t3-screen",
+      "models": [
+        "p37_t3_info_nce_temp0p05_hardw2",
+        "p37_t3_info_nce_temp0p10_hardw2",
+        "p37_t3_info_nce_temp0p20_hardw1",
+        "p37_t3_supcon_margin0p10_hardw2"
+      ],
+      "seeds": [
+        42
+      ],
+      "split_strategy": [
+        "leave_one_view_out",
+        "leave_one_sortie_out"
+      ],
+      "evidence_role": "private_real_dual_stream",
+      "resume": true,
+      "skip_completed": true,
+      "gpuopt_enabled": true,
+      "tensor_cache": "auto",
+      "auto_batch_size": true,
+      "amp": "bf16",
+      "torch_compile": "default",
+      "num_workers": 24,
+      "parallel_fold_prep": 8
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:37.989933Z",
+      "event": "sources_loaded",
+      "sample_count": 111,
+      "task_entry_count": 333,
+      "view_count": 3,
+      "sortie_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.666376Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.666501Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.668181Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.668690Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.669918Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.671098Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.671413Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.671704Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.671974Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.672244Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.672519Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.672798Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.673110Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.673384Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.673655Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.673931Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:39.674209Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:41.895126Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p05_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:41.895317Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:42.007285Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:42.007486Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:42.124222Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_info_nce_temp0p20_hardw1"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:42.124423Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:42.241267Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "p37_t3_supcon_margin0p10_hardw2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:41:43.468950Z",
+      "event": "finished",
+      "status": "completed",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/20260702T-stage-i-optimized-final-polish-r1-t3-screen/private_thirdparty_summary.json",
+      "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/20260702T-stage-i-optimized-final-polish-r1-t3-screen/evidence_manifest.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_reports/stage-i-private-thirdparty-comparison-20260702T-stage-i-optimized-final-polish-r1-t3-screen.md"
+    }
+  ],
+  "sample_count": 111,
+  "task_entry_count": 333,
+  "view_count": 3,
+  "sortie_count": 2,
+  "task_name": "T3_paired_pilot_window_retrieval",
+  "model_name": "p37_t3_supcon_margin0p10_hardw2",
+  "status": "completed",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/20260702T-stage-i-optimized-final-polish-r1-t3-screen/private_thirdparty_summary.json",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/20260702T-stage-i-optimized-final-polish-r1-t3-screen/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_reports/stage-i-private-thirdparty-comparison-20260702T-stage-i-optimized-final-polish-r1-t3-screen.md"
+}

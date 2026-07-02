@@ -77,12 +77,16 @@ class VehicleDominantAuxiliaryClassificationHead(nn.Module):
         hidden_dim: int = 64,
         dropout: float = 0.0,
         initial_vehicle_bias: float = 0.75,
+        vehicle_skip_weight: float = 0.0,
     ) -> None:
         super().__init__()
         _validate_positive("vehicle_dim", vehicle_dim)
         _validate_positive("fused_dim", fused_dim)
         _validate_positive("output_dim", output_dim)
         _validate_probability("initial_vehicle_bias", initial_vehicle_bias)
+        if float(vehicle_skip_weight) < 0.0:
+            raise ValueError("vehicle_skip_weight must be non-negative.")
+        self.vehicle_skip_weight = float(vehicle_skip_weight)
         self.vehicle_branch = _mlp(vehicle_dim, hidden_dim, output_dim, dropout)
         self.fusion_branch = _mlp(fused_dim, hidden_dim, output_dim, dropout)
         self.gate_network = nn.Sequential(
@@ -114,6 +118,8 @@ class VehicleDominantAuxiliaryClassificationHead(nn.Module):
         fusion_logits = self.fusion_branch(fused_features)
         gate = torch.sigmoid(self.gate_network(torch.cat((vehicle_features, fused_features), dim=-1)))
         logits = gate * vehicle_logits + (1.0 - gate) * fusion_logits
+        if self.vehicle_skip_weight > 0.0:
+            logits = logits + self.vehicle_skip_weight * vehicle_logits
         return VehicleAuxClassificationOutput(
             logits=logits,
             vehicle_logits=vehicle_logits,
@@ -213,6 +219,41 @@ def gate_regularization_loss(
     lower = torch.relu(gate.new_tensor(collapse_margin) - mean_gate)
     upper = torch.relu(mean_gate - gate.new_tensor(1.0 - collapse_margin))
     return balance + lower + upper
+
+
+def class_balanced_focal_loss(
+    logits: torch.Tensor,
+    targets: torch.Tensor,
+    *,
+    class_weights: torch.Tensor | None = None,
+    gamma: float = 2.0,
+    label_smoothing: float = 0.0,
+) -> torch.Tensor:
+    """Class-balanced focal loss using weights computed outside the test fold."""
+
+    if logits.ndim != 2:
+        raise ValueError("logits must have shape [B, C].")
+    targets = targets.to(device=logits.device, dtype=torch.long)
+    if targets.ndim != 1 or targets.shape[0] != logits.shape[0]:
+        raise ValueError("targets must have shape [B].")
+    if not 0.0 <= float(label_smoothing) < 1.0:
+        raise ValueError("label_smoothing must be in [0.0, 1.0).")
+    log_probs = F.log_softmax(logits, dim=-1)
+    probs = log_probs.exp()
+    class_count = logits.shape[-1]
+    smooth = float(label_smoothing)
+    with torch.no_grad():
+        target_dist = torch.zeros_like(log_probs)
+        target_dist.fill_(smooth / max(class_count - 1, 1))
+        target_dist.scatter_(1, targets.unsqueeze(1), 1.0 - smooth)
+    focal = torch.pow(1.0 - probs, float(gamma))
+    loss = -(target_dist * focal * log_probs)
+    if class_weights is not None:
+        weights = class_weights.to(device=logits.device, dtype=logits.dtype)
+        if weights.ndim != 1 or weights.shape[0] != class_count:
+            raise ValueError("class_weights must have shape [C].")
+        loss = loss * weights.view(1, -1)
+    return loss.sum(dim=-1).mean()
 
 
 def summarize_gate_contributions(

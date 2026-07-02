@@ -1,0 +1,14 @@
+dataset_id,task_group,metric,seed,p37_public_context_adapter_only_cap2x_do0p2,p37_public_force_adaptive_context_gate
+nasa_csm,benchmark_only,benchmark_only_macro_f1,42,0.37223427777738255,0.3697641410407368
+nasa_csm,combined,combined_balanced_accuracy,42,0.41033074800507124,0.450488228453188
+nasa_csm,combined,combined_macro_f1,42,0.40479690219112513,0.4439192370785678
+nasa_csm,loft_only,loft_only_macro_f1,42,0.5548585068751829,0.5076713076713076
+uab_workload_dataset,heat_the_chair,heat_the_chair_mae,42,1.1595348519875723,1.166312083295163
+uab_workload_dataset,heat_the_chair,heat_the_chair_rmse,42,1.4623358076184991,1.4661397117578951
+uab_workload_dataset,heat_the_chair_balanced,heat_the_chair_balanced_accuracy,42,0.5360678842627896,0.536502004486451
+uab_workload_dataset,heat_the_chair_macro,heat_the_chair_macro_f1,42,0.5101181878420568,0.49405094002647554
+uab_workload_dataset,n_back,n_back_mae,42,4.083830407053194,3.926544147658481
+uab_workload_dataset,n_back,n_back_rmse,42,5.191901333542587,4.917482923487938
+uab_workload_dataset,n_back_balanced,n_back_balanced_accuracy,42,0.361270196931957,0.3661208733210693
+uab_workload_dataset,n_back_macro,n_back_macro_f1,42,0.36096061584116096,0.3467945531457892
+uab_workload_dataset,uab_mean,mean_rmse,42,3.3271185705805433,3.191811317622917

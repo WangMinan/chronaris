@@ -15,6 +15,7 @@ if str(SRC) not in sys.path:
 from chronaris.models.alignment.task_heads_v2 import (  # noqa: E402
     PhysiologyResponseResidualRegressionHead,
     VehicleDominantAuxiliaryClassificationHead,
+    class_balanced_focal_loss,
     gate_regularization_loss,
 )
 from chronaris.models.alignment.task_losses_v2 import TrainFoldTargetTransform  # noqa: E402
@@ -37,6 +38,19 @@ class StageITaskHeadsV2Test(unittest.TestCase):
         summary = output.contribution_summary().to_jsonable()
         self.assertIn("gate_mean", summary)
         self.assertTrue(torch.isfinite(gate_regularization_loss(output.gate)).item())
+
+    def test_t1_class_balanced_focal_loss_is_finite(self) -> None:
+        logits = torch.randn(6, 3)
+        targets = torch.tensor([0, 0, 0, 1, 1, 2])
+        weights = torch.tensor([0.5, 1.0, 2.0])
+        loss = class_balanced_focal_loss(
+            logits,
+            targets,
+            class_weights=weights,
+            gamma=2.0,
+            label_smoothing=0.05,
+        )
+        self.assertTrue(torch.isfinite(loss).item())
 
     def test_t2_residual_head_decomposes_prediction(self) -> None:
         head = PhysiologyResponseResidualRegressionHead(

@@ -28,6 +28,7 @@ class DeepForwardResult:
     sequence_embedding: torch.Tensor
     attention_map: torch.Tensor
     logits: torch.Tensor | None
+    auxiliary_outputs: Mapping[str, torch.Tensor] | None = None
 
 
 class ChronarisRoleAwareFusionWrapper(nn.Module):
@@ -78,7 +79,11 @@ class ChronarisRoleAwareFusionWrapper(nn.Module):
                 for modality_name in self.ordered_modalities
             }
         )
-        self.role_aware_fusion = RoleAwareCausalFusion(hidden_dim=hidden_dim)
+        self.role_aware_fusion = RoleAwareCausalFusion(
+            hidden_dim=hidden_dim,
+            context_adapter_hidden_multiplier=2 if "cap2x" in variant else 1,
+            context_adapter_dropout=0.2 if "do0p2" in variant else 0.1 if "do0p1" in variant else 0.0,
+        )
         self.output_head = (
             nn.Sequential(
                 nn.LayerNorm(hidden_dim * 3),
@@ -117,6 +122,12 @@ class ChronarisRoleAwareFusionWrapper(nn.Module):
             sequence_embedding=fusion_output.fused_states,
             attention_map=fusion_output.attention_weights,
             logits=logits,
+            auxiliary_outputs={
+                "lag_gate": fusion_output.route_decision.lag_gate,
+                "context_gate": fusion_output.route_decision.context_gate,
+                "vehicle_gate": fusion_output.route_decision.vehicle_gate,
+                "causal_gate": fusion_output.route_decision.causal_gate,
+            },
         )
 
     def _encode(

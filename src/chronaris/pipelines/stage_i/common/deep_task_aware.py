@@ -29,6 +29,7 @@ class DeepForwardResult:
     sequence_embedding: torch.Tensor
     attention_map: torch.Tensor
     logits: torch.Tensor | None
+    auxiliary_outputs: Mapping[str, torch.Tensor] | None = None
 
 
 class ChronarisPrivateTaskAwareWrapper(nn.Module):
@@ -89,6 +90,8 @@ class ChronarisPrivateTaskAwareWrapper(nn.Module):
                     output_dim=int(output_dim),
                     hidden_dim=hidden_dim,
                     dropout=dropout,
+                    initial_vehicle_bias=_vehicle_bias_from_variant(variant),
+                    vehicle_skip_weight=0.15 if "vehicle_skip" in variant else 0.0,
                 )
                 self.output_head = None
         elif self.task_type == "regression":
@@ -135,12 +138,18 @@ class ChronarisPrivateTaskAwareWrapper(nn.Module):
         mask = torch.maximum(modality_masks[physiology_name], modality_masks[vehicle_name])
         pooled = _masked_mean_pool(fusion.fused_states, mask)
         logits = None
+        auxiliary_outputs = None
         if self.task_type == "classification":
-            logits = (
-                self.output_head(pooled)
-                if self.task_head is None
-                else self.task_head(vehicle_states=vehicle, fused_states=fusion.fused_states).logits
-            )
+            if self.task_head is None:
+                logits = self.output_head(pooled)
+            else:
+                head_output = self.task_head(vehicle_states=vehicle, fused_states=fusion.fused_states)
+                logits = head_output.logits
+                auxiliary_outputs = {
+                    "gate": head_output.gate,
+                    "vehicle_logits": head_output.vehicle_logits,
+                    "fusion_logits": head_output.fusion_logits,
+                }
         elif self.task_type == "regression":
             logits = (
                 self.output_head(pooled)
@@ -158,6 +167,7 @@ class ChronarisPrivateTaskAwareWrapper(nn.Module):
             sequence_embedding=fusion.fused_states,
             attention_map=fusion.attention_weights,
             logits=logits,
+            auxiliary_outputs=auxiliary_outputs,
         )
 
     def _encode(
@@ -192,3 +202,16 @@ def _fused_output_head(input_dim: int, hidden_dim: int, output_dim: int, dropout
         nn.Dropout(dropout),
         nn.Linear(hidden_dim, output_dim),
     )
+
+
+def _vehicle_bias_from_variant(variant: str) -> float:
+    normalized = variant.lower()
+    for token, value in (
+        ("gate0p55", 0.55),
+        ("gate0p65", 0.65),
+        ("gate0p75", 0.75),
+        ("gate0p85", 0.85),
+    ):
+        if token in normalized:
+            return value
+    return 0.75

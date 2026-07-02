@@ -1,0 +1,8 @@
+{
+  "rejected": [
+    {
+      "scope": "T3",
+      "reason": "No P37 retrieval metric exceeded P34 in available rows."
+    }
+  ]
+}

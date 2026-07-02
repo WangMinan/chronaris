@@ -1,0 +1,7 @@
+stage,dataset_id,variant_id,seed,track,evaluation_group,split_group,sample_count,macro_f1,balanced_accuracy
+screen,nasa_csm,p37_public_no_lag_prior_context085,42,objective,benchmark_only,subject_10,87,0.29957805907172996,0.3333333333333333
+screen,nasa_csm,p37_public_no_lag_prior_context085,42,objective,benchmark_only,subject_11,85,0.3034188034188034,0.3333333333333333
+screen,nasa_csm,p37_public_no_lag_prior_context085,42,objective,loft_only,subject_10,100,0.3082437275985663,0.3333333333333333
+screen,nasa_csm,p37_public_no_lag_prior_context085,42,objective,loft_only,subject_11,80,0.3087248322147651,0.3333333333333333
+screen,nasa_csm,p37_public_no_lag_prior_context085,42,objective,combined,subject_10,187,0.30426356589147285,0.3333333333333333
+screen,nasa_csm,p37_public_no_lag_prior_context085,42,objective,combined,subject_11,165,0.30601092896174864,0.3333333333333333

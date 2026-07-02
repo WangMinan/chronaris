@@ -25,6 +25,16 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from chronaris.dataset import dump_stage_i_private_task_entries
+from chronaris.models.alignment.contrastive import (
+    HardNegativeSamplerConfig,
+    info_nce_loss,
+    stratified_hard_negative_samples,
+    supervised_contrastive_margin_loss,
+)
+from chronaris.models.alignment.task_heads_v2 import (
+    class_balanced_focal_loss,
+    gate_regularization_loss,
+)
 from chronaris.pipelines.stage_i.common.deep_models import build_stage_i_deep_model
 from chronaris.pipelines.stage_i.common.gpu_runtime import (
     choose_auto_batch_size,
@@ -108,6 +118,67 @@ FEATURE_MODEL_SOURCES = {
     "naive_time_sync": ("naive_sync", "dual_projection"),
     "classical_baseline": ("f_full", "dual_projection"),
 }
+
+
+def _is_p37_private_model(model_name: str) -> bool:
+    normalized = str(model_name).strip().lower()
+    return normalized.startswith("p37_t1_") or normalized.startswith("p37_t3_")
+
+
+def _private_deep_model_applies_to_task(model_name: str, task_type: str) -> bool:
+    normalized = str(model_name).strip().lower()
+    if normalized.startswith("p37_t1_"):
+        return task_type == "classification"
+    if normalized.startswith("p37_t3_"):
+        return task_type == "retrieval"
+    return True
+
+
+def _p37_t1_config(model_name: str) -> dict[str, float | bool]:
+    normalized = str(model_name).strip().lower()
+    if not normalized.startswith("p37_t1_"):
+        return {}
+    gamma = 2.0 if "gamma2" in normalized else 1.0 if "gamma1" in normalized else 0.0
+    label_smoothing = 0.1 if "ls0p10" in normalized else 0.05 if "ls0p05" in normalized else 0.0
+    target_gate = 0.85 if "gate0p85" in normalized else 0.75 if "gate0p75" in normalized else 0.65 if "gate0p65" in normalized else 0.55 if "gate0p55" in normalized else 0.65
+    collapse_margin = 0.10 if "collapse0p10" in normalized else 0.05
+    return {
+        "focal_gamma": gamma,
+        "label_smoothing": label_smoothing,
+        "target_vehicle_contribution": target_gate,
+        "collapse_margin": collapse_margin,
+        "gate_regularization_weight": 0.05,
+        "class_balanced": True,
+    }
+
+
+def _p37_t3_config(model_name: str) -> dict[str, float | str]:
+    normalized = str(model_name).strip().lower()
+    if not normalized.startswith("p37_t3_"):
+        return {"temperature": 0.1, "hard_negative_weight": 1.0, "margin": 0.0, "loss_variant": "in_batch_info_nce"}
+    temperature = 0.05 if "temp0p05" in normalized else 0.2 if "temp0p20" in normalized else 0.1
+    hard_weight = 2.0 if "hardw2" in normalized else 1.0
+    margin = 0.2 if "margin0p20" in normalized else 0.1 if "margin0p10" in normalized else 0.0
+    loss_variant = "supervised_contrastive_margin" if "supcon" in normalized or margin > 0.0 else "info_nce"
+    return {
+        "temperature": temperature,
+        "hard_negative_weight": hard_weight,
+        "margin": margin,
+        "loss_variant": loss_variant,
+    }
+
+
+def _class_balanced_weights(labels: np.ndarray, *, device: torch.device) -> torch.Tensor:
+    if labels.size == 0:
+        raise ValueError("cannot compute class weights from an empty train fold.")
+    class_count = max(int(np.max(labels)) + 1, len(CLASS_LABEL_TO_ID))
+    counts = np.bincount(labels.astype(int), minlength=class_count).astype(np.float32)
+    weights = np.zeros_like(counts, dtype=np.float32)
+    present = counts > 0
+    weights[present] = float(counts[present].sum()) / (float(present.sum()) * counts[present])
+    if present.any():
+        weights[~present] = 0.0
+    return torch.as_tensor(weights, dtype=torch.float32, device=device)
 
 
 @dataclass(frozen=True, slots=True)
@@ -301,7 +372,7 @@ def _run_observed(
         task_type = entries[0].task_type if entries else None
         for model_name in config.models:
             progress.update("model_task_start", task_name=task_name, model_name=model_name)
-            if model_name in DEEP_MODEL_NAMES:
+            if model_name in DEEP_MODEL_NAMES or _is_p37_private_model(model_name):
                 task_fold_rows, task_curve_rows, task_predictions = _run_deep_task(
                     config=config,
                     run_root=run_root,
@@ -753,6 +824,8 @@ def _run_deep_task(
     model_name: str,
     runtime_device: str,
 ) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
+    if not _private_deep_model_applies_to_task(model_name, task_type):
+        return [], [], []
     frame = _private_sequence_frame(task_entries, records, task_type=task_type)
     if frame.empty:
         return [], [], []
@@ -806,6 +879,7 @@ def _private_retrieval_sequence_frame(task_entries: Sequence[object], records: p
                 "sortie_id": record["sortie_id"],
                 "pilot_id": record["pilot_id"],
                 "view_id": record["view_id"],
+                "window_index": getattr(entry, "window_index", None),
                 "paired_sample_id": entry.paired_sample_id,
             }
         )
@@ -1001,7 +1075,21 @@ def _train_supervised_model(
     device_name = runtime_device.type
     seed_torch(seed, device=device_name)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
-    criterion = torch.nn.CrossEntropyLoss() if task_type == "classification" else torch.nn.SmoothL1Loss()
+    model_name = str(context.get("model_name", ""))
+    t1_config = _p37_t1_config(model_name)
+    class_weights = (
+        _class_balanced_weights(labels[train_indices].astype(int), device=runtime_device)
+        if task_type == "classification" and t1_config.get("class_balanced")
+        else None
+    )
+    criterion = (
+        torch.nn.CrossEntropyLoss(
+            weight=class_weights,
+            label_smoothing=float(t1_config.get("label_smoothing", 0.0)),
+        )
+        if task_type == "classification"
+        else torch.nn.SmoothL1Loss()
+    )
     amp = resolve_amp_runtime(requested_mode=config.amp, device=device_name, grad_scaler=config.grad_scaler)
     scaler = make_grad_scaler(amp, device=device_name)
     selected_batch_size, batch_attempts = _select_private_batch_size(
@@ -1025,6 +1113,7 @@ def _train_supervised_model(
     started = time.monotonic()
     for epoch in range(config.epochs):
         losses = []
+        gate_means = []
         batch_count = 0
         for batch_number, batch in enumerate(_iter_batches(train_indices, selected_batch_size, seed + epoch), start=1):
             batch_count = batch_number
@@ -1039,7 +1128,26 @@ def _train_supervised_model(
                 if output.logits is None:
                     raise ValueError("private deep model returned no logits")
                 if task_type == "classification":
-                    loss = criterion(output.logits, target_tensor.to(dtype=torch.long))
+                    target_long = target_tensor.to(dtype=torch.long)
+                    if t1_config and float(t1_config.get("focal_gamma", 0.0)) > 0.0:
+                        loss = class_balanced_focal_loss(
+                            output.logits,
+                            target_long,
+                            class_weights=class_weights,
+                            gamma=float(t1_config.get("focal_gamma", 2.0)),
+                            label_smoothing=float(t1_config.get("label_smoothing", 0.0)),
+                        )
+                    else:
+                        loss = criterion(output.logits, target_long)
+                    aux = getattr(output, "auxiliary_outputs", None) or {}
+                    gate = aux.get("gate") if isinstance(aux, Mapping) else None
+                    if gate is not None and t1_config:
+                        gate_means.append(float(gate.detach().float().mean().cpu().item()))
+                        loss = loss + float(t1_config["gate_regularization_weight"]) * gate_regularization_loss(
+                            gate,
+                            target_vehicle_contribution=float(t1_config["target_vehicle_contribution"]),
+                            collapse_margin=float(t1_config["collapse_margin"]),
+                        )
                 else:
                     loss = criterion(output.logits, target_tensor.to(dtype=torch.float32).view(-1, 1))
             if scaler.is_enabled():
@@ -1092,6 +1200,11 @@ def _train_supervised_model(
                 "batch_size_attempts": json.dumps(batch_attempts),
                 "torch_compile": config.torch_compile,
                 **compile_info,
+                "p37_focal_gamma": t1_config.get("focal_gamma") if t1_config else None,
+                "p37_label_smoothing": t1_config.get("label_smoothing") if t1_config else None,
+                "p37_target_vehicle_contribution": t1_config.get("target_vehicle_contribution") if t1_config else None,
+                "p37_gate_mean": float(np.mean(gate_means)) if gate_means else None,
+                "class_weight_source": "train_fold_only" if class_weights is not None else None,
             }
         )
     return curve_rows
@@ -1120,6 +1233,10 @@ def _train_retrieval_model(
             pairs.append((int(index), int(paired_index)))
     if not pairs:
         return [{**context, "epoch": 0, "train_loss": float("nan"), "skipped_reason": "no_train_pairs"}]
+    model_name = str(context.get("model_name", ""))
+    t3_config = _p37_t3_config(model_name)
+    frame_rows = frame.to_dict(orient="records")
+    train_pool = tuple(int(index) for index in train_indices.tolist())
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
     amp = resolve_amp_runtime(requested_mode=config.amp, device=device_name, grad_scaler=config.grad_scaler)
     scaler = make_grad_scaler(amp, device=device_name)
@@ -1143,21 +1260,62 @@ def _train_retrieval_model(
     for epoch in range(config.epochs):
         rng.shuffle(pairs)
         losses = []
+        hard_negative_counts = []
         for start in range(0, len(pairs), max(selected_batch_size, 1)):
             batch_pairs = pairs[start : start + max(selected_batch_size, 1)]
             query_idx = np.asarray([left for left, _ in batch_pairs], dtype=int)
             positive_idx = np.asarray([right for _, right in batch_pairs], dtype=int)
+            candidate_indices: list[int] = [int(index) for index in positive_idx.tolist()]
+            hard_samples_by_anchor: dict[int, list[int]] = {}
+            if _is_p37_private_model(model_name):
+                for row_number, (anchor, positive) in enumerate(batch_pairs):
+                    samples = stratified_hard_negative_samples(
+                        frame_rows,
+                        anchor_index=int(anchor),
+                        positive_index=int(positive),
+                        pool_indices=train_pool,
+                        config=HardNegativeSamplerConfig(near_window_radius=2, max_per_kind=2),
+                    )
+                    hard_samples_by_anchor[row_number] = [sample.candidate_index for sample in samples]
+                    candidate_indices.extend(sample.candidate_index for sample in samples)
+            candidate_idx = np.asarray(list(dict.fromkeys(candidate_indices)), dtype=int)
+            positive_positions = torch.as_tensor(
+                [int(np.where(candidate_idx == positive)[0][0]) for positive in positive_idx],
+                dtype=torch.long,
+                device=runtime_device,
+            )
+            candidate_weights = torch.ones((len(query_idx), len(candidate_idx)), device=runtime_device)
+            if _is_p37_private_model(model_name):
+                hard_weight = float(t3_config["hard_negative_weight"])
+                for row_number, hard_indices in hard_samples_by_anchor.items():
+                    for candidate_index in hard_indices:
+                        matches = np.where(candidate_idx == int(candidate_index))[0]
+                        if len(matches):
+                            candidate_weights[row_number, int(matches[0])] = hard_weight
+                hard_negative_counts.append(sum(len(indices) for indices in hard_samples_by_anchor.values()))
             optimizer.zero_grad(set_to_none=True)
             q_modalities, q_masks, q_time, _ = get_train_batch(prepared, query_idx, device=device_name)
-            p_modalities, p_masks, p_time, _ = get_train_batch(prepared, positive_idx, device=device_name)
+            p_modalities, p_masks, p_time, _ = get_train_batch(prepared, candidate_idx, device=device_name)
             with amp.autocast(device=device_name):
                 query = model(q_modalities, time_axis=q_time, modality_masks=q_masks).pooled_embedding
-                positive = model(p_modalities, time_axis=p_time, modality_masks=p_masks).pooled_embedding
+                candidates = model(p_modalities, time_axis=p_time, modality_masks=p_masks).pooled_embedding
                 query = torch.nn.functional.normalize(query, dim=-1)
-                positive = torch.nn.functional.normalize(positive, dim=-1)
-                logits = query @ positive.T / 0.1
-                target = torch.arange(logits.shape[0], dtype=torch.long, device=runtime_device)
-                loss = torch.nn.functional.cross_entropy(logits, target)
+                candidates = torch.nn.functional.normalize(candidates, dim=-1)
+                loss = info_nce_loss(
+                    query,
+                    candidates,
+                    positive_positions,
+                    temperature=float(t3_config["temperature"]),
+                    candidate_weights=candidate_weights,
+                )
+                if float(t3_config.get("margin", 0.0)) > 0.0:
+                    scores = query @ candidates.T
+                    loss = loss + supervised_contrastive_margin_loss(
+                        scores,
+                        positive_positions,
+                        margin=float(t3_config["margin"]),
+                        negative_weights=candidate_weights,
+                    )
             if scaler.is_enabled():
                 scaler.scale(loss).backward()
                 scaler.unscale_(optimizer)
@@ -1200,6 +1358,12 @@ def _train_retrieval_model(
                 "amp_fallback_reason": amp.fallback_reason,
                 "auto_batch_size": bool(config.auto_batch_size),
                 "torch_compile": config.torch_compile,
+                "p37_loss_variant": t3_config.get("loss_variant"),
+                "p37_temperature": t3_config.get("temperature"),
+                "p37_hard_negative_weight": t3_config.get("hard_negative_weight"),
+                "p37_margin": t3_config.get("margin"),
+                "p37_hard_negative_count": float(np.mean(hard_negative_counts)) if hard_negative_counts else 0.0,
+                "candidate_pool_policy": "same_sortie_cross_pilot_eval; train uses metadata-only hard negatives",
                 **compile_info,
             }
         )

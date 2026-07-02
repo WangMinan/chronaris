@@ -1,0 +1,5 @@
+task_name,model_name,split_strategy,seed,completed_fold_count,sample_count,top1,top3,top5,mrr
+T3_paired_pilot_window_retrieval,p37_t3_info_nce_temp0p05_hardw2,leave_one_view_out,42,2,74,0.02702702702702703,0.0945945945945946,0.14864864864864866,0.11994791108940953
+T3_paired_pilot_window_retrieval,p37_t3_info_nce_temp0p10_hardw2,leave_one_view_out,42,2,74,0.02702702702702703,0.0945945945945946,0.14864864864864866,0.11994791108940953
+T3_paired_pilot_window_retrieval,p37_t3_info_nce_temp0p20_hardw1,leave_one_view_out,42,2,74,0.02702702702702703,0.0945945945945946,0.14864864864864866,0.11994791108940953
+T3_paired_pilot_window_retrieval,p37_t3_supcon_margin0p10_hardw2,leave_one_view_out,42,2,74,0.02702702702702703,0.0945945945945946,0.14864864864864866,0.11994791108940953

@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/stage_i/evidence/run_optimized_final_polish.py --run-id 20260702T-stage-i-optimized-final-polish-r1 --device cuda --require-cuda --resume --skip-completed --tensor-cache auto --auto-batch-size --amp bf16

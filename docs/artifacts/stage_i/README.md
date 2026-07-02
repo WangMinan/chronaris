@@ -21,6 +21,7 @@
 - Private third-party comparison GPUOPT r1：`stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md`
 - Public fusion ablation GPUOPT r1：`stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md`
 - Cross-evidence matrix GPUOPT r1：`stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md`
+- Optimized final polish P37 r1：`stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md`
 - 中期事实清单：`../../midterm/midterm-fact-sheet-2026-06-13.md`
 - 中期边界说明：`../../midterm/boundaries-and-risks-2026-06-13.md`
 - P21 中期结果摘要：`../../midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
@@ -101,6 +102,14 @@
   - CSV/JSON：`optimized_model_summary.json`、`optimized_model_summary.csv`、`key_metric_summary.csv`、`stream_role_gate_summary.csv`、`gpu_runtime_summary.csv`、`claim_boundary_summary.csv`
   - figures：`fig_model_summary_status.png`、`fig_model_summary_metric_delta.png`、`fig_model_summary_gate_profile.png`、`fig_model_summary_gpu_runtime.png`
   - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_commands.txt`
+- P37 optimized final polish completed 资产：
+  - assets root：`../assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/`
+  - status：`completed`
+  - report：`stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md`
+  - CSV/JSON：`optimized_final_polish_summary.json`、`t3_final_polish_metrics.csv`、`t1_calibration_metrics.csv`、`public_route_calibration_metrics.csv`、`p37_delta_vs_p34.csv`、`p37_delta_vs_p35.csv`、`p37_delta_vs_p30_p31.csv`、`accepted_candidate_summary.json`、`rejected_candidate_summary.json`、`gpu_perf_summary.json`
+  - figures：`fig_p37_t3_retrieval_leaderboard.png`、`fig_p37_t3_delta_vs_p34.png`、`fig_p37_t1_macro_f1_leaderboard.png`、`fig_p37_public_route_delta_heatmap.png`、`fig_p37_gpu_runtime.png`
+  - manifest/log/progress/resume：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_command.txt`
+  - boundary：P30/P31/P34/P35/P36 是固定 reference；T1 与 public route accepted，T3 rejected 并沿用 P34 retrieval；public 仍是 context proxy。
 - private component ablation（历史协议）：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
 - public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
 - public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
@@ -141,6 +150,7 @@
 - P31 public fusion ablation 只能写成 public adapter / context proxy 上的组件敏感性诊断；不替代 P28 confirmed metrics，也不证明 public 第二模态等价于私有航电流。
 - P32 cross-evidence matrix 用于 private/public/proxy/component 四层证据分工；不要把四层指标混成单一排行榜。
 - P34/P35/P36 与 optimized model summary 当前为 optimized v2/v3 CUDA confirm / completed aggregation / summary，不替代 P30/P31/P32 completed 结果；引用时必须写明 P34 是 20-epoch confirm、P35 是 requested private/public v3 confirm、public 第二流仍是 context proxy，也不得写成 optimized Chronaris 全面超过全部 baseline。
+- P37 final polish 当前为固定 P30/P31/P34/P35/P36 reference 上的局部收束：T1 calibration 与 public route calibration accepted，T3 retrieval rejected 并沿用 P34 confirmed retrieval。引用时不要把 public context proxy 写成私有真实航电流，也不要把 P37 写成全面胜出。
 - 2026-07-02 后，本轮 P34/P35/P36/summary 柱状图已基于现有 CSV/JSON 重绘并增加短数值标签；future run 默认使用 `checkpoint_policy=last`，checkpoint binary 和 dense prediction CSV 不进入 git。清理/profiling 入口：`../cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md`。
 - 历史 archive 只用于追溯，不作为当前状态入口。
 - 历史 raw replay、prepared bundle 和大型 manifest 已按 `../cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 中清理；引用旧实验时优先看报告、summary、plots 和当前索引。
