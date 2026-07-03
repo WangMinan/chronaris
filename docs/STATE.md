@@ -161,7 +161,7 @@
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，P42 起始 HEAD 与 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。当前工作树正在收口 P42 清理提交：P38 thesis protocol freeze 已进入历史，P42 已完成代码入口整理、外置备份删除、docs 索引回写、`.gitignore` 防回流和 LFS 本地 prune；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，P37 只接受 T1 calibration 与 public route calibration 的局部增益，public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
+- 当前分支为 `main`；P42 起始 HEAD 与当时 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。当前分支已发布 P42 清理提交：P38 thesis protocol freeze 已进入历史，P42 已完成代码入口整理、外置备份删除、docs 索引回写、`.gitignore` 防回流和 LFS 本地 prune；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，P37 只接受 T1 calibration 与 public route calibration 的局部增益，public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
 - 本轮 2026-07-02 清理删除 P34/P35/P36 过渡 run、P31 superseded r1，以及 current r4 nested dense prediction/checkpoint/partial CSV；压缩 P35/P31 training curves 和大日志；dense prediction CSV 已备份到远程开发机仓库外 `/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/`，重复 weak-label manifest 副本已回指 canonical；`.pt` checkpoint 已备份到 `/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/`，提交后使用 `git filter-repo` 从 git 历史移除 checkpoint binary。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
