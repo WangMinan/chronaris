@@ -29,6 +29,7 @@
 - docs LFS 清理记录：`../cleanup/20260619-lfs-docs-prune.md`
 - docs 深度清理记录：`../cleanup/20260621-deep-cleanup.md`
 - src/docs artifact prune 记录：`../cleanup/20260701-src-docs-artifact-prune.md`
+- P42 thesis prep cleanup 记录：`../cleanup/20260703-thesis-prep-cleanup.md`
 - 历史 Stage I closure：`stage-i-closure-2026-04-30.md`
 - Phase C thesis weak-label evidence：`thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`
 - 当前公开主线：`stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md`
@@ -88,7 +89,7 @@
   - CSV/JSON：`route_manifest.json`、`gate_statistics.csv`、`route_decision_summary.csv`、`private_metrics.csv`、`public_metrics.csv`、`comparison_vs_p31.csv`、`comparison_vs_p34.csv`、`fold_metrics.csv`、`training_curves.csv`、`gpu_perf_summary.json`
   - figures：`fig_p35_route_gate_statistics.png`、`fig_p35_private_task_delta.png`、`fig_p35_public_ablation_comparison.png`、`fig_p35_context_vs_vehicle_gate.png`、`fig_p35_nasa_macro_f1_route_comparison.png`、`fig_p35_uab_rmse_route_comparison.png`、`fig_p35_stream_role_decision_map.png`
   - manifest/log/progress：`evidence_manifest.json`、`run.log`、`progress.json`
-  - 2026-07-02 cleanup 后，nested public/private confirm 的 per-candidate dense predictions、partial CSV 和 checkpoint 不再作为 git 资产；aggregate metrics、figures、summary 和 trimmed logs 保留。
+  - 2026-07-03 P42 cleanup 后，nested public/private confirm 的 per-candidate byproduct、重复 task manifest、GPU batch 明细和 child run 日志不再作为 git 资产；aggregate metrics、figures、summary 和顶层 logs 保留，外置备份见 `../cleanup/20260703-thesis-prep-cleanup.md`。
 - P36 optimized Chronaris re-evaluation completed 资产：
   - assets root：`../assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/`
   - status：`completed`
@@ -111,6 +112,7 @@
   - figures：`fig_p37_t3_retrieval_leaderboard.png`、`fig_p37_t3_delta_vs_p34.png`、`fig_p37_t1_macro_f1_leaderboard.png`、`fig_p37_public_route_delta_heatmap.png`、`fig_p37_gpu_runtime.png`
   - manifest/log/progress/resume：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_command.txt`
   - boundary：P30/P31/P34/P35/P36 是固定 reference；T1 与 public route accepted，T3 rejected 并沿用 P34 retrieval；public 仍是 context proxy。
+  - 2026-07-03 P42 cleanup 后，nested screen/confirm 的可再生成训练曲线、child run 日志、GPU batch、逐候选 deep summary 和顶层稠密预测副本已外置备份并从 git 当前树删除；P37 顶层 summary/metrics/figures/manifest 保留。
 - P38 thesis protocol freeze completed 资产：
   - assets root：`../assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/`
   - status：`completed`

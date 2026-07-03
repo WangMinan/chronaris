@@ -32,7 +32,7 @@ LOGGER.addHandler(logging.NullHandler())
 DEFAULT_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_midterm"
 DEFAULT_REPORT_ROOT = "docs/artifacts/stage_i"
 DEFAULT_PRIVATE_SUMMARY_PATH = (
-    "docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
+    "docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/"
     "private_benchmark_summary.json"
 )
 DEFAULT_SUPPORT_SUMMARY_PATH = (

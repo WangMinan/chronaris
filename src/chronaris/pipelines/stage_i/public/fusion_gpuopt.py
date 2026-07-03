@@ -35,7 +35,7 @@ from chronaris.pipelines.stage_i.public.deep_baseline_runtime import (
 from chronaris.pipelines.stage_i.public.fusion_refresh import (
     PublicFusionRefreshCandidate,
 )
-from chronaris.pipelines.stage_i.public.gpu_runtime import (
+from chronaris.pipelines.stage_i.common.gpu_runtime import (
     AmpRuntime,
     completed_profile_key,
     gpu_runtime_snapshot,

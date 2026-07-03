@@ -47,7 +47,7 @@ DEFAULT_CASE_STUDY_ABLATION_CSV_PATH = (
     "ablation_summary.csv"
 )
 DEFAULT_PRIVATE_BENCHMARK_SUMMARY_PATH = (
-    "docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
+    "docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/"
     "private_benchmark_summary.json"
 )
 DEFAULT_DEEP_COMPARISON_SUMMARY_PATH = (

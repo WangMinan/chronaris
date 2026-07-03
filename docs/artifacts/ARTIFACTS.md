@@ -12,6 +12,7 @@
 - [cleanup/20260621-deep-cleanup.md](cleanup/20260621-deep-cleanup.md)：删除已由 r6 接管的 r5 thesis figure 图包/报告、空目录和本地 Python 编译缓存，并记录仍需保留的 public adapter、P11 live child run 与 LLM runtime case 输入表。
 - [cleanup/20260701-src-docs-artifact-prune.md](cleanup/20260701-src-docs-artifact-prune.md)：删除 `src/tests/scripts` 本地 Python 编译缓存和 archive-only public torch/mainline/fusion screen 旧产物；保留当前 P27/P28 与仍被代码/报告引用的 public adapter 基线。
 - [cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md](cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md)：P34/P35/P36 图表标签、GPU profiling、future-run checkpoint policy、dense prediction CSV 外置备份和 checkpoint 历史清理记录。
+- [cleanup/20260703-thesis-prep-cleanup.md](cleanup/20260703-thesis-prep-cleanup.md)：P42 仓库收敛清理记录；删除 P37/P35 nested byproduct、P34 未索引 batch/manifest、P37 稠密预测副本，外置备份到 `/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/`，并记录代码入口收敛、LFS prune 和 history rewrite 决策。
 
 ## 2. 阶段产物
 
@@ -166,4 +167,5 @@
 - P37 `stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/` 是固定 P30/P31/P34/P35/P36 reference 上的 final polish。引用时只能写成 T1 calibration 与 public route calibration 局部 accepted improvement；T3 retrieval 沿用 P34 confirmed result；public 第二流仍是 context proxy。
 - P38 `stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/` 是论文协议冻结入口；它只读聚合既有 P30/P31/P32/P34/P35/P36/P37，不重跑实验，不删除 artifact。论文图表应优先从 `experiment_registry.csv` / `result_matrix_long.csv` / `claim_boundary_table.csv` 反查原始路径和表述边界。
 - 2026-07-02 P34/P35/P36 GPU profiling、柱状图标签和 docs cleanup 记录：[cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md](cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md)。checkpoint binary、dense prediction CSV 和 partial CSV 默认不再纳入 git；必要 checkpoint 已备份在远程开发机仓库外。
+- 2026-07-03 P42 cleanup 后，P35/P37 nested confirm/screen 的可再生成明细、P34 未索引 task manifest/GPU batch、P37 顶层稠密预测副本不再作为当前 git 资产；恢复时使用 `/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/backup_manifest.csv`。P38 registry/result matrix 引用路径已检查，缺失为 `0`。
 - `stage_i_private_component_ablation` 的历史满分结果与 `stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/` 是不同协议。论文实验章节优先引用 `protocol=leakage_safe_v1` 的 r2 消融；历史结果只能作为 private proxy 历史对照，不得与防泄漏结果混成同一柱状结论。

@@ -37,7 +37,7 @@ def parse_args() -> argparse.Namespace:
         "--private-benchmark-summary-path",
         default=(
             "docs/artifacts/assets/stage_i_private/"
-            "20260504T120000Z-stage-i-private-opt-package/private_benchmark_summary.json"
+            "20260607T-stage-i-private-opt-package-r2/private_benchmark_summary.json"
         ),
     )
     parser.add_argument("--top-k-windows", type=int, default=5)
