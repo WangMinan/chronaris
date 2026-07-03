@@ -15,10 +15,15 @@ if str(SRC) not in sys.path:
 
 from chronaris.dataset import StageIPrivateTaskEntry, StreamingPointEvent, StreamingWindowBuffer  # noqa: E402
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix  # noqa: E402
-from chronaris.pipelines import AlignmentPreviewConfig, StageIMultitaskTrainConfig, run_stage_i_multitask_train  # noqa: E402
-from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig  # noqa: E402
+from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig  # noqa: E402
+from chronaris.pipelines.stage_i.training.multitask_train import (  # noqa: E402
+    StageIMultitaskTrainConfig,
+    run_stage_i_multitask_train,
+)
+from chronaris.models.alignment.config import AlignmentPrototypeConfig  # noqa: E402
+from chronaris.models.alignment.splits import ChronologicalSplitConfig  # noqa: E402
 from chronaris.schema.models import AlignedPoint, RawPoint, StreamKind, WindowConfig  # noqa: E402
-from chronaris.serving import (  # noqa: E402
+from chronaris.serving.runtime_inference import (  # noqa: E402
     StageIRuntimeInferenceConfig,
     dump_runtime_samples_jsonl,
     load_runtime_samples_jsonl,

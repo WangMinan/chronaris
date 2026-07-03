@@ -1,6 +1,5 @@
 """Data access boundaries for upstream stores."""
 
-from chronaris.access.contracts import MetadataReader, PhysiologyPointReader, VehiclePointReader
 from chronaris.access.influx_cli import (
     InfluxCliRunner,
     InfluxDistinctMeasurementReader,
@@ -14,7 +13,7 @@ from chronaris.access.influx_cli import (
 )
 from chronaris.access.influx_probe import MeasurementTimeBounds, fetch_measurement_time_bounds
 from chronaris.access.live_factory import StageBLiveLoaderConfig, build_stage_b_live_sortie_loader
-from chronaris.access.loader import SortieLoader
+from chronaris.access.loader import MetadataReader, PhysiologyPointReader, SortieLoader, VehiclePointReader
 from chronaris.access.live_readers import PhysiologyInfluxPointReader, RealBusInfluxPointReader
 from chronaris.access.memory import InMemoryMetadataReader, InMemoryPointReader
 from chronaris.access.overlap_preview import (

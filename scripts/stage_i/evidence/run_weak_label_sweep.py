@@ -28,7 +28,7 @@ from chronaris.access import (  # noqa: E402
 )
 from chronaris.dataset import build_stage_i_real_task_payload  # noqa: E402
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix  # noqa: E402
-from chronaris.pipelines import collect_stage_i_multitask_samples  # noqa: E402
+from chronaris.pipelines.stage_i.training.backbone_train import collect_stage_i_multitask_samples  # noqa: E402
 from chronaris.pipelines.stage_i.evidence.weak_label_sweep import (  # noqa: E402
     StageIMultitaskSweepConfig,
     discover_existing_child_summary_paths,

@@ -29,14 +29,20 @@ from chronaris.dataset import (  # noqa: E402
     save_stage_i_sequence_bundle,
 )
 from chronaris.evaluation import save_bar_plot, save_grouped_bar_plot  # noqa: E402
-from chronaris.pipelines import (  # noqa: E402
+from chronaris.pipelines.stage_i.public.mainline_report import (  # noqa: E402
     StageIPublicMainlineReportConfig,
-    StageIPublicOptConfig,
-    StageIPublicOptTorchUABConfig,
-    StageISequencePreparationConfig,
     run_stage_i_public_mainline_report,
+)
+from chronaris.pipelines.stage_i.public.opt import (  # noqa: E402
+    StageIPublicOptConfig,
     run_stage_i_public_opt,
+)
+from chronaris.pipelines.stage_i.public.opt_torch import (  # noqa: E402
+    StageIPublicOptTorchUABConfig,
     run_stage_i_public_opt_torch_uab,
+)
+from chronaris.pipelines.stage_i.public.sequence_preparation import (  # noqa: E402
+    StageISequencePreparationConfig,
     run_stage_i_sequence_preparation,
 )
 from chronaris.pipelines.stage_i.common.baseline_models import build_loso_splits  # noqa: E402

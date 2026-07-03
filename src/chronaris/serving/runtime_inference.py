@@ -12,20 +12,22 @@ import pandas as pd
 import torch
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-from chronaris.models.alignment import (
-    AlignmentPrototypeConfig,
-    ChronologicalSplitConfig,
-    ReferenceGridConfig,
+from chronaris.models.alignment.config import AlignmentPrototypeConfig
+from chronaris.models.alignment.reference_grid import ReferenceGridConfig
+from chronaris.models.alignment.splits import ChronologicalSplitConfig
+from chronaris.models.alignment.task_heads import (
     StageITaskHeadBatch,
     StageITaskHeadSet,
     StageITaskHeadSpec,
 )
-from chronaris.models.fusion import (
-    CausalEventFusion,
-    CausalEventFusionConfig,
+from chronaris.models.fusion.causal import (
     CausalFusionConfig,
     CausalFusionTensorInput,
     CausalMaskedCrossModalFusion,
+)
+from chronaris.models.fusion.semantic_event import (
+    CausalEventFusion,
+    CausalEventFusionConfig,
     SemanticEventTensorInput,
     semantic_query_entropy,
 )

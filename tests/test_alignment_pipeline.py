@@ -16,20 +16,24 @@ if str(SRC) not in sys.path:
 import torch
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig, ReferenceGridConfig
-from chronaris.pipelines import (
-    StageIBackboneTrainConfig,
+from chronaris.models.alignment.config import AlignmentPrototypeConfig
+from chronaris.models.alignment.reference_grid import ReferenceGridConfig
+from chronaris.models.alignment.splits import ChronologicalSplitConfig
+from chronaris.pipelines.alignment_preview import (
     load_alignment_preview_checkpoint,
-    run_stage_i_backbone_train,
     save_alignment_preview_checkpoint,
 )
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
+from chronaris.pipelines.stage_i.training.backbone_train import (
+    StageIBackboneTrainConfig,
+    run_stage_i_backbone_train,
+)
 from chronaris.schema.models import StreamKind
 
 ENABLE_TORCH_RUNTIME_TESTS = os.environ.get("CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS") == "1"
 
 if ENABLE_TORCH_RUNTIME_TESTS:
-    from chronaris.models.fusion import (
+    from chronaris.models.fusion.causal import (
         CausalFusionTensorInput,
         CausalMaskedCrossModalFusion,
         build_causal_attention_mask,
@@ -371,7 +375,9 @@ if ENABLE_TORCH_RUNTIME_TESTS:
         sys.path.insert(0, str(SRC))
 
     from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-    from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig, ReferenceGridConfig
+    from chronaris.models.alignment.config import AlignmentPrototypeConfig
+    from chronaris.models.alignment.reference_grid import ReferenceGridConfig
+    from chronaris.models.alignment.splits import ChronologicalSplitConfig
     from chronaris.pipelines.alignment_experiment import AlignmentExperimentPipeline
     from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
     from chronaris.schema.models import SortieLocator, StreamKind

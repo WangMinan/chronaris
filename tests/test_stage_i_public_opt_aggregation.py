@@ -16,10 +16,12 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines import (  # noqa: E402
+from chronaris.pipelines.stage_i.public.opt import (  # noqa: E402
     StageIPublicOptConfig,
-    StageIPublicOptTorchUABConfig,
     run_stage_i_public_opt,
+)
+from chronaris.pipelines.stage_i.public.opt_torch import (  # noqa: E402
+    StageIPublicOptTorchUABConfig,
     run_stage_i_public_opt_torch_uab,
 )
 

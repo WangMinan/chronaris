@@ -14,9 +14,9 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix  # noqa: E402
-from chronaris.serving import (  # noqa: E402
+from chronaris.serving.runtime_inference import dump_runtime_samples_jsonl  # noqa: E402
+from chronaris.serving.runtime_service_smoke import (  # noqa: E402
     StageIRuntimeSmokeConfig,
-    dump_runtime_samples_jsonl,
     run_stage_i_runtime_smoke,
 )
 

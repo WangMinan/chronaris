@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-from chronaris.models.fusion import (
+from chronaris.models.fusion.role_aware_fusion import (
     RoleAwareCausalFusion,
     private_stream_metadata,
     public_stream_metadata,

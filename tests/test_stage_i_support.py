@@ -14,10 +14,12 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.midterm_pack import (  # noqa: E402
     StageIMidtermEvidenceConfig,
-    StageISupportConfig,
     run_stage_i_midterm_evidence,
+)
+from chronaris.pipelines.stage_i.evidence.support import (  # noqa: E402
+    StageISupportConfig,
     run_stage_i_support,
 )
 

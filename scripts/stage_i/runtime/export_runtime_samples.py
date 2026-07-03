@@ -28,9 +28,9 @@ from chronaris.access import (  # noqa: E402
     MySQLStorageAnalysisReader,
     StageHProfileResolver,
 )
-from chronaris.pipelines import collect_stage_i_multitask_samples  # noqa: E402
+from chronaris.pipelines.stage_i.training.backbone_train import collect_stage_i_multitask_samples  # noqa: E402
 from chronaris.schema.models import WindowConfig  # noqa: E402
-from chronaris.serving import dump_runtime_samples_jsonl  # noqa: E402
+from chronaris.serving.runtime_inference import dump_runtime_samples_jsonl  # noqa: E402
 
 
 def _default_run_id() -> str:

@@ -16,9 +16,9 @@ if str(REPO_ROOT) not in sys.path:
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines import (  # noqa: E402
-    run_stage_i_public_fusion_screen,
+from chronaris.pipelines.stage_i.public.fusion_screen import (  # noqa: E402
     StageIPublicFusionScreenConfig,
+    run_stage_i_public_fusion_screen,
 )
 from chronaris.pipelines.stage_i.common.run_observer import (  # noqa: E402
     configure_stage_i_cli_logging,

@@ -14,7 +14,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines import (  # noqa: E402
+from chronaris.pipelines.stage_i.evidence.midterm_pack import (  # noqa: E402
     StageIMidtermEvidenceConfig,
     run_stage_i_midterm_evidence,
 )

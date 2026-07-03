@@ -3,9 +3,24 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Protocol, Sequence
 
-from chronaris.access.contracts import MetadataReader, PhysiologyPointReader, VehiclePointReader
-from chronaris.schema.models import RawPoint, SortieBundle, SortieLocator, StreamKind
+from chronaris.schema.models import RawPoint, SortieBundle, SortieLocator, SortieMetadata, StreamKind
+
+
+class PhysiologyPointReader(Protocol):
+    def fetch_points(self, locator: SortieLocator) -> Sequence[RawPoint]:
+        ...
+
+
+class VehiclePointReader(Protocol):
+    def fetch_points(self, locator: SortieLocator) -> Sequence[RawPoint]:
+        ...
+
+
+class MetadataReader(Protocol):
+    def fetch_metadata(self, locator: SortieLocator) -> SortieMetadata:
+        ...
 
 
 @dataclass(slots=True)
