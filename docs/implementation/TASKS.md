@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-02
+更新时间：2026-07-03
 
 ## 文档定位
 
@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `e8d367d feat: optimize stage i gpu outputs and docs cleanup`；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix，P34/P35/P36 与 optimized model summary r4 confirm20 已进入当前历史。本轮 P37 optimized final polish 资产仍在工作树中待提交。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36 confirmed metrics，提交前以本地 diff 为准。
+- 当前分支为 `main`，当前 HEAD 为 `6228787 feat: add stage i optimized final polish`，且 `origin/main` 指向同一提交；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix，P34/P35/P36 与 optimized model summary r4 confirm20 已进入当前历史，P37 optimized final polish 也已进入当前历史。当前工作树只包含毕业论文准备相关文档改动；尚未执行清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -75,6 +75,29 @@
   - `docs/artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md`
   - `docs/artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md`
   - `docs/artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md`
+
+中期后毕业论文准备确认前提：
+
+- 内部执行不再期待鼎新新增一手数据或专家评价数据；答辩口径可保留“若后续可获得则作为附加验证”。
+- 允许并需要引入仿真数据集；仿真数据可以进入附录型实验，但必须标注为 synthetic stress-test / simulation oracle。
+- 允许调用 LLM，并优先复用现有 DeepSeek v4-pro 链路；可扩展到 synthetic scenario、expert rubric 草案、case explanation、review packet 和论文图表说明，但不替代专家真值。
+- 当前时间充足，清理完成后优先继续提升 T3 retrieval 与 public route 指标。
+- 用户接受先清理仓库再跑新实验；允许删除 tracked 历史 artifact、允许外置备份、允许必要时改写 git history。
+- 当前用户要求先不要执行清理或新实验，先更新并细化文档。
+
+下一轮待执行队列（尚未启动）：
+
+1. `P38` 论文协议冻结：统一 private/public、model comparison/component ablation 的 2x2 证据矩阵、result registry 和 claim boundary。
+2. `P42` 仓库收敛清理：先审计、备份、记录，再删除/拆分/历史瘦身；第一步只做 inventory，不删除 tracked artifact。
+3. `P39` 仿真数据集：构建 synthetic generator、审计与附录型 stress-test，不混入真实数据主结果。
+4. `P40` T3/public 指标提升：清理后定点优化 T3 retrieval 与 public route。
+5. `P41` 论文级消融统一：聚合现有消融为统一长表、短表和图。
+6. `P43` 论文材料化：整理方法章节、实验表、图、边界说明、复现实验包和答辩问答。
+
+文档细化入口：
+
+- `docs/implementation/notes/thesis-prep-readiness-assessment-2026-07-03.md`
+- `docs/implementation/notes/thesis-prep-execution-plan-2026-07-03.md`
 
 后续收敛顺序：
 

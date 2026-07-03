@@ -12,6 +12,8 @@
 - [thesis-coding-gap.md](thesis-coding-gap.md)：论文主线编码缺口。
 - [midterm-goal-2026-06-07.md](midterm-goal-2026-06-07.md)：中期前最小收敛历史快照；当前 P10-P15 主动任务以 [../TASKS.md](../TASKS.md) 为准。
 - [stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)：P20 DeepSeek 在线时序数据预处理计划，当前只冻结文档方案，尚未更新代码或调用 API。
+- [thesis-prep-readiness-assessment-2026-07-03.md](thesis-prep-readiness-assessment-2026-07-03.md)：中期后进入毕业论文准备前的只读评估，覆盖无新增鼎新数据前提、后续实验、模拟数据可行性和仓库清理边界。
+- [thesis-prep-execution-plan-2026-07-03.md](thesis-prep-execution-plan-2026-07-03.md)：用户确认六项前提后的毕业论文阶段执行计划，细化 P38-P43、清理审计、仿真数据、LLM 扩展和指标提升边界；当前仅为计划，尚未执行清理或新实验。
 - [goal-prompt-stage-i-p10-p15-2026-06-07.md](goal-prompt-stage-i-p10-p15-2026-06-07.md)：用于新 session goal 模式推进 P10-P15 的长程 prompt。
 - [iteration-playbook.md](iteration-playbook.md)：跨阶段执行模板。
 

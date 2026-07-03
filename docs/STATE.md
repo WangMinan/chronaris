@@ -1,10 +1,12 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-02
+更新时间：2026-07-03
 
 ## 一句话状态
 
 项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish`、`Public-P27/Public-P28` 与本轮 `P30/P31/P32/P34/P35/P36/P37`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表；P30/P31/P32 进一步补齐 private third-party comparison、public fusion ablation 和跨证据矩阵；P34/P35/P36 进一步把诊断转化为 optimized Chronaris CUDA confirm、stream-role v3 confirm 和统一聚合 summary；P37 在固定 P30/P31/P34/P35/P36 reference 上完成最终 polish，接受 T1 calibration 与 public route calibration，T3 retrieval 保持 P34 confirmed 结论。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28、P31 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
+
+2026-07-03 用户已确认毕业论文阶段前提：内部执行不再期待鼎新新增一手数据或专家评价数据；允许引入仿真数据集并作为附录型 synthetic stress-test；允许复用并扩展 DeepSeek v4-pro LLM 链路；后续有时间继续提升 T3/public 指标；接受先彻底清理仓库再跑新实验，并允许 tracked 历史 artifact 删除、外置备份和必要时 git history 改写。当前用户进一步要求先不要执行清理或新实验，先更新并细化文档。
 
 ## 当前阶段
 
@@ -153,7 +155,7 @@
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，当前 HEAD 为 `e8d367d feat: optimize stage i gpu outputs and docs cleanup`；本轮 P37 final polish 资产已在工作树完成，提交前以本地 diff 为准。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，P37 只接受 T1 calibration 与 public route calibration 的局部增益，public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
+- 当前分支为 `main`，当前 HEAD 为 `6228787 feat: add stage i optimized final polish`，且 `origin/main` 指向同一提交；P37 final polish 已进入历史。当前工作树只包含毕业论文准备相关文档改动，尚未执行清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，P37 只接受 T1 calibration 与 public route calibration 的局部增益，public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
 - 本轮 2026-07-02 清理删除 P34/P35/P36 过渡 run、P31 superseded r1，以及 current r4 nested dense prediction/checkpoint/partial CSV；压缩 P35/P31 training curves 和大日志；dense prediction CSV 已备份到远程开发机仓库外 `/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/`，重复 weak-label manifest 副本已回指 canonical；`.pt` checkpoint 已备份到 `/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/`，提交后使用 `git filter-repo` 从 git 历史移除 checkpoint binary。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
@@ -214,6 +216,9 @@
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
 - 中期 P20/P21 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run 与 A0-A4 对比实验；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核、whitelisted semantic hints、runtime explanation 和人工复核 packet，不替代物理约束、因果融合或人工真值。
+- 毕业论文后续内部执行默认不依赖新增鼎新数据或专家评价标签；若答辩中提到继续争取外部数据，只能写成附加验证机会。
+- 仿真数据可以进入附录型实验，但必须写成 synthetic stress-test / simulation oracle，不替代 private real dual-stream evidence 或 expert truth。
+- 仓库清理已被用户确认允许彻底执行，包括 tracked 历史 artifact 删除、外置备份和必要时 git history 改写；但当前用户要求先细化文档，暂不执行清理。
 
 ## 当前代码组织事实
 
