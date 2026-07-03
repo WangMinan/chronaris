@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `6228787 feat: add stage i optimized final polish`，且 `origin/main` 指向同一提交；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix，P34/P35/P36 与 optimized model summary r4 confirm20 已进入当前历史，P37 optimized final polish 也已进入当前历史。当前工作树只包含毕业论文准备相关文档改动；尚未执行清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics。
+- 当前分支为 `main`，当前 HEAD 为 `21c4294 docs: add thesis prep execution plan`，且 `origin/main` 指向同一提交；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix，P34/P35/P36 与 optimized model summary r4 confirm20 已进入当前历史，P37 optimized final polish 也已进入当前历史。当前工作树已新增 P38 论文协议冻结实现、测试、只读聚合产物和状态文档回写；尚未执行 P42 清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -83,16 +83,19 @@
 - 允许调用 LLM，并优先复用现有 DeepSeek v4-pro 链路；可扩展到 synthetic scenario、expert rubric 草案、case explanation、review packet 和论文图表说明，但不替代专家真值。
 - 当前时间充足，清理完成后优先继续提升 T3 retrieval 与 public route 指标。
 - 用户接受先清理仓库再跑新实验；允许删除 tracked 历史 artifact、允许外置备份、允许必要时改写 git history。
-- 当前用户要求先不要执行清理或新实验，先更新并细化文档。
+- 当前 P38 已按计划先执行；P42 清理仍未启动，下一步先做 inventory，不直接删除 tracked artifact。
 
-下一轮待执行队列（尚未启动）：
+当前已完成：
 
-1. `P38` 论文协议冻结：统一 private/public、model comparison/component ablation 的 2x2 证据矩阵、result registry 和 claim boundary。
-2. `P42` 仓库收敛清理：先审计、备份、记录，再删除/拆分/历史瘦身；第一步只做 inventory，不删除 tracked artifact。
-3. `P39` 仿真数据集：构建 synthetic generator、审计与附录型 stress-test，不混入真实数据主结果。
-4. `P40` T3/public 指标提升：清理后定点优化 T3 retrieval 与 public route。
-5. `P41` 论文级消融统一：聚合现有消融为统一长表、短表和图。
-6. `P43` 论文材料化：整理方法章节、实验表、图、边界说明、复现实验包和答辩问答。
+- `P38` 论文协议冻结：已新增 `scripts/stage_i/evidence/build_thesis_protocol.py` 与 `src/chronaris/pipelines/stage_i/evidence/thesis_protocol.py`，从既有 P30/P31/P32/P34/P35/P36/P37 artifact 只读生成 `20260703T-stage-i-thesis-protocol-r1`，不重跑训练、不清理 artifact、不改写历史。
+
+下一轮待执行队列：
+
+1. `P42` 仓库收敛清理：先审计、备份、记录，再删除/拆分/历史瘦身；第一步只做 inventory，不删除 tracked artifact。
+2. `P39` 仿真数据集：构建 synthetic generator、审计与附录型 stress-test，不混入真实数据主结果。
+3. `P40` T3/public 指标提升：清理后定点优化 T3 retrieval 与 public route。
+4. `P41` 论文级消融统一：聚合现有消融为统一长表、短表和图。
+5. `P43` 论文材料化：整理方法章节、实验表、图、边界说明、复现实验包和答辩问答。
 
 文档细化入口：
 
@@ -127,9 +130,14 @@
    - T3：`p37_t3_info_nce_temp0p05_hardw2` 与 P34 在 `top1=0.0315315`、`top3=0.0855856`、`top5=0.139640`、`mrr=0.117939` 上持平，P37 T3 rejected，后续仍引用 P34 confirmed retrieval。
    - T1：accepted；`leave_one_view_out` macro-F1 `0.204614` vs P34 `0.187489`（+`0.017125`），`leave_one_sortie_out` macro-F1 `0.220099` vs P34 `0.216065`（+`0.004034`）。
    - public route：accepted；`p37_public_force_adaptive_context_gate` NASA combined macro-F1 `0.443919` vs P35 `0.432193`（+`0.011726`），UAB mean RMSE `3.191811` vs P35 `3.374779`（改善 `0.182968`）。该分支仍是 public adapter / context-proxy evidence。
-18. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
+18. P38 thesis protocol freeze 已完成，入口为 `docs/artifacts/stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md`，资产根 `docs/artifacts/assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/`。
+   - 当前状态：`status=completed`，只读聚合 P30/P31/P32/P34/P35/P36/P37 artifact，未重跑训练、未删除 artifact、未改写 git history。
+   - 核心输出：`experiment_registry.csv`、`result_matrix_long.csv`、`result_matrix_summary.csv`、`claim_boundary_table.csv`、`thesis_protocol_summary.json`、`evidence_manifest.json`。
+   - 当前矩阵：`505` 行，四象限为 `private_component_ablation=204`、`public_component_ablation=132`、`private_model_comparison=85`、`public_model_comparison=84`；来源覆盖 `P30_via_P32/P31_via_P32/P27_via_P32/P24_via_P32/P34/P35/P36_summary/P37`。
+   - 引用边界：P38 是论文协议冻结层，不替代原始 source artifact；public 仍是 context proxy，private T1/T2/T3 仍是 proxy/weak-label evidence，P39 synthetic 只能作为未来附录型 stress-test。
+19. 2026-07-01 src/docs artifact prune 已删除 `src/tests/scripts` 下本地 Python 编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物；当前删除边界见 `docs/artifacts/cleanup/20260701-src-docs-artifact-prune.md`。
 
-引用边界：P37 final polish 只在固定 P30/P31/P34/P35/P36 reference 上做局部收束；T1 calibration 与 public route calibration 可写成 accepted improvement，T3 retrieval 仍沿用 P34 confirmed retrieval，public 分支继续写成 public adapter / context-proxy evidence。
+引用边界：P38 是 P30/P31/P32/P34/P35/P36/P37 的论文协议冻结层；P37 final polish 只在固定 P30/P31/P34/P35/P36 reference 上做局部收束；T1 calibration 与 public route calibration 可写成 accepted improvement，T3 retrieval 仍沿用 P34 confirmed retrieval，public 分支继续写成 public adapter / context-proxy evidence。
 
 验收：
 
