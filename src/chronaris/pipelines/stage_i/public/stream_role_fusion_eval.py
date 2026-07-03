@@ -651,7 +651,7 @@ def _latest_p34_root() -> Path | None:
 def _resume_command(config: StageIStreamRoleFusionEvalConfig) -> str:
     parts = [
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
-        "scripts/stage_i/run_stream_role_fusion_eval.py",
+        "scripts/stage_i/evidence/run_stream_role_fusion_eval.py",
         "--resume",
         "--resume-run-id",
         config.run_id,

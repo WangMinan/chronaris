@@ -2198,7 +2198,7 @@ def _gpuopt_config(config: StageIPrivateThirdPartyComparisonConfig) -> dict[str,
 def _resume_command(config: StageIPrivateThirdPartyComparisonConfig) -> str:
     parts = [
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
-        "scripts/stage_i/private/run_private_third_party_comparison.py",
+        "scripts/stage_i/private/run_private_thirdparty_comparison.py",
         "--run-id",
         config.run_id,
         "--device",

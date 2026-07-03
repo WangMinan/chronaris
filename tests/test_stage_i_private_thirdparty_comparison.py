@@ -15,7 +15,7 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.pipelines.stage_i.private.third_party_comparison import (  # noqa: E402
+from chronaris.pipelines.stage_i.private.thirdparty_comparison import (  # noqa: E402
     StageIPrivateThirdPartyComparisonConfig,
     _build_improvement_summary,
     run_stage_i_private_thirdparty_comparison,

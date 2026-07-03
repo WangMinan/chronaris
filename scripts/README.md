@@ -34,6 +34,8 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 - `scripts/stage_i/public/run_deep_comparison.py`：固定顺序 deep comparison。
 - `scripts/stage_i/public/run_fusion_screen.py`：public fusion screening。
 - `scripts/stage_i/public/run_public_fusion_refresh.py`：P28 `chronaris_public_fusion` screen + confirm refresh。
+- `scripts/stage_i/public/run_public_fusion_gpuopt.py`：P28 GPU optimization profiling，不替代 confirmed metrics。
+- `scripts/stage_i/public/run_public_fusion_ablation.py`：P31 public adapter/context-proxy component ablation。
 - `scripts/stage_i/public/build_public_model_comparison.py`：P27 public model comparison 图表/CSV/报告整编。
 - `scripts/stage_i/public/build_mainline_report.py`：public mainline report builder。
 
@@ -41,6 +43,8 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 
 - `scripts/stage_i/private/run_benchmark.py`：私有 Stage H `T1/T2/T3` proxy benchmark 与 `chronaris_opt` 证据。
 - `scripts/stage_i/private/run_leakage_safe_ablation.py`：P24 `protocol=leakage_safe_v1` 标签-特征审计与防泄漏组件消融。
+- `scripts/stage_i/private/run_private_thirdparty_comparison.py`：P30 private Stage H third-party comparison canonical 入口。
+- `scripts/stage_i/private/run_task_head_optimization.py`：P34 task-aware heads optimization / confirm 入口。
 
 ### evidence
 
@@ -56,6 +60,10 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 - `scripts/stage_i/evidence/build_midterm_evidence.py`：中期证据包整编。
 - `scripts/stage_i/evidence/export_anchors.py`：关键工况 anchor 导出。
 - `scripts/stage_i/evidence/run_case_study.py`：Stage I case study。
+- `scripts/stage_i/evidence/build_cross_evidence_matrix.py`：P32 cross-evidence matrix 构建。
+- `scripts/stage_i/evidence/build_optimized_chronaris_reevaluation.py`：P36 optimized Chronaris re-evaluation 聚合。
+- `scripts/stage_i/evidence/build_optimized_model_summary.py`：optimized model summary 聚合。
+- `scripts/stage_i/evidence/run_stream_role_fusion_eval.py`：P35 stream-role-aware fusion routing evaluation canonical 入口。
 - `scripts/stage_i/evidence/build_thesis_protocol.py`：P38 论文协议冻结，统一 P30/P31/P32/P34/P35/P36/P37 registry、result matrix 和 claim boundary。
 
 ### runtime
@@ -68,6 +76,7 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 ### llm
 
 - `scripts/stage_i/llm/run_preprocessing.py`：P20 DeepSeek/OpenAI-compatible LLM preprocessing context、规则复核、semantic hints 与 runtime explanation。
+- `scripts/stage_i/llm/run_preprocessing_comparison.py`：P21 LLM preprocessing A0-A4 对比实验。
 
 ### legacy
 

@@ -19,7 +19,7 @@ from chronaris.pipelines.stage_i.public.deep_baseline_runtime import (
     _sanitize_regression_outputs,
     _inverse_transform_targets,
 )
-from chronaris.pipelines.stage_i.public.gpu_runtime import (
+from chronaris.pipelines.stage_i.common.gpu_runtime import (
     AmpRuntime,
     choose_auto_batch_size,
     get_train_batch,

@@ -2,7 +2,7 @@
 
 日期：2026-07-03
 
-状态：文档细化版，尚未启动清理、删除、历史改写或新实验。
+状态：P38 已完成；P42 current-tree 仓库收敛清理已完成；P39/P40/P41/P43 尚未启动。
 
 ## 0. 固定前提
 
@@ -14,7 +14,7 @@
 - 公开 UAB/NASA 仍是 public adapter / context-proxy 泛化与校准证据，不等价于私有真实航电流。
 - 仿真数据允许进入附录型实验，但必须标注为 synthetic stress-test，不替代真实数据或专家真值。
 - LLM 允许扩展，默认复用 DeepSeek v4-pro 现有链路；LLM 输出只能作为 preprocessing context、rubric、semantic hints、runtime explanation、synthetic scenario card 或 review packet，不直接作为专家真值。
-- 当前先更新文档，不执行清理、不删除 artifact、不改写 git history、不跑新实验。
+- P38/P42 已按本计划先完成协议冻结和仓库收敛；尚未跑 P39/P40/P41/P43 新实验。
 
 ## 1. 总体顺序
 
@@ -65,6 +65,15 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 目标：先把仓库恢复到适合长期论文实验的结构，再跑新实验。
 
 清理分四层执行，必须每层先审计再删除。
+
+当前执行结果：
+
+- inventory：`docs/artifacts/cleanup/20260703-thesis-prep-cleanup-inventory.md`
+- cleanup report：`docs/artifacts/cleanup/20260703-thesis-prep-cleanup.md`
+- 外置备份 manifest：`/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/backup_manifest.csv`
+- 删除范围：P37/P35 nested byproduct、P34 未索引 batch/manifest、P37 顶层稠密预测副本，共 `67` 个文件，`68.36 MiB`。
+- P38 registry/matrix path check：missing paths `0`。
+- Git/LFS 决策：docs LFS history 约 `132 MB`，本轮不执行 `filter-repo`；已执行本地 `git lfs prune`，`.git/lfs` 从 `8.0G` 降到 `106M`。
 
 ### 3.1 清理前审计
 
@@ -298,8 +307,8 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 ## 9. 执行开关
 
-当前只更新文档。后续若用户要求开始执行，建议第一条明确指令是：
+P38/P42 已完成。后续若用户要求继续执行，建议第一条明确指令是：
 
-> 启动 P38 + P42，只做协议冻结和清理审计，不删除任何 tracked artifact。
+> 启动 P39 synthetic stress-test 或 P40 T3/public 定点优化，沿用 P38 协议矩阵和 P42 cleanup 边界，不改写已确认 P30-P38 指标。
 
-完成审计后，再由用户确认是否进入删除、外置备份和历史改写。
+若后续需要再清理仓库，继续按 P42 模式执行：先 inventory，再外置备份和路径完整性检查，最后才删除 tracked artifact。

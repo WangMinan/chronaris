@@ -18,7 +18,7 @@ from chronaris.pipelines.stage_i.evidence.case_study import (
 )
 
 DEFAULT_PRIVATE_BENCHMARK_SUMMARY_PATH = (
-    "docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/"
+    "docs/artifacts/assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/"
     "private_benchmark_summary.json"
 )
 LOGGER = logging.getLogger(__name__)

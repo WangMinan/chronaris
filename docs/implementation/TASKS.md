@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，当前 HEAD 为 `21c4294 docs: add thesis prep execution plan`，且 `origin/main` 指向同一提交；P28-GPUOPT 已完成 chronaris_public_fusion 训练效率 profiling，P30/P31/P32 已完成 private third-party comparison、public fusion ablation 和 cross-evidence matrix，P34/P35/P36 与 optimized model summary r4 confirm20 已进入当前历史，P37 optimized final polish 也已进入当前历史。当前工作树已新增 P38 论文协议冻结实现、测试、只读聚合产物和状态文档回写；尚未执行 P42 清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics。
+- 当前分支为 `main`，P42 起始 HEAD 与 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。P28-GPUOPT、P30/P31/P32、P34/P35/P36、P37 与 P38 thesis protocol freeze 均已进入当前历史。当前工作树正在收口 P42：已完成 inventory、代码入口整理、67 个可再生成 byproduct 外置备份删除、`.gitignore` 防回流、docs 索引回写和本地 `git lfs prune`；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -83,19 +83,19 @@
 - 允许调用 LLM，并优先复用现有 DeepSeek v4-pro 链路；可扩展到 synthetic scenario、expert rubric 草案、case explanation、review packet 和论文图表说明，但不替代专家真值。
 - 当前时间充足，清理完成后优先继续提升 T3 retrieval 与 public route 指标。
 - 用户接受先清理仓库再跑新实验；允许删除 tracked 历史 artifact、允许外置备份、允许必要时改写 git history。
-- 当前 P38 已按计划先执行；P42 清理仍未启动，下一步先做 inventory，不直接删除 tracked artifact。
+- 当前 P38 已按计划先执行；P42 current-tree 仓库收敛清理已完成，删除项均先备份到 `/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/backup_manifest.csv`。本轮不做 `filter-repo` 历史改写；下一步优先 P39 synthetic stress-test 或 P40 T3/public 定点优化。
 
 当前已完成：
 
 - `P38` 论文协议冻结：已新增 `scripts/stage_i/evidence/build_thesis_protocol.py` 与 `src/chronaris/pipelines/stage_i/evidence/thesis_protocol.py`，从既有 P30/P31/P32/P34/P35/P36/P37 artifact 只读生成 `20260703T-stage-i-thesis-protocol-r1`，不重跑训练、不清理 artifact、不改写历史。
+- `P42` 仓库收敛清理：已新增 `docs/artifacts/cleanup/20260703-thesis-prep-cleanup-inventory.md` 与 `docs/artifacts/cleanup/20260703-thesis-prep-cleanup.md`；删除 P37/P35 nested byproduct、P34 未索引 batch/manifest、P37 顶层稠密预测副本共 67 个文件，备份 manifest 在仓库外；代码入口删除纯 wrapper、统一 P35 stream-role CLI、把 GPU helper 实现移入 common，并通过 compile/unit/CLI/P38 path/LFS 初验。
 
 下一轮待执行队列：
 
-1. `P42` 仓库收敛清理：先审计、备份、记录，再删除/拆分/历史瘦身；第一步只做 inventory，不删除 tracked artifact。
-2. `P39` 仿真数据集：构建 synthetic generator、审计与附录型 stress-test，不混入真实数据主结果。
-3. `P40` T3/public 指标提升：清理后定点优化 T3 retrieval 与 public route。
-4. `P41` 论文级消融统一：聚合现有消融为统一长表、短表和图。
-5. `P43` 论文材料化：整理方法章节、实验表、图、边界说明、复现实验包和答辩问答。
+1. `P39` 仿真数据集：构建 synthetic generator、审计与附录型 stress-test，不混入真实数据主结果。
+2. `P40` T3/public 指标提升：清理后定点优化 T3 retrieval 与 public route。
+3. `P41` 论文级消融统一：聚合现有消融为统一长表、短表和图。
+4. `P43` 论文材料化：整理方法章节、实验表、图、边界说明、复现实验包和答辩问答。
 
 文档细化入口：
 
