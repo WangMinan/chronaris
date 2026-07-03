@@ -1,6 +1,6 @@
 # Stage I Artifacts Index
 
-更新时间：2026-07-02
+更新时间：2026-07-03
 
 本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
@@ -22,6 +22,7 @@
 - Public fusion ablation GPUOPT r1：`stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md`
 - Cross-evidence matrix GPUOPT r1：`stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md`
 - Optimized final polish P37 r1：`stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md`
+- Thesis protocol freeze P38 r1：`stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md`
 - 中期事实清单：`../../midterm/midterm-fact-sheet-2026-06-13.md`
 - 中期边界说明：`../../midterm/boundaries-and-risks-2026-06-13.md`
 - P21 中期结果摘要：`../../midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
@@ -110,6 +111,13 @@
   - figures：`fig_p37_t3_retrieval_leaderboard.png`、`fig_p37_t3_delta_vs_p34.png`、`fig_p37_t1_macro_f1_leaderboard.png`、`fig_p37_public_route_delta_heatmap.png`、`fig_p37_gpu_runtime.png`
   - manifest/log/progress/resume：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_command.txt`
   - boundary：P30/P31/P34/P35/P36 是固定 reference；T1 与 public route accepted，T3 rejected 并沿用 P34 retrieval；public 仍是 context proxy。
+- P38 thesis protocol freeze completed 资产：
+  - assets root：`../assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/`
+  - status：`completed`
+  - report：`stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md`
+  - CSV/JSON：`experiment_registry.csv`、`result_matrix_long.csv`、`result_matrix_summary.csv`、`claim_boundary_table.csv`、`thesis_protocol_summary.json`
+  - manifest/log/progress/resume：`evidence_manifest.json`、`run.log`、`progress.json`、`resume_command.txt`
+  - boundary：P38 只读聚合 P30/P31/P32/P34/P35/P36/P37，不重跑训练、不删除 artifact、不改写历史；public 仍是 context proxy，private 仍是 proxy/weak-label evidence。
 - private component ablation（历史协议）：`stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md`
 - public adapter calibration：`stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md`
 - public transfer boundary：`stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md`
@@ -151,6 +159,7 @@
 - P32 cross-evidence matrix 用于 private/public/proxy/component 四层证据分工；不要把四层指标混成单一排行榜。
 - P34/P35/P36 与 optimized model summary 当前为 optimized v2/v3 CUDA confirm / completed aggregation / summary，不替代 P30/P31/P32 completed 结果；引用时必须写明 P34 是 20-epoch confirm、P35 是 requested private/public v3 confirm、public 第二流仍是 context proxy，也不得写成 optimized Chronaris 全面超过全部 baseline。
 - P37 final polish 当前为固定 P30/P31/P34/P35/P36 reference 上的局部收束：T1 calibration 与 public route calibration accepted，T3 retrieval rejected 并沿用 P34 confirmed retrieval。引用时不要把 public context proxy 写成私有真实航电流，也不要把 P37 写成全面胜出。
+- P38 thesis protocol freeze 是论文协议矩阵入口；论文图表若引用 P30/P31/P32/P34/P35/P36/P37，应优先从 P38 的 `experiment_registry.csv` 或 `result_matrix_long.csv` 反查原始 artifact path 和 claim boundary。
 - 2026-07-02 后，本轮 P34/P35/P36/summary 柱状图已基于现有 CSV/JSON 重绘并增加短数值标签；future run 默认使用 `checkpoint_policy=last`，checkpoint binary 和 dense prediction CSV 不进入 git。清理/profiling 入口：`../cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md`。
 - 历史 archive 只用于追溯，不作为当前状态入口。
 - 历史 raw replay、prepared bundle 和大型 manifest 已按 `../cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 中清理；引用旧实验时优先看报告、summary、plots 和当前索引。

@@ -4,9 +4,9 @@
 
 ## 一句话状态
 
-项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish`、`Public-P27/Public-P28` 与本轮 `P30/P31/P32/P34/P35/P36/P37`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表；P30/P31/P32 进一步补齐 private third-party comparison、public fusion ablation 和跨证据矩阵；P34/P35/P36 进一步把诊断转化为 optimized Chronaris CUDA confirm、stream-role v3 confirm 和统一聚合 summary；P37 在固定 P30/P31/P34/P35/P36 reference 上完成最终 polish，接受 T1 calibration 与 public route calibration，T3 retrieval 保持 P34 confirmed 结论。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28、P31 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
+项目已经具备中期答辩可用的历史实验资产与最新主动证据闭环：真实链路 `Stage E/F/G(min)/H`、Stage I 历史公开 benchmark、`chronaris_opt` 私有代理证据、public adapter 支撑线、Phase C 真实 Stage H multitask 联合训练证据和中期证据包都已形成并进入 git 历史；同时，`P10 evidence runner`、`P11 live_influx thesis weak-label sweep`、`P12 chronaris_opt` 组件诊断、`P13 public adapter calibration`、`P14 public transfer boundary`、`P15 rigid_body rotation audit`、`P16 thesis materials`、`P17 runtime service smoke`、`P18 partial/resume + runtime schema contract` 已新增落盘。当前新增 `P24 leakage-safe private component ablation`、`P25 thesis materials r5 leakage-safe refresh`、`P26 thesis materials r6 report figure polish`、`Public-P27/Public-P28` 与本轮 `P30/P31/P32/P34/P35/P36/P37`：P24 把历史 private proxy 满分结果升级为带标签-特征同源审计的 `leakage_safe_v1` 组件诊断；P26 基于已有 summary/CSV/manifest 重绘 12 张 300dpi 中期报告图件与 12 张配套 CSV，并新增 `runtime_service_flow.png`；Public-P27/P28 完成 public model comparison、chronaris_public_fusion CUDA screen + full LOSO confirm、P28 后 P27 重新整编和中期报告图表；P30/P31/P32 进一步补齐 private third-party comparison、public fusion ablation 和跨证据矩阵；P34/P35/P36 进一步把诊断转化为 optimized Chronaris CUDA confirm、stream-role v3 confirm 和统一聚合 summary；P37 在固定 P30/P31/P34/P35/P36 reference 上完成最终 polish，接受 T1 calibration 与 public route calibration，T3 retrieval 保持 P34 confirmed 结论；P38 已把 P30/P31/P32/P34/P35/P36/P37 冻结为论文协议矩阵、结果长表、summary 和 claim boundary。2026-06-21 深度清理已删除被 r6 接管的 r5 图包/报告、空 artifact 目录和本地 Python 编译缓存；2026-07-01 src/docs artifact prune 已删除本地编译缓存和 archive-only 早期 public torch/mainline/fusion screen 旧产物，当前公开入口统一使用 P27/P28、P31 与仍被代码/报告引用的 public adapter 基线。`P20 DeepSeek 在线时序数据预处理` 已完成 provider contract、agent-style prompt/harness v2、切片整合、mock/repair 测试和小样本真实 DeepSeek run，并作为 Stage H 到 Stage I 之间的可选 preprocessing context 接入；`P21 LLM preprocessing 对比实验` 已完成 A0-A4 本地对比、工程资产、Stage I 报告和中期 summary。
 
-2026-07-03 用户已确认毕业论文阶段前提：内部执行不再期待鼎新新增一手数据或专家评价数据；允许引入仿真数据集并作为附录型 synthetic stress-test；允许复用并扩展 DeepSeek v4-pro LLM 链路；后续有时间继续提升 T3/public 指标；接受先彻底清理仓库再跑新实验，并允许 tracked 历史 artifact 删除、外置备份和必要时 git history 改写。当前用户进一步要求先不要执行清理或新实验，先更新并细化文档。
+2026-07-03 用户已确认毕业论文阶段前提：内部执行不再期待鼎新新增一手数据或专家评价数据；允许引入仿真数据集并作为附录型 synthetic stress-test；允许复用并扩展 DeepSeek v4-pro LLM 链路；后续有时间继续提升 T3/public 指标；接受先彻底清理仓库再跑新实验，并允许 tracked 历史 artifact 删除、外置备份和必要时 git history 改写。当前已按执行计划先完成 P38 论文协议冻结；P42 清理、新实验和历史改写尚未启动。
 
 ## 当前阶段
 
@@ -152,10 +152,16 @@
       - 当前结果：`status=completed`，CUDA required，tensor cache `auto`、AMP `bf16`、auto batch、torch compile `default`、heartbeat/progress/resume/skip-completed 均落盘；4 个 GPU summary source 均为 `runtime_device=cuda`、`oom_fallback_count=0`，T3 screen best batch `128`，T1/private/public confirm best batch `2048`。
       - 指标边界：T3 P37 best `p37_t3_info_nce_temp0p05_hardw2` 与 P34 在 `top1=0.0315315`、`top3=0.0855856`、`top5=0.139640`、`mrr=0.117939` 上持平，因此 T3 polish rejected，继续保持 P34 confirmed retrieval 口径；T1 accepted，`leave_one_view_out` macro-F1 从 P34 `0.187489` 到 P37 `0.204614`（+`0.017125`），`leave_one_sortie_out` macro-F1 从 `0.216065` 到 `0.220099`（+`0.004034`）；public route accepted，`p37_public_force_adaptive_context_gate` 在 NASA combined macro-F1 `0.443919`（vs P35 `0.432193`，+`0.011726`），UAB mean RMSE `3.191811`（vs P35 `3.374779`，改善 `0.182968`）。
       - 论文表述：P37 只在同 split / leakage boundary 下采纳优于 P34/P35 confirmed metric 的候选；public 仍是 `public adapter / context-proxy evidence`，T3 不包装成改善，P30/P31/P34/P35/P36 不被重跑或改写。
+    - `P38 thesis protocol freeze` 已完成：
+      - 产物：`docs/artifacts/assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/evidence_manifest.json`
+      - 报告：`docs/artifacts/stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md`
+      - 当前结果：`status=completed`，只读聚合 P30/P31/P32/P34/P35/P36/P37；输出 `experiment_registry.csv`、`result_matrix_long.csv`、`result_matrix_summary.csv`、`claim_boundary_table.csv`、`thesis_protocol_summary.json`、`run.log`、`progress.json` 与 `resume_command.txt`。
+      - 矩阵覆盖：`505` 行，四象限为 `private_component_ablation=204`、`public_component_ablation=132`、`private_model_comparison=85`、`public_model_comparison=84`；来源覆盖 `P30_via_P32/P31_via_P32/P27_via_P32/P24_via_P32/P34/P35/P36_summary/P37`。
+      - 论文表述：P38 是论文协议冻结和追溯入口，不替代原始 source artifact；public 仍是 context proxy，private T1/T2/T3 仍是 proxy/weak-label evidence，仿真数据后续只能作为附录型 synthetic stress-test。
 
 ## Git 与工作区核对
 
-- 当前分支为 `main`，当前 HEAD 为 `6228787 feat: add stage i optimized final polish`，且 `origin/main` 指向同一提交；P37 final polish 已进入历史。当前工作树只包含毕业论文准备相关文档改动，尚未执行清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，P37 只接受 T1 calibration 与 public route calibration 的局部增益，public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
+- 当前分支为 `main`，当前 HEAD 为 `21c4294 docs: add thesis prep execution plan`，且 `origin/main` 指向同一提交；P37 final polish 已进入历史。当前工作树新增 P38 论文协议冻结代码、测试、artifact 和文档回写，尚未执行 P42 清理、删除 artifact、改写历史或启动新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37 confirmed metrics；P34 是 completed CUDA 20-epoch confirm，P35/P36/optimized model summary 是 requested CUDA v3 confirm / aggregation completed，P37 只接受 T1 calibration 与 public route calibration 的局部增益，public 证据仍是 context proxy，private T1/T2/T3 仍是 proxy benchmark。
 - 本轮 2026-07-02 清理删除 P34/P35/P36 过渡 run、P31 superseded r1，以及 current r4 nested dense prediction/checkpoint/partial CSV；压缩 P35/P31 training curves 和大日志；dense prediction CSV 已备份到远程开发机仓库外 `/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/`，重复 weak-label manifest 副本已回指 canonical；`.pt` checkpoint 已备份到 `/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/`，提交后使用 `git filter-repo` 从 git 历史移除 checkpoint binary。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史；`Phase D/E/F` 代码、文档与资产作为历史基线保留。
 - 最新进入历史的 `P10-P15` 主动证据提交：
@@ -205,6 +211,7 @@
   - 最新 private third-party comparison package：`docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/evidence_manifest.json`
   - 最新 public fusion ablation package：`docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/evidence_manifest.json`
   - 最新 cross-evidence matrix package：`docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json`
+  - 最新 thesis protocol freeze package：`docs/artifacts/assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/evidence_manifest.json`
 
 ## 当前主线事实
 
@@ -213,12 +220,13 @@
 - 当前公开第二模态应写成 `context proxy / public adapter evidence`，不是论文严格意义上的真实航电流。
 - P30/P31/P32 已把 private real dual-stream、private leakage-safe proxy、public model comparison、public component ablation 四层证据放入同一 cross-evidence matrix；该矩阵用于中期报告的证据分层，不用于把 public context proxy 伪写成私有航电流。
 - P37 final polish 用固定 P30/P31/P34/P35/P36 作为 reference，只用于最终 polish 与论文表述收束：T1/public route 可引用为局部 accepted improvement，T3 继续引用 P34 confirmed retrieval，不要写成最终全面胜出。
+- P38 thesis protocol freeze 是毕业论文阶段的协议矩阵入口；论文图表应优先从 `experiment_registry.csv`、`result_matrix_long.csv` 和 `claim_boundary_table.csv` 反查 P30/P31/P32/P34/P35/P36/P37 原始 artifact 与 claim boundary。
 - `T1/T2/T3` 是私有代理任务；`risk_proxy / workload_proxy / event_replay_tag` 是 thesis weak-label task builder，不等价于人工真值任务。
 - `20251110_单01_ACT-2_涛_J20_26#01` 仍是 vehicle-only partial-data，不是双流 Stage H view。
 - 中期 P20/P21 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run 与 A0-A4 对比实验；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核、whitelisted semantic hints、runtime explanation 和人工复核 packet，不替代物理约束、因果融合或人工真值。
 - 毕业论文后续内部执行默认不依赖新增鼎新数据或专家评价标签；若答辩中提到继续争取外部数据，只能写成附加验证机会。
 - 仿真数据可以进入附录型实验，但必须写成 synthetic stress-test / simulation oracle，不替代 private real dual-stream evidence 或 expert truth。
-- 仓库清理已被用户确认允许彻底执行，包括 tracked 历史 artifact 删除、外置备份和必要时 git history 改写；但当前用户要求先细化文档，暂不执行清理。
+- 仓库清理已被用户确认允许彻底执行，包括 tracked 历史 artifact 删除、外置备份和必要时 git history 改写；P38 已先完成，下一步 P42 应从 inventory 开始，不能直接删除 tracked artifact。
 
 ## 当前代码组织事实
 

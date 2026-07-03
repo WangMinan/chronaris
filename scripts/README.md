@@ -56,6 +56,7 @@ Stage I 入口已按职责拆到 `scripts/stage_i/<category>/`。根目录不再
 - `scripts/stage_i/evidence/build_midterm_evidence.py`：中期证据包整编。
 - `scripts/stage_i/evidence/export_anchors.py`：关键工况 anchor 导出。
 - `scripts/stage_i/evidence/run_case_study.py`：Stage I case study。
+- `scripts/stage_i/evidence/build_thesis_protocol.py`：P38 论文协议冻结，统一 P30/P31/P32/P34/P35/P36/P37 registry、result matrix 和 claim boundary。
 
 ### runtime
 
