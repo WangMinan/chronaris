@@ -64,7 +64,7 @@
 
 当前事实：
 
-- 当前分支为 `main`，P42 起始 HEAD 与 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。P28-GPUOPT、P30/P31/P32、P34/P35/P36、P37 与 P38 thesis protocol freeze 均已进入当前历史。当前工作树正在收口 P42：已完成 inventory、代码入口整理、67 个可再生成 byproduct 外置备份删除、`.gitignore` 防回流、docs 索引回写和本地 `git lfs prune`；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics。
+- 当前分支为 `main`；P42 起始 HEAD 与当时 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。P28-GPUOPT、P30/P31/P32、P34/P35/P36、P37、P38 thesis protocol freeze 与 P42 cleanup 均已进入当前历史。P42 已完成 inventory、代码入口整理、67 个可再生成 byproduct 外置备份删除、`.gitignore` 防回流、docs 索引回写和本地 `git lfs prune`；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
