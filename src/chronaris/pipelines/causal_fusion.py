@@ -8,14 +8,16 @@ from typing import Literal
 import torch
 
 from chronaris.features import load_stage_h_feature_run
-from chronaris.models.fusion import (
-    CausalEventFusion,
-    CausalEventFusionConfig,
+from chronaris.models.fusion.causal import (
     CausalFusionConfig,
     CausalFusionTensorInput,
     CausalMaskedCrossModalFusion,
-    SemanticEventTensorInput,
     attention_entropy,
+)
+from chronaris.models.fusion.semantic_event import (
+    CausalEventFusion,
+    CausalEventFusionConfig,
+    SemanticEventTensorInput,
     semantic_query_entropy,
 )
 from chronaris.pipelines.alignment_preview import AlignmentPreviewIntermediateExport
@@ -637,7 +639,7 @@ def _build_semantic_event_input(
     tensor_input: CausalFusionTensorInput,
     causal_output,
 ):
-    from chronaris.models.fusion import SemanticEventTensorInput
+    from chronaris.models.fusion.semantic_event import SemanticEventTensorInput
 
     return SemanticEventTensorInput(
         physiology_states=tensor_input.physiology_states,

@@ -226,13 +226,13 @@
 - 中期 P20/P21 LLM preprocessing 已按 DeepSeek v4-pro 完成小样本真实 run 与 A0-A4 对比实验；不默认使用 OpenAI，且 LLM 仅作为在线时序数据预处理、规则复核、whitelisted semantic hints、runtime explanation 和人工复核 packet，不替代物理约束、因果融合或人工真值。
 - 毕业论文后续内部执行默认不依赖新增鼎新数据或专家评价标签；若答辩中提到继续争取外部数据，只能写成附加验证机会。
 - 仿真数据可以进入附录型实验，但必须写成 synthetic stress-test / simulation oracle，不替代 private real dual-stream evidence 或 expert truth。
-- P42 仓库收敛清理已完成 current-tree 路线：先 inventory，再外置备份和删除 tracked byproduct；本轮不做历史改写，因为 docs LFS history 约 `132 MB`，未达到异常膨胀阈值。后续若再出现大 checkpoint/raw bundle 入仓，按 `.gitignore` 和 cleanup 记录处理。
+- P42 仓库收敛清理已完成 current-tree 路线：先 inventory，再外置备份和删除 tracked byproduct；本轮不做历史改写，因为 docs LFS history 约 `132 MB`，未达到异常膨胀阈值。P42b 已追加 `src/` 激进瘦身，删除 6 个早期薄层/单用途 helper 文件并压薄 5 个包级 barrel/compat 层；`src/chronaris` 当前为 `187` 个 Python 文件、`64,211` 行。后续若再出现大 checkpoint/raw bundle 入仓，按 `.gitignore` 和 cleanup 记录处理。
 
 ## 当前代码组织事实
 
 - Stage I pipeline 源码已按职责拆分到 `src/chronaris/pipelines/stage_i/common/`、`training/`、`public/`、`private/`、`evidence/`、`llm/`、`legacy/`，不再继续新增单层 `stage_i_*.py` 主实现文件。
 - Stage I CLI 入口已按用途拆分到 `scripts/stage_i/<category>/`；P42 后 `scripts/stage_i/` 根目录不再保留 Stage I Python 入口，P35 canonical 入口为 `scripts/stage_i/evidence/run_stream_role_fusion_eval.py`。
-- P42 已删除 `third_party` 命名兼容 wrapper、stream-role private re-export，并将 shared GPU helper 实现收敛到 `stage_i/common/gpu_runtime.py`；后续命令以 `scripts/README.md` 的 canonical 路径为准。
+- P42 已删除 `third_party` 命名兼容 wrapper、stream-role private re-export，并将 shared GPU helper 实现收敛到 `stage_i/common/gpu_runtime.py`；P42b 已移除旧 `stage_i_*` meta-path import hook 和多个 package-level re-export 表，后续代码应直接导入真实模块路径，后续命令以 `scripts/README.md` 的 canonical 路径为准。
 
 ## 编码层面还需要做什么
 

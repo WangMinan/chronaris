@@ -102,7 +102,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-from chronaris.models.alignment import ReferenceGridConfig, build_reference_grid, build_reference_grids
+from chronaris.models.alignment.reference_grid import ReferenceGridConfig, build_reference_grid, build_reference_grids
 from chronaris.schema.models import StreamKind
 
 
@@ -183,7 +183,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-from chronaris.models.alignment import ChronologicalSplitConfig, split_e0_samples_chronologically
+from chronaris.models.alignment.splits import ChronologicalSplitConfig, split_e0_samples_chronologically
 from chronaris.schema.models import StreamKind
 
 

@@ -23,11 +23,15 @@ from chronaris.dataset import (  # noqa: E402
     build_stage_i_real_task_payload,
 )
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix  # noqa: E402
-from chronaris.models.alignment import AlignmentPrototypeConfig, ChronologicalSplitConfig  # noqa: E402
-from chronaris.pipelines import StageIMultitaskTrainConfig, run_stage_i_multitask_train  # noqa: E402
+from chronaris.models.alignment.config import AlignmentPrototypeConfig  # noqa: E402
+from chronaris.models.alignment.splits import ChronologicalSplitConfig  # noqa: E402
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig  # noqa: E402
 from chronaris.pipelines.stage_i.private.benchmark_data import (  # noqa: E402
     load_aligned_private_records,
+)
+from chronaris.pipelines.stage_i.training.multitask_train import (  # noqa: E402
+    StageIMultitaskTrainConfig,
+    run_stage_i_multitask_train,
 )
 from chronaris.schema.models import StreamKind  # noqa: E402
 

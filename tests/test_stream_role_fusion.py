@@ -12,14 +12,18 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.models.fusion import (  # noqa: E402
-    FusionRoute,
+from chronaris.models.fusion.role_aware_fusion import (  # noqa: E402
     RoleAwareCausalFusion,
     private_stream_metadata,
     public_stream_metadata,
 )
-from chronaris.pipelines.stage_i.common.deep_models import build_stage_i_deep_model  # noqa: E402
-from chronaris.pipelines.stage_i.common.deep_role_aware import ChronarisRoleAwareFusionWrapper  # noqa: E402
+from chronaris.models.fusion.stream_role import (  # noqa: E402
+    FusionRoute,
+)
+from chronaris.pipelines.stage_i.common.deep_models import (  # noqa: E402
+    ChronarisRoleAwareFusionWrapper,
+    build_stage_i_deep_model,
+)
 from chronaris.pipelines.stage_i.public.fusion_ablation import _select_variants  # noqa: E402
 
 

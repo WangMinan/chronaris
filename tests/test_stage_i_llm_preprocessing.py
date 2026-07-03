@@ -20,8 +20,11 @@ from chronaris.dataset import (  # noqa: E402
 from chronaris.llm import LLMProvider, LLMTaskRequest, LLMTaskResponse, MockLLMProvider  # noqa: E402
 from chronaris.llm.prompts import build_llm_task_request  # noqa: E402
 from chronaris.llm.schemas import PROMPT_VERSION, SCHEMA_VERSION  # noqa: E402
-from chronaris.models.fusion import semantic_query_specs_from_llm_hints  # noqa: E402
-from chronaris.pipelines import StageILLMPreprocessingConfig, run_stage_i_llm_preprocessing  # noqa: E402
+from chronaris.models.fusion.semantic_event import semantic_query_specs_from_llm_hints  # noqa: E402
+from chronaris.pipelines.stage_i.llm.preprocessing import (  # noqa: E402
+    StageILLMPreprocessingConfig,
+    run_stage_i_llm_preprocessing,
+)
 
 
 class StageILLMPreprocessingTest(unittest.TestCase):

@@ -28,7 +28,7 @@ from chronaris.pipelines.stage_i.llm.slicing import (
     build_slicing_summary,
     merge_sliced_task_output,
 )
-from chronaris.models.fusion import semantic_query_specs_from_llm_hints
+from chronaris.models.fusion.semantic_event import semantic_query_specs_from_llm_hints
 from chronaris.pipelines.stage_i.llm.reporting import (
     render_stage_i_llm_preprocessing_report,
 )

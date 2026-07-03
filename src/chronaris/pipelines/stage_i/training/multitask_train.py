@@ -14,15 +14,17 @@ from chronaris.dataset.stage_i_private_contracts import (
     dump_stage_i_private_task_entries,
 )
 from chronaris.features.experiment_input import E0ExperimentSample
-from chronaris.models.alignment import (
+from chronaris.models.alignment.losses import (
+    build_stage_e_objective,
+    build_task_loss_breakdown,
+)
+from chronaris.models.alignment.splits import split_e0_samples_chronologically
+from chronaris.models.alignment.task_heads import (
     StageITaskHeadBatch,
     StageITaskHeadSet,
     StageITaskHeadSpec,
-    build_stage_e_objective,
-    build_task_loss_breakdown,
-    split_e0_samples_chronologically,
 )
-from chronaris.models.fusion import (
+from chronaris.models.fusion.causal import (
     CausalFusionConfig,
     CausalFusionTensorInput,
     CausalMaskedCrossModalFusion,

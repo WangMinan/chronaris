@@ -16,10 +16,6 @@ from chronaris.pipelines.stage_i.evidence.optimized_final_polish_render import (
     render_figures,
     render_report,
 )
-from chronaris.pipelines.stage_i.evidence.optimized_final_polish_support import (
-    infer_existing_nested_roots,
-    status_from_outputs,
-)
 from chronaris.pipelines.stage_i.private.thirdparty_comparison import (
     StageIPrivateThirdPartyComparisonConfig,
     run_stage_i_private_thirdparty_comparison,
@@ -42,7 +38,6 @@ DEFAULT_E_MANIFEST = REPO_ROOT / "docs/artifacts/assets/stage_h/20260502T092753Z
 DEFAULT_F_MANIFEST = REPO_ROOT / "docs/artifacts/assets/stage_h/20260502T092753Z-stage-h-f-allwindow-clean/run_manifest.json"
 DEFAULT_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_optimized_final_polish"
 DEFAULT_REPORT_ROOT = "docs/artifacts/stage_i"
-_status_from_outputs = status_from_outputs
 
 T1_CANDIDATES = (
     "p37_t1_focal_gamma1_gate0p65_ls0p05",
@@ -61,6 +56,30 @@ PUBLIC_CANDIDATES = (
     "p37_public_context_adapter_only_cap2x_do0p2",
     "p37_public_force_adaptive_context_gate",
 )
+
+
+def infer_existing_nested_roots(run_root: Path, run_id: str) -> dict[str, str | None]:
+    candidates = {
+        "t3_screen_root": run_root / "nested_private" / f"{run_id}-t3-screen",
+        "t1_screen_root": run_root / "nested_private" / f"{run_id}-t1-screen",
+        "private_confirm_root": run_root / "nested_private" / f"{run_id}-private-confirm",
+        "public_screen_root": run_root / "nested_public" / f"{run_id}-public-screen",
+        "public_confirm_root": run_root / "nested_public" / f"{run_id}-public-confirm",
+    }
+    return {key: str(path) for key, path in candidates.items() if path.exists()}
+
+
+def status_from_outputs(config: object, roots: Mapping[str, str | None]) -> str:
+    if roots.get("private_confirm_root") and roots.get("public_confirm_root"):
+        return "completed"
+    if getattr(config, "run_private_confirm") and "private_confirm_root" not in roots:
+        return "partial"
+    if getattr(config, "run_public_confirm") and "public_confirm_root" not in roots:
+        return "partial"
+    return "completed" if getattr(config, "run_private_confirm") and getattr(config, "run_public_confirm") else "partial"
+
+
+_status_from_outputs = status_from_outputs
 
 
 @dataclass(frozen=True, slots=True)

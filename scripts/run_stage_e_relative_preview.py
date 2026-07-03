@@ -39,11 +39,9 @@ from chronaris.evaluation import (
     summarize_alignment_projection_diagnostics,
 )
 from chronaris.features.experiment_input import E0InputConfig
-from chronaris.models.alignment import (
-    AlignmentPrototypeConfig,
-    ReferenceGridConfig,
-    build_rigid_body_mapping_diagnostics,
-)
+from chronaris.models.alignment.config import AlignmentPrototypeConfig
+from chronaris.models.alignment.physics_state_mapping import build_rigid_body_mapping_diagnostics
+from chronaris.models.alignment.reference_grid import ReferenceGridConfig
 from chronaris.pipelines.alignment_experiment import AlignmentExperimentPipeline
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
 from chronaris.pipelines.causal_fusion import (

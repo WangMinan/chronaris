@@ -32,17 +32,23 @@ from chronaris.features import (  # noqa: E402
     prepare_stage_h_case_sequences,
     prepare_uab_sequences,
 )
-from chronaris.pipelines import (  # noqa: E402
+from chronaris.pipelines.stage_i.private.benchmark import (  # noqa: E402
+    StageIPrivateBenchmarkConfig,
+    run_stage_i_private_benchmark,
+)
+from chronaris.pipelines.stage_i.public.deep_baseline import (  # noqa: E402
     StageIDeepBaselineConfig,
     StageIDeepComparisonConfig,
-    StageIPublicFusionCandidate,
-    StageIPublicFusionScreenConfig,
-    StageIPrivateBenchmarkConfig,
-    StageISequencePreparationConfig,
     run_stage_i_deep_baseline,
     run_stage_i_deep_comparison,
-    run_stage_i_private_benchmark,
+)
+from chronaris.pipelines.stage_i.public.fusion_screen import (  # noqa: E402
+    StageIPublicFusionCandidate,
+    StageIPublicFusionScreenConfig,
     run_stage_i_public_fusion_screen,
+)
+from chronaris.pipelines.stage_i.public.sequence_preparation import (  # noqa: E402
+    StageISequencePreparationConfig,
     run_stage_i_sequence_preparation,
 )
 from chronaris.pipelines.stage_i.public.deep_baseline import (  # noqa: E402

@@ -14,7 +14,7 @@ SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.serving import (  # noqa: E402
+from chronaris.serving.runtime_demo import (  # noqa: E402
     StageIRuntimeDemoConfig,
     run_stage_i_runtime_demo,
 )

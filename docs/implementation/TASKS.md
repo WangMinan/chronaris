@@ -58,13 +58,13 @@
 - `src/chronaris/pipelines/stage_i/llm/`：P20 LLM preprocessing pipeline、harness、slicing、reporting。
 - `src/chronaris/pipelines/stage_i/legacy/`：历史公开 Phase 0/1/2/3 与 baseline closure。
 
-脚本入口统一放到 `scripts/stage_i/<category>/`。根目录不再保留 `run_stage_i_*.py` / `build_stage_i_*.py` 旧脚本文件；需要执行旧命令时，应改用 `scripts/README.md` 里列出的 canonical 路径。Python 模块层保留旧 `chronaris.pipelines.stage_i.stage_i_*` import 的包级兼容映射，以便历史 notebook 或外部调用迁移时不需要立刻重写全部 import。
+脚本入口统一放到 `scripts/stage_i/<category>/`。根目录不再保留 `run_stage_i_*.py` / `build_stage_i_*.py` 旧脚本文件；需要执行旧命令时，应改用 `scripts/README.md` 里列出的 canonical 路径。P42b 后不再保留旧 `chronaris.pipelines.stage_i.stage_i_*` import hook 或大规模 package-level re-export 表；新代码应直接导入真实实现模块。
 
 ## 当前工作区与推送状态
 
 当前事实：
 
-- 当前分支为 `main`；P42 起始 HEAD 与当时 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。P28-GPUOPT、P30/P31/P32、P34/P35/P36、P37、P38 thesis protocol freeze 与 P42 cleanup 均已进入当前历史。P42 已完成 inventory、代码入口整理、67 个可再生成 byproduct 外置备份删除、`.gitignore` 防回流、docs 索引回写和本地 `git lfs prune`；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics。
+- 当前分支为 `main`；P42 起始 HEAD 与当时 `origin/main` 均为 `756555c79627237800458cd8420a064441ab0147`（`feat: add stage i thesis protocol freeze`）。P28-GPUOPT、P30/P31/P32、P34/P35/P36、P37、P38 thesis protocol freeze 与 P42 cleanup 均已进入当前历史。P42 已完成 inventory、代码入口整理、67 个可再生成 byproduct 外置备份删除、`.gitignore` 防回流、docs 索引回写和本地 `git lfs prune`；P42b 已完成追加 `src/` 激进瘦身，`src/chronaris` 当前为 `187` 个 Python 文件、`64,211` 行，`src/scripts/tests` 当前为 `276` 个 Python 文件、`85,162` 行；尚未启动 P39/P40/P41/P43 新实验。本轮不改变 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics。
 - `P10-P15` 主动证据工具、测试、报告、索引和可引用汇总资产已经进入远端历史，主体功能与资产提交为 `70b651a feat: add stage i evidence closure tools`。
 - `Phase D/E/F` 代码、文档与资产已经进入历史基线；当前最新主动证据入口为 `docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`。
 - 已进入 git 历史的最新 Stage I 真实 replay/support/ablation 资产包括：
@@ -89,6 +89,7 @@
 
 - `P38` 论文协议冻结：已新增 `scripts/stage_i/evidence/build_thesis_protocol.py` 与 `src/chronaris/pipelines/stage_i/evidence/thesis_protocol.py`，从既有 P30/P31/P32/P34/P35/P36/P37 artifact 只读生成 `20260703T-stage-i-thesis-protocol-r1`，不重跑训练、不清理 artifact、不改写历史。
 - `P42` 仓库收敛清理：已新增 `docs/artifacts/cleanup/20260703-thesis-prep-cleanup-inventory.md` 与 `docs/artifacts/cleanup/20260703-thesis-prep-cleanup.md`；删除 P37/P35 nested byproduct、P34 未索引 batch/manifest、P37 顶层稠密预测副本共 67 个文件，备份 manifest 在仓库外；代码入口删除纯 wrapper、统一 P35 stream-role CLI、把 GPU helper 实现移入 common，并通过 compile/unit/CLI/P38 path/LFS 初验。
+- `P42b` 追加 `src` 激进瘦身：已新增 `docs/artifacts/cleanup/20260703-src-aggressive-slimming.md`；删除 `dataset_v1.py`、`access/contracts.py`、`deep_role_aware.py`、`deep_task_aware.py`、`optimized_final_polish_support.py`、`comparison_io.py`，压薄 `chronaris.pipelines`、`stage_i`、`models.alignment`、`models.fusion`、`serving` 包级 barrel/compat 层，并通过 compile 与 focused tests。
 
 下一轮待执行队列：
 

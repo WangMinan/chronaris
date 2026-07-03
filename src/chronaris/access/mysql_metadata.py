@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date, datetime
 
-from chronaris.access.contracts import MetadataReader
+from chronaris.access.loader import MetadataReader
 from chronaris.access.mysql_cli import SQLQueryRunner
 from chronaris.schema.models import SortieLocator, SortieMetadata
 from chronaris.schema.real_bus import (

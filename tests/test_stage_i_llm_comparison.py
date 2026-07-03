@@ -14,7 +14,10 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.dataset import StageIPrivateTaskEntry, dump_stage_i_private_task_entries  # noqa: E402
-from chronaris.pipelines import StageILLMComparisonConfig, run_stage_i_llm_comparison  # noqa: E402
+from chronaris.pipelines.stage_i.llm.comparison import (  # noqa: E402
+    StageILLMComparisonConfig,
+    run_stage_i_llm_comparison,
+)
 
 
 class StageILLMComparisonTest(unittest.TestCase):

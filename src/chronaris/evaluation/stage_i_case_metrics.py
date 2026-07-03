@@ -10,7 +10,7 @@ import numpy as np
 import torch
 
 from chronaris.features.stage_i_case import StageICaseStudyViewInput, StageICaseStudyWindowRow
-from chronaris.models.fusion import CausalFusionConfig, CausalFusionTensorInput, CausalMaskedCrossModalFusion, attention_entropy
+from chronaris.models.fusion.causal import CausalFusionConfig, CausalFusionTensorInput, CausalMaskedCrossModalFusion, attention_entropy
 from chronaris.pipelines.torch_runtime import resolve_torch_device_name
 
 

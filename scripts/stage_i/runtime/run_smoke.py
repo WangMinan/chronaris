@@ -12,7 +12,7 @@ SRC = Path(__file__).resolve().parents[3] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.serving import (  # noqa: E402
+from chronaris.serving.runtime_service_smoke import (  # noqa: E402
     StageIRuntimeSmokeConfig,
     run_stage_i_runtime_smoke,
 )

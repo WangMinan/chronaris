@@ -29,9 +29,9 @@ from chronaris.access import (  # noqa: E402
     StageHProfileResolver,
 )
 from chronaris.dataset import build_stage_i_real_task_payload  # noqa: E402
-from chronaris.pipelines import (  # noqa: E402
+from chronaris.pipelines.stage_i.training.backbone_train import collect_stage_i_multitask_samples  # noqa: E402
+from chronaris.pipelines.stage_i.training.multitask_train import (  # noqa: E402
     StageIMultitaskTrainConfig,
-    collect_stage_i_multitask_samples,
     run_stage_i_multitask_train,
 )
 from chronaris.pipelines.stage_i.private.benchmark_data import (  # noqa: E402

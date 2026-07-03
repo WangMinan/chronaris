@@ -6,7 +6,7 @@ from collections import Counter
 from typing import Mapping, Sequence
 
 from chronaris.dataset import attach_llm_preprocessing_context_to_task_entries
-from chronaris.models.fusion import (
+from chronaris.models.fusion.semantic_event import (
     CausalEventFusionConfig,
     LLM_SEMANTIC_QUERY_RECIPE_WHITELIST,
     semantic_query_specs_from_llm_hints,
