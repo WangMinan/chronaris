@@ -1,0 +1,2 @@
+2026-06-14 23:18:52,988 INFO chronaris.pipelines.task_eval.llm.comparison: task_eval_llm_comparison observer start run_id=20260614T-task-eval-p21-llm-comparison-r1 run_root=docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison
+2026-06-14 23:29:17,263 INFO chronaris.pipelines.task_eval.llm.comparison: task_eval_llm_comparison observer start run_id=20260614T-task-eval-p21-llm-comparison-r1 run_root=docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison

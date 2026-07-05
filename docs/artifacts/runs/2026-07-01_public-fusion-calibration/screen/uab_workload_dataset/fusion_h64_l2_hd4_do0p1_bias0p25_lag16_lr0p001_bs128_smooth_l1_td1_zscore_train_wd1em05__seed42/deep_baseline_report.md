@@ -1,0 +1,19 @@
+# task evaluation Deep Baseline - uab_workload_dataset - chronaris_public_fusion
+
+- profile: `window_v2`
+- artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-01_public-fusion-calibration/screen/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42`
+- prepared root: `/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/uab_workload_dataset`
+
+## Objective
+
+| group | macro-F1 | balanced accuracy | samples | folds |
+| --- | ---: | ---: | ---: | ---: |
+| `n_back` | 0.308763 | 0.334184 | 3764 | 2 |
+| `heat_the_chair` | 0.455383 | 0.504963 | 638 | 2 |
+
+## Subjective
+
+| group | RMSE | MAE | R2 | Spearman | samples | folds |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `n_back` | 6.053349 | 5.474464 | 0.010536 | 0.061121 | 3764 | 2 |
+| `heat_the_chair` | 2.095348 | 1.792898 | -0.100455 | -0.774424 | 638 | 2 |

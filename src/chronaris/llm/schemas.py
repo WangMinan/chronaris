@@ -8,8 +8,8 @@ import re
 from dataclasses import asdict, dataclass, field
 from typing import Mapping, Sequence
 
-PROMPT_VERSION = "stage_i_llm_preprocessing.agent_guardrails.v2"
-SCHEMA_VERSION = "stage_i_llm_preprocessing_context.v2"
+PROMPT_VERSION = "task_eval_llm_preprocessing.agent_guardrails.v2"
+SCHEMA_VERSION = "task_eval_llm_preprocessing_context.v2"
 
 ALLOWED_FIELD_ROLES = {
     "attitude",

@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import unittest
 
-SRC = Path(__file__).resolve().parents[1] / "src"
+SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
@@ -75,7 +75,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import unittest
 
-SRC = Path(__file__).resolve().parents[1] / "src"
+SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 

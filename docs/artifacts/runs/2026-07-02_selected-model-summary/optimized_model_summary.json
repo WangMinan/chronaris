@@ -1,0 +1,32 @@
+{
+  "run_id": "20260702T-task-eval-optimized-model-summary-r4-v3-confirm20",
+  "status": "completed",
+  "runtime_device": "cuda",
+  "generated_at_utc": "2026-07-02T06:50:59.899184Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary",
+  "p30_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+  "p31_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_public-fusion-ablation",
+  "p32_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix",
+  "p34_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration",
+  "p35_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion",
+  "p36_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-reevaluation",
+  "optimized_model_summary_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/optimized_model_summary_config.json",
+  "optimized_model_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/optimized_model_summary.csv",
+  "key_metric_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/key_metric_summary.csv",
+  "stream_role_gate_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/stream_role_gate_summary.csv",
+  "gpu_runtime_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/gpu_runtime_summary.csv",
+  "claim_boundary_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/claim_boundary_summary.csv",
+  "resume_commands_txt": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/resume_commands.txt",
+  "figure_paths": {
+    "fig_model_summary_status": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/fig_model_summary_status.png",
+    "fig_model_summary_metric_delta": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/fig_model_summary_metric_delta.png",
+    "fig_model_summary_gate_profile": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/fig_model_summary_gate_profile.png",
+    "fig_model_summary_gpu_runtime": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/fig_model_summary_gpu_runtime.png"
+  },
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary/report.md",
+  "protocol_boundary": "This package summarizes completed optimized P34/P35/P36 evidence with fixed P30/P31/P32 references; public rows remain context-proxy evidence and historical artifacts are read-only.",
+  "model_summary_rows": 6,
+  "key_metric_rows": 29,
+  "gate_rows": 5,
+  "gpu_rows": 2
+}

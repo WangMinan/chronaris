@@ -1,0 +1,32 @@
+{
+  "run_id": "20260702T-task-eval-cross-evidence-matrix-gpuopt-r1",
+  "status": "completed",
+  "generated_at_utc": "2026-07-01T22:30:33.451128Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix",
+  "cross_evidence_matrix_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/cross_evidence_matrix.csv",
+  "cross_evidence_matrix_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/cross_evidence_matrix.json",
+  "cross_evidence_summary_md": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/cross_evidence_summary.md",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/report.md",
+  "figure_paths": {
+    "fig_cross_evidence_matrix": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/fig_cross_evidence_matrix.png",
+    "fig_cross_evidence_metric_overview": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/fig_cross_evidence_metric_overview.png",
+    "fig_private_public_evidence_roles": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/fig_private_public_evidence_roles.png",
+    "fig_private_public_result_summary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/fig_private_public_result_summary.png",
+    "fig_method_claim_support_map": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/fig_method_claim_support_map.png"
+  },
+  "quadrant_counts": {
+    "public_component_ablation": 104,
+    "public_model_comparison": 80,
+    "private_thirdparty_comparison": 72,
+    "private_component_ablation": 36
+  },
+  "source_roots": {
+    "private_thirdparty_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+    "private_ablation_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-19_dingxin-leakage-safe-ablation",
+    "public_model_comparison_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-01_public-model-comparison",
+    "public_fusion_refresh_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-01_public-fusion-calibration",
+    "public_ablation_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_public-fusion-ablation"
+  },
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix/cross_evidence_summary.md"
+}

@@ -334,14 +334,14 @@ def _render_visual_artifacts(
         plt.close(fig_physics)
         image_paths["train_validation_physics_loss"] = physics_path
 
-        final_train = train_history[-1]
-        final_validation = validation_history[-1] if validation_history else None
+        terminal_train = train_history[-1]
+        terminal_validation = validation_history[-1] if validation_history else None
         test_metrics = preview_result.test_metrics
         labels = ["vehicle physics", "physiology physics"]
-        train_values = [final_train.vehicle_physics, final_train.physiology_physics]
+        train_values = [terminal_train.vehicle_physics, terminal_train.physiology_physics]
         validation_values = (
-            [final_validation.vehicle_physics, final_validation.physiology_physics]
-            if final_validation is not None
+            [terminal_validation.vehicle_physics, terminal_validation.physiology_physics]
+            if terminal_validation is not None
             else [0.0, 0.0]
         )
         test_values = [test_metrics.vehicle_physics, test_metrics.physiology_physics]
@@ -350,7 +350,7 @@ def _render_visual_artifacts(
         x_positions = [0, 1]
         width = 0.22
         ax_components.bar([x - width for x in x_positions], train_values, width=width, label="train")
-        if final_validation is not None:
+        if terminal_validation is not None:
             ax_components.bar(x_positions, validation_values, width=width, label="validation")
             ax_components.bar([x + width for x in x_positions], test_values, width=width, label="test")
         else:
@@ -358,7 +358,7 @@ def _render_visual_artifacts(
         ax_components.set_xticks(x_positions)
         ax_components.set_xticklabels(labels)
         ax_components.set_ylabel("Loss")
-        ax_components.set_title("Final Physics Constraint Components")
+        ax_components.set_title("Terminal Physics Constraint Components")
         ax_components.grid(True, axis="y", alpha=0.25)
         ax_components.legend(loc="best")
         component_path = assets_dir / "constraint_component_breakdown.png"
@@ -410,7 +410,7 @@ def _append_visual_links_to_report(
         "train_validation_alignment_loss": "Train/Validation Alignment Loss",
         "reconstruction_stream_loss": "Per-Stream Reconstruction Loss",
         "train_validation_physics_loss": "Train/Validation Physics Loss",
-        "constraint_component_breakdown": "Final Physics Constraint Components",
+        "constraint_component_breakdown": "Terminal Physics Constraint Components",
         "reference_projection_cosine": "Reference Projection Cosine",
     }
     lines = [
@@ -590,9 +590,9 @@ def _write_model_checkpoint(
     enable_physics_constraints: bool,
     enable_causal_fusion: bool,
     split: dict[str, int],
-    final_train: dict[str, object],
-    final_validation: dict[str, object],
-    final_test: dict[str, object],
+    terminal_train: dict[str, object],
+    terminal_validation: dict[str, object],
+    terminal_test: dict[str, object],
 ) -> dict[str, str]:
     assets_dir = report_path.parent / "assets" / report_path.stem
     assets_dir.mkdir(parents=True, exist_ok=True)
@@ -641,10 +641,10 @@ def _write_model_checkpoint(
             "causal_fusion_epsilon_s": args.causal_fusion_epsilon_s,
         },
         "split": split,
-        "final_metrics": {
-            "train": final_train,
-            "validation": final_validation,
-            "test": final_test,
+        "terminal_metrics": {
+            "train": terminal_train,
+            "validation": terminal_validation,
+            "test": terminal_test,
         },
         "model_state_dict": _state_dict_to_cpu(model),
     }
@@ -674,13 +674,13 @@ def _render_physics_diagnostics_markdown(
     mode: str,
     vehicle_metadata_summary: dict[str, object],
     rigid_body_mapping_diagnostics: dict[str, object] | None,
-    train_final: dict[str, object],
-    validation_final: dict[str, object],
-    test_final: dict[str, object],
+    train_terminal: dict[str, object],
+    validation_terminal: dict[str, object],
+    test_terminal: dict[str, object],
 ) -> str:
-    train_components = train_final.get("physics_components") or {}
-    validation_components = validation_final.get("physics_components") or {}
-    test_components = test_final.get("physics_components") or {}
+    train_components = train_terminal.get("physics_components") or {}
+    validation_components = validation_terminal.get("physics_components") or {}
+    test_components = test_terminal.get("physics_components") or {}
     lines = [
         "## Physics Constraint Diagnostics",
         "",
@@ -693,16 +693,16 @@ def _render_physics_diagnostics_markdown(
         "| metric | train | validation | test |",
         "| --- | ---: | ---: | ---: |",
         (
-            f"| vehicle physics | {train_final['vehicle_physics']:.6f} | "
-            f"{validation_final['vehicle_physics']:.6f} | {test_final['vehicle_physics']:.6f} |"
+            f"| vehicle physics | {train_terminal['vehicle_physics']:.6f} | "
+            f"{validation_terminal['vehicle_physics']:.6f} | {test_terminal['vehicle_physics']:.6f} |"
         ),
         (
-            f"| physiology physics | {train_final['physiology_physics']:.6f} | "
-            f"{validation_final['physiology_physics']:.6f} | {test_final['physiology_physics']:.6f} |"
+            f"| physiology physics | {train_terminal['physiology_physics']:.6f} | "
+            f"{validation_terminal['physiology_physics']:.6f} | {test_terminal['physiology_physics']:.6f} |"
         ),
         (
-            f"| physics total | {train_final['physics_total']:.6f} | "
-            f"{validation_final['physics_total']:.6f} | {test_final['physics_total']:.6f} |"
+            f"| physics total | {train_terminal['physics_total']:.6f} | "
+            f"{validation_terminal['physics_total']:.6f} | {test_terminal['physics_total']:.6f} |"
         ),
         "",
     ]
@@ -823,8 +823,8 @@ def _render_normalization_comparison_markdown(
             "",
             "| metric | primary | secondary |",
             "| --- | ---: | ---: |",
-            f"| final train total | {primary_summary['final_train']['total']:.6f} | {secondary_summary['final_train']['total']:.6f} |",
-            f"| final validation total | {primary_summary['final_validation']['total']:.6f} | {secondary_summary['final_validation']['total']:.6f} |",
+            f"| terminal train total | {primary_summary['terminal_train']['total']:.6f} | {secondary_summary['terminal_train']['total']:.6f} |",
+            f"| terminal validation total | {primary_summary['terminal_validation']['total']:.6f} | {secondary_summary['terminal_validation']['total']:.6f} |",
             f"| test total | {primary_summary['test']['total']:.6f} | {secondary_summary['test']['total']:.6f} |",
             f"| test physics total | {primary_summary['test']['physics_total']:.6f} | {secondary_summary['test']['physics_total']:.6f} |",
             f"| threshold verdict | {primary_threshold} | {secondary_threshold} |",
@@ -900,8 +900,8 @@ def _render_physics_comparison_markdown(
             "",
             "| metric | E baseline | E+F(full) |",
             "| --- | ---: | ---: |",
-            f"| final train total | {baseline_summary['final_train']['total']:.6f} | {physics_summary['final_train']['total']:.6f} |",
-            f"| final validation total | {baseline_summary['final_validation']['total']:.6f} | {physics_summary['final_validation']['total']:.6f} |",
+            f"| terminal train total | {baseline_summary['terminal_train']['total']:.6f} | {physics_summary['terminal_train']['total']:.6f} |",
+            f"| terminal validation total | {baseline_summary['terminal_validation']['total']:.6f} | {physics_summary['terminal_validation']['total']:.6f} |",
             f"| test total | {baseline_summary['test']['total']:.6f} | {physics_summary['test']['total']:.6f} |",
             f"| test physics total | {baseline_summary['test']['physics_total']:.6f} | {physics_summary['test']['physics_total']:.6f} |",
             f"| threshold verdict | {baseline_threshold} | {physics_threshold} |",
@@ -960,8 +960,8 @@ def _render_causal_fusion_comparison_markdown(
             "",
             "| metric | F baseline | F+G(min) |",
             "| --- | ---: | ---: |",
-            f"| final train total | {baseline_summary['final_train']['total']:.6f} | {fusion_summary['final_train']['total']:.6f} |",
-            f"| final validation total | {baseline_summary['final_validation']['total']:.6f} | {fusion_summary['final_validation']['total']:.6f} |",
+            f"| terminal train total | {baseline_summary['terminal_train']['total']:.6f} | {fusion_summary['terminal_train']['total']:.6f} |",
+            f"| terminal validation total | {baseline_summary['terminal_validation']['total']:.6f} | {fusion_summary['terminal_validation']['total']:.6f} |",
             f"| test total | {baseline_summary['test']['total']:.6f} | {fusion_summary['test']['total']:.6f} |",
             f"| test physics total | {baseline_summary['test']['physics_total']:.6f} | {fusion_summary['test']['physics_total']:.6f} |",
             f"| threshold verdict | {baseline_threshold} | {fusion_threshold} |",
@@ -1167,18 +1167,18 @@ def _run_once(
                 mode=args.physics_constraint_mode,
             )
         )
-    train_final = asdict(result.preview_result.train_history[-1])
-    validation_final = asdict(result.preview_result.validation_history[-1])
-    test_final = asdict(result.preview_result.test_metrics)
+    train_terminal = asdict(result.preview_result.train_history[-1])
+    validation_terminal = asdict(result.preview_result.validation_history[-1])
+    test_terminal = asdict(result.preview_result.test_metrics)
     physics_diagnostics_markdown = _render_physics_diagnostics_markdown(
         enabled=resolved_enable_physics,
         family=args.physics_constraint_family,
         mode=args.physics_constraint_mode,
         vehicle_metadata_summary=vehicle_metadata_summary,
         rigid_body_mapping_diagnostics=rigid_body_mapping_diagnostics,
-        train_final=train_final,
-        validation_final=validation_final,
-        test_final=test_final,
+        train_terminal=train_terminal,
+        validation_terminal=validation_terminal,
+        test_terminal=test_terminal,
     )
     report_with_diagnostics = "\n".join(
         [
@@ -1217,9 +1217,9 @@ def _run_once(
         enable_physics_constraints=resolved_enable_physics,
         enable_causal_fusion=resolved_enable_causal_fusion,
         split=split_summary,
-        final_train=train_final,
-        final_validation=validation_final,
-        final_test=test_final,
+        terminal_train=train_terminal,
+        terminal_validation=validation_terminal,
+        terminal_test=test_terminal,
     )
 
     return {
@@ -1228,9 +1228,9 @@ def _run_once(
         "device": resolved_device,
         "sample_summary": asdict(result.sample_summary),
         "split": split_summary,
-        "final_train": train_final,
-        "final_validation": validation_final,
-        "test": test_final,
+        "terminal_train": train_terminal,
+        "terminal_validation": validation_terminal,
+        "test": test_terminal,
         "intermediate_export": (
             None
             if intermediate is None

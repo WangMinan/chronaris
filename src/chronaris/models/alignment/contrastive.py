@@ -1,4 +1,4 @@
-"""Contrastive retrieval utilities for Stage I T3 optimization."""
+"""Contrastive retrieval utilities for task evaluation T3 optimization."""
 
 from __future__ import annotations
 

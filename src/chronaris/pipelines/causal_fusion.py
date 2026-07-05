@@ -7,7 +7,7 @@ from typing import Literal
 
 import torch
 
-from chronaris.features import load_stage_h_feature_run
+from chronaris.features import load_feature_export_feature_run
 from chronaris.models.fusion.causal import (
     CausalFusionConfig,
     CausalFusionTensorInput,
@@ -419,15 +419,15 @@ class StageGSemanticEventSupportConfig:
             raise ValueError(f"device must be one of: {', '.join(TORCH_DEVICE_CHOICES)}.")
 
 
-def build_stage_h_semantic_event_support(
+def build_feature_export_semantic_event_support(
     run_manifest_path: str,
     *,
     config: StageGSemanticEventSupportConfig | None = None,
 ) -> dict[str, object]:
-    """Aggregate semantic event support across all views in one Stage H run."""
+    """Aggregate semantic event support across all views in one feature export run."""
 
     resolved_config = config or StageGSemanticEventSupportConfig()
-    run = load_stage_h_feature_run(run_manifest_path)
+    run = load_feature_export_feature_run(run_manifest_path)
     resolved_device = resolve_torch_device_name(resolved_config.device)
     fusion = CausalEventFusion(
         CausalEventFusionConfig(

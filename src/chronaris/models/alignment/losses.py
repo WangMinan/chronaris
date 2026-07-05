@@ -1,4 +1,4 @@
-"""Loss functions for Stage E/F backbones and Stage I multitask training."""
+"""Loss functions for Stage E/F backbones and task evaluation multitask training."""
 
 from __future__ import annotations
 
@@ -91,7 +91,7 @@ class StageEObjectiveBreakdown:
 
 @dataclass(frozen=True, slots=True)
 class TaskLossBreakdown:
-    """Task supervision losses attached to the shared Stage I backbone."""
+    """Task supervision losses attached to the shared task evaluation backbone."""
 
     total: torch.Tensor
     task_components: Mapping[str, torch.Tensor]

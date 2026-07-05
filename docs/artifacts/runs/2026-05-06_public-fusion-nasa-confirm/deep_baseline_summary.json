@@ -1,0 +1,133 @@
+{
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "model_name": "chronaris_public_fusion",
+  "model_config": {
+    "hidden_dim": 64,
+    "num_heads": 4,
+    "layers": 2,
+    "dropout": 0.1,
+    "epochs": 2,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "fusion_event_bias_weight": 0.25,
+    "fusion_lag_window_points": 16,
+    "fusion_normalize_states": true
+  },
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-fusion-nasa-confirm",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-nasa-prepared",
+  "objective": {
+    "track": "objective",
+    "model_name": "chronaris_public_fusion",
+    "groups": {
+      "benchmark_only": {
+        "sample_count": 172,
+        "fold_count": 2,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.09464899361806578,
+        "balanced_accuracy": 0.2833333333333334,
+        "per_class_recall": {
+          "1": 0.3,
+          "2": 0.0,
+          "5": 0.55
+        },
+        "confusion_matrix": [
+          [
+            3,
+            0,
+            7
+          ],
+          [
+            83,
+            0,
+            59
+          ],
+          [
+            9,
+            0,
+            11
+          ]
+        ]
+      },
+      "loft_only": {
+        "sample_count": 180,
+        "fold_count": 2,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.5120652925561578,
+        "balanced_accuracy": 0.48921744324970134,
+        "per_class_recall": {
+          "1": 0.5555555555555556,
+          "2": 0.7870967741935484,
+          "5": 0.125
+        },
+        "confusion_matrix": [
+          [
+            5,
+            4,
+            0
+          ],
+          [
+            0,
+            122,
+            33
+          ],
+          [
+            2,
+            12,
+            2
+          ]
+        ]
+      },
+      "combined": {
+        "sample_count": 352,
+        "fold_count": 2,
+        "label_order": [
+          1,
+          2,
+          5
+        ],
+        "macro_f1": 0.33480062421490825,
+        "balanced_accuracy": 0.52829464232973,
+        "per_class_recall": {
+          "1": 0.6842105263157895,
+          "2": 0.4006734006734007,
+          "5": 0.5
+        },
+        "confusion_matrix": [
+          [
+            13,
+            0,
+            6
+          ],
+          [
+            75,
+            119,
+            103
+          ],
+          [
+            10,
+            8,
+            18
+          ]
+        ]
+      }
+    },
+    "plot_paths": {
+      "objective_benchmark_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-fusion-nasa-confirm/plots/objective_benchmark_only_confusion_matrix.png",
+      "objective_loft_only_confusion_matrix": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-fusion-nasa-confirm/plots/objective_loft_only_confusion_matrix.png",
+      "objective_combined_confusion_matrix": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-fusion-nasa-confirm/plots/objective_combined_confusion_matrix.png",
+      "objective_primary_metrics": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-fusion-nasa-confirm/plots/objective_primary_metrics.png"
+    }
+  },
+  "subjective": null,
+  "reference_comparison": null
+}

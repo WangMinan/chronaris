@@ -1,0 +1,7 @@
+figure_id,title_cn,title_ascii,path,exists,note
+thesis_chain_status,论文链路状态图,Thesis Chain Status,/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-07_midterm-evidence-pack/plots/thesis_chain_status.png,True,using CJK font WenQuanYi Zen Hei
+private_opt_task_metrics,private opt 三任务指标图,Private Opt Task Metrics,/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-07_midterm-evidence-pack/plots/private_opt_task_metrics.png,True,
+public_mainline_metrics,public mainline 指标图,Public Mainline Metrics,/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-07_midterm-evidence-pack/plots/public_mainline_metrics.png,True,
+support_ablation,support ablation 图,Support Ablation,/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-07_midterm-evidence-pack/plots/support_ablation_metrics.png,True,
+anchor_window_scores,anchor window 图,Anchor Window Scores,/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-07_midterm-evidence-pack/plots/anchor_window_scores.png,True,
+runtime_progress_timeline,runtime progress timeline 图,Runtime Progress Timeline,/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-06-07_midterm-evidence-pack/plots/runtime_progress_timeline.png,True,

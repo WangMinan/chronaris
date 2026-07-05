@@ -1,3 +1,0 @@
-2026-07-02T06:44:55.742286Z INFO stage=P36 run_id=20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20 status=completed runtime_device=cuda
-P36 aggregation used fixed P30/P31/P32 references and current P34/P35 optimized artifacts.
-No historical baseline artifacts were overwritten.

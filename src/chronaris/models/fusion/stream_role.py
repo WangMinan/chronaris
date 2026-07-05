@@ -7,7 +7,7 @@ from enum import Enum
 
 
 class StreamRole(str, Enum):
-    """Supported Stage I second-stream roles."""
+    """Supported task evaluation second-stream roles."""
 
     REAL_VEHICLE = "real_vehicle"
     TASK_CONTEXT_PROXY = "task_context_proxy"
@@ -28,7 +28,7 @@ class FusionRoute(str, Enum):
 
 @dataclass(frozen=True, slots=True)
 class StreamRoleMetadata:
-    """Reader-facing metadata propagated through Stage I fusion runs."""
+    """Reader-facing metadata propagated through task evaluation fusion runs."""
 
     second_stream_role: StreamRole
     second_stream_is_real_vehicle: bool

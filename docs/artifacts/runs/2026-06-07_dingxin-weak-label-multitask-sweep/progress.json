@@ -1,0 +1,74 @@
+{
+  "artifact_root": "docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep",
+  "max_runs": 2,
+  "physics_constraint_families": [
+    "minimal",
+    "full",
+    "rigid_body"
+  ],
+  "stage_name": "dingxin_multitask_sweep",
+  "run_id": "20260607T-task-eval-evidence-closure-r2-multitask",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-07T12:54:02.157884Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-07T12:53:41.983888Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep",
+      "max_runs": 2,
+      "physics_constraint_families": [
+        "minimal",
+        "full",
+        "rigid_body"
+      ]
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:53:41.984190Z",
+      "event": "grid_ready",
+      "combination_count": 2
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:53:41.984857Z",
+      "event": "combination_started",
+      "run_index": 1,
+      "child_run_id": "20260607T-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone",
+      "physics_constraint_family": "minimal"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:53:51.607448Z",
+      "event": "combination_finished",
+      "run_index": 1,
+      "child_run_id": "20260607T-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone",
+      "test_total": 1024.8099895974865
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:53:51.607954Z",
+      "event": "combination_started",
+      "run_index": 2,
+      "child_run_id": "20260607T-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3",
+      "physics_constraint_family": "minimal"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:02.154655Z",
+      "event": "combination_finished",
+      "run_index": 2,
+      "child_run_id": "20260607T-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3",
+      "test_total": 1025.0848388671875
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:02.157884Z",
+      "event": "finished",
+      "summary_path": "docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep/multitask_sweep_summary.json",
+      "table_path": "docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep/thesis_weak_label_multitask_ablation.csv",
+      "report_path": "docs/artifacts/runs/2026-06-07_evidence-closure/report.md"
+    }
+  ],
+  "combination_count": 2,
+  "run_index": 2,
+  "child_run_id": "20260607T-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3",
+  "physics_constraint_family": "minimal",
+  "test_total": 1025.0848388671875,
+  "summary_path": "docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep/multitask_sweep_summary.json",
+  "table_path": "docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep/thesis_weak_label_multitask_ablation.csv",
+  "report_path": "docs/artifacts/runs/2026-06-07_evidence-closure/report.md"
+}

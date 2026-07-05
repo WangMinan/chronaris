@@ -70,8 +70,8 @@ def render_alignment_experiment_report(
 ) -> str:
     """Render a compact Markdown report for one Stage E preview experiment."""
 
-    final_train = preview_result.train_history[-1] if preview_result.train_history else None
-    final_validation = preview_result.validation_history[-1] if preview_result.validation_history else None
+    terminal_train = preview_result.train_history[-1] if preview_result.train_history else None
+    terminal_validation = preview_result.validation_history[-1] if preview_result.validation_history else None
     test_metrics = preview_result.test_metrics
     intermediate_export = preview_result.intermediate_export
 
@@ -94,36 +94,36 @@ def render_alignment_experiment_report(
         "",
     ]
 
-    if final_train is not None:
+    if terminal_train is not None:
         lines.extend(
             [
-                "## Final Train Metrics",
+                "## Terminal Train Metrics",
                 "",
-                f"- physiology reconstruction: `{final_train.physiology_reconstruction:.6f}`",
-                f"- vehicle reconstruction: `{final_train.vehicle_reconstruction:.6f}`",
-                f"- reconstruction total: `{final_train.reconstruction_total:.6f}`",
-                f"- alignment: `{final_train.alignment:.6f}`",
-                f"- vehicle physics: `{final_train.vehicle_physics:.6f}`",
-                f"- physiology physics: `{final_train.physiology_physics:.6f}`",
-                f"- physics total: `{final_train.physics_total:.6f}`",
-                f"- total: `{final_train.total:.6f}`",
+                f"- physiology reconstruction: `{terminal_train.physiology_reconstruction:.6f}`",
+                f"- vehicle reconstruction: `{terminal_train.vehicle_reconstruction:.6f}`",
+                f"- reconstruction total: `{terminal_train.reconstruction_total:.6f}`",
+                f"- alignment: `{terminal_train.alignment:.6f}`",
+                f"- vehicle physics: `{terminal_train.vehicle_physics:.6f}`",
+                f"- physiology physics: `{terminal_train.physiology_physics:.6f}`",
+                f"- physics total: `{terminal_train.physics_total:.6f}`",
+                f"- total: `{terminal_train.total:.6f}`",
                 "",
             ]
         )
 
-    if final_validation is not None:
+    if terminal_validation is not None:
         lines.extend(
             [
-                "## Final Validation Metrics",
+                "## Terminal Validation Metrics",
                 "",
-                f"- physiology reconstruction: `{final_validation.physiology_reconstruction:.6f}`",
-                f"- vehicle reconstruction: `{final_validation.vehicle_reconstruction:.6f}`",
-                f"- reconstruction total: `{final_validation.reconstruction_total:.6f}`",
-                f"- alignment: `{final_validation.alignment:.6f}`",
-                f"- vehicle physics: `{final_validation.vehicle_physics:.6f}`",
-                f"- physiology physics: `{final_validation.physiology_physics:.6f}`",
-                f"- physics total: `{final_validation.physics_total:.6f}`",
-                f"- total: `{final_validation.total:.6f}`",
+                f"- physiology reconstruction: `{terminal_validation.physiology_reconstruction:.6f}`",
+                f"- vehicle reconstruction: `{terminal_validation.vehicle_reconstruction:.6f}`",
+                f"- reconstruction total: `{terminal_validation.reconstruction_total:.6f}`",
+                f"- alignment: `{terminal_validation.alignment:.6f}`",
+                f"- vehicle physics: `{terminal_validation.vehicle_physics:.6f}`",
+                f"- physiology physics: `{terminal_validation.physiology_physics:.6f}`",
+                f"- physics total: `{terminal_validation.physics_total:.6f}`",
+                f"- total: `{terminal_validation.total:.6f}`",
                 "",
             ]
         )

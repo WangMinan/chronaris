@@ -1,0 +1,60 @@
+{
+  "run_id": "20260703T-task-eval-thesis-protocol-r1",
+  "stage": "P38-thesis-protocol",
+  "status": "completed",
+  "generated_at_utc": "2026-07-03T09:11:25.006111Z",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot",
+  "experiment_registry_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/experiment_registry.csv",
+  "result_matrix_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/result_matrix_long.csv",
+  "result_matrix_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/result_matrix_summary.csv",
+  "claim_boundary_table_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/claim_boundary_table.csv",
+  "resume_command_txt": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/resume_command.txt",
+  "run_log": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/run.log",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/report.md",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/evidence_manifest.json",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/progress.json",
+  "source_roots": {
+    "P30": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+    "P31": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_public-fusion-ablation",
+    "P32": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_cross-evidence-matrix",
+    "P34": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration",
+    "P35": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion",
+    "P36": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-reevaluation",
+    "P36_summary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary",
+    "P37": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration"
+  },
+  "matrix_rows": 505,
+  "registry_rows": 8,
+  "claim_boundary_rows": 7,
+  "quadrant_counts": {
+    "private_component_ablation": 204,
+    "public_component_ablation": 132,
+    "private_model_comparison": 85,
+    "public_model_comparison": 84
+  },
+  "source_stage_counts": {
+    "P35": 112,
+    "P31_via_P32": 104,
+    "P27_via_P32": 80,
+    "P30_via_P32": 72,
+    "P34": 56,
+    "P24_via_P32": 36,
+    "P36_summary": 29,
+    "P37": 16
+  },
+  "field_contract": [
+    "evidence_quadrant",
+    "dataset_role",
+    "task",
+    "split_protocol",
+    "model_or_component",
+    "metric",
+    "value",
+    "baseline",
+    "delta_positive_is_better",
+    "seed_count",
+    "artifact_path",
+    "claim_boundary"
+  ],
+  "protocol_boundary": "P38 is a read-only protocol freeze over existing P30/P31/P32/P34/P35/P36/P37 artifacts; public rows remain context-proxy evidence, private rows remain proxy/weak-label evidence, and P38 does not replace expert labels or rerun experiments."
+}

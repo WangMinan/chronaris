@@ -1,4 +1,4 @@
-"""Stage I runtime/service smoke facade and deployment-boundary artifacts."""
+"""task evaluation runtime/service smoke facade and deployment-boundary artifacts."""
 
 from __future__ import annotations
 
@@ -10,15 +10,15 @@ from pathlib import Path
 from typing import Mapping, Sequence
 
 from chronaris.features.experiment_input import E0ExperimentSample, NumericStreamMatrix
-from chronaris.pipelines.stage_i.common.run_observer import (
+from chronaris.modeling.common.run_observer import (
     StageIRunProgress,
-    open_stage_i_run_observer,
+    open_task_eval_run_observer,
 )
 from chronaris.schema.models import StreamKind
 from chronaris.serving.runtime_inference import (
     StageIRuntimeInferenceConfig,
     StageIRuntimeInferenceRunResult,
-    run_stage_i_runtime_inference,
+    run_task_eval_runtime_inference,
 )
 from chronaris.serving.runtime_schema_contract import (
     build_runtime_schema_contract,
@@ -29,8 +29,8 @@ os.environ.setdefault("MPLCONFIGDIR", "/tmp/chronaris-matplotlib")
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
 
-DEFAULT_ARTIFACT_ROOT = "docs/artifacts/assets/stage_i_runtime_service"
-DEFAULT_REPORT_ROOT = "docs/artifacts/stage_i"
+DEFAULT_ARTIFACT_ROOT = "docs/artifacts/runs"
+DEFAULT_REPORT_ROOT = "docs/artifacts/runs"
 DEFAULT_CJK_FONT_CANDIDATES = (
     "WenQuanYi Zen Hei",
     "Noto Sans CJK SC",
@@ -75,15 +75,15 @@ class PlotFontSelection:
     note: str
 
 
-def run_stage_i_runtime_smoke(
+def run_task_eval_runtime_smoke(
     config: StageIRuntimeSmokeConfig,
 ) -> StageIRuntimeSmokeRunResult:
     run_root = Path(config.artifact_root) / config.run_id
     run_root.mkdir(parents=True, exist_ok=True)
-    with open_stage_i_run_observer(
+    with open_task_eval_run_observer(
         run_root=run_root,
         run_id=config.run_id,
-        stage_name="stage_i_runtime_service_smoke",
+        stage_name="task_eval_runtime_service_smoke",
         logger=LOGGER,
         initial_progress={
             "artifact_root": str(run_root),
@@ -91,14 +91,14 @@ def run_stage_i_runtime_smoke(
             "export_canonical_payload": config.export_canonical_payload,
         },
     ) as progress:
-        return _run_stage_i_runtime_smoke_observed(
+        return _run_task_eval_runtime_smoke_observed(
             config=config,
             run_root=run_root,
             progress=progress,
         )
 
 
-def _run_stage_i_runtime_smoke_observed(
+def _run_task_eval_runtime_smoke_observed(
     *,
     config: StageIRuntimeSmokeConfig,
     run_root: Path,
@@ -215,9 +215,9 @@ def _run_stage_i_runtime_smoke_observed(
         encoding="utf-8",
     )
 
-    report_path = report_root / f"stage-i-runtime-service-smoke-{config.run_id}.md"
+    report_path = report_root / f"task-eval-runtime-service-smoke-{config.run_id}.md"
     report_path.write_text(
-        render_stage_i_runtime_smoke_report(
+        render_task_eval_runtime_smoke_report(
             summary=summary,
             error_cases=error_cases,
             figure_entries=figure_entries,
@@ -254,7 +254,7 @@ def _run_runtime_inference(
     checkpoint_path = Path(config.checkpoint_path)
     if not checkpoint_path.exists():
         raise FileNotFoundError(f"checkpoint not found: {checkpoint_path}")
-    return run_stage_i_runtime_inference(
+    return run_task_eval_runtime_inference(
         StageIRuntimeInferenceConfig(
             run_id=f"{config.run_id}-{run_id_suffix}",
             checkpoint_path=str(checkpoint_path),
@@ -691,14 +691,14 @@ def _pick_label(font: PlotFontSelection, cn_label: str, ascii_label: str) -> str
     return ascii_label if font.ascii_only else cn_label
 
 
-def render_stage_i_runtime_smoke_report(
+def render_task_eval_runtime_smoke_report(
     *,
     summary: Mapping[str, object],
     error_cases: Sequence[Mapping[str, object]],
     figure_entries: Sequence[Mapping[str, object]],
 ) -> str:
     lines = [
-        f"# Stage I Runtime Service Smoke - {summary['run_id']}",
+        f"# task evaluation Runtime Service Smoke - {summary['run_id']}",
         "",
         f"- checkpoint_path: `{summary['checkpoint_path']}`",
         f"- sample_jsonl_path: `{summary['sample_jsonl_path']}`",

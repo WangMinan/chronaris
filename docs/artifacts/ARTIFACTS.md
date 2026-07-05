@@ -1,173 +1,76 @@
 # Chronaris 产物索引
 
-更新时间：2026-07-03
+更新时间：2026-07-05
 
-## 1. 目录定位
+## 目录定位
 
-本目录用于组织报告、图、CSV、JSON、checkpoint、manifest 等可引用产物。
+当前可引用产物入口统一放在 `docs/artifacts/runs/`。目录命名采用 `YYYY-MM-DD_intent`，避免把当前入口继续绑定到历史阶段编号。
 
-清理记录：
+历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
-- [cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)：删除历史 raw replay / prepared bundle / 大型 JSONL 与 NPZ 载荷，保留报告、summary、schema contract 和中期写作入口。
-- [cleanup/20260621-deep-cleanup.md](cleanup/20260621-deep-cleanup.md)：删除已由 r6 接管的 r5 thesis figure 图包/报告、空目录和本地 Python 编译缓存，并记录仍需保留的 public adapter、鼎新弱监督任务扫描 live child run 与 LLM runtime case 输入表。
-- [cleanup/20260701-src-docs-artifact-prune.md](cleanup/20260701-src-docs-artifact-prune.md)：删除 `src/tests/scripts` 本地 Python 编译缓存和 archive-only public torch/mainline/fusion screen 旧产物；保留当前 公开模型对比与公开融合刷新 与仍被代码/报告引用的 public adapter 基线。
-- [cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md](cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md)：任务感知头优化、流角色融合与优化模型再评估 图表标签、GPU profiling、future-run checkpoint policy、dense prediction CSV 外置备份和 checkpoint 历史清理记录。
-- [cleanup/20260703-thesis-prep-cleanup.md](cleanup/20260703-thesis-prep-cleanup.md)：仓库收敛清理 仓库收敛清理记录；删除 最终指标打磨/流角色融合 nested byproduct、任务感知头优化 未索引 batch/manifest、最终指标打磨 稠密预测副本，外置备份到 `/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/`，并记录代码入口收敛、LFS prune 和 history rewrite 决策。
-- [cleanup/20260703-src-aggressive-slimming.md](cleanup/20260703-src-aggressive-slimming.md)：代码瘦身追加清理 追加 `src/` 激进瘦身记录；删除早期薄 pipeline、单用途 helper、重复 deep wrapper 文件，并压薄 package barrel / compat import 层。
+## 当前核心 runs
 
-## 2. 阶段产物
+- `runs/2026-07-03_thesis-protocol-snapshot/`：论文协议快照，包含 `experiment_registry.csv`、`result_matrix_long.csv`、`result_matrix_summary.csv`、`claim_boundary_table.csv`、`thesis_protocol_summary.json` 和 `report.md`。
+- `runs/2026-07-02_metric-calibration/`：指标校准，保留分类任务校准、公开路线校准、检索任务沿用边界和 GPU/runtime 记录。
+- `runs/2026-07-02_selected-model-summary/`：选定模型汇总。
+- `runs/2026-07-02_selected-model-reevaluation/`：选定模型再评估。
+- `runs/2026-07-02_stream-role-fusion/`：流角色融合。
+- `runs/2026-07-02_task-head-calibration/`：任务头校准。
+- `runs/2026-07-02_cross-evidence-matrix/`：跨证据矩阵。
+- `runs/2026-07-02_dingxin-thirdparty-comparison/`：鼎新真实数据第三方模型对比。
+- `runs/2026-07-02_public-fusion-ablation/`：公开融合消融。
+- `runs/2026-07-01_public-model-comparison/`：公开模型对比。
+- `runs/2026-07-01_public-fusion-calibration/`：公开融合校准和 GPU profiling 子目录。
+- `runs/2026-06-21_thesis-materials-report-figures/`：论文图表材料。
+- `runs/2026-06-19_dingxin-leakage-safe-ablation/`：鼎新防泄漏组件消融。
+- `runs/2026-06-19_rotation-audit-figure-refresh/`：rotation audit 图件刷新。
+- `runs/2026-06-14_llm-preprocessing-context/`：LLM preprocessing context。
+- `runs/2026-06-14_llm-preprocessing-comparison/`：LLM preprocessing 对比。
+- `runs/2026-06-13_runtime-schema-contract/`：runtime schema contract。
+- `runs/2026-06-13_dingxin-weak-label-sweep-resume/`：鼎新弱监督任务扫描 stable resume。
+- `runs/2026-06-13_dingxin-weak-label-sweep-partial/`：鼎新弱监督任务扫描 partial。
+- `runs/2026-06-07_evidence-closure/`：证据闭环。
+- `runs/2026-06-07_dingxin-multitask-real-closure/`：鼎新 weak-label multitask real closure。
+- `runs/2026-06-07_dingxin-weak-label-multitask-sweep/`：鼎新弱监督任务 multitask sweep。
+- `runs/2026-06-07_dingxin-opt-package/`：鼎新优化包。
+- `runs/2026-06-07_dingxin-component-ablation/`：鼎新组件消融。
+- `runs/2026-06-07_public-adapter-calibration/`：公开数据适配校准。
+- `runs/2026-06-07_public-transfer-boundary/`：公开数据 transfer boundary。
+- `runs/2026-06-07_rigid-body-diagnostics/`：刚体约束诊断。
+- `runs/2026-06-07_rotation-audit-closure/`：rotation audit closure。
+- `runs/2026-06-07_semantic-support/`：semantic support。
+- `runs/2026-06-07_semantic-event-support/`：semantic event support。
+- `runs/2026-06-07_runtime-inference-service/`：runtime inference replay。
+- `runs/2026-06-07_midterm-evidence-pack/`：中期证据包。
+- `runs/2026-05-09_public-fusion-nasa-full-confirm/`：NASA 公开融合确认。
+- `runs/2026-05-08_public-mainline-uab-robust-prior-r1/`：公开主线汇总。
+- `runs/2026-05-08_public-opt-nasa-prepared-v2/`、`runs/2026-05-08_public-opt-uab-robust-prior-r1/` 与 `runs/2026-05-08_public-opt-uab-heat-specialist-r1/`：公开数据准备、稳健 prior 和 heat specialist 优化证据。
+- `runs/2026-05-06_semantic-support-baseline/` 与 `runs/2026-05-06_anchor-windows/`：semantic support baseline 与 anchor windows。
+- `runs/2026-05-06_public-fusion-screen-round2/`：公开融合 screen round2。
+- `runs/2026-05-06_public-fusion-nasa-confirm/`：NASA 公开融合确认。
+- `runs/2026-05-06_public-fusion-uab-confirm/`：UAB 公开融合确认。
+- `runs/2026-05-06_public-opt-nasa-round1/`：NASA 公开优化结果。
+- `runs/2026-05-06_public-opt-nasa-prepared/`、`runs/2026-05-06_public-opt-uab/` 与 `runs/2026-05-06_public-opt-uab-torch/`：公开数据准备和优化输入。
+- `runs/2026-05-04_public-opt-uab-prepared/` 与 `runs/2026-05-04_dingxin-opt-package/`：UAB 公开准备根和鼎新优化包基线。
+- `runs/2026-05-01_deep-real-sortie-prepared/` 与 `runs/2026-05-01_deep-comparison-prepared/`：deep baseline 真实架次和公开序列准备根。
+- `runs/2026-05-01_full-loso-deep-comparison/`：公开 deep baseline 全 LOSO 对比。
+- `runs/2026-04-29_case-study/`：case-study summary 与 ablation table。
+- `runs/2026-05-02_feature-export-e-allwindow-clean/` 与 `runs/2026-05-02_feature-export-f-allwindow-clean/`：特征导出 clean roots。
+- `runs/2026-04-27_feature-export-closure/`：带 causal fusion summary 的特征导出 closure，用于真实架次序列准备和 case-study 默认入口。
+- `runs/2026-04-22_alignment-e-baseline/`、`runs/2026-04-22_alignment-f-full/`、`runs/2026-04-22_alignment-g-baseline/` 与 `runs/2026-04-22_alignment-g-min/`：alignment/fusion 早期诊断输入，供 support summary 追溯。
 
-阶段产物按 [../implementation/TASKS.md](../implementation/TASKS.md) 的阶段划分：
+## 引用规则
 
-- [stage/stage-a/](stage/stage-a/)：仓库初始化与最小设计。
-- [stage/stage-b/](stage/stage-b/)：真实元信息与数据访问接入。
-- [stage/stage-c/](stage/stage-c/)：统一样本组织与数据核验。
-- [stage/stage-d/](stage/stage-d/)：数据集工程化与批量构建。
-- [stage/stage-e0/](stage/stage-e0/)：单架次最小训练输入适配。
-- [stage/stage-e/](stage/stage-e/)：双流连续潜态对齐。
-- [stage/stage-f/](stage/stage-f/)：物理一致性约束。
-- [stage/stage-g/](stage/stage-g/)：因果掩码与语义融合。
-- [stage/stage-h/](stage/stage-h/)：标准化融合特征导出。
-- [stage/stage-i/](stage/stage-i/)：典型任务评测、论文证据与运行时。
+- 当前状态先看 `docs/STATE.md`。
+- 当前执行队列先看 `docs/implementation/TASKS.md`。
+- 论文需求先看 `docs/requirements/SPEC.md`。
+- 论文图表和实验表优先从 `runs/2026-07-03_thesis-protocol-snapshot/experiment_registry.csv` 与 `result_matrix_long.csv` 反查原始路径和边界。
+- 公开 UAB/NASA 结果必须写成公开数据适配、校准或上下文构造第二输入流证据。
+- 鼎新结果必须写成鼎新真实数据弱监督任务证据，不写成人工专家真值。
+- LLM preprocessing 只写成字段语义归一、规则复核、semantic hints、runtime explanation 和 pending human review packet。
 
-## 3. 中期答辩产物
+## 清理记录
 
-- [mid-term/](mid-term/)：中期答辩证据包、图件、指标表和运行日志。
-- [../midterm/](../midterm/)：中期报告写作事实清单、边界风险说明和 claims matrix。
-
-当前中期主入口：
-
-- [stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
-- [stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
-- [stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
-- [stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md](stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md)
-- [stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md](stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md)
-- [stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md](stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md)
-- [stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md](stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md)
-- [stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md](stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md)
-- [stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md](stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md)
-- [stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md](stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md)
-- [stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md](stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md)
-- [stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md](stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md)
-- [stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md](stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md)
-- [stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md](stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md)
-- [../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
-- [../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
-- [../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
-- [../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
-- [../midterm/llm-preprocessing-comparison-plan-2026-06-14.md](../midterm/llm-preprocessing-comparison-plan-2026-06-14.md)
-- [../midterm/llm-preprocessing-comparison-summary-2026-06-14.md](../midterm/llm-preprocessing-comparison-summary-2026-06-14.md)
-
-## 4. 当前最常引用产物
-
-- Stage H 收口：[stage_h/stage-h-closure-2026-04-27.md](stage_h/stage-h-closure-2026-04-27.md)
-- Stage I 历史公开收口：[stage_i/stage-i-closure-2026-04-30.md](stage_i/stage-i-closure-2026-04-30.md)
-- Stage I thesis weak-label evidence：[stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md)
-- Stage I evidence runner r2：[stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md)
-- Stage I bounded weak-label sweep r2：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
-- Stage I live weak-label stable resume：[stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md)
-- Stage I thesis materials r6 report figure polish：[stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
-- Stage I leakage-safe Dingxin weak-label ablation r2：[stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
-- Stage I public mainline：[stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md](stage_i/stage-i-public-mainline-20260508T130100Z-stage-i-public-mainline-uab-robust-prior-r1.md)
-- Stage I public model comparison r1：[stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md](stage_i/stage-i-public-model-comparison-20260701T-stage-i-public-model-comparison-r1.md)
-- Stage I public fusion refresh r1：[stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md](stage_i/stage-i-public-fusion-refresh-20260701T-stage-i-public-fusion-refresh-r1.md)
-- Stage I public fusion GPU optimization r1：[stage_i/stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md](stage_i/stage-i-public-fusion-gpu-optimization-20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1.md)
-- Stage I Dingxin third-party comparison GPUOPT r1：[stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md](stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md)
-- Stage I public fusion ablation GPUOPT r1：[stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md](stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md)
-- Stage I cross-evidence matrix GPUOPT r1：[stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md](stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md)
-- Stage I optimized model summary r4 confirm20：[stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md](stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md)
-- Stage I optimized final polish 最终指标打磨 r1：[stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md](stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md)
-- Stage I thesis protocol freeze 论文协议冻结 r1：[stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md](stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md)
-- Stage I support ablation：[stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md](stage_i/stage-i-ablation-support-20260506T120000Z-stage-i-support.md)
-- Stage I rigid-body r2：[stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md)
-- Stage I semantic support r2：[stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md)
-- Stage I runtime service r2：[stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md)
-- Dingxin optimized package summary：[Dingxin-optimization-summary-20260607T-stage-i-private-opt-package-r2.md](private-optimization-summary-20260607T-stage-i-private-opt-package-r2.md)
-- Stage I Dingxin component ablation r2：[stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md](stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md)
-- Stage I public adapter calibration r2：[stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md](stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md)
-- Stage I public transfer boundary r2：[stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md](stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md)
-- Stage I rotation audit r3 figure refresh：[stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md](stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md)
-- Stage I rotation audit r2 历史入口：[stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md](stage_i/stage-i-rigid-body-rotation-audit-20260607T-stage-i-rotation-audit-r2.md)
-- Stage I runtime service smoke r2 contract：[stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md)
-- Midterm fact sheet：[../midterm/midterm-fact-sheet-2026-06-13.md](../midterm/midterm-fact-sheet-2026-06-13.md)
-- Midterm boundaries and risks：[../midterm/boundaries-and-risks-2026-06-13.md](../midterm/boundaries-and-risks-2026-06-13.md)
-- Midterm claims matrix：[../midterm/claims-matrix-2026-06-13.md](../midterm/claims-matrix-2026-06-13.md)
-- DeepSeek 在线时序数据预处理计划：[../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md](../implementation/notes/stage-i-deepseek-llm-preprocessing-plan-2026-06-14.md)
-- DeepSeek 在线时序数据预处理 run：[stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md](stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md)
-- LLM preprocessing 对比 对比实验计划：[../midterm/llm-preprocessing-comparison-plan-2026-06-14.md](../midterm/llm-preprocessing-comparison-plan-2026-06-14.md)
-- LLM preprocessing 对比 对比实验 run：[stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md](stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md)
-- LLM 预处理对比 中期结果摘要：[../midterm/llm-preprocessing-comparison-summary-2026-06-14.md](../midterm/llm-preprocessing-comparison-summary-2026-06-14.md)
-- LLM 预处理对比 执行 prompt（历史追溯）：[../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md](../implementation/notes/goal-prompt-stage-i-p21-llm-comparison-2026-06-14.md)
-- 当前 `chronaris_opt` package：[assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
-- 当前 evidence manifest：[assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json](assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json)
-- 当前 thesis figure manifest：[assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json](assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json)
-- 当前 thesis figure quality audit：[assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv](assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv)
-- 当前 public model comparison assets：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/)
-- 当前 public model comparison CSV：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/model_comparison_wide.csv](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/model_comparison_wide.csv)、[improvement_summary.csv](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/improvement_summary.csv)
-- 当前 public model comparison figures：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_leaderboard_nasa_macro_f1.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_leaderboard_nasa_macro_f1.png)、[fig_public_model_delta_heatmap.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_delta_heatmap.png)、[fig_uab_subjective_rmse_comparison.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_uab_subjective_rmse_comparison.png)、[fig_public_model_win_summary.png](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/fig_public_model_win_summary.png)
-- 当前 public model comparison manifest：[assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json](assets/stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/evidence_manifest.json)
-- 当前 public fusion refresh assets：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/)
-- 当前 public fusion refresh CSV/summary：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm_leaderboard.csv](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm_leaderboard.csv)、[fusion_refresh_summary.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fusion_refresh_summary.json)、[fold_metrics.csv](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fold_metrics.csv)、[training_curves.csv](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/training_curves.csv)
-- 当前 public fusion refresh figures：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_refresh_confirm_vs_baselines.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_refresh_confirm_vs_baselines.png)、[fig_public_fusion_config_sensitivity.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_config_sensitivity.png)、[fig_public_fusion_training_curves_best.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/fig_public_fusion_training_curves_best.png)
-- 当前 public fusion refresh manifest/log/progress：[evidence_manifest.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/evidence_manifest.json)、[run.log](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/run.log)、[progress.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/progress.json)
-- 当前 public fusion GPU optimization 资产：[assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/)
-- 当前 public fusion GPU optimization summary/log/progress：[optimization_summary.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_summary.json)、[gpu_perf_summary.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/gpu_perf_summary.json)、[optimization_run.log](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_run.log)、[optimization_progress.json](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/optimization_progress.json)
-- 当前 public fusion GPU optimization figures：[fig_gpu_throughput_before_after.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/plots/fig_gpu_throughput_before_after.png)、[fig_gpu_batch_timing_breakdown.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/plots/fig_gpu_batch_timing_breakdown.png)、[fig_gpu_memory_and_batch_size.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/plots/fig_gpu_memory_and_batch_size.png)、[fig_gpu_cache_effect.png](assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/plots/fig_gpu_cache_effect.png)
-- 当前 Dingxin third-party comparison assets：[assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/)
-- 当前 Dingxin third-party comparison CSV/summary：[private_thirdparty_summary.json](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/private_thirdparty_summary.json)、[model_comparison_wide.csv](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/model_comparison_wide.csv)、[improvement_summary.csv](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/improvement_summary.csv)、[gpu_perf_summary.json](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/gpu_perf_summary.json)
-- 当前 Dingxin third-party comparison figures：[fig_private_thirdparty_t1_macro_f1.png](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fig_private_thirdparty_t1_macro_f1.png)、[fig_private_thirdparty_t2_rmse.png](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fig_private_thirdparty_t2_rmse.png)、[fig_private_thirdparty_t3_retrieval.png](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fig_private_thirdparty_t3_retrieval.png)、[fig_private_thirdparty_delta_heatmap.png](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fig_private_thirdparty_delta_heatmap.png)
-- 当前 Dingxin third-party comparison manifest/log：[evidence_manifest.json](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/evidence_manifest.json)、[run.log](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/run.log)、[progress.json](assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/progress.json)
-- 当前 public fusion ablation assets：[assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/)
-- 当前 public fusion ablation CSV/summary：[public_fusion_ablation_summary.json](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/public_fusion_ablation_summary.json)、[ablation_summary.csv](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/ablation_summary.csv)、[component_contribution.csv](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/component_contribution.csv)、[gpu_perf_summary.json](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/gpu_perf_summary.json)
-- 当前 public fusion ablation figures：[fig_public_ablation_nasa_macro_f1.png](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/fig_public_ablation_nasa_macro_f1.png)、[fig_public_ablation_nasa_balanced_accuracy.png](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/fig_public_ablation_nasa_balanced_accuracy.png)、[fig_public_ablation_uab_rmse.png](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/fig_public_ablation_uab_rmse.png)、[fig_public_ablation_delta_heatmap.png](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/fig_public_ablation_delta_heatmap.png)、[fig_public_ablation_gpu_throughput.png](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/fig_public_ablation_gpu_throughput.png)
-- 当前 public fusion ablation manifest/log：[evidence_manifest.json](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/evidence_manifest.json)、[run.log](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/run.log)、[progress.json](assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/progress.json)。`run.log` 与 `training_curves.csv` 已在 2026-07-02 cleanup 中裁剪/压缩，指标 CSV/summary 不变。
-- 当前 cross-evidence matrix assets：[assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/)
-- 当前 cross-evidence matrix CSV/summary：[cross_evidence_matrix.csv](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/cross_evidence_matrix.csv)、[cross_evidence_matrix.json](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/cross_evidence_matrix.json)、[cross_evidence_summary.md](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/cross_evidence_summary.md)
-- 当前 cross-evidence matrix figures：[fig_cross_evidence_matrix.png](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/fig_cross_evidence_matrix.png)、[fig_cross_evidence_metric_overview.png](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/fig_cross_evidence_metric_overview.png)、[fig_private_public_evidence_roles.png](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/fig_private_public_evidence_roles.png)、[fig_private_public_result_summary.png](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/fig_private_public_result_summary.png)、[fig_method_claim_support_map.png](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/fig_method_claim_support_map.png)
-- 当前 cross-evidence matrix manifest：[evidence_manifest.json](assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/evidence_manifest.json)
-- 当前 任务感知头优化 task-aware heads confirm assets：[assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/](assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/)
-- 当前 任务感知头优化 CSV/JSON/report：[task_head_metrics_wide.csv](assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/task_head_metrics_wide.csv)、[improvement_vs_p30.csv](assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/improvement_vs_p30.csv)、[evidence_manifest.json](assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/evidence_manifest.json)、[stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md](stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md)
-- 当前 流角色融合 stream-role fusion completed assets：[assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/](assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/)
-- 当前 流角色融合 CSV/JSON/report：[gate_statistics.csv](assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/gate_statistics.csv)、[private_metrics.csv](assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_metrics.csv)、[public_metrics.csv](assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/public_metrics.csv)、[evidence_manifest.json](assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/evidence_manifest.json)、[stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md](stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md)
-- 当前 优化模型再评估 optimized re-evaluation completed assets：[assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/)
-- 当前 优化模型再评估 CSV/JSON/report：[optimized_private_comparison.csv](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_private_comparison.csv)、[optimized_public_comparison.csv](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_public_comparison.csv)、[evidence_manifest.json](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/evidence_manifest.json)、[run.log](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/run.log)、[progress.json](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/progress.json)、[resume_command.txt](assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/resume_command.txt)、[stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md](stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md)
-- 当前 optimized model summary completed assets：[assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/)
-- 当前 optimized model summary CSV/JSON/report：[optimized_model_summary.json](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/optimized_model_summary.json)、[optimized_model_summary.csv](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/optimized_model_summary.csv)、[key_metric_summary.csv](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/key_metric_summary.csv)、[gpu_runtime_summary.csv](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/gpu_runtime_summary.csv)、[evidence_manifest.json](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/evidence_manifest.json)、[run.log](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/run.log)、[progress.json](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/progress.json)、[resume_commands.txt](assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/resume_commands.txt)、[stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md](stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md)
-- 当前 最终指标打磨 optimized final polish assets：[assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/)
-- 当前 最终指标打磨 CSV/JSON/report：[optimized_final_polish_summary.json](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/optimized_final_polish_summary.json)、[t3_final_polish_metrics.csv](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/t3_final_polish_metrics.csv)、[t1_calibration_metrics.csv](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/t1_calibration_metrics.csv)、[public_route_calibration_metrics.csv](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/public_route_calibration_metrics.csv)、[p37_delta_vs_p34.csv](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/p37_delta_vs_p34.csv)、[p37_delta_vs_p35.csv](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/p37_delta_vs_p35.csv)、[accepted_candidate_summary.json](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/accepted_candidate_summary.json)、[rejected_candidate_summary.json](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/rejected_candidate_summary.json)、[gpu_perf_summary.json](assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/gpu_perf_summary.json)、[stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md](stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md)
-- 当前 论文协议冻结 thesis protocol freeze assets：[assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/)
-- 当前 论文协议冻结 CSV/JSON/report：[experiment_registry.csv](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/experiment_registry.csv)、[result_matrix_long.csv](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/result_matrix_long.csv)、[result_matrix_summary.csv](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/result_matrix_summary.csv)、[claim_boundary_table.csv](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/claim_boundary_table.csv)、[thesis_protocol_summary.json](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/thesis_protocol_summary.json)、[evidence_manifest.json](assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/evidence_manifest.json)、[stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md](stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md)
-- 当前 leakage-safe Dingxin ablation summary：[assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json](assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json)
-- 当前 runtime service smoke summary：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json)
-- 当前 live weak-label stable resume summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json)
-- 当前 live weak-label partial summary：[assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json](assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r4-partial/partial_summary.json)
-- 当前 runtime schema contract：[assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json](assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json)
-- 当前 docs LFS 清理记录：[cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md)
-- 当前 docs 深度清理记录：[cleanup/20260621-deep-cleanup.md](cleanup/20260621-deep-cleanup.md)
-- 当前 src/docs artifact prune 记录：[cleanup/20260701-src-docs-artifact-prune.md](cleanup/20260701-src-docs-artifact-prune.md)
-- DeepSeek 时序预处理/LLM 预处理对比 LLM runtime case 输入表：[assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv](assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv)
-- 当前 LLM 预处理对比 LLM comparison summary：[assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json](assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/llm_comparison_summary.json)
-
-## 5. 引用规则
-
-- 引用当前状态先看 [../STATE.md](../STATE.md)，不要从历史报告倒推当前阶段。
-- 引用执行入口先看 [../implementation/TASKS.md](../implementation/TASKS.md)。
-- 引用论文能力要求先看 [../requirements/SPEC.md](../requirements/SPEC.md)。
-- 历史报告可以引用，但必须说明是历史快照、公开适配器证据、鼎新真实数据弱监督任务证据还是 thesis weak-label evidence。
-- 2026-06-19 起，若历史报告提到已清理的 raw JSONL / NPZ / prepared bundle，应按 [cleanup/20260619-lfs-docs-prune.md](cleanup/20260619-lfs-docs-prune.md) 处理：引用保留的 summary/report，复跑时重新生成 raw payload。
-- 2026-06-19 深度清理后，DeepSeek 时序预处理 LLM preprocessing r1、鼎新弱监督任务扫描 live r2、rigid-body r1、runtime replay r1、semantic support r1、runtime service smoke r1 和 thesis materials r4 仅保留在 git 历史中；当前文档入口统一使用本索引列出的 r3/r6/r2-contract 稳定产物。
-- 2026-06-21 深度清理后，旧论文图表刷新 thesis materials r5 图包与报告仅保留在 git 历史；当前中期图表统一引用 论文图表报告级重绘 r6 report figure polish。不要继续链接已清理的 r5 路径。
-- 2026-07-01 src/docs artifact prune 后，archive-only 的早期 public torch/mainline/fusion screen 迭代产物仅保留在 git 历史；当前公开实验入口统一引用 公开模型对比与公开融合刷新、UAB robust-prior、NASA round1、UAB torch auto-cuda confirm 和仍被 midterm pack 引用的 fusion screen round2。
-- DeepSeek 时序预处理 DeepSeek 已生成小样本真实切片 run 产物：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/` 和 `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`。引用时必须写成 LLM preprocessing context / rule review / semantic hints / runtime explanation / bounded slicing，不得写成人工真值、核心因果证据或原始全量高频时序外发。
-- LLM 预处理对比 LLM comparison 已生成 A0-A4 对比产物：`docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1/`、`docs/artifacts/stage_i/stage-i-llm-comparison-20260614T-stage-i-p21-llm-comparison-r1.md` 和 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。引用时必须保留 `label_unchanged=true`、semantic hints whitelist、runtime explanation bounded subset、`human_review_completed=false` 四个边界。
-- 公开模型对比与公开融合刷新产物属于公开数据适配、公开数据校准和上下文构造第二输入流证据。引用 `stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/` 时优先使用 公开模型对比 宽表、improvement summary 和图件；公开融合刷新 `20260701T-stage-i-public-fusion-refresh-r1` 已完成 CUDA screen + full LOSO confirm，并通过 `run.log` / `progress.json` / `evidence_manifest.json` 保留复现路径。公开融合刷新-GPUOPT `gpu_optimization/` 只作为训练效率 profiling 与 resume 证据，不替代 公开融合刷新 confirmed metrics。
-- 鼎新真实数据第三方模型对比 `stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/` 是 Dingxin real dual-stream Stage H 的 分类任务、回归任务和检索任务 weak-label constructed task 第三方对比。它补齐 MulT、ContiFormer、naive time sync 和 classical baseline 对照，但结果为混合对比，不能写成 Chronaris 全面胜出或论文最终人工真值任务。
-- 公开融合消融 `stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/` 是 public adapter / context-derived second-stream component ablation。引用时必须保留 NASA/UAB public context-derived second stream 边界；该结果不替代 公开融合刷新 confirmed refresh，也不能证明 public 第二模态等价于鼎新真实航电流。
-- 跨证据矩阵 `stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/` 用于把 Dingxin third-party comparison、Dingxin leakage-safe weak-label、public model comparison 和 public component ablation 放入同一证据矩阵；引用时强调证据分层与边界，不把 Dingxin/public/weak-label 指标混成单一胜负表。
-- 任务感知头优化、流角色融合与优化模型再评估 与 `stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/` 当前是 optimized v2/v3 CUDA confirm / completed aggregation / summary。引用时必须保留 任务感知头优化 completed 20-epoch confirm、流角色融合 requested Dingxin/public v3 confirm、public context-derived second stream 和固定 鼎新真实数据第三方模型对比、公开融合消融与跨证据矩阵 reference 边界，不得写成公开数据证明鼎新真实航电流或 optimized Chronaris 全面超过全部 baseline。
-- 最终指标打磨 `stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/` 是固定 鼎新真实数据第三方模型对比、公开融合消融、任务感知头优化、流角色融合与优化模型再评估 reference 上的 final polish。引用时只能写成 分类任务校准 与 public route calibration 局部 accepted improvement；检索任务 沿用 任务感知头优化 confirmed result；public 第二流仍是 context-derived second stream。
-- 论文协议冻结 `stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/` 是论文协议冻结入口；它只读聚合既有 鼎新真实数据第三方模型对比、公开融合消融、跨证据矩阵、任务感知头优化、流角色融合、优化模型再评估与最终指标打磨，不重跑实验，不删除 artifact。论文图表应优先从 `experiment_registry.csv` / `result_matrix_long.csv` / `claim_boundary_table.csv` 反查原始路径和表述边界。
-- 2026-07-02 任务感知头优化、流角色融合与优化模型再评估 GPU profiling、柱状图标签和 docs cleanup 记录：[cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md](cleanup/20260702-p34-p36-gpu-and-docs-cleanup.md)。checkpoint binary、dense prediction CSV 和 partial CSV 默认不再纳入 git；必要 checkpoint 已备份在远程开发机仓库外。
-- 2026-07-03 仓库收敛清理 cleanup 后，流角色融合/最终指标打磨 nested confirm/screen 的可再生成明细、任务感知头优化 未索引 task manifest/GPU batch、最终指标打磨 顶层稠密预测副本不再作为当前 git 资产；恢复时使用 `/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/backup_manifest.csv`。论文协议冻结 registry/result matrix 引用路径已检查，缺失为 `0`。
-- 2026-07-03 代码瘦身追加清理 aggressive src slimming 后，`src/chronaris` Python 文件为 `187` 个、`64,211` 行；`src/scripts/tests` Python 文件为 `276` 个、`85,162` 行。旧 `chronaris.pipelines` / `chronaris.pipelines.stage_i.stage_i_*` / `chronaris.models.alignment` / `chronaris.models.fusion` / `chronaris.serving` 包级转发表不再作为当前导入契约；新代码应直接导入真实模块。
-- `stage_i_private_component_ablation` 的历史满分结果与 `stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/` 是不同协议。论文实验章节优先引用 `protocol=leakage_safe_v1` 的 r2 消融；历史结果只能作为 Dingxin weak-label 历史对照，不得与防泄漏结果混成同一柱状结论。
+- `cleanup/20260705-name-migration-cleanup.md`：本轮职责命名迁移和产物整理记录。
+- `../maintenance/2026-07-05_name-migration-map.md`：old path 到 new path 的迁移表。
+- 更早 cleanup 记录保留在 `cleanup/`，用于追溯历史删除、外置备份和 LFS 决策。

@@ -1,0 +1,5 @@
+step_order,step_title_cn,core_quantity_cn,detail_cn,output_items_cn,status_cn,source_path,evidence_layer
+1,模型参数加载,已加载联合训练模型参数,复用当前 feature export 到 task evaluation 的联合训练权重，不重跑训练。,任务头;融合表示,已归档,docs/artifacts/runs/2026-06-13_runtime-schema-contract/runtime_service_smoke_summary.json,runtime_schema
+2,原始回放窗口输入,代表回放窗口37个,已读取飞机状态字段965，保留窗口顺序与双流来源。,原始窗口;字段列表,已读取,docs/artifacts/runs/2026-06-13_runtime-schema-contract/runtime_service_smoke_summary.json,runtime_schema
+3,运行字段规范检查,待补齐范围：6个测量组,统一格式按1930维保留缺失标记；原始输入已对齐，统一输入已通过。,字段检查结果;缺失标记,已检查,docs/artifacts/runs/2026-06-13_runtime-schema-contract/runtime_schema_contract.json,runtime_schema
+4,批量推理与结果归档,输出清单已落盘,结果包括任务输出、融合表示、事件贡献和字段检查结果。,任务输出;融合表示;事件贡献;字段检查结果,已归档,docs/artifacts/runs/2026-06-13_runtime-schema-contract/runtime_service_smoke_summary.json,runtime_schema

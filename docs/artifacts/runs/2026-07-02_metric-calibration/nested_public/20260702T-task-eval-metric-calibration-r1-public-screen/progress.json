@@ -1,0 +1,170 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen",
+  "datasets": [
+    "nasa_csm",
+    "uab_workload_dataset"
+  ],
+  "variants": [
+    "p37_public_no_lag_prior_context075",
+    "p37_public_no_lag_prior_context085",
+    "p37_public_context_adapter_only_cap2x_do0p2",
+    "p37_public_force_adaptive_context_gate"
+  ],
+  "screen_epochs": 5,
+  "confirm_epochs": 5,
+  "resume": true,
+  "skip_completed": true,
+  "evidence_role": "public_adapter_context_proxy_evidence",
+  "gpuopt_enabled": true,
+  "base_run_id": "20260702T-task-eval-metric-calibration-r1",
+  "tensor_cache": "auto",
+  "auto_batch_size": true,
+  "amp": "bf16",
+  "torch_compile": "default",
+  "num_workers": 24,
+  "parallel_fold_prep": 8,
+  "stage_name": "task_eval_public_fusion_ablation",
+  "run_id": "20260702T-task-eval-metric-calibration-r1-public-screen",
+  "last_event": "blocked",
+  "updated_at_utc": "2026-07-02T09:44:24.643541Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.173647Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen",
+      "datasets": [
+        "nasa_csm",
+        "uab_workload_dataset"
+      ],
+      "variants": [
+        "p37_public_no_lag_prior_context075",
+        "p37_public_no_lag_prior_context085",
+        "p37_public_context_adapter_only_cap2x_do0p2",
+        "p37_public_force_adaptive_context_gate"
+      ],
+      "screen_epochs": 5,
+      "confirm_epochs": 5,
+      "resume": true,
+      "skip_completed": true,
+      "evidence_role": "public_adapter_context_proxy_evidence",
+      "gpuopt_enabled": true,
+      "base_run_id": "20260702T-task-eval-metric-calibration-r1",
+      "tensor_cache": "auto",
+      "auto_batch_size": true,
+      "amp": "bf16",
+      "torch_compile": "default",
+      "num_workers": 24,
+      "parallel_fold_prep": 8
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.174757Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_no_lag_prior_context075"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.202044Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_no_lag_prior_context075"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.202195Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_no_lag_prior_context085"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.229010Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_no_lag_prior_context085"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.229167Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_context_adapter_only_cap2x_do0p2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.259649Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_context_adapter_only_cap2x_do0p2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.259816Z",
+      "event": "screen_start",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_force_adaptive_context_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.290227Z",
+      "event": "screen_done",
+      "dataset_id": "nasa_csm",
+      "variant_id": "p37_public_force_adaptive_context_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.290395Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_no_lag_prior_context075"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.338564Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_no_lag_prior_context075"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.338741Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_no_lag_prior_context085"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.385440Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_no_lag_prior_context085"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.385634Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_context_adapter_only_cap2x_do0p2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.445371Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_context_adapter_only_cap2x_do0p2"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.445571Z",
+      "event": "screen_start",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_force_adaptive_context_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.497632Z",
+      "event": "screen_done",
+      "dataset_id": "uab_workload_dataset",
+      "variant_id": "p37_public_force_adaptive_context_gate"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:44:24.643541Z",
+      "event": "blocked",
+      "status": "blocked",
+      "blocked_reason": "'metric'",
+      "blocked_reason_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/blocked_reason.json",
+      "partial_summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/partial_summary.json"
+    }
+  ],
+  "dataset_id": "uab_workload_dataset",
+  "variant_id": "p37_public_force_adaptive_context_gate",
+  "status": "blocked",
+  "blocked_reason": "'metric'",
+  "blocked_reason_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/blocked_reason.json",
+  "partial_summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/partial_summary.json"
+}

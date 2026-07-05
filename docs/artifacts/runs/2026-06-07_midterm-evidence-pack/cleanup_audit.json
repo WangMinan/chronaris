@@ -1,0 +1,315 @@
+{
+  "generated_at_utc": "2026-06-07T07:35:39.594366Z",
+  "outdated_report_candidates": [
+    {
+      "path": "docs/artifacts/runs/2026-06-07_midterm-evidence-pack/report.md",
+      "suggested_archive_path": "docs/reports/task_eval/archive/public_history/task-eval-midterm-20260509T071500Z-task-eval-midterm-r2.md",
+      "reference_hits": [
+        {
+          "path": "docs/implementation/notes/midterm-goal-2026-06-07.md",
+          "line_numbers": [
+            15
+          ]
+        },
+        {
+          "path": "docs/artifacts/ARTIFACTS.md",
+          "line_numbers": [
+            32
+          ]
+        },
+        {
+          "path": "docs/artifacts/README.md",
+          "line_numbers": [
+            9
+          ]
+        },
+        {
+          "path": "docs/artifacts/mid-term/README.md",
+          "line_numbers": [
+            7
+          ]
+        }
+      ],
+      "safe_to_move": false
+    },
+    {
+      "path": "docs/artifacts/runs/2026-06-07_dingxin-multitask-real-closure/report.md",
+      "suggested_archive_path": "docs/reports/task_eval/archive/public_history/thesis-weak-label-evidence-20260607T-task-eval-multitask-real-closure-r2.md",
+      "reference_hits": [],
+      "safe_to_move": true
+    }
+  ],
+  "unreferenced_code_candidates": [],
+  "test_coverage_status": [
+    {
+      "path": "src/chronaris/pipelines/task_eval/__init__.py",
+      "test_hit_count": 5,
+      "test_hits": [
+        "tests/test_access_cli_overlap.py",
+        "tests/test_access_metadata_live.py",
+        "tests/test_alignment_pipeline.py",
+        "tests/test_feature_export_export.py",
+        "tests/test_task_eval_support.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_anchor.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_case_study.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_backbone_train.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_alignment_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_baseline.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_task_eval_pipeline.py",
+        "tests/test_task_eval_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_baseline_models.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_baseline_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_case_study.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_task_eval_case_study.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_deep_baseline.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_deep_baseline_case.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_deep_baseline_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_deep_baseline_runtime.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_deep_models.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_midterm_evidence.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_task_eval_support.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_multitask_train.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_multitask_train.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_phase3.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_phase3_assets.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_phase3_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_private_benchmark.py",
+      "test_hit_count": 3,
+      "test_hits": [
+        "tests/test_task_eval_deep_pipeline.py",
+        "tests/test_task_eval_multitask_train.py",
+        "tests/test_task_eval_private_optimization.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_private_benchmark_data.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_task_eval_multitask_train.py",
+        "tests/test_task_eval_private_optimization.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_private_benchmark_models.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_private_feature_utils.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_private_optimization.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/README.md"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_private_optimized_package.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_fusion_screen.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_deep_pipeline.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_mainline_report.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt.py",
+      "test_hit_count": 3,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_task_eval_public_opt.py",
+        "tests/test_task_eval_public_opt_aggregation.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_data.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_postprocess.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_reference.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_shared.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_sklearn.py",
+      "test_hit_count": 1,
+      "test_hits": [
+        "tests/test_task_eval_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_torch.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_task_eval_public_opt.py",
+        "tests/test_task_eval_public_opt_aggregation.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_torch_catalog.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_torch_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_public_opt_torch_supervision.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_run_observer.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_sequence_preparation.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/test_task_eval_deep_pipeline.py",
+        "tests/test_task_eval_public_opt.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_support.py",
+      "test_hit_count": 2,
+      "test_hits": [
+        "tests/README.md",
+        "tests/test_task_eval_support.py"
+      ]
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_support_builders.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    },
+    {
+      "path": "src/chronaris/pipelines/task_eval/task_eval_support_reporting.py",
+      "test_hit_count": 0,
+      "test_hits": []
+    }
+  ],
+  "summary": {
+    "outdated_doc_candidate_count": 2,
+    "unreferenced_code_candidate_count": 0
+  }
+}

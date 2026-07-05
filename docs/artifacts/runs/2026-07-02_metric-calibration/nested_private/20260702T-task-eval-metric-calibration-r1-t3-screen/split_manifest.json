@@ -1,0 +1,141 @@
+{
+  "dataset_id": "private_feature_export",
+  "evidence_role": "private_real_dual_stream",
+  "strategies": [
+    "leave_one_view_out",
+    "leave_one_sortie_out"
+  ],
+  "tasks": {
+    "T1_maneuver_intensity_class": {
+      "valid_entry_count": 111,
+      "strategies": {
+        "leave_one_view_out": [
+          {
+            "fold_index": 1,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+            "train_count": 74,
+            "test_count": 37,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 2,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+            "train_count": 74,
+            "test_count": 37,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 3,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+            "train_count": 74,
+            "test_count": 37,
+            "fold_skipped_reason": null
+          }
+        ],
+        "leave_one_sortie_out": [
+          {
+            "fold_index": 1,
+            "split_strategy": "leave_one_sortie_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01",
+            "train_count": 37,
+            "test_count": 74,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 2,
+            "split_strategy": "leave_one_sortie_out",
+            "test_group": "20251005_四01_ACT-4_云_J20_22#01",
+            "train_count": 74,
+            "test_count": 37,
+            "fold_skipped_reason": null
+          }
+        ]
+      }
+    },
+    "T2_next_window_physiology_response": {
+      "valid_entry_count": 108,
+      "strategies": {
+        "leave_one_view_out": [
+          {
+            "fold_index": 1,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+            "train_count": 72,
+            "test_count": 36,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 2,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+            "train_count": 72,
+            "test_count": 36,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 3,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+            "train_count": 72,
+            "test_count": 36,
+            "fold_skipped_reason": null
+          }
+        ],
+        "leave_one_sortie_out": [
+          {
+            "fold_index": 1,
+            "split_strategy": "leave_one_sortie_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01",
+            "train_count": 36,
+            "test_count": 72,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 2,
+            "split_strategy": "leave_one_sortie_out",
+            "test_group": "20251005_四01_ACT-4_云_J20_22#01",
+            "train_count": 72,
+            "test_count": 36,
+            "fold_skipped_reason": null
+          }
+        ]
+      }
+    },
+    "T3_paired_pilot_window_retrieval": {
+      "valid_entry_count": 74,
+      "strategies": {
+        "leave_one_view_out": [
+          {
+            "fold_index": 1,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+            "train_count": 37,
+            "test_count": 37,
+            "fold_skipped_reason": null
+          },
+          {
+            "fold_index": 2,
+            "split_strategy": "leave_one_view_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+            "train_count": 37,
+            "test_count": 37,
+            "fold_skipped_reason": null
+          }
+        ],
+        "leave_one_sortie_out": [
+          {
+            "fold_index": 1,
+            "split_strategy": "leave_one_sortie_out",
+            "test_group": "20251002_单01_ACT-8_翼云_J16_12#01",
+            "train_count": 0,
+            "test_count": 74,
+            "fold_skipped_reason": "no_train_samples"
+          }
+        ]
+      }
+    }
+  }
+}

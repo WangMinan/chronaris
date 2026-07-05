@@ -1,0 +1,122 @@
+{
+  "run_id": "20260614T-task-eval-p21-llm-comparison-r1",
+  "status": "success",
+  "artifact_root": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison",
+  "summary_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/llm_comparison_summary.json",
+  "condition_manifest_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/condition_manifest.json",
+  "task_context_comparison_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/task_context_comparison.csv",
+  "semantic_hint_comparison_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/semantic_hint_comparison.csv",
+  "runtime_explanation_comparison_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/runtime_explanation_comparison.csv",
+  "human_review_packet_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/human_review_packet.csv",
+  "midterm_claims_payload_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/midterm_claims_payload.json",
+  "report_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/report.md",
+  "midterm_summary_path": "docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md",
+  "source_paths": {
+    "llm_context_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/llm_preprocessing_context.json",
+    "task_manifest_path": "docs/artifacts/runs/2026-06-07_dingxin-multitask-real-closure/thesis_task_manifest.jsonl",
+    "support_summary_path": "docs/artifacts/runs/2026-06-07_semantic-support/support_summary.json",
+    "runtime_schema_contract_path": "docs/artifacts/runs/2026-06-13_runtime-schema-contract/runtime_schema_contract.json",
+    "runtime_case_table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_semantic_case.csv",
+    "runtime_explanations_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/runtime_llm_explanations.jsonl"
+  },
+  "task_context": {
+    "condition": "A1_llm_context",
+    "baseline_condition": "A0_baseline",
+    "task_entry_count": 333,
+    "unique_sample_count": 111,
+    "task_counts": {
+      "risk_proxy": 111,
+      "workload_proxy": 111,
+      "event_replay_tag": 111
+    },
+    "attached_entry_count": 333,
+    "context_coverage_rate": 1.0,
+    "weak_label_review_task_count": 3,
+    "label_changed_count": 0,
+    "label_unchanged": true,
+    "label_unchanged_text": "true"
+  },
+  "semantic_hints": {
+    "condition": "A2_llm_semantic_hints",
+    "baseline_query_count": 3,
+    "combined_query_count": 7,
+    "added_query_count": 4,
+    "added_query_names": [
+      "pilot_vehicle_event_gap",
+      "event_gap_analysis",
+      "pilot_physiology_gap",
+      "multi_aircraft_coordination_gap"
+    ],
+    "rejected_hint_count": 0,
+    "rejected_hints": [],
+    "recipe_whitelist": [
+      "coordination_gap",
+      "gap_plus_event",
+      "physiology_plus_gap",
+      "vehicle_plus_event"
+    ],
+    "view_count": 3,
+    "baseline_top_view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+    "view_ranking_recomputed": false,
+    "view_ranking_change_status": "not_recomputed_from_summary_only",
+    "boundary": "LLM hints extend deterministic query coverage only through whitelisted recipes."
+  },
+  "runtime_explanations": {
+    "condition": "A3_llm_runtime_explanation",
+    "runtime_case_count": 12,
+    "llm_explained_case_count": 4,
+    "llm_explained_case_rate": 0.3333333333333333,
+    "baseline_average_completeness": 0.75,
+    "with_llm_average_completeness_for_explained_cases": 1.0,
+    "average_completeness_delta_for_explained_cases": 0.25,
+    "complete_with_llm_case_count": 4,
+    "required_fields": [
+      "model_prediction",
+      "semantic_attribution",
+      "schema_gap_note",
+      "weak_label_boundary"
+    ],
+    "status": "success_bounded_explained_subset"
+  },
+  "human_review_packet": {
+    "condition": "A4_human_review_packet",
+    "item_count": 15,
+    "item_counts": {
+      "field_semantic": 6,
+      "weak_label_rule": 3,
+      "schema_gap_policy": 6
+    },
+    "human_review_completed": false,
+    "validation_status": "pending_human_review",
+    "boundary": "packet_generated_only_not_manual_validation_complete"
+  },
+  "midterm_claims": {
+    "claim_strength": "中强但限域",
+    "evidence_layer": "llm_preprocessing_comparison",
+    "allowed_claims": [
+      "P21 completed a bounded A0-A4 comparison showing LLM preprocessing can attach auditable context without changing weak-label values.",
+      "A1 label_unchanged=true across 333 task evaluation weak-label task entries.",
+      "A2 expanded deterministic semantic query coverage from 3 to 7 through whitelisted recipes.",
+      "A3 LLM explanations fully covered required runtime fields for 4 of 4 explained cases.",
+      "A4 generated 15 human-review packet items; manual validation is still pending."
+    ],
+    "disallowed_claims": [
+      "LLM output is manual ground truth.",
+      "LLM semantic hints prove the core causal fusion module.",
+      "P21 completes human validation before the review packet is filled.",
+      "LLM explanations convert native aligned runtime input into native exact evidence."
+    ],
+    "paths": {
+      "summary_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/llm_comparison_summary.json",
+      "condition_manifest_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/condition_manifest.json",
+      "task_context_comparison_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/task_context_comparison.csv",
+      "semantic_hint_comparison_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/semantic_hint_comparison.csv",
+      "runtime_explanation_comparison_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/runtime_explanation_comparison.csv",
+      "human_review_packet_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/human_review_packet.csv",
+      "report_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-comparison/report.md",
+      "midterm_summary_path": "docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md"
+    },
+    "manual_validation_completed": false
+  },
+  "boundary": "LLM preprocessing comparison evidence only; not manual truth or core causal proof."
+}

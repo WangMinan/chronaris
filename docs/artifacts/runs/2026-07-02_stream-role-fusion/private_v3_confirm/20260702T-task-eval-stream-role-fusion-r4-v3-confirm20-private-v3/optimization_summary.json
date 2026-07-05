@@ -1,0 +1,7 @@
+{
+  "run_id": "20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3",
+  "device": "cuda",
+  "batch_size": 128,
+  "amp_mode": "bf16",
+  "tensor_cache_mode": "auto"
+}

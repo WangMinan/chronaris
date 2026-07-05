@@ -1,0 +1,27 @@
+{
+  "private": {
+    "second_stream_role": "real_vehicle",
+    "second_stream_is_real_vehicle": true,
+    "evidence_role": "private_real_dual_stream",
+    "fusion_route": "causal_lagged_vehicle_to_physio",
+    "lag_policy": "causal_lag_window_enabled",
+    "causal_policy": "vehicle_to_physiology"
+  },
+  "nasa_csm": {
+    "second_stream_role": "scenario_context_proxy",
+    "second_stream_is_real_vehicle": false,
+    "evidence_role": "public_adapter_context_proxy_evidence",
+    "fusion_route": "adaptive_context_gate",
+    "lag_policy": "no_lag_or_learned_context_gate_allowed",
+    "causal_policy": "context_proxy_not_real_vehicle"
+  },
+  "uab_workload_dataset": {
+    "second_stream_role": "task_context_proxy",
+    "second_stream_is_real_vehicle": false,
+    "evidence_role": "public_adapter_context_proxy_evidence",
+    "fusion_route": "adaptive_context_gate",
+    "lag_policy": "no_lag_or_learned_context_gate_allowed",
+    "causal_policy": "context_proxy_not_real_vehicle"
+  },
+  "boundary": "public context proxy is not real_vehicle; private feature export second stream is real_vehicle"
+}

@@ -1,0 +1,27 @@
+2026-06-13 16:48:32,296 INFO chronaris.pipelines.task_eval.task_eval_multitask_sweep: task_eval_multitask_sweep observer start run_id=20260613T-task-eval-p11-live-influx-r1 run_root=docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-child-r1
+2026-06-13 16:57:07,399 ERROR chronaris.pipelines.task_eval.task_eval_multitask_sweep: task_eval_multitask_sweep failed run_id=20260613T-task-eval-p11-live-influx-r1
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/pipelines/task_eval/task_eval_multitask_sweep.py", line 98, in run_task_eval_multitask_sweep
+    return _run_task_eval_multitask_sweep_observed(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/pipelines/task_eval/task_eval_multitask_sweep.py", line 173, in _run_task_eval_multitask_sweep_observed
+    result = run_task_eval_multitask_train(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/pipelines/task_eval/task_eval_multitask_train.py", line 564, in run_task_eval_multitask_train
+    return StageIMultitaskTrainPipeline(config=config).run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/pipelines/task_eval/task_eval_multitask_train.py", line 205, in run
+    self._run_partition(
+  File "/home/wangminan/projects/chronaris/src/chronaris/pipelines/task_eval/task_eval_multitask_train.py", line 362, in _run_partition
+    torch_batch = preview_pipeline._build_torch_batch(batch_samples)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/pipelines/alignment_preview.py", line 607, in _build_torch_batch
+    numpy_batch = build_alignment_batch(samples)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/models/alignment/batching.py", line 42, in build_alignment_batch
+    vehicle = _build_stream_batch(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/models/alignment/batching.py", line 76, in _build_stream_batch
+    values[sample_index, point_index, feature_index[feature_name]] = value
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

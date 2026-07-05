@@ -1,0 +1,1 @@
+2026-06-07 20:53:41,984 INFO chronaris.evaluation.public_datasets.pipelines.dingxin_multitask_sweep: dingxin_multitask_sweep observer start run_id=20260607T-task-eval-evidence-closure-r2-multitask run_root=docs/artifacts/runs/2026-06-07_dingxin-weak-label-multitask-sweep

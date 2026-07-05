@@ -1,0 +1,48 @@
+{
+  "dataset_id": "nasa_csm",
+  "model_name": "p37_public_force_adaptive_context_gate",
+  "requested_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42",
+  "epochs": 5,
+  "max_folds": 2,
+  "heartbeat_seconds": 60.0,
+  "batch_log_interval": 20,
+  "checkpoint_policy": "last",
+  "stage_name": "task_eval_deep_baseline",
+  "run_id": "p37_public_force_adaptive_context_gate__seed42",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-02T09:15:03.364972Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-02T09:14:53.971854Z",
+      "event": "start",
+      "dataset_id": "nasa_csm",
+      "model_name": "p37_public_force_adaptive_context_gate",
+      "requested_device": "cuda",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42",
+      "epochs": 5,
+      "max_folds": 2,
+      "heartbeat_seconds": 60.0,
+      "batch_log_interval": 20,
+      "checkpoint_policy": "last"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:14:55.305387Z",
+      "event": "dataset_loaded",
+      "prepared_artifact_root": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/nasa_csm",
+      "runtime_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:15:03.364972Z",
+      "event": "finished",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42/deep_baseline_report.md",
+      "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42/fold_predictions.csv"
+    }
+  ],
+  "prepared_artifact_root": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/nasa_csm",
+  "runtime_device": "cuda",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42/deep_baseline_summary.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42/deep_baseline_report.md",
+  "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-screen/screen/nasa_csm/p37_public_force_adaptive_context_gate__seed42/fold_predictions.csv"
+}

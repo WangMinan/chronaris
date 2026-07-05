@@ -29,7 +29,7 @@ class StreamPrototypeOutput:
     offsets_s: torch.Tensor
     delta_t_s: torch.Tensor
     point_counts: torch.Tensor
-    final_hidden_state: torch.Tensor
+    terminal_hidden_state: torch.Tensor
     reference_offsets_s: torch.Tensor | None = None
     reference_hidden_states: torch.Tensor | None = None
     reference_projected_states: torch.Tensor | None = None
@@ -155,7 +155,7 @@ class SingleStreamODERNNPrototype(nn.Module):
             offsets_s=stream.offsets_s,
             delta_t_s=stream.delta_t_s,
             point_counts=stream.point_counts,
-            final_hidden_state=hidden_state,
+            terminal_hidden_state=hidden_state,
             reference_offsets_s=resolved_reference_offsets,
             reference_hidden_states=reference_hidden_states,
             reference_projected_states=reference_projected_states,

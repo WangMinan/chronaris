@@ -1,4 +1,4 @@
-"""Loss helpers for Stage I optimized task heads."""
+"""Loss helpers for task evaluation optimized task heads."""
 
 from __future__ import annotations
 

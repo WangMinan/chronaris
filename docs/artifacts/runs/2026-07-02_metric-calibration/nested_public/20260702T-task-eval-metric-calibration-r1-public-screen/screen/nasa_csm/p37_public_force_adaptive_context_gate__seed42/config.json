@@ -1,0 +1,29 @@
+{
+  "stage": "screen",
+  "dataset_id": "nasa_csm",
+  "variant": {
+    "variant_id": "p37_public_force_adaptive_context_gate",
+    "description": "P37 public route forcing adaptive context gate for context-proxy streams.",
+    "model_name": "p37_public_force_adaptive_context_gate",
+    "hidden_dim": 64,
+    "layers": 2,
+    "num_heads": 4,
+    "dropout": 0.1,
+    "fusion_event_bias_weight": 0.25,
+    "fusion_lag_window_points": 16,
+    "fusion_normalize_states": true,
+    "learning_rate": 0.001,
+    "batch_size": 128,
+    "regression_loss": "smooth_l1",
+    "huber_delta": 1.0,
+    "target_transform": "zscore_train",
+    "weight_decay": 1e-05,
+    "gradient_clip_max_norm": 1.0,
+    "ablation_family": "p37_public_route",
+    "train_sampling_policy": null
+  },
+  "seed": 42,
+  "epochs": 5,
+  "max_folds": 2,
+  "prepared_root": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/nasa_csm"
+}

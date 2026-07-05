@@ -13,7 +13,7 @@ from typing import Mapping
 import numpy as np
 import pandas as pd
 
-from chronaris.features import load_stage_i_case_study_run
+from chronaris.features import load_task_eval_case_study_run
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
@@ -21,12 +21,12 @@ LOGGER.addHandler(logging.NullHandler())
 
 @dataclass(frozen=True, slots=True)
 class StageIRuntimeDemoConfig:
-    """Config for the minimal Stage I runtime/demo entry."""
+    """Config for the minimal task evaluation runtime/demo entry."""
 
     run_id: str
     source_path: str
-    artifact_root: str = "docs/artifacts/assets/stage_i_runtime_demo"
-    report_root: str = "docs/artifacts/stage_i"
+    artifact_root: str = "docs/artifacts/runs"
+    report_root: str = "docs/artifacts/runs"
     source_type: str = "auto"
     export_window_csv: bool = True
 
@@ -44,17 +44,17 @@ class StageIRuntimeDemoRunResult:
     summary: Mapping[str, object]
 
 
-def run_stage_i_runtime_demo(
+def run_task_eval_runtime_demo(
     config: StageIRuntimeDemoConfig,
 ) -> StageIRuntimeDemoRunResult:
-    """Build a thesis-facing summary over frozen Stage H or private package assets."""
+    """Build a thesis-facing summary over frozen feature export or private package assets."""
 
     resolved_source_type = _resolve_source_type(
         Path(config.source_path),
         source_type=config.source_type,
     )
     LOGGER.info(
-        "stage_i_runtime_demo start run_id=%s source_type=%s source_path=%s",
+        "task_eval_runtime_demo start run_id=%s source_type=%s source_path=%s",
         config.run_id,
         resolved_source_type,
         config.source_path,
@@ -64,10 +64,10 @@ def run_stage_i_runtime_demo(
     report_root = Path(config.report_root)
     report_root.mkdir(parents=True, exist_ok=True)
     summary_path = run_root / "runtime_demo_summary.json"
-    report_path = report_root / f"stage-i-runtime-demo-{config.run_id}.md"
+    report_path = report_root / f"task-eval-runtime-demo-{config.run_id}.md"
 
-    if resolved_source_type == "stage_h_run_manifest":
-        summary, window_rows = _build_stage_h_demo_summary(Path(config.source_path))
+    if resolved_source_type == "feature_export_run_manifest":
+        summary, window_rows = _build_feature_export_demo_summary(Path(config.source_path))
     else:
         summary, window_rows = _build_private_package_demo_summary(Path(config.source_path))
 
@@ -92,11 +92,11 @@ def run_stage_i_runtime_demo(
     )
 
     report_path.write_text(
-        render_stage_i_runtime_demo_report(summary_payload) + "\n",
+        render_task_eval_runtime_demo_report(summary_payload) + "\n",
         encoding="utf-8",
     )
     LOGGER.info(
-        "stage_i_runtime_demo finished run_id=%s summary_path=%s report_path=%s window_csv=%s",
+        "task_eval_runtime_demo finished run_id=%s summary_path=%s report_path=%s window_csv=%s",
         config.run_id,
         summary_path,
         report_path,
@@ -113,12 +113,12 @@ def run_stage_i_runtime_demo(
     )
 
 
-def render_stage_i_runtime_demo_report(summary: Mapping[str, object]) -> str:
+def render_task_eval_runtime_demo_report(summary: Mapping[str, object]) -> str:
     """Render the minimal runtime/demo report."""
 
     source_type = str(summary["source_type"])
     lines = [
-        f"# Stage I Runtime Demo - {summary['run_id']}",
+        f"# task evaluation Runtime Demo - {summary['run_id']}",
         "",
         f"- generated_at_utc: `{summary['generated_at_utc']}`",
         f"- source_type: `{source_type}`",
@@ -128,19 +128,19 @@ def render_stage_i_runtime_demo_report(summary: Mapping[str, object]) -> str:
         lines.append(f"- window_csv_path: `{summary['window_csv_path']}`")
     lines.append("")
 
-    if source_type == "stage_h_run_manifest":
-        stage_h = summary["stage_h"]
+    if source_type == "feature_export_run_manifest":
+        feature_export = summary["feature_export"]
         lines.extend(
             [
-                "## Stage H Runtime Overview",
+                "## feature export Runtime Overview",
                 "",
-                f"- run_manifest_path: `{stage_h['run_manifest_path']}`",
-                f"- sortie_count: `{stage_h['sortie_count']}`",
-                f"- view_count: `{stage_h['view_count']}`",
-                f"- total_window_count: `{stage_h['total_window_count']}`",
-                f"- case_window_count: `{stage_h['case_window_count']}`",
-                f"- view_verdict_counts: `{stage_h['view_verdict_counts']}`",
-                "- task_prediction_status: `not_available_for_frozen_stage_h_views`",
+                f"- run_manifest_path: `{feature_export['run_manifest_path']}`",
+                f"- sortie_count: `{feature_export['sortie_count']}`",
+                f"- view_count: `{feature_export['view_count']}`",
+                f"- total_window_count: `{feature_export['total_window_count']}`",
+                f"- case_window_count: `{feature_export['case_window_count']}`",
+                f"- view_verdict_counts: `{feature_export['view_verdict_counts']}`",
+                "- task_prediction_status: `not_available_for_frozen_feature_export_views`",
                 "",
                 "## View Summary",
                 "",
@@ -148,7 +148,7 @@ def render_stage_i_runtime_demo_report(summary: Mapping[str, object]) -> str:
                 "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
             ]
         )
-        for view in stage_h["views"]:
+        for view in feature_export["views"]:
             lines.append(
                 f"| `{view['view_id']}` | `{view['projection_diagnostics_verdict']}` | "
                 f"{view['window_count']} | {view['case_partition_sample_count']} | "
@@ -214,21 +214,21 @@ def render_stage_i_runtime_demo_report(summary: Mapping[str, object]) -> str:
 
 def _resolve_source_type(path: Path, *, source_type: str) -> str:
     if source_type != "auto":
-        if source_type not in {"stage_h_run_manifest", "optimized_candidate_package"}:
+        if source_type not in {"feature_export_run_manifest", "optimized_candidate_package"}:
             raise ValueError(f"unsupported source_type: {source_type}")
         return source_type
     payload = json.loads(path.read_text(encoding="utf-8"))
     if "package_version" in payload and "dependency_contracts" in payload:
         return "optimized_candidate_package"
     if "sortie_manifest_paths" in payload:
-        return "stage_h_run_manifest"
+        return "feature_export_run_manifest"
     raise ValueError(
-        "failed to infer runtime source type; expected Stage H run manifest or optimized package."
+        "failed to infer runtime source type; expected feature export run manifest or optimized package."
     )
 
 
-def _build_stage_h_demo_summary(path: Path) -> tuple[dict[str, object], list[dict[str, object]]]:
-    run_input = load_stage_i_case_study_run(path)
+def _build_feature_export_demo_summary(path: Path) -> tuple[dict[str, object], list[dict[str, object]]]:
+    run_input = load_task_eval_case_study_run(path)
     verdict_counts = Counter(
         view.projection_diagnostics_verdict
         for view in run_input.views
@@ -267,11 +267,11 @@ def _build_stage_h_demo_summary(path: Path) -> tuple[dict[str, object], list[dic
                 ),
                 "mean_attention_entropy": _safe_float(
                     view.causal_summary.get("mean_attention_entropy"),
-                    fallback=_mean_attention_entropy(view.stage_h_view.attention_weights),
+                    fallback=_mean_attention_entropy(view.feature_export_view.attention_weights),
                 ),
                 "mean_top_event_score": _safe_float(
                     view.causal_summary.get("mean_top_event_score"),
-                    fallback=float(np.max(view.stage_h_view.vehicle_event_scores, axis=-1).mean()),
+                    fallback=float(np.max(view.feature_export_view.vehicle_event_scores, axis=-1).mean()),
                 ),
                 "mean_top_contribution_score": _safe_float(
                     view.causal_summary.get("mean_top_contribution_score"),
@@ -330,9 +330,9 @@ def _build_stage_h_demo_summary(path: Path) -> tuple[dict[str, object], list[dic
             )
     return (
         {
-            "stage_h": {
+            "feature_export": {
                 "run_manifest_path": str(path),
-                "sortie_count": len(run_input.stage_h_run.run_manifest.get("sortie_manifest_paths", {})),
+                "sortie_count": len(run_input.feature_export_run.run_manifest.get("sortie_manifest_paths", {})),
                 "view_count": len(run_input.views),
                 "total_window_count": total_window_count,
                 "case_window_count": case_window_count,

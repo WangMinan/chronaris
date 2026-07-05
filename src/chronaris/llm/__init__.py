@@ -1,4 +1,4 @@
-"""LLM preprocessing contracts for Chronaris Stage I."""
+"""LLM preprocessing contracts for Chronaris task evaluation."""
 
 from chronaris.llm.provider import (
     DeepSeekChatProvider,

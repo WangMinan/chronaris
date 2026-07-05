@@ -1,4 +1,4 @@
-"""Runtime payload schema contract helpers for Stage I service smoke."""
+"""Runtime payload schema contract helpers for task evaluation service smoke."""
 
 from __future__ import annotations
 
