@@ -1,0 +1,889 @@
+{
+  "generated_at_utc": "2026-05-08T09:07:23.742643Z",
+  "run_id": "20260508T090700Z-task-eval-public-opt-uab-heat-specialist-r1",
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "runtime_device": "cuda",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-04_public-opt-uab-prepared",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-heat-specialist-r1",
+  "feature_frame_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-heat-specialist-r1/public_opt_torch_feature_frame.parquet",
+  "leaderboard_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-heat-specialist-r1/candidate_leaderboard.csv",
+  "predictions_path": null,
+  "run_log_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-heat-specialist-r1/run.log",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-heat-specialist-r1/progress.json",
+  "screen_config": {
+    "screen_max_folds": 2,
+    "full_max_folds": null,
+    "run_full_loso": true,
+    "full_candidate_limit": 2,
+    "full_group_winner_limit": 1,
+    "batch_size": 256,
+    "epochs": 20,
+    "patience": 4,
+    "learning_rates": [
+      0.001,
+      0.0003
+    ],
+    "weight_decays": [
+      0.0001,
+      0.001
+    ],
+    "feature_profiles": [
+      "physiology_lowdim"
+    ],
+    "device": "cuda",
+    "require_cuda": true,
+    "candidate_catalog": "heat_specialist",
+    "selected_subsets": [
+      "heat_the_chair"
+    ],
+    "ensemble_policy": "none",
+    "prediction_aggregation_policy": "none",
+    "supervision_granularity": "window"
+  },
+  "candidate_count": 16,
+  "screen_leaderboard": [
+    {
+      "candidate_id": "heat_residual_correction__lr0p0003__wd0p0001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.0960458303963434,
+      "screen_mean_mae": 1.7883089216525279,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.0960458303963434,
+      "heat_the_chair_mae": 1.7883089216525279
+    },
+    {
+      "candidate_id": "heat_residual_correction__lr0p001__wd0p0001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.0960458303963434,
+      "screen_mean_mae": 1.7883089216525279,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.0960458303963434,
+      "heat_the_chair_mae": 1.7883089216525279
+    },
+    {
+      "candidate_id": "heat_residual_correction__lr0p0003__wd0p001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.096045831129953,
+      "screen_mean_mae": 1.7883089238947087,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.096045831129953,
+      "heat_the_chair_mae": 1.7883089238947087
+    },
+    {
+      "candidate_id": "heat_residual_correction__lr0p001__wd0p001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.096045831129953,
+      "screen_mean_mae": 1.7883089238947087,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.096045831129953,
+      "heat_the_chair_mae": 1.7883089238947087
+    },
+    {
+      "candidate_id": "heat_mlp_lowdim__lr0p0003__wd0p0001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "dropout": 0.1,
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "screen_mean_rmse": 2.172823422794418,
+      "screen_mean_mae": 1.886343316972069,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.172823422794418,
+      "heat_the_chair_mae": 1.886343316972069
+    },
+    {
+      "candidate_id": "heat_mlp_lowdim__lr0p0003__wd0p001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "dropout": 0.1,
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "screen_mean_rmse": 2.172869551733196,
+      "screen_mean_mae": 1.8863861904622619,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.172869551733196,
+      "heat_the_chair_mae": 1.8863861904622619
+    },
+    {
+      "candidate_id": "heat_mlp_lowdim__lr0p001__wd0p0001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "dropout": 0.1,
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "screen_mean_rmse": 2.2438909385234336,
+      "screen_mean_mae": 1.968512198020672,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.2438909385234336,
+      "heat_the_chair_mae": 1.968512198020672
+    },
+    {
+      "candidate_id": "heat_mlp_lowdim__lr0p001__wd0p001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "dropout": 0.1,
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "screen_mean_rmse": 2.2440200834712276,
+      "screen_mean_mae": 1.9686534217906222,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.2440200834712276,
+      "heat_the_chair_mae": 1.9686534217906222
+    },
+    {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p0003__wd0p001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.6045499718652025,
+      "screen_mean_mae": 2.340337537299129,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.6045499718652025,
+      "heat_the_chair_mae": 2.340337537299129
+    },
+    {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p001__wd0p001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.6045499718652025,
+      "screen_mean_mae": 2.340337537299129,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.6045499718652025,
+      "heat_the_chair_mae": 2.340337537299129
+    },
+    {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p0003__wd0p0001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.604550203600181,
+      "screen_mean_mae": 2.3403377562854732,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.604550203600181,
+      "heat_the_chair_mae": 2.3403377562854732
+    },
+    {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p001__wd0p0001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 2.604550203600181,
+      "screen_mean_mae": 2.3403377562854732,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 2.604550203600181,
+      "heat_the_chair_mae": 2.3403377562854732
+    },
+    {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p001__wd0p0001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 5.443209132318218,
+      "screen_mean_mae": 5.089119438514067,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 5.443209132318218,
+      "heat_the_chair_mae": 5.089119438514067
+    },
+    {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p001__wd0p001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 5.443259978055717,
+      "screen_mean_mae": 5.089167822140698,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 5.443259978055717,
+      "heat_the_chair_mae": 5.089167822140698
+    },
+    {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p0003__wd0p0001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 5.684833849627022,
+      "screen_mean_mae": 5.3467676428593345,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 5.684833849627022,
+      "heat_the_chair_mae": 5.3467676428593345
+    },
+    {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p0003__wd0p001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "dropout": 0.0,
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "screen_mean_rmse": 5.684836030028096,
+      "screen_mean_mae": 5.346768459906586,
+      "n_back_rmse": NaN,
+      "n_back_mae": NaN,
+      "heat_the_chair_rmse": 5.684836030028096,
+      "heat_the_chair_mae": 5.346768459906586
+    }
+  ],
+  "screen_candidate_details": {
+    "heat_linear_huber_lowdim__lr0p001__wd0p0001": {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p001__wd0p0001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 5.089119438514067,
+          "rmse": 5.443209132318218,
+          "r2": -6.426251488929084,
+          "spearman": 0.2631619998440272
+        }
+      },
+      "mean_rmse": 5.443209132318218,
+      "mean_mae": 5.089119438514067
+    },
+    "heat_linear_huber_lowdim__lr0p001__wd0p001": {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p001__wd0p001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 5.089167822140698,
+          "rmse": 5.443259978055717,
+          "r2": -6.426390228774714,
+          "spearman": 0.2631619998440272
+        }
+      },
+      "mean_rmse": 5.443259978055717,
+      "mean_mae": 5.089167822140698
+    },
+    "heat_linear_huber_lowdim__lr0p0003__wd0p0001": {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p0003__wd0p0001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 5.3467676428593345,
+          "rmse": 5.684833849627022,
+          "r2": -7.100189209506155,
+          "spearman": 0.26506613867616485
+        }
+      },
+      "mean_rmse": 5.684833849627022,
+      "mean_mae": 5.3467676428593345
+    },
+    "heat_linear_huber_lowdim__lr0p0003__wd0p001": {
+      "candidate_id": "heat_linear_huber_lowdim__lr0p0003__wd0p001",
+      "model_family": "linear_huber",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 5.346768459906586,
+          "rmse": 5.684836030028096,
+          "r2": -7.100195423114187,
+          "spearman": 0.26506613867616485
+        }
+      },
+      "mean_rmse": 5.684836030028096,
+      "mean_mae": 5.346768459906586
+    },
+    "heat_mlp_lowdim__lr0p001__wd0p0001": {
+      "candidate_id": "heat_mlp_lowdim__lr0p001__wd0p0001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "dropout": 0.1,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.968512198020672,
+          "rmse": 2.2438909385234336,
+          "r2": -0.2620108852370955,
+          "spearman": -0.7791188989157352
+        }
+      },
+      "mean_rmse": 2.2438909385234336,
+      "mean_mae": 1.968512198020672
+    },
+    "heat_mlp_lowdim__lr0p001__wd0p001": {
+      "candidate_id": "heat_mlp_lowdim__lr0p001__wd0p001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "dropout": 0.1,
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.9686534217906222,
+          "rmse": 2.2440200834712276,
+          "r2": -0.26215615702124073,
+          "spearman": -0.7791613048559658
+        }
+      },
+      "mean_rmse": 2.2440200834712276,
+      "mean_mae": 1.9686534217906222
+    },
+    "heat_mlp_lowdim__lr0p0003__wd0p0001": {
+      "candidate_id": "heat_mlp_lowdim__lr0p0003__wd0p0001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "dropout": 0.1,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.886343316972069,
+          "rmse": 2.172823422794418,
+          "r2": -0.18333709762885664,
+          "spearman": -0.7803049230349273
+        }
+      },
+      "mean_rmse": 2.172823422794418,
+      "mean_mae": 1.886343316972069
+    },
+    "heat_mlp_lowdim__lr0p0003__wd0p001": {
+      "candidate_id": "heat_mlp_lowdim__lr0p0003__wd0p001",
+      "model_family": "mlp_huber_small",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        96,
+        48
+      ],
+      "dropout": 0.1,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.8863861904622619,
+          "rmse": 2.172869551733196,
+          "r2": -0.18338734254373334,
+          "spearman": -0.7803011944493107
+        }
+      },
+      "mean_rmse": 2.172869551733196,
+      "mean_mae": 1.8863861904622619
+    },
+    "heat_residual_correction__lr0p001__wd0p0001": {
+      "candidate_id": "heat_residual_correction__lr0p001__wd0p0001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.7883089216525279,
+          "rmse": 2.0960458303963434,
+          "r2": -0.1011872137090204,
+          "spearman": -0.7764758955519523
+        }
+      },
+      "mean_rmse": 2.0960458303963434,
+      "mean_mae": 1.7883089216525279
+    },
+    "heat_residual_correction__lr0p001__wd0p001": {
+      "candidate_id": "heat_residual_correction__lr0p001__wd0p001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.7883089238947087,
+          "rmse": 2.096045831129953,
+          "r2": -0.10118721447984447,
+          "spearman": -0.7764758955519523
+        }
+      },
+      "mean_rmse": 2.096045831129953,
+      "mean_mae": 1.7883089238947087
+    },
+    "heat_residual_correction__lr0p0003__wd0p0001": {
+      "candidate_id": "heat_residual_correction__lr0p0003__wd0p0001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.7883089216525279,
+          "rmse": 2.0960458303963434,
+          "r2": -0.1011872137090204,
+          "spearman": -0.7764758955519523
+        }
+      },
+      "mean_rmse": 2.0960458303963434,
+      "mean_mae": 1.7883089216525279
+    },
+    "heat_residual_correction__lr0p0003__wd0p001": {
+      "candidate_id": "heat_residual_correction__lr0p0003__wd0p001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 1.7883089238947087,
+          "rmse": 2.096045831129953,
+          "r2": -0.10118721447984447,
+          "spearman": -0.7764758955519523
+        }
+      },
+      "mean_rmse": 2.096045831129953,
+      "mean_mae": 1.7883089238947087
+    },
+    "heat_affine_calibrated_blend__lr0p001__wd0p0001": {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p001__wd0p0001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 2.3403377562854732,
+          "rmse": 2.604550203600181,
+          "r2": -0.7002981307504195,
+          "spearman": -0.7806751574079479
+        }
+      },
+      "mean_rmse": 2.604550203600181,
+      "mean_mae": 2.3403377562854732
+    },
+    "heat_affine_calibrated_blend__lr0p001__wd0p001": {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p001__wd0p001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 2.340337537299129,
+          "rmse": 2.6045499718652025,
+          "r2": -0.7002978281887473,
+          "spearman": -0.7806751574079479
+        }
+      },
+      "mean_rmse": 2.6045499718652025,
+      "mean_mae": 2.340337537299129
+    },
+    "heat_affine_calibrated_blend__lr0p0003__wd0p0001": {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p0003__wd0p0001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 2.3403377562854732,
+          "rmse": 2.604550203600181,
+          "r2": -0.7002981307504195,
+          "spearman": -0.7806751574079479
+        }
+      },
+      "mean_rmse": 2.604550203600181,
+      "mean_mae": 2.3403377562854732
+    },
+    "heat_affine_calibrated_blend__lr0p0003__wd0p001": {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p0003__wd0p001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 638,
+          "fold_count": 2,
+          "mae": 2.340337537299129,
+          "rmse": 2.6045499718652025,
+          "r2": -0.7002978281887473,
+          "spearman": -0.7806751574079479
+        }
+      },
+      "mean_rmse": 2.6045499718652025,
+      "mean_mae": 2.340337537299129
+    }
+  },
+  "winning_candidate": {
+    "candidate_id": "heat_residual_correction__lr0p0003__wd0p0001",
+    "model_family": "heat_residual_correction",
+    "feature_profile": "physiology_lowdim",
+    "hidden_dims": [
+      0,
+      0
+    ],
+    "dropout": 0.0,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001
+  },
+  "full_run_completed": true,
+  "full_candidate_details": {
+    "heat_residual_correction__lr0p0003__wd0p0001": {
+      "candidate_id": "heat_residual_correction__lr0p0003__wd0p0001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.15944445165349,
+          "rmse": 1.4629949608517474,
+          "r2": -0.09379864739339894,
+          "spearman": -0.7272346766705611
+        }
+      },
+      "mean_rmse": 1.4629949608517474,
+      "mean_mae": 1.15944445165349
+    },
+    "heat_residual_correction__lr0p001__wd0p0001": {
+      "candidate_id": "heat_residual_correction__lr0p001__wd0p0001",
+      "model_family": "heat_residual_correction",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.15944445165349,
+          "rmse": 1.4629949608517474,
+          "r2": -0.09379864739339894,
+          "spearman": -0.7272346766705611
+        }
+      },
+      "mean_rmse": 1.4629949608517474,
+      "mean_mae": 1.15944445165349
+    },
+    "heat_affine_calibrated_blend__lr0p0003__wd0p001": {
+      "candidate_id": "heat_affine_calibrated_blend__lr0p0003__wd0p001",
+      "model_family": "heat_affine_calibrated_blend",
+      "feature_profile": "physiology_lowdim",
+      "hidden_dims": [
+        0,
+        0
+      ],
+      "dropout": 0.0,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.001,
+      "groups": {
+        "heat_the_chair": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.5603215646510034,
+          "rmse": 1.8804082549159369,
+          "r2": -0.8069911253113107,
+          "spearman": -0.11492867192824585
+        }
+      },
+      "mean_rmse": 1.8804082549159369,
+      "mean_mae": 1.5603215646510034
+    }
+  },
+  "selected_result": {
+    "selection_policy": {
+      "ensemble_policy": "none",
+      "selection_scope": "per_subset_best_of_full_candidates"
+    },
+    "groups": {
+      "heat_the_chair": {
+        "sample_count": 5440,
+        "fold_count": 17,
+        "mae": 1.15944445165349,
+        "rmse": 1.4629949608517474,
+        "r2": -0.09379864739339894,
+        "spearman": -0.7272346766705611
+      }
+    },
+    "group_selections": {
+      "heat_the_chair": {
+        "selected_source_type": "candidate",
+        "selected_source_id": "heat_residual_correction__lr0p0003__wd0p0001",
+        "selected_metrics": {
+          "rmse": 1.4629949608517474,
+          "mae": 1.15944445165349
+        }
+      }
+    },
+    "mean_rmse": 1.4629949608517474,
+    "mean_mae": 1.15944445165349
+  },
+  "reference_public_opt": {
+    "n_back": {
+      "best_head": "ridge_residual",
+      "rmse": 4.610314175862912,
+      "mae": 3.8042500756744353
+    },
+    "heat_the_chair": {
+      "best_head": "physiology_persistence",
+      "rmse": 1.4567585657677036,
+      "mae": 1.1636927899776721
+    }
+  },
+  "reference_deep_models": {
+    "mult": {
+      "n_back": {
+        "rmse": 5.828201477861089,
+        "mae": 4.670542635891571
+      },
+      "heat_the_chair": {
+        "rmse": 2.8251064718014294,
+        "mae": 2.3534156768308843
+      }
+    },
+    "contiformer": {
+      "n_back": {
+        "rmse": 4.654091035125815,
+        "mae": 3.8122692104117193
+      },
+      "heat_the_chair": {
+        "rmse": 1.4567585837447001,
+        "mae": 1.1636927941704498
+      }
+    }
+  },
+  "acceptance": {
+    "groups": {
+      "n_back": {
+        "threshold_rmse": 4.6541,
+        "observed_rmse": null,
+        "passed": false,
+        "status": "not_run"
+      },
+      "heat_the_chair": {
+        "threshold_rmse": 1.4568,
+        "observed_rmse": 1.4629949608517474,
+        "passed": false,
+        "status": "completed"
+      }
+    },
+    "all_passed": false
+  },
+  "public_mainline_status": "NASA closed, UAB partial",
+  "prediction_exports_pruned": true
+}

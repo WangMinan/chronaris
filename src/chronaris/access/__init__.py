@@ -1,5 +1,7 @@
 """Data access boundaries for upstream stores."""
 
+from typing import TYPE_CHECKING
+
 from chronaris.access.influx_cli import (
     InfluxCliRunner,
     InfluxDistinctMeasurementReader,
@@ -38,11 +40,6 @@ from chronaris.access.real_bus_context import (
     resolve_time_column_index,
 )
 from chronaris.access.settings import AppSettings, InfluxSettings, MySQLSettings
-from chronaris.access.stage_h_profile import (
-    StageHProfileResolver,
-    StageHSortieProfile,
-    StageHViewProfile,
-)
 from chronaris.access.temporal import (
     AttachedClockTime,
     attach_bus_timestamps,
@@ -51,6 +48,13 @@ from chronaris.access.temporal import (
     parse_physiology_timestamp,
 )
 from chronaris.access.physiology_context import PhysiologyQueryContext, derive_physiology_query_context
+
+if TYPE_CHECKING:  # pragma: no cover - typing-only compatibility exports
+    from chronaris.feature_export.profile import (
+        StageHProfileResolver,
+        StageHSortieProfile,
+        StageHViewProfile,
+    )
 
 __all__ = [
     "AppSettings",
@@ -104,3 +108,11 @@ __all__ = [
     "rows_to_raw_points",
     "build_stage_b_live_sortie_loader",
 ]
+
+
+def __getattr__(name: str) -> object:
+    if name in {"StageHProfileResolver", "StageHSortieProfile", "StageHViewProfile"}:
+        from chronaris.feature_export import profile
+
+        return getattr(profile, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

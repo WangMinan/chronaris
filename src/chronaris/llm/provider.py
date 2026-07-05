@@ -1,4 +1,4 @@
-"""LLM provider implementations for Stage I preprocessing."""
+"""LLM provider implementations for task evaluation preprocessing."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ DEFAULT_DEEPSEEK_BASE_URL = "https://api.deepseek.com/chat/completions"
 
 
 class LLMProvider(ABC):
-    """Provider boundary used by the Stage I preprocessing pipeline."""
+    """Provider boundary used by the task evaluation preprocessing pipeline."""
 
     provider_name: str
     model: str
@@ -119,7 +119,7 @@ class MockLLMProvider(LLMProvider):
 
     provider_name = "mock"
 
-    def __init__(self, *, model: str = "mock-stage-i-llm") -> None:
+    def __init__(self, *, model: str = "mock-task-eval-llm") -> None:
         self.model = model
 
     def generate(self, request: LLMTaskRequest) -> LLMTaskResponse:

@@ -11,7 +11,7 @@ import unittest
 ENABLE_TORCH_RUNTIME_TESTS = os.environ.get("CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS") == "1"
 
 if ENABLE_TORCH_RUNTIME_TESTS:
-    SRC = Path(__file__).resolve().parents[1] / "src"
+    SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
     if str(SRC) not in sys.path:
         sys.path.insert(0, str(SRC))
 
@@ -131,7 +131,7 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             offsets_s=stream_batch.offsets_s,
             delta_t_s=stream_batch.delta_t_s,
             point_counts=stream_batch.point_counts,
-            final_hidden_state=torch.zeros((batch_size, hidden_dim), dtype=torch.float32),
+            terminal_hidden_state=torch.zeros((batch_size, hidden_dim), dtype=torch.float32),
             reference_projected_states=resolved_reference_projection,
             reference_offsets_s=resolved_reference_offsets,
         )
@@ -579,7 +579,7 @@ from pathlib import Path
 import sys
 import unittest
 
-SRC = Path(__file__).resolve().parents[1] / "src"
+SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
@@ -712,7 +712,7 @@ import unittest
 ENABLE_TORCH_RUNTIME_TESTS = os.environ.get("CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS") == "1"
 
 if ENABLE_TORCH_RUNTIME_TESTS:
-    SRC = Path(__file__).resolve().parents[1] / "src"
+    SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
     if str(SRC) not in sys.path:
         sys.path.insert(0, str(SRC))
 
@@ -808,12 +808,12 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertEqual(tuple(output.vehicle.reconstructions.shape), (2, 2, 2))
             self.assertEqual(tuple(output.physiology.projected_states.shape), (2, 2, 4))
             self.assertEqual(tuple(output.vehicle.projected_states.shape), (2, 2, 4))
-            self.assertEqual(tuple(output.physiology.final_hidden_state.shape), (2, 8))
-            self.assertEqual(tuple(output.vehicle.final_hidden_state.shape), (2, 8))
+            self.assertEqual(tuple(output.physiology.terminal_hidden_state.shape), (2, 8))
+            self.assertEqual(tuple(output.vehicle.terminal_hidden_state.shape), (2, 8))
             self.assertEqual(float(output.physiology.updated_hidden_states[1, 1].abs().sum().detach()), 0.0)
             self.assertEqual(float(output.physiology.reconstructions[1, 1].abs().sum().detach()), 0.0)
-            self.assertTrue(bool(torch.isfinite(output.physiology.final_hidden_state).all()))
-            self.assertTrue(bool(torch.isfinite(output.vehicle.final_hidden_state).all()))
+            self.assertTrue(bool(torch.isfinite(output.physiology.terminal_hidden_state).all()))
+            self.assertTrue(bool(torch.isfinite(output.vehicle.terminal_hidden_state).all()))
             self.assertTrue(bool(torch.isfinite(output.physiology.reconstructions).all()))
             self.assertTrue(bool(torch.isfinite(output.vehicle.reconstructions).all()))
 else:

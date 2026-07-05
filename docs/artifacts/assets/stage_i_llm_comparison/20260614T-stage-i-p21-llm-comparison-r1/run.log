@@ -1,2 +1,0 @@
-2026-06-14 23:18:52,988 INFO chronaris.pipelines.stage_i.llm.comparison: stage_i_llm_comparison observer start run_id=20260614T-stage-i-p21-llm-comparison-r1 run_root=docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1
-2026-06-14 23:29:17,263 INFO chronaris.pipelines.stage_i.llm.comparison: stage_i_llm_comparison observer start run_id=20260614T-stage-i-p21-llm-comparison-r1 run_root=docs/artifacts/assets/stage_i_llm_comparison/20260614T-stage-i-p21-llm-comparison-r1

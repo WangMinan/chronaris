@@ -8,32 +8,32 @@ from chronaris.features.experiment_input import (
     build_numeric_stream_matrix,
     summarize_e0_samples,
 )
-from chronaris.features.stage_i_case import (
+from chronaris.features.case_study import (
     StageICaseStudyRunInput,
     StageICaseStudyViewInput,
     StageICaseStudyWindowRow,
-    load_stage_i_case_study_run,
+    load_task_eval_case_study_run,
 )
-from chronaris.features.stage_i_features import (
+from chronaris.features.task_features import (
     StageIFeatureTableResult,
     build_nasa_csm_feature_table,
     build_uab_feature_table,
 )
-from chronaris.features.stage_i_sequences import (
+from chronaris.features.sequence_features import (
     DEFAULT_SEQUENCE_STEPS,
     REAL_SORTIE_V1,
     STAGE_H_CASE_DATASET_ID,
     StageISequencePreparationPayload,
     prepare_nasa_sequences,
-    prepare_stage_h_case_sequences,
+    prepare_feature_export_case_sequences,
     prepare_uab_sequences,
 )
-from chronaris.features.stage_h_bundle import (
+from chronaris.feature_export.bundle import (
     STAGE_H_FEATURE_KEYS,
     StageHFeatureRun,
     StageHFeatureView,
-    load_stage_h_feature_run,
-    load_stage_h_feature_view,
+    load_feature_export_feature_run,
+    load_feature_export_feature_view,
 )
 
 __all__ = [
@@ -54,12 +54,12 @@ __all__ = [
     "build_e0_experiment_samples",
     "build_nasa_csm_feature_table",
     "build_numeric_stream_matrix",
-    "load_stage_i_case_study_run",
+    "load_task_eval_case_study_run",
     "build_uab_feature_table",
-    "load_stage_h_feature_run",
-    "load_stage_h_feature_view",
+    "load_feature_export_feature_run",
+    "load_feature_export_feature_view",
     "prepare_nasa_sequences",
-    "prepare_stage_h_case_sequences",
+    "prepare_feature_export_case_sequences",
     "prepare_uab_sequences",
     "summarize_e0_samples",
 ]

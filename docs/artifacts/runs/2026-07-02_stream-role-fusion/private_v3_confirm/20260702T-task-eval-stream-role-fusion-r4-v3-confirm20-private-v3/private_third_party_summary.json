@@ -1,0 +1,118 @@
+{
+  "run_id": "20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3",
+  "status": "completed",
+  "generated_at_utc": "2026-07-02T03:49:24.531296Z",
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3",
+  "dataset_id": "private_feature_export",
+  "evidence_role": "private_real_dual_stream",
+  "data_role": "private_real_dual_stream",
+  "sample_facts": {
+    "sample_count": 111,
+    "view_count": 3,
+    "sortie_count": 2
+  },
+  "private_thirdparty_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_thirdparty_config.json",
+  "private_sequence_schema_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_sequence_schema.json",
+  "private_sequence_dataset_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_sequence_dataset_summary.json",
+  "task_manifest_jsonl": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/task_manifest.jsonl",
+  "split_manifest_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/split_manifest.json",
+  "label_feature_overlap_audit_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/label_feature_overlap_audit.json",
+  "label_feature_overlap_audit_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/label_feature_overlap_audit.csv",
+  "model_comparison_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/model_comparison_long.csv",
+  "model_comparison_wide_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/model_comparison_wide.csv",
+  "improvement_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/improvement_summary.csv",
+  "fold_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fold_metrics.csv",
+  "seed_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/seed_metrics.csv",
+  "training_curves_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/training_curves.csv",
+  "candidate_leaderboard_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/candidate_leaderboard.csv",
+  "fold_predictions_csv": null,
+  "gpu_perf_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/gpu_perf_summary.json",
+  "gpu_perf_batches_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/gpu_perf_batches.csv",
+  "gpu_perf_fold_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/gpu_perf_fold_summary.csv",
+  "optimization_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/optimization_summary.json",
+  "figure_paths": {
+    "fig_private_third_party_task_leaderboard": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_third_party_task_leaderboard.png",
+    "fig_private_third_party_delta_heatmap": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_third_party_delta_heatmap.png",
+    "fig_private_third_party_fold_variance": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_third_party_fold_variance.png",
+    "fig_private_third_party_training_curves": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_third_party_training_curves.png",
+    "fig_private_third_party_retrieval_topk": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_third_party_retrieval_topk.png",
+    "fig_private_third_party_gpu_throughput": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_third_party_gpu_throughput.png",
+    "fig_private_thirdparty_t1_macro_f1": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_t1_macro_f1.png",
+    "fig_private_thirdparty_t2_rmse": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_t2_rmse.png",
+    "fig_private_thirdparty_t3_retrieval": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_t3_retrieval.png",
+    "fig_private_thirdparty_delta_heatmap": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_delta_heatmap.png",
+    "fig_private_thirdparty_fold_stability": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_fold_stability.png",
+    "fig_private_thirdparty_confusion_t1": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_confusion_t1.png",
+    "fig_private_thirdparty_t2_error_distribution": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_t2_error_distribution.png",
+    "fig_private_thirdparty_t3_retrieval_curve": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/fig_private_thirdparty_t3_retrieval_curve.png"
+  },
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/nested_reports/task-eval-private-thirdparty-comparison-20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3.md",
+  "run_log_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/run.log",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/progress.json",
+  "completed_fold_count": 108,
+  "expected_fold_count": 117,
+  "diagnostics": {
+    "f_full": {
+      "mean_attention_entropy": 0.0,
+      "mean_top_event_concentration": 0.0,
+      "mean_event_mask_interference": 0.0
+    },
+    "g_min": {
+      "mean_attention_entropy": 0.9322229951351613,
+      "mean_top_event_concentration": 0.2298674837157533,
+      "mean_event_mask_interference": 0.0075189981374654685
+    },
+    "g_no_causal_mask": {
+      "mean_attention_entropy": 0.9988201126322016,
+      "mean_top_event_concentration": 0.06846144922950247,
+      "mean_event_mask_interference": 0.0011366595019091357
+    },
+    "chronaris_opt": {
+      "mean_attention_entropy": 0.9345914001937385,
+      "mean_top_event_concentration": 0.3974255199904914,
+      "mean_event_mask_interference": 0.002122758745073198,
+      "mean_causal_residual_gate": 1.0,
+      "lag_window_points": 3,
+      "residual_mode": "raw_window_stats",
+      "use_causal_mask": true
+    },
+    "chronaris_opt_no_causal_mask": {
+      "mean_attention_entropy": 0.9988201126322016,
+      "mean_top_event_concentration": 0.06846144922950247,
+      "mean_event_mask_interference": 0.0011366595019091357,
+      "mean_causal_residual_gate": 0.0,
+      "lag_window_points": 3,
+      "residual_mode": "raw_window_stats",
+      "use_causal_mask": false
+    }
+  },
+  "private_third_party_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_third_party_config.json",
+  "private_third_party_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_third_party_long.csv",
+  "private_third_party_wide_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_third_party_wide.csv",
+  "private_third_party_leaderboard_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/private_third_party_leaderboard.csv",
+  "predictions_csv": null,
+  "resume_command_txt": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/private_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-private-v3/resume_command.txt",
+  "gpuopt_enabled": true,
+  "gpuopt_config": {
+    "tensor_cache": "auto",
+    "max_cache_gb": 18.0,
+    "auto_batch_size": true,
+    "batch_size_candidates": [
+      2048,
+      1024,
+      512,
+      256,
+      128
+    ],
+    "amp": "bf16",
+    "amp_eval": true,
+    "torch_compile": "off",
+    "profile_gpu": true,
+    "num_workers": 24,
+    "parallel_fold_prep": 8
+  },
+  "prediction_exports_pruned": true,
+  "prediction_exports_pruned_reason": "dense prediction CSV excluded from git during 2026-07-02 docs cleanup; aggregate metrics and figures remain."
+}

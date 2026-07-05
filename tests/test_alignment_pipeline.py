@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 import unittest
 
-SRC = Path(__file__).resolve().parents[1] / "src"
+SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
@@ -24,9 +24,9 @@ from chronaris.pipelines.alignment_preview import (
     save_alignment_preview_checkpoint,
 )
 from chronaris.pipelines.alignment_preview import AlignmentPreviewConfig, AlignmentPreviewPipeline
-from chronaris.pipelines.stage_i.training.backbone_train import (
+from chronaris.modeling.training.backbone_train import (
     StageIBackboneTrainConfig,
-    run_stage_i_backbone_train,
+    run_task_eval_backbone_train,
 )
 from chronaris.schema.models import StreamKind
 
@@ -370,7 +370,7 @@ import unittest
 ENABLE_TORCH_RUNTIME_TESTS = os.environ.get("CHRONARIS_ENABLE_TORCH_RUNTIME_TESTS") == "1"
 
 if ENABLE_TORCH_RUNTIME_TESTS:
-    SRC = Path(__file__).resolve().parents[1] / "src"
+    SRC = next(parent / "src" for parent in Path(__file__).resolve().parents if (parent / "src" / "chronaris").exists())
     if str(SRC) not in sys.path:
         sys.path.insert(0, str(SRC))
 
@@ -475,7 +475,7 @@ if ENABLE_TORCH_RUNTIME_TESTS:
             self.assertIn("# Alignment Preview - sortie-001", result.report_markdown)
             self.assertIn("- sample count: `25`", result.report_markdown)
             self.assertIn("- train: `15`", result.report_markdown)
-            self.assertIn("## Final Train Metrics", result.report_markdown)
+            self.assertIn("## Terminal Train Metrics", result.report_markdown)
             self.assertIn("## Reference Intermediate Export", result.report_markdown)
             self.assertIn("- partition: `test`", result.report_markdown)
             self.assertIn("- exported sample count: `3`", result.report_markdown)
@@ -601,11 +601,11 @@ class AlignmentPreviewCheckpointTest(unittest.TestCase):
             self.assertEqual(inference_result.intermediate_export.partition, "all")
             self.assertEqual(inference_result.intermediate_export.sample_count, 10)
 
-    def test_stage_i_backbone_train_writes_checkpoint_and_summary(self) -> None:
+    def test_task_eval_backbone_train_writes_checkpoint_and_summary(self) -> None:
         samples = tuple(_light_sample(index) for index in range(10))
         with tempfile.TemporaryDirectory() as temp_dir:
             config = StageIBackboneTrainConfig(
-                run_id="stage-i-backbone-test",
+                run_id="task-eval-backbone-test",
                 output_root=temp_dir,
                 preview_config=AlignmentPreviewConfig(
                     prototype_config=AlignmentPrototypeConfig(
@@ -627,7 +627,7 @@ class AlignmentPreviewCheckpointTest(unittest.TestCase):
                 ),
             )
 
-            result = run_stage_i_backbone_train(
+            result = run_task_eval_backbone_train(
                 config,
                 samples,
                 source_summary={"sample_count": len(samples)},
@@ -637,5 +637,5 @@ class AlignmentPreviewCheckpointTest(unittest.TestCase):
             self.assertTrue(Path(result.summary_path).exists())
             self.assertEqual(
                 result.summary["checkpoint_metadata"]["backbone_run_id"],
-                "stage-i-backbone-test",
+                "task-eval-backbone-test",
             )

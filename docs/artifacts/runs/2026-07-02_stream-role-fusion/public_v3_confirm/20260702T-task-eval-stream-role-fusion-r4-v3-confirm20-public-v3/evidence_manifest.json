@@ -1,0 +1,97 @@
+{
+  "run_id": "20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3",
+  "status": "completed",
+  "generated_at_utc": "2026-07-02T06:42:43.843085Z",
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3",
+  "evidence_role": "public_adapter_context_proxy_evidence",
+  "dataset_role": "public_context_proxy",
+  "screen_leaderboard_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/screen_leaderboard.csv",
+  "confirm_leaderboard_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/confirm_leaderboard.csv",
+  "model_comparison_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/model_comparison_long.csv",
+  "ablation_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/ablation_long.csv",
+  "ablation_wide_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/ablation_wide.csv",
+  "component_contribution_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/component_contribution.csv",
+  "ablation_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/ablation_summary.csv",
+  "ablation_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/ablation_summary.json",
+  "fold_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fold_metrics.csv",
+  "training_curves_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/training_curves.csv",
+  "fold_predictions_csv": null,
+  "predictions_csv": null,
+  "public_ablation_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/public_ablation_config.json",
+  "public_fusion_ablation_config_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/public_fusion_ablation_config.json",
+  "ablation_variant_manifest_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/ablation_variant_manifest.json",
+  "public_fusion_ablation_variants_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/public_fusion_ablation_variants.json",
+  "gpu_perf_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/gpu_perf_summary.json",
+  "gpu_perf_batches_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/gpu_perf_batches.csv",
+  "gpu_perf_fold_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/gpu_perf_fold_summary.csv",
+  "figure_paths": {
+    "fig_public_ablation_nasa_macro_f1": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_nasa_macro_f1.png",
+    "fig_public_ablation_nasa_balanced_accuracy": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_nasa_balanced_accuracy.png",
+    "fig_public_ablation_uab_rmse": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_uab_rmse.png",
+    "fig_public_ablation_delta_heatmap": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_delta_heatmap.png",
+    "fig_public_ablation_win_summary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_win_summary.png",
+    "fig_public_ablation_config_sensitivity": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_config_sensitivity.png",
+    "fig_public_ablation_context_contribution": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_context_contribution.png",
+    "fig_public_ablation_component_contribution": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_component_contribution.png",
+    "fig_public_ablation_fold_stability": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_fold_stability.png",
+    "fig_public_ablation_gpu_throughput": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/fig_public_ablation_gpu_throughput.png"
+  },
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/nested_reports/task-eval-public-fusion-ablation-20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3.md",
+  "run_log_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/run.log",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/progress.json",
+  "resume_command_txt": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/resume_command.txt",
+  "completed_fold_count": 1404,
+  "expected_fold_count": 1428,
+  "screen_completed_fold_count": 0,
+  "source_prepared_roots": {
+    "nasa_csm": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/nasa_csm",
+    "uab_workload_dataset": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/uab_workload_dataset"
+  },
+  "p28_source_run_id": "20260701T-task-eval-public-fusion-refresh-r1",
+  "base_run_id": "20260702T-task-eval-stream-role-fusion-r4-v3-confirm20",
+  "gpuopt_enabled": true,
+  "config_delta": {
+    "tensor_cache": "auto",
+    "max_cache_gb": 18.0,
+    "auto_batch_size": true,
+    "batch_size_candidates": [
+      2048,
+      1024,
+      512,
+      256,
+      128
+    ],
+    "amp": "bf16",
+    "amp_eval": true,
+    "torch_compile": "off",
+    "profile_gpu": true,
+    "num_workers": 24,
+    "parallel_fold_prep": 8,
+    "parallel_candidates": 1,
+    "config_lineage": "gpuopt rerun uses same prepared roots, labels and split construction; it must not be merged into base run leaderboards without protocol/config columns."
+  },
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_stream-role-fusion/public_v3_confirm/20260702T-task-eval-stream-role-fusion-r4-v3-confirm20-public-v3/public_fusion_ablation_summary.json",
+  "protocol": {
+    "screen": {
+      "epochs": 20,
+      "max_folds": null,
+      "seed": 42
+    },
+    "confirm": {
+      "epochs": 20,
+      "max_folds": null,
+      "seeds": [
+        42,
+        17,
+        29
+      ]
+    },
+    "evidence_role": "public_adapter_context_proxy_evidence",
+    "data_role": "public_context_proxy",
+    "target_transform_policy": "fit on train fold only"
+  },
+  "prediction_exports_pruned": true,
+  "prediction_exports_pruned_reason": "dense prediction CSV excluded from git during 2026-07-02 docs cleanup; aggregate metrics and figures remain."
+}

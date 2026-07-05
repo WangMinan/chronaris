@@ -1,40 +1,32 @@
 """Dataset construction and windowing utilities."""
 
+from typing import TYPE_CHECKING
+
 from chronaris.dataset.builder import SortieDatasetBuilder
-from chronaris.dataset.nasa_csm_stage_i import NASACSMPreparedTaskSet, build_nasa_csm_task_entries
-from chronaris.dataset.stage_i_contracts import (
+from chronaris.dataset.nasa_csm_tasks import NASACSMPreparedTaskSet, build_nasa_csm_task_entries
+from chronaris.dataset.task_contracts import (
     StageIDatasetSummary,
     StageITaskEntry,
-    dump_stage_i_summary,
-    dump_stage_i_task_entries,
+    dump_task_eval_summary,
+    dump_task_eval_task_entries,
     isoformat_utc,
-    load_stage_i_task_entries,
+    load_task_eval_task_entries,
 )
-from chronaris.dataset.stage_i_private_contracts import (
+from chronaris.dataset.dingxin_task_contracts import (
     StageIPrivateTaskEntry,
-    dump_stage_i_private_task_entries,
-    load_stage_i_private_task_entries,
+    dump_task_eval_private_task_entries,
+    load_task_eval_private_task_entries,
 )
-from chronaris.dataset.stage_i_real_task_builders import (
-    TASK_EVENT_REPLAY_TAG,
-    TASK_RISK_PROXY,
-    TASK_WORKLOAD_PROXY,
-    THESIS_WEAK_LABEL_BENCHMARK_ROLE,
-    THESIS_WEAK_LABEL_BOUNDARY,
-    THESIS_WEAK_LABEL_ROLE,
-    attach_llm_preprocessing_context_to_task_entries,
-    build_stage_i_real_task_payload,
-)
-from chronaris.dataset.stage_i_sequence_contracts import (
+from chronaris.dataset.public_sequence_contracts import (
     StageISequenceBundle,
     StageISequenceDatasetSummary,
     StageISequenceEntry,
-    dump_stage_i_sequence_entries,
-    dump_stage_i_sequence_summary,
-    load_stage_i_sequence_bundle,
-    load_stage_i_sequence_entries,
-    load_stage_i_sequence_summary,
-    save_stage_i_sequence_bundle,
+    dump_task_eval_sequence_entries,
+    dump_task_eval_sequence_summary,
+    load_task_eval_sequence_bundle,
+    load_task_eval_sequence_entries,
+    load_task_eval_sequence_summary,
+    save_task_eval_sequence_bundle,
 )
 from chronaris.dataset.streaming_windows import (
     StreamingPointEvent,
@@ -42,9 +34,21 @@ from chronaris.dataset.streaming_windows import (
     StreamingWindowBufferDiagnostics,
     iter_aligned_sortie_events,
 )
-from chronaris.dataset.uab_stage_i import UABPreparedTaskSet, build_uab_task_entries
+from chronaris.dataset.uab_workload_tasks import UABPreparedTaskSet, build_uab_task_entries
 from chronaris.dataset.timebase import ReferenceStrategy, TimebaseError, TimebasePolicy, align_sortie_bundle
 from chronaris.dataset.windows import build_sample_windows
+
+if TYPE_CHECKING:  # pragma: no cover - typing-only compatibility exports
+    from chronaris.dataset.dingxin_task_builders import (
+        TASK_EVENT_REPLAY_TAG,
+        TASK_RISK_PROXY,
+        TASK_WORKLOAD_PROXY,
+        THESIS_WEAK_LABEL_BENCHMARK_ROLE,
+        THESIS_WEAK_LABEL_BOUNDARY,
+        THESIS_WEAK_LABEL_ROLE,
+        attach_llm_preprocessing_context_to_task_entries,
+        build_task_eval_real_task_payload,
+    )
 
 __all__ = [
     "NASACSMPreparedTaskSet",
@@ -72,19 +76,38 @@ __all__ = [
     "attach_llm_preprocessing_context_to_task_entries",
     "build_sample_windows",
     "build_nasa_csm_task_entries",
-    "build_stage_i_real_task_payload",
+    "build_task_eval_real_task_payload",
     "build_uab_task_entries",
-    "dump_stage_i_sequence_entries",
-    "dump_stage_i_sequence_summary",
-    "dump_stage_i_private_task_entries",
-    "dump_stage_i_summary",
-    "dump_stage_i_task_entries",
+    "dump_task_eval_sequence_entries",
+    "dump_task_eval_sequence_summary",
+    "dump_task_eval_private_task_entries",
+    "dump_task_eval_summary",
+    "dump_task_eval_task_entries",
     "isoformat_utc",
     "iter_aligned_sortie_events",
-    "load_stage_i_sequence_bundle",
-    "load_stage_i_sequence_entries",
-    "load_stage_i_sequence_summary",
-    "load_stage_i_private_task_entries",
-    "load_stage_i_task_entries",
-    "save_stage_i_sequence_bundle",
+    "load_task_eval_sequence_bundle",
+    "load_task_eval_sequence_entries",
+    "load_task_eval_sequence_summary",
+    "load_task_eval_private_task_entries",
+    "load_task_eval_task_entries",
+    "save_task_eval_sequence_bundle",
 ]
+
+_DINGXIN_TASK_BUILDER_EXPORTS = {
+    "TASK_EVENT_REPLAY_TAG",
+    "TASK_RISK_PROXY",
+    "TASK_WORKLOAD_PROXY",
+    "THESIS_WEAK_LABEL_BENCHMARK_ROLE",
+    "THESIS_WEAK_LABEL_BOUNDARY",
+    "THESIS_WEAK_LABEL_ROLE",
+    "attach_llm_preprocessing_context_to_task_entries",
+    "build_task_eval_real_task_payload",
+}
+
+
+def __getattr__(name: str) -> object:
+    if name in _DINGXIN_TASK_BUILDER_EXPORTS:
+        from chronaris.dataset import dingxin_task_builders
+
+        return getattr(dingxin_task_builders, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

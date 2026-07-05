@@ -22,7 +22,7 @@ from chronaris.evaluation.sortie_validation import (
     summarize_window_trial,
     validate_sortie_bundle,
 )
-from chronaris.evaluation.stage_i_case_metrics import (
+from chronaris.evaluation.case_metrics import (
     StageICaseStudyAblationMetrics,
     StageICaseStudyPilotComparison,
     StageICaseStudySampleMetric,
@@ -34,7 +34,7 @@ from chronaris.evaluation.stage_i_case_metrics import (
     compute_case_study_ablations,
     explain_warn_view,
 )
-from chronaris.evaluation.stage_i_metrics import (
+from chronaris.evaluation.task_metrics import (
     evaluate_classification_predictions,
     evaluate_regression_predictions,
     save_bar_plot,

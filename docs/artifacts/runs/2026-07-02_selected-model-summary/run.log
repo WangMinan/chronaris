@@ -1,0 +1,3 @@
+2026-07-02T06:50:59.899184Z INFO stage=P36-summary run_id=20260702T-task-eval-optimized-model-summary-r4-v3-confirm20 status=completed runtime_device=cuda
+Built optimized model summary from P34/P35/P36 artifacts and fixed P30/P31/P32 references.
+No training or baseline rerun was performed by this summary builder.

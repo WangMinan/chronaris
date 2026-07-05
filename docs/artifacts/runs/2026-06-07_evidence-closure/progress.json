@@ -1,0 +1,93 @@
+{
+  "artifact_root": "docs/artifacts/runs/2026-06-07_evidence-closure",
+  "only": [
+    "multitask",
+    "rigid_body",
+    "semantic",
+    "runtime",
+    "private_proxy",
+    "public_adapter",
+    "rotation"
+  ],
+  "reuse_existing": false,
+  "stage_name": "task_eval_evidence_runner",
+  "run_id": "20260607T-task-eval-evidence-closure-r2",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-07T12:54:52.889802Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-07T12:53:39.888892Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/runs/2026-06-07_evidence-closure",
+      "only": [
+        "multitask",
+        "rigid_body",
+        "semantic",
+        "runtime",
+        "private_proxy",
+        "public_adapter",
+        "rotation"
+      ],
+      "reuse_existing": false
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:53:39.892051Z",
+      "event": "tasks_resolved",
+      "task_count": 7
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:02.693233Z",
+      "event": "task_finished",
+      "task_name": "multitask",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:02.693712Z",
+      "event": "task_finished",
+      "task_name": "rigid_body",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:02.702455Z",
+      "event": "task_finished",
+      "task_name": "semantic",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:02.732513Z",
+      "event": "task_finished",
+      "task_name": "runtime",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:51.639774Z",
+      "event": "task_finished",
+      "task_name": "private_proxy",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:52.394683Z",
+      "event": "task_finished",
+      "task_name": "public_adapter",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:52.885312Z",
+      "event": "task_finished",
+      "task_name": "rotation",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-06-07T12:54:52.889802Z",
+      "event": "finished",
+      "manifest_path": "docs/artifacts/runs/2026-06-07_evidence-closure/evidence_manifest.json",
+      "report_path": "docs/artifacts/runs/2026-06-07_evidence-closure/report.md",
+      "status": "completed"
+    }
+  ],
+  "task_count": 7,
+  "task_name": "rotation",
+  "status": "completed",
+  "manifest_path": "docs/artifacts/runs/2026-06-07_evidence-closure/evidence_manifest.json",
+  "report_path": "docs/artifacts/runs/2026-06-07_evidence-closure/report.md"
+}

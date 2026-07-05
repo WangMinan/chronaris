@@ -1,0 +1,272 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+  "models": [
+    "chronaris_full",
+    "mult",
+    "contiformer",
+    "naive_time_sync",
+    "classical_baseline"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "split_strategy": [
+    "leave_one_view_out",
+    "leave_one_sortie_out"
+  ],
+  "evidence_role": "private_real_dual_stream",
+  "resume": false,
+  "skip_completed": true,
+  "gpuopt_enabled": true,
+  "tensor_cache": "auto",
+  "auto_batch_size": true,
+  "amp": "bf16",
+  "torch_compile": "off",
+  "num_workers": 24,
+  "parallel_fold_prep": 8,
+  "stage_name": "task_eval_private_thirdparty_comparison",
+  "run_id": "20260702T-task-eval-private-thirdparty-comparison-gpuopt-r1",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-01T18:28:19.874400Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-01T18:24:27.161643Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+      "models": [
+        "chronaris_full",
+        "mult",
+        "contiformer",
+        "naive_time_sync",
+        "classical_baseline"
+      ],
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "split_strategy": [
+        "leave_one_view_out",
+        "leave_one_sortie_out"
+      ],
+      "evidence_role": "private_real_dual_stream",
+      "resume": false,
+      "skip_completed": true,
+      "gpuopt_enabled": true,
+      "tensor_cache": "auto",
+      "auto_batch_size": true,
+      "amp": "bf16",
+      "torch_compile": "off",
+      "num_workers": 24,
+      "parallel_fold_prep": 8
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:24:35.825359Z",
+      "event": "sources_loaded",
+      "sample_count": 111,
+      "task_entry_count": 333,
+      "view_count": 3,
+      "sortie_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:24:37.424299Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "chronaris_full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:24:37.833910Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "chronaris_full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:24:37.834107Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:25:37.161582Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:25:37.161757Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:28.709631Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:28.709842Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:28.752536Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:28.752719Z",
+      "event": "model_task_start",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "classical_baseline"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:28.919999Z",
+      "event": "model_task_done",
+      "task_name": "T1_maneuver_intensity_class",
+      "model_name": "classical_baseline"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:28.920179Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "chronaris_full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:29.381556Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "chronaris_full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:26:29.381768Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:27:23.848779Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:27:23.848990Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:15.778117Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:15.778349Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:15.825468Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:15.825684Z",
+      "event": "model_task_start",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "classical_baseline"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:15.959570Z",
+      "event": "model_task_done",
+      "task_name": "T2_next_window_physiology_response",
+      "model_name": "classical_baseline"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:15.959813Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "chronaris_full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:16.505898Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "chronaris_full"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:16.506156Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:16.998857Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:16.999163Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:17.337494Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:17.337747Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:17.681215Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:17.681510Z",
+      "event": "model_task_start",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "classical_baseline"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:18.120433Z",
+      "event": "model_task_done",
+      "task_name": "T3_paired_pilot_window_retrieval",
+      "model_name": "classical_baseline"
+    },
+    {
+      "timestamp_utc": "2026-07-01T18:28:19.874400Z",
+      "event": "finished",
+      "status": "completed",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/private_thirdparty_summary.json",
+      "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/evidence_manifest.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/report.md"
+    }
+  ],
+  "sample_count": 111,
+  "task_entry_count": 333,
+  "view_count": 3,
+  "sortie_count": 2,
+  "task_name": "T3_paired_pilot_window_retrieval",
+  "model_name": "classical_baseline",
+  "status": "completed",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/private_thirdparty_summary.json",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/report.md"
+}

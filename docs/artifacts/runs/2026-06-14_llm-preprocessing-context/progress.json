@@ -1,0 +1,54 @@
+{
+  "artifact_root": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context",
+  "mode": "build-and-evaluate",
+  "provider_name": "deepseek",
+  "model": "deepseek-v4-pro",
+  "stage_name": "task_eval_llm_preprocessing",
+  "run_id": "20260614T-task-eval-p20-deepseek-llm-preprocessing-r3-sliced",
+  "last_event": "finished",
+  "updated_at_utc": "2026-06-14T14:12:37.471545Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-14T14:09:55.682503Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context",
+      "mode": "build-and-evaluate",
+      "provider_name": "deepseek",
+      "model": "deepseek-v4-pro"
+    },
+    {
+      "timestamp_utc": "2026-06-14T14:09:55.950740Z",
+      "event": "sources_loaded",
+      "source_count": 8
+    },
+    {
+      "timestamp_utc": "2026-06-14T14:09:55.951449Z",
+      "event": "cards_built",
+      "card_count": 5
+    },
+    {
+      "timestamp_utc": "2026-06-14T14:09:55.972834Z",
+      "event": "llm_task_calls_built",
+      "task_call_count": 8
+    },
+    {
+      "timestamp_utc": "2026-06-14T14:12:37.446951Z",
+      "event": "llm_requests_finished",
+      "request_count": 8,
+      "error_count": 0
+    },
+    {
+      "timestamp_utc": "2026-06-14T14:12:37.471545Z",
+      "event": "finished",
+      "summary_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/llm_preprocessing_summary.json",
+      "report_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/report.md"
+    }
+  ],
+  "source_count": 8,
+  "card_count": 5,
+  "task_call_count": 8,
+  "request_count": 8,
+  "error_count": 0,
+  "summary_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/llm_preprocessing_summary.json",
+  "report_path": "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/report.md"
+}

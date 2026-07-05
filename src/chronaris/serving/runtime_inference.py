@@ -1,4 +1,4 @@
-"""Checkpoint-backed Stage I runtime inference."""
+"""Checkpoint-backed task evaluation runtime inference."""
 
 from __future__ import annotations
 
@@ -48,8 +48,8 @@ class StageIRuntimeInferenceConfig:
 
     run_id: str
     checkpoint_path: str
-    artifact_root: str = "docs/artifacts/assets/stage_i_runtime_inference"
-    report_root: str = "docs/artifacts/stage_i"
+    artifact_root: str = "docs/artifacts/runs"
+    report_root: str = "docs/artifacts/runs"
     device: str = "auto"
     export_predictions_csv: bool = True
     emit_predictions_jsonl: bool = False
@@ -99,7 +99,7 @@ class _RuntimeSession:
     normalization_stats: AlignmentInputNormalizationStats | None
 
 
-def run_stage_i_runtime_inference(
+def run_task_eval_runtime_inference(
     config: StageIRuntimeInferenceConfig,
     *,
     samples: Sequence[E0ExperimentSample],
@@ -164,7 +164,7 @@ def run_stage_i_runtime_inference(
     report_root = Path(config.report_root)
     report_root.mkdir(parents=True, exist_ok=True)
     summary_path = run_root / "runtime_inference_summary.json"
-    report_path = report_root / f"stage-i-runtime-inference-{config.run_id}.md"
+    report_path = report_root / f"task-eval-runtime-inference-{config.run_id}.md"
     predictions_csv_path: str | None = None
     predictions_jsonl_path: str | None = None
     if config.export_predictions_csv:
@@ -190,7 +190,7 @@ def run_stage_i_runtime_inference(
         encoding="utf-8",
     )
     report_path.write_text(
-        render_stage_i_runtime_inference_report(summary) + "\n",
+        render_task_eval_runtime_inference_report(summary) + "\n",
         encoding="utf-8",
     )
     return StageIRuntimeInferenceRunResult(
@@ -204,38 +204,38 @@ def run_stage_i_runtime_inference(
     )
 
 
-def run_stage_i_runtime_inference_batch(
+def run_task_eval_runtime_inference_batch(
     config: StageIRuntimeInferenceConfig,
     *,
     samples: Sequence[E0ExperimentSample],
 ) -> StageIRuntimeInferenceRunResult:
     """Convenience wrapper for batch replay only."""
 
-    return run_stage_i_runtime_inference(
+    return run_task_eval_runtime_inference(
         _replace_config(config, replay_mode="batch"),
         samples=samples,
     )
 
 
-def run_stage_i_runtime_inference_incremental(
+def run_task_eval_runtime_inference_incremental(
     config: StageIRuntimeInferenceConfig,
     *,
     samples: Sequence[E0ExperimentSample],
 ) -> StageIRuntimeInferenceRunResult:
     """Convenience wrapper for incremental replay only."""
 
-    return run_stage_i_runtime_inference(
+    return run_task_eval_runtime_inference(
         _replace_config(config, replay_mode="incremental"),
         samples=samples,
     )
 
 
-def render_stage_i_runtime_inference_report(summary: Mapping[str, object]) -> str:
+def render_task_eval_runtime_inference_report(summary: Mapping[str, object]) -> str:
     """Render a compact runtime inference report."""
 
     diagnostics = summary["diagnostics"]
     lines = [
-        f"# Stage I Runtime Inference - {summary['run_id']}",
+        f"# task evaluation Runtime Inference - {summary['run_id']}",
         "",
         f"- generated_at_utc: `{summary['generated_at_utc']}`",
         f"- checkpoint_path: `{summary['checkpoint_path']}`",

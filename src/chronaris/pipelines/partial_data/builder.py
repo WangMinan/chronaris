@@ -103,10 +103,10 @@ class PartialDataBuilder:
         write_jsonl(manifest_path, manifest_rows)
         write_jsonl(window_manifest_path, window_rows)
 
-        final_feature_bundle_path: str | None = None
+        selected_feature_bundle_path: str | None = None
         if stream_matrices:
             _write_vehicle_feature_bundle(feature_bundle_path, stream_matrices, built_samples)
-            final_feature_bundle_path = str(feature_bundle_path)
+            selected_feature_bundle_path = str(feature_bundle_path)
 
         manifest = PartialDataManifest(
             export_version=self.config.export_version,
@@ -119,7 +119,7 @@ class PartialDataBuilder:
             manifest=manifest,
             manifest_path=str(manifest_path),
             window_manifest_path=str(window_manifest_path),
-            feature_bundle_path=final_feature_bundle_path,
+            feature_bundle_path=selected_feature_bundle_path,
             built_samples=tuple(built_samples),
         )
 

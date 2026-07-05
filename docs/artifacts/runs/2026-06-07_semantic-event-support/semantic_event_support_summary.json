@@ -1,0 +1,995 @@
+{
+  "run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json",
+  "sample_count": 111,
+  "mean_attention_entropy": 1.9099187056223552,
+  "mean_max_attention": 0.22986747324466705,
+  "mean_top_event_score": 1.0,
+  "mean_top_contribution_score": 2.481295108795166,
+  "view_count": 3,
+  "generated_view_ids": [
+    "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033"
+  ],
+  "query_names": [
+    "risk_proxy",
+    "workload_proxy",
+    "event_replay_tag"
+  ],
+  "query_count": 3,
+  "mean_event_token_count": 1.0090090036392212,
+  "mean_query_entropy": 0.00854379249115785,
+  "mean_top_query_score": 2.4731220890272847,
+  "mean_top_event_attribution": 7.417277874173345,
+  "top_view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+  "samples": [
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0000",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.751729965209961,
+      "top_query_event_offset_s": 0.6261972188949585,
+      "top_event_attribution": 8.255189895629883
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0001",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 0.38782718777656555,
+      "top_query_event_offset_s": 0.6969227194786072,
+      "top_event_attribution": 1.163481593132019
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0002",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0003",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0004",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0005",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0006",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0007",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0008",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0009",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0010",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0011",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0012",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0013",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0014",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0015",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0016",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0017",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0018",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0019",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0020",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0021",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0022",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0023",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0024",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0025",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0026",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0027",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0028",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0029",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0030",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0031",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0032",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0033",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0034",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0035",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.686110496520996,
+      "top_query_event_offset_s": 0.6881057620048523,
+      "top_event_attribution": 8.058331489562988
+    },
+    {
+      "sample_id": "20251005_四01_ACT-4_云_J20_22#01:0036",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.615206241607666,
+      "top_query_event_offset_s": 0.14610818028450012,
+      "top_event_attribution": 7.845618724822998
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0000",
+      "event_token_count": 2,
+      "top_query_name": "event_replay_tag",
+      "top_query_score": 1.7563132047653198,
+      "top_query_event_offset_s": 0.5578886270523071,
+      "top_event_attribution": 5.0371198654174805
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0001",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 0.3186921775341034,
+      "top_query_event_offset_s": 0.7163625955581665,
+      "top_event_attribution": 0.9560765027999878
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0002",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0003",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0004",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0005",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0006",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0007",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0008",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0009",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0010",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0011",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0012",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0013",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0014",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0015",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0016",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0017",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0018",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0019",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0020",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0021",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0022",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0023",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0024",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0025",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0026",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0027",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0028",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.5790247917175293,
+      "top_query_event_offset_s": 0.7107536792755127,
+      "top_event_attribution": 7.737074375152588
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.519973039627075,
+      "top_query_event_offset_s": 0.14659854769706726,
+      "top_event_attribution": 7.559919357299805
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0000",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.7265517711639404,
+      "top_query_event_offset_s": 0.6206890344619751,
+      "top_event_attribution": 8.179655075073242
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0001",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 0.2879846394062042,
+      "top_query_event_offset_s": 0.7450853586196899,
+      "top_event_attribution": 0.8639539480209351
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0002",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0003",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0004",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0005",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0006",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0007",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0008",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0009",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0010",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0011",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0012",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0013",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0014",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0015",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0016",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0017",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0018",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0019",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0020",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0021",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0022",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0023",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0024",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0025",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0026",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0027",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0028",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0029",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0030",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0031",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0032",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0033",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0034",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0035",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.3517115116119385,
+      "top_query_event_offset_s": 0.7421258687973022,
+      "top_event_attribution": 7.0551347732543945
+    },
+    {
+      "sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0036",
+      "event_token_count": 1,
+      "top_query_name": "risk_proxy",
+      "top_query_score": 2.1794824600219727,
+      "top_query_event_offset_s": 0.15099972486495972,
+      "top_event_attribution": 6.538447380065918
+    }
+  ],
+  "view_rows": [
+    {
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "pilot_id": 10033,
+      "source_summary_path": "",
+      "state_source": "hidden",
+      "sample_count": 37,
+      "query_names": [
+        "risk_proxy",
+        "workload_proxy",
+        "event_replay_tag"
+      ],
+      "mean_event_token_count": 1.0,
+      "mean_query_entropy": 0.0,
+      "mean_top_query_score": 2.623851899359677,
+      "mean_top_event_attribution": 7.8715556988845,
+      "mean_attention_entropy": 1.910941481590271,
+      "mean_max_attention": 0.23009324073791504,
+      "mean_top_event_score": 1.0,
+      "mean_top_contribution_score": 2.623852252960205,
+      "dominant_query_name": "risk_proxy",
+      "top_sample_id": "20251005_四01_ACT-4_云_J20_22#01:0000",
+      "top_sample_query_name": "risk_proxy",
+      "top_sample_query_event_offset_s": 0.6261972188949585,
+      "top_sample_event_attribution": 8.255189895629883
+    },
+    {
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "pilot_id": 10035,
+      "source_summary_path": "",
+      "state_source": "hidden",
+      "sample_count": 37,
+      "query_names": [
+        "risk_proxy",
+        "workload_proxy",
+        "event_replay_tag"
+      ],
+      "mean_event_token_count": 1.0270270109176636,
+      "mean_query_entropy": 0.02563137747347355,
+      "mean_top_query_score": 2.4941032794681757,
+      "mean_top_event_attribution": 7.476044445424466,
+      "mean_attention_entropy": 1.9092870950698853,
+      "mean_max_attention": 0.23257721960544586,
+      "mean_top_event_score": 1.0,
+      "mean_top_contribution_score": 2.5186221599578857,
+      "dominant_query_name": "risk_proxy",
+      "top_sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0002",
+      "top_sample_query_name": "risk_proxy",
+      "top_sample_query_event_offset_s": 0.7107536792755127,
+      "top_sample_event_attribution": 7.737074375152588
+    },
+    {
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "pilot_id": 10033,
+      "source_summary_path": "",
+      "state_source": "hidden",
+      "sample_count": 37,
+      "query_names": [
+        "risk_proxy",
+        "workload_proxy",
+        "event_replay_tag"
+      ],
+      "mean_event_token_count": 1.0,
+      "mean_query_entropy": 0.0,
+      "mean_top_query_score": 2.301411088254001,
+      "mean_top_event_attribution": 6.904233478211068,
+      "mean_attention_entropy": 1.9095275402069092,
+      "mean_max_attention": 0.22693195939064026,
+      "mean_top_event_score": 1.0,
+      "mean_top_contribution_score": 2.3014109134674072,
+      "dominant_query_name": "risk_proxy",
+      "top_sample_id": "20251002_单01_ACT-8_翼云_J16_12#01:0000",
+      "top_sample_query_name": "risk_proxy",
+      "top_sample_query_event_offset_s": 0.6206890344619751,
+      "top_sample_event_attribution": 8.179655075073242
+    }
+  ]
+}

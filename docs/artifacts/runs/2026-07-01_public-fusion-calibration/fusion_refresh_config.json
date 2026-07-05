@@ -1,0 +1,43 @@
+{
+  "run_id": "20260701T-task-eval-public-fusion-refresh-r1",
+  "runtime_device": "cuda",
+  "config": {
+    "run_id": "20260701T-task-eval-public-fusion-refresh-r1",
+    "dataset_prepared_roots": {
+      "nasa_csm": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/nasa_csm",
+      "uab_workload_dataset": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/uab_workload_dataset"
+    },
+    "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-01_public-fusion-calibration",
+    "report_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+    "datasets": [
+      "nasa_csm",
+      "uab_workload_dataset"
+    ],
+    "screen_epochs": 5,
+    "confirm_epochs": 20,
+    "screen_max_folds": 2,
+    "confirm_max_folds": null,
+    "screen_candidate_limit": 2,
+    "confirm_top_k": 1,
+    "screen_seed": 42,
+    "confirm_seeds": [
+      42
+    ],
+    "device": "cuda",
+    "require_cuda": true,
+    "resume": true,
+    "resume_run_id": null,
+    "resume_from_progress": null,
+    "skip_completed": true,
+    "allow_partial": true,
+    "screen_only": false,
+    "confirm_only": true,
+    "candidate_filter": [],
+    "dataset_filter": [],
+    "heartbeat_seconds": 60.0,
+    "batch_log_interval": 20,
+    "batch_size": null,
+    "learning_rate": null,
+    "train_sampling_policy": null
+  }
+}

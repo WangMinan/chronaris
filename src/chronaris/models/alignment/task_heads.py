@@ -1,4 +1,4 @@
-"""Unified task heads for Stage I multitask alignment training."""
+"""Unified task heads for task evaluation multitask alignment training."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ _TASK_TYPES = {"classification", "regression", "retrieval"}
 
 @dataclass(frozen=True, slots=True)
 class StageITaskHeadSpec:
-    """One task-head configuration over the shared Stage I backbone."""
+    """One task-head configuration over the shared task evaluation backbone."""
 
     task_name: str
     task_type: str

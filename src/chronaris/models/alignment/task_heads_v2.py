@@ -1,4 +1,4 @@
-"""Task-aware Stage I heads for optimized private proxy experiments."""
+"""Task-aware task evaluation heads for optimized private proxy experiments."""
 
 from __future__ import annotations
 

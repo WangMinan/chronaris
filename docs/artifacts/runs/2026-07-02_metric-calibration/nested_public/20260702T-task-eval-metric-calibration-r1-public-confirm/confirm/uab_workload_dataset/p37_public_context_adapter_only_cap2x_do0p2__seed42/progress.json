@@ -1,0 +1,48 @@
+{
+  "dataset_id": "uab_workload_dataset",
+  "model_name": "p37_public_context_adapter_only_cap2x_do0p2",
+  "requested_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42",
+  "epochs": 20,
+  "max_folds": null,
+  "heartbeat_seconds": 60.0,
+  "batch_log_interval": 20,
+  "checkpoint_policy": "last",
+  "stage_name": "task_eval_deep_baseline",
+  "run_id": "p37_public_context_adapter_only_cap2x_do0p2__seed42",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-02T09:31:10.965177Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-02T09:21:12.976753Z",
+      "event": "start",
+      "dataset_id": "uab_workload_dataset",
+      "model_name": "p37_public_context_adapter_only_cap2x_do0p2",
+      "requested_device": "cuda",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42",
+      "epochs": 20,
+      "max_folds": null,
+      "heartbeat_seconds": 60.0,
+      "batch_log_interval": 20,
+      "checkpoint_policy": "last"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:21:16.638312Z",
+      "event": "dataset_loaded",
+      "prepared_artifact_root": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/uab_workload_dataset",
+      "runtime_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-07-02T09:31:10.965177Z",
+      "event": "finished",
+      "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42/deep_baseline_summary.json",
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42/deep_baseline_report.md",
+      "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42/fold_predictions.csv"
+    }
+  ],
+  "prepared_artifact_root": "/tmp/chronaris_task_eval_public_fusion_refresh/20260701T-task-eval-public-fusion-refresh-r1/uab_workload_dataset",
+  "runtime_device": "cuda",
+  "summary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42/deep_baseline_summary.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42/deep_baseline_report.md",
+  "predictions_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_metric-calibration/nested_public/20260702T-task-eval-metric-calibration-r1-public-confirm/confirm/uab_workload_dataset/p37_public_context_adapter_only_cap2x_do0p2__seed42/fold_predictions.csv"
+}

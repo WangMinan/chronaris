@@ -1,4 +1,4 @@
-"""Adaptive fusion router for stream-role-aware Stage I models."""
+"""Adaptive fusion router for stream-role-aware task evaluation models."""
 
 from __future__ import annotations
 

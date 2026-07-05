@@ -1,4 +1,4 @@
-"""Prompt builders for Stage I LLM preprocessing."""
+"""Prompt builders for task evaluation LLM preprocessing."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from chronaris.llm.schemas import (
     SCHEMA_VERSION,
 )
 
-SYSTEM_PROMPT = """You are an audited, single-step preprocessing agent for Chronaris Stage I.
+SYSTEM_PROMPT = """You are an audited, single-step preprocessing agent for Chronaris task evaluation.
 You do not browse, call tools, infer from private knowledge, or create new data.
 Use only the user-provided JSON payload as evidence.
 

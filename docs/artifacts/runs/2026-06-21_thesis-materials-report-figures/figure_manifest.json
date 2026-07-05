@@ -1,0 +1,198 @@
+{
+  "run_id": "20260621T-task-eval-thesis-materials-r6-report-figure-polish",
+  "artifact_root": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures",
+  "figures": [
+    {
+      "figure_id": "evidence_layer_overview",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/evidence_layer_overview.png",
+      "exists": true,
+      "source_reference": [
+        "evidence manifest",
+        "weak-label sweep summary",
+        "private component ablation summary",
+        "public adapter calibration summary",
+        "runtime service summary and field contract",
+        "semantic support summary",
+        "rotation audit summary",
+        "LLM comparison summary"
+      ],
+      "evidence_layer": "cross_layer_index",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/evidence_layer_overview.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.8,
+      "metric_definition": "Evidence-layer card overview with source-derived counts and report roles.",
+      "recommended_placement": "appendix_or_supporting",
+      "replaces_problem": "evidence_layer_overview is redrawn as a 2x4 report-readable card overview."
+    },
+    {
+      "figure_id": "runtime_payload_schema",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_payload_schema.png",
+      "exists": true,
+      "source_reference": [
+        "runtime service summary and field contract",
+        "runtime service summary and field contract"
+      ],
+      "evidence_layer": "runtime_schema",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_payload_schema.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 9.8,
+      "metric_definition": "Runtime input format comparison showing observed vehicle fields, missing measurement groups, and unified input dimensions.",
+      "replaces_problem": "runtime_payload_schema is rendered as a contract comparison instead of a generic schema plot."
+    },
+    {
+      "figure_id": "runtime_service_flow",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_service_flow.png",
+      "exists": true,
+      "source_reference": [
+        "runtime service summary and field contract",
+        "runtime service summary and field contract"
+      ],
+      "evidence_layer": "runtime_schema",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_service_flow.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 9.8,
+      "metric_definition": "Report-facing 2x2 runtime flow drawn from runtime smoke summary and schema-contract summary.",
+      "replaces_problem": "runtime_service_flow is redrawn as a 2x2 Chinese process diagram without internal runtime labels."
+    },
+    {
+      "figure_id": "runtime_semantic_case",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_semantic_case.png",
+      "exists": true,
+      "source_reference": [
+        "runtime semantic case table",
+        "semantic support summary",
+        "runtime service summary and field contract",
+        "runtime service summary and field contract"
+      ],
+      "evidence_layer": "runtime_semantic_support",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/runtime_semantic_case.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.6,
+      "metric_definition": "Runtime case values are selected from runtime_semantic_case.csv and shown as dominant query, semantic attribution, and task output ranges.",
+      "case_definition": "代表窗口按查询类型变化、归因局部峰值、归因变化幅度和任务输出变化优先选择；source_window_count=12; selected_window_count=8",
+      "replaces_problem": "uses a compact selected-window axis and replaces near-flat/repeated attribution bars with case-level semantic attribution and task-output ranges."
+    },
+    {
+      "figure_id": "rigid_body_rotation_audit",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/rigid_body_rotation_audit.png",
+      "exists": true,
+      "source_reference": [
+        "rigid-body ablation summary",
+        "rotation audit summary"
+      ],
+      "evidence_layer": "rigid_body_rotation_diagnostics",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/rigid_body_rotation_audit.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 9.2,
+      "metric_definition": "三类损失分开显示并使用对数尺度；旋转矩阵标记角度和角速度字段可用性，当前数据缺少成对角速度字段。",
+      "replaces_problem": "rotation rate absence is shown as a matrix, not empty bars."
+    },
+    {
+      "figure_id": "weak_label_sweep_ablation",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/weak_label_sweep_ablation.png",
+      "exists": true,
+      "source_reference": [
+        "weak-label sweep summary",
+        "weak-label sweep summary",
+        "weak-label sweep summary"
+      ],
+      "evidence_layer": "thesis_weak_label",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/weak_label_sweep_ablation.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 9.2,
+      "metric_definition": "小规模弱监督参数组合按数据读取方式和滞后窗口参数比较；部分执行与续跑状态仅保留在结构化表和清单中。",
+      "replaces_problem": "weak-label sweep uses a lag-window trend plus task-record coverage instead of a repeated heatmap."
+    },
+    {
+      "figure_id": "chronaris_opt_component_ablation",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/chronaris_opt_component_ablation.png",
+      "exists": true,
+      "source_reference": [
+        "private component ablation summary"
+      ],
+      "evidence_layer": "private_proxy",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/chronaris_opt_component_ablation.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.8,
+      "metric_definition": "Task absolute metrics are shown on native scales; relative component changes are centered at zero with positive values meaning worse performance after removal.",
+      "recommended_placement": "supporting_overview",
+      "replaces_problem": "redundant full-candidate bars are replaced by baseline metric cards and a compact signed relative-change overview."
+    },
+    {
+      "figure_id": "model_backbone_ablation",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/model_backbone_ablation.png",
+      "exists": true,
+      "source_reference": [
+        "private component ablation summary"
+      ],
+      "evidence_layer": "private_proxy_strict_protocol",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/model_backbone_ablation.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.5,
+      "metric_definition": "Strict-protocol model-backbone ablation with signed relative performance change by task.",
+      "recommended_placement": "main_experiment_component_analysis",
+      "replaces_problem": "model_backbone_ablation uses full task names, full model first, and a zero-centered diverging heatmap."
+    },
+    {
+      "figure_id": "task_adapter_ablation",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/task_adapter_ablation.png",
+      "exists": true,
+      "source_reference": [
+        "private component ablation summary"
+      ],
+      "evidence_layer": "private_proxy_strict_protocol",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/task_adapter_ablation.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.5,
+      "metric_definition": "Strict-protocol task-adapter ablation with signed relative performance change by task.",
+      "recommended_placement": "main_experiment_component_analysis",
+      "replaces_problem": "task_adapter_ablation uses readable task-input labels and a zero-centered diverging heatmap."
+    },
+    {
+      "figure_id": "public_transfer_boundary",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/public_transfer_boundary.png",
+      "exists": true,
+      "source_reference": [
+        "public transfer boundary summary",
+        "public adapter calibration summary",
+        "private component ablation summary"
+      ],
+      "evidence_layer": "transfer_boundary",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/public_transfer_boundary.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.5,
+      "metric_definition": "Chinese positive role diagram separating public adapters, Dingxin weak-label mainline evidence, and Dingxin component diagnostics.",
+      "replaces_problem": "defensive boundary copy is replaced by positive Chinese role wording."
+    },
+    {
+      "figure_id": "semantic_event_fusion_overview",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/semantic_event_fusion_overview.png",
+      "exists": true,
+      "source_reference": [
+        "semantic support summary",
+        "semantic event support summary"
+      ],
+      "evidence_layer": "semantic_support",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/semantic_event_fusion_overview.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 9.4,
+      "case_definition": "Pipeline diagram plus view-query heatmap when complete source scores exist; otherwise coverage/support status is drawn without fabricated attribution values.",
+      "replaces_problem": "semantic fusion overview is redrawn as a report-readable flow and coverage/status matrix."
+    },
+    {
+      "figure_id": "llm_comparison_a0_a4",
+      "path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/llm_comparison_a0_a4.png",
+      "exists": true,
+      "source_reference": [
+        "LLM preprocessing summary",
+        "LLM comparison summary"
+      ],
+      "evidence_layer": "llm_preprocessing_comparison",
+      "table_path": "docs/artifacts/runs/2026-06-21_thesis-materials-report-figures/llm_comparison_a0_a4.csv",
+      "visible_label_language": "zh_cn_or_report_abbrev",
+      "min_font_pt": 8.6,
+      "metric_definition": "LLM preprocessing comparison from existing summary; hints show rule-checked coverage only, not attribution improvement.",
+      "replaces_problem": "adds LLM preprocessing/comparison evidence without treating LLM output as truth."
+    }
+  ]
+}

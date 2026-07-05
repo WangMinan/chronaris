@@ -1,0 +1,152 @@
+{
+  "generated_at_utc": "2026-05-06T03:02:40.010917Z",
+  "run_id": "20260506T121000Z-task-eval-public-opt-uab",
+  "dataset_id": "uab_workload_dataset",
+  "profile": "window_v2",
+  "track": "subjective",
+  "task_type": "regression",
+  "subset_order": [
+    "n_back",
+    "heat_the_chair"
+  ],
+  "evaluation_groups": {
+    "n_back": [
+      "n_back"
+    ],
+    "heat_the_chair": [
+      "heat_the_chair"
+    ]
+  },
+  "heads": [
+    "physiology_persistence",
+    "ridge_residual"
+  ],
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-uab",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-04_public-opt-uab-prepared",
+  "subset_results": {
+    "n_back": {
+      "sample_count": 28052,
+      "fold_count": 16,
+      "best_head": "ridge_residual",
+      "heads": {
+        "physiology_persistence": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "mae": 3.8108450859647673,
+          "rmse": 4.647675963220541,
+          "r2": -0.023305649069951695,
+          "spearman": -0.35517201235741286
+        },
+        "ridge_residual": {
+          "sample_count": 28052,
+          "fold_count": 16,
+          "mae": 3.8042500756744353,
+          "rmse": 4.610314175862912,
+          "r2": -0.006919456772758625,
+          "spearman": 0.062139139276073715
+        }
+      }
+    },
+    "heat_the_chair": {
+      "sample_count": 5440,
+      "fold_count": 17,
+      "best_head": "physiology_persistence",
+      "heads": {
+        "physiology_persistence": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.1636927899776721,
+          "rmse": 1.4567585657677036,
+          "r2": -0.08449332265696508,
+          "spearman": -0.7922311996746196
+        },
+        "ridge_residual": {
+          "sample_count": 5440,
+          "fold_count": 17,
+          "mae": 1.1723914609820236,
+          "rmse": 1.462376431557945,
+          "r2": -0.09287396411440207,
+          "spearman": -0.7572570102065325
+        }
+      }
+    }
+  },
+  "reference_comparison": {
+    "dataset_id": "uab_workload_dataset",
+    "track": "subjective",
+    "groups": {
+      "n_back": {
+        "public_opt": {
+          "best_head": "ridge_residual",
+          "best_metrics": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 3.8042500756744353,
+            "rmse": 4.610314175862912,
+            "r2": -0.006919456772758625,
+            "spearman": 0.062139139276073715
+          }
+        },
+        "classical": {
+          "rmse": 10.223413421909578,
+          "mae": 4.798697119158675,
+          "sample_count": 28052.0
+        },
+        "deep_models": {
+          "mult": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 4.670542635891571,
+            "rmse": 5.828201477861089,
+            "r2": -0.6091732062569284,
+            "spearman": -0.2321704679451848
+          },
+          "contiformer": {
+            "sample_count": 28052,
+            "fold_count": 16,
+            "mae": 3.8122692104117193,
+            "rmse": 4.654091035125815,
+            "r2": -0.026132462753980512,
+            "spearman": -0.40538114088456173
+          }
+        }
+      },
+      "heat_the_chair": {
+        "public_opt": {
+          "best_head": "physiology_persistence",
+          "best_metrics": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.1636927899776721,
+            "rmse": 1.4567585657677036,
+            "r2": -0.08449332265696508,
+            "spearman": -0.7922311996746196
+          }
+        },
+        "classical": {
+          "rmse": 1.8639105911346199,
+          "mae": 1.2785132457477062,
+          "sample_count": 5440.0
+        },
+        "deep_models": {
+          "mult": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 2.3534156768308843,
+            "rmse": 2.8251064718014294,
+            "r2": -3.0786962774093825,
+            "spearman": -0.14828013073805651
+          },
+          "contiformer": {
+            "sample_count": 5440,
+            "fold_count": 17,
+            "mae": 1.1636927941704498,
+            "rmse": 1.4567585837447001,
+            "r2": -0.08449336180562583,
+            "spearman": -0.7922311996746196
+          }
+        }
+      }
+    }
+  }
+}

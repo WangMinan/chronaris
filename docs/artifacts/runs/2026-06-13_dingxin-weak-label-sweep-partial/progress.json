@@ -1,0 +1,73 @@
+{
+  "artifact_root": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-partial",
+  "max_runs": 4,
+  "physics_constraint_families": [
+    "minimal",
+    "full",
+    "rigid_body"
+  ],
+  "resume_existing": true,
+  "resume_run_root": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-child-r1",
+  "max_runtime_seconds": 0.0,
+  "stage_name": "task_eval_multitask_sweep",
+  "run_id": "20260613T-task-eval-p11-live-influx-r4-partial",
+  "last_event": "failed",
+  "updated_at_utc": "2026-06-13T09:45:49.538956Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-06-13T09:45:49.525747Z",
+      "event": "start",
+      "artifact_root": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-partial",
+      "max_runs": 4,
+      "physics_constraint_families": [
+        "minimal",
+        "full",
+        "rigid_body"
+      ],
+      "resume_existing": true,
+      "resume_run_root": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-child-r1",
+      "max_runtime_seconds": 0.0
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:49.526181Z",
+      "event": "grid_ready",
+      "combination_count": 4
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:49.527590Z",
+      "event": "combination_reused",
+      "run_index": 1,
+      "child_run_id": "20260613T-task-eval-p11-live-influx-r4-partial-01-minimal-cw0p00-tlw0p50-lagnone",
+      "summary_path": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-child-r1/runs/20260613T-task-eval-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_summary.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:49.533511Z",
+      "event": "combination_reused",
+      "run_index": 2,
+      "child_run_id": "20260613T-task-eval-p11-live-influx-r4-partial-02-minimal-cw0p00-tlw0p50-lag3",
+      "summary_path": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-child-r1/runs/20260613T-task-eval-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:49.538773Z",
+      "event": "partial_blocked",
+      "completed_child_runs": 2,
+      "blocked_at_run_index": 3,
+      "blocker_log_path": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-partial/run.log"
+    },
+    {
+      "timestamp_utc": "2026-06-13T09:45:49.538956Z",
+      "event": "failed",
+      "error_type": "StageIMultitaskSweepRuntimeBudgetExceeded",
+      "error_message": "runtime budget reached before starting the next child run: elapsed=0.010s budget=0.000s"
+    }
+  ],
+  "combination_count": 4,
+  "run_index": 2,
+  "child_run_id": "20260613T-task-eval-p11-live-influx-r4-partial-02-minimal-cw0p00-tlw0p50-lag3",
+  "summary_path": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-child-r1/runs/20260613T-task-eval-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_summary.json",
+  "completed_child_runs": 2,
+  "blocked_at_run_index": 3,
+  "blocker_log_path": "docs/artifacts/runs/2026-06-13_dingxin-weak-label-sweep-partial/run.log",
+  "error_type": "StageIMultitaskSweepRuntimeBudgetExceeded",
+  "error_message": "runtime budget reached before starting the next child run: elapsed=0.010s budget=0.000s"
+}

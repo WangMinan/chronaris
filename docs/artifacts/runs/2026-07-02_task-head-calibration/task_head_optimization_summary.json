@@ -1,0 +1,51 @@
+{
+  "run_id": "20260702T-task-eval-task-heads-optimization-r3-confirm20",
+  "status": "completed",
+  "generated_at_utc": "2026-07-02T03:18:01.229840Z",
+  "runtime_device": "cuda",
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration",
+  "p30_reference_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+  "models": [
+    "chronaris_v2_task_heads",
+    "v2_no_vehicle_aux_head",
+    "v2_no_residual_t2_head",
+    "v2_no_contrastive_t3_loss"
+  ],
+  "seeds": [
+    42,
+    17,
+    29
+  ],
+  "split_strategies": [
+    "leave_one_view_out",
+    "leave_one_sortie_out"
+  ],
+  "task_head_metrics_long_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/task_head_metrics_long.csv",
+  "task_head_metrics_wide_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/task_head_metrics_wide.csv",
+  "improvement_vs_p30_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/improvement_vs_p30.csv",
+  "fold_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fold_metrics.csv",
+  "seed_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/seed_metrics.csv",
+  "training_curves_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/training_curves.csv",
+  "t3_retrieval_metrics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/t3_retrieval_metrics.csv",
+  "gate_contribution_summary_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/gate_contribution_summary.csv",
+  "t2_residual_decomposition_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/t2_residual_decomposition.csv",
+  "contrastive_diagnostics_csv": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/contrastive_diagnostics.csv",
+  "gpu_perf_summary_json": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/gpu_perf_summary.json",
+  "figure_paths": {
+    "fig_p34_t1_macro_f1_leaderboard": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_t1_macro_f1_leaderboard.png",
+    "fig_p34_t2_rmse_leaderboard": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_t2_rmse_leaderboard.png",
+    "fig_p34_t3_retrieval_leaderboard": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_t3_retrieval_leaderboard.png",
+    "fig_p34_delta_vs_p30_heatmap": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_delta_vs_p30_heatmap.png",
+    "fig_p34_t1_gate_contribution": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_t1_gate_contribution.png",
+    "fig_p34_t2_residual_decomposition": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_t2_residual_decomposition.png",
+    "fig_p34_t3_positive_negative_margin": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_t3_positive_negative_margin.png",
+    "fig_p34_training_curves": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/fig_p34_training_curves.png"
+  },
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/evidence_manifest.json",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/report.md",
+  "run_log_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/run.log",
+  "progress_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/progress.json",
+  "resume_command_txt": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/resume_command.txt",
+  "inner_private_comparison_summary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_task-head-calibration/private_thirdparty_summary.json",
+  "protocol_boundary": "P34 writes new optimized Chronaris candidates only; P30 baselines are read-only references. Labels, splits and same_sortie_cross_pilot retrieval policy are unchanged."
+}

@@ -1,0 +1,735 @@
+{
+  "generated_at_utc": "2026-05-06T04:14:21.519837Z",
+  "run_id": "20260506T161500Z-task-eval-public-opt-nasa-round1",
+  "dataset_id": "nasa_csm",
+  "profile": "window_v2",
+  "feature_profile": "full",
+  "head_catalog": "expanded",
+  "train_balance_policy": "class_weight_balanced",
+  "ensemble_policy": "none",
+  "winner_margin_policy": "paper_gate",
+  "track": "objective",
+  "task_type": "classification",
+  "subset_order": [
+    "benchmark_only",
+    "loft_only",
+    "combined"
+  ],
+  "evaluation_groups": {
+    "benchmark_only": [
+      "benchmark"
+    ],
+    "loft_only": [
+      "loft"
+    ],
+    "combined": [
+      "benchmark",
+      "loft"
+    ]
+  },
+  "heads": [
+    "physiology_margin_balanced_logistic",
+    "balanced_logistic_context",
+    "balanced_linear_svc_context"
+  ],
+  "feature_group_sizes": {
+    "full": 165,
+    "physiology_only": 129,
+    "context_only": 31,
+    "residual_only": 17
+  },
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-nasa-round1",
+  "prepared_artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-nasa-prepared",
+  "subset_results": {
+    "benchmark_only": {
+      "sample_count": 1451,
+      "fold_count": 17,
+      "best_head": "balanced_linear_svc_context",
+      "heads": {
+        "physiology_margin_balanced_logistic": {
+          "sample_count": 1451,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.4350438025193399,
+          "balanced_accuracy": 0.5372910389678602,
+          "per_class_recall": {
+            "1": 0.5113636363636364,
+            "2": 0.6448132780082988,
+            "5": 0.45569620253164556
+          },
+          "confusion_matrix": [
+            [
+              45,
+              26,
+              17
+            ],
+            [
+              190,
+              777,
+              238
+            ],
+            [
+              29,
+              57,
+              72
+            ]
+          ]
+        },
+        "balanced_logistic_context": {
+          "sample_count": 1451,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.6772997770227688,
+          "balanced_accuracy": 0.7305180196311558,
+          "per_class_recall": {
+            "1": 0.7386363636363636,
+            "2": 0.8896265560165975,
+            "5": 0.5632911392405063
+          },
+          "confusion_matrix": [
+            [
+              65,
+              1,
+              22
+            ],
+            [
+              41,
+              1072,
+              92
+            ],
+            [
+              16,
+              53,
+              89
+            ]
+          ]
+        },
+        "balanced_linear_svc_context": {
+          "sample_count": 1451,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.7445135090687961,
+          "balanced_accuracy": 0.758165694976977,
+          "per_class_recall": {
+            "1": 0.75,
+            "2": 0.9485477178423236,
+            "5": 0.5759493670886076
+          },
+          "confusion_matrix": [
+            [
+              66,
+              3,
+              19
+            ],
+            [
+              20,
+              1143,
+              42
+            ],
+            [
+              16,
+              51,
+              91
+            ]
+          ]
+        }
+      }
+    },
+    "loft_only": {
+      "sample_count": 1359,
+      "fold_count": 17,
+      "best_head": "balanced_linear_svc_context",
+      "heads": {
+        "physiology_margin_balanced_logistic": {
+          "sample_count": 1359,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.3007729170964785,
+          "balanced_accuracy": 0.408013930209765,
+          "per_class_recall": {
+            "1": 0.5416666666666666,
+            "2": 0.42502218278615794,
+            "5": 0.25735294117647056
+          },
+          "confusion_matrix": [
+            [
+              52,
+              31,
+              13
+            ],
+            [
+              357,
+              479,
+              291
+            ],
+            [
+              45,
+              56,
+              35
+            ]
+          ]
+        },
+        "balanced_logistic_context": {
+          "sample_count": 1359,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.2863480473875823,
+          "balanced_accuracy": 0.39297095649854147,
+          "per_class_recall": {
+            "1": 0.5416666666666666,
+            "2": 0.40195208518189884,
+            "5": 0.23529411764705882
+          },
+          "confusion_matrix": [
+            [
+              52,
+              31,
+              13
+            ],
+            [
+              373,
+              453,
+              301
+            ],
+            [
+              47,
+              57,
+              32
+            ]
+          ]
+        },
+        "balanced_linear_svc_context": {
+          "sample_count": 1359,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.3643360690716937,
+          "balanced_accuracy": 0.39925281706885657,
+          "per_class_recall": {
+            "1": 0.3541666666666667,
+            "2": 0.7480035492457853,
+            "5": 0.09558823529411764
+          },
+          "confusion_matrix": [
+            [
+              34,
+              55,
+              7
+            ],
+            [
+              214,
+              843,
+              70
+            ],
+            [
+              29,
+              94,
+              13
+            ]
+          ]
+        }
+      }
+    },
+    "combined": {
+      "sample_count": 2810,
+      "fold_count": 17,
+      "best_head": "balanced_logistic_context",
+      "heads": {
+        "physiology_margin_balanced_logistic": {
+          "sample_count": 2810,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.3496388933859283,
+          "balanced_accuracy": 0.4389425892414291,
+          "per_class_recall": {
+            "1": 0.40217391304347827,
+            "2": 0.5132933104631218,
+            "5": 0.4013605442176871
+          },
+          "confusion_matrix": [
+            [
+              74,
+              61,
+              49
+            ],
+            [
+              651,
+              1197,
+              484
+            ],
+            [
+              82,
+              94,
+              118
+            ]
+          ]
+        },
+        "balanced_logistic_context": {
+          "sample_count": 2810,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.4549915569394342,
+          "balanced_accuracy": 0.5590685276024547,
+          "per_class_recall": {
+            "1": 0.5652173913043478,
+            "2": 0.6698113207547169,
+            "5": 0.4421768707482993
+          },
+          "confusion_matrix": [
+            [
+              104,
+              47,
+              33
+            ],
+            [
+              437,
+              1562,
+              333
+            ],
+            [
+              70,
+              94,
+              130
+            ]
+          ]
+        },
+        "balanced_linear_svc_context": {
+          "sample_count": 2810,
+          "fold_count": 17,
+          "label_order": [
+            1,
+            2,
+            5
+          ],
+          "macro_f1": 0.45127198018021497,
+          "balanced_accuracy": 0.4899558525774393,
+          "per_class_recall": {
+            "1": 0.45652173913043476,
+            "2": 0.8194682675814752,
+            "5": 0.19387755102040816
+          },
+          "confusion_matrix": [
+            [
+              84,
+              83,
+              17
+            ],
+            [
+              313,
+              1911,
+              108
+            ],
+            [
+              45,
+              192,
+              57
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "reference_comparison": {
+    "dataset_id": "nasa_csm",
+    "track": "objective",
+    "groups": {
+      "benchmark_only": {
+        "public_opt": {
+          "best_head": "balanced_linear_svc_context",
+          "best_metrics": {
+            "sample_count": 1451,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.7445135090687961,
+            "balanced_accuracy": 0.758165694976977,
+            "per_class_recall": {
+              "1": 0.75,
+              "2": 0.9485477178423236,
+              "5": 0.5759493670886076
+            },
+            "confusion_matrix": [
+              [
+                66,
+                3,
+                19
+              ],
+              [
+                20,
+                1143,
+                42
+              ],
+              [
+                16,
+                51,
+                91
+              ]
+            ]
+          }
+        },
+        "classical": {
+          "macro_f1": 0.4641561353985333,
+          "balanced_accuracy": 0.4905424988898386,
+          "sample_count": 1451.0
+        },
+        "deep_models": {
+          "mult": {
+            "sample_count": 1451,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.3024598393574297,
+            "balanced_accuracy": 0.3333333333333333,
+            "per_class_recall": {
+              "1": 0.0,
+              "2": 1.0,
+              "5": 0.0
+            },
+            "confusion_matrix": [
+              [
+                0,
+                88,
+                0
+              ],
+              [
+                0,
+                1205,
+                0
+              ],
+              [
+                0,
+                158,
+                0
+              ]
+            ]
+          },
+          "contiformer": {
+            "sample_count": 1451,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.30243657372519467,
+            "balanced_accuracy": 0.3330567081604426,
+            "per_class_recall": {
+              "1": 0.0,
+              "2": 0.9991701244813278,
+              "5": 0.0
+            },
+            "confusion_matrix": [
+              [
+                0,
+                88,
+                0
+              ],
+              [
+                1,
+                1204,
+                0
+              ],
+              [
+                1,
+                157,
+                0
+              ]
+            ]
+          }
+        }
+      },
+      "loft_only": {
+        "public_opt": {
+          "best_head": "balanced_linear_svc_context",
+          "best_metrics": {
+            "sample_count": 1359,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.3643360690716937,
+            "balanced_accuracy": 0.39925281706885657,
+            "per_class_recall": {
+              "1": 0.3541666666666667,
+              "2": 0.7480035492457853,
+              "5": 0.09558823529411764
+            },
+            "confusion_matrix": [
+              [
+                34,
+                55,
+                7
+              ],
+              [
+                214,
+                843,
+                70
+              ],
+              [
+                29,
+                94,
+                13
+              ]
+            ]
+          }
+        },
+        "classical": {
+          "macro_f1": 0.3723186247618541,
+          "balanced_accuracy": 0.38077459244567397,
+          "sample_count": 1359.0
+        },
+        "deep_models": {
+          "mult": {
+            "sample_count": 1359,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.30222579780101905,
+            "balanced_accuracy": 0.3333333333333333,
+            "per_class_recall": {
+              "1": 0.0,
+              "2": 1.0,
+              "5": 0.0
+            },
+            "confusion_matrix": [
+              [
+                0,
+                96,
+                0
+              ],
+              [
+                0,
+                1127,
+                0
+              ],
+              [
+                0,
+                136,
+                0
+              ]
+            ]
+          },
+          "contiformer": {
+            "sample_count": 1359,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.3002832861189802,
+            "balanced_accuracy": 0.32919254658385094,
+            "per_class_recall": {
+              "1": 0.0,
+              "2": 0.9875776397515528,
+              "5": 0.0
+            },
+            "confusion_matrix": [
+              [
+                0,
+                96,
+                0
+              ],
+              [
+                10,
+                1113,
+                4
+              ],
+              [
+                1,
+                135,
+                0
+              ]
+            ]
+          }
+        }
+      },
+      "combined": {
+        "public_opt": {
+          "best_head": "balanced_logistic_context",
+          "best_metrics": {
+            "sample_count": 2810,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.4549915569394342,
+            "balanced_accuracy": 0.5590685276024547,
+            "per_class_recall": {
+              "1": 0.5652173913043478,
+              "2": 0.6698113207547169,
+              "5": 0.4421768707482993
+            },
+            "confusion_matrix": [
+              [
+                104,
+                47,
+                33
+              ],
+              [
+                437,
+                1562,
+                333
+              ],
+              [
+                70,
+                94,
+                130
+              ]
+            ]
+          }
+        },
+        "classical": {
+          "macro_f1": 0.3741024976765464,
+          "balanced_accuracy": 0.37649783482140214,
+          "sample_count": 2810.0
+        },
+        "deep_models": {
+          "mult": {
+            "sample_count": 2810,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.3023466874108648,
+            "balanced_accuracy": 0.3333333333333333,
+            "per_class_recall": {
+              "1": 0.0,
+              "2": 1.0,
+              "5": 0.0
+            },
+            "confusion_matrix": [
+              [
+                0,
+                184,
+                0
+              ],
+              [
+                0,
+                2332,
+                0
+              ],
+              [
+                0,
+                294,
+                0
+              ]
+            ]
+          },
+          "contiformer": {
+            "sample_count": 2810,
+            "fold_count": 17,
+            "label_order": [
+              1,
+              2,
+              5
+            ],
+            "macro_f1": 0.30226373483816565,
+            "balanced_accuracy": 0.33304745568896515,
+            "per_class_recall": {
+              "1": 0.0,
+              "2": 0.9991423670668954,
+              "5": 0.0
+            },
+            "confusion_matrix": [
+              [
+                0,
+                184,
+                0
+              ],
+              [
+                2,
+                2330,
+                0
+              ],
+              [
+                1,
+                293,
+                0
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  "winning_margin_vs_deep": {
+    "benchmark_only": {
+      "best_public_head": "balanced_linear_svc_context",
+      "best_public_value": 0.7445135090687961,
+      "best_deep_model": "mult",
+      "best_deep_value": 0.3024598393574297,
+      "margin_vs_best_deep": 0.4420536697113664,
+      "gate_passed": true,
+      "rerun_threshold": 0.005,
+      "needs_deep_rerun": false
+    },
+    "loft_only": {
+      "best_public_head": "balanced_linear_svc_context",
+      "best_public_value": 0.3643360690716937,
+      "best_deep_model": "mult",
+      "best_deep_value": 0.30222579780101905,
+      "margin_vs_best_deep": 0.062110271270674644,
+      "gate_passed": true,
+      "rerun_threshold": 0.005,
+      "needs_deep_rerun": false
+    },
+    "combined": {
+      "best_public_head": "balanced_logistic_context",
+      "best_public_value": 0.4549915569394342,
+      "best_deep_model": "mult",
+      "best_deep_value": 0.3023466874108648,
+      "margin_vs_best_deep": 0.15264486952856943,
+      "gate_passed": true,
+      "rerun_threshold": 0.005,
+      "needs_deep_rerun": false
+    }
+  },
+  "needs_deep_rerun": false
+}

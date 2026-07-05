@@ -1,0 +1,7 @@
+{
+  "run_id": "20260702T-task-eval-metric-calibration-r1-private-confirm",
+  "device": "cuda",
+  "batch_size": 128,
+  "amp_mode": "bf16",
+  "tensor_cache_mode": "auto"
+}
