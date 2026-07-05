@@ -2,7 +2,7 @@
 
 日期：2026-07-03
 
-状态：P38 已完成；P42 current-tree 仓库收敛清理已完成；P39/P40/P41/P43 尚未启动。
+状态：论文协议冻结 已完成；current-tree 仓库收敛清理已完成；仿真压力测试/检索任务与公开路线优化/论文级消融统一/论文材料化 尚未启动。
 
 ## 0. 固定前提
 
@@ -10,11 +10,11 @@
 
 - 不再把鼎新新增一手数据或新增专家评价数据作为执行依赖。
 - 若答辩或论文中提到继续争取外部数据，只能写成“若后续可获得则作为附加验证”，不能作为主线闭合条件。
-- 现有私有真实双流数据仍是主证据来源：2 个 sortie、3 个双流 view、111 个窗口、333 条 weak-label task。
-- 公开 UAB/NASA 仍是 public adapter / context-proxy 泛化与校准证据，不等价于私有真实航电流。
+- 现有鼎新真实双流数据仍是主证据来源：2 个 sortie、3 个双流 view、111 个窗口、333 条 weak-label task。
+- 公开 UAB/NASA 仍是 public adapter / context-derived second-stream 泛化与校准证据，不等价于鼎新真实航电流。
 - 仿真数据允许进入附录型实验，但必须标注为 synthetic stress-test，不替代真实数据或专家真值。
 - LLM 允许扩展，默认复用 DeepSeek v4-pro 现有链路；LLM 输出只能作为 preprocessing context、rubric、semantic hints、runtime explanation、synthetic scenario card 或 review packet，不直接作为专家真值。
-- P38/P42 已按本计划先完成协议冻结和仓库收敛；尚未跑 P39/P40/P41/P43 新实验。
+- 论文协议冻结/仓库收敛清理 已按本计划先完成协议冻结和仓库收敛；尚未跑 仿真压力测试/检索任务与公开路线优化/论文级消融统一/论文材料化 新实验。
 
 ## 1. 总体顺序
 
@@ -23,15 +23,15 @@
 1. `P38` 论文协议冻结：统一实验矩阵、结果表 schema 和 claim boundary。
 2. `P42` 仓库收敛清理：先审计、备份和记录，再删除/拆分/历史瘦身。
 3. `P39` 仿真数据集：实现 synthetic generator、审计和附录型 stress test。
-4. `P40` T3/public 指标提升：在清理后的仓库中定点优化 retrieval 与 public route。
-5. `P41` 论文级消融统一：把 private/public/model/ablation 聚合为统一长表、短表和图。
+4. `P40` 检索任务与公开路线 指标提升：在清理后的仓库中定点优化 retrieval 与 public route。
+5. `P41` 论文级消融统一：把 Dingxin/public/model/ablation 聚合为统一长表、短表和图。
 6. `P43` 论文材料化：整理方法、实验、图表、边界、答辩问答和复现实验包。
 
 此顺序的理由是：如果先继续跑实验，会继续扩大已有 nested artifact 和日志膨胀；如果先清理但没有协议矩阵，容易误删当前论文需要的证据。因此先冻结协议，再清理，再实验。
 
-## 2. P38 论文协议冻结
+## 2. 论文协议冻结
 
-目标：把现有 P30/P31/P32/P34/P35/P36/P37 证据冻结为论文可引用的统一协议矩阵。
+目标：把现有 鼎新真实数据第三方模型对比、公开融合消融、跨证据矩阵、任务感知头优化、流角色融合、优化模型再评估与最终指标打磨 证据冻结为论文可引用的统一协议矩阵。
 
 应产出：
 
@@ -45,9 +45,9 @@
 
 | field | 含义 |
 | --- | --- |
-| `evidence_quadrant` | private_model_comparison / private_component_ablation / public_model_comparison / public_component_ablation |
-| `dataset_role` | private_real_dual_stream / private_proxy / public_context_proxy / synthetic_stress_test |
-| `task` | T1 / T2 / T3 / NASA / UAB n_back / UAB heat_the_chair |
+| `evidence_quadrant` | dingxin_model_comparison / dingxin_component_ablation / public_model_comparison / public_component_ablation |
+| `dataset_role` | dingxin_real_dual_stream / dingxin_weak_label / public_context_derived_second_stream / synthetic_stress_test |
+| `task` | 分类任务、回归任务和检索任务 / NASA / UAB n_back / UAB heat_the_chair |
 | `split_protocol` | leave_one_view_out / leave_one_sortie_out / LOSO / fixed_public_split / synthetic_domain_shift |
 | `model_or_component` | Chronaris variant、baseline 或 ablated component |
 | `metric` | macro-F1、balanced accuracy、RMSE、MAE、top-k、MRR 等 |
@@ -58,9 +58,9 @@
 | `artifact_path` | 可追溯 CSV/JSON/manifest |
 | `claim_boundary` | 论文可写边界 |
 
-P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图表都能从 P38 的 registry 或 matrix 反查到当前 artifact root。
+论文协议冻结 不重跑实验，只读已有 artifact。验收标准是：任何论文图表都能从 论文协议冻结 的 registry 或 matrix 反查到当前 artifact root。
 
-## 3. P42 仓库收敛清理
+## 3. 仓库收敛清理 仓库收敛清理
 
 目标：先把仓库恢复到适合长期论文实验的结构，再跑新实验。
 
@@ -71,8 +71,8 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 - inventory：`docs/artifacts/cleanup/20260703-thesis-prep-cleanup-inventory.md`
 - cleanup report：`docs/artifacts/cleanup/20260703-thesis-prep-cleanup.md`
 - 外置备份 manifest：`/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/backup_manifest.csv`
-- 删除范围：P37/P35 nested byproduct、P34 未索引 batch/manifest、P37 顶层稠密预测副本，共 `67` 个文件，`68.36 MiB`。
-- P38 registry/matrix path check：missing paths `0`。
+- 删除范围：最终指标打磨/流角色融合 nested byproduct、任务感知头优化 未索引 batch/manifest、最终指标打磨 顶层稠密预测副本，共 `67` 个文件，`68.36 MiB`。
+- 论文协议冻结 registry/matrix path check：missing paths `0`。
 - Git/LFS 决策：docs LFS history 约 `132 MB`，本轮不执行 `filter-repo`；已执行本地 `git lfs prune`，`.git/lfs` 从 `8.0G` 降到 `106M`。
 
 ### 3.1 清理前审计
@@ -111,9 +111,9 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 候选包括但不限于：
 
-- P37 nested public/private 中可由 top-level summary、CSV、figures 复现的 child logs / training curves / dense rows。
-- P35/P31/P28 中已经由上层 summary 接管的 per-candidate child outputs。
-- 202605 历史 private/public opt 包中不再作为当前入口的 raw-ish payload。
+- 最终指标打磨 nested public/Dingxin 中可由 top-level summary、CSV、figures 复现的 child logs / training curves / dense rows。
+- 流角色融合/公开融合消融/公开融合刷新 中已经由上层 summary 接管的 per-candidate child outputs。
+- 202605 历史 Dingxin/public opt 包中不再作为当前入口的 raw-ish payload。
 - 重复 task manifest / training curves，若 checksum 与 canonical 文件一致，可替换为说明或仅保留 canonical。
 
 删除前必须：
@@ -146,7 +146,7 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 本计划阶段不执行历史改写。
 
-## 4. P39 仿真数据集与附录实验
+## 4. 仿真压力测试 仿真数据集与附录实验
 
 目标：构造可解释、可审计、可复现的 synthetic stress-test dataset，用于验证机制而非替代真实证据。
 
@@ -172,8 +172,8 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 - `flight_phase_simulator`：生成 climb / cruise / maneuver / event-like phase。
 - `vehicle_dynamics_simulator`：生成速度、高度、加速度、垂向速度和约束残差。
 - `physiology_response_simulator`：生成滞后响应、个体基线、噪声和疲劳项。
-- `event_context_simulator`：生成语义事件 token 和 context proxy。
-- `oracle_task_builder`：生成 T1/T2/T3 和 public-like labels。
+- `event_context_simulator`：生成语义事件 token 和 context-derived second stream。
+- `oracle_task_builder`：生成 分类任务、回归任务和检索任务 和 public-like labels。
 - `domain_shift_builder`：生成跨 sortie、跨 pilot、跨传感器缺失的 stress split。
 
 ### 4.3 仿真数据审计
@@ -191,15 +191,15 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 论文写法：附录或补充实验中写“仿真压力测试表明方法在已知机制下能恢复/区分某类结构”，不能写“仿真证明真实飞行数据结论”。
 
-## 5. P40 T3/public 指标提升
+## 5. 检索任务与公开路线优化 检索任务与公开路线 指标提升
 
 目标：在清理后的仓库上做定点优化，不做无边界大搜索。
 
-### 5.1 T3 retrieval
+### 5.1 检索任务
 
 当前状态：
 
-- P37 T3 未超过 P34。
+- 最终指标打磨 检索任务 未超过 任务感知头优化。
 - 后续若继续优化，应集中在 retrieval 机制。
 
 候选方向：
@@ -216,15 +216,15 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 - 不只看 top1；同时看 top3、top5、MRR。
 - 保留失败结果。
-- 不改变 P34/P37 reference。
-- 若无提升，论文中把 T3 写成方法边界和 future work。
+- 不改变 任务感知头优化/最终指标打磨 reference。
+- 若无提升，论文中把 检索任务 写成方法边界和 future work。
 
 ### 5.2 public route
 
 当前状态：
 
-- P37 public route accepted。
-- public 仍是 context-proxy。
+- 最终指标打磨 public route accepted。
+- public 仍是 context-derived second-stream。
 
 候选方向：
 
@@ -236,21 +236,21 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 验收：
 
 - NASA macro-F1 / balanced accuracy 和 UAB RMSE / MAE 分开看。
-- 不把 public context proxy 写成真实航电流。
-- 所有结果进入 P38/P41 矩阵，而不是孤立报告。
+- 不把 public context-derived second stream 写成真实航电流。
+- 所有结果进入 论文协议冻结/论文级消融统一 矩阵，而不是孤立报告。
 
-## 6. P41 论文级消融统一
+## 6. 论文级消融统一 论文级消融统一
 
 目标：把现有消融从“工程诊断”收束为“论文实验章节”。
 
 统一消融主题：
 
 1. 连续时间双流对齐 vs 朴素同步 / 单流。
-2. 物理残差对 T2 的贡献。
+2. 物理残差对 回归任务 的贡献。
 3. 因果掩码和 lag window 对方向约束的贡献。
-4. 语义事件对 T3 候选排序的贡献。
-5. task-aware heads 对 T1/T2 的贡献。
-6. stream-role gate 对 private/public route 分离的贡献。
+4. 语义事件对 检索任务 候选排序的贡献。
+5. task-aware heads 对 分类任务和回归任务 的贡献。
+6. stream-role gate 对 Dingxin/public route 分离的贡献。
 7. synthetic stress-test 对机制恢复能力的补充说明。
 
 输出：
@@ -260,7 +260,7 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 - 每个组件一张小图或一组子图。
 - 每个结论一条 claim boundary。
 
-## 7. P43 论文材料化
+## 7. 论文材料化 论文材料化
 
 目标：把仓库证据转化为毕业论文材料，而不是继续堆实验目录。
 
@@ -269,8 +269,8 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 - 方法章节变量表。
 - 模型结构图和公式说明。
 - 数据与任务定义表。
-- 真实私有数据实验表。
-- 公开 context-proxy 实验表。
+- 真实鼎新真实数据实验表。
+- 公开 context-derived second-stream 实验表。
 - 仿真附录实验表。
 - 消融与案例分析图。
 - 可复现性说明。
@@ -278,9 +278,9 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 写作边界：
 
-- 私有真实双流：主线证据。
+- 鼎新真实双流：主线证据。
 - weak-label：任务原型和机制验证，不是人工真值。
-- public：adapter / calibration / context-proxy。
+- public：adapter / calibration / context-derived second-stream。
 - synthetic：附录型 stress test。
 - LLM：preprocessing / review / explanation / rubric，不是专家真值。
 
@@ -307,8 +307,8 @@ P38 不重跑实验，只读已有 artifact。验收标准是：任何论文图�
 
 ## 9. 执行开关
 
-P38/P42 已完成。后续若用户要求继续执行，建议第一条明确指令是：
+论文协议冻结/仓库收敛清理 已完成。后续若用户要求继续执行，建议第一条明确指令是：
 
-> 启动 P39 synthetic stress-test 或 P40 T3/public 定点优化，沿用 P38 协议矩阵和 P42 cleanup 边界，不改写已确认 P30-P38 指标。
+> 启动 仿真压力测试 synthetic stress-test 或 检索任务与公开路线优化 检索任务与公开路线 定点优化，沿用 论文协议冻结 协议矩阵和 仓库收敛清理 cleanup 边界，不改写已确认 鼎新真实数据第三方模型对比-论文协议冻结 指标。
 
-若后续需要再清理仓库，继续按 P42 模式执行：先 inventory，再外置备份和路径完整性检查，最后才删除 tracked artifact。
+若后续需要再清理仓库，继续按 仓库收敛清理 模式执行：先 inventory，再外置备份和路径完整性检查，最后才删除 tracked artifact。

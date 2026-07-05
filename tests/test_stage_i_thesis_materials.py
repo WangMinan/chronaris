@@ -101,7 +101,7 @@ class StageIThesisMaterialsDataTest(unittest.TestCase):
         a4 = next(row for row in llm_rows if row["condition"] == "A4_human_review_packet")
         self.assertIn("待复核", a4["boundary_cn"])
         self.assertIn("human_review_completed=False", a4["metric_note"])
-        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开适配", "私有弱标注主线", "私有代理消融"])
+        self.assertEqual([row["segment_title_cn"] for row in transfer_rows], ["公开适配", "鼎新弱监督主线", "鼎新组件诊断"])
         self.assertTrue(all("不能" not in row["positive_reading_cn"] for row in transfer_rows))
 
     def test_table_contract_includes_required_outputs(self) -> None:

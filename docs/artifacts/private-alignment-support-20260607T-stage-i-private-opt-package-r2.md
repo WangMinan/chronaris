@@ -1,12 +1,12 @@
-# Private Alignment Support - 20260607T-stage-i-private-opt-package-r2
+# Dingxin Alignment Support - 20260607T-stage-i-private-opt-package-r2
 
-- benchmark_role: `private_proxy_benchmark`
-- task_role: `proxy_task`
-- `T1/T2/T3` 仅作为 private proxy tasks，用于验证表示学习与融合增益，不等价于论文风险/负荷/复盘人工真值任务。
+- benchmark_role: dingxin_weak_label_benchmark
+- task_role: weak_label_task
+- 分类任务、回归任务和检索任务 仅作为 Dingxin weak-label tasks，用于验证表示学习与融合增益，不等价于论文风险/负荷/复盘人工真值任务。
 - thesis weak-label layer: `thesis_task_weak_label_benchmark`
 - alignment gain supported: `False`
 
-## T1 Proxy Task
+## 分类任务 weak-label Task
 
 | variant | macro-F1 | balanced accuracy |
 | --- | ---: | ---: |
@@ -14,7 +14,7 @@
 | `e_baseline` | 0.262981 | 0.333333 |
 | `f_full` | 0.276605 | 0.350427 |
 
-## T2 Proxy Task
+## 回归任务 weak-label Task
 
 | variant | RMSE | MAE | Spearman |
 | --- | ---: | ---: | ---: |

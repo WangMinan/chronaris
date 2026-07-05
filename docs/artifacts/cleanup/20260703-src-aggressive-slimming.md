@@ -2,15 +2,15 @@
 
 ## 范围
 
-本次是 P42 之后的追加 `src/` 激进瘦身，只处理过度设计、过度封装和无活跃依赖的早期薄层。未启动 P39/P40/P41/P43 实验，未重跑或改写 P27/P28/P30/P31/P32/P34/P35/P36/P37/P38 confirmed metrics。
+本次是 仓库收敛清理 之后的追加 `src/` 激进瘦身，只处理过度设计、过度封装和无活跃依赖的早期薄层。未启动 仿真压力测试/检索任务与公开路线优化/论文级消融统一/论文材料化 实验，未重跑或改写 公开模型对比与公开融合刷新/鼎新真实数据第三方模型对比、公开融合消融、跨证据矩阵、任务感知头优化、流角色融合、优化模型再评估与最终指标打磨/论文协议冻结 confirmed metrics。
 
 ## 删除与合并
 
 - 删除 `src/chronaris/pipelines/dataset_v1.py`：该类只包装 `SortieLoader + SortieDatasetBuilder`，没有活跃脚本入口。
 - 删除 `src/chronaris/access/contracts.py`：三个 Protocol 并入 `src/chronaris/access/loader.py`，避免单独维护接口文件。
 - 删除 `src/chronaris/pipelines/stage_i/common/deep_role_aware.py` 与 `src/chronaris/pipelines/stage_i/common/deep_task_aware.py`：v2/v3 wrapper 并入 `deep_models.py`，复用已有 forward result、mask pooling 与 time-feature helper。
-- 删除 `src/chronaris/pipelines/stage_i/evidence/optimized_final_polish_support.py`：P37 nested-root/status helper 并回唯一调用方。
-- 删除 `src/chronaris/pipelines/stage_i/llm/comparison_io.py`：P21 JSON/CSV helper 并回唯一调用方。
+- 删除 `src/chronaris/pipelines/stage_i/evidence/optimized_final_polish_support.py`：最终指标打磨 nested-root/status helper 并回唯一调用方。
+- 删除 `src/chronaris/pipelines/stage_i/llm/comparison_io.py`：LLM 预处理对比 JSON/CSV helper 并回唯一调用方。
 - 压薄 barrel/compat 层：`chronaris.pipelines`、`chronaris.pipelines.stage_i`、`chronaris.models.alignment`、`chronaris.models.fusion`、`chronaris.serving` 不再维护大规模 re-export / meta-path 兼容表；活跃代码改为从真实实现模块直接导入。
 
 ## 规模变化

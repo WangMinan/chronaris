@@ -1,4 +1,4 @@
-# Stage I P20 DeepSeek 在线时序数据预处理计划
+# Stage I DeepSeek 在线时序数据预处理计划
 
 更新时间：2026-06-14
 
@@ -6,15 +6,15 @@
 
 本文件记录中期前新增的 DeepSeek 在线大模型时序数据预处理方案。当前提交只更新文档，不修改 `src/`、`scripts/`、`tests/`，也不产生新的实验资产。
 
-P20 的目标是在现有 MySQL / InfluxDB 私有数据链路上增加一个可审计的在线 LLM 预处理层，使中期报告能够真实写入“大模型辅助时序数据预处理”内容。中期默认 provider 为 DeepSeek，不以 OpenAI 作为默认路径，原因是用户明确提出 OpenAI 可能存在信息安全顾虑。
+DeepSeek 时序预处理 的目标是在现有 MySQL / InfluxDB 鼎新真实数据链路上增加一个可审计的在线 LLM 预处理层，使中期报告能够真实写入“大模型辅助时序数据预处理”内容。中期默认 provider 为 DeepSeek，不以 OpenAI 作为默认路径，原因是用户明确提出 OpenAI 可能存在信息安全顾虑。
 
 ## 现有数据基础
 
-P20 不新建上游接收器，不重建入库链路，复用当前已经闭环的私有数据和 Stage H / Stage I 资产：
+DeepSeek 时序预处理 不新建上游接收器，不重建入库链路，复用当前已经闭环的鼎新真实数据和 Stage H / Stage I 资产：
 
 - MySQL：业务元数据、飞行批次日期、sortie / pilot / view 关系、飞机字段标签与 measurement metadata。
 - InfluxDB：已经入库的生理流和飞机时序流，当前通过 Stage H 导出为双流窗口样本。
-- 当前中期私有数据规模：`2` 个 sortie、`3` 个双流 view、`111` 个窗口样本。
+- 当前中期鼎新真实数据规模：`2` 个 sortie、`3` 个双流 view、`111` 个窗口样本。
 - 当前主要 sortie：
   - `20251005_四01_ACT-4_云_J20_22#01`
   - `20251002_单01_ACT-8_翼云_J16_12#01`
@@ -29,9 +29,9 @@ P20 不新建上游接收器，不重建入库链路，复用当前已经闭环�
 3. 中期阶段需要一个能真实调用、能落盘、能解释输出边界的在线 LLM 能力，而不是只在报告里写“可探索”。
 4. DeepSeek 接入应服务于预处理、字段语义、规则复核和结果解释，不替代现有双流连续对齐模型、物理约束和因果融合主线。
 
-## P20 建议拆分
+## DeepSeek 时序预处理 建议拆分
 
-### P20-A：DeepSeek provider contract
+### DeepSeek 时序预处理-A：DeepSeek provider contract
 
 目标：形成在线 LLM 调用的最小工程契约。
 
@@ -58,7 +58,7 @@ DEEPSEEK_API_KEY=...
 - 每条请求必须记录 `run_id`、`provider`、`model`、prompt version、input hash、output schema version、token / latency / retry summary。
 - 失败时输出 `llm_error_cases.json`，不能把在线失败包装成成功。
 
-### P20-B：字段语义归一
+### DeepSeek 时序预处理-B：字段语义归一
 
 目标：用 DeepSeek 读取 MySQL 字段标签、Stage H feature schema 和少量统计摘要，生成字段语义字典。
 
@@ -93,7 +93,7 @@ DEEPSEEK_API_KEY=...
 | confidence | 0 到 1 |
 | needs_human_review | 是否需要人工确认 |
 
-### P20-C：weak-label 规则复核
+### DeepSeek 时序预处理-C：weak-label 规则复核
 
 目标：让 DeepSeek 对当前 `risk_proxy / workload_proxy / event_replay_tag` 的规则构造给出候选解释、字段权重和冲突样本说明，再由程序化代码做对比。
 
@@ -127,7 +127,7 @@ DEEPSEEK_API_KEY=...
 - LLM 建议规则必须通过 schema 校验、范围校验和人工抽检后才能进入训练。
 - 中期可写“已规划或实现 LLM 规则复核层”，不能把它写成“真实标签问题已经解决”。
 
-### P20-D：缺失与 schema gap 预处理建议
+### DeepSeek 时序预处理-D：缺失与 schema gap 预处理建议
 
 目标：围绕当前 runtime native aligned 但不是 exact 的问题，让 DeepSeek 生成可解释的 preprocessing policy 草案。
 
@@ -157,7 +157,7 @@ DEEPSEEK_API_KEY=...
 - 不允许把 canonical exact 写成原始 native exact。
 - 不允许绕过 runtime schema contract。
 
-### P20-E：runtime 与语义事件解释
+### DeepSeek 时序预处理-E：runtime 与语义事件解释
 
 目标：把 runtime prediction、semantic event attribution、weak-label task 和 schema gap 组织成窗口级自然语言解释，用于中期报告案例和答辩讲解。
 
@@ -199,11 +199,11 @@ DEEPSEEK_API_KEY=...
 
 ## 中期报告可写口径
 
-在完成 P20 代码和一次真实 DeepSeek 调用前，只能写：
+在完成 DeepSeek 时序预处理 代码和一次真实 DeepSeek 调用前，只能写：
 
 > 已制定 DeepSeek 在线大模型辅助时序数据预处理方案，计划接入现有 MySQL / InfluxDB 派生的 Stage H schema、窗口统计和 runtime 证据，用于字段语义归一、weak-label 规则复核、schema gap 预处理建议和 runtime 结果解释。
 
-在 P20 完成真实 run 后，可以写：
+在 DeepSeek 时序预处理 完成真实 run 后，可以写：
 
 > 已实现基于 DeepSeek 的在线 LLM 预处理模块，并在当前 2 个 sortie、3 个双流 view、111 个窗口样本的 Stage H / Stage I 证据链上完成字段语义、weak-label 复核、schema gap 建议和 runtime 解释的落盘审计。
 
@@ -219,12 +219,12 @@ DEEPSEEK_API_KEY=...
 
 - L01 / L03：支撑时序与自然语言语义对齐，可对应字段语义和 runtime case explanation。
 - L02：支撑语言模型参与时序插补策略讨论，但本项目只允许 LLM 生成 preprocessing policy，不允许直接编造真实缺失值。
-- L04：支撑 LLM agent 辅助表征学习，可作为后续扩展，不作为中期 P20 主线。
-- L05：支撑自动标注和程序化标注函数，最适合对应 P20-C 的 weak-label 规则复核。
+- L04：支撑 LLM agent 辅助表征学习，可作为后续扩展，不作为中期 DeepSeek 时序预处理 主线。
+- L05：支撑自动标注和程序化标注函数，最适合对应 DeepSeek 时序预处理-C 的 weak-label 规则复核。
 
 ## 验收标准
 
-P20 真正进入“已完成”需要满足：
+DeepSeek 时序预处理 真正进入“已完成”需要满足：
 
 1. 有 mock provider 测试，离线环境不依赖真实 DeepSeek API。
 2. 有一次真实 DeepSeek 小样本 run，建议覆盖 3 个 view 和不超过 111 个窗口摘要。
@@ -235,4 +235,4 @@ P20 真正进入“已完成”需要满足：
 
 ## 当前状态
 
-截至 2026-06-14，本文件只是 P20 计划和文档口径冻结。尚未更新代码，尚未调用 DeepSeek，尚未生成 `stage_i_llm_preprocessing` 运行产物。
+截至 2026-06-14，本文件只是 DeepSeek 时序预处理 计划和文档口径冻结。尚未更新代码，尚未调用 DeepSeek，尚未生成 `stage_i_llm_preprocessing` 运行产物。

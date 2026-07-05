@@ -9,4 +9,4 @@
 - `P14 public transfer boundary`
 - `P15 rigid_body rotation audit`
 
-Review 时必须同步检查 `evidence_layer`、报告边界和产物可追溯性，避免把 public adapter、private proxy、thesis weak-label 混写。
+Review 时必须同步检查 `evidence_layer`、报告边界和产物可追溯性，避免把 public adapter、Dingxin weak-label、thesis weak-label 混写。

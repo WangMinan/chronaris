@@ -1,8 +1,15 @@
 # Chronaris 文档入口
 
-更新时间：2026-07-03
+更新时间：2026-07-04
 
 本目录按 AI coding 使用方式重新组织。顶层只承担导航和状态入口；具体计划、需求、产物、review 记录分别下沉到专门目录。
+
+## 术语约定
+
+- 采自酒泉、当前由鼎新链路进入仓库的真实数据，统一写作“鼎新真实数据”或 `dingxin`。
+- 分类、回归、检索三类任务在面向人阅读的文档和图表中直接写完整任务名，不再用 `T1/T2/T3` 作为展示标签。
+- 基于规则或弱监督构造的验证任务，写作“弱监督任务”或“弱监督任务证据”；公开数据中由任务/场景上下文构造的第二输入流，写作“上下文构造第二输入流”。
+- `private`、`proxy`、`Pxx`、`T1/T2/T3` 等只应出现在稳定文件路径、代码标识、历史 run_id 或必须复现的机器字段中。
 
 ## 顶层文件
 
@@ -37,7 +44,7 @@
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：当前产物索引和引用规则。
 - [artifacts/stage/](artifacts/stage/)：按 [implementation/TASKS.md](implementation/TASKS.md) 的阶段组织产物。
 - [artifacts/mid-term/](artifacts/mid-term/)：中期答辩证据包。
-- [artifacts/cleanup/](artifacts/cleanup/)：docs 产物清理记录，说明已清理内容、外置备份、LFS/历史处理和保留边界；当前 P42 记录见 [artifacts/cleanup/20260703-thesis-prep-cleanup.md](artifacts/cleanup/20260703-thesis-prep-cleanup.md)。
+- [artifacts/cleanup/](artifacts/cleanup/)：docs 产物清理记录，说明已清理内容、外置备份、LFS/历史处理和保留边界；当前 仓库收敛清理 记录见 [artifacts/cleanup/20260703-thesis-prep-cleanup.md](artifacts/cleanup/20260703-thesis-prep-cleanup.md)。
 
 ### midterm
 

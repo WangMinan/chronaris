@@ -1,14 +1,14 @@
-# Private Optimality Summary - 20260607T-stage-i-private-opt-package-r2
+# Dingxin Real-Data Optimality Summary - 20260607T-stage-i-private-opt-package-r2
 
-- benchmark_role: `private_proxy_benchmark`
-- `T1/T2/T3` 只按 private proxy tasks 解读，不把它们写成人工真值 thesis tasks。
+- benchmark_role: dingxin_weak_label_benchmark
+- 分类任务、回归任务和检索任务 只按 Dingxin weak-label tasks 解读，不把它们写成人工真值 thesis tasks。
 - thesis weak-label tasks: `risk_proxy, workload_proxy, event_replay_tag`
-- private optimality supported: `True`
-- best T1 variant: `chronaris_opt`
-- best T2 variant: `chronaris_opt`
-- best T3 variant: `chronaris_opt`
-- best deep T1 model: `contiformer`
-- best deep T2 model: `contiformer`
+- Dingxin optimality supported: `True`
+- best 分类任务 variant: `chronaris_opt`
+- best 回归任务 variant: `chronaris_opt`
+- best 检索任务 variant: `chronaris_opt`
+- best deep 分类任务 model: `contiformer`
+- best deep 回归任务 model: `contiformer`
 
 ## Retrieval
 

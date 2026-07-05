@@ -1,11 +1,11 @@
-# Private Optimization Summary - 20260607T-stage-i-private-opt-package-r2
+# Dingxin Real-Data Optimization Summary - 20260607T-stage-i-private-opt-package-r2
 
-- benchmark_role: `private_proxy_benchmark`
-- `T1/T2/T3` 的最优性只说明 private proxy benchmark 收敛，不代表论文真值任务已经闭环。
+- benchmark_role: dingxin_weak_label_benchmark
+- 分类任务、回归任务和检索任务 的最优性只说明 Dingxin weak-label benchmark 收敛，不代表论文真值任务已经闭环。
 - thesis weak-label manifest: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
 - target variant: `chronaris_opt`
 - no-mask variant: `chronaris_opt_no_causal_mask`
-- private optimality supported: `True`
+- Dingxin optimality supported: `True`
 
 ## Criteria
 
@@ -24,12 +24,12 @@
 
 | task | variant | primary metrics |
 | --- | --- | --- |
-| `T1_maneuver_intensity_class` | `chronaris_opt` | macro_f1=1.000000, balanced_accuracy=1.000000 |
-| `T1_maneuver_intensity_class` | `chronaris_opt_no_causal_mask` | macro_f1=0.173333, balanced_accuracy=0.333333 |
-| `T2_next_window_physiology_response` | `chronaris_opt` | rmse=201.489565, mae=113.851926 |
-| `T2_next_window_physiology_response` | `chronaris_opt_no_causal_mask` | rmse=313.232477, mae=173.648719 |
-| `T3_paired_pilot_window_retrieval` | `chronaris_opt` | top1_accuracy=1.000000, mrr=1.000000 |
-| `T3_paired_pilot_window_retrieval` | `chronaris_opt_no_causal_mask` | top1_accuracy=0.027027, mrr=0.113556 |
+| 分类任务：机动强度分类 | `chronaris_opt` | macro_f1=1.000000, balanced_accuracy=1.000000 |
+| 分类任务：机动强度分类 | `chronaris_opt_no_causal_mask` | macro_f1=0.173333, balanced_accuracy=0.333333 |
+| 回归任务：下一窗口生理响应 | `chronaris_opt` | rmse=201.489565, mae=113.851926 |
+| 回归任务：下一窗口生理响应 | `chronaris_opt_no_causal_mask` | rmse=313.232477, mae=173.648719 |
+| 检索任务：配对飞行员窗口检索 | `chronaris_opt` | top1_accuracy=1.000000, mrr=1.000000 |
+| 检索任务：配对飞行员窗口检索 | `chronaris_opt_no_causal_mask` | top1_accuracy=0.027027, mrr=0.113556 |
 
 ## Artifacts
 

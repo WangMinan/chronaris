@@ -41,7 +41,7 @@
 
 ## 3. 设计原则
 
-`chronaris public opt` 只迁移思路，不强行复制私有 benchmark 的所有实现细节。
+`chronaris public opt` 只迁移思路，不强行复制鼎新真实数据 benchmark 的所有实现细节。
 
 本轮保留三条核心：
 
@@ -50,7 +50,7 @@
    - `task_context / scenario_context` 作为辅流
 2. 轻量 residual/context 特征：
    - 从现有 `sequence bundle` 与 `entry.context_payload` 中派生
-   - 不依赖私有 `raw_window_summary.jsonl`
+   - 不依赖鼎新 `raw_window_summary.jsonl`
 3. 任务感知轻量 head：
    - 优先 regression
    - 先求可跑和稳定，再谈更重模型
@@ -83,9 +83,9 @@
    - effective valid ratio
    - window fraction
 4. `public residual proxies`
-   - physiology end-start delta proxy
-   - physiology short-term variability proxy
-   - context intensity proxy
+   - physiology end-start delta weak-label
+   - physiology short-term variability weak-label
+   - context intensity weak-label
 
 建议文件：
 

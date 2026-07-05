@@ -2,13 +2,13 @@
 
 - evidence_layer: `transfer_boundary`
 - public_mainline_status: `public opt closed`
-- boundary_note: `公开 UAB/NASA 结果只用于 adapter/calibration 与 transfer-boundary 说明，不能改写为论文私有双流本体 fully closed。`
+- boundary_note: `公开 UAB/NASA 结果只用于 adapter/calibration 与 transfer-boundary 说明，不能改写为论文鼎新真实双流本体 fully closed。`
 
 ## Data Boundary
 
 | corpus | modality_pair | labels | granularity | time_reference | evidence_role |
 | --- | --- | --- | --- | --- | --- |
-| `private_stage_h` | `real_physiology + real_vehicle_timeseries` | `risk_proxy/workload_proxy/event_replay_tag or T1/T2/T3` | `window/view` | `Stage H unified timeline with sortie/pilot/view ids` | `thesis_weak_label + private_proxy` |
+| dingxin_stage_h | `real_physiology + real_vehicle_timeseries` | `risk_proxy/workload_proxy/event_replay_tag or T1/T2/T3` | `window/view` | `Stage H unified timeline with sortie/pilot/view ids` | `thesis_weak_label + dingxin_component_diagnostics` |
 | `uab_workload_dataset` | `physiology + task_context_proxy` | `subjective workload / public adapter target` | `window` | `public prepared sequence timeline` | `public_adapter/calibration` |
 | `nasa_csm` | `physiology + scenario_context_proxy` | `attention_state / public adapter target` | `window/sequence` | `public prepared sequence timeline` | `public_adapter/calibration` |
 
@@ -16,9 +16,9 @@
 
 | layer | task_scope | note |
 | --- | --- | --- |
-| `thesis_weak_label` | `risk_proxy / workload_proxy / event_replay_tag` | `weak labels built from private Stage H aligned windows` |
-| `private_proxy` | `T1/T2/T3` | `private proxy benchmark diagnostics only` |
-| `public_adapter/calibration` | `UAB/NASA public tasks` | `context proxy only, not real vehicle stream` |
+| `thesis_weak_label` | `risk_proxy / workload_proxy / event_replay_tag` | `weak labels built from Dingxin Stage H aligned windows` |
+| dingxin_weak_label | 分类任务、回归任务和检索任务 | `Dingxin weak-label component diagnostics only` |
+| `public_adapter/calibration` | `UAB/NASA public tasks` | `context-derived second stream only, not real vehicle stream` |
 
 ## Performance References
 

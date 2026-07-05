@@ -1,4 +1,4 @@
-# Private Optimized Package - 20260504T120000Z-stage-i-private-opt-package
+# Dingxin Real-Data Optimized Package - 20260504T120000Z-stage-i-private-opt-package
 
 - package path: `docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 - target variant: `chronaris_opt`
@@ -15,6 +15,6 @@
 
 ## Exported Heads
 
-- `T1_maneuver_intensity_class`: `class_balanced_threshold`
-- `T2_next_window_physiology_response`: `physiology_persistence`
-- `T3_paired_pilot_window_retrieval`: `chronaris_time_residual_retrieval`
+- 分类任务：机动强度分类: `class_balanced_threshold`
+- 回归任务：下一窗口生理响应: `physiology_persistence`
+- 检索任务：配对飞行员窗口检索: `chronaris_time_residual_retrieval`

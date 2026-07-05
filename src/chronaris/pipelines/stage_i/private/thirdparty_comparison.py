@@ -1,4 +1,4 @@
-"""P30 private Dingxin / Stage H third-party comparison."""
+"""Dingxin / Stage H real-data third-party comparison."""
 
 from __future__ import annotations
 
@@ -117,6 +117,35 @@ FEATURE_MODEL_SOURCES = {
     "chronaris_full": ("chronaris_opt", "full_safe"),
     "naive_time_sync": ("naive_sync", "dual_projection"),
     "classical_baseline": ("f_full", "dual_projection"),
+}
+
+TASK_DISPLAY_NAMES = {
+    TASK_MANEUVER: "分类任务",
+    TASK_RESPONSE: "回归任务",
+    TASK_RETRIEVAL: "检索任务",
+}
+
+METRIC_DISPLAY_NAMES = {
+    "macro_f1": "macro-F1",
+    "balanced_accuracy": "balanced accuracy",
+    "rmse": "RMSE",
+    "mae": "MAE",
+    "nrmse": "NRMSE",
+    "top1": "Top-1",
+    "top3": "Top-3",
+    "top5": "Top-5",
+    "mrr": "MRR",
+}
+
+MODEL_DISPLAY_NAMES = {
+    "chronaris_full": "Chronaris完整模型",
+    "mult": "MulT",
+    "contiformer": "ContiFormer",
+    "naive_time_sync": "朴素时间同步基线",
+    "classical_baseline": "传统特征基线",
+    "p37_t3_info_nce_temp0p05_hardw2": "检索任务：InfoNCE低温候选",
+    "p37_t1_focal_gamma2_gate0p85_ls0p10_collapse0p10": "分类任务：焦点损失+门控候选",
+    "p37_t1_focal_gamma1_gate0p65_ls0p05": "分类任务：轻门控候选",
 }
 
 
@@ -528,7 +557,7 @@ def _run_observed(
             "splits": list(config.split_strategy),
             "seeds": list(config.seeds),
             "label_policy": "labels unchanged; test fold statistics excluded from normalization and target transforms",
-            "candidate_policy": "T3 same_sortie_cross_pilot",
+            "candidate_policy": "retrieval task: same sortie cross-pilot candidates",
         },
     }
     manifest_path.write_text(
@@ -1772,6 +1801,55 @@ def _build_candidate_leaderboard(seed_metrics: pd.DataFrame) -> pd.DataFrame:
     return seed_metrics.sort_values(["task_name", "split_strategy", "model_name", "seed"]) if not seed_metrics.empty else seed_metrics
 
 
+def _display_task_name(value: object) -> str:
+    text = str(value)
+    return TASK_DISPLAY_NAMES.get(text, text.replace("_", " "))
+
+
+def _display_metric_name(value: object) -> str:
+    text = str(value)
+    return METRIC_DISPLAY_NAMES.get(text, text)
+
+
+def _display_task_metric(task_name: object, metric: object) -> str:
+    return f"{_display_task_name(task_name)} / {_display_metric_name(metric)}"
+
+
+def _display_model_label(value: object) -> str:
+    text = str(value)
+    return MODEL_DISPLAY_NAMES.get(text, text.replace("_", " "))
+
+
+def _with_display_columns(frame: pd.DataFrame) -> pd.DataFrame:
+    if frame.empty:
+        return frame
+    display = frame.copy()
+    if "task_name" in display:
+        display["task"] = display["task_name"].map(_display_task_name)
+    if "metric" in display:
+        display["metric_display"] = display["metric"].map(_display_metric_name)
+    if "model_name" in display:
+        display["model"] = display["model_name"].map(_display_model_label)
+    if "baseline_model" in display:
+        display["baseline"] = display["baseline_model"].map(_display_model_label)
+    return display
+
+
+def _configure_plot_font() -> None:
+    try:
+        from matplotlib import font_manager
+    except Exception:
+        return
+    for family in ("WenQuanYi Zen Hei", "Noto Sans CJK SC", "Microsoft YaHei", "SimHei"):
+        try:
+            font_manager.findfont(family, fallback_to_default=False)
+        except ValueError:
+            continue
+        plt.rcParams["font.sans-serif"] = [family, *plt.rcParams.get("font.sans-serif", [])]
+        plt.rcParams["axes.unicode_minus"] = False
+        return
+
+
 def _render_figures(
     run_root: Path,
     long_frame: pd.DataFrame,
@@ -1780,6 +1858,7 @@ def _render_figures(
     predictions: pd.DataFrame,
     training_frame: pd.DataFrame,
 ) -> dict[str, str]:
+    _configure_plot_font()
     paths = {
         "fig_private_third_party_task_leaderboard": str(run_root / "fig_private_third_party_task_leaderboard.png"),
         "fig_private_third_party_delta_heatmap": str(run_root / "fig_private_third_party_delta_heatmap.png"),
@@ -1802,8 +1881,8 @@ def _render_figures(
     _private_training_curves(training_frame, paths["fig_private_third_party_training_curves"])
     _retrieval_grouped(long_frame, paths["fig_private_third_party_retrieval_topk"])
     _private_gpu_throughput(training_frame, paths["fig_private_third_party_gpu_throughput"])
-    _metric_bar(long_frame, TASK_MANEUVER, "macro_f1", paths["fig_private_thirdparty_t1_macro_f1"], "T1 macro-F1 model leaderboard", higher=True)
-    _metric_bar(long_frame, TASK_RESPONSE, "rmse", paths["fig_private_thirdparty_t2_rmse"], "T2 RMSE model leaderboard", higher=False)
+    _metric_bar(long_frame, TASK_MANEUVER, "macro_f1", paths["fig_private_thirdparty_t1_macro_f1"], "分类任务 macro-F1 模型榜", higher=True)
+    _metric_bar(long_frame, TASK_RESPONSE, "rmse", paths["fig_private_thirdparty_t2_rmse"], "回归任务 RMSE 模型榜", higher=False)
     _retrieval_grouped(long_frame, paths["fig_private_thirdparty_t3_retrieval"])
     _private_delta_heatmap(improvement, paths["fig_private_thirdparty_delta_heatmap"])
     _private_fold_stability(fold_frame, paths["fig_private_thirdparty_fold_stability"])
@@ -1816,10 +1895,10 @@ def _render_figures(
 def _private_task_leaderboard(frame: pd.DataFrame, path: str) -> None:
     subset = frame.copy() if not frame.empty else pd.DataFrame()
     priority = {
-        (TASK_MANEUVER, "macro_f1"): "T1 macro-F1",
-        (TASK_RESPONSE, "rmse"): "T2 RMSE",
-        (TASK_RETRIEVAL, "top1"): "T3 top1",
-        (TASK_RETRIEVAL, "mrr"): "T3 MRR",
+        (TASK_MANEUVER, "macro_f1"): "分类任务 macro-F1",
+        (TASK_RESPONSE, "rmse"): "回归任务 RMSE",
+        (TASK_RETRIEVAL, "top1"): "检索任务 Top-1",
+        (TASK_RETRIEVAL, "mrr"): "检索任务 MRR",
     }
     subset = subset[
         [(row.task_name, row.metric) in priority for row in subset.itertuples(index=False)]
@@ -1831,7 +1910,8 @@ def _private_task_leaderboard(frame: pd.DataFrame, path: str) -> None:
     else:
         subset = subset.copy()
         subset["task_metric"] = [priority[(row.task_name, row.metric)] for row in subset.itertuples(index=False)]
-        pivot = subset.pivot_table(index="model_name", columns="task_metric", values="value_mean", aggfunc="mean")
+        subset["model_label"] = subset["model_name"].map(_display_model_label)
+        pivot = subset.pivot_table(index="model_label", columns="task_metric", values="value_mean", aggfunc="mean")
         normalized = pivot.copy()
         for column in normalized:
             values = normalized[column].astype(float)
@@ -1848,8 +1928,8 @@ def _private_task_leaderboard(frame: pd.DataFrame, path: str) -> None:
         label_stack_totals(axis, x, bottom)
         axis.set_xticks(x)
         axis.set_xticklabels(normalized.index, rotation=20, ha="right")
-        axis.set_ylabel("normalized score; higher is better")
-        axis.set_title("Private third-party task leaderboard")
+        axis.set_ylabel("归一化分数；越高越好")
+        axis.set_title("鼎新真实数据第三方模型任务榜")
         axis.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=220)
@@ -1865,10 +1945,10 @@ def _private_training_curves(frame: pd.DataFrame, path: str) -> None:
         subset = frame.copy()
         for model_name, model_rows in subset.groupby("model_name", sort=False):
             curve = model_rows.groupby("epoch", sort=True)["train_loss"].mean()
-            axis.plot(curve.index, curve.values, marker="o", linewidth=1.4, label=model_name)
+            axis.plot(curve.index, curve.values, marker="o", linewidth=1.4, label=_display_model_label(model_name))
         axis.set_xlabel("epoch")
         axis.set_ylabel("mean train loss")
-        axis.set_title("Private third-party training curves")
+        axis.set_title("鼎新真实数据第三方模型训练曲线")
         axis.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=220)
@@ -1893,10 +1973,10 @@ def _private_gpu_throughput(frame: pd.DataFrame, path: str) -> None:
         bars = axis.barh(np.arange(len(grouped)), values, color="#2f6f9f")
         label_horizontal_bars(axis, bars, values)
         axis.set_yticks(np.arange(len(grouped)))
-        axis.set_yticklabels(grouped.index)
+        axis.set_yticklabels([_display_model_label(value) for value in grouped.index])
         axis.invert_yaxis()
         axis.set_xlabel("selected batch size")
-        axis.set_title("Private GPUOPT selected batch size")
+        axis.set_title("鼎新真实数据训练批量选择")
         for index, row in enumerate(grouped.to_dict(orient="records")):
             axis.text(float(row["selected_batch_size"]), index, f" cache {float(row['cache_gb']):.2f} GB", va="center", fontsize=8)
     fig.tight_layout()
@@ -1916,7 +1996,7 @@ def _metric_bar(frame: pd.DataFrame, task: str, metric: str, path: str, title: s
         bars = axis.barh(np.arange(len(grouped)), values, color="#2f6f9f")
         label_horizontal_bars(axis, bars, values)
         axis.set_yticks(np.arange(len(grouped)))
-        axis.set_yticklabels(grouped.index)
+        axis.set_yticklabels([_display_model_label(value) for value in grouped.index])
         axis.invert_yaxis()
         axis.set_title(title)
         axis.set_xlabel(metric)
@@ -1941,9 +2021,9 @@ def _retrieval_grouped(frame: pd.DataFrame, path: str) -> None:
             bars = axis.bar(x + offset * width, values, width, label=metric)
             label_vertical_bars(axis, bars, values)
         axis.set_xticks(x + width * (len(metrics) - 1) / 2)
-        axis.set_xticklabels(pivot.index, rotation=20, ha="right")
+        axis.set_xticklabels([_display_model_label(value) for value in pivot.index], rotation=20, ha="right")
         axis.set_ylim(0, 1.05)
-        axis.set_title("T3 retrieval top-k/MRR comparison")
+        axis.set_title("检索任务 Top-k / MRR 对比")
         axis.legend()
     fig.tight_layout()
     fig.savefig(path, dpi=220)
@@ -1952,19 +2032,23 @@ def _retrieval_grouped(frame: pd.DataFrame, path: str) -> None:
 
 def _private_delta_heatmap(frame: pd.DataFrame, path: str) -> None:
     subset = frame.copy() if not frame.empty else pd.DataFrame()
-    rows = list(dict.fromkeys((subset["task_name"] + " / " + subset["metric"]).tolist())) if not subset.empty else ["none"]
-    cols = list(dict.fromkeys(subset["baseline_model"].tolist())) if not subset.empty else ["none"]
+    rows = (
+        list(dict.fromkeys((_display_task_metric(row.task_name, row.metric) for row in subset.itertuples(index=False))))
+        if not subset.empty
+        else ["none"]
+    )
+    cols = list(dict.fromkeys((_display_model_label(value) for value in subset["baseline_model"].tolist()))) if not subset.empty else ["none"]
     data = np.zeros((len(rows), len(cols)), dtype=float)
     lookup = {}
     for row in subset.to_dict(orient="records"):
-        lookup[(f"{row['task_name']} / {row['metric']}", row["baseline_model"])] = row["delta_abs"]
+        lookup[(_display_task_metric(row["task_name"], row["metric"]), _display_model_label(row["baseline_model"]))] = row["delta_abs"]
     for i, row_label in enumerate(rows):
         for j, col in enumerate(cols):
             data[i, j] = float(lookup.get((row_label, col), np.nan))
     fig, axis = plt.subplots(figsize=(max(7, len(cols) * 1.2), max(4, len(rows) * 0.45)))
     vmax = np.nanmax(np.abs(data)) if np.isfinite(data).any() else 1.0
     image = axis.imshow(data, cmap="RdYlGn", vmin=-vmax, vmax=vmax, aspect="auto")
-    axis.set_title("Chronaris improvement over private baselines")
+    axis.set_title("Chronaris 相对鼎新基线模型的提升")
     axis.set_xticks(np.arange(len(cols)))
     axis.set_xticklabels(cols, rotation=20, ha="right")
     axis.set_yticks(np.arange(len(rows)))
@@ -1991,9 +2075,9 @@ def _private_fold_stability(frame: pd.DataFrame, path: str) -> None:
         subset["metric_value"] = metric
         labels = list(dict.fromkeys(subset["model_name"]))
         data = [subset[subset["model_name"] == label]["metric_value"].dropna().astype(float).to_numpy() for label in labels]
-        axis.boxplot(data, labels=labels, showfliers=False)
+        axis.boxplot(data, labels=[_display_model_label(label) for label in labels], showfliers=False)
         axis.tick_params(axis="x", rotation=20)
-        axis.set_title("Private third-party fold stability")
+        axis.set_title("鼎新真实数据第三方模型折间稳定性")
     fig.tight_layout()
     fig.savefig(path, dpi=220)
     plt.close(fig)
@@ -2003,7 +2087,7 @@ def _t1_confusion(predictions: pd.DataFrame, path: str) -> None:
     subset = predictions[(predictions["task_name"] == TASK_MANEUVER) & (predictions["model_name"] == "chronaris_full")].copy() if not predictions.empty else pd.DataFrame()
     fig, axis = plt.subplots(figsize=(4.5, 4))
     if subset.empty:
-        axis.text(0.5, 0.5, "no T1 predictions", ha="center", va="center")
+        axis.text(0.5, 0.5, "no classification-task predictions", ha="center", va="center")
         axis.axis("off")
     else:
         labels = [0, 1, 2]
@@ -2018,7 +2102,7 @@ def _t1_confusion(predictions: pd.DataFrame, path: str) -> None:
         axis.set_yticklabels(["low", "medium", "high"])
         axis.set_xlabel("predicted")
         axis.set_ylabel("true")
-        axis.set_title("T1 Chronaris confusion matrix")
+        axis.set_title("分类任务 Chronaris 混淆矩阵")
         for i in range(3):
             for j in range(3):
                 axis.text(j, i, str(matrix[i, j]), ha="center", va="center")
@@ -2032,13 +2116,13 @@ def _t2_errors(predictions: pd.DataFrame, path: str) -> None:
     subset = predictions[predictions["task_name"] == TASK_RESPONSE].copy() if not predictions.empty else pd.DataFrame()
     fig, axis = plt.subplots(figsize=(9, 4.8))
     if subset.empty:
-        axis.text(0.5, 0.5, "no T2 predictions", ha="center", va="center")
+        axis.text(0.5, 0.5, "no regression-task predictions", ha="center", va="center")
         axis.axis("off")
     else:
         for model_name, group in subset.groupby("model_name", sort=False):
             errors = group["y_pred"].astype(float) - group["y_true"].astype(float)
             axis.hist(errors, bins=20, alpha=0.45, label=model_name)
-        axis.set_title("T2 prediction error distribution")
+        axis.set_title("回归任务预测误差分布")
         axis.set_xlabel("prediction - truth")
         axis.legend(fontsize=8)
     fig.tight_layout()
@@ -2050,19 +2134,19 @@ def _t3_curve(frame: pd.DataFrame, path: str) -> None:
     subset = frame[(frame["task_name"] == TASK_RETRIEVAL) & frame["metric"].isin(["top1", "top3", "top5"])].copy() if not frame.empty else pd.DataFrame()
     fig, axis = plt.subplots(figsize=(8, 4.5))
     if subset.empty:
-        axis.text(0.5, 0.5, "no T3 rows", ha="center", va="center")
+        axis.text(0.5, 0.5, "no retrieval-task rows", ha="center", va="center")
         axis.axis("off")
     else:
         order = {"top1": 1, "top3": 3, "top5": 5}
         for model_name, group in subset.groupby("model_name", sort=False):
             grouped = group.groupby("metric")["value_mean"].mean()
             xs = [order[metric] for metric in grouped.index]
-            axis.plot(xs, grouped.values, marker="o", label=model_name)
+            axis.plot(xs, grouped.values, marker="o", label=_display_model_label(model_name))
         axis.set_xticks([1, 3, 5])
         axis.set_ylim(0, 1.05)
         axis.set_xlabel("k")
         axis.set_ylabel("top-k accuracy")
-        axis.set_title("T3 retrieval curve")
+        axis.set_title("检索任务 Top-k 曲线")
         axis.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(path, dpi=220)
@@ -2250,14 +2334,16 @@ def _lower_is_better(metric: str) -> bool:
 
 
 def _render_report(summary: Mapping[str, object], long_frame: pd.DataFrame, improvement: pd.DataFrame) -> str:
+    display_long = _with_display_columns(long_frame)
+    display_improvement = _with_display_columns(improvement)
     lines = [
-        f"# Stage I Private Third-party Comparison - {summary['run_id']}",
+        f"# Stage I Dingxin Real-Data Third-party Comparison - {summary['run_id']}",
         "",
         "## Executive Summary",
         "",
-        "On the private Dingxin / Stage H real dual-stream dataset, Chronaris is compared with MulT and ContiFormer under the same leakage-safe split manifest. "
+        "On the Dingxin / Stage H real dual-stream dataset, Chronaris is compared with MulT and ContiFormer under the same leakage-safe split manifest. "
         "The comparison uses real physiology and real vehicle time-series streams, with label-source fields and identity/time-position features excluded from model inputs. "
-        "Across T1/T2/T3 proxy tasks, the report provides model-level leaderboard, fold-level stability and Chronaris-vs-third-party deltas.",
+        "Across the classification, regression and retrieval component-diagnostic tasks, the report provides model-level leaderboard, fold-level stability and Chronaris-vs-third-party deltas.",
         "",
         "## Dataset and protocol",
         "",
@@ -2272,11 +2358,11 @@ def _render_report(summary: Mapping[str, object], long_frame: pd.DataFrame, impr
         "",
         "## Main leaderboard",
         "",
-        _markdown_table(long_frame.head(60), ["task_name", "split_strategy", "model_name", "metric", "value_mean", "value_std", "seed_count"]),
+        _markdown_table(display_long.head(60), ["task", "split_strategy", "model", "metric_display", "value_mean", "value_std", "seed_count"]),
         "",
         "## Improvement over third-party baselines",
         "",
-        _markdown_table(improvement.head(60), ["task_name", "split_strategy", "metric", "baseline_model", "chronaris_value", "baseline_value", "delta_abs", "delta_rel_pct"]),
+        _markdown_table(display_improvement.head(60), ["task", "split_strategy", "metric_display", "baseline", "chronaris_value", "baseline_value", "delta_abs", "delta_rel_pct"]),
         "",
         "## Figure index",
         "",
@@ -2296,7 +2382,7 @@ def _render_report(summary: Mapping[str, object], long_frame: pd.DataFrame, impr
             "",
             "## Midterm-ready wording",
             "",
-            "自有鼎新 / Stage H 分支在同一 leakage-safe 任务协议下比较 Chronaris、MulT 与 ContiFormer，量化真实生理流和真实航电流连续对齐场景中的模型适配性。T1/T2/T3 均保持 proxy task 标注边界，结果以 fold-level stability、mean/std 和 Chronaris-vs-baseline delta 展示。",
+            "鼎新 / Stage H 分支在同一 leakage-safe 任务协议下比较 Chronaris、MulT 与 ContiFormer，量化真实生理流和真实航电流连续对齐场景中的模型适配性。分类任务、回归任务和检索任务均属于从现有鼎新数据派生的组件诊断任务，结果以 fold-level stability、mean/std 和 Chronaris-vs-baseline delta 展示。",
         ]
     )
     return "\n".join(lines)

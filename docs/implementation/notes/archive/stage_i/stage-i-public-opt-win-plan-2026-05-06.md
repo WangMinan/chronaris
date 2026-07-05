@@ -48,7 +48,7 @@
    - 保留现有全序列 pooled stats
    - 新增 `early / middle / late` 三段强度与变化特征
    - 新增主流/辅流强度差、变化差、有效率差等跨模态标量
-   - 新增辅流 jump / peak / change density 代理特征
+   - 新增辅流 jump / peak / change density 弱监督特征
 2. 扩展 `public opt` head family
    - `UAB subjective`
      - `physiology_persistence`

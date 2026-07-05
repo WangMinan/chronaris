@@ -20,9 +20,9 @@
 
 | task | total_count | valid_label_count |
 | --- | ---: | ---: |
-| `risk_proxy` | 111 | 111 |
-| `workload_proxy` | 111 | 111 |
-| `event_replay_tag` | 111 | 111 |
+| risk_weak_label | 111 | 111 |
+| workload_weak_label | 111 | 111 |
+| 事件回放标签 | 111 | 111 |
 
 ## Test Metrics
 
@@ -38,6 +38,6 @@
 
 | task | weighted_loss |
 | --- | ---: |
-| `risk_proxy` | 1.195015 |
-| `workload_proxy` | 0.004169 |
-| `event_replay_tag` | 3.030424 |
+| risk_weak_label | 1.195015 |
+| workload_weak_label | 0.004169 |
+| 事件回放标签 | 3.030424 |

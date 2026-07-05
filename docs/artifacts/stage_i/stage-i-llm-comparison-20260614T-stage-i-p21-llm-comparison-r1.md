@@ -33,17 +33,17 @@ LLM outputs are used only as preprocessing context, whitelisted semantic hints, 
 
 | task | baseline entries | attached entries | label unchanged | review decision | human review |
 | --- | ---: | ---: | --- | --- | --- |
-| `event_replay_tag` | 111 | 111 | `true` | `keep_current_rule` | `true` |
-| `risk_proxy` | 111 | 111 | `true` | `keep_current_rule` | `true` |
-| `workload_proxy` | 111 | 111 | `true` | `keep_current_rule` | `true` |
+| 事件回放标签 | 111 | 111 | `true` | `keep_current_rule` | `true` |
+| risk_weak_label | 111 | 111 | `true` | `keep_current_rule` | `true` |
+| workload_weak_label | 111 | 111 | `true` | `keep_current_rule` | `true` |
 
 ## Semantic Hint Comparison
 
 | query | condition | recipe | source | whitelisted | ranking status |
 | --- | --- | --- | --- | --- | --- |
-| `risk_proxy` | `A0_baseline` | `gap_plus_event` | `built_in_query_bank` | `true` | `not_recomputed_from_summary_only` |
-| `workload_proxy` | `A0_baseline` | `physiology_plus_gap` | `built_in_query_bank` | `true` | `not_recomputed_from_summary_only` |
-| `event_replay_tag` | `A0_baseline` | `vehicle_plus_event` | `built_in_query_bank` | `true` | `not_recomputed_from_summary_only` |
+| risk_weak_label | `A0_baseline` | `gap_plus_event` | `built_in_query_bank` | `true` | `not_recomputed_from_summary_only` |
+| workload_weak_label | `A0_baseline` | `physiology_plus_gap` | `built_in_query_bank` | `true` | `not_recomputed_from_summary_only` |
+| 事件回放标签 | `A0_baseline` | `vehicle_plus_event` | `built_in_query_bank` | `true` | `not_recomputed_from_summary_only` |
 | `pilot_vehicle_event_gap` | `A2_llm_semantic_hints` | `vehicle_plus_event` | `P20_llm_semantic_hints` | `true` | `not_recomputed_from_summary_only` |
 | `event_gap_analysis` | `A2_llm_semantic_hints` | `gap_plus_event` | `P20_llm_semantic_hints` | `true` | `not_recomputed_from_summary_only` |
 | `pilot_physiology_gap` | `A2_llm_semantic_hints` | `physiology_plus_gap` | `P20_llm_semantic_hints` | `true` | `not_recomputed_from_summary_only` |

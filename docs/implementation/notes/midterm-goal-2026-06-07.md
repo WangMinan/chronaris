@@ -2,7 +2,7 @@
 
 更新时间：2026-06-07
 
-> 2026-06-07 同日补记：本文件保留为“中期前最小收敛”历史判断。当前事实源已经更新到 [../TASKS.md](../TASKS.md) 和 [../../STATE.md](../../STATE.md)：`main/origin/main` 已同步到 `57ca739`，`Phase D/E/F` 已进入二轮真实资产闭环；中期前策略也已经从“最小收敛、不扩公开线”升级为“P10 evidence runner + 五项主动证据”。因此，本文件第 5-7 节中关于“不建议继续扩大 UAB/NASA 搜索”“把刚体/语义/runtime 留到中期后”的判断只作为历史快照，不再作为当前执行入口。
+> 2026-06-07 同日补记：本文件保留为“中期前最小收敛”历史判断。当前事实源已经更新到 [../TASKS.md](../TASKS.md) 和 [../../STATE.md](../../STATE.md)：`main/origin/main` 已同步到 `57ca739`，`Phase D/E/F` 已进入二轮真实资产闭环；中期前策略也已经从“最小收敛、不扩公开线”升级为“主动证据汇总器 evidence runner + 五项主动证据”。因此，本文件第 5-7 节中关于“不建议继续扩大 UAB/NASA 搜索”“把刚体/语义/runtime 留到中期后”的判断只作为历史快照，不再作为当前执行入口。
 
 ## 1. 当前结论
 
@@ -12,11 +12,11 @@
 
 - `阶段 E / F / G(min) / H` 已完成真实链路收口，继续作为历史基线和阶段 I 输入依赖保留。
 - `阶段 I Phase 0/1/2/3` 的公开数据基准历史收口已完成。
-- `chronaris_opt` 已作为当前鼎新私有代理任务基准主线固化，T1/T2/T3 均为“私有代理任务证据”，不能写成人工真值论文任务。
+- `chronaris_opt` 已作为当前鼎新真实数据弱监督任务基准主线固化，分类任务、回归任务和检索任务 均为“鼎新真实数据弱监督任务证据”，不能写成人工真值论文任务。
 - “公开数据支撑线已收口”已经固化；UAB `target_prior_median` 仍只能写成“公开数据适配器 / 校准证据”，不能写成双流连续对齐和因果融合模块本体的直接胜利。
-- 当前最新中期证据入口是 `docs/artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md`，其中私有证据、公开证据、支撑性消融、关键窗口锚定、离线演示图件已经整编，并切换到最新 private benchmark summary。
+- 当前最新中期证据入口是 `docs/artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md`，其中鼎新证据、公开证据、支撑性消融、关键窗口锚定、离线演示图件已经整编，并切换到最新 Dingxin benchmark summary。
 - 当前 git 顶端提交 `HEAD=2055dec` 已提交到 `origin/main`，其内容主要覆盖阶段 I 论文主线重构 A/B 两阶段：主线边界校准、统一骨干训练入口、阶段 H 固定 checkpoint 推理导出、文档索引收敛。
-- 当前工作区还有未提交改动，主要是阶段 I 论文主线重构 C 阶段及其真实产物：统一任务头、任务监督损失与因果融合损失、`risk_proxy / workload_proxy / event_replay_tag` 三类论文任务弱标签构造器、`stage_i_multitask_train` 联合训练入口、真实 Stage H multitask 闭环产物，以及私有证据 summary 中“代理任务证据 / 论文弱标签任务证据”的分层。
+- 当前工作区还有未提交改动，主要是阶段 I 论文主线重构 C 阶段及其真实产物：统一任务头、任务监督损失与因果融合损失、`risk_proxy / workload_proxy / event_replay_tag` 三类论文任务弱标签构造器、`stage_i_multitask_train` 联合训练入口、真实 Stage H multitask 闭环产物，以及鼎新证据 summary 中“弱监督构造任务证据 / 论文弱标签任务证据”的分层。
 
 本轮已用指定解释器验证 C 阶段最小合约：
 
@@ -48,8 +48,8 @@
 近期主线提交可以这样理解：
 
 - `9399977 feat: finish stage i and deep comparison assets`：阶段 I 历史收口、UAB/NASA、阶段 H case、深度基线资产落地。
-- `a5dea37 feat: smoke test for chroaris with stage i`：阶段 H 全窗口 clean 资产与阶段 I 私有代理任务基准雏形落地。
-- `a3c939e Promote chronaris_opt mainline and add Stage I public opt`：`chronaris_opt` 私有主线 package 固化，并启动 public opt。
+- `a5dea37 feat: smoke test for chroaris with stage i`：阶段 H 全窗口 clean 资产与阶段 I 鼎新真实数据弱监督任务基准雏形落地。
+- `a3c939e Promote chronaris_opt mainline and add Stage I public opt`：`chronaris_opt` 鼎新真实数据主线 package 固化，并启动 public opt。
 - `fef794c fix: use gpu cuda to accelerate`：关键阶段 E/G/H/I 路线补 GPU 设备选择合约。
 - `5bc253c`、`43a74a4`、`e1aa55f`：UAB/NASA public opt、torch/GPU、robust-prior 和 public mainline 逐步收敛。
 - `579eb4c feat: 中期前变更闭环`：中期证据包、图件、离线演示、关键窗口锚定、支撑性消融入口整编。
@@ -59,7 +59,7 @@
 
 ## 4. 编码层面还需要做什么
 
-### P0：先冻结当前阶段 I 论文主线重构 C 阶段工作区
+### 阶段冻结：先冻结当前阶段 I 论文主线重构 C 阶段工作区
 
 目标：把已通过测试的 C 阶段从“工作区改动”变成可追溯的主线状态。
 
@@ -84,9 +84,9 @@
    - `tests.test_alignment_model_losses`
 5. 通过后再提交。
 
-### P1：已补一条真实资产上的 C 阶段联合训练证据
+### 真实资产联合训练：已补一条真实资产上的 C 阶段联合训练证据
 
-当前 C 阶段已经不只停留在合成样本 / 私有资产形态的最小冒烟测试，而是已经补出一条可引用的真实资产运行记录。
+当前 C 阶段已经不只停留在合成样本 / 鼎新资产形态的最小冒烟测试，而是已经补出一条可引用的真实资产运行记录。
 
 建议下一步优先做：
 
@@ -98,7 +98,7 @@
 3. 已补 `docs/artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md`，并明确写成“论文任务弱标签证据”。
 4. 当前这条证据按“主线闭环证据”使用，不宣称人工真值最优。
 
-### P2：补强基于飞行刚体运动规律的物理一致性约束
+### 鼎新真实数据 benchmark 刷新：补强基于飞行刚体运动规律的物理一致性约束
 
 这是当前最值得写进论文方法体的下一段代码工作。
 
@@ -120,7 +120,7 @@
 - 新的“刚体运动物理约束族”有单测和分项损失明细。
 - 报告能说明当前架次哪些刚体运动残差被启用，哪些因为字段缺失只能退回弱约束。
 
-### P3：补强基于语义查询与非对称因果掩码的事件级融合
+### 物理一致性补强：补强基于语义查询与非对称因果掩码的事件级融合
 
 目标：
 
@@ -139,7 +139,7 @@
 - 可以输出事件标记向量、语义查询到事件的注意力、事件归因摘要。
 - 支撑报告能区分“时间步注意力”和“事件级归因”。
 
-### P4：补离线飞参记录或在线传感器流的推理管线
+### 运行时推理管线补强：补离线飞参记录或在线传感器流的推理管线
 
 目标：
 
@@ -184,15 +184,15 @@
 如果时间只够做最小闭环，按下面顺序收敛：
 
 1. 提交当前 C 阶段工作区。
-2. 直接引用最新联合训练确认与 private benchmark 分层资产。
+2. 直接引用最新联合训练确认与 Dingxin benchmark 分层资产。
 3. 直接引用最新中期证据包。
 4. 准备答辩叙事：
    - 历史收口：E/F/G/H + 阶段 I Phase 0/1/2/3。
-   - 私有主线：`chronaris_opt` 是私有代理任务证据。
+   - 鼎新真实数据主线：`chronaris_opt` 是鼎新真实数据弱监督任务证据。
    - 公开支撑：公开数据支撑线是适配器/校准证据。
    - 当前论文主线：A/B/C 三阶段已接上统一骨干、固定 checkpoint 推理导出、统一任务头、论文弱标签任务。
    - 未完成但方向明确：基于飞行刚体运动规律的物理一致性约束补强、基于语义查询与非对称因果掩码的事件级融合、离线飞参记录或在线传感器流的推理管线。
 
 ## 7. 当前一句话状态
 
-当前项目已经具备中期答辩所需的历史实验资产、Phase C 真实联合训练证据、private/thesis 分层资产和新版中期证据包；真正剩下的主要是把这些工作区改动固化进 git，并在中期后把研发重心切到“刚体运动物理约束补强”“语义事件融合补强”和“runtime inference”，而不是继续扩旧公开数据基准。
+当前项目已经具备中期答辩所需的历史实验资产、Phase C 真实联合训练证据、Dingxin/thesis 分层资产和新版中期证据包；真正剩下的主要是把这些工作区改动固化进 git，并在中期后把研发重心切到“刚体运动物理约束补强”“语义事件融合补强”和“runtime inference”，而不是继续扩旧公开数据基准。

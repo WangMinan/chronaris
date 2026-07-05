@@ -1,4 +1,4 @@
-# P42 thesis-prep cleanup inventory
+# 仓库收敛清理 thesis-prep cleanup inventory
 
 - generated_at_utc: 2026-07-03T13:27:29.872334Z
 - scope: pre-cleanup audit only; no tracked artifact deleted before this inventory was written
@@ -201,26 +201,26 @@ LFS Objects	132 MB	403/404 files(s)	100%
 | 1.3 MiB | `docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/label_feature_overlap_audit.json` |
 
 ## 3. Current artifact reference table
-P38 registry is the current thesis protocol freeze entry. `exists=True` for all rows at audit time.
+论文协议冻结 registry is the current thesis protocol freeze entry. `exists=True` for all rows at audit time.
 
 | stage | artifact root | primary result | report | boundary |
 | --- | --- | --- | --- | --- |
-| P30 | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1` | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/model_comparison_long.csv` | `docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md` | Private Stage H proxy-task third-party comparison; not expert truth. |
-| P31 | `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1` | `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/ablation_summary.csv` | `docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md` | Public adapter context-proxy component ablation; not real aircraft-bus validation. |
-| P32 | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1` | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/cross_evidence_matrix.csv` | `docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md` | Cross-evidence routing matrix; do not merge private/public/proxy metrics into one leaderboard. |
-| P34 | `docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20` | `docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/task_head_metrics_long.csv` | `docs/artifacts/stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md` | CUDA 20-epoch task-head confirm; T3 remains mixed and must not be overstated. |
-| P35 | `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20` | `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_metrics.csv` | `docs/artifacts/stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md` | Stream-role v3 confirm separates private real vehicle streams from public context proxy streams. |
-| P36 | `docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20` | `docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_cross_evidence_matrix.csv` | `docs/artifacts/stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md` | Aggregation over fixed references; does not overwrite P30/P31/P32 confirmed results. |
+| 鼎新真实数据第三方模型对比 | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1` | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/model_comparison_long.csv` | `docs/artifacts/stage_i/stage-i-private-thirdparty-comparison-20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1.md` | Dingxin Stage H weak-label-task third-party comparison; not expert truth. |
+| 公开融合消融 | `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1` | `docs/artifacts/assets/stage_i_public_fusion_ablation/20260702T-stage-i-public-fusion-ablation-gpuopt-r1/ablation_summary.csv` | `docs/artifacts/stage_i/stage-i-public-fusion-ablation-20260702T-stage-i-public-fusion-ablation-gpuopt-r1.md` | Public adapter context-derived second-stream component ablation; not real aircraft-bus validation. |
+| 跨证据矩阵 | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1` | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/cross_evidence_matrix.csv` | `docs/artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md` | Cross-evidence routing matrix; do not merge Dingxin/public/weak-label metrics into one leaderboard. |
+| 任务感知头优化 | `docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20` | `docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/task_head_metrics_long.csv` | `docs/artifacts/stage_i/stage-i-task-aware-heads-20260702T-stage-i-task-heads-optimization-r3-confirm20.md` | CUDA 20-epoch task-head confirm; 检索任务 remains mixed and must not be overstated. |
+| 流角色融合 | `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20` | `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_metrics.csv` | `docs/artifacts/stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md` | Stream-role v3 confirm separates Dingxin real vehicle streams from public context-derived second stream streams. |
+| 优化模型再评估 | `docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20` | `docs/artifacts/assets/stage_i_optimized_reevaluation/20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20/optimized_cross_evidence_matrix.csv` | `docs/artifacts/stage_i/stage-i-optimized-chronaris-reevaluation-20260702T-stage-i-optimized-reevaluation-r4-v3-confirm20.md` | Aggregation over fixed references; does not overwrite 鼎新真实数据第三方模型对比、公开融合消融与跨证据矩阵 confirmed results. |
 | P36_summary | `docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20` | `docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20/optimized_model_summary.csv` | `docs/artifacts/stage_i/stage-i-optimized-model-summary-20260702T-stage-i-optimized-model-summary-r4-v3-confirm20.md` | Paper-facing summary table and claim boundaries over fixed source artifacts. |
-| P37 | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1` | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/optimized_final_polish_summary.json` | `docs/artifacts/stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md` | Final polish accepts T1/public route only; T3 rejected and public remains context proxy. |
+| 最终指标打磨 | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1` | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/optimized_final_polish_summary.json` | `docs/artifacts/stage_i/stage-i-optimized-final-polish-20260702T-stage-i-optimized-final-polish-r1.md` | Final polish accepts 分类任务/public route only; 检索任务 rejected and public remains context-derived second stream. |
 
-### P38 result matrix coverage
+### 论文协议冻结 result matrix coverage
 - rows: 505
-- by quadrant: private_component_ablation=204, private_model_comparison=85, public_component_ablation=132, public_model_comparison=84
-- by source_stage: P24_via_P32=36, P27_via_P32=80, P30_via_P32=72, P31_via_P32=104, P34=56, P35=112, P36_summary=29, P37=16
+- by quadrant: dingxin_component_ablation=204, dingxin_model_comparison=85, public_component_ablation=132, public_model_comparison=84
+- by source_stage: P24_via_P32=36, P27_via_P32=80, P30_via_P32=72, P31_via_P32=104, 任务感知头优化=56, 流角色融合=112, P36_summary=29, 最终指标打磨=16
 - unique referenced paths in artifact_path/source_file/figure_path: 23
 
-Top referenced paths from P38 result matrix:
+Top referenced paths from 论文协议冻结 result matrix:
 | refs | path | exists |
 | ---: | --- | --- |
 | 292 | `docs/artifacts/assets/stage_i_cross_evidence_matrix/20260702T-stage-i-cross-evidence-matrix-gpuopt-r1/cross_evidence_matrix.csv` | True |
@@ -250,13 +250,13 @@ Top referenced paths from P38 result matrix:
 ### Claim boundary rows
 | claim_id | dataset_role | source_stage | boundary |
 | --- | --- | --- | --- |
-| private_real_dual_stream_scope | private_real_dual_stream | P30/P34/P35/P37 | Do not describe T1/T2/T3 as expert-label ground truth or claim new Dingxin data was obtained. |
-| private_component_ablation_scope | private_real_dual_stream | P32/P34/P35/P36 | Report mixed or failed rows, especially T3; do not write a blanket Chronaris superiority claim. |
-| public_context_proxy_scope | public_context_proxy | P31/P35/P37 | Public second stream is context proxy, not private aircraft-bus telemetry. |
-| public_component_ablation_scope | public_context_proxy | P31/P35/P36 | Do not let public component wins override private dual-stream limitations. |
-| p37_final_polish_scope | mixed_private_public | P37 | P37 T3 is rejected and remains P34 confirmed retrieval; P37 does not rerun or overwrite P30/P31/P34/P35/P36. |
-| synthetic_future_scope | synthetic_stress_test | P39-future | Synthetic rows must remain appendix stress tests and cannot replace real data or expert truth. |
-| llm_future_scope | llm_semantic_context | P20/P21/P39-future | LLM output is not expert evaluation data and must not directly become truth labels. |
+| private_real_dual_stream_scope | dingxin_real_dual_stream | 鼎新真实数据第三方模型对比/任务感知头优化与流角色融合/最终指标打磨 | Do not describe 分类任务、回归任务和检索任务 as expert-label ground truth or claim new Dingxin data was obtained. |
+| private_component_ablation_scope | dingxin_real_dual_stream | 跨证据矩阵/任务感知头优化、流角色融合与优化模型再评估 | Report mixed or failed rows, especially 检索任务; do not write a blanket Chronaris superiority claim. |
+| public_context_proxy_scope | public_context_derived_second_stream | 公开融合消融/流角色融合/最终指标打磨 | Public second stream is context-derived second stream, not Dingxin aircraft-bus telemetry. |
+| public_component_ablation_scope | public_context_derived_second_stream | 公开融合消融/流角色融合与优化模型再评估 | Do not let public component wins override Dingxin dual-stream limitations. |
+| p37_final_polish_scope | mixed_dingxin_public | 最终指标打磨 | 最终指标打磨 检索任务 is rejected and remains 任务感知头优化 confirmed retrieval; 最终指标打磨 does not rerun or overwrite 鼎新真实数据第三方模型对比、公开融合消融、任务感知头优化、流角色融合与优化模型再评估. |
+| synthetic_future_scope | synthetic_stress_test | 仿真压力测试-future | Synthetic rows must remain appendix stress tests and cannot replace real data or expert truth. |
+| llm_future_scope | llm_semantic_context | DeepSeek 时序预处理/LLM 预处理对比/仿真压力测试-future | LLM output is not expert evaluation data and must not directly become truth labels. |
 
 ## 4. Code complexity table
 - Python files under `src scripts tests`: 287
@@ -269,23 +269,23 @@ Top referenced paths from P38 result matrix:
 Largest Python files:
 | lines | path | cleanup reading |
 | ---: | --- | --- |
-| 2353 | `src/chronaris/pipelines/stage_i/private/thirdparty_comparison.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1838 | `src/chronaris/pipelines/stage_i/public/fusion_ablation.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1745 | `src/chronaris/pipelines/stage_i/evidence/thesis_materials_figures.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1625 | `src/chronaris/pipelines/stage_i/public/fusion_refresh.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1542 | `src/chronaris/pipelines/stage_i/public/deep_baseline_runtime.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1489 | `tests/test_stage_i_public_opt.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1476 | `scripts/run_stage_e_relative_preview.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1144 | `src/chronaris/pipelines/stage_i/public/model_comparison.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1128 | `src/chronaris/features/stage_i_sequences.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1052 | `tests/test_stage_h_export.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 1004 | `src/chronaris/pipelines/stage_i/evidence/thesis_materials_data.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 994 | `src/chronaris/serving/runtime_inference.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 969 | `tests/test_stage_i_deep_pipeline.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 963 | `src/chronaris/pipelines/stage_i/evidence/thesis_protocol.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 919 | `src/chronaris/pipelines/stage_i/private/leakage_safe_ablation.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 899 | `src/chronaris/pipelines/alignment_preview.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
-| 823 | `tests/test_alignment_model_losses.py` | must split eventually; P42 targets wrappers/shims first and records large-file backlog |
+| 2353 | `src/chronaris/pipelines/stage_i/private/thirdparty_comparison.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1838 | `src/chronaris/pipelines/stage_i/public/fusion_ablation.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1745 | `src/chronaris/pipelines/stage_i/evidence/thesis_materials_figures.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1625 | `src/chronaris/pipelines/stage_i/public/fusion_refresh.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1542 | `src/chronaris/pipelines/stage_i/public/deep_baseline_runtime.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1489 | `tests/test_stage_i_public_opt.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1476 | `scripts/run_stage_e_relative_preview.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1144 | `src/chronaris/pipelines/stage_i/public/model_comparison.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1128 | `src/chronaris/features/stage_i_sequences.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1052 | `tests/test_stage_h_export.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 1004 | `src/chronaris/pipelines/stage_i/evidence/thesis_materials_data.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 994 | `src/chronaris/serving/runtime_inference.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 969 | `tests/test_stage_i_deep_pipeline.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 963 | `src/chronaris/pipelines/stage_i/evidence/thesis_protocol.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 919 | `src/chronaris/pipelines/stage_i/private/leakage_safe_ablation.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 899 | `src/chronaris/pipelines/alignment_preview.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
+| 823 | `tests/test_alignment_model_losses.py` | must split eventually; 仓库收敛清理 targets wrappers/shims first and records large-file backlog |
 | 797 | `src/chronaris/pipelines/stage_i/evidence/optimized_final_polish.py` | split candidate |
 | 758 | `src/chronaris/pipelines/stage_i/llm/preprocessing.py` | split candidate |
 | 746 | `src/chronaris/models/alignment/physics.py` | split candidate |
@@ -385,7 +385,7 @@ Raw top-80 wc output:
 ```
 
 ## 5. Import/reference audit for cleanup candidates
-### P37 nested public/private child outputs
+### 最终指标打磨 nested public/Dingxin child outputs
 ```text
 src/chronaris/pipelines/stage_i/evidence/optimized_final_polish.py:295:            output_root=str(run_root / "nested_private"),
 src/chronaris/pipelines/stage_i/evidence/optimized_final_polish.py:342:            artifact_root=str(run_root / "nested_public"),
@@ -397,7 +397,7 @@ src/chronaris/pipelines/stage_i/evidence/optimized_final_polish_support.py:14:  
 src/chronaris/pipelines/stage_i/evidence/optimized_final_polish_support.py:15:        "public_confirm_root": run_root / "nested_public" / f"{run_id}-public-confirm",
 ```
 
-### P35 nested private/public v3 roots
+### 流角色融合 nested Dingxin/public v3 roots
 ```text
 docs/artifacts/stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md:9:- private_confirm_root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/private_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-private-v3`
 docs/artifacts/stage_i/stage-i-stream-role-aware-fusion-20260702T-stage-i-stream-role-fusion-r4-v3-confirm20.md:10:- public_confirm_root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/public_v3_confirm/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20-public-v3`
@@ -413,17 +413,17 @@ src/chronaris/pipelines/stage_i/public/stream_role_fusion_eval.py:515:        ("
 src/chronaris/pipelines/stage_i/public/stream_role_fusion_eval.py:516:        ("P35_public_v3_confirm", public_root),
 ```
 
-### P30 task manifest direct docs/code refs
+### 鼎新真实数据第三方模型对比 task manifest direct docs/code refs
 ```text
 [exit=1]
 ```
 
-### P34 task manifest direct docs/code refs
+### 任务感知头优化 task manifest direct docs/code refs
 ```text
 [exit=1]
 ```
 
-### old private opt packages
+### old Dingxin opt packages
 ```text
 tests/test_stage_i_support.py:507:                "run_id": "20260504T120000Z-stage-i-private-opt-package",
 docs/artifacts/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md:1:# Private Optimization Summary - 20260504T120000Z-stage-i-private-opt-package
@@ -640,27 +640,27 @@ Interpretation:
 - `private/stream_role_private_eval.py` has no repository references; it is a pure re-export candidate.
 - `private/third_party_comparison.py`, `scripts/stage_i/private/run_private_third_party_comparison.py`, and `tests/test_stage_i_private_third_party_comparison.py` are compatibility wrappers around canonical `thirdparty` names; visible tests/docs can be moved to canonical imports before deletion.
 - `scripts/stage_i/run_stream_role_fusion_eval.py` is the only root-level Stage I script; it should move into a category directory and the generated resume command should follow it.
-- `stage_i` old import aliases are not used by repo code/tests outside the explanatory `TASKS.md` note; P42 can either remove them or document them as legacy. This pass will keep package-level alias risk low unless tests prove otherwise.
+- `stage_i` old import aliases are not used by repo code/tests outside the explanatory `TASKS.md` note; 仓库收敛清理 can either remove them or document them as legacy. This pass will keep package-level alias risk low unless tests prove otherwise.
 - `public.gpu_runtime` is used as a shared helper through `common.gpu_runtime`; moving the implementation to `common` reduces the misleading public/common wrapper split.
 
 ## 6. Deletion candidate table
 | action | candidate | path pattern | evidence/reason |
 | --- | --- | --- | --- |
-| backup then delete if final rg/path checks stay clean | P37 nested public child deep_baseline_summary/training_curves/run.log | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/**/{deep_baseline_summary.json,training_curves.csv,run.log,gpu_perf_batches.csv}` | top-level P37 optimized_final_polish_summary / public_route_calibration_metrics / report preserve accepted metrics; current docs do not require per-candidate child rows |
-| backup then delete if final rg/path checks stay clean | P37 nested private child logs, duplicate audit CSV/JSON, dense retrieval predictions | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/**/{run.log,training_curves.csv,gpu_perf_*.json,gpu_perf_batches.csv,label_feature_overlap_audit.*,fold_predictions.csv}` | P37 report and P38 freeze only need top-level summary, t1/p37 deltas, accepted/rejected summaries and figures |
-| backup then delete if final rg/path checks stay clean | P35 stream-role nested child logs/training curves/gpu batches/task manifest | `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/{private_v3_confirm,public_v3_confirm}/**/{task_manifest.jsonl,training_curves.csv,gpu_perf_batches.csv,run.log}` | top-level P35 private_metrics/public_metrics/gate stats/route manifest/report preserve current evidence; report roots may remain with compact summaries |
-| backup then delete if final rg/path checks stay clean | P30/P34 repeated private task manifests | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/task_manifest.jsonl; docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/task_manifest.jsonl` | no direct docs/code references outside assets; can be regenerated from Stage H manifests |
+| backup then delete if final rg/path checks stay clean | 最终指标打磨 nested public child deep_baseline_summary/training_curves/run.log | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_public/**/{deep_baseline_summary.json,training_curves.csv,run.log,gpu_perf_batches.csv}` | top-level 最终指标打磨 optimized_final_polish_summary / public_route_calibration_metrics / report preserve accepted metrics; current docs do not require per-candidate child rows |
+| backup then delete if final rg/path checks stay clean | 最终指标打磨 nested Dingxin child logs, duplicate audit CSV/JSON, dense retrieval predictions | `docs/artifacts/assets/stage_i_optimized_final_polish/20260702T-stage-i-optimized-final-polish-r1/nested_private/**/{run.log,training_curves.csv,gpu_perf_*.json,gpu_perf_batches.csv,label_feature_overlap_audit.*,fold_predictions.csv}` | 最终指标打磨 report and 论文协议冻结 freeze only need top-level summary, classification-task/current-candidate deltas, accepted/rejected summaries and figures |
+| backup then delete if final rg/path checks stay clean | 流角色融合 stream-role nested child logs/training curves/gpu batches/task manifest | `docs/artifacts/assets/stage_i_stream_role_fusion/20260702T-stage-i-stream-role-fusion-r4-v3-confirm20/{private_v3_confirm,public_v3_confirm}/**/{task_manifest.jsonl,training_curves.csv,gpu_perf_batches.csv,run.log}` | top-level 流角色融合 private_metrics/public_metrics/gate stats/route manifest/report preserve current evidence; report roots may remain with compact summaries |
+| backup then delete if final rg/path checks stay clean | 鼎新真实数据第三方模型对比/任务感知头优化 repeated Dingxin task manifests | `docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/task_manifest.jsonl; docs/artifacts/assets/stage_i_task_heads_optimization/20260702T-stage-i-task-heads-optimization-r3-confirm20/task_manifest.jsonl` | no direct docs/code references outside assets; can be regenerated from Stage H manifests |
 | direct delete | local Python caches | `./third_party/__pycache__; ./third_party/mult/modules/__pycache__; ./third_party/mult/__pycache__; ./third_party/contiformer/__pycache__; ./third_party/contiformer/physiopro/network/__pycache__; ./third_party/contiformer/physiopro/__pycache__; ./tests/__pycache__; ./.pytest_cache; ./scripts/stage_i/evidence/__pycache__; ./src/chronaris/schema/__pycache__; ./src/chronaris/models/alignment/__pycache__; ./src/chronaris/models/__pycache__; ./src/chronaris/models/fusion/__pycache__; ./src/chronaris/__pycache__; ./src/chronaris/features/__pycache__; ./src/chronaris/pipelines/stage_i/common/__pycache__; ./src/chronaris/pipelines/stage_i/__pycache__; ./src/chronaris/pipelines/stage_i/evidence/__pycache__; ./src/chronaris/pipelines/stage_i/legacy/__pycache__; ./src/chronaris/pipelines/stage_i/public/__pycache__; ./src/chronaris/pipelines/stage_i/private/__pycache__; ./src/chronaris/pipelines/__pycache__; ./src/chronaris/dataset/__pycache__; ./src/chronaris/evaluation/__pycache__` | ignored generated state; direct delete without backup |
 
 ## 7. Preserve / defer table
-- P38 thesis protocol freeze registry/matrix/summary/boundary/report/manifest under docs/artifacts/assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/ and docs/artifacts/stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md
-- P37 top-level optimized_final_polish_summary.json, t1_calibration_metrics.csv, public_route_calibration_metrics.csv, p37_delta_vs_p34.csv, p37_delta_vs_p35.csv, accepted/rejected candidate summaries, gpu_perf_summary.json, top-level figures/report/manifest/log/progress/resume
-- P30/P31/P32/P34/P35/P36/P36_summary current primary CSV/JSON/report/manifest paths listed in P38 experiment_registry.csv
-- P26 r6 thesis figure manifest/quality audit/12 PNG/CSV and runtime_semantic_case.csv historical input used by P20/P21
+- 论文协议冻结 thesis protocol freeze registry/matrix/summary/boundary/report/manifest under docs/artifacts/assets/stage_i_thesis_protocol/20260703T-stage-i-thesis-protocol-r1/ and docs/artifacts/stage_i/stage-i-thesis-protocol-20260703T-stage-i-thesis-protocol-r1.md
+- 最终指标打磨 top-level optimized_final_polish_summary.json, t1_calibration_metrics.csv, public_route_calibration_metrics.csv, p37_delta_vs_p34.csv, p37_delta_vs_p35.csv, accepted/rejected candidate summaries, gpu_perf_summary.json, top-level figures/report/manifest/log/progress/resume
+- 鼎新真实数据第三方模型对比、公开融合消融与跨证据矩阵/任务感知头优化、流角色融合与优化模型再评估/P36_summary current primary CSV/JSON/report/manifest paths listed in 论文协议冻结 experiment_registry.csv
+- 论文图表报告级重绘 r6 thesis figure manifest/quality audit/12 PNG/CSV and runtime_semantic_case.csv historical input used by DeepSeek 时序预处理/LLM 预处理对比
 - Stage H clean run manifests and current Stage H dependency roots; raw window summaries are large but still current training/sample provenance and not pruned in this pass without replacement manifest support
 - public adapter baselines explicitly kept by 20260701 cleanup and current public transfer/calibration code paths
 
 ## 8. History/LFS decision before cleanup
 - Local `.git/lfs` cache is large (`8.0G` before cleanup), while current `.git/objects` is about `120M` and pack history is about `105.25 MiB`.
 - `git lfs migrate info --include-ref=refs/heads/main --include=docs/**` still reports docs LFS objects around `132 MB` across `403/404` files, dominated by JSON/log/PNG history.
-- Decision is deferred until after tree cleanup, backup manifest validation, and final LFS/history re-check. If bloated paths are backed up and removed from current tree but remain in docs/LFS history, P42 may proceed with `git filter-repo` plus `--force-with-lease` as authorized.
+- Decision is deferred until after tree cleanup, backup manifest validation, and final LFS/history re-check. If bloated paths are backed up and removed from current tree but remain in docs/LFS history, 仓库收敛清理 may proceed with `git filter-repo` plus `--force-with-lease` as authorized.

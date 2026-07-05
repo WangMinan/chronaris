@@ -16,17 +16,17 @@
 
 - `E / F / G(min) / H` 已完成真实数据链路、导出 contract 与测试闭环。
 - `Stage I Phase 0 + Phase 1 + Phase 2 + Phase 3` 的公开 benchmark 历史收口已完成。
-- `chronaris_opt` 已在鼎新私有 `proxy benchmark` 的 `T1 / T2 / T3` 三任务上达到当前对照矩阵最优，并固化 package。
+- `chronaris_opt` 已在鼎新 `proxy benchmark` 的 分类任务、回归任务和检索任务 三任务上达到当前对照矩阵最优，并固化 package。
 - `alignment support`、`causal support`、`fixed six-path ablation` 三份 support 已落盘。
 - `runtime/demo` 与 `anchor` 已经提供 thesis-facing 的离线展示入口。
 - `public opt closed` 仍可作为公开支撑证据，但它主要是 `public adapter / calibration evidence`，不是 thesis 双流主线已经完全收口的证据。
-- `Stage I thesis mainline Phase A` 已完成首轮代码/测试收敛：公开第二模态与私有 `T1/T2/T3` 的 thesis-facing 边界已经在 contract、metadata 与报告生成代码里统一。
+- `Stage I thesis mainline Phase A` 已完成首轮代码/测试收敛：公开第二模态与鼎新 分类任务、回归任务和检索任务 的 thesis-facing 边界已经在 contract、metadata 与报告生成代码里统一。
 
 因此，当前真正没完成的已经不是“系统完全跑不起来”，而是“现有实现是否已经和论文主线一一对应”。
 
 ## 3. 当前七类关键缺口
 
-### 3.1 公开分支的第二模态仍是代理流
+### 3.1 公开分支的第二模态仍是弱监督流
 
 当前 `UAB` 与 `NASA` 公共分支使用的是 `task_context / scenario_context`，而不是论文里严格意义上的航电/战术环境连续流。
 
@@ -57,8 +57,8 @@
 1. `src/chronaris/models/alignment/task_heads.py` 已统一 `classification / regression / retrieval` head contract。
 2. `build_stage_e_objective()` 已支持把 `L_task` 与 `L_causal` 汇总进总目标。
 3. `src/chronaris/dataset/stage_i_real_task_builders.py` 已补出 `risk_proxy / workload_proxy / event_replay_tag` 三类 thesis-facing weak-label tasks。
-4. `src/chronaris/pipelines/stage_i/training/multitask_train.py` 已可在最小 synthetic/private-style 样本上跑通一次 `backbone + causal fusion + task heads` 端到端训练并落盘。
-5. `stage_i_private_benchmark` 已把 `proxy_evidence` 与 `thesis_task_evidence` 分层写入 summary/manifest。
+4. `src/chronaris/pipelines/stage_i/training/multitask_train.py` 已可在最小 synthetic/Dingxin-style 样本上跑通一次 `backbone + causal fusion + task heads` 端到端训练并落盘。
+5. `stage_i_private_benchmark` 已把 weak_label_task_evidence 与 `thesis_task_evidence` 分层写入 summary/manifest。
 
 这意味着：
 
@@ -93,11 +93,11 @@
 - `query-to-event attention`
 - 事件原型级解释
 
-### 3.6 私有任务已补出 thesis weak-label layer，但仍不能替代人工真值任务
+### 3.6 鼎新真实数据任务已补出 thesis weak-label layer，但仍不能替代人工真值任务
 
-当前同时存在两层私有任务：
+当前同时存在两层鼎新真实数据任务：
 
-- `T1 / T2 / T3`：`private proxy benchmark / proxy tasks`
+- 分类任务、回归任务和检索任务：`private proxy benchmark / proxy tasks`
 - `risk_proxy / workload_proxy / event_replay_tag`：`thesis weak-label tasks`
 
 但这两层都不能直接替代：
@@ -156,7 +156,7 @@
 
 - “为了毕业论文，剩余工作主要是图表整理和 fairness confirm。”
 - “`public opt closed` 基本等于论文公开主线已经完成。”
-- “`chronaris_opt` 私有最优 package 已经足以证明 thesis 主线 fully closed。”
+- “`chronaris_opt` 鼎新最优 package 已经足以证明 thesis 主线 fully closed。”
 - “`runtime_demo` 已经可以视作实时推理入口。”
 
 更准确的判断是：

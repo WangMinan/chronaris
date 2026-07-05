@@ -19,12 +19,12 @@
 
 当前差距不在 `access / schema / dataset / timebase` 这些底座，而集中在下面七类问题：
 
-1. 公开数据分支的第二模态是 `task_context / scenario_context` 代理流，不是论文里严格意义上的航电流。
+1. 公开数据分支的第二模态是 `task_context / scenario_context` 弱监督流，不是论文里严格意义上的航电流。
 2. `Stage H` 已补上 `fixed checkpoint inference -> export` 路径，但它还不是完整 runtime inference。
 3. `E/F/G/H` 骨干与 `Stage I` 下游任务已经补上最小联合训练闭环，但仍停留在 weak-label Phase C 首轮。
 4. `Stage F` 当前是 `weak physics family`，还不足以支撑“显式刚体动力学残差”这一强表述。
 5. `Stage G` 当前是 `minimal causal attention`，还没有语义查询向量、事件 token 与事件级归因层。
-6. 私有主线虽然已经补出 `risk_proxy / workload_proxy / event_replay_tag` weak-label builder，但仍和论文里的风险/负荷/复盘人工真值任务没有完全对齐。
+6. 鼎新真实数据主线虽然已经补出 `risk_proxy / workload_proxy / event_replay_tag` weak-label builder，但仍和论文里的风险/负荷/复盘人工真值任务没有完全对齐。
 7. `serving/runtime_demo.py` 仍是离线报告入口，不是实时或准实时推理引擎。
 
 ## 3. 下一阶段总目标
@@ -51,7 +51,7 @@
 本阶段重点：
 
 - 明确公开分支是 `context proxy / adapter evidence`，不与真实双流主线混写。
-- 明确 `T1/T2/T3` 是 `proxy tasks`，不直接等价于论文任务本体。
+- 明确 分类任务、回归任务和检索任务 是 `proxy tasks`，不直接等价于论文任务本体。
 - 清理 `planning / docs / reports / AGENTS` 中把旧计划当现行主线的表述。
 
 退出条件：
@@ -90,7 +90,7 @@
 
 - 新增统一 task heads 与 multitask trainer。
 - 把 `proxy task` 和 `thesis task` builder 拆开。
-- 先用私有弱标签任务打通 `L_recon + L_align + L_phy + L_causal + L_task`。
+- 先用鼎新弱标签任务打通 `L_recon + L_align + L_phy + L_causal + L_task`。
 
 退出条件：
 
@@ -147,7 +147,7 @@
 
 - 不继续扩大 `UAB` 的 CPU-heavy 搜索空间。
 - 不把 `UAB robust-prior adapter` 写成双流融合本体胜利。
-- 不把 `T1/T2/T3` 直接写成人工真值任务最优。
+- 不把 分类任务、回归任务和检索任务 直接写成人工真值任务最优。
 - 不提前重写上游接收器、入库链路或原始大文件治理。
 - 不删除 `E/F/G/H` 收口工件；它们仍是历史基线和导出依赖。
 

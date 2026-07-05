@@ -1,8 +1,8 @@
-# P21 LLM 预处理对比实验计划
+# LLM 预处理对比 LLM 预处理对比实验计划
 
 更新时间：2026-06-14
 
-本计划用于承接 P20 DeepSeek 在线时序数据预处理之后的下一轮实验。目标不是证明 LLM 替代人工标注，也不是把 LLM 变成核心因果模块；目标是用对比实验说明：把 LLM preprocessing context 接入现有 Stage I 数据融合管线后，在哪些环节带来了可审计、可解释、可复核的增量价值。
+本计划用于承接 DeepSeek 在线时序数据预处理之后的下一轮实验。目标不是证明 LLM 替代人工标注，也不是把 LLM 变成核心因果模块；目标是用对比实验说明：把 LLM preprocessing context 接入现有 Stage I 数据融合管线后，在哪些环节带来了可审计、可解释、可复核的增量价值。
 
 ## 1. 实验问题
 
@@ -15,7 +15,7 @@
 
 ## 2. 固定边界
 
-- 使用 DeepSeek v4-pro 已生成的 P20 `llm_preprocessing_context`，默认不改成 OpenAI。
+- 使用 DeepSeek v4-pro 已生成的 DeepSeek 时序预处理 `llm_preprocessing_context`，默认不改成 OpenAI。
 - LLM 输出只作为 preprocessing context / rule review / semantic hints / runtime explanation。
 - 不覆盖 `risk_proxy / workload_proxy / event_replay_tag` 的 label value。
 - 不把 weak-label 写成人工真值。
@@ -48,7 +48,7 @@
 
 默认输入：
 
-- P20 context：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
+- DeepSeek 时序预处理 context：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
 - Stage I weak-label manifest：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
 - semantic support summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
 - runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
@@ -82,11 +82,11 @@ Stage I 工程报告：
 
 ## 6. 必须落到 midterm 的结果
 
-P21 不以工程报告结束。完成判据必须包括 `docs/midterm/` 下的写作级材料：
+LLM 预处理对比 不以工程报告结束。完成判据必须包括 `docs/midterm/` 下的写作级材料：
 
 - `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
 - 更新 `docs/midterm/README.md`，把该 summary 加入当前入口。
-- 更新 `docs/midterm/claims-matrix-2026-06-13.md`，只在 P21 真实跑完后新增或升级 “LLM 接入带来可解释性/复核效率增量” claim。
+- 更新 `docs/midterm/claims-matrix-2026-06-13.md`，只在 LLM 预处理对比 真实跑完后新增或升级 “LLM 接入带来可解释性/复核效率增量” claim。
 - 如发现新的边界，更新 `docs/midterm/boundaries-and-risks-2026-06-13.md`，保持 “LLM 不替代人工真值”。
 
 `llm-preprocessing-comparison-summary-2026-06-14.md` 必须面向中期报告，而不是命令日志。建议结构：
@@ -110,10 +110,10 @@ P21 不以工程报告结束。完成判据必须包括 `docs/midterm/` 下的�
 
 ## 8. 中期报告建议表述
 
-P21 完成后可以考虑写：
+LLM 预处理对比 完成后可以考虑写：
 
 > 在现有 Stage I weak-label 与 runtime 证据链上，本文引入 DeepSeek 在线 LLM 预处理作为可审计上下文层。对比实验保持 weak-label 标签值不变，将 LLM 输出限制为字段语义归一、规则复核、schema gap policy、语义 query hint 和 runtime explanation。结果用于评估 LLM 对数据预处理可解释性、规则复核效率和报告完整性的增量价值，而不作为人工真值或核心因果证据。
 
-P21 完成前只能写：
+LLM 预处理对比 完成前只能写：
 
-> 已完成 P20 小样本真实 DeepSeek preprocessing context，下一步将通过 A0-A4 对比实验评估 LLM 接入对现有融合管线的增量价值。
+> 已完成 DeepSeek 时序预处理 小样本真实 DeepSeek preprocessing context，下一步将通过 A0-A4 对比实验评估 LLM 接入对现有融合管线的增量价值。

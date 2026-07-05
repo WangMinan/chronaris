@@ -1,4 +1,4 @@
-"""Leakage-safe Stage I private proxy ablation protocol."""
+"""Leakage-safe Dingxin Stage I component-diagnostic ablation protocol."""
 
 from __future__ import annotations
 
@@ -582,13 +582,13 @@ def _build_summary(
         "task_status": _task_status(seed_rows),
         "t3_similarity_distribution": dict(t3_distribution_summary),
         "nrmse_normalization": "target_range",
-        "boundary": "T1/T2/T3 remain private proxy tasks; this protocol audits label-feature overlap and excludes identity/time leakage.",
+        "boundary": "classification, regression and retrieval tasks are Dingxin weak-label component diagnostics; this protocol audits label-feature overlap and excludes identity/time leakage.",
     }
 
 
 def render_leakage_safe_ablation_report(summary: Mapping[str, object]) -> str:
     lines = [
-        f"# Stage I Leakage-Safe Private Proxy Ablation - {summary['run_id']}",
+        f"# Stage I Leakage-Safe Dingxin Component-Diagnostic Ablation - {summary['run_id']}",
         "",
         f"- protocol: `{summary['protocol']}`",
         f"- leakage_safe: `{summary['leakage_safe']}`",
@@ -599,7 +599,7 @@ def render_leakage_safe_ablation_report(summary: Mapping[str, object]) -> str:
         "",
         "## 读取边界",
         "",
-        "`T1/T2/T3` 仍属于 private proxy 组件诊断。`leakage_safe_v1` 不覆盖历史结果，而是新增排除标签源字段、确定性派生特征、样本身份与窗口位置的评价协议。",
+        "分类任务、回归任务和检索任务均属于从现有鼎新数据派生的弱监督组件诊断。`leakage_safe_v1` 不覆盖历史结果，而是新增排除标签源字段、确定性派生特征、样本身份与窗口位置的评价协议。",
         "",
         "## 消融汇总",
         "",
@@ -608,7 +608,7 @@ def render_leakage_safe_ablation_report(summary: Mapping[str, object]) -> str:
     ]
     for row in summary.get("rows", []):
         lines.append(
-            f"| `{row['ablation_group']}` | `{row['task_name']}` | {row['display_name_cn']} | "
+                f"| `{row['ablation_group']}` | {_task_label_text(row['task_name'])} | {row['display_name_cn']} | "
             f"`{row['primary_metric_name']}` | {float(row['primary_metric_value']):.6f} | "
             f"{float(row['primary_metric_std']):.6f} | {float(row['relative_delta_percent']):.3f} |"
         )
@@ -617,9 +617,9 @@ def render_leakage_safe_ablation_report(summary: Mapping[str, object]) -> str:
         lines.extend(
             [
                 "",
-                "## T3 检索诊断",
+                "## 检索任务诊断",
                 "",
-                "T3 使用 `same_sortie_cross_pilot` 候选池：候选集合限定为同一 sortie 的另一名飞行员窗口；`pilot_id/window_index` 仍不进入特征向量。",
+                "检索任务使用 `same_sortie_cross_pilot` 候选池：候选集合限定为同一 sortie 的另一名飞行员窗口；`pilot_id/window_index` 仍不进入特征向量。",
                 "",
                 "| component | candidate_policy | query_count | candidate_count | top1 | top3 | top5 | mrr |",
                 "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
@@ -843,7 +843,7 @@ def _plot_t2_errors(rows: Sequence[Mapping[str, object]], path: Path) -> None:
         return
     fig, ax = plt.subplots(figsize=(6.2, 4.2))
     ax.hist(values, bins=min(10, max(3, len(values) // 2)), color="#5a7ca8", edgecolor="#20252b")
-    ax.set_title("T2 RMSE 多种子分布", fontsize=13, weight="bold")
+    ax.set_title("回归任务 RMSE 多种子分布", fontsize=13, weight="bold")
     ax.set_xlabel("RMSE")
     ax.set_ylabel("seed rows")
     fig.tight_layout()
@@ -863,7 +863,7 @@ def _plot_t3_similarity(rows: Sequence[Mapping[str, object]], path: Path) -> Non
     fig, ax = plt.subplots(figsize=(6.5, 4.3))
     for label, group in frame.groupby("is_positive"):
         ax.hist(group["similarity"].astype(float), bins=12, alpha=0.65, label="正样本" if int(label) else "负样本")
-    ax.set_title("T3 正负样本相似度分布", fontsize=13, weight="bold")
+    ax.set_title("检索任务正负样本相似度分布", fontsize=13, weight="bold")
     ax.set_xlabel("cosine similarity")
     ax.set_ylabel("candidate pairs")
     ax.legend(frameon=False)
@@ -874,10 +874,14 @@ def _plot_t3_similarity(rows: Sequence[Mapping[str, object]], path: Path) -> Non
 
 def _task_label(task_name: str) -> str:
     return {
-        TASK_MANEUVER: "T1\n宏平均F1",
-        TASK_RESPONSE: "T2\nRMSE",
-        TASK_RETRIEVAL: "T3\nTop-1",
+        TASK_MANEUVER: "分类任务\n宏平均F1",
+        TASK_RESPONSE: "回归任务\nRMSE",
+        TASK_RETRIEVAL: "检索任务\nTop-1",
     }.get(task_name, task_name)
+
+
+def _task_label_text(task_name: str) -> str:
+    return _task_label(task_name).replace("\n", " ")
 
 
 def _configure_plot_font(rc_params) -> None:
