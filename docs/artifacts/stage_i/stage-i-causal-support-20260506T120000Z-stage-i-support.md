@@ -27,13 +27,13 @@
 | --- | ---: | ---: | ---: |
 | `20251002_单01_ACT-8_翼云_J16_12#01` | -0.170068 | +0.192775 | -0.217476 |
 
-## Private No-Mask Comparison
+## Dingxin No-Mask Comparison
 
 | task | target metrics | no-mask metrics | target_beats_no_mask |
 | --- | --- | --- | --- |
-| `T1_maneuver_intensity_class` | macro_f1=1.000000, balanced_accuracy=1.000000 | macro_f1=0.173333, balanced_accuracy=0.333333 | `True` |
-| `T2_next_window_physiology_response` | rmse=201.489565, mae=113.851926 | rmse=313.232477, mae=173.648719 | `True` |
-| `T3_paired_pilot_window_retrieval` | top1_accuracy=1.000000, mrr=1.000000 | top1_accuracy=0.027027, mrr=0.113556 | `True` |
+| 分类任务：机动强度分类 | macro_f1=1.000000, balanced_accuracy=1.000000 | macro_f1=0.173333, balanced_accuracy=0.333333 | `True` |
+| 回归任务：下一窗口生理响应 | rmse=201.489565, mae=113.851926 | rmse=313.232477, mae=173.648719 | `True` |
+| 检索任务：配对飞行员窗口检索 | top1_accuracy=1.000000, mrr=1.000000 | top1_accuracy=0.027027, mrr=0.113556 | `True` |
 
 ## 辅助 real-sortie deep wrappers
 
@@ -46,13 +46,13 @@
 
 1. `G(min)` 已经产生稳定的非对称注意力与 top-event/top-contribution 指标。
 2. 当前最强 bundle-only 干预是 `vehicle_delta_suppressed`，其 mean delta top contribution 为 `-2.399792`，mean delta top event 为 `-1.000000`。
-3. `chronaris_opt_no_causal_mask` 在私有 T1/T2/T3 三任务上都劣于 target variant，说明因果掩码不是可有可无的装饰项。
+3. `chronaris_opt_no_causal_mask` 在鼎新 分类任务、回归任务和检索任务 三任务上都劣于 target variant，说明因果掩码不是可有可无的装饰项。
 4. 这条报告回答的是“因果融合是否做出来并给出可解释差异”，不是“因果融合已在公开数据上全面最优”。
 
 ## 本结论能支撑什么
 
 - 可以支撑论文中“单向因果约束、关键事件偏置与双 pilot 差异可读性”已经形成真实 sortie 证据链。
-- 可以支撑“去掉因果掩码后，私有 proxy 三任务同步退化”的主张。
+- 可以支撑“去掉因果掩码后，鼎新 weak-label 三任务同步退化”的主张。
 
 ## 本结论不能支撑什么
 

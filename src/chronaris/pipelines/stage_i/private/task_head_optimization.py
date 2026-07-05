@@ -161,7 +161,7 @@ def run_stage_i_task_head_optimization(
         "resume_command_txt": str(resume_path),
         "inner_private_comparison_summary": inner.summary_path,
         "protocol_boundary": (
-            "P34 writes new optimized Chronaris candidates only; P30 baselines are read-only "
+            "This run writes new optimized Chronaris candidates only; confirmed baselines are read-only "
             "references. Labels, splits and same_sortie_cross_pilot retrieval policy are unchanged."
         ),
     }
@@ -318,6 +318,7 @@ def _render_p34_figures(
     residual_path: Path,
     contrastive_path: Path,
 ) -> dict[str, str]:
+    _configure_plot_font()
     long_frame = pd.read_csv(long_path)
     improvement = pd.read_csv(improvement_path) if improvement_path.exists() else pd.DataFrame()
     paths = {
@@ -354,6 +355,7 @@ def _bar_metric(frame: pd.DataFrame, task_prefix: str, metric: str, path: str) -
         label_vertical_bars(ax, bars, values)
         ax.tick_params(axis="x", rotation=35, labelsize=8)
         ax.set_ylabel(metric)
+        ax.set_title(_task_prefix_label(task_prefix))
     fig.tight_layout()
     fig.savefig(path, dpi=160)
     plt.close(fig)
@@ -362,15 +364,15 @@ def _bar_metric(frame: pd.DataFrame, task_prefix: str, metric: str, path: str) -
 def _delta_plot(frame: pd.DataFrame, path: str) -> None:
     fig, ax = plt.subplots(figsize=(8, 4))
     if frame.empty:
-        ax.text(0.5, 0.5, "no P34/P30 overlap", ha="center", va="center")
+        ax.text(0.5, 0.5, "no overlap with confirmed reference", ha="center", va="center")
     else:
-        labels = frame["task_name"].str.replace("_", "\n").str.slice(0, 24) + "\n" + frame["metric"]
+        labels = frame.apply(lambda row: f"{_task_name_label(row['task_name'])}\n{row['metric']}", axis=1)
         values = frame["delta_abs_positive_is_better"].astype(float)
         bars = ax.bar(labels, values)
         label_vertical_bars(ax, bars, values)
         ax.axhline(0.0, color="black", linewidth=0.8)
         ax.tick_params(axis="x", rotation=35, labelsize=7)
-        ax.set_ylabel("delta; positive means P34 better")
+        ax.set_ylabel("delta; positive means current candidate is better")
     fig.tight_layout()
     fig.savefig(path, dpi=160)
     plt.close(fig)
@@ -404,6 +406,40 @@ def _curve_plot(frame: pd.DataFrame, path: str) -> None:
     fig.tight_layout()
     fig.savefig(path, dpi=160)
     plt.close(fig)
+
+
+def _task_prefix_label(task_prefix: str) -> str:
+    return {
+        "T1": "分类任务",
+        "T2": "回归任务",
+        "T3": "检索任务",
+    }.get(task_prefix, task_prefix)
+
+
+def _task_name_label(task_name: object) -> str:
+    text = str(task_name)
+    if text.startswith("T1"):
+        return "分类任务"
+    if text.startswith("T2"):
+        return "回归任务"
+    if text.startswith("T3"):
+        return "检索任务"
+    return text.replace("_", " ")
+
+
+def _configure_plot_font() -> None:
+    try:
+        from matplotlib import font_manager
+    except Exception:
+        return
+    for family in ("WenQuanYi Zen Hei", "Noto Sans CJK SC", "Microsoft YaHei", "SimHei"):
+        try:
+            font_manager.findfont(family, fallback_to_default=False)
+        except ValueError:
+            continue
+        plt.rcParams["font.sans-serif"] = [family, *plt.rcParams.get("font.sans-serif", [])]
+        plt.rcParams["axes.unicode_minus"] = False
+        return
 
 
 def _ensure_gpu_perf_summary(
@@ -447,13 +483,13 @@ def _render_report(summary: Mapping[str, object]) -> str:
             f"- status: `{summary['status']}`",
             f"- runtime_device: `{summary['runtime_device']}`",
             f"- artifact_root: `{summary['artifact_root']}`",
-            f"- P30 reference: `{summary['p30_reference_root']}`",
-            "- boundary: labels, splits, P30/P31/P32 historical artifacts are unchanged.",
+            f"- confirmed comparison reference: `{summary['p30_reference_root']}`",
+            "- boundary: labels, splits and historical artifacts are unchanged.",
             "",
             "## Outputs",
             f"- metrics long: `{summary['task_head_metrics_long_csv']}`",
             f"- metrics wide: `{summary['task_head_metrics_wide_csv']}`",
-            f"- improvement vs P30: `{summary['improvement_vs_p30_csv']}`",
+            f"- improvement vs confirmed comparison reference: `{summary['improvement_vs_p30_csv']}`",
             f"- gate summary: `{summary['gate_contribution_summary_csv']}`",
             f"- residual decomposition: `{summary['t2_residual_decomposition_csv']}`",
             f"- contrastive diagnostics: `{summary['contrastive_diagnostics_csv']}`",

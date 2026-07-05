@@ -1,7 +1,7 @@
 # Stage I Public Adapter Calibration - 20260607T-stage-i-evidence-closure-r2-public-adapter
 
 - evidence_layer: `public_adapter_calibration`
-- boundary_note: `UAB/NASA rows only support public adapter or calibration evidence. They do not prove the thesis dual-stream private mainline is fully closed.`
+- boundary_note: `UAB/NASA rows only support public adapter or calibration evidence. They do not prove the Dingxin real dual-stream thesis mainline is fully closed.`
 
 ## Best By Category
 

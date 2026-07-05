@@ -5,7 +5,7 @@
 ## 清理范围
 
 - `src/`、`tests/`、`scripts/` 下的本地 Python `__pycache__` 生成缓存已删除。
-- `src/chronaris` 下没有删除源码模块：本轮复查确认 Stage I public/private/evidence/legacy 模块仍被脚本、测试、兼容 import map 或当前报告链路引用。
+- `src/chronaris` 下没有删除源码模块：本轮复查确认 Stage I public/Dingxin/evidence/legacy 模块仍被脚本、测试、兼容 import map 或当前报告链路引用。
 - `docs/artifacts/assets/` 下删除 archive-only 的旧 public 迭代资产：
   - `stage_i_public_opt_torch/20260506T063146Z-stage-i-public-opt-uab-torch/`
   - `stage_i_public_opt_torch/20260507T133000Z-stage-i-public-opt-uab-torch-mainline-r2/`
@@ -22,7 +22,7 @@
 
 ## 保留边界
 
-- 保留 P27/P28 当前公开对比与 fusion refresh 产物：
+- 保留 公开模型对比与公开融合刷新 当前公开对比与 fusion refresh 产物：
   - `stage_i_public_model_comparison/20260701T-stage-i-public-model-comparison-r1/`
   - `stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/`
 - 保留仍被代码或当前报告直接引用的 public adapter 基线：
@@ -33,7 +33,7 @@
   - `stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/`
   - `stage_i_public_opt_torch/20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1/`
   - `stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/`
-- 保留 P11 live child run、Stage H 输入、P20/P21 LLM 输入表、P26 r6 thesis figures、leakage-safe private ablation 与当前中期写作入口。
+- 保留 鼎新弱监督任务扫描 live child run、Stage H 输入、DeepSeek 时序预处理/LLM 预处理对比 LLM 输入表、论文图表报告级重绘 r6 thesis figures、leakage-safe Dingxin ablation 与当前中期写作入口。
 
 ## 体积与 LFS 结论
 

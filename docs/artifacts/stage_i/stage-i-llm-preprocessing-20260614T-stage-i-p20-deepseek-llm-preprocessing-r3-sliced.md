@@ -76,9 +76,9 @@ LLM output is preprocessing context, semantic hints, rule review, and runtime ex
 
 | task_name | decision | sample_count | agreement | conflict | human_review | agreement_rate |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| `event_replay_tag` | `keep_current_rule` | 111 | 111 | 0 | 111 | 1.000000 |
-| `risk_proxy` | `keep_current_rule` | 111 | 111 | 0 | 111 | 1.000000 |
-| `workload_proxy` | `keep_current_rule` | 111 | 111 | 0 | 111 | 1.000000 |
+| 事件回放标签 | `keep_current_rule` | 111 | 111 | 0 | 111 | 1.000000 |
+| risk_weak_label | `keep_current_rule` | 111 | 111 | 0 | 111 | 1.000000 |
+| workload_weak_label | `keep_current_rule` | 111 | 111 | 0 | 111 | 1.000000 |
 
 ## Source Paths
 

@@ -1,10 +1,10 @@
-# Private Causal Fusion Support - 20260504T120000Z-stage-i-private-opt-package
+# Dingxin Real-Data Causal Fusion Support - 20260504T120000Z-stage-i-private-opt-package
 
 - causal gain supported: `True`
 - diagnostic supported: `True`
 - target variant: `chronaris_opt`
 
-## T1
+## 分类任务
 
 | variant | macro-F1 | balanced accuracy |
 | --- | ---: | ---: |
@@ -12,7 +12,7 @@
 | `chronaris_opt` | 1.000000 | 1.000000 |
 | `chronaris_opt_no_causal_mask` | 0.173333 | 0.333333 |
 
-## T2
+## 回归任务
 
 | variant | RMSE | MAE | Spearman |
 | --- | ---: | ---: | ---: |

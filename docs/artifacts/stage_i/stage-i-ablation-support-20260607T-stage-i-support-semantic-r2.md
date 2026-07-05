@@ -11,7 +11,7 @@
 | `E baseline` | `projection_diagnostics_summary` | 3.0 | 0.760173 | 0.211933 | 0.0 | - | - | - | - | - | - | - | 对齐预览存在 | 不含稳定导出与因果解释 |
 | `F(full)` | `projection_diagnostics_summary + stage_h_run_manifest` | 3.0 | 0.699514 | 0.212016 | 3.0 | - | - | - | - | - | - | - | 稳定导出与双 pilot 可读性 | 不直接给出因果 ablation 胜负 |
 | `G(min)` | `causal_fusion_summary + phase2_case_study` | 111.0 | 0.705586 | 0.101908 | 3.0 | 0.930686 | 1.000000 | 2.399792 | +0.000000 | - | - | - | 非对称注意力与双 pilot 差异可读 | 不等价于任务级 superiority |
-| `G(no causal mask)` | `chronaris_opt_no_causal_mask_private_proxy` | - | - | - | - | - | - | - | - | 0.173333 | 313.232477 | 0.027027 | 去掉因果掩码后三任务同步退化 | 当前来自私有 proxy，不直接等价于公开 benchmark |
+| `G(no causal mask)` | `chronaris_opt_no_causal_mask_private_proxy` | - | - | - | - | - | - | - | - | 0.173333 | 313.232477 | 0.027027 | 去掉因果掩码后三任务同步退化 | 当前来自鼎新 weak-label，不直接等价于公开 benchmark |
 | `vehicle_delta_suppressed` | `phase2_case_study_bundle_only` | 3.0 | 0.705586 | 0.101908 | 3.0 | 0.937500 | 0.000000 | 0.000000 | -2.399792 | - | - | - | 事件/机动敏感性可读 | 仅是 frozen Stage H view 上的 bundle-only 干预 |
 | `no_event_bias` | `phase2_case_study_bundle_only` | 3.0 | 0.705586 | 0.101908 | 3.0 | 0.932829 | 1.000000 | 2.126160 | -0.273633 | - | - | - | 事件/机动敏感性可读 | 仅是 frozen Stage H view 上的 bundle-only 干预 |
 

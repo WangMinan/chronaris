@@ -1,8 +1,8 @@
-# Private Artifacts Index
+# Dingxin Real-Data Artifacts Index
 
 更新时间：2026-06-07
 
-本目录保存私有 benchmark 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
+本目录保存鼎新真实数据 benchmark 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
 ## 当前主入口
 
@@ -15,7 +15,7 @@
 
 ## 引用规则
 
-- `chronaris_opt` 是当前鼎新私有代理任务验证主线。
-- `T1/T2/T3` 必须写成 `private proxy benchmark / proxy tasks`，不能写成人工真值 thesis tasks。
-- 若要讨论 Phase C 之后的 thesis-facing 私有任务，请明确写成 `risk_proxy / workload_proxy / event_replay_tag` weak-label evidence。
+- `chronaris_opt` 是当前鼎新真实数据弱监督任务验证主线。
+- 分类任务、回归任务和检索任务必须写成鼎新真实数据弱监督组件诊断任务，不能写成人工真值 thesis tasks。
+- 若要讨论 Phase C 之后的 thesis-facing 鼎新真实数据任务，请明确写成 `risk_proxy / workload_proxy / event_replay_tag` weak-label evidence。
 - `archive/` 只用于历史追溯，不作为当前活跃 truth source。

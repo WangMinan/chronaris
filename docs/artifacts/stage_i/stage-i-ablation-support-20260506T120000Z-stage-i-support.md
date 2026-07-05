@@ -8,7 +8,7 @@
 
 ## 固定六路径主矩阵
 
-| variant | source | mean projection cosine | export views | mean attention entropy | mean top event | mean top contribution | delta top event | delta top contribution | private T1 macro-F1 | private T2 RMSE | private T3 top1 |
+| variant | source | mean projection cosine | export views | mean attention entropy | mean top event | mean top contribution | delta top event | delta top contribution | Dingxin 分类任务 macro-F1 | Dingxin 回归任务 RMSE | Dingxin 检索任务 top1 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | `E baseline` | `projection_diagnostics_summary` | 0.760173 | 0.000000 | - | - | - | - | - | - | - | - |
 | `F(full)` | `projection_diagnostics_summary + stage_h_run_manifest` | 0.699514 | 3.000000 | - | - | - | - | - | - | - | - |
@@ -21,7 +21,7 @@
 
 1. 去掉双流连续对齐后，只剩 `E baseline` 级预览证据；它能说明预览存在，但不能替代稳定 export 与下游消费闭环。
 2. 保留 `F(full)` 与 `G(min)` 后，Stage H/Phase 2 已形成 `3` 个真实双流 view、`2 PASS + 1 WARN` 的可解释证据链。
-3. 去掉因果掩码后，`chronaris_opt_no_causal_mask` 在私有 T1/T2/T3 三任务同时退化，说明因果掩码对当前主线不是装饰项。
+3. 去掉因果掩码后，`chronaris_opt_no_causal_mask` 在鼎新 分类任务、回归任务和检索任务 三任务同时退化，说明因果掩码对当前主线不是装饰项。
 4. 去掉关键事件偏置时，`no_event_bias` 的 mean top contribution 下降；压制 vehicle delta 时，`vehicle_delta_suppressed` 的干预幅度最大，说明事件与机动变化都是当前融合读数的重要支撑。
 
 ## 本结论能支撑什么

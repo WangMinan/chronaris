@@ -42,7 +42,7 @@ def render_stage_i_thesis_materials_report(
         "## 概览",
         "",
         f"- 本轮将中期报告图表刷新为 `{len(figure_entries)}` 张 PNG 与对应 `{len(table_entries)}` 张 CSV，所有数值来自已有 JSON/CSV summary 或本轮旋转字段审计。",
-        "- 证据层级继续分开：论文弱标注、私有代理、公开适配、运行字段契约、语义融合支撑、刚体/旋转诊断和大语言模型预处理对比分别解读。",
+        "- 证据层级继续分开：论文弱标注、鼎新真实数据组件诊断、公开数据适配、运行字段契约、语义融合支撑、刚体/旋转诊断和大语言模型预处理对比分别解读。",
     ]
     for row in best_rows.to_dict(orient="records"):
         lines.append(

@@ -195,7 +195,7 @@ def _plot_evidence_layer_overview(path: Path, sources, font, table_paths):
         quantity=_label(font, "分层解读\n不合并结论", "Separate layers\nNo merged conclusion"),
         role=_label(
             font,
-            "弱标注、代理、适配、契约、语义与预处理输出分别解读。",
+            "弱监督、组件诊断、适配、契约、语义与预处理输出分别解读。",
             "Weak labels, proxies, adapters, contracts, semantics, and preprocessing stay separate.",
         ),
         color="#94a3b8",
@@ -701,7 +701,8 @@ def _plot_private_component(path: Path, sources, font, table_paths):
             )
         )
         ax_cards.add_patch(patches.Rectangle((x, y + h - 0.065), w, 0.065, facecolor=color, edgecolor="none"))
-        ax_cards.text(x + 0.026, y + h - 0.14, str(card["task"]), fontsize=11.2, weight="bold", color=INK, va="top")
+        task_title = str(card["task"]).replace("\n", "：")
+        ax_cards.text(x + 0.026, y + h - 0.14, task_title, fontsize=11.0, weight="bold", color=INK, va="top")
         ax_cards.text(x + 0.026, y + h - 0.29, str(card["metric"]), fontsize=9.4, color=MUTED, va="top")
         ax_cards.text(x + 0.026, y + 0.21, str(card["value"]), fontsize=17.0, weight="bold", color=color, va="bottom")
         seed_count = card.get("seed_count")
@@ -830,7 +831,7 @@ def _plot_public_transfer(path: Path, sources, font, table_paths):
     ax.text(
         6.0,
         0.72,
-        _label(font, "公开数据用于适配校准，真实航空双流用于验证闭环，组件代理任务用于结构敏感性测试。", "Public data supports adaptation, private dual-stream data supports validation, proxy tasks support structural sensitivity tests."),
+        _label(font, "公开数据用于适配校准，鼎新真实航空双流用于验证闭环，组件诊断任务用于结构敏感性测试。", "Public data supports adaptation, Dingxin dual-stream data supports validation, and component-diagnostic tasks support structural sensitivity tests."),
         ha="center",
         fontsize=10.2,
         color=INK,
@@ -846,7 +847,7 @@ def _plot_public_transfer(path: Path, sources, font, table_paths):
         source_paths=_source_paths(sources, "public_transfer", "public_calibration", "private_component"),
         evidence_layer="transfer_boundary",
         table_path=table_paths["public_transfer_boundary"],
-        metric_definition="Chinese positive role diagram separating public adapter, private weak-label mainline, and private proxy diagnostics.",
+        metric_definition="Chinese positive role diagram separating public adapters, Dingxin weak-label mainline evidence, and Dingxin component diagnostics.",
         replaces_problem="defensive boundary copy is replaced by positive Chinese role wording.",
     )
 
@@ -1256,7 +1257,7 @@ def _evidence_card_role(row: Mapping[str, object], font: PlotFontSelection) -> s
     }
     compact_ascii = {
         "thesis_weak_label": "Prototype and parameter evidence; expert review remains separate.",
-        "private_proxy": "Locates backbone, task input, and strict protocol effects.",
+        "private_proxy": "Locates Dingxin component diagnostics, backbone, task input, and strict protocol effects.",
         "public_adapter_calibration": "Supports public adapters, calibration baselines, and external task checks.",
         "runtime_schema": "Replay inputs are aligned; canonical contract passes validation.",
         "semantic_support": "Shows event representation, semantic query, and attribution support.",
@@ -1486,9 +1487,9 @@ def _query_name_cn(value: object) -> str:
 
 def _task_label_cn(value: object) -> str:
     mapping = {
-        "T1_maneuver_intensity_class": "风险预测",
-        "T2_next_window_physiology_response": "工作负荷预测",
-        "T3_paired_pilot_window_retrieval": "事件复盘",
+        "T1_maneuver_intensity_class": "分类任务\n机动强度",
+        "T2_next_window_physiology_response": "回归任务\n生理响应",
+        "T3_paired_pilot_window_retrieval": "检索任务\n配对窗口",
     }
     return mapping.get(str(value), str(value))
 

@@ -2,13 +2,13 @@
 
 ## Executive Summary
 
-P31 decomposes the P28 chronaris_public_fusion refresh result on NASA/UAB. The public branch is evaluated as public_adapter_context_proxy_evidence, with the second stream recorded as context_proxy rather than private vehicle telemetry. The ablation table reports absolute and relative deltas for lag window, event bias, fusion normalization, stream contribution, fusion head, target transform and regression-loss settings.
+公开融合消融 decomposes the 公开融合刷新 chronaris_public_fusion refresh result on NASA/UAB. The public branch is evaluated as public_adapter_context_proxy_evidence, with the second stream recorded as context_derived_second_stream rather than Dingxin vehicle telemetry. The ablation table reports absolute and relative deltas for lag window, event bias, fusion normalization, stream contribution, fusion head, target transform and regression-loss settings.
 
 ## Dataset and public evidence role
 
 - evidence_role: `public_adapter_context_proxy_evidence`
 - source_prepared_roots: `{'nasa_csm': '/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm', 'uab_workload_dataset': '/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/uab_workload_dataset'}`
-- P28 source run: `20260701T-stage-i-public-fusion-refresh-r1`
+- 公开融合刷新 source run: `20260701T-stage-i-public-fusion-refresh-r1`
 
 ## Ablation design
 
@@ -82,4 +82,4 @@ P31 decomposes the P28 chronaris_public_fusion refresh result on NASA/UAB. The p
 
 ## Midterm-ready wording
 
-P31 public ablation decomposes the P28 chronaris_public_fusion refresh result on NASA/UAB. The table reports how lag-aware fusion, event bias, public context stream use, causal fusion head, target transform and regression loss contribute to NASA attention-state classification and UAB workload regression under the same prepared public split protocol.
+公开融合消融 public ablation decomposes the 公开融合刷新 chronaris_public_fusion refresh result on NASA/UAB. The table reports how lag-aware fusion, event bias, public context stream use, causal fusion head, target transform and regression loss contribute to NASA attention-state classification and UAB workload regression under the same prepared public split protocol.

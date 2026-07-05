@@ -1,23 +1,23 @@
-# Stage I 私有双流 benchmark 执行计划
+# Stage I 鼎新真实双流 benchmark 执行计划
 
 更新时间：2026-05-04
 
-> 说明：本文件已归档为 `chronaris_opt` 私有 proxy benchmark 阶段快照。  
+> 说明：本文件已归档为 `chronaris_opt` 鼎新 weak-label benchmark 阶段快照。
 > 当前现行入口改为 `docs/implementation/notes/stage-i-thesis-mainline-roadmap-2026-05-15.md` 与 `docs/implementation/notes/stage-i-thesis-mainline-coding-plan-2026-05-15.md`。
 
 ## 1. 目标
 
 当前新增的最高优先级不是继续扩公开数据，而是：
 
-1. 在私有双流 sortie 上导出 `all-window / all partitions` 资产
-2. 在同一批私有窗口上验证 `naive_sync -> E -> F -> G(min) -> G(no causal mask)` 模块增益
-3. 在 T1/T2/T3 三个私有 proxy 任务上比较优化后的 `chronaris_opt` 与 `naive_sync / E / F / G(min) / no-mask / MulT / ContiFormer`
+1. 在鼎新真实双流 sortie 上导出 `all-window / all partitions` 资产
+2. 在同一批鼎新窗口上验证 `naive_sync -> E -> F -> G(min) -> G(no causal mask)` 模块增益
+3. 在 分类任务、回归任务和检索任务 三个鼎新 weak-label 任务上比较优化后的 `chronaris_opt` 与 `naive_sync / E / F / G(min) / no-mask / MulT / ContiFormer`
 
 本计划对应的优化候选已经完成 full LOSO 实跑。当前状态只应表述为：
 
-- `chronaris_opt` 在鼎新私有 proxy benchmark 的 T1/T2/T3 三任务上达到当前对照矩阵全面最优
+- `chronaris_opt` 在鼎新 weak-label benchmark 的 分类任务、回归任务和检索任务 三任务上达到当前对照矩阵全面最优
 - `private_optimality_supported=True`
-- 这些标签仍是 proxy / 弱标签，不应写成人工真值
+- 这些标签仍是 weak-label / 弱标签，不应写成人工真值
 
 ## 2. 已接入代码入口
 
@@ -37,7 +37,7 @@
     - `vehicle_reference_hidden`
   - 每个 view 会额外导出 `raw_window_summary.jsonl`
 
-### 私有任务与 benchmark 管线
+### 鼎新真实数据任务与 benchmark 管线
 
 - 任务 contract：`src/chronaris/dataset/stage_i_private_contracts.py`
 - 主入口：`src/chronaris/pipelines/stage_i/stage_i_private_benchmark.py`
@@ -54,17 +54,17 @@
 
 ## 3. 当前固定任务
 
-### T1 maneuver_intensity_class
+### 分类任务 maneuver_intensity_class
 
 - 来源：`raw_window_summary.jsonl` 里的车辆窗口统计
 - 策略：按候选机动字段的 `abs(delta) + std + span` 聚合打分，再按全体分位数离散为 `low / medium / high`
 
-### T2 next_window_physiology_response
+### 回归任务 next_window_physiology_response
 
 - 来源：同 view 下一窗口的生理统计
 - 策略：用下一窗口生理字段变化强度构造回归标签
 
-### T3 paired_pilot_window_retrieval
+### 检索任务 paired_pilot_window_retrieval
 
 - 来源：同 sortie、同 `window_index` 的双 pilot 配对
 - 策略：在同 sortie 的对侧 pilot 候选集中做 top-1 / MRR 检索
@@ -93,8 +93,8 @@
 ## 5. 建议执行顺序
 
 1. 先用 `StageHExportConfig.preview_config.intermediate_partition='all'` 和 `intermediate_sample_limit=None` 重跑 E / F all-window 资产。
-2. 再执行私有 benchmark 编排入口。
-3. 只在三份私有报告和资产都落盘后，再回写“是否证明最优”的状态文本。
+2. 再执行鼎新真实数据 benchmark 编排入口。
+3. 只在三份鼎新报告和资产都落盘后，再回写“是否证明最优”的状态文本。
 4. 如果要把当前最佳工件从 summary 升级到可引用 package，执行 benchmark 时额外开启 package 导出。
 
 ## 6. 建议命令
@@ -135,13 +135,13 @@ from chronaris.pipelines import (
 - `private benchmark smoke` 已完成并已被 full run 覆盖，`docs/artifacts/assets` 中不再保留中间 smoke 产物
 - `private benchmark full` 已完成：`docs/artifacts/assets/stage_i_private/20260502T121815Z-stage-i-private-opt-full/`
 - `private benchmark package` 已完成：`docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/`
-- 私有 benchmark 的最终结论是：
+- 鼎新真实数据 benchmark 的最终结论是：
   - `private_optimality_supported = True`
-  - T1：`chronaris_opt` macro-F1 `1.000000`、balanced accuracy `1.000000`
-  - T2：`chronaris_opt` RMSE `201.489565`、MAE `113.851926`
-  - T3：`chronaris_opt` top-1 `1.000000`、MRR `1.000000`
-  - `chronaris_opt` 在 T1/T2/T3 均优于 `chronaris_opt_no_causal_mask`
+  - 分类任务：`chronaris_opt` macro-F1 `1.000000`、balanced accuracy `1.000000`
+  - 回归任务：`chronaris_opt` RMSE `201.489565`、MAE `113.851926`
+  - 检索任务：`chronaris_opt` top-1 `1.000000`、MRR `1.000000`
+  - `chronaris_opt` 在 分类任务、回归任务和检索任务 均优于 `chronaris_opt_no_causal_mask`
   - `criterion_details` 全为 `true`
   - 当前可引用 package：`docs/artifacts/assets/stage_i_private/20260504T120000Z-stage-i-private-opt-package/optimized_candidate_package.json`
 
-因此当前可以说“已在鼎新私有 proxy benchmark 上证明 `chronaris_opt` 三任务全面最优”。该结论不外推为人工真值或真实飞行风险标签最优。
+因此当前可以说“已在鼎新 weak-label benchmark 上证明 `chronaris_opt` 三任务全面最优”。该结论不外推为人工真值或真实飞行风险标签最优。

@@ -1,8 +1,8 @@
-# Private Alignment Support - 20260504T120000Z-stage-i-private-opt-package
+# Dingxin Alignment Support - 20260504T120000Z-stage-i-private-opt-package
 
 - alignment gain supported: `False`
 
-## T1
+## 分类任务
 
 | variant | macro-F1 | balanced accuracy |
 | --- | ---: | ---: |
@@ -10,7 +10,7 @@
 | `e_baseline` | 0.262981 | 0.333333 |
 | `f_full` | 0.276605 | 0.350427 |
 
-## T2
+## 回归任务
 
 | variant | RMSE | MAE | Spearman |
 | --- | ---: | ---: | ---: |

@@ -3,7 +3,7 @@
 ## 概览
 
 - 本轮将中期报告图表刷新为 `12` 张 PNG 与对应 `12` 张 CSV，所有数值来自已有 JSON/CSV summary 或本轮旋转字段审计。
-- 证据层级继续分开：论文弱标注、私有代理、公开适配、运行字段契约、语义融合支撑、刚体/旋转诊断和大语言模型预处理对比分别解读。
+- 证据层级继续分开：论文弱标注、鼎新真实数据组件诊断、公开数据适配、运行字段契约、语义融合支撑、刚体/旋转诊断和大语言模型预处理对比分别解读。
 - `live_influx` weak-label sweep: sample_count=`111`, task_entry_count=`333`, best_test_total=`1153.898570`。
 - `stage_h_window_stats_proxy` weak-label sweep: sample_count=`111`, task_entry_count=`333`, best_test_total=`1024.809990`。
 - 运行字段契约：原始输入状态=`aligned`，飞机状态字段=`965`；统一输入状态=`exact`，字段维度=`1930`。

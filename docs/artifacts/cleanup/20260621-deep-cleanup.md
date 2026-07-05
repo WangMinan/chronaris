@@ -16,7 +16,7 @@
 
 ## 当前替代入口
 
-- r5 thesis figures 已由 P26 r6 接管：
+- r5 thesis figures 已由 论文图表报告级重绘 r6 接管：
   - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
   - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/table_manifest.json`
   - `docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv`
@@ -25,7 +25,7 @@
 ## 明确保留内容
 
 - `docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/`：r3 stable resume 与 r4 partial summary 仍引用其中两个 live child run、checkpoint 和 blocker log。
-- `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`：P20/P21 LLM preprocessing 与 comparison 仍把它作为 runtime case 输入表。
+- `docs/artifacts/assets/stage_i_thesis_figures/20260613T-stage-i-thesis-materials-r2-p18/runtime_semantic_case.csv`：DeepSeek/LLM preprocessing 与 comparison 仍把它作为 runtime case 输入表。
 - `docs/artifacts/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/` 与 `docs/artifacts/assets/stage_i_public_opt_torch/20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1/`：public adapter calibration、public transfer boundary 和代码常量仍直接引用其 summary。
 - `scripts/stage_i/<category>/` canonical CLI 与 `src/chronaris/pipelines/stage_i/<subpackage>/` 源码：本轮引用扫描和测试入口检查未发现可安全删除的 tracked canonical 脚本或源码文件；清理只移除本地编译缓存。
 

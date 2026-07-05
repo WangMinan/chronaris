@@ -1,13 +1,13 @@
-# Private Causal Fusion Support - 20260607T-stage-i-private-opt-package-r2
+# Dingxin Real-Data Causal Fusion Support - 20260607T-stage-i-private-opt-package-r2
 
-- benchmark_role: `private_proxy_benchmark`
-- `T1/T2/T3` 仍按 private proxy tasks 解释，不直接等价于论文任务本体。
+- benchmark_role: dingxin_weak_label_benchmark
+- 分类任务、回归任务和检索任务仍按 Dingxin weak-label tasks 解释，不直接等价于论文任务本体。
 - thesis weak-label boundary: `weak_label_proxy_not_manual_ground_truth`
 - causal gain supported: `True`
 - diagnostic supported: `True`
 - target variant: `chronaris_opt`
 
-## T1 Proxy Task
+## 分类任务 weak-label Task
 
 | variant | macro-F1 | balanced accuracy |
 | --- | ---: | ---: |
@@ -15,7 +15,7 @@
 | `chronaris_opt` | 1.000000 | 1.000000 |
 | `chronaris_opt_no_causal_mask` | 0.173333 | 0.333333 |
 
-## T2 Proxy Task
+## 回归任务 weak-label Task
 
 | variant | RMSE | MAE | Spearman |
 | --- | ---: | ---: | ---: |

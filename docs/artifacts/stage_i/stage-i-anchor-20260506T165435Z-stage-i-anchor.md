@@ -44,10 +44,10 @@
 | --- | --- | --- | ---: | ---: |
 | `20251002_单01_ACT-8_翼云_J16_12#01` | `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035` | `20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033` | -0.170068 | -0.217477 |
 
-## Private No-Mask Comparison
+## Dingxin No-Mask Comparison
 
 | task | target metrics | no-mask metrics | target beats no-mask |
 | --- | --- | --- | --- |
-| `T1_maneuver_intensity_class` | `macro_f1=1.000000, balanced_accuracy=1.000000` | `macro_f1=0.173333, balanced_accuracy=0.333333` | `True` |
-| `T2_next_window_physiology_response` | `rmse=201.489565, mae=113.851926` | `rmse=313.232477, mae=173.648719` | `True` |
-| `T3_paired_pilot_window_retrieval` | `top1_accuracy=1.000000, mrr=1.000000` | `top1_accuracy=0.027027, mrr=0.113556` | `True` |
+| 分类任务：机动强度分类 | `macro_f1=1.000000, balanced_accuracy=1.000000` | `macro_f1=0.173333, balanced_accuracy=0.333333` | `True` |
+| 回归任务：下一窗口生理响应 | `rmse=201.489565, mae=113.851926` | `rmse=313.232477, mae=173.648719` | `True` |
+| 检索任务：配对飞行员窗口检索 | `top1_accuracy=1.000000, mrr=1.000000` | `top1_accuracy=0.027027, mrr=0.113556` | `True` |

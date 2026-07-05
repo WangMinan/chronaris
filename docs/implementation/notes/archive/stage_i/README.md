@@ -8,7 +8,7 @@
 
 它们仍然有价值，因为记录了：
 
-- `chronaris_opt` 私有最优性阶段的执行顺序
+- `chronaris_opt` 鼎新最优性阶段的执行顺序
 - `public opt` 从最小可跑到增强闭环的演化路径
 - `MulT / ContiFormer` 深基线和公开数据扩展时的历史判断
 

@@ -28,9 +28,9 @@
 
 | task | task_type | head_family | recommended_head | prediction_contract_available | metric snapshot |
 | --- | --- | --- | --- | --- | --- |
-| `T1_maneuver_intensity_class` | `classification` | `class_balanced_threshold` | `class_balanced_threshold` | `True` | `macro_f1=1.000000, balanced_accuracy=1.000000` |
-| `T2_next_window_physiology_response` | `regression` | `n/a` | `physiology_persistence` | `True` | `rmse=201.489565, mae=113.851926` |
-| `T3_paired_pilot_window_retrieval` | `retrieval` | `chronaris_time_residual_retrieval` | `chronaris_time_residual_retrieval` | `True` | `top1_accuracy=1.000000, mrr=1.000000` |
+| 分类任务：机动强度分类 | `classification` | `class_balanced_threshold` | `class_balanced_threshold` | `True` | `macro_f1=1.000000, balanced_accuracy=1.000000` |
+| 回归任务：下一窗口生理响应 | `regression` | `n/a` | `physiology_persistence` | `True` | `rmse=201.489565, mae=113.851926` |
+| 检索任务：配对飞行员窗口检索 | `retrieval` | `chronaris_time_residual_retrieval` | `chronaris_time_residual_retrieval` | `True` | `top1_accuracy=1.000000, mrr=1.000000` |
 
 ## Diagnostics
 

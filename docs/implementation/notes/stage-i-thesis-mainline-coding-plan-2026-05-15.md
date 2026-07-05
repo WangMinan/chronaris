@@ -17,12 +17,12 @@
 
 | 文件 | 动作 | 验收 |
 | --- | --- | --- |
-| `src/chronaris/features/stage_i_sequences.py` | 把公开第二模态的论文口径统一为 `context_proxy`；保留 `task_context / scenario_context` 作为数据集内字段名，但在 metadata 中显式声明 `adapter/proxy` 语义。 | 导出的 `dataset_summary / sequence_schema / metadata` 不再把公开第二流写成真实航电流。 |
+| `src/chronaris/features/stage_i_sequences.py` | 把公开第二模态的论文口径统一为 context_derived_second_stream；保留 `task_context / scenario_context` 作为数据集内字段名，但在 metadata 中显式声明 `adapter/proxy` 语义。 | 导出的 `dataset_summary / sequence_schema / metadata` 不再把公开第二流写成真实航电流。 |
 | `src/chronaris/pipelines/stage_i/common/deep_models.py` | 保留 `Stage G` 核心接口不动，但在 `ChronarisPublicFusionWrapper` 层补明确的 second-stream 语义边界，避免 thesis-facing 代码把它误称为 vehicle stream。 | public deep wrapper 的输入/输出说明与 `stage_i_sequences.py` 一致。 |
 | `src/chronaris/pipelines/stage_i/public/mainline_report.py` | 把 `public opt closed` 重新表述为 `public adapter evidence`，显式区分 `public adapter`、`public fusion exploratory`、`private mainline`。 | 主报告不再把 `public opt` 直接写成 thesis dual-stream 主线闭环。 |
 | `src/chronaris/pipelines/stage_i/public/opt_reporting.py` | 在 `UAB robust-prior`、`NASA round1` 等 report summary 中保留 adapter/calibration 边界。 | report wording 与 roadmap/gap 文档一致。 |
-| `src/chronaris/pipelines/stage_i/private/benchmark_data.py` | 给 `T1/T2/T3` 增加 `proxy_task` 语义字段或独立 builder 标识。 | 任务 metadata 能区分 `proxy` 与后续 `thesis task`。 |
-| `tests/test_stage_i_public_opt.py` | 新增 adapter/proxy metadata 与 report wording 合约测试。 | synthetic asset 下可校验新 metadata 键和值。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark_data.py` | 给 分类任务、回归任务和检索任务 增加 weak_label_task 语义字段或独立 builder 标识。 | 任务 metadata 能区分 `proxy` 与后续 `thesis task`。 |
+| `tests/test_stage_i_public_opt.py` | 新增 adapter/weak-label metadata 与 report wording 合约测试。 | synthetic asset 下可校验新 metadata 键和值。 |
 | `tests/test_stage_i_deep_pipeline.py` | 校验公开双流 wrapper 的第二模态语义不会回退成 thesis-facing vehicle stream 描述。 | public deep path contract 通过。 |
 
 ## 3. Phase B：统一骨干与 checkpoint 导出
@@ -44,10 +44,10 @@
 | --- | --- | --- |
 | `src/chronaris/models/alignment/task_heads.py` | 新增多任务头定义，覆盖 classification / regression / retrieval 与后续 thesis-task heads。 | 单文件集中管理 task heads 和 output contract。 |
 | `src/chronaris/models/alignment/losses.py` | 在现有 objective 上增加 `task_loss` 汇总入口和权重配置。 | `StageEObjectiveBreakdown` 或并行 multitask breakdown 能输出 `L_task`。 |
-| `src/chronaris/dataset/stage_i_real_task_builders.py` | 新增 thesis-task builder，先实现 `risk_proxy`、`workload_proxy`、`event_replay_tag`。 | 可以从现有 `Stage H / private` 资产构建真实任务近似标签。 |
-| `src/chronaris/pipelines/stage_i/training/multitask_train.py` | 新增统一训练入口，打通 `L_recon + L_align + L_phy + L_causal + L_task`。 | 至少一组私有弱标签 thesis task 能端到端训练并导出结果。 |
-| `src/chronaris/pipelines/stage_i/private/benchmark_data.py` | 把 `T1/T2/T3` 的构造逻辑下沉到 `proxy task builder`，与真实 thesis-task builder 拆开。 | `proxy` 与 `thesis task` contract 不再混在一个入口。 |
-| `src/chronaris/pipelines/stage_i/private/benchmark.py` | 支持 benchmark 结果按 `proxy / thesis` 两层输出。 | 报告可单独说明代理任务和 thesis-task 证据。 |
+| `src/chronaris/dataset/stage_i_real_task_builders.py` | 新增 thesis-task builder，先实现 risk_weak_label、workload_weak_label、事件回放标签。 | 可以从现有 `Stage H / private` 资产构建真实任务近似标签。 |
+| `src/chronaris/pipelines/stage_i/training/multitask_train.py` | 新增统一训练入口，打通 `L_recon + L_align + L_phy + L_causal + L_task`。 | 至少一组鼎新弱标签 thesis task 能端到端训练并导出结果。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark_data.py` | 把 分类任务、回归任务和检索任务 的构造逻辑下沉到 `proxy task builder`，与真实 thesis-task builder 拆开。 | `proxy` 与 `thesis task` contract 不再混在一个入口。 |
+| `src/chronaris/pipelines/stage_i/private/benchmark.py` | 支持 benchmark 结果按 `proxy / thesis` 两层输出。 | 报告可单独说明弱监督构造任务和 thesis-task 证据。 |
 | `src/chronaris/pipelines/stage_i/private/benchmark_models.py` | 允许共享 backbone + task head 的训练/评估路径，不再只消费导出特征表。 | deep/classical 路线可以和 multitask 路线并列比较。 |
 | `tests/test_stage_i_private_optimization.py` | 保留旧 benchmark 回归，同时新增 `proxy/thesis task split` 合约测试。 | 历史 benchmark 不回归，新任务入口可验证。 |
 | `tests/test_stage_i_multitask_train.py` | 新增 multitask smoke test。 | synthetic 数据上能完成一次前向、loss 汇总与落盘。 |

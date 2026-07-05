@@ -1,7 +1,7 @@
 # Stage I Public Fusion GPU Optimization - 20260701T-stage-i-public-fusion-refresh-r1-gpuopt-r1
 
 ## 1. Executive Summary
-Base P28 run `20260701T-stage-i-public-fusion-refresh-r1` is completed. This GPUOPT run did not continue full LOSO; it profiled representative folds only.
+Base 公开融合刷新 run `20260701T-stage-i-public-fusion-refresh-r1` is completed. This GPUOPT run did not continue full LOSO; it profiled representative folds only.
 Throughput changed from 559.52 to 5090.93 samples/sec (speedup 9.10x).
 
 ## 2. Baseline bottleneck diagnosis
@@ -28,7 +28,7 @@ The baseline path repeatedly sliced CPU numpy arrays and rebuilt CUDA tensors in
 Normalization and target transforms are computed from train fold indices only. Split groups are copied from the original LOSO grouping and no label/split/metric definitions are changed.
 
 ## 7. Resume status
-No P28 full LOSO resume was executed in this run.
+No 公开融合刷新 full LOSO resume was executed in this run.
 
 ## 8. Artifact index
 - artifact root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization`

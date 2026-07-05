@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-P28 refresh enlarged chronaris_public_fusion from the previous light screen setting to confirm runs. On NASA combined attention-state classification, the best refreshed chronaris_public_fusion achieved macro-F1=0.5657, outperforming the public baseline by +0.1107 absolute / +24.3% relative.
+公开融合刷新 refresh enlarged chronaris_public_fusion from the previous light screen setting to confirm runs. On NASA combined attention-state classification, the best refreshed chronaris_public_fusion achieved macro-F1=0.5657, outperforming the public baseline by +0.1107 absolute / +24.3% relative.
 On UAB subjective workload regression, the best refreshed candidate achieved mean RMSE=3.3098, with per-task RMSE 5.1639 / 1.4558.
 
 ## Leaderboards

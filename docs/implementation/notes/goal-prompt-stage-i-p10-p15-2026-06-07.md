@@ -1,4 +1,4 @@
-# Goal Prompt：Stage I 中期前 P10-P15 主动证据推进
+# Goal Prompt：Stage I 中期前 主动证据汇总器-刚体旋转审计 主动证据推进
 
 下面这段 prompt 用于在新 session 的 goal 模式中启动后续工作。它假定工作区为 `/home/wangminan/projects/chronaris`。
 

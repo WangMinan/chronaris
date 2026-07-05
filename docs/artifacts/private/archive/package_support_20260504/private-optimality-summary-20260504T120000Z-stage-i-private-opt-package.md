@@ -1,11 +1,11 @@
-# Private Optimality Summary - 20260504T120000Z-stage-i-private-opt-package
+# Dingxin Real-Data Optimality Summary - 20260504T120000Z-stage-i-private-opt-package
 
-- private optimality supported: `True`
-- best T1 variant: `chronaris_opt`
-- best T2 variant: `chronaris_opt`
-- best T3 variant: `chronaris_opt`
-- best deep T1 model: `mult`
-- best deep T2 model: `mult`
+- Dingxin optimality supported: `True`
+- best 分类任务 variant: `chronaris_opt`
+- best 回归任务 variant: `chronaris_opt`
+- best 检索任务 variant: `chronaris_opt`
+- best deep 分类任务 model: `mult`
+- best deep 回归任务 model: `mult`
 
 ## Retrieval
 

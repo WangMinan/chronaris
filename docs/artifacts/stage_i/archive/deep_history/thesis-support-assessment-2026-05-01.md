@@ -2,8 +2,8 @@
 
 更新时间：2026-05-01
 
-> 说明：本文件成稿时间早于 `chronaris_opt` 私有 full LOSO 与 package 固化。  
-> 当前鼎新私有最优性与主线工件请改看：
+> 说明：本文件成稿时间早于 `chronaris_opt` 鼎新 full LOSO 与 package 固化。
+> 当前鼎新最优性与主线工件请改看：
 > - `docs/artifacts/private/archive/full_loso_20260502/private-optimization-summary-20260502T121815Z-stage-i-private-opt-full.md`
 > - `docs/artifacts/private/private-optimization-summary-20260504T120000Z-stage-i-private-opt-package.md`
 
@@ -198,7 +198,7 @@
 根本原因是：
 
 - `UAB` 是生理 workload 数据
-- `NASA` 是 attention-state / risk proxy 数据
+- `NASA` 是 attention-state / risk weak-label 数据
 - 它们并不等价于“生理流 + 飞机航电流”的自有任务场景
 
 所以最合理的定位是：

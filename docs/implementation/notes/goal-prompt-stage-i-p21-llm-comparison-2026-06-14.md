@@ -1,6 +1,6 @@
-# Goal Prompt: Stage I P21 LLM Preprocessing Comparison
+# Goal Prompt: Stage I LLM 预处理对比 LLM Preprocessing Comparison
 
-请在 `/home/wangminan/projects/chronaris` 仓库继续推进 Stage I P21。开始前必须先读：
+请在 `/home/wangminan/projects/chronaris` 仓库继续推进 Stage I LLM 预处理对比。开始前必须先读：
 
 - `AGENTS.md`
 - `docs/STATE.md`
@@ -11,14 +11,14 @@
 
 ## 目标
 
-实现并真实运行 P21：LLM preprocessing 融入 Stage I 数据融合管线的对比实验。最终必须生成工程资产和中期报告可直接引用的 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。
+实现并真实运行 LLM 预处理对比：LLM preprocessing 融入 Stage I 数据融合管线的对比实验。最终必须生成工程资产和中期报告可直接引用的 `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`。
 
 ## 当前事实
 
-- P20 DeepSeek 在线时序数据预处理已完成真实切片 run：
+- DeepSeek 在线时序数据预处理已完成真实切片 run：
   - `docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
   - `docs/artifacts/stage_i/stage-i-llm-preprocessing-20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced.md`
-- P20 只能作为 preprocessing context / rule review / semantic hints / runtime explanation；不能写成人工真值、OpenAI 默认接入、原始全量高频时序外发或核心因果证据。
+- DeepSeek 时序预处理 只能作为 preprocessing context / rule review / semantic hints / runtime explanation；不能写成人工真值、OpenAI 默认接入、原始全量高频时序外发或核心因果证据。
 - 当前 Stage I 代码已按目录拆分：
   - LLM pipeline：`src/chronaris/pipelines/stage_i/llm/`
   - LLM CLI：`scripts/stage_i/llm/`
@@ -45,14 +45,14 @@
 实现 A0-A4 对比：
 
 - `A0 baseline`：不接 LLM context；复用当前 Stage I task entries 与内置 semantic query bank。
-- `A1 llm_context`：attach P20 context 到 task entries；标签值必须保持不变，并输出 `label_unchanged=true` 的代码检查结果。
+- `A1 llm_context`：attach DeepSeek 时序预处理 context 到 task entries；标签值必须保持不变，并输出 `label_unchanged=true` 的代码检查结果。
 - `A2 llm_semantic_hints`：只通过 whitelisted recipes 接入 LLM semantic hints，对比 query coverage、view ranking、attribution。
 - `A3 llm_runtime_explanation`：比较 runtime cases 有/无 LLM explanation 的报告完整性。
 - `A4 human_review_packet`：生成字段/规则/schema gap 小样本人工复核表；人工未填写前只写成 review packet，不写成验证完成。
 
 ## 默认输入
 
-- P20 context：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
+- DeepSeek 时序预处理 context：`docs/artifacts/assets/stage_i_llm_preprocessing/20260614T-stage-i-p20-deepseek-llm-preprocessing-r3-sliced/llm_preprocessing_context.json`
 - task manifest：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/thesis_task_manifest.jsonl`
 - semantic support summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
 - runtime schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
@@ -75,7 +75,7 @@
 
 - `docs/midterm/llm-preprocessing-comparison-summary-2026-06-14.md`
 - 更新 `docs/midterm/README.md`
-- P21 真实完成后再更新 `docs/midterm/claims-matrix-2026-06-13.md`
+- LLM 预处理对比 真实完成后再更新 `docs/midterm/claims-matrix-2026-06-13.md`
 - 如暴露新边界，更新 `docs/midterm/boundaries-and-risks-2026-06-13.md`
 
 ## 验收

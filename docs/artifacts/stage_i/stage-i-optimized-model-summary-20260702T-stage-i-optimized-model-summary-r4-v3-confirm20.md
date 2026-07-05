@@ -3,26 +3,26 @@
 - status: `completed`
 - runtime_device: `cuda`
 - artifact_root: `/home/wangminan/projects/chronaris/docs/artifacts/assets/stage_i_optimized_model_summary/20260702T-stage-i-optimized-model-summary-r4-v3-confirm20`
-- boundary: This package summarizes completed optimized P34/P35/P36 evidence with fixed P30/P31/P32 references; public rows remain context-proxy evidence and historical artifacts are read-only.
+- boundary: This package summarizes completed optimized 任务感知头优化、流角色融合与优化模型再评估 evidence with fixed 鼎新真实数据第三方模型对比、公开融合消融与跨证据矩阵 references; public rows remain context-derived second-stream evidence and historical artifacts are read-only.
 
-## P34 Key Deltas
-- `T1_maneuver_intensity_class` `balanced_accuracy`: P30=`0.333333` P34=`0.34188` delta=`0.00854701` status=`improved`
-- `T1_maneuver_intensity_class` `macro_f1`: P30=`0.173333` P34=`0.216065` delta=`0.0427322` status=`improved`
-- `T1_maneuver_intensity_class` `balanced_accuracy`: P30=`0.333333` P34=`0.344729` delta=`0.011396` status=`improved`
-- `T1_maneuver_intensity_class` `macro_f1`: P30=`0.173333` P34=`0.187489` delta=`0.0141557` status=`improved`
-- `T2_next_window_physiology_response` `mae`: P30=`992.524` P34=`317.41` delta=`675.114` status=`improved`
-- `T2_next_window_physiology_response` `nrmse`: P30=`11.3163` P34=`2.05032` delta=`9.26601` status=`improved`
-- `T2_next_window_physiology_response` `rmse`: P30=`1111.98` P34=`415.361` delta=`696.618` status=`improved`
-- `T2_next_window_physiology_response` `mae`: P30=`762.558` P34=`276.504` delta=`486.054` status=`improved`
-- `T2_next_window_physiology_response` `nrmse`: P30=`8.78099` P34=`2.25945` delta=`6.52154` status=`improved`
-- `T2_next_window_physiology_response` `rmse`: P30=`838.121` P34=`346.827` delta=`491.294` status=`improved`
-- `T3_paired_pilot_window_retrieval` `mrr`: P30=`0.119948` P34=`0.117939` delta=`-0.00200877` status=`regressed`
-- `T3_paired_pilot_window_retrieval` `top1`: P30=`0.027027` P34=`0.0315315` delta=`0.0045045` status=`improved`
-- `T3_paired_pilot_window_retrieval` `top3`: P30=`0.0945946` P34=`0.0855856` delta=`-0.00900901` status=`regressed`
-- `T3_paired_pilot_window_retrieval` `top5`: P30=`0.148649` P34=`0.13964` delta=`-0.00900901` status=`regressed`
+## 任务感知头优化 Key Deltas
+- 分类任务：机动强度分类 `balanced_accuracy`: 鼎新真实数据第三方模型对比=`0.333333` 任务感知头优化=`0.34188` delta=`0.00854701` status=`improved`
+- 分类任务：机动强度分类 `macro_f1`: 鼎新真实数据第三方模型对比=`0.173333` 任务感知头优化=`0.216065` delta=`0.0427322` status=`improved`
+- 分类任务：机动强度分类 `balanced_accuracy`: 鼎新真实数据第三方模型对比=`0.333333` 任务感知头优化=`0.344729` delta=`0.011396` status=`improved`
+- 分类任务：机动强度分类 `macro_f1`: 鼎新真实数据第三方模型对比=`0.173333` 任务感知头优化=`0.187489` delta=`0.0141557` status=`improved`
+- 回归任务：下一窗口生理响应 `mae`: 鼎新真实数据第三方模型对比=`992.524` 任务感知头优化=`317.41` delta=`675.114` status=`improved`
+- 回归任务：下一窗口生理响应 `nrmse`: 鼎新真实数据第三方模型对比=`11.3163` 任务感知头优化=`2.05032` delta=`9.26601` status=`improved`
+- 回归任务：下一窗口生理响应 `rmse`: 鼎新真实数据第三方模型对比=`1111.98` 任务感知头优化=`415.361` delta=`696.618` status=`improved`
+- 回归任务：下一窗口生理响应 `mae`: 鼎新真实数据第三方模型对比=`762.558` 任务感知头优化=`276.504` delta=`486.054` status=`improved`
+- 回归任务：下一窗口生理响应 `nrmse`: 鼎新真实数据第三方模型对比=`8.78099` 任务感知头优化=`2.25945` delta=`6.52154` status=`improved`
+- 回归任务：下一窗口生理响应 `rmse`: 鼎新真实数据第三方模型对比=`838.121` 任务感知头优化=`346.827` delta=`491.294` status=`improved`
+- 检索任务：配对飞行员窗口检索 `mrr`: 鼎新真实数据第三方模型对比=`0.119948` 任务感知头优化=`0.117939` delta=`-0.00200877` status=`regressed`
+- 检索任务：配对飞行员窗口检索 `top1`: 鼎新真实数据第三方模型对比=`0.027027` 任务感知头优化=`0.0315315` delta=`0.0045045` status=`improved`
+- 检索任务：配对飞行员窗口检索 `top3`: 鼎新真实数据第三方模型对比=`0.0945946` 任务感知头优化=`0.0855856` delta=`-0.00900901` status=`regressed`
+- 检索任务：配对飞行员窗口检索 `top5`: 鼎新真实数据第三方模型对比=`0.148649` 任务感知头优化=`0.13964` delta=`-0.00900901` status=`regressed`
 
-## P35 Stream-role Gates
-- `private_stage_h` role=`real_vehicle` route=`causal_lagged_vehicle_to_physio` lag=`0.869754` context=`0.101672` vehicle=`0.857364` causal=`0.876729`
+## 流角色融合 Stream-role Gates
+- dingxin_stage_h role=`real_vehicle` route=`causal_lagged_vehicle_to_physio` lag=`0.869754` context=`0.101672` vehicle=`0.857364` causal=`0.876729`
 - `nasa_csm` role=`scenario_context_proxy` route=`adaptive_context_gate` lag=`0.115751` context=`0.752347` vehicle=`0.155897` causal=`0.121497`
 - `uab_workload_dataset` role=`task_context_proxy` route=`adaptive_context_gate` lag=`0.119853` context=`0.755867` vehicle=`0.158099` causal=`0.13321`
 - `nasa_csm` role=`scenario_context_proxy` route=`causal_lagged_vehicle_to_physio` lag=`0.865751` context=`0.102347` vehicle=`0.861355` causal=`0.871497`
