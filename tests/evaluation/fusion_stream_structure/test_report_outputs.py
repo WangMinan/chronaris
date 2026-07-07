@@ -50,3 +50,9 @@ def test_synthetic_cli_writes_report_outputs(tmp_path: Path) -> None:
     assert manifest["confirmed_metrics_changed"] is False
     assert manifest["thesis_protocol_snapshot_modified"] is False
     assert "2026-07-03_thesis-protocol-snapshot" not in "\n".join(manifest["output_files"])
+    external = manifest["external_libraries"]
+    evaluator_counts = manifest.get("evaluator_status_counts", {})
+    if external.get("claspy", {}).get("import_available") is True:
+        assert evaluator_counts.get("clasp", {}).get("completed", 0) > 0
+    if external.get("stumpy", {}).get("import_available") is True:
+        assert evaluator_counts.get("stumpy", {}).get("completed", 0) > 0

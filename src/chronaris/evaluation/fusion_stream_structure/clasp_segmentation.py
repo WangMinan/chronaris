@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass
+from importlib.metadata import PackageNotFoundError, version
 from typing import Mapping
 
 import numpy as np
@@ -35,28 +36,63 @@ def run_clasp_segmentation(stream: PreprocessedFusionStream) -> dict[str, object
             "import_error": import_state.error,
             "algorithm_version": import_state.version,
         }
+    window_size = _safe_window_size(stream.T)
     try:
-        data = np.asarray(stream.matrix, dtype=np.float64).T
-        change_points = _run_binary_clasp(import_state.binary_segmentation, data)
-        state_sequence, transition_graph = _run_clap(import_state.clap_detection, data, stream.T)
-        return {
-            **base,
-            "status": "completed",
-            "import_available": True,
-            "algorithm_version": import_state.version,
-            "change_points": change_points,
-            "change_point_windows": [_map_point(point, stream) for point in change_points],
-            "state_sequence": state_sequence,
-            "state_transition_graph": transition_graph,
-        }
+        data = _claspy_input(stream.matrix)
+        change_points = _run_binary_clasp(import_state.binary_segmentation, data, window_size)
     except Exception as exc:  # pragma: no cover - depends on optional third-party APIs.
         return {
             **base,
             "status": "clasp_error",
             "import_available": True,
             "algorithm_version": import_state.version,
+            "window_size": window_size,
             "error": repr(exc),
         }
+
+    try:
+        state_sequence, transition_graph = _run_clap(import_state.clap_detection, data, stream.T, window_size)
+        clap_status = "completed"
+        clap_error = None
+    except Exception as exc:  # pragma: no cover - short streams can lack enough inferred states.
+        state_sequence = [0] * stream.T
+        transition_graph = {
+            "state_count": 1 if stream.T else 0,
+            "transitions": [],
+            "status": "clap_unavailable",
+            "error": repr(exc),
+        }
+        clap_status = "clap_unavailable"
+        clap_error = repr(exc)
+
+    result = {
+        **base,
+        "status": "completed",
+        "import_available": True,
+        "algorithm_version": import_state.version,
+        "window_size": window_size,
+        "change_points": change_points,
+        "change_point_windows": [_map_point(point, stream) for point in change_points],
+        "state_sequence": state_sequence,
+        "state_transition_graph": transition_graph,
+        "clap_status": clap_status,
+    }
+    if clap_error is not None:
+        result["clap_error"] = clap_error
+    return result
+
+
+def _claspy_input(matrix: np.ndarray) -> np.ndarray:
+    values = np.asarray(matrix, dtype=np.float64)
+    if values.ndim == 2 and values.shape[1] == 1:
+        return values[:, 0]
+    return values
+
+
+def _safe_window_size(T: int) -> int:
+    if T <= 6:
+        return 3
+    return max(3, min(10, T // 5))
 
 
 def run_clasp_for_streams(
@@ -72,16 +108,20 @@ def _load_claspy() -> ClaspImportState:
         from claspy.state_detection import AgglomerativeCLaPDetection  # type: ignore
     except Exception as exc:  # pragma: no cover - exercised when dependency absent.
         return ClaspImportState(available=False, error=repr(exc))
+    try:
+        package_version = version("claspy")
+    except PackageNotFoundError:  # pragma: no cover
+        package_version = str(getattr(claspy, "__version__", "unknown"))
     return ClaspImportState(
         available=True,
-        version=str(getattr(claspy, "__version__", "unknown")),
+        version=package_version,
         binary_segmentation=BinaryClaSPSegmentation,
         clap_detection=AgglomerativeCLaPDetection,
     )
 
 
-def _run_binary_clasp(binary_segmentation: object, data: np.ndarray) -> list[int]:
-    model = binary_segmentation()
+def _run_binary_clasp(binary_segmentation: object, data: np.ndarray, window_size: int) -> list[int]:
+    model = binary_segmentation(window_size=window_size)
     prediction = None
     if hasattr(model, "fit_predict"):
         prediction = model.fit_predict(data)
@@ -99,8 +139,8 @@ def _run_binary_clasp(binary_segmentation: object, data: np.ndarray) -> list[int
     return sorted({int(value) for value in values if np.isfinite(value) and int(value) > 0})
 
 
-def _run_clap(clap_detection: object, data: np.ndarray, T: int) -> tuple[list[int], dict[str, object]]:
-    model = clap_detection()
+def _run_clap(clap_detection: object, data: np.ndarray, T: int, window_size: int) -> tuple[list[int], dict[str, object]]:
+    model = clap_detection(window_size=window_size)
     states = None
     transitions = None
     if hasattr(model, "fit_predict"):

@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 from typing import Mapping, Sequence
 
 import numpy as np
 
 from chronaris.evaluation.fusion_stream_structure.preprocessing import PreprocessedFusionStream
+
+os.environ.setdefault("NUMBA_DISABLE_CUDA", "1")
 
 
 @dataclass(frozen=True, slots=True)

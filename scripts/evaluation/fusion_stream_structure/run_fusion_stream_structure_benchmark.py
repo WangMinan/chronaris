@@ -5,13 +5,19 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+from typing import Mapping, Sequence
 
 import numpy as np
 import pandas as pd
+
+os.environ.setdefault("NUMBA_DISABLE_CUDA", "1")
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 SRC = REPO_ROOT / "src"
@@ -115,6 +121,9 @@ def main() -> int:
     manifest = {
         "run_id": args.run_id,
         "run_type": "fusion_stream_structure_evaluation",
+        "branch": _git_value("rev-parse", "--abbrev-ref", "HEAD"),
+        "commit": _git_value("rev-parse", "HEAD"),
+        "benchmark_command": [sys.executable, *sys.argv],
         "training_invoked": False,
         "metrics_changed": False,
         "confirmed_metrics_changed": False,
@@ -134,9 +143,26 @@ def main() -> int:
             _key_to_text(key): result.get("status")
             for key, result in clasp_results.items()
         },
+        "clap_status": {
+            _key_to_text(key): result.get("clap_status", "not_run")
+            for key, result in clasp_results.items()
+        },
+        "clasp_result_summary": {
+            _key_to_text(key): _clasp_result_summary(result)
+            for key, result in clasp_results.items()
+        },
         "stumpy_status": {
             _key_to_text(key): result.get("status")
             for key, result in stumpy_results.items()
+        },
+        "stumpy_result_summary": {
+            _key_to_text(key): _stumpy_result_summary(result)
+            for key, result in stumpy_results.items()
+        },
+        "evaluator_status_counts": {
+            "clasp": _status_counts(clasp_results),
+            "clap": _status_counts({key: {"status": value.get("clap_status", "not_run")} for key, value in clasp_results.items()}),
+            "stumpy": _status_counts(stumpy_results),
         },
         "output_files": output_files,
         "notes": [
@@ -283,14 +309,23 @@ def _external_library_status() -> dict[str, dict[str, object]]:
             module = importlib.import_module(name)
             status[name] = {
                 "status": "available",
-                "version": str(getattr(module, "__version__", "unknown")),
+                "import_available": True,
+                "version": _package_version(name, module),
             }
         except Exception as exc:
             status[name] = {
                 "status": "unavailable",
+                "import_available": False,
                 "error": repr(exc),
             }
     return status
+
+
+def _package_version(name: str, module: object) -> str:
+    try:
+        return version(name)
+    except PackageNotFoundError:
+        return str(getattr(module, "__version__", "unknown"))
 
 
 def _resolve_path(path_like: str | Path) -> Path:
@@ -314,6 +349,63 @@ def _parse_m_grid(value: str) -> str | tuple[int, ...]:
 
 def _key_to_text(key: tuple[str, str, str]) -> str:
     return "::".join(key)
+
+
+def _git_value(*args: str) -> str:
+    try:
+        result = subprocess.run(
+            ["git", *args],
+            cwd=REPO_ROOT,
+            check=True,
+            text=True,
+            capture_output=True,
+        )
+    except Exception as exc:  # pragma: no cover - git may be unavailable in packaged runs.
+        return f"unavailable:{exc!r}"
+    return result.stdout.strip()
+
+
+def _status_counts(results: Mapping[tuple[str, str, str], Mapping[str, object]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for result in results.values():
+        status = str(result.get("status", "unknown"))
+        counts[status] = counts.get(status, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _clasp_result_summary(result: Mapping[str, object]) -> dict[str, object]:
+    graph = result.get("state_transition_graph", {})
+    state_count = graph.get("state_count") if isinstance(graph, Mapping) else None
+    summary = {
+        "status": result.get("status"),
+        "clap_status": result.get("clap_status", "not_run"),
+        "import_available": result.get("import_available"),
+        "algorithm_version": result.get("algorithm_version"),
+        "window_size": result.get("window_size"),
+        "change_point_count": len(result.get("change_points", []) or []),
+        "state_count": state_count,
+    }
+    for field in ("error", "clap_error", "import_error"):
+        if field in result:
+            summary[field] = result[field]
+    return summary
+
+
+def _stumpy_result_summary(result: Mapping[str, object]) -> dict[str, object]:
+    summary = {
+        "status": result.get("status"),
+        "import_available": result.get("import_available"),
+        "algorithm_version": result.get("algorithm_version"),
+        "m": result.get("m"),
+        "mode": result.get("mode"),
+        "m_grid": result.get("m_grid"),
+        "fluss_regime_count": len(result.get("fluss_regimes", []) or []),
+        "snippet_count": len(result.get("snippets", []) or []),
+    }
+    for field in ("error", "import_error", "errors"):
+        if field in result:
+            summary[field] = result[field]
+    return summary
 
 
 def _safe_name(value: str) -> str:

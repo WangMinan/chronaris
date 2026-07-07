@@ -179,6 +179,7 @@ def write_markdown_report(
             if isinstance(item, Mapping)
         )
     external = manifest.get("external_libraries", {})
+    evaluator_counts = manifest.get("evaluator_status_counts", {})
     lines = [
         "# E3 融合表示流结构评价执行报告",
         "",
@@ -189,7 +190,8 @@ def write_markdown_report(
         "- 是否修改 confirmed metrics：`false`。",
         f"- 可用方法：{available_methods}。",
         f"- 不可用方法：{unavailable_text}。",
-        f"- 外部库状态：claspy={external.get('claspy', {}).get('status', 'unknown')}；stumpy={external.get('stumpy', {}).get('status', 'unknown')}。",
+        f"- 外部库状态：claspy={_external_text(external.get('claspy', {}))}；stumpy={_external_text(external.get('stumpy', {}))}。",
+        f"- evaluator 状态：ClaSP={_status_count_text(evaluator_counts.get('clasp', {}))}；CLaP={_status_count_text(evaluator_counts.get('clap', {}))}；STUMPY={_status_count_text(evaluator_counts.get('stumpy', {}))}。",
         "",
         "## 输出文件",
         "",
@@ -199,7 +201,9 @@ def write_markdown_report(
         "",
         "## 结果边界",
         "",
-        "本轮输出只进入 E3 专属 long 表，`evidence_quadrant = fusion_stream_structure`。Composite score 只作为固定权重汇总展示，不作为 winner 结论。若外部库缺失或序列过短，对应指标保留为 unavailable，不静默删除。",
+        "本轮输出只进入 E3 专属 long 表，`evidence_quadrant = fusion_stream_structure`。Composite score 只作为固定权重汇总展示，不作为 winner 结论。若外部库缺失、短序列状态检测不足或方法无可复用融合流，对应指标保留为 unavailable，不静默删除。",
+        "",
+        "合成数据 run 只证明工程链路和 evaluator API 可执行；Dingxin 小规模 dry run 只证明现有可用融合流可以进入 E3 结构诊断流程，不能直接写成正式论文结论。",
         "",
         "## 当前摘要",
         "",
@@ -219,6 +223,23 @@ def _json_default(value: object) -> object:
     if isinstance(value, np.generic):
         return value.item()
     return str(value)
+
+
+def _external_text(payload: object) -> str:
+    if not isinstance(payload, Mapping):
+        return "unknown"
+    status = str(payload.get("status", "unknown"))
+    version = payload.get("version")
+    import_available = payload.get("import_available")
+    if version:
+        return f"{status}({version}, import_available={import_available})"
+    return f"{status}(import_available={import_available})"
+
+
+def _status_count_text(payload: object) -> str:
+    if not isinstance(payload, Mapping) or not payload:
+        return "unknown"
+    return ", ".join(f"{key}:{value}" for key, value in sorted(payload.items()))
 
 
 def _display_view(record: FusionStreamRecord) -> str:

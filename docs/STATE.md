@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-“融合表示流结构评价（E3）”第一批编码已完成：新增独立评价层、CLI、测试和 no-training dry run。`claspy` / `stumpy` 当前环境未安装，本轮按 gated import fallback 生成结构化 unavailable 报告；未训练、未改 confirmed metrics、未回写论文协议快照。
+“融合表示流结构评价（E3）”第二轮 evaluator validation 已完成：`claspy 0.2.8` 与 `stumpy 1.14.1` 已在 `chronaris` 环境可 import；ClaSP 与 STUMPY 在合成数据和小规模 Dingxin dry run 均完成，CLaP 在短序列上按结构化 `clap_unavailable` 记录；未训练、未改 confirmed metrics、未回写论文协议快照。
 
 ## 当前入口
 
@@ -29,11 +29,11 @@
 - 已将历史阶段编号报告、旧资产目录和兼容 symlink 迁入 `docs/artifacts/archive/`。
 - 已补充 `docs/artifacts/README.md` 和迁移记录。
 - 已完成验证：`compileall`、全量 `pytest -q`、活动路径/文本命名审计、artifact manifest/resume command 旧路径审计、入口文档路径存在性检查、`git diff --check`、`git lfs status`、`git lfs fsck`。
-- 已完成 E3 第一批实现与验证：合同/加载/预处理、ClaSP/CLaP fallback、STUMPY fallback、结构指标、报告、CLI、synthetic no-training run 和小规模 Dingxin dry run。
+- 已完成 E3 第一批实现与第二轮 evaluator-enabled 验证：合同/加载/预处理、ClaSP/CLaP gated wrapper、STUMPY Matrix Profile wrapper、结构指标、报告、CLI、合成数据 validation run 和小规模 Dingxin validation run。
 
 ## 后续队列
 
-1. 如需启用真实 ClaSP/CLaP 和 Matrix Profile 结果，先评估并安装 `claspy` / `stumpy`，再在新 run root 或本轮 execution root 的清晰子路径中复跑；不得为结果好看调参刷分。
-2. 小规模 Dingxin dry run 当前只发现 `chronaris` 与 `naive_time_sync` 有可复用融合表示流；`mult` / `contiformer` 未训练补齐，已按 `method_unavailable` 记录。
-3. E3 后续实验仍必须只在新 run root 产出，不回写论文协议快照，不与分类/回归/历史检索 confirmed metrics 混算，不删除历史检索 artifact。
-4. 可另起任务处理仿真压力测试、检索任务提升或论文材料化工作。
+1. CLaP 在当前短序列 validation 中未稳定形成多状态标签，已按 `clap_unavailable` 保留；后续若扩大样本或更换固定协议，必须另起 run root 并记录判据。
+2. 小规模 Dingxin validation 当前只发现 `chronaris` 与 `naive_time_sync` 有可复用融合表示流；`mult` / `contiformer` 未训练补齐，已按 `method_unavailable` 记录。
+3. E3 后续实验仍必须只在新 run root 产出，不回写论文协议快照，不与分类、回归和历史检索 confirmed metrics 混算，不删除历史检索 artifact。
+4. 可另起任务处理仿真压力测试、历史检索任务提升或论文材料化工作。

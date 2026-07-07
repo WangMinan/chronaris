@@ -10,6 +10,8 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-07_fusion-stream-structure-evaluator-validation/`：**E3 synthetic evaluator validation**。当前环境已安装 `claspy 0.2.8` / `stumpy 1.14.1`；四类方法均可用，ClaSP `completed:8`，STUMPY `completed:8`，CLaP 因短序列状态标签不足记录 `clap_unavailable:8`；`metric rows=108`，`completed=88`，`unavailable=20`；未训练、未改 confirmed metrics。
+- `runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`：**E3 小规模 Dingxin evaluator validation**。从既有 E/F feature export 和变体 feature frame 构造融合表示流，`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 当前无可复用融合表示流并记录为 `method_unavailable`；ClaSP `completed:4`，STUMPY `completed:4`，CLaP `clap_unavailable:4`；`metric rows=54`，`completed=44`，`unavailable=10`；未训练、未改 confirmed metrics。
 - `runs/2026-07-07_fusion-stream-structure-execution/`：**E3 融合表示流结构评价 synthetic no-training 执行**。包含 `e3_input_long_table.csv`、`e3_metrics_long.csv`、`e3_summary.json`、`evidence_manifest.json`、`report.md` 和 `plots/`。本轮环境未安装 `claspy` / `stumpy`，外部 evaluator 结果为结构化 unavailable；未训练、未改 confirmed metrics。
 - `runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`：**E3 小规模 Dingxin dry run**。从既有 E/F feature export 和变体 feature frame 构造融合表示流，`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 当前无可复用融合表示流并记录为 `method_unavailable`；未训练、未改 confirmed metrics。
 - `runs/2026-07-06_fusion-stream-structure-plan/`：**融合表示流结构评价开发计划（E3）**，是 planning 文档，不是实验结果。包含 `report.md`、`input_contract.md`、`metric_contract.md`、`implementation_plan.md`、`acceptance_checklist.md`、`evidence_manifest.json`。本轮未编码、未训练、未改 confirmed metrics；后续编码任务需等待人工 review 本计划后再执行。

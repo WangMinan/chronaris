@@ -1,0 +1,39 @@
+{
+  "metric_row_count": 54,
+  "completed_metric_row_count": 44,
+  "unavailable_metric_row_count": 10,
+  "training_invoked": false,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "run_id": "2026-07-07_fusion-stream-structure-dingxin-evaluator-validation",
+  "available_methods": [
+    "chronaris",
+    "naive_time_sync"
+  ],
+  "unavailable_methods": [
+    {
+      "method_name": "mult",
+      "status": "method_unavailable",
+      "reason": "no_reusable_fusion_feature_frame"
+    },
+    {
+      "method_name": "contiformer",
+      "status": "method_unavailable",
+      "reason": "no_reusable_fusion_feature_frame"
+    }
+  ],
+  "external_libraries": {
+    "claspy": {
+      "status": "available",
+      "import_available": true,
+      "version": "0.2.8"
+    },
+    "stumpy": {
+      "status": "available",
+      "import_available": true,
+      "version": "1.14.1"
+    }
+  },
+  "input_long_table": null,
+  "plot_count": 12
+}
