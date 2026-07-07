@@ -1,27 +1,29 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-06
+更新时间：2026-07-07
 
 ## 当前任务
 
-命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-06）新增任务是 **fusion stream structure evaluation planning（E3 融合表示流结构评价开发计划）**：只产出计划文档，不编码、不训练、不改 confirmed metrics。
+命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码：新增独立评价层、CLI、测试和 no-training dry run，不训练、不改 confirmed metrics。
 
 - 计划入口：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`（report / input_contract / metric_contract / implementation_plan / acceptance_checklist / evidence_manifest）。
-- 计划结论：保留 T1/T2；T3 叙事降级为历史检索诊断 / 片段级复盘前置参考（artifact 不删除）；新增 E3，第一批实现 ClaSPy + STUMPY，TICC 列备选。
-- 后续编码任务**需等待人工 review 本计划后再执行**。
+- 执行入口：`src/chronaris/evaluation/fusion_stream_structure/` 与 `scripts/evaluation/fusion_stream_structure/run_fusion_stream_structure_benchmark.py`。
+- 产物入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/` 与 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`。
+- 当前环境 `claspy` / `stumpy` 未安装，外部 evaluator 按 gated import fallback 写出 `claspy_unavailable` / `stumpy_unavailable`；synthetic 和 Dingxin dry run 均未训练。
 
-验收关注点（本轮 planning）：
+验收关注点（本轮 execution）：
 
-- 计划文档齐全且与既有 T1/T2/T3、论文协议快照、claim boundary 不冲突。
-- 未创建 `src/scripts/tests` 实现文件或空占位。
+- E3 long 表固定 `evidence_quadrant = fusion_stream_structure`，不并入既有 leaderboard。
+- 小规模 Dingxin dry run 只使用既有 feature export 和可复用 `feature_values`；`mult` / `contiformer` 当前无可复用融合表示流，已写 `method_unavailable`，未训练补齐。
 - 未改 confirmed metrics、未回写 `result_matrix_long.csv` / `experiment_registry.csv` / `claim_boundary_table.csv`。
-- `git diff --check`、`compileall` 通过。
+- 相关测试、`compileall`、`git diff --check` 需在本轮提交前保持通过。
 
 ## 当前代码结构
 
 - `src/chronaris/feature_export/`：标准化融合特征导出、导出 manifest 读取和相关 profile。
 - `src/chronaris/modeling/`：公共建模组件、GPU runtime helper、backbone 与 multitask training。
 - `src/chronaris/evaluation/dingxin/`：鼎新真实数据弱监督任务、组件消融、第三方模型对比和任务头校准。
+- `src/chronaris/evaluation/fusion_stream_structure/`：E3 融合表示流结构评价，包含合同、Dingxin feature frame 重组、预处理、ClaSP/CLaP 与 STUMPY fallback、结构指标和报告写出。
 - `src/chronaris/evaluation/public_datasets/`：公开 UAB/NASA 数据适配、公开模型对比、公开融合校准和公开消融。
 - `src/chronaris/evidence/`：证据矩阵、指标校准、论文协议快照、图表材料、support、rotation audit 和 evidence runner。
 - `src/chronaris/runtime/` 与 `src/chronaris/serving/`：运行时服务、schema contract 和 replay。
@@ -34,6 +36,7 @@
 - `scripts/modeling/train_backbone.py`
 - `scripts/modeling/train_multitask.py`
 - `scripts/evaluation/dingxin/*.py`
+- `scripts/evaluation/fusion_stream_structure/run_fusion_stream_structure_benchmark.py`
 - `scripts/evaluation/public_datasets/*.py`
 - `scripts/evidence/*.py`
 - `scripts/runtime/*.py`
@@ -50,6 +53,9 @@
 
 主要入口：
 
+- E3 synthetic no-training 执行：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/`
+- E3 小规模 Dingxin dry run：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`
+- E3 开发计划：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`
 - 论文协议快照：`docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/`
 - 指标校准：`docs/artifacts/runs/2026-07-02_metric-calibration/`
 - 选定模型汇总：`docs/artifacts/runs/2026-07-02_selected-model-summary/`
@@ -89,8 +95,10 @@
 5. 入口文档路径存在性检查通过：55 个真实路径，0 缺失。
 6. `git diff --check`、`git lfs status`、`git lfs fsck` 通过。
 
-## 本轮 planning 校验
+## 本轮 E3 execution 校验
 
-- 本轮仅新增/更新 docs，未改 `src/scripts/tests`。
-- `compileall src scripts tests`、`git diff --check` 通过。
-- 未改 confirmed metrics，未回写论文协议快照。
+- 已新增 `tests/evaluation/fusion_stream_structure/`，覆盖合同、预处理、指标和 CLI synthetic 输出。
+- 已完成 synthetic no-training run：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/`。
+- 已完成小规模 Dingxin dry run：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`；`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 为 `method_unavailable`。
+- `claspy` / `stumpy` 当前不可用，本轮结果为 fallback 报告，后续启用真实 evaluator 需先评估依赖兼容性。
+- 未改 confirmed metrics，未回写论文协议快照，未删除历史检索 artifact。

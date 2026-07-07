@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-07-06
+更新时间：2026-07-07
 
 ## 目录定位
 
@@ -10,6 +10,8 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-07_fusion-stream-structure-execution/`：**E3 融合表示流结构评价 synthetic no-training 执行**。包含 `e3_input_long_table.csv`、`e3_metrics_long.csv`、`e3_summary.json`、`evidence_manifest.json`、`report.md` 和 `plots/`。本轮环境未安装 `claspy` / `stumpy`，外部 evaluator 结果为结构化 unavailable；未训练、未改 confirmed metrics。
+- `runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`：**E3 小规模 Dingxin dry run**。从既有 E/F feature export 和变体 feature frame 构造融合表示流，`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 当前无可复用融合表示流并记录为 `method_unavailable`；未训练、未改 confirmed metrics。
 - `runs/2026-07-06_fusion-stream-structure-plan/`：**融合表示流结构评价开发计划（E3）**，是 planning 文档，不是实验结果。包含 `report.md`、`input_contract.md`、`metric_contract.md`、`implementation_plan.md`、`acceptance_checklist.md`、`evidence_manifest.json`。本轮未编码、未训练、未改 confirmed metrics；后续编码任务需等待人工 review 本计划后再执行。
 - `runs/2026-07-03_thesis-protocol-snapshot/`：论文协议快照，包含 `experiment_registry.csv`、`result_matrix_long.csv`、`result_matrix_summary.csv`、`claim_boundary_table.csv`、`thesis_protocol_summary.json` 和 `report.md`。
 - `runs/2026-07-02_metric-calibration/`：指标校准，保留分类任务校准、公开路线校准、检索任务沿用边界和 GPU/runtime 记录。
@@ -69,7 +71,7 @@
 - 公开 UAB/NASA 结果必须写成公开数据适配、校准或上下文构造第二输入流证据。
 - 鼎新结果必须写成鼎新真实数据弱监督任务证据，不写成人工专家真值。
 - LLM preprocessing 只写成字段语义归一、规则复核、semantic hints、runtime explanation 和 pending human review packet。
-- E3（融合表示流结构评价）结果单独成表，`evidence_quadrant = fusion_stream_structure`，是无监督结构诊断，不与 T1/T2/T3 confirmed metrics 混算，也不替代 T1/T2；T3 仅叙事降级，artifact 不删除。
+- E3（融合表示流结构评价）结果单独成表，`evidence_quadrant = fusion_stream_structure`，是无监督结构诊断，不与分类、回归和历史检索 confirmed metrics 混算，也不替代分类任务和回归任务；历史检索任务仅叙事降级，artifact 不删除。
 
 ## 清理记录
 

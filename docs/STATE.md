@@ -1,16 +1,16 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-06
+更新时间：2026-07-07
 
 ## 一句话状态
 
-命名迁移已完成。本轮新增“融合表示流结构评价（E3）”开发计划（`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`），只产出计划文档：未编码、未训练、未改 confirmed metrics。后续编码需人工 review 本计划后再执行。
+“融合表示流结构评价（E3）”第一批编码已完成：新增独立评价层、CLI、测试和 no-training dry run。`claspy` / `stumpy` 当前环境未安装，本轮按 gated import fallback 生成结构化 unavailable 报告；未训练、未改 confirmed metrics、未回写论文协议快照。
 
 ## 当前入口
 
-- 代码：`src/chronaris/feature_export/`、`src/chronaris/modeling/`、`src/chronaris/evaluation/dingxin/`、`src/chronaris/evaluation/public_datasets/`、`src/chronaris/evidence/`、`src/chronaris/runtime/`、`src/chronaris/llm_preprocessing/`。
-- 脚本：`scripts/feature_export/`、`scripts/modeling/`、`scripts/evaluation/dingxin/`、`scripts/evaluation/public_datasets/`、`scripts/evidence/`、`scripts/runtime/`、`scripts/llm_preprocessing/`。
-- 测试：`tests/feature_export/`、`tests/modeling/`、`tests/evaluation/dingxin/`、`tests/evaluation/public_datasets/`、`tests/evidence/`、`tests/runtime/`、`tests/llm_preprocessing/`。
+- 代码：`src/chronaris/feature_export/`、`src/chronaris/modeling/`、`src/chronaris/evaluation/dingxin/`、`src/chronaris/evaluation/fusion_stream_structure/`、`src/chronaris/evaluation/public_datasets/`、`src/chronaris/evidence/`、`src/chronaris/runtime/`、`src/chronaris/llm_preprocessing/`。
+- 脚本：`scripts/feature_export/`、`scripts/modeling/`、`scripts/evaluation/dingxin/`、`scripts/evaluation/fusion_stream_structure/`、`scripts/evaluation/public_datasets/`、`scripts/evidence/`、`scripts/runtime/`、`scripts/llm_preprocessing/`。
+- 测试：`tests/feature_export/`、`tests/modeling/`、`tests/evaluation/dingxin/`、`tests/evaluation/fusion_stream_structure/`、`tests/evaluation/public_datasets/`、`tests/evidence/`、`tests/runtime/`、`tests/llm_preprocessing/`。
 - 产物：`docs/artifacts/runs/`，当前协议入口为 `docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/`。
 
 历史阶段编号目录和旧报告入口已经移入 `docs/artifacts/archive/`；迁移表见 `docs/maintenance/2026-07-05_name-migration-map.md`。
@@ -29,10 +29,11 @@
 - 已将历史阶段编号报告、旧资产目录和兼容 symlink 迁入 `docs/artifacts/archive/`。
 - 已补充 `docs/artifacts/README.md` 和迁移记录。
 - 已完成验证：`compileall`、全量 `pytest -q`、活动路径/文本命名审计、artifact manifest/resume command 旧路径审计、入口文档路径存在性检查、`git diff --check`、`git lfs status`、`git lfs fsck`。
+- 已完成 E3 第一批实现与验证：合同/加载/预处理、ClaSP/CLaP fallback、STUMPY fallback、结构指标、报告、CLI、synthetic no-training run 和小规模 Dingxin dry run。
 
 ## 后续队列
 
-1. 人工 review `docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/` 计划；通过后按 `implementation_plan.md` 阶段执行 E3 编码（contracts→clasp→stumpy→CLI→可选 ticc）。
-2. E3 编码必须遵守：只在新 run root 产出、外部库 gated import + fallback、不回写论文协议快照、不与 T1/T2/T3 confirmed metrics 混算、不删 T3 artifact。
-3. 后续如继续实验，只在新命名入口下新增 run root，不恢复旧阶段编号入口。
+1. 如需启用真实 ClaSP/CLaP 和 Matrix Profile 结果，先评估并安装 `claspy` / `stumpy`，再在新 run root 或本轮 execution root 的清晰子路径中复跑；不得为结果好看调参刷分。
+2. 小规模 Dingxin dry run 当前只发现 `chronaris` 与 `naive_time_sync` 有可复用融合表示流；`mult` / `contiformer` 未训练补齐，已按 `method_unavailable` 记录。
+3. E3 后续实验仍必须只在新 run root 产出，不回写论文协议快照，不与分类/回归/历史检索 confirmed metrics 混算，不删除历史检索 artifact。
 4. 可另起任务处理仿真压力测试、检索任务提升或论文材料化工作。

@@ -1,0 +1,37 @@
+{
+  "metric_row_count": 46,
+  "completed_metric_row_count": 0,
+  "unavailable_metric_row_count": 46,
+  "training_invoked": false,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "run_id": "2026-07-07_fusion-stream-structure-dingxin-dry-run",
+  "available_methods": [
+    "chronaris",
+    "naive_time_sync"
+  ],
+  "unavailable_methods": [
+    {
+      "method_name": "mult",
+      "status": "method_unavailable",
+      "reason": "no_reusable_fusion_feature_frame"
+    },
+    {
+      "method_name": "contiformer",
+      "status": "method_unavailable",
+      "reason": "no_reusable_fusion_feature_frame"
+    }
+  ],
+  "external_libraries": {
+    "claspy": {
+      "status": "unavailable",
+      "error": "ModuleNotFoundError(\"No module named 'claspy'\")"
+    },
+    "stumpy": {
+      "status": "unavailable",
+      "error": "ModuleNotFoundError(\"No module named 'stumpy'\")"
+    }
+  },
+  "input_long_table": null,
+  "plot_count": 12
+}

@@ -1,0 +1,28 @@
+{
+  "metric_row_count": 92,
+  "completed_metric_row_count": 0,
+  "unavailable_metric_row_count": 92,
+  "training_invoked": false,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "run_id": "2026-07-07_fusion-stream-structure-execution",
+  "available_methods": [
+    "chronaris",
+    "contiformer",
+    "mult",
+    "naive_time_sync"
+  ],
+  "unavailable_methods": [],
+  "external_libraries": {
+    "claspy": {
+      "status": "unavailable",
+      "error": "ModuleNotFoundError(\"No module named 'claspy'\")"
+    },
+    "stumpy": {
+      "status": "unavailable",
+      "error": "ModuleNotFoundError(\"No module named 'stumpy'\")"
+    }
+  },
+  "input_long_table": "docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/e3_input_long_table.csv",
+  "plot_count": 24
+}
