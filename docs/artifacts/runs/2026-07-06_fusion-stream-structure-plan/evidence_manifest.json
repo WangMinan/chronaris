@@ -1,0 +1,73 @@
+{
+  "run_id": "2026-07-06_fusion-stream-structure-plan",
+  "run_type": "development_plan",
+  "is_experiment_result": false,
+  "training_invoked": false,
+  "metrics_changed": false,
+  "code_implemented": false,
+  "external_code_vendored": false,
+  "pyproject_modified": false,
+  "summary": "融合表示流结构评价 (fusion_stream_structure evaluation, E3) 开发计划。本轮只产出计划文档与索引更新，未编码、未训练、未改 confirmed metrics。",
+  "read_key_documents": [
+    "docs/STATE.md",
+    "docs/implementation/TASKS.md",
+    "docs/artifacts/ARTIFACTS.md",
+    "docs/artifacts/README.md",
+    "docs/requirements/SPEC.md",
+    "docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/report.md",
+    "docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/experiment_registry.csv",
+    "docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/result_matrix_long.csv"
+  ],
+  "read_key_code_entries": [
+    "src/chronaris/feature_export/ (export.py, export_helpers.py, bundle.py, profile.py)",
+    "src/chronaris/evaluation/dingxin/pipelines/ (benchmark_data.py, benchmark_models.py, thirdparty_comparison.py, feature_utils.py)",
+    "scripts/evaluation/dingxin/ (run_benchmark.py, run_private_thirdparty_comparison.py, run_task_head_optimization.py, run_leakage_safe_ablation.py)",
+    "tests/evaluation/dingxin/ (test_thirdparty_comparison.py 及其它)",
+    "scripts/feature_export/run_export.py",
+    "pyproject.toml"
+  ],
+  "read_external_repositories": [
+    {
+      "name": "ClaSPy / ClaSP / CLaP",
+      "url": "https://github.com/ermshaua/claspy",
+      "role": "evaluator (state segmentation + state detection)",
+      "citation": "Ermshaus et al., ClaSP (DMKD 2023); ClaSS (PVLDB 2024); CLaP (PVLDB 2025)"
+    },
+    {
+      "name": "STUMPY / Matrix Profile",
+      "url": "https://github.com/stumpy-dev/stumpy",
+      "role": "evaluator (motif, discord, FLUSS semantic segmentation, snippets)",
+      "citation": "Law 2019, JOSS 4(39) 1504; Matrix Profile series (MP I/II/VI/VIII/XII)"
+    }
+  ],
+  "new_plan_documents": [
+    "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/report.md",
+    "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/input_contract.md",
+    "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/metric_contract.md",
+    "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/implementation_plan.md",
+    "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/acceptance_checklist.md",
+    "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/evidence_manifest.json"
+  ],
+  "depends_on_existing_artifacts": [
+    "docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/ (论文协议快照，E3 不回写)",
+    "docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/ (method 变体与 T1/T2/T3 既有口径)",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/",
+    "docs/artifacts/runs/2026-04-27_feature-export-closure/"
+  ],
+  "relationship_to_existing_tasks": {
+    "T1_maneuver_intensity_class": "保留，任务可用性评价，E3 不替代",
+    "T2_next_window_physiology_response": "保留，任务可用性评价，E3 不替代",
+    "T3_paired_pilot_window_retrieval": "叙事降级为历史检索诊断/片段级复盘前置参考；artifact 不删除",
+    "E3_fusion_stream_structure": "本轮新增的规划层，无监督结构诊断"
+  },
+  "not_done_this_round": [
+    "未创建 src/scripts/tests 任何实现文件或空占位",
+    "未安装 claspy/stumpy/ticc",
+    "未修改 pyproject.toml 或 requirements",
+    "未启动训练、未重跑任何评价",
+    "未改任何 confirmed metrics 或 claim boundary",
+    "未把外部仓库源码 vendor 进 chronaris"
+  ],
+  "next_handoff_entry": "docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/implementation_plan.md"
+}
