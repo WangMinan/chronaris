@@ -1,0 +1,2108 @@
+{
+  "summary": {
+    "run_id": "2026-07-07_fusion-stream-thirdparty-source-audit",
+    "generated_at_utc": "2026-07-07T14:47:45.174447Z",
+    "branch": "implement/fusion-stream-structure-20260707",
+    "commit": "ba32a2fa07c6ebd0071cbf575b61b255b3af302c",
+    "decision": "C. no_reusable_sources",
+    "found_reusable_fusion_stream": false,
+    "found_dingxin_mult_contiformer_checkpoint": false,
+    "adapter_implemented": false,
+    "four_method_e3_run_executed": false,
+    "training_invoked": false,
+    "confirmed_metrics_changed": false,
+    "thesis_protocol_snapshot_modified": false,
+    "t3_artifact_deleted": false,
+    "uses_stage_or_final_naming": false,
+    "inventory_row_count": 214,
+    "inventory_status_counts": {
+      "no_reusable_source_found": 3,
+      "not_direct_fusion_stream": 127,
+      "not_e3_dingxin_thirdparty_checkpoint": 15,
+      "prediction_only_not_valid_fusion_stream": 52,
+      "raw_or_prepared_sequence_not_model_representation": 11,
+      "scalar_summary_or_report_only": 6
+    },
+    "inventory_kind_counts": {
+      "checkpoint_candidate": 15,
+      "method_named_report_or_summary": 127,
+      "no_candidate_files": 3,
+      "prediction_table_candidate": 52,
+      "representation_named_candidate": 6,
+      "tensor_cache_candidate": 11
+    },
+    "root_summaries": [
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+        "exists": true,
+        "file_count": 43,
+        "candidate_count": 0,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 0,
+        "prediction_count": 0,
+        "representation_named_count": 0,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary",
+        "exists": true,
+        "file_count": 16,
+        "candidate_count": 0,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 0,
+        "prediction_count": 0,
+        "representation_named_count": 0,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-reevaluation",
+        "exists": true,
+        "file_count": 20,
+        "candidate_count": 0,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 0,
+        "prediction_count": 0,
+        "representation_named_count": 0,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+        "exists": true,
+        "file_count": 20,
+        "candidate_count": 15,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 1,
+        "prediction_count": 0,
+        "representation_named_count": 2,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+        "exists": true,
+        "file_count": 78,
+        "candidate_count": 72,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 0,
+        "prediction_count": 0,
+        "representation_named_count": 2,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+        "exists": true,
+        "file_count": 44,
+        "candidate_count": 42,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 0,
+        "prediction_count": 0,
+        "representation_named_count": 2,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+        "exists": true,
+        "file_count": 1345,
+        "candidate_count": 15,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 10,
+        "prediction_count": 0,
+        "representation_named_count": 0,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+        "exists": true,
+        "file_count": 15,
+        "candidate_count": 15,
+        "checkpoint_count": 15,
+        "tensor_cache_count": 0,
+        "prediction_count": 0,
+        "representation_named_count": 0,
+        "reusable_fusion_stream_count": 0
+      },
+      {
+        "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+        "exists": true,
+        "file_count": 52,
+        "candidate_count": 52,
+        "checkpoint_count": 0,
+        "tensor_cache_count": 0,
+        "prediction_count": 52,
+        "representation_named_count": 0,
+        "reusable_fusion_stream_count": 0
+      }
+    ],
+    "manual_findings": [
+      {
+        "finding_id": "dingxin_thirdparty_root_current",
+        "source": "docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/",
+        "finding": "current repo root keeps summary, metrics, manifests, logs, figures, split/task manifests, and sequence schema; no .pt/.pth/.npz/.parquet or fold_predictions.csv remains",
+        "e3_implication": "no reusable MulT/ContiFormer representation or checkpoint in current repo artifact root"
+      },
+      {
+        "finding_id": "deep_model_code_api",
+        "source": "src/chronaris/modeling/common/deep_models.py; src/chronaris/evaluation/dingxin/pipelines/thirdparty_comparison.py",
+        "finding": "MulT and ContiFormer wrappers return pooled_embedding and sequence_embedding, and the third-party comparison code can call _embed_all after training",
+        "e3_implication": "an export adapter is feasible only if a matching trained checkpoint and fold/source metadata exist"
+      },
+      {
+        "finding_id": "no_feature_frame_mapping",
+        "source": "src/chronaris/evaluation/dingxin/pipelines/benchmark_data.py; thirdparty_comparison.py FEATURE_MODEL_SOURCES",
+        "finding": "build_variant_feature_frames creates naive_sync, E/F projection, G variants, and optimized Chronaris frames; FEATURE_MODEL_SOURCES maps chronaris_full/naive_time_sync/classical_baseline only",
+        "e3_implication": "current E3 Dingxin loader cannot discover MulT/ContiFormer feature_values without a separate representation export"
+      },
+      {
+        "finding_id": "deep_real_scalar_summary",
+        "source": "docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/.../{mult,contiformer}/sample_summary.csv",
+        "finding": "sample summaries contain sample_id, view_id, sortie_id, pilot_id, diagnostic verdict, embedding_norm, attention_entropy, top_event_concentration, and event_mask_interference only",
+        "e3_implication": "scalar diagnostics are not a fusion_feature_* vector stream and should not enter E3 main input"
+      },
+      {
+        "finding_id": "sequence_bundle_raw_inputs",
+        "source": "docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/feature_export_case_sequences/sequence_bundle.npz",
+        "finding": "sequence bundle contains raw/prepared physiology and vehicle arrays plus masks, time_axis, labels, metadata, and diagnostics",
+        "e3_implication": "it is an input bundle, not trained MulT/ContiFormer output; using it would require training or a checkpoint"
+      },
+      {
+        "finding_id": "external_prediction_backup",
+        "source": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/",
+        "finding": "external backup has fold_predictions.csv files, including Dingxin third-party predictions and older deep-real scalar diagnostics",
+        "e3_implication": "predictions/ranks or scalar diagnostics are explicitly invalid as E3 fusion streams"
+      },
+      {
+        "finding_id": "external_checkpoint_backup",
+        "source": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/",
+        "finding": "external checkpoint backup has alignment and multitask checkpoints but no Dingxin MulT/ContiFormer third-party checkpoint candidate",
+        "e3_implication": "no found checkpoint that would support no-training MulT/ContiFormer E3 export"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+      "path": "",
+      "kind": "no_candidate_files",
+      "bytes": 0,
+      "method_hint": "",
+      "candidate_status": "no_reusable_source_found",
+      "notes": "file_count=43; no checkpoint/cache/embedding/prediction candidates"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary",
+      "path": "",
+      "kind": "no_candidate_files",
+      "bytes": 0,
+      "method_hint": "",
+      "candidate_status": "no_reusable_source_found",
+      "notes": "file_count=16; no checkpoint/cache/embedding/prediction candidates"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-reevaluation",
+      "path": "",
+      "kind": "no_candidate_files",
+      "bytes": 0,
+      "method_hint": "",
+      "candidate_status": "no_reusable_source_found",
+      "notes": "file_count=20; no checkpoint/cache/embedding/prediction candidates"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1508,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3343,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/pilot_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 299,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/plots/event_mask_interference.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 61114,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/plots/view_representation_stability.png",
+      "kind": "representation_named_candidate",
+      "bytes": 56908,
+      "method_hint": "contiformer",
+      "candidate_status": "scalar_summary_or_report_only",
+      "notes": "name mentions representation but inspected files are summaries/plots, not vector tables"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/sample_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 6565,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/contiformer/view_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 698,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1494,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3292,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/pilot_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 298,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/plots/event_mask_interference.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 58466,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/plots/view_representation_stability.png",
+      "kind": "representation_named_candidate",
+      "bytes": 55726,
+      "method_hint": "mult",
+      "candidate_status": "scalar_summary_or_report_only",
+      "notes": "name mentions representation but inspected files are summaries/plots, not vector tables"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/sample_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 6582,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/comparison/feature_export_case/mult/view_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 697,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/feature_export_case_sequences/sequence_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 23135,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1517,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3399,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/pilot_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 300,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/plots/event_mask_interference.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 59857,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/plots/view_representation_stability.png",
+      "kind": "representation_named_candidate",
+      "bytes": 57185,
+      "method_hint": "contiformer",
+      "candidate_status": "scalar_summary_or_report_only",
+      "notes": "name mentions representation but inspected files are summaries/plots, not vector tables"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/sample_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 6554,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/contiformer/view_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 699,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1503,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3346,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/pilot_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 299,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/plots/event_mask_interference.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 61301,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/plots/view_representation_stability.png",
+      "kind": "representation_named_candidate",
+      "bytes": 56010,
+      "method_hint": "mult",
+      "candidate_status": "scalar_summary_or_report_only",
+      "notes": "name mentions representation but inspected files are summaries/plots, not vector tables"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/sample_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 6555,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/feature_export_case/mult/view_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 696,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 830,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3758,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/contiformer/plots/objective_benchmark_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 25054,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/contiformer/plots/objective_combined_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 25198,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/contiformer/plots/objective_loft_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 25220,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/contiformer/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 45396,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 816,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3709,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/mult/plots/objective_benchmark_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 23874,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/mult/plots/objective_combined_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 23872,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/mult/plots/objective_loft_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 23906,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/nasa_csm/mult/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 44111,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1167,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4189,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 25504,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 27146,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 35636,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29507,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 27620,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/contiformer/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 30674,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1164,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4211,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 24114,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 25707,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 34844,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 28163,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26933,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/comparison_probe_all/uab_workload_dataset/mult/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 30045,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/nasa_mult_probe/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 804,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/nasa_mult_probe/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3649,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/nasa_mult_probe/plots/objective_benchmark_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 23874,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/nasa_mult_probe/plots/objective_combined_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 23872,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/nasa_mult_probe/plots/objective_loft_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 23906,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/nasa_mult_probe/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 44111,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1139,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4011,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 24114,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26783,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 34511,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 28330,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 32226,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29324,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1144,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4069,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 24114,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 25590,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 34698,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 27867,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 27051,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_fast/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 30119,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1146,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4047,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 24114,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26937,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 34350,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26042,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 28353,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared/probes/uab_mult_probe_tiny/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29842,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1513,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3279,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/pilot_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 300,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/plots/event_mask_interference.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 59857,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/plots/view_representation_stability.png",
+      "kind": "representation_named_candidate",
+      "bytes": 57185,
+      "method_hint": "contiformer",
+      "candidate_status": "scalar_summary_or_report_only",
+      "notes": "name mentions representation but inspected files are summaries/plots, not vector tables"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/sample_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 6554,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/contiformer/view_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 699,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1499,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3226,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/pilot_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 299,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/plots/event_mask_interference.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 61301,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/plots/view_representation_stability.png",
+      "kind": "representation_named_candidate",
+      "bytes": 56010,
+      "method_hint": "mult",
+      "candidate_status": "scalar_summary_or_report_only",
+      "notes": "name mentions representation but inspected files are summaries/plots, not vector tables"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/sample_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 6555,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/feature_export_case/mult/view_summary.csv",
+      "kind": "method_named_report_or_summary",
+      "bytes": 696,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 833,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3725,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/contiformer/plots/objective_benchmark_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 28793,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/contiformer/plots/objective_combined_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26378,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/contiformer/plots/objective_loft_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26143,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/contiformer/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 44235,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 819,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3627,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/mult/plots/objective_benchmark_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 27872,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/mult/plots/objective_combined_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 24442,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/mult/plots/objective_loft_only_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 24630,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/nasa_csm/mult/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 43513,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1183,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4099,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 26206,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 27586,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 36285,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29180,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 34344,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/contiformer/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29337,
+      "method_hint": "contiformer",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/deep_baseline_report.md",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1169,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/deep_baseline_summary.json",
+      "kind": "method_named_report_or_summary",
+      "bytes": 4141,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/plots/objective_heat_the_chair_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29034,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/plots/objective_n_back_confusion_matrix.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 35092,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/plots/objective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 34339,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/plots/subjective_heat_the_chair_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 39983,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/plots/subjective_n_back_regression.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 41070,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison/uab_workload_dataset/mult/plots/subjective_primary_metrics.png",
+      "kind": "method_named_report_or_summary",
+      "bytes": 29923,
+      "method_hint": "mult",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-04-27_feature-export-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 76436,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-04-27_feature-export-closure/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 76436,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-04-27_feature-export-closure/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 76436,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/feature_export_case_sequences/sequence_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 23135,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 239272,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 239272,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 239124,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 239272,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 239272,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz",
+      "kind": "tensor_cache_candidate",
+      "bytes": 239124,
+      "method_hint": "",
+      "candidate_status": "raw_or_prepared_sequence_not_model_representation",
+      "notes": "sequence/raw tensor cache, not trained MulT/ContiFormer representation"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-nasa-round1/public_opt_feature_frame.parquet",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3005486,
+      "method_hint": "",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-uab/public_opt_feature_frame.parquet",
+      "kind": "method_named_report_or_summary",
+      "bytes": 1713193,
+      "method_hint": "",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-06_public-opt-uab-torch/public_opt_torch_feature_frame.parquet",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3241575,
+      "method_hint": "",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-heat-specialist-r1/public_opt_torch_feature_frame.parquet",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3241575,
+      "method_hint": "",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+      "path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-08_public-opt-uab-robust-prior-r1/public_opt_feature_frame.parquet",
+      "kind": "method_named_report_or_summary",
+      "bytes": 3241575,
+      "method_hint": "",
+      "candidate_status": "not_direct_fusion_stream",
+      "notes": "method-named report, figure, or scalar summary"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-none/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 180299,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/alignment-preview-stage-e-closure-2026-04-21-zscore_train/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 180363,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/alignment-preview-stage-f-closure-2026-04-22-e-baseline/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 181451,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/alignment-preview-stage-f-closure-2026-04-22-stage-f-full/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 181451,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-f-baseline/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 181707,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/alignment-preview-stage-g-min-closure-2026-04-22-stage-g-min/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 181707,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 1766145,
+      "method_hint": "mult",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 1767681,
+      "method_hint": "mult",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/runs/20260607T-stage-i-evidence-closure-r2-multitask-02-minimal-cw0p00-tlw0p50-lag3/multitask_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 1767681,
+      "method_hint": "mult",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-01-minimal-cw0p00-tlw0p50-lagnone/multitask_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 1767681,
+      "method_hint": "mult",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r1/runs/20260613T-stage-i-p11-live-influx-r1-02-minimal-cw0p00-tlw0p50-lag3/multitask_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 1767681,
+      "method_hint": "mult",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/stage_i/assets/stage-i-rigid-body-full-20260607T-stage-i-rigid-body-r2/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 182805,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/stage_i/assets/stage-i-rigid-body-minimal-20260607T-stage-i-rigid-body-r2/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 182805,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 182805,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/docs/artifacts/stage_i/assets/stage-i-semantic-event-20260607T-stage-i-semantic-event-r1/alignment_model_checkpoint.pt",
+      "kind": "checkpoint_candidate",
+      "bytes": 182805,
+      "method_hint": "",
+      "candidate_status": "not_e3_dingxin_thirdparty_checkpoint",
+      "notes": "not a Dingxin MulT/ContiFormer third-party comparison checkpoint"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260429T000000Z-stage-i-phase0-1-uab/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 53808,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/nasa_csm/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 645031,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/nasa_csm/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 605691,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/stage_h_case/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 6554,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/stage_h_case/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 6555,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 9969468,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T-full-loso-deep-comparison/uab_workload_dataset/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 9505142,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 6565,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T000000Z-stage-i-deep-real-sortie/comparison/stage_h_case/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 6582,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 43134,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/nasa_csm/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 40516,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 6554,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/stage_h_case/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 6555,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 656963,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/comparison_probe_all/uab_workload_dataset/mult/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 626279,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/probes/nasa_mult_probe/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 40516,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/probes/uab_mult_probe/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 615910,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/probes/uab_mult_probe_fast/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 615144,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260501T043348Z-stage-i-deep-comparison/probes/uab_mult_probe_tiny/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 616007,
+      "method_hint": "mult",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260506T-nasa-public-fusion-confirm/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260506T-nasa-public-fusion-cuda-smoke/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 47622,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260506T-nasa-public-fusion-smoke/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 47622,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260506T-uab-public-fusion-confirm/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 1415513,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i/20260506T-uab-public-fusion-cuda-smoke/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 709738,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/20260509T031000Z-stage-i-uab-fairness-contiformer/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 9969468,
+      "method_hint": "contiformer",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/20260509T065500Z-stage-i-public-fusion-nasa-full-confirm/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 712471,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T030000Z-stage-i-public-fusion-nasa-balanced-e10/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_midterm_runtime/public_fusion_screen/20260509T063500Z-stage-i-public-fusion-nasa-balanced-e10-r2/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_private_thirdparty_comparison/20260702T-stage-i-private-thirdparty-comparison-gpuopt-r1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 1578063,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 712471,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/confirm/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 12528339,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/gpu_optimization/predictions.gpuopt.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 400251,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/nasa_csm/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 89642,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/uab_workload_dataset/fusion_h64_l2_hd4_do0p1_bias0p25_lag16_lr0p001_bs128_smooth_l1_td1_zscore_train_wd1em05__seed42/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 1640716,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/screen/uab_workload_dataset/fusion_h96_l2_hd4_do0p2_bias0p5_lag8_lr0p001_bs128_mse_td1_none_wd0__seed42/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 1484259,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/nasa_csm/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 47622,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/nasa_csm/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 47622,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/nasa_csm/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 47622,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/uab_workload_dataset/fusion_h64_l2_hd4_do01_bias025_lag16_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 711115,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/uab_workload_dataset/fusion_h64_l2_hd4_do02_bias025_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 711397,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_fusion_screen/20260506T-stage-i-public-fusion-screen-round2/uab_workload_dataset/fusion_h96_l2_hd4_do02_bias050_lag8_norm1/fold_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 710908,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_opt/20260506T121000Z-stage-i-public-opt-uab/public_opt_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 13025776,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_opt/20260506T161500Z-stage-i-public-opt-nasa-round1/public_opt_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 3230086,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_opt/20260508T125651Z-stage-i-public-opt-uab-robust-prior-r1/public_opt_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 8068450,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch/public_opt_torch_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 7235394,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_opt_torch/20260506T165558Z-stage-i-public-opt-uab-torch-gpu/public_opt_torch_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 7561931,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    },
+    {
+      "audit_root": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702",
+      "path": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/docs/artifacts/assets/stage_i_public_opt_torch/20260508T090700Z-stage-i-public-opt-uab-heat-specialist-r1/public_opt_torch_predictions.csv",
+      "kind": "prediction_table_candidate",
+      "bytes": 1542553,
+      "method_hint": "",
+      "candidate_status": "prediction_only_not_valid_fusion_stream",
+      "notes": "task predictions/ranks cannot be used as fusion_feature_* stream"
+    }
+  ]
+}

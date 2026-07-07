@@ -1,0 +1,103 @@
+{
+  "run_id": "2026-07-07_fusion-stream-thirdparty-source-audit",
+  "run_type": "fusion_stream_thirdparty_source_audit",
+  "branch": "implement/fusion-stream-structure-20260707",
+  "commit": "ba32a2fa07c6ebd0071cbf575b61b255b3af302c",
+  "training_invoked": false,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "t3_artifact_deleted": false,
+  "uses_stage_or_final_naming": false,
+  "audit_scope": [
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-summary",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-02_selected-model-reevaluation",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_deep-comparison-prepared",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-01_full-loso-deep-comparison",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+    "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702",
+    "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702"
+  ],
+  "decision": "C. no_reusable_sources",
+  "found_reusable_sources": false,
+  "found_checkpoints_need_adapter": false,
+  "no_reusable_sources": true,
+  "adapter_implemented": false,
+  "four_method_e3_run_executed": false,
+  "method_availability_after_audit": {
+    "chronaris": {
+      "status": "available_in_existing_dingxin_e3",
+      "source": "chronaris_opt feature_values"
+    },
+    "naive_time_sync": {
+      "status": "available_in_existing_dingxin_e3",
+      "source": "naive_sync feature_values"
+    },
+    "mult": {
+      "status": "method_unavailable",
+      "reason": "no_reusable_fusion_stream_or_checkpoint"
+    },
+    "contiformer": {
+      "status": "method_unavailable",
+      "reason": "no_reusable_fusion_stream_or_checkpoint"
+    }
+  },
+  "inventory_files": {
+    "source_inventory_csv": "docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/source_inventory.csv",
+    "source_inventory_json": "docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/source_inventory.json"
+  },
+  "manual_findings": [
+    {
+      "finding_id": "dingxin_thirdparty_root_current",
+      "source": "docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/",
+      "finding": "current repo root keeps summary, metrics, manifests, logs, figures, split/task manifests, and sequence schema; no .pt/.pth/.npz/.parquet or fold_predictions.csv remains",
+      "e3_implication": "no reusable MulT/ContiFormer representation or checkpoint in current repo artifact root"
+    },
+    {
+      "finding_id": "deep_model_code_api",
+      "source": "src/chronaris/modeling/common/deep_models.py; src/chronaris/evaluation/dingxin/pipelines/thirdparty_comparison.py",
+      "finding": "MulT and ContiFormer wrappers return pooled_embedding and sequence_embedding, and the third-party comparison code can call _embed_all after training",
+      "e3_implication": "an export adapter is feasible only if a matching trained checkpoint and fold/source metadata exist"
+    },
+    {
+      "finding_id": "no_feature_frame_mapping",
+      "source": "src/chronaris/evaluation/dingxin/pipelines/benchmark_data.py; thirdparty_comparison.py FEATURE_MODEL_SOURCES",
+      "finding": "build_variant_feature_frames creates naive_sync, E/F projection, G variants, and optimized Chronaris frames; FEATURE_MODEL_SOURCES maps chronaris_full/naive_time_sync/classical_baseline only",
+      "e3_implication": "current E3 Dingxin loader cannot discover MulT/ContiFormer feature_values without a separate representation export"
+    },
+    {
+      "finding_id": "deep_real_scalar_summary",
+      "source": "docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/.../{mult,contiformer}/sample_summary.csv",
+      "finding": "sample summaries contain sample_id, view_id, sortie_id, pilot_id, diagnostic verdict, embedding_norm, attention_entropy, top_event_concentration, and event_mask_interference only",
+      "e3_implication": "scalar diagnostics are not a fusion_feature_* vector stream and should not enter E3 main input"
+    },
+    {
+      "finding_id": "sequence_bundle_raw_inputs",
+      "source": "docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/feature_export_case_sequences/sequence_bundle.npz",
+      "finding": "sequence bundle contains raw/prepared physiology and vehicle arrays plus masks, time_axis, labels, metadata, and diagnostics",
+      "e3_implication": "it is an input bundle, not trained MulT/ContiFormer output; using it would require training or a checkpoint"
+    },
+    {
+      "finding_id": "external_prediction_backup",
+      "source": "/home/wangminan/projects/chronaris-local-artifacts/dense-predictions-pruned-20260702/",
+      "finding": "external backup has fold_predictions.csv files, including Dingxin third-party predictions and older deep-real scalar diagnostics",
+      "e3_implication": "predictions/ranks or scalar diagnostics are explicitly invalid as E3 fusion streams"
+    },
+    {
+      "finding_id": "external_checkpoint_backup",
+      "source": "/home/wangminan/projects/chronaris-local-artifacts/checkpoints-history-20260702/",
+      "finding": "external checkpoint backup has alignment and multitask checkpoints but no Dingxin MulT/ContiFormer third-party checkpoint candidate",
+      "e3_implication": "no found checkpoint that would support no-training MulT/ContiFormer E3 export"
+    }
+  ],
+  "output_files": [
+    "source_inventory.csv",
+    "source_inventory.json",
+    "evidence_manifest.json",
+    "decision.md",
+    "report.md",
+    "next_prompt_for_deep_baseline_export.md"
+  ]
+}

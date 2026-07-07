@@ -4,18 +4,19 @@
 
 ## 当前任务
 
-命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码和第二轮 evaluator validation：新增独立评价层、CLI、测试和 no-training dry run，不训练、不改 confirmed metrics。
+命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码、第二轮 evaluator validation 和第三方来源审计：新增独立评价层、CLI、测试、no-training dry run 与 MulT / ContiFormer source audit，不训练、不改 confirmed metrics。
 
 - 计划入口：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`（report / input_contract / metric_contract / implementation_plan / acceptance_checklist / evidence_manifest）。
 - 执行入口：`src/chronaris/evaluation/fusion_stream_structure/` 与 `scripts/evaluation/fusion_stream_structure/run_fusion_stream_structure_benchmark.py`。
 - 当前 validation 产物入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-evaluator-validation/` 与 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`。
+- 第三方来源审计入口：`docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/`，结论为 `C. no_reusable_sources`。
 - 历史首轮 fallback 产物入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/` 与 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`。
 - 当前环境已安装并验证 `claspy 0.2.8` / `stumpy 1.14.1`；ClaSP 与 STUMPY 真实 evaluator 已启用，CLaP 在短序列上保留结构化 `clap_unavailable`。
 
 验收关注点（本轮 execution）：
 
 - E3 long 表固定 `evidence_quadrant = fusion_stream_structure`，不并入既有 leaderboard。
-- 小规模 Dingxin dry run 只使用既有 feature export 和可复用 `feature_values`；`mult` / `contiformer` 当前无可复用融合表示流，已写 `method_unavailable`，未训练补齐。
+- 小规模 Dingxin dry run 只使用既有 feature export 和可复用 `feature_values`；source audit 确认 `mult` / `contiformer` 当前无可复用融合表示流或可加载 checkpoint，已写 `method_unavailable`，未训练补齐。
 - 未改 confirmed metrics、未回写 `result_matrix_long.csv` / `experiment_registry.csv` / `claim_boundary_table.csv`。
 - 相关测试、`compileall`、`git diff --check` 需在本轮提交前保持通过。
 
@@ -58,6 +59,7 @@
 - E3 小规模 Dingxin dry run：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`
 - E3 synthetic evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-evaluator-validation/`
 - E3 小规模 Dingxin evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`
+- E3 第三方来源审计：`docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/`
 - E3 开发计划：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`
 - 论文协议快照：`docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/`
 - 指标校准：`docs/artifacts/runs/2026-07-02_metric-calibration/`
@@ -103,6 +105,7 @@
 - 已新增 `tests/evaluation/fusion_stream_structure/`，覆盖合同、预处理、指标、CLI synthetic 输出和 optional evaluator wrapper。
 - 已完成 synthetic evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-evaluator-validation/`。四类方法均可用；ClaSP `completed:8`，STUMPY `completed:8`，CLaP `clap_unavailable:8`；`metric rows=108`，`completed=88`，`unavailable=20`。
 - 已完成小规模 Dingxin evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`。`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 为 `method_unavailable`；ClaSP `completed:4`，STUMPY `completed:4`，CLaP `clap_unavailable:4`；`metric rows=54`，`completed=44`，`unavailable=10`。
+- 已完成 MulT / ContiFormer source audit：`docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/`。当前 repo artifact 与本机外置备份中没有可复用融合表示流或 Dingxin 第三方模型 checkpoint；仅发现任务预测、检索 rank、scalar diagnostics、raw sequence bundle 和其他路径 checkpoint，因此不实现 adapter、不运行四方法 Dingxin E3。
 - `claspy 0.2.8` / `stumpy 1.14.1` 已安装并通过 import 与 wrapper smoke test；STUMPY import 由代码设置 `NUMBA_DISABLE_CUDA=1`，避免当前 WSL/CUDA 探测崩溃。
 - 未改 confirmed metrics，未回写论文协议快照，未删除历史检索 artifact。
 - 已验证：`compileall` 通过；`pytest -q tests/evaluation/fusion_stream_structure` 为 `21 passed, 1 warning`；全量 `pytest -q` 为 `234 passed, 8 skipped, 318 warnings`。
