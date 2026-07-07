@@ -1,15 +1,17 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-07
+更新时间：2026-07-08
 
 ## 当前任务
 
-命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码、第二轮 evaluator validation 和第三方来源审计：新增独立评价层、CLI、测试、no-training dry run 与 MulT / ContiFormer source audit，不训练、不改 confirmed metrics。
+命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07/2026-07-08）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码、第二轮 evaluator validation、第三方来源审计和 deep baseline representation export：新增独立评价层、CLI、测试、no-training dry run、MulT / ContiFormer source audit、回归任务 held-out pooled embedding 导出与四方法 Dingxin validation；仅 deep baseline export run 训练 MulT / ContiFormer，不改 confirmed metrics。
 
 - 计划入口：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`（report / input_contract / metric_contract / implementation_plan / acceptance_checklist / evidence_manifest）。
 - 执行入口：`src/chronaris/evaluation/fusion_stream_structure/` 与 `scripts/evaluation/fusion_stream_structure/run_fusion_stream_structure_benchmark.py`。
 - 当前 validation 产物入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-evaluator-validation/` 与 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`。
 - 第三方来源审计入口：`docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/`，结论为 `C. no_reusable_sources`。
+- deep baseline 表示导出入口：`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`，协议为回归任务（`T2_next_window_physiology_response`）+ `leave_one_view_out` + seed17 + `pooled_embedding`；MulT / ContiFormer 均完成 3 folds、各 108 行 OOF embedding。
+- 四方法 Dingxin E3 validation 入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`，方法为 `chronaris` / `naive_time_sync` / `mult` / `contiformer`，本 run `training_invoked=false`。
 - 历史首轮 fallback 产物入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/` 与 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`。
 - 当前环境已安装并验证 `claspy 0.2.8` / `stumpy 1.14.1`；ClaSP 与 STUMPY 真实 evaluator 已启用，CLaP 在短序列上保留结构化 `clap_unavailable`。
 
@@ -17,6 +19,8 @@
 
 - E3 long 表固定 `evidence_quadrant = fusion_stream_structure`，不并入既有 leaderboard。
 - 小规模 Dingxin dry run 只使用既有 feature export 和可复用 `feature_values`；source audit 确认 `mult` / `contiformer` 当前无可复用融合表示流或可加载 checkpoint，已写 `method_unavailable`，未训练补齐。
+- deep baseline export run 只训练 MulT / ContiFormer；导出的 `fusion_feature_*` 来自 held-out fold inference 的 `pooled_embedding`，不包含 logits、预测值、rank、embedding norm 或 attention diagnostics。
+- 四方法 Dingxin E3 validation 只消费已导出的表示和既有 `chronaris` / `naive_time_sync` 融合流；该结构评价不写单一 winner，也不替代分类任务和回归任务。
 - 未改 confirmed metrics、未回写 `result_matrix_long.csv` / `experiment_registry.csv` / `claim_boundary_table.csv`。
 - 相关测试、`compileall`、`git diff --check` 需在本轮提交前保持通过。
 
@@ -60,6 +64,8 @@
 - E3 synthetic evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-evaluator-validation/`
 - E3 小规模 Dingxin evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`
 - E3 第三方来源审计：`docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/`
+- E3 deep baseline 表示导出：`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`
+- E3 四方法 Dingxin validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`
 - E3 开发计划：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`
 - 论文协议快照：`docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/`
 - 指标校准：`docs/artifacts/runs/2026-07-02_metric-calibration/`
@@ -106,6 +112,8 @@
 - 已完成 synthetic evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-evaluator-validation/`。四类方法均可用；ClaSP `completed:8`，STUMPY `completed:8`，CLaP `clap_unavailable:8`；`metric rows=108`，`completed=88`，`unavailable=20`。
 - 已完成小规模 Dingxin evaluator validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`。`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 为 `method_unavailable`；ClaSP `completed:4`，STUMPY `completed:4`，CLaP `clap_unavailable:4`；`metric rows=54`，`completed=44`，`unavailable=10`。
 - 已完成 MulT / ContiFormer source audit：`docs/artifacts/runs/2026-07-07_fusion-stream-thirdparty-source-audit/`。当前 repo artifact 与本机外置备份中没有可复用融合表示流或 Dingxin 第三方模型 checkpoint；仅发现任务预测、检索 rank、scalar diagnostics、raw sequence bundle 和其他路径 checkpoint，因此不实现 adapter、不运行四方法 Dingxin E3。
+- 已完成 deep baseline representation export：`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`。`training_invoked=true`；MulT / ContiFormer 各完成 3 个 leave-one-view-out folds、各 108 行 held-out pooled embedding；`deep_baseline_oof_embeddings_long.csv` 和 checkpoint manifest 已写出。
+- 已完成四方法 Dingxin E3 validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`。`training_invoked=false`；四方法各 108 行输入；`metric rows=160`，`completed=124`，`unavailable=36`；ClaSP `completed:12`，STUMPY `completed:12`，CLaP `clap_unavailable:12`。
 - `claspy 0.2.8` / `stumpy 1.14.1` 已安装并通过 import 与 wrapper smoke test；STUMPY import 由代码设置 `NUMBA_DISABLE_CUDA=1`，避免当前 WSL/CUDA 探测崩溃。
 - 未改 confirmed metrics，未回写论文协议快照，未删除历史检索 artifact。
 - 已验证：`compileall` 通过；`pytest -q tests/evaluation/fusion_stream_structure` 为 `21 passed, 1 warning`；全量 `pytest -q` 为 `234 passed, 8 skipped, 318 warnings`。

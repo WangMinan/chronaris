@@ -192,10 +192,12 @@ def write_markdown_report(
         f"- 不可用方法：{unavailable_text}。",
         f"- 外部库状态：claspy={_external_text(external.get('claspy', {}))}；stumpy={_external_text(external.get('stumpy', {}))}。",
         f"- evaluator 状态：ClaSP={_status_count_text(evaluator_counts.get('clasp', {}))}；CLaP={_status_count_text(evaluator_counts.get('clap', {}))}；STUMPY={_status_count_text(evaluator_counts.get('stumpy', {}))}。",
-        "",
-        "## 输出文件",
-        "",
     ]
+    if manifest.get("source_training_run"):
+        lines.append(f"- MulT / ContiFormer embedding 来源：`{manifest.get('source_training_run')}`。")
+    if manifest.get("representation_family"):
+        lines.append(f"- representation_family：`{manifest.get('representation_family')}`。")
+    lines.extend(["", "## 输出文件", ""])
     lines.extend(f"- `{item}`" for item in output_files)
     lines.extend([
         "",
@@ -203,7 +205,7 @@ def write_markdown_report(
         "",
         "本轮输出只进入 E3 专属 long 表，`evidence_quadrant = fusion_stream_structure`。Composite score 只作为固定权重汇总展示，不作为 winner 结论。若外部库缺失、短序列状态检测不足或方法无可复用融合流，对应指标保留为 unavailable，不静默删除。",
         "",
-        "合成数据 run 只证明工程链路和 evaluator API 可执行；Dingxin 小规模 dry run 只证明现有可用融合流可以进入 E3 结构诊断流程，不能直接写成正式论文结论。",
+        "若本 run 消费 deep baseline OOF embedding，该 embedding 仅表示 T2 任务训练后的模型层 pooled representation；E3 不替代分类任务和回归任务，也不给单一 winner。结果是否可用于论文必须由后续人工 review 决定。",
         "",
         "## 当前摘要",
         "",

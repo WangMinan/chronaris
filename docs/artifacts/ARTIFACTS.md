@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-07-07
+更新时间：2026-07-08
 
 ## 目录定位
 
@@ -10,7 +10,9 @@
 
 ## 当前核心 runs
 
-- `runs/2026-07-07_fusion-stream-thirdparty-source-audit/`：**E3 第三方来源审计**。审计当前 repo artifact 与本机外置备份后，结论为 `C. no_reusable_sources`：没有找到 Dingxin MulT / ContiFormer 可复用融合表示流或可加载 checkpoint；旧 deep baseline 仅保留 scalar diagnostics / raw sequence bundle，外置备份仅含任务预测、检索 rank 或其他路径 checkpoint。当前 Dingxin E3 保持 `chronaris` / `naive_time_sync` two-method validation，`mult` / `contiformer` 继续记录 `method_unavailable`；未训练、未改 confirmed metrics、未回写论文协议快照。
+- `runs/2026-07-07_deep-baseline-representation-export/`：**E3 deep baseline 表示导出**。本 run 是本轮唯一训练 run，`training_invoked=true`；协议为回归任务（`T2_next_window_physiology_response`）+ `leave_one_view_out` + seed17 + `pooled_embedding`；MulT 与 ContiFormer 均完成 3 个 held-out folds，各导出 108 行 OOF embedding；包含 `deep_baseline_oof_embeddings_long.csv`、`checkpoint_manifest.csv/json`、`representation_manifest.json`、`training_curves.csv`、`fold_status.csv`、`report.md` 和 `evidence_manifest.json`；未改 confirmed metrics、未回写论文协议快照。
+- `runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`：**E3 四方法 Dingxin validation**。消费既有 `chronaris` / `naive_time_sync` 融合流和 deep baseline export 的 MulT / ContiFormer held-out pooled embedding；本 run `training_invoked=false`；四方法各 108 行输入，`metric rows=160`，`completed=124`，`unavailable=36`；ClaSP `completed:12`，STUMPY `completed:12`，CLaP `clap_unavailable:12`；该结构评价不替代分类任务和回归任务，不给单一 winner。
+- `runs/2026-07-07_fusion-stream-thirdparty-source-audit/`：**E3 第三方来源审计**。审计当前 repo artifact 与本机外置备份后，结论为 `C. no_reusable_sources`：没有找到 Dingxin MulT / ContiFormer 可复用融合表示流或可加载 checkpoint；旧 deep baseline 仅保留 scalar diagnostics / raw sequence bundle，外置备份仅含任务预测、检索 rank 或其他路径 checkpoint。该审计 run 当时未训练，Dingxin E3 当时保持 `chronaris` / `naive_time_sync` two-method validation，`mult` / `contiformer` 记录 `method_unavailable`；后续补齐见 `runs/2026-07-07_deep-baseline-representation-export/`。
 - `runs/2026-07-07_fusion-stream-structure-evaluator-validation/`：**E3 synthetic evaluator validation**。当前环境已安装 `claspy 0.2.8` / `stumpy 1.14.1`；四类方法均可用，ClaSP `completed:8`，STUMPY `completed:8`，CLaP 因短序列状态标签不足记录 `clap_unavailable:8`；`metric rows=108`，`completed=88`，`unavailable=20`；未训练、未改 confirmed metrics。
 - `runs/2026-07-07_fusion-stream-structure-dingxin-evaluator-validation/`：**E3 小规模 Dingxin evaluator validation**。从既有 E/F feature export 和变体 feature frame 构造融合表示流，`chronaris` / `naive_time_sync` 可用，`mult` / `contiformer` 当前无可复用融合表示流并记录为 `method_unavailable`；ClaSP `completed:4`，STUMPY `completed:4`，CLaP `clap_unavailable:4`；`metric rows=54`，`completed=44`，`unavailable=10`；未训练、未改 confirmed metrics。
 - `runs/2026-07-07_fusion-stream-structure-execution/`：**E3 融合表示流结构评价 synthetic no-training 执行**。包含 `e3_input_long_table.csv`、`e3_metrics_long.csv`、`e3_summary.json`、`evidence_manifest.json`、`report.md` 和 `plots/`。本轮环境未安装 `claspy` / `stumpy`，外部 evaluator 结果为结构化 unavailable；未训练、未改 confirmed metrics。

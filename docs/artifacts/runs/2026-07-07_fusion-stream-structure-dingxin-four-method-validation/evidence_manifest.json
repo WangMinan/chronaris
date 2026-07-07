@@ -1,0 +1,4410 @@
+{
+  "run_id": "2026-07-07_fusion-stream-structure-dingxin-four-method-validation",
+  "run_type": "fusion_stream_structure_evaluation",
+  "branch": "implement/fusion-stream-structure-20260707",
+  "commit": "140382227dd247dc177c4bafabdb29ca93efa47e",
+  "benchmark_command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "scripts/evaluation/fusion_stream_structure/run_fusion_stream_structure_benchmark.py",
+    "--fusion-stream-table",
+    "docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/combined_four_method_e3_input_long.csv",
+    "--methods",
+    "chronaris",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "--output-root",
+    "docs/artifacts/runs",
+    "--run-id",
+    "2026-07-07_fusion-stream-structure-dingxin-four-method-validation",
+    "--min-T",
+    "30",
+    "--source-training-run",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export",
+    "--representation-family",
+    "T2_response_lovo_seed17_pooled_embedding"
+  ],
+  "training_invoked": false,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "t3_artifact_deleted": false,
+  "uses_stage_or_final_naming": false,
+  "input_long_table": "docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/combined_four_method_e3_input_long.csv",
+  "source_training_run": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export",
+  "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+  "dataset_manifest": {
+    "source_type": "fusion_stream_long_table",
+    "source_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/combined_four_method_e3_input_long.csv",
+    "row_count": 432,
+    "stream_count": 12,
+    "method_feature_dimensions": {
+      "chronaris": 480,
+      "contiformer": 64,
+      "mult": 128,
+      "naive_time_sync": 9710
+    }
+  },
+  "available_methods": [
+    "chronaris",
+    "contiformer",
+    "mult",
+    "naive_time_sync"
+  ],
+  "unavailable_methods": [],
+  "external_libraries": {
+    "claspy": {
+      "status": "available",
+      "import_available": true,
+      "version": "0.2.8"
+    },
+    "stumpy": {
+      "status": "available",
+      "import_available": true,
+      "version": "1.14.1"
+    }
+  },
+  "preprocessing": {
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "method_name": "chronaris",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 2,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9230,
+          "sample": [
+            "fusion_feature_481",
+            "fusion_feature_482",
+            "fusion_feature_483",
+            "fusion_feature_484",
+            "fusion_feature_485",
+            "fusion_feature_486",
+            "fusion_feature_487",
+            "fusion_feature_488",
+            "fusion_feature_489",
+            "fusion_feature_490",
+            "fusion_feature_491",
+            "fusion_feature_492",
+            "fusion_feature_493",
+            "fusion_feature_494",
+            "fusion_feature_495",
+            "fusion_feature_496",
+            "fusion_feature_497",
+            "fusion_feature_498",
+            "fusion_feature_499",
+            "fusion_feature_500"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "count": 480,
+          "sample": {
+            "fusion_feature_1": 0.005566567600513792,
+            "fusion_feature_2": 0.001062909819473346,
+            "fusion_feature_3": 0.0021405813522824193,
+            "fusion_feature_4": 0.002032313894527798,
+            "fusion_feature_5": 3.8277152621771625e-05,
+            "fusion_feature_6": 0.8028459307897475,
+            "fusion_feature_7": 0.4434825573280035,
+            "fusion_feature_8": 0.14029477649590347,
+            "fusion_feature_9": 0.0017117463170086198,
+            "fusion_feature_10": 0.0367236696107747,
+            "fusion_feature_11": 0.09177060450147649,
+            "fusion_feature_12": 0.0014880127622142315,
+            "fusion_feature_13": 0.021817127946236956,
+            "fusion_feature_14": 0.06196445217444192,
+            "fusion_feature_15": 0.004707950837081373,
+            "fusion_feature_16": 0.0010271481389966428,
+            "fusion_feature_17": 0.00029315184302201777,
+            "fusion_feature_18": 0.0010712445853350763,
+            "fusion_feature_19": 0.0009929669274302358,
+            "fusion_feature_20": 1.0726256087344852e-06
+          },
+          "min": 7.47558269105662e-07,
+          "max": 1.0046566670695642
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 480,
+        "retained_components": 2,
+        "explained_variance_ratio": [
+          0.9088775907475711,
+          0.09112240925242884
+        ],
+        "cumulative_explained_variance": 1.0,
+        "source_columns": {
+          "count": 480,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 1.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 2.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 3.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 4.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 5.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 6.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 7.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 8.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 9.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 10.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 11.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 12.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 13.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 14.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 15.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 16.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 17.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 18.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 19.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 20.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 21.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 22.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 23.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 24.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 25.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 26.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 27.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 28.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 29.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 30.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 31.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 32.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 33.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 34.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 35.0
+        }
+      ]
+    },
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "method_name": "chronaris",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 2,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9230,
+          "sample": [
+            "fusion_feature_481",
+            "fusion_feature_482",
+            "fusion_feature_483",
+            "fusion_feature_484",
+            "fusion_feature_485",
+            "fusion_feature_486",
+            "fusion_feature_487",
+            "fusion_feature_488",
+            "fusion_feature_489",
+            "fusion_feature_490",
+            "fusion_feature_491",
+            "fusion_feature_492",
+            "fusion_feature_493",
+            "fusion_feature_494",
+            "fusion_feature_495",
+            "fusion_feature_496",
+            "fusion_feature_497",
+            "fusion_feature_498",
+            "fusion_feature_499",
+            "fusion_feature_500"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "count": 480,
+          "sample": {
+            "fusion_feature_1": 0.14307074837669628,
+            "fusion_feature_2": 0.09197659869877588,
+            "fusion_feature_3": 0.020459857272410013,
+            "fusion_feature_4": 0.00047678906629870045,
+            "fusion_feature_5": 0.010679596607678109,
+            "fusion_feature_6": 0.008978856386943259,
+            "fusion_feature_7": 0.001972360374221467,
+            "fusion_feature_8": 0.002832110396560612,
+            "fusion_feature_9": 0.004320176124623794,
+            "fusion_feature_10": 0.00016606571820428973,
+            "fusion_feature_11": 0.10963169519734972,
+            "fusion_feature_12": 0.09323771899651269,
+            "fusion_feature_13": 0.032635671441403086,
+            "fusion_feature_14": 0.003565487079398376,
+            "fusion_feature_15": 0.0061680538588877055,
+            "fusion_feature_16": 0.005240206779021814,
+            "fusion_feature_17": 0.001668480706512693,
+            "fusion_feature_18": 0.005230944861765317,
+            "fusion_feature_19": 0.0060745366732988405,
+            "fusion_feature_20": 0.00010258759315500254
+          },
+          "min": 5.549675306444836e-06,
+          "max": 0.8028394751084877
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 480,
+        "retained_components": 2,
+        "explained_variance_ratio": [
+          0.9005188338535814,
+          0.09948116614641848
+        ],
+        "cumulative_explained_variance": 0.9999999999999999,
+        "source_columns": {
+          "count": 480,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 1.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 2.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 3.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 4.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 5.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 6.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 7.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 8.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 9.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 10.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 11.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 12.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 13.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 14.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 15.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 16.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 17.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 18.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 19.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 20.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 21.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 22.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 23.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 24.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 25.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 26.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 27.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 28.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 29.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 30.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 31.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 32.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 33.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 34.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 35.0
+        }
+      ]
+    },
+    "chronaris::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "method_name": "chronaris",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 2,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9230,
+          "sample": [
+            "fusion_feature_481",
+            "fusion_feature_482",
+            "fusion_feature_483",
+            "fusion_feature_484",
+            "fusion_feature_485",
+            "fusion_feature_486",
+            "fusion_feature_487",
+            "fusion_feature_488",
+            "fusion_feature_489",
+            "fusion_feature_490",
+            "fusion_feature_491",
+            "fusion_feature_492",
+            "fusion_feature_493",
+            "fusion_feature_494",
+            "fusion_feature_495",
+            "fusion_feature_496",
+            "fusion_feature_497",
+            "fusion_feature_498",
+            "fusion_feature_499",
+            "fusion_feature_500"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "count": 480,
+          "sample": {
+            "fusion_feature_1": 0.41534602747544713,
+            "fusion_feature_2": 0.24374578801115135,
+            "fusion_feature_3": 0.09933721273122259,
+            "fusion_feature_4": 0.003146170757279687,
+            "fusion_feature_5": 0.016156269531673744,
+            "fusion_feature_6": 0.06993978133494959,
+            "fusion_feature_7": 0.00021185632500351391,
+            "fusion_feature_8": 0.01083053940292772,
+            "fusion_feature_9": 0.037682334631562044,
+            "fusion_feature_10": 0.0030892650166710165,
+            "fusion_feature_11": 0.022395217841964115,
+            "fusion_feature_12": 0.02576036883155307,
+            "fusion_feature_13": 0.015832527806299332,
+            "fusion_feature_14": 0.00487271642208189,
+            "fusion_feature_15": 0.0006620369979121999,
+            "fusion_feature_16": 0.05603470060269574,
+            "fusion_feature_17": 0.0018425779724060313,
+            "fusion_feature_18": 0.022180863844575332,
+            "fusion_feature_19": 0.058908052522437755,
+            "fusion_feature_20": 0.004216353814748353
+          },
+          "min": 3.5748923881410575e-07,
+          "max": 0.7973528109556743
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 480,
+        "retained_components": 2,
+        "explained_variance_ratio": [
+          0.904795509477603,
+          0.09520449052239693
+        ],
+        "cumulative_explained_variance": 1.0,
+        "source_columns": {
+          "count": 480,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0001",
+          "time": 1.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0002",
+          "time": 2.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0003",
+          "time": 3.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0004",
+          "time": 4.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0005",
+          "time": 5.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0006",
+          "time": 6.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0007",
+          "time": 7.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0008",
+          "time": 8.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0009",
+          "time": 9.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0010",
+          "time": 10.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0011",
+          "time": 11.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0012",
+          "time": 12.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0013",
+          "time": 13.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0014",
+          "time": 14.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0015",
+          "time": 15.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0016",
+          "time": 16.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0017",
+          "time": 17.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0018",
+          "time": 18.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0019",
+          "time": 19.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0020",
+          "time": 20.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0021",
+          "time": 21.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0022",
+          "time": 22.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0023",
+          "time": 23.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0024",
+          "time": 24.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0025",
+          "time": 25.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0026",
+          "time": 26.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0027",
+          "time": 27.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0028",
+          "time": 28.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0029",
+          "time": 29.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0030",
+          "time": 30.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0031",
+          "time": 31.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0032",
+          "time": 32.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0033",
+          "time": 33.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0034",
+          "time": 34.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0035",
+          "time": 35.0
+        }
+      ]
+    },
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "method_name": "contiformer",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 1,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9646,
+          "sample": [
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_72",
+            "fusion_feature_73",
+            "fusion_feature_74",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_77",
+            "fusion_feature_78",
+            "fusion_feature_79",
+            "fusion_feature_80",
+            "fusion_feature_81",
+            "fusion_feature_82",
+            "fusion_feature_83",
+            "fusion_feature_84"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "fusion_feature_1": 0.004041678577722956,
+          "fusion_feature_2": 0.0034848185385635538,
+          "fusion_feature_3": 0.04619136318146769,
+          "fusion_feature_4": 0.006814494364914868,
+          "fusion_feature_5": 0.0025825702479873743,
+          "fusion_feature_6": 0.001205399381365671,
+          "fusion_feature_7": 0.002025460765657831,
+          "fusion_feature_8": 0.03773832429685266,
+          "fusion_feature_9": 0.01253897965621737,
+          "fusion_feature_10": 0.0018328913698704473,
+          "fusion_feature_11": 0.002888797463246131,
+          "fusion_feature_12": 0.0038785772854136127,
+          "fusion_feature_13": 0.03968710827195497,
+          "fusion_feature_14": 0.0016111251033528,
+          "fusion_feature_15": 0.001606161783640338,
+          "fusion_feature_16": 0.03812370373307293,
+          "fusion_feature_17": 0.003608926129953357,
+          "fusion_feature_18": 0.000979844968917732,
+          "fusion_feature_19": 0.000346209099337125,
+          "fusion_feature_20": 0.003564808770372796,
+          "fusion_feature_21": 0.008145073126032383,
+          "fusion_feature_22": 0.010271271528316615,
+          "fusion_feature_23": 0.01277322036816702,
+          "fusion_feature_24": 0.0018102381351183955,
+          "fusion_feature_25": 0.0006145114328116316,
+          "fusion_feature_26": 0.007030005198038369,
+          "fusion_feature_27": 0.000469100432831385,
+          "fusion_feature_28": 0.017226233615209793,
+          "fusion_feature_29": 0.003045681478068324,
+          "fusion_feature_30": 0.0001509087917829975,
+          "fusion_feature_31": 0.020283919720286318,
+          "fusion_feature_32": 0.008486429748675075,
+          "fusion_feature_33": 0.0010794142791916731,
+          "fusion_feature_34": 0.0006317131633708315,
+          "fusion_feature_35": 0.1092119585962368,
+          "fusion_feature_36": 0.010863383812319221,
+          "fusion_feature_37": 0.0068072085918047635,
+          "fusion_feature_38": 0.0006565590682583691,
+          "fusion_feature_39": 0.0007792737205510793,
+          "fusion_feature_40": 0.01346758852482733,
+          "fusion_feature_41": 0.007165523931974804,
+          "fusion_feature_42": 0.010382746477710376,
+          "fusion_feature_43": 0.00391539665194893,
+          "fusion_feature_44": 0.00029858475103479687,
+          "fusion_feature_45": 0.0002869785818163337,
+          "fusion_feature_46": 0.004277654892835722,
+          "fusion_feature_47": 0.027202049942058278,
+          "fusion_feature_48": 0.018171556249522797,
+          "fusion_feature_49": 0.0012186652852180966,
+          "fusion_feature_50": 0.003950632076738903,
+          "fusion_feature_51": 0.013648886697384028,
+          "fusion_feature_52": 0.01746889079732994,
+          "fusion_feature_53": 0.03060262218197645,
+          "fusion_feature_54": 0.007308279477320172,
+          "fusion_feature_55": 0.002800151204102462,
+          "fusion_feature_56": 0.0055497426325263515,
+          "fusion_feature_57": 0.002852601957308213,
+          "fusion_feature_58": 0.0036636341383996397,
+          "fusion_feature_59": 0.0021579525056055846,
+          "fusion_feature_60": 0.018052809247826256,
+          "fusion_feature_61": 0.005481109210814789,
+          "fusion_feature_62": 0.0017717105841463525,
+          "fusion_feature_63": 0.011522636555403106,
+          "fusion_feature_64": 0.0302229914738038
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 64,
+        "retained_components": 1,
+        "explained_variance_ratio": [
+          0.9894406913751167
+        ],
+        "cumulative_explained_variance": 0.9894406913751167,
+        "source_columns": [
+          "fusion_feature_1",
+          "fusion_feature_2",
+          "fusion_feature_3",
+          "fusion_feature_4",
+          "fusion_feature_5",
+          "fusion_feature_6",
+          "fusion_feature_7",
+          "fusion_feature_8",
+          "fusion_feature_9",
+          "fusion_feature_10",
+          "fusion_feature_11",
+          "fusion_feature_12",
+          "fusion_feature_13",
+          "fusion_feature_14",
+          "fusion_feature_15",
+          "fusion_feature_16",
+          "fusion_feature_17",
+          "fusion_feature_18",
+          "fusion_feature_19",
+          "fusion_feature_20",
+          "fusion_feature_21",
+          "fusion_feature_22",
+          "fusion_feature_23",
+          "fusion_feature_24",
+          "fusion_feature_25",
+          "fusion_feature_26",
+          "fusion_feature_27",
+          "fusion_feature_28",
+          "fusion_feature_29",
+          "fusion_feature_30",
+          "fusion_feature_31",
+          "fusion_feature_32",
+          "fusion_feature_33",
+          "fusion_feature_34",
+          "fusion_feature_35",
+          "fusion_feature_36",
+          "fusion_feature_37",
+          "fusion_feature_38",
+          "fusion_feature_39",
+          "fusion_feature_40",
+          "fusion_feature_41",
+          "fusion_feature_42",
+          "fusion_feature_43",
+          "fusion_feature_44",
+          "fusion_feature_45",
+          "fusion_feature_46",
+          "fusion_feature_47",
+          "fusion_feature_48",
+          "fusion_feature_49",
+          "fusion_feature_50",
+          "fusion_feature_51",
+          "fusion_feature_52",
+          "fusion_feature_53",
+          "fusion_feature_54",
+          "fusion_feature_55",
+          "fusion_feature_56",
+          "fusion_feature_57",
+          "fusion_feature_58",
+          "fusion_feature_59",
+          "fusion_feature_60",
+          "fusion_feature_61",
+          "fusion_feature_62",
+          "fusion_feature_63",
+          "fusion_feature_64"
+        ]
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 5000.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 10000.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 15000.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 20000.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 25000.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 30000.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 35000.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 40000.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 45000.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 50000.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 55000.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 60000.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 65000.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 70000.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 75000.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 80000.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 85000.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 90000.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 95000.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 100000.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 105000.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 110000.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 115000.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 120000.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 125000.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 130000.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 135000.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 140000.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 145000.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 150000.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 155000.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 160000.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 165000.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 170000.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 175000.0
+        }
+      ]
+    },
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "method_name": "contiformer",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 1,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9646,
+          "sample": [
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_72",
+            "fusion_feature_73",
+            "fusion_feature_74",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_77",
+            "fusion_feature_78",
+            "fusion_feature_79",
+            "fusion_feature_80",
+            "fusion_feature_81",
+            "fusion_feature_82",
+            "fusion_feature_83",
+            "fusion_feature_84"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "fusion_feature_1": 0.001999098853467218,
+          "fusion_feature_2": 0.01808863828752214,
+          "fusion_feature_3": 8.938803830508772e-05,
+          "fusion_feature_4": 0.004632587275432853,
+          "fusion_feature_5": 0.008999883229383061,
+          "fusion_feature_6": 0.019227547461245144,
+          "fusion_feature_7": 0.008583634402311434,
+          "fusion_feature_8": 0.004132292305759554,
+          "fusion_feature_9": 0.030358581491573278,
+          "fusion_feature_10": 0.0017178527601132115,
+          "fusion_feature_11": 0.012261611688598982,
+          "fusion_feature_12": 0.007667653533946928,
+          "fusion_feature_13": 0.02745552622526,
+          "fusion_feature_14": 0.0024458918866971996,
+          "fusion_feature_15": 4.577734524207489e-05,
+          "fusion_feature_16": 2.348139762195946e-05,
+          "fusion_feature_17": 0.0002703886793178328,
+          "fusion_feature_18": 0.00045161111244328297,
+          "fusion_feature_19": 0.007012603212107953,
+          "fusion_feature_20": 0.010847478384011,
+          "fusion_feature_21": 0.006524383415661428,
+          "fusion_feature_22": 0.004891993989352726,
+          "fusion_feature_23": 0.013247824272334117,
+          "fusion_feature_24": 0.010850278517247371,
+          "fusion_feature_25": 0.0006993472046495302,
+          "fusion_feature_26": 0.013777803890975535,
+          "fusion_feature_27": 0.03550723644090832,
+          "fusion_feature_28": 0.0027387849153963453,
+          "fusion_feature_29": 0.004267261296341097,
+          "fusion_feature_30": 0.00045823666186455415,
+          "fusion_feature_31": 0.0035085744758973267,
+          "fusion_feature_32": 0.032230973863538154,
+          "fusion_feature_33": 0.0001885886424066308,
+          "fusion_feature_34": 0.00018999387404194915,
+          "fusion_feature_35": 0.0002317068356849208,
+          "fusion_feature_36": 0.020906517047244916,
+          "fusion_feature_37": 0.005974028030630084,
+          "fusion_feature_38": 0.0003096709926375401,
+          "fusion_feature_39": 0.034554288203548875,
+          "fusion_feature_40": 0.0001861748525120334,
+          "fusion_feature_41": 0.0051832143752388775,
+          "fusion_feature_42": 0.0016676472620426464,
+          "fusion_feature_43": 0.008005709914320725,
+          "fusion_feature_44": 0.0078020928540729045,
+          "fusion_feature_45": 0.011513692371574274,
+          "fusion_feature_46": 0.02615177054057949,
+          "fusion_feature_47": 0.012395668359934936,
+          "fusion_feature_48": 0.022471402770970993,
+          "fusion_feature_49": 0.017054063207486387,
+          "fusion_feature_50": 0.018840981351223866,
+          "fusion_feature_51": 0.0037343646916703104,
+          "fusion_feature_52": 0.0007036604491373847,
+          "fusion_feature_53": 0.0007491461060288813,
+          "fusion_feature_54": 0.012496917366856635,
+          "fusion_feature_55": 0.008706860686615829,
+          "fusion_feature_56": 0.008237378273738851,
+          "fusion_feature_57": 0.021724539230590235,
+          "fusion_feature_58": 0.003013836455141552,
+          "fusion_feature_59": 0.022209455308060306,
+          "fusion_feature_60": 0.03795417359518151,
+          "fusion_feature_61": 5.1517371374865235e-05,
+          "fusion_feature_62": 0.018801107744745523,
+          "fusion_feature_63": 0.0030169904112521987,
+          "fusion_feature_64": 9.736173478533207e-05
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 64,
+        "retained_components": 1,
+        "explained_variance_ratio": [
+          0.9855410703189695
+        ],
+        "cumulative_explained_variance": 0.9855410703189695,
+        "source_columns": [
+          "fusion_feature_1",
+          "fusion_feature_2",
+          "fusion_feature_3",
+          "fusion_feature_4",
+          "fusion_feature_5",
+          "fusion_feature_6",
+          "fusion_feature_7",
+          "fusion_feature_8",
+          "fusion_feature_9",
+          "fusion_feature_10",
+          "fusion_feature_11",
+          "fusion_feature_12",
+          "fusion_feature_13",
+          "fusion_feature_14",
+          "fusion_feature_15",
+          "fusion_feature_16",
+          "fusion_feature_17",
+          "fusion_feature_18",
+          "fusion_feature_19",
+          "fusion_feature_20",
+          "fusion_feature_21",
+          "fusion_feature_22",
+          "fusion_feature_23",
+          "fusion_feature_24",
+          "fusion_feature_25",
+          "fusion_feature_26",
+          "fusion_feature_27",
+          "fusion_feature_28",
+          "fusion_feature_29",
+          "fusion_feature_30",
+          "fusion_feature_31",
+          "fusion_feature_32",
+          "fusion_feature_33",
+          "fusion_feature_34",
+          "fusion_feature_35",
+          "fusion_feature_36",
+          "fusion_feature_37",
+          "fusion_feature_38",
+          "fusion_feature_39",
+          "fusion_feature_40",
+          "fusion_feature_41",
+          "fusion_feature_42",
+          "fusion_feature_43",
+          "fusion_feature_44",
+          "fusion_feature_45",
+          "fusion_feature_46",
+          "fusion_feature_47",
+          "fusion_feature_48",
+          "fusion_feature_49",
+          "fusion_feature_50",
+          "fusion_feature_51",
+          "fusion_feature_52",
+          "fusion_feature_53",
+          "fusion_feature_54",
+          "fusion_feature_55",
+          "fusion_feature_56",
+          "fusion_feature_57",
+          "fusion_feature_58",
+          "fusion_feature_59",
+          "fusion_feature_60",
+          "fusion_feature_61",
+          "fusion_feature_62",
+          "fusion_feature_63",
+          "fusion_feature_64"
+        ]
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 5000.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 10000.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 15000.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 20000.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 25000.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 30000.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 35000.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 40000.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 45000.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 50000.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 55000.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 60000.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 65000.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 70000.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 75000.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 80000.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 85000.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 90000.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 95000.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 100000.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 105000.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 110000.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 115000.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 120000.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 125000.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 130000.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 135000.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 140000.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 145000.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 150000.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 155000.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 160000.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 165000.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 170000.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 175000.0
+        }
+      ]
+    },
+    "contiformer::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "method_name": "contiformer",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 1,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9646,
+          "sample": [
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_72",
+            "fusion_feature_73",
+            "fusion_feature_74",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_77",
+            "fusion_feature_78",
+            "fusion_feature_79",
+            "fusion_feature_80",
+            "fusion_feature_81",
+            "fusion_feature_82",
+            "fusion_feature_83",
+            "fusion_feature_84"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "fusion_feature_1": 0.00013703791999211104,
+          "fusion_feature_2": 0.019683400969334307,
+          "fusion_feature_3": 0.004721063472896994,
+          "fusion_feature_4": 0.00916566200754657,
+          "fusion_feature_5": 0.008160289737017322,
+          "fusion_feature_6": 0.028094919048434055,
+          "fusion_feature_7": 0.0001851195259167527,
+          "fusion_feature_8": 0.009731380659448133,
+          "fusion_feature_9": 0.03561934526625038,
+          "fusion_feature_10": 0.04342141553800955,
+          "fusion_feature_11": 0.0009918116496638102,
+          "fusion_feature_12": 2.744456891825948e-05,
+          "fusion_feature_13": 0.00011534155319880424,
+          "fusion_feature_14": 0.012667389608976285,
+          "fusion_feature_15": 0.003046751439146877,
+          "fusion_feature_16": 0.009193120224128472,
+          "fusion_feature_17": 0.0005269027019658454,
+          "fusion_feature_18": 0.057109945194854274,
+          "fusion_feature_19": 0.0018012267157211505,
+          "fusion_feature_20": 0.030018992067127635,
+          "fusion_feature_21": 0.008087779280038919,
+          "fusion_feature_22": 0.009153405612861218,
+          "fusion_feature_23": 0.0007031754028082993,
+          "fusion_feature_24": 0.06588476181343943,
+          "fusion_feature_25": 0.009133625738084489,
+          "fusion_feature_26": 0.0018460633979219601,
+          "fusion_feature_27": 0.0017247942199197217,
+          "fusion_feature_28": 0.004172856036934122,
+          "fusion_feature_29": 0.00044853222439186806,
+          "fusion_feature_30": 0.012666828443293933,
+          "fusion_feature_31": 0.00010716494903535943,
+          "fusion_feature_32": 0.00128395232043615,
+          "fusion_feature_33": 0.01998804540635858,
+          "fusion_feature_34": 0.022010207853264963,
+          "fusion_feature_35": 0.03315913890723272,
+          "fusion_feature_36": 0.001973186920800294,
+          "fusion_feature_37": 0.0072290379818852075,
+          "fusion_feature_38": 0.0032061411370993323,
+          "fusion_feature_39": 0.01329913322262271,
+          "fusion_feature_40": 0.01087728282065781,
+          "fusion_feature_41": 0.00010417239061016244,
+          "fusion_feature_42": 9.95187248041702e-05,
+          "fusion_feature_43": 0.009828856283122127,
+          "fusion_feature_44": 0.005181340536781736,
+          "fusion_feature_45": 0.0016417011210167658,
+          "fusion_feature_46": 0.02031509768178902,
+          "fusion_feature_47": 0.008301119487778957,
+          "fusion_feature_48": 0.023149440335187448,
+          "fusion_feature_49": 0.008961456793719201,
+          "fusion_feature_50": 0.002213900581059015,
+          "fusion_feature_51": 2.9482401887005723e-05,
+          "fusion_feature_52": 0.006288276036709653,
+          "fusion_feature_53": 1.555370565892759e-05,
+          "fusion_feature_54": 0.006440923240980776,
+          "fusion_feature_55": 0.08469879086887948,
+          "fusion_feature_56": 0.06749732286403548,
+          "fusion_feature_57": 0.00756026615513584,
+          "fusion_feature_58": 0.0033284942444490903,
+          "fusion_feature_59": 0.0006003610529441237,
+          "fusion_feature_60": 0.033055748735504875,
+          "fusion_feature_61": 0.016539006527925944,
+          "fusion_feature_62": 0.0004918693912723561,
+          "fusion_feature_63": 0.001383300667806171,
+          "fusion_feature_64": 0.009002928533634887
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 64,
+        "retained_components": 1,
+        "explained_variance_ratio": [
+          0.9796444809990267
+        ],
+        "cumulative_explained_variance": 0.9796444809990267,
+        "source_columns": [
+          "fusion_feature_1",
+          "fusion_feature_2",
+          "fusion_feature_3",
+          "fusion_feature_4",
+          "fusion_feature_5",
+          "fusion_feature_6",
+          "fusion_feature_7",
+          "fusion_feature_8",
+          "fusion_feature_9",
+          "fusion_feature_10",
+          "fusion_feature_11",
+          "fusion_feature_12",
+          "fusion_feature_13",
+          "fusion_feature_14",
+          "fusion_feature_15",
+          "fusion_feature_16",
+          "fusion_feature_17",
+          "fusion_feature_18",
+          "fusion_feature_19",
+          "fusion_feature_20",
+          "fusion_feature_21",
+          "fusion_feature_22",
+          "fusion_feature_23",
+          "fusion_feature_24",
+          "fusion_feature_25",
+          "fusion_feature_26",
+          "fusion_feature_27",
+          "fusion_feature_28",
+          "fusion_feature_29",
+          "fusion_feature_30",
+          "fusion_feature_31",
+          "fusion_feature_32",
+          "fusion_feature_33",
+          "fusion_feature_34",
+          "fusion_feature_35",
+          "fusion_feature_36",
+          "fusion_feature_37",
+          "fusion_feature_38",
+          "fusion_feature_39",
+          "fusion_feature_40",
+          "fusion_feature_41",
+          "fusion_feature_42",
+          "fusion_feature_43",
+          "fusion_feature_44",
+          "fusion_feature_45",
+          "fusion_feature_46",
+          "fusion_feature_47",
+          "fusion_feature_48",
+          "fusion_feature_49",
+          "fusion_feature_50",
+          "fusion_feature_51",
+          "fusion_feature_52",
+          "fusion_feature_53",
+          "fusion_feature_54",
+          "fusion_feature_55",
+          "fusion_feature_56",
+          "fusion_feature_57",
+          "fusion_feature_58",
+          "fusion_feature_59",
+          "fusion_feature_60",
+          "fusion_feature_61",
+          "fusion_feature_62",
+          "fusion_feature_63",
+          "fusion_feature_64"
+        ]
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0001",
+          "time": 5000.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0002",
+          "time": 10000.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0003",
+          "time": 15000.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0004",
+          "time": 20000.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0005",
+          "time": 25000.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0006",
+          "time": 30000.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0007",
+          "time": 35000.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0008",
+          "time": 40000.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0009",
+          "time": 45000.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0010",
+          "time": 50000.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0011",
+          "time": 55000.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0012",
+          "time": 60000.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0013",
+          "time": 65000.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0014",
+          "time": 70000.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0015",
+          "time": 75000.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0016",
+          "time": 80000.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0017",
+          "time": 85000.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0018",
+          "time": 90000.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0019",
+          "time": 95000.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0020",
+          "time": 100000.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0021",
+          "time": 105000.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0022",
+          "time": 110000.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0023",
+          "time": 115000.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0024",
+          "time": 120000.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0025",
+          "time": 125000.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0026",
+          "time": 130000.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0027",
+          "time": 135000.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0028",
+          "time": 140000.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0029",
+          "time": 145000.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0030",
+          "time": 150000.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0031",
+          "time": 155000.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0032",
+          "time": 160000.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0033",
+          "time": 165000.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0034",
+          "time": 170000.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0035",
+          "time": 175000.0
+        }
+      ]
+    },
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "method_name": "mult",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 1,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9582,
+          "sample": [
+            "fusion_feature_129",
+            "fusion_feature_130",
+            "fusion_feature_131",
+            "fusion_feature_132",
+            "fusion_feature_133",
+            "fusion_feature_134",
+            "fusion_feature_135",
+            "fusion_feature_136",
+            "fusion_feature_137",
+            "fusion_feature_138",
+            "fusion_feature_139",
+            "fusion_feature_140",
+            "fusion_feature_141",
+            "fusion_feature_142",
+            "fusion_feature_143",
+            "fusion_feature_144",
+            "fusion_feature_145",
+            "fusion_feature_146",
+            "fusion_feature_147",
+            "fusion_feature_148"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "count": 128,
+          "sample": {
+            "fusion_feature_1": 0.04092822531379044,
+            "fusion_feature_2": 0.02053666447502234,
+            "fusion_feature_3": 0.0001520693442466941,
+            "fusion_feature_4": 0.0005841271256248011,
+            "fusion_feature_5": 0.008234616624760955,
+            "fusion_feature_6": 0.010148846804627576,
+            "fusion_feature_7": 0.059386841118582084,
+            "fusion_feature_8": 0.03677881075248781,
+            "fusion_feature_9": 0.013758736095700084,
+            "fusion_feature_10": 0.003977899716158362,
+            "fusion_feature_11": 0.013441619068948875,
+            "fusion_feature_12": 0.010229109870959428,
+            "fusion_feature_13": 0.011807270058060312,
+            "fusion_feature_14": 0.004472070688875859,
+            "fusion_feature_15": 2.428225360758937e-05,
+            "fusion_feature_16": 0.028930912945798654,
+            "fusion_feature_17": 0.033835928653750236,
+            "fusion_feature_18": 0.005188117892785848,
+            "fusion_feature_19": 7.602606338521532e-06,
+            "fusion_feature_20": 0.06399506234833546
+          },
+          "min": 6.929188283058873e-06,
+          "max": 0.1259845951456354
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 128,
+        "retained_components": 1,
+        "explained_variance_ratio": [
+          0.9787892275893362
+        ],
+        "cumulative_explained_variance": 0.9787892275893362,
+        "source_columns": {
+          "count": 128,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 5000.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 10000.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 15000.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 20000.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 25000.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 30000.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 35000.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 40000.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 45000.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 50000.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 55000.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 60000.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 65000.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 70000.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 75000.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 80000.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 85000.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 90000.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 95000.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 100000.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 105000.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 110000.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 115000.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 120000.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 125000.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 130000.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 135000.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 140000.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 145000.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 150000.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 155000.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 160000.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 165000.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 170000.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 175000.0
+        }
+      ]
+    },
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "method_name": "mult",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 2,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9582,
+          "sample": [
+            "fusion_feature_129",
+            "fusion_feature_130",
+            "fusion_feature_131",
+            "fusion_feature_132",
+            "fusion_feature_133",
+            "fusion_feature_134",
+            "fusion_feature_135",
+            "fusion_feature_136",
+            "fusion_feature_137",
+            "fusion_feature_138",
+            "fusion_feature_139",
+            "fusion_feature_140",
+            "fusion_feature_141",
+            "fusion_feature_142",
+            "fusion_feature_143",
+            "fusion_feature_144",
+            "fusion_feature_145",
+            "fusion_feature_146",
+            "fusion_feature_147",
+            "fusion_feature_148"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "count": 128,
+          "sample": {
+            "fusion_feature_1": 0.0016115714201377215,
+            "fusion_feature_2": 0.08284287754380608,
+            "fusion_feature_3": 0.001150565642821343,
+            "fusion_feature_4": 0.00012225175971018057,
+            "fusion_feature_5": 0.04322922024706269,
+            "fusion_feature_6": 0.011840710194196014,
+            "fusion_feature_7": 0.0009471438243373482,
+            "fusion_feature_8": 0.024208803815709345,
+            "fusion_feature_9": 0.11078534009871557,
+            "fusion_feature_10": 0.000882153838805248,
+            "fusion_feature_11": 0.02022792681053521,
+            "fusion_feature_12": 0.018030510265324623,
+            "fusion_feature_13": 0.03621459296969693,
+            "fusion_feature_14": 0.007777600100082927,
+            "fusion_feature_15": 0.047250811833691925,
+            "fusion_feature_16": 0.0042851879151749464,
+            "fusion_feature_17": 0.0001092571116446933,
+            "fusion_feature_18": 0.000403597765354978,
+            "fusion_feature_19": 0.005960488906084215,
+            "fusion_feature_20": 0.024445180625671536
+          },
+          "min": 4.1202236867314647e-07,
+          "max": 0.1551304723276169
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 128,
+        "retained_components": 2,
+        "explained_variance_ratio": [
+          0.946960494026602,
+          0.053039505973398016
+        ],
+        "cumulative_explained_variance": 1.0,
+        "source_columns": {
+          "count": 128,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 5000.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 10000.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 15000.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 20000.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 25000.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 30000.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 35000.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 40000.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 45000.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 50000.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 55000.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 60000.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 65000.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 70000.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 75000.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 80000.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 85000.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 90000.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 95000.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 100000.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 105000.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 110000.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 115000.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 120000.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 125000.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 130000.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 135000.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 140000.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 145000.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 150000.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 155000.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 160000.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 165000.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 170000.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 175000.0
+        }
+      ]
+    },
+    "mult::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "method_name": "mult",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 1,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 9582,
+          "sample": [
+            "fusion_feature_129",
+            "fusion_feature_130",
+            "fusion_feature_131",
+            "fusion_feature_132",
+            "fusion_feature_133",
+            "fusion_feature_134",
+            "fusion_feature_135",
+            "fusion_feature_136",
+            "fusion_feature_137",
+            "fusion_feature_138",
+            "fusion_feature_139",
+            "fusion_feature_140",
+            "fusion_feature_141",
+            "fusion_feature_142",
+            "fusion_feature_143",
+            "fusion_feature_144",
+            "fusion_feature_145",
+            "fusion_feature_146",
+            "fusion_feature_147",
+            "fusion_feature_148"
+          ]
+        },
+        "mean_imputed_columns": []
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": [],
+        "source_variances": {
+          "count": 128,
+          "sample": {
+            "fusion_feature_1": 0.027634001180630363,
+            "fusion_feature_2": 1.4200853904627738e-05,
+            "fusion_feature_3": 2.7020598173977794e-05,
+            "fusion_feature_4": 0.038287663283521775,
+            "fusion_feature_5": 0.018080264422305623,
+            "fusion_feature_6": 0.007782081113380306,
+            "fusion_feature_7": 0.0019985015048229453,
+            "fusion_feature_8": 0.018921543393751388,
+            "fusion_feature_9": 0.002232081215874431,
+            "fusion_feature_10": 0.004883539602150147,
+            "fusion_feature_11": 0.08458004850236452,
+            "fusion_feature_12": 0.004424273323688059,
+            "fusion_feature_13": 0.007742138527912794,
+            "fusion_feature_14": 0.10400349924249744,
+            "fusion_feature_15": 0.008496453540125013,
+            "fusion_feature_16": 0.0007458186909497949,
+            "fusion_feature_17": 0.00504912852388559,
+            "fusion_feature_18": 0.01868906148505524,
+            "fusion_feature_19": 0.1381925686969908,
+            "fusion_feature_20": 0.05301552167217813
+          },
+          "min": 5.489199249271402e-06,
+          "max": 0.14593347861136058
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 128,
+        "retained_components": 1,
+        "explained_variance_ratio": [
+          0.9690541624076765
+        ],
+        "cumulative_explained_variance": 0.9690541624076765,
+        "source_columns": {
+          "count": 128,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0001",
+          "time": 5000.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0002",
+          "time": 10000.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0003",
+          "time": 15000.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0004",
+          "time": 20000.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0005",
+          "time": 25000.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0006",
+          "time": 30000.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0007",
+          "time": 35000.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0008",
+          "time": 40000.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0009",
+          "time": 45000.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0010",
+          "time": 50000.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0011",
+          "time": 55000.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0012",
+          "time": 60000.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0013",
+          "time": 65000.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0014",
+          "time": 70000.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0015",
+          "time": 75000.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0016",
+          "time": 80000.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0017",
+          "time": 85000.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0018",
+          "time": 90000.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0019",
+          "time": 95000.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0020",
+          "time": 100000.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0021",
+          "time": 105000.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0022",
+          "time": 110000.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0023",
+          "time": 115000.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0024",
+          "time": 120000.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0025",
+          "time": 125000.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0026",
+          "time": 130000.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0027",
+          "time": 135000.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0028",
+          "time": 140000.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0029",
+          "time": 145000.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0030",
+          "time": 150000.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0031",
+          "time": 155000.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0032",
+          "time": 160000.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0033",
+          "time": 165000.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0034",
+          "time": 170000.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0035",
+          "time": 175000.0
+        }
+      ]
+    },
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "method_name": "naive_time_sync",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 28,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 4825,
+          "sample": [
+            "fusion_feature_61",
+            "fusion_feature_62",
+            "fusion_feature_63",
+            "fusion_feature_64",
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_72",
+            "fusion_feature_73",
+            "fusion_feature_74",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_77",
+            "fusion_feature_78",
+            "fusion_feature_79",
+            "fusion_feature_80"
+          ]
+        },
+        "mean_imputed_columns": {
+          "count": 1170,
+          "sample": [
+            "fusion_feature_4886",
+            "fusion_feature_4887",
+            "fusion_feature_4888",
+            "fusion_feature_4889",
+            "fusion_feature_4890",
+            "fusion_feature_4891",
+            "fusion_feature_4892",
+            "fusion_feature_4893",
+            "fusion_feature_4894",
+            "fusion_feature_4895",
+            "fusion_feature_4896",
+            "fusion_feature_4897",
+            "fusion_feature_4898",
+            "fusion_feature_4899",
+            "fusion_feature_4900",
+            "fusion_feature_4901",
+            "fusion_feature_4902",
+            "fusion_feature_4903",
+            "fusion_feature_4904",
+            "fusion_feature_4905"
+          ]
+        }
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": {
+          "count": 4156,
+          "sample": [
+            "fusion_feature_46",
+            "fusion_feature_47",
+            "fusion_feature_48",
+            "fusion_feature_49",
+            "fusion_feature_50",
+            "fusion_feature_4886",
+            "fusion_feature_4890",
+            "fusion_feature_4891",
+            "fusion_feature_4892",
+            "fusion_feature_4893",
+            "fusion_feature_4894",
+            "fusion_feature_4895",
+            "fusion_feature_4896",
+            "fusion_feature_4900",
+            "fusion_feature_4901",
+            "fusion_feature_4905",
+            "fusion_feature_4906",
+            "fusion_feature_4907",
+            "fusion_feature_4908",
+            "fusion_feature_4909"
+          ]
+        },
+        "source_variances": {
+          "count": 4885,
+          "sample": {
+            "fusion_feature_1": 8007.328264837764,
+            "fusion_feature_2": 64466.66170751209,
+            "fusion_feature_3": 62494.57068983841,
+            "fusion_feature_4": 61804.607002590754,
+            "fusion_feature_5": 318.92855299196333,
+            "fusion_feature_6": 13996.183131832342,
+            "fusion_feature_7": 90965.6498575551,
+            "fusion_feature_8": 94693.15680647186,
+            "fusion_feature_9": 103589.89365676942,
+            "fusion_feature_10": 936.0719121923744,
+            "fusion_feature_11": 10369.290641625723,
+            "fusion_feature_12": 31922.1900647209,
+            "fusion_feature_13": 29605.522947379104,
+            "fusion_feature_14": 27469.126615397723,
+            "fusion_feature_15": 325.0397609918993,
+            "fusion_feature_16": 6459.1871062430255,
+            "fusion_feature_17": 33656.67432442566,
+            "fusion_feature_18": 32926.969739948305,
+            "fusion_feature_19": 32546.80243613263,
+            "fusion_feature_20": 302.89587322176106
+          },
+          "min": 0.0,
+          "max": 3.9950492328115794e+26
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 729,
+        "retained_components": 28,
+        "explained_variance_ratio": [
+          0.19247349292200755,
+          0.08702101817648851,
+          0.07543269149987568,
+          0.06478092120909243,
+          0.04980125667963328,
+          0.04576453414928984,
+          0.04108227059143185,
+          0.040596029632399236,
+          0.032975723421265604,
+          0.03076810354944201,
+          0.027507597676534816,
+          0.025013853796675492,
+          0.023572229053993476,
+          0.022412100749504,
+          0.01989008731926902,
+          0.01881164917506003,
+          0.01782899549204388,
+          0.016870827425649278,
+          0.0156583668700397,
+          0.01503134406287005,
+          0.014379503700775887,
+          0.013522284486946035,
+          0.012987499061800627,
+          0.012058198783995128,
+          0.011278342340930867,
+          0.01000134092830852,
+          0.009460841010719485,
+          0.008962018985440703
+        ],
+        "cumulative_explained_variance": 0.9559431227514832,
+        "source_columns": {
+          "count": 729,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 1.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 2.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 3.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 4.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 5.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 6.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 7.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 8.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 9.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 10.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 11.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 12.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 13.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 14.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 15.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 16.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 17.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 18.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 19.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 20.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 21.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 22.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 23.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 24.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 25.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 26.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 27.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 28.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 29.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 30.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 31.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 32.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 33.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 34.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 35.0
+        }
+      ]
+    },
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "method_name": "naive_time_sync",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 28,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 4825,
+          "sample": [
+            "fusion_feature_61",
+            "fusion_feature_62",
+            "fusion_feature_63",
+            "fusion_feature_64",
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_72",
+            "fusion_feature_73",
+            "fusion_feature_74",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_77",
+            "fusion_feature_78",
+            "fusion_feature_79",
+            "fusion_feature_80"
+          ]
+        },
+        "mean_imputed_columns": {
+          "count": 1170,
+          "sample": [
+            "fusion_feature_4886",
+            "fusion_feature_4887",
+            "fusion_feature_4888",
+            "fusion_feature_4889",
+            "fusion_feature_4890",
+            "fusion_feature_4891",
+            "fusion_feature_4892",
+            "fusion_feature_4893",
+            "fusion_feature_4894",
+            "fusion_feature_4895",
+            "fusion_feature_4896",
+            "fusion_feature_4897",
+            "fusion_feature_4898",
+            "fusion_feature_4899",
+            "fusion_feature_4900",
+            "fusion_feature_4901",
+            "fusion_feature_4902",
+            "fusion_feature_4903",
+            "fusion_feature_4904",
+            "fusion_feature_4905"
+          ]
+        }
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": {
+          "count": 4156,
+          "sample": [
+            "fusion_feature_46",
+            "fusion_feature_47",
+            "fusion_feature_48",
+            "fusion_feature_49",
+            "fusion_feature_50",
+            "fusion_feature_4886",
+            "fusion_feature_4890",
+            "fusion_feature_4891",
+            "fusion_feature_4892",
+            "fusion_feature_4893",
+            "fusion_feature_4894",
+            "fusion_feature_4895",
+            "fusion_feature_4896",
+            "fusion_feature_4900",
+            "fusion_feature_4901",
+            "fusion_feature_4905",
+            "fusion_feature_4906",
+            "fusion_feature_4907",
+            "fusion_feature_4908",
+            "fusion_feature_4909"
+          ]
+        },
+        "source_variances": {
+          "count": 4885,
+          "sample": {
+            "fusion_feature_1": 8007.328264837764,
+            "fusion_feature_2": 64466.66170751209,
+            "fusion_feature_3": 62494.57068983841,
+            "fusion_feature_4": 61804.607002590754,
+            "fusion_feature_5": 318.92855299196333,
+            "fusion_feature_6": 13996.183131832342,
+            "fusion_feature_7": 90965.6498575551,
+            "fusion_feature_8": 94693.15680647186,
+            "fusion_feature_9": 103589.89365676942,
+            "fusion_feature_10": 936.0719121923744,
+            "fusion_feature_11": 10369.290641625723,
+            "fusion_feature_12": 31922.1900647209,
+            "fusion_feature_13": 29605.522947379104,
+            "fusion_feature_14": 27469.126615397723,
+            "fusion_feature_15": 325.0397609918993,
+            "fusion_feature_16": 6459.1871062430255,
+            "fusion_feature_17": 33656.67432442566,
+            "fusion_feature_18": 32926.969739948305,
+            "fusion_feature_19": 32546.80243613263,
+            "fusion_feature_20": 302.89587322176106
+          },
+          "min": 0.0,
+          "max": 3.9950492328115794e+26
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 729,
+        "retained_components": 28,
+        "explained_variance_ratio": [
+          0.19247349292200755,
+          0.08702101817648851,
+          0.07543269149987568,
+          0.06478092120909243,
+          0.04980125667963328,
+          0.04576453414928984,
+          0.04108227059143185,
+          0.040596029632399236,
+          0.032975723421265604,
+          0.03076810354944201,
+          0.027507597676534816,
+          0.025013853796675492,
+          0.023572229053993476,
+          0.022412100749504,
+          0.01989008731926902,
+          0.01881164917506003,
+          0.01782899549204388,
+          0.016870827425649278,
+          0.0156583668700397,
+          0.01503134406287005,
+          0.014379503700775887,
+          0.013522284486946035,
+          0.012987499061800627,
+          0.012058198783995128,
+          0.011278342340930867,
+          0.01000134092830852,
+          0.009460841010719485,
+          0.008962018985440703
+        ],
+        "cumulative_explained_variance": 0.9559431227514832,
+        "source_columns": {
+          "count": 729,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0001",
+          "time": 1.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0002",
+          "time": 2.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0003",
+          "time": 3.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0004",
+          "time": 4.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0005",
+          "time": 5.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0006",
+          "time": 6.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0007",
+          "time": 7.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0008",
+          "time": 8.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0009",
+          "time": 9.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0010",
+          "time": 10.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0011",
+          "time": 11.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0012",
+          "time": 12.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0013",
+          "time": 13.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0014",
+          "time": 14.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0015",
+          "time": 15.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0016",
+          "time": 16.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0017",
+          "time": 17.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0018",
+          "time": 18.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0019",
+          "time": 19.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0020",
+          "time": 20.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0021",
+          "time": 21.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0022",
+          "time": 22.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0023",
+          "time": 23.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0024",
+          "time": 24.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0025",
+          "time": 25.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0026",
+          "time": 26.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0027",
+          "time": 27.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0028",
+          "time": 28.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0029",
+          "time": 29.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0030",
+          "time": 30.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0031",
+          "time": 31.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0032",
+          "time": 32.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0033",
+          "time": 33.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0034",
+          "time": 34.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::20251002_单01_ACT-8_翼云_J16_12#01:0035",
+          "time": 35.0
+        }
+      ]
+    },
+    "naive_time_sync::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "method_name": "naive_time_sync",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "status": "completed",
+      "T": 36,
+      "source_feature_count": 9710,
+      "retained_feature_count": 27,
+      "min_T": 30,
+      "missing_values": {
+        "dropped_all_missing_columns": {
+          "count": 4825,
+          "sample": [
+            "fusion_feature_4886",
+            "fusion_feature_4887",
+            "fusion_feature_4888",
+            "fusion_feature_4889",
+            "fusion_feature_4890",
+            "fusion_feature_4891",
+            "fusion_feature_4892",
+            "fusion_feature_4893",
+            "fusion_feature_4894",
+            "fusion_feature_4895",
+            "fusion_feature_4896",
+            "fusion_feature_4897",
+            "fusion_feature_4898",
+            "fusion_feature_4899",
+            "fusion_feature_4900",
+            "fusion_feature_4901",
+            "fusion_feature_4902",
+            "fusion_feature_4903",
+            "fusion_feature_4904",
+            "fusion_feature_4905"
+          ]
+        },
+        "mean_imputed_columns": {
+          "count": 1170,
+          "sample": [
+            "fusion_feature_61",
+            "fusion_feature_62",
+            "fusion_feature_63",
+            "fusion_feature_64",
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_72",
+            "fusion_feature_73",
+            "fusion_feature_74",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_77",
+            "fusion_feature_78",
+            "fusion_feature_79",
+            "fusion_feature_80"
+          ]
+        }
+      },
+      "low_variance_filter": {
+        "threshold": 1e-08,
+        "dropped_columns": {
+          "count": 4151,
+          "sample": [
+            "fusion_feature_61",
+            "fusion_feature_65",
+            "fusion_feature_66",
+            "fusion_feature_67",
+            "fusion_feature_68",
+            "fusion_feature_69",
+            "fusion_feature_70",
+            "fusion_feature_71",
+            "fusion_feature_75",
+            "fusion_feature_76",
+            "fusion_feature_80",
+            "fusion_feature_81",
+            "fusion_feature_82",
+            "fusion_feature_83",
+            "fusion_feature_84",
+            "fusion_feature_85",
+            "fusion_feature_86",
+            "fusion_feature_87",
+            "fusion_feature_88",
+            "fusion_feature_89"
+          ]
+        },
+        "source_variances": {
+          "count": 4885,
+          "sample": {
+            "fusion_feature_1": 35920.52783913147,
+            "fusion_feature_2": 448117.59241561044,
+            "fusion_feature_3": 323403.13600539585,
+            "fusion_feature_4": 270088.323161281,
+            "fusion_feature_5": 3381.2879371592394,
+            "fusion_feature_6": 33022.85618819215,
+            "fusion_feature_7": 400559.0845429974,
+            "fusion_feature_8": 289035.5619257523,
+            "fusion_feature_9": 238405.93981379012,
+            "fusion_feature_10": 2681.774537983729,
+            "fusion_feature_11": 26682.43590810564,
+            "fusion_feature_12": 183258.46289840378,
+            "fusion_feature_13": 172794.2717653086,
+            "fusion_feature_14": 170915.5108225868,
+            "fusion_feature_15": 1748.3319882075916,
+            "fusion_feature_16": 20656.915675105138,
+            "fusion_feature_17": 127361.3919420137,
+            "fusion_feature_18": 148103.310044656,
+            "fusion_feature_19": 183137.3573650368,
+            "fusion_feature_20": 1685.231176068204
+          },
+          "min": 0.0,
+          "max": 3.9950492328115794e+26
+        }
+      },
+      "zscore": {
+        "scope": "method_sortie_view",
+        "applied": true
+      },
+      "pca": {
+        "status": "applied",
+        "threshold": 0.95,
+        "source_feature_count": 734,
+        "retained_components": 27,
+        "explained_variance_ratio": [
+          0.1988126766896871,
+          0.0919547749435319,
+          0.07519980134113563,
+          0.06420370529881933,
+          0.05310542629711663,
+          0.04612908868488015,
+          0.04026889573318395,
+          0.038902408050837965,
+          0.03500277366025419,
+          0.03222917751646617,
+          0.027013993547258818,
+          0.023981146950871057,
+          0.022858133274494433,
+          0.022402451802958995,
+          0.019726853799831343,
+          0.018429984814786336,
+          0.017705562328646524,
+          0.015422214618384033,
+          0.014621799519794988,
+          0.013928229313656226,
+          0.01294700616808088,
+          0.012589656035506908,
+          0.011652679442993323,
+          0.011387229036934194,
+          0.010866447916178933,
+          0.009704598050403246,
+          0.009332789371167795
+        ],
+        "cumulative_explained_variance": 0.950379504207861,
+        "source_columns": {
+          "count": 734,
+          "sample": [
+            "fusion_feature_1",
+            "fusion_feature_2",
+            "fusion_feature_3",
+            "fusion_feature_4",
+            "fusion_feature_5",
+            "fusion_feature_6",
+            "fusion_feature_7",
+            "fusion_feature_8",
+            "fusion_feature_9",
+            "fusion_feature_10",
+            "fusion_feature_11",
+            "fusion_feature_12",
+            "fusion_feature_13",
+            "fusion_feature_14",
+            "fusion_feature_15",
+            "fusion_feature_16",
+            "fusion_feature_17",
+            "fusion_feature_18",
+            "fusion_feature_19",
+            "fusion_feature_20"
+          ]
+        }
+      },
+      "row_mapping": [
+        {
+          "row_index": 0,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0000",
+          "time": 0.0
+        },
+        {
+          "row_index": 1,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0001",
+          "time": 1.0
+        },
+        {
+          "row_index": 2,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0002",
+          "time": 2.0
+        },
+        {
+          "row_index": 3,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0003",
+          "time": 3.0
+        },
+        {
+          "row_index": 4,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0004",
+          "time": 4.0
+        },
+        {
+          "row_index": 5,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0005",
+          "time": 5.0
+        },
+        {
+          "row_index": 6,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0006",
+          "time": 6.0
+        },
+        {
+          "row_index": 7,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0007",
+          "time": 7.0
+        },
+        {
+          "row_index": 8,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0008",
+          "time": 8.0
+        },
+        {
+          "row_index": 9,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0009",
+          "time": 9.0
+        },
+        {
+          "row_index": 10,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0010",
+          "time": 10.0
+        },
+        {
+          "row_index": 11,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0011",
+          "time": 11.0
+        },
+        {
+          "row_index": 12,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0012",
+          "time": 12.0
+        },
+        {
+          "row_index": 13,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0013",
+          "time": 13.0
+        },
+        {
+          "row_index": 14,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0014",
+          "time": 14.0
+        },
+        {
+          "row_index": 15,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0015",
+          "time": 15.0
+        },
+        {
+          "row_index": 16,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0016",
+          "time": 16.0
+        },
+        {
+          "row_index": 17,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0017",
+          "time": 17.0
+        },
+        {
+          "row_index": 18,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0018",
+          "time": 18.0
+        },
+        {
+          "row_index": 19,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0019",
+          "time": 19.0
+        },
+        {
+          "row_index": 20,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0020",
+          "time": 20.0
+        },
+        {
+          "row_index": 21,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0021",
+          "time": 21.0
+        },
+        {
+          "row_index": 22,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0022",
+          "time": 22.0
+        },
+        {
+          "row_index": 23,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0023",
+          "time": 23.0
+        },
+        {
+          "row_index": 24,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0024",
+          "time": 24.0
+        },
+        {
+          "row_index": 25,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0025",
+          "time": 25.0
+        },
+        {
+          "row_index": 26,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0026",
+          "time": 26.0
+        },
+        {
+          "row_index": 27,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0027",
+          "time": 27.0
+        },
+        {
+          "row_index": 28,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0028",
+          "time": 28.0
+        },
+        {
+          "row_index": 29,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0029",
+          "time": 29.0
+        },
+        {
+          "row_index": 30,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0030",
+          "time": 30.0
+        },
+        {
+          "row_index": 31,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0031",
+          "time": 31.0
+        },
+        {
+          "row_index": 32,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0032",
+          "time": 32.0
+        },
+        {
+          "row_index": 33,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0033",
+          "time": 33.0
+        },
+        {
+          "row_index": 34,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0034",
+          "time": 34.0
+        },
+        {
+          "row_index": 35,
+          "window_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::20251005_四01_ACT-4_云_J20_22#01:0035",
+          "time": 35.0
+        }
+      ]
+    }
+  },
+  "clasp_status": {
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "chronaris::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed",
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "contiformer::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed",
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "mult::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed",
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "naive_time_sync::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed"
+  },
+  "clap_status": {
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "clap_unavailable",
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "clap_unavailable",
+    "chronaris::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "clap_unavailable",
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "clap_unavailable",
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "clap_unavailable",
+    "contiformer::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "clap_unavailable",
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "clap_unavailable",
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "clap_unavailable",
+    "mult::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "clap_unavailable",
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "clap_unavailable",
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "clap_unavailable",
+    "naive_time_sync::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "clap_unavailable"
+  },
+  "clasp_result_summary": {
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "OverflowError('Python int too large to convert to C long')"
+    },
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "OverflowError('Python int too large to convert to C long')"
+    },
+    "chronaris::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "OverflowError('Python int too large to convert to C long')"
+    },
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "contiformer::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "OverflowError('Python int too large to convert to C long')"
+    },
+    "mult::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    },
+    "naive_time_sync::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "clap_status": "clap_unavailable",
+      "import_available": true,
+      "algorithm_version": "0.2.8",
+      "window_size": 7,
+      "change_point_count": 0,
+      "state_count": 1,
+      "clap_error": "ValueError('y must contain at least 2 unique labels, but found 1.')"
+    }
+  },
+  "stumpy_status": {
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "chronaris::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed",
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "contiformer::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed",
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "mult::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed",
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": "completed",
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": "completed",
+    "naive_time_sync::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": "completed"
+  },
+  "stumpy_result_summary": {
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "chronaris::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "chronaris::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "contiformer::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "contiformer::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "mult::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "mult::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "naive_time_sync::20251002_单01_ACT-8_翼云_J16_12#01::20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    },
+    "naive_time_sync::20251005_四01_ACT-4_云_J20_22#01::20251005_四01_ACT-4_云_J20_22#01__pilot_10033": {
+      "status": "completed",
+      "import_available": true,
+      "algorithm_version": "1.14.1",
+      "m": 3,
+      "mode": "mstump",
+      "m_grid": [
+        3,
+        4,
+        7
+      ],
+      "fluss_regime_count": 1,
+      "snippet_count": 4,
+      "errors": []
+    }
+  },
+  "evaluator_status_counts": {
+    "clasp": {
+      "completed": 12
+    },
+    "clap": {
+      "clap_unavailable": 12
+    },
+    "stumpy": {
+      "completed": 12
+    }
+  },
+  "output_files": [
+    "e3_metrics_long.csv",
+    "e3_summary.json",
+    "plots/state_timeline_chronaris_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/transition_graph_chronaris_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/fragment_replay_chronaris_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/state_timeline_chronaris_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/transition_graph_chronaris_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/fragment_replay_chronaris_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/state_timeline_chronaris_20251005__01_ACT-4___J20_22_01_20251005__01_ACT-4___J20_22_01__pilot_10033.png",
+    "plots/transition_graph_chronaris_20251005__01_ACT-4___J20_22_01_20251005__01_ACT-4___J20_22_01__pilot_10033.png",
+    "plots/fragment_replay_chronaris_20251005__01_ACT-4___J20_22_01_20251005__01_ACT-4___J20_22_01__pilot_10033.png",
+    "plots/state_timeline_contiformer_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/transition_graph_contiformer_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/fragment_replay_contiformer_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/state_timeline_contiformer_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/transition_graph_contiformer_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/fragment_replay_contiformer_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/state_timeline_contiformer_20251005__01_ACT-4___J20_22_01_20251005__01_ACT-4___J20_22_01__pilot_10033.png",
+    "plots/transition_graph_contiformer_20251005__01_ACT-4___J20_22_01_20251005__01_ACT-4___J20_22_01__pilot_10033.png",
+    "plots/fragment_replay_contiformer_20251005__01_ACT-4___J20_22_01_20251005__01_ACT-4___J20_22_01__pilot_10033.png",
+    "plots/state_timeline_mult_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/transition_graph_mult_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/fragment_replay_mult_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10033.png",
+    "plots/state_timeline_mult_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/transition_graph_mult_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "plots/fragment_replay_mult_20251002__01_ACT-8___J16_12_01_20251002__01_ACT-8___J16_12_01__pilot_10035.png",
+    "evidence_manifest.json",
+    "report.md"
+  ],
+  "notes": [
+    "E3 is an unsupervised structure diagnostic.",
+    "E3 does not replace classification/regression task evidence.",
+    "Historical retrieval artifacts are not deleted.",
+    "Composite scores use fixed manifest weights and do not imply a winner."
+  ]
+}

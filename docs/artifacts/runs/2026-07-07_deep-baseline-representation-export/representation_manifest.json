@@ -1,0 +1,44 @@
+{
+  "run_id": "2026-07-07_deep-baseline-representation-export",
+  "status": "completed",
+  "training_invoked": true,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "t3_artifact_deleted": false,
+  "uses_stage_or_final_naming": false,
+  "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+  "task_name": "T2_next_window_physiology_response",
+  "task_type": "regression",
+  "split_strategy": "leave_one_view_out",
+  "seed": 17,
+  "epochs": 20,
+  "runtime_device": "cuda",
+  "sequence_sample_count": 108,
+  "embedding_row_count": 216,
+  "method_embedding_status": {
+    "mult": true,
+    "contiformer": true
+  },
+  "completed_fold_count": 6,
+  "expected_fold_count": 6,
+  "fold_status_counts": {
+    "completed_skipped": 6
+  },
+  "method_counts": {
+    "contiformer": 108,
+    "mult": 108
+  },
+  "feature_dimensions": {
+    "contiformer": 64,
+    "mult": 128
+  },
+  "source_manifest_paths": {
+    "e_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "f_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+  },
+  "representation_table_path": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/deep_baseline_oof_embeddings_long.csv",
+  "checkpoint_manifest_csv": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/checkpoint_manifest.csv",
+  "checkpoint_manifest_json": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/checkpoint_manifest.json",
+  "oof_protocol": "held-out leave-one-view-out inference only"
+}

@@ -69,6 +69,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-stumpy", action="store_true")
     parser.add_argument("--no-install", action="store_true")
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--source-training-run")
+    parser.add_argument("--representation-family")
     return parser.parse_args()
 
 
@@ -131,12 +133,14 @@ def main() -> int:
         "t3_artifact_deleted": False,
         "uses_stage_or_final_naming": False,
         "input_long_table": input_table_rel,
+        "source_training_run": args.source_training_run,
+        "representation_family": args.representation_family,
         "dataset_manifest": dataset.manifest,
         "available_methods": sorted({key[0] for key in dataset.records}),
         "unavailable_methods": list(dataset.unavailable_methods),
         "external_libraries": external_libraries,
         "preprocessing": {
-            _key_to_text(key): stream.manifest
+            _key_to_text(key): _compact_preprocessing_manifest(stream.manifest)
             for key, stream in preprocessed.items()
         },
         "clasp_status": {
@@ -406,6 +410,38 @@ def _stumpy_result_summary(result: Mapping[str, object]) -> dict[str, object]:
         if field in result:
             summary[field] = result[field]
     return summary
+
+
+def _compact_preprocessing_manifest(manifest: Mapping[str, object]) -> dict[str, object]:
+    return {
+        str(key): _compact_manifest_value(value)
+        for key, value in manifest.items()
+    }
+
+
+def _compact_manifest_value(value: object) -> object:
+    if isinstance(value, Mapping):
+        if len(value) > 80:
+            numeric_values = [
+                float(item)
+                for item in value.values()
+                if isinstance(item, (int, float, np.number)) and np.isfinite(float(item))
+            ]
+            compact: dict[str, object] = {
+                "count": len(value),
+                "sample": dict(list(value.items())[:20]),
+            }
+            if numeric_values:
+                compact["min"] = float(np.min(numeric_values))
+                compact["max"] = float(np.max(numeric_values))
+            return compact
+        return {str(key): _compact_manifest_value(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)) and len(value) > 80:
+        return {
+            "count": len(value),
+            "sample": list(value[:20]),
+        }
+    return value
 
 
 def _safe_name(value: str) -> str:

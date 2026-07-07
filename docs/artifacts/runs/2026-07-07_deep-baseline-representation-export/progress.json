@@ -1,0 +1,140 @@
+{
+  "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-07_deep-baseline-representation-export",
+  "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+  "training_invoked": true,
+  "confirmed_metrics_changed": false,
+  "stage_name": "deep_baseline_representation_export",
+  "run_id": "2026-07-07_deep-baseline-representation-export",
+  "last_event": "fold_finished",
+  "updated_at_utc": "2026-07-07T16:47:31.330905Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-07T16:47:30.848688Z",
+      "event": "start",
+      "artifact_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-07_deep-baseline-representation-export",
+      "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+      "training_invoked": true,
+      "confirmed_metrics_changed": false
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.292214Z",
+      "event": "sequence_frame_ready",
+      "sample_count": 108,
+      "fold_count": 3,
+      "expected_fold_count": 6,
+      "runtime_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.292716Z",
+      "event": "fold_started",
+      "model_name": "mult",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "train_count": 72,
+      "test_count": 36
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.303716Z",
+      "event": "fold_finished",
+      "model_name": "mult",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "status": "completed_skipped"
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.304228Z",
+      "event": "fold_started",
+      "model_name": "mult",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "train_count": 72,
+      "test_count": 36
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.311105Z",
+      "event": "fold_finished",
+      "model_name": "mult",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "status": "completed_skipped"
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.311504Z",
+      "event": "fold_started",
+      "model_name": "mult",
+      "fold_index": 3,
+      "fold_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "train_count": 72,
+      "test_count": 36
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.317452Z",
+      "event": "fold_finished",
+      "model_name": "mult",
+      "fold_index": 3,
+      "fold_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "status": "completed_skipped"
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.317858Z",
+      "event": "fold_started",
+      "model_name": "contiformer",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "train_count": 72,
+      "test_count": 36
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.321882Z",
+      "event": "fold_finished",
+      "model_name": "contiformer",
+      "fold_index": 1,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "status": "completed_skipped"
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.322257Z",
+      "event": "fold_started",
+      "model_name": "contiformer",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "train_count": 72,
+      "test_count": 36
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.326249Z",
+      "event": "fold_finished",
+      "model_name": "contiformer",
+      "fold_index": 2,
+      "fold_group": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "status": "completed_skipped"
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.326620Z",
+      "event": "fold_started",
+      "model_name": "contiformer",
+      "fold_index": 3,
+      "fold_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "train_count": 72,
+      "test_count": 36
+    },
+    {
+      "timestamp_utc": "2026-07-07T16:47:31.330905Z",
+      "event": "fold_finished",
+      "model_name": "contiformer",
+      "fold_index": 3,
+      "fold_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "status": "completed_skipped"
+    }
+  ],
+  "sample_count": 108,
+  "fold_count": 3,
+  "expected_fold_count": 6,
+  "runtime_device": "cuda",
+  "model_name": "contiformer",
+  "fold_index": 3,
+  "fold_group": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+  "train_count": 72,
+  "test_count": 36,
+  "status": "completed_skipped"
+}

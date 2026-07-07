@@ -1,0 +1,30 @@
+{
+  "metric_row_count": 160,
+  "completed_metric_row_count": 124,
+  "unavailable_metric_row_count": 36,
+  "training_invoked": false,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "run_id": "2026-07-07_fusion-stream-structure-dingxin-four-method-validation",
+  "available_methods": [
+    "chronaris",
+    "contiformer",
+    "mult",
+    "naive_time_sync"
+  ],
+  "unavailable_methods": [],
+  "external_libraries": {
+    "claspy": {
+      "status": "available",
+      "import_available": true,
+      "version": "0.2.8"
+    },
+    "stumpy": {
+      "status": "available",
+      "import_available": true,
+      "version": "1.14.1"
+    }
+  },
+  "input_long_table": "docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/combined_four_method_e3_input_long.csv",
+  "plot_count": 24
+}

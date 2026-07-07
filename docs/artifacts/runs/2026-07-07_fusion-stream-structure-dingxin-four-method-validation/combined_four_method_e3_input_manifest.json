@@ -1,0 +1,15 @@
+{
+  "source_type": "dingxin_four_method_e3_input",
+  "deep_representation_table_path": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/deep_baseline_oof_embeddings_long.csv",
+  "e_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+  "f_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json",
+  "row_count": 432,
+  "method_counts": {
+    "chronaris": 108,
+    "contiformer": 108,
+    "mult": 108,
+    "naive_time_sync": 108
+  },
+  "training_invoked": false,
+  "confirmed_metrics_changed": false
+}

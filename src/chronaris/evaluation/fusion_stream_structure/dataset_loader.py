@@ -89,6 +89,7 @@ def build_fusion_streams_from_dingxin_artifacts(
     chronaris_variant_name: str = "chronaris_opt",
     include_proxy_columns: bool = True,
     max_groups: int | None = None,
+    stage_g_device: str = "auto",
 ) -> FusionStreamDataset:
     """Build E3 streams from existing Dingxin feature-export artifacts.
 
@@ -120,6 +121,7 @@ def build_fusion_streams_from_dingxin_artifacts(
         records,
         enable_optimized_chronaris=enable_optimized_chronaris,
         target_variant_name=chronaris_variant_name,
+        stage_g_device=stage_g_device,
     )
 
     rows: list[dict[str, object]] = []

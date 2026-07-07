@@ -81,6 +81,7 @@ def build_optimized_chronaris_feature_frames(
     residual_mode: str,
     selected_vehicle_fields: Sequence[str],
     selected_physiology_fields: Sequence[str],
+    stage_g_device: str = "auto",
 ) -> tuple[dict[str, pd.DataFrame], dict[str, object]]:
     """Build masked and no-mask optimized Chronaris feature frames."""
 
@@ -97,6 +98,7 @@ def build_optimized_chronaris_feature_frames(
             residual_mode=residual_mode,
             selected_vehicle_fields=selected_vehicle_fields,
             selected_physiology_fields=selected_physiology_fields,
+            stage_g_device=stage_g_device,
         )
         frames[variant_name] = frame
         diagnostics[variant_name] = summary
@@ -111,12 +113,14 @@ def _build_one_optimized_frame(
     residual_mode: str,
     selected_vehicle_fields: Sequence[str],
     selected_physiology_fields: Sequence[str],
+    stage_g_device: str,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     config = StageGCausalFusionConfig(
         use_causal_mask=use_causal_mask,
         lag_window_points=lag_window_points,
         fusion_output_mode="pooled_with_residual",
         residual_mode=residual_mode,
+        device=stage_g_device,
     )
     rows: list[dict[str, object]] = []
     attention_entropies: list[float] = []

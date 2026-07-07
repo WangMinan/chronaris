@@ -362,6 +362,7 @@ def build_variant_feature_frames(
     target_variant_name: str = "chronaris_opt",
     lag_window_points: int = 3,
     residual_mode: str = "raw_window_stats",
+    stage_g_device: str = "auto",
 ) -> tuple[dict[str, pd.DataFrame], dict[str, object]]:
     variant_frames: dict[str, pd.DataFrame] = {
         "naive_sync": build_naive_feature_frame(records),
@@ -370,11 +371,11 @@ def build_variant_feature_frames(
     }
     g_min_frame, g_min_summary = build_g_variant_feature_frame(
         records,
-        config=StageGCausalFusionConfig(),
+        config=StageGCausalFusionConfig(device=stage_g_device),
     )
     g_nomask_frame, g_nomask_summary = build_g_variant_feature_frame(
         records,
-        config=StageGCausalFusionConfig(use_causal_mask=False),
+        config=StageGCausalFusionConfig(use_causal_mask=False, device=stage_g_device),
     )
     variant_frames["g_min"] = g_min_frame
     variant_frames["g_no_causal_mask"] = g_nomask_frame
@@ -419,6 +420,7 @@ def build_variant_feature_frames(
             residual_mode=residual_mode,
             selected_vehicle_fields=selected_vehicle_fields,
             selected_physiology_fields=selected_physiology_fields,
+            stage_g_device=stage_g_device,
         )
         variant_frames.update(optimized_frames)
         diagnostics.update(optimized_diagnostics)

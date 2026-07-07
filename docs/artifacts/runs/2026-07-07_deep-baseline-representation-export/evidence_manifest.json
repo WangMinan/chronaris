@@ -1,0 +1,81 @@
+{
+  "run_id": "2026-07-07_deep-baseline-representation-export",
+  "run_type": "deep_baseline_representation_export",
+  "branch": "implement/fusion-stream-structure-20260707",
+  "commit": "140382227dd247dc177c4bafabdb29ca93efa47e",
+  "created_at_utc": "2026-07-07T16:47:31.397929Z",
+  "training_invoked": true,
+  "metrics_changed": false,
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "t3_artifact_deleted": false,
+  "uses_stage_or_final_naming": false,
+  "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+  "task_name": "T2_next_window_physiology_response",
+  "task_type": "regression",
+  "split_strategy": "leave_one_view_out",
+  "seed": 17,
+  "models": [
+    "mult",
+    "contiformer"
+  ],
+  "source_manifest_paths": {
+    "e_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "f_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+  },
+  "summary": {
+    "run_id": "2026-07-07_deep-baseline-representation-export",
+    "status": "completed",
+    "training_invoked": true,
+    "metrics_changed": false,
+    "confirmed_metrics_changed": false,
+    "thesis_protocol_snapshot_modified": false,
+    "t3_artifact_deleted": false,
+    "uses_stage_or_final_naming": false,
+    "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+    "task_name": "T2_next_window_physiology_response",
+    "task_type": "regression",
+    "split_strategy": "leave_one_view_out",
+    "seed": 17,
+    "epochs": 20,
+    "runtime_device": "cuda",
+    "sequence_sample_count": 108,
+    "embedding_row_count": 216,
+    "method_embedding_status": {
+      "mult": true,
+      "contiformer": true
+    },
+    "completed_fold_count": 6,
+    "expected_fold_count": 6,
+    "fold_status_counts": {
+      "completed_skipped": 6
+    },
+    "method_counts": {
+      "contiformer": 108,
+      "mult": 108
+    },
+    "feature_dimensions": {
+      "contiformer": 64,
+      "mult": 128
+    },
+    "source_manifest_paths": {
+      "e_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+      "f_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+    }
+  },
+  "sequence_source_record_count": 111,
+  "output_files": [
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/deep_baseline_oof_embeddings_long.csv",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/deep_baseline_oof_embeddings_summary.json",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/representation_manifest.json",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/checkpoint_manifest.csv",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/checkpoint_manifest.json",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/training_curves.csv",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/fold_status.csv",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/training_protocol.json",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/resume_command.txt",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/run.log",
+    "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/progress.json"
+  ],
+  "blockers_path": null
+}

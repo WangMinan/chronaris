@@ -10,9 +10,15 @@ from chronaris.evaluation.fusion_stream_structure.contracts import (
     normalize_method_name,
     validate_input_frame,
 )
+from chronaris.evaluation.fusion_stream_structure.deep_baseline_representation_types import (
+    DeepBaselineRepresentationExportConfig,
+    DeepBaselineRepresentationExportResult,
+)
 
 __all__ = [
     "ContractError",
+    "DeepBaselineRepresentationExportConfig",
+    "DeepBaselineRepresentationExportResult",
     "FusionStreamContract",
     "FusionStreamRecord",
     "FusionStreamRunConfig",
