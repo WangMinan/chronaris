@@ -1,17 +1,21 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-05
+更新时间：2026-07-06
 
 ## 当前任务
 
-本轮任务是本地命名迁移和产物整理，不启动新实验，不重跑重型训练，不改 confirmed metrics，不 push。
+命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-06）新增任务是 **fusion stream structure evaluation planning（E3 融合表示流结构评价开发计划）**：只产出计划文档，不编码、不训练、不改 confirmed metrics。
 
-验收关注点：
+- 计划入口：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`（report / input_contract / metric_contract / implementation_plan / acceptance_checklist / evidence_manifest）。
+- 计划结论：保留 T1/T2；T3 叙事降级为历史检索诊断 / 片段级复盘前置参考（artifact 不删除）；新增 E3，第一批实现 ClaSPy + STUMPY，TICC 列备选。
+- 后续编码任务**需等待人工 review 本计划后再执行**。
 
-- `src/`、`scripts/`、`tests/` 当前路径不再使用阶段编号式命名。
-- 当前产物入口统一在 `docs/artifacts/runs/YYYY-MM-DD_intent/`。
-- 旧编号只保留在 `docs/artifacts/archive/`、`docs/artifacts/cleanup/` 和 `docs/maintenance/2026-07-05_name-migration-map.md`。
-- import、脚本入口、README、manifest、registry 和 result matrix 能追溯到新路径。
+验收关注点（本轮 planning）：
+
+- 计划文档齐全且与既有 T1/T2/T3、论文协议快照、claim boundary 不冲突。
+- 未创建 `src/scripts/tests` 实现文件或空占位。
+- 未改 confirmed metrics、未回写 `result_matrix_long.csv` / `experiment_registry.csv` / `claim_boundary_table.csv`。
+- `git diff --check`、`compileall` 通过。
 
 ## 当前代码结构
 
@@ -76,7 +80,7 @@
 
 完整产物导航见 `docs/artifacts/ARTIFACTS.md`。
 
-## 已验证
+## 已验证（命名迁移轮）
 
 1. `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m compileall src scripts tests`
 2. `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest -q`，结果为 `213 passed, 8 skipped, 78 warnings`。
@@ -84,3 +88,9 @@
 4. `docs/artifacts/runs/` manifest、registry、result matrix、resume command 旧路径审计通过；没有残留 `docs/artifacts/assets`、`docs/reports/assets`、`docs/artifacts/task_eval` 或 `scripts/task_eval` 引用。
 5. 入口文档路径存在性检查通过：55 个真实路径，0 缺失。
 6. `git diff --check`、`git lfs status`、`git lfs fsck` 通过。
+
+## 本轮 planning 校验
+
+- 本轮仅新增/更新 docs，未改 `src/scripts/tests`。
+- `compileall src scripts tests`、`git diff --check` 通过。
+- 未改 confirmed metrics，未回写论文协议快照。
