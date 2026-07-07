@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-05
+更新时间：2026-07-06
 
 ## 一句话状态
 
-仓库已经完成一次本地命名迁移：当前源码、脚本、测试和可引用产物入口已从阶段编号式命名改为“职责 + 日期 + 意图”的命名。当前工作没有重跑训练、没有改 confirmed metrics、没有推送远端。
+命名迁移已完成。本轮新增“融合表示流结构评价（E3）”开发计划（`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`），只产出计划文档：未编码、未训练、未改 confirmed metrics。后续编码需人工 review 本计划后再执行。
 
 ## 当前入口
 
@@ -32,6 +32,7 @@
 
 ## 后续队列
 
-1. 本轮迁移未 push；如需发布，先复核大范围 rename diff 和 LFS 状态。
-2. 后续如继续实验，只在新命名入口下新增 run root，不恢复旧阶段编号入口。
-3. 可另起任务处理仿真压力测试、检索任务提升或论文材料化工作。
+1. 人工 review `docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/` 计划；通过后按 `implementation_plan.md` 阶段执行 E3 编码（contracts→clasp→stumpy→CLI→可选 ticc）。
+2. E3 编码必须遵守：只在新 run root 产出、外部库 gated import + fallback、不回写论文协议快照、不与 T1/T2/T3 confirmed metrics 混算、不删 T3 artifact。
+3. 后续如继续实验，只在新命名入口下新增 run root，不恢复旧阶段编号入口。
+4. 可另起任务处理仿真压力测试、检索任务提升或论文材料化工作。
