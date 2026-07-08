@@ -1,0 +1,267 @@
+{
+  "run_id": "2026-07-08_chronaris-controlled-optimization-dev",
+  "status": "completed",
+  "training_invoked": true,
+  "candidate_count": 8,
+  "smoke_pass_count": 8,
+  "dev_completed_count": 8,
+  "pareto_selected_candidate": "chr_v2_residual_delta_h64",
+  "locked_candidate_id": "chr_v2_residual_delta_h64",
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "old_deep_baseline_modified": false,
+  "old_e3_validation_modified": false,
+  "representation_root": "docs/artifacts/runs/2026-07-08_chronaris-oof-representation-export",
+  "dev_root": "docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-dev",
+  "confirm_root": "docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-confirm",
+  "selection": {
+    "selected_candidate_id": "chr_v2_residual_delta_h64",
+    "pareto_rows": [
+      {
+        "candidate_id": "chr_v2_residual_h64",
+        "t2_rmse": 347.5849433293766,
+        "t2_improved": true,
+        "t1_macro_f1": 0.16317016317016317,
+        "t1_balanced_accuracy": 0.32407407407407407,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      },
+      {
+        "candidate_id": "chr_v2_residual_norm_h64",
+        "t2_rmse": 347.5849433293766,
+        "t2_improved": true,
+        "t1_macro_f1": 0.16317016317016317,
+        "t1_balanced_accuracy": 0.32407407407407407,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      },
+      {
+        "candidate_id": "chr_v2_residual_delta_h64",
+        "t2_rmse": 347.5849433293766,
+        "t2_improved": true,
+        "t1_macro_f1": 0.16317016317016317,
+        "t1_balanced_accuracy": 0.32407407407407407,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 1,
+        "e3_positive_signal": true,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": true
+      },
+      {
+        "candidate_id": "chr_v2_residual_h96_wd1e4",
+        "t2_rmse": 347.0400126863381,
+        "t2_improved": true,
+        "t1_macro_f1": 0.2608242044861763,
+        "t1_balanced_accuracy": 0.3333333333333333,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      },
+      {
+        "candidate_id": "chr_v2_residual_h64_do0p05",
+        "t2_rmse": 347.59926790079345,
+        "t2_improved": true,
+        "t1_macro_f1": 0.16317016317016317,
+        "t1_balanced_accuracy": 0.32407407407407407,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      },
+      {
+        "candidate_id": "chr_v2_noresidual_h64",
+        "t2_rmse": 347.38239388033367,
+        "t2_improved": true,
+        "t1_macro_f1": 0.16317016317016317,
+        "t1_balanced_accuracy": 0.32407407407407407,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      },
+      {
+        "candidate_id": "chr_v3_stream_role_h64",
+        "t2_rmse": 347.4741849318816,
+        "t2_improved": true,
+        "t1_macro_f1": 0.16666666666666666,
+        "t1_balanced_accuracy": 0.3333333333333333,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      },
+      {
+        "candidate_id": "chr_v3_fixed_causal_norm_h64",
+        "t2_rmse": 347.4741849318816,
+        "t2_improved": true,
+        "t1_macro_f1": 0.27186147186147186,
+        "t1_balanced_accuracy": 0.35185185185185186,
+        "t1_not_degraded": true,
+        "e3_positive_signal_count": 0,
+        "e3_positive_signal": false,
+        "completed_fold_count": 3,
+        "expected_fold_count": 3,
+        "pareto_pass": false
+      }
+    ],
+    "selection_rule": "T2 RMSE improvement; T1 macro-F1/balanced accuracy within 0.02 of old Chronaris; at least one target E3 metric improved; all dev folds complete."
+  },
+  "old_reference_metrics": {
+    "t1": {
+      "balanced_accuracy": {
+        "chronaris": 0.3333333333333333,
+        "mult": 0.3532763532763532,
+        "contiformer": 0.356125356125356,
+        "naive_or_classical": 0.3504273504273504
+      },
+      "macro_f1": {
+        "chronaris": 0.1733333333333333,
+        "mult": 0.203459684898388,
+        "contiformer": 0.2095579035396664,
+        "naive_or_classical": 0.211837227644681
+      }
+    },
+    "t2": {
+      "mae": {
+        "chronaris": 762.5578999733825,
+        "mult": 273.38187323676215,
+        "contiformer": 273.5298546685113,
+        "naive_or_classical": 360.9690202958808
+      },
+      "nrmse": {
+        "chronaris": 8.780987018657159,
+        "mult": 2.237883859210544,
+        "contiformer": 2.23608136177063,
+        "naive_or_classical": 4.111481326727145
+      },
+      "rmse": {
+        "chronaris": 838.121039184215,
+        "mult": 344.28897466792205,
+        "contiformer": 344.3351099592478,
+        "naive_or_classical": 463.13663933056176
+      }
+    },
+    "e3": {
+      "clap_state_replay_consistency": {
+        "chronaris": 1.0,
+        "mult": 1.0,
+        "contiformer": 1.0,
+        "naive_time_sync": 1.0
+      },
+      "cp_tolerance_hit_rate": {
+        "chronaris": 0.0,
+        "mult": 0.0,
+        "contiformer": 0.0,
+        "naive_time_sync": 0.0
+      },
+      "cross_view_segment_stability": {
+        "chronaris": 1.0,
+        "mult": 1.0,
+        "contiformer": 1.0,
+        "naive_time_sync": 1.0
+      },
+      "discord_maneuver_overlap": {
+        "chronaris": 0.0714285714285714,
+        "mult": 0.0714285714285714,
+        "contiformer": 0.0714285714285714,
+        "naive_time_sync": 0.0714285714285714
+      },
+      "discord_physio_overlap": {
+        "chronaris": 0.15,
+        "mult": 0.15,
+        "contiformer": 0.15,
+        "naive_time_sync": 0.0666666666666666
+      },
+      "event_alignment_score": {
+        "chronaris": 0.1011904761904761,
+        "mult": 0.1011904761904761,
+        "contiformer": 0.1011904761904761,
+        "naive_time_sync": 0.1011904761904761
+      },
+      "fluss_clasp_agreement": {
+        "chronaris": null,
+        "mult": null,
+        "contiformer": null,
+        "naive_time_sync": null
+      },
+      "fragment_replay_recall": {
+        "chronaris": null,
+        "mult": null,
+        "contiformer": null,
+        "naive_time_sync": null
+      },
+      "motif_event_consistency": {
+        "chronaris": 0.0,
+        "mult": 0.0,
+        "contiformer": 0.0,
+        "naive_time_sync": 0.0
+      },
+      "mp_discord_isolation": {
+        "chronaris": 4.0,
+        "mult": 4.0,
+        "contiformer": 4.0,
+        "naive_time_sync": 2.870514625492864
+      },
+      "nn_segment_cross_view_consistency": {
+        "chronaris": null,
+        "mult": null,
+        "contiformer": null,
+        "naive_time_sync": null
+      },
+      "replay_consistency_score": {
+        "chronaris": 0.5,
+        "mult": 0.5,
+        "contiformer": 0.5,
+        "naive_time_sync": 0.5
+      },
+      "segment_event_purity": {
+        "chronaris": 0.3333333333333333,
+        "mult": 0.3333333333333333,
+        "contiformer": 0.3333333333333333,
+        "naive_time_sync": 0.3333333333333333
+      },
+      "snippet_coverage": {
+        "chronaris": 0.1111111111111111,
+        "mult": 0.1111111111111111,
+        "contiformer": 0.1111111111111111,
+        "naive_time_sync": 0.1111111111111111
+      },
+      "state_count": {
+        "chronaris": 1.0,
+        "mult": 1.0,
+        "contiformer": 1.0,
+        "naive_time_sync": 1.0
+      },
+      "structure_stability_score": {
+        "chronaris": null,
+        "mult": null,
+        "contiformer": null,
+        "naive_time_sync": null
+      },
+      "transition_entropy": {
+        "chronaris": 0.0,
+        "mult": 0.0,
+        "contiformer": 0.0,
+        "naive_time_sync": 0.0
+      }
+    }
+  }
+}

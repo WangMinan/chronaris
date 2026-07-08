@@ -4,7 +4,7 @@
 
 ## 当前任务
 
-命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07/2026-07-08）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码、第二轮 evaluator validation、第三方来源审计、deep baseline representation export、四方法 Dingxin validation 和结果审查：新增独立评价层、CLI、测试、no-training dry run、MulT / ContiFormer source audit、回归任务 held-out pooled embedding 导出、四方法结构评价与论文可用性判断；仅 deep baseline export run 训练 MulT / ContiFormer，不改 confirmed metrics。
+命名迁移已完成（见 `docs/maintenance/2026-07-05_name-migration-map.md`）。本轮（2026-07-07/2026-07-08）已执行 **fusion stream structure evaluation（E3 融合表示流结构评价）** 第一批编码、第二轮 evaluator validation、第三方来源审计、deep baseline representation export、四方法 Dingxin validation、结果审查和 Chronaris 受控候选优化：新增独立评价层、CLI、测试、no-training dry run、MulT / ContiFormer source audit、回归任务 held-out pooled embedding 导出、四方法结构评价、论文可用性判断，以及固定 split / labels / evaluator 下的 Chronaris 候选开发与 locked confirmation；confirmed metrics、论文协议快照和历史检索 artifact 均未改动。
 
 - 计划入口：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`（report / input_contract / metric_contract / implementation_plan / acceptance_checklist / evidence_manifest）。
 - 执行入口：`src/chronaris/evaluation/fusion_stream_structure/` 与 `scripts/evaluation/fusion_stream_structure/run_fusion_stream_structure_benchmark.py`。
@@ -13,6 +13,9 @@
 - deep baseline 表示导出入口：`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`，协议为回归任务（`T2_next_window_physiology_response`）+ `leave_one_view_out` + seed17 + `pooled_embedding`；MulT / ContiFormer 均完成 3 folds、各 108 行 OOF embedding。
 - 四方法 Dingxin E3 validation 入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`，方法为 `chronaris` / `naive_time_sync` / `mult` / `contiformer`，本 run `training_invoked=false`。
 - E3 结果审查入口：`docs/artifacts/runs/2026-07-08_e3-result-review/`，结论为 `D. needs_chronaris_optimization`；当前 E3 对 Chronaris 是 mixed、非差异性结果，不建议作为论文正文优势证据；已生成下一轮受控优化 prompt。
+- Chronaris 受控优化开发入口：`docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-dev/`，注册 8 个候选、8 个 smoke 通过、8 个 dev run 完成，Pareto 选择 `chr_v2_residual_delta_h64`。
+- Chronaris locked confirmation 入口：`docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-confirm/`，锁定候选为 `chr_v2_residual_delta_h64`；回归任务相对旧 Chronaris 显著改善，但仍略弱于固定 MulT / ContiFormer 回归 baseline，E3 只出现一个 motif 正向信号。
+- Chronaris OOF 表示导出入口：`docs/artifacts/runs/2026-07-08_chronaris-oof-representation-export/`，8 个候选共 972 行 held-out pooled embedding，表示族为 `Chronaris_T2_response_lovo_seed17_pooled_embedding`。
 - 历史首轮 fallback 产物入口：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-execution/` 与 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-dry-run/`。
 - 当前环境已安装并验证 `claspy 0.2.8` / `stumpy 1.14.1`；ClaSP 与 STUMPY 真实 evaluator 已启用，CLaP 在短序列上保留结构化 `clap_unavailable`。
 
@@ -22,6 +25,8 @@
 - 小规模 Dingxin dry run 只使用既有 feature export 和可复用 `feature_values`；source audit 确认 `mult` / `contiformer` 当前无可复用融合表示流或可加载 checkpoint，已写 `method_unavailable`，未训练补齐。
 - deep baseline export run 只训练 MulT / ContiFormer；导出的 `fusion_feature_*` 来自 held-out fold inference 的 `pooled_embedding`，不包含 logits、预测值、rank、embedding norm 或 attention diagnostics。
 - 四方法 Dingxin E3 validation 只消费已导出的表示和既有 `chronaris` / `naive_time_sync` 融合流；该结构评价不写单一 winner，也不替代分类任务和回归任务。
+- Chronaris 受控优化只在新 run root 训练和导出候选表示；固定 MulT / ContiFormer baseline、固定四方法 E3 evaluator、固定 split / labels，不回写论文协议快照或 confirmed metrics。
+- locked candidate `chr_v2_residual_delta_h64` 的论文建议位置是补充或附录诊断：它修复旧 Chronaris 回归任务明显落后问题，并给出一个 E3 motif 正向信号，但不能写成整体优于 MulT / ContiFormer。
 - 未改 confirmed metrics、未回写 `result_matrix_long.csv` / `experiment_registry.csv` / `claim_boundary_table.csv`。
 - 相关测试、`compileall`、`git diff --check` 需在本轮提交前保持通过。
 
@@ -68,6 +73,9 @@
 - E3 deep baseline 表示导出：`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`
 - E3 四方法 Dingxin validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`
 - E3 结果审查与论文可用性判断：`docs/artifacts/runs/2026-07-08_e3-result-review/`
+- E3 Chronaris 受控优化开发：`docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-dev/`
+- E3 Chronaris locked confirmation：`docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-confirm/`
+- E3 Chronaris OOF 表示导出：`docs/artifacts/runs/2026-07-08_chronaris-oof-representation-export/`
 - E3 开发计划：`docs/artifacts/runs/2026-07-06_fusion-stream-structure-plan/`
 - 论文协议快照：`docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/`
 - 指标校准：`docs/artifacts/runs/2026-07-02_metric-calibration/`
@@ -117,6 +125,9 @@
 - 已完成 deep baseline representation export：`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`。`training_invoked=true`；MulT / ContiFormer 各完成 3 个 leave-one-view-out folds、各 108 行 held-out pooled embedding；`deep_baseline_oof_embeddings_long.csv` 和 checkpoint manifest 已写出。
 - 已完成四方法 Dingxin E3 validation：`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`。`training_invoked=false`；四方法各 108 行输入；`metric rows=160`，`completed=124`，`unavailable=36`；ClaSP `completed:12`，STUMPY `completed:12`，CLaP `clap_unavailable:12`。
 - 已完成 E3 结果审查：`docs/artifacts/runs/2026-07-08_e3-result-review/`。四方法各 108 行输入均完整；当前 E3 指标大多并列或为零信号，CLaP 全部 unavailable；结论为 `D. needs_chronaris_optimization`，E3 不进入正文主证明，只作为附录诊断或下一轮 Chronaris 受控优化依据。
+- 已完成 Chronaris 受控候选优化：`docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-dev/` 注册 8 个候选、8 个 smoke 通过、8 个 dev run 完成；Pareto 选择 `chr_v2_residual_delta_h64`，依据为回归任务改善、分类任务无明显退化和一个目标 E3 正向信号。
+- 已完成 Chronaris locked confirmation：`docs/artifacts/runs/2026-07-08_chronaris-controlled-optimization-confirm/`。锁定候选回归任务 RMSE 为 347.009106，相对旧 Chronaris 838.121039 改善，但仍略弱于 MulT 344.288975 与 ContiFormer 344.335110；分类任务 macro-F1 从 0.173333 到 0.166667，balanced accuracy 保持 0.333333；E3 `motif_event_consistency` 从 0 到 1，其他目标结构指标仍并列。
+- 已完成 Chronaris OOF 表示导出：`docs/artifacts/runs/2026-07-08_chronaris-oof-representation-export/`。`training_invoked=true`；8 个候选、972 行 held-out pooled embedding、selected candidate 含 dev 与 locked confirmation 两组 216 行；confirmed metrics 与论文协议快照未改。
 - `claspy 0.2.8` / `stumpy 1.14.1` 已安装并通过 import 与 wrapper smoke test；STUMPY import 由代码设置 `NUMBA_DISABLE_CUDA=1`，避免当前 WSL/CUDA 探测崩溃。
 - 未改 confirmed metrics，未回写论文协议快照，未删除历史检索 artifact。
-- 已验证：`compileall` 通过；`pytest -q tests/evaluation/fusion_stream_structure` 为 `21 passed, 1 warning`；全量 `pytest -q` 为 `234 passed, 8 skipped, 318 warnings`。
+- 已重新验证：`compileall` 通过；`pytest -q tests/evaluation/fusion_stream_structure` 为 `34 passed, 1 warning`；全量 `pytest -q` 为 `247 passed, 8 skipped, 318 warnings`；`git diff --check` 通过。

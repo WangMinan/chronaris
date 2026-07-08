@@ -1,0 +1,54 @@
+{
+  "run_id": "2026-07-08_chronaris-oof-representation-export",
+  "status": "completed",
+  "training_invoked": true,
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "old_deep_baseline_modified": false,
+  "old_e3_validation_modified": false,
+  "representation_family": "Chronaris_T2_response_lovo_seed17_pooled_embedding",
+  "task_name": "T2_next_window_physiology_response",
+  "split_strategy": "leave_one_view_out",
+  "seed": 17,
+  "runtime_device": "cuda",
+  "sequence_sample_count": 108,
+  "candidate_count": 8,
+  "embedding_row_count": 972,
+  "candidate_counts": {
+    "chr_v2_noresidual_h64": 108,
+    "chr_v2_residual_delta_h64": 216,
+    "chr_v2_residual_h64": 108,
+    "chr_v2_residual_h64_do0p05": 108,
+    "chr_v2_residual_h96_wd1e4": 108,
+    "chr_v2_residual_norm_h64": 108,
+    "chr_v3_fixed_causal_norm_h64": 108,
+    "chr_v3_stream_role_h64": 108
+  },
+  "feature_dimensions": {
+    "chr_v2_noresidual_h64": 192,
+    "chr_v2_residual_delta_h64": 384,
+    "chr_v2_residual_h64": 192,
+    "chr_v2_residual_h64_do0p05": 192,
+    "chr_v2_residual_h96_wd1e4": 288,
+    "chr_v2_residual_norm_h64": 192,
+    "chr_v3_fixed_causal_norm_h64": 192,
+    "chr_v3_stream_role_h64": 192
+  },
+  "source_manifest_paths": {
+    "e_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "f_run_manifest_path": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+  },
+  "run_type": "chronaris_oof_representation_export",
+  "branch": "implement/fusion-stream-structure-20260707",
+  "commit": "2a376ec479dde08cd63318d1636b06b6cf476893",
+  "created_at_utc": "2026-07-08T09:35:07.224052Z",
+  "output_files": [
+    "chronaris_oof_embeddings_long.csv",
+    "chronaris_oof_embeddings_summary.json",
+    "checkpoint_manifest.csv",
+    "checkpoint_manifest.json",
+    "representation_manifest.json",
+    "fold_status.csv",
+    "training_curves.csv"
+  ]
+}
