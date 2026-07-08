@@ -56,6 +56,16 @@ stumpy,completed,60
 stumpy,unavailable,20
 ```
 
+
+Evaluator runtime status from the validation manifest:
+
+```csv
+section,key,status,count
+evaluator_runtime_status,clasp,completed,12
+evaluator_runtime_status,clap,clap_unavailable,12
+evaluator_runtime_status,stumpy,completed,12
+```
+
 No method was silently dropped. Four methods each have 108 input rows. The validation run reports `confirmed_metrics_changed=false` and `training_invoked=false`; only the upstream deep baseline representation export has `training_invoked=true`.
 
 ## 5. E3 Metric Summary

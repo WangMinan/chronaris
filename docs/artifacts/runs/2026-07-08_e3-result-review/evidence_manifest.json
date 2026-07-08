@@ -49,6 +49,17 @@
       "stumpy": {
         "completed": 12
       }
+    },
+    "evaluator_runtime_status_counts": {
+      "clasp": {
+        "completed": 12
+      },
+      "clap": {
+        "clap_unavailable": 12
+      },
+      "stumpy": {
+        "completed": 12
+      }
     }
   },
   "deep_export_context": {
@@ -62,7 +73,7 @@
   "key_findings": [
     "Four methods each have 108 input rows; no method was silently dropped.",
     "E3 validation run has training_invoked=false and confirmed_metrics_changed=false.",
-    "CLaP is unavailable for all 12 streams, so CLaP-dependent rows are diagnostic only.",
+    "CLaP runtime status is clap_unavailable for all 12 streams; CLaP-dependent rows are diagnostic only.",
     "Available direction-aware E3 metrics are mostly tied, non-differentiating, and often zero, so E3 does not support a Chronaris advantage claim.",
     "T2 third-party comparison remains unfavorable for Chronaris versus MulT and ContiFormer, motivating controlled Chronaris optimization."
   ],
