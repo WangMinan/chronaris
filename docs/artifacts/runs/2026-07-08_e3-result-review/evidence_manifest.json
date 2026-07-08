@@ -1,0 +1,84 @@
+{
+  "run_id": "2026-07-08_e3-result-review",
+  "run_type": "e3_result_review",
+  "generated_at_utc": "2026-07-08T03:15:23.469735+00:00",
+  "branch": "implement/fusion-stream-structure-20260707",
+  "head_commit": "60cafb83d1cf13a3846ce9e3e087690125c17853",
+  "target_commit": "60cafb83d1cf13a3846ce9e3e087690125c17853",
+  "training_invoked": false,
+  "tuning_invoked": false,
+  "e3_rerun_invoked": false,
+  "confirmed_metrics_changed": false,
+  "thesis_protocol_snapshot_modified": false,
+  "t3_artifact_deleted": false,
+  "paper_use_decision": "D. needs_chronaris_optimization",
+  "e3_overall_chronaris_performance": "mixed",
+  "input_artifacts": {
+    "e3_metrics_long": "docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/e3_metrics_long.csv",
+    "e3_summary": "docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/e3_summary.json",
+    "e3_evidence_manifest": "docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/evidence_manifest.json",
+    "deep_export_summary": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/deep_baseline_oof_embeddings_summary.json",
+    "deep_export_representation_manifest": "docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/representation_manifest.json",
+    "thesis_result_matrix_long": "docs/artifacts/runs/2026-07-03_thesis-protocol-snapshot/result_matrix_long.csv",
+    "dingxin_thirdparty_long": "docs/artifacts/runs/2026-07-02_dingxin-thirdparty-comparison/private_third_party_long.csv",
+    "metric_calibration_t1": "docs/artifacts/runs/2026-07-02_metric-calibration/t1_calibration_metrics.csv"
+  },
+  "e3_completeness": {
+    "metric_row_count": 160,
+    "completed_metric_row_count": 124,
+    "unavailable_metric_row_count": 36,
+    "input_row_counts_by_method": {
+      "chronaris": 108,
+      "contiformer": 108,
+      "mult": 108,
+      "naive_time_sync": 108
+    },
+    "feature_dimensions_by_method": {
+      "chronaris": 480,
+      "contiformer": 64,
+      "mult": 128,
+      "naive_time_sync": 9710
+    },
+    "evaluator_status_counts": {
+      "clasp": {
+        "completed": 12
+      },
+      "clap": {
+        "clap_unavailable": 12
+      },
+      "stumpy": {
+        "completed": 12
+      }
+    }
+  },
+  "deep_export_context": {
+    "training_invoked": true,
+    "representation_family": "T2_response_lovo_seed17_pooled_embedding",
+    "method_counts": {
+      "contiformer": 108,
+      "mult": 108
+    }
+  },
+  "key_findings": [
+    "Four methods each have 108 input rows; no method was silently dropped.",
+    "E3 validation run has training_invoked=false and confirmed_metrics_changed=false.",
+    "CLaP is unavailable for all 12 streams, so CLaP-dependent rows are diagnostic only.",
+    "Available direction-aware E3 metrics are mostly tied, non-differentiating, and often zero, so E3 does not support a Chronaris advantage claim.",
+    "T2 third-party comparison remains unfavorable for Chronaris versus MulT and ContiFormer, motivating controlled Chronaris optimization."
+  ],
+  "output_files": [
+    "docs/artifacts/runs/2026-07-08_e3-result-review/report.md",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/paper_use_decision.md",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/e3_method_metric_summary.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/e3_status_summary.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/chronaris_supportive_metrics.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/chronaris_mixed_metrics.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/chronaris_unfavorable_metrics.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/t1_t2_e3_consistency_table.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/figure_inventory.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/figure_candidate_table.csv",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/risk_and_boundary.md",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/next_prompt_for_chronaris_controlled_optimization.md",
+    "docs/artifacts/runs/2026-07-08_e3-result-review/evidence_manifest.json"
+  ]
+}

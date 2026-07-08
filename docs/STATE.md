@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-“融合表示流结构评价（E3）”已完成 Dingxin deep baseline representation export 和四方法 Dingxin validation：本轮只在 `docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/` 训练 MulT 与 ContiFormer，按回归任务（`T2_next_window_physiology_response`）+ leave-one-view-out + seed17 导出 held-out pooled embedding；四方法 run `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/` 已完成，`chronaris` / `naive_time_sync` / `mult` / `contiformer` 均可用；未改 confirmed metrics、未回写论文协议快照、未删除历史检索 artifact。
+“融合表示流结构评价（E3）”已完成 Dingxin deep baseline representation export、四方法 Dingxin validation 和结果审查：本轮只在 `docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/` 训练 MulT 与 ContiFormer，按回归任务（`T2_next_window_physiology_response`）+ leave-one-view-out + seed17 导出 held-out pooled embedding；四方法 run `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/` 已完成，`chronaris` / `naive_time_sync` / `mult` / `contiformer` 均可用；审查 run `docs/artifacts/runs/2026-07-08_e3-result-review/` 判定当前 E3 结果为 mixed，论文可用性为 D 类（建议进入 Chronaris 受控优化，不作为正文优势证据）；未改 confirmed metrics、未回写论文协议快照、未删除历史检索 artifact。
 
 ## 当前入口
 
@@ -29,11 +29,11 @@
 - 已将历史阶段编号报告、旧资产目录和兼容 symlink 迁入 `docs/artifacts/archive/`。
 - 已补充 `docs/artifacts/README.md` 和迁移记录。
 - 已完成验证：`compileall`、全量 `pytest -q`、活动路径/文本命名审计、artifact manifest/resume command 旧路径审计、入口文档路径存在性检查、`git diff --check`、`git lfs status`、`git lfs fsck`。
-- 已完成 E3 第一批实现、第二轮 evaluator-enabled 验证、MulT / ContiFormer 来源审计，以及后续 deep baseline OOF 表示导出：合同/加载/预处理、ClaSP/CLaP gated wrapper、STUMPY Matrix Profile wrapper、结构指标、报告、CLI、合成数据 validation run、小规模 Dingxin validation run、来源审计、`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/` 和 `docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/`。
+- 已完成 E3 第一批实现、第二轮 evaluator-enabled 验证、MulT / ContiFormer 来源审计、deep baseline OOF 表示导出、四方法 Dingxin validation 和结果审查：合同/加载/预处理、ClaSP/CLaP gated wrapper、STUMPY Matrix Profile wrapper、结构指标、报告、CLI、合成数据 validation run、小规模 Dingxin validation run、来源审计、`docs/artifacts/runs/2026-07-07_deep-baseline-representation-export/`、`docs/artifacts/runs/2026-07-07_fusion-stream-structure-dingxin-four-method-validation/` 和 `docs/artifacts/runs/2026-07-08_e3-result-review/`。
 
 ## 后续队列
 
 1. CLaP 在当前 Dingxin 四方法短序列 validation 中仍未稳定形成多状态标签，已按 `clap_unavailable:12` 保留；后续若扩大样本或更换固定协议，必须另起 run root 并记录判据。
-2. 四方法 E3 是结构评价补充证据，不替代分类任务和回归任务；MulT / ContiFormer 表示来自回归任务训练后的 held-out pooled embedding，是否进入论文需后续人工 review。
-3. E3 后续实验仍必须只在新 run root 产出，不回写论文协议快照，不与分类、回归和历史检索 confirmed metrics 混算，不删除历史检索 artifact。
-4. 可另起任务处理仿真压力测试、历史检索任务提升或论文材料化工作。
+2. 四方法 E3 是结构评价补充证据，不替代分类任务和回归任务；审查结论为当前 E3 不适合作为正文优势证据，只可作为附录诊断或下一轮优化依据。
+3. 下一轮若推进 Chronaris 受控优化，应使用 `docs/artifacts/runs/2026-07-08_e3-result-review/next_prompt_for_chronaris_controlled_optimization.md`，固定 MulT / ContiFormer 表示、固定 E3 evaluator，并同时看分类任务、回归任务和 E3 的 Pareto 结果。
+4. E3 后续实验仍必须只在新 run root 产出，不回写论文协议快照，不与分类、回归和历史检索 confirmed metrics 混算，不删除历史检索 artifact。
