@@ -289,6 +289,16 @@ MiniRocket 是主实验依赖；ClaSP/STUMPY 保持可选 gated import。无需 
 - 禁止字段注入测试能拒绝 logits/labels/diagnostics。
 - 中断一个 fold 后 `--resume` 能从下一个未完成 fold 继续。
 
+### 7.5 2026-07-11 执行结果
+
+- 新增 `chronaris.representation` 基础层，冻结 30 秒上下文、96 点查询轴和 64 维融合表示的张量、掩码与来源合同。
+- 仿真加载器只接受独立观测归档；真值字段或额外字段注入直接失败。鼎新加载器从固定 snapshot 形成 12 个生理字段和 955 个跨架次同序航电字段，20 个机动标签源全部排除。
+- 实现训练折中位数/四分位距归一化、无监督主成分投影、检查点注册表、严格表示序列化、留出折导出、覆盖检查和恢复复用。
+- 公共训练增强 realization 只由样本标识、epoch 和随机种子派生，API 不接收方法名。
+- 六个方法接口使用合同探针完成 6/6 输出与 6/6 恢复复用，样本标识、查询时间、有效掩码和留出折检查点来源完全一致；探针输出不作为模型结果。
+- `aeon==1.5.0` 已进入 `application-eval` 可选依赖；统一合同正式冒烟验证 14/14 通过，相关聚焦测试 20 个通过。
+- 紧凑 run 为 `docs/artifacts/runs/2026-07-11_representation-contract-smoke/`；探针检查点和稠密表示只保存在被忽略的 `artifacts/application_evaluation/`。
+
 ## 8. 工作包 E：六方法编码器
 
 ### 8.1 单流与朴素同步

@@ -1,0 +1,29 @@
+from __future__ import annotations
+
+import inspect
+
+from chronaris.representation import (
+    build_augmentation_realization,
+    build_batch_augmentation_realizations,
+)
+
+
+def test_augmentation_realization_is_seeded_by_sample_epoch_not_method():
+    first = build_augmentation_realization(sample_id="sample_a", epoch=3, global_seed=17)
+    second = build_augmentation_realization(sample_id="sample_a", epoch=3, global_seed=17)
+    changed = build_augmentation_realization(sample_id="sample_a", epoch=4, global_seed=17)
+
+    assert first == second
+    assert first.augmentation_id != changed.augmentation_id
+    assert "method" not in inspect.signature(build_augmentation_realization).parameters
+
+
+def test_batch_augmentation_preserves_sample_order_and_never_drops_both_modalities():
+    values = build_batch_augmentation_realizations(
+        ("sample_b", "sample_a"),
+        epoch=1,
+        global_seed=23,
+    )
+
+    assert tuple(value.sample_id for value in values) == ("sample_b", "sample_a")
+    assert all(value.dropped_modality in {None, "physiology", "vehicle"} for value in values)

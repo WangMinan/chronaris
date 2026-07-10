@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-07-11_representation-contract-smoke",
+  "status": "completed",
+  "evidence_layer": "representation_contract_smoke_only",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke",
+  "probe_outputs_are_model_results": false,
+  "output_paths": {
+    "input_schema": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/input_schema.json",
+    "representation_schema": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/representation_schema.json",
+    "sample_order_manifest": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/sample_order_manifest.json",
+    "fold_transform_manifest": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/fold_transform_manifest.json",
+    "oof_export_manifest": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/oof_export_manifest.json",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_representation-contract-smoke/evidence_manifest.json"
+  }
+}

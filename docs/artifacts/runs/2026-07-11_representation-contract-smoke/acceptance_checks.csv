@@ -1,0 +1,15 @@
+check_id,passed,actual,expected
+simulation_observed_batch,True,3,3
+dingxin_observed_batch,True,1,1
+query_contract_96,True,96,96
+dingxin_label_sources_excluded,True,20,20
+normalizer_train_only,True,['g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000'],['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000']
+pca_train_only,True,['g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000'],['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000']
+checkpoint_registry_complete,True,6,6
+six_method_slot_exports,True,6,6
+resume_reuses_complete_exports,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed']",all resumed
+method_alignment,True,b2761df06f5fa75c091ead957f42a8844c8cc81658a4c639dd069d86137171a9,SHA-256
+fixed_output_dimension,True,"[64, 64, 64, 64, 64, 64]",64
+held_out_checkpoint_lineage,True,"[['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000'], ['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000'], ['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000'], ['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000'], ['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000'], ['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000']]",['g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000']
+task_labels_not_used,True,False,False
+aeon_optional_dependency,True,1.5.0,1.5.0
