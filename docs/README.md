@@ -1,6 +1,6 @@
 # Chronaris 文档入口
 
-更新时间：2026-07-04
+更新时间：2026-07-10
 
 本目录按 AI coding 使用方式重新组织。顶层只承担导航和状态入口；具体计划、需求、产物、review 记录分别下沉到专门目录。
 
@@ -34,6 +34,10 @@
 - [requirements/选题报告与基金申请书/](requirements/选题报告与基金申请书/)：原始 Word 文档。
 - [requirements/foundation/](requirements/foundation/)：项目边界、架构和数据契约。
 - [requirements/model-contracts/](requirements/model-contracts/)：模型输入、批处理和早期原型协议。
+- [requirements/foundation/fixed-data-evidence-strategy.md](requirements/foundation/fixed-data-evidence-strategy.md)：固定数据、仿真、公开数据和结构诊断的证据职责。
+- [requirements/downstream-evaluation-spec.md](requirements/downstream-evaluation-spec.md)：当前真实/仿真应用任务与公平比较协议。
+- [requirements/synthetic-benchmark-spec.md](requirements/synthetic-benchmark-spec.md)：航空人机异步双流仿真基准规格。
+- [requirements/model-contracts/application-fusion-stream-contract.md](requirements/model-contracts/application-fusion-stream-contract.md)：六方法统一融合表示合同。
 
 解析 `.docx` 时必须使用 `$docx` skill 或文档插件，不要把 Word 文件当作普通文本猜读。
 
@@ -42,7 +46,7 @@
 产物入口。用于组织报告、图、CSV、JSON、checkpoint、manifest 等：
 
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：当前产物索引和引用规则。
-- [artifacts/stage/](artifacts/stage/)：按 [implementation/TASKS.md](implementation/TASKS.md) 的阶段组织产物。
+- [artifacts/runs/](artifacts/runs/)：按 `YYYY-MM-DD_intent` 组织当前可引用产物。
 - [artifacts/mid-term/](artifacts/mid-term/)：中期答辩证据包。
 - [artifacts/cleanup/](artifacts/cleanup/)：docs 产物清理记录，说明已清理内容、外置备份、LFS/历史处理和保留边界；当前 仓库收敛清理 记录见 [artifacts/cleanup/20260703-thesis-prep-cleanup.md](artifacts/cleanup/20260703-thesis-prep-cleanup.md)。
 
