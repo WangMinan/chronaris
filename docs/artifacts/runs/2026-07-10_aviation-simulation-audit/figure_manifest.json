@@ -1,0 +1,24 @@
+{
+  "figures": [
+    {
+      "path": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/figures/workload_distribution.png",
+      "title": "仿真负荷等级覆盖",
+      "purpose": "检查低、中、高负荷覆盖是否满足规格"
+    },
+    {
+      "path": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/figures/physics_and_lag_audit.png",
+      "title": "物理残差与生理时延审计",
+      "purpose": "检查生成族物理边界和响应时延可恢复性"
+    },
+    {
+      "path": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/figures/observation_quality.png",
+      "title": "观测缺失与时钟偏移",
+      "purpose": "检查不同压力场景的缺失与时钟偏移是否生效"
+    },
+    {
+      "path": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/figures/maneuver_state_coverage.png",
+      "title": "机动状态时间覆盖",
+      "purpose": "检查五类机动状态均形成可用片段"
+    }
+  ]
+}

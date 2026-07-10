@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-07-10_aviation-simulation-audit",
+  "status": "completed",
+  "evidence_layer": "method_independent_simulation_truth",
+  "mode": "formal",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+  "heavy_simulation_manifest": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/simulation_manifest.json",
+  "output_paths": {
+    "oracle_validation": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/oracle_validation.csv",
+    "paired_observation_audit": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/paired_observation_audit.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/acceptance_checks.csv",
+    "scenario_coverage": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/scenario_coverage.csv",
+    "generator_family_split": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/generator_family_split.json",
+    "generator_config": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/generator_config.json",
+    "figure_manifest": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/figure_manifest.json",
+    "report": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/resume_command.txt",
+    "progress": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/progress.json",
+    "run_log": "docs/artifacts/runs/2026-07-10_aviation-simulation-audit/run.log"
+  }
+}

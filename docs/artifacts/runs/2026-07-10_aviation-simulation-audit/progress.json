@@ -1,0 +1,30 @@
+{
+  "mode": "formal",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+  "stage_name": "aviation_simulation_existing_audit",
+  "run_id": "2026-07-10_aviation-simulation-audit",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T16:08:10.418415Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T16:08:09.794997Z",
+      "event": "start",
+      "mode": "formal",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "heavy_run_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
+    },
+    {
+      "timestamp_utc": "2026-07-10T16:08:10.418415Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 19,
+      "acceptance_check_count": 19
+    }
+  ],
+  "status": "completed",
+  "acceptance_pass_count": 19,
+  "acceptance_check_count": 19
+}
