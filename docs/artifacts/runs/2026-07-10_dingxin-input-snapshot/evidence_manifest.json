@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-07-10_dingxin-input-snapshot",
+  "status": "completed",
+  "evidence_layer": "dingxin_fixed_raw_input_snapshot",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "raw_values_committed": false,
+  "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
+  "source_manifest_hashes": {
+    "e_run_manifest_sha256": "57bb0de3477e48441df1d31dbdb8639745baacc082f48ba28ea12b0416c6a161",
+    "f_run_manifest_sha256": "9b0070432c5daf8279fe82b416bf62823763c7d0c0a7f5ebbea9dfb8dc824a3e"
+  },
+  "output_paths": {
+    "raw_snapshot_manifest": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/raw_snapshot_manifest.json",
+    "raw_snapshot_consistency": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/raw_snapshot_consistency.csv",
+    "raw_input_field_exclusion": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/raw_input_field_exclusion.csv",
+    "report": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/resume_command.txt",
+    "progress": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/progress.json",
+    "run_log": "docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/run.log"
+  }
+}

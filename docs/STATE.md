@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1 固定数据与标签泄漏审计已完成：111 个窗口形成 96 个机动分类上下文和 93 个未来生理响应上下文，5 个外层折均可构造训练折标签；本轮未训练模型、未修改既有确认指标。当前实施里程碑已推进到 G2a 鼎新原始异步点冻结。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1 固定数据审计和 G2a 原始异步点冻结均已完成：111 个窗口形成 96/93 个应用上下文；两份共享航电文件与三份 view 生理文件共冻结 57,648/2,715 个原始点，6/6 点数对账、20/20 标签源排除检查通过。本轮未训练模型、未修改既有确认指标。当前实施里程碑已推进到 G2b 方法无关半物理仿真器。
 
 ## 当前执行入口
 
@@ -16,6 +16,7 @@
 - 仿真生成器规格：[requirements/synthetic-benchmark-spec.md](requirements/synthetic-benchmark-spec.md)
 - 双流与融合表示合同：[requirements/model-contracts/application-fusion-stream-contract.md](requirements/model-contracts/application-fusion-stream-contract.md)
 - G1 固定数据审计：[artifacts/runs/2026-07-10_fixed-data-audit/report.md](artifacts/runs/2026-07-10_fixed-data-audit/report.md)
+- G2a 原始点冻结：[artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md](artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md)
 
 ## 已锁定事实
 
@@ -48,10 +49,14 @@
 - 生理响应审计确认 12 个唯一 EEG/SpO₂ 字段，5 个外层折均完成且无元数据错误。
 - 生成 `data_manifest`、字段角色、缺失率、sampling、fold 阈值、标签、split、overlap、进度和恢复命令等 G1 产物。
 - 将既有对齐后投影判定为可能包含机动标签源信息，明确拒绝把它直接用于新的防泄漏分类主结果。
+- 按锁定的 181 秒范围只读冻结两个 sortie 的原始点：每个 sortie 一份共享航电、每个 view 一份按 pilot 过滤的生理文件。
+- 原始 snapshot 使用确定性 gzip JSONL 和 SHA-256；5.3 MB 高频值位于 `artifacts/application_evaluation/`，未进入 Git/LFS。
+- 三个 view 的生理点均为 905；两个 sortie 的航电点均为 28,824，和既有 37 窗口逐项完全一致。
+- 20 个机动标签源字段都能在 snapshot 中复核，并全部进入原字段、统计、差分、变化率和标准化副本的排除合同。
+- `--resume` 在 2.47 秒内校验并复用 5 个文件，没有重复查询数据库。
 
 ## 当前未完成
 
-- 尚未实现原始 snapshot writer 和两架次原始异步点冻结。
 - 尚未实现 G1/G2 仿真器。
 - 尚未打通任务无关 Chronaris 连续融合编码器。
 - 尚未实现六方法统一 OOF 导出与应用下游 benchmark。
@@ -59,22 +64,23 @@
 
 ## 下一验收门
 
-G2a 必须在六方法真实数据训练前完成：
+G2b 必须在大规模模型 screen 前完成：
 
-1. 只读冻结白名单中两个 sortie 的生理与航电原始异步点。
-2. 把原始值写入被忽略的 `artifacts/application_evaluation/`，Git 中只保留紧凑 manifest 和审计摘要。
-3. 对齐 snapshot 的时间范围、measurement、字段名、点数与现有特征导出范围。
-4. 在原始输入合同中执行 G1 标签字段排除；禁止继续使用可能已编码标签源的历史投影完成机动分类主实验。
-5. 若 InfluxDB 原始点不可读，写结构化 unavailable 产物并继续仿真主线，不伪造原始数据。
+1. G1/G2 两个生成族的 API 不接受方法名、checkpoint 或候选配置。
+2. 生成同一潜在轨迹的 clean/stress 成对观测，并输出状态、负荷、边界、时钟和响应时延 oracle。
+3. 固定 96/24/48 潜在架次和 pilot/scenario/generator-family 隔离。
+4. 通过 seed 复现、物理范围、状态覆盖、lag 恢复和生成族隔离测试。
+5. 生成中文数据质量图，抽查标签、长标签、图例和数值可读性。
 
 ## 本轮验证
 
 - G1 正式 run：`completed`，MySQL metadata error 为 0，5 个 fold 均为 `completed`。
 - G1 focused tests：`7 passed`，覆盖分组隔离、test 值不影响阈值、未知字段 fail closed 和零 IQR 剔除。
 - G1 CLI 与新增包 `compileall`：通过。
-- 完整测试：`220 passed, 8 skipped, 317 warnings`。
+- G2a focused suite 合并后为 `10 passed`；正式 run 为 `completed`，resume 复核通过。
+- 完整测试：`223 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
-- 当前改动中没有 raw snapshot、bundle、checkpoint 或逐样本预测；G1 产物均为汇总、manifest 和可追溯标签表。
+- 当前 Git 改动中没有 raw snapshot、bundle、checkpoint 或逐样本预测；G1/G2a 入仓产物均为汇总、manifest 和可追溯审计表。
 
 ## 证据边界
 

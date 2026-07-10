@@ -1,0 +1,462 @@
+{
+  "run_id": "2026-07-10_dingxin-input-snapshot",
+  "status": "completed",
+  "generated_at_utc": "2026-07-10T15:22:58.148886+00:00",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
+  "raw_values_committed": false,
+  "allowed_sortie_ids": [
+    "20251005_四01_ACT-4_云_J20_22#01",
+    "20251002_单01_ACT-8_翼云_J16_12#01"
+  ],
+  "source_manifest_hashes": {
+    "e_run_manifest_sha256": "57bb0de3477e48441df1d31dbdb8639745baacc082f48ba28ea12b0416c6a161",
+    "f_run_manifest_sha256": "9b0070432c5daf8279fe82b416bf62823763c7d0c0a7f5ebbea9dfb8dc824a3e"
+  },
+  "source_run_manifests": [
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+  ],
+  "plans": [
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "pilot_id": 10033,
+      "start_utc": "2025-10-05T01:35:00+00:00",
+      "stop_utc": "2025-10-05T01:38:01+00:00",
+      "physiology_measurements": [
+        "eeg",
+        "spo2"
+      ],
+      "vehicle_measurements": [
+        "BUS6000019110015",
+        "BUS6000019110016",
+        "BUS6000019110017",
+        "BUS6000019110018",
+        "BUS6000019110019",
+        "BUS6000019110020"
+      ],
+      "expected_physiology_point_count": 905,
+      "expected_vehicle_point_count": 28824
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "pilot_id": 10035,
+      "start_utc": "2025-10-02T08:35:00+00:00",
+      "stop_utc": "2025-10-02T08:38:01+00:00",
+      "physiology_measurements": [
+        "eeg",
+        "spo2"
+      ],
+      "vehicle_measurements": [
+        "BUS6000019110021",
+        "BUS6000019110022",
+        "BUS6000019110023",
+        "BUS6000019110024",
+        "BUS6000019110025",
+        "BUS6000019110026"
+      ],
+      "expected_physiology_point_count": 905,
+      "expected_vehicle_point_count": 28824
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "pilot_id": 10033,
+      "start_utc": "2025-10-02T08:35:00+00:00",
+      "stop_utc": "2025-10-02T08:38:01+00:00",
+      "physiology_measurements": [
+        "eeg",
+        "spo2"
+      ],
+      "vehicle_measurements": [
+        "BUS6000019110021",
+        "BUS6000019110022",
+        "BUS6000019110023",
+        "BUS6000019110024",
+        "BUS6000019110025",
+        "BUS6000019110026"
+      ],
+      "expected_physiology_point_count": 905,
+      "expected_vehicle_point_count": 28824
+    }
+  ],
+  "files": [
+    {
+      "stream_kind": "vehicle",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": null,
+      "pilot_id": null,
+      "relative_path": "sorties/20251005_四01_ACT-4_云_J20_22#01/vehicle_points.jsonl.gz",
+      "sha256": "0fcb1e9123c679391ca5cf817ab6aeaef1ff9aaf9fd8748bcff97f25004a3cb1",
+      "byte_count": 2643984,
+      "point_count": 28824,
+      "measurement_counts": {
+        "BUS6000019110015": 5,
+        "BUS6000019110016": 233,
+        "BUS6000019110017": 9039,
+        "BUS6000019110018": 724,
+        "BUS6000019110019": 18100,
+        "BUS6000019110020": 723
+      },
+      "field_count": 1811,
+      "first_timestamp_utc": "2025-10-05T01:35:00+00:00",
+      "last_timestamp_utc": "2025-10-05T01:38:00.990000+00:00",
+      "format": "chronaris.raw_point_jsonl_gzip.v1"
+    },
+    {
+      "stream_kind": "physiology",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "pilot_id": 10033,
+      "relative_path": "sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/physiology_points.jsonl.gz",
+      "sha256": "ae36282aa273e8c77c6053daaa9fe5e1934129072907541a5e3aa6fa0539d44f",
+      "byte_count": 63571,
+      "point_count": 905,
+      "measurement_counts": {
+        "eeg": 724,
+        "spo2": 181
+      },
+      "field_count": 14,
+      "first_timestamp_utc": "2025-10-05T01:35:00+00:00",
+      "last_timestamp_utc": "2025-10-05T01:38:00.750000+00:00",
+      "format": "chronaris.raw_point_jsonl_gzip.v1"
+    },
+    {
+      "stream_kind": "vehicle",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": null,
+      "pilot_id": null,
+      "relative_path": "sorties/20251002_单01_ACT-8_翼云_J16_12#01/vehicle_points.jsonl.gz",
+      "sha256": "eac71fd17d8bb989fd0de0aa75000390310a61de45ad035b29704a49be015ac2",
+      "byte_count": 2641406,
+      "point_count": 28824,
+      "measurement_counts": {
+        "BUS6000019110021": 5,
+        "BUS6000019110022": 233,
+        "BUS6000019110023": 9039,
+        "BUS6000019110024": 724,
+        "BUS6000019110025": 18100,
+        "BUS6000019110026": 723
+      },
+      "field_count": 1811,
+      "first_timestamp_utc": "2025-10-02T08:35:00+00:00",
+      "last_timestamp_utc": "2025-10-02T08:38:00.990000+00:00",
+      "format": "chronaris.raw_point_jsonl_gzip.v1"
+    },
+    {
+      "stream_kind": "physiology",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "pilot_id": 10035,
+      "relative_path": "sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/physiology_points.jsonl.gz",
+      "sha256": "2dc3b2ba6d394deaafc11c62771ad351d2008c030eb6bee63ebeda824c4c33aa",
+      "byte_count": 59724,
+      "point_count": 905,
+      "measurement_counts": {
+        "eeg": 724,
+        "spo2": 181
+      },
+      "field_count": 14,
+      "first_timestamp_utc": "2025-10-02T08:35:00+00:00",
+      "last_timestamp_utc": "2025-10-02T08:38:00.750000+00:00",
+      "format": "chronaris.raw_point_jsonl_gzip.v1"
+    },
+    {
+      "stream_kind": "physiology",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "pilot_id": 10033,
+      "relative_path": "sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/physiology_points.jsonl.gz",
+      "sha256": "c3968bc4621d4e2729e7b298fbea72fd9f1c4a8e3013f22ff0db4be9f7aebed3",
+      "byte_count": 59722,
+      "point_count": 905,
+      "measurement_counts": {
+        "eeg": 724,
+        "spo2": 181
+      },
+      "field_count": 14,
+      "first_timestamp_utc": "2025-10-02T08:35:00+00:00",
+      "last_timestamp_utc": "2025-10-02T08:38:00.750000+00:00",
+      "format": "chronaris.raw_point_jsonl_gzip.v1"
+    }
+  ],
+  "consistency_rows": [
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "pilot_id": 10033,
+      "stream_kind": "vehicle",
+      "start_utc": "2025-10-05T01:35:00+00:00",
+      "stop_utc": "2025-10-05T01:38:01+00:00",
+      "expected_point_count": 28824,
+      "actual_point_count": 28824,
+      "point_count_delta": 0,
+      "count_matches_reference": true
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "pilot_id": 10033,
+      "stream_kind": "physiology",
+      "start_utc": "2025-10-05T01:35:00+00:00",
+      "stop_utc": "2025-10-05T01:38:01+00:00",
+      "expected_point_count": 905,
+      "actual_point_count": 905,
+      "point_count_delta": 0,
+      "count_matches_reference": true
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "pilot_id": 10035,
+      "stream_kind": "vehicle",
+      "start_utc": "2025-10-02T08:35:00+00:00",
+      "stop_utc": "2025-10-02T08:38:01+00:00",
+      "expected_point_count": 28824,
+      "actual_point_count": 28824,
+      "point_count_delta": 0,
+      "count_matches_reference": true
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "pilot_id": 10033,
+      "stream_kind": "vehicle",
+      "start_utc": "2025-10-02T08:35:00+00:00",
+      "stop_utc": "2025-10-02T08:38:01+00:00",
+      "expected_point_count": 28824,
+      "actual_point_count": 28824,
+      "point_count_delta": 0,
+      "count_matches_reference": true
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "pilot_id": 10035,
+      "stream_kind": "physiology",
+      "start_utc": "2025-10-02T08:35:00+00:00",
+      "stop_utc": "2025-10-02T08:38:01+00:00",
+      "expected_point_count": 905,
+      "actual_point_count": 905,
+      "point_count_delta": 0,
+      "count_matches_reference": true
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "pilot_id": 10033,
+      "stream_kind": "physiology",
+      "start_utc": "2025-10-02T08:35:00+00:00",
+      "stop_utc": "2025-10-02T08:38:01+00:00",
+      "expected_point_count": 905,
+      "actual_point_count": 905,
+      "point_count_delta": 0,
+      "count_matches_reference": true
+    }
+  ],
+  "field_exclusion_rows": [
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1024",
+      "display_label": "[TSPI数据][载机平台系加速度][加速度_北向][_加速度]",
+      "semantic_key": "acceleration_north",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1025",
+      "display_label": "[TSPI数据][载机平台系加速度][加速度_西向][_加速度]",
+      "semantic_key": "acceleration_west",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1026",
+      "display_label": "[TSPI数据][载机平台系加速度][加速度_天向][_加速度]",
+      "semantic_key": "acceleration_up",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1027",
+      "display_label": "[TSPI数据][载机平台系速度][速度_北向][_速度]",
+      "semantic_key": "speed_north",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1028",
+      "display_label": "[TSPI数据][载机平台系速度][速度_西向][_速度]",
+      "semantic_key": "speed_west",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1029",
+      "display_label": "[TSPI数据][载机平台系速度][速度_天向][_速度]",
+      "semantic_key": "speed_up",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1030",
+      "display_label": "[TSPI数据][载机俯仰角][_角度_毫弧度]",
+      "semantic_key": "pitch",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1031",
+      "display_label": "[TSPI数据][载机真航向][_角度_毫弧度]",
+      "semantic_key": "yaw_or_heading",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1032",
+      "display_label": "[TSPI数据][载机横滚角][_角度_毫弧度]",
+      "semantic_key": "roll",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "feature_name": "BUS6000019110024.code1036",
+      "display_label": "[TSPI数据][载机法向过载][_过载]",
+      "semantic_key": "normal_load_normal",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1024",
+      "display_label": "[TSPI数据][载机平台系加速度][加速度_北向][_加速度]",
+      "semantic_key": "acceleration_north",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1025",
+      "display_label": "[TSPI数据][载机平台系加速度][加速度_西向][_加速度]",
+      "semantic_key": "acceleration_west",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1026",
+      "display_label": "[TSPI数据][载机平台系加速度][加速度_天向][_加速度]",
+      "semantic_key": "acceleration_up",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1027",
+      "display_label": "[TSPI数据][载机平台系速度][速度_北向][_速度]",
+      "semantic_key": "speed_north",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1028",
+      "display_label": "[TSPI数据][载机平台系速度][速度_西向][_速度]",
+      "semantic_key": "speed_west",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1029",
+      "display_label": "[TSPI数据][载机平台系速度][速度_天向][_速度]",
+      "semantic_key": "speed_up",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1030",
+      "display_label": "[TSPI数据][载机俯仰角][_角度_毫弧度]",
+      "semantic_key": "pitch",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1031",
+      "display_label": "[TSPI数据][载机真航向][_角度_毫弧度]",
+      "semantic_key": "yaw_or_heading",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1032",
+      "display_label": "[TSPI数据][载机横滚角][_角度_毫弧度]",
+      "semantic_key": "roll",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "feature_name": "BUS6000019110018.code1036",
+      "display_label": "[TSPI数据][载机法向过载][_过载]",
+      "semantic_key": "normal_load_normal",
+      "observed_in_snapshot": true,
+      "allowed_in_maneuver_input": false,
+      "derived_feature_policy": "exclude_raw_statistics_differences_rates_and_normalized_copies",
+      "exclusion_reason": "maneuver_label_source"
+    }
+  ]
+}

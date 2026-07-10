@@ -181,6 +181,15 @@ artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/
 - 随机抽查每个 view 至少两个窗口的原始点数与现有 window manifest 相符。
 - `git status` 不出现重型 bundle。
 
+### 5.6 2026-07-10 执行结果
+
+- G2a 正式 run 为 `docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/`，状态 `completed`。
+- 锁定时间范围内每个 sortie 有 28,824 个航电点；每个 view 有 905 个生理点，6/6 与既有 37 窗口 manifest 对账一致。
+- snapshot 采用每 sortie 一份共享航电、每 view 一份生理的 5 文件布局，使用确定性 gzip JSONL 和 SHA-256。
+- 5.3 MB 原始高频值只保存在被忽略目录；仓库只保留约 60 KB 紧凑证据。
+- 20 个机动标签源字段在 snapshot 中全部可见，并全部进入原始/统计/差分/变化率/标准化副本排除合同。
+- `--resume` 校验 5 个文件 hash 后在 2.47 秒内完成，没有重复数据库查询。
+
 ## 6. 工作包 C：模型无关仿真器
 
 ### 6.1 实现顺序
