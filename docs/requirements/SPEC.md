@@ -1,6 +1,6 @@
 # Chronaris 需求规格入口
 
-更新时间：2026-06-07
+更新时间：2026-07-10
 
 ## 1. 毕业论文目标
 
@@ -63,3 +63,12 @@
 - [model-contracts/alignment-batch-contract.md](model-contracts/alignment-batch-contract.md)
 - [model-contracts/stage-e-prototype-design.md](model-contracts/stage-e-prototype-design.md)
 - [model-contracts/stage-e-reference-repos.md](model-contracts/stage-e-reference-repos.md)
+
+## 6. 固定数据下游评估补充规格
+
+毕业论文后续实验默认不依赖新增鼎新一手数据或人工专家评价。当前下游评估、仿真和融合表示按以下规格执行：
+
+- [foundation/fixed-data-evidence-strategy.md](foundation/fixed-data-evidence-strategy.md)：数据来源、证据层级、论文论断与失败边界。
+- [downstream-evaluation-spec.md](downstream-evaluation-spec.md)：真实/仿真任务、标签公式、划分、下游算法、指标与模型选择。
+- [synthetic-benchmark-spec.md](synthetic-benchmark-spec.md)：G1/G2 仿真生成族、观测场景、oracle、压力等级和验收。
+- [model-contracts/application-fusion-stream-contract.md](model-contracts/application-fusion-stream-contract.md)：六方法共同消费的异步双流和 `[B,T,64]` 融合表示合同。
