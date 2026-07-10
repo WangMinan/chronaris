@@ -1,0 +1,13 @@
+{
+  "disjoint": true,
+  "pairwise_intersection_sizes": {
+    "locked_test__train": 0,
+    "locked_test__validation": 0,
+    "train__validation": 0
+  },
+  "split_sizes": {
+    "locked_test": 48,
+    "train": 96,
+    "validation": 24
+  }
+}

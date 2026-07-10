@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/simulation/generate_aviation_dual_stream.py --mode formal --heavy-run-id 2026-07-10_aviation-simulation-formal --compact-run-id 2026-07-10_aviation-simulation-audit --resume

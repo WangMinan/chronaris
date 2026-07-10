@@ -1,0 +1,20 @@
+check_id,passed,actual,expected
+latent_count,True,168,168
+scenario_count,True,1008,1008
+split_identity_disjoint,True,"{'locked_test__train': 0, 'locked_test__validation': 0, 'train__validation': 0}",0
+paired_latent_hash,True,168,168
+state_coverage_per_sortie,True,168,168
+minimum_complete_events,True,2,2
+finite_vehicle_values,True,1008,1008
+finite_physiology_values,True,1008,1008
+g1_residual_median,True,0.011354345593822772,0.1
+g2_residual_q95,True,0.042088837321234474,0.35
+clean_lag_within_one_second,True,1.0,0.9
+clock_mapping_invertible,True,0.0,1e-09
+source_method_independence,True,True,True
+workload_low_coverage,True,0.23317294973544975,0.15
+workload_medium_coverage,True,0.4304232804232804,0.15
+workload_high_coverage,True,0.33640376984126985,0.15
+each_locked_profile_has_high_load,True,True,True
+all_maneuver_types_per_split,True,True,True
+random_missing_tolerance,True,0.01944444444444443,0.02

@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-10
+更新时间：2026-07-11
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1 固定数据审计和 G2a 原始异步点冻结均已完成：111 个窗口形成 96/93 个应用上下文；两份共享航电文件与三份 view 生理文件共冻结 57,648/2,715 个原始点，6/6 点数对账、20/20 标签源排除检查通过。本轮未训练模型、未修改既有确认指标。当前实施里程碑已推进到 G2b 方法无关半物理仿真器。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1 固定数据审计、G2a 原始点冻结和 G2b 方法无关仿真基准均已完成：真实固定数据形成 96/93 个应用上下文；仿真正式生成 168 条潜在架次与 1,008 个成对观测场景，19/19 验收通过。本轮尚未训练六种待比较方法、未修改既有确认指标。当前实施里程碑已推进到 G3a 统一双流输入与融合表示基础设施。
 
 ## 当前执行入口
 
@@ -17,6 +17,7 @@
 - 双流与融合表示合同：[requirements/model-contracts/application-fusion-stream-contract.md](requirements/model-contracts/application-fusion-stream-contract.md)
 - G1 固定数据审计：[artifacts/runs/2026-07-10_fixed-data-audit/report.md](artifacts/runs/2026-07-10_fixed-data-audit/report.md)
 - G2a 原始点冻结：[artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md](artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md)
+- G2b 仿真基准审计：[artifacts/runs/2026-07-10_aviation-simulation-audit/report.md](artifacts/runs/2026-07-10_aviation-simulation-audit/report.md)
 
 ## 已锁定事实
 
@@ -54,23 +55,29 @@
 - 三个 view 的生理点均为 905；两个 sortie 的航电点均为 28,824，和既有 37 窗口逐项完全一致。
 - 20 个机动标签源字段都能在 snapshot 中复核，并全部进入原字段、统计、差分、变化率和标准化副本的排除合同。
 - `--resume` 在 2.47 秒内校验并复用 5 个文件，没有重复查询数据库。
+- 实现 G1 状态空间与 G2 事件样条两个异构生成族，公开 API 只接收场景、飞行员参数档案和随机种子。
+- 生成器把潜在轨迹与观测过程分离；相同 latent ID 的六个场景只改变采样、时钟、缺失、额外时延和噪声。
+- 正式生成训练/验证/锁定测试 96/24/48 条潜在架次、1,008 个观测场景；profile、latent seed 和生成族跨 split 隔离。
+- 全局低/中/高仿真负荷占比为 23.3%/43.0%/33.6%；每个锁定测试 profile 均有高负荷区间。
+- G1 物理残差中位数最坏 0.0114，G2 残差 95% 分位最坏 0.0421；干净场景时延 ±1 秒命中率 100%。
+- 正式重型 bundle 约 1,018 MB，只在被忽略目录；compact audit 约 1.2 MB，4 张中文图已逐张检查可读性。
+- 独立 audit CLI 可在 3.13 秒内重建验收和图表，不重新生成重型 bundle。
 
 ## 当前未完成
 
-- 尚未实现 G1/G2 仿真器。
 - 尚未打通任务无关 Chronaris 连续融合编码器。
 - 尚未实现六方法统一 OOF 导出与应用下游 benchmark。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
 ## 下一验收门
 
-G2b 必须在大规模模型 screen 前完成：
+G3a 必须在六方法训练前完成：
 
-1. G1/G2 两个生成族的 API 不接受方法名、checkpoint 或候选配置。
-2. 生成同一潜在轨迹的 clean/stress 成对观测，并输出状态、负荷、边界、时钟和响应时延 oracle。
-3. 固定 96/24/48 潜在架次和 pilot/scenario/generator-family 隔离。
-4. 通过 seed 复现、物理范围、状态覆盖、lag 恢复和生成族隔离测试。
-5. 生成中文数据质量图，抽查标签、长标签、图例和数值可读性。
+1. 实现 `DualStreamObservationBatch` 与 `FusionStreamBatch`，统一样本、查询轴、mask 和 `[B,T,64]` 输出。
+2. 模型输入 loader 只能读取 observed archive；oracle、标签、logits 和 diagnostics 注入必须失败。
+3. 实现 train-only normalizer/PCA、fold checkpoint registry、OOF exporter、sample-order/hash 校验和 resume。
+4. 用仿真 smoke batch 证明六方法能消费相同样本顺序和查询点合同。
+5. 增加 `aeon==1.5.0` 可选依赖，但结构诊断依赖保持 gated import。
 
 ## 本轮验证
 
@@ -78,7 +85,8 @@ G2b 必须在大规模模型 screen 前完成：
 - G1 focused tests：`7 passed`，覆盖分组隔离、test 值不影响阈值、未知字段 fail closed 和零 IQR 剔除。
 - G1 CLI 与新增包 `compileall`：通过。
 - G2a focused suite 合并后为 `10 passed`；正式 run 为 `completed`，resume 复核通过。
-- 完整测试：`223 passed, 8 skipped, 317 warnings`。
+- G2b simulation/audit focused tests：`11 passed`；smoke 13/13、formal 19/19 验收通过。
+- 完整测试：`234 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、bundle、checkpoint 或逐样本预测；G1/G2a 入仓产物均为汇总、manifest 和可追溯审计表。
 

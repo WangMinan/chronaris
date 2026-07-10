@@ -1,6 +1,6 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-10
+更新时间：2026-07-11
 
 ## 当前长程 goal
 
@@ -8,62 +8,59 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G2b 方法无关半物理仿真器
+## 当前里程碑：G3a 统一双流输入与融合表示基础设施
 
-本里程碑实现两个与待比较方法解耦的航空人机异步双流生成族、成对观测压力场景和 oracle 审计，不启动六方法完整训练。
+本里程碑只建立六方法共用的输入、训练折变换、checkpoint、OOF 导出和 resume 合同；暂不宣称任何模型指标。
 
-### G1/G2a 已完成
+### G1–G2b 已完成
 
-- G1 run：`docs/artifacts/runs/2026-07-10_fixed-data-audit/`；111 个窗口形成 96/93 个应用上下文，5 个外层折全部完成。
-- G1 字段：每个 sortie 10 个载机标签源，12 个唯一 EEG/SpO₂ 响应字段；动态标签语义为 3 轴加速度、俯仰和滚转。
-- G2a run：`docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/`。
-- G2a 原始点：2 份共享航电共 57,648 点，3 份生理共 2,715 点；6/6 历史点数一致。
-- G2a 存储：5.3 MB 原始值只在被忽略目录，仓库只保留约 60 KB 紧凑 manifest、对账和排除表。
-- G2a 排除：20/20 机动标签源在 snapshot 中可见且全部禁止进入机动分类输入。
-- G2a resume：哈希复核后不重复查询数据库；G1/G2a focused tests 共 10 个通过。
-- 两个里程碑均未启动训练或修改既有确认指标。
+- 固定鼎新数据审计：111 个窗口、96/93 个应用上下文、5 个外层折全部完成。
+- 原始点冻结：57,648 个共享航电点、2,715 个生理点，6/6 点数和 20/20 标签源排除检查通过。
+- 仿真 smoke：4 条潜在轨迹、8 个场景、13/13 检查和 4 张中文图通过。
+- 仿真正式集：训练/验证/锁定测试 96/24/48 条潜在架次、1,008 个场景、19/19 验收通过。
+- 仿真低/中/高负荷占比 23.3%/43.0%/33.6%，干净场景响应时延 ±1 秒命中率 100%。
+- 约 1,018 MB 正式仿真 bundle 与 5.3 MB 鼎新 snapshot 均只在被忽略目录；compact audit 可入仓。
+- 以上阶段均未训练六种待比较方法或修改既有确认指标。
 
 ### 当前输入
 
-- [仿真基准规格](../requirements/synthetic-benchmark-spec.md)。
-- G2a 真实点的采样率、字段规模、缺失和时间间隔摘要，只用于仿真参数范围校准，不复制真实值。
-- G1 任务上下文：过去 30 秒、基础窗口 5 秒、负荷提前 10 秒、五类机动状态。
-- 正式开发 seed 17，训练/验证/锁定测试潜在架次分别为 96/24/48。
+- [双流与融合表示合同](../requirements/model-contracts/application-fusion-stream-contract.md)。
+- 鼎新 snapshot manifest：`docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/raw_snapshot_manifest.json`。
+- 仿真 audit：`docs/artifacts/runs/2026-07-10_aviation-simulation-audit/`；模型 loader 只允许读取 heavy run 中的 `raw_dual_stream.npz`。
+- G1 split/profile/seed manifest 和 G2 locked test 隔离边界。
 
 ### 需要编码
 
-1. `simulation/aviation_dual_stream`：配置、半马尔可夫机动、车辆动力学、潜在负荷、生理响应、观测时钟和 generator。
-2. G1：切换线性状态空间、受控输入、一阶滞后响应。
-3. G2：事件驱动样条、非线性饱和和非一阶生理滤波，不复用 Chronaris ODE 方程。
-4. paired observation generator：同一 latent trajectory 生成 clean 和 stress，不重新抽样状态或个体参数。
-5. oracle 与 validator：状态边界、负荷、时钟偏移/漂移、响应 lag、物理 residual、seed 和 family。
-6. CLI：`generate_aviation_dual_stream.py`、`audit_aviation_dual_stream.py`。
-7. 测试：方法无关 API、seed 复现、family split、状态覆盖、物理范围、响应 lag、同轨迹配对。
+1. `DualStreamObservationBatch`：两流 observed time、value、valid mask、query grid、sample ID 和特征名校验。
+2. `FusionStreamBatch`：统一 `[B,T,64]` sequence、pooled embedding、valid mask、fold/checkpoint lineage；禁止 logits、标签、预测和 diagnostics 字段。
+3. 仿真/鼎新输入 loader 与 30 秒 context collator；oracle 文件只能由任务 builder 和机制审计读取。
+4. train-only robust normalizer、可选 PCA/projector registry；fit sample hash 必须可追溯。
+5. checkpoint registry、fold status、OOF exporter、sample/query order hash 和中断恢复。
+6. 公共 augmentation realization：由 sample ID、epoch 和 seed 派生，后续六方法共享。
+7. `pyproject.toml` 增加 `application-eval = ["aeon==1.5.0"]`；结构诊断依赖保持独立可选。
+8. smoke CLI 与测试：oracle 注入拒绝、test group 不参与 fit、OOF checkpoint 隔离、resume 和 64 维合同。
 
 ### 预期产物
 
-本机重型目录 `artifacts/application_evaluation/2026-07-10_aviation-simulation/`：
+紧凑 run `docs/artifacts/runs/2026-07-11_representation-contract-smoke/`：
 
-- 生成后的潜在轨迹、原始异步双流、oracle 和训练/验证/测试 bundle。
-
-紧凑 run `docs/artifacts/runs/2026-07-10_aviation-simulation-audit/`：
-
-- `simulation_manifest.json`
-- `scenario_coverage.csv`
-- `oracle_validation.csv`
-- `paired_observation_audit.csv`
-- `generator_family_split.json`
-- 中文数据质量图与 `figure_manifest.json`
+- `input_schema.json`
+- `representation_schema.json`
+- `sample_order_manifest.json`
+- `fold_transform_manifest.json`
+- `checkpoint_registry.json`
+- `oof_export_manifest.json`
+- `acceptance_checks.csv`
 - `report.md`、`claim_boundary.md`、`progress.json`、`resume_command.txt` 和 `evidence_manifest.json`
 
-### G2b 验收
+### G3a 验收
 
-- generator API 和配置中不存在方法名、候选名或 checkpoint。
-- 相同 latent ID 的 clean/stress oracle 完全一致，仅观测过程改变。
-- G1 train/validation 与 G2 locked test 的 family、profile、seed 无交集。
-- 状态转移、负荷范围、响应 lag 和时钟真值可由 oracle 重建。
-- 96/24/48 潜在架次全部生成或明确记录失败，不静默补样本。
-- 图表中文可读且仿真结论不与鼎新真实指标混算。
+- observed loader 无法读取或返回 oracle/label 字段。
+- train-only normalizer/PCA 的 fit hash 不含 test sample。
+- OOF test sample 只来自 held-out fold checkpoint。
+- 所有方法适配器必须保持完全相同的 sample ID、query timestamp、mask 和 64 维输出顺序。
+- 删除一个已完成 fold 的下一个输出后，`--resume` 只重建缺失 fold。
+- 仿真 smoke 和鼎新 snapshot 都能通过同一输入合同校验。
 
 ## 已锁定规范
 
@@ -75,12 +72,6 @@
 - [长程运行手册](notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 
 ## 后续验收门
-
-### G3a：统一表示基础设施
-
-- `DualStreamObservationBatch` / `FusionStreamBatch` 合同。
-- train-only normalizer、checkpoint registry、OOF exporter、resume。
-- 六方法同 sample/query 顺序和 64 维输出。
 
 ### G3b：六方法编码器
 
@@ -164,11 +155,11 @@
 
 ## 当前验证门
 
-当前 G2b 实现提交前必须通过：
+当前 G3a 实现提交前必须通过：
 
-1. 仿真方法无关、seed 复现、family split 和 paired latent 测试。
-2. G1/G2a 全部 focused tests 保持通过。
-3. smoke 生成、oracle audit 和关键 PNG 抽查。
+1. 输入/表示 schema、forbidden field、fit isolation、OOF lineage 和 resume 测试。
+2. G1–G2b 全部 focused tests 保持通过。
+3. 仿真与鼎新各至少一个 smoke context 通过相同 collator。
 4. `git diff --check`、完整 `pytest` 和 `compileall`。
-5. 读者可见术语与真实/仿真证据隔离审计。
-6. `git status` 中不存在完整仿真 bundle、raw point、dense bundle 或 checkpoint。
+5. 读者可见术语、oracle 隔离和密钥审计。
+6. `git status` 中不存在 raw point、完整仿真 bundle、dense representation 或 checkpoint。
