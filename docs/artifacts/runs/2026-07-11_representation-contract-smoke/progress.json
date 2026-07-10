@@ -1,0 +1,52 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "probe_outputs_are_model_results": false,
+  "stage_name": "representation_contract_smoke",
+  "run_id": "2026-07-11_representation-contract-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T16:37:49.918010Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T16:37:48.843928Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "probe_outputs_are_model_results": false
+    },
+    {
+      "timestamp_utc": "2026-07-10T16:37:48.878649Z",
+      "event": "simulation_batch_ready",
+      "sample_count": 3
+    },
+    {
+      "timestamp_utc": "2026-07-10T16:37:49.883080Z",
+      "event": "dingxin_batch_ready",
+      "physiology_feature_count": 12,
+      "vehicle_feature_count": 955
+    },
+    {
+      "timestamp_utc": "2026-07-10T16:37:49.902731Z",
+      "event": "initial_exports_complete",
+      "export_count": 6
+    },
+    {
+      "timestamp_utc": "2026-07-10T16:37:49.918010Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 14,
+      "acceptance_check_count": 14,
+      "representation_export_count": 6,
+      "resume_reused_count": 6
+    }
+  ],
+  "sample_count": 3,
+  "physiology_feature_count": 12,
+  "vehicle_feature_count": 955,
+  "export_count": 6,
+  "status": "completed",
+  "acceptance_pass_count": 14,
+  "acceptance_check_count": 14,
+  "representation_export_count": 6,
+  "resume_reused_count": 6
+}

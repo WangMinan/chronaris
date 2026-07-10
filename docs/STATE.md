@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1 固定数据审计、G2a 原始点冻结和 G2b 方法无关仿真基准均已完成：真实固定数据形成 96/93 个应用上下文；仿真正式生成 168 条潜在架次与 1,008 个成对观测场景，19/19 验收通过。本轮尚未训练六种待比较方法、未修改既有确认指标。当前实施里程碑已推进到 G3a 统一双流输入与融合表示基础设施。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真基准和统一表示基础设施均已完成：真实固定数据形成 96/93 个应用上下文；仿真形成 168 条潜在架次和 1,008 个观测场景；统一合同冒烟验证 14/14 通过。本轮尚未训练六种待比较方法、未修改既有确认指标。当前实施里程碑已推进到 G3b.1 两个单流与朴素时间同步生产适配器。
 
 ## 当前执行入口
 
@@ -18,6 +18,7 @@
 - G1 固定数据审计：[artifacts/runs/2026-07-10_fixed-data-audit/report.md](artifacts/runs/2026-07-10_fixed-data-audit/report.md)
 - G2a 原始点冻结：[artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md](artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md)
 - G2b 仿真基准审计：[artifacts/runs/2026-07-10_aviation-simulation-audit/report.md](artifacts/runs/2026-07-10_aviation-simulation-audit/report.md)
+- G3a 统一表示合同冒烟验证：[artifacts/runs/2026-07-11_representation-contract-smoke/report.md](artifacts/runs/2026-07-11_representation-contract-smoke/report.md)
 
 ## 已锁定事实
 
@@ -62,22 +63,30 @@
 - G1 物理残差中位数最坏 0.0114，G2 残差 95% 分位最坏 0.0421；干净场景时延 ±1 秒命中率 100%。
 - 正式重型 bundle 约 1,018 MB，只在被忽略目录；compact audit 约 1.2 MB，4 张中文图已逐张检查可读性。
 - 独立 audit CLI 可在 3.13 秒内重建验收和图表，不重新生成重型 bundle。
+- 新增任务无关 `chronaris.representation` 基础层，统一 30 秒原始异步双流批次、96 点查询轴和 `[B,T,64]` 融合表示。
+- 仿真加载器只接受 `raw_dual_stream.npz` 的六个观测字段；真值、标签或额外字段注入会直接失败。
+- 鼎新加载器从固定 snapshot 构造 12 个生理字段和 955 个跨架次同序航电字段，并在输入前排除全部 20 个机动标签源字段。
+- 训练折中位数/四分位距归一化与主成分分析均记录拟合样本哈希，锁定测试样本重叠会直接失败。
+- 检查点注册表、严格融合表示序列化、留出折导出、样本/查询顺序哈希和缺失输出恢复均已实现。
+- 六个方法接口使用合同探针完成 6/6 导出与 6/6 恢复复用；该结果只证明接口贯通，不是六种模型效果。
+- G3a 紧凑证据约 144 KB；约 276 KB 的探针检查点和稠密表示保留在被忽略目录。
 
 ## 当前未完成
 
 - 尚未打通任务无关 Chronaris 连续融合编码器。
-- 尚未实现六方法统一 OOF 导出与应用下游 benchmark。
+- 尚未以生产编码器替换六个合同探针；两个单流、朴素同步、MulT 与 ContiFormer 仍待接入统一导出器。
+- 尚未实现应用下游算法与正式 benchmark。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
 ## 下一验收门
 
-G3a 必须在六方法训练前完成：
+G3b.1 必须在深度基线训练前完成：
 
-1. 实现 `DualStreamObservationBatch` 与 `FusionStreamBatch`，统一样本、查询轴、mask 和 `[B,T,64]` 输出。
-2. 模型输入 loader 只能读取 observed archive；oracle、标签、logits 和 diagnostics 注入必须失败。
-3. 实现 train-only normalizer/PCA、fold checkpoint registry、OOF exporter、sample-order/hash 校验和 resume。
-4. 用仿真 smoke batch 证明六方法能消费相同样本顺序和查询点合同。
-5. 增加 `aeon==1.5.0` 可选依赖，但结构诊断依赖保持 gated import。
+1. 两个单流适配器必须复用同一个连续时间编码器类，只切换激活模态。
+2. 朴素时间同步只使用当前及历史观测，训练折归一化和降维不得读取留出样本。
+3. 三个生产适配器输出统一 64 维表示，不再使用合同探针生成主表示。
+4. 修改未来观测不得改变更早查询点；整段单模态缺失必须显式保留无效掩码。
+5. 生成参数量、输入字段、拟合样本和恢复状态清单，并完成仿真与鼎新冒烟验证。
 
 ## 本轮验证
 
@@ -86,9 +95,11 @@ G3a 必须在六方法训练前完成：
 - G1 CLI 与新增包 `compileall`：通过。
 - G2a focused suite 合并后为 `10 passed`；正式 run 为 `completed`，resume 复核通过。
 - G2b simulation/audit focused tests：`11 passed`；smoke 13/13、formal 19/19 验收通过。
-- 完整测试：`234 passed, 8 skipped, 317 warnings`。
+- G3a representation focused tests：`20 passed`；G1–G3a 联合聚焦测试 `41 passed`。
+- G3a 统一合同 smoke：鼎新/仿真输入、六方法接口、留出折来源和恢复共 `14/14` 通过。
+- 完整测试：`254 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
-- 当前 Git 改动中没有 raw snapshot、bundle、checkpoint 或逐样本预测；G1/G2a 入仓产物均为汇总、manifest 和可追溯审计表。
+- 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 
 ## 证据边界
 

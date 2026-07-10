@@ -1,0 +1,36 @@
+{
+  "format": "chronaris.fusion_stream.v1",
+  "output_dim": 64,
+  "query_point_count": 96,
+  "forbidden_fields": [
+    "attention_entropy",
+    "candidate_id",
+    "diagnostics",
+    "label",
+    "labels",
+    "logit",
+    "logits",
+    "maneuver_state",
+    "physical_residual",
+    "prediction",
+    "predictions",
+    "probability",
+    "rank",
+    "response_target",
+    "task_name",
+    "workload",
+    "y_pred",
+    "y_true"
+  ],
+  "label_used_for_encoder_training": false,
+  "contract_probe_only": true,
+  "probe_outputs_are_model_results": false,
+  "method_slots": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ]
+}

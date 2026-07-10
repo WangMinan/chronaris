@@ -1,0 +1,131 @@
+{
+  "fold_id": "simulation_out_of_family_smoke",
+  "robust_normalizer": {
+    "transform": "median_iqr",
+    "minimum_scale": 1e-06,
+    "fit_sample_ids": [
+      "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+    ],
+    "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+    "physiology": {
+      "center": [
+        0.5391595959663391,
+        0.36930397152900696,
+        0.2807123064994812,
+        97.16182708740234,
+        72.50818634033203,
+        0.1903012990951538,
+        0.45721277594566345
+      ],
+      "scale": [
+        0.01879781484603882,
+        0.01641702651977539,
+        0.01624155044555664,
+        0.0705108642578125,
+        1.3777542114257812,
+        0.021878942847251892,
+        0.004638373851776123
+      ],
+      "active_mask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "valid_count": [
+        61,
+        61,
+        61,
+        61,
+        61,
+        61,
+        61
+      ]
+    },
+    "vehicle": {
+      "center": [
+        246.25576782226562,
+        5989.068359375,
+        -0.2953670620918274,
+        0.05432815104722977,
+        -0.009100576862692833,
+        0.021981611847877502,
+        0.001647348515689373,
+        -0.001304206089116633,
+        0.005127916112542152,
+        -0.02762933447957039,
+        0.06124826520681381,
+        0.9918747544288635
+      ],
+      "scale": [
+        0.5911102294921875,
+        7.71142578125,
+        1.2695839405059814,
+        0.030986882746219635,
+        0.037431567907333374,
+        0.042901162058115005,
+        0.019579248502850533,
+        0.019773464649915695,
+        0.016955051571130753,
+        0.12976764142513275,
+        0.12831826508045197,
+        0.07343614101409912
+      ],
+      "active_mask": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "valid_count": [
+        300,
+        300,
+        300,
+        300,
+        300,
+        300,
+        300,
+        300,
+        300,
+        300,
+        300,
+        300
+      ]
+    },
+    "transform_sha256": "9576b548c0151d91ea10bcf9fa4a32aa34e9e09d3235fe9993b62a296d5045ba"
+  },
+  "pca_projector": {
+    "transform": "train_only_svd_pca",
+    "input_dim": 19,
+    "component_count": 1,
+    "output_dim": 64,
+    "fit_sample_ids": [
+      "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+    ],
+    "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+    "center_sha256": "12bd61adf8f796793691413bfb95fcc8a508f3b19846a548542357af32304564",
+    "components_sha256": "7cc8f16a0829880ecff001f124708254742ed07c9b70bb8bb35c0989cb778195",
+    "explained_variance_ratio": [
+      0.0
+    ],
+    "transform_sha256": "3eea2e9757ecbe214a65df4e2e036e77af1b05e6409989f31b5fc0365d3a1c50"
+  },
+  "pca_held_out_shape": [
+    1,
+    64
+  ],
+  "held_out_sample_ids": [
+    "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+  ]
+}

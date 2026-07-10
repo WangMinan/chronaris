@@ -1,0 +1,88 @@
+{
+  "format": "chronaris.oof_export_smoke.v1",
+  "contract_probe_only": true,
+  "available_export_count": 6,
+  "current_run_built_count": 0,
+  "current_run_initial_reused_count": 6,
+  "resume_verification_reused_count": 6,
+  "exports": [
+    {
+      "method_name": "physiology_only",
+      "fold_id": "simulation_out_of_family_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/physiology_only/simulation_out_of_family_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/physiology_only/simulation_out_of_family_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/physiology_only/simulation_out_of_family_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "20080359a56b5269d45b4be2fbd210d8ee9abf18cf0eb880e42140314dda3adc",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold_id": "simulation_out_of_family_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/vehicle_only/simulation_out_of_family_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/vehicle_only/simulation_out_of_family_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/vehicle_only/simulation_out_of_family_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "9f5a07d992ee8648eadedae6172ca5b8212a7324e84bfbf4fdaa043edfe8c4ce",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold_id": "simulation_out_of_family_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/naive_time_sync/simulation_out_of_family_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/naive_time_sync/simulation_out_of_family_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/naive_time_sync/simulation_out_of_family_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "df7f48b2eba3a6525fc8245e7c6f82fd4b5f17973246c3bce5b78d34ae5e626b",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "mult",
+      "fold_id": "simulation_out_of_family_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/mult/simulation_out_of_family_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/mult/simulation_out_of_family_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/mult/simulation_out_of_family_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "0599f4e6544c96de58bbe7acc066c045392575d5d4162cccce46f234d930a8d0",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "contiformer",
+      "fold_id": "simulation_out_of_family_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/contiformer/simulation_out_of_family_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/contiformer/simulation_out_of_family_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/contiformer/simulation_out_of_family_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "eb775f47ab5da14c9a06c63e18bdae2f3bff4db5c6233f9547da52b615ba3597",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "chronaris",
+      "fold_id": "simulation_out_of_family_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/chronaris/simulation_out_of_family_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/chronaris/simulation_out_of_family_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/representations/chronaris/simulation_out_of_family_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "c696561d9d18aa3d888cf31a8c4402c8ad2a0b7bd070037f073667cf30590e94",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    }
+  ]
+}

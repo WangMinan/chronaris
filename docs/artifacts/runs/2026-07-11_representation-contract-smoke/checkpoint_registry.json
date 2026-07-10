@@ -1,0 +1,150 @@
+{
+  "format": "chronaris.checkpoint_registry.v1",
+  "record_count": 6,
+  "records": [
+    {
+      "method_name": "chronaris",
+      "fold": {
+        "fold_id": "simulation_out_of_family_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/checkpoints/chronaris.probe",
+      "checkpoint_sha256": "464d4eb0592a47ea3d28680dab2a37e8c938cab9cb3fad0689bd88b5c9bccca4",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "contiformer",
+      "fold": {
+        "fold_id": "simulation_out_of_family_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/checkpoints/contiformer.probe",
+      "checkpoint_sha256": "c44ea2c4b800dbe8bd722d2b28a37d8809ee104972a0363a26514072646ae208",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "mult",
+      "fold": {
+        "fold_id": "simulation_out_of_family_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/checkpoints/mult.probe",
+      "checkpoint_sha256": "4016e8893c0f19a4c5b3106214852be4db7d39255ab9a0e18f5796b726de815c",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold": {
+        "fold_id": "simulation_out_of_family_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/checkpoints/naive_time_sync.probe",
+      "checkpoint_sha256": "b567113546036be79183a1bd447f6e59e639e9d961e4ad944266d7a8bb3d4180",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "physiology_only",
+      "fold": {
+        "fold_id": "simulation_out_of_family_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/checkpoints/physiology_only.probe",
+      "checkpoint_sha256": "abdc8a37ed1355ab7ee888acd7cd43e17d03bb44b6efe6196a8aaf196734923e",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold": {
+        "fold_id": "simulation_out_of_family_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_representation-contract-smoke/checkpoints/vehicle_only.probe",
+      "checkpoint_sha256": "ede424272754f30ff078996b320a0458f472cb64f933af91adfb737c693a09bd",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    }
+  ]
+}

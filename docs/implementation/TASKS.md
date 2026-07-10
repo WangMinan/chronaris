@@ -8,59 +8,77 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G3a 统一双流输入与融合表示基础设施
+## 当前里程碑：G3b.1 两个单流与朴素时间同步生产适配器
 
-本里程碑只建立六方法共用的输入、训练折变换、checkpoint、OOF 导出和 resume 合同；暂不宣称任何模型指标。
+本里程碑把 G3a 的三个合同探针替换为可训练、可导出的生产基线。只实现生理单流、航电单流和朴素时间同步；MulT、ContiFormer 与 Chronaris 分别进入 G3b.2 和 G3b.3，避免一次改动同时跨越所有模型主干。
 
-### G1–G2b 已完成
+### G1–G3a 已完成
 
 - 固定鼎新数据审计：111 个窗口、96/93 个应用上下文、5 个外层折全部完成。
 - 原始点冻结：57,648 个共享航电点、2,715 个生理点，6/6 点数和 20/20 标签源排除检查通过。
-- 仿真 smoke：4 条潜在轨迹、8 个场景、13/13 检查和 4 张中文图通过。
-- 仿真正式集：训练/验证/锁定测试 96/24/48 条潜在架次、1,008 个场景、19/19 验收通过。
-- 仿真低/中/高负荷占比 23.3%/43.0%/33.6%，干净场景响应时延 ±1 秒命中率 100%。
-- 约 1,018 MB 正式仿真 bundle 与 5.3 MB 鼎新 snapshot 均只在被忽略目录；compact audit 可入仓。
-- 以上阶段均未训练六种待比较方法或修改既有确认指标。
+- 仿真正式基准：训练/验证/锁定测试 96/24/48 条潜在架次、1,008 个场景、19/19 验收通过。
+- 统一输入与表示：鼎新 12/955 字段、仿真 7/12 字段、96 点查询轴、64 维表示和训练折隔离均已固化。
+- 合同冒烟验证：六个方法接口 6/6 输出、6/6 恢复复用、14/14 验收通过；相关聚焦测试 20 个通过。
+- 合同探针只验证接口，不作为任何模型效果或候选选择依据。
 
 ### 当前输入
 
 - [双流与融合表示合同](../requirements/model-contracts/application-fusion-stream-contract.md)。
-- 鼎新 snapshot manifest：`docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/raw_snapshot_manifest.json`。
-- 仿真 audit：`docs/artifacts/runs/2026-07-10_aviation-simulation-audit/`；模型 loader 只允许读取 heavy run 中的 `raw_dual_stream.npz`。
-- G1 split/profile/seed manifest 和 G2 locked test 隔离边界。
+- G3a 证据：`docs/artifacts/runs/2026-07-11_representation-contract-smoke/`。
+- 生产接口：`src/chronaris/representation/` 中的批次、训练折变换、检查点注册表和留出折导出器。
+- 现有连续时间基础块：`src/chronaris/modeling/common/deep_models.py`；复用前先确认其时间、掩码与任务头边界。
+- 仿真训练/验证只使用 G1 生成族；G2 事件样条锁定测试在适配器开发期间不可读取任务真值。
 
-### 需要编码
+### 子任务 G3b.1-a：公共因果查询层
 
-1. `DualStreamObservationBatch`：两流 observed time、value、valid mask、query grid、sample ID 和特征名校验。
-2. `FusionStreamBatch`：统一 `[B,T,64]` sequence、pooled embedding、valid mask、fold/checkpoint lineage；禁止 logits、标签、预测和 diagnostics 字段。
-3. 仿真/鼎新输入 loader 与 30 秒 context collator；oracle 文件只能由任务 builder 和机制审计读取。
-4. train-only robust normalizer、可选 PCA/projector registry；fit sample hash 必须可追溯。
-5. checkpoint registry、fold status、OOF exporter、sample/query order hash 和中断恢复。
-6. 公共 augmentation realization：由 sample ID、epoch 和 seed 派生，后续六方法共享。
-7. `pyproject.toml` 增加 `application-eval = ["aeon==1.5.0"]`；结构诊断依赖保持独立可选。
-8. smoke CLI 与测试：oracle 注入拒绝、test group 不参与 fit、OOF checkpoint 隔离、resume 和 64 维合同。
+1. 实现只使用 `timestamp <= query_time` 的批量查询重采样器，支持 forward-fill、观测年龄和整段模态缺失。
+2. 对相同时间的多 measurement 观测采用稳定顺序聚合，不引入未来点。
+3. 输出每个查询点的值、字段有效掩码、模态有效掩码和观测年龄，不改变 96 点查询轴。
+4. 增加未来值扰动、未来时间戳插入、首点晚于查询时刻和重复时间戳测试。
+
+### 子任务 G3b.1-b：两个单流编码器
+
+1. 新增一个共享 `ContinuousTimeSingleStreamEncoder`，生理单流和航电单流只通过 `active_stream` 配置切换，不复制模型实现。
+2. 输入投影同时消费数值、字段掩码、观测年龄和相对时间；主干隐藏维固定 64。
+3. 单流缺失时输出无效查询掩码，不用全零向量冒充有效状态。
+4. 表示来自任务头之前；适配器不得接收标签、任务名或预测目标。
+5. 检查两个单流的参数量差异只能来自输入投影维数，主干层数、隐藏维和训练预算相同。
+
+### 子任务 G3b.1-c：朴素时间同步
+
+1. 两流分别通过公共因果查询层投影到 96 点，不允许默认线性插值跨越未来观测。
+2. 拼接同步值、字段有效掩码和截断观测年龄；中位数/四分位距归一化只在训练折拟合。
+3. 无监督主成分分析最多保留 64 个分量，不足 64 维时右侧补零；拟合样本哈希进入表示清单。
+4. 朴素同步不训练任务头，不读取仿真真值或鼎新弱监督标签。
+
+### 子任务 G3b.1-d：统一导出与冒烟验证
+
+1. 三个生产适配器接入现有检查点注册表和留出折导出器，替换对应合同探针。
+2. 仿真使用一条训练、一条验证和一条 G2 锁定轨迹验证来源隔离；鼎新使用一个 30 秒上下文验证 955 维稀疏航电输入。
+3. 记录输入字段数、参数量、查询有效率、拟合样本哈希、检查点哈希、运行耗时和峰值内存。
+4. 保留同一批次的合同探针作为接口对照，但报告中明确区分“生产适配器”和“合同探针”。
 
 ### 预期产物
 
-紧凑 run `docs/artifacts/runs/2026-07-11_representation-contract-smoke/`：
+紧凑 run `docs/artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke/`：
 
-- `input_schema.json`
-- `representation_schema.json`
-- `sample_order_manifest.json`
+- `adapter_protocol.json`
+- `causal_query_audit.csv`
+- `parameter_budget.csv`
 - `fold_transform_manifest.json`
 - `checkpoint_registry.json`
-- `oof_export_manifest.json`
+- `representation_export_manifest.json`
 - `acceptance_checks.csv`
 - `report.md`、`claim_boundary.md`、`progress.json`、`resume_command.txt` 和 `evidence_manifest.json`
 
-### G3a 验收
+### G3b.1 验收
 
-- observed loader 无法读取或返回 oracle/label 字段。
-- train-only normalizer/PCA 的 fit hash 不含 test sample。
-- OOF test sample 只来自 held-out fold checkpoint。
-- 所有方法适配器必须保持完全相同的 sample ID、query timestamp、mask 和 64 维输出顺序。
-- 删除一个已完成 fold 的下一个输出后，`--resume` 只重建缺失 fold。
-- 仿真 smoke 和鼎新 snapshot 都能通过同一输入合同校验。
+- 修改任一查询时刻之后的观测，不能改变该时刻及之前的输出。
+- 生理单流与航电单流复用同一主干类，且非激活模态的数值变化不影响输出。
+- 朴素同步的归一化和主成分分析拟合样本不含验证或留出测试样本。
+- 三个生产适配器均输出 `[B,96,64]`，池化严格等于有效查询点均值。
+- 删除一个已完成导出后，恢复运行只重建缺失项；完整项校验后复用。
+- 仿真和鼎新冒烟验证通过，且没有标签、输出分数、预测值或诊断量进入表示文件。
 
 ## 已锁定规范
 
@@ -73,11 +91,19 @@
 
 ## 后续验收门
 
-### G3b：六方法编码器
+### G3b.2：MulT 与 ContiFormer 生产适配器
 
-- 两个单流、朴素同步、MulT、ContiFormer、Chronaris。
-- Chronaris 确实调用连续 ODE-RNN、物理约束和秒级因果融合。
-- 公共 pretext、增强和候选预算一致。
+- 从任务头之前导出时序状态，增加统一时间/掩码适配层和 64 维投影。
+- 不复用旧回归任务 checkpoint 作为论文主表示初始化。
+- 两者共享公共自监督目标、增强 realization、候选数和训练预算。
+- 仿真与鼎新各完成一折留出导出后才能进入 Chronaris 主干改造。
+
+### G3b.3：Chronaris 连续融合生产主干
+
+- 打通双流 ODE-RNN、统一查询、物理一致性和秒级三尺度因果融合。
+- 路径测试证明连续演化、物理项与因果掩码真实执行，不由任务 wrapper 替代。
+- 物理项逐项记录 active/unavailable/count/value；缺字段时不得写零值冒充启用。
+- 固定无连续演化、无物理、无因果掩码和单尺度时延四项消融。
 
 ### G4：下游 consumer
 
@@ -155,11 +181,11 @@
 
 ## 当前验证门
 
-当前 G3a 实现提交前必须通过：
+当前 G3b.1 实现提交前必须通过：
 
-1. 输入/表示 schema、forbidden field、fit isolation、OOF lineage 和 resume 测试。
-2. G1–G2b 全部 focused tests 保持通过。
-3. 仿真与鼎新各至少一个 smoke context 通过相同 collator。
+1. 因果查询、未来扰动不变性、单流模态隔离和朴素同步训练折隔离测试。
+2. G1–G3a 全部聚焦测试保持通过。
+3. 仿真与鼎新各至少一个 30 秒上下文通过三个生产适配器。
 4. `git diff --check`、完整 `pytest` 和 `compileall`。
-5. 读者可见术语、oracle 隔离和密钥审计。
-6. `git status` 中不存在 raw point、完整仿真 bundle、dense representation 或 checkpoint。
+5. 读者可见术语、未来信息、真值隔离和密钥审计。
+6. `git status` 中不存在原始点、完整仿真 bundle、稠密表示或检查点。
