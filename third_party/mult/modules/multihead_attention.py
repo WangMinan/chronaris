@@ -48,7 +48,7 @@ class MultiheadAttention(nn.Module):
         if self.bias_v is not None:
             nn.init.xavier_normal_(self.bias_v)
 
-    def forward(self, query, key, value, attn_mask=None):
+    def forward(self, query, key, value, attn_mask=None, key_padding_mask=None):
         """Input shape: Time x Batch x Channel
         Self-attention can be implemented by passing in the same arguments for
         query, key and value. Timesteps can be masked by supplying a T x T mask in the
@@ -90,6 +90,14 @@ class MultiheadAttention(nn.Module):
             v = torch.cat([v, self.bias_v.repeat(1, bsz, 1)])
             if attn_mask is not None:
                 attn_mask = torch.cat([attn_mask, attn_mask.new_zeros(attn_mask.size(0), 1)], dim=1)
+            if key_padding_mask is not None:
+                key_padding_mask = torch.cat(
+                    [
+                        key_padding_mask,
+                        key_padding_mask.new_zeros((key_padding_mask.size(0), 1)),
+                    ],
+                    dim=1,
+                )
 
         q = q.contiguous().view(tgt_len, bsz * self.num_heads, self.head_dim).transpose(0, 1)
         if k is not None:
@@ -105,6 +113,14 @@ class MultiheadAttention(nn.Module):
             v = torch.cat([v, v.new_zeros((v.size(0), 1) + v.size()[2:])], dim=1)
             if attn_mask is not None:
                 attn_mask = torch.cat([attn_mask, attn_mask.new_zeros(attn_mask.size(0), 1)], dim=1)
+            if key_padding_mask is not None:
+                key_padding_mask = torch.cat(
+                    [
+                        key_padding_mask,
+                        key_padding_mask.new_zeros((key_padding_mask.size(0), 1)),
+                    ],
+                    dim=1,
+                )
         
         attn_weights = torch.bmm(q, k.transpose(1, 2))
         assert list(attn_weights.size()) == [bsz * self.num_heads, tgt_len, src_len]
@@ -116,6 +132,18 @@ class MultiheadAttention(nn.Module):
                 print(attn_weights.shape)
                 print(attn_mask.unsqueeze(0).shape)
                 assert False
+        if key_padding_mask is not None:
+            if tuple(key_padding_mask.shape) != (bsz, src_len):
+                raise ValueError(
+                    "key_padding_mask must have shape [batch, source_time]"
+                )
+            expanded_padding = (
+                key_padding_mask.to(dtype=torch.bool)
+                .view(bsz, 1, 1, src_len)
+                .expand(bsz, self.num_heads, tgt_len, src_len)
+                .reshape(bsz * self.num_heads, tgt_len, src_len)
+            )
+            attn_weights = attn_weights.masked_fill(expanded_padding, float("-inf"))
                 
         attn_weights = F.softmax(attn_weights.float(), dim=-1).type_as(attn_weights)
         # attn_weights = F.relu(attn_weights)

@@ -1,0 +1,102 @@
+{
+  "format": "chronaris.checkpoint_registry.v1",
+  "record_count": 4,
+  "records": [
+    {
+      "method_name": "contiformer",
+      "fold": {
+        "fold_id": "dingxin_deep_baseline_smoke",
+        "train_sample_ids": [
+          "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005"
+        ],
+        "validation_sample_ids": [
+          "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0005"
+        ],
+        "held_out_sample_ids": [
+          "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+        ],
+        "train_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+        "validation_sample_hash": "68ae82237a1180049cfe231670da52b1c9b86238f57b147289fe48b598fb7bcf",
+        "held_out_sample_hash": "0a70cc8ccaac12d8cf0e8db5303e586d68048d2b8074871a7914dfefe5a996ec"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/checkpoints/dingxin/contiformer.pt",
+      "checkpoint_sha256": "a1c112ff302f9355265b2977c0bad45636f1930e05223bfa259ce9b777c2ed20",
+      "fit_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "contiformer",
+      "fold": {
+        "fold_id": "simulation_deep_baseline_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/checkpoints/simulation/contiformer.pt",
+      "checkpoint_sha256": "eccb4ce8774c74770b317cf481ea0a9cecded8f214d6d6e8d8220c1b966d5b4e",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "mult",
+      "fold": {
+        "fold_id": "dingxin_deep_baseline_smoke",
+        "train_sample_ids": [
+          "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005"
+        ],
+        "validation_sample_ids": [
+          "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0005"
+        ],
+        "held_out_sample_ids": [
+          "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+        ],
+        "train_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+        "validation_sample_hash": "68ae82237a1180049cfe231670da52b1c9b86238f57b147289fe48b598fb7bcf",
+        "held_out_sample_hash": "0a70cc8ccaac12d8cf0e8db5303e586d68048d2b8074871a7914dfefe5a996ec"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/checkpoints/dingxin/mult.pt",
+      "checkpoint_sha256": "75b105749ec4e5e119a51bfdca66e56fc1916141986e9b03ed5dd51c656287d3",
+      "fit_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    },
+    {
+      "method_name": "mult",
+      "fold": {
+        "fold_id": "simulation_deep_baseline_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "checkpoint_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/checkpoints/simulation/mult.pt",
+      "checkpoint_sha256": "f87a027a45b9ce0932e5b049ad274120382ca48acc60abadf141fc313fc2499e",
+      "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+      "seed": 17,
+      "status": "locked",
+      "label_used_for_encoder_training": false
+    }
+  ]
+}

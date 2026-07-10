@@ -8,60 +8,98 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G3b.2 MulT 与 ContiFormer 生产适配器
+## 当前里程碑：G3b.3 Chronaris 连续融合生产主干
 
-本里程碑从历史任务 wrapper 中分离两个深度基线的任务头前时序状态，接入 G3a 统一表示与留出折导出器。只做生产适配器、检查点可恢复性和因果边界验证；公共自监督训练在五个可训练编码器都具备后统一启动。
+本里程碑把论文方法中的双流连续潜态、物理一致性和秒级因果滞后融合连接成一个任务无关编码器，接入既有训练折归一化、检查点注册与留出折导出。此处先证明机制路径和四项固定消融真实可执行；五个可训练编码器的公共自监督训练在本门通过后统一启动。
 
-### G1–G3b.1 已完成
+### G1–G3b.2 已完成
 
-- 固定数据、原始点、仿真真值、统一表示与留出折来源合同均已固化。
-- 生理单流、航电单流和朴素时间同步已成为生产适配器，不再由合同探针承担主表示。
-- 仿真三划分与鼎新三个不同视图共完成 6 个生产导出，恢复 6/6 复用，14/14 验收通过。
-- 未来观测与非激活模态扰动的历史输出最大变化均为 0。
-- 完整测试为 `265 passed, 8 skipped`；本阶段开始前工作树不包含入仓检查点或稠密表示。
+- 固定鼎新数据、原始异步点、仿真真值、统一表示与留出折来源合同均已固化。
+- 生理单流、航电单流、朴素时间同步、MulT 与 ContiFormer 已具备任务头前生产适配器。
+- 两轮适配器冒烟共完成 10 个仿真/鼎新留出折输出；浅层基线 14/14、深度基线 15/15 验收通过。
+- 所有生产适配器当前与历史查询均不受未来观测扰动；两个双流深度基线对两种历史输入均有非零响应。
+- 完整测试为 `272 passed, 8 skipped`；检查点和稠密表示均位于被忽略目录。
 
-### 当前输入
+### 当前可复用实现与禁止替代路径
 
-- 公共因果查询层：`src/chronaris/modeling/fusion_encoders/causal_query.py`。
-- 现有历史 wrapper：`ChronarisMulTWrapper` 与 `ChronarisContiFormerWrapper`，仅作为结构与权重命名参考，不直接导出任务训练后的 pooled embedding。
-- vendored MulT：`third_party/mult/`；需先确认自注意力和跨模态注意力的掩码语义。
-- vendored ContiFormer：已支持 `causal=True`，历史 wrapper 默认仍为 false。
-- 统一检查点、表示序列化和恢复：`src/chronaris/representation/`。
-- G3b.1 证据：`docs/artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke/`。
+- 连续潜态原型：`src/chronaris/models/alignment/prototype.py` 中的 `DualStreamODERNNPrototype`、`SingleStreamODERNNPrototype`。
+- 观测编码与连续演化：`src/chronaris/models/alignment/encoders.py`、`ode_cells.py` 和 `torch_batch.py`。
+- 已有物理损失：`src/chronaris/models/alignment/physics.py`、`physics_features.py`、`physics_state_mapping.py` 与 `losses.py`。
+- 历史融合：`src/chronaris/models/fusion/causal.py` 目前支持因果与固定点数窗口，可复用投影/注意力思路，不能继续用点数窗口作为新主协议。
+- 公共表示输入、训练折变换与折外导出：`src/chronaris/representation/`。
+- 历史 `ChronarisPrivateTaskAwareWrapper` 和任务训练后的 pooled embedding 不得作为本里程碑的 Chronaris 主路径。
+- G3b.2 证据：`docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/`。
 
-### 子任务 G3b.2-a：双流查询输入
+### 子任务 G3b.3-a：原始异步双流到连续潜态
 
-1. 两流分别经过公共因果查询层，形成 96 点值、字段有效性和观测年龄；适配器不直接读取原始未来点。
-2. 生理与航电各自使用独立输入投影，输入维数允许不同，隐藏维固定为 64。
-3. 整段模态缺失时保留内部模态可用性掩码，并保证统一查询有效掩码跨方法一致。
-4. 双流归一化只在训练折拟合；MulT 与 ContiFormer 共享同一 transform hash。
+1. 新建任务无关 `ChronarisContinuousFusionEncoder`；输入直接使用每个模态的原始时间、数值、字段有效掩码和长度，不能先用公共前向填充把不规则采样抹平。
+2. 生理和航电各自使用独立 ObservationEncoder、ODE 演化与 GRU 观测更新；共享隐藏维和求解配置，但不共享输入投影参数。
+3. 将 `DualStreamObservationBatch` 明确转换为现有 `TorchAlignmentBatch` 或等价的严格张量合同；padding 时间不得触发 ODE 或 GRU 更新。
+4. 在统一 96 点查询轴上读取两条连续潜态；查询轴之前没有观测时输出无效掩码，不能使用未来第一个观测回填。
+5. 增加运行计数器或 trace，逐样本记录 ODE 演化步数、GRU 更新步数、查询次数和最大时间间隔，供路径审计使用。
 
-### 子任务 G3b.2-b：MulT 生产适配器
+### 子任务 G3b.3-b：秒级多尺度因果融合
 
-1. 复用 vendored Transformer block，但新增严格因果的自注意力与跨模态注意力掩码。
-2. 生理查询航电、航电查询生理两个方向都只能关注当前及历史查询点。
-3. 两个方向的时序状态在任务头前合并并投影到 64 维，不导出 logits 或旧任务 pooled embedding。
-4. 增加未来点扰动、单向模态扰动、整段模态缺失和注意力掩码测试。
+1. 新建生产级多尺度因果融合模块，窗口固定为近时延 0–5 秒、中时延 5–15 秒、长时延 15–30 秒。
+2. 每个生理查询只能读取对应窗口内的当前或历史航电潜态；时间差由真实秒数计算，不由查询点序号近似。
+3. 三个尺度分别计算注意力上下文；空窗口输出结构化不可用并从尺度门控 softmax 中排除，不能用全零上下文参与归一化。
+4. 门控输入只允许当前/历史生理潜态、三个尺度上下文和模态可用性；门控权重按查询点归一化并记录尺度利用率。
+5. 将生理连续潜态、航电当前潜态和门控跨流上下文投影为 64 维表示；最终有效掩码继续使用六方法公共查询合同。
+6. 历史 `lag_window_points` 仅保留 artifact replay 兼容入口，新 checkpoint 清单必须记录 `lag_ranges_s=[[0,5],[5,15],[15,30]]`。
 
-### 子任务 G3b.2-c：ContiFormer 生产适配器
+### 子任务 G3b.3-c：物理一致性可用性与损失接口
 
-1. 拼接两流的因果查询值、字段掩码和观测年龄，使用 `ContiFormerEncoder(causal=True)`。
-2. 时序状态直接作为任务头前 sequence embedding；模型隐藏维即 64，不再追加任务特征。
-3. 兼容历史 wrapper 的非因果默认行为，但生产适配器必须在清单中记录 `causal_attention=true`。
-4. 增加未来点扰动、时间轴变化、模态缺失和检查点 round-trip 测试。
+1. 为仿真 12 状态航电字段和鼎新元数据分别构造物理语义映射；映射只根据字段名/元数据和训练折统计，不读取仿真 oracle。
+2. 复用 rigid-body/full family 的物理残差实现，但把训练返回值扩展为每项 `status`、`active`、`count`、`raw_value`、`weighted_value` 和缺失原因。
+3. 仿真至少审计速度/姿态/角速度/加速度可用项；鼎新按实际字段逐项启用，无法满足输入语义的项标记 `unavailable`。
+4. 物理损失只在有效查询与有效字段上聚合；没有样本时不返回数值零，避免“未计算等于完全一致”的误读。
+5. 物理损失是训练辅助量，不写入 `FusionStreamBatch`；表示 manifest 只记录组件配置和可用性摘要。
+6. 本工程冒烟不声称模型已被物理目标训练；正式权重仍按第 1–10 epoch 为 0、第 11–20 epoch 线性升至 0.1 的训练协议执行。
 
-### 子任务 G3b.2-d：公平预算与导出
+### 子任务 G3b.3-d：四项固定消融
 
-1. 两个适配器使用相同隐藏维 64、两层、四头、dropout 0.1 和随机种子 17。
-2. 两者共享训练折归一化与同一 augmentation realization 合同；本 smoke 不执行训练增强。
-3. 仿真训练/验证/G2 锁定轨迹和鼎新三个不同视图分别完成两个方法的留出折导出。
-4. 记录参数量、检查点哈希、输入字段、导出耗时、未来扰动、双流敏感性和恢复状态。
+建立单一枚举配置，禁止为消融另开超参数搜索：
 
-### 预期产物
+| 变体 | 唯一变化 | 保持不变 |
+| --- | --- | --- |
+| 完整 Chronaris | ODE-RNN、物理、多尺度因果融合全部启用 | 统一基准 |
+| 无连续演化 | 相邻观测间不执行 ODE 演化，只保留观测更新和查询保持 | 编码器、隐藏维、融合、损失预算 |
+| 无物理一致性 | 物理权重为 0，仍计算可用性审计 | ODE-RNN、因果融合、公共目标 |
+| 无因果掩码 | 多尺度融合允许对称时间可见域，仅用于消融 | ODE-RNN、物理、尺度与参数预算 |
+| 单尺度时延 | 使用 0–30 秒单一历史窗口，不使用三尺度门控 | ODE-RNN、物理、输出投影 |
 
-紧凑 run `docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/`：
+每个变体 manifest 必须列出与完整配置的字段级 diff；自动测试断言 diff 仅命中表中目标字段。
+
+### 子任务 G3b.3-e：检查点与任务无关导出
+
+1. 检查点保存主干配置、模型权重、训练折归一化器、随机种子、代码路径版本和物理语义映射摘要。
+2. `label_used_for_encoder_training=false`；本 smoke 的 `training_invoked=false`，不得加载旧分类/回归 checkpoint。
+3. 仿真使用训练、验证、锁定测试三个不同 profile；鼎新使用三个不同 view，沿用一训练、一验证、一留出折的工程冒烟划分。
+4. 完整 Chronaris 导出仿真和鼎新各一个留出折表示；四项消融先完成前向、路径与配置审计，不产生论文任务指标。
+5. 二次运行逐项校验 checkpoint、normalizer、输入和表示哈希，完整项必须恢复复用；任一来源哈希变化时拒绝复用。
+
+### 子任务 G3b.3-f：针对性测试矩阵
+
+单元与集成测试至少覆盖：
+
+1. 不规则时间间隔会改变 ODE 演化结果；禁用连续演化后该差异消失。
+2. padding 时间、无效字段和整段缺失模态不会触发伪观测更新。
+3. 未来原始点扰动不改变当前及历史完整模型输出；无因果掩码消融应被反例测试检出未来敏感性。
+4. 精确位于 5、15、30 秒边界的键只进入预先规定的尺度；31 秒历史不进入任何主尺度。
+5. 三个尺度均可用时门控和为 1；部分尺度空缺时只在可用尺度归一化。
+6. 仿真物理项出现 active 且 count 大于 0；语义字段不足的 fixture 返回 unavailable 而非零损失。
+7. 四项消融每项只改变一个目标机制，参数和 checkpoint 元数据可复核。
+8. 检查点保存/加载前后输出、trace 和配置一致；折外导出与恢复合同保持通过。
+
+### 本里程碑预期产物
+
+紧凑 run `docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/`：
 
 - `adapter_protocol.json`
+- `continuous_path_audit.csv`
+- `lag_scale_boundary_audit.csv`
+- `physics_availability.csv`
+- `ablation_config_diff.csv`
 - `attention_causality_audit.csv`
 - `dual_stream_sensitivity.csv`
 - `parameter_budget.csv`
@@ -71,14 +109,17 @@
 - `acceptance_checks.csv`
 - `report.md`、`claim_boundary.md`、`progress.json`、`resume_command.txt` 和 `evidence_manifest.json`
 
-### G3b.2 验收
+检查点和稠密表示继续写入 `artifacts/application_evaluation/2026-07-11_chronaris-continuous-adapter-smoke/`，禁止入仓。
 
-- 两个方法均输出 `[B,96,64]`，样本标识、查询时间、有效掩码和留出折来源一致。
-- 修改查询时刻之后的任一模态观测，不能改变该时刻及之前的输出。
-- 分别扰动生理或航电历史时，两个双流适配器都必须产生非零但有限的表示变化。
-- 生产表示来自任务头之前，文件中不存在标签、logits、预测值或方法专属诊断量。
-- 两个方法的归一化拟合样本哈希一致且不含验证/留出样本。
-- 检查点保存/加载后输出一致；恢复运行只重建缺失项，完整项校验后复用。
+### G3b.3 验收
+
+- 完整主干输出 `[B,96,64]`，样本、查询时间、有效掩码、训练折来源与五个对照方法合同一致。
+- 路径 trace 证明两条 ODE-RNN、统一查询、物理可用性计算和秒级多尺度因果融合真实执行。
+- 未来扰动最大变化在数值容差内为 0；三条秒级边界、空窗口门控和整段模态缺失测试通过。
+- 物理清单至少在仿真出现 active 项；所有未计算项都有明确 unavailable 原因。
+- 四项消融配置 diff 均只命中目标机制，完整模型与消融都能完成有限值前向。
+- 任务无关 checkpoint round-trip、折外导出和完整恢复复用通过；文件中不存在标签、logits 或下游预测。
+- 完整测试、`compileall`、`git diff --check`、读者术语、密钥、LFS 与被忽略重型产物检查通过。
 
 ## 已锁定规范
 
@@ -91,12 +132,13 @@
 
 ## 后续验收门
 
-### G3b.3：Chronaris 连续融合生产主干
+### G3b.4：五个可训练编码器公共自监督训练
 
-- 打通双流 ODE-RNN、统一查询、物理一致性和秒级三尺度因果融合。
-- 路径测试证明连续演化、物理项与因果掩码真实执行，不由任务 wrapper 替代。
-- 物理项逐项记录 active/unavailable/count/value；缺字段时不得写零值冒充启用。
-- 固定无连续演化、无物理、无因果掩码和单尺度时延四项消融。
+- 训练对象为生理单流、航电单流、MulT、ContiFormer 和 Chronaris；朴素时间同步只拟合训练折归一化与无监督投影。
+- 公共目标固定为 masked reconstruction 1.0、短期预测 0.5、时延判别 0.2；目标构造、遮挡位置和错误时移由共享 augmentation ID 派生。
+- Chronaris 的连续对齐、物理一致性与因果方向正则在第 1–10 epoch 为 0，第 11–20 epoch 线性升至 0.2/0.1/0.1，之后保持。
+- 首先运行六方法、单一仿真 fold、候选 A、1 epoch 的训练—导出—线性探针闭环烟雾测试；通过后再启动 seed 17 开发筛选。
+- 训练器记录每个方法/epoch 的公共损失、方法特有损失、有效样本数、参数量、吞吐、峰值显存和 checkpoint 哈希；任务标签不得进入表示预训练。
 
 ### G4：下游 consumer
 
@@ -174,11 +216,13 @@
 
 ## 当前验证门
 
-当前 G3b.2 实现提交前必须通过：
+当前 G3b.3 实现提交前必须通过：
 
-1. MulT/ContiFormer 因果注意力、未来扰动不变性、双流敏感性和检查点 round-trip 测试。
-2. G1–G3b.1 全部聚焦测试保持通过。
-3. 仿真与鼎新各完成两个深度基线的留出折导出。
-4. `git diff --check`、完整 `pytest` 和 `compileall`。
-5. 读者可见术语、未来信息、真值隔离和密钥审计。
-6. `git status` 中不存在原始点、完整仿真 bundle、稠密表示或检查点。
+1. ODE-RNN 真实时间演化、padding 隔离、查询前无观测和 checkpoint round-trip 测试。
+2. 0–5、5–15、15–30 秒可见域边界、空尺度门控和未来扰动不变性测试。
+3. 仿真/鼎新物理项 active/unavailable 审计与缺字段不冒充零损失测试。
+4. 完整 Chronaris 与四项固定消融的单一机制 diff 和有限值前向测试。
+5. 仿真与鼎新各完成完整 Chronaris 留出折导出、恢复复用和路径审计。
+6. G1–G3b.2 全部聚焦测试保持通过，并运行完整 `pytest`、`compileall` 和 `git diff --check`。
+7. 读者可见术语、未来信息、仿真真值隔离、密钥、LFS 和 Git ignore 审计通过。
+8. `git status` 中不存在原始点、完整仿真 bundle、稠密表示或检查点。

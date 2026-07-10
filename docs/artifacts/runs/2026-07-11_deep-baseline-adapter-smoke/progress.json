@@ -1,0 +1,45 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "downstream_metrics_produced": false,
+  "stage_name": "deep_baseline_adapter_smoke",
+  "run_id": "2026-07-11_deep-baseline-adapter-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T17:18:19.212614Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T17:18:15.287017Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "downstream_metrics_produced": false
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:18:18.413541Z",
+      "event": "dataset_deep_baselines_complete",
+      "dataset_id": "simulation",
+      "export_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:18:19.208917Z",
+      "event": "dataset_deep_baselines_complete",
+      "dataset_id": "dingxin",
+      "export_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:18:19.212614Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 15,
+      "acceptance_check_count": 15,
+      "export_count": 4,
+      "resume_reused_count": 4
+    }
+  ],
+  "dataset_id": "dingxin",
+  "export_count": 4,
+  "status": "completed",
+  "acceptance_pass_count": 15,
+  "acceptance_check_count": 15,
+  "resume_reused_count": 4
+}

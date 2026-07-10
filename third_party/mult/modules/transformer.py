@@ -48,7 +48,7 @@ class TransformerEncoder(nn.Module):
         if self.normalize:
             self.layer_norm = LayerNorm(embed_dim)
 
-    def forward(self, x_in, x_in_k = None, x_in_v = None):
+    def forward(self, x_in, x_in_k = None, x_in_v = None, *, key_padding_mask=None):
         """
         Args:
             x_in (FloatTensor): embedded input of shape `(src_len, batch, embed_dim)`
@@ -81,9 +81,9 @@ class TransformerEncoder(nn.Module):
         intermediates = [x]
         for layer in self.layers:
             if x_in_k is not None and x_in_v is not None:
-                x = layer(x, x_k, x_v)
+                x = layer(x, x_k, x_v, key_padding_mask=key_padding_mask)
             else:
-                x = layer(x)
+                x = layer(x, key_padding_mask=key_padding_mask)
             intermediates.append(x)
 
         if self.normalize:
@@ -132,7 +132,7 @@ class TransformerEncoderLayer(nn.Module):
         self.fc2 = Linear(4*self.embed_dim, self.embed_dim)
         self.layer_norms = nn.ModuleList([LayerNorm(self.embed_dim) for _ in range(2)])
 
-    def forward(self, x, x_k=None, x_v=None):
+    def forward(self, x, x_k=None, x_v=None, *, key_padding_mask=None):
         """
         Args:
             x (Tensor): input to the layer of shape `(seq_len, batch, embed_dim)`
@@ -147,11 +147,23 @@ class TransformerEncoderLayer(nn.Module):
         x = self.maybe_layer_norm(0, x, before=True)
         mask = buffered_future_mask(x, x_k) if self.attn_mask else None
         if x_k is None and x_v is None:
-            x, _ = self.self_attn(query=x, key=x, value=x, attn_mask=mask)
+            x, _ = self.self_attn(
+                query=x,
+                key=x,
+                value=x,
+                attn_mask=mask,
+                key_padding_mask=key_padding_mask,
+            )
         else:
             x_k = self.maybe_layer_norm(0, x_k, before=True)
             x_v = self.maybe_layer_norm(0, x_v, before=True) 
-            x, _ = self.self_attn(query=x, key=x_k, value=x_v, attn_mask=mask)
+            x, _ = self.self_attn(
+                query=x,
+                key=x_k,
+                value=x_v,
+                attn_mask=mask,
+                key_padding_mask=key_padding_mask,
+            )
         x = F.dropout(x, p=self.res_dropout, training=self.training)
         x = residual + x
         x = self.maybe_layer_norm(0, x, after=True)

@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-07-11_deep-baseline-adapter-smoke",
+  "status": "completed",
+  "evidence_layer": "deep_baseline_adapter_smoke_only",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke",
+  "downstream_metrics_produced": false,
+  "output_paths": {
+    "adapter_protocol": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/adapter_protocol.json",
+    "attention_causality_audit": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/attention_causality_audit.csv",
+    "dual_stream_sensitivity": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/dual_stream_sensitivity.csv",
+    "parameter_budget": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/parameter_budget.csv",
+    "fold_transform_manifest": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/fold_transform_manifest.json",
+    "checkpoint_registry": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/checkpoint_registry.json",
+    "representation_export_manifest": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/representation_export_manifest.json",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/evidence_manifest.json"
+  }
+}
