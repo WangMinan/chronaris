@@ -1,0 +1,15 @@
+check_id,passed,actual,expected
+two_dataset_three_method_exports,True,6,6
+resume_reuses_all_exports,True,6,6
+checkpoint_registry_complete,True,6,6
+fixed_query_and_output_shape,True,"[(96, 64), (96, 64), (96, 64), (96, 64), (96, 64), (96, 64)]","(96, 64)"
+future_observation_invariance,True,0.0,1e-06
+inactive_stream_invariance,True,0.0,1e-06
+train_only_transform_lineage,True,True,True
+cross_method_alignment,True,"{'simulation': 'e48c7b82388dcb8e3c320eca7981b758ecd3c74195f32c78b08e121b8d5c4b8b', 'dingxin': '8a4f078fee371b1753fee7c76dce3d63af0c762d0d40c7a16a42d99862706bdc'}",two SHA-256 values
+single_stream_shared_backbone,True,"[110208, 111168, 0, 111168, 292224, 0]","single streams >0, naive=0"
+naive_has_no_trainable_parameters,True,"[0, 0]",0
+dingxin_three_view_smoke,True,3,3
+dingxin_label_sources_excluded,True,20,20
+observed_only_inputs,True,False,False
+labels_not_used_for_encoder,True,False,False

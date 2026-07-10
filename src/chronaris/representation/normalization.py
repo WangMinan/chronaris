@@ -98,6 +98,26 @@ class TrainOnlyRobustNormalizer:
             ),
         )
 
+    @classmethod
+    def from_manifest(
+        cls,
+        payload: Mapping[str, object],
+    ) -> "TrainOnlyRobustNormalizer":
+        if payload.get("transform") != "median_iqr":
+            raise RepresentationContractError("unsupported robust normalizer manifest")
+        normalizer = cls(minimum_scale=float(payload["minimum_scale"]))
+        normalizer.fit_sample_ids = tuple(str(value) for value in payload["fit_sample_ids"])
+        normalizer.fit_sample_hash = str(payload["fit_sample_hash"])
+        if normalizer.fit_sample_hash != stable_sample_hash(normalizer.fit_sample_ids):
+            raise RepresentationContractError("normalizer manifest fit hash mismatch")
+        normalizer.physiology = _statistics_from_payload(payload["physiology"])
+        normalizer.vehicle = _statistics_from_payload(payload["vehicle"])
+        manifest_without_hash = dict(payload)
+        expected_transform_hash = str(manifest_without_hash.pop("transform_sha256"))
+        if _mapping_hash(manifest_without_hash) != expected_transform_hash:
+            raise RepresentationContractError("normalizer manifest transform hash mismatch")
+        return normalizer
+
     def to_manifest(self) -> Mapping[str, object]:
         physiology, vehicle = self._require_fitted()
         payload: dict[str, object] = {
@@ -211,6 +231,47 @@ class TrainOnlyPCAProjector:
         payload["transform_sha256"] = _mapping_hash(payload)
         return payload
 
+    def state_dict(self) -> Mapping[str, object]:
+        if (
+            self.center is None
+            or self.components is None
+            or self.explained_variance_ratio is None
+            or self.fit_sample_hash is None
+        ):
+            raise RepresentationContractError("PCA projector must be fitted before save")
+        return {
+            "output_dim": self.output_dim,
+            "center": torch.from_numpy(self.center.copy()),
+            "components": torch.from_numpy(self.components.copy()),
+            "explained_variance_ratio": torch.from_numpy(
+                self.explained_variance_ratio.copy()
+            ),
+            "fit_sample_ids": list(self.fit_sample_ids),
+            "fit_sample_hash": self.fit_sample_hash,
+        }
+
+    @classmethod
+    def from_state_dict(cls, payload: Mapping[str, object]) -> "TrainOnlyPCAProjector":
+        projector = cls(output_dim=int(payload["output_dim"]))
+        projector.center = _tensor_to_numpy(payload["center"])
+        projector.components = _tensor_to_numpy(payload["components"])
+        projector.explained_variance_ratio = _tensor_to_numpy(
+            payload["explained_variance_ratio"]
+        )
+        projector.fit_sample_ids = tuple(
+            str(value) for value in payload["fit_sample_ids"]
+        )
+        projector.fit_sample_hash = str(payload["fit_sample_hash"])
+        if projector.fit_sample_hash != stable_sample_hash(projector.fit_sample_ids):
+            raise RepresentationContractError("PCA state fit hash mismatch")
+        if projector.center.ndim != 1 or projector.components.ndim != 2:
+            raise RepresentationContractError("PCA state array dimensions are invalid")
+        if projector.components.shape[1] != len(projector.center):
+            raise RepresentationContractError("PCA state input dimensions are inconsistent")
+        if projector.components.shape[0] > projector.output_dim:
+            raise RepresentationContractError("PCA state exceeds configured output dimension")
+        return projector
+
 
 def _fit_stream_statistics(
     values: torch.Tensor,
@@ -244,9 +305,12 @@ def _transform_stream(
 ) -> torch.Tensor:
     if values.shape[-1] != len(statistics.center):
         raise RepresentationContractError("normalizer feature dimension mismatch")
-    transformed = (values - statistics.center) / statistics.scale
+    center = statistics.center.to(device=values.device, dtype=values.dtype)
+    scale = statistics.scale.to(device=values.device, dtype=values.dtype)
+    active_mask = statistics.active_mask.to(device=values.device)
+    transformed = (values - center) / scale
     transformed = torch.where(
-        feature_mask & statistics.active_mask.view(1, 1, -1),
+        feature_mask & active_mask.view(1, 1, -1),
         transformed,
         torch.zeros_like(transformed),
     )
@@ -262,7 +326,29 @@ def _statistics_payload(statistics: StreamRobustStatistics) -> Mapping[str, obje
     }
 
 
+def _statistics_from_payload(payload: object) -> StreamRobustStatistics:
+    resolved = dict(payload)
+    center = torch.tensor(resolved["center"], dtype=torch.float32)
+    scale = torch.tensor(resolved["scale"], dtype=torch.float32)
+    active = torch.tensor(resolved["active_mask"], dtype=torch.bool)
+    counts = torch.tensor(resolved["valid_count"], dtype=torch.int64)
+    if not (center.shape == scale.shape == active.shape == counts.shape):
+        raise RepresentationContractError("normalizer statistics shape mismatch")
+    if bool((scale <= 0).any()) or not torch.isfinite(center).all() or not torch.isfinite(scale).all():
+        raise RepresentationContractError("normalizer statistics contain invalid values")
+    return StreamRobustStatistics(center, scale, active, counts)
+
+
 def _mapping_hash(payload: Mapping[str, object]) -> str:
     return hashlib.sha256(
         json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     ).hexdigest()
+
+
+def _tensor_to_numpy(value: object) -> np.ndarray:
+    if not isinstance(value, torch.Tensor):
+        raise RepresentationContractError("serialized PCA arrays must be tensors")
+    array = value.detach().cpu().numpy().astype(np.float64, copy=True)
+    if not np.isfinite(array).all():
+        raise RepresentationContractError("serialized PCA arrays contain non-finite values")
+    return array

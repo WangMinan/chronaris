@@ -1,0 +1,7 @@
+dataset_id,dataset_label,method_name,method_label,input_feature_count,parameter_count,output_dim,query_point_count,export_elapsed_s,process_peak_rss_mb
+simulation,仿真,physiology_only,生理单流,7,110208,64,96,0.002007350791245699,812.01171875
+simulation,仿真,vehicle_only,航电单流,12,111168,64,96,0.0016340729780495167,812.01171875
+simulation,仿真,naive_time_sync,朴素时间同步,19,0,64,96,0.0013078060001134872,812.01171875
+dingxin,鼎新,physiology_only,生理单流,12,111168,64,96,0.00175808509811759,812.01171875
+dingxin,鼎新,vehicle_only,航电单流,955,292224,64,96,0.0020798309706151485,812.01171875
+dingxin,鼎新,naive_time_sync,朴素时间同步,967,0,64,96,0.002239047084003687,812.01171875

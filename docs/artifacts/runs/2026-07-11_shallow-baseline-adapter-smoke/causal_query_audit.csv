@@ -1,0 +1,7 @@
+dataset_id,dataset_label,method_name,method_label,cutoff_s,future_perturbation_max_abs_delta,inactive_stream_check_applicable,inactive_stream_max_abs_delta,query_valid_ratio
+simulation,仿真,physiology_only,生理单流,15.0,0.0,True,0.0,1.0
+simulation,仿真,vehicle_only,航电单流,15.0,0.0,True,0.0,1.0
+simulation,仿真,naive_time_sync,朴素时间同步,15.0,0.0,False,0.0,1.0
+dingxin,鼎新,physiology_only,生理单流,15.0,0.0,True,0.0,1.0
+dingxin,鼎新,vehicle_only,航电单流,15.0,0.0,True,0.0,1.0
+dingxin,鼎新,naive_time_sync,朴素时间同步,15.0,0.0,False,0.0,1.0

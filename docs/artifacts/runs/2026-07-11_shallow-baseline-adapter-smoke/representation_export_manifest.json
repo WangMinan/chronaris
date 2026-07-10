@@ -1,0 +1,91 @@
+{
+  "format": "chronaris.shallow_adapter_exports.v1",
+  "available_export_count": 6,
+  "current_run_built_count": 0,
+  "current_run_reused_count": 6,
+  "resume_verification_reused_count": 6,
+  "exports": [
+    {
+      "method_name": "physiology_only",
+      "fold_id": "simulation_shallow_adapter_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/physiology_only/simulation_shallow_adapter_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/physiology_only/simulation_shallow_adapter_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/physiology_only/simulation_shallow_adapter_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "1dc5a344f8289c502a992e989014f3d81f92ea7369342d02df3829679eb64d4f",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold_id": "simulation_shallow_adapter_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/vehicle_only/simulation_shallow_adapter_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/vehicle_only/simulation_shallow_adapter_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/vehicle_only/simulation_shallow_adapter_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "4de0451bdc09aed1d3ec2da75e7e35a1fa97e9dc8b19bc952fe0edcd52b7b091",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold_id": "simulation_shallow_adapter_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/naive_time_sync/simulation_shallow_adapter_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/naive_time_sync/simulation_shallow_adapter_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/naive_time_sync/simulation_shallow_adapter_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "05aa1478b2196087bbbbe1ad3814a889a53c529699c892e1a1819d628798be78",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "physiology_only",
+      "fold_id": "dingxin_shallow_adapter_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/physiology_only/dingxin_shallow_adapter_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/physiology_only/dingxin_shallow_adapter_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/physiology_only/dingxin_shallow_adapter_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "ef1d91cd5840b2477cc080a88821d803b6f1b1cb5b9e0da45067ead81403598e",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+      ]
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold_id": "dingxin_shallow_adapter_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/vehicle_only/dingxin_shallow_adapter_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/vehicle_only/dingxin_shallow_adapter_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/vehicle_only/dingxin_shallow_adapter_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "acdf4859904f4452e38eaa97dd1fdb307d7ef4f2f9fc588844d745b26a3f669f",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+      ]
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold_id": "dingxin_shallow_adapter_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/naive_time_sync/dingxin_shallow_adapter_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/naive_time_sync/dingxin_shallow_adapter_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_shallow-baseline-adapter-smoke/representations/naive_time_sync/dingxin_shallow_adapter_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "b37fddabe349e6ace83ab586f369feea0c204ea024ea7354e99d6c54b6fa5ce4",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+      ]
+    }
+  ],
+  "alignment_sha256": {
+    "simulation": "e48c7b82388dcb8e3c320eca7981b758ecd3c74195f32c78b08e121b8d5c4b8b",
+    "dingxin": "8a4f078fee371b1753fee7c76dce3d63af0c762d0d40c7a16a42d99862706bdc"
+  }
+}

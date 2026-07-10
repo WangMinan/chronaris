@@ -1,0 +1,85 @@
+{
+  "format": "chronaris.shallow_adapter_transforms.v1",
+  "datasets": {
+    "simulation": {
+      "fold": {
+        "fold_id": "simulation_shallow_adapter_smoke",
+        "train_sample_ids": [
+          "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000"
+        ],
+        "validation_sample_ids": [
+          "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000"
+        ],
+        "held_out_sample_ids": [
+          "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+        ],
+        "train_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+        "validation_sample_hash": "b3f87723448edf204a9b148a8431144af7e041829628a21a45441c469c2f1e60",
+        "held_out_sample_hash": "9a6d64b6977106f55e954d55a827872d501a3a03fd7ca81267d1ae1842280a4f"
+      },
+      "methods": {
+        "physiology_only": {
+          "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+          "normalizer_sha256": "9576b548c0151d91ea10bcf9fa4a32aa34e9e09d3235fe9993b62a296d5045ba",
+          "label_used_for_encoder_training": false,
+          "checkpoint_sha256": "60bbfa78d56385a76fa99a86c9606ee497e7174f5b84009287eee2a5076fc9d5"
+        },
+        "vehicle_only": {
+          "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+          "normalizer_sha256": "9576b548c0151d91ea10bcf9fa4a32aa34e9e09d3235fe9993b62a296d5045ba",
+          "label_used_for_encoder_training": false,
+          "checkpoint_sha256": "2d6aa117a87a892dda89679e160f0edc4eeacedb0c1384105e21ef3b1eb32713"
+        },
+        "naive_time_sync": {
+          "fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+          "normalizer_sha256": "9576b548c0151d91ea10bcf9fa4a32aa34e9e09d3235fe9993b62a296d5045ba",
+          "label_used_for_encoder_training": false,
+          "checkpoint_sha256": "d25e242288dc8b62aae8ae873daa925d557b56a854136bc6050da2d1b2119f21",
+          "pca_fit_sample_hash": "4d7e10c8ca0313c1ea38d44d72c3bfac8f4e2c2e574985f9ede0cab5cf7a33ac",
+          "pca_transform_sha256": "e1c14a3f29e3fa1c68efd450e3134c482251c62bfc347b6583ab96fdb178fd56",
+          "pca_component_count": 57
+        }
+      }
+    },
+    "dingxin": {
+      "fold": {
+        "fold_id": "dingxin_shallow_adapter_smoke",
+        "train_sample_ids": [
+          "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005"
+        ],
+        "validation_sample_ids": [
+          "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0005"
+        ],
+        "held_out_sample_ids": [
+          "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+        ],
+        "train_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+        "validation_sample_hash": "68ae82237a1180049cfe231670da52b1c9b86238f57b147289fe48b598fb7bcf",
+        "held_out_sample_hash": "0a70cc8ccaac12d8cf0e8db5303e586d68048d2b8074871a7914dfefe5a996ec"
+      },
+      "methods": {
+        "physiology_only": {
+          "fit_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+          "normalizer_sha256": "79360be54fc6a0c33aa3149bea02eff1b0ffb050a8a20126682b227d7b9f03ed",
+          "label_used_for_encoder_training": false,
+          "checkpoint_sha256": "0bd70e79c906bcb3f11b1192d0ed6f8986acea3c67a6adb669460d97964d6a4d"
+        },
+        "vehicle_only": {
+          "fit_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+          "normalizer_sha256": "79360be54fc6a0c33aa3149bea02eff1b0ffb050a8a20126682b227d7b9f03ed",
+          "label_used_for_encoder_training": false,
+          "checkpoint_sha256": "c765985cacabd85898a69fa5dc36e6635064362f0ef0871aa4d9d47e0b4890df"
+        },
+        "naive_time_sync": {
+          "fit_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+          "normalizer_sha256": "79360be54fc6a0c33aa3149bea02eff1b0ffb050a8a20126682b227d7b9f03ed",
+          "label_used_for_encoder_training": false,
+          "checkpoint_sha256": "04ce145c06cd207e5a24d3a5b7657b8dc2e8915204b04cb04d1b9b87bc74c733",
+          "pca_fit_sample_hash": "8bc52e5829ed7d54ce2a3e1761d6a8145de86d177c43dd957350ca7dfcbb5424",
+          "pca_transform_sha256": "5ceffe4ce4f58348db7c81f69f6ff71a4ed04d90850fb7bf2b4e0a445573215b",
+          "pca_component_count": 64
+        }
+      }
+    }
+  }
+}
