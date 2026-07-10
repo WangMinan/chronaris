@@ -1,0 +1,28 @@
+{
+  "fold_id": "simulation_g1_common_pretraining_smoke",
+  "train_sample_ids": [
+    "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+  ],
+  "validation_sample_ids": [
+    "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+  ],
+  "held_out_sample_ids": [
+    "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+  ],
+  "train_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da",
+  "validation_sample_hash": "0be0d0562b981e36cfa50755a96fc7cd03254cb9ccc89b85c03e4204e5461ba9",
+  "held_out_sample_hash": "6b9d7b5ebcfa0e6d8826a5bccbcb6141b942a6f1191135345c116b938e379ce7"
+}

@@ -1,0 +1,33 @@
+{
+  "run_id": "2026-07-11_common-pretraining-loop-smoke",
+  "status": "completed",
+  "evidence_layer": "common_pretraining_loop_smoke_only",
+  "training_invoked": true,
+  "training_epochs": 1,
+  "confirmed_metrics_changed": false,
+  "downstream_metrics_smoke_only": true,
+  "pretraining_oracle_opened": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke",
+  "prediction_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/downstream_predictions.csv",
+  "output_paths": {
+    "data_manifest": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/data_manifest.json",
+    "split_manifest": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/split_manifest.json",
+    "augmentation_protocol": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/augmentation_protocol.json",
+    "augmentation_alignment": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/augmentation_alignment.csv",
+    "pretext_target_manifest": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/pretext_target_manifest.json",
+    "pretext_loss_audit": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/pretext_loss_audit.csv",
+    "training_protocol": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/training_protocol.json",
+    "training_status": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/training_status.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/resource_budget.csv",
+    "checkpoint_registry": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/checkpoint_registry.json",
+    "representation_export_manifest": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/representation_export_manifest.json",
+    "downstream_protocol": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/downstream_protocol.json",
+    "fold_metrics": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/fold_metrics.csv",
+    "metric_long": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/metric_long.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/evidence_manifest.json"
+  }
+}

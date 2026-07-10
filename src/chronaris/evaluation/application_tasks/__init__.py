@@ -20,6 +20,11 @@ from chronaris.evaluation.application_tasks.chronaris_continuous_adapter_smoke i
     ChronarisContinuousAdapterSmokeResult,
     run_chronaris_continuous_adapter_smoke,
 )
+from chronaris.evaluation.application_tasks.common_pretraining_loop_smoke import (
+    CommonPretrainingLoopSmokeConfig,
+    CommonPretrainingLoopSmokeResult,
+    run_common_pretraining_loop_smoke,
+)
 from chronaris.evaluation.application_tasks.snapshot_live_source import (
     InfluxSnapshotPointSource,
     SnapshotPointSource,
@@ -47,6 +52,8 @@ __all__ = [
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
     "ChronarisContinuousAdapterSmokeResult",
+    "CommonPretrainingLoopSmokeConfig",
+    "CommonPretrainingLoopSmokeResult",
     "DeepBaselineAdapterSmokeConfig",
     "DeepBaselineAdapterSmokeResult",
     "InfluxSnapshotPointSource",
@@ -62,6 +69,7 @@ __all__ = [
     "run_fixed_data_audit",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
+    "run_common_pretraining_loop_smoke",
     "run_deep_baseline_adapter_smoke",
     "run_simulation_audit",
     "run_representation_contract_smoke",

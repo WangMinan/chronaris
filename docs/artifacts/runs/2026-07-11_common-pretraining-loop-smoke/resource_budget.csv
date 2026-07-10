@@ -1,0 +1,6 @@
+method_name,parameter_count,head_parameter_count,training_elapsed_s,step_count
+physiology_only,110208,2663,0.32020197389647365,2
+vehicle_only,111168,2663,0.2642718683928251,2
+mult,1014784,2663,0.5415990650653839,2
+contiformer,112512,2663,0.27479019295424223,2
+chronaris,123222,2663,5.893846562132239,2

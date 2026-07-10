@@ -1,0 +1,21 @@
+check_id,passed,actual,expected
+sixteen_distinct_profile_samples,True,16,16
+fixed_role_counts,True,"{'held_out': 4, 'validation': 4, 'train': 8}","{'train': 8, 'validation': 4, 'held_out': 4}"
+train_split_g1_only,True,True,True
+five_trainable_methods_completed,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed']",5
+training_resume_reuses_five,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed']",five resumed
+two_steps_per_trainable_method,True,"[2, 2, 2, 2, 2]",2
+three_public_terms_active,True,30,30 active rows
+chronaris_auxiliary_weights_zero_epoch_one,True,True,True
+augmentation_alignment_complete,True,16,16 rows x five methods
+shared_normalizer,True,['4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5'],one transform hash
+six_checkpoint_registry_records,True,6,6
+labels_not_used_for_encoder,True,False,False
+eighteen_role_exports,True,18,18
+resume_reuses_eighteen_exports,True,18,18
+single_missing_export_rebuilt,True,"{'method_name': 'chronaris', 'export_role': 'held_out', 'removed_file_count': 2, 'rebuild_status': 'completed', 'original_representation_sha256': '0a7d6268f9e6536e3cf7bdb229b525624a065a890d71737a611e44d98f73a571', 'rebuilt_representation_sha256': '0a7d6268f9e6536e3cf7bdb229b525624a065a890d71737a611e44d98f73a571', 'hash_match': True, 'non_target_initial_export_count': 17}",one Chronaris held-out export rebuilt with matching hash
+six_method_role_alignment,True,"{'train': '453360480a69cf9f4d3a6b4cdc9fe987dfb70d53c6cb73358331ca612a4d4cf2', 'validation': '4688aa095192655e0f9b504f04e7488e75391410005e3c69cb479f01f4da5045', 'held_out': 'b189ff2ff3c2750a8b5d87512f10b34598e507ca7c3ee262b26833a3a336d67e'}",three SHA-256 values
+oracle_opened_after_five_checkpoints,True,5,5
+train_only_target_thresholds,True,"[0.32348955461862033, 0.42305522691248326]",2
+fixed_linear_metric_matrix,True,72,72
+smoke_metrics_not_confirmed,True,True,True

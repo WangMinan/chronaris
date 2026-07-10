@@ -365,6 +365,16 @@ MiniRocket 是主实验依赖；ClaSP/STUMPY 保持可选 gated import。无需 
 - 仿真与鼎新各完成一个 Chronaris 留出折导出，恢复复核 2/2 复用，21/21 验收通过；完整模型未来扰动最大历史变化为 0。
 - 本里程碑没有公共自监督训练或下游任务指标；紧凑证据为 `docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/`，约 2.0 MB 检查点和稠密表示只保存在被忽略目录。
 
+### 8.9 2026-07-11 G3b.4 执行结果
+
+- 增强 realization 已从计划对象升级为真实执行器，支持模态删除、连续/随机缺失、时间抖动和时钟偏移；逐点 provenance 保证遮挡目标来自真实被移除查询来源。
+- 五个可训练编码器统一使用 `CommonPretextHeadBundle`，公共目标权重固定为 1.0/0.5/0.2；无有效位置以 unavailable 处理，Chronaris 第 1 epoch 三个特有权重按协议保持 0。
+- 通用训练 checkpoint 保存主干、公共头、optimizer、normalizer、fold、augmentation、输入与代码协议 hash；协议变化会拒绝错误 resume。
+- 仿真 train split 选择 16 个不同 G1 profile 的 clean-asynchronous 轨迹，按 8/4/4 profile 隔离；五个方法各完成 1 epoch、2 step，30 条公共 loss 记录全部 active。
+- 六个方法 train/validation/held-out 共导出 18 个表示并完成恢复复用；删除 Chronaris held-out 表示后仅重建该项且 hash 一致。
+- 五个训练 checkpoint 完成后才读取 30–35 秒 workload 真值，固定 Logistic/Ridge 输出 72 条 smoke-only 指标；不读取 locked_test，不更新 confirmed metrics。
+- 正式紧凑证据为 `docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/`，20/20 验收通过；约 37 MB 重型产物只在被忽略目录。
+
 ## 9. 工作包 F：下游 consumer 与指标
 
 ### 9.1 实现

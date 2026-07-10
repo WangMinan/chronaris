@@ -1,0 +1,393 @@
+{
+  "format": "chronaris.common_pretraining_exports.v1",
+  "available_export_count": 18,
+  "current_run_built_count": 0,
+  "current_run_reused_count": 18,
+  "resume_verification_reused_count": 18,
+  "alignment_sha256": {
+    "train": "453360480a69cf9f4d3a6b4cdc9fe987dfb70d53c6cb73358331ca612a4d4cf2",
+    "validation": "4688aa095192655e0f9b504f04e7488e75391410005e3c69cb479f01f4da5045",
+    "held_out": "b189ff2ff3c2750a8b5d87512f10b34598e507ca7c3ee262b26833a3a336d67e"
+  },
+  "exports": [
+    {
+      "method_name": "physiology_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "train",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/train",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/train/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/train/representation_manifest.json",
+      "representation_sha256": "b2f8bd9166993ef5d0cfcb899d4c9ba688c1e3f9df2a20d9f2472489bae3734d",
+      "sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "physiology_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "validation",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/validation",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/validation/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/validation/representation_manifest.json",
+      "representation_sha256": "e80f75036de0b18bc040bdd66f7f43d730541fb1680ddd5e2f881c128bae0ea8",
+      "sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "physiology_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/physiology_only/simulation_g1_common_pretraining_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "dcc3e8bd87737a5c045587a1d14d9306b3f192a76a1c9564692d54dd9f160024",
+      "sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "train",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/train",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/train/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/train/representation_manifest.json",
+      "representation_sha256": "75d3ef8948f92226186a6f4668b4940d1cad85d6089cf244456d87deb021063c",
+      "sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "validation",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/validation",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/validation/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/validation/representation_manifest.json",
+      "representation_sha256": "d18178e5d24cc981000d2a2671758432ba633be231a1a9a0d230dc55e6059548",
+      "sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "vehicle_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/vehicle_only/simulation_g1_common_pretraining_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "f67a05feace14456988ce85b6cd89d7ca509d07fa9047c0c866f8079207120ec",
+      "sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "train",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/train",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/train/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/train/representation_manifest.json",
+      "representation_sha256": "5819c36a1835891da512d3507dd4722c6b1df3babb0a32715195647b762ab0ef",
+      "sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "validation",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/validation",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/validation/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/validation/representation_manifest.json",
+      "representation_sha256": "fced9b90bfe2422af66706b6e1a5e47e22f22fdf28fca8f91151b6b325406ba9",
+      "sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "naive_time_sync",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/naive_time_sync/simulation_g1_common_pretraining_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "d33ecc72cb115d634ddd2ffdf4c1c3f7b3c15aacbafd7d86924c90b03ded957c",
+      "sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "mult",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "train",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/train",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/train/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/train/representation_manifest.json",
+      "representation_sha256": "542fe01a7103d5cd3df04b1b3c675b918489c58a1d5b7a1de57bac72d16e9585",
+      "sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "mult",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "validation",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/validation",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/validation/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/validation/representation_manifest.json",
+      "representation_sha256": "e470fe91af8738ed1975750ab5ab6d5388eec768895bac36317340075e30c42f",
+      "sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "mult",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/mult/simulation_g1_common_pretraining_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "bd9e176190f204c3be0030aa00d77bb99273282f058cccc9fd72a33d01898e38",
+      "sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "contiformer",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "train",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/train",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/train/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/train/representation_manifest.json",
+      "representation_sha256": "465a0cb6ede9d4027bf66c2d15d4fed2f6ca290a22c285e7487f2d1b1586eda5",
+      "sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "contiformer",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "validation",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/validation",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/validation/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/validation/representation_manifest.json",
+      "representation_sha256": "a5581eea06fb5e5fe0cd99435d96f514044c13fcef424e65b4ffde34c5595022",
+      "sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "contiformer",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/contiformer/simulation_g1_common_pretraining_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "53e5114149afadd6578c0d65fc82e8d01eb1cfe11a5e9462230cae362c5474e8",
+      "sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "chronaris",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "train",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/train",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/train/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/train/representation_manifest.json",
+      "representation_sha256": "cf00e08f5efe138fd77f56dc25aefba952c2f2e0ad986adcf5b0919b7c297475",
+      "sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "chronaris",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "validation",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/validation",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/validation/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/validation/representation_manifest.json",
+      "representation_sha256": "be16e201f6fbe0a3e8d0f5ec8efaa545824b9c8d562448ca570d539cad60bbf9",
+      "sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "chronaris",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/representations/chronaris/simulation_g1_common_pretraining_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "0a7d6268f9e6536e3cf7bdb229b525624a065a890d71737a611e44d98f73a571",
+      "sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ]
+    }
+  ],
+  "transform_manifest": {
+    "format": "chronaris.common_pretraining_transforms.v1",
+    "fold": {
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "train_sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000"
+      ],
+      "validation_sample_ids": [
+        "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000"
+      ],
+      "held_out_sample_ids": [
+        "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+        "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000"
+      ],
+      "train_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da",
+      "validation_sample_hash": "0be0d0562b981e36cfa50755a96fc7cd03254cb9ccc89b85c03e4204e5461ba9",
+      "held_out_sample_hash": "6b9d7b5ebcfa0e6d8826a5bccbcb6141b942a6f1191135345c116b938e379ce7"
+    },
+    "methods": {
+      "physiology_only": {
+        "normalizer_sha256": "4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5",
+        "fit_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da"
+      },
+      "vehicle_only": {
+        "normalizer_sha256": "4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5",
+        "fit_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da"
+      },
+      "naive_time_sync": {
+        "normalizer_sha256": "4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5",
+        "fit_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da"
+      },
+      "mult": {
+        "normalizer_sha256": "4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5",
+        "fit_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da"
+      },
+      "contiformer": {
+        "normalizer_sha256": "4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5",
+        "fit_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da"
+      },
+      "chronaris": {
+        "normalizer_sha256": "4f3099305207f89daabd2f772703f9fab8519e9cbe44b241441104cf08de95a5",
+        "fit_sample_hash": "8151f81b563f63a23694768d976e8456991f86de042a6271ac6165770f7342da"
+      }
+    }
+  },
+  "single_item_recovery": {
+    "method_name": "chronaris",
+    "export_role": "held_out",
+    "removed_file_count": 2,
+    "rebuild_status": "completed",
+    "original_representation_sha256": "0a7d6268f9e6536e3cf7bdb229b525624a065a890d71737a611e44d98f73a571",
+    "rebuilt_representation_sha256": "0a7d6268f9e6536e3cf7bdb229b525624a065a890d71737a611e44d98f73a571",
+    "hash_match": true,
+    "non_target_initial_export_count": 17
+  }
+}
