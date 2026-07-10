@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/freeze_fixed_data.py --run-id 2026-07-10_dingxin-input-snapshot --resume

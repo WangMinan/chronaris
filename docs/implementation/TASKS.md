@@ -8,57 +8,62 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G2a 鼎新原始输入冻结
+## 当前里程碑：G2b 方法无关半物理仿真器
 
-本里程碑只执行现有两个 sortie 的只读原始点冻结和输入合同审计，不启动完整模型训练。
+本里程碑实现两个与待比较方法解耦的航空人机异步双流生成族、成对观测压力场景和 oracle 审计，不启动六方法完整训练。
 
-### G1 已完成
+### G1/G2a 已完成
 
-- 正式 run：`docs/artifacts/runs/2026-07-10_fixed-data-audit/`。
-- 规模：2 个 sortie、3 个 view、111 个窗口、96 个分类上下文、93 个响应上下文。
-- 划分：3 个 leave-one-view-out fold、2 个 leave-one-sortie-out fold，全部完成。
-- 字段：每个 sortie 10 个载机机动标签源；12 个唯一 EEG/SpO₂ 响应字段。
-- 动态标签语义：3 轴加速度、俯仰、滚转；训练折双 IQR 为 0 的速度、航向和过载已排除。
-- 边界：历史对齐后投影可能编码机动标签源，不进入新的防泄漏分类主结果。
-- 测试：7 个 focused tests 通过；没有启动训练或修改既有确认指标。
+- G1 run：`docs/artifacts/runs/2026-07-10_fixed-data-audit/`；111 个窗口形成 96/93 个应用上下文，5 个外层折全部完成。
+- G1 字段：每个 sortie 10 个载机标签源，12 个唯一 EEG/SpO₂ 响应字段；动态标签语义为 3 轴加速度、俯仰和滚转。
+- G2a run：`docs/artifacts/runs/2026-07-10_dingxin-input-snapshot/`。
+- G2a 原始点：2 份共享航电共 57,648 点，3 份生理共 2,715 点；6/6 历史点数一致。
+- G2a 存储：5.3 MB 原始值只在被忽略目录，仓库只保留约 60 KB 紧凑 manifest、对账和排除表。
+- G2a 排除：20/20 机动标签源在 snapshot 中可见且全部禁止进入机动分类输入。
+- G2a resume：哈希复核后不重复查询数据库；G1/G2a focused tests 共 10 个通过。
+- 两个里程碑均未启动训练或修改既有确认指标。
 
 ### 当前输入
 
-- G1 `label_field_manifest.json` 和 `label_feature_overlap_audit.csv`。
-- 既有 E/F clean manifest 的白名单 sortie、时间范围和视图合同。
-- 本机 MySQL/InfluxDB 当前副本，只允许只读查询。
-- 现有 `access` 读取器、sortie profile、`RawPoint` 和 `SortieBundle` 合同。
+- [仿真基准规格](../requirements/synthetic-benchmark-spec.md)。
+- G2a 真实点的采样率、字段规模、缺失和时间间隔摘要，只用于仿真参数范围校准，不复制真实值。
+- G1 任务上下文：过去 30 秒、基础窗口 5 秒、负荷提前 10 秒、五类机动状态。
+- 正式开发 seed 17，训练/验证/锁定测试潜在架次分别为 96/24/48。
 
 ### 需要编码
 
-1. `dataset/application_evaluation`：snapshot contract、字段排除和一致性校验。
-2. `evaluation/application_tasks`：冻结 orchestrator、compact manifest 和 unavailable writer。
-3. `scripts/evaluation/application_tasks/freeze_fixed_data.py`：只解析 CLI 和调用核心模块。
-4. 测试：sortie 白名单、查询只读、secret 不落盘、点数/时间范围一致、标签字段排除、hash 可复现。
+1. `simulation/aviation_dual_stream`：配置、半马尔可夫机动、车辆动力学、潜在负荷、生理响应、观测时钟和 generator。
+2. G1：切换线性状态空间、受控输入、一阶滞后响应。
+3. G2：事件驱动样条、非线性饱和和非一阶生理滤波，不复用 Chronaris ODE 方程。
+4. paired observation generator：同一 latent trajectory 生成 clean 和 stress，不重新抽样状态或个体参数。
+5. oracle 与 validator：状态边界、负荷、时钟偏移/漂移、响应 lag、物理 residual、seed 和 family。
+6. CLI：`generate_aviation_dual_stream.py`、`audit_aviation_dual_stream.py`。
+7. 测试：方法无关 API、seed 复现、family split、状态覆盖、物理范围、响应 lag、同轨迹配对。
 
 ### 预期产物
 
-本机重型目录 `artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/`：
+本机重型目录 `artifacts/application_evaluation/2026-07-10_aviation-simulation/`：
 
-- 两流规范化原始点分片。
-- 本机 snapshot index 和校验 hash。
+- 生成后的潜在轨迹、原始异步双流、oracle 和训练/验证/测试 bundle。
 
-G1 紧凑 run 追加或新建的可引用产物：
+紧凑 run `docs/artifacts/runs/2026-07-10_aviation-simulation-audit/`：
 
-- `raw_snapshot_manifest.json`
-- `raw_snapshot_consistency.csv`
-- `raw_input_field_exclusion.csv`
-- `raw_snapshot_unavailable.json`（仅失败时）
-- 更新后的 `report.md`、`progress.json` 和 `evidence_manifest.json`
+- `simulation_manifest.json`
+- `scenario_coverage.csv`
+- `oracle_validation.csv`
+- `paired_observation_audit.csv`
+- `generator_family_split.json`
+- 中文数据质量图与 `figure_manifest.json`
+- `report.md`、`claim_boundary.md`、`progress.json`、`resume_command.txt` 和 `evidence_manifest.json`
 
-### G2a 验收
+### G2b 验收
 
-- 仅出现两个白名单 sortie，没有扩大数据范围。
-- 原始点时间范围覆盖现有 37 个窗口，点数差异有结构化解释。
-- 六方法原始输入字段合同明确排除 G1 标签源及其确定性派生项。
-- snapshot 路径被 Git 忽略，紧凑 manifest 不含原始高频值或密钥。
-- 数据不可读时产生可复现 unavailable 状态，不伪造原始流。
-- 本里程碑不改既有确认指标、不运行结构诊断、不启动大规模训练。
+- generator API 和配置中不存在方法名、候选名或 checkpoint。
+- 相同 latent ID 的 clean/stress oracle 完全一致，仅观测过程改变。
+- G1 train/validation 与 G2 locked test 的 family、profile、seed 无交集。
+- 状态转移、负荷范围、响应 lag 和时钟真值可由 oracle 重建。
+- 96/24/48 潜在架次全部生成或明确记录失败，不静默补样本。
+- 图表中文可读且仿真结论不与鼎新真实指标混算。
 
 ## 已锁定规范
 
@@ -70,13 +75,6 @@ G1 紧凑 run 追加或新建的可引用产物：
 - [长程运行手册](notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 
 ## 后续验收门
-
-### G2b：G1/G2 仿真器
-
-- 方法无关、seed 可复现、生成族隔离。
-- 96/24/48 潜在架次和成对 observation 场景。
-- 状态、负荷、物理 residual、时钟与响应 lag oracle 完整。
-- 数据质量和中文图件审计通过。
 
 ### G3a：统一表示基础设施
 
@@ -166,11 +164,11 @@ G1 紧凑 run 追加或新建的可引用产物：
 
 ## 当前验证门
 
-当前 G2a 实现提交前必须通过：
+当前 G2b 实现提交前必须通过：
 
-1. snapshot 与 compact manifest schema 测试。
-2. G1 全部 focused tests 保持通过。
-3. `git diff --check` 和完整 `pytest`。
-4. `compileall src scripts tests`。
-5. 读者可见术语与密钥审计。
-6. `git status` 中不存在 raw point、dense bundle 或 checkpoint。
+1. 仿真方法无关、seed 复现、family split 和 paired latent 测试。
+2. G1/G2a 全部 focused tests 保持通过。
+3. smoke 生成、oracle audit 和关键 PNG 抽查。
+4. `git diff --check`、完整 `pytest` 和 `compileall`。
+5. 读者可见术语与真实/仿真证据隔离审计。
+6. `git status` 中不存在完整仿真 bundle、raw point、dense bundle 或 checkpoint。

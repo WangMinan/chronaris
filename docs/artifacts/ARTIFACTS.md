@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-10_dingxin-input-snapshot/`：**鼎新原始异步点冻结紧凑证据**。实际 5.3 MB 高频值保存在被忽略的 `artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/`；本目录只提交文件 SHA-256、点数、时间范围、measurement 分布和字段排除合同。2 个 sortie 的航电点均为 28,824，3 个 view 的生理点均为 905，6/6 与既有窗口 manifest 一致，20/20 机动标签源字段明确禁止进入新分类输入。本 run 未训练模型、未生成下游指标。
 - `runs/2026-07-10_fixed-data-audit/`：**固定数据、字段语义与下游任务合同审计**。确认现有 2 个 sortie、3 个 view、111 个窗口可构造 96 个机动分类上下文和 93 个未来生理响应上下文；5 个外层折均完成，MySQL 字段语义解析无错误。该 run 不含模型训练结果；窗口均值只用于 G1 目标可行性验证，正式原始点实验将使用窗口中位数。历史对齐后投影因可能包含机动标签源信息，不具备新的防泄漏分类主结果资格。
 - `runs/2026-07-06_fusion-stream-structure-plan/`：**融合表示流结构评价开发计划（E3）**，是 planning 文档，不是实验结果。包含 `report.md`、`input_contract.md`、`metric_contract.md`、`implementation_plan.md`、`acceptance_checklist.md`、`evidence_manifest.json`。本轮未编码、未训练、未改 confirmed metrics；后续编码任务需等待人工 review 本计划后再执行。
 - `runs/2026-07-03_thesis-protocol-snapshot/`：论文协议快照，包含 `experiment_registry.csv`、`result_matrix_long.csv`、`result_matrix_summary.csv`、`claim_boundary_table.csv`、`thesis_protocol_summary.json` 和 `report.md`。
