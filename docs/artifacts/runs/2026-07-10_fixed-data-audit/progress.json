@@ -1,0 +1,72 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "e_run_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+  "f_run_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json",
+  "stage_name": "fixed_data_application_audit",
+  "run_id": "2026-07-10_fixed-data-audit",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T15:05:35.853264Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T15:05:34.198829Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "e_run_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+      "f_run_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+    },
+    {
+      "timestamp_utc": "2026-07-10T15:05:34.403757Z",
+      "event": "records_loaded",
+      "record_count": 111,
+      "sortie_count": 2,
+      "view_count": 3
+    },
+    {
+      "timestamp_utc": "2026-07-10T15:05:35.546296Z",
+      "event": "field_roles_resolved",
+      "metadata_error_count": 0,
+      "field_role_count": 1954,
+      "selected_maneuver_field_count": 20,
+      "selected_response_role_count": 24,
+      "selected_response_field_count": 12
+    },
+    {
+      "timestamp_utc": "2026-07-10T15:05:35.575224Z",
+      "event": "contexts_and_splits_built",
+      "context_candidate_count": 96,
+      "classification_context_count": 96,
+      "response_context_count": 93,
+      "fold_count": 5
+    },
+    {
+      "timestamp_utc": "2026-07-10T15:05:35.853264Z",
+      "event": "finished",
+      "status": "completed",
+      "classification_context_count": 96,
+      "response_context_count": 93,
+      "selected_maneuver_field_count": 20,
+      "selected_response_role_count": 24,
+      "selected_response_field_count": 12,
+      "fold_count": 5,
+      "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/report.md",
+      "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/evidence_manifest.json"
+    }
+  ],
+  "record_count": 111,
+  "sortie_count": 2,
+  "view_count": 3,
+  "metadata_error_count": 0,
+  "field_role_count": 1954,
+  "selected_maneuver_field_count": 20,
+  "selected_response_role_count": 24,
+  "selected_response_field_count": 12,
+  "context_candidate_count": 96,
+  "classification_context_count": 96,
+  "response_context_count": 93,
+  "fold_count": 5,
+  "status": "completed",
+  "report_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/report.md",
+  "evidence_manifest_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/evidence_manifest.json"
+}

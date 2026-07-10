@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 已启动，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。本轮已把“不再依赖新增鼎新数据/人工评价”的研究边界、真实任务、仿真基准、统一融合表示和长程运行门禁细化为仓库规格；尚未新增源码、尚未训练模型、尚未修改 confirmed metrics。下一实施里程碑是 G1 固定数据与标签泄漏审计。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1 固定数据与标签泄漏审计已完成：111 个窗口形成 96 个机动分类上下文和 93 个未来生理响应上下文，5 个外层折均可构造训练折标签；本轮未训练模型、未修改既有确认指标。当前实施里程碑已推进到 G2a 鼎新原始异步点冻结。
 
 ## 当前执行入口
 
@@ -15,6 +15,7 @@
 - 真实/仿真任务协议：[requirements/downstream-evaluation-spec.md](requirements/downstream-evaluation-spec.md)
 - 仿真生成器规格：[requirements/synthetic-benchmark-spec.md](requirements/synthetic-benchmark-spec.md)
 - 双流与融合表示合同：[requirements/model-contracts/application-fusion-stream-contract.md](requirements/model-contracts/application-fusion-stream-contract.md)
+- G1 固定数据审计：[artifacts/runs/2026-07-10_fixed-data-audit/report.md](artifacts/runs/2026-07-10_fixed-data-audit/report.md)
 
 ## 已锁定事实
 
@@ -41,10 +42,16 @@
 - 锁定六方法统一表示、公共 pretext、Chronaris 秒级多尺度因果 lag 和四项消融。
 - 锁定 leave-one-view-out 主协议、leave-one-sortie-out 辅助协议、MiniRocket/TCN/Viterbi 下游配置和三 seed 确认。
 - 明确原始 snapshot、checkpoint 和 dense predictions 只进入被忽略的 `artifacts/application_evaluation/`。
+- 新增固定数据应用评估包、只读审计 CLI、30 秒上下文构造、外层分组划分和训练折标签构造。
+- 通过 MySQL 元数据把载机 TSPI 字段与目标机、质量字段分离；未解析字段不会回退为标签源。
+- 每个 sortie 识别 10 个载机机动标签源字段；训练折自动剔除双 IQR 为 0 的速度、航向和过载语义组，实际使用 3 轴加速度、俯仰和滚转。
+- 生理响应审计确认 12 个唯一 EEG/SpO₂ 字段，5 个外层折均完成且无元数据错误。
+- 生成 `data_manifest`、字段角色、缺失率、sampling、fold 阈值、标签、split、overlap、进度和恢复命令等 G1 产物。
+- 将既有对齐后投影判定为可能包含机动标签源信息，明确拒绝把它直接用于新的防泄漏分类主结果。
 
 ## 当前未完成
 
-- 尚未实现固定数据审计、fold-fitted 标签或原始 snapshot writer。
+- 尚未实现原始 snapshot writer 和两架次原始异步点冻结。
 - 尚未实现 G1/G2 仿真器。
 - 尚未打通任务无关 Chronaris 连续融合编码器。
 - 尚未实现六方法统一 OOF 导出与应用下游 benchmark。
@@ -52,22 +59,22 @@
 
 ## 下一验收门
 
-G1 固定数据审计必须在任何新训练前完成：
+G2a 必须在六方法真实数据训练前完成：
 
-1. 对三个 view 建立 30 秒上下文和连续性清单。
-2. 通过 MySQL 元数据识别机动标签字段，不允许未知字段全选 fallback。
-3. 在每个外层训练折拟合标签阈值和生理目标尺度。
-4. 证明标签源字段及确定性派生字段未进入模型输入。
-5. 输出 split、字段角色、缺失率、样本覆盖和 overlap audit。
+1. 只读冻结白名单中两个 sortie 的生理与航电原始异步点。
+2. 把原始值写入被忽略的 `artifacts/application_evaluation/`，Git 中只保留紧凑 manifest 和审计摘要。
+3. 对齐 snapshot 的时间范围、measurement、字段名、点数与现有特征导出范围。
+4. 在原始输入合同中执行 G1 标签字段排除；禁止继续使用可能已编码标签源的历史投影完成机动分类主实验。
+5. 若 InfluxDB 原始点不可读，写结构化 unavailable 产物并继续仿真主线，不伪造原始数据。
 
 ## 本轮验证
 
-- 当前改动文档链接检查：77 个链接，0 缺失。
-- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m compileall -q src scripts tests`：通过。
-- `/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest -q`：`213 passed, 8 skipped, 317 warnings`。
-- `git diff --check`：通过。
-- `git lfs status` 与 `git lfs fsck`：通过。
-- 当前改动中没有 raw snapshot、bundle、checkpoint 或逐样本预测。
+- G1 正式 run：`completed`，MySQL metadata error 为 0，5 个 fold 均为 `completed`。
+- G1 focused tests：`7 passed`，覆盖分组隔离、test 值不影响阈值、未知字段 fail closed 和零 IQR 剔除。
+- G1 CLI 与新增包 `compileall`：通过。
+- 完整测试：`220 passed, 8 skipped, 317 warnings`。
+- `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
+- 当前改动中没有 raw snapshot、bundle、checkpoint 或逐样本预测；G1 产物均为汇总、manifest 和可追溯标签表。
 
 ## 证据边界
 

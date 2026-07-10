@@ -1,0 +1,31 @@
+{
+  "run_id": "2026-07-10_fixed-data-audit",
+  "status": "completed",
+  "evidence_layer": "dingxin_fixed_data_task_contract_audit",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "source_paths": [
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+  ],
+  "output_paths": {
+    "data_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/data_manifest.json",
+    "field_role_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/field_role_manifest.csv",
+    "sampling_interval_summary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/sampling_interval_summary.csv",
+    "missingness_summary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/missingness_summary.csv",
+    "context_sample_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/context_sample_manifest.jsonl",
+    "label_field_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/label_field_manifest.json",
+    "fold_label_thresholds": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/fold_label_thresholds.csv",
+    "fold_task_labels": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/fold_task_labels.csv",
+    "label_feature_overlap_audit": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/label_feature_overlap_audit.csv",
+    "split_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/split_manifest.json",
+    "vehicle_metadata_source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/vehicle_metadata_source.csv",
+    "vehicle_metadata_errors": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/vehicle_metadata_errors.json",
+    "claim_boundary": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/claim_boundary.md",
+    "resume_command": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/resume_command.txt",
+    "report": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/report.md",
+    "progress": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/progress.json",
+    "run_log": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/run.log"
+  },
+  "claim_boundary_path": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/claim_boundary.md"
+}

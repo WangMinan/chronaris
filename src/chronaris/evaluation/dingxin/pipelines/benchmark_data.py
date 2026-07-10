@@ -112,6 +112,8 @@ def load_aligned_private_records(
                     "sample_partition": row.get("sample_partition"),
                     "start_offset_ms": int(row["start_offset_ms"]),
                     "end_offset_ms": int(row["end_offset_ms"]),
+                    "physiology_point_count": int(row.get("physiology_point_count") or 0),
+                    "vehicle_point_count": int(row.get("vehicle_point_count") or 0),
                     "e_view": e_view,
                     "f_view": f_view,
                     "e_index": e_index.get(raw_sample_id),

@@ -115,6 +115,15 @@ scripts/evaluation/application_tasks/audit_fixed_data.py
 - 不训练模型，不改 confirmed metrics。
 - 若 R1 字段元数据不足，明确 blocked 原因后仍继续 R2 和仿真工作。
 
+### 4.6 2026-07-10 执行结果
+
+- G1 正式 run 为 `docs/artifacts/runs/2026-07-10_fixed-data-audit/`，状态 `completed`。
+- 111 个窗口形成 96 个分类上下文和 93 个未来响应上下文；3 个 leave-one-view-out fold 与 2 个 leave-one-sortie-out fold 全部完成。
+- MySQL 元数据解析错误为 0；每个 sortie 选择 10 个载机标签源，目标机与质量字段不入选。
+- 训练折动态语义实际为 3 轴加速度、俯仰和滚转；速度、航向和过载因双 IQR 为 0 按 fold 排除。
+- 生理响应有 12 个唯一 EEG/SpO₂ 字段。G1 使用窗口均值验证合同，G2a 后按任务规格切换到原始点窗口中位数。
+- 既有对齐后投影可能已经编码机动标签源，因此只保留为历史诊断输入，不进入新的防泄漏分类主结果。
+
 ## 5. 工作包 B：现有原始数据冻结
 
 ### 5.1 目标

@@ -8,60 +8,57 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G1 固定数据审计
+## 当前里程碑：G2a 鼎新原始输入冻结
 
-本里程碑只实现数据/任务合同和审计，不启动完整模型训练。
+本里程碑只执行现有两个 sortie 的只读原始点冻结和输入合同审计，不启动完整模型训练。
 
-### 输入
+### G1 已完成
 
-- `docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json`
-- `docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json`
-- 当前 MySQL 航电字段元数据。
-- 当前三个 view 的 window/raw summary 和 feature bundle。
+- 正式 run：`docs/artifacts/runs/2026-07-10_fixed-data-audit/`。
+- 规模：2 个 sortie、3 个 view、111 个窗口、96 个分类上下文、93 个响应上下文。
+- 划分：3 个 leave-one-view-out fold、2 个 leave-one-sortie-out fold，全部完成。
+- 字段：每个 sortie 10 个载机机动标签源；12 个唯一 EEG/SpO₂ 响应字段。
+- 动态标签语义：3 轴加速度、俯仰、滚转；训练折双 IQR 为 0 的速度、航向和过载已排除。
+- 边界：历史对齐后投影可能编码机动标签源，不进入新的防泄漏分类主结果。
+- 测试：7 个 focused tests 通过；没有启动训练或修改既有确认指标。
+
+### 当前输入
+
+- G1 `label_field_manifest.json` 和 `label_feature_overlap_audit.csv`。
+- 既有 E/F clean manifest 的白名单 sortie、时间范围和视图合同。
+- 本机 MySQL/InfluxDB 当前副本，只允许只读查询。
+- 现有 `access` 读取器、sortie profile、`RawPoint` 和 `SortieBundle` 合同。
 
 ### 需要编码
 
-1. `dataset/application_evaluation` 包：
-   - 数据来源、字段角色和上下文 dataclass。
-   - E/F clean manifest loader。
-   - 30 秒上下文与连续性 builder。
-   - fold-fitted 机动标签和生理响应目标。
-   - 标签源字段及确定性派生字段排除器。
-   - leave-one-view-out / leave-one-sortie-out split builder。
-2. 固定数据审计 CLI：
-   - 读取现有数据和 MySQL 元数据。
-   - 写数据、字段、缺失、标签覆盖、split 和泄漏审计。
-   - 支持结构化 blocked/unavailable。
-3. 测试：
-   - test group 不参与任何 fit。
-   - 未知字段不回退全字段。
-   - 标签字段与输入字段交集为零。
-   - 30 秒连续上下文数量和分组正确。
-   - 阈值、IQR 和样本 hash 可追溯。
+1. `dataset/application_evaluation`：snapshot contract、字段排除和一致性校验。
+2. `evaluation/application_tasks`：冻结 orchestrator、compact manifest 和 unavailable writer。
+3. `scripts/evaluation/application_tasks/freeze_fixed_data.py`：只解析 CLI 和调用核心模块。
+4. 测试：sortie 白名单、查询只读、secret 不落盘、点数/时间范围一致、标签字段排除、hash 可复现。
 
 ### 预期产物
 
-`docs/artifacts/runs/2026-07-10_fixed-data-audit/`：
+本机重型目录 `artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/`：
 
-- `data_manifest.json`
-- `field_role_manifest.csv`
-- `sampling_interval_summary.csv`
-- `missingness_summary.csv`
-- `context_sample_manifest.jsonl`
-- `label_field_manifest.json`
-- `fold_label_thresholds.csv`
-- `label_feature_overlap_audit.csv`
-- `split_manifest.json`
-- `report.md`
-- `evidence_manifest.json`
+- 两流规范化原始点分片。
+- 本机 snapshot index 和校验 hash。
 
-### G1 验收
+G1 紧凑 run 追加或新建的可引用产物：
 
-- 无排除时分类/响应上下文数量为 96/93；实际排除均有原因。
-- 每个 fold 的标签阈值只由 train sample hash 计算。
-- 标签源字段和可确定性重建标签的字段不进入模型输入。
-- 每个 fold 的类别/目标覆盖足够；不足时结构化标记，不伪造标签。
-- 本里程碑不改 confirmed metrics，不运行 E3，不启动大规模训练。
+- `raw_snapshot_manifest.json`
+- `raw_snapshot_consistency.csv`
+- `raw_input_field_exclusion.csv`
+- `raw_snapshot_unavailable.json`（仅失败时）
+- 更新后的 `report.md`、`progress.json` 和 `evidence_manifest.json`
+
+### G2a 验收
+
+- 仅出现两个白名单 sortie，没有扩大数据范围。
+- 原始点时间范围覆盖现有 37 个窗口，点数差异有结构化解释。
+- 六方法原始输入字段合同明确排除 G1 标签源及其确定性派生项。
+- snapshot 路径被 Git 忽略，紧凑 manifest 不含原始高频值或密钥。
+- 数据不可读时产生可复现 unavailable 状态，不伪造原始流。
+- 本里程碑不改既有确认指标、不运行结构诊断、不启动大规模训练。
 
 ## 已锁定规范
 
@@ -73,13 +70,6 @@
 - [长程运行手册](notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 
 ## 后续验收门
-
-### G2a：鼎新原始输入冻结
-
-- 只读导出现有两个 sortie 的原始异步点。
-- 本机重型 snapshot 写入被忽略的 `artifacts/application_evaluation/`。
-- 与现有 feature-export 时间范围和抽样点数一致。
-- 读取失败时进入对齐后真实证据 fallback，不伪造原始流。
 
 ### G2b：G1/G2 仿真器
 
@@ -176,10 +166,11 @@
 
 ## 当前验证门
 
-本轮详细规格完成后必须通过：
+当前 G2a 实现提交前必须通过：
 
-1. 文档路径和相互链接存在。
-2. `git diff --check`。
-3. `compileall src scripts tests`，确认文档变更未破坏当前代码。
-4. 读者可见术语审计。
-5. `git status` 中不存在重型产物。
+1. snapshot 与 compact manifest schema 测试。
+2. G1 全部 focused tests 保持通过。
+3. `git diff --check` 和完整 `pytest`。
+4. `compileall src scripts tests`。
+5. 读者可见术语与密钥审计。
+6. `git status` 中不存在 raw point、dense bundle 或 checkpoint。
