@@ -1,0 +1,5 @@
+dataset_id,dataset_label,method_name,method_label,cutoff_s,future_perturbation_max_abs_delta,causal_attention
+simulation,仿真,mult,MulT,15.0,0.0,True
+simulation,仿真,contiformer,ContiFormer,15.0,0.0,True
+dingxin,鼎新,mult,MulT,15.0,0.0,True
+dingxin,鼎新,contiformer,ContiFormer,15.0,0.0,True

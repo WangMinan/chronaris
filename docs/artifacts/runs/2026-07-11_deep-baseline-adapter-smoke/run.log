@@ -1,0 +1,2 @@
+2026-07-11 01:18:02,016 INFO chronaris.pipelines.task_eval.deep_baseline_adapter_smoke: deep_baseline_adapter_smoke observer start run_id=2026-07-11_deep-baseline-adapter-smoke run_root=docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke
+2026-07-11 01:18:15,287 INFO chronaris.pipelines.task_eval.deep_baseline_adapter_smoke: deep_baseline_adapter_smoke observer start run_id=2026-07-11_deep-baseline-adapter-smoke run_root=docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke

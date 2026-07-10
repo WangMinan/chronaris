@@ -1,0 +1,16 @@
+check_id,passed,actual,expected
+two_dataset_two_method_exports,True,4,4
+resume_reuses_all_exports,True,4,4
+checkpoint_registry_complete,True,4,4
+fixed_query_and_output_shape,True,"[(96, 64), (96, 64), (96, 64), (96, 64)]","(96, 64)"
+future_observation_invariance,True,0.0,1e-05
+physiology_stream_sensitivity,True,0.9862306118011475,> 0
+vehicle_stream_sensitivity,True,1.3224470615386963,> 0
+shared_train_only_transform,True,"{'same_hash': True, 'fit_isolated': True}",True
+cross_method_alignment,True,"{'simulation': 'e48c7b82388dcb8e3c320eca7981b758ecd3c74195f32c78b08e121b8d5c4b8b', 'dingxin': '8a4f078fee371b1753fee7c76dce3d63af0c762d0d40c7a16a42d99862706bdc'}",two SHA-256 values
+task_head_free_outputs,True,"['task_head_free', 'task_head_free', 'task_head_free', 'task_head_free']",task_head_free
+causal_attention_enabled,True,"[True, True, True, True]",True
+dingxin_three_view_smoke,True,3,3
+dingxin_label_sources_excluded,True,20,20
+observed_only_inputs,True,False,False
+labels_not_used_for_encoder,True,False,False

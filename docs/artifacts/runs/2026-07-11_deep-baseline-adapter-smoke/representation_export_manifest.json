@@ -1,0 +1,65 @@
+{
+  "format": "chronaris.deep_baseline_exports.v1",
+  "available_export_count": 4,
+  "current_run_built_count": 0,
+  "current_run_reused_count": 4,
+  "resume_verification_reused_count": 4,
+  "exports": [
+    {
+      "method_name": "mult",
+      "fold_id": "simulation_deep_baseline_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/mult/simulation_deep_baseline_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/mult/simulation_deep_baseline_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/mult/simulation_deep_baseline_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "e4431533c09763d7348849709e9ff35a9f6abada32922d4a867d2cd02a0957c2",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "contiformer",
+      "fold_id": "simulation_deep_baseline_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/contiformer/simulation_deep_baseline_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/contiformer/simulation_deep_baseline_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/contiformer/simulation_deep_baseline_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "b0ef8e704b94187a64c8f986b744e84211b938cc5048a3558c004bcb15dc0ac9",
+      "sample_ids": [
+        "g2_event_spline__locked_test_profile_000__trajectory_000__seed_300000__clean_asynchronous::context_000.000"
+      ]
+    },
+    {
+      "method_name": "mult",
+      "fold_id": "dingxin_deep_baseline_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/mult/dingxin_deep_baseline_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/mult/dingxin_deep_baseline_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/mult/dingxin_deep_baseline_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "98edef3ef39d90502e967037e0fc5bd3115b85b1f453bbf038da4ce944d50652",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+      ]
+    },
+    {
+      "method_name": "contiformer",
+      "fold_id": "dingxin_deep_baseline_smoke",
+      "export_role": "held_out",
+      "status": "resumed",
+      "output_root": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/contiformer/dingxin_deep_baseline_smoke/held_out",
+      "representation_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/contiformer/dingxin_deep_baseline_smoke/held_out/fusion_stream.npz",
+      "manifest_path": "artifacts/application_evaluation/2026-07-11_deep-baseline-adapter-smoke/representations/contiformer/dingxin_deep_baseline_smoke/held_out/representation_manifest.json",
+      "representation_sha256": "26b2fda1cadc45562d5ea3ac7cde4580594c917956e7b62f715cce9dd0a8142d",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+      ]
+    }
+  ],
+  "alignment_sha256": {
+    "simulation": "e48c7b82388dcb8e3c320eca7981b758ecd3c74195f32c78b08e121b8d5c4b8b",
+    "dingxin": "8a4f078fee371b1753fee7c76dce3d63af0c762d0d40c7a16a42d99862706bdc"
+  }
+}

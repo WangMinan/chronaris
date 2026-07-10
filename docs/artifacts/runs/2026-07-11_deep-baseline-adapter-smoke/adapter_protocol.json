@@ -1,0 +1,35 @@
+{
+  "format": "chronaris.deep_baseline_adapter_protocol.v1",
+  "methods": [
+    "mult",
+    "contiformer"
+  ],
+  "sequence_source": "task_head_free",
+  "causal_query": true,
+  "causal_attention": true,
+  "hidden_dim": 64,
+  "layers": 2,
+  "num_heads": 4,
+  "dropout": 0.1,
+  "query_point_count": 96,
+  "output_dim": 64,
+  "seed": 17,
+  "label_used_for_encoder_training": false,
+  "training_invoked": false,
+  "dataset_metadata": {
+    "simulation": {
+      "sample_count": 3,
+      "physiology_feature_count": 7,
+      "vehicle_feature_count": 12,
+      "oracle_opened": false
+    },
+    "dingxin": {
+      "sample_count": 3,
+      "view_count": 3,
+      "physiology_feature_count": 12,
+      "vehicle_feature_count": 955,
+      "excluded_label_source_count": 20,
+      "label_or_target_opened": false
+    }
+  }
+}

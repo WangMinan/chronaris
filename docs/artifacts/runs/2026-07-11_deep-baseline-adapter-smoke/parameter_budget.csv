@@ -1,0 +1,5 @@
+dataset_id,dataset_label,method_name,method_label,input_feature_count,parameter_count,output_dim,query_point_count,export_elapsed_s,process_peak_rss_mb,sequence_source,causal_attention
+simulation,仿真,mult,MulT,19,1014784,64,96,0.004096054006367922,811.93359375,task_head_free,True
+simulation,仿真,contiformer,ContiFormer,19,112512,64,96,0.0013035107403993607,811.93359375,task_head_free,True
+dingxin,鼎新,mult,MulT,967,1196800,64,96,0.004438899923115969,811.93359375,task_head_free,True
+dingxin,鼎新,contiformer,ContiFormer,967,294528,64,96,0.0021434039808809757,811.93359375,task_head_free,True

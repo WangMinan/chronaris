@@ -1,0 +1,5 @@
+dataset_id,dataset_label,method_name,method_label,cutoff_s,physiology_history_max_abs_delta,vehicle_history_max_abs_delta,both_streams_sensitive
+simulation,仿真,mult,MulT,15.0,0.9862306118011475,1.3224470615386963,True
+simulation,仿真,contiformer,ContiFormer,15.0,2.9201765060424805,4.3520002365112305,True
+dingxin,鼎新,mult,MulT,15.0,1.3844677209854126,1.9377353191375732,True
+dingxin,鼎新,contiformer,ContiFormer,15.0,2.814244270324707,4.072662830352783,True
