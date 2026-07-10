@@ -1,0 +1,18 @@
+{
+  "format": "chronaris.linear_smoke_consumer.v1",
+  "classification": {
+    "estimator": "LogisticRegression",
+    "C": 1.0
+  },
+  "regression": {
+    "estimator": "Ridge",
+    "alpha": 1.0
+  },
+  "scaler_fit_role": "train",
+  "threshold_fit_role": "train",
+  "evaluation_roles": [
+    "validation",
+    "held_out"
+  ],
+  "smoke_only": true
+}

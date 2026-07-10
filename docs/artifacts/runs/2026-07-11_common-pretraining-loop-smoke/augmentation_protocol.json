@@ -1,0 +1,13 @@
+{
+  "format": "chronaris.augmentation_protocol.v1",
+  "policy": {
+    "point_dropout_probability": 0.1,
+    "block_duration_min_s": 1.0,
+    "block_duration_max_s": 5.0,
+    "modality_dropout_probability": 0.05,
+    "timestamp_jitter_sigma_s": 0.05,
+    "clock_offset_limit_s": 0.25
+  },
+  "method_parameter_allowed": false,
+  "method_count": 5
+}

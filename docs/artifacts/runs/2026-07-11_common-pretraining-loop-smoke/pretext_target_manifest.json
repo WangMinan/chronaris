@@ -1,0 +1,159 @@
+{
+  "format": "chronaris.pretraining_smoke_targets.v1",
+  "oracle_opened_after_checkpoint_count": 5,
+  "target_window_s": [
+    30.0,
+    35.0
+  ],
+  "classification_thresholds_train_only": [
+    0.32348955461862033,
+    0.42305522691248326
+  ],
+  "oracle_files": [
+    {
+      "sample_id": "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_000/g1_state_space__train_profile_000__trajectory_000__seed_100000/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "cdcb1bb3b7a3f0820e890e7b8ca5afd1a10e4a231abbe5dd38f328714ef6c098",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_001__trajectory_006__seed_100006__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_001/g1_state_space__train_profile_001__trajectory_006__seed_100006/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "82d0177a68bf45ed7f606c79f0922221f4c76b4b5cd8a177ad68ec16ad4de4e9",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_002__trajectory_012__seed_100012__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_002/g1_state_space__train_profile_002__trajectory_012__seed_100012/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "00e0e42a35cde3bca5ee30a5bf95507fc87e3add842db8a3e5d90f054552984d",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_003__trajectory_018__seed_100018__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_003/g1_state_space__train_profile_003__trajectory_018__seed_100018/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "99e5c4640d2bbdf62122534e33f49aed76be27294d664e68c6f88f62d094949f",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_004/g1_state_space__train_profile_004__trajectory_024__seed_100024/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "1fdf05b34db866b71838f350fc04b56e502e9760fb4ad53ffc4ebaa2b5964603",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_005__trajectory_030__seed_100030__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_005/g1_state_space__train_profile_005__trajectory_030__seed_100030/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "5557692ec9d59e7ba165a76a2bcb00f395b076f3bee48fbb161f403a165bb42e",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_006__trajectory_036__seed_100036__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_006/g1_state_space__train_profile_006__trajectory_036__seed_100036/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "be8c6314f65ee73defe7cf90828ec3377d80de570e54df70aa217fb90363ccb7",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_007__trajectory_042__seed_100042__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_007/g1_state_space__train_profile_007__trajectory_042__seed_100042/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "e7ee7c1dd5082dbe9506764e46844fbc6255d3f4045a40749ca822d4e997b64a",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_008/g1_state_space__train_profile_008__trajectory_048__seed_100048/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "d24c3a30d1f8343a2339c690de14eaec17f0a2c582732e4e685d6c0569a0b4d9",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_009__trajectory_054__seed_100054__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_009/g1_state_space__train_profile_009__trajectory_054__seed_100054/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "3e0981461ba62fe672a225f6b6531c852701514c515aa429140633db8a481572",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_010__trajectory_060__seed_100060__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_010/g1_state_space__train_profile_010__trajectory_060__seed_100060/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "16bd0d3d60e211cea5725f45d52181599e112bebbe59f5b84707235ac2ed7ede",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_011__trajectory_066__seed_100066__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_011/g1_state_space__train_profile_011__trajectory_066__seed_100066/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "1bcdfac0511a9fdc8250ad4537290e39de15845f2510e49999823646727a7c17",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_012/g1_state_space__train_profile_012__trajectory_072__seed_100072/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "ac076ffa2919101bc805b1a69b897da8e2e5c28ceb76168babb75320c75bd8db",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_013__trajectory_078__seed_100078__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_013/g1_state_space__train_profile_013__trajectory_078__seed_100078/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "caab439a886860dab4dae2b0f525016dc9de7e119f5b396e15504e3e456ccd84",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_014__trajectory_084__seed_100084__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_014/g1_state_space__train_profile_014__trajectory_084__seed_100084/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "a6d36ec8e757f9f876dbf5f5efb44395af7fe1ce311992027fd8f66ceaa1f76d",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    },
+    {
+      "sample_id": "g1_state_space__train_profile_015__trajectory_090__seed_100090__clean_asynchronous::context_000.000",
+      "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_015/g1_state_space__train_profile_015__trajectory_090__seed_100090/clean_asynchronous/ground_truth.npz",
+      "oracle_sha256": "a9c608eebd53c922b55342f0e4b7f6e6ae2fd72de3de4e42c0eaac39bf395651",
+      "fields_opened": [
+        "true_time_s",
+        "workload"
+      ]
+    }
+  ],
+  "smoke_only": true
+}

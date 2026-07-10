@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_common_pretraining_loop_smoke.py --run-id 2026-07-11_common-pretraining-loop-smoke --resume

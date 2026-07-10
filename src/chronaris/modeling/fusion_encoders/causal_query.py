@@ -19,6 +19,7 @@ class CausalQueryStream:
     modality_mask: torch.Tensor
     observation_age_s: torch.Tensor
     timestamps_s: torch.Tensor
+    source_indices: torch.Tensor
 
     def __post_init__(self) -> None:
         if self.values.ndim != 3:
@@ -31,6 +32,14 @@ class CausalQueryStream:
             raise RepresentationContractError("causal query modality mask shape mismatch")
         if self.timestamps_s.shape != self.values.shape[:2]:
             raise RepresentationContractError("causal query timestamps shape mismatch")
+        if self.source_indices.shape != self.values.shape:
+            raise RepresentationContractError("causal query source index shape mismatch")
+        if self.source_indices.dtype != torch.int64:
+            raise RepresentationContractError("causal query source indices must use int64")
+        if not torch.equal(self.source_indices >= 0, self.feature_mask):
+            raise RepresentationContractError(
+                "causal query source availability must match feature mask"
+            )
         if self.feature_mask.dtype != torch.bool or self.modality_mask.dtype != torch.bool:
             raise RepresentationContractError("causal query masks must use torch.bool")
         if not torch.equal(self.modality_mask, self.feature_mask.any(dim=-1)):
@@ -79,6 +88,12 @@ def causal_query_stream(
         dtype=values.dtype,
         device=values.device,
     )
+    output_source_indices = torch.full(
+        (batch_size, query_count, feature_count),
+        -1,
+        dtype=torch.int64,
+        device=values.device,
+    )
     for sample_index in range(batch_size):
         sample_queries = queries[sample_index]
         for feature_index in range(feature_count):
@@ -101,10 +116,15 @@ def causal_query_stream(
             output_age[sample_index, available, feature_index] = (
                 sample_queries[available] - feature_times[resolved_indices[available]]
             ).to(values.dtype)
+            observed_indices = torch.nonzero(observed, as_tuple=False).flatten()
+            output_source_indices[sample_index, available, feature_index] = (
+                observed_indices[resolved_indices[available]]
+            )
     return CausalQueryStream(
         values=output_values,
         feature_mask=output_mask,
         modality_mask=output_mask.any(dim=-1),
         observation_age_s=output_age,
         timestamps_s=batch.query_timestamps_s.to(values.device),
+        source_indices=output_source_indices,
     )

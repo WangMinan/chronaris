@@ -1,0 +1,67 @@
+from __future__ import annotations
+
+import hashlib
+
+import numpy as np
+import pytest
+import torch
+
+from chronaris.modeling.training import (
+    TRAINABLE_FUSION_METHODS,
+    build_trainable_fusion_encoder,
+)
+from chronaris.representation import (
+    ObservationSchema,
+    ObservedDualStreamSample,
+    collate_observation_samples,
+)
+
+
+def _sample(sample_id: str):
+    schema = ObservationSchema(
+        schema_id="pretraining_encoder_test.v1",
+        source_kind="unit_test",
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        physiology_feature_roles=("observed",),
+        vehicle_feature_roles=("observed",),
+    )
+    return ObservedDualStreamSample(
+        sample_id=sample_id,
+        group_id=sample_id,
+        schema=schema,
+        physiology_values=np.asarray([[1.0], [2.0], [3.0], [4.0]], dtype=np.float32),
+        physiology_timestamps_s=np.asarray([0.0, 5.0, 10.0, 20.0]),
+        physiology_feature_mask=np.ones((4, 1), dtype=bool),
+        vehicle_values=np.asarray([[5.0], [6.0], [7.0], [8.0]], dtype=np.float32),
+        vehicle_timestamps_s=np.asarray([0.0, 4.0, 12.0, 20.0]),
+        vehicle_feature_mask=np.ones((4, 1), dtype=bool),
+        source_sample_hash=hashlib.sha256(sample_id.encode()).hexdigest(),
+    )
+
+
+@pytest.mark.parametrize("method_name", TRAINABLE_FUSION_METHODS)
+def test_five_trainable_encoders_share_differentiable_sequence_contract(method_name):
+    torch.manual_seed(17)
+    batch = collate_observation_samples([_sample("a"), _sample("b")])
+    encoder = build_trainable_fusion_encoder(
+        method_name,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+    )
+    output = encoder(batch)
+    loss = output.sequence_embedding.square().mean()
+    loss.backward()
+
+    assert output.method_name == method_name
+    assert output.sequence_embedding.shape == (2, 96, 64)
+    assert output.modality_available_mask.shape == (2, 96)
+    assert torch.isfinite(output.sequence_embedding).all()
+    assert any(
+        parameter.grad is not None and torch.isfinite(parameter.grad).all()
+        for parameter in encoder.parameters()
+    )
+    if method_name == "chronaris":
+        assert output.auxiliary["physical_consistency"] != "not_applicable"
+    else:
+        assert output.auxiliary["physical_consistency"] == "not_applicable"

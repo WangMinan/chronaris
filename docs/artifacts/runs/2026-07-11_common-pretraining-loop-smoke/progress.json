@@ -1,0 +1,77 @@
+{
+  "training_epochs": 1,
+  "confirmed_metrics_changed": false,
+  "pretraining_oracle_opened": false,
+  "downstream_metrics_smoke_only": true,
+  "stage_name": "common_pretraining_loop_smoke",
+  "run_id": "2026-07-11_common-pretraining-loop-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T18:20:54.421984Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T18:20:52.425207Z",
+      "event": "start",
+      "training_epochs": 1,
+      "confirmed_metrics_changed": false,
+      "pretraining_oracle_opened": false,
+      "downstream_metrics_smoke_only": true
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:52.505445Z",
+      "event": "method_pretraining_complete",
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "step_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:52.514014Z",
+      "event": "method_pretraining_complete",
+      "method_name": "vehicle_only",
+      "status": "resumed",
+      "step_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:52.619743Z",
+      "event": "method_pretraining_complete",
+      "method_name": "mult",
+      "status": "resumed",
+      "step_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:52.698292Z",
+      "event": "method_pretraining_complete",
+      "method_name": "contiformer",
+      "status": "resumed",
+      "step_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:52.892631Z",
+      "event": "method_pretraining_complete",
+      "method_name": "chronaris",
+      "status": "resumed",
+      "step_count": 2
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:53.594495Z",
+      "event": "downstream_targets_opened_after_pretraining",
+      "target_count": 16
+    },
+    {
+      "timestamp_utc": "2026-07-10T18:20:54.421984Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 20,
+      "acceptance_check_count": 20,
+      "representation_export_count": 18,
+      "metric_count": 72
+    }
+  ],
+  "method_name": "chronaris",
+  "status": "completed",
+  "step_count": 2,
+  "target_count": 16,
+  "acceptance_pass_count": 20,
+  "acceptance_check_count": 20,
+  "representation_export_count": 18,
+  "metric_count": 72
+}
