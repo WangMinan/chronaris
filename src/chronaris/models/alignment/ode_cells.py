@@ -85,12 +85,20 @@ class ODERNNCell(nn.Module):
         if delta_t_s.shape != (hidden_state.shape[0],):
             raise ValueError("delta_t_s must have shape [B].")
 
+        clamped_delta_t = torch.clamp(
+            delta_t_s.to(dtype=hidden_state.dtype),
+            min=0.0,
+        )
+        if self.ode_method == "euler":
+            derivative = self.ode_func(hidden_state.new_zeros(()), hidden_state)
+            return hidden_state + (clamped_delta_t.unsqueeze(-1) * derivative)
+
         evolved_rows: list[torch.Tensor] = []
         zero_time = hidden_state.new_zeros(())
 
         for sample_index in range(hidden_state.shape[0]):
             current_hidden = hidden_state[sample_index]
-            current_delta_t = torch.clamp(delta_t_s[sample_index].to(dtype=hidden_state.dtype), min=0.0)
+            current_delta_t = clamped_delta_t[sample_index]
             if torch.is_nonzero(current_delta_t <= 0):
                 evolved_rows.append(current_hidden)
                 continue

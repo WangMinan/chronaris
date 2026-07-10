@@ -23,6 +23,7 @@ class AlignmentPrototypeConfig:
     ode_rtol: float = 1e-3
     ode_atol: float = 1e-4
     use_feature_valid_mask: bool = True
+    enable_continuous_evolution: bool = True
 
     def __post_init__(self) -> None:
         for field_name in (

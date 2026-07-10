@@ -355,6 +355,16 @@ MiniRocket 是主实验依赖；ClaSP/STUMPY 保持可选 gated import。无需 
 - 两个方法在同一数据集内共享训练折归一化拟合样本哈希，检查点清单明确记录未使用任务标签。
 - 本里程碑没有公共自监督训练或下游任务指标；紧凑证据为 `docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/`，约 11 MB 检查点和稠密表示只保存在被忽略目录。
 
+### 8.8 2026-07-11 G3b.3 执行结果
+
+- 新增 `ChronarisContinuousFusionEncoder`，直接消费原始异步点，经两条 ObservationEncoder—ODE 演化—GRU 更新路径在 96 点公共查询轴读取连续潜态。
+- ODE-RNN 输出新增路径 trace 和查询有效性；`enable_continuous_evolution=false` 会关闭真实 ODE 步骤，构成可审计消融而非报告字段变化。
+- 新增按真实秒数定义的 0–5、5–15、15–30 秒互斥可见域、空尺度屏蔽和三尺度门控；无因果掩码消融使用对称时间可见域，单尺度消融固定为 0–30 秒。
+- 物理项逐项记录 active/disabled/unavailable、有效残差对数量、原始值、加权值与原因；仿真/鼎新分别有 5/4 项可计算，不可用项不以零值冒充启用。
+- 完整主干与四项消融均在仿真和鼎新完成前向；字段级配置 diff 只命中目标机制，无因果消融在两套数据上均出现非零未来反事实变化。
+- 仿真与鼎新各完成一个 Chronaris 留出折导出，恢复复核 2/2 复用，21/21 验收通过；完整模型未来扰动最大历史变化为 0。
+- 本里程碑没有公共自监督训练或下游任务指标；紧凑证据为 `docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/`，约 2.0 MB 检查点和稠密表示只保存在被忽略目录。
+
 ## 9. 工作包 F：下游 consumer 与指标
 
 ### 9.1 实现

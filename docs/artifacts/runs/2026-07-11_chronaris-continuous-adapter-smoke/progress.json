@@ -1,0 +1,48 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "downstream_metrics_produced": false,
+  "simulation_oracle_opened": false,
+  "stage_name": "chronaris_continuous_adapter_smoke",
+  "run_id": "2026-07-11_chronaris-continuous-adapter-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T17:44:17.274679Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T17:44:01.773871Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "downstream_metrics_produced": false,
+      "simulation_oracle_opened": false
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:44:07.827143Z",
+      "event": "dataset_chronaris_complete",
+      "dataset_id": "simulation",
+      "physics_active_count": 5
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:44:17.268397Z",
+      "event": "dataset_chronaris_complete",
+      "dataset_id": "dingxin",
+      "physics_active_count": 4
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:44:17.274679Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 21,
+      "acceptance_check_count": 21,
+      "export_count": 2,
+      "resume_reused_count": 2
+    }
+  ],
+  "dataset_id": "dingxin",
+  "physics_active_count": 4,
+  "status": "completed",
+  "acceptance_pass_count": 21,
+  "acceptance_check_count": 21,
+  "export_count": 2,
+  "resume_reused_count": 2
+}

@@ -20,7 +20,9 @@ def audit_deep_baseline_output(
     baseline_output,
 ):
     cutoff_s = 15.0
-    future_output = adapter(_perturb_future(held_out_batch, cutoff_s=cutoff_s))
+    future_output = adapter(
+        perturb_future_observations(held_out_batch, cutoff_s=cutoff_s)
+    )
     past = baseline_output.timestamps_s <= cutoff_s
     future_delta = float(
         (baseline_output.sequence_embedding[past] - future_output.sequence_embedding[past])
@@ -29,14 +31,14 @@ def audit_deep_baseline_output(
         .item()
     )
     physiology_output = adapter(
-        _perturb_historical_stream(
+        perturb_historical_stream(
             held_out_batch,
             stream_name="physiology",
             cutoff_s=cutoff_s,
         )
     )
     vehicle_output = adapter(
-        _perturb_historical_stream(
+        perturb_historical_stream(
             held_out_batch,
             stream_name="vehicle",
             cutoff_s=cutoff_s,
@@ -127,7 +129,7 @@ def build_deep_baseline_acceptance_rows(
     ]
 
 
-def _perturb_future(batch, *, cutoff_s: float):
+def perturb_future_observations(batch, *, cutoff_s: float):
     physiology_future = (
         (batch.physiology_timestamps_s > cutoff_s) & batch.physiology_point_mask
     ).unsqueeze(-1)
@@ -149,7 +151,7 @@ def _perturb_future(batch, *, cutoff_s: float):
     )
 
 
-def _perturb_historical_stream(batch, *, stream_name: str, cutoff_s: float):
+def perturb_historical_stream(batch, *, stream_name: str, cutoff_s: float):
     if stream_name == "physiology":
         historical = (
             (batch.physiology_timestamps_s <= cutoff_s)

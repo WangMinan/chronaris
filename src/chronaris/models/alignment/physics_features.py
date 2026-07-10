@@ -189,7 +189,11 @@ def build_vehicle_feature_groups(
 def build_physiology_feature_groups(feature_names: tuple[str, ...]) -> StageFPhysiologyFeatureGroups:
     """Group physiology features into EEG/SPO2 constraints."""
 
-    eeg = tuple(name for name in feature_names if name.lower().startswith("eeg."))
+    eeg = tuple(
+        name
+        for name in feature_names
+        if name.lower().startswith("eeg.") or ".eeg." in name.lower()
+    )
     spo2 = tuple(name for name in feature_names if "spo2" in name.lower())
     assigned = set(eeg) | set(spo2)
     suffix_index = {feature_suffix(name): name for name in eeg}
