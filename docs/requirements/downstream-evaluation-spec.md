@@ -92,6 +92,8 @@ maneuver_score(t) = mean_k(field_score(k,t))
 
 其中 `eps=1e-6`。测试折只使用训练折 median/IQR。
 
+若某个物理语义组在训练折中的 `std` 与 `abs(delta)` 两个 IQR 都不大于 `eps`，该组标记为 `both_train_iqrs_are_zero` 并从该 fold 的 `maneuver_score` 分母中删除；不得用 `eps` 把常量字段放大成有效机动信号。每个 fold 至少保留 4 个动态语义组，否则结构化标记为不可用。
+
 训练折 `maneuver_score` 的 33% 和 67% 分位数定义低、中、高三类；阈值写入 fold manifest 后应用于测试折。
 
 ### 4.4 标签字段隔离
@@ -139,6 +141,8 @@ response(t) = mean_k(clip(scaled_delta(k,t), 0, 10))
 ```
 
 训练折拟合 `IQR_train`；测试折只应用。至少两个目标字段有效才生成目标。
+
+G1 固定数据审计只能读取既有特征导出的窗口汇总，因此以窗口均值完成字段覆盖、IQR 和 fold 合同可行性验证，并在 manifest 中强制标记 `window_mean_fallback`。这一结果不进入正式主指标；G2a 原始点冻结完成后，真实任务主实验必须按上述窗口中位数公式重新生成目标，二者不得混算。
 
 ### 5.4 高响应分类
 
@@ -378,4 +382,3 @@ E3 不参与选择。锁定 Chronaris 需要：
 5. 关键消融与方法设计方向一致。
 
 若条件未满足，保留完整负结果并将结论写成 mixed；不得继续无边界搜索直到出现胜出表格。
-

@@ -1,0 +1,50 @@
+{
+  "run_id": "2026-07-10_fixed-data-audit",
+  "status": "completed",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "data_role": "dingxin_existing_real_dual_stream_weak_supervision",
+  "data_mode": "feature_export_window_summary",
+  "source_paths": {
+    "e_run_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "f_run_manifest": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+  },
+  "source_hashes": {
+    "e_run_manifest_sha256": "57bb0de3477e48441df1d31dbdb8639745baacc082f48ba28ea12b0416c6a161",
+    "f_run_manifest_sha256": "9b0070432c5daf8279fe82b416bf62823763c7d0c0a7f5ebbea9dfb8dc824a3e"
+  },
+  "record_count": 111,
+  "sortie_count": 2,
+  "view_count": 3,
+  "pilot_count": 2,
+  "records_by_sortie": {
+    "20251002_单01_ACT-8_翼云_J16_12#01": 74,
+    "20251005_四01_ACT-4_云_J20_22#01": 37
+  },
+  "records_by_view": {
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033": 37,
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035": 37,
+    "20251005_四01_ACT-4_云_J20_22#01__pilot_10033": 37
+  },
+  "context_candidate_count": 96,
+  "classification_context_count": 96,
+  "response_context_count": 93,
+  "expected_classification_context_count": 96,
+  "expected_response_context_count": 93,
+  "selected_maneuver_field_count": 20,
+  "selected_response_candidate_role_count": 24,
+  "selected_response_candidate_field_count": 12,
+  "metadata_error_count": 0,
+  "fold_status": {
+    "leave_one_view_out__fold01": "completed",
+    "leave_one_view_out__fold02": "completed",
+    "leave_one_view_out__fold03": "completed",
+    "leave_one_sortie_out__fold01": "completed",
+    "leave_one_sortie_out__fold02": "completed"
+  },
+  "warnings": [],
+  "response_representative_statistic": "window_mean_fallback",
+  "raw_snapshot_required_for_main_median_target": true,
+  "post_alignment_maneuver_representation_leakage_safe": false,
+  "post_alignment_boundary": "existing reference projections may encode maneuver label-source fields; the final leakage-safe maneuver benchmark requires raw snapshot retraining with exclusions"
+}
