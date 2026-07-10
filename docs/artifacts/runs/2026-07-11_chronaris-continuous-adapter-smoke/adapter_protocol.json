@@ -1,0 +1,49 @@
+{
+  "format": "chronaris.continuous_adapter_protocol.v1",
+  "method_name": "chronaris",
+  "sequence_source": "task_head_free_continuous_fusion",
+  "query_point_count": 96,
+  "output_dim": 64,
+  "ode_method": "euler",
+  "lag_ranges_s": [
+    [
+      0.0,
+      5.0
+    ],
+    [
+      5.0,
+      15.0
+    ],
+    [
+      15.0,
+      30.0
+    ]
+  ],
+  "physics_weight": 0.1,
+  "fixed_ablations": [
+    "no_continuous_evolution",
+    "no_physics",
+    "no_causal_mask",
+    "single_scale_lag"
+  ],
+  "seed": 17,
+  "training_invoked": false,
+  "label_used_for_encoder_training": false,
+  "simulation_oracle_opened": false,
+  "dataset_metadata": {
+    "simulation": {
+      "sample_count": 3,
+      "physiology_feature_count": 7,
+      "vehicle_feature_count": 12,
+      "oracle_opened": false
+    },
+    "dingxin": {
+      "sample_count": 3,
+      "view_count": 3,
+      "physiology_feature_count": 12,
+      "vehicle_feature_count": 955,
+      "excluded_label_source_count": 20,
+      "label_or_target_opened": false
+    }
+  }
+}

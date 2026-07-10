@@ -1,0 +1,9 @@
+dataset_id,dataset_label,variant,changed_fields,diff_valid,finite_output,forward_elapsed_s,continuous_evolution_enabled,physics_active_count,causal_mask_enabled,lag_scale_count,scale_gate_enabled,future_counterfactual_max_abs_delta
+simulation,仿真,no_continuous_evolution,continuous_evolution_enabled,True,True,0.16672798804938793,False,5,True,3,True,
+simulation,仿真,no_physics,physics_enabled,True,True,0.2271134383045137,True,0,True,3,True,
+simulation,仿真,no_causal_mask,causal_mask_enabled,True,True,0.24496086593717337,True,5,False,3,True,0.48748868703842163
+simulation,仿真,single_scale_lag,"lag_ranges_s,scale_gate_enabled",True,True,0.22611589962616563,True,5,True,1,False,
+dingxin,鼎新,no_continuous_evolution,continuous_evolution_enabled,True,True,0.773425794672221,False,4,True,3,True,
+dingxin,鼎新,no_physics,physics_enabled,True,True,1.2603684500791132,True,0,True,3,True,
+dingxin,鼎新,no_causal_mask,causal_mask_enabled,True,True,0.9012200841680169,True,4,False,3,True,0.7773242592811584
+dingxin,鼎新,single_scale_lag,"lag_ranges_s,scale_gate_enabled",True,True,1.144365502987057,True,4,True,1,False,

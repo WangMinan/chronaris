@@ -15,6 +15,18 @@ from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAli
 
 
 @dataclass(frozen=True, slots=True)
+class StreamPathTrace:
+    """Auditable execution counts for one irregular stream forward pass."""
+
+    continuous_evolution_enabled: bool
+    observation_update_count: int
+    observation_positive_evolution_count: int
+    reference_query_count: int
+    reference_positive_evolution_count: int
+    maximum_positive_delta_t_s: float
+
+
+@dataclass(frozen=True, slots=True)
 class StreamPrototypeOutput:
     """Forward outputs and intermediate states for one stream."""
 
@@ -33,6 +45,8 @@ class StreamPrototypeOutput:
     reference_offsets_s: torch.Tensor | None = None
     reference_hidden_states: torch.Tensor | None = None
     reference_projected_states: torch.Tensor | None = None
+    reference_valid_mask: torch.Tensor | None = None
+    path_trace: StreamPathTrace | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -114,9 +128,14 @@ class SingleStreamODERNNPrototype(nn.Module):
         for point_index in range(point_count):
             valid_mask = stream.mask[:, point_index]
             valid_mask_float = valid_mask.to(dtype=value_dtype).unsqueeze(-1)
+            evolution_delta_t_s = (
+                stream.delta_t_s[:, point_index]
+                if self.config.enable_continuous_evolution
+                else torch.zeros_like(stream.delta_t_s[:, point_index])
+            )
             evolved_state, hidden_state = self.ode_rnn_cell(
                 hidden_state,
-                stream.delta_t_s[:, point_index],
+                evolution_delta_t_s,
                 observation_embeddings[:, point_index],
                 valid_mask,
             )
@@ -127,6 +146,9 @@ class SingleStreamODERNNPrototype(nn.Module):
 
         reference_hidden_states: torch.Tensor | None = None
         reference_projected_states: torch.Tensor | None = None
+        reference_valid_mask: torch.Tensor | None = None
+        reference_positive_evolution_count = 0
+        reference_maximum_delta_t_s = 0.0
         if reference_offsets_s is not None:
             resolved_reference_offsets = _resolve_reference_offsets_s(
                 reference_offsets_s,
@@ -134,7 +156,12 @@ class SingleStreamODERNNPrototype(nn.Module):
                 device=stream.values.device,
                 dtype=value_dtype,
             )
-            reference_hidden_states = self._sample_reference_hidden_states(
+            (
+                reference_hidden_states,
+                reference_valid_mask,
+                reference_positive_evolution_count,
+                reference_maximum_delta_t_s,
+            ) = self._sample_reference_hidden_states(
                 stream,
                 observation_embeddings,
                 resolved_reference_offsets,
@@ -159,6 +186,32 @@ class SingleStreamODERNNPrototype(nn.Module):
             reference_offsets_s=resolved_reference_offsets,
             reference_hidden_states=reference_hidden_states,
             reference_projected_states=reference_projected_states,
+            reference_valid_mask=reference_valid_mask,
+            path_trace=StreamPathTrace(
+                continuous_evolution_enabled=self.config.enable_continuous_evolution,
+                observation_update_count=int(stream.mask.sum().item()),
+                observation_positive_evolution_count=(
+                    int(((stream.delta_t_s > 0) & stream.mask).sum().item())
+                    if self.config.enable_continuous_evolution
+                    else 0
+                ),
+                reference_query_count=(
+                    int(resolved_reference_offsets.numel())
+                    if resolved_reference_offsets is not None
+                    else 0
+                ),
+                reference_positive_evolution_count=reference_positive_evolution_count,
+                maximum_positive_delta_t_s=max(
+                    float(
+                        stream.delta_t_s[stream.mask].max().item()
+                        if bool(stream.mask.any())
+                        else 0.0
+                    )
+                    if self.config.enable_continuous_evolution
+                    else 0.0,
+                    reference_maximum_delta_t_s,
+                ),
+            ),
         )
 
     def _sample_reference_hidden_states(
@@ -166,7 +219,7 @@ class SingleStreamODERNNPrototype(nn.Module):
         stream: TorchAlignmentStreamBatch,
         observation_embeddings: torch.Tensor,
         reference_offsets_s: torch.Tensor,
-    ) -> torch.Tensor:
+    ) -> tuple[torch.Tensor, torch.Tensor, int, float]:
         """Replay one stream and sample hidden states on a shared reference grid."""
 
         if reference_offsets_s.ndim != 2:
@@ -181,6 +234,9 @@ class SingleStreamODERNNPrototype(nn.Module):
             raise ValueError("reference_offsets_s must be monotonically non-decreasing within each sample.")
 
         reference_rows: list[torch.Tensor] = []
+        reference_valid_rows: list[torch.Tensor] = []
+        positive_evolution_count = 0
+        maximum_positive_delta_t_s = 0.0
         hidden_dtype = stream.values.dtype
         device = stream.values.device
 
@@ -188,8 +244,10 @@ class SingleStreamODERNNPrototype(nn.Module):
             sample_hidden = stream.values.new_zeros((1, self.config.hidden_dim))
             sample_current_time = stream.values.new_zeros(())
             sample_reference_states: list[torch.Tensor] = []
+            sample_reference_valid: list[torch.Tensor] = []
             observation_count = int(stream.point_counts[sample_index].item())
             observation_index = 0
+            has_observation = False
 
             while observation_index < observation_count and not bool(stream.mask[sample_index, observation_index]):
                 observation_index += 1
@@ -207,10 +265,17 @@ class SingleStreamODERNNPrototype(nn.Module):
                         break
 
                     delta_to_observation = torch.clamp(observation_time - sample_current_time, min=0.0)
-                    sample_hidden = self.ode_rnn_cell.evolve_hidden_state(
-                        sample_hidden,
-                        delta_to_observation.reshape(1),
-                    )
+                    if self.config.enable_continuous_evolution:
+                        if bool(delta_to_observation > 0):
+                            positive_evolution_count += 1
+                            maximum_positive_delta_t_s = max(
+                                maximum_positive_delta_t_s,
+                                float(delta_to_observation.item()),
+                            )
+                        sample_hidden = self.ode_rnn_cell.evolve_hidden_state(
+                            sample_hidden,
+                            delta_to_observation.reshape(1),
+                        )
                     sample_hidden = self.ode_rnn_cell.update_hidden_state(
                         sample_hidden,
                         observation_embeddings[sample_index, observation_index].unsqueeze(0),
@@ -218,17 +283,36 @@ class SingleStreamODERNNPrototype(nn.Module):
                     )
                     sample_current_time = observation_time
                     observation_index += 1
+                    has_observation = True
 
                 delta_to_reference = torch.clamp(resolved_reference_time - sample_current_time, min=0.0)
-                sampled_hidden = self.ode_rnn_cell.evolve_hidden_state(
-                    sample_hidden,
-                    delta_to_reference.reshape(1),
-                )[0]
+                if self.config.enable_continuous_evolution and has_observation:
+                    if bool(delta_to_reference > 0):
+                        positive_evolution_count += 1
+                        maximum_positive_delta_t_s = max(
+                            maximum_positive_delta_t_s,
+                            float(delta_to_reference.item()),
+                        )
+                    sampled_hidden = self.ode_rnn_cell.evolve_hidden_state(
+                        sample_hidden,
+                        delta_to_reference.reshape(1),
+                    )[0]
+                else:
+                    sampled_hidden = sample_hidden[0]
                 sample_reference_states.append(sampled_hidden)
+                sample_reference_valid.append(
+                    torch.as_tensor(has_observation, dtype=torch.bool, device=device)
+                )
 
             reference_rows.append(torch.stack(sample_reference_states, dim=0))
+            reference_valid_rows.append(torch.stack(sample_reference_valid, dim=0))
 
-        return torch.stack(reference_rows, dim=0)
+        return (
+            torch.stack(reference_rows, dim=0),
+            torch.stack(reference_valid_rows, dim=0),
+            positive_evolution_count,
+            maximum_positive_delta_t_s,
+        )
 
 
 class DualStreamODERNNPrototype(nn.Module):

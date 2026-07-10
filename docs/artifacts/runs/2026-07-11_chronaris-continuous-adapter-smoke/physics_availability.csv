@@ -1,0 +1,11 @@
+dataset_id,dataset_label,component_name,status,available,active,count,raw_value,weighted_value,reason
+simulation,仿真,vehicle_rigid_body_translation,active,True,True,298,0.0016173033509403467,0.00016173033509403467,
+simulation,仿真,vehicle_rigid_body_vertical,active,True,True,298,0.009037877433001995,0.0009037877316586673,
+simulation,仿真,vehicle_rigid_body_rotation,active,True,True,894,0.07938332855701447,0.007938332855701447,
+simulation,仿真,physiology_smoothness,active,True,True,59,0.012091822922229767,0.001209182315506041,
+simulation,仿真,physiology_spo2_delta,active,True,True,60,0.0008041350520215929,8.041350520215929e-05,
+dingxin,鼎新,vehicle_rigid_body_translation,active,True,True,1483,1.938448429107666,0.19384483993053436,
+dingxin,鼎新,vehicle_rigid_body_vertical,active,True,True,1582,13.745939254760742,1.37459397315979,
+dingxin,鼎新,vehicle_rigid_body_rotation,active,True,True,1417,3.981072425842285,0.39810726046562195,
+dingxin,鼎新,physiology_smoothness,active,True,True,89,0.11575591564178467,0.011575591750442982,
+dingxin,鼎新,physiology_spo2_delta,unavailable,False,False,0,,,no_valid_derivative_pairs

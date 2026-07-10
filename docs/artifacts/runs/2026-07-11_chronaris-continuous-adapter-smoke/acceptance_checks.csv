@@ -1,0 +1,22 @@
+check_id,passed,actual,expected
+two_dataset_exports,True,2,2
+resume_reuses_all_exports,True,2,2
+checkpoint_registry_complete,True,2,2
+fixed_query_and_output_shape,True,"[(96, 64), (96, 64)]","(96, 64)"
+future_observation_invariance,True,0.0,1e-05
+physiology_stream_sensitivity,True,0.10583901405334473,> 0
+vehicle_stream_sensitivity,True,1.3204748630523682,> 0
+continuous_evolution_executed,True,4,4
+reference_query_count,True,"[96, 96, 96, 96]",96
+seconds_lag_boundaries,True,"{0.0: [0], 5.0: [0], 15.0: [1], 30.0: [2]}","{0.0: [0], 5.0: [0], 15.0: [1], 30.0: [2]}"
+simulation_physics_active,True,5,>= 3
+unavailable_physics_not_zero,True,True,True
+four_fixed_ablations,True,"['no_causal_mask', 'no_continuous_evolution', 'no_physics', 'single_scale_lag']",four fixed variants
+ablation_forward_finite,True,"[True, True, True, True, True, True, True, True]",True
+ablation_diff_exact,True,"['continuous_evolution_enabled', 'physics_enabled', 'causal_mask_enabled', 'lag_ranges_s,scale_gate_enabled', 'continuous_evolution_enabled', 'physics_enabled', 'causal_mask_enabled', 'lag_ranges_s,scale_gate_enabled']",declared fields only
+no_causal_ablation_exposes_future,True,"[0.48748868703842163, 0.7773242592811584]",> 0 for both datasets
+train_only_transform,True,True,True
+dingxin_three_view_smoke,True,3,3
+dingxin_label_sources_excluded,True,20,20
+observed_only_inputs,True,False,False
+labels_not_used_for_encoder,True,False,False

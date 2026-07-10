@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、统一表示基础设施以及五个对照方法的生产适配器均已完成；MulT 与 ContiFormer 深度基线冒烟验证 15/15 通过。本轮尚未运行公共自监督训练或下游任务指标、未修改既有确认指标。当前实施里程碑已推进到 G3b.3 Chronaris 连续融合生产主干。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、统一表示基础设施、五个对照适配器和 Chronaris 连续融合生产主干均已完成；Chronaris 机制冒烟验证 21/21 通过。本轮尚未运行公共自监督训练或下游任务指标、未修改既有确认指标。当前实施里程碑已推进到 G3b.4 五个可训练编码器公共自监督训练闭环。
 
 ## 当前执行入口
 
@@ -21,6 +21,7 @@
 - G3a 统一表示合同冒烟验证：[artifacts/runs/2026-07-11_representation-contract-smoke/report.md](artifacts/runs/2026-07-11_representation-contract-smoke/report.md)
 - G3b.1 浅层基线生产适配器冒烟验证：[artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke/report.md](artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke/report.md)
 - G3b.2 深度基线生产适配器冒烟验证：[artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/report.md](artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/report.md)
+- G3b.3 Chronaris 连续融合生产主干冒烟验证：[artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/report.md](artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/report.md)
 
 ## 已锁定事实
 
@@ -85,23 +86,29 @@
 - 对未来观测施加扰动，当前及历史输出最大变化为 0；分别扰动生理/航电历史时，四组表示的最小变化为 0.9862/1.322，两个输入流均真实进入计算图。
 - 仿真 MulT/ContiFormer 参数量为 1,014,784/112,512；鼎新输入维数更高，对应 1,196,800/294,528。该审计不构成任务性能排名。
 - G3b.2 紧凑证据约 64 KB；约 11 MB 检查点和稠密表示位于被忽略目录。
+- 新增原始异步双流到 ODE-RNN 的严格桥接，padding 不触发更新；两流在 96 点公共查询轴上读取连续潜态并记录观测更新、正时间演化、查询次数和最大时间间隔。
+- Chronaris 主融合按真实秒数使用 0–5、5–15、15–30 秒三个互斥可见域；空尺度从门控归一化中排除，历史固定点数窗口不进入新 checkpoint。
+- 物理一致性清单逐项区分 active、disabled 和 unavailable，并记录 count、raw value、weighted value 和不可用原因；仿真/鼎新分别有 5/4 项可计算。
+- 无连续演化、无物理、无因果掩码和单尺度时延四项消融已由同一配置枚举生成，字段级 diff 只命中目标机制；两套数据共 8 次有限值前向通过。
+- 仿真与鼎新各完成 1 个 Chronaris 留出折导出，恢复复核 2/2 复用；未来扰动对历史输出最大变化为 0，生理/航电历史扰动最小变化为 0.1058/1.3205。
+- 无因果掩码消融在仿真/鼎新上的未来反事实变化为 0.4875/0.7773，证明该消融真实打开未来可见域。
+- Chronaris 仿真/鼎新参数量为 123,222/306,186；单样本前向约 0.14/1.24 秒。G3b.3 紧凑证据约 76 KB，约 2.0 MB 检查点与表示位于被忽略目录。
 
 ## 当前未完成
 
-- 尚未打通任务无关 Chronaris 连续融合编码器。
 - 六方法尚未完成公共自监督训练；五个对照适配器目前只完成随机初始化或无监督变换的工程冒烟验证。
 - 尚未实现应用下游算法与正式 benchmark。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
 ## 下一验收门
 
-G3b.3 必须先证明 Chronaris 论文主张的三个机制真实进入同一条任务无关表示路径：
+G3b.4 必须建立五个可训练编码器共用的单折训练—导出—线性探针闭环：
 
-1. 原始异步双流分别经观测编码、ODE 演化和 GRU 观测更新，在 96 点公共查询轴上读取连续潜态；不能用前向填充 Transformer 替代。
-2. 新增按真实秒数定义的 0–5、5–15、15–30 秒三个因果可见域；多尺度门控不能读取未来航电状态。
-3. 物理一致性逐项记录 `active/unavailable/count/value`，缺少语义字段时必须结构化不可用，不能写零值冒充约束生效。
-4. 固定实现无连续演化、无物理、无因果掩码、单尺度时延四项消融；每项只能关闭目标机制。
-5. 仿真与鼎新分别完成留出折表示、连续路径调用、未来扰动、秒级边界、物理项和恢复审计。
+1. masked reconstruction、短期预测和时延判别的目标、mask 与错误时移必须由同一 augmentation ID 构造，不接收方法名。
+2. 生理单流、航电单流、MulT、ContiFormer 和 Chronaris 使用相同样本顺序、epoch、优化器家族、早停字段和训练预算；朴素时间同步只拟合训练折无监督变换。
+3. Chronaris 方法特有损失按冻结升权计划启用；物理 unavailable 项不进入总损失分母。
+4. 单一仿真 fold、候选 A、seed 17、1 epoch 先打通六方法训练、checkpoint、折外表示、线性分类/回归探针与恢复。
+5. smoke 不能读取 G2 锁定测试 oracle 或鼎新留出折标签来选择模型；通过后才进入 seed 17 开发筛选。
 
 ## 本轮验证
 
@@ -116,7 +123,9 @@ G3b.3 必须先证明 Chronaris 论文主张的三个机制真实进入同一条
 - G3b.1 生产适配器 smoke：仿真/鼎新 6 个导出、恢复 6/6 复用、`14/14` 验收通过。
 - G3b.2 深度基线聚焦测试：`7 passed`；联合模型聚焦测试 `35 passed, 2 skipped`。
 - G3b.2 生产适配器 smoke：仿真/鼎新 4 个导出、恢复 4/4 复用、`15/15` 验收通过。
-- 完整测试：`272 passed, 8 skipped, 317 warnings`。
+- G3b.3 连续主干聚焦测试：`11 passed, 2 skipped`；融合编码器联合聚焦测试 `29 passed, 2 skipped`。
+- G3b.3 生产主干 smoke：仿真/鼎新 2 个导出、恢复 2/2 复用、`21/21` 验收通过。
+- 完整测试：`281 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 

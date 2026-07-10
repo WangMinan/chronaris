@@ -8,118 +8,112 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G3b.3 Chronaris 连续融合生产主干
+## 当前里程碑：G3b.4 公共自监督训练与六方法单折闭环
 
-本里程碑把论文方法中的双流连续潜态、物理一致性和秒级因果滞后融合连接成一个任务无关编码器，接入既有训练折归一化、检查点注册与留出折导出。此处先证明机制路径和四项固定消融真实可执行；五个可训练编码器的公共自监督训练在本门通过后统一启动。
+本里程碑先建立一条可恢复、可审计的最小完整实验链：五个可训练编码器在同一仿真训练折使用相同增强与公共目标训练 1 epoch，朴素时间同步拟合相同训练折的无监督变换；六种表示随后由同一线性下游算法消费。这个 smoke 只验证训练、导出、任务消费和报告闭环，不进入论文主指标或候选选择。
 
-### G1–G3b.2 已完成
+### G1–G3b.3 已完成
 
-- 固定鼎新数据、原始异步点、仿真真值、统一表示与留出折来源合同均已固化。
-- 生理单流、航电单流、朴素时间同步、MulT 与 ContiFormer 已具备任务头前生产适配器。
-- 两轮适配器冒烟共完成 10 个仿真/鼎新留出折输出；浅层基线 14/14、深度基线 15/15 验收通过。
-- 所有生产适配器当前与历史查询均不受未来观测扰动；两个双流深度基线对两种历史输入均有非零响应。
-- 完整测试为 `272 passed, 8 skipped`；检查点和稠密表示均位于被忽略目录。
+- 固定鼎新数据、方法无关仿真、统一表示、五个对照适配器和 Chronaris 连续融合主干均已固化。
+- Chronaris 已连接双流 ODE-RNN、96 点连续查询、结构化物理可用性和秒级三尺度因果融合；四项固定消融可执行。
+- G3b.3 仿真/鼎新 2 个留出折输出恢复 2/2 复用，21/21 验收通过；完整模型未来扰动最大变化为 0。
+- 完整测试为 `281 passed, 8 skipped`；原始点、完整仿真、checkpoint 和稠密表示均不进入 Git。
 
-### 当前可复用实现与禁止替代路径
+### 当前输入与严格边界
 
-- 连续潜态原型：`src/chronaris/models/alignment/prototype.py` 中的 `DualStreamODERNNPrototype`、`SingleStreamODERNNPrototype`。
-- 观测编码与连续演化：`src/chronaris/models/alignment/encoders.py`、`ode_cells.py` 和 `torch_batch.py`。
-- 已有物理损失：`src/chronaris/models/alignment/physics.py`、`physics_features.py`、`physics_state_mapping.py` 与 `losses.py`。
-- 历史融合：`src/chronaris/models/fusion/causal.py` 目前支持因果与固定点数窗口，可复用投影/注意力思路，不能继续用点数窗口作为新主协议。
-- 公共表示输入、训练折变换与折外导出：`src/chronaris/representation/`。
-- 历史 `ChronarisPrivateTaskAwareWrapper` 和任务训练后的 pooled embedding 不得作为本里程碑的 Chronaris 主路径。
-- G3b.2 证据：`docs/artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/`。
+- 五个可训练主干：`ContinuousTimeSingleStreamEncoder` 两个实例、`CausalMulTFusionEncoder`、`CausalContiFormerFusionEncoder` 和 `ChronarisContinuousFusionEncoder`。
+- 不训练方法：`NaiveTimeSyncEncoder`，只允许训练折中位数/四分位距归一化与无监督主成分投影。
+- 共享增强计划已存在于 `src/chronaris/representation/augmentation.py`，目前只有 realization 生成器，尚未实现对原始异步双流的实际变换。
+- 表示导出、checkpoint 来源、恢复与禁止字段合同位于 `src/chronaris/representation/`。
+- smoke 只从仿真 `train` split 的 G1 生成族选样并在内部划分 train/validation/held-out；不得读取 `locked_test`，不得使用鼎新留出视图调参。
+- 训练编码器不得读取 workload、maneuver、alignment、lag 等 oracle；oracle 只允许在表示冻结后由下游任务构造器按明确清单读取。
 
-### 子任务 G3b.3-a：原始异步双流到连续潜态
+### 子任务 G3b.4-a：增强执行器与查询来源追踪
 
-1. 新建任务无关 `ChronarisContinuousFusionEncoder`；输入直接使用每个模态的原始时间、数值、字段有效掩码和长度，不能先用公共前向填充把不规则采样抹平。
-2. 生理和航电各自使用独立 ObservationEncoder、ODE 演化与 GRU 观测更新；共享隐藏维和求解配置，但不共享输入投影参数。
-3. 将 `DualStreamObservationBatch` 明确转换为现有 `TorchAlignmentBatch` 或等价的严格张量合同；padding 时间不得触发 ODE 或 GRU 更新。
-4. 在统一 96 点查询轴上读取两条连续潜态；查询轴之前没有观测时输出无效掩码，不能使用未来第一个观测回填。
-5. 增加运行计数器或 trace，逐样本记录 ODE 演化步数、GRU 更新步数、查询次数和最大时间间隔，供路径审计使用。
+1. 实现 `apply_augmentation_realizations`，逐样本消费既有 realization；API 只接收 batch、realization 和固定 policy，不接收方法名。
+2. 先应用整段模态 dropout，再应用连续缺失段和单点随机缺失；两个模态不得同时被整段删除。
+3. 时间抖动与时钟偏移只改变训练输入时间；变换后按 `(timestamp, original_index)` 稳定排序，相同时间的观测顺序可复现。
+4. 时间变换越过 0/30 秒边界的点从训练输入移除，不裁剪回边界制造重复点；padding、feature mask 和 observation age 重新计算。
+5. 扩展因果查询返回 source observation index；masked reconstruction mask 由“原查询来源存在、增强后该来源被删除或替换”确定，不能用数值恰好相等推测。
+6. 每个样本/epoch 写出 augmentation ID、两流保留点数、遮挡字段数、时钟偏移和被删模态；五个方法对应记录必须逐项一致。
 
-### 子任务 G3b.3-b：秒级多尺度因果融合
+### 子任务 G3b.4-b：公共 pretext 目标
 
-1. 新建生产级多尺度因果融合模块，窗口固定为近时延 0–5 秒、中时延 5–15 秒、长时延 15–30 秒。
-2. 每个生理查询只能读取对应窗口内的当前或历史航电潜态；时间差由真实秒数计算，不由查询点序号近似。
-3. 三个尺度分别计算注意力上下文；空窗口输出结构化不可用并从尺度门控 softmax 中排除，不能用全零上下文参与归一化。
-4. 门控输入只允许当前/历史生理潜态、三个尺度上下文和模态可用性；门控权重按查询点归一化并记录尺度利用率。
-5. 将生理连续潜态、航电当前潜态和门控跨流上下文投影为 64 维表示；最终有效掩码继续使用六方法公共查询合同。
-6. 历史 `lag_window_points` 仅保留 artifact replay 兼容入口，新 checkpoint 清单必须记录 `lag_ranges_s=[[0,5],[5,15],[15,30]]`。
+所有目标先在训练折归一化后的原始 batch 上构造 target，再把增强 batch 送入编码器：
 
-### 子任务 G3b.3-c：物理一致性可用性与损失接口
+| 目标 | 权重 | 有效位置 | 头部输出 |
+| --- | ---: | --- | --- |
+| 遮挡重构 | 1.0 | 查询来源被增强移除且原字段有效 | 64 维状态到生理+航电字段 |
+| 短期预测 | 0.5 | 当前和下一查询均有效，最后一点排除 | 预测下一查询的生理+航电字段 |
+| 时延判别 | 0.2 | 正配对与固定错误时移各半 | 当前/池化状态到二分类 logit |
 
-1. 为仿真 12 状态航电字段和鼎新元数据分别构造物理语义映射；映射只根据字段名/元数据和训练折统计，不读取仿真 oracle。
-2. 复用 rigid-body/full family 的物理残差实现，但把训练返回值扩展为每项 `status`、`active`、`count`、`raw_value`、`weighted_value` 和缺失原因。
-3. 仿真至少审计速度/姿态/角速度/加速度可用项；鼎新按实际字段逐项启用，无法满足输入语义的项标记 `unavailable`。
-4. 物理损失只在有效查询与有效字段上聚合；没有样本时不返回数值零，避免“未计算等于完全一致”的误读。
-5. 物理损失是训练辅助量，不写入 `FusionStreamBatch`；表示 manifest 只记录组件配置和可用性摘要。
-6. 本工程冒烟不声称模型已被物理目标训练；正式权重仍按第 1–10 epoch 为 0、第 11–20 epoch 线性升至 0.1 的训练协议执行。
+具体约束：
 
-### 子任务 G3b.3-d：四项固定消融
+1. 重构与预测使用按字段有效数归一的 Huber loss；某批次无有效位置时返回 unavailable，不以零值计入目标分母。
+2. 错误时移从冻结集合 `{-10,-5,5,10}` 秒按 augmentation ID 选择，移动一个模态时间戳后重新排序；不得读取真值时延。
+3. 五个可训练方法使用同一个 target archive、遮挡 mask 和正负配对顺序；单流方法仍接受同一任务，但 inactive stream 的输入不会被偷偷补回。
+4. 三个公共头的结构、初始化 seed 与参数量规则相同；头部只服务预训练，正式 `FusionStreamBatch` 仍来自任务头之前。
 
-建立单一枚举配置，禁止为消融另开超参数搜索：
+### 子任务 G3b.4-c：统一训练适配器
 
-| 变体 | 唯一变化 | 保持不变 |
-| --- | --- | --- |
-| 完整 Chronaris | ODE-RNN、物理、多尺度因果融合全部启用 | 统一基准 |
-| 无连续演化 | 相邻观测间不执行 ODE 演化，只保留观测更新和查询保持 | 编码器、隐藏维、融合、损失预算 |
-| 无物理一致性 | 物理权重为 0，仍计算可用性审计 | ODE-RNN、因果融合、公共目标 |
-| 无因果掩码 | 多尺度融合允许对称时间可见域，仅用于消融 | ODE-RNN、物理、尺度与参数预算 |
-| 单尺度时延 | 使用 0–30 秒单一历史窗口，不使用三尺度门控 | ODE-RNN、物理、输出投影 |
+1. 为五个主干实现可微分 `encode_for_pretraining`，返回 `[B,96,64]`、内部可用性和方法特有辅助量，不经过适配器的 `inference_mode`。
+2. 单流、MulT、ContiFormer 与 Chronaris 共享 `PretextHeadBundle` 类和 `CommonPretextLoss` 聚合器；不得复制五套损失实现。
+3. Chronaris 额外暴露 continuous alignment、物理一致性和 causal direction 三项；其他方法明确为 not_applicable，不写零值混入公共平均。
+4. Chronaris 升权函数固定：epoch 1–10 为 0，epoch 11–20 线性升至 0.2/0.1/0.1，之后保持；1 epoch smoke 中三项权重必须为 0，但可用性仍审计。
+5. 每个 step 验证输出有限、有效目标数量非负、公共 augmentation ID 一致；梯度裁剪前后范数和跳过原因写入 batch log。
 
-每个变体 manifest 必须列出与完整配置的字段级 diff；自动测试断言 diff 仅命中表中目标字段。
+### 子任务 G3b.4-d：优化器、预算与 checkpoint
 
-### 子任务 G3b.3-e：检查点与任务无关导出
+smoke 候选 A 固定为：
 
-1. 检查点保存主干配置、模型权重、训练折归一化器、随机种子、代码路径版本和物理语义映射摘要。
-2. `label_used_for_encoder_training=false`；本 smoke 的 `training_invoked=false`，不得加载旧分类/回归 checkpoint。
-3. 仿真使用训练、验证、锁定测试三个不同 profile；鼎新使用三个不同 view，沿用一训练、一验证、一留出折的工程冒烟划分。
-4. 完整 Chronaris 导出仿真和鼎新各一个留出折表示；四项消融先完成前向、路径与配置审计，不产生论文任务指标。
-5. 二次运行逐项校验 checkpoint、normalizer、输入和表示哈希，完整项必须恢复复用；任一来源哈希变化时拒绝复用。
+- seed 17、1 epoch、batch size 4；显存不足时只允许降至 2/1，隐藏维不变。
+- AdamW，学习率 `3e-4`，weight decay `1e-4`，梯度裁剪 `1.0`。
+- 每个方法使用相同样本顺序和 batch 数；参数量差异单独报告，不用提前停止制造训练量差异。
+- `last.pt` 与 `best.pt` 分开；1 epoch smoke 两者可指向相同权重，但 manifest 必须分别登记。
+- checkpoint 包含主干、公共头、normalizer、optimizer、epoch、augmentation policy、输入/split hash、损失权重和 `label_used_for_encoder_training=false`。
+- `--resume` 只复用配置、输入和代码路径 hash 全部一致的 completed method/fold；中断 batch 从最近原子 checkpoint 恢复。
 
-### 子任务 G3b.3-f：针对性测试矩阵
+### 子任务 G3b.4-e：仿真训练折 smoke 数据
 
-单元与集成测试至少覆盖：
+1. 仅选择 `train/g1_state_space` 的 clean-asynchronous 观测，按 profile/trajectory 分成 8 个训练、4 个验证、4 个留出样本；三组 profile 与 latent seed 不重叠。
+2. 编码器预训练加载器只能打开 `raw_dual_stream.npz`；路径审计对 `oracle.npz`、任务标签和生成器内部状态为零读取。
+3. 表示冻结后，下游 smoke 才加载同一 16 条轨迹的 oracle，构造一个三类仿真负荷窗口任务和一个连续负荷预测任务。
+4. 下游标签 archive 与预训练输入分目录、分 manifest；测试断言在 checkpoint 完成前实例化标签读取器会失败。
+5. smoke 样本量只用于贯通协议，不写入论文表；正式 screen 使用锁定的完整 G1 train/validation 配置。
 
-1. 不规则时间间隔会改变 ODE 演化结果；禁用连续演化后该差异消失。
-2. padding 时间、无效字段和整段缺失模态不会触发伪观测更新。
-3. 未来原始点扰动不改变当前及历史完整模型输出；无因果掩码消融应被反例测试检出未来敏感性。
-4. 精确位于 5、15、30 秒边界的键只进入预先规定的尺度；31 秒历史不进入任何主尺度。
-5. 三个尺度均可用时门控和为 1；部分尺度空缺时只在可用尺度归一化。
-6. 仿真物理项出现 active 且 count 大于 0；语义字段不足的 fixture 返回 unavailable 而非零损失。
-7. 四项消融每项只改变一个目标机制，参数和 checkpoint 元数据可复核。
-8. 检查点保存/加载前后输出、trace 和配置一致；折外导出与恢复合同保持通过。
+### 子任务 G3b.4-f：六方法表示与线性 consumer
+
+1. 五个训练模型和朴素时间同步均导出 train/validation/held-out 三种 role 的 `[B,96,64]` 表示；所有方法样本、查询轴和有效掩码一致。
+2. 线性分类使用 Logistic Regression，线性回归使用 Ridge；smoke 固定 `C=1.0`、`alpha=1.0`，不做方法特异调参。
+3. scaler、标签阈值和线性模型只在表示 train role 拟合；validation 只检查运行，held-out 只计算一次。
+4. 输出 macro-F1、balanced accuracy、AUPRC、MAE、RMSE 和 Spearman；若单折类别不足，写结构化 unavailable，不改标签阈值补齐类别。
+5. 指标仅标记 `smoke_only=true`，不得进入 confirmed metrics、候选 Pareto 或论文主图。
 
 ### 本里程碑预期产物
 
-紧凑 run `docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/`：
+紧凑 run `docs/artifacts/runs/2026-07-11_common-pretraining-loop-smoke/`：
 
-- `adapter_protocol.json`
-- `continuous_path_audit.csv`
-- `lag_scale_boundary_audit.csv`
-- `physics_availability.csv`
-- `ablation_config_diff.csv`
-- `attention_causality_audit.csv`
-- `dual_stream_sensitivity.csv`
-- `parameter_budget.csv`
-- `fold_transform_manifest.json`
-- `checkpoint_registry.json`
-- `representation_export_manifest.json`
+- `data_manifest.json`、`split_manifest.json`
+- `augmentation_protocol.json`、`augmentation_alignment.csv`
+- `pretext_target_manifest.json`、`pretext_loss_audit.csv`
+- `training_protocol.json`、`training_status.csv`、`resource_budget.csv`
+- `checkpoint_registry.json`、`representation_export_manifest.json`
+- `downstream_protocol.json`、`fold_metrics.csv`、`metric_long.csv`
 - `acceptance_checks.csv`
-- `report.md`、`claim_boundary.md`、`progress.json`、`resume_command.txt` 和 `evidence_manifest.json`
+- `report.md`、`claim_boundary.md`、`progress.json`、`run.log`、`resume_command.txt` 和 `evidence_manifest.json`
 
-检查点和稠密表示继续写入 `artifacts/application_evaluation/2026-07-11_chronaris-continuous-adapter-smoke/`，禁止入仓。
+逐 batch log、checkpoint、稠密表示、target archive 和逐样本预测写入 `artifacts/application_evaluation/2026-07-11_common-pretraining-loop-smoke/`，禁止入仓。
 
-### G3b.3 验收
+### G3b.4 验收
 
-- 完整主干输出 `[B,96,64]`，样本、查询时间、有效掩码、训练折来源与五个对照方法合同一致。
-- 路径 trace 证明两条 ODE-RNN、统一查询、物理可用性计算和秒级多尺度因果融合真实执行。
-- 未来扰动最大变化在数值容差内为 0；三条秒级边界、空窗口门控和整段模态缺失测试通过。
-- 物理清单至少在仿真出现 active 项；所有未计算项都有明确 unavailable 原因。
-- 四项消融配置 diff 均只命中目标机制，完整模型与消融都能完成有限值前向。
-- 任务无关 checkpoint round-trip、折外导出和完整恢复复用通过；文件中不存在标签、logits 或下游预测。
-- 完整测试、`compileall`、`git diff --check`、读者术语、密钥、LFS 与被忽略重型产物检查通过。
+- 五个方法在每个样本/epoch 上的 augmentation ID、遮挡来源和错误时移完全一致；增强执行器源码/API 不含方法参数。
+- 三个公共目标在至少一个训练 batch 中均为 active、count 大于 0、loss 有限；无有效位置时以 unavailable 处理。
+- 五个 checkpoint 均未使用下游标签，六方法三种 role 共 18 个表示输出来源完整且恢复可复用。
+- Chronaris smoke 的三个特有权重为 0，与冻结升权计划一致；物理可用性仍被记录。
+- 线性分类与回归使用完全相同的训练折、超参数和单次 held-out 评价；指标标记只用于 smoke。
+- 任一预训练代码在 checkpoint 完成前尝试读取 oracle 时测试失败；`locked_test` 路径审计为零命中。
+- 重跑 `--resume` 时已完成方法/role 全部复用，删除一个输出后只重建该项。
+- 完整测试、`compileall`、`git diff --check`、术语、密钥、LFS 与重型产物忽略检查通过。
 
 ## 已锁定规范
 
@@ -131,14 +125,6 @@
 - [长程运行手册](notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 
 ## 后续验收门
-
-### G3b.4：五个可训练编码器公共自监督训练
-
-- 训练对象为生理单流、航电单流、MulT、ContiFormer 和 Chronaris；朴素时间同步只拟合训练折归一化与无监督投影。
-- 公共目标固定为 masked reconstruction 1.0、短期预测 0.5、时延判别 0.2；目标构造、遮挡位置和错误时移由共享 augmentation ID 派生。
-- Chronaris 的连续对齐、物理一致性与因果方向正则在第 1–10 epoch 为 0，第 11–20 epoch 线性升至 0.2/0.1/0.1，之后保持。
-- 首先运行六方法、单一仿真 fold、候选 A、1 epoch 的训练—导出—线性探针闭环烟雾测试；通过后再启动 seed 17 开发筛选。
-- 训练器记录每个方法/epoch 的公共损失、方法特有损失、有效样本数、参数量、吞吐、峰值显存和 checkpoint 哈希；任务标签不得进入表示预训练。
 
 ### G4：下游 consumer
 
@@ -216,13 +202,13 @@
 
 ## 当前验证门
 
-当前 G3b.3 实现提交前必须通过：
+当前 G3b.4 实现提交前必须通过：
 
-1. ODE-RNN 真实时间演化、padding 隔离、查询前无观测和 checkpoint round-trip 测试。
-2. 0–5、5–15、15–30 秒可见域边界、空尺度门控和未来扰动不变性测试。
-3. 仿真/鼎新物理项 active/unavailable 审计与缺字段不冒充零损失测试。
-4. 完整 Chronaris 与四项固定消融的单一机制 diff 和有限值前向测试。
-5. 仿真与鼎新各完成完整 Chronaris 留出折导出、恢复复用和路径审计。
-6. G1–G3b.2 全部聚焦测试保持通过，并运行完整 `pytest`、`compileall` 和 `git diff --check`。
-7. 读者可见术语、未来信息、仿真真值隔离、密钥、LFS 和 Git ignore 审计通过。
-8. `git status` 中不存在原始点、完整仿真 bundle、稠密表示或检查点。
+1. 增强执行器的 method-free API、稳定排序、双模态不同时删除和查询来源追踪测试。
+2. 遮挡重构、短期预测、时延判别三项目标 active/unavailable、有效计数、权重与有限梯度测试。
+3. 五个方法共享 augmentation ID、target hash、样本顺序、step 数和优化器协议审计。
+4. 预训练阶段 oracle/下游标签 fail-closed，仿真 `locked_test` 路径零读取测试。
+5. 五个训练 checkpoint、朴素同步变换和六方法 train/validation/held-out 共 18 个表示输出来源完整。
+6. 固定 Logistic/Ridge 在同一折完成分类/回归 smoke，所有指标明确标记不进入论文结果。
+7. 完整恢复复用和单项删除重建测试；输入、配置或代码路径 hash 改变时拒绝复用。
+8. G1–G3b.3 聚焦测试保持通过，并运行完整 `pytest`、`compileall`、`git diff --check`、术语、密钥、LFS 和重型产物忽略检查。

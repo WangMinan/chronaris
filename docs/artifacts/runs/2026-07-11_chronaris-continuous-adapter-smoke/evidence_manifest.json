@@ -1,0 +1,28 @@
+{
+  "run_id": "2026-07-11_chronaris-continuous-adapter-smoke",
+  "status": "completed",
+  "evidence_layer": "chronaris_continuous_adapter_smoke_only",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "downstream_metrics_produced": false,
+  "simulation_oracle_opened": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_chronaris-continuous-adapter-smoke",
+  "output_paths": {
+    "adapter_protocol": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/adapter_protocol.json",
+    "continuous_path_audit": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/continuous_path_audit.csv",
+    "lag_scale_boundary_audit": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/lag_scale_boundary_audit.csv",
+    "physics_availability": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/physics_availability.csv",
+    "ablation_config_diff": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/ablation_config_diff.csv",
+    "attention_causality_audit": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/attention_causality_audit.csv",
+    "dual_stream_sensitivity": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/dual_stream_sensitivity.csv",
+    "parameter_budget": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/parameter_budget.csv",
+    "fold_transform_manifest": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/fold_transform_manifest.json",
+    "checkpoint_registry": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/checkpoint_registry.json",
+    "representation_export_manifest": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/representation_export_manifest.json",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/evidence_manifest.json"
+  }
+}
