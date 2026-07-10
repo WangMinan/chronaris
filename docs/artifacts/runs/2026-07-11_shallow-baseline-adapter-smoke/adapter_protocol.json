@@ -1,0 +1,31 @@
+{
+  "format": "chronaris.shallow_adapter_protocol.v1",
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync"
+  ],
+  "single_stream_backbone_class": "ContinuousTimeSingleStreamEncoder",
+  "single_stream_continuous_block": "ContiFormerEncoder(causal=True)",
+  "naive_sync_policy": "past_or_present_forward_fill_only",
+  "query_point_count": 96,
+  "output_dim": 64,
+  "label_used_for_encoder_training": false,
+  "training_invoked": false,
+  "dataset_metadata": {
+    "simulation": {
+      "sample_count": 3,
+      "physiology_feature_count": 7,
+      "vehicle_feature_count": 12,
+      "oracle_opened": false
+    },
+    "dingxin": {
+      "sample_count": 3,
+      "view_count": 3,
+      "physiology_feature_count": 12,
+      "vehicle_feature_count": 955,
+      "excluded_label_source_count": 20,
+      "label_or_target_opened": false
+    }
+  }
+}

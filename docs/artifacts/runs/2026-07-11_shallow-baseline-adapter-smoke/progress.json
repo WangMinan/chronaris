@@ -1,0 +1,45 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "downstream_metrics_produced": false,
+  "stage_name": "shallow_adapter_smoke",
+  "run_id": "2026-07-11_shallow-baseline-adapter-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-10T17:01:46.158924Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-10T17:01:42.098817Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "downstream_metrics_produced": false
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:01:45.754364Z",
+      "event": "dataset_adapters_complete",
+      "dataset_id": "simulation",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:01:46.155098Z",
+      "event": "dataset_adapters_complete",
+      "dataset_id": "dingxin",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-07-10T17:01:46.158924Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 14,
+      "acceptance_check_count": 14,
+      "export_count": 6,
+      "resume_reused_count": 6
+    }
+  ],
+  "dataset_id": "dingxin",
+  "export_count": 6,
+  "status": "completed",
+  "acceptance_pass_count": 14,
+  "acceptance_check_count": 14,
+  "resume_reused_count": 6
+}

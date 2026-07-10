@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真基准和统一表示基础设施均已完成：真实固定数据形成 96/93 个应用上下文；仿真形成 168 条潜在架次和 1,008 个观测场景；统一合同冒烟验证 14/14 通过。本轮尚未训练六种待比较方法、未修改既有确认指标。当前实施里程碑已推进到 G3b.1 两个单流与朴素时间同步生产适配器。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、统一表示基础设施以及两个单流/朴素时间同步生产适配器均已完成；最新生产适配器冒烟验证 14/14 通过。本轮尚未运行公共自监督训练或下游任务指标、未修改既有确认指标。当前实施里程碑已推进到 G3b.2 MulT 与 ContiFormer 生产适配器。
 
 ## 当前执行入口
 
@@ -19,6 +19,7 @@
 - G2a 原始点冻结：[artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md](artifacts/runs/2026-07-10_dingxin-input-snapshot/report.md)
 - G2b 仿真基准审计：[artifacts/runs/2026-07-10_aviation-simulation-audit/report.md](artifacts/runs/2026-07-10_aviation-simulation-audit/report.md)
 - G3a 统一表示合同冒烟验证：[artifacts/runs/2026-07-11_representation-contract-smoke/report.md](artifacts/runs/2026-07-11_representation-contract-smoke/report.md)
+- G3b.1 浅层基线生产适配器冒烟验证：[artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke/report.md](artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke/report.md)
 
 ## 已锁定事实
 
@@ -70,23 +71,31 @@
 - 检查点注册表、严格融合表示序列化、留出折导出、样本/查询顺序哈希和缺失输出恢复均已实现。
 - 六个方法接口使用合同探针完成 6/6 导出与 6/6 恢复复用；该结果只证明接口贯通，不是六种模型效果。
 - G3a 紧凑证据约 144 KB；约 276 KB 的探针检查点和稠密表示保留在被忽略目录。
+- 新增按字段逐项 forward-fill 的公共因果查询层；相同时间的重复观测按稳定顺序取最后一项，任何查询只读取当前及历史观测。
+- 生理单流和航电单流复用同一个 `ContinuousTimeSingleStreamEncoder`，主干为开启因果注意力的连续时间编码器；两者只在输入投影维数上不同。
+- 朴素时间同步无可训练参数，使用训练折中位数/四分位距归一化和无监督主成分投影，不跨越未来观测。
+- 仿真三划分与鼎新三个不同视图共完成 6 个生产适配器导出；查询轴均为 96 点、输出均为 64 维，14/14 验收通过。
+- 对未来观测增加大幅扰动，当前及历史查询输出最大变化为 0；对非激活模态增加扰动，两个单流输出最大变化也为 0。
+- 仿真单流参数量为 110,208/111,168；鼎新单流为 111,168/292,224；朴素同步参数量为 0。该审计不代表任务性能排名。
+- G3b.1 紧凑证据约 68 KB；约 4.3 MB 检查点和稠密表示位于被忽略目录。
 
 ## 当前未完成
 
 - 尚未打通任务无关 Chronaris 连续融合编码器。
-- 尚未以生产编码器替换六个合同探针；两个单流、朴素同步、MulT 与 ContiFormer 仍待接入统一导出器。
+- MulT 与 ContiFormer 尚未从历史任务 wrapper 中分离为任务头前的生产适配器。
+- 六方法尚未完成公共自监督训练；现有三个浅层基线只完成随机初始化/无监督变换的工程冒烟验证。
 - 尚未实现应用下游算法与正式 benchmark。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
 ## 下一验收门
 
-G3b.1 必须在深度基线训练前完成：
+G3b.2 必须在 Chronaris 连续主干改造前完成：
 
-1. 两个单流适配器必须复用同一个连续时间编码器类，只切换激活模态。
-2. 朴素时间同步只使用当前及历史观测，训练折归一化和降维不得读取留出样本。
-3. 三个生产适配器输出统一 64 维表示，不再使用合同探针生成主表示。
-4. 修改未来观测不得改变更早查询点；整段单模态缺失必须显式保留无效掩码。
-5. 生成参数量、输入字段、拟合样本和恢复状态清单，并完成仿真与鼎新冒烟验证。
+1. MulT 与 ContiFormer 必须导出任务头之前的 96 点时序状态并投影到 64 维。
+2. 两个适配器都先经过公共因果查询层；跨模态注意力和连续时间自注意力不得重新引入未来信息。
+3. 旧回归任务 checkpoint 不作为主表示初始化，适配器 checkpoint 明确记录 `label_used_for_encoder_training=false`。
+4. 两个深度基线复用训练折归一化、共享增强 realization 和相同隐藏维/层数/训练预算合同。
+5. 仿真与鼎新分别完成留出折导出、未来扰动审计、双流敏感性审计和恢复复核。
 
 ## 本轮验证
 
@@ -97,7 +106,9 @@ G3b.1 必须在深度基线训练前完成：
 - G2b simulation/audit focused tests：`11 passed`；smoke 13/13、formal 19/19 验收通过。
 - G3a representation focused tests：`20 passed`；G1–G3a 联合聚焦测试 `41 passed`。
 - G3a 统一合同 smoke：鼎新/仿真输入、六方法接口、留出折来源和恢复共 `14/14` 通过。
-- 完整测试：`254 passed, 8 skipped, 317 warnings`。
+- G3b.1 因果查询与浅层适配器测试：`11 passed`；联合表示/适配器聚焦测试 `31 passed`。
+- G3b.1 生产适配器 smoke：仿真/鼎新 6 个导出、恢复 6/6 复用、`14/14` 验收通过。
+- 完整测试：`265 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 

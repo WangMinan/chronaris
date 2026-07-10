@@ -50,6 +50,7 @@ class EncoderLayer(nn.Module):
         *,
         num_heads: int = 4,
         dropout: float = 0.1,
+        causal: bool = False,
     ) -> None:
         super().__init__()
         self.time_encoding = ContinuousTimeEncoding(model_dim)
@@ -62,6 +63,7 @@ class EncoderLayer(nn.Module):
         self.norm1 = nn.LayerNorm(model_dim)
         self.norm2 = nn.LayerNorm(model_dim)
         self.dropout = nn.Dropout(dropout)
+        self.causal = bool(causal)
         self.ffn = nn.Sequential(
             nn.Linear(model_dim, model_dim * 4),
             nn.GELU(),
@@ -82,6 +84,18 @@ class EncoderLayer(nn.Module):
             normed,
             normed,
             normed,
+            attn_mask=(
+                torch.triu(
+                    torch.ones(
+                        (values.shape[1], values.shape[1]),
+                        dtype=torch.bool,
+                        device=values.device,
+                    ),
+                    diagonal=1,
+                )
+                if self.causal
+                else None
+            ),
             key_padding_mask=key_padding_mask,
             need_weights=True,
             average_attn_weights=False,
@@ -99,6 +113,7 @@ class _EncoderConfig:
     num_heads: int
     depth: int
     dropout: float
+    causal: bool
 
 
 class ContiFormerEncoder(nn.Module):
@@ -112,6 +127,7 @@ class ContiFormerEncoder(nn.Module):
         num_heads: int = 4,
         depth: int = 2,
         dropout: float = 0.1,
+        causal: bool = False,
     ) -> None:
         super().__init__()
         self.config = _EncoderConfig(
@@ -120,10 +136,16 @@ class ContiFormerEncoder(nn.Module):
             num_heads=num_heads,
             depth=depth,
             dropout=dropout,
+            causal=causal,
         )
         self.input_proj = nn.Linear(input_dim, model_dim)
         self.layers = nn.ModuleList(
-            EncoderLayer(model_dim, num_heads=num_heads, dropout=dropout)
+            EncoderLayer(
+                model_dim,
+                num_heads=num_heads,
+                dropout=dropout,
+                causal=causal,
+            )
             for _ in range(depth)
         )
         self.output_norm = nn.LayerNorm(model_dim)

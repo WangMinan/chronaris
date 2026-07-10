@@ -1,0 +1,2 @@
+2026-07-11 01:01:15,428 INFO chronaris.pipelines.task_eval.shallow_adapter_smoke: shallow_adapter_smoke observer start run_id=2026-07-11_shallow-baseline-adapter-smoke run_root=docs/artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke
+2026-07-11 01:01:42,099 INFO chronaris.pipelines.task_eval.shallow_adapter_smoke: shallow_adapter_smoke observer start run_id=2026-07-11_shallow-baseline-adapter-smoke run_root=docs/artifacts/runs/2026-07-11_shallow-baseline-adapter-smoke

@@ -25,6 +25,11 @@ from chronaris.evaluation.application_tasks.representation_contract_smoke import
     RepresentationContractSmokeResult,
     run_representation_contract_smoke,
 )
+from chronaris.evaluation.application_tasks.shallow_adapter_smoke import (
+    ShallowAdapterSmokeConfig,
+    ShallowAdapterSmokeResult,
+    run_shallow_adapter_smoke,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
@@ -36,10 +41,13 @@ __all__ = [
     "SimulationAuditResult",
     "RepresentationContractSmokeConfig",
     "RepresentationContractSmokeResult",
+    "ShallowAdapterSmokeConfig",
+    "ShallowAdapterSmokeResult",
     "audit_existing_simulation",
     "DEFAULT_SNAPSHOT_RUN_ID",
     "run_fixed_data_audit",
     "run_fixed_data_snapshot",
     "run_simulation_audit",
     "run_representation_contract_smoke",
+    "run_shallow_adapter_smoke",
 ]
