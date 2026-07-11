@@ -1,0 +1,508 @@
+{
+  "format": "chronaris.application_context_representations.v1",
+  "initial_exports": [
+    {
+      "method_name": "physiology_only",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "c27f9991a632e2de7763d8633745436866504596d73f311c2aa010aafacf0d56",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/train"
+    },
+    {
+      "method_name": "physiology_only",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "72819afad29f84b191eb62a0836055e72172929f0d0ce5218aea66a88b0d3302",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/validation"
+    },
+    {
+      "method_name": "physiology_only",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "19831ecde65e100191437756d08d84377270aa1982a7e8e15326aaad3e16cce2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/held_out"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "af7786aa53c637d8b214b6d89f4695a77ac335f333721488d6a4a93ea1e3cf59",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/train"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "db617c391a0f5b94f2f4a0817d5b913ea6854c81800526fd2e1d876d905d73cc",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/validation"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "a7cd01721439e0661994f8db8de2c4b66b41cd92b35bc0abe02c0abf6d5c15d4",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/held_out"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "9bf4830f0dc3d568cd3c89aec04c5bd02b5aa7b04ca5a83b45341373dc41234e",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/train"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "f97de43996a75a5a360c25c9610fdace4332417bd7014a5755d4055f2ea364cb",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/validation"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "d377e6e0de5646461ceb64c998a999e35f732c6d9eadccd90f59177fcacd5377",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/held_out"
+    },
+    {
+      "method_name": "mult",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "096ea26f8893118e6f21f6cfe5d2f5ebceba8d30c8cc7f6d3c52b79accbe9e3f",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/train"
+    },
+    {
+      "method_name": "mult",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "730994f51000b7d29642350410f2308d28fb1d2bd8dca1366bcdd56cd1483bb2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/validation"
+    },
+    {
+      "method_name": "mult",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "c53a42b6560f8e4c9f65f6f338b947fb22ca47ec4dbf554ff006628f35e84790",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/held_out"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "5b69b7fc960281f5917140179c53cde873b68e750d1a30690a88bf06748df5d2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/train"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "d4cc69392b3ab301a1bc0b3d5bb6e77d8ed65e91584c477dafc0c6bc03f80ad8",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/validation"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "83fe82ade5a11f26c5c13f9c72ff1a3b7cad1b1e4025949c0e15cfe8ff78fb55",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/held_out"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "01880d31a5f7f15ad4e9319b1a877607d81527658a6fdd86a5dae3df460b818e",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/train"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "332c4aee664dbc6c4f9bdffaa0f7214fb347dc9ecce590d6b6c2bdd7e62494fa",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/validation"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/held_out"
+    }
+  ],
+  "single_item_recovery_exports": [
+    {
+      "method_name": "physiology_only",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "c27f9991a632e2de7763d8633745436866504596d73f311c2aa010aafacf0d56",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/train"
+    },
+    {
+      "method_name": "physiology_only",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "72819afad29f84b191eb62a0836055e72172929f0d0ce5218aea66a88b0d3302",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/validation"
+    },
+    {
+      "method_name": "physiology_only",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "19831ecde65e100191437756d08d84377270aa1982a7e8e15326aaad3e16cce2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/held_out"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "af7786aa53c637d8b214b6d89f4695a77ac335f333721488d6a4a93ea1e3cf59",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/train"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "db617c391a0f5b94f2f4a0817d5b913ea6854c81800526fd2e1d876d905d73cc",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/validation"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "a7cd01721439e0661994f8db8de2c4b66b41cd92b35bc0abe02c0abf6d5c15d4",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/held_out"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "9bf4830f0dc3d568cd3c89aec04c5bd02b5aa7b04ca5a83b45341373dc41234e",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/train"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "f97de43996a75a5a360c25c9610fdace4332417bd7014a5755d4055f2ea364cb",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/validation"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "d377e6e0de5646461ceb64c998a999e35f732c6d9eadccd90f59177fcacd5377",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/held_out"
+    },
+    {
+      "method_name": "mult",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "096ea26f8893118e6f21f6cfe5d2f5ebceba8d30c8cc7f6d3c52b79accbe9e3f",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/train"
+    },
+    {
+      "method_name": "mult",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "730994f51000b7d29642350410f2308d28fb1d2bd8dca1366bcdd56cd1483bb2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/validation"
+    },
+    {
+      "method_name": "mult",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "c53a42b6560f8e4c9f65f6f338b947fb22ca47ec4dbf554ff006628f35e84790",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/held_out"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "5b69b7fc960281f5917140179c53cde873b68e750d1a30690a88bf06748df5d2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/train"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "d4cc69392b3ab301a1bc0b3d5bb6e77d8ed65e91584c477dafc0c6bc03f80ad8",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/validation"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "83fe82ade5a11f26c5c13f9c72ff1a3b7cad1b1e4025949c0e15cfe8ff78fb55",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/held_out"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "01880d31a5f7f15ad4e9319b1a877607d81527658a6fdd86a5dae3df460b818e",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/train"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "332c4aee664dbc6c4f9bdffaa0f7214fb347dc9ecce590d6b6c2bdd7e62494fa",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/validation"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "held_out",
+      "status": "completed",
+      "sample_count": 16,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/held_out"
+    }
+  ],
+  "resume_exports": [
+    {
+      "method_name": "physiology_only",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "c27f9991a632e2de7763d8633745436866504596d73f311c2aa010aafacf0d56",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/train"
+    },
+    {
+      "method_name": "physiology_only",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "72819afad29f84b191eb62a0836055e72172929f0d0ce5218aea66a88b0d3302",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/validation"
+    },
+    {
+      "method_name": "physiology_only",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "81c4ebb36142b2279838d0c9d10a2841f0037b0329a8d547e931561c23bb8bc6",
+      "representation_sha256": "19831ecde65e100191437756d08d84377270aa1982a7e8e15326aaad3e16cce2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/physiology_only/held_out"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "af7786aa53c637d8b214b6d89f4695a77ac335f333721488d6a4a93ea1e3cf59",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/train"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "db617c391a0f5b94f2f4a0817d5b913ea6854c81800526fd2e1d876d905d73cc",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/validation"
+    },
+    {
+      "method_name": "vehicle_only",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "8d9f098e799f97ef02a4e5b46627bbd6c65c05e4af1cdf7789aaf970467ad7c8",
+      "representation_sha256": "a7cd01721439e0661994f8db8de2c4b66b41cd92b35bc0abe02c0abf6d5c15d4",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/vehicle_only/held_out"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "9bf4830f0dc3d568cd3c89aec04c5bd02b5aa7b04ca5a83b45341373dc41234e",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/train"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "f97de43996a75a5a360c25c9610fdace4332417bd7014a5755d4055f2ea364cb",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/validation"
+    },
+    {
+      "method_name": "naive_time_sync",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "0a20c5baa68b35e2af8ce0586fabbabe74f79213b0ff0d0c3dc9233254e8fb59",
+      "representation_sha256": "d377e6e0de5646461ceb64c998a999e35f732c6d9eadccd90f59177fcacd5377",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/naive_time_sync/held_out"
+    },
+    {
+      "method_name": "mult",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "096ea26f8893118e6f21f6cfe5d2f5ebceba8d30c8cc7f6d3c52b79accbe9e3f",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/train"
+    },
+    {
+      "method_name": "mult",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "730994f51000b7d29642350410f2308d28fb1d2bd8dca1366bcdd56cd1483bb2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/validation"
+    },
+    {
+      "method_name": "mult",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "a5f20a14e1879693e3ff9b994f31464766acbb86afe111fda1ba9e1fcab589c8",
+      "representation_sha256": "c53a42b6560f8e4c9f65f6f338b947fb22ca47ec4dbf554ff006628f35e84790",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/mult/held_out"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "5b69b7fc960281f5917140179c53cde873b68e750d1a30690a88bf06748df5d2",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/train"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "d4cc69392b3ab301a1bc0b3d5bb6e77d8ed65e91584c477dafc0c6bc03f80ad8",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/validation"
+    },
+    {
+      "method_name": "contiformer",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "cb51a58a6b44086b5229cd8c1be8f427dfed8be25e56ae015ab343f6b4e99fad",
+      "representation_sha256": "83fe82ade5a11f26c5c13f9c72ff1a3b7cad1b1e4025949c0e15cfe8ff78fb55",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/contiformer/held_out"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "train",
+      "status": "resumed",
+      "sample_count": 32,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "01880d31a5f7f15ad4e9319b1a877607d81527658a6fdd86a5dae3df460b818e",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/train"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "validation",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "332c4aee664dbc6c4f9bdffaa0f7214fb347dc9ecce590d6b6c2bdd7e62494fa",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/validation"
+    },
+    {
+      "method_name": "chronaris",
+      "role": "held_out",
+      "status": "resumed",
+      "sample_count": 16,
+      "checkpoint_sha256": "b5b1865927d213c8a85f2244fb6f310d3abbff38a742d7058664c95db1e3c837",
+      "representation_sha256": "4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c",
+      "output_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/representations/chronaris/held_out"
+    }
+  ],
+  "alignment_sha256": {
+    "train": "7cea28f66d2e9db0fdd6f4569a11a3cc2ea8caec930d99ba0aea67dac12c2180",
+    "validation": "4580c1a9c8602cfdd7bd839703b63a0ff663298492bbe918d7622f1f0be60a32",
+    "held_out": "f8d2e69e77e9bf9819c070a7e46059ef0c3e7044e8f96976615474816312ded8"
+  },
+  "single_item_recovery": {
+    "method_name": "chronaris",
+    "role": "held_out",
+    "original_sha256": "4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c",
+    "rebuilt_sha256": "4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c",
+    "hash_match": true,
+    "rebuild_status": "completed"
+  }
+}

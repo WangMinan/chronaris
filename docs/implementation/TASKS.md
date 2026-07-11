@@ -8,17 +8,21 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G4 应用型下游 consumer 与正式任务指标
+## 当前里程碑：G4.2 鼎新弱监督目标与真实外层折接入
 
-G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下完成训练，并由固定线性算法消费。G4 不再调整表示接口，而是把真实弱监督任务和仿真真值任务固化为独立 target archive，实现 MiniRocket、TCN 与持续时间约束 Viterbi，并统一所有任务指标、fusion gain 和配对统计。
+G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成线性、MiniROCKET、因果 TCN、持续时间解码、统一指标、融合增益和轨迹级配对接口。G4.2 继续完成鼎新机动强度弱监督分类与机动诱发生理响应回归的独立目标 archive、原始点上下文和真实外层折；未完成前不进入候选 screen。
 
-### G1–G3b.4 已完成
+### G1–G4.1 已完成
 
 - 六方法生产表示、Chronaris 连续主干、五方法公共预训练和朴素时间同步训练折无监督变换均已可恢复。
 - 16 条仿真 train 轨迹的 8/4/4 smoke 完成 5 个训练 checkpoint、18 个折外表示和 72 条线性指标。
 - workload 真值只在五个 checkpoint 完成后打开；预训练路径不读取 oracle，仿真 validation/locked_test 路径零命中。
 - 删除一个 Chronaris 留出折表示后仅重建该项，重建 SHA-256 与原输出一致；闭环 20/20 验收通过。
-- 完整测试为 `301 passed, 8 skipped`；37 MB 重型产物留在被忽略目录。
+- G3b.4 完成时完整测试为 `301 passed, 8 skipped`；G4.1 完成后刷新为 `312 passed, 8 skipped`。
+- 16 条仿真训练轨迹各取四个跨状态上下文，形成 64 个样本和 32/16/16 profile 隔离；六方法应用上下文表示共 18 份，恢复 18/18 复用。
+- 线性、MiniROCKET 10,000 kernels、两层因果 TCN 与训练折持续时间解码共产生 384 条可计算指标、256 条融合增益和 30 条轨迹级配对统计。
+- MiniROCKET 训练折方差过滤、TCN 随机流隔离和组件级恢复均已固化；删除 Chronaris 表示、MiniROCKET、TCN 后只重建目标组件，12/12 验收通过。
+- G4.1 紧凑证据位于 `2026-07-11_application-consumer-smoke`，约 15 MB 模型、表示和预测留在被忽略目录；所有指标均为 smoke only。
 
 ### 当前输入与不可变边界
 
@@ -26,9 +30,10 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 - 鼎新 target 来源固定为 G1 审计中的训练折阈值、字段角色和 30 秒上下文；标签源航电字段仍禁止进入机动分类输入。
 - 仿真 target 只允许读取 `ground_truth.npz` 中预先列入任务合同的 `true_time_s`、`workload`、`maneuver_state`、`maneuver_type` 和事件边界；物理残差、生成参数和真实时延不进入应用任务 consumer。
 - consumer 只拟合 representation train role；validation 用于固定网格选择，held-out 每个锁定配置只评价一次。
-- G4 smoke 沿用 `2026-07-11_common-pretraining-loop-smoke` 的 18 份表示，不产生模型排名；正式 screen 才重训完整 G1 配置。
+- G4.1 复用 `2026-07-11_common-pretraining-loop-smoke` 的六个 checkpoint，但为 64 个跨状态上下文重新导出 18 份表示；没有读取仿真 validation 或 locked_test，也不产生模型排名。
+- G4.2 必须使用鼎新 snapshot 原始点重新构造外层折输入，不能把仿真输入维数的 checkpoint 直接套到鼎新，也不能回用可能含标签源信息的历史对齐投影。
 
-### 子任务 G4-a：独立 target archive
+### 子任务 G4.2-a：鼎新独立 target archive（当前）
 
 #### 鼎新机动强度弱监督分类
 
@@ -44,14 +49,14 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 3. 输入窗口截至 context end，目标区间为其后 0–5 秒；未来生理点绝不进入表示或归一化器。
 4. 目标无有效生理字段时按样本 unavailable，不以零变化替代。
 
-#### 仿真负荷与机动状态
+#### 仿真负荷与机动状态（G4.1 已完成）
 
 1. 负荷提前评估：使用输入结束后 0–5 秒 workload 均值，训练折三分位形成三类，并保留连续回归值。
 2. 机动状态分段：把 oracle `maneuver_state` 重采样到 96 点查询轴，固定状态为稳态、进入、持续、退出/恢复；同一重采样规则供六方法共享。
 3. 边界真值由状态变化点独立生成，记录原始秒数和查询点索引；consumer 不读取 event duration 或 test transition 统计。
 4. target archive 与表示目录分离，写入允许字段列表；任一未声明 oracle 字段访问由测试拦截。
 
-### 子任务 G4-b：统一线性与 MiniRocket consumer
+### 子任务 G4.1-b：统一线性与 MiniRocket consumer（已完成）
 
 1. 保留已完成的 Logistic/Ridge 线性探针，提取为正式 `FrozenRepresentationConsumer` 接口。
 2. MiniRocket 输入统一转为 `[N,64,96]`，固定 `aeon==1.5.0`、10,000 kernels、seed 17；变换器只在 representation train role 拟合。
@@ -59,7 +64,7 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 4. 内层 validation 选择超参数后冻结；同一任务六方法共享被选中的 consumer 配置，不能让每种表示选择不同容量。
 5. 记录 transform hash、fit sample hash、kernel 数、训练秒数、峰值内存和输出维数；恢复时逐项校验。
 
-### 子任务 G4-c：TCN emission 与持续时间约束 Viterbi
+### 子任务 G4.1-c：TCN emission 与持续时间约束 Viterbi（已完成）
 
 1. TCN 固定两层、64 channels、kernel size 3、dilation 1/2、dropout 0.1，使用严格因果左 padding；输出每个查询点的状态 emission logits。
 2. 训练 loss 使用有效查询 mask 的 class-balanced cross entropy；类别权重只由训练 role 统计。
@@ -67,7 +72,7 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 4. 自研 duration-constrained Viterbi 不依赖 `hmmlearn`；validation/held-out 标签不能参与 transition、duration 或后处理阈值拟合。
 5. 同时保留 raw TCN 与 TCN+Viterbi 两组结果，以区分表示/发射模型能力和时序先验增益。
 
-### 子任务 G4-d：任务指标与方向合同
+### 子任务 G4.1-d：任务指标与方向合同（已完成）
 
 | 任务 | 主指标 | 辅助指标 | 指标方向 |
 | --- | --- | --- | --- |
@@ -83,7 +88,7 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 3. 校准输出 Brier score 与 ECE 10 bins；小样本空 bin 跳过但记录有效 bin 数。
 4. regression/分类/分段 unavailable 分开记录，不能用另一个任务指标补位。
 
-### 子任务 G4-e：双流增益、压力斜率和配对统计
+### 子任务 G4.1-e：双流增益、压力斜率和配对统计（接口已完成）
 
 1. 对每个 fusion 方法计算 `Score_fusion - max(Score_physiology, Score_vehicle)`；误差型指标先转换方向后再计算。
 2. 六方法必须使用相同 held-out trajectory/context 配对；缺任一样本时整组配对统计 unavailable。
@@ -91,14 +96,14 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 4. 实现 trajectory-level paired bootstrap 和 exact/permutation test；smoke 只验证接口，正式 locked confirmation 才报告区间和 p 值。
 5. stress slope 只接收锁定 checkpoint 的成对场景结果；G4 consumer 开发期不运行 G2 stress。
 
-### 子任务 G4-f：应用 consumer smoke
+### 子任务 G4.1-f：仿真应用 consumer smoke（已完成）
 
-新建 `docs/artifacts/runs/2026-07-11_application-consumer-smoke/`，沿用现有 16 条仿真 train 轨迹和 18 份冻结表示：
+已生成 `docs/artifacts/runs/2026-07-11_application-consumer-smoke/`，沿用 16 条仿真 train 轨迹的六个 checkpoint，并为四个时间位置重新导出 18 份冻结表示：
 
 1. 从 ground truth 生成 workload 分类/回归和 96 点机动状态 target archive，验证允许字段审计。
 2. 六方法运行线性、MiniRocket 分类/回归、TCN 和 TCN+Viterbi；小样本指标全部标记 `smoke_only=true`。
 3. 所有 consumer 使用同一 train/validation/held-out role，完成 fit hash、恢复和方法不变超参数审计。
-4. 删除一个 MiniRocket transform 和一个 TCN checkpoint 后各只重建对应项。
+4. 删除 Chronaris 留出表示、MiniROCKET transform 和 TCN checkpoint 后各只重建对应项；未删除组件哈希保持不变，预测哈希一致。
 5. 生成完整 `metric_long`、fusion gain、边界/分段指标和配对接口输出；不进入候选选择。
 
 ### 本里程碑预期产物
@@ -111,9 +116,9 @@ G3b.4 已证明六方法能够在同一增强、目标和折外表示合同下�
 - `acceptance_checks.csv`
 - `report.md`、`claim_boundary.md`、`progress.json`、`run.log`、`resume_command.txt` 和 `evidence_manifest.json`
 
-transform、consumer checkpoint、emission、逐样本预测与逐点状态序列写入被忽略的 `artifacts/application_evaluation/2026-07-11_application-consumer-smoke/`。
+transform、consumer checkpoint、emission、逐样本预测与逐点状态序列已写入被忽略的 `artifacts/application_evaluation/2026-07-11_application-consumer-smoke/`；紧凑 run 为 12/12 验收通过。
 
-### G4 验收
+### G4.1 验收（已通过）
 
 - 三类 target archive 的来源、时间边界、训练折阈值和允许 oracle 字段全部通过 fail-closed 测试。
 - MiniRocket 10,000 kernels、TCN 架构和 Viterbi 参数在六方法间完全一致，fit lineage 只含 train role。
@@ -121,6 +126,14 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - classification、regression、segmentation、校准、fusion gain 和配对统计接口均输出方向明确的结构化结果。
 - consumer checkpoint/transform 的完整恢复和单项删除重建通过，表示 checkpoint hash 保持不变。
 - 完整测试、`compileall`、`git diff --check`、术语、密钥、LFS 和重型产物忽略检查通过。
+
+### G4.2 当前实现顺序
+
+1. 生成鼎新机动分类与生理响应两个独立目标 archive，逐样本记录 G1 阈值、字段、生理基线、snapshot 与外层折 hash。
+2. 从固定 snapshot 构造与目标 context 一一对应的 30 秒原始异步双流；分别审计标签源字段排除和未来生理区间隔离。
+3. 固化 leave-one-view-out 主协议、leave-one-sortie-out 辅助协议及结构化 unavailable；不因类别不足移动测试阈值或合并类别。
+4. 接入六方法表示与固定线性/MiniROCKET consumer 的真实数据 smoke；真实与仿真 metric root 分离。
+5. G4.2 通过后再建立完整 G1 开发训练配置和 seed 17 四候选 screen。
 
 ## 已锁定规范
 
@@ -202,13 +215,11 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 ## 当前验证门
 
-当前 G4 实现提交前必须通过：
+当前 G4.2 提交前必须通过：
 
-1. 鼎新分类/回归与仿真负荷/分段 target archive 的时间边界、训练折阈值、样本覆盖和允许字段测试。
-2. MiniRocket shape/seed/kernel/fit-role、TCN 因果 padding 和 Viterbi train-only transition/duration 测试。
-3. classification、regression、calibration、frame/segment/boundary/edit/delay 指标的方向与边界 fixture 测试。
-4. 六方法 consumer 超参数、训练样本、target hash 和表示 checkpoint hash 完全一致审计。
-5. fusion gain 对高低方向指标转换正确，trajectory/view 级配对统计不把查询点当独立样本。
-6. 线性、MiniRocket、raw TCN、TCN+Viterbi 在同一仿真 smoke 折完成，所有结果标记 smoke only。
-7. consumer transform/checkpoint 完整恢复和单项删除重建通过，不触碰既有表示 checkpoint。
-8. G1–G3b.4 聚焦测试保持通过，并运行完整 `pytest`、`compileall`、`git diff --check`、术语、密钥、LFS 和重型产物忽略检查。
+1. 两项鼎新 target archive 的时间边界、训练折阈值、样本覆盖、字段 lineage 和 unavailable 测试通过。
+2. 机动标签源字段及其派生副本在输入中零命中，未来生理点在表示和归一化拟合中零命中。
+3. leave-one-view-out 与 leave-one-sortie-out 的 train/validation/held-out group 无交集，所有阈值只用 train group。
+4. target、原始点 context 与表示 sample ID 一一对应；漏样本、重复样本、跨折 checkpoint 直接失败。
+5. 至少一个真实外层折完成六方法表示和固定 consumer smoke，所有鼎新结果继续标记弱监督并与仿真指标分层。
+6. G1–G4.1 聚焦测试保持通过，并运行完整 `pytest`、`compileall`、`git diff --check`、术语、密钥、LFS 和重型产物忽略检查。

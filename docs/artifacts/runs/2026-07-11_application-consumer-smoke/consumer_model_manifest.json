@@ -1,0 +1,250 @@
+{
+  "format": "chronaris.application_consumer_model_set.v1",
+  "models": [
+    {
+      "format": "chronaris.application_consumer_models.v1",
+      "method_name": "physiology_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "protocol_sha256": "15b4518a7cbb5ec69247e6334f1bb2828c47067f6d4e33617e511c5bd7c4aa74",
+      "status": "completed",
+      "component_status_current_run": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "resumed"
+      },
+      "model_files": {
+        "linear": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/physiology_only/linear.joblib",
+          "sha256": "10a1fe871b262353fdcc7570a93d4355cbc6d8b203874c71509e1ef84dc6f62b"
+        },
+        "minirocket": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/physiology_only/minirocket.joblib",
+          "sha256": "9452609fbfdf6422fb8eca279701f8efcf88464cb57a28d72fd0fccbf28604dc"
+        },
+        "tcn": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/physiology_only/causal_tcn.pt",
+          "sha256": "2a0efdc32d5df164f907e2c9be9857554666fcccb916962bc595c3526252afe4"
+        }
+      },
+      "prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/physiology_only/predictions.npz",
+      "prediction_sha256": "903a81139df7bc43ba1cccc0a9cddeba017090c095a6a6ff228efa41035f7c4d",
+      "label_used_for_encoder_training": false,
+      "consumer_fit_role": "train",
+      "evaluation_roles": [
+        "validation",
+        "held_out"
+      ],
+      "minirocket_input_channel_count_before_filter": 64,
+      "minirocket_input_channel_count_after_train_filter": 64,
+      "minirocket_variance_filter_fit_role": "train"
+    },
+    {
+      "format": "chronaris.application_consumer_models.v1",
+      "method_name": "vehicle_only",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "protocol_sha256": "e54adee610a1349ddc662b6c90d873cef72aef478e837dc02b6b7491f5a6cabe",
+      "status": "completed",
+      "component_status_current_run": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "resumed"
+      },
+      "model_files": {
+        "linear": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/vehicle_only/linear.joblib",
+          "sha256": "b42fac76a900d4251b37708c8b00c8c6367b8396f0a6fd7b0e494b70c3c336f3"
+        },
+        "minirocket": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/vehicle_only/minirocket.joblib",
+          "sha256": "d86895a5bc809fb7599c780fe5a2d13af4df1ab398f8ade3a971cc8da99d92d6"
+        },
+        "tcn": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/vehicle_only/causal_tcn.pt",
+          "sha256": "3ee923f9411f6390e2fa9003871f35856c2529de26fe86fd15fd21e0d1de6419"
+        }
+      },
+      "prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/vehicle_only/predictions.npz",
+      "prediction_sha256": "e3604e436aa2d17b3aed0b48ce82790e521119049fdcc247aef3ea37ba994f0f",
+      "label_used_for_encoder_training": false,
+      "consumer_fit_role": "train",
+      "evaluation_roles": [
+        "validation",
+        "held_out"
+      ],
+      "minirocket_input_channel_count_before_filter": 64,
+      "minirocket_input_channel_count_after_train_filter": 64,
+      "minirocket_variance_filter_fit_role": "train"
+    },
+    {
+      "format": "chronaris.application_consumer_models.v1",
+      "method_name": "naive_time_sync",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "protocol_sha256": "05b96321909ac5e78c87efbc7f7ddfbdfe7dd24187de190c4e41d54f9b24985b",
+      "status": "completed",
+      "component_status_current_run": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "resumed"
+      },
+      "model_files": {
+        "linear": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/naive_time_sync/linear.joblib",
+          "sha256": "eb8015a3f5f5f09005f8094e1bbaf59ea6b0cca64ed071cf923160e5dc9c120f"
+        },
+        "minirocket": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/naive_time_sync/minirocket.joblib",
+          "sha256": "940bbb877efe28147a2c9a5d2da5d78dc33ff0046a280821b3f83b9ebdf6a1b6"
+        },
+        "tcn": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/naive_time_sync/causal_tcn.pt",
+          "sha256": "88b54294bfda67c6d9814c29b000fc47f282e7f5cc0dbf1fa75549f70ce04860"
+        }
+      },
+      "prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/naive_time_sync/predictions.npz",
+      "prediction_sha256": "9432ca483c8676aa9d490895d94ff204c5fa17065835659df6688d141564d6d6",
+      "label_used_for_encoder_training": false,
+      "consumer_fit_role": "train",
+      "evaluation_roles": [
+        "validation",
+        "held_out"
+      ],
+      "minirocket_input_channel_count_before_filter": 64,
+      "minirocket_input_channel_count_after_train_filter": 23,
+      "minirocket_variance_filter_fit_role": "train"
+    },
+    {
+      "format": "chronaris.application_consumer_models.v1",
+      "method_name": "mult",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "protocol_sha256": "6afc2a3c17e04eba5acf49268b7d60c1f581ee0a6d1f1275ea895548ecd38073",
+      "status": "completed",
+      "component_status_current_run": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "resumed"
+      },
+      "model_files": {
+        "linear": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/mult/linear.joblib",
+          "sha256": "03f4b420e8443bed93ecee346b9b49906bc62c5266ea68883e651fe27adf1a15"
+        },
+        "minirocket": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/mult/minirocket.joblib",
+          "sha256": "b32291024cfe42507a4d8c5b415cbbe370c7faba95067753de962e1554c31a63"
+        },
+        "tcn": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/mult/causal_tcn.pt",
+          "sha256": "cf1cfc4bafb16d96ff960953f4876d05e1b87d5bce96eff3279a4129fb418cdc"
+        }
+      },
+      "prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/mult/predictions.npz",
+      "prediction_sha256": "99d5ff39c2db370d4688b2d49ccb9bbad36bd89ddadca85a10634d116b1bf2fb",
+      "label_used_for_encoder_training": false,
+      "consumer_fit_role": "train",
+      "evaluation_roles": [
+        "validation",
+        "held_out"
+      ],
+      "minirocket_input_channel_count_before_filter": 64,
+      "minirocket_input_channel_count_after_train_filter": 64,
+      "minirocket_variance_filter_fit_role": "train"
+    },
+    {
+      "format": "chronaris.application_consumer_models.v1",
+      "method_name": "contiformer",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "protocol_sha256": "a663d1fb422c40ac16eb51dc316696e4fa22edad6d928fe177da9b6aeddec41f",
+      "status": "completed",
+      "component_status_current_run": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "resumed"
+      },
+      "model_files": {
+        "linear": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/contiformer/linear.joblib",
+          "sha256": "bd953039767a2a191030a04fa8199a81e2963f7e0334aacd97b465b688e8daae"
+        },
+        "minirocket": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/contiformer/minirocket.joblib",
+          "sha256": "bea329dde797da885a170be4cad57cbe238d9c37e889b441ddcccbf07f8c683f"
+        },
+        "tcn": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/contiformer/causal_tcn.pt",
+          "sha256": "a7671d7513a219049c9338ba6e8f51aa544ff8242f0d3eb9d6a6e8ae4ddf4c0e"
+        }
+      },
+      "prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/contiformer/predictions.npz",
+      "prediction_sha256": "9fb6d093696804d469fb3f9089ced4a6ce414a63447d1d5499a0713fa2e20de4",
+      "label_used_for_encoder_training": false,
+      "consumer_fit_role": "train",
+      "evaluation_roles": [
+        "validation",
+        "held_out"
+      ],
+      "minirocket_input_channel_count_before_filter": 64,
+      "minirocket_input_channel_count_after_train_filter": 64,
+      "minirocket_variance_filter_fit_role": "train"
+    },
+    {
+      "format": "chronaris.application_consumer_models.v1",
+      "method_name": "chronaris",
+      "fold_id": "simulation_g1_common_pretraining_smoke",
+      "protocol_sha256": "3d92a986207c06d8745b126bdf56f52561c4ed503792c9295def01204e6714f1",
+      "status": "completed",
+      "component_status_current_run": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "resumed"
+      },
+      "model_files": {
+        "linear": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/chronaris/linear.joblib",
+          "sha256": "6db473cda1a8b69a10151a09e23b37dbd13d2a763e5900e8b7a9ac7ebcd50bf8"
+        },
+        "minirocket": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/chronaris/minirocket.joblib",
+          "sha256": "6c481d8bd6da56d09ffd5c59443009bd33c8e0063a1551ad75432d0e25397942"
+        },
+        "tcn": {
+          "path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/chronaris/causal_tcn.pt",
+          "sha256": "90235bf62e928c5eb085847b04da580eba5388691c01ffbe0cb781e705e96aeb"
+        }
+      },
+      "prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/consumers/chronaris/predictions.npz",
+      "prediction_sha256": "146115c9089821f4e6db851e0a5c53a53a874fc5c7871757af20bcccbb8dbf6d",
+      "label_used_for_encoder_training": false,
+      "consumer_fit_role": "train",
+      "evaluation_roles": [
+        "validation",
+        "held_out"
+      ],
+      "minirocket_input_channel_count_before_filter": 64,
+      "minirocket_input_channel_count_after_train_filter": 64,
+      "minirocket_variance_filter_fit_role": "train"
+    }
+  ],
+  "prediction_single_item_recovery": {
+    "method_name": "chronaris",
+    "minirocket": {
+      "component_status": {
+        "linear": "resumed",
+        "minirocket": "completed",
+        "causal_tcn": "resumed"
+      },
+      "unrelated_linear_hash_unchanged": true,
+      "unrelated_tcn_hash_unchanged": true,
+      "prediction_hash_match": true
+    },
+    "tcn": {
+      "component_status": {
+        "linear": "resumed",
+        "minirocket": "resumed",
+        "causal_tcn": "completed"
+      },
+      "unrelated_linear_hash_unchanged": true,
+      "unrelated_minirocket_hash_unchanged": true,
+      "prediction_hash_match": true
+    }
+  }
+}

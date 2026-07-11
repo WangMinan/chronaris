@@ -1,0 +1,89 @@
+{
+  "encoder_training_invoked": false,
+  "target_oracle_opened": true,
+  "confirmed_metrics_changed": false,
+  "smoke_only": true,
+  "stage_name": "application_consumer_smoke",
+  "run_id": "2026-07-11_application-consumer-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T02:50:57.243862Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T02:48:53.863344Z",
+      "event": "start",
+      "encoder_training_invoked": false,
+      "target_oracle_opened": false,
+      "confirmed_metrics_changed": false,
+      "smoke_only": true
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:48:54.343532Z",
+      "event": "application_representations_complete",
+      "export_count": 18,
+      "target_oracle_opened": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:48:55.805638Z",
+      "event": "application_targets_opened_after_representation",
+      "target_count": 64,
+      "target_oracle_opened": true
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:49:03.827547Z",
+      "event": "method_consumers_complete",
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "metric_count": 64
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:49:13.655772Z",
+      "event": "method_consumers_complete",
+      "method_name": "vehicle_only",
+      "status": "resumed",
+      "metric_count": 64
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:49:21.124115Z",
+      "event": "method_consumers_complete",
+      "method_name": "naive_time_sync",
+      "status": "resumed",
+      "metric_count": 64
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:49:28.722292Z",
+      "event": "method_consumers_complete",
+      "method_name": "mult",
+      "status": "resumed",
+      "metric_count": 64
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:49:36.330966Z",
+      "event": "method_consumers_complete",
+      "method_name": "contiformer",
+      "status": "resumed",
+      "metric_count": 64
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:49:46.234867Z",
+      "event": "method_consumers_complete",
+      "method_name": "chronaris",
+      "status": "resumed",
+      "metric_count": 64
+    },
+    {
+      "timestamp_utc": "2026-07-11T02:50:57.243862Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 12,
+      "acceptance_check_count": 12,
+      "metric_count": 384
+    }
+  ],
+  "export_count": 18,
+  "target_count": 64,
+  "method_name": "chronaris",
+  "status": "completed",
+  "metric_count": 384,
+  "acceptance_pass_count": 12,
+  "acceptance_check_count": 12
+}

@@ -1,0 +1,13 @@
+check_name,passed,details
+application_context_grid_complete,True,"{'sample_count': 64, 'role_counts': {'train': 32, 'validation': 16, 'held_out': 16}}"
+pretraining_checkpoint_gate_complete,True,{'checkpoint_count': 6}
+oracle_opened_only_after_five_checkpoints,True,"{'checkpoint_count': 5, 'allowed_fields': ['true_time_s', 'workload', 'maneuver_state']}"
+six_method_representation_coverage,True,"{'export_count': 18, 'alignment': {'train': '7cea28f66d2e9db0fdd6f4569a11a3cc2ea8caec930d99ba0aea67dac12c2180', 'validation': '4580c1a9c8602cfdd7bd839703b63a0ff663298492bbe918d7622f1f0be60a32', 'held_out': 'f8d2e69e77e9bf9819c070a7e46059ef0c3e7044e8f96976615474816312ded8'}}"
+representation_single_item_recovery,True,"{'method_name': 'chronaris', 'role': 'held_out', 'original_sha256': '4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c', 'rebuilt_sha256': '4f9185509139d769fdecb99c14b057a7658470f9af667b70769fc29b4620a20c', 'hash_match': True, 'rebuild_status': 'completed'}"
+representation_resume_all_items,True,{'resumed_count': 18}
+three_consumers_cover_six_methods,True,"{'method_count': 6, 'resume_count': 6}"
+minirocket_train_only_variance_filter_recorded,True,"{'physiology_only': 64, 'vehicle_only': 64, 'naive_time_sync': 23, 'mult': 64, 'contiformer': 64, 'chronaris': 64}"
+consumer_metric_schema_complete,True,"{'metric_row_count': 384, 'available_count': 384}"
+trajectory_paired_interface_available,True,{'paired_row_count': 30}
+consumer_component_single_item_recovery,True,"{'method_name': 'chronaris', 'minirocket': {'component_status': {'linear': 'resumed', 'minirocket': 'completed', 'causal_tcn': 'resumed'}, 'unrelated_linear_hash_unchanged': True, 'unrelated_tcn_hash_unchanged': True, 'prediction_hash_match': True}, 'tcn': {'component_status': {'linear': 'resumed', 'minirocket': 'resumed', 'causal_tcn': 'completed'}, 'unrelated_linear_hash_unchanged': True, 'unrelated_minirocket_hash_unchanged': True, 'prediction_hash_match': True}}"
+pretraining_checkpoints_immutable,True,{'unchanged': True}

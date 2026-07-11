@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示和单折公共自监督训练—折外导出—线性下游闭环均已完成；最新闭环 smoke 20/20 通过。本轮仅生成明确标记的 smoke 指标，未修改既有确认指标或形成模型排名。当前实施里程碑已推进到 G4 应用型下游 consumer 与正式任务指标实现。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示、公共自监督训练和仿真应用型下游消费者闭环均已完成；最新消费者 smoke 12/12 通过。本轮仅生成明确标记的 smoke 指标，未修改既有确认指标或形成模型排名。当前实施里程碑为 G4.2 鼎新两项弱监督目标 archive 与真实外层折接入。
 
 ## 当前执行入口
 
@@ -23,6 +23,7 @@
 - G3b.2 深度基线生产适配器冒烟验证：[artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/report.md](artifacts/runs/2026-07-11_deep-baseline-adapter-smoke/report.md)
 - G3b.3 Chronaris 连续融合生产主干冒烟验证：[artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/report.md](artifacts/runs/2026-07-11_chronaris-continuous-adapter-smoke/report.md)
 - G3b.4 公共预训练与线性下游闭环冒烟验证：[artifacts/runs/2026-07-11_common-pretraining-loop-smoke/report.md](artifacts/runs/2026-07-11_common-pretraining-loop-smoke/report.md)
+- G4.1 应用型下游消费者闭环冒烟验证：[artifacts/runs/2026-07-11_application-consumer-smoke/report.md](artifacts/runs/2026-07-11_application-consumer-smoke/report.md)
 
 ## 已锁定事实
 
@@ -103,21 +104,29 @@
 - 自动删除 Chronaris 留出折表示后只重建该项，重建前后 SHA-256 一致，其余 17 项保持复用。
 - 仿真 workload 真值只有在五个 checkpoint 完成后才打开；固定 Logistic/Ridge 产生 72 条全部可计算的 smoke-only 指标，不进入 confirmed metrics 或模型选择。
 - G3b.4 紧凑证据约 180 KB；约 37 MB checkpoint、表示、target/prediction 只在被忽略目录。此前 35 MB 开发计时目录已由正式 run 取代并清理。
+- 从 16 条 G1 仿真训练轨迹各取 30/60/90/120 秒四个上下文，形成 64 个跨状态样本和 32/16/16 的 profile 隔离划分；未来 5 秒负荷与 96 点机动状态真值只在五个可训练 checkpoint 和 18 份表示完成后打开。
+- 六方法在相同样本、查询轴和 checkpoint 下重新导出 18 份应用上下文表示；删除 Chronaris 留出表示后只重建该项，SHA-256 保持一致，随后 18/18 恢复复用。
+- 固定线性探针、MiniROCKET 10,000 kernels、两层因果 TCN 与训练折持续时间解码均已实现；分类、回归、校准、frame/segment/boundary/edit/delay 指标共 384 条且全部可计算。
+- MiniROCKET 对窗口内恒定潜在维采用统一训练折方差过滤；六方法保留维数均写入模型清单，不读取验证或留出标签。
+- 输出 256 条方向归一融合增益和 30 条以 4 条留出轨迹为独立单位的配对统计接口；全部标记 smoke only，不用于模型排序。
+- 删除 Chronaris MiniROCKET 与 TCN 模型后分别只重建缺失组件，未删除模型哈希保持不变；TCN 初始化、dropout 与优化共用隔离 seed，重建预测哈希一致。
+- G4.1 紧凑证据约 404 KB；约 15 MB 表示、消费者模型和逐样本预测只在被忽略目录，12/12 验收通过。
 
 ## 当前未完成
 
-- 尚未实现应用下游算法与正式 benchmark。
+- 鼎新机动强度弱监督分类与机动诱发生理响应回归尚未生成独立逐样本 target archive，也尚未接入新的统一表示外层折。
+- 仿真应用消费者目前仍是 16 条轨迹上的接口 smoke，不是完整 G1 开发筛选结果。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
 ## 下一验收门
 
-G4 必须把统一表示接入正式应用任务，而不是只保留线性 smoke：
+G4.2 必须先把鼎新两项弱监督任务变成独立、可追溯的目标与外层折输入，再进入 screen：
 
-1. 固化鼎新机动强度弱监督分类、机动诱发生理响应回归和仿真负荷/机动分段的逐样本目标 archive；阈值和归一化只在训练折拟合。
-2. 实现 Logistic/Ridge、MiniRocket 10,000 kernels、两层 TCN 与训练折持续时间约束 Viterbi；所有方法共享 consumer 配置和搜索预算。
-3. 完整实现 frame/segment/boundary、事件预警、回归、校准、fusion gain 和 trajectory-level 配对统计。
-4. consumer 或标签构造不得反向修改冻结表示 checkpoint；仿真、鼎新与公开数据指标继续分层保存。
-5. 单折应用 consumer smoke 通过后才启动 seed 17 四候选 screen，期间禁止读取 G2 locked test。
+1. 从 G1 的 96 个机动分类上下文和 93 个未来生理响应上下文生成独立 target archive；训练折阈值、生理基线和字段有效性不得在 G4 重新使用全体样本拟合。
+2. 为 leave-one-view-out 主协议和 leave-one-sortie-out 辅助协议建立 context、target、输入字段排除和 unavailable 清单；每个目标必须反查 snapshot 与 G1 阈值 hash。
+3. 从固定原始点 snapshot 构造 30 秒双流输入；机动标签源字段及统计、差分、变化率、标准化副本继续全部排除，未来生理区间不进入表示。
+4. 用真实外层折完成至少一个六方法表示—固定 consumer smoke；鼎新指标与仿真指标分目录保存，不形成混合平均分。
+5. G4.2 验收通过后才启动 seed 17 四候选 screen，期间禁止读取 G2 locked test。
 
 ## 本轮验证
 
@@ -136,7 +145,8 @@ G4 必须把统一表示接入正式应用任务，而不是只保留线性 smok
 - G3b.3 生产主干 smoke：仿真/鼎新 2 个导出、恢复 2/2 复用、`21/21` 验收通过。
 - G3b.4 增强/目标/训练/下游聚焦测试：`20 passed`；训练、表示与融合编码器联合聚焦测试 `42 passed`。
 - G3b.4 六方法闭环 smoke：五个训练 checkpoint、18 个表示、72 个 smoke 指标，`20/20` 验收通过。
-- 完整测试：`301 passed, 8 skipped, 317 warnings`。
+- G4.1 consumer 聚焦测试：`10 passed`；六方法应用 consumer smoke 生成 18 个表示、384 条指标、256 条融合增益和 30 条配对统计，`12/12` 验收通过。
+- 完整测试：`312 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 
