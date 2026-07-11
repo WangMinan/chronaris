@@ -348,6 +348,16 @@ MiniRocket(n_kernels=10000, max_dilations_per_kernel=32,
 - 下游 head 与冻结探针相同容量。
 - 输出使用独立表示族，不能覆盖冻结表示结果。
 
+具体执行固定为：
+
+- 生理单流、航电单流、MulT、ContiFormer 与 Chronaris 更新完整编码器；朴素时间同步的因果同步与训练折 PCA 没有可学习参数，因此只更新相同容量任务头，并明确记为非参数控制。
+- 三个任务损失联合训练且权重均为 1：未来负荷三分类交叉熵、按训练集均值和标准差归一后的未来负荷均方误差、五类机动状态逐时刻交叉熵。分类权重只由 G1 train 估计。
+- 工作负荷分类/回归头均为 64 维表示上的单层线性头；机动状态头与冻结主表相同，使用两个 64-channel residual block、kernel 5、dilation 1/2 的因果 TCN。
+- epoch 只由 G1 validation 三项损失之和选择；G2 held-out 不参与梯度、早停、阈值或超参数选择。
+- seeds 17、29、43 均执行六方法；每个方法—seed 独立保存 `best.pt`、`last.pt`、训练历史、源任务无关 checkpoint 哈希和设备历史。
+- 微调后的 `[B,T,64]` 表示另存为 `end_to_end_finetuned_v1`，manifest 必须写 `label_used_for_encoder_training=true`；冻结主表仍使用 `frozen_task_agnostic_v1`。
+- 指标、融合增益与 48 条 G2 潜在轨迹配对统计单独成表，不得与冻结表示结果合并排序。
+
 ## 12. 融合增益
 
 每个任务和指标都计算：

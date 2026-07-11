@@ -11,10 +11,6 @@ def build_inner_split_acceptance_rows(
     overlap_count,
     deterministic_rebuild,
 ):
-    coverage = {
-        (row["fold_id"], row["task_slug"], row["role"]): row
-        for row in coverage_rows
-    }
     checks = [
         _check(
             "five_outer_folds_have_inner_validation",

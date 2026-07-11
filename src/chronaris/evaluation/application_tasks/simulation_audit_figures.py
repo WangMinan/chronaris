@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Mapping
 
 import matplotlib.font_manager as font_manager
 import matplotlib.pyplot as plt

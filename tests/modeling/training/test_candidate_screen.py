@@ -5,6 +5,10 @@ import hashlib
 import numpy as np
 import torch
 
+from chronaris.modeling.training.candidate_screen import (
+    _training_configs_match_ignoring_device,
+)
+
 from chronaris.modeling.training import (
     CandidateScreenConfig,
     EncoderCandidateConfig,
@@ -257,6 +261,17 @@ def test_candidate_screen_rejects_unknown_device() -> None:
 
     with pytest.raises(ValueError, match="device"):
         CandidateScreenConfig(device="tpu")
+
+
+def test_candidate_screen_allows_device_only_resume_migration() -> None:
+    stored = {"max_epochs": 50, "batch_size": 128, "device": "cuda"}
+    expected = {"max_epochs": 50, "batch_size": 128, "device": "cpu"}
+
+    assert _training_configs_match_ignoring_device(stored, expected)
+    assert not _training_configs_match_ignoring_device(
+        stored,
+        expected | {"batch_size": 64},
+    )
 
 
 def test_candidate_screen_schema_safe_transfer_records_partial_initialization(

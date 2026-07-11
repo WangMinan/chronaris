@@ -173,6 +173,15 @@ def run_simulation_locked_pretraining(
                         chronaris_device if method_name == "chronaris" else baseline_device
                     ),
                 )
+                checkpoint_payload = torch.load(
+                    result.best_checkpoint_path,
+                    map_location="cpu",
+                    weights_only=True,
+                )
+                device_history = checkpoint_payload.get(
+                    "training_device_history",
+                    [checkpoint_payload.get("config", {}).get("device", "cpu")],
+                )
                 result_rows.append(
                     {
                         "seed": seed,
@@ -187,9 +196,8 @@ def run_simulation_locked_pretraining(
                         "parameter_count": result.parameter_count,
                         "checkpoint_path": result.best_checkpoint_path,
                         "checkpoint_sha256": sha256_file(result.best_checkpoint_path),
-                        "training_device": (
-                            chronaris_device if method_name == "chronaris" else baseline_device
-                        ),
+                        "training_device": device_history[-1],
+                        "training_device_history": json.dumps(device_history),
                         "chronaris_auxiliary_enabled": auxiliary_enabled,
                         "reserved_confirmation_loss": confirmation[
                             "public_confirmation_loss"

@@ -6,7 +6,6 @@ import hashlib
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping, Sequence
 
 import pandas as pd
 
@@ -17,7 +16,6 @@ from chronaris.access.mysql_metadata import (
     MySQLStorageAnalysisReader,
 )
 from chronaris.dataset.application_evaluation import (
-    FieldRoleRecord,
     build_application_contexts,
     build_field_role_manifest,
     build_fold_task_labels,

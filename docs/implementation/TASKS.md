@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 8/8 协议验证，并保存第一训练单元至 epoch 37；当前先独占 RTX 4090 完成 G6 仿真 seeds 29/43，再串行恢复鼎新 75 单元队列。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
+G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 8/8 协议验证，并保存第一训练单元至 epoch 37；G6 仿真 seeds 29/43 在独占 CUDA 仍重复发生驱动故障后，已从原 checkpoint 只改变设备到 CPU 恢复，设备迁移进入 checkpoint 历史。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
 
 ### 本轮新增进度
 
@@ -25,6 +25,7 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通�
 - Chronaris 四项机制消融已接入锁定训练、checkpoint 回载、表示导出和相同下游 consumer；完整模型与消融按 48 条 G2 潜在轨迹配对。
 - synthetic-to-real 轨道已实现形状安全的部分参数迁移和无标签鼎新适配；单方法跨 schema 冒烟复制 97.93% 目标编码器元素并通过 8/8 门禁，正式轨道等待仿真三 seed checkpoint 完整。
 - 时间偏移/响应时延恢复已实现四方法专用表示与下游探针：G1 train 拟合、G1 validation 选择 Ridge 强度，G2 35 场景只评价；主统计单位固定为 48 条潜在轨迹。
+- 仿真端到端微调辅助链路已实现并通过定向测试：五个可训练方法更新完整编码器，朴素同步只更新相同容量任务头；三任务联合损失只由 train 拟合、validation 早停，G2 held-out 只评价，输出独立 `end_to_end_finetuned_v1` 表。
 
 ### G1–G4.1 已完成
 
@@ -206,15 +207,15 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 ### G6：locked confirmation
 
-- 进行中：seeds 17、29、43 的五个唯一配置重训；基线优先 GPU、Chronaris 使用同批基准更快设备。
-- 进行中：仿真 seed 17 五方法已完成，seeds 29/43 已从恢复点串行继续。
-- 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。为规避 WSL GPU 双进程 launch failure，待仿真 CUDA 队列完成后再独占 GPU 恢复。
+- 进行中：seeds 17、29、43 的五个唯一配置重训；仿真长基线在独占 GPU 重复失败后迁移到 CPU，Chronaris 仍使用同批基准更快的 CPU。
+- 进行中：仿真 seed 17 五方法已完成，seed 29 航电单流从 epoch 37 的恢复点继续，之后依次完成其余 seeds 29/43 单元。
+- 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。待仿真锁定训练收口后串行恢复，默认使用 CPU；只有短任务在 GPU 自检稳定且无并发时才重新尝试 CUDA。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
 - 进行中：Chronaris 四项固定消融 × seeds 17/29/43 已启动 CPU 锁定重训；不占用当前唯一 CUDA 正式队列。
 - 已验证：无物理约束变体完成 G1 train/validation 与 G2 held-out 三角色表示导出，3/3 输出、5/5 验收通过；正式消融表示等待 12 个变体 checkpoint。
 - 已实现待上游门禁：synthetic-to-real 三 seed 五折无标签适配及其统一表示/consumer 复用。
-- 待执行：端到端微调辅助表；不得替代冻结表示主结果。
+- 已实现待上游门禁：端到端微调辅助表；三 seed 六方法、独立表示族和 48 轨迹统计均已编排，不得替代冻结表示主结果。
 
 ### G7：stress 与论文证据包
 
@@ -257,7 +258,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ## 运行和产物规则
 
 - Python：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`。
-- RTX 4090 正式训练按单 CUDA 进程串行调度；CPU Chronaris 可并行，但不得再启动第二个 CUDA 训练进程。
+- RTX 4090 正式训练最多单 CUDA 进程；独占训练重复失败的长队列必须记录设备历史并迁移 CPU，不再无限同配置重试。短 TCN/微调可在张量自检通过后单独使用 GPU，重复失败则同样迁移。
 - 紧凑可引用产物：`docs/artifacts/runs/YYYY-MM-DD_intent/`。
 - raw snapshot、dense bundle、checkpoint 和逐样本预测：`artifacts/application_evaluation/`，禁止入仓。
 - 每个正式 run 必须有 progress、resume、protocol、fold metrics、claim boundary 和 evidence manifest。

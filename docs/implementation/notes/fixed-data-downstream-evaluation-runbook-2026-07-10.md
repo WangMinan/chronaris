@@ -79,7 +79,23 @@
 - best/last checkpoint 分开命名。
 - `--resume` 跳过 hash 已匹配的 completed fold。
 - 配置或输入 hash 改变时拒绝复用旧 fold。
-- 本机 WSL/RTX 4090 同时只运行一个正式 CUDA 训练进程；仿真与鼎新 GPU 队列串行，避免驱动级 `cudaErrorLaunchFailure`。Chronaris 已确认 CPU 更快，继续使用 CPU。
+- 本机 WSL/RTX 4090 同时只运行一个正式 CUDA 训练进程；仿真与鼎新 GPU 队列串行。若独占 CUDA 后仍再次出现驱动级 `cudaErrorLaunchFailure`，保留 checkpoint 并允许只改变设备到 CPU 后恢复；checkpoint 必须记录 `training_device_history`，其他训练配置不得改变。Chronaris 已确认 CPU 更快，继续使用 CPU。
+
+### 1.8 端到端微调辅助表
+
+- 必须等待仿真任务无关锁定训练、统一表示和冻结 consumer 三个 evidence manifest 均为 `completed` 后启动。
+- 五个可训练编码器从各自任务无关 `best.pt` 初始化；朴素时间同步只更新相同容量任务头。
+- train 负责拟合，validation 负责 epoch 早停，G2 held-out 只打开一次；结果写入 `end_to_end_finetuned_v1`，不得覆盖冻结表示目录。
+- GPU 稳定时仅基线微调走唯一 CUDA 队列，Chronaris 默认 CPU；出现重复驱动故障时按 1.7 的设备迁移规则恢复。
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_simulation_end_to_end_finetuning.py \
+  --run-id 2026-07-12_simulation-end-to-end-finetuning \
+  --seed 17 --seed 29 --seed 43 \
+  --learning-rate 1e-4 --max-epochs 20 --patience 5 --batch-size 128 \
+  --baseline-device cuda --chronaris-device cpu --resume
+```
 
 ## 2. 工作包 H：附录诊断与论文证据包
 

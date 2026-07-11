@@ -5,13 +5,11 @@ from __future__ import annotations
 import importlib.metadata
 import json
 import logging
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Mapping
 
 import numpy as np
-import torch
-
 from chronaris.evaluation.application_tasks.representation_contract_reporting import (
     write_representation_contract_outputs,
 )
