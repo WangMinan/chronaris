@@ -23,11 +23,18 @@ def build_dingxin_fold_pretraining_acceptance_rows(
     }
     fit_ids = set(normalizer.fit_sample_ids)
     non_train = set(fold.validation_sample_ids + fold.held_out_sample_ids)
+    expected_role_counts = {
+        "leave_one_view_out__fold01": {"train": 31, "validation": 31, "held_out": 31},
+        "leave_one_view_out__fold02": {"train": 31, "validation": 31, "held_out": 31},
+        "leave_one_view_out__fold03": {"train": 38, "validation": 14, "held_out": 31},
+        "leave_one_sortie_out__fold01": {"train": 19, "validation": 7, "held_out": 62},
+        "leave_one_sortie_out__fold02": {"train": 38, "validation": 14, "held_out": 31},
+    }.get(fold.fold_id)
     return [
-        _check("primary_fold_role_counts", role_counts == {"train": 31, "validation": 31, "held_out": 31}, role_counts, {"train": 31, "validation": 31, "held_out": 31}),
-        _check("normalizer_inner_train_only", fit_ids == set(fold.train_sample_ids) and not fit_ids & non_train, len(fit_ids), 31),
+        _check("fixed_fold_role_counts", expected_role_counts is not None and role_counts == expected_role_counts, role_counts, expected_role_counts),
+        _check("normalizer_inner_train_only", fit_ids == set(fold.train_sample_ids) and not fit_ids & non_train, len(fit_ids), len(fold.train_sample_ids)),
         _check("five_trainable_checkpoints", len(training_results) == 5 and all(result.status in {"completed", "resumed"} for result in training_results), [result.status for result in training_results], "five complete or resumed"),
-        _check("one_epoch_has_31_steps", all(result.step_count == 31 for result in training_results), [result.step_count for result in training_results], "31 each"),
+        _check("one_epoch_has_expected_steps", all(result.step_count == len(fold.train_sample_ids) for result in training_results), [result.step_count for result in training_results], f"{len(fold.train_sample_ids)} each"),
         _check("five_checkpoint_resume", len(resumed_training_results) == 5 and all(result.status == "resumed" for result in resumed_training_results), [result.status for result in resumed_training_results], "five resumed"),
         _check("six_checkpoint_records", len(registry.records) == 6, len(registry.records), 6),
         _check("encoder_training_has_no_labels", all(not record.label_used_for_encoder_training for record in registry.records.values()), False, False),

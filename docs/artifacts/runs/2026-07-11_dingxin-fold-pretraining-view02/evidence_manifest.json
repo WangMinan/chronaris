@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-07-11_dingxin-fold-pretraining-view02",
+  "status": "completed",
+  "evidence_layer": "dingxin_real_fold_pretraining_smoke",
+  "training_invoked": true,
+  "downstream_targets_opened": false,
+  "outer_test_metrics_opened": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_dingxin-fold-pretraining-view02",
+  "output_paths": {
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/source_manifest.json",
+    "split_manifest": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/split_manifest.json",
+    "training_protocol": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/training_protocol.json",
+    "training_status": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/training_status.csv",
+    "pretext_loss_audit": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/pretext_loss_audit.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/resource_budget.csv",
+    "representation_export_manifest": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/representation_export_manifest.json",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-view02/evidence_manifest.json"
+  }
+}

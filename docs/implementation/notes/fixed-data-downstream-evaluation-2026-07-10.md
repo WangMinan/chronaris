@@ -464,6 +464,15 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - checkpoint solver 元数据缺失、重训后 registry hash 更新和非恢复模式下恢复校验三个问题均由安全门实际暴露并修复；最终 run 12/12 通过。
 - 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke/`；约 79 MB checkpoint 与表示位于被忽略目录。预训练未打开两项任务目标，outer-test 不生成指标或排名。
 
+### 9.8 2026-07-11 G4.2 五折公共预训练与表示闭环
+
+- 同一流式训练入口已扩展到三个留一视图主协议折和两个留一架次辅助折；按固定 split manifest 分别使用 31/31/38/19/38 个 inner-train 上下文，不改动统一 1 epoch 预算。
+- 每折注册生理单流、航电单流、朴素时间同步、MulT、ContiFormer 和 Chronaris 共 6 个 checkpoint，并导出 train/validation/outer-test 各 6 份表示；五折合计 30 个 checkpoint 和 90 份 `[N,96,64]` 表示。
+- 聚合审计逐项读取 90 份 archive 与 manifest，重验文件 SHA-256、sample/source hash、角色数量、checkpoint lineage 和 inner-train fit hash；每折第二遍恢复均复用 18/18。
+- 五个子 run 合计 60/60 验收，聚合层 13/13；五折五方法累计训练 1066.45 秒，所有运行最高峰值内存 2047.1 MB，低于 2.5 GB 门限。
+- 约 393 MB checkpoint 与稠密表示只位于被忽略目录；紧凑子 run 与聚合清单进入 `docs/artifacts/runs/`。全部预训练保持任务目标关闭、outer-test 指标关闭，未形成方法排名。
+- 聚合证据为 `docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/`。下一步使用这 90 份冻结表示接入统一线性与 MiniROCKET 工程冒烟，并在正式 screen 前重建 inner-train 嵌套目标。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/audit_dingxin_five_fold_pretraining.py --run-id 2026-07-11_dingxin-five-fold-pretraining

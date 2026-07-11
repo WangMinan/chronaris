@@ -1,7 +1,7 @@
 check_id,passed,actual,expected
 fixed_fold_role_counts,True,"{'train': 31, 'validation': 31, 'held_out': 31}","{'train': 31, 'validation': 31, 'held_out': 31}"
 normalizer_inner_train_only,True,31,31
-five_trainable_checkpoints,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed']",five complete or resumed
+five_trainable_checkpoints,True,"['completed', 'completed', 'completed', 'completed', 'completed']",five complete or resumed
 one_epoch_has_expected_steps,True,"[31, 31, 31, 31, 31]",31 each
 five_checkpoint_resume,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed']",five resumed
 six_checkpoint_records,True,6,6
@@ -9,5 +9,5 @@ encoder_training_has_no_labels,True,False,False
 naive_randomized_train_only_pca,True,randomized,randomized on inner-train
 eighteen_role_exports,True,18,18
 eighteen_exports_resume,True,18,18
-six_method_role_alignment,True,"{'train': 'feec217ae916216ea3c4cf09d327ca25f335cc4e682991948020b14f167ee354', 'validation': '4ec00ef8d6b70723ac22203892d6ea93a375628d8788fab83a9c17052503209f', 'held_out': '45795f7bac38227a8dba5552190424578b0d285ad4e783cd9cb538107bde9b62'}",three role hashes
-bounded_peak_memory,True,1967.4,<2500 MB
+six_method_role_alignment,True,"{'train': '45795f7bac38227a8dba5552190424578b0d285ad4e783cd9cb538107bde9b62', 'validation': '4ec00ef8d6b70723ac22203892d6ea93a375628d8788fab83a9c17052503209f', 'held_out': 'feec217ae916216ea3c4cf09d327ca25f335cc4e682991948020b14f167ee354'}",three role hashes
+bounded_peak_memory,True,1925.7,<2500 MB

@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示、公共自监督训练、仿真应用型下游消费者、鼎新弱监督目标归档、防泄漏原始上下文绑定和五个外层折的训练内验证划分均已完成；留一视图主协议第一个外层折也已完成六方法真实预训练与 18 份统一表示导出，验收 12/12 通过。本轮未修改既有确认指标或形成模型排名。当前实施里程碑为 G4.2 其余四个鼎新外层折的公共预训练与统一表示导出。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示、公共自监督训练、仿真应用型下游消费者、鼎新弱监督目标归档、防泄漏原始上下文绑定、训练内验证划分和五个外层折的六方法真实预训练与统一表示导出均已完成；五个子 run 合计 60/60、聚合审计 13/13 通过。本轮未修改既有确认指标或形成模型排名。当前实施里程碑为 G4.2 鼎新五折固定 consumer 工程冒烟与嵌套目标准备。
 
 ## 当前执行入口
 
@@ -28,6 +28,7 @@
 - G4.2 鼎新原始双流上下文与目标绑定：[artifacts/runs/2026-07-11_dingxin-context-bindings/report.md](artifacts/runs/2026-07-11_dingxin-context-bindings/report.md)
 - G4.2 鼎新外层折训练内验证划分：[artifacts/runs/2026-07-11_dingxin-inner-splits/report.md](artifacts/runs/2026-07-11_dingxin-inner-splits/report.md)
 - G4.2 鼎新主协议首折公共预训练与表示导出：[artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke/report.md](artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke/report.md)
+- G4.2 鼎新五折公共预训练与统一表示聚合审计：[artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/report.md](artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/report.md)
 
 ## 已锁定事实
 
@@ -138,10 +139,14 @@
 - 六方法共生成 6 个 checkpoint 和 18 份 `[N,96,64]` 表示；第二遍恢复复用 18/18，同角色样本、查询轴和 source hash 对齐。
 - 五方法累计训练 213.63 秒，其中 Chronaris 148.73 秒；单次完整成功链路峰值 1967.4 MB。约 79 MB checkpoint/表示位于被忽略目录，紧凑证据约 292 KB，12/12 通过。
 - 首折预训练未打开机动分类或生理响应目标，outer-test 只导出表示、不计算任务指标，因此不构成方法排名。
+- 三个留一视图主协议折与两个留一架次辅助折全部完成；每折 6 个 checkpoint、18 份 train/validation/outer-test 表示，五折总计 30 个 checkpoint 和 90 份表示。
+- 聚合审计逐项重验 90 份 archive/manifest、样本顺序、source hash、checkpoint 文件哈希与 inner-train fit hash；每折第二遍恢复均为 18/18。
+- 五折五个可训练方法累计训练 1066.45 秒，全部 run 的最高峰值内存为 2047.1 MB；约 393 MB 重型产物位于被忽略目录，五个子 run 60/60、聚合 13/13 通过。
+- 五折预训练均保持任务目标关闭、outer-test 指标关闭和单一公共输入 schema；该里程碑只证明真实双流表示链路闭环，不构成效果排名。
 
 ## 当前未完成
 
-- 鼎新目标、snapshot 原始上下文和训练内 validation 已逐折绑定；主协议首折完成六方法公共预训练和统一表示，其余四个外层折尚未生成。
+- 鼎新目标、snapshot 原始上下文、训练内 validation、30 个 checkpoint 和 90 份六方法表示已逐折闭环；尚未用这批真实表示运行固定 consumer，也尚未生成正式 inner-train 嵌套目标。
 - 仿真应用消费者目前仍是 16 条轨迹上的接口 smoke，不是完整 G1 开发筛选结果。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
@@ -151,8 +156,8 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 
 1. 已完成：在每个外层训练组内按 view/sortie 和时间顺序固定 validation，并对共享航电原始区间实施 overlap embargo。
 2. 归一化、增强和公共预训练只拟合 inner-train；outer-test 在候选冻结前只用于一次 smoke 结构验证，不参与选择。MiniROCKET 方差过滤和正式任务阈值在后续 consumer 阶段也必须只拟合 inner-train。
-3. 首折已通过；继续生成其余四折六方法 checkpoint、train/validation/test 表示，并逐项匹配 schema、fit sample 和 source hash。
-4. 用真实外层折完成六方法表示—固定 consumer smoke；鼎新指标与仿真指标分目录保存，不形成混合平均分。
+3. 已完成：五折六方法 checkpoint、train/validation/test 表示逐项匹配 schema、fit sample 和 source hash。
+4. 当前：用真实外层折完成六方法表示—固定 consumer smoke；鼎新指标与仿真指标分目录保存，不形成混合平均分。
 5. G4.2 验收通过后才启动 seed 17 四候选 screen，期间禁止读取 G2 locked test。
 
 ## 本轮验证
@@ -177,7 +182,7 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 - G4.2 上下文绑定与加载器聚焦测试：`7 passed`；93 个完整原始输入、90 个完整响应绑定，`12/12` 验收通过。
 - G4.2 训练内划分聚焦测试：`4 passed`；五折角色穷尽互斥、共享航电区间零重叠、任务覆盖和确定性重建均通过，正式 run `11/11` 验收通过。
 - G4.2 流式归一化、随机化 PCA、懒加载公共训练与 OOF 导出聚焦测试：`21 passed`；主协议首折真实 run 为 5 个训练 checkpoint、6 个总 checkpoint、18 个表示，`12/12` 验收通过。
-- 完整测试：`323 passed, 8 skipped, 317 warnings`。
+- 完整测试：`325 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 

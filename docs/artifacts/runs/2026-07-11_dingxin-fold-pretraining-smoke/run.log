@@ -1,1 +1,1 @@
-2026-07-11 12:18:45,857 INFO chronaris.pipelines.task_eval.dingxin_fold_pretraining: dingxin_real_fold_pretraining_smoke observer start run_id=2026-07-11_dingxin-fold-pretraining-smoke run_root=docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke
+2026-07-11 12:52:18,064 INFO chronaris.pipelines.task_eval.dingxin_fold_pretraining: dingxin_real_fold_pretraining_smoke observer start run_id=2026-07-11_dingxin-fold-pretraining-smoke run_root=docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke

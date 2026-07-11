@@ -1,111 +1,111 @@
 {
-  "fold_id": "leave_one_view_out__fold01",
+  "fold_id": "leave_one_sortie_out__fold01",
   "training_epochs": 1,
   "downstream_targets_opened": false,
   "outer_test_metrics_opened": false,
   "confirmed_metrics_changed": false,
   "stage_name": "dingxin_real_fold_pretraining_smoke",
-  "run_id": "2026-07-11_dingxin-fold-pretraining-smoke",
+  "run_id": "2026-07-11_dingxin-fold-pretraining-sortie01",
   "last_event": "finished",
-  "updated_at_utc": "2026-07-11T04:52:34.747070Z",
+  "updated_at_utc": "2026-07-11T04:42:45.637053Z",
   "events": [
     {
-      "timestamp_utc": "2026-07-11T04:52:18.064235Z",
+      "timestamp_utc": "2026-07-11T04:38:01.962198Z",
       "event": "start",
-      "fold_id": "leave_one_view_out__fold01",
+      "fold_id": "leave_one_sortie_out__fold01",
       "training_epochs": 1,
       "downstream_targets_opened": false,
       "outer_test_metrics_opened": false,
       "confirmed_metrics_changed": false
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:33.889422Z",
+      "timestamp_utc": "2026-07-11T04:38:13.852260Z",
       "event": "inner_train_normalizer_fitted",
-      "fit_sample_count": 31,
-      "elapsed_s": 3.1122512971051037
+      "fit_sample_count": 19,
+      "elapsed_s": 1.8188111740164459
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:33.908424Z",
+      "timestamp_utc": "2026-07-11T04:38:23.513944Z",
       "event": "method_pretraining_complete",
       "method_name": "physiology_only",
-      "status": "resumed",
-      "step_count": 31
+      "status": "completed",
+      "step_count": 19
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:33.926687Z",
+      "timestamp_utc": "2026-07-11T04:38:33.074900Z",
       "event": "method_pretraining_complete",
       "method_name": "vehicle_only",
-      "status": "resumed",
-      "step_count": 31
+      "status": "completed",
+      "step_count": 19
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:33.956472Z",
+      "timestamp_utc": "2026-07-11T04:38:43.692978Z",
       "event": "method_pretraining_complete",
       "method_name": "mult",
-      "status": "resumed",
-      "step_count": 31
+      "status": "completed",
+      "step_count": 19
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:33.974407Z",
+      "timestamp_utc": "2026-07-11T04:38:55.744397Z",
       "event": "method_pretraining_complete",
       "method_name": "contiformer",
-      "status": "resumed",
-      "step_count": 31
+      "status": "completed",
+      "step_count": 19
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:33.996386Z",
+      "timestamp_utc": "2026-07-11T04:40:33.398729Z",
       "event": "method_pretraining_complete",
       "method_name": "chronaris",
-      "status": "resumed",
-      "step_count": 31
+      "status": "completed",
+      "step_count": 19
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.318221Z",
+      "timestamp_utc": "2026-07-11T04:40:41.354079Z",
       "event": "method_representation_export_complete",
       "method_name": "physiology_only"
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.359076Z",
+      "timestamp_utc": "2026-07-11T04:40:51.983673Z",
       "event": "method_representation_export_complete",
       "method_name": "vehicle_only"
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.384602Z",
+      "timestamp_utc": "2026-07-11T04:41:05.999902Z",
       "event": "method_representation_export_complete",
       "method_name": "naive_time_sync"
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.446846Z",
+      "timestamp_utc": "2026-07-11T04:41:17.235173Z",
       "event": "method_representation_export_complete",
       "method_name": "mult"
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.487033Z",
+      "timestamp_utc": "2026-07-11T04:41:27.940973Z",
       "event": "method_representation_export_complete",
       "method_name": "contiformer"
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.526920Z",
+      "timestamp_utc": "2026-07-11T04:42:45.413536Z",
       "event": "method_representation_export_complete",
       "method_name": "chronaris"
     },
     {
-      "timestamp_utc": "2026-07-11T04:52:34.747070Z",
+      "timestamp_utc": "2026-07-11T04:42:45.637053Z",
       "event": "finished",
       "status": "completed",
       "acceptance_pass_count": 12,
       "acceptance_check_count": 12,
       "representation_export_count": 18,
-      "maximum_rss_mb": 1967.44140625
+      "maximum_rss_mb": 1828.33984375
     }
   ],
-  "fit_sample_count": 31,
-  "elapsed_s": 3.1122512971051037,
+  "fit_sample_count": 19,
+  "elapsed_s": 1.8188111740164459,
   "method_name": "chronaris",
   "status": "completed",
-  "step_count": 31,
+  "step_count": 19,
   "acceptance_pass_count": 12,
   "acceptance_check_count": 12,
   "representation_export_count": 18,
-  "maximum_rss_mb": 1967.44140625
+  "maximum_rss_mb": 1828.33984375
 }
