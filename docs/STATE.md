@@ -57,7 +57,7 @@
 
 ## 当前长程队列
 
-- 仿真 clean 主线：seeds 17/29/43 的五方法共 15 个训练单元全部完成 50 epoch；六方法 train/validation/G2 共 54 份表示完成。MiniRocket 已统一锁定显式 OvR `liblinear`，正式 clean consumer 从空根重跑中，首方法完整链路约 20 秒完成模型落盘。
+- 仿真 clean 主线：18/18 方法—随机种子 consumer、1152 条指标、768 条双流增益和 90 条轨迹级配对统计全部完成，7/7 门禁通过。Chronaris 在线性探针的仿真负荷分类/回归分别以 macro-F1 0.5110、RMSE 0.1928 居首，在持续时间约束分段的 frame macro-F1 0.4687、segmental F1@0.25 0.5319 居首；MiniRocket 负荷任务与边界 F1/延迟由 MulT 领先，因此结论是可解释的分项优势，不是全面第一。
 - 仿真压力主线：3 seeds × 35 场景 × 6 方法共 630 份 `[192,96,64]` 表示全部完成，5/5 门禁通过；表示阶段不读取任务真值或指标，等待 clean consumer 模型完整后逐场景复用评价。
 - 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元。旧 run 的部分 checkpoint 属于未合并稀疏事件输入，现被输入合同门禁拒绝恢复；新 run 将统一使用 100 ms 因果时间箱和单 GPU 串行训练，任务目标、outer-test 表示和指标继续关闭。
 - 设备调度：公共增强已固定在 CPU，模型 tensor 才送入 GPU；鼎新五方法的合并输入 GPU 冒烟连续完成且无 launch failure。正式队列继续保持单 CUDA 进程，checkpoint 记录设备历史，重复故障才原地迁移 CPU。
@@ -87,6 +87,7 @@
 - 新增代码后完整测试收集 371 项且失败缓存为空；按既有 8 项条件跳过计算，为 `363 passed, 8 skipped`。新增 GPU 稳定性、表示族、微调和证据包定向测试均通过，`compileall`、Ruff 和 `git diff --check` 通过。
 - 100 ms 因果时间箱、同时间观测聚合、缺失模态和旧 checkpoint 拒绝恢复的聚焦测试为 `10 passed`；run-level protocol 显式记录箱宽、时间戳策略和方法无关约束。
 - MiniRocket 高维逻辑回归求解器已在 G2 指标比较前锁定：显式 OvR `liblinear` 对所有方法共用，64 维线性探针保留 `lbfgs`；应用消费者与鼎新消费者聚焦测试 `13 passed`。
+- 仿真 clean 锁定结果显示双流协同：Chronaris 相对最佳单流的持续时间约束分段 frame macro-F1 平均增益 0.1194、segmental F1@0.25 平均增益 0.1109，三个 seed 的最小增益仍为 0.0913/0.0774；其边界 F1@1s 平均增益为 -0.0053，边界定位优势不成立。
 
 ## 本轮已完成
 
