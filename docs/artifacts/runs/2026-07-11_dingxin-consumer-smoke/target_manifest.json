@@ -1,0 +1,107 @@
+{
+  "format": "chronaris.dingxin_consumer_targets.v1",
+  "folds": [
+    {
+      "fold_id": "leave_one_view_out__fold01",
+      "threshold_scope": "outer_train_smoke_only",
+      "target_source_sha256": "802da5694c94e24125c3f611665987f46ade98671924c3bb71a18da43595c2f7",
+      "role_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 30,
+        "validation": 30,
+        "held_out": 30
+      }
+    },
+    {
+      "fold_id": "leave_one_view_out__fold02",
+      "threshold_scope": "outer_train_smoke_only",
+      "target_source_sha256": "ac626fe29218f545205409186e87faceb3b185aafec70494cc3c03af9a8f70a3",
+      "role_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 30,
+        "validation": 30,
+        "held_out": 30
+      }
+    },
+    {
+      "fold_id": "leave_one_view_out__fold03",
+      "threshold_scope": "outer_train_smoke_only",
+      "target_source_sha256": "82570762e1337ce50db00ae83372d0098ab36f2e2560add81aa695e922cb4c38",
+      "role_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 38,
+        "validation": 12,
+        "held_out": 30
+      }
+    },
+    {
+      "fold_id": "leave_one_sortie_out__fold01",
+      "threshold_scope": "outer_train_smoke_only",
+      "target_source_sha256": "e55696a4e2c026b5f40ded1784bb28e0e74918cf3c6400eaf63b5a7e0687dc8a",
+      "role_counts": {
+        "train": 19,
+        "validation": 7,
+        "held_out": 62
+      },
+      "maneuver_counts": {
+        "train": 19,
+        "validation": 7,
+        "held_out": 62
+      },
+      "response_counts": {
+        "train": 19,
+        "validation": 6,
+        "held_out": 60
+      }
+    },
+    {
+      "fold_id": "leave_one_sortie_out__fold02",
+      "threshold_scope": "outer_train_smoke_only",
+      "target_source_sha256": "b22b17b776cbdf01c0758e32c862a449b1b8033147f41523632267f88b6cb4ad",
+      "role_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 38,
+        "validation": 12,
+        "held_out": 30
+      }
+    }
+  ],
+  "threshold_scope": "outer_train_smoke_only",
+  "formal_screen_requires_nested_target_refit": true
+}

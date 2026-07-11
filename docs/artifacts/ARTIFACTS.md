@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-11_dingxin-consumer-smoke/`：**鼎新五折冻结表示下游 consumer 工程冒烟**。五个固定外层折和六种表示方法共享同一线性模型与 MiniROCKET 配置，形成 30 个方法—折 bundle、60 个消费者组件；首次拟合累计 144.34 秒，恢复 60/60，预测哈希 30/30 一致。机动强度分类、生理响应回归和高生理响应识别共生成 1680 条全部可计算的 smoke-only 指标，方向归一双流增益 1120 条；15/15 验收通过。约 36 MB 模型与逐样本预测位于被忽略目录，鼎新与仿真指标保持分层。当前仍使用 outer-train 阈值，只证明消费链路，不形成排名；正式 screen 前必须重建 inner-train 嵌套目标。
 - `runs/2026-07-11_dingxin-five-fold-pretraining/`：**鼎新五折六方法公共预训练与统一表示聚合审计**。三个留一视图主协议折与两个留一架次辅助折均完成，每折 6 个 checkpoint、18 份 train/validation/outer-test 表示，合计 30 个 checkpoint 和 90 份 `[N,96,64]` 表示。聚合层逐项重验 archive/manifest、样本顺序、source hash、checkpoint 文件与 inner-train fit hash；每折恢复 18/18，五个子 run 60/60、聚合 13/13。五折五方法累计训练 1066.45 秒，最高峰值 2047.1 MB；约 393 MB 重型产物位于被忽略目录。任务目标与 outer-test 指标全程关闭，本 run 不形成模型排名。
 - `runs/2026-07-11_dingxin-fold-pretraining-smoke/`：**鼎新主协议首折六方法公共预训练与统一表示导出**。留一视图第一折的 inner-train/validation/outer-test 各 31 个完整上下文；五个可训练方法共享 inner-train 归一化、增强和三个公共目标，各完成 1 epoch、31 step，朴素同步仅拟合因果 forward-fill 与随机化主成分分析。六个 checkpoint 导出三角色共 18 份 `[N,96,64]` 表示，恢复 18/18 复用并通过同角色对齐。累计训练 213.63 秒、完整成功链路峰值 1967.4 MB，约 79 MB 重型产物位于被忽略目录；紧凑证据约 292 KB，12/12 验收通过。本 run 未打开任务目标、未计算 outer-test 指标或形成排名。
 - `runs/2026-07-11_dingxin-inner-splits/`：**鼎新外层折训练内验证划分**。五个外层折均形成 inner-train、validation、overlap embargo 和 outer-test 四种互斥角色；训练组含两个架次时完整留出一个架次，只含同一架次时按末端七个时间块验证并删除重叠上下文。五折 inner-train/validation 为 31/31、31/31、38/14、19/7、38/14，共享航电原始时间区间重叠数为 0；分类各角色覆盖三类，生理响应各角色均覆盖连续值和高/非高两类，11/11 验收通过。现有 outer-train 阈值只供固定配置 smoke，正式候选筛选前必须嵌套重拟合。本 run 未训练模型、未读取 outer-test 指标或形成排名。

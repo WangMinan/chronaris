@@ -1,0 +1,16 @@
+check_id,passed,actual,expected
+five_folds_consumed,True,5,5
+six_methods_consumed,True,"['chronaris', 'contiformer', 'mult', 'naive_time_sync', 'physiology_only', 'vehicle_only']",6
+thirty_method_fold_bundles,True,30,30
+sixty_components_built_or_reused,True,60,60
+resume_reuses_sixty_components,True,60,60
+resume_predictions_are_identical,True,30,30
+fixed_consumer_config,True,['c4b0960d07bb35ee2eb481ec242eefcdae65a7641dd633e6cff6e311c9e9261b'],one config hash
+expected_metric_matrix,True,1680,1680
+metric_status_is_structured,True,['available'],available/unavailable
+expected_fusion_gain_matrix,True,1120,1120
+outer_train_thresholds_smoke_only,True,False,False
+target_counts_are_fixed,True,"{'maneuver': 440, 'response': 425}","{'maneuver': 440, 'response': 425}"
+real_metrics_not_mixed_with_simulation,True,['dingxin_existing_dual_stream'],['dingxin_existing_dual_stream']
+encoder_labels_remain_closed,True,False,False
+smoke_metrics_not_confirmed,True,True,True

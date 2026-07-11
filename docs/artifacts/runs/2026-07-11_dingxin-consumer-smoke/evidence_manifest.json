@@ -1,0 +1,25 @@
+{
+  "run_id": "2026-07-11_dingxin-consumer-smoke",
+  "status": "completed",
+  "evidence_layer": "dingxin_frozen_consumer_smoke",
+  "metric_count": 1680,
+  "fusion_gain_count": 1120,
+  "threshold_scope": "outer_train_smoke_only",
+  "formal_screen_requires_nested_target_refit": true,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_dingxin-consumer-smoke",
+  "output_paths": {
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/source_manifest.json",
+    "target_manifest": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/target_manifest.json",
+    "consumer_protocol": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/consumer_protocol.json",
+    "consumer_inventory": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/consumer_inventory.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/resource_budget.csv",
+    "metric_long": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/metric_long.csv",
+    "fusion_gain": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/fusion_gain.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/evidence_manifest.json"
+  }
+}

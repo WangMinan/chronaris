@@ -1,0 +1,284 @@
+{
+  "fold_count": 5,
+  "consumer_names": [
+    "linear",
+    "minirocket"
+  ],
+  "threshold_scope": "outer_train_smoke_only",
+  "confirmed_metrics_changed": false,
+  "stage_name": "dingxin_frozen_consumer_smoke",
+  "run_id": "2026-07-11_dingxin-consumer-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T05:07:35.604585Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T05:04:53.080178Z",
+      "event": "start",
+      "fold_count": 5,
+      "consumer_names": [
+        "linear",
+        "minirocket"
+      ],
+      "threshold_scope": "outer_train_smoke_only",
+      "confirmed_metrics_changed": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:04:56.411456Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "physiology_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:02.740996Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "vehicle_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:07.221417Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "naive_time_sync",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:09.115211Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "mult",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:12.963461Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "contiformer",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:18.632353Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "chronaris",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:21.444562Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "physiology_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:30.426738Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "vehicle_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:34.978741Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "naive_time_sync",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:37.088416Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "mult",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:43.209190Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "contiformer",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:49.218533Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "chronaris",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:05:54.546332Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "physiology_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:02.561699Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "vehicle_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:10.757032Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "naive_time_sync",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:15.115353Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "mult",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:21.068196Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "contiformer",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:26.512225Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "chronaris",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:33.541211Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "physiology_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:38.382159Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "vehicle_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:42.985671Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "naive_time_sync",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:48.226001Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "mult",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:53.065958Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "contiformer",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:06:57.852880Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "chronaris",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:05.473430Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "physiology_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:10.727647Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "vehicle_only",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:18.459361Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "naive_time_sync",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:22.790814Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "mult",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:27.542838Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "contiformer",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:35.587549Z",
+      "event": "method_fold_consumers_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "chronaris",
+      "initial_status": "completed",
+      "resume_status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:07:35.604585Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 15,
+      "acceptance_check_count": 15,
+      "metric_count": 1680,
+      "fusion_gain_count": 1120
+    }
+  ],
+  "fold_id": "leave_one_sortie_out__fold02",
+  "method_name": "chronaris",
+  "initial_status": "completed",
+  "resume_status": "resumed",
+  "status": "completed",
+  "acceptance_pass_count": 15,
+  "acceptance_check_count": 15,
+  "metric_count": 1680,
+  "fusion_gain_count": 1120
+}
