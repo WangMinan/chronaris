@@ -1,0 +1,10 @@
+{
+  "format": "chronaris.dingxin_inner_split_sources.v1",
+  "source_hashes": {
+    "outer_split_manifest": "e69fccc8474ca00de3edf69ceaa64b1d4cca35106b26b8e1bcf79260d2d0a5e8",
+    "context_catalog": "1e1afd9cb60e2b7a609994cb0038a2e0d2294413c003a449cf5b6d67c7023be2",
+    "fold_task_binding": "cae2f8d5bb4faf83c6d83984244ceb75d5a0d2d21856ab2fd68a85fdb83f4c75"
+  },
+  "available_input_context_count": 93,
+  "shared_vehicle_overlap_count": 0
+}

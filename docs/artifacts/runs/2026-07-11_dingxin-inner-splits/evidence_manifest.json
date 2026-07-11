@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-11_dingxin-inner-splits",
+  "status": "completed",
+  "evidence_layer": "dingxin_inner_validation_splits",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "formal_screen_requires_nested_target_refit": true,
+  "output_paths": {
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/source_manifest.json",
+    "split_manifest": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/split_manifest.json",
+    "context_roles": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/context_roles.csv",
+    "task_coverage": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/task_coverage.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits/evidence_manifest.json"
+  }
+}

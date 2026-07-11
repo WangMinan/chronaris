@@ -2,7 +2,7 @@
 
 日期：2026-07-10  
 分支：`codex/fixed-data-downstream-evaluation-20260710`  
-状态：长程 goal 已启动；当前处于详细规格与实施入口冻结阶段
+状态：长程 goal 执行中；当前进入鼎新真实外层折公共预训练与统一表示导出
 
 ## 1. 最终交付
 
@@ -444,6 +444,15 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 最终 CSR 缓存包含 10,255,756 个 float32 值、数组净大小 78.6 MB；完整 96 上下文审计耗时 12.34 秒、峰值 767 MB。缓存与直接 gzip 切片逐值一致。
 - 10 个目标 archive、阈值文件和 5 个 snapshot 文件重新校验哈希；外层 train/test group 无交集，12/12 验收通过。
 - 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-context-bindings/`；本 run 未训练模型或生成指标。下一步进入 outer-train 内部 validation 和真实五折公共预训练。
+
+### 9.6 2026-07-11 G4.2 训练内验证划分执行结果
+
+- 五个固定外层折都被展开为 inner-train、validation、overlap embargo 和 outer-test 四种互斥角色；93 个完整输入在每折恰好出现一次。
+- 外层训练组含两个不同架次时，完整留出后一个训练架次作为 validation；只含同一架次时，以最后七个唯一时间块作为 validation，并把与其 30 秒原始窗口重叠的中间上下文放入 embargo。
+- 五折 inner-train/validation 数量依次为 31/31、31/31、38/14、19/7、38/14；共享航电流上的训练/验证原始时间区间重叠数为 0。
+- 每折分类的 inner-train、validation、outer-test 都覆盖低、中、高三类；生理响应三个角色都有有限连续目标和高/非高两类。
+- 当前目标阈值仍由 outer-train 拟合，只允许后续固定配置 smoke 使用；正式 screen 必须先以 inner-train 生成嵌套目标 archive，不能复用这些阈值做候选选择。
+- 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-inner-splits/`，11/11 验收通过；本 run 未训练模型、未读取 outer-test 指标，也未形成方法排名。
 
 ## 10. 运行与收口入口
 

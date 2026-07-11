@@ -1,0 +1,30 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "formal_screen_requires_nested_target_refit": true,
+  "stage_name": "dingxin_inner_validation_splits",
+  "run_id": "2026-07-11_dingxin-inner-splits",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T03:40:26.550137Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T03:40:26.451673Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "formal_screen_requires_nested_target_refit": true
+    },
+    {
+      "timestamp_utc": "2026-07-11T03:40:26.550137Z",
+      "event": "finished",
+      "status": "completed",
+      "fold_count": 5,
+      "acceptance_pass_count": 11,
+      "acceptance_check_count": 11
+    }
+  ],
+  "status": "completed",
+  "fold_count": 5,
+  "acceptance_pass_count": 11,
+  "acceptance_check_count": 11
+}
