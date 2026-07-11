@@ -229,6 +229,10 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                         map_location="cpu",
                         weights_only=True,
                     )
+                    device_history = checkpoint_payload.get(
+                        "training_device_history",
+                        [checkpoint_payload.get("config", {}).get("device", device)],
+                    )
                     transfer = checkpoint_payload.get("transfer_initialization")
                     result_rows.append(
                         {
@@ -243,7 +247,8 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                             "best_public_selection_loss": result.best_public_selection_loss,
                             "training_elapsed_s": result.training_elapsed_s,
                             "parameter_count": result.parameter_count,
-                            "training_device": device,
+                            "training_device": device_history[-1],
+                            "training_device_history": json.dumps(device_history),
                             "checkpoint_path": result.best_checkpoint_path,
                             "checkpoint_sha256": sha256_file(result.best_checkpoint_path),
                             "maximum_rss_mb": _maximum_rss_mb(),
