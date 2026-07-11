@@ -1,0 +1,31 @@
+fold_id,task_slug,role,context_count,class_values,binary_values,continuous_finite_count,target_threshold_scope
+leave_one_view_out__fold01,maneuver_intensity_classification,inner_train,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold01,maneuver_intensity_classification,validation,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold01,maneuver_intensity_classification,outer_test,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold01,physiology_response_prediction,inner_train,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_view_out__fold01,physiology_response_prediction,validation,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_view_out__fold01,physiology_response_prediction,outer_test,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_view_out__fold02,maneuver_intensity_classification,inner_train,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold02,maneuver_intensity_classification,validation,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold02,maneuver_intensity_classification,outer_test,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold02,physiology_response_prediction,inner_train,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_view_out__fold02,physiology_response_prediction,validation,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_view_out__fold02,physiology_response_prediction,outer_test,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_view_out__fold03,maneuver_intensity_classification,inner_train,38,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold03,maneuver_intensity_classification,validation,14,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold03,maneuver_intensity_classification,outer_test,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_view_out__fold03,physiology_response_prediction,inner_train,38,[],"[0, 1]",38,outer_train_smoke_only
+leave_one_view_out__fold03,physiology_response_prediction,validation,12,[],"[0, 1]",12,outer_train_smoke_only
+leave_one_view_out__fold03,physiology_response_prediction,outer_test,30,[],"[0, 1]",30,outer_train_smoke_only
+leave_one_sortie_out__fold01,maneuver_intensity_classification,inner_train,19,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_sortie_out__fold01,maneuver_intensity_classification,validation,7,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_sortie_out__fold01,maneuver_intensity_classification,outer_test,62,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_sortie_out__fold01,physiology_response_prediction,inner_train,19,[],"[0, 1]",19,outer_train_smoke_only
+leave_one_sortie_out__fold01,physiology_response_prediction,validation,6,[],"[0, 1]",6,outer_train_smoke_only
+leave_one_sortie_out__fold01,physiology_response_prediction,outer_test,60,[],"[0, 1]",60,outer_train_smoke_only
+leave_one_sortie_out__fold02,maneuver_intensity_classification,inner_train,38,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_sortie_out__fold02,maneuver_intensity_classification,validation,14,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_sortie_out__fold02,maneuver_intensity_classification,outer_test,31,"[0, 1, 2]",[],0,outer_train_smoke_only
+leave_one_sortie_out__fold02,physiology_response_prediction,inner_train,38,[],"[0, 1]",38,outer_train_smoke_only
+leave_one_sortie_out__fold02,physiology_response_prediction,validation,12,[],"[0, 1]",12,outer_train_smoke_only
+leave_one_sortie_out__fold02,physiology_response_prediction,outer_test,30,[],"[0, 1]",30,outer_train_smoke_only

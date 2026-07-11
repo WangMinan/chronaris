@@ -1,0 +1,12 @@
+check_name,passed,details
+five_outer_folds_have_inner_validation,True,{'fold_count': 5}
+all_available_inputs_have_one_fold_role,True,"{'leave_one_view_out__fold01': {'inner_train': 31, 'validation': 31, 'embargo': 0, 'outer_test': 31}, 'leave_one_view_out__fold02': {'inner_train': 31, 'validation': 31, 'embargo': 0, 'outer_test': 31}, 'leave_one_view_out__fold03': {'inner_train': 38, 'validation': 14, 'embargo': 10, 'outer_test': 31}, 'leave_one_sortie_out__fold01': {'inner_train': 19, 'validation': 7, 'embargo': 5, 'outer_test': 62}, 'leave_one_sortie_out__fold02': {'inner_train': 38, 'validation': 14, 'embargo': 10, 'outer_test': 31}}"
+fold_roles_are_sample_disjoint,True,{'fold_count': 5}
+shared_vehicle_intervals_do_not_overlap,True,{'inner_train_validation_overlap_count': 0}
+same_sortie_splits_use_temporal_embargo,True,"{'leave_one_view_out__fold03': 10, 'leave_one_sortie_out__fold01': 5, 'leave_one_sortie_out__fold02': 10}"
+cross_sortie_splits_hold_out_complete_sortie,True,"{'leave_one_view_out__fold01': ['20251005_四01_ACT-4_云_J20_22#01'], 'leave_one_view_out__fold02': ['20251005_四01_ACT-4_云_J20_22#01']}"
+classification_roles_cover_three_classes,True,{'classification_role_count': 15}
+response_roles_cover_binary_and_continuous_targets,True,{'response_role_count': 15}
+outer_thresholds_are_smoke_only,True,{'formal_screen_requires_nested_target_refit': True}
+inner_split_rebuild_is_deterministic,True,{'deterministic': True}
+role_manifest_has_no_duplicate_fold_context,True,{'role_row_count': 465}

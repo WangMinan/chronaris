@@ -181,6 +181,9 @@ def build_fold_task_context_bindings(
             input_ends = archive["input_end_exclusive_ms"].astype(np.int64)
             target_starts = archive["target_start_offset_ms"].astype(np.int64)
             target_ends = archive["target_end_exclusive_ms"].astype(np.int64)
+            class_targets = archive["class_target"].astype(np.int64)
+            continuous_targets = archive["continuous_target"].astype(np.float32)
+            binary_targets = archive["binary_target"].astype(np.int64)
         if len(set(context_ids)) != len(context_ids):
             raise ValueError(f"duplicate context IDs in target archive: {archive_path}")
         missing = sorted(set(context_ids) - set(context_lookup.index))
@@ -209,6 +212,9 @@ def build_fold_task_context_bindings(
                     "target_start_offset_ms": int(target_starts[position]),
                     "target_end_exclusive_ms": int(target_ends[position]),
                     "target_status": statuses[position],
+                    "class_target": int(class_targets[position]),
+                    "continuous_target": float(continuous_targets[position]),
+                    "binary_target": int(binary_targets[position]),
                     "input_fully_observed": input_available,
                     "binding_status": binding_status,
                     "fit_sample_hash": fit_hashes[position],
