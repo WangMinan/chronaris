@@ -505,4 +505,11 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 
 - [fixed-data-downstream-evaluation-runbook-2026-07-10.md](fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 
+### 2026-07-12 仿真预训练到鼎新无标签适配进展
+
+- 正式 run `2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced` 完成五方法、五外层折和 seeds 17/29/43 共 75/75 个训练单元，8/8 门禁通过。
+- 五方法全部实际使用 RTX 4090，公共增强在 CPU 确定性生成；任务目标与 outer-test 均未进入训练或早停。
+- 六方法使用同一仿真预训练数据预算。跨 schema 初始化只复制同名同形的任务无关参数；生理单流、航电单流、MulT、ContiFormer 和 Chronaris 的复制元素比例依次为 97.93%、24.61%、84.47%、36.96% 和 39.05%。复制比例差异来自字段相关层形状和各编码器结构，不作为方法优劣指标。
+- 下一门禁固定为 270/270 份 `synthetic_pretrain_real_adapt_v1` 三角色统一表示；完成后才运行相同冻结 consumer，并与 real-only 主视图折按 seed、方法、任务、consumer 和指标逐项配对。
+
 拆分后本文件保持“实现哪些能力”的主计划，runbook 负责“如何长程运行并收口”。

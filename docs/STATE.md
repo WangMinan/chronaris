@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。仿真 clean 锁定主表、时间机制恢复、端到端辅助表和七因素压力评估均已完成：Chronaris 在线性负荷探针、机动状态/片段质量、时钟偏移和响应时延绝对误差上形成优势，MulT 在 MiniRocket 负荷任务、边界定位和时延排序相关性上领先。压力结果进一步表明 Chronaris 在 21 个最高单因素压力组合中有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六，不形成全因素鲁棒性优势。鼎新 real-only 轨道的 75/75 训练、270/270 表示和 90/90 冻结 consumer 均已完成：Chronaris 在高生理响应识别上以 AUPRC 0.8839 居首，但机动强度分类和连续响应回归分别由 ContiFormer 和 MulT 领先。Chronaris 消融的 12 个 checkpoint 和 36 份三角色表示也已完成；当前自动队列已进入同预训练预算的仿真到鼎新无标签适配。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。仿真 clean 锁定主表、时间机制恢复、端到端辅助表和七因素压力评估均已完成：Chronaris 在线性负荷探针、机动状态/片段质量、时钟偏移和响应时延绝对误差上形成优势，MulT 在 MiniRocket 负荷任务、边界定位和时延排序相关性上领先。压力结果进一步表明 Chronaris 在 21 个最高单因素压力组合中有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六，不形成全因素鲁棒性优势。鼎新 real-only 轨道的 75/75 训练、270/270 表示和 90/90 冻结 consumer 均已完成：Chronaris 在高生理响应识别上以 AUPRC 0.8839 居首，但机动强度分类和连续响应回归分别由 ContiFormer 和 MulT 领先。Chronaris 消融的 12 个 checkpoint 和 36 份三角色表示也已完成。同一仿真预训练预算到鼎新无标签适配的 75/75 训练现已完成，8/8 门禁通过，五方法全部使用 RTX 4090；自动队列正在导出迁移轨道的 270 份统一表示。
 
 ## 当前执行入口
 
@@ -36,6 +36,7 @@
 - G5 seed 17 正式编码器候选筛选：[artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md)
 - G6 鼎新锁定重训单折协议验证：[artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md](artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md)
 - G6 仿真预训练到鼎新适配协议验证：[artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/report.md](artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/report.md)
+- G6 仿真预训练到鼎新无标签适配重训：[artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/report.md](artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/report.md)
 - G6 Chronaris 机制消融重训协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md)
 - G6 Chronaris 机制消融表示协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md)
 - G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
@@ -213,7 +214,7 @@
 
 - 鼎新 real-only 轨道已完成；后续只需把高生理响应识别的分项优势与其他两任务的基线领先并列写入论文证据包。
 - 仿真压力 consumer 已完成；后续只需在论文证据包中把绝对重压表现和退化斜率分开呈现，不将随机/连续缺失写成优势。
-- Chronaris 消融尚需运行与完整模型共用的统一 consumer；仿真预训练到鼎新适配、论文证据包和图表抽查也尚待自动队列完成。
+- 仿真预训练到鼎新无标签适配的 75 个训练单元已经完成；尚需完成 270 份统一表示、90 个同协议 consumer 与 real-only 逐项对照。Chronaris 消融仍需运行与完整模型共用的统一 consumer；论文证据包和图表抽查等待自动队列完成。
 
 ## 下一验收门
 
