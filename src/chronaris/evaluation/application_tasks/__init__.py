@@ -35,6 +35,11 @@ from chronaris.evaluation.application_tasks.dingxin_target_archive import (
     DingxinTargetArchiveResult,
     run_dingxin_target_archive,
 )
+from chronaris.evaluation.application_tasks.dingxin_context_binding import (
+    DingxinContextBindingConfig,
+    DingxinContextBindingResult,
+    run_dingxin_context_binding_audit,
+)
 from chronaris.evaluation.application_tasks.snapshot_live_source import (
     InfluxSnapshotPointSource,
     SnapshotPointSource,
@@ -68,6 +73,8 @@ __all__ = [
     "ApplicationConsumerSmokeResult",
     "DingxinTargetArchiveConfig",
     "DingxinTargetArchiveResult",
+    "DingxinContextBindingConfig",
+    "DingxinContextBindingResult",
     "DeepBaselineAdapterSmokeConfig",
     "DeepBaselineAdapterSmokeResult",
     "InfluxSnapshotPointSource",
@@ -86,6 +93,7 @@ __all__ = [
     "run_common_pretraining_loop_smoke",
     "run_application_consumer_smoke",
     "run_dingxin_target_archive",
+    "run_dingxin_context_binding_audit",
     "run_deep_baseline_adapter_smoke",
     "run_simulation_audit",
     "run_representation_contract_smoke",

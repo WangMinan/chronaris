@@ -33,7 +33,9 @@ from chronaris.representation.contract_probe import (
 )
 from chronaris.representation.loaders import (
     DingxinObservationSchemaPlan,
+    DingxinSnapshotPointCache,
     build_dingxin_observation_schema_plan,
+    build_dingxin_snapshot_point_cache,
     load_dingxin_observed_context,
     load_simulation_observed_context,
 )
@@ -80,6 +82,7 @@ __all__ = [
     "TrainOnlyRobustNormalizer",
     "StreamAugmentationProvenance",
     "DingxinObservationSchemaPlan",
+    "DingxinSnapshotPointCache",
     "CheckpointRecord",
     "CheckpointRegistry",
     "CommonPretextTargets",
@@ -91,6 +94,7 @@ __all__ = [
     "ResumableOOFExporter",
     "SIX_METHOD_NAMES",
     "build_dingxin_observation_schema_plan",
+    "build_dingxin_snapshot_point_cache",
     "build_checkpoint_record",
     "build_common_pretext_targets",
     "build_lag_discrimination_inputs",

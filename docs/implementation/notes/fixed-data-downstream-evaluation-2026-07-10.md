@@ -435,6 +435,16 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-application-targets/`，12/12 验收通过；约 248 KB 目标 archive 位于被忽略目录。本 run 未训练模型或生成指标。
 - 下一步为按 archive context 时间范围构造 30 秒防泄漏原始异步双流，并接入真实外层折表示训练。
 
+### 9.5 2026-07-11 G4.2 原始上下文绑定执行结果
+
+- 目标 catalog 的 96 个上下文中有 93 个严格满足 30 秒输入合同；三个 `context_end_0036` 只覆盖 155–180.991 秒，作为部分末窗不可用，不把名义 181–185 秒补造出来。
+- 五折任务绑定中，机动分类有 93 个唯一可用输入，生理响应再叠加完整未来 5 秒要求后为 90 个；每个不可用原因都按 fold/task 保留。
+- 原始输入 schema 为 12 个生理字段和 955 个跨架次同序航电字段。20 个机动标签源字段在 raw-to-index 映射阶段删除；93 个可用上下文的最大相对时间为 29.999 秒。
+- 不生成全量稠密上下文 bundle。首次 Python `RawPoint` 缓存方案虽把运行缩短到约 70 秒，但峰值达到约 3.9 GB，已被替换为允许字段 CSR 缓存。
+- 最终 CSR 缓存包含 10,255,756 个 float32 值、数组净大小 78.6 MB；完整 96 上下文审计耗时 12.34 秒、峰值 767 MB。缓存与直接 gzip 切片逐值一致。
+- 10 个目标 archive、阈值文件和 5 个 snapshot 文件重新校验哈希；外层 train/test group 无交集，12/12 验收通过。
+- 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-context-bindings/`；本 run 未训练模型或生成指标。下一步进入 outer-train 内部 validation 和真实五折公共预训练。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

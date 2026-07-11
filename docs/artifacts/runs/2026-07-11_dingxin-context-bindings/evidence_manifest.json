@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-07-11_dingxin-context-bindings",
+  "status": "completed",
+  "evidence_layer": "dingxin_lazy_raw_context_bindings",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "precomputed_dense_context_bundle": false,
+  "output_paths": {
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/source_manifest.json",
+    "schema_manifest": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/schema_manifest.json",
+    "context_catalog": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/context_catalog.csv",
+    "stream_audit": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/stream_audit.csv",
+    "fold_task_binding": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/fold_task_binding.csv",
+    "archive_verification": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/archive_verification.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/resource_budget.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-context-bindings/evidence_manifest.json"
+  }
+}
