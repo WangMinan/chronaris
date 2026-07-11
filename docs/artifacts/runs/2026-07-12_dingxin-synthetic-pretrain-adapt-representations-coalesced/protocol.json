@@ -1,0 +1,37 @@
+{
+  "format": "chronaris.dingxin_locked_representation_protocol.v1",
+  "config": {
+    "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
+    "fixed_audit_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+    "inner_split_root": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits",
+    "fold_ids": [
+      "leave_one_view_out__fold01",
+      "leave_one_view_out__fold02",
+      "leave_one_view_out__fold03",
+      "leave_one_sortie_out__fold01",
+      "leave_one_sortie_out__fold02"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "fit_batch_size": 8,
+    "export_batch_size": 8,
+    "baseline_device": "cuda",
+    "chronaris_device": "cuda",
+    "resume": true
+  },
+  "baseline_device": "cuda",
+  "chronaris_device": "cuda",
+  "checkpoint_set_verified_before_outer_test": true,
+  "task_targets_opened": false,
+  "outer_test_metrics_opened": false,
+  "representation_family": "synthetic_pretrain_real_adapt_v1",
+  "model_input_bin_width_s": 0.1
+}

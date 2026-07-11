@@ -1,0 +1,33 @@
+{
+  "format": "chronaris.dingxin_locked_consumer_protocol.v1",
+  "config": {
+    "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "representation_run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced",
+    "nested_target_path": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_targets.csv",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "fold_ids": [
+      "leave_one_view_out__fold01",
+      "leave_one_view_out__fold02",
+      "leave_one_view_out__fold03",
+      "leave_one_sortie_out__fold01",
+      "leave_one_sortie_out__fold02"
+    ],
+    "minirocket_kernels": 10000,
+    "resume": true
+  },
+  "fit_role": "train",
+  "hyperparameter_selection_role": "validation",
+  "evaluation_roles": [
+    "validation",
+    "held_out"
+  ],
+  "main_statistical_unit": "view_fold",
+  "window_level_significance_allowed": false,
+  "representation_family": "synthetic_pretrain_real_adapt_v1"
+}

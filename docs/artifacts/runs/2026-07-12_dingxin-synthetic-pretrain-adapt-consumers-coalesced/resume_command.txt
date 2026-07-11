@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_dingxin_locked_consumers.py --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced --representation-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced --minirocket-kernels 10000 --resume

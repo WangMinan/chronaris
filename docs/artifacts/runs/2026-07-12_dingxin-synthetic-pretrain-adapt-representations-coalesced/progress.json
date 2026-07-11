@@ -1,0 +1,143 @@
+{
+  "checkpoint_count_verified_before_outer_test": 75,
+  "task_targets_opened": false,
+  "outer_test_metrics_opened": false,
+  "representation_family": "synthetic_pretrain_real_adapt_v1",
+  "model_input_bin_width_s": 0.1,
+  "stage_name": "dingxin_locked_representation_export",
+  "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T22:49:15.254415Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T22:36:13.672418Z",
+      "event": "start",
+      "checkpoint_count_verified_before_outer_test": 75,
+      "task_targets_opened": false,
+      "outer_test_metrics_opened": false,
+      "representation_family": "synthetic_pretrain_real_adapt_v1",
+      "model_input_bin_width_s": 0.1
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:37:11.515848Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 17,
+      "fold_id": "leave_one_view_out__fold01",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:38:07.385090Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 17,
+      "fold_id": "leave_one_view_out__fold02",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:38:58.343417Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 17,
+      "fold_id": "leave_one_view_out__fold03",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:39:47.596375Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:40:38.394057Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:41:32.375815Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 29,
+      "fold_id": "leave_one_view_out__fold01",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:42:24.280851Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 29,
+      "fold_id": "leave_one_view_out__fold02",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:43:16.928435Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 29,
+      "fold_id": "leave_one_view_out__fold03",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:44:07.074513Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:44:58.296177Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:45:52.219934Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 43,
+      "fold_id": "leave_one_view_out__fold01",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:46:43.718956Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 43,
+      "fold_id": "leave_one_view_out__fold02",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:47:34.644257Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 43,
+      "fold_id": "leave_one_view_out__fold03",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:48:24.517696Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:49:15.243562Z",
+      "event": "dingxin_locked_seed_fold_representation_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:49:15.254415Z",
+      "event": "finished",
+      "status": "completed",
+      "seed_fold_count": 15,
+      "export_count": 270,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "seed": 43,
+  "fold_id": "leave_one_sortie_out__fold02",
+  "export_count": 270,
+  "status": "completed",
+  "seed_fold_count": 15,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}
