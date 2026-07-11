@@ -133,9 +133,8 @@ def run_simulation_mechanism_representations(
                         role=role,
                         scenario_id=scenario_id,
                     )
-                    data_rows.extend(
-                        {"seed": seed, **row} for row in data.sample_manifest_rows
-                    )
+                    if seed == config.seeds[0]:
+                        data_rows.extend(data.sample_manifest_rows)
                     outputs = []
                     for method in MECHANISM_METHODS:
                         destination = (
