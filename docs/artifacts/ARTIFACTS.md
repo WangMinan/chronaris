@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_simulation-locked-stress-representations/`：**G2 三随机种子 35 场景压力表示**。seeds 17/29/43、六方法和 35 个严格成对压力场景共导出 630/630 份 `[192,96,64]` 表示，105 个随机种子—场景单元均含六方法，每条 48 轨迹保留四个上下文，5/5 门禁通过。该阶段只读取原始异步双流观测，不打开任务真值或指标；后续只复用 clean 主表锁定的 consumer，不能按压力结果重新拟合。
 - `runs/2026-07-12_minirocket-solver-runtime-benchmark/`：**MiniRocket 高维逻辑回归求解器运行时基准**。只使用 seed 17 生理单流的 G1 train/validation 冻结表示，MiniRocket 输出为 `[384,9996]`；默认 `lbfgs` 所在完整组件约 1743.68 秒，显式 OvR `liblinear` 三个 C 分别为 2.20、2.40、2.37 秒。求解器只按运行时与高维小样本形态锁定，不按验证分数选择；规则对六方法完全一致，G2 锁定测试比较未参与。旧模型只留在被忽略 runtime 目录，不进入正式主表。
 - `runs/2026-07-12_simulation-locked-representations/`：**仿真三随机种子六方法统一表示**。三个随机种子的生理单流、航电单流、朴素时间同步、MulT、ContiFormer 和 Chronaris 均导出 G1 train、G1 validation、G2 held-out 表示，共 54/54 份 `[N,96,64]`、7/7 门禁通过。五个任务无关 encoder 全部来自锁定 checkpoint，朴素时间同步只在训练折拟合；所有 checkpoint 完整后才读取 G2 原始观测，任务真值与指标在本 run 中保持关闭。
 - `runs/2026-07-12_simulation-locked-pretraining/`：**仿真选定配置三随机种子锁定重训**。seeds 17/29/43 的生理单流、航电单流、MulT、ContiFormer 和 Chronaris 共 15 个训练单元均完成 50 epoch，15/15 checkpoint 和 9/9 门禁通过。训练只读取 G1 原始异步双流，Chronaris 专属机制损失参与反向传播但早停只读取公共自监督 validation；任务真值和 G2 锁定测试始终关闭。本 run 冻结正式表示导出的任务无关 encoder，不构成任务性能排名。

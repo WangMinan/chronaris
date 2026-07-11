@@ -20,7 +20,7 @@ G4.1–G4.2、G5 seed 17 正式筛选、G6 仿真三随机种子五方法锁定�
 - 100 ms 公共因果时间箱五方法单 epoch 实跑为 8/8；四个基线 GPU 耗时 8.59–16.46 秒，Chronaris CPU 为 91.86 秒、GPU 为 40.07 秒。鼎新正式三随机种子 run 使用新 ID、全方法单 GPU 串行和逐 epoch 恢复。
 - 正式 consumer 使用 validation 固定网格选择 Logistic/Ridge 与 MiniRocket 参数；机动分段使用两层残差因果 TCN、kernel 5、dilation 1/2、patience 6，并可在 GPU 上训练。
 - G2 压力扩展包含 7 个单因素的 34 个等级版本和 1 个 mixed-severe 版本；48 条轨迹共 1,680 个观测场景，同轨迹复用相同 observation seed，7/7 验收通过。
-- G1→G2 clean 表示、正式 consumer、压力表示、冻结 consumer 复用、退化斜率和轨迹级配对统计的可恢复编排已经实现；按协议等待上游锁定 checkpoint 后再执行。
+- G1→G2 clean 表示已完成，正式 consumer 正在按新求解器从空根重跑；压力表示完成 630/630 与 5/5 门禁。冻结 consumer 复用、退化斜率和轨迹级配对统计已排队自动衔接。
 - 鼎新正式表示与 consumer 编排已实现：75 个 checkpoint 完整后才导出 270 份六方法三角色表示，validation 只负责选参，outer-test 只负责一次锁定评价。
 - Chronaris 四项机制消融已接入锁定训练、checkpoint 回载、表示导出和相同下游 consumer；完整模型与消融按 48 条 G2 潜在轨迹配对。
 - synthetic-to-real 轨道已实现形状安全的部分参数迁移和无标签鼎新适配；单方法跨 schema 冒烟复制 97.93% 目标编码器元素并通过 8/8 门禁，正式轨道等待仿真三 seed checkpoint 完整。
@@ -213,6 +213,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；仿真长基线在独占 GPU 重复失败后迁移到 CPU，Chronaris 仍使用同批基准更快的 CPU。
 - 已完成：仿真 seeds 17/29/43 五方法均完成 50 epoch，15 个训练单元、54 份六方法三角色表示、9/9 与 7/7 门禁全部通过。首次 consumer 运行确认默认 `lbfgs` 高维网格约需 29 分钟/方法；同一冻结变换上显式 OvR `liblinear` 三值网格合计 6.97 秒，已在不读取 G2 比较结果的前提下统一锁定并准备从空根重跑。
+- 已完成：G2 压力 35 场景的三随机种子六方法表示共 630 份、5/5 门禁；任务真值与指标在表示阶段保持关闭。
 - 排队执行：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced` 新根；CPU 构造增强、全方法单进程 GPU 训练。任何缺少 `model_input_contract.json` 的旧 checkpoint 均 fail closed，不与新输入混用。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。

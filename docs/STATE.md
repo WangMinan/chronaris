@@ -57,7 +57,8 @@
 
 ## 当前长程队列
 
-- 仿真 clean 主线：seeds 17/29/43 的五方法共 15 个训练单元全部完成 50 epoch；六方法 train/validation/G2 共 54 份表示完成。首次 consumer 实跑定位到默认多项 `lbfgs` 在 `[384,9996]` MiniRocket 特征上的运行时瓶颈；G1 train/validation 基准后已统一锁定显式 OvR `liblinear`，三个 C 合计 6.97 秒。旧单方法运行已隔离，正式主表从空根重跑。
+- 仿真 clean 主线：seeds 17/29/43 的五方法共 15 个训练单元全部完成 50 epoch；六方法 train/validation/G2 共 54 份表示完成。MiniRocket 已统一锁定显式 OvR `liblinear`，正式 clean consumer 从空根重跑中，首方法完整链路约 20 秒完成模型落盘。
+- 仿真压力主线：3 seeds × 35 场景 × 6 方法共 630 份 `[192,96,64]` 表示全部完成，5/5 门禁通过；表示阶段不读取任务真值或指标，等待 clean consumer 模型完整后逐场景复用评价。
 - 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元。旧 run 的部分 checkpoint 属于未合并稀疏事件输入，现被输入合同门禁拒绝恢复；新 run 将统一使用 100 ms 因果时间箱和单 GPU 串行训练，任务目标、outer-test 表示和指标继续关闭。
 - 设备调度：公共增强已固定在 CPU，模型 tensor 才送入 GPU；鼎新五方法的合并输入 GPU 冒烟连续完成且无 launch failure。正式队列继续保持单 CUDA 进程，checkpoint 记录设备历史，重复故障才原地迁移 CPU。
 - CUDA 故障点已收敛到增强阶段的小粒度索引算子；公共增强、pretext target 和错误时移现固定在 CPU 确定性构造，再只把模型输入与 target tensor 送入 GPU。单 epoch CUDA 冒烟已确认 `training_device=cuda`、`augmentation_device=cpu`，鼎新基线队列将在严格单进程下采用该路径，若仍失败再按设备历史迁移 CPU。
