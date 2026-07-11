@@ -1,0 +1,32 @@
+{
+  "chronaris": {
+    "candidate_id": "A",
+    "selection_loss": 0.012968228631784717,
+    "checkpoint_path": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/chronaris/A/best.pt",
+    "checkpoint_sha256": "597bd6fb279af950580fdaed15484dbef3e15d4dbfa77a8afff00fe9eac53b1d"
+  },
+  "contiformer": {
+    "candidate_id": "A",
+    "selection_loss": 0.04817046526406546,
+    "checkpoint_path": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/contiformer/A/best.pt",
+    "checkpoint_sha256": "a7dcef370eb836051f70db9d96248c11ae6a7c0a75f8afd68eb08ed2bcc846a5"
+  },
+  "mult": {
+    "candidate_id": "A",
+    "selection_loss": 0.0,
+    "checkpoint_path": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/mult/A/best.pt",
+    "checkpoint_sha256": "0c194ad1c3d901288cc52686ba7955403aaddfe94cf8d14b18f6bbada57afa00"
+  },
+  "physiology_only": {
+    "candidate_id": "A",
+    "selection_loss": 0.01487593350999759,
+    "checkpoint_path": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/physiology_only/A/best.pt",
+    "checkpoint_sha256": "d068902b1ed1d9fe6bf581aa1d710b70e0efca49d32ccbb2b098b3ef35e2d755"
+  },
+  "vehicle_only": {
+    "candidate_id": "C",
+    "selection_loss": 0.026809648757762296,
+    "checkpoint_path": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/vehicle_only/C/best.pt",
+    "checkpoint_sha256": "995eac0f4a7d02c787be1a5c0de5a94225bae6585061f30a89df0345c94272b7"
+  }
+}

@@ -276,6 +276,8 @@ normalized_loss = (loss - min_candidate_loss)
 
 G1 正式开发划分使用 96 个训练 profile；24 个 validation profile 中前 23 个用于候选排序，最后 1 个仅用于选定配置的开发确认。`locked_test` 在候选排序期间保持封存。训练增强按 epoch 变化，验证增强固定为 seed 17、epoch 0；每个候选保存独立 `best.pt` 与 `last.pt`，中断后从 `last.pt` 的下一 epoch 恢复优化器、patience 和最佳验证状态。
 
+训练设备必须进入 protocol 和 checkpoint。优先实测 GPU；若同一正式批次上 GPU 因连续演化的小矩阵循环慢于 CPU，可以使用更快设备，但必须保存同批次基准。Chronaris 的参考轴状态采用数学等价的向量化查询：直接读取不晚于查询时刻的最后观测更新隐态，再演化剩余时间；输出、有效掩码、演化审计和梯度必须与逐样本历史重放一致。
+
 开发 seed 固定 17；配置锁定后使用 17、29、43 三个 seed 正式确认。
 
 ## 11. 冻结表示下游算法

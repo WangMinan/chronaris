@@ -26,8 +26,11 @@ from chronaris.modeling.training.candidate_screen import (
     PUBLIC_SELECTION_WEIGHTS,
     CandidateScreenConfig,
     CandidateScreenResult,
-    rank_encoder_candidates,
     train_pretext_candidate,
+)
+from chronaris.modeling.training.candidate_ranking import rank_encoder_candidates
+from chronaris.modeling.training.candidate_confirmation import (
+    confirm_selected_pretext_checkpoint,
 )
 
 __all__ = [
@@ -52,6 +55,7 @@ __all__ = [
     "train_common_pretext_method",
     "train_pretext_candidate",
     "chronaris_auxiliary_weight_schedule",
+    "confirm_selected_pretext_checkpoint",
     "pretext_loss_terms_to_rows",
     "rank_encoder_candidates",
 ]

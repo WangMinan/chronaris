@@ -1,6 +1,5 @@
 """Early-stopped, public-pretext-only encoder candidate screening."""
 from __future__ import annotations
-
 import hashlib
 import json
 import time
@@ -10,7 +9,7 @@ from typing import Callable, Mapping, Sequence
 
 import torch
 from torch import nn
-
+from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training.pretext import (
     CommonPretextHeadBundle,
     CommonPretextWeights,
@@ -49,6 +48,7 @@ class CandidateScreenConfig:
     gradient_clip_norm: float = 1.0
     seed: int = 17
     minimum_delta: float = 0.0
+    device: str = "cpu"
 
     def __post_init__(self) -> None:
         if self.max_epochs <= 0 or self.batch_size <= 0 or self.patience <= 0:
@@ -57,6 +57,10 @@ class CandidateScreenConfig:
             raise ValueError("candidate screen optimizer configuration is invalid")
         if self.minimum_delta < 0:
             raise ValueError("candidate screen minimum delta must be non-negative")
+        if self.device not in {"cpu", "cuda"}:
+            raise ValueError("candidate screen device must be cpu or cuda")
+        if self.device == "cuda" and not torch.cuda.is_available():
+            raise ValueError("candidate screen requested unavailable CUDA device")
 
 
 @dataclass(frozen=True, slots=True)
@@ -75,63 +79,6 @@ class CandidateScreenResult:
     training_elapsed_s: float
     parameter_count: int
     epoch_rows: tuple[Mapping[str, object], ...]
-
-
-def rank_encoder_candidates(
-    results: Sequence[CandidateScreenResult],
-) -> tuple[Mapping[str, object], ...]:
-    """Min-max normalize four candidates within each method and rank deterministically."""
-
-    grouped: dict[str, list[CandidateScreenResult]] = {}
-    for result in results:
-        grouped.setdefault(result.method_name, []).append(result)
-    rows = []
-    for method_name, values in sorted(grouped.items()):
-        by_id = {value.candidate_id: value for value in values}
-        if set(by_id) != {"A", "B", "C", "D"} or len(values) != 4:
-            raise ValueError(f"candidate ranking requires A-D exactly once for {method_name}")
-        normalized_by_loss = {}
-        for loss_name in PUBLIC_SELECTION_WEIGHTS:
-            raw = {key: value.best_validation_losses[loss_name] for key, value in by_id.items()}
-            lower = min(raw.values())
-            upper = max(raw.values())
-            normalized_by_loss[loss_name] = {
-                key: (0.0 if upper == lower else (score - lower) / (upper - lower))
-                for key, score in raw.items()
-            }
-        method_rows = []
-        for candidate_id, result in sorted(by_id.items()):
-            normalized = {
-                name: normalized_by_loss[name][candidate_id]
-                for name in PUBLIC_SELECTION_WEIGHTS
-            }
-            score = sum(
-                PUBLIC_SELECTION_WEIGHTS[name] * normalized[name]
-                for name in PUBLIC_SELECTION_WEIGHTS
-            )
-            method_rows.append(
-                {
-                    "method_name": method_name,
-                    "candidate_id": candidate_id,
-                    "raw_validation_losses": dict(result.best_validation_losses),
-                    "normalized_validation_losses": normalized,
-                    "selection_loss": score,
-                    "parameter_count": result.parameter_count,
-                    "best_epoch": result.best_epoch,
-                    "completed_epochs": result.completed_epochs,
-                    "checkpoint_path": result.best_checkpoint_path,
-                }
-            )
-        method_rows.sort(
-            key=lambda row: (
-                row["selection_loss"],
-                row["parameter_count"],
-                row["candidate_id"],
-            )
-        )
-        for rank, row in enumerate(method_rows, start=1):
-            rows.append({**row, "rank": rank, "selected": rank == 1})
-    return tuple(rows)
 
 
 def train_pretext_candidate(
@@ -178,7 +125,20 @@ def train_pretext_candidate(
     resume_payload = None
     if resume and last_path.exists():
         last_payload = _load_payload(last_path)
-        if last_payload.get("protocol_sha256") != protocol_hash:
+        if (
+            last_payload.get("protocol_sha256") != protocol_hash
+            and not _legacy_cpu_checkpoint_is_compatible(
+                last_payload,
+                candidate=candidate,
+                config=resolved,
+                policy=policy,
+                fold=fold,
+                normalizer=normalizer,
+                physiology_feature_names=physiology_feature_names,
+                vehicle_feature_names=vehicle_feature_names,
+                vehicle_field_labels=vehicle_field_labels,
+            )
+        ):
             raise RepresentationContractError(
                 f"candidate screen checkpoint protocol changed for {method_name}/{candidate.candidate_id}"
             )
@@ -195,11 +155,11 @@ def train_pretext_candidate(
             vehicle_feature_names=vehicle_feature_names,
             vehicle_field_labels=vehicle_field_labels,
             candidate_config=candidate,
-        )
+        ).to(resolved.device)
         heads = CommonPretextHeadBundle(
             representation_dim=FUSION_OUTPUT_DIM,
             target_feature_count=len(physiology_feature_names) + len(vehicle_feature_names),
-        )
+        ).to(resolved.device)
     optimizer = torch.optim.AdamW(
         (*encoder.parameters(), *heads.parameters()),
         lr=candidate.learning_rate,
@@ -241,7 +201,9 @@ def train_pretext_candidate(
         gradient_norms = []
         for sample_ids in _batch_ids(fold.train_sample_ids, resolved.batch_size):
             raw = _load_batch(batch, batch_provider, sample_ids)
-            normalized = normalizer.transform(raw)
+            normalized = move_observation_batch(
+                normalizer.transform(raw), device=resolved.device
+            )
             plans = build_batch_augmentation_realizations(
                 sample_ids,
                 epoch=epoch,
@@ -280,6 +242,7 @@ def train_pretext_candidate(
             normalizer=normalizer,
             policy=policy,
             seed=resolved.seed,
+            device=resolved.device,
         )
         score = _public_selection_loss(validation_losses)
         improved = score < best_score - resolved.minimum_delta
@@ -355,7 +318,7 @@ def train_pretext_candidate(
 
 
 def _evaluate_public_losses(
-    *, encoder, heads, batch, batch_provider, sample_ids, batch_size, normalizer, policy, seed
+    *, encoder, heads, batch, batch_provider, sample_ids, batch_size, normalizer, policy, seed, device
 ) -> Mapping[str, float]:
     encoder.eval()
     heads.eval()
@@ -363,7 +326,7 @@ def _evaluate_public_losses(
     with torch.inference_mode():
         for ids in _batch_ids(sample_ids, batch_size):
             raw = _load_batch(batch, batch_provider, ids)
-            normalized = normalizer.transform(raw)
+            normalized = move_observation_batch(normalizer.transform(raw), device=device)
             plans = build_batch_augmentation_realizations(
                 ids, epoch=0, global_seed=seed, policy=policy
             )
@@ -464,6 +427,43 @@ def _protocol_hash(**payload) -> str:
     payload["code_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _legacy_cpu_checkpoint_is_compatible(
+    payload,
+    *,
+    candidate,
+    config,
+    policy,
+    fold,
+    normalizer,
+    physiology_feature_names,
+    vehicle_feature_names,
+    vehicle_field_labels,
+) -> bool:
+    """Allow only the device-field addition to reuse pre-CUDA CPU checkpoints."""
+
+    expected_config = asdict(config)
+    if payload.get("method_name") == "chronaris":
+        return False
+    if expected_config.pop("device") != "cpu" or "device" in payload.get("config", {}):
+        return False
+    return all(
+        (
+            payload.get("candidate_config") == asdict(candidate),
+            payload.get("config") == expected_config,
+            payload.get("augmentation_policy") == asdict(policy),
+            payload.get("fold") == fold.to_dict(),
+            payload.get("normalizer", {}).get("transform_sha256")
+            == normalizer.to_manifest().get("transform_sha256"),
+            payload.get("physiology_feature_names") == list(physiology_feature_names),
+            payload.get("vehicle_feature_names") == list(vehicle_feature_names),
+            payload.get("vehicle_field_labels")
+            == [list(value) for value in vehicle_field_labels],
+            payload.get("label_used_for_encoder_training") is False,
+            payload.get("simulation_oracle_opened") is False,
+        )
+    )
 
 
 def _load_payload(path: Path):

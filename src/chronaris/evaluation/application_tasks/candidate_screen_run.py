@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pandas as pd
+import torch
 
 from chronaris.evaluation.application_tasks.candidate_screen_data import (
     load_candidate_screen_data,
@@ -19,6 +20,7 @@ from chronaris.modeling.training import (
     TRAINABLE_FUSION_METHODS,
     CandidateScreenConfig,
     rank_encoder_candidates,
+    confirm_selected_pretext_checkpoint,
     train_pretext_candidate,
 )
 from chronaris.representation import AugmentationPolicy, TrainOnlyRobustNormalizer
@@ -40,6 +42,7 @@ class EncoderCandidateScreenRunConfig:
     batch_size: int = 128
     patience: int = 8
     seed: int = 17
+    device: str = "auto"
     resume: bool = True
 
 
@@ -77,6 +80,7 @@ def run_encoder_candidate_screen(
         },
     ) as progress:
         data = load_candidate_screen_data(config.simulation_root)
+        device = _resolve_device(config.device)
         normalizer = TrainOnlyRobustNormalizer().fit(
             data.batch,
             train_sample_ids=data.fold.train_sample_ids,
@@ -89,6 +93,7 @@ def run_encoder_candidate_screen(
             batch_size=config.batch_size,
             patience=config.patience,
             seed=config.seed,
+            device=device,
         )
         vehicle_labels = tuple((name, name) for name in data.schema.vehicle_feature_names)
         results = []
@@ -135,6 +140,21 @@ def run_encoder_candidate_screen(
             if row["selected"]
         }
         _write_json(compact_root / "selected_candidates.json", selection)
+        confirmation_rows = tuple(
+            confirm_selected_pretext_checkpoint(
+                item["checkpoint_path"],
+                batch=data.batch,
+                sample_ids=data.fold.held_out_sample_ids,
+                batch_size=config.batch_size,
+                seed=config.seed,
+                device=device,
+            )
+            for item in selection.values()
+        )
+        pd.DataFrame(confirmation_rows).to_csv(
+            compact_root / "development_confirmation.csv",
+            index=False,
+        )
         protocol = {
             "format": "chronaris.encoder_candidate_screen_protocol.v1",
             "seed": config.seed,
@@ -156,19 +176,37 @@ def run_encoder_candidate_screen(
             "task_labels_opened": False,
             "simulation_ground_truth_opened": False,
             "locked_test_opened": False,
+            "training_device": device,
+            "cuda_device_name": (
+                torch.cuda.get_device_name(0) if device == "cuda" else None
+            ),
             "sealed_locked_test_raw_file_count": data.sealed_locked_test_file_count,
         }
         _write_json(compact_root / "screen_protocol.json", protocol)
-        acceptance = _acceptance_rows(results, ranking_rows, data)
+        acceptance = _acceptance_rows(
+            results,
+            ranking_rows,
+            data,
+            confirmation_rows=confirmation_rows,
+        )
         pd.DataFrame(acceptance).to_csv(compact_root / "acceptance.csv", index=False)
         report_path = compact_root / "summary.md"
-        report_path.write_text(_summary(config, results, ranking_rows, acceptance), encoding="utf-8")
+        report_path.write_text(
+            _summary(
+                config,
+                results,
+                ranking_rows,
+                acceptance,
+                confirmation_rows=confirmation_rows,
+            ),
+            encoding="utf-8",
+        )
         resume_command = (
             "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
             "scripts/evaluation/application_tasks/run_encoder_candidate_screen.py "
             f"--run-id {config.run_id} --max-epochs {config.max_epochs} "
             f"--batch-size {config.batch_size} --patience {config.patience} "
-            f"--seed {config.seed} --resume\n"
+            f"--seed {config.seed} --device {device} --resume\n"
         )
         (compact_root / "resume_command.txt").write_text(resume_command, encoding="utf-8")
         evidence_path = compact_root / "evidence_manifest.json"
@@ -224,7 +262,17 @@ def _flat_ranking_rows(rows):
     )
 
 
-def _acceptance_rows(results, ranking_rows, data):
+def _resolve_device(value: str) -> str:
+    if value == "auto":
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    if value not in {"cpu", "cuda"}:
+        raise ValueError("candidate screen device must be auto, cpu, or cuda")
+    if value == "cuda" and not torch.cuda.is_available():
+        raise ValueError("candidate screen requested unavailable CUDA device")
+    return value
+
+
+def _acceptance_rows(results, ranking_rows, data, *, confirmation_rows):
     return (
         {"check": "twenty_candidates_completed", "passed": len(results) == 20},
         {
@@ -247,10 +295,22 @@ def _acceptance_rows(results, ranking_rows, data):
             "check": "external_contract_is_64_dimensional",
             "passed": all(result.parameter_count > 0 for result in results),
         },
+        {
+            "check": "selected_candidates_confirmed_on_reserved_profile",
+            "passed": (
+                len(confirmation_rows) == 5
+                and all(row["sample_count"] == 1 for row in confirmation_rows)
+                and all(not row["task_labels_opened"] for row in confirmation_rows)
+                and all(
+                    not row["simulation_ground_truth_opened"]
+                    for row in confirmation_rows
+                )
+            ),
+        },
     )
 
 
-def _summary(config, results, ranking_rows, acceptance):
+def _summary(config, results, ranking_rows, acceptance, *, confirmation_rows):
     winners = [row for row in ranking_rows if row["selected"]]
     lines = [
         "# 编码器候选筛选（seed 17）",
@@ -271,6 +331,15 @@ def _summary(config, results, ranking_rows, acceptance):
     )
     lines.extend(
         [
+            "",
+            "## 预留配置开发确认",
+            "",
+            "| 方法 | 候选 | 公共确认损失 |",
+            "| --- | --- | ---: |",
+            *(
+                f"| {row['method_name']} | {row['candidate_id']} | {row['public_confirmation_loss']:.6f} |"
+                for row in confirmation_rows
+            ),
             "",
             "## 证据边界",
             "",

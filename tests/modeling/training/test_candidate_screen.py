@@ -9,6 +9,7 @@ from chronaris.modeling.training import (
     CandidateScreenConfig,
     EncoderCandidateConfig,
     CandidateScreenResult,
+    confirm_selected_pretext_checkpoint,
     load_common_pretraining_checkpoint,
     rank_encoder_candidates,
     train_pretext_candidate,
@@ -111,6 +112,16 @@ def test_candidate_screen_early_stopping_checkpoint_is_loadable(tmp_path) -> Non
     assert payload["label_used_for_encoder_training"] is False
     assert payload["simulation_oracle_opened"] is False
     assert encoder.config_manifest()["backbone_config"]["hidden_dim"] == 32
+    confirmation = confirm_selected_pretext_checkpoint(
+        result.best_checkpoint_path,
+        batch=batch,
+        sample_ids=fold.held_out_sample_ids,
+        batch_size=1,
+        seed=17,
+    )
+    assert confirmation["sample_count"] == 1
+    assert confirmation["task_labels_opened"] is False
+    assert np.isfinite(confirmation["public_confirmation_loss"])
 
 
 def test_candidate_ranking_uses_within_method_min_max_and_parameter_tie_break() -> None:
@@ -210,3 +221,10 @@ def test_candidate_screen_resumes_running_last_checkpoint_from_next_epoch(tmp_pa
     assert first.completed_epochs == 3
     assert resumed.completed_epochs == 3
     assert [row["epoch"] for row in resumed.epoch_rows] == [1, 2, 3]
+
+
+def test_candidate_screen_rejects_unknown_device() -> None:
+    import pytest
+
+    with pytest.raises(ValueError, match="device"):
+        CandidateScreenConfig(device="tpu")

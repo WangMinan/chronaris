@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G5 seed 17 编码器候选筛选
 
-G4.1–G4.2 已完成仿真应用 consumer、鼎新目标与防泄漏上下文、五折训练内 validation、六方法公共预训练与统一表示、固定 consumer、inner-train 嵌套目标和 validation-only 复核。G4 验收门已关闭。G5 已完成 20 候选单 epoch 全链路 smoke，当前运行最多 50 epoch、patience 8 的 seed 17 正式筛选。
+G4.1–G4.2 已完成。G5 seed 17 正式筛选也已完成：20/20 候选、5/5 唯一配置和预留 G1 profile 开发确认均闭环，7/7 验收通过。当前进入选定配置的鼎新 validation 确认与 G6 多 seed 锁定实验。
 
 ### G1–G4.1 已完成
 
@@ -168,7 +168,9 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 候选内逐 epoch 保存 `last.pt`，恢复时加载编码器、公共 head、优化器、最佳分数和 patience，从下一 epoch 继续；候选完成后直接复用 `best.pt`。
 - 四候选逐损失做方法内 min-max，常量损失项归一化为 0；总分并列时按更小参数量、候选字母序确定唯一配置。
 - 20 候选单 epoch smoke 已完成，耗时 5 分 03 秒、峰值内存 4.34 GB、重型 checkpoint 约 114 MB，6/6 验收通过。该结果只验证长跑链路，不作为正式候选结论。
-- 新增代码后完整测试为 `338 passed, 8 skipped, 317 warnings`，`compileall` 与 `git diff --check` 通过。
+- G5 正式收口后完整测试为 `340 passed, 8 skipped, 317 warnings`，`compileall` 与 `git diff --check` 通过。
+- 正式 50 epoch/patience 8 筛选完成；Chronaris、MulT、ContiFormer、生理单流选择 A，航电单流选择 C。预留的第 24 个 G1 validation profile 只用于五个选定 checkpoint 的一次开发确认，不参与重新排序。
+- Chronaris 参考轴采样已由逐样本重放改为数学等价的向量化查询，输出、审计与梯度对照通过；CPU 单 epoch 从约 60 秒降至 17.07 秒。RTX 4090 同批次为 49.87 秒，因此该主干正式 screen 使用 CPU，CUDA 支持保留给更适合并行的后续训练。
 
 ## 已锁定规范
 
@@ -183,9 +185,10 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 ### G5：screen
 
-- seed 17、每个深度方法四候选。
-- 当前先完成 G1 的五方法公共自监督候选排序；选定候选随后进入鼎新五折 inner-train/validation 确认，禁止在 20 候选上反复读取鼎新 validation 指标。
-- 不读取 G2 locked test，不使用结构诊断指标选择候选。
+- 已完成：seed 17、每个可训练方法四候选。
+- 已完成：只用 G1 公共自监督验证损失排序，并在预留 profile 上确认选定配置。
+- 已保持：未读取 G2 locked test，未使用结构诊断指标选择候选。
+- 下一步：只重训每方法唯一选定配置并进入鼎新五折 validation；禁止让 20 个候选反复读取鼎新 validation。
 
 ### G6：locked confirmation
 

@@ -149,6 +149,7 @@ class SingleStreamODERNNPrototype(nn.Module):
         reference_valid_mask: torch.Tensor | None = None
         reference_positive_evolution_count = 0
         reference_maximum_delta_t_s = 0.0
+        updated_hidden_tensor = torch.stack(updated_hidden_steps, dim=1)
         if reference_offsets_s is not None:
             resolved_reference_offsets = _resolve_reference_offsets_s(
                 reference_offsets_s,
@@ -163,7 +164,7 @@ class SingleStreamODERNNPrototype(nn.Module):
                 reference_maximum_delta_t_s,
             ) = self._sample_reference_hidden_states(
                 stream,
-                observation_embeddings,
+                updated_hidden_tensor,
                 resolved_reference_offsets,
             )
             reference_projected_states = self.projection_head(reference_hidden_states)
@@ -174,7 +175,7 @@ class SingleStreamODERNNPrototype(nn.Module):
             feature_names=stream.feature_names,
             observation_embeddings=observation_embeddings,
             evolved_hidden_states=torch.stack(evolved_hidden_steps, dim=1),
-            updated_hidden_states=torch.stack(updated_hidden_steps, dim=1),
+            updated_hidden_states=updated_hidden_tensor,
             reconstructions=torch.stack(reconstruction_steps, dim=1),
             projected_states=torch.stack(projection_steps, dim=1),
             mask=stream.mask,
@@ -217,7 +218,7 @@ class SingleStreamODERNNPrototype(nn.Module):
     def _sample_reference_hidden_states(
         self,
         stream: TorchAlignmentStreamBatch,
-        observation_embeddings: torch.Tensor,
+        updated_hidden_states: torch.Tensor,
         reference_offsets_s: torch.Tensor,
     ) -> tuple[torch.Tensor, torch.Tensor, int, float]:
         """Replay one stream and sample hidden states on a shared reference grid."""
@@ -233,83 +234,66 @@ class SingleStreamODERNNPrototype(nn.Module):
         ):
             raise ValueError("reference_offsets_s must be monotonically non-decreasing within each sample.")
 
-        reference_rows: list[torch.Tensor] = []
-        reference_valid_rows: list[torch.Tensor] = []
-        positive_evolution_count = 0
-        maximum_positive_delta_t_s = 0.0
-        hidden_dtype = stream.values.dtype
-        device = stream.values.device
-
-        for sample_index in range(stream.values.shape[0]):
-            sample_hidden = stream.values.new_zeros((1, self.config.hidden_dim))
-            sample_current_time = stream.values.new_zeros(())
-            sample_reference_states: list[torch.Tensor] = []
-            sample_reference_valid: list[torch.Tensor] = []
-            observation_count = int(stream.point_counts[sample_index].item())
-            observation_index = 0
-            has_observation = False
-
-            while observation_index < observation_count and not bool(stream.mask[sample_index, observation_index]):
-                observation_index += 1
-
-            for reference_time in reference_offsets_s[sample_index]:
-                resolved_reference_time = torch.clamp(reference_time.to(dtype=hidden_dtype), min=0.0)
-
-                while observation_index < observation_count:
-                    if not bool(stream.mask[sample_index, observation_index]):
-                        observation_index += 1
-                        continue
-
-                    observation_time = stream.offsets_s[sample_index, observation_index].to(dtype=hidden_dtype)
-                    if bool(observation_time > resolved_reference_time):
-                        break
-
-                    delta_to_observation = torch.clamp(observation_time - sample_current_time, min=0.0)
-                    if self.config.enable_continuous_evolution:
-                        if bool(delta_to_observation > 0):
-                            positive_evolution_count += 1
-                            maximum_positive_delta_t_s = max(
-                                maximum_positive_delta_t_s,
-                                float(delta_to_observation.item()),
-                            )
-                        sample_hidden = self.ode_rnn_cell.evolve_hidden_state(
-                            sample_hidden,
-                            delta_to_observation.reshape(1),
-                        )
-                    sample_hidden = self.ode_rnn_cell.update_hidden_state(
-                        sample_hidden,
-                        observation_embeddings[sample_index, observation_index].unsqueeze(0),
-                        torch.ones((1,), dtype=torch.bool, device=device),
-                    )
-                    sample_current_time = observation_time
-                    observation_index += 1
-                    has_observation = True
-
-                delta_to_reference = torch.clamp(resolved_reference_time - sample_current_time, min=0.0)
-                if self.config.enable_continuous_evolution and has_observation:
-                    if bool(delta_to_reference > 0):
-                        positive_evolution_count += 1
-                        maximum_positive_delta_t_s = max(
-                            maximum_positive_delta_t_s,
-                            float(delta_to_reference.item()),
-                        )
-                    sampled_hidden = self.ode_rnn_cell.evolve_hidden_state(
-                        sample_hidden,
-                        delta_to_reference.reshape(1),
-                    )[0]
-                else:
-                    sampled_hidden = sample_hidden[0]
-                sample_reference_states.append(sampled_hidden)
-                sample_reference_valid.append(
-                    torch.as_tensor(has_observation, dtype=torch.bool, device=device)
-                )
-
-            reference_rows.append(torch.stack(sample_reference_states, dim=0))
-            reference_valid_rows.append(torch.stack(sample_reference_valid, dim=0))
-
+        batch_size, point_count = stream.mask.shape
+        reference_count = reference_offsets_s.shape[1]
+        observation_indices = torch.arange(
+            point_count,
+            device=stream.values.device,
+        ).view(1, point_count, 1)
+        eligible = stream.mask.unsqueeze(-1) & (
+            stream.offsets_s.unsqueeze(-1) <= reference_offsets_s.unsqueeze(1)
+        )
+        source_indices = torch.where(
+            eligible,
+            observation_indices,
+            torch.full_like(observation_indices, -1),
+        ).amax(dim=1)
+        reference_valid_mask = source_indices >= 0
+        safe_indices = source_indices.clamp_min(0)
+        gathered_states = torch.gather(
+            updated_hidden_states,
+            1,
+            safe_indices.unsqueeze(-1).expand(-1, -1, self.config.hidden_dim),
+        )
+        source_offsets = torch.gather(stream.offsets_s, 1, safe_indices)
+        delta_to_reference = torch.clamp(
+            reference_offsets_s - source_offsets,
+            min=0.0,
+        )
+        if self.config.enable_continuous_evolution:
+            sampled_states = self.ode_rnn_cell.evolve_hidden_state(
+                gathered_states.reshape(batch_size * reference_count, -1),
+                delta_to_reference.reshape(batch_size * reference_count),
+            ).reshape(batch_size, reference_count, -1)
+            observation_positive = (stream.delta_t_s > 0) & stream.mask
+            reference_positive = (delta_to_reference > 0) & reference_valid_mask
+            positive_evolution_count = int(observation_positive.sum().item()) + int(
+                reference_positive.sum().item()
+            )
+            maximum_positive_delta_t_s = max(
+                float(
+                    stream.delta_t_s[stream.mask].max().item()
+                    if bool(stream.mask.any())
+                    else 0.0
+                ),
+                float(
+                    delta_to_reference[reference_valid_mask].max().item()
+                    if bool(reference_valid_mask.any())
+                    else 0.0
+                ),
+            )
+        else:
+            sampled_states = gathered_states
+            positive_evolution_count = 0
+            maximum_positive_delta_t_s = 0.0
+        sampled_states = torch.where(
+            reference_valid_mask.unsqueeze(-1),
+            sampled_states,
+            torch.zeros_like(sampled_states),
+        )
         return (
-            torch.stack(reference_rows, dim=0),
-            torch.stack(reference_valid_rows, dim=0),
+            sampled_states,
+            reference_valid_mask,
             positive_evolution_count,
             maximum_positive_delta_t_s,
         )
