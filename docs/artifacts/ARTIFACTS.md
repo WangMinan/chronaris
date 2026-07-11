@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_simulation-mechanism-consumers/`：**时间偏移与生理响应时延恢复锁定评价**。四方法在三个随机种子上完成 24 个 G1 Ridge 探针和 840 个 G2 压力场景评价，输出 3,360 条正式指标、630 条以 48 条潜在轨迹为单位的配对统计，6/6 门禁通过。Chronaris 在 35 场景与三 seed 汇总的时钟偏移 MAE/RMSE/±0.5 秒命中率为 0.8883/0.9932/0.5210，响应时延 MAE/RMSE/±2 秒命中率为 7.4859/8.7352/0.2073，均为四方法最佳；MulT 的响应时延 Spearman 0.3584 高于 Chronaris 0.1766。该证据支持绝对误差与容差命中优势，不支持所有机制指标全面领先。
 - `runs/2026-07-12_simulation-mechanism-representations/`：**时间偏移与生理响应时延恢复表示**。三个随机种子的朴素同步、MulT、ContiFormer 和 Chronaris 在 G1 train/validation 六个观测场景上导出 144/144 份统一表示，36 个随机种子—角色—场景单元均含四方法，5/5 门禁通过。时间偏移与响应时延真值在该阶段保持关闭；下游只允许 G1 train 拟合、G1 validation 选择 Ridge 强度，再到 G2 压力输入锁定评价。
 - `runs/2026-07-12_batched-viterbi-runtime-benchmark/`：**持续时间约束批量解码运行时基准**。在 seed 17 生理单流、192 条真实压力场景 TCN logits 上，batch 维向量化将逐样本外推 77.55 秒降到 1.76 秒，约 43.95 倍；时间、类别、持续时间候选顺序和回溯规则均不变，真实前四样本与随机单元测试逐位一致。旧标量 run 未完成任何 seed—场景单元并已隔离，不进入正式压力指标。
 - `runs/2026-07-12_simulation-locked-consumers/`：**G1 到 G2 三随机种子六方法锁定下游主表**。18/18 方法—随机种子单元完成 Logistic/Ridge、MiniRocket 10,000 kernels、GPU 因果 TCN 和持续时间约束解码，生成 1,152 条指标、768 条双流增益、90 条以 48 条 G2 轨迹为独立单位的配对统计，7/7 门禁通过。Chronaris 在线性探针负荷分类/回归（macro-F1 0.5110、RMSE 0.1928）和持续时间约束机动分段（frame macro-F1 0.4687、segmental F1@0.25 0.5319）居首；MulT 在 MiniRocket 负荷分类及边界 F1/延迟上居首。Chronaris 相对最佳单流的分段 frame/segmental 平均增益为 0.1194/0.1109，边界 F1@1s 增益为 -0.0053；本结果支持分项机制优势，不支持所有指标全面领先。
