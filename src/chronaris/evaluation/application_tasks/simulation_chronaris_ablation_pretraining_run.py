@@ -226,7 +226,11 @@ def run_simulation_chronaris_ablation_pretraining(
 
 def _acceptance_rows(config, rows, auxiliary):
     expected = len(config.seeds) * len(config.variants)
-    physics = [row for row in auxiliary if row["component"] == "physical_consistency"]
+    physics = [
+        row
+        for row in auxiliary
+        if row["term_name"] == "chronaris_physical_consistency"
+    ]
     return (
         _check("all_variant_seed_runs", len(rows) == expected, len(rows), expected),
         _check("all_checkpoints_complete", all(row["status"] in {"completed", "resumed"} for row in rows), [row["status"] for row in rows], "completed_or_resumed"),

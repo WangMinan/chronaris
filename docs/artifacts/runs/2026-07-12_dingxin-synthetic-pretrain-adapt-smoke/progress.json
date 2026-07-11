@@ -1,0 +1,75 @@
+{
+  "folds": [
+    "leave_one_view_out__fold01"
+  ],
+  "seeds": [
+    17
+  ],
+  "selected_candidates": {
+    "physiology_only": "A",
+    "vehicle_only": "C",
+    "mult": "A",
+    "contiformer": "A",
+    "chronaris": "A"
+  },
+  "methods": [
+    "physiology_only"
+  ],
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "transfer_initialization_enabled": true,
+  "stage_name": "dingxin_locked_pretraining",
+  "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T11:41:55.784312Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T11:41:38.595070Z",
+      "event": "start",
+      "folds": [
+        "leave_one_view_out__fold01"
+      ],
+      "seeds": [
+        17
+      ],
+      "selected_candidates": {
+        "physiology_only": "A",
+        "vehicle_only": "C",
+        "mult": "A",
+        "contiformer": "A",
+        "chronaris": "A"
+      },
+      "methods": [
+        "physiology_only"
+      ],
+      "task_targets_opened": false,
+      "outer_test_accessed": false,
+      "transfer_initialization_enabled": true
+    },
+    {
+      "timestamp_utc": "2026-07-11T11:41:55.649769Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "best_epoch": 1
+    },
+    {
+      "timestamp_utc": "2026-07-11T11:41:55.784312Z",
+      "event": "finished",
+      "status": "completed",
+      "method_fold_seed_count": 1,
+      "acceptance_pass_count": 8,
+      "acceptance_check_count": 8
+    }
+  ],
+  "seed": 17,
+  "fold_id": "leave_one_view_out__fold01",
+  "method_name": "physiology_only",
+  "status": "completed",
+  "best_epoch": 1,
+  "method_fold_seed_count": 1,
+  "acceptance_pass_count": 8,
+  "acceptance_check_count": 8
+}

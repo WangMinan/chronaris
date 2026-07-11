@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 7/7 协议验证，并启动 3 seeds × 5 folds × 5 methods 的 75 单元队列；G6 仿真 seeds 17/29/43 正式队列同时运行。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
+G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 8/8 协议验证，并启动 3 seeds × 5 folds × 5 methods 的 75 单元队列；G6 仿真 seeds 17/29/43 正式队列同时运行。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
 
 ### 本轮新增进度
 
@@ -23,6 +23,8 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通�
 - G1→G2 clean 表示、正式 consumer、压力表示、冻结 consumer 复用、退化斜率和轨迹级配对统计的可恢复编排已经实现；按协议等待上游锁定 checkpoint 后再执行。
 - 鼎新正式表示与 consumer 编排已实现：75 个 checkpoint 完整后才导出 270 份六方法三角色表示，validation 只负责选参，outer-test 只负责一次锁定评价。
 - Chronaris 四项机制消融已接入锁定训练、checkpoint 回载、表示导出和相同下游 consumer；完整模型与消融按 48 条 G2 潜在轨迹配对。
+- synthetic-to-real 轨道已实现形状安全的部分参数迁移和无标签鼎新适配；单方法跨 schema 冒烟复制 97.93% 目标编码器元素并通过 8/8 门禁，正式轨道等待仿真三 seed checkpoint 完整。
+- 时间偏移/响应时延恢复已实现四方法专用表示与下游探针：G1 train 拟合、G1 validation 选择 Ridge 强度，G2 35 场景只评价；主统计单位固定为 48 条潜在轨迹。
 
 ### G1–G4.1 已完成
 
@@ -180,7 +182,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 候选内逐 epoch 保存 `last.pt`，恢复时加载编码器、公共 head、优化器、最佳分数和 patience，从下一 epoch 继续；候选完成后直接复用 `best.pt`。
 - 四候选逐损失做方法内 min-max，常量损失项归一化为 0；总分并列时按更小参数量、候选字母序确定唯一配置。
 - 20 候选单 epoch smoke 已完成，耗时 5 分 03 秒、峰值内存 4.34 GB、重型 checkpoint 约 114 MB，6/6 验收通过。该结果只验证长跑链路，不作为正式候选结论。
-- 本轮正式训练、鼎新下游与消融编排收口后完整测试为 `356 passed, 8 skipped, 317 warnings`，`compileall`、Ruff 与 `git diff --check` 通过。
+- 本轮正式训练、鼎新下游、机制恢复与消融编排收口后完整测试为 `360 passed, 8 skipped, 317 warnings`，`compileall`、Ruff 与 `git diff --check` 通过。
 - 正式 50 epoch/patience 8 筛选完成；Chronaris、MulT、ContiFormer、生理单流选择 A，航电单流选择 C。预留的第 24 个 G1 validation profile 只用于五个选定 checkpoint 的一次开发确认，不参与重新排序。
 - Chronaris 参考轴采样已由逐样本重放改为数学等价的向量化查询，输出、审计与梯度对照通过；CPU 单 epoch 从约 60 秒降至 17.07 秒。RTX 4090 同批次为 49.87 秒，因此该主干正式 screen 使用 CPU，CUDA 支持保留给更适合并行的后续训练。
 
@@ -205,15 +207,18 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ### G6：locked confirmation
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；基线优先 GPU、Chronaris 使用同批基准更快设备。
-- 进行中：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 7/7 验收，正式队列已启动。
+- 进行中：仿真 seed 17 五方法已完成，seeds 29/43 已从恢复点串行继续。
+- 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。为规避 WSL GPU 双进程 launch failure，待仿真 CUDA 队列完成后再独占 GPU 恢复。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
-- 待执行：synthetic-to-real 和端到端微调辅助表；二者不替代冻结表示主结果。
+- 已实现待上游门禁：synthetic-to-real 三 seed 五折无标签适配及其统一表示/consumer 复用。
+- 待执行：端到端微调辅助表；不得替代冻结表示主结果。
 
 ### G7：stress 与论文证据包
 
 - 已完成：48 条 G2 轨迹 × 35 个严格成对观测版本，生成器不接收方法名，7/7 审计通过。
 - 待锁定 checkpoint：跑全部单因素表示、冻结 consumer、退化斜率和 mixed-severe。
+- 待锁定 checkpoint：导出 G1 六观测场景四方法表示，并在 G2 压力表示完成后运行绝对时钟偏移和主生理响应时延恢复。
 - 结构诊断只放附录。
 - 输出中文论文图表、证据矩阵、claim boundary 和新协议快照候选。
 
@@ -250,6 +255,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ## 运行和产物规则
 
 - Python：`/home/wangminan/env/anaconda3/envs/chronaris/bin/python`。
+- RTX 4090 正式训练按单 CUDA 进程串行调度；CPU Chronaris 可并行，但不得再启动第二个 CUDA 训练进程。
 - 紧凑可引用产物：`docs/artifacts/runs/YYYY-MM-DD_intent/`。
 - raw snapshot、dense bundle、checkpoint 和逐样本预测：`artifacts/application_evaluation/`，禁止入仓。
 - 每个正式 run 必须有 progress、resume、protocol、fold metrics、claim boundary 和 evidence manifest。

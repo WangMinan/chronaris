@@ -25,10 +25,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default="2026-07-12_dingxin-locked-pretraining")
     parser.add_argument("--seed", action="append", type=int, default=[])
+    parser.add_argument(
+        "--method",
+        action="append",
+        choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"),
+        default=[],
+    )
     parser.add_argument("--fold-id", action="append", default=[])
     parser.add_argument("--max-epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--patience", type=int, default=8)
+    parser.add_argument("--initialization-pretraining-run-id")
     parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--chronaris-device", choices=("auto", "cpu", "cuda"), default="cpu")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
@@ -38,6 +45,13 @@ def main() -> int:
         DingxinLockedPretrainingConfig(
             run_id=args.run_id,
             seeds=tuple(args.seed) or (17, 29, 43),
+            methods=tuple(args.method) or (
+                "physiology_only",
+                "vehicle_only",
+                "mult",
+                "contiformer",
+                "chronaris",
+            ),
             fold_ids=(
                 tuple(args.fold_id)
                 if args.fold_id
@@ -46,6 +60,7 @@ def main() -> int:
             max_epochs=args.max_epochs,
             batch_size=args.batch_size,
             patience=args.patience,
+            initialization_pretraining_run_id=args.initialization_pretraining_run_id,
             baseline_device=args.baseline_device,
             chronaris_device=args.chronaris_device,
             resume=args.resume,

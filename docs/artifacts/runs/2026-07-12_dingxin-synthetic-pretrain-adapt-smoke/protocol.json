@@ -1,14 +1,14 @@
 {
   "format": "chronaris.dingxin_locked_pretraining_protocol.v1",
   "config": {
-    "run_id": "2026-07-12_dingxin-locked-pretraining-smoke",
+    "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-smoke",
     "compact_output_root": "docs/artifacts/runs",
     "heavy_output_root": "artifacts/application_evaluation",
     "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
     "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
     "fixed_audit_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
     "inner_split_root": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits",
-    "initialization_pretraining_run_id": null,
+    "initialization_pretraining_run_id": "2026-07-12_simulation-locked-pretraining-smoke",
     "fold_ids": [
       "leave_one_view_out__fold01"
     ],
@@ -16,11 +16,7 @@
       17
     ],
     "methods": [
-      "physiology_only",
-      "vehicle_only",
-      "mult",
-      "contiformer",
-      "chronaris"
+      "physiology_only"
     ],
     "max_epochs": 1,
     "batch_size": 32,
@@ -45,5 +41,5 @@
     "short_horizon_prediction",
     "lag_discrimination"
   ],
-  "representation_family": "frozen_task_agnostic_v1"
+  "representation_family": "synthetic_pretrain_real_adapt_v1"
 }

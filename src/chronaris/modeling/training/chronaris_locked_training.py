@@ -28,6 +28,10 @@ from chronaris.modeling.training.pretraining_encoders import (
     EncoderCandidateConfig,
     build_trainable_fusion_encoder,
 )
+from chronaris.modeling.training.transfer_initialization import (
+    describe_transfer_source,
+    initialize_encoder_from_transfer_source,
+)
 from chronaris.representation import (
     AugmentationPolicy,
     DualStreamObservationBatch,
@@ -94,6 +98,7 @@ def train_locked_chronaris(
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     candidate_config: EncoderCandidateConfig | None = None,
     variant: str = "full",
+    initialization_checkpoint: str | Path | None = None,
     resume: bool = True,
 ) -> LockedChronarisTrainingResult:
     resolved = config or LockedChronarisTrainingConfig()
@@ -104,6 +109,15 @@ def train_locked_chronaris(
     root = Path(output_root) / "chronaris"
     best_path = root / "best.pt"
     last_path = root / "last.pt"
+    transfer_source = (
+        describe_transfer_source(
+            initialization_checkpoint,
+            expected_method="chronaris",
+            expected_seed=resolved.seed,
+        ).to_dict()
+        if initialization_checkpoint is not None
+        else None
+    )
     protocol_hash = _protocol_hash(
         config=asdict(resolved),
         policy=asdict(policy),
@@ -114,11 +128,27 @@ def train_locked_chronaris(
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
         variant=variant,
+        transfer_source=transfer_source,
     )
     resume_payload = None
     if resume and last_path.exists():
         resume_payload = _load(last_path)
-        if resume_payload.get("protocol_sha256") != protocol_hash:
+        if (
+            resume_payload.get("protocol_sha256") != protocol_hash
+            and not _checkpoint_is_semantically_compatible(
+                resume_payload,
+                config=resolved,
+                policy=policy,
+                candidate=candidate,
+                fold=fold,
+                normalizer=normalizer,
+                physiology_feature_names=physiology_feature_names,
+                vehicle_feature_names=vehicle_feature_names,
+                vehicle_field_labels=vehicle_field_labels,
+                variant=variant,
+                transfer_source=transfer_source,
+            )
+        ):
             raise RepresentationContractError("locked Chronaris protocol changed")
         if resume_payload.get("training_status") == "completed":
             return _result(_load(best_path), best_path, last_path, status="resumed")
@@ -141,10 +171,19 @@ def train_locked_chronaris(
         lr=candidate.learning_rate,
         weight_decay=resolved.weight_decay,
     )
+    transfer_initialization = None
     if resume_payload is not None:
         encoder.load_state_dict(resume_payload["encoder_state_dict"], strict=True)
         heads.load_state_dict(resume_payload["head_state_dict"], strict=True)
         optimizer.load_state_dict(resume_payload["optimizer_state_dict"])
+        transfer_initialization = resume_payload.get("transfer_initialization")
+    elif initialization_checkpoint is not None:
+        transfer_initialization = initialize_encoder_from_transfer_source(
+            encoder,
+            initialization_checkpoint,
+            expected_method="chronaris",
+            expected_seed=resolved.seed,
+        ).to_dict()
     epoch_rows = list(resume_payload["epoch_rows"]) if resume_payload else []
     auxiliary_rows = list(resume_payload["auxiliary_rows"]) if resume_payload else []
     best_score = float(resume_payload["best_public_selection_loss"]) if resume_payload else float("inf")
@@ -265,6 +304,8 @@ def train_locked_chronaris(
             epoch_rows=epoch_rows,
             auxiliary_rows=auxiliary_rows,
             elapsed=elapsed_offset + time.perf_counter() - started,
+            transfer_source=transfer_source,
+            transfer_initialization=transfer_initialization,
         )
         _save(last_path, payload)
         if improved:
@@ -369,7 +410,48 @@ def _payload(**values):
         "chronaris_auxiliary_enabled": True,
         "selection_uses_public_pretext_only": True,
         "early_stopping_uses_public_pretext_only": True,
+        "transfer_source": values.get("transfer_source"),
+        "transfer_initialization": values.get("transfer_initialization"),
     }
+
+
+def _checkpoint_is_semantically_compatible(
+    payload,
+    *,
+    config,
+    policy,
+    candidate,
+    fold,
+    normalizer,
+    physiology_feature_names,
+    vehicle_feature_names,
+    vehicle_field_labels,
+    variant,
+    transfer_source,
+):
+    return all(
+        (
+            payload.get("method_name") == "chronaris",
+            payload.get("config") == asdict(config),
+            payload.get("augmentation_policy") == asdict(policy),
+            payload.get("candidate_config") == asdict(candidate),
+            payload.get("fold") == fold.to_dict(),
+            payload.get("normalizer", {}).get("transform_sha256")
+            == normalizer.to_manifest().get("transform_sha256"),
+            payload.get("physiology_feature_names")
+            == list(physiology_feature_names),
+            payload.get("vehicle_feature_names") == list(vehicle_feature_names),
+            payload.get("vehicle_field_labels")
+            == [list(value) for value in vehicle_field_labels],
+            payload.get("encoder_manifest", {})
+            .get("backbone_config", {})
+            .get("variant", "full")
+            == variant,
+            payload.get("transfer_source") == transfer_source,
+            payload.get("label_used_for_encoder_training") is False,
+            payload.get("simulation_oracle_opened") is False,
+        )
+    )
 
 
 def _protocol_hash(**payload):

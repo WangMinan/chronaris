@@ -1,4 +1,4 @@
-"""Export six-method locked representations for all paired G2 stress scenarios."""
+"""Export G1 multi-scenario representations for the mechanism recovery task."""
 
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ from pathlib import Path
 import pandas as pd
 
 from chronaris.evaluation.application_tasks.application_consumer_representations import (
-    APPLICATION_METHODS,
     _encode_in_batches,
 )
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_data import (
@@ -23,8 +22,8 @@ from chronaris.evaluation.application_tasks.simulation_locked_representation_run
     load_locked_seed_adapters,
     require_complete_locked_checkpoint_set,
 )
-from chronaris.evaluation.application_tasks.simulation_stress_context_data import (
-    load_simulation_stress_context_data,
+from chronaris.evaluation.application_tasks.simulation_mechanism_context_data import (
+    load_simulation_mechanism_context_data,
 )
 from chronaris.modeling.common.run_observer import open_task_eval_run_observer
 from chronaris.modeling.training import TRAINABLE_FUSION_METHODS
@@ -33,31 +32,30 @@ from chronaris.representation import (
     validate_fusion_method_alignment,
     write_fusion_stream_batch,
 )
-from chronaris.simulation.aviation_dual_stream import (
-    locked_stress_observation_scenarios,
-)
+from chronaris.simulation.aviation_dual_stream import canonical_observation_scenarios
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-LOGGER = logging.getLogger("chronaris.pipelines.task_eval.simulation_stress_representations")
+LOGGER = logging.getLogger(
+    "chronaris.pipelines.task_eval.simulation_mechanism_representations"
+)
 LOGGER.addHandler(logging.NullHandler())
+MECHANISM_METHODS = ("naive_time_sync", "mult", "contiformer", "chronaris")
 
 
 @dataclass(frozen=True, slots=True)
-class SimulationStressRepresentationConfig:
-    run_id: str = "2026-07-12_simulation-locked-stress-representations"
+class SimulationMechanismRepresentationConfig:
+    run_id: str = "2026-07-12_simulation-mechanism-representations"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
     clean_representation_run_id: str = "2026-07-12_simulation-locked-representations"
-    stress_generation_run_id: str = "2026-07-12_aviation-simulation-locked-stress"
-    stress_audit_run_id: str = "2026-07-12_aviation-simulation-locked-stress-audit"
+    simulation_root: str = (
+        "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
+    )
     selected_candidates_path: str = (
         "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/"
         "selected_candidates.json"
-    )
-    formal_simulation_root: str = (
-        "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
     )
     seeds: tuple[int, ...] = LOCKED_SEEDS
     export_batch_size: int = 32
@@ -65,35 +63,35 @@ class SimulationStressRepresentationConfig:
 
 
 @dataclass(frozen=True, slots=True)
-class SimulationStressRepresentationResult:
+class SimulationMechanismRepresentationResult:
     run_id: str
     status: str
-    compact_run_root: str
-    heavy_run_root: str
     export_count: int
     acceptance_pass_count: int
     acceptance_check_count: int
+    compact_run_root: str
+    heavy_run_root: str
     report_path: str
     evidence_manifest_path: str
 
 
-def run_simulation_stress_representations(config: SimulationStressRepresentationConfig):
+def run_simulation_mechanism_representations(
+    config: SimulationMechanismRepresentationConfig,
+) -> SimulationMechanismRepresentationResult:
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
     clean_representation_root = (
         Path(config.heavy_output_root) / config.clean_representation_run_id
     )
-    stress_root = Path(config.heavy_output_root) / config.stress_generation_run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
     _require_completed_evidence(
         Path(config.compact_output_root) / config.clean_representation_run_id
     )
-    _require_completed_evidence(
-        Path(config.compact_output_root) / config.stress_audit_run_id
+    selected = json.loads(
+        Path(config.selected_candidates_path).read_text(encoding="utf-8")
     )
-    selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
     selected_ids = {
         method: str(selected[method]["candidate_id"])
         for method in TRAINABLE_FUSION_METHODS
@@ -103,20 +101,16 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
         seeds=config.seeds,
         selected_ids=selected_ids,
     )
-    pretraining_data = load_simulation_locked_pretraining_data(
-        config.formal_simulation_root
-    )
-    scenario_ids = tuple(
-        scenario.scenario_id for scenario in locked_stress_observation_scenarios()
-    )
+    pretraining_data = load_simulation_locked_pretraining_data(config.simulation_root)
+    scenarios = tuple(value.scenario_id for value in canonical_observation_scenarios())
     with open_task_eval_run_observer(
         run_root=compact_root,
         run_id=config.run_id,
-        stage_name="simulation_locked_stress_representation_export",
+        stage_name="simulation_mechanism_representation_export",
         logger=LOGGER,
         initial_progress={
             "seeds": list(config.seeds),
-            "scenario_count": len(scenario_ids),
+            "scenarios": list(scenarios),
             "task_oracle_opened": False,
         },
     ) as progress:
@@ -132,61 +126,69 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                 heavy_root=clean_representation_root,
                 resume=True,
             )
-            for scenario_id in scenario_ids:
-                data = load_simulation_stress_context_data(
-                    stress_root,
-                    scenario_id=scenario_id,
-                )
-                if seed == config.seeds[0]:
-                    data_rows.extend(data.sample_manifest_rows)
-                outputs = []
-                for method in APPLICATION_METHODS:
-                    destination = (
-                        heavy_root
-                        / "representations"
-                        / f"seed_{seed}"
-                        / method
-                        / scenario_id
+            for role in ("train", "validation"):
+                for scenario_id in scenarios:
+                    data = load_simulation_mechanism_context_data(
+                        config.simulation_root,
+                        role=role,
+                        scenario_id=scenario_id,
                     )
-                    output, status = _export_one(
-                        adapter=adapters[method],
-                        batch=data.batch,
-                        destination=destination,
-                        batch_size=config.export_batch_size,
-                        resume=config.resume,
+                    data_rows.extend(
+                        {"seed": seed, **row} for row in data.sample_manifest_rows
                     )
-                    outputs.append(output)
-                    export_rows.append(
+                    outputs = []
+                    for method in MECHANISM_METHODS:
+                        destination = (
+                            heavy_root
+                            / "representations"
+                            / f"seed_{seed}"
+                            / method
+                            / role
+                            / scenario_id
+                        )
+                        output, status = _export_one(
+                            adapter=adapters[method],
+                            batch=data.batch,
+                            destination=destination,
+                            batch_size=config.export_batch_size,
+                            resume=config.resume,
+                        )
+                        outputs.append(output)
+                        export_rows.append(
+                            {
+                                "seed": seed,
+                                "method_name": method,
+                                "role": role,
+                                "scenario_id": scenario_id,
+                                "status": status,
+                                "sample_count": len(output.sample_ids),
+                                "checkpoint_sha256": output.checkpoint_sha256,
+                                "representation_sha256": sha256_file(
+                                    destination / "fusion_stream.npz"
+                                ),
+                                "output_root": str(destination),
+                                "task_oracle_opened": False,
+                            }
+                        )
+                    scenario_rows.append(
                         {
                             "seed": seed,
-                            "method_name": method,
+                            "role": role,
                             "scenario_id": scenario_id,
-                            "status": status,
-                            "sample_count": len(output.sample_ids),
-                            "checkpoint_sha256": output.checkpoint_sha256,
-                            "representation_sha256": sha256_file(
-                                destination / "fusion_stream.npz"
+                            "method_count": len(outputs),
+                            "context_count": len(data.batch.sample_ids),
+                            "alignment_sha256": validate_fusion_method_alignment(
+                                outputs
                             ),
-                            "output_root": str(destination),
                             "task_oracle_opened": False,
                         }
                     )
-                alignment = validate_fusion_method_alignment(outputs)
-                scenario_rows.append(
-                    {
-                        "seed": seed,
-                        "scenario_id": scenario_id,
-                        "method_count": len(outputs),
-                        "context_count": len(data.batch.sample_ids),
-                        "alignment_sha256": alignment,
-                        "task_oracle_opened": False,
-                    }
-                )
-                progress.update(
-                    "stress_scenario_representation_complete",
-                    seed=seed,
-                    scenario_id=scenario_id,
-                )
+                    progress.update(
+                        "simulation_mechanism_scenario_complete",
+                        seed=seed,
+                        role=role,
+                        scenario_id=scenario_id,
+                    )
         acceptance = _acceptance_rows(config, export_rows, scenario_rows)
         status = "completed" if all(row["passed"] for row in acceptance) else "partial"
         paths = _write_outputs(
@@ -205,14 +207,14 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
             acceptance_pass_count=sum(row["passed"] for row in acceptance),
             acceptance_check_count=len(acceptance),
         )
-    return SimulationStressRepresentationResult(
+    return SimulationMechanismRepresentationResult(
         run_id=config.run_id,
         status=status,
-        compact_run_root=str(compact_root),
-        heavy_run_root=str(heavy_root),
         export_count=len(export_rows),
         acceptance_pass_count=sum(row["passed"] for row in acceptance),
         acceptance_check_count=len(acceptance),
+        compact_run_root=str(compact_root),
+        heavy_run_root=str(heavy_root),
         report_path=str(paths["report"]),
         evidence_manifest_path=str(paths["evidence"]),
     )
@@ -227,23 +229,27 @@ def _export_one(*, adapter, batch, destination, batch_size, resume):
         ):
             return output, "resumed"
     output = _encode_in_batches(adapter, batch, batch_size=batch_size)
-    write_fusion_stream_batch(output, root=destination, export_role="stress_held_out")
+    write_fusion_stream_batch(
+        output,
+        root=destination,
+        export_role="mechanism_recovery_development",
+    )
     return load_fusion_stream_batch(destination), "completed"
 
 
 def _require_completed_evidence(root):
     payload = json.loads((root / "evidence_manifest.json").read_text(encoding="utf-8"))
     if payload.get("status") != "completed":
-        raise ValueError(f"stress representations require completed evidence: {root}")
+        raise ValueError("mechanism representations require clean locked representations")
 
 
 def _acceptance_rows(config, exports, scenarios):
-    expected_scenarios = len(config.seeds) * 35
-    expected_exports = expected_scenarios * 6
+    expected_scenarios = len(config.seeds) * 2 * 6
+    expected_exports = expected_scenarios * len(MECHANISM_METHODS)
     return (
-        _check("all_seed_scenarios", len(scenarios) == expected_scenarios, len(scenarios), expected_scenarios),
-        _check("six_methods_per_scenario", all(row["method_count"] == 6 for row in scenarios), [row["method_count"] for row in scenarios], 6),
-        _check("four_contexts_per_trajectory", all(row["context_count"] == 192 for row in scenarios), [row["context_count"] for row in scenarios], 192),
+        _check("all_seed_role_scenarios", len(scenarios) == expected_scenarios, len(scenarios), expected_scenarios),
+        _check("four_dual_stream_methods", all(row["method_count"] == 4 for row in scenarios), [row["method_count"] for row in scenarios], 4),
+        _check("fixed_context_counts", all(row["context_count"] == (384 if row["role"] == "train" else 96) for row in scenarios), sorted({(row["role"], row["context_count"]) for row in scenarios}), [("train", 384), ("validation", 96)]),
         _check("all_representation_exports", len(exports) == expected_exports, len(exports), expected_exports),
         _check("task_oracle_closed", all(not row["task_oracle_opened"] for row in exports), False, False),
     )
@@ -266,28 +272,27 @@ def _write_outputs(**values):
     pd.DataFrame(values["data_rows"]).to_csv(paths["data"], index=False)
     pd.DataFrame(values["acceptance"]).to_csv(paths["acceptance"], index=False)
     _write_json(paths["protocol"], {
-        "format": "chronaris.simulation_stress_representation_protocol.v1",
+        "format": "chronaris.simulation_mechanism_representation_protocol.v1",
         "config": asdict(values["config"]),
+        "methods": list(MECHANISM_METHODS),
         "task_oracle_opened": False,
-        "frozen_checkpoint_reuse": True,
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
-        "# G2 锁定压力场景表示导出",
+        "# 时间偏移与响应时延恢复表示导出",
         "",
         f"状态：{values['status']}；验收 {passed}/{len(values['acceptance'])}。",
-        f"共导出 {len(values['export_rows'])} 份三随机种子、六方法、35 场景冻结表示。",
-        "本阶段只读取原始观测，不打开任务真值或指标。",
+        f"完成 {len(values['export_rows'])} 份 G1 多场景四方法表示；任务真值保持关闭。",
         "",
     )), encoding="utf-8")
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_stress_representations.py "
+        "scripts/evaluation/application_tasks/run_simulation_mechanism_representations.py "
         f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} --resume\n",
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
-        "format": "chronaris.simulation_stress_representation_evidence.v1",
+        "format": "chronaris.simulation_mechanism_representation_evidence.v1",
         "run_id": values["config"].run_id,
         "status": values["status"],
         "export_count": len(values["export_rows"]),
@@ -305,4 +310,6 @@ def _check(check_id, passed, actual, expected):
 
 
 def _write_json(path, payload):
-    Path(path).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    Path(path).write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
