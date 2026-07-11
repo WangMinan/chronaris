@@ -4,23 +4,23 @@
   "stage_name": "simulation_chronaris_ablation_representations",
   "run_id": "2026-07-12_simulation-chronaris-ablation-representations-smoke",
   "last_event": "finished",
-  "updated_at_utc": "2026-07-11T12:03:31.026979Z",
+  "updated_at_utc": "2026-07-11T12:04:14.073038Z",
   "events": [
     {
-      "timestamp_utc": "2026-07-11T12:03:14.262157Z",
+      "timestamp_utc": "2026-07-11T12:04:13.784748Z",
       "event": "start",
       "checkpoint_count_verified_before_g2_open": 1,
       "task_oracle_opened": false
     },
     {
-      "timestamp_utc": "2026-07-11T12:03:30.950094Z",
+      "timestamp_utc": "2026-07-11T12:04:14.008612Z",
       "event": "simulation_chronaris_ablation_representation_complete",
       "seed": 17,
       "variant": "no_physics",
       "export_count": 3
     },
     {
-      "timestamp_utc": "2026-07-11T12:03:31.026979Z",
+      "timestamp_utc": "2026-07-11T12:04:14.073038Z",
       "event": "finished",
       "status": "completed",
       "variant_seed_count": 1,
