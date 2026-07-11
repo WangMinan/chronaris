@@ -1,0 +1,2 @@
+stage,elapsed_s,maximum_rss_mb,context_count,cached_sparse_array_bytes,precomputed_dense_context_bundle
+lazy_context_binding_audit,12.336434681899846,767.015625,96,82432824,False

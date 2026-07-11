@@ -1,0 +1,13 @@
+check_name,passed,details
+context_catalog_complete,True,{'context_count': 96}
+raw_input_availability_explicit,True,"{'available_count': 93, 'unavailable_count': 3}"
+lazy_streams_respect_context_end,True,{'maximum_relative_timestamp_s': 29.999000072479248}
+label_source_fields_absent_from_active_schema,True,"{'excluded_count': 20, 'active_raw_mapping_count': 1934}"
+common_schema_matches_locked_contract,True,"{'physiology_feature_count': 12, 'vehicle_feature_count': 955, 'materialization_policy': 'lazy_small_batch_only', 'cached_snapshot_file_count': 5}"
+classification_binding_uses_complete_inputs_only,True,{'available_unique_context_count': 93}
+response_binding_requires_complete_future,True,{'available_unique_context_count': 90}
+response_target_starts_after_input,True,{'row_count': 465}
+outer_fold_groups_are_disjoint,True,{'fold_count': 5}
+target_archives_verified,True,{'verified_archive_count': 10}
+lazy_context_hashes_complete,True,{'unique_source_hash_count': 93}
+snapshot_files_immutable,True,{'unchanged': True}

@@ -1,0 +1,38 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "precomputed_dense_context_bundle": false,
+  "stage_name": "dingxin_lazy_context_bindings",
+  "run_id": "2026-07-11_dingxin-context-bindings",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T03:25:10.194951Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T03:24:55.627663Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "precomputed_dense_context_bundle": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T03:25:09.251427Z",
+      "event": "lazy_context_streams_audited",
+      "context_count": 96,
+      "available_count": 93
+    },
+    {
+      "timestamp_utc": "2026-07-11T03:25:10.194951Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 12,
+      "acceptance_check_count": 12,
+      "input_available_context_count": 93
+    }
+  ],
+  "context_count": 96,
+  "available_count": 93,
+  "status": "completed",
+  "acceptance_pass_count": 12,
+  "acceptance_check_count": 12,
+  "input_available_context_count": 93
+}

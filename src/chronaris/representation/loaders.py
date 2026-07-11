@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from array import array
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -45,6 +46,81 @@ class DingxinObservationSchemaPlan:
     vehicle_raw_to_index: Mapping[str, Mapping[str, int]]
     snapshot_manifest: Mapping[str, object]
     snapshot_root: str
+
+
+@dataclass(frozen=True, slots=True)
+class CachedSparseSnapshotStream:
+    timestamps_epoch_s: np.ndarray
+    indptr: np.ndarray
+    feature_indices: np.ndarray
+    feature_values: np.ndarray
+    feature_count: int
+
+
+@dataclass(frozen=True, slots=True)
+class DingxinSnapshotPointCache:
+    """Verified allowed-field CSR cache; contexts remain sliced on demand."""
+
+    streams_by_path: Mapping[str, CachedSparseSnapshotStream]
+    file_sha256: Mapping[str, str]
+
+
+def build_dingxin_snapshot_point_cache(
+    plan: DingxinObservationSchemaPlan,
+) -> DingxinSnapshotPointCache:
+    root = Path(plan.snapshot_root)
+    streams_by_path = {}
+    file_hashes = {}
+    for item in plan.snapshot_manifest["files"]:
+        path = root / str(item["relative_path"])
+        actual_hash = sha256_file(path)
+        if actual_hash != str(item["sha256"]):
+            raise RepresentationContractError(
+                f"Dingxin snapshot cache hash mismatch: {path}"
+            )
+        sortie_id = str(item["sortie_id"])
+        raw_to_index = (
+            plan.physiology_raw_to_index[sortie_id]
+            if item["stream_kind"] == "physiology"
+            else plan.vehicle_raw_to_index[sortie_id]
+        )
+        timestamps = array("d")
+        indices = array("i")
+        values = array("f")
+        indptr = array("q", [0])
+        source_point_count = 0
+        for point in iter_raw_point_snapshot(path):
+            source_point_count += 1
+            start_index = len(indices)
+            for field, raw_value in sorted(point.values.items()):
+                index = raw_to_index.get(f"{point.measurement}.{field}")
+                if index is None:
+                    continue
+                value = _finite_float(raw_value)
+                if value is None:
+                    continue
+                indices.append(index)
+                values.append(value)
+            if len(indices) == start_index:
+                continue
+            timestamps.append(point.timestamp.timestamp())
+            indptr.append(len(indices))
+        if source_point_count != int(item["point_count"]):
+            raise RepresentationContractError(
+                f"Dingxin snapshot cache point count mismatch: {path}"
+            )
+        streams_by_path[str(path.resolve())] = CachedSparseSnapshotStream(
+            timestamps_epoch_s=np.frombuffer(timestamps, dtype=np.float64),
+            indptr=np.frombuffer(indptr, dtype=np.int64),
+            feature_indices=np.frombuffer(indices, dtype=np.int32),
+            feature_values=np.frombuffer(values, dtype=np.float32),
+            feature_count=len(raw_to_index),
+        )
+        file_hashes[str(path.resolve())] = actual_hash
+    return DingxinSnapshotPointCache(
+        streams_by_path=streams_by_path,
+        file_sha256=file_hashes,
+    )
 
 
 def load_simulation_observed_context(
@@ -234,6 +310,8 @@ def build_dingxin_observation_schema_plan(
 def load_dingxin_observed_context(
     plan: DingxinObservationSchemaPlan,
     context: Mapping[str, object],
+    *,
+    point_cache: DingxinSnapshotPointCache | None = None,
 ) -> ObservedDualStreamSample:
     """Read one 30-second Dingxin context from the frozen raw-point snapshot."""
 
@@ -271,6 +349,11 @@ def load_dingxin_observed_context(
         feature_count=len(plan.schema.physiology_feature_names),
         start_utc=start_utc,
         end_utc=end_utc,
+        cached_stream=(
+            None
+            if point_cache is None
+            else point_cache.streams_by_path.get(str(physiology_path.resolve()))
+        ),
     )
     vehicle = _load_sparse_snapshot_stream(
         vehicle_path,
@@ -278,6 +361,11 @@ def load_dingxin_observed_context(
         feature_count=len(plan.schema.vehicle_feature_names),
         start_utc=start_utc,
         end_utc=end_utc,
+        cached_stream=(
+            None
+            if point_cache is None
+            else point_cache.streams_by_path.get(str(vehicle_path.resolve()))
+        ),
     )
     return ObservedDualStreamSample(
         sample_id=str(context["context_id"]),
@@ -331,17 +419,39 @@ def _load_sparse_snapshot_stream(
     feature_count: int,
     start_utc: datetime,
     end_utc: datetime,
+    cached_stream: CachedSparseSnapshotStream | None = None,
 ) -> dict[str, np.ndarray]:
-    rows: list[np.ndarray] = []
-    masks: list[np.ndarray] = []
-    timestamps: list[float] = []
-    for point in iter_raw_point_snapshot(path):
+    if cached_stream is not None:
+        if cached_stream.feature_count != feature_count:
+            raise RepresentationContractError(
+                f"Dingxin cached feature count mismatch: {path}"
+            )
+        return _slice_cached_sparse_stream(
+            cached_stream,
+            start_utc=start_utc,
+            end_utc=end_utc,
+        )
+    point_iterator = (
+        iter_raw_point_snapshot(path)
+    )
+    selected_points = []
+    for point in point_iterator:
         if point.timestamp < start_utc:
             continue
         if point.timestamp >= end_utc:
             break
-        row = np.zeros(feature_count, dtype=np.float32)
-        mask = np.zeros(feature_count, dtype=bool)
+        selected_points.append(point)
+    if not selected_points:
+        return {
+            "values": np.empty((0, feature_count), dtype=np.float32),
+            "timestamps": np.empty((0,), dtype=np.float64),
+            "feature_mask": np.empty((0, feature_count), dtype=bool),
+        }
+    values = np.zeros((len(selected_points), feature_count), dtype=np.float32)
+    feature_mask = np.zeros((len(selected_points), feature_count), dtype=bool)
+    timestamps = np.empty((len(selected_points),), dtype=np.float64)
+    output_index = 0
+    for point in selected_points:
         for field, raw_value in point.values.items():
             index = raw_to_index.get(f"{point.measurement}.{field}")
             if index is None:
@@ -349,23 +459,54 @@ def _load_sparse_snapshot_stream(
             value = _finite_float(raw_value)
             if value is None:
                 continue
-            row[index] = value
-            mask[index] = True
-        if not mask.any():
+            values[output_index, index] = value
+            feature_mask[output_index, index] = True
+        if not feature_mask[output_index].any():
             continue
-        rows.append(row)
-        masks.append(mask)
-        timestamps.append((point.timestamp - start_utc).total_seconds())
-    if not rows:
+        timestamps[output_index] = (point.timestamp - start_utc).total_seconds()
+        output_index += 1
+    if output_index == 0:
         return {
             "values": np.empty((0, feature_count), dtype=np.float32),
             "timestamps": np.empty((0,), dtype=np.float64),
             "feature_mask": np.empty((0, feature_count), dtype=bool),
         }
     return {
-        "values": np.stack(rows),
-        "timestamps": np.asarray(timestamps, dtype=np.float64),
-        "feature_mask": np.stack(masks),
+        "values": values[:output_index],
+        "timestamps": timestamps[:output_index],
+        "feature_mask": feature_mask[:output_index],
+    }
+
+
+def _slice_cached_sparse_stream(
+    stream: CachedSparseSnapshotStream,
+    *,
+    start_utc: datetime,
+    end_utc: datetime,
+) -> dict[str, np.ndarray]:
+    start_epoch = start_utc.timestamp()
+    end_epoch = end_utc.timestamp()
+    left = int(np.searchsorted(stream.timestamps_epoch_s, start_epoch, side="left"))
+    right = int(np.searchsorted(stream.timestamps_epoch_s, end_epoch, side="left"))
+    point_count = right - left
+    if point_count <= 0:
+        return {
+            "values": np.empty((0, stream.feature_count), dtype=np.float32),
+            "timestamps": np.empty((0,), dtype=np.float64),
+            "feature_mask": np.empty((0, stream.feature_count), dtype=bool),
+        }
+    values = np.zeros((point_count, stream.feature_count), dtype=np.float32)
+    feature_mask = np.zeros((point_count, stream.feature_count), dtype=bool)
+    for output_index, source_index in enumerate(range(left, right)):
+        item_start = int(stream.indptr[source_index])
+        item_end = int(stream.indptr[source_index + 1])
+        indices = stream.feature_indices[item_start:item_end]
+        values[output_index, indices] = stream.feature_values[item_start:item_end]
+        feature_mask[output_index, indices] = True
+    return {
+        "values": values,
+        "timestamps": stream.timestamps_epoch_s[left:right] - start_epoch,
+        "feature_mask": feature_mask,
     }
 
 
