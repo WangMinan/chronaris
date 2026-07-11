@@ -22,6 +22,7 @@ def test_downstream_evidence_pack_builds_separated_chinese_figures(tmp_path: Pat
     config = DownstreamEvidencePackConfig(
         compact_output_root=str(tmp_path),
         heavy_output_root=str(tmp_path / "heavy"),
+        public_adapter_run_id=None,
         transfer_consumer_run_id=None,
     )
     run_ids = (
