@@ -10,6 +10,9 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_simulation-locked-pretraining/`：**仿真选定配置三随机种子锁定重训**。seeds 17/29/43 的生理单流、航电单流、MulT、ContiFormer 和 Chronaris 共 15 个训练单元均完成 50 epoch，15/15 checkpoint 和 9/9 门禁通过。训练只读取 G1 原始异步双流，Chronaris 专属机制损失参与反向传播但早停只读取公共自监督 validation；任务真值和 G2 锁定测试始终关闭。本 run 冻结正式表示导出的任务无关 encoder，不构成任务性能排名。
+- `runs/2026-07-12_dingxin-coalesced-pretraining-smoke/`：**鼎新公共因果时间箱五方法运行时验证**。六方法统一在归一化和增强前使用 100 ms 固定因果时间箱，箱内同字段取均值、时间戳取最后真实观测；首个上下文航电/生理事件由 1779/150 点变为 300/120 点且末端时间不变。留一视图第一折 seed 17 的五方法均完成 1 epoch、8/8 门禁通过，四个 GPU 深度基线为 8.59–16.46 秒、Chronaris CPU 为 91.86 秒。该 run 只锁定输入与运行时合同，不形成任务排名。
+- `runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/`：**鼎新 Chronaris 合并输入 GPU 运行时验证**。与公共时间箱 run 使用相同折、seed、配置和输入，Chronaris 在 RTX 4090 完成 1 epoch，训练耗时 40.07 秒、8/8 门禁通过；相对同批 CPU 91.86 秒明显更快。因此正式鼎新队列采用单 GPU 串行，重复驱动故障时才按 checkpoint 设备历史迁移 CPU。本 run 不形成任务排名。
 - `runs/2026-07-12_simulation-locked-representations-gpu-smoke/`：**锁定表示混合设备导出验证**。使用 seed 17 五个已完成任务无关 checkpoint 与训练折朴素同步变换，四个深度/单流基线在 RTX 4090、Chronaris 在 CPU、朴素同步在 CPU/PCA 上导出 G1 train、G1 validation、G2 held-out 三角色共 18 份 `[N,96,64]` 表示；18/18 输出、7/7 门禁通过，耗时约 2 分 41 秒。任务 oracle 和指标保持关闭；本 run 只验证正式三 seed 导出的混合设备与 lineage，不形成方法排名。
 - `runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/`：**仿真预训练到鼎新无标签适配协议验证**。使用已完成的 G1 生理单流 checkpoint 初始化鼎新留一视图第一折；只复制同名且形状一致的任务无关参数，字段相关输入层重新初始化。复制目标编码器元素比例为 97.93%，源 checkpoint SHA-256、复制清单和 schema 差异进入新 checkpoint；任务目标与 outer-test 均保持关闭，8/8 验收通过。本 run 只验证跨 schema 迁移协议，不构成迁移效果结论。
 - `runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/`：**Chronaris 机制消融锁定重训协议验证**。seed 17 的无物理约束变体完成 1 epoch，checkpoint 明确记录 `variant=no_physics`，物理一致性项有效计数为 0；恢复复用后 6/6 验收通过。首次训练约 3 分 03 秒，重型 checkpoint 位于被忽略目录；本 run 不形成消融性能结论。

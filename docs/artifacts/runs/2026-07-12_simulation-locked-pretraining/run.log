@@ -1,0 +1,58 @@
+2026-07-11 17:55:32,010 INFO chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining observer start run_id=2026-07-12_simulation-locked-pretraining run_root=docs/artifacts/runs/2026-07-12_simulation-locked-pretraining
+2026-07-11 19:42:26,584 ERROR chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining failed run_id=2026-07-12_simulation-locked-pretraining
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/simulation_locked_pretraining_run.py", line 143, in run_simulation_locked_pretraining
+    result = train_pretext_candidate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/candidate_screen.py", line 213, in train_pretext_candidate
+    )
+
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 103, in apply_augmentation_realizations
+    vehicle = _augment_stream(
+              ^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 238, in _augment_stream
+    output_age[sample_index, :retained_count] = _feature_age(
+                                                ^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 306, in _feature_age
+    result[point_index, available] = (
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: unspecified launch failure
+Search for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2026-07-11 19:44:09,999 INFO chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining observer start run_id=2026-07-12_simulation-locked-pretraining run_root=docs/artifacts/runs/2026-07-12_simulation-locked-pretraining
+2026-07-11 20:16:09,752 ERROR chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining failed run_id=2026-07-12_simulation-locked-pretraining
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/simulation_locked_pretraining_run.py", line 143, in run_simulation_locked_pretraining
+    result = train_pretext_candidate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/candidate_screen.py", line 238, in train_pretext_candidate
+    augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 93, in apply_augmentation_realizations
+    physiology = _augment_stream(
+                 ^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 238, in _augment_stream
+    output_age[sample_index, :retained_count] = _feature_age(
+                                                ^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 306, in _feature_age
+    result[point_index, available] = (
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: unspecified launch failure
+Search for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2026-07-11 20:17:58,439 INFO chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining observer start run_id=2026-07-12_simulation-locked-pretraining run_root=docs/artifacts/runs/2026-07-12_simulation-locked-pretraining
+2026-07-11 20:17:58,454 ERROR chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining failed run_id=2026-07-12_simulation-locked-pretraining
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/simulation_locked_pretraining_run.py", line 143, in run_simulation_locked_pretraining
+    result = train_pretext_candidate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/candidate_screen.py", line 158, in train_pretext_candidate
+    raise RepresentationContractError(
+chronaris.representation.contracts.RepresentationContractError: candidate screen checkpoint protocol changed for physiology_only/A
+2026-07-11 20:19:26,774 INFO chronaris.pipelines.task_eval.simulation_locked_pretraining: simulation_locked_pretraining observer start run_id=2026-07-12_simulation-locked-pretraining run_root=docs/artifacts/runs/2026-07-12_simulation-locked-pretraining

@@ -11,8 +11,41 @@ from chronaris.evaluation.application_tasks.dingxin_context_data import (
     build_dingxin_lazy_context_index,
     dingxin_vehicle_field_labels,
 )
-from chronaris.representation import FoldLineage
+from chronaris.representation import (
+    FoldLineage,
+    coalesce_observation_batch,
+)
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+
+
+DINGXIN_MODEL_INPUT_BIN_WIDTH_S = 0.1
+
+
+def ensure_dingxin_model_input_contract(root: str | Path) -> Path:
+    root = Path(root)
+    path = root / "model_input_contract.json"
+    expected = {
+        "format": "chronaris.dingxin_model_input_contract.v1",
+        "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
+        "causal_bin_timestamp": "last_real_observation",
+        "duplicate_feature_reducer": "arithmetic_mean",
+    }
+    if path.is_file():
+        observed = json.loads(path.read_text(encoding="utf-8"))
+        if observed != expected:
+            raise ValueError("Dingxin model-input temporal contract changed")
+        return path
+    if any(root.rglob("*.pt")):
+        raise ValueError(
+            "Dingxin checkpoints predate the temporal-coalescing contract; "
+            "use a new run_id instead of mixing model inputs"
+        )
+    root.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(expected, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return path
 
 
 @dataclass(frozen=True, slots=True)
@@ -21,6 +54,12 @@ class DingxinFoldPretrainingData:
     fold: FoldLineage
     vehicle_field_labels: tuple[tuple[str, str], ...]
     source_hashes: dict[str, str]
+
+    def load_batch(self, sample_ids):
+        return coalesce_observation_batch(
+            self.index.load_batch(sample_ids),
+            bin_width_s=DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
+        )
 
 
 def load_dingxin_fold_pretraining_data(

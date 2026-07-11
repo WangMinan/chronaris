@@ -11,6 +11,7 @@ import pandas as pd
 import torch
 
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import (
+    DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
     load_dingxin_fold_pretraining_data,
 )
 from chronaris.evaluation.application_tasks.dingxin_selected_screen_run import (
@@ -105,6 +106,10 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
         "synthetic_pretrain_real_adapt_v1",
     }:
         raise ValueError("Dingxin pretraining representation family is unsupported")
+    if float(pretraining_protocol.get("model_input_bin_width_s", -1.0)) != float(
+        DINGXIN_MODEL_INPUT_BIN_WIDTH_S
+    ):
+        raise ValueError("Dingxin pretraining and representation input bins differ")
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
@@ -130,6 +135,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
             "task_targets_opened": False,
             "outer_test_metrics_opened": False,
             "representation_family": representation_family,
+            "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
         },
     ) as progress:
         seed_fold_rows = []
@@ -142,7 +148,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
                     fixed_audit_root=config.fixed_audit_root,
                     inner_split_root=config.inner_split_root,
                 )
-                provider = data.index.load_batch
+                provider = data.load_batch
                 fold_root = compact_root / "folds" / f"seed_{seed}" / fold_id
                 fold_root.mkdir(parents=True, exist_ok=True)
                 registry = CheckpointRegistry(fold_root / "checkpoint_registry.json")
@@ -366,6 +372,7 @@ def _write_outputs(**values):
         "task_targets_opened": False,
         "outer_test_metrics_opened": False,
         "representation_family": values["representation_family"],
+        "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((

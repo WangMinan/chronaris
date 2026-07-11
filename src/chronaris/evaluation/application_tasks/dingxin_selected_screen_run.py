@@ -12,6 +12,7 @@ from pathlib import Path
 import pandas as pd
 
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import (
+    ensure_dingxin_model_input_contract,
     load_dingxin_fold_pretraining_data,
 )
 from chronaris.modeling.common.run_observer import open_task_eval_run_observer
@@ -77,6 +78,7 @@ def run_dingxin_selected_screen(
     heavy_root = Path(config.heavy_output_root) / config.run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
+    ensure_dingxin_model_input_contract(heavy_root)
     selected_path = Path(config.selected_candidates_path)
     selected_payload = json.loads(selected_path.read_text(encoding="utf-8"))
     selected_ids = {
@@ -108,7 +110,7 @@ def run_dingxin_selected_screen(
                 inner_split_root=config.inner_split_root,
             )
             fold = data.fold
-            base_provider = data.index.load_batch
+            base_provider = data.load_batch
             normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
                 base_provider,
                 train_sample_ids=fold.train_sample_ids,

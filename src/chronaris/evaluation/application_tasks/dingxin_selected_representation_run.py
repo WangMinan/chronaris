@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import (
+    ensure_dingxin_model_input_contract,
     load_dingxin_fold_pretraining_data,
 )
 from chronaris.evaluation.application_tasks.dingxin_selected_screen_run import (
@@ -83,6 +84,7 @@ def run_dingxin_selected_representations(config: DingxinSelectedRepresentationCo
     screen_heavy_root = Path(config.heavy_output_root) / config.selected_screen_run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
+    ensure_dingxin_model_input_contract(screen_heavy_root)
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
     selected_ids = {
         method: str(selected[method]["candidate_id"])
@@ -109,7 +111,7 @@ def run_dingxin_selected_representations(config: DingxinSelectedRepresentationCo
                 fixed_audit_root=config.fixed_audit_root,
                 inner_split_root=config.inner_split_root,
             )
-            provider = data.index.load_batch
+            provider = data.load_batch
             fold = data.fold
             fold_compact_root = compact_root / "folds" / fold_id
             fold_compact_root.mkdir(parents=True, exist_ok=True)

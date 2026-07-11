@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_dingxin_locked_pretraining.py --run-id 2026-07-12_dingxin-coalesced-chronaris-gpu-smoke --seed 17 --method chronaris --max-epochs 1 --batch-size 32 --patience 1 --baseline-device cuda --chronaris-device cuda --resume
