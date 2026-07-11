@@ -34,6 +34,7 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--patience", type=int, default=8)
     parser.add_argument("--seed", type=int, default=17)
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     configure_task_eval_cli_logging(sys.stderr)
@@ -47,6 +48,7 @@ def main() -> int:
             batch_size=args.batch_size,
             patience=args.patience,
             seed=args.seed,
+            device=args.device,
             resume=args.resume,
         )
     )
