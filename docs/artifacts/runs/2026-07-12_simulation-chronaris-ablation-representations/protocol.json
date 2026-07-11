@@ -1,0 +1,26 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_representations.v1",
+  "config": {
+    "run_id": "2026-07-12_simulation-chronaris-ablation-representations",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-12_simulation-chronaris-ablation-pretraining",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "variants": [
+      "no_continuous_evolution",
+      "no_physics",
+      "no_causal_mask",
+      "single_scale_lag"
+    ],
+    "export_batch_size": 32,
+    "device": "cpu",
+    "resume": true
+  },
+  "checkpoint_set_verified_before_g2_open": true,
+  "task_oracle_opened": false
+}
