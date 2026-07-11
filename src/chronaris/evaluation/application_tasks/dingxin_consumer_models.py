@@ -7,6 +7,7 @@ from typing import Sequence
 
 import numpy as np
 from chronaris.evaluation.application_tasks.consumer_model_selection import (
+    classifier_classes,
     fit_classifier,
     fit_regressor,
 )
@@ -28,6 +29,7 @@ class DingxinConsumerConfig:
     classification_c_grid: tuple[float, ...] = (0.1, 1.0, 10.0)
     regression_alpha_grid: tuple[float, ...] = (0.1, 1.0, 10.0, 100.0)
     tune_on_validation: bool = False
+    minirocket_classification_solver: str = "liblinear_ovr"
 
 
 @dataclass(slots=True)
@@ -47,12 +49,10 @@ class DingxinTaskConsumerBundle:
 
     def predict(self, values):
         transformed = self._transform(values)
-        maneuver_step = self.maneuver_classifier.named_steps["logisticregression"]
-        high_step = self.high_response_classifier.named_steps["logisticregression"]
         return {
             "maneuver_prediction": self.maneuver_classifier.predict(transformed),
             "maneuver_probability": self.maneuver_classifier.predict_proba(transformed),
-            "maneuver_classes": maneuver_step.classes_,
+            "maneuver_classes": classifier_classes(self.maneuver_classifier),
             "response_prediction": self.response_regressor.predict(transformed),
             "high_response_prediction": self.high_response_classifier.predict(
                 transformed
@@ -60,7 +60,9 @@ class DingxinTaskConsumerBundle:
             "high_response_probability": self.high_response_classifier.predict_proba(
                 transformed
             ),
-            "high_response_classes": high_step.classes_,
+            "high_response_classes": classifier_classes(
+                self.high_response_classifier
+            ),
             "transformed_feature_count": int(transformed.shape[1]),
         }
 
@@ -196,6 +198,11 @@ def fit_dingxin_task_consumer(
         random_state=resolved.random_state,
         scaler_with_mean=(consumer_name == "linear"),
         classification_labels=(0, 1, 2),
+        solver=(
+            resolved.minirocket_classification_solver
+            if consumer_name == "minirocket"
+            else "lbfgs"
+        ),
     )
     response_regressor, selected_response_alpha = fit_regressor(
         transformed[response_positions],
@@ -238,6 +245,11 @@ def fit_dingxin_task_consumer(
         random_state=resolved.random_state,
         scaler_with_mean=(consumer_name == "linear"),
         classification_labels=(0, 1),
+        solver=(
+            resolved.minirocket_classification_solver
+            if consumer_name == "minirocket"
+            else "lbfgs"
+        ),
     )
     return DingxinTaskConsumerBundle(
         consumer_name=consumer_name,

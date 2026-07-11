@@ -10,6 +10,7 @@ from torch import nn
 from torch.nn import functional as F
 
 from chronaris.evaluation.application_tasks.consumer_model_selection import (
+    classifier_classes,
     fit_classifier,
     fit_regressor,
 )
@@ -26,6 +27,7 @@ class MiniRocketConsumerConfig:
     regression_alpha_grid: tuple[float, ...] = (0.1, 1.0, 10.0, 100.0)
     tune_on_validation: bool = False
     minimum_case_channel_std: float = 1e-7
+    classification_solver: str = "liblinear_ovr"
 
 
 class MiniRocketFrozenConsumer:
@@ -89,6 +91,7 @@ class MiniRocketFrozenConsumer:
             ),
             random_state=self.config.random_state,
             scaler_with_mean=False,
+            solver=self.config.classification_solver,
         )
         self.regressor, self.selected_regression_alpha = fit_regressor(
             transformed,
@@ -112,7 +115,7 @@ class MiniRocketFrozenConsumer:
         return {
             "class_prediction": self.classifier.predict(transformed),
             "class_probability": self.classifier.predict_proba(transformed),
-            "classes": self.classifier.named_steps["logisticregression"].classes_,
+            "classes": classifier_classes(self.classifier),
             "regression_prediction": self.regressor.predict(transformed),
             "transformed_feature_count": int(transformed.shape[1]),
             "input_channel_count": int(len(self.channel_indices)),

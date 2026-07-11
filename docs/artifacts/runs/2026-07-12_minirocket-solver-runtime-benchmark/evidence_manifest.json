@@ -1,0 +1,14 @@
+{
+  "format": "chronaris.evidence_manifest.v1",
+  "run_id": "2026-07-12_minirocket-solver-runtime-benchmark",
+  "status": "completed",
+  "evidence_role": "downstream_runtime_protocol",
+  "locked_test_opened": false,
+  "selected_solver": "liblinear_ovr",
+  "acceptance": {
+    "same_frozen_transform": true,
+    "same_c_grid": true,
+    "validation_only": true,
+    "method_invariant_rule": true
+  }
+}
