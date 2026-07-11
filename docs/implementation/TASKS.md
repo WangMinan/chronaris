@@ -218,7 +218,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 已完成：G2 clean 正式指标。Chronaris 在线性低容量负荷探针与机动状态/片段质量上领先；MulT 在 MiniRocket 负荷任务和边界定位上领先。Chronaris 对最佳单流的分段 frame/segmental 平均增益为 0.1194/0.1109，但边界 F1@1s 平均增益为 -0.0053，不把边界任务写成优势。
 - 已完成：压力冻结 consumer 的持续时间约束批量解码。真实 `[192,96,5]` logits 与逐样本结果逐位一致，运行时约提升 43.95 倍；旧标量运行未完成场景单元并已隔离，正式压力 run 从空根恢复。
 - 验证刷新：完整测试 `370 passed, 8 skipped, 319 warnings`，覆盖新加入的因果时间合并、显式 OvR 高维求解器和批量持续时间约束逐位等价路径。
-- 排队执行：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced` 新根；CPU 构造增强、全方法单进程 GPU 训练。任何缺少 `model_input_contract.json` 的旧 checkpoint 均 fail closed，不与新输入混用。
+- 进行中：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced`；首个留一视图折 15/15 完成，第二折累计完成 3 个单元，总进度 18/75。CPU 构造增强、全方法唯一 GPU 训练；任何缺少 `model_input_contract.json` 的旧 checkpoint 均拒绝恢复。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
 - 进行中：Chronaris 四项固定消融 × seeds 17/29/43 已启动 CPU 锁定重训；不占用当前唯一 CUDA 正式队列。
