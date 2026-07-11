@@ -29,6 +29,7 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通�
 - 仿真端到端微调辅助链路已实现并通过定向测试：五个可训练方法更新完整编码器，朴素同步只更新相同容量任务头；三任务联合损失只由 train 拟合、validation 早停，G2 held-out 只评价，输出独立 `end_to_end_finetuned_v1` 表。
 - 论文证据包生成器已实现并通过 8/8 合成输入验收：正式上游完成后自动汇总至少 7 个独立证据角色（含既有 UAB/NASA 公开适配，迁移轨道完成后为 8 个），生成鼎新/仿真六方法主图、压力斜率热图、机制恢复图、消融图、鼎新代表时间线与仿真 oracle 复盘，并输出 7 图可追溯 figure manifest。
 - 公共自监督增强已移到 CPU 确定性执行，模型前向和 target tensor 才进入 GPU；该路径完成单 epoch CUDA 实跑，可避开此前 `_feature_age` 的 WSL 小算子 launch failure，同时保持训练配置和增强 realization 不变。
+- clean、压力和机制恢复表示导出已支持 baseline CUDA / Chronaris CPU 混合设备；seed 17 完整六方法三角色冒烟导出 18/18、7/7 通过，正式表示队列可直接复用该配置。
 
 ### G1–G4.1 已完成
 

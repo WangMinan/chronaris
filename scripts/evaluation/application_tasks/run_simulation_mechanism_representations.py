@@ -26,6 +26,8 @@ def main() -> int:
     parser.add_argument("--run-id", default="2026-07-12_simulation-mechanism-representations")
     parser.add_argument("--seed", action="append", type=int, default=[])
     parser.add_argument("--export-batch-size", type=int, default=32)
+    parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")
+    parser.add_argument("--chronaris-device", choices=("auto", "cpu", "cuda"), default="cpu")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     configure_task_eval_cli_logging(sys.stderr)
@@ -34,6 +36,8 @@ def main() -> int:
             run_id=args.run_id,
             seeds=tuple(args.seed) or (17, 29, 43),
             export_batch_size=args.export_batch_size,
+            baseline_device=args.baseline_device,
+            chronaris_device=args.chronaris_device,
             resume=args.resume,
         )
     )

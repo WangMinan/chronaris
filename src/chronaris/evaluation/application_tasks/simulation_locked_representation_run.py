@@ -58,6 +58,8 @@ class SimulationLockedRepresentationConfig:
     )
     seeds: tuple[int, ...] = LOCKED_SEEDS
     export_batch_size: int = 32
+    baseline_device: str = "auto"
+    chronaris_device: str = "cpu"
     resume: bool = True
 
 
@@ -95,6 +97,8 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
     )
     pretraining_data = load_simulation_locked_pretraining_data(config.simulation_root)
     data = load_simulation_locked_context_data(config.simulation_root)
+    baseline_device = _resolve_device(config.baseline_device)
+    chronaris_device = _resolve_device(config.chronaris_device)
     with open_task_eval_run_observer(
         run_root=compact_root,
         run_id=config.run_id,
@@ -116,6 +120,8 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
                 pretraining_data=pretraining_data,
                 heavy_root=heavy_root,
                 resume=config.resume,
+                baseline_device=baseline_device,
+                chronaris_device=chronaris_device,
             )
             outputs, rows, alignment = export_application_context_representations(
                 adapters=adapters,
@@ -162,6 +168,8 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
             export_rows=export_rows,
             acceptance=acceptance,
             status=status,
+            baseline_device=baseline_device,
+            chronaris_device=chronaris_device,
         )
         progress.finish(
             status=status,
@@ -202,7 +210,8 @@ def require_complete_locked_checkpoint_set(root, *, seeds, selected_ids):
 
 
 def load_locked_seed_adapters(
-    *, seed, checkpoints, selected_ids, pretraining_data, heavy_root, resume
+    *, seed, checkpoints, selected_ids, pretraining_data, heavy_root, resume,
+    baseline_device="cpu", chronaris_device="cpu"
 ):
     adapters = {}
     rows = []
@@ -211,7 +220,11 @@ def load_locked_seed_adapters(
     fold_id = f"simulation_g1_to_g2_clean_locked__seed_{seed}"
     for method in TRAINABLE_FUSION_METHODS:
         path = checkpoints[(seed, method)]
-        encoder, _heads, loaded_normalizer, payload = load_common_pretraining_checkpoint(path)
+        device = chronaris_device if method == "chronaris" else baseline_device
+        encoder, _heads, loaded_normalizer, payload = load_common_pretraining_checkpoint(
+            path,
+            device=_resolve_device(device),
+        )
         if payload["candidate_config"]["candidate_id"] != selected_ids[method]:
             raise ValueError("locked representation candidate mismatch")
         normalizer_hashes.add(loaded_normalizer.to_manifest()["transform_sha256"])
@@ -246,6 +259,16 @@ def load_locked_seed_adapters(
     )
     rows.append({"method_name": "naive_time_sync", "path": str(naive_path), "sha256": naive_hash})
     return adapters, rows
+
+
+def _resolve_device(value):
+    if value == "auto":
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    if value not in {"cpu", "cuda"}:
+        raise ValueError("simulation representation device must be auto, cpu, or cuda")
+    if value == "cuda" and not torch.cuda.is_available():
+        raise ValueError("simulation representation requested unavailable CUDA")
+    return value
 
 
 def _acceptance_rows(config, seeds, exports):
@@ -283,6 +306,8 @@ def _write_outputs(**values):
         "fold": values["data"].fold.to_dict(),
         "checkpoint_set_verified_before_g2_open": True,
         "task_oracle_opened": False,
+        "baseline_device": values["baseline_device"],
+        "chronaris_device": values["chronaris_device"],
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -296,7 +321,8 @@ def _write_outputs(**values):
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_simulation_locked_representations.py "
-        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} --resume\n",
+        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} "
+        f"--baseline-device {values['baseline_device']} --chronaris-device {values['chronaris_device']} --resume\n",
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
@@ -308,6 +334,8 @@ def _write_outputs(**values):
         "acceptance_pass_count": passed,
         "acceptance_check_count": len(values["acceptance"]),
         "task_oracle_opened": False,
+        "baseline_device": values["baseline_device"],
+        "chronaris_device": values["chronaris_device"],
         "heavy_run_root": str(values["heavy_root"]),
         "output_paths": {key: str(path) for key, path in paths.items()},
     })

@@ -57,6 +57,7 @@
 - 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元；已保存第一训练单元的 37 个 epoch，当前等待仿真锁定训练收口后串行恢复，并默认沿用 CPU 故障降级路径。任务目标、outer-test 表示和指标仍保持关闭。
 - 设备调度：并发故障后已改为单 CUDA 进程，但独占训练仍再次触发 launch failure；GPU 张量自检恢复后通过。长基线训练改走 CPU，后续只在短 TCN/微调队列重新评估 GPU，重复故障立即从 checkpoint 迁移到 CPU。
 - CUDA 故障点已收敛到增强阶段的小粒度索引算子；公共增强、pretext target 和错误时移现固定在 CPU 确定性构造，再只把模型输入与 target tensor 送入 GPU。单 epoch CUDA 冒烟已确认 `training_device=cuda`、`augmentation_device=cpu`，鼎新基线队列将在严格单进程下采用该路径，若仍失败再按设备历史迁移 CPU。
+- 锁定表示混合设备冒烟已完成：seed 17 六方法在 baseline CUDA、Chronaris CPU、朴素同步 CPU/PCA 下导出 train/validation/G2 共 18 份表示，耗时约 2 分 41 秒，18/18 输出、7/7 验收通过；任务 oracle 保持关闭。
 - Chronaris 机制消融：四个变体 × 三个随机种子的 CPU 锁定重训已启动，与仿真基线的单 GPU 队列并行；后续仍需等待完整模型与消融表示后才能打开任务真值。
 - 消融表示冒烟：无物理约束变体已从锁定 checkpoint 回载并导出 G1 train、G1 validation、G2 held-out 三角色共 3 份统一表示，672 个上下文耗时约 22 秒，5/5 门禁通过。
 - 上游完成后按门禁顺序自动进入六方法统一表示、validation 选参 consumer、G2 clean 锁定指标、35 场景压力曲线和四项 Chronaris 机制消融。

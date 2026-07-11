@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_simulation-locked-representations-gpu-smoke/`：**锁定表示混合设备导出验证**。使用 seed 17 五个已完成任务无关 checkpoint 与训练折朴素同步变换，四个深度/单流基线在 RTX 4090、Chronaris 在 CPU、朴素同步在 CPU/PCA 上导出 G1 train、G1 validation、G2 held-out 三角色共 18 份 `[N,96,64]` 表示；18/18 输出、7/7 门禁通过，耗时约 2 分 41 秒。任务 oracle 和指标保持关闭；本 run 只验证正式三 seed 导出的混合设备与 lineage，不形成方法排名。
 - `runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/`：**仿真预训练到鼎新无标签适配协议验证**。使用已完成的 G1 生理单流 checkpoint 初始化鼎新留一视图第一折；只复制同名且形状一致的任务无关参数，字段相关输入层重新初始化。复制目标编码器元素比例为 97.93%，源 checkpoint SHA-256、复制清单和 schema 差异进入新 checkpoint；任务目标与 outer-test 均保持关闭，8/8 验收通过。本 run 只验证跨 schema 迁移协议，不构成迁移效果结论。
 - `runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/`：**Chronaris 机制消融锁定重训协议验证**。seed 17 的无物理约束变体完成 1 epoch，checkpoint 明确记录 `variant=no_physics`，物理一致性项有效计数为 0；恢复复用后 6/6 验收通过。首次训练约 3 分 03 秒，重型 checkpoint 位于被忽略目录；本 run 不形成消融性能结论。
 - `runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/`：**Chronaris 机制消融表示协议验证**。seed 17 无物理约束 checkpoint 回载后，对 G1 train、G1 validation 和 G2 held-out 的 384/96/192 个上下文分别导出 `[N,96,64]` 表示，共 3/3 输出、5/5 验收通过。当前并行条件下耗时约 22 秒、峰值约 0.89 GB；任务 oracle 和指标保持关闭，本 run 不形成消融性能结论。
