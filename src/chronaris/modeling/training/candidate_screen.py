@@ -32,6 +32,7 @@ from chronaris.representation import (
     build_batch_augmentation_realizations,
     build_common_pretext_targets,
     build_lag_discrimination_inputs,
+    move_common_pretext_targets,
     select_observation_batch,
 )
 from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError
@@ -236,9 +237,7 @@ def train_pretext_candidate(
         gradient_norms = []
         for sample_ids in _batch_ids(fold.train_sample_ids, resolved.batch_size):
             raw = _load_batch(batch, batch_provider, sample_ids)
-            normalized = move_observation_batch(
-                normalizer.transform(raw), device=resolved.device
-            )
+            normalized = normalizer.transform(raw)
             plans = build_batch_augmentation_realizations(
                 sample_ids,
                 epoch=epoch,
@@ -251,10 +250,22 @@ def train_pretext_candidate(
                 augmented.batch,
                 augmented.augmentation_ids,
             )
+            positive_batch = move_observation_batch(
+                augmented.batch,
+                device=resolved.device,
+            )
+            negative_batch = move_observation_batch(
+                lag_inputs.negative_batch,
+                device=resolved.device,
+            )
+            targets = move_common_pretext_targets(
+                targets,
+                device=resolved.device,
+            )
             optimizer.zero_grad(set_to_none=True)
             output = heads(
-                encoder(augmented.batch).sequence_embedding,
-                encoder(lag_inputs.negative_batch).sequence_embedding,
+                encoder(positive_batch).sequence_embedding,
+                encoder(negative_batch).sequence_embedding,
                 targets,
                 weights=CommonPretextWeights(),
             )
@@ -366,7 +377,7 @@ def _evaluate_public_losses(
     with torch.inference_mode():
         for ids in _batch_ids(sample_ids, batch_size):
             raw = _load_batch(batch, batch_provider, ids)
-            normalized = move_observation_batch(normalizer.transform(raw), device=device)
+            normalized = normalizer.transform(raw)
             plans = build_batch_augmentation_realizations(
                 ids, epoch=0, global_seed=seed, policy=policy
             )
@@ -375,9 +386,15 @@ def _evaluate_public_losses(
             lag_inputs = build_lag_discrimination_inputs(
                 augmented.batch, augmented.augmentation_ids
             )
+            positive_batch = move_observation_batch(augmented.batch, device=device)
+            negative_batch = move_observation_batch(
+                lag_inputs.negative_batch,
+                device=device,
+            )
+            targets = move_common_pretext_targets(targets, device=device)
             output = heads(
-                encoder(augmented.batch).sequence_embedding,
-                encoder(lag_inputs.negative_batch).sequence_embedding,
+                encoder(positive_batch).sequence_embedding,
+                encoder(negative_batch).sequence_embedding,
                 targets,
                 weights=CommonPretextWeights(),
             )
@@ -463,6 +480,7 @@ def _checkpoint_payload(**values):
         "transfer_source": values.get("transfer_source"),
         "transfer_initialization": values.get("transfer_initialization"),
         "training_device_history": list(values["device_history"]),
+        "augmentation_device": "cpu",
     }
 
 

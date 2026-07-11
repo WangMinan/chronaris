@@ -80,6 +80,7 @@
 - `--resume` 跳过 hash 已匹配的 completed fold。
 - 配置或输入 hash 改变时拒绝复用旧 fold。
 - 本机 WSL/RTX 4090 同时只运行一个正式 CUDA 训练进程；仿真与鼎新 GPU 队列串行。若独占 CUDA 后仍再次出现驱动级 `cudaErrorLaunchFailure`，保留 checkpoint 并允许只改变设备到 CPU 后恢复；checkpoint 必须记录 `training_device_history`，其他训练配置不得改变。Chronaris 已确认 CPU 更快，继续使用 CPU。
+- 公共观测增强、pretext target 和错误时移固定在 CPU 构造；只把增强后的双流 batch 与 target tensor 送入训练设备。checkpoint 记录 `augmentation_device=cpu`，不得为了设备切换改变 augmentation realization。
 
 ### 1.8 端到端微调辅助表
 

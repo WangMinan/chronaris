@@ -54,6 +54,21 @@ class LagDiscriminationInputs:
     augmentation_ids: tuple[str, ...]
 
 
+def move_common_pretext_targets(
+    targets: CommonPretextTargets,
+    *,
+    device: str | torch.device,
+) -> CommonPretextTargets:
+    """Move only target tensors after deterministic augmentation stays on CPU."""
+    return replace(
+        targets,
+        reconstruction_target=targets.reconstruction_target.to(device),
+        reconstruction_mask=targets.reconstruction_mask.to(device),
+        next_query_target=targets.next_query_target.to(device),
+        next_query_mask=targets.next_query_mask.to(device),
+    )
+
+
 def build_common_pretext_targets(
     original_batch: DualStreamObservationBatch,
     augmented: AppliedAugmentationBatch,

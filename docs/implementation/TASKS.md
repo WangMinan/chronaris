@@ -27,6 +27,7 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通�
 - 时间偏移/响应时延恢复已实现四方法专用表示与下游探针：G1 train 拟合、G1 validation 选择 Ridge 强度，G2 35 场景只评价；主统计单位固定为 48 条潜在轨迹。
 - 仿真端到端微调辅助链路已实现并通过定向测试：五个可训练方法更新完整编码器，朴素同步只更新相同容量任务头；三任务联合损失只由 train 拟合、validation 早停，G2 held-out 只评价，输出独立 `end_to_end_finetuned_v1` 表。
 - 论文证据包生成器已实现并通过 8/8 合成输入验收：正式上游完成后自动汇总 6 个独立证据角色，生成鼎新/仿真六方法主图、压力斜率热图、机制恢复图与消融图，并输出可追溯 figure manifest。
+- 公共自监督增强已移到 CPU 确定性执行，模型前向和 target tensor 才进入 GPU；该路径完成单 epoch CUDA 实跑，可避开此前 `_feature_age` 的 WSL 小算子 launch failure，同时保持训练配置和增强 realization 不变。
 
 ### G1–G4.1 已完成
 
@@ -210,7 +211,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；仿真长基线在独占 GPU 重复失败后迁移到 CPU，Chronaris 仍使用同批基准更快的 CPU。
 - 进行中：仿真 seed 17 五方法已完成，seed 29 航电单流从 epoch 37 的恢复点继续，之后依次完成其余 seeds 29/43 单元。
-- 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。待仿真锁定训练收口后串行恢复，默认使用 CPU；只有短任务在 GPU 自检稳定且无并发时才重新尝试 CUDA。
+- 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。待仿真锁定训练收口后，以“CPU 增强 + 单进程 GPU 模型”路径恢复基线、CPU 运行 Chronaris；若 CUDA 模型计算仍重复失败则保留 checkpoint 迁移 CPU。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
 - 进行中：Chronaris 四项固定消融 × seeds 17/29/43 已启动 CPU 锁定重训；不占用当前唯一 CUDA 正式队列。
