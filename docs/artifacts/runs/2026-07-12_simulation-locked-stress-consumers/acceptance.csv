@@ -1,0 +1,7 @@
+check_id,passed,actual,expected
+all_frozen_evaluations,True,630,630
+no_consumer_refit,True,False,False
+formal_metric_scope,True,20160,>0 formal rows
+all_stress_factors_have_slopes,True,"['absolute_clock_drift_ppm', 'absolute_clock_offset_s', 'additional_physiology_lag_s', 'contiguous_gap_s', 'random_missing_rate', 'snr_degradation_db', 'timestamp_jitter_ms']",seven factors
+mixed_severe_evaluated,True,True,True
+paired_trajectory_unit,True,630,>0 with 48 units
