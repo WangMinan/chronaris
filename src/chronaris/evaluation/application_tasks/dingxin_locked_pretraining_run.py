@@ -51,14 +51,20 @@ class DingxinLockedPretrainingConfig:
     snapshot_root: str = "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot"
     fixed_audit_root: str = "docs/artifacts/runs/2026-07-10_fixed-data-audit"
     inner_split_root: str = "docs/artifacts/runs/2026-07-11_dingxin-inner-splits"
+    initialization_pretraining_run_id: str | None = None
     fold_ids: tuple[str, ...] = DEFAULT_FOLDS
     seeds: tuple[int, ...] = LOCKED_SEEDS
+    methods: tuple[str, ...] = TRAINABLE_FUSION_METHODS
     max_epochs: int = 50
     batch_size: int = 32
     patience: int = 8
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
     resume: bool = True
+
+    def __post_init__(self) -> None:
+        if not self.methods or not set(self.methods).issubset(TRAINABLE_FUSION_METHODS):
+            raise ValueError("Dingxin locked methods must use the fixed trainable set")
 
 
 @dataclass(frozen=True, slots=True)
@@ -85,6 +91,20 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
         for method in TRAINABLE_FUSION_METHODS
     }
     candidates = {value.candidate_id: value for value in ENCODER_SCREEN_CANDIDATES}
+    initialization_checkpoints = (
+        _require_complete_initialization_checkpoints(
+            Path(config.heavy_output_root) / config.initialization_pretraining_run_id,
+            compact_root=(
+                Path(config.compact_output_root)
+                / config.initialization_pretraining_run_id
+            ),
+            seeds=config.seeds,
+            selected_ids=selected_ids,
+            methods=config.methods,
+        )
+        if config.initialization_pretraining_run_id is not None
+        else {}
+    )
     baseline_device = _resolve_device(config.baseline_device)
     chronaris_device = _resolve_device(config.chronaris_device)
     with open_task_eval_run_observer(
@@ -96,8 +116,10 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
             "folds": list(config.fold_ids),
             "seeds": list(config.seeds),
             "selected_candidates": selected_ids,
+            "methods": list(config.methods),
             "task_targets_opened": False,
             "outer_test_accessed": False,
+            "transfer_initialization_enabled": bool(initialization_checkpoints),
         },
     ) as progress:
         result_rows = []
@@ -117,18 +139,24 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                 ),
                 forbidden_sample_ids=data.fold.held_out_sample_ids,
             )
-            normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
-                provider,
+            normalizer, normalizer_status = _load_or_fit_normalizer(
+                heavy_root=heavy_root,
+                fold_id=fold_id,
+                seeds=config.seeds,
+                methods=config.methods,
+                selected_ids=selected_ids,
+                provider=provider,
                 train_sample_ids=data.fold.train_sample_ids,
                 held_out_sample_ids=(
                     data.fold.validation_sample_ids + data.fold.held_out_sample_ids
                 ),
                 batch_size=config.batch_size,
+                resume=config.resume,
             )
             schema = data.index.plan.schema
             vehicle_labels = data.vehicle_field_labels
             for seed in config.seeds:
-                for method in TRAINABLE_FUSION_METHODS:
+                for method in config.methods:
                     candidate = candidates[selected_ids[method]]
                     output_root = (
                         heavy_root
@@ -155,6 +183,9 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                             ),
                             augmentation_policy=AugmentationPolicy(),
                             candidate_config=candidate,
+                            initialization_checkpoint=initialization_checkpoints.get(
+                                (seed, method)
+                            ),
                             resume=config.resume,
                         )
                         auxiliary_rows.extend(
@@ -187,9 +218,18 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                                 device=baseline_device,
                             ),
                             augmentation_policy=AugmentationPolicy(),
+                            initialization_checkpoint=initialization_checkpoints.get(
+                                (seed, method)
+                            ),
                             resume=config.resume,
                         )
                         device = baseline_device
+                    checkpoint_payload = torch.load(
+                        result.best_checkpoint_path,
+                        map_location="cpu",
+                        weights_only=True,
+                    )
+                    transfer = checkpoint_payload.get("transfer_initialization")
                     result_rows.append(
                         {
                             "seed": seed,
@@ -209,6 +249,17 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                             "maximum_rss_mb": _maximum_rss_mb(),
                             "task_targets_opened": False,
                             "outer_test_accessed": False,
+                            "transfer_initialized": transfer is not None,
+                            "transfer_source_sha256": (
+                                None
+                                if transfer is None
+                                else transfer["source"]["checkpoint_sha256"]
+                            ),
+                            "transfer_copied_element_fraction": (
+                                None
+                                if transfer is None
+                                else transfer["copied_element_fraction"]
+                            ),
                         }
                     )
                     progress.update(
@@ -231,6 +282,7 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                     "normalizer_fit_count": len(normalizer.fit_sample_ids),
                     "forbidden_request_count": access["forbidden_request_count"],
                     "cache_hit_count": access["cache_hit_count"],
+                    "normalizer_status": normalizer_status,
                 }
             )
         acceptance = _acceptance_rows(config, result_rows, fold_rows, auxiliary_rows)
@@ -277,26 +329,129 @@ def _resolve_device(value):
     return value
 
 
+def _load_or_fit_normalizer(
+    *, heavy_root, fold_id, seeds, methods, selected_ids, provider,
+    train_sample_ids, held_out_sample_ids, batch_size, resume
+):
+    path = heavy_root / "normalizers" / fold_id / "normalizer.json"
+    manifest = None
+    status = "completed"
+    if resume and path.is_file():
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        status = "resumed_cache"
+    if resume and manifest is None:
+        for seed in seeds:
+            for method in methods:
+                checkpoint = (
+                    heavy_root
+                    / "checkpoints"
+                    / f"seed_{seed}"
+                    / fold_id
+                    / method
+                    / (
+                        "last.pt"
+                        if method == "chronaris"
+                        else f"{selected_ids[method]}/last.pt"
+                    )
+                )
+                if checkpoint.is_file():
+                    manifest = torch.load(
+                        checkpoint, map_location="cpu", weights_only=True
+                    )["normalizer"]
+                    status = "resumed_checkpoint"
+                    break
+            if manifest is not None:
+                break
+    if manifest is None:
+        normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
+            provider,
+            train_sample_ids=train_sample_ids,
+            held_out_sample_ids=held_out_sample_ids,
+            batch_size=batch_size,
+        )
+        manifest = dict(normalizer.to_manifest())
+    else:
+        normalizer = TrainOnlyRobustNormalizer.from_manifest(manifest)
+    if tuple(normalizer.fit_sample_ids) != tuple(train_sample_ids):
+        raise ValueError("Dingxin cached normalizer fit lineage changed")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return normalizer, status
+
+
+def _require_complete_initialization_checkpoints(
+    root, *, compact_root, seeds, selected_ids, methods
+):
+    evidence_path = compact_root / "evidence_manifest.json"
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    if evidence.get("status") != "completed":
+        raise ValueError("Dingxin transfer requires completed simulation pretraining")
+    paths = {}
+    for seed in seeds:
+        for method in methods:
+            path = (
+                root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
+                if method == "chronaris"
+                else root
+                / "checkpoints"
+                / f"seed_{seed}"
+                / method
+                / selected_ids[method]
+                / "best.pt"
+            )
+            payload = torch.load(path, map_location="cpu", weights_only=True)
+            if (
+                payload.get("training_status") != "completed"
+                or int(payload["seed"]) != seed
+                or str(payload["method_name"]) != method
+            ):
+                raise ValueError("Dingxin transfer source checkpoint is incomplete")
+            paths[(seed, method)] = path
+    return paths
+
+
 def _acceptance_rows(config, results, folds, auxiliary):
-    expected = len(config.seeds) * len(config.fold_ids) * len(TRAINABLE_FUSION_METHODS)
+    expected = len(config.seeds) * len(config.fold_ids) * len(config.methods)
+    chronaris_required = "chronaris" in config.methods
     return (
         _check("all_method_fold_seed_runs", len(results) == expected, len(results), expected),
         _check("all_checkpoints_complete", all(row["status"] in {"completed", "resumed"} for row in results), [row["status"] for row in results], "completed_or_resumed"),
         _check("public_validation_losses_finite", all(row["best_public_selection_loss"] >= 0 for row in results), len(results), expected),
         _check(
             "chronaris_auxiliary_schedule_consistent",
-            bool(auxiliary)
-            and (
-                any(row["weight"] > 0 for row in auxiliary)
-                if config.max_epochs > 10
-                else all(row["weight"] == 0 for row in auxiliary)
+            (
+                bool(auxiliary)
+                and (
+                    any(row["weight"] > 0 for row in auxiliary)
+                    if config.max_epochs > 10
+                    else all(row["weight"] == 0 for row in auxiliary)
+                )
+                if chronaris_required
+                else not auxiliary
             ),
             any(row["weight"] > 0 for row in auxiliary),
-            config.max_epochs > 10,
+            config.max_epochs > 10 if chronaris_required else False,
         ),
         _check("normalizers_inner_train_only", all(row["normalizer_fit_count"] == row["inner_train_count"] for row in folds), [row["normalizer_fit_count"] for row in folds], "inner_train counts"),
         _check("outer_test_never_requested", all(row["forbidden_request_count"] == 0 for row in folds), [row["forbidden_request_count"] for row in folds], 0),
         _check("task_targets_closed", all(not row["task_targets_opened"] for row in results), False, False),
+        _check(
+            "transfer_initialization_contract",
+            (
+                all(
+                    row["transfer_initialized"]
+                    and row["transfer_copied_element_fraction"] > 0
+                    for row in results
+                )
+                if config.initialization_pretraining_run_id is not None
+                else all(not row["transfer_initialized"] for row in results)
+            ),
+            config.initialization_pretraining_run_id,
+            "all initialized when configured; none otherwise",
+        ),
     )
 
 
@@ -325,21 +480,39 @@ def _write_outputs(**values):
         "task_targets_opened": False,
         "outer_test_accessed": False,
         "early_stopping_inputs": ["masked_reconstruction", "short_horizon_prediction", "lag_discrimination"],
+        "representation_family": (
+            "synthetic_pretrain_real_adapt_v1"
+            if values["config"].initialization_pretraining_run_id is not None
+            else "frozen_task_agnostic_v1"
+        ),
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
-        "# 鼎新选定配置三随机种子五折重训",
+        "# 鼎新选定配置锁定重训",
         "",
         f"状态：{values['status']}；验收 {passed}/{len(values['acceptance'])}。",
         f"完成 {len(values['result_rows'])} 个方法—折—随机种子训练；任务目标和 outer-test 始终关闭。",
-        "Chronaris 方法专属损失参与反向传播，早停只读取公共自监督 validation 损失。",
+        "跨 schema 迁移只加载形状一致的任务无关参数；schema 相关输入和重构层重新初始化。"
+        if values["config"].initialization_pretraining_run_id is not None
+        else "Chronaris 方法专属损失参与反向传播，早停只读取公共自监督 validation 损失。",
         "",
     )), encoding="utf-8")
     seed_flags = " ".join(f"--seed {seed}" for seed in values["config"].seeds)
+    method_flags = " ".join(
+        f"--method {method}" for method in values["config"].methods
+    )
+    initialization_flag = (
+        ""
+        if values["config"].initialization_pretraining_run_id is None
+        else "--initialization-pretraining-run-id "
+        f"{values['config'].initialization_pretraining_run_id} "
+    )
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_dingxin_locked_pretraining.py "
-        f"--run-id {values['config'].run_id} {seed_flags} --max-epochs {values['config'].max_epochs} "
+        f"--run-id {values['config'].run_id} {seed_flags} {method_flags} "
+        f"{initialization_flag}"
+        f"--max-epochs {values['config'].max_epochs} "
         f"--batch-size {values['config'].batch_size} --patience {values['config'].patience} "
         f"--baseline-device {values['baseline_device']} --chronaris-device {values['chronaris_device']} --resume\n",
         encoding="utf-8",

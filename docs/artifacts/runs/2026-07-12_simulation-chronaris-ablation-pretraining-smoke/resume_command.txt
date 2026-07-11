@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_simulation_chronaris_ablation_pretraining.py --run-id 2026-07-12_simulation-chronaris-ablation-pretraining-smoke --seed 17 --variant no_physics --max-epochs 1 --batch-size 128 --patience 1 --device cpu --resume

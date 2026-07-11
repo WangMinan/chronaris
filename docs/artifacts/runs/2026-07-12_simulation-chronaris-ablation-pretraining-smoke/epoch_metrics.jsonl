@@ -1,0 +1,1 @@
+{"seed": 17, "variant": "no_physics", "epoch": 1, "train_common_loss": 0.6014602184295654, "train_auxiliary_loss": 0.0, "validation_losses": {"masked_reconstruction": 0.29092514514923096, "short_horizon_prediction": 0.2672015130519867, "lag_discrimination": 0.7935258746147156}, "public_selection_loss": 0.41064441949129105, "improved": true, "epochs_without_improvement": 0}

@@ -19,6 +19,10 @@ from chronaris.modeling.training.pretraining_encoders import (
     EncoderCandidateConfig,
     build_trainable_fusion_encoder,
 )
+from chronaris.modeling.training.transfer_initialization import (
+    describe_transfer_source,
+    initialize_encoder_from_transfer_source,
+)
 from chronaris.representation import (
     AugmentationPolicy,
     DualStreamObservationBatch,
@@ -95,6 +99,7 @@ def train_pretext_candidate(
     config: CandidateScreenConfig | None = None,
     augmentation_policy: AugmentationPolicy | None = None,
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
+    initialization_checkpoint: str | Path | None = None,
     resume: bool = True,
 ) -> CandidateScreenResult:
     """Train one frozen candidate without opening task labels or simulation truth."""
@@ -110,6 +115,15 @@ def train_pretext_candidate(
     root = Path(output_root) / method_name / candidate.candidate_id
     best_path = root / "best.pt"
     last_path = root / "last.pt"
+    transfer_source = (
+        describe_transfer_source(
+            initialization_checkpoint,
+            expected_method=method_name,
+            expected_seed=resolved.seed,
+        ).to_dict()
+        if initialization_checkpoint is not None
+        else None
+    )
     protocol_hash = _protocol_hash(
         method_name=method_name,
         candidate=asdict(candidate),
@@ -121,13 +135,14 @@ def train_pretext_candidate(
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
         data_access_mode="lazy_batch_provider" if batch_provider else "materialized_batch",
+        transfer_source=transfer_source,
     )
     resume_payload = None
     if resume and last_path.exists():
         last_payload = _load_payload(last_path)
         if (
             last_payload.get("protocol_sha256") != protocol_hash
-            and not _legacy_cpu_checkpoint_is_compatible(
+            and not _checkpoint_is_semantically_compatible(
                 last_payload,
                 candidate=candidate,
                 config=resolved,
@@ -137,6 +152,7 @@ def train_pretext_candidate(
                 physiology_feature_names=physiology_feature_names,
                 vehicle_feature_names=vehicle_feature_names,
                 vehicle_field_labels=vehicle_field_labels,
+                transfer_source=transfer_source,
             )
         ):
             raise RepresentationContractError(
@@ -165,10 +181,19 @@ def train_pretext_candidate(
         lr=candidate.learning_rate,
         weight_decay=resolved.weight_decay,
     )
+    transfer_initialization = None
     if resume_payload is not None:
         encoder.load_state_dict(resume_payload["encoder_state_dict"], strict=True)
         heads.load_state_dict(resume_payload["head_state_dict"], strict=True)
         optimizer.load_state_dict(resume_payload["optimizer_state_dict"])
+        transfer_initialization = resume_payload.get("transfer_initialization")
+    elif initialization_checkpoint is not None:
+        transfer_initialization = initialize_encoder_from_transfer_source(
+            encoder,
+            initialization_checkpoint,
+            expected_method=method_name,
+            expected_seed=resolved.seed,
+        ).to_dict()
     best_score = (
         float(resume_payload["best_public_selection_loss"])
         if resume_payload is not None
@@ -287,6 +312,8 @@ def train_pretext_candidate(
             step_count=step_count,
             epoch_rows=epoch_rows,
             elapsed=elapsed_offset + time.perf_counter() - started,
+            transfer_source=transfer_source,
+            transfer_initialization=transfer_initialization,
         )
         _atomic_save(last_path, payload)
         if improved:
@@ -420,6 +447,8 @@ def _checkpoint_payload(**values):
         "simulation_oracle_opened": False,
         "selection_uses_public_pretext_only": True,
         "selection_weights": dict(PUBLIC_SELECTION_WEIGHTS),
+        "transfer_source": values.get("transfer_source"),
+        "transfer_initialization": values.get("transfer_initialization"),
     }
 
 
@@ -429,7 +458,7 @@ def _protocol_hash(**payload) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
-def _legacy_cpu_checkpoint_is_compatible(
+def _checkpoint_is_semantically_compatible(
     payload,
     *,
     candidate,
@@ -440,18 +469,19 @@ def _legacy_cpu_checkpoint_is_compatible(
     physiology_feature_names,
     vehicle_feature_names,
     vehicle_field_labels,
+    transfer_source,
 ) -> bool:
-    """Allow only the device-field addition to reuse pre-CUDA CPU checkpoints."""
-
+    """Allow code-only changes when every persisted training input still matches."""
     expected_config = asdict(config)
-    if payload.get("method_name") == "chronaris":
-        return False
-    if expected_config.pop("device") != "cpu" or "device" in payload.get("config", {}):
-        return False
+    stored_config = dict(payload.get("config", {}))
+    if "device" not in stored_config:
+        if expected_config.get("device") != "cpu":
+            return False
+        expected_config.pop("device")
     return all(
         (
             payload.get("candidate_config") == asdict(candidate),
-            payload.get("config") == expected_config,
+            stored_config == expected_config,
             payload.get("augmentation_policy") == asdict(policy),
             payload.get("fold") == fold.to_dict(),
             payload.get("normalizer", {}).get("transform_sha256")
@@ -462,6 +492,7 @@ def _legacy_cpu_checkpoint_is_compatible(
             == [list(value) for value in vehicle_field_labels],
             payload.get("label_used_for_encoder_training") is False,
             payload.get("simulation_oracle_opened") is False,
+            payload.get("transfer_source") == transfer_source,
         )
     )
 

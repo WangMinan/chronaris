@@ -1,0 +1,15 @@
+2026-07-11 19:24:02,486 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-12_dingxin-synthetic-pretrain-adapt-smoke run_root=docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke
+2026-07-11 19:36:16,552 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-12_dingxin-synthetic-pretrain-adapt-smoke run_root=docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke
+2026-07-11 19:40:26,246 ERROR chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining failed run_id=2026-07-12_dingxin-synthetic-pretrain-adapt-smoke
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/dingxin_locked_pretraining_run.py", line 142, in run_dingxin_locked_pretraining
+    normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/normalization.py", line 130, in fit_from_batch_provider
+    self.vehicle = _fit_stream_statistics_from_observed_parts(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/normalization.py", line 427, in _fit_stream_statistics_from_observed_parts
+    median = torch.quantile(observed, 0.5)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+2026-07-11 19:41:38,595 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-12_dingxin-synthetic-pretrain-adapt-smoke run_root=docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke

@@ -318,7 +318,9 @@ def _write_outputs(**values):
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_dingxin_locked_consumers.py "
-        f"--run-id {values['config'].run_id} --minirocket-kernels {values['config'].minirocket_kernels} --resume\n",
+        f"--run-id {values['config'].run_id} "
+        f"--representation-run-id {values['config'].representation_run_id} "
+        f"--minirocket-kernels {values['config'].minirocket_kernels} --resume\n",
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {

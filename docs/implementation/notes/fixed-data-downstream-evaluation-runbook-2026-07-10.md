@@ -62,7 +62,15 @@
 
 消融使用同 seed、相同 checkpoint 选择预算和相同 downstream consumer。
 
-### 1.6 运行恢复
+### 1.6 时间偏移与响应时延恢复
+
+- 只比较朴素时间同步、MulT、ContiFormer 和 Chronaris 四种双流方法。
+- 编码器锁定后导出 G1 六个成对观测场景的 train/validation 表示；此阶段不打开 oracle。
+- downstream Ridge 只用 G1 train 拟合、G1 validation 在 `alpha={0.1,1,10,100}` 中选参。
+- 目标固定为生理流相对航电流的绝对时钟偏移幅值，以及第一生理字段的真实响应时延。
+- G2 的 35 个压力场景只用于最终评价，以 48 条潜在轨迹为配对单位，不允许反向调参。
+
+### 1.7 运行恢复
 
 每个 run：
 
@@ -71,6 +79,7 @@
 - best/last checkpoint 分开命名。
 - `--resume` 跳过 hash 已匹配的 completed fold。
 - 配置或输入 hash 改变时拒绝复用旧 fold。
+- 本机 WSL/RTX 4090 同时只运行一个正式 CUDA 训练进程；仿真与鼎新 GPU 队列串行，避免驱动级 `cudaErrorLaunchFailure`。Chronaris 已确认 CPU 更快，继续使用 CPU。
 
 ## 2. 工作包 H：附录诊断与论文证据包
 
@@ -200,4 +209,3 @@ git lfs fsck
 7. 论文证据包和状态文档闭环。
 
 默认只做本地提交；push/PR 需用户另行明确授权。
-

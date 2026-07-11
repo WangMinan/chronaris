@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选已经完成；鼎新正式三随机种子五折重训协议已通过单折 5/5 方法、7/7 验收并启动 75 个方法—折—随机种子队列。G6 仿真 seeds 17/29/43 也在运行，基线使用 RTX 4090、Chronaris 使用同批实测更快的 CPU 连续演化路径。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计；既有确认指标仍未修改。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选已经完成；鼎新正式三随机种子五折重训协议已通过单折 5/5 方法、8/8 验收并启动 75 个方法—折—随机种子队列。G6 仿真 seeds 17/29/43 也在运行，基线使用 RTX 4090、Chronaris 使用同批实测更快的 CPU 连续演化路径。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计；既有确认指标仍未修改。
 
 ## 当前执行入口
 
@@ -35,6 +35,8 @@
 - G5 编码器候选筛选全链路 smoke：[artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md)
 - G5 seed 17 正式编码器候选筛选：[artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md)
 - G6 鼎新锁定重训单折协议验证：[artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md](artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md)
+- G6 仿真预训练到鼎新适配协议验证：[artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/report.md](artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/report.md)
+- G6 Chronaris 机制消融重训协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md)
 - G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
 
 ## 已锁定事实
@@ -50,8 +52,9 @@
 
 ## 当前长程队列
 
-- 仿真锁定重训：3 seeds × 5 个可训练方法；四个基线走 RTX 4090，Chronaris 走已实测更快的 CPU 路径，逐 epoch `last.pt` 可恢复。
-- 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元；任务目标、outer-test 表示和指标仍保持关闭。
+- 仿真锁定重训：seed 17 的五方法已完成并从 checkpoint 恢复 seeds 29/43；四个基线走 RTX 4090，Chronaris 走已实测更快的 CPU 路径，逐 epoch `last.pt` 可恢复。
+- 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元；已保存第一训练单元的 37 个 epoch，当前为避免 WSL GPU 并发故障而等待仿真 CUDA 队列完成后串行恢复。任务目标、outer-test 表示和指标仍保持关闭。
+- 设备调度：同一时刻只运行一个 CUDA 正式训练进程；一次双进程并发触发的驱动级 launch failure 已由 checkpoint 恢复处理，GPU 张量自检随后通过。
 - 上游完成后按门禁顺序自动进入六方法统一表示、validation 选参 consumer、G2 clean 锁定指标、35 场景压力曲线和四项 Chronaris 机制消融。
 
 ## 分支与历史实现
@@ -66,7 +69,9 @@
 - 鼎新正式表示导出要求 75 个 checkpoint 全部完成后才允许打开 outer-test 原始输入，统一导出 3 seeds × 5 folds × 6 methods × 3 roles 共 270 份 `[N,96,64]` 表示。
 - 鼎新正式下游消费者只在 validation 网格选择 Logistic/Ridge/MiniRocket 超参数；三个留一视图折作为主统计单位，两个留一架次折只作辅助，不报告窗口级显著性。
 - Chronaris 四项消融已经接入与完整模型相同的锁定训练、checkpoint 回载、G1→G2 表示和正式 consumer 协议；完整模型与消融以 48 条潜在轨迹做配对差异。
-- 新增代码后完整测试为 `356 passed, 8 skipped, 317 warnings`；`compileall`、Ruff 和 `git diff --check` 通过。
+- 仿真预训练到鼎新无标签适配已实现跨 schema 安全初始化：仅复制同名且形状一致的任务无关参数，重新初始化字段相关输入/重构层；源 checkpoint 哈希、复制张量和元素比例进入协议。
+- 时间偏移与响应时延恢复任务已形成独立门禁链路：四种双流方法先导出 G1 六场景 train/validation 表示，再用 G1 validation 选择统一 Ridge 探针，最后只在 G2 的 35 个压力场景上评价；G2 不参与拟合或选参。
+- 新增代码后完整测试为 `360 passed, 8 skipped, 317 warnings`；`compileall`、Ruff 和 `git diff --check` 通过。
 
 ## 本轮已完成
 

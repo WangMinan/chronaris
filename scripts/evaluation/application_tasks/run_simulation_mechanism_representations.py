@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export three-seed five-fold six-method Dingxin representations."""
+"""Export locked G1 multi-scenario representations for mechanism recovery."""
 
 from __future__ import annotations
 
@@ -15,31 +15,25 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.evaluation.application_tasks import (  # noqa: E402
-    DingxinLockedRepresentationConfig,
-    run_dingxin_locked_representations,
+    SimulationMechanismRepresentationConfig,
+    run_simulation_mechanism_representations,
 )
 from chronaris.modeling.common.run_observer import configure_task_eval_cli_logging  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", default="2026-07-12_dingxin-locked-representations")
-    parser.add_argument("--pretraining-run-id", default="2026-07-12_dingxin-locked-pretraining")
-    parser.add_argument("--fit-batch-size", type=int, default=8)
-    parser.add_argument("--export-batch-size", type=int, default=8)
-    parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")
-    parser.add_argument("--chronaris-device", choices=("auto", "cpu", "cuda"), default="cpu")
+    parser.add_argument("--run-id", default="2026-07-12_simulation-mechanism-representations")
+    parser.add_argument("--seed", action="append", type=int, default=[])
+    parser.add_argument("--export-batch-size", type=int, default=32)
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     configure_task_eval_cli_logging(sys.stderr)
-    result = run_dingxin_locked_representations(
-        DingxinLockedRepresentationConfig(
+    result = run_simulation_mechanism_representations(
+        SimulationMechanismRepresentationConfig(
             run_id=args.run_id,
-            pretraining_run_id=args.pretraining_run_id,
-            fit_batch_size=args.fit_batch_size,
+            seeds=tuple(args.seed) or (17, 29, 43),
             export_batch_size=args.export_batch_size,
-            baseline_device=args.baseline_device,
-            chronaris_device=args.chronaris_device,
             resume=args.resume,
         )
     )

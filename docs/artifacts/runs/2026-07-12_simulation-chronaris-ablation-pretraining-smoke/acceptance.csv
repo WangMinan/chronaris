@@ -1,0 +1,7 @@
+check_id,passed,actual,expected
+all_variant_seed_runs,True,1,1
+all_checkpoints_complete,True,['resumed'],completed_or_resumed
+public_validation_losses_finite,True,1,1
+reserved_confirmation_complete,True,1,1
+no_physics_component_removed,True,True,True
+g2_and_task_oracle_closed,True,False,False

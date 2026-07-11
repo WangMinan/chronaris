@@ -170,6 +170,17 @@ from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_consum
     SimulationChronarisAblationConsumerResult,
     run_simulation_chronaris_ablation_consumers,
 )
+from chronaris.evaluation.application_tasks.simulation_mechanism_representation_run import (
+    MECHANISM_METHODS,
+    SimulationMechanismRepresentationConfig,
+    SimulationMechanismRepresentationResult,
+    run_simulation_mechanism_representations,
+)
+from chronaris.evaluation.application_tasks.simulation_mechanism_consumer_run import (
+    SimulationMechanismConsumerConfig,
+    SimulationMechanismConsumerResult,
+    run_simulation_mechanism_consumers,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
@@ -204,6 +215,11 @@ __all__ = [
     "SimulationChronarisAblationRepresentationResult",
     "SimulationChronarisAblationConsumerConfig",
     "SimulationChronarisAblationConsumerResult",
+    "MECHANISM_METHODS",
+    "SimulationMechanismRepresentationConfig",
+    "SimulationMechanismRepresentationResult",
+    "SimulationMechanismConsumerConfig",
+    "SimulationMechanismConsumerResult",
     "FixedDataAuditResult",
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
@@ -257,6 +273,8 @@ __all__ = [
     "run_simulation_chronaris_ablation_pretraining",
     "run_simulation_chronaris_ablation_representations",
     "run_simulation_chronaris_ablation_consumers",
+    "run_simulation_mechanism_representations",
+    "run_simulation_mechanism_consumers",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",

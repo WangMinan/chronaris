@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run formal consumers on the locked Dingxin fold representations."""
+"""Run G1-fitted G2-locked clock-offset and response-lag recovery probes."""
 
 from __future__ import annotations
 
@@ -15,25 +15,23 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from chronaris.evaluation.application_tasks import (  # noqa: E402
-    DingxinLockedConsumerConfig,
-    run_dingxin_locked_consumers,
+    SimulationMechanismConsumerConfig,
+    run_simulation_mechanism_consumers,
 )
 from chronaris.modeling.common.run_observer import configure_task_eval_cli_logging  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", default="2026-07-12_dingxin-locked-consumers")
-    parser.add_argument("--representation-run-id", default="2026-07-12_dingxin-locked-representations")
-    parser.add_argument("--minirocket-kernels", type=int, default=10_000)
+    parser.add_argument("--run-id", default="2026-07-12_simulation-mechanism-consumers")
+    parser.add_argument("--seed", action="append", type=int, default=[])
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     configure_task_eval_cli_logging(sys.stderr)
-    result = run_dingxin_locked_consumers(
-        DingxinLockedConsumerConfig(
+    result = run_simulation_mechanism_consumers(
+        SimulationMechanismConsumerConfig(
             run_id=args.run_id,
-            representation_run_id=args.representation_run_id,
-            minirocket_kernels=args.minirocket_kernels,
+            seeds=tuple(args.seed) or (17, 29, 43),
             resume=args.resume,
         )
     )

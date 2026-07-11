@@ -1,0 +1,4 @@
+seed,variant,epoch,step,term_name,weight,raw_loss,weighted_loss,count,status
+17,no_physics,1,1,chronaris_continuous_alignment,0.0,1.0907591581344604,0.0,7459,scheduled_zero_or_unavailable
+17,no_physics,1,1,chronaris_physical_consistency,0.0,0.0,0.0,0,scheduled_zero_or_unavailable
+17,no_physics,1,1,chronaris_causal_direction,0.0,0.1019117459654808,0.0,7459,scheduled_zero_or_unavailable

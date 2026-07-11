@@ -42,6 +42,12 @@ from chronaris.modeling.training.chronaris_locked_training import (
     LockedChronarisTrainingResult,
     train_locked_chronaris,
 )
+from chronaris.modeling.training.transfer_initialization import (
+    TransferInitializationManifest,
+    TransferSourceDescriptor,
+    describe_transfer_source,
+    initialize_encoder_from_transfer_source,
+)
 
 __all__ = [
     "ChronarisAuxiliaryWeights",
@@ -63,12 +69,16 @@ __all__ = [
     "PretrainingEncoderOutput",
     "TrainableFusionEncoder",
     "TrainedFusionAdapter",
+    "TransferInitializationManifest",
+    "TransferSourceDescriptor",
     "build_trainable_fusion_encoder",
     "build_chronaris_auxiliary_losses",
     "load_common_pretraining_checkpoint",
     "train_common_pretext_method",
     "train_pretext_candidate",
     "train_locked_chronaris",
+    "describe_transfer_source",
+    "initialize_encoder_from_transfer_source",
     "chronaris_auxiliary_weight_schedule",
     "chronaris_auxiliary_losses_to_rows",
     "confirm_selected_pretext_checkpoint",

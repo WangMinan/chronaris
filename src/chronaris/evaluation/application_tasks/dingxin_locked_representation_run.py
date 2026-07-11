@@ -362,7 +362,9 @@ def _write_outputs(**values):
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_dingxin_locked_representations.py "
-        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} --resume\n",
+        f"--run-id {values['config'].run_id} "
+        f"--pretraining-run-id {values['config'].pretraining_run_id} "
+        f"--export-batch-size {values['config'].export_batch_size} --resume\n",
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
