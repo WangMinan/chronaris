@@ -51,6 +51,7 @@ class DownstreamEvidencePackConfig:
         "2026-07-12_simulation-chronaris-ablation-consumers"
     )
     finetuning_run_id: str = "2026-07-12_simulation-end-to-end-finetuning"
+    public_adapter_run_id: str | None = "2026-06-07_public-adapter-calibration"
     transfer_consumer_run_id: str | None = (
         "2026-07-12_dingxin-synthetic-pretrain-adapt-consumers"
     )
@@ -273,6 +274,21 @@ def _load_upstream_evidence(config):
             "format": payload.get("format"),
             "status": payload.get("status"),
         }
+    if config.public_adapter_run_id is not None:
+        public_root = (
+            Path(config.compact_output_root) / config.public_adapter_run_id
+        )
+        summary_path = public_root / "public_adapter_calibration_summary.json"
+        payload = json.loads(summary_path.read_text(encoding="utf-8"))
+        if payload.get("evidence_layer") != "public_adapter_calibration":
+            raise ValueError("public adapter evidence layer is invalid")
+        result["public_dataset_adaptation"] = {
+            "run_id": config.public_adapter_run_id,
+            "evidence_path": str(summary_path),
+            "evidence_sha256": sha256_file(summary_path),
+            "format": "chronaris.public_adapter_calibration.legacy_v1",
+            "status": "completed_legacy_evidence",
+        }
     return result
 
 
@@ -319,6 +335,12 @@ def _evidence_matrix_rows(config, upstream):
             "无标签真实训练折适配",
             "检查仿真预训练的迁移价值",
             "六方法必须使用相同额外数据预算",
+        ),
+        "public_dataset_adaptation": (
+            "UAB/NASA 公开数据",
+            "公开工作负荷与认知状态适配",
+            "提供人体状态任务的外部适配参照",
+            "上下文构造第二输入流不等价于鼎新真实航电流",
         ),
     }
     return [
