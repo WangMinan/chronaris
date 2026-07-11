@@ -1,0 +1,13 @@
+check_name,passed,details
+fixed_source_lineage_complete,True,"{'source_hash_count': 6, 'fold_count': 5}"
+raw_snapshot_files_verified,True,{'verified_file_count': 5}
+maneuver_label_sources_excluded_from_input,True,"{'label_source_count': 20, 'allowed_count': 0}"
+classification_fold_coverage_complete,True,"{'row_count': 480, 'unique_context_count': 96}"
+classification_three_classes_in_each_role,True,"{'fold_count': 5, 'roles': ['train', 'test']}"
+raw_median_response_availability_explicit,True,"{'row_count': 465, 'available_unique_context_count': 90, 'unavailable_unique_context_count': 3}"
+raw_median_response_time_boundary,True,{'available_row_count': 450}
+response_fit_hash_uses_available_train_contexts_only,True,{'fold_count': 5}
+response_field_selection_is_train_only,True,"{'selected_field_counts': {'leave_one_sortie_out__fold01': 12, 'leave_one_sortie_out__fold02': 11, 'leave_one_view_out__fold01': 12, 'leave_one_view_out__fold02': 12, 'leave_one_view_out__fold03': 11}}"
+ten_independent_archives_written,True,{'archive_count': 10}
+target_archive_resume_is_deterministic,True,{'stable_count': 10}
+raw_snapshot_files_immutable,True,{'unchanged': True}

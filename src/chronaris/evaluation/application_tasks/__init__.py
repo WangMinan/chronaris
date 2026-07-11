@@ -30,6 +30,11 @@ from chronaris.evaluation.application_tasks.application_consumer_smoke import (
     ApplicationConsumerSmokeResult,
     run_application_consumer_smoke,
 )
+from chronaris.evaluation.application_tasks.dingxin_target_archive import (
+    DingxinTargetArchiveConfig,
+    DingxinTargetArchiveResult,
+    run_dingxin_target_archive,
+)
 from chronaris.evaluation.application_tasks.snapshot_live_source import (
     InfluxSnapshotPointSource,
     SnapshotPointSource,
@@ -61,6 +66,8 @@ __all__ = [
     "CommonPretrainingLoopSmokeResult",
     "ApplicationConsumerSmokeConfig",
     "ApplicationConsumerSmokeResult",
+    "DingxinTargetArchiveConfig",
+    "DingxinTargetArchiveResult",
     "DeepBaselineAdapterSmokeConfig",
     "DeepBaselineAdapterSmokeResult",
     "InfluxSnapshotPointSource",
@@ -78,6 +85,7 @@ __all__ = [
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",
     "run_application_consumer_smoke",
+    "run_dingxin_target_archive",
     "run_deep_baseline_adapter_smoke",
     "run_simulation_audit",
     "run_representation_contract_smoke",

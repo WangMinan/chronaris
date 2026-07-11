@@ -1,0 +1,6 @@
+fold_id,candidate_row_count,paired_available_count,raw_unavailable_count,mean_absolute_difference,spearman,comparison_only
+leave_one_sortie_out__fold01,93,90,3,0.1268678015735056,0.9431888353711253,True
+leave_one_sortie_out__fold02,93,90,3,0.14517422367543334,0.934922399242518,True
+leave_one_view_out__fold01,93,90,3,0.10499391360420884,0.9401095055781978,True
+leave_one_view_out__fold02,93,90,3,0.10499391360420884,0.9401095055781978,True
+leave_one_view_out__fold03,93,90,3,0.14517422367543334,0.934922399242518,True

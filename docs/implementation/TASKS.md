@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G4.2 鼎新弱监督目标与真实外层折接入
 
-G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成线性、MiniROCKET、因果 TCN、持续时间解码、统一指标、融合增益和轨迹级配对接口。G4.2 继续完成鼎新机动强度弱监督分类与机动诱发生理响应回归的独立目标 archive、原始点上下文和真实外层折；未完成前不进入候选 screen。
+G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成线性、MiniROCKET、因果 TCN、持续时间解码、统一指标、融合增益和轨迹级配对接口。G4.2 已完成鼎新机动强度弱监督分类与机动诱发生理响应回归的独立目标 archive，当前继续构造防泄漏原始点上下文和真实外层折表示；未完成前不进入候选 screen。
 
 ### G1–G4.1 已完成
 
@@ -18,11 +18,13 @@ G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成
 - 16 条仿真 train 轨迹的 8/4/4 smoke 完成 5 个训练 checkpoint、18 个折外表示和 72 条线性指标。
 - workload 真值只在五个 checkpoint 完成后打开；预训练路径不读取 oracle，仿真 validation/locked_test 路径零命中。
 - 删除一个 Chronaris 留出折表示后仅重建该项，重建 SHA-256 与原输出一致；闭环 20/20 验收通过。
-- G3b.4 完成时完整测试为 `301 passed, 8 skipped`；G4.1 完成后刷新为 `312 passed, 8 skipped`。
+- G3b.4 完成时完整测试为 `301 passed, 8 skipped`；G4.1 完成后为 `312 passed, 8 skipped`；G4.2 目标归档完成后刷新为 `314 passed, 8 skipped`。
 - 16 条仿真训练轨迹各取四个跨状态上下文，形成 64 个样本和 32/16/16 profile 隔离；六方法应用上下文表示共 18 份，恢复 18/18 复用。
 - 线性、MiniROCKET 10,000 kernels、两层因果 TCN 与训练折持续时间解码共产生 384 条可计算指标、256 条融合增益和 30 条轨迹级配对统计。
 - MiniROCKET 训练折方差过滤、TCN 随机流隔离和组件级恢复均已固化；删除 Chronaris 表示、MiniROCKET、TCN 后只重建目标组件，12/12 验收通过。
 - G4.1 紧凑证据位于 `2026-07-11_application-consumer-smoke`，约 15 MB 模型、表示和预测留在被忽略目录；所有指标均为 smoke only。
+- G4.2 已生成五折两个任务共 10 个独立目标 archive：分类保留 96 个上下文，原始点中位数生理响应保留 90/93 个完整未来区间，3 个末端候选结构化不可用。
+- 10/10 archive 恢复复用，原 snapshot 哈希不变，目标归档 `12/12` 验收通过；本阶段没有模型训练或任务指标。
 
 ### 当前输入与不可变边界
 
@@ -33,7 +35,7 @@ G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成
 - G4.1 复用 `2026-07-11_common-pretraining-loop-smoke` 的六个 checkpoint，但为 64 个跨状态上下文重新导出 18 份表示；没有读取仿真 validation 或 locked_test，也不产生模型排名。
 - G4.2 必须使用鼎新 snapshot 原始点重新构造外层折输入，不能把仿真输入维数的 checkpoint 直接套到鼎新，也不能回用可能含标签源信息的历史对齐投影。
 
-### 子任务 G4.2-a：鼎新独立 target archive（当前）
+### 子任务 G4.2-a：鼎新独立 target archive（已完成）
 
 #### 鼎新机动强度弱监督分类
 
@@ -48,6 +50,8 @@ G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成
 2. 同时生成连续响应值和训练折高响应阈值，但 G4 主回归 consumer 只使用连续值；高响应识别留作分类辅助表。
 3. 输入窗口截至 context end，目标区间为其后 0–5 秒；未来生理点绝不进入表示或归一化器。
 4. 目标无有效生理字段时按样本 unavailable，不以零变化替代。
+
+执行结果补充：正式目标使用冻结原始点的当前/未来 5 秒窗口中位数，不再使用 G1 的窗口均值兼容统计；原始点只到 181 秒，三个 `context_end_0035` 不足完整未来区间，因此正式可用上下文为 90 个。
 
 #### 仿真负荷与机动状态（G4.1 已完成）
 
@@ -129,8 +133,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 ### G4.2 当前实现顺序
 
-1. 生成鼎新机动分类与生理响应两个独立目标 archive，逐样本记录 G1 阈值、字段、生理基线、snapshot 与外层折 hash。
-2. 从固定 snapshot 构造与目标 context 一一对应的 30 秒原始异步双流；分别审计标签源字段排除和未来生理区间隔离。
+1. 已完成：生成鼎新机动分类与生理响应两个独立目标 archive，逐样本记录 G1 阈值、原始点中位数、snapshot 与外层折 hash。
+2. 当前：从固定 snapshot 构造与目标 context 一一对应的 30 秒原始异步双流；分别审计标签源字段排除和未来生理区间隔离。
 3. 固化 leave-one-view-out 主协议、leave-one-sortie-out 辅助协议及结构化 unavailable；不因类别不足移动测试阈值或合并类别。
 4. 接入六方法表示与固定线性/MiniROCKET consumer 的真实数据 smoke；真实与仿真 metric root 分离。
 5. G4.2 通过后再建立完整 G1 开发训练配置和 seed 17 四候选 screen。
@@ -217,7 +221,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 当前 G4.2 提交前必须通过：
 
-1. 两项鼎新 target archive 的时间边界、训练折阈值、样本覆盖、字段 lineage 和 unavailable 测试通过。
+1. 已通过：两项鼎新 target archive 的时间边界、训练折阈值、样本覆盖、字段 lineage 和 unavailable 测试。
 2. 机动标签源字段及其派生副本在输入中零命中，未来生理点在表示和归一化拟合中零命中。
 3. leave-one-view-out 与 leave-one-sortie-out 的 train/validation/held-out group 无交集，所有阈值只用 train group。
 4. target、原始点 context 与表示 sample ID 一一对应；漏样本、重复样本、跨折 checkpoint 直接失败。

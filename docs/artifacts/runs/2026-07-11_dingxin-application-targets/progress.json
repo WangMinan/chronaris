@@ -1,0 +1,42 @@
+{
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "human_expert_labels_available": false,
+  "stage_name": "dingxin_application_target_archives",
+  "run_id": "2026-07-11_dingxin-application-targets",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T03:02:35.143456Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T03:02:34.884858Z",
+      "event": "start",
+      "training_invoked": false,
+      "confirmed_metrics_changed": false,
+      "human_expert_labels_available": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T03:02:35.078962Z",
+      "event": "target_rows_built",
+      "classification_row_count": 480,
+      "response_row_count": 465,
+      "response_available_count": 450
+    },
+    {
+      "timestamp_utc": "2026-07-11T03:02:35.143456Z",
+      "event": "finished",
+      "status": "completed",
+      "archive_count": 10,
+      "acceptance_pass_count": 12,
+      "acceptance_check_count": 12,
+      "response_available_unique_context_count": 90
+    }
+  ],
+  "classification_row_count": 480,
+  "response_row_count": 465,
+  "response_available_count": 450,
+  "status": "completed",
+  "archive_count": 10,
+  "acceptance_pass_count": 12,
+  "acceptance_check_count": 12,
+  "response_available_unique_context_count": 90
+}
