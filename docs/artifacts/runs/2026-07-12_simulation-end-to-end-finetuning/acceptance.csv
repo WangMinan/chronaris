@@ -1,0 +1,8 @@
+check_id,passed,actual,expected
+six_methods_all_seeds,True,18,18
+all_training_complete,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed']",completed_or_resumed
+labels_declared,True,True,True
+independent_representation_family,True,end_to_end_finetuned_v1,end_to_end_finetuned_v1
+three_role_exports,True,54,54
+held_out_metrics,True,864,>0
+paired_48_trajectories,True,60,>0 with 48 units

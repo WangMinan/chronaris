@@ -1,0 +1,25 @@
+{
+  "format": "chronaris.simulation_end_to_end_finetuning_evidence.v1",
+  "run_id": "2026-07-12_simulation-end-to-end-finetuning",
+  "status": "completed",
+  "representation_family": "end_to_end_finetuned_v1",
+  "method_seed_count": 18,
+  "metric_count": 864,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_simulation-end-to-end-finetuning",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/finetuning_inventory.csv",
+    "training": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/training_history.csv",
+    "exports": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/representation_inventory.csv",
+    "metrics": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/metric_long.csv",
+    "gains": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/fusion_gain.csv",
+    "paired": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/paired_statistics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/report.md",
+    "claim": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/evidence_manifest.json"
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "representation_family": "end_to_end_finetuned_v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "task_oracle_opened_after_pretraining": true,
+  "held_out_used_for_training_or_selection": false,
+  "stage_name": "simulation_end_to_end_finetuning",
+  "run_id": "2026-07-12_simulation-end-to-end-finetuning",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T17:10:05.099571Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T15:58:59.928890Z",
+      "event": "start",
+      "representation_family": "end_to_end_finetuned_v1",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "methods": [
+        "physiology_only",
+        "vehicle_only",
+        "naive_time_sync",
+        "mult",
+        "contiformer",
+        "chronaris"
+      ],
+      "task_oracle_opened_after_pretraining": true,
+      "held_out_used_for_training_or_selection": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T15:59:25.837729Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 17,
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:01:44.859964Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 17,
+      "method_name": "vehicle_only",
+      "status": "resumed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:02:58.526935Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 17,
+      "method_name": "naive_time_sync",
+      "status": "resumed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:03:04.487457Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 17,
+      "method_name": "mult",
+      "status": "resumed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:03:09.841084Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 17,
+      "method_name": "contiformer",
+      "status": "resumed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:22:14.791812Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 17,
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:22:40.162501Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 29,
+      "method_name": "physiology_only",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:23:03.566937Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 29,
+      "method_name": "vehicle_only",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:23:24.810037Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 29,
+      "method_name": "naive_time_sync",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:24:49.800947Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 29,
+      "method_name": "mult",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:25:17.927043Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 29,
+      "method_name": "contiformer",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:46:52.833767Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 29,
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:47:15.520373Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 43,
+      "method_name": "physiology_only",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:47:36.012402Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 43,
+      "method_name": "vehicle_only",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:47:52.205292Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 43,
+      "method_name": "naive_time_sync",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:49:07.463801Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 43,
+      "method_name": "mult",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T16:49:30.600827Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 43,
+      "method_name": "contiformer",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T17:10:02.195179Z",
+      "event": "fine_tuned_method_complete",
+      "seed": 43,
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-11T17:10:05.099571Z",
+      "event": "finished",
+      "status": "completed",
+      "method_seed_count": 18,
+      "metric_count": 864,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7
+    }
+  ],
+  "seed": 43,
+  "method_name": "chronaris",
+  "status": "completed",
+  "best_epoch": 20,
+  "method_seed_count": 18,
+  "metric_count": 864,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7
+}
