@@ -70,6 +70,7 @@ class ChronarisContinuousEncoderConfig:
     ode_atol: float = 1e-4
     physics_weight: float = 0.1
     physics_huber_delta: float = 1.0
+    dropout: float = 0.1
 
     def __post_init__(self) -> None:
         if not self.physiology_feature_names or not self.vehicle_feature_names:
@@ -91,8 +92,8 @@ class ChronarisContinuousEncoderConfig:
         )
         if any(value <= 0 for value in dimensions):
             raise ValueError("Chronaris dimensions must be positive")
-        if self.hidden_dim != FUSION_OUTPUT_DIM:
-            raise ValueError("Chronaris hidden dimension must match output contract")
+        if not 0 <= self.dropout < 1:
+            raise ValueError("Chronaris dropout is invalid")
         if self.physics_weight < 0 or self.physics_huber_delta <= 0:
             raise ValueError("Chronaris physics configuration is invalid")
         labels = dict(self.field_labels)
@@ -200,6 +201,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                 use_scale_gate=config.scale_gate_enabled,
             )
         )
+        self.output_dropout = nn.Dropout(config.dropout)
 
     def forward(
         self,
@@ -249,7 +251,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             huber_delta=self.config.physics_huber_delta,
         )
         return ChronarisContinuousEncoding(
-            sequence_embedding=fusion.sequence_embedding,
+            sequence_embedding=self.output_dropout(fusion.sequence_embedding),
             modality_available_mask=fusion.modality_available_mask,
             alignment_output=alignment,
             fusion_output=fusion,

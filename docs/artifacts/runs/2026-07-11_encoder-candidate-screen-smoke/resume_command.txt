@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_encoder_candidate_screen.py --run-id 2026-07-11_encoder-candidate-screen-smoke --max-epochs 1 --batch-size 128 --patience 1 --seed 17 --resume

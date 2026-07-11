@@ -265,6 +265,17 @@ selection_loss = 0.50 * normalized_masked_reconstruction
 
 各 loss 先按同一方法四候选的验证分布归一化。Chronaris 的方法专属正则不进入候选排序，避免用自己定义的损失偏置选择。
 
+归一化固定为同一方法、同一损失项内的 min-max：
+
+```text
+normalized_loss = (loss - min_candidate_loss)
+                / (max_candidate_loss - min_candidate_loss)
+```
+
+若四候选该项损失完全相同，则该项四个归一化值均记为 0。总分相同时先选择参数量更小的候选，再按候选 A、B、C、D 的顺序确定唯一结果。候选 C 只把编码器内部隐层缩小到 32 维；所有方法仍通过合同投影导出 64 维时序表示，下游接口不随候选改变。
+
+G1 正式开发划分使用 96 个训练 profile；24 个 validation profile 中前 23 个用于候选排序，最后 1 个仅用于选定配置的开发确认。`locked_test` 在候选排序期间保持封存。训练增强按 epoch 变化，验证增强固定为 seed 17、epoch 0；每个候选保存独立 `best.pt` 与 `last.pt`，中断后从 `last.pt` 的下一 epoch 恢复优化器、patience 和最佳验证状态。
+
 开发 seed 固定 17；配置锁定后使用 17、29、43 三个 seed 正式确认。
 
 ## 11. 冻结表示下游算法

@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-11_encoder-candidate-screen-smoke/`：**seed 17 编码器候选筛选全链路冒烟验证**。G1 原始异步双流按 96 个训练 profile、23 个候选排序 validation profile 和 1 个开发确认 profile 组织；五个可训练方法各运行 A–D 四候选单 epoch，共 20 个 checkpoint。验证增强固定，排序只使用三项公共自监督损失并做方法内 min-max；任务标签、仿真真值和封存测试均未打开。全链路耗时 5 分 03 秒、峰值内存 4.34 GB、重型 checkpoint 约 114 MB，6/6 验收通过。该 run 只证明正式 50 epoch/patience 8 筛选可运行，单 epoch 排名不作为候选结论。
 - `runs/2026-07-11_dingxin-nested-validation/`：**鼎新嵌套目标 validation-only consumer**。五折六方法使用 inner-train 嵌套目标拟合固定线性与 MiniROCKET，形成 30 个方法—折 bundle；组件恢复 60/60，预测哈希 30/30 一致。只评价 validation，生成 840 条全部可计算指标和 560 条双流增益；指标 role 唯一为 validation、threshold scope 唯一为 inner-train nested，outer-test 零预测/指标。三个 validation 缺低机动类时 macro-F1 固定三类集合，不补类。约 35 MB 模型/预测位于被忽略目录，12/12 通过；本 run 是正式 screen 前协议确认，不形成排名。
 - `runs/2026-07-11_dingxin-nested-targets/`：**鼎新 inner-train 嵌套目标**。五折机动语义尺度、分位阈值、生理字段有效性/IQR 与高响应阈值均只用 inner-train 重拟合，validation/outer-test 仅应用参数。生成 10 个确定性 archive，机动分类 440 个角色上下文、生理响应 425 个可用角色上下文；相对 outer-train 工程冒烟口径，75 个机动类别和 51 个高响应标签变化，连续响应 Spearman 为 0.9787–0.9971。三个时间块 validation 只覆盖中/高机动类，保持真实分布不补类。snapshot 哈希不变，10/10 通过；本 run 不训练模型或生成指标。
 - `runs/2026-07-11_dingxin-consumer-smoke/`：**鼎新五折冻结表示下游 consumer 工程冒烟**。五个固定外层折和六种表示方法共享同一线性模型与 MiniROCKET 配置，形成 30 个方法—折 bundle、60 个消费者组件；首次拟合累计 144.34 秒，恢复 60/60，预测哈希 30/30 一致。机动强度分类、生理响应回归和高生理响应识别共生成 1680 条全部可计算的 smoke-only 指标，方向归一双流增益 1120 条；15/15 验收通过。约 36 MB 模型与逐样本预测位于被忽略目录，鼎新与仿真指标保持分层。当前仍使用 outer-train 阈值，只证明消费链路，不形成排名；正式 screen 前必须重建 inner-train 嵌套目标。

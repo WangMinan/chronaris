@@ -49,7 +49,7 @@ class DeepBaselineEncoderConfig:
             raise ValueError("deep baseline method must be mult or contiformer")
         if self.physiology_feature_dim <= 0 or self.vehicle_feature_dim <= 0:
             raise ValueError("deep baseline input dimensions must be positive")
-        if self.hidden_dim != FUSION_OUTPUT_DIM or self.hidden_dim % self.num_heads:
+        if self.hidden_dim <= 0 or self.hidden_dim % self.num_heads:
             raise ValueError("deep baseline hidden/head dimensions are invalid")
         if self.layers <= 0 or not 0 <= self.dropout < 1:
             raise ValueError("deep baseline depth/dropout is invalid")
@@ -99,7 +99,7 @@ class CausalMulTFusionEncoder(nn.Module):
         self.vehicle_memory = TransformerEncoder(**memory_kwargs)
         self.output_projection = nn.Sequential(
             nn.LayerNorm(config.hidden_dim * 4),
-            nn.Linear(config.hidden_dim * 4, config.hidden_dim),
+            nn.Linear(config.hidden_dim * 4, FUSION_OUTPUT_DIM),
         )
 
     def forward(self, batch: DualStreamObservationBatch) -> DeepBaselineEncoding:
@@ -169,6 +169,11 @@ class CausalContiFormerFusionEncoder(nn.Module):
             dropout=config.dropout,
             causal=True,
         )
+        self.contract_projection = (
+            nn.Identity()
+            if config.hidden_dim == FUSION_OUTPUT_DIM
+            else nn.Linear(config.hidden_dim, FUSION_OUTPUT_DIM)
+        )
 
     def forward(self, batch: DualStreamObservationBatch) -> DeepBaselineEncoding:
         physiology, vehicle = _dual_query_inputs(batch, self.config)
@@ -188,7 +193,8 @@ class CausalContiFormerFusionEncoder(nn.Module):
             ),
             mask=_safe_attention_mask(available),
         )
-        sequence = torch.nan_to_num(encoded) * available.unsqueeze(-1).to(encoded.dtype)
+        sequence = torch.nan_to_num(self.contract_projection(encoded))
+        sequence = sequence * available.unsqueeze(-1).to(sequence.dtype)
         return DeepBaselineEncoding(sequence, available)
 
 

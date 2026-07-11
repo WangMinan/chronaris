@@ -90,9 +90,16 @@ from chronaris.evaluation.application_tasks.shallow_adapter_smoke import (
     ShallowAdapterSmokeResult,
     run_shallow_adapter_smoke,
 )
+from chronaris.evaluation.application_tasks.candidate_screen_run import (
+    EncoderCandidateScreenRunConfig,
+    EncoderCandidateScreenRunResult,
+    run_encoder_candidate_screen,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
+    "EncoderCandidateScreenRunConfig",
+    "EncoderCandidateScreenRunResult",
     "FixedDataAuditResult",
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
@@ -130,6 +137,7 @@ __all__ = [
     "audit_existing_simulation",
     "DEFAULT_SNAPSHOT_RUN_ID",
     "run_fixed_data_audit",
+    "run_encoder_candidate_screen",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",

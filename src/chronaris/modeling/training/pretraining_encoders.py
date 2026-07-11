@@ -37,6 +37,36 @@ TRAINABLE_FUSION_METHODS = (
 
 
 @dataclass(frozen=True, slots=True)
+class EncoderCandidateConfig:
+    """One equal-budget architecture candidate from the frozen screen."""
+
+    candidate_id: str = "A"
+    hidden_dim: int = FUSION_OUTPUT_DIM
+    learning_rate: float = 1e-3
+    dropout: float = 0.1
+    layers: int = 2
+    num_heads: int = 4
+
+    def __post_init__(self) -> None:
+        if self.candidate_id not in {"A", "B", "C", "D"}:
+            raise ValueError("encoder candidate id must be A, B, C, or D")
+        if self.hidden_dim <= 0 or self.hidden_dim % self.num_heads:
+            raise ValueError("encoder candidate hidden/head dimensions are invalid")
+        if self.learning_rate <= 0 or self.layers <= 0:
+            raise ValueError("encoder candidate optimizer/depth is invalid")
+        if not 0 <= self.dropout < 1:
+            raise ValueError("encoder candidate dropout is invalid")
+
+
+ENCODER_SCREEN_CANDIDATES = (
+    EncoderCandidateConfig(candidate_id="A"),
+    EncoderCandidateConfig(candidate_id="B", learning_rate=3e-4),
+    EncoderCandidateConfig(candidate_id="C", hidden_dim=32),
+    EncoderCandidateConfig(candidate_id="D", dropout=0.2),
+)
+
+
+@dataclass(frozen=True, slots=True)
 class PretrainingEncoderOutput:
     method_name: str
     sequence_embedding: torch.Tensor
@@ -121,12 +151,18 @@ def build_trainable_fusion_encoder(
     physiology_feature_names: tuple[str, ...],
     vehicle_feature_names: tuple[str, ...],
     vehicle_field_labels: tuple[tuple[str, str], ...] = (),
+    candidate_config: EncoderCandidateConfig | None = None,
 ) -> TrainableFusionEncoder:
+    candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
         backbone = ContinuousTimeSingleStreamEncoder(
             SingleStreamEncoderConfig(
                 active_stream="physiology",
                 input_feature_dim=len(physiology_feature_names),
+                hidden_dim=candidate.hidden_dim,
+                num_heads=candidate.num_heads,
+                layers=candidate.layers,
+                dropout=candidate.dropout,
             )
         )
     elif method_name == "vehicle_only":
@@ -134,6 +170,10 @@ def build_trainable_fusion_encoder(
             SingleStreamEncoderConfig(
                 active_stream="vehicle",
                 input_feature_dim=len(vehicle_feature_names),
+                hidden_dim=candidate.hidden_dim,
+                num_heads=candidate.num_heads,
+                layers=candidate.layers,
+                dropout=candidate.dropout,
             )
         )
     elif method_name in {"mult", "contiformer"}:
@@ -141,6 +181,10 @@ def build_trainable_fusion_encoder(
             method_name=method_name,
             physiology_feature_dim=len(physiology_feature_names),
             vehicle_feature_dim=len(vehicle_feature_names),
+            hidden_dim=candidate.hidden_dim,
+            num_heads=candidate.num_heads,
+            layers=candidate.layers,
+            dropout=candidate.dropout,
         )
         backbone = (
             CausalMulTFusionEncoder(config)
@@ -153,6 +197,12 @@ def build_trainable_fusion_encoder(
                 physiology_feature_names=physiology_feature_names,
                 vehicle_feature_names=vehicle_feature_names,
                 field_labels=vehicle_field_labels,
+                hidden_dim=candidate.hidden_dim,
+                embedding_dim=candidate.hidden_dim,
+                encoder_hidden_dim=candidate.hidden_dim,
+                decoder_hidden_dim=candidate.hidden_dim,
+                dynamics_hidden_dim=candidate.hidden_dim,
+                dropout=candidate.dropout,
             )
         )
     else:

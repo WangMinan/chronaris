@@ -8,9 +8,9 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G4.2 鼎新弱监督目标与真实外层折接入
+## 当前里程碑：G5 seed 17 编码器候选筛选
 
-G4.1–G4.2 已完成仿真应用 consumer、鼎新目标与防泄漏上下文、五折训练内 validation、六方法公共预训练与统一表示、固定 consumer、inner-train 嵌套目标和 validation-only 复核。G4 验收门已关闭，当前进入 G5 seed 17 固定候选 screen。
+G4.1–G4.2 已完成仿真应用 consumer、鼎新目标与防泄漏上下文、五折训练内 validation、六方法公共预训练与统一表示、固定 consumer、inner-train 嵌套目标和 validation-only 复核。G4 验收门已关闭。G5 已完成 20 候选单 epoch 全链路 smoke，当前运行最多 50 epoch、patience 8 的 seed 17 正式筛选。
 
 ### G1–G4.1 已完成
 
@@ -159,6 +159,17 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 7. 已完成：只在 validation 复跑固定 consumer，并修正固定类别指标合同；outer-test 继续关闭。
 8. 当前：冻结 G4 协议，运行 seed 17 四候选 screen；只使用仿真开发 validation 和鼎新 validation，不读取任何 outer-test/locked-test。
 
+### G5 已完成的筛选基础设施
+
+- A–D 候选已成为代码中的冻结配置：`64/1e-3/0.1`、`64/3e-4/0.1`、`32/1e-3/0.1`、`64/1e-3/0.2`；共同使用 2 层、4 heads 和 64 维输出合同。
+- 候选 C 只缩小内部隐层，单流、MulT、ContiFormer 和 Chronaris 的对外表示仍为 `[N,96,64]`；旧 64 维 checkpoint 可严格加载。
+- G1 只读取 96 个 train 与 24 个 validation profile 的 `raw_dual_stream.npz`；其中 23 个 validation 用于排序、1 个保留作开发确认，封存测试不进入批次。
+- 验证增强固定为 seed 17、epoch 0；早停只使用遮挡重构、短期预测和时延判别三项公共损失，Chronaris 专属诊断不进入分数。
+- 候选内逐 epoch 保存 `last.pt`，恢复时加载编码器、公共 head、优化器、最佳分数和 patience，从下一 epoch 继续；候选完成后直接复用 `best.pt`。
+- 四候选逐损失做方法内 min-max，常量损失项归一化为 0；总分并列时按更小参数量、候选字母序确定唯一配置。
+- 20 候选单 epoch smoke 已完成，耗时 5 分 03 秒、峰值内存 4.34 GB、重型 checkpoint 约 114 MB，6/6 验收通过。该结果只验证长跑链路，不作为正式候选结论。
+- 新增代码后完整测试为 `338 passed, 8 skipped, 317 warnings`，`compileall` 与 `git diff --check` 通过。
+
 ## 已锁定规范
 
 - [固定数据证据策略](../requirements/foundation/fixed-data-evidence-strategy.md)
@@ -173,7 +184,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ### G5：screen
 
 - seed 17、每个深度方法四候选。
-- 只使用 G1 validation 和鼎新外层 train groups。
+- 当前先完成 G1 的五方法公共自监督候选排序；选定候选随后进入鼎新五折 inner-train/validation 确认，禁止在 20 候选上反复读取鼎新 validation 指标。
 - 不读取 G2 locked test，不使用结构诊断指标选择候选。
 
 ### G6：locked confirmation

@@ -20,7 +20,9 @@ from chronaris.modeling.training.pretext import (
     pretext_loss_terms_to_rows,
 )
 from chronaris.modeling.training.pretraining_encoders import (
+    ENCODER_SCREEN_CANDIDATES,
     TRAINABLE_FUSION_METHODS,
+    EncoderCandidateConfig,
     TrainableFusionEncoder,
     build_trainable_fusion_encoder,
 )
@@ -129,12 +131,14 @@ def train_common_pretext_method(
     config: CommonPretrainingConfig | None = None,
     augmentation_policy: AugmentationPolicy | None = None,
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
+    candidate_config: EncoderCandidateConfig | None = None,
     resume: bool = True,
 ) -> CommonPretrainingResult:
     if method_name not in TRAINABLE_FUSION_METHODS:
         raise ValueError(f"unsupported trainable method: {method_name}")
     resolved_config = config or CommonPretrainingConfig()
     resolved_policy = augmentation_policy or AugmentationPolicy()
+    resolved_candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if (batch is None) == (batch_provider is None):
         raise ValueError("provide exactly one of batch or batch_provider")
     root = Path(output_root) / method_name
@@ -149,6 +153,7 @@ def train_common_pretext_method(
         physiology_feature_names=physiology_feature_names,
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
+        candidate_config=resolved_candidate,
         data_access_mode=("lazy_batch_provider" if batch_provider else "materialized_batch"),
     )
     if resume and best_path.exists() and last_path.exists():
@@ -167,6 +172,7 @@ def train_common_pretext_method(
             physiology_feature_names=physiology_feature_names,
             vehicle_feature_names=vehicle_feature_names,
             vehicle_field_labels=vehicle_field_labels,
+            candidate_config=resolved_candidate,
         )
         heads = CommonPretextHeadBundle(
             representation_dim=FUSION_OUTPUT_DIM,
@@ -277,6 +283,7 @@ def train_common_pretext_method(
         "vehicle_feature_names": list(vehicle_feature_names),
         "vehicle_field_labels": [list(value) for value in vehicle_field_labels],
         "encoder_manifest": dict(encoder.config_manifest()),
+        "candidate_config": asdict(resolved_candidate),
         "seed": resolved_config.seed,
         "epoch": resolved_config.epochs,
         "step_count": step_count,
@@ -307,11 +314,13 @@ def load_common_pretraining_checkpoint(
     physiology_names = tuple(payload["physiology_feature_names"])
     vehicle_names = tuple(payload["vehicle_feature_names"])
     field_labels = tuple(tuple(value) for value in payload["vehicle_field_labels"])
+    candidate = EncoderCandidateConfig(**payload.get("candidate_config", {}))
     encoder = build_trainable_fusion_encoder(
         method_name,
         physiology_feature_names=physiology_names,
         vehicle_feature_names=vehicle_names,
         vehicle_field_labels=field_labels,
+        candidate_config=candidate,
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(
