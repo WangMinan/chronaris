@@ -1,0 +1,140 @@
+{
+  "variants": [
+    "no_continuous_evolution",
+    "no_physics",
+    "no_causal_mask",
+    "single_scale_lag"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "full_locked_consumer_verified": true,
+  "task_oracle_opened_after_representation": true,
+  "stage_name": "simulation_chronaris_ablation_consumers",
+  "run_id": "2026-07-12_simulation-chronaris-ablation-consumers",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T22:55:14.130427Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T22:54:42.736839Z",
+      "event": "start",
+      "variants": [
+        "no_continuous_evolution",
+        "no_physics",
+        "no_causal_mask",
+        "single_scale_lag"
+      ],
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "full_locked_consumer_verified": true,
+      "task_oracle_opened_after_representation": true
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:54:45.558012Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_continuous_evolution",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:54:47.842040Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_physics",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:54:50.323229Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_causal_mask",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:54:54.880300Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "single_scale_lag",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:54:57.344716Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_continuous_evolution",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:54:59.435266Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_physics",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:01.723591Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_causal_mask",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:03.977037Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "single_scale_lag",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:06.496366Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_continuous_evolution",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:08.747437Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_physics",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:11.468470Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_causal_mask",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:13.799222Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "single_scale_lag",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:55:14.130427Z",
+      "event": "finished",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "metric_count": 768,
+      "paired_statistic_count": 72,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "seed": 43,
+  "variant": "single_scale_lag",
+  "status": "completed",
+  "variant_seed_count": 12,
+  "metric_count": 768,
+  "paired_statistic_count": 72,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_simulation_chronaris_ablation_consumers.py --run-id 2026-07-12_simulation-chronaris-ablation-consumers --minirocket-kernels 10000 --tcn-device cuda --resume

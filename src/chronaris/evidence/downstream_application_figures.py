@@ -125,7 +125,7 @@ def plot_stress_slope_heatmap(table: pd.DataFrame, path: str | Path) -> Path:
                 )
     axis.set_title("观测压力增强时的下游性能退化斜率", fontsize=16, fontweight="bold")
     axis.set_xlabel("压力因素")
-    axis.set_ylabel("融合方法")
+    axis.set_ylabel("输入与融合方法")
     colorbar = figure.colorbar(image, ax=axis, shrink=0.82)
     colorbar.set_label("方向归一化斜率（越大表示退化越慢）")
     figure.text(
@@ -164,7 +164,7 @@ def plot_mechanism_recovery(table: pd.DataFrame, path: str | Path) -> Path:
     figure.text(
         0.5,
         0.015,
-        "岭回归探针只在 G1 训练并由 G1 验证集选参；图中结果来自 G2 锁定压力场景。",
+        "岭回归探针只在仿真训练族拟合并由独立验证集选参；图中结果来自锁定压力场景。",
         ha="center",
         fontsize=10,
         color="#444444",
@@ -232,6 +232,7 @@ def plot_dingxin_representative_case(
     consumer = "minirocket" if "minirocket" in set(selected["consumer"]) else "linear"
     selected = selected[selected["consumer"] == consumer]
     fold = selected.groupby("fold").size().sort_values(ascending=False).index[0]
+    fold_label = _reader_fold_label(fold)
     selected = selected[selected["fold"] == fold]
     selected["context_end_s"] = selected["sample_id"].map(_context_end_second)
     figure, axes = plt.subplots(2, 1, figsize=(12.5, 7.2), sharex=True)
@@ -269,7 +270,7 @@ def plot_dingxin_representative_case(
     figure.text(
         0.5,
         0.01,
-        f"示例来自 {fold} 的外层测试 view；目标由训练折规则构造，不是人工工作负荷或专家机动科目真值。",
+        f"示例来自{fold_label}的外层测试视图；目标由训练折规则构造，不是人工工作负荷或专家机动科目真值。",
         ha="center",
         fontsize=10,
         color="#444444",
@@ -345,11 +346,11 @@ def plot_simulation_oracle_case(
     axes[1].legend(loc="best")
     for axis in axes:
         axis.grid(alpha=0.22)
-    figure.suptitle("半物理仿真的代表性负荷 oracle 复盘", fontsize=16, fontweight="bold")
+    figure.suptitle("半物理仿真的代表性生成真值复盘", fontsize=16, fontweight="bold")
     figure.text(
         0.5,
         0.01,
-        f"示例轨迹：{trajectory}。oracle 只在编码器和下游模型锁定后用于评价。",
+        "示例取自锁定测试中的一条代表性潜在轨迹；生成器真值只在编码器和下游模型锁定后用于评价。",
         ha="center",
         fontsize=10,
         color="#444444",
@@ -378,6 +379,14 @@ def _context_end_second(sample_id: str) -> float:
     if match is None:
         raise ValueError(f"Dingxin context ID lacks end time: {sample_id}")
     return float(match.group(1))
+
+
+def _reader_fold_label(fold_id: str) -> str:
+    match = re.fullmatch(r"leave_one_(view|sortie)_out__fold(\d+)", str(fold_id))
+    if match is None:
+        return "预先固定的分组验证折"
+    group_label = "视图" if match.group(1) == "view" else "架次"
+    return f"留一{group_label}第{int(match.group(2))}折"
 
 
 def _save(figure, path) -> Path:

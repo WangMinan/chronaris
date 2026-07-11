@@ -1,0 +1,74 @@
+{
+  "format": "chronaris.downstream_evidence_pack.v1",
+  "run_id": "2026-07-12_downstream-evidence-pack",
+  "status": "completed",
+  "figure_count": 7,
+  "evidence_row_count": 8,
+  "acceptance_pass_count": 9,
+  "acceptance_check_count": 9,
+  "upstream": {
+    "dingxin_real_weak_supervision": {
+      "run_id": "2026-07-12_dingxin-locked-consumers-coalesced",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_dingxin-locked-consumers-coalesced/evidence_manifest.json",
+      "evidence_sha256": "90bd957db70ef67c471c088566086cc77dfa123ada6882c87a61d6eead686fb9",
+      "format": "chronaris.dingxin_locked_consumer_evidence.v1",
+      "status": "completed"
+    },
+    "simulation_clean_locked": {
+      "run_id": "2026-07-12_simulation-locked-consumers",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_simulation-locked-consumers/evidence_manifest.json",
+      "evidence_sha256": "7ba534b9ef490fd2a05866d1adb3f49e714740875a930fe2e5162086b0f03894",
+      "format": "chronaris.simulation_locked_consumer_evidence.v1",
+      "status": "completed"
+    },
+    "simulation_stress_locked": {
+      "run_id": "2026-07-12_simulation-locked-stress-consumers",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_simulation-locked-stress-consumers/evidence_manifest.json",
+      "evidence_sha256": "86dc233edef00dac6ff4880b7f420984b96ddbe90145795877bf9b02e3251720",
+      "format": "chronaris.simulation_stress_consumer_evidence.v1",
+      "status": "completed"
+    },
+    "simulation_mechanism_recovery": {
+      "run_id": "2026-07-12_simulation-mechanism-consumers",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_simulation-mechanism-consumers/evidence_manifest.json",
+      "evidence_sha256": "ce6976c53b7f1507a41081957d5b1c6b7542039b712ae268ca007b853b721acb",
+      "format": "chronaris.simulation_mechanism_consumer_evidence.v1",
+      "status": "completed"
+    },
+    "simulation_chronaris_ablation": {
+      "run_id": "2026-07-12_simulation-chronaris-ablation-consumers",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-consumers/evidence_manifest.json",
+      "evidence_sha256": "c9405333e8bddfafc86bb9d051585bac78a9c813761c130d40a14ba6cacf1747",
+      "format": "chronaris.simulation_chronaris_ablation_consumer_evidence.v1",
+      "status": "completed"
+    },
+    "simulation_end_to_end_auxiliary": {
+      "run_id": "2026-07-12_simulation-end-to-end-finetuning",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_simulation-end-to-end-finetuning/evidence_manifest.json",
+      "evidence_sha256": "ecb9e821dfeed8b38bfb0e4f869177abff1c9ccf2faf68e6a279fdaefa350e00",
+      "format": "chronaris.simulation_end_to_end_finetuning_evidence.v1",
+      "status": "completed"
+    },
+    "dingxin_synthetic_pretrain_adaptation": {
+      "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced",
+      "evidence_path": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced/evidence_manifest.json",
+      "evidence_sha256": "fba0e8235902df7cfe4d8cfc76a11626dcb06edfc8356a5d44ecd7950921a891",
+      "format": "chronaris.dingxin_locked_consumer_evidence.v1",
+      "status": "completed"
+    },
+    "public_dataset_adaptation": {
+      "run_id": "2026-06-07_public-adapter-calibration",
+      "evidence_path": "docs/artifacts/runs/2026-06-07_public-adapter-calibration/public_adapter_calibration_summary.json",
+      "evidence_sha256": "2371b64813b56eaec1648a94d6e2acdb4a5dee29f418d8352a3c9dbba0272514",
+      "format": "chronaris.public_adapter_calibration.legacy_v1",
+      "status": "completed_legacy_evidence"
+    }
+  },
+  "output_paths": {
+    "protocol": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/report.md",
+    "claim": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/evidence_manifest.json"
+  }
+}

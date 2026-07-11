@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。仿真 clean 锁定主表、时间机制恢复、端到端辅助表和七因素压力评估均已完成：Chronaris 在线性负荷探针、机动状态/片段质量、时钟偏移和响应时延绝对误差上形成优势，MulT 在 MiniRocket 负荷任务、边界定位和时延排序相关性上领先。压力结果进一步表明 Chronaris 在 21 个最高单因素压力组合中有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六，不形成全因素鲁棒性优势。鼎新 real-only 轨道的 75/75 训练、270/270 表示和 90/90 冻结 consumer 均已完成：Chronaris 在高生理响应识别上以 AUPRC 0.8839 居首，但机动强度分类和连续响应回归分别由 ContiFormer 和 MulT 领先。仿真预训练到鼎新无标签适配的 75/75 训练、270/270 表示和 90/90 consumer 也已完成。迁移没有形成 Chronaris 的一致增益：高生理响应 AUPRC 下降 0.0336，机动分类 Macro-F1 下降 0.0048，生理响应 RMSE 改善 0.0062；这条轨道保留为跨域适配负结果，不替代 real-only 主表。Chronaris 消融的 12 个 checkpoint 和 36 份三角色表示已完成，统一 consumer 正在 GPU 运行。
+固定数据下游评估与完整论文实验长程 goal 的实验和证据链已经闭环，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`，只剩全量回归测试与工作树审计。鼎新 real-only、仿真 clean、时间机制、端到端辅助、七因素压力、仿真到鼎新适配和 Chronaris 四机制消融均完成锁定评价。Chronaris 在鼎新高生理响应识别 AUPRC 0.8839、仿真机动分段 Macro-F1 0.4687、时钟偏移 MAE 0.8883 秒和响应时延 MAE 7.4859 秒上形成分项领先；机动分类、负荷分类/回归和边界定位由不同基线领先。压力结果中 Chronaris 在最高单因素压力的 21 个主指标组合里有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六。仿真预训练迁移没有形成一致收益；四项消融进一步显示连续演化主要支撑负荷任务，因果掩码和多尺度时延主要支撑机动分段，物理约束不形成全任务一致增益。最终论文证据包汇总 8 层证据、7 幅已抽查中文图和 54 项迁移配对，9/9 门禁通过。
 
 ## 当前执行入口
 
@@ -41,6 +41,8 @@
 - G6 仿真预训练适配冻结下游评估：[artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced/report.md](artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced/report.md)
 - G6 Chronaris 机制消融重训协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md)
 - G6 Chronaris 机制消融表示协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md)
+- G7 Chronaris 四机制锁定消融下游评估：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-consumers/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-consumers/report.md)
+- G8 固定数据下游评估论文证据包：[artifacts/runs/2026-07-12_downstream-evidence-pack/report.md](artifacts/runs/2026-07-12_downstream-evidence-pack/report.md)
 - G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
 - G6 仿真三随机种子五方法锁定重训：[artifacts/runs/2026-07-12_simulation-locked-pretraining/report.md](artifacts/runs/2026-07-12_simulation-locked-pretraining/report.md)
 - G6 仿真三随机种子六方法统一表示：[artifacts/runs/2026-07-12_simulation-locked-representations/report.md](artifacts/runs/2026-07-12_simulation-locked-representations/report.md)
@@ -68,7 +70,7 @@
 - 设备调度：公共增强已固定在 CPU，模型 tensor 才送入 GPU；鼎新五方法的合并输入 GPU 冒烟连续完成且无 launch failure。正式队列继续保持单 CUDA 进程，checkpoint 记录设备历史，重复故障才原地迁移 CPU。
 - CUDA 故障点已收敛到增强阶段的小粒度索引算子；公共增强、pretext target 和错误时移现固定在 CPU 确定性构造，再只把模型输入与 target tensor 送入 GPU。单 epoch CUDA 冒烟已确认 `training_device=cuda`、`augmentation_device=cpu`，鼎新基线队列将在严格单进程下采用该路径，若仍失败再按设备历史迁移 CPU。
 - 锁定表示混合设备冒烟已完成：seed 17 六方法在 baseline CUDA、Chronaris CPU、朴素同步 CPU/PCA 下导出 train/validation/G2 共 18 份表示，耗时约 2 分 41 秒，18/18 输出、7/7 验收通过；任务 oracle 保持关闭。
-- Chronaris 机制消融：四个变体 × 三个随机种子的 CPU 锁定重训完成 12/12 个 checkpoint，6/6 门禁通过；每个变体—种子均导出 G1 train/validation 与 G2 held-out，共 36/36 份表示、5/5 门禁通过。训练和表示阶段均不读取任务真值，统一 consumer 等待其他自动队列门禁后使用 GPU 运行。
+- Chronaris 机制消融：四个变体 × 三个随机种子的锁定重训完成 12/12 个 checkpoint，每个变体—种子均导出仿真训练、验证与锁定测试三角色，共 36/36 份表示；12/12 个统一 consumer、768 条指标、384 条完整模型方向归一优势和 72 条 48 轨迹配对统计完成，三级门禁为 6/6、5/5、6/6。完整模型相对去连续演化在分类/回归/分段上为 +0.0691/+0.0278/+0.0142，相对去因果掩码为 +0.0060/+0.0082/+0.0662，相对单尺度时延为 +0.0056/+0.0118/+0.0623；去物理约束为 -0.0193/+0.0118/+0.0044，不写成全任务一致贡献。
 - 消融表示冒烟：无物理约束变体已从锁定 checkpoint 回载并导出 G1 train、G1 validation、G2 held-out 三角色共 3 份统一表示，672 个上下文耗时约 22 秒，5/5 门禁通过。
 - 上游完成后按门禁顺序自动进入六方法统一表示、validation 选参 consumer、G2 clean 锁定指标、35 场景压力曲线和四项 Chronaris 机制消融。
 
@@ -88,7 +90,7 @@
 - 鼎新表示与 consumer 现从上游训练协议继承表示族：real-only 固定为 `frozen_task_agnostic_v1`，仿真预训练适配固定为 `synthetic_pretrain_real_adapt_v1`；两条轨道即使复用相同导出/consumer 代码也不会在 manifest 或主表中混写。
 - 时间偏移与响应时延恢复任务已形成独立门禁链路：四种双流方法先导出 G1 六场景 train/validation 表示，再用 G1 validation 选择统一 Ridge 探针，最后只在 G2 的 35 个压力场景上评价；G2 不参与拟合或选参。
 - 仿真端到端微调辅助链路已实现：六方法共享 `1e-4`、20 epoch、patience 5，联合训练线性负荷分类/回归头与两层因果 TCN；五个可训练编码器更新完整主干，朴素同步作为非参数 head-only 控制。微调表示单独写入 `end_to_end_finetuned_v1` 并显式声明使用任务标签，等待冻结主表完成后运行。
-- 下游论文证据包生成器已实现：锁定读取鼎新主折、仿真 clean、七因素压力、时间机制恢复、四项消融、端到端辅助表和既有 UAB/NASA 公开适配证据，生成 7 幅中文图（含鼎新代表时间线与仿真 oracle 复盘）、预声明主指标表、证据矩阵、领先方法描述与 claim boundary；真实弱监督、仿真真值、标签微调和公开上下文适配不会混入同一结论层。
+- 下游论文证据包已正式生成：锁定读取鼎新主折、仿真 clean、七因素压力、时间机制恢复、四项消融、端到端辅助表、仿真预训练适配和既有 UAB/NASA 公开适配证据，形成 8 层证据、7 幅中文图、预声明主指标表、54 项迁移增量表、证据矩阵和结论边界，9/9 门禁通过。7 图已逐图抽查并移除机器折 ID、轨迹 ID和未解释英文。
 - 因果时间合并、OvR 高维求解器和批量持续时间解码接入后，完整测试为 `370 passed, 8 skipped, 319 warnings`；新增批量解码逐位等价、GPU 稳定性、表示族、微调和证据包测试均通过。
 - 100 ms 因果时间箱、同时间观测聚合、缺失模态和旧 checkpoint 拒绝恢复的聚焦测试为 `10 passed`；run-level protocol 显式记录箱宽、时间戳策略和方法无关约束。
 - MiniRocket 高维逻辑回归求解器已在 G2 指标比较前锁定：显式 OvR `liblinear` 对所有方法共用，64 维线性探针保留 `lbfgs`；应用消费者与鼎新消费者聚焦测试 `13 passed`。
@@ -214,23 +216,15 @@
 
 ## 当前未完成
 
-- 鼎新 real-only 轨道已完成；后续只需把高生理响应识别的分项优势与其他两任务的基线领先并列写入论文证据包。
-- 仿真压力 consumer 已完成；后续只需在论文证据包中把绝对重压表现和退化斜率分开呈现，不将随机/连续缺失写成优势。
-- 仿真预训练到鼎新无标签适配已完成训练、统一表示、冻结 consumer 和 real-only 54 项主指标配对；结果不支持一致跨域迁移增益。Chronaris 消融统一 consumer 正在运行；论文证据包和图表抽查等待其门禁完成。
+- 运行完整测试、源码编译、Ruff、术语、Git 差异和重型产物边界审计。
+- 把最终验证计数回写到状态与任务文档后提交；不新增候选、不追加为了制造领先而设计的实验。
 
-## 下一验收门
+## 最终验收门
 
-G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统一表示，再进入 screen：
-
-1. 已完成：在每个外层训练组内按 view/sortie 和时间顺序固定 validation，并对共享航电原始区间实施 overlap embargo。
-2. 归一化、增强和公共预训练只拟合 inner-train；outer-test 在候选冻结前只用于一次 smoke 结构验证，不参与选择。MiniROCKET 方差过滤和正式任务阈值在后续 consumer 阶段也必须只拟合 inner-train。
-3. 已完成：五折六方法 checkpoint、train/validation/test 表示逐项匹配 schema、fit sample 和 source hash。
-4. 已完成：真实外层折六方法表示—固定 consumer smoke；鼎新指标与仿真指标分目录保存，不形成混合平均分。
-5. 已完成：按 inner-train 重建嵌套目标。
-6. 已完成：仅在 validation 复跑固定 consumer，outer-test 指标保持关闭。
-7. 已完成：G1 seed 17 四候选正式 screen 与预留 profile 确认。
-8. 已收口：五个选定配置的 seed 17 开发确认完成前两个主折；第一折 18 份表示已导出。后续不补跑冗余开发折，统一由正式三 seed 五折协议承接。
-9. 进行中：seeds 17/29/43 只重训五个唯一配置；G2 任务真值必须等 15 个 checkpoint 和 54 份 clean 表示全部完成后再打开。
+1. 所有正式 run 的 `evidence_manifest.json` 必须为 `completed`，真实、仿真、迁移、标签微调和公开适配继续分层。
+2. 完整测试、`compileall`、本轮改动文件 Ruff 和 `git diff --check` 全部通过；全仓 Ruff 的 252 项历史导入/未使用符号基线单独记录，不混入本任务修复。
+3. 七幅论文图保持中文字体、长标签、图例和数值可读，不展示内部折 ID、轨迹 ID 或未解释术语。
+4. 工作树只包含源码、测试、紧凑表格、清单、报告和图；checkpoint、稠密表示与逐样本预测继续位于被忽略目录。
 
 ## 本轮验证
 
@@ -255,8 +249,8 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 - G4.2 训练内划分聚焦测试：`4 passed`；五折角色穷尽互斥、共享航电区间零重叠、任务覆盖和确定性重建均通过，正式 run `11/11` 验收通过。
 - G4.2 流式归一化、随机化 PCA、懒加载公共训练与 OOF 导出聚焦测试：`21 passed`；主协议首折真实 run 为 5 个训练 checkpoint、6 个总 checkpoint、18 个表示，`12/12` 验收通过。
 - G5 候选配置、早停、排名和恢复聚焦测试：`17 passed`；20 候选单 epoch G1 smoke 为 `6/6`，耗时 5 分 03 秒、峰值内存 4.34 GB。
-- 完整测试：`352 passed, 8 skipped, 317 warnings`。
-- `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
+- 最终完整测试：`372 passed, 8 skipped, 319 warnings`。
+- `compileall src scripts tests`、本轮改动文件 Ruff、`git diff --check`、读者术语、密钥模式和重型产物忽略检查通过；全仓 Ruff 仍有 252 项历史基线，集中在本轮未修改的归档脚本、旧模块和合并测试。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 
 ## 证据边界

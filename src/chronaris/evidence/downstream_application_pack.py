@@ -10,9 +10,12 @@ from pathlib import Path
 import pandas as pd
 
 from chronaris.evidence.downstream_application_data import (
+    ABLATION_LABELS,
     DINGXIN_PRIMARY,
     METHOD_LABELS,
     SIMULATION_PRIMARY,
+    STRESS_LABELS,
+    TARGET_LABELS,
     build_ablation_primary_table,
     build_dingxin_transfer_delta_table,
     build_mechanism_mae_table,
@@ -241,6 +244,9 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
             font_family=font_family,
             status=status,
             transfer_table=transfer_table,
+            stress_table=stress_table,
+            mechanism_table=mechanism_table,
+            ablation_table=ablation_table,
         )
         progress.finish(
             status=status,
@@ -482,6 +488,42 @@ def _write_documents(**values):
             ],
             "",
         ]
+    stress_lines = [
+        "## Chronaris 的观测压力退化斜率",
+        "",
+        "数值已按指标方向归一，越大表示压力增强时退化越慢；每格汇总三个预声明主任务。",
+        "",
+        *[
+            f"- {column_label}：{float(values['stress_table'].loc['chronaris', column]):+.4f}。"
+            for column, column_label in (
+                (column, STRESS_LABELS[column])
+                for column in values["stress_table"].columns
+            )
+        ],
+        "",
+    ]
+    mechanism_lines = [
+        "## 时间机制恢复的描述性领先方法",
+        "",
+    ]
+    for target, panel in values["mechanism_table"].groupby("target", sort=False):
+        winner = panel.loc[panel["value"].idxmin()]
+        mechanism_lines.append(
+            f"- {TARGET_LABELS[target]}：{METHOD_LABELS[winner['method']]}，平均绝对误差 {float(winner['value']):.4f} 秒。"
+        )
+    mechanism_lines.append("")
+    ablation_lines = [
+        "## Chronaris 关键机制消融",
+        "",
+        "正值表示完整 Chronaris 优于对应消融；不同任务保留各自主指标尺度。",
+        "",
+    ]
+    task_labels = {item["task"]: item["title"] for item in SIMULATION_PRIMARY}
+    for row in values["ablation_table"].itertuples(index=False):
+        ablation_lines.append(
+            f"- {task_labels[row.task]}—{ABLATION_LABELS[row.ablation_method]}：{float(row.mean):+.4f}。"
+        )
+    ablation_lines.append("")
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text(
         "\n".join(
@@ -498,6 +540,9 @@ def _write_documents(**values):
                 "这些领先关系是结果汇总，不替代折级或轨迹级配对统计；真实弱监督、仿真真值与端到端微调保持独立表述。",
                 "",
                 *transfer_lines,
+                *stress_lines,
+                *mechanism_lines,
+                *ablation_lines,
             )
         ),
         encoding="utf-8",
