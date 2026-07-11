@@ -18,6 +18,7 @@ def fit_classifier(
     c_values,
     random_state,
     scaler_with_mean,
+    classification_labels=None,
 ):
     best = None
     best_score = float("-inf")
@@ -36,6 +37,7 @@ def fit_classifier(
             f1_score(
                 np.asarray(validation_target, dtype=np.int64),
                 candidate.predict(validation_values),
+                labels=classification_labels,
                 average="macro",
                 zero_division=0,
             )

@@ -1,0 +1,21 @@
+{
+  "format": "chronaris.dingxin_locked_pretraining_evidence.v1",
+  "run_id": "2026-07-12_dingxin-locked-pretraining-smoke",
+  "status": "completed",
+  "method_fold_seed_count": 5,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7,
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_dingxin-locked-pretraining-smoke",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/locked_pretraining_results.csv",
+    "folds": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/fold_audit.csv",
+    "auxiliary": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/chronaris_auxiliary_metrics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/evidence_manifest.json"
+  }
+}

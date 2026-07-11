@@ -15,6 +15,9 @@ from chronaris.evaluation.application_tasks.dingxin_consumer_runtime import (
 from chronaris.evaluation.application_tasks.dingxin_consumer_targets import (
     DingxinFoldConsumerTargets,
 )
+from chronaris.evaluation.application_tasks.dingxin_locked_consumer_run import (
+    aggregate_dingxin_main_fold_metrics,
+)
 from chronaris.representation import FusionStreamBatch
 
 
@@ -137,3 +140,65 @@ def test_dingxin_method_consumer_resume_keeps_metrics_and_predictions(tmp_path):
     assert first.manifest["prediction_sha256"] == resumed.manifest[
         "prediction_sha256"
     ]
+
+
+def test_dingxin_formal_consumer_selects_validation_grid_and_marks_formal(tmp_path):
+    targets = _targets()
+    outputs = {
+        role: _output(
+            role,
+            tuple(
+                sample_id
+                for sample_id, sample_role in targets.role_by_sample_id.items()
+                if sample_role == role
+            ),
+            seed=40 + index,
+        )
+        for index, role in enumerate(("train", "validation", "held_out"))
+    }
+    config = DingxinConsumerConfig(n_kernels=84, tune_on_validation=True)
+
+    result = run_dingxin_method_consumers(
+        method_name="chronaris",
+        fold_id="fold_test",
+        outputs=outputs,
+        targets=targets,
+        output_root=tmp_path,
+        config=config,
+        evaluation_roles=("held_out",),
+        smoke_only=False,
+    )
+
+    assert all(not row["smoke_only"] for row in result.metric_rows)
+    assert result.manifest["smoke_only"] is False
+    for consumer in result.manifest["consumer_files"].values():
+        model = consumer["model"]
+        assert model["hyperparameter_selection_role"] == "validation"
+        assert model["selected_maneuver_c"] in config.classification_c_grid
+        assert model["selected_response_alpha"] in config.regression_alpha_grid
+
+
+def test_dingxin_main_summary_uses_view_folds_not_windows() -> None:
+    rows = [
+        {
+            "seed": 17,
+            "method": "chronaris",
+            "task": "physiology_response_regression",
+            "consumer": "linear",
+            "metric": "rmse",
+            "direction": "lower",
+            "role": "held_out",
+            "fold": f"leave_one_view_out__fold0{index}",
+            "value": value,
+        }
+        for index, value in enumerate((2.0, 1.0, 3.0), start=1)
+    ]
+
+    summary = aggregate_dingxin_main_fold_metrics(rows)
+
+    assert len(summary) == 1
+    assert summary[0]["fold_count"] == 3
+    assert summary[0]["mean"] == 2.0
+    assert summary[0]["worst_fold_value"] == 3.0
+    assert summary[0]["statistical_unit"] == "view_fold"
+    assert summary[0]["window_level_p_value_reported"] is False

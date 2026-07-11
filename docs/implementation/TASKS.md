@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新第一个外层折的五个选定配置与 18 份统一表示已完成；G6 seeds 17/29/43 正式队列正在运行。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
+G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 7/7 协议验证，并启动 3 seeds × 5 folds × 5 methods 的 75 单元队列；G6 仿真 seeds 17/29/43 正式队列同时运行。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
 
 ### 本轮新增进度
 
@@ -21,6 +21,8 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新第一个外层折�
 - 正式 consumer 使用 validation 固定网格选择 Logistic/Ridge 与 MiniRocket 参数；机动分段使用两层残差因果 TCN、kernel 5、dilation 1/2、patience 6，并可在 GPU 上训练。
 - G2 压力扩展包含 7 个单因素的 34 个等级版本和 1 个 mixed-severe 版本；48 条轨迹共 1,680 个观测场景，同轨迹复用相同 observation seed，7/7 验收通过。
 - G1→G2 clean 表示、正式 consumer、压力表示、冻结 consumer 复用、退化斜率和轨迹级配对统计的可恢复编排已经实现；按协议等待上游锁定 checkpoint 后再执行。
+- 鼎新正式表示与 consumer 编排已实现：75 个 checkpoint 完整后才导出 270 份六方法三角色表示，validation 只负责选参，outer-test 只负责一次锁定评价。
+- Chronaris 四项机制消融已接入锁定训练、checkpoint 回载、表示导出和相同下游 consumer；完整模型与消融按 48 条 G2 潜在轨迹配对。
 
 ### G1–G4.1 已完成
 
@@ -178,7 +180,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 候选内逐 epoch 保存 `last.pt`，恢复时加载编码器、公共 head、优化器、最佳分数和 patience，从下一 epoch 继续；候选完成后直接复用 `best.pt`。
 - 四候选逐损失做方法内 min-max，常量损失项归一化为 0；总分并列时按更小参数量、候选字母序确定唯一配置。
 - 20 候选单 epoch smoke 已完成，耗时 5 分 03 秒、峰值内存 4.34 GB、重型 checkpoint 约 114 MB，6/6 验收通过。该结果只验证长跑链路，不作为正式候选结论。
-- G5 正式收口后完整测试为 `340 passed, 8 skipped, 317 warnings`，`compileall` 与 `git diff --check` 通过。
+- 本轮正式训练、鼎新下游与消融编排收口后完整测试为 `356 passed, 8 skipped, 317 warnings`，`compileall`、Ruff 与 `git diff --check` 通过。
 - 正式 50 epoch/patience 8 筛选完成；Chronaris、MulT、ContiFormer、生理单流选择 A，航电单流选择 C。预留的第 24 个 G1 validation profile 只用于五个选定 checkpoint 的一次开发确认，不参与重新排序。
 - Chronaris 参考轴采样已由逐样本重放改为数学等价的向量化查询，输出、审计与梯度对照通过；CPU 单 epoch 从约 60 秒降至 17.07 秒。RTX 4090 同批次为 49.87 秒，因此该主干正式 screen 使用 CPU，CUDA 支持保留给更适合并行的后续训练。
 
@@ -203,9 +205,10 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ### G6：locked confirmation
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；基线优先 GPU、Chronaris 使用同批基准更快设备。
-- 进行中：鼎新五折选定配置 validation 确认；第 1 折训练与统一表示已完成。
+- 进行中：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 7/7 验收，正式队列已启动。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
-- 待执行：鼎新主/辅助 split、synthetic-to-real、端到端微调辅助表和 Chronaris 四项固定消融。
+- 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
+- 待执行：synthetic-to-real 和端到端微调辅助表；二者不替代冻结表示主结果。
 
 ### G7：stress 与论文证据包
 

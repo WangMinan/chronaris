@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选已经完成；鼎新第一个外层折的五个选定配置和 18 份六方法表示也已完成。G6 seeds 17/29/43 正在运行，基线使用 RTX 4090、Chronaris 使用同批实测更快的 CPU 连续演化路径。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计；既有确认指标仍未修改。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选已经完成；鼎新正式三随机种子五折重训协议已通过单折 5/5 方法、7/7 验收并启动 75 个方法—折—随机种子队列。G6 仿真 seeds 17/29/43 也在运行，基线使用 RTX 4090、Chronaris 使用同批实测更快的 CPU 连续演化路径。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计；既有确认指标仍未修改。
 
 ## 当前执行入口
 
@@ -34,6 +34,7 @@
 - G4.2 鼎新嵌套目标 validation-only consumer：[artifacts/runs/2026-07-11_dingxin-nested-validation/report.md](artifacts/runs/2026-07-11_dingxin-nested-validation/report.md)
 - G5 编码器候选筛选全链路 smoke：[artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md)
 - G5 seed 17 正式编码器候选筛选：[artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md)
+- G6 鼎新锁定重训单折协议验证：[artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md](artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md)
 - G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
 
 ## 已锁定事实
@@ -47,11 +48,25 @@
 - 融合表示结构诊断只放附录，不参与模型选择。
 - UAB/NASA 保持公开数据适配和上下文构造第二输入流证据，不等价于鼎新真实航电流。
 
+## 当前长程队列
+
+- 仿真锁定重训：3 seeds × 5 个可训练方法；四个基线走 RTX 4090，Chronaris 走已实测更快的 CPU 路径，逐 epoch `last.pt` 可恢复。
+- 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元；任务目标、outer-test 表示和指标仍保持关闭。
+- 上游完成后按门禁顺序自动进入六方法统一表示、validation 选参 consumer、G2 clean 锁定指标、35 场景压力曲线和四项 Chronaris 机制消融。
+
 ## 分支与历史实现
 
 - 当前分支从 `origin/main` 建立；基线包含 2026-07-06 融合表示结构评价规划。
 - `implement/fusion-stream-structure-20260707` 保留为历史实现分支，不整体合并。
 - 后续只选择性复用 OOF/checkpoint manifest、resume、结构化 unavailable 和 ClaSP/STUMPY wrapper 思路，不移入旧 checkpoint、图件、大型 manifest 或 E3 候选选择逻辑。
+
+## 本轮新增锁定链路
+
+- 鼎新正式训练器只允许 inner-train/validation batch provider，outer-test 请求会 fail closed；训练折归一化、公共早停损失、checkpoint hash、设备与资源峰值均写入 manifest。
+- 鼎新正式表示导出要求 75 个 checkpoint 全部完成后才允许打开 outer-test 原始输入，统一导出 3 seeds × 5 folds × 6 methods × 3 roles 共 270 份 `[N,96,64]` 表示。
+- 鼎新正式下游消费者只在 validation 网格选择 Logistic/Ridge/MiniRocket 超参数；三个留一视图折作为主统计单位，两个留一架次折只作辅助，不报告窗口级显著性。
+- Chronaris 四项消融已经接入与完整模型相同的锁定训练、checkpoint 回载、G1→G2 表示和正式 consumer 协议；完整模型与消融以 48 条潜在轨迹做配对差异。
+- 新增代码后完整测试为 `356 passed, 8 skipped, 317 warnings`；`compileall`、Ruff 和 `git diff --check` 通过。
 
 ## 本轮已完成
 

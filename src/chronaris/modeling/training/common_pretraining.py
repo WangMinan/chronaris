@@ -93,8 +93,9 @@ class TrainedFusionAdapter:
 
     def __call__(self, batch: DualStreamObservationBatch) -> FusionStreamBatch:
         device = next(self.encoder.parameters()).device
-        normalized = self.normalizer.transform(
-            move_observation_batch(batch, device=device)
+        normalized = move_observation_batch(
+            self.normalizer.transform(batch),
+            device=device,
         )
         self.encoder.eval()
         with torch.inference_mode():
@@ -315,12 +316,18 @@ def load_common_pretraining_checkpoint(
     vehicle_names = tuple(payload["vehicle_feature_names"])
     field_labels = tuple(tuple(value) for value in payload["vehicle_field_labels"])
     candidate = EncoderCandidateConfig(**payload.get("candidate_config", {}))
+    chronaris_variant = str(
+        payload.get("encoder_manifest", {})
+        .get("backbone_config", {})
+        .get("variant", "full")
+    )
     encoder = build_trainable_fusion_encoder(
         method_name,
         physiology_feature_names=physiology_names,
         vehicle_feature_names=vehicle_names,
         vehicle_field_labels=field_labels,
         candidate_config=candidate,
+        chronaris_variant=chronaris_variant,
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(
