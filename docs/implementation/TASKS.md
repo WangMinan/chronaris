@@ -221,7 +221,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 已完成：压力冻结 consumer 105/105 种子—场景、630 方法评估、20,160 条指标、4,032 条退化斜率和 630 条 48 轨迹配对统计，6/6 门禁通过。Chronaris 在最高单因素压力下 15/21 个主指标组合位于前二，但随机/连续缺失平均退化斜率均为第六，不形成全因素鲁棒性优势。
 - 验证刷新：完整测试 `370 passed, 8 skipped, 319 warnings`，覆盖新加入的因果时间合并、显式 OvR 高维求解器和批量持续时间约束逐位等价路径。
 - 已完成：鼎新 75 个选定配置锁定重训 `2026-07-12_dingxin-locked-pretraining-coalesced`；三个留一视图主折和两个留一架次辅助折共 75/75 单元、8/8 门禁通过。CPU 构造增强、五个可训练方法全部使用唯一 GPU；任务目标与 outer-test 访问数均为零，任何缺少 `model_input_contract.json` 的旧 checkpoint 均拒绝恢复。
-- 进行中：从 75 个已验证 checkpoint 导出 3 seeds × 5 folds × 6 methods × train/validation/outer-test 共 270 份 `frozen_task_agnostic_v1` 表示；表示阶段不计算 outer-test 任务指标。
+- 已完成：从 75 个已验证 checkpoint 导出 3 seeds × 5 folds × 6 methods × train/validation/outer-test 共 270/270 份 `frozen_task_agnostic_v1` 表示，6/6 门禁通过；表示阶段不计算 outer-test 任务指标。
+- 已完成：鼎新冻结 consumer 90/90 单元、5,040 条正式指标、3,360 条双流增益和 504 条主折汇总，8/8 门禁通过。Chronaris 在高生理响应识别上以 AUPRC 0.8839 居首，但机动强度分类和连续响应回归不领先。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
 - 已完成：Chronaris 四项固定消融 × seeds 17/29/43 共 12/12 个 checkpoint、6/6 门禁；训练和保留确认全程不打开 G2 或任务真值。
