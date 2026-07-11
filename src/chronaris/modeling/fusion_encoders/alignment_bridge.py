@@ -59,6 +59,14 @@ def _build_stream(
         raise RepresentationContractError("invalid raw stream mask shape")
     if not torch.equal(point_mask, feature_mask.any(dim=-1)):
         raise RepresentationContractError("point mask must equal any feature mask")
+    values, timestamps_s, point_mask, feature_mask = (
+        _coalesce_simultaneous_observations(
+            values=values,
+            timestamps_s=timestamps_s,
+            point_mask=point_mask,
+            feature_mask=feature_mask,
+        )
+    )
     clean_values = torch.where(feature_mask, values, torch.zeros_like(values))
     clean_timestamps = torch.where(
         point_mask,
@@ -76,6 +84,77 @@ def _build_stream(
         delta_t_s=delta_t_s,
         point_counts=point_mask.sum(dim=1).to(torch.int64),
         feature_names=feature_names,
+    )
+
+
+def _coalesce_simultaneous_observations(
+    *,
+    values: torch.Tensor,
+    timestamps_s: torch.Tensor,
+    point_mask: torch.Tensor,
+    feature_mask: torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    """Merge long-table fields sharing one timestamp into one observation event."""
+    sample_rows = []
+    maximum_count = 0
+    feature_count = values.shape[-1]
+    for sample_index in range(values.shape[0]):
+        indices = torch.nonzero(point_mask[sample_index], as_tuple=False).flatten()
+        sample_times = timestamps_s[sample_index].index_select(0, indices)
+        if sample_times.numel() > 1 and not bool(
+            torch.all(sample_times[1:] >= sample_times[:-1])
+        ):
+            raise RepresentationContractError(
+                "raw observation timestamps must be non-decreasing"
+            )
+        unique_times, inverse = torch.unique_consecutive(
+            sample_times,
+            return_inverse=True,
+        )
+        group_count = len(unique_times)
+        sample_values = values[sample_index].index_select(0, indices)
+        sample_features = feature_mask[sample_index].index_select(0, indices)
+        group_indices = inverse.unsqueeze(-1).expand(-1, feature_count)
+        value_sums = values.new_zeros((group_count, feature_count))
+        observation_counts = values.new_zeros((group_count, feature_count))
+        value_sums.scatter_add_(
+            0,
+            group_indices,
+            sample_values * sample_features.to(sample_values.dtype),
+        )
+        observation_counts.scatter_add_(
+            0,
+            group_indices,
+            sample_features.to(values.dtype),
+        )
+        coalesced_mask = observation_counts > 0
+        coalesced_values = torch.where(
+            coalesced_mask,
+            value_sums / observation_counts.clamp_min(1.0),
+            torch.zeros_like(value_sums),
+        )
+        sample_rows.append((coalesced_values, unique_times, coalesced_mask))
+        maximum_count = max(maximum_count, group_count)
+    maximum_count = max(maximum_count, 1)
+    coalesced_values = values.new_zeros(
+        (values.shape[0], maximum_count, feature_count)
+    )
+    coalesced_times = timestamps_s.new_zeros((values.shape[0], maximum_count))
+    coalesced_features = feature_mask.new_zeros(
+        (values.shape[0], maximum_count, feature_count)
+    )
+    for sample_index, (sample_values, sample_times, sample_features) in enumerate(
+        sample_rows
+    ):
+        count = len(sample_times)
+        coalesced_values[sample_index, :count] = sample_values
+        coalesced_times[sample_index, :count] = sample_times
+        coalesced_features[sample_index, :count] = sample_features
+    return (
+        coalesced_values,
+        coalesced_times,
+        coalesced_features.any(dim=-1),
+        coalesced_features,
     )
 
 

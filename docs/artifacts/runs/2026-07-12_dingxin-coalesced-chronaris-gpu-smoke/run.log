@@ -1,0 +1,2 @@
+2026-07-11 21:18:18,967 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-12_dingxin-coalesced-chronaris-gpu-smoke run_root=docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke
+2026-07-11 21:23:48,904 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-12_dingxin-coalesced-chronaris-gpu-smoke run_root=docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke

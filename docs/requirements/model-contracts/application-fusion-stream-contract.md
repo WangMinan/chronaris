@@ -80,6 +80,12 @@ class DualStreamObservationBatch:
 - 训练折排除字段及原因。
 - 每个字段在 train/test 的有效点数和缺失率。
 
+### 2.5 鼎新长表的模型无关时间合并
+
+鼎新输入在进入任何编码器或训练折预处理器之前，统一按 `100 ms` 固定因果时间箱合并。时间箱内同一字段取均值，输出时间戳取该箱最后一次真实观测，随后重算 mask 与 observation age。该函数不得接收方法名、标签或 split role，六种方法必须消费完全相同的结果；原始 snapshot 和 source hash 不因模型输入压缩而改变。
+
+时间箱只延迟箱内较早事件，最大延迟小于 `100 ms`，不允许把观测前移。它不替代 96 点公共查询轴，也不允许在 outer-test 上重新拟合任何参数。正式 manifest 必须记录 `model_input_bin_width_s=0.1`，恢复 checkpoint 时该值变化视为协议不兼容。
+
 ## 3. 统一融合表示
 
 ```python
@@ -268,4 +274,3 @@ Chronaris 额外使用：
 - Chronaris 声明物理项 active 但没有相应字段或 loss 记录。
 
 失败 fold 写 `contract_violation` 和具体原因，不用零指标占位，不参与汇总排名。
-

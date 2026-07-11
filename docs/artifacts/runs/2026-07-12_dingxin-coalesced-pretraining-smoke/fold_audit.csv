@@ -1,0 +1,2 @@
+fold_id,inner_train_count,validation_count,outer_test_count,normalizer_fit_count,forbidden_request_count,cache_hit_count,normalizer_status
+leave_one_view_out__fold01,31,31,31,31,0,0,resumed_cache

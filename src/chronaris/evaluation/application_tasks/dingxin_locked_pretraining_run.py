@@ -13,6 +13,8 @@ import pandas as pd
 import torch
 
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import (
+    DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
+    ensure_dingxin_model_input_contract,
     load_dingxin_fold_pretraining_data,
 )
 from chronaris.evaluation.application_tasks.dingxin_selected_screen_run import (
@@ -85,6 +87,7 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
     heavy_root = Path(config.heavy_output_root) / config.run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
+    ensure_dingxin_model_input_contract(heavy_root)
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
     selected_ids = {
         method: str(selected[method]["candidate_id"])
@@ -120,6 +123,7 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
             "task_targets_opened": False,
             "outer_test_accessed": False,
             "transfer_initialization_enabled": bool(initialization_checkpoints),
+            "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
         },
     ) as progress:
         result_rows = []
@@ -133,7 +137,7 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                 inner_split_root=config.inner_split_root,
             )
             provider, access = _build_guarded_cached_provider(
-                data.index.load_batch,
+                data.load_batch,
                 allowed_sample_ids=(
                     data.fold.train_sample_ids + data.fold.validation_sample_ids
                 ),
@@ -490,6 +494,7 @@ def _write_outputs(**values):
             if values["config"].initialization_pretraining_run_id is not None
             else "frozen_task_agnostic_v1"
         ),
+        "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -497,6 +502,8 @@ def _write_outputs(**values):
         "",
         f"状态：{values['status']}；验收 {passed}/{len(values['acceptance'])}。",
         f"完成 {len(values['result_rows'])} 个方法—折—随机种子训练；任务目标和 outer-test 始终关闭。",
+        f"六种方法共用 {DINGXIN_MODEL_INPUT_BIN_WIDTH_S:.1f} 秒固定因果时间箱；每箱时间戳取最后一次真实观测，任何输入都不会前移。",
+        f"深度基线设备为 {values['baseline_device']}，Chronaris 设备为 {values['chronaris_device']}；逐方法实测耗时与设备历史见 locked_pretraining_results.csv。",
         "跨 schema 迁移只加载形状一致的任务无关参数；schema 相关输入和重构层重新初始化。"
         if values["config"].initialization_pretraining_run_id is not None
         else "Chronaris 方法专属损失参与反向传播，早停只读取公共自监督 validation 损失。",

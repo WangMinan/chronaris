@@ -66,6 +66,9 @@ from chronaris.representation.pretext_targets import (
     map_augmented_query_sources_to_original,
     move_common_pretext_targets,
 )
+from chronaris.representation.temporal_coalescing import (
+    coalesce_observation_batch,
+)
 
 __all__ = [
     "AugmentationPolicy",
@@ -104,6 +107,7 @@ __all__ = [
     "apply_augmentation_realizations",
     "augmentation_executor_accepts_method_name",
     "collate_observation_samples",
+    "coalesce_observation_batch",
     "select_observation_batch",
     "load_dingxin_observed_context",
     "load_fusion_stream_batch",

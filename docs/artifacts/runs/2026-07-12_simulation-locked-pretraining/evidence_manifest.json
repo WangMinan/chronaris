@@ -1,0 +1,22 @@
+{
+  "format": "chronaris.simulation_locked_pretraining_evidence.v1",
+  "run_id": "2026-07-12_simulation-locked-pretraining",
+  "status": "completed",
+  "method_seed_count": 15,
+  "acceptance_pass_count": 9,
+  "acceptance_check_count": 9,
+  "g2_locked_test_opened": false,
+  "task_targets_opened": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_simulation-locked-pretraining",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/locked_pretraining_results.csv",
+    "epochs": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/epoch_metrics.jsonl",
+    "auxiliary": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/chronaris_auxiliary_metrics.csv",
+    "data": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/data_manifest.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_simulation-locked-pretraining/evidence_manifest.json"
+  }
+}

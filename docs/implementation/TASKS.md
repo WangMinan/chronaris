@@ -10,14 +10,14 @@
 
 ## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 8/8 协议验证，并保存第一训练单元至 epoch 37；G6 仿真 seeds 29/43 在独占 CUDA 仍重复发生驱动故障后，已从原 checkpoint 只改变设备到 CPU 恢复，设备迁移进入 checkpoint 历史。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
+G4.1–G4.2、G5 seed 17 正式筛选和 G6 仿真三随机种子五方法锁定重训已经完成；仿真 15/15 checkpoint、9/9 门禁通过，正式统一表示正在导出。鼎新正式重训在运行时审计后新增 100 ms 方法无关因果时间箱：首个上下文航电/生理事件由 1779/150 点压缩为 300/120 点，Chronaris GPU 单 epoch 为 40.07 秒，旧未合并 checkpoint 已由协议门禁隔离。G7 的 35 场景 G2 压力数据已完成 7/7 审计，压力模型评价等待 clean 表示和 consumer 收口。
 
 ### 本轮新增进度
 
 - 选定配置 seed 17 开发确认完成前两个留一视图折；第一折 Chronaris 在 epoch 28 早停、最佳 epoch 20。该冗余开发队列已停止，后续由正式三 seed 五折协议承接。
 - 第 1 折六方法 train/validation/outer-test 表示完成 18/18 导出；这只冻结输入，不提前运行 outer-test consumer。
 - Chronaris 锁定训练中的连续对齐、物理一致性和因果方向损失已真实参与反向传播，公共自监督损失仍是唯一早停依据。
-- 单 epoch 五方法锁定实跑为 9/9；四个基线使用 RTX 4090，Chronaris 使用实测更快的 CPU 路径。正式三随机种子 run 已启动并可逐 epoch 恢复。
+- 100 ms 公共因果时间箱五方法单 epoch 实跑为 8/8；四个基线 GPU 耗时 8.59–16.46 秒，Chronaris CPU 为 91.86 秒、GPU 为 40.07 秒。鼎新正式三随机种子 run 使用新 ID、全方法单 GPU 串行和逐 epoch 恢复。
 - 正式 consumer 使用 validation 固定网格选择 Logistic/Ridge 与 MiniRocket 参数；机动分段使用两层残差因果 TCN、kernel 5、dilation 1/2、patience 6，并可在 GPU 上训练。
 - G2 压力扩展包含 7 个单因素的 34 个等级版本和 1 个 mixed-severe 版本；48 条轨迹共 1,680 个观测场景，同轨迹复用相同 observation seed，7/7 验收通过。
 - G1→G2 clean 表示、正式 consumer、压力表示、冻结 consumer 复用、退化斜率和轨迹级配对统计的可恢复编排已经实现；按协议等待上游锁定 checkpoint 后再执行。
@@ -29,7 +29,7 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通�
 - 仿真端到端微调辅助链路已实现并通过定向测试：五个可训练方法更新完整编码器，朴素同步只更新相同容量任务头；三任务联合损失只由 train 拟合、validation 早停，G2 held-out 只评价，输出独立 `end_to_end_finetuned_v1` 表。
 - 论文证据包生成器已实现并通过 8/8 合成输入验收：正式上游完成后自动汇总至少 7 个独立证据角色（含既有 UAB/NASA 公开适配，迁移轨道完成后为 8 个），生成鼎新/仿真六方法主图、压力斜率热图、机制恢复图、消融图、鼎新代表时间线与仿真 oracle 复盘，并输出 7 图可追溯 figure manifest。
 - 公共自监督增强已移到 CPU 确定性执行，模型前向和 target tensor 才进入 GPU；该路径完成单 epoch CUDA 实跑，可避开此前 `_feature_age` 的 WSL 小算子 launch failure，同时保持训练配置和增强 realization 不变。
-- clean、压力和机制恢复表示导出已支持 baseline CUDA / Chronaris CPU 混合设备；seed 17 完整六方法三角色冒烟导出 18/18、7/7 通过，正式表示队列可直接复用该配置。
+- clean、压力和机制恢复表示导出已支持 baseline CUDA / Chronaris CPU 混合设备；seed 17 完整六方法三角色冒烟导出 18/18、7/7 通过，正式三 seed clean 表示队列正在复用该配置。
 
 ### G1–G4.1 已完成
 
@@ -212,8 +212,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ### G6：locked confirmation
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；仿真长基线在独占 GPU 重复失败后迁移到 CPU，Chronaris 仍使用同批基准更快的 CPU。
-- 进行中：仿真 seeds 17/29 五方法均已完成 50 epoch，seed 29 Chronaris 最佳轮次为 50；队列已进入 seed 43。
-- 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。待仿真锁定训练收口后，以“CPU 增强 + 单进程 GPU 模型”路径恢复基线、CPU 运行 Chronaris；若 CUDA 模型计算仍重复失败则保留 checkpoint 迁移 CPU。
+- 已完成：仿真 seeds 17/29/43 五方法均完成 50 epoch，15 个训练单元与 9/9 门禁全部通过；正式 clean 表示导出正在运行。
+- 排队执行：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced` 新根；CPU 构造增强、全方法单进程 GPU 训练。任何缺少 `model_input_contract.json` 的旧 checkpoint 均 fail closed，不与新输入混用。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
 - 进行中：Chronaris 四项固定消融 × seeds 17/29/43 已启动 CPU 锁定重训；不占用当前唯一 CUDA 正式队列。

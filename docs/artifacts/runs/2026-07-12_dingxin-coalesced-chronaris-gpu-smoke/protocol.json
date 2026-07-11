@@ -1,0 +1,46 @@
+{
+  "format": "chronaris.dingxin_locked_pretraining_protocol.v1",
+  "config": {
+    "run_id": "2026-07-12_dingxin-coalesced-chronaris-gpu-smoke",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
+    "fixed_audit_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+    "inner_split_root": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits",
+    "initialization_pretraining_run_id": null,
+    "fold_ids": [
+      "leave_one_view_out__fold01"
+    ],
+    "seeds": [
+      17
+    ],
+    "methods": [
+      "chronaris"
+    ],
+    "max_epochs": 1,
+    "batch_size": 32,
+    "patience": 1,
+    "baseline_device": "cuda",
+    "chronaris_device": "cuda",
+    "resume": true
+  },
+  "selected_candidates": {
+    "physiology_only": "A",
+    "vehicle_only": "C",
+    "mult": "A",
+    "contiformer": "A",
+    "chronaris": "A"
+  },
+  "baseline_device": "cuda",
+  "chronaris_device": "cuda",
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "early_stopping_inputs": [
+    "masked_reconstruction",
+    "short_horizon_prediction",
+    "lag_discrimination"
+  ],
+  "representation_family": "frozen_task_agnostic_v1",
+  "model_input_bin_width_s": 0.1
+}

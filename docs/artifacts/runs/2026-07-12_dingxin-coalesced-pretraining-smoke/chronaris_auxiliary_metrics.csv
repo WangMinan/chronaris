@@ -1,0 +1,4 @@
+seed,fold_id,method_name,epoch,step,term_name,weight,raw_loss,weighted_loss,count,status
+17,leave_one_view_out__fold01,chronaris,1,1,chronaris_continuous_alignment,0.0,0.9811007380485535,0.0,2321,scheduled_zero_or_unavailable
+17,leave_one_view_out__fold01,chronaris,1,1,chronaris_physical_consistency,0.0,3.1145992279052734,0.0,5,scheduled_zero_or_unavailable
+17,leave_one_view_out__fold01,chronaris,1,1,chronaris_causal_direction,0.0,0.10108067095279694,0.0,2321,scheduled_zero_or_unavailable

@@ -1,0 +1,21 @@
+{
+  "format": "chronaris.dingxin_locked_pretraining_evidence.v1",
+  "run_id": "2026-07-12_dingxin-coalesced-chronaris-gpu-smoke",
+  "status": "completed",
+  "method_fold_seed_count": 1,
+  "acceptance_pass_count": 8,
+  "acceptance_check_count": 8,
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/locked_pretraining_results.csv",
+    "folds": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/fold_audit.csv",
+    "auxiliary": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/chronaris_auxiliary_metrics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/evidence_manifest.json"
+  }
+}

@@ -14,6 +14,7 @@ from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_audit impor
     build_dingxin_fold_pretraining_acceptance_rows,
 )
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import (
+    ensure_dingxin_model_input_contract,
     load_dingxin_fold_pretraining_data,
 )
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_reporting import (
@@ -93,6 +94,7 @@ def run_dingxin_fold_pretraining_smoke(
     heavy_root = Path(config.heavy_output_root) / config.run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
+    ensure_dingxin_model_input_contract(heavy_root)
     with open_task_eval_run_observer(
         run_root=compact_root,
         run_id=config.run_id,
@@ -113,7 +115,7 @@ def run_dingxin_fold_pretraining_smoke(
             inner_split_root=config.inner_split_root,
         )
         fold = data.fold
-        provider = data.index.load_batch
+        provider = data.load_batch
         normalization_started = time.perf_counter()
         normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
             provider,

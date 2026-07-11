@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_simulation_locked_pretraining.py --run-id 2026-07-12_simulation-locked-pretraining --seed 17 --seed 29 --seed 43 --max-epochs 50 --batch-size 128 --patience 8 --baseline-device cpu --chronaris-device cpu --resume

@@ -1,0 +1,10 @@
+check_id,passed,actual,expected
+all_method_seed_runs,True,15,15
+all_checkpoints_complete,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed']",completed_or_resumed
+public_validation_losses_finite,True,15,15
+reserved_confirmation_complete,True,15,15
+chronaris_auxiliary_recorded,True,450,>0
+chronaris_auxiliary_schedule_consistent,True,True,True
+g1_train_validation_confirmation_counts,True,"[96, 23, 1]","[96, 23, 1]"
+normalizer_train_only,True,False,False
+task_targets_closed,True,False,False
