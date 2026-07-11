@@ -478,15 +478,113 @@ def duration_constrained_viterbi_decode(
 ) -> torch.Tensor:
     logits = torch.as_tensor(emission_logits, dtype=torch.float64)
     if logits.ndim == 3:
-        return torch.stack(
-            tuple(
-                _decode_one(logits[index], parameters)
-                for index in range(logits.shape[0])
-            )
-        )
+        return _decode_batch(logits, parameters)
     if logits.ndim != 2:
         raise ValueError("Viterbi emissions must have shape [T,C] or [B,T,C]")
     return _decode_one(logits, parameters)
+
+
+def _decode_batch(logits, parameters):
+    """Run the same semi-Markov recurrence with samples vectorized together."""
+    log_emission = torch.log_softmax(logits, dim=-1)
+    batch_size, time_count, class_count = log_emission.shape
+    cumulative = torch.cat(
+        (
+            torch.zeros(
+                batch_size,
+                1,
+                class_count,
+                dtype=log_emission.dtype,
+                device=log_emission.device,
+            ),
+            log_emission.cumsum(dim=1),
+        ),
+        dim=1,
+    )
+    initial = parameters.initial_log_probability.to(
+        dtype=log_emission.dtype,
+        device=log_emission.device,
+    )
+    transition = parameters.transition_log_probability.to(
+        dtype=log_emission.dtype,
+        device=log_emission.device,
+    )
+    minimum_duration = parameters.minimum_duration.tolist()
+    maximum_duration = parameters.maximum_duration.tolist()
+    dp = torch.full(
+        (batch_size, time_count + 1, class_count),
+        float("-inf"),
+        dtype=log_emission.dtype,
+        device=log_emission.device,
+    )
+    previous_time = torch.full(
+        (batch_size, time_count + 1, class_count),
+        -1,
+        dtype=torch.long,
+        device=log_emission.device,
+    )
+    previous_class = torch.full_like(previous_time, -1)
+    for end in range(1, time_count + 1):
+        for class_id in range(class_count):
+            minimum = int(minimum_duration[class_id])
+            maximum = min(int(maximum_duration[class_id]), end)
+            for duration in range(minimum, maximum + 1):
+                start = end - duration
+                score = (
+                    cumulative[:, end, class_id]
+                    - cumulative[:, start, class_id]
+                )
+                if start == 0:
+                    score = score + initial[class_id]
+                    prior_class = torch.full(
+                        (batch_size,),
+                        -1,
+                        dtype=torch.long,
+                        device=log_emission.device,
+                    )
+                else:
+                    candidates = dp[:, start] + transition[:, class_id]
+                    best_score, prior_class = candidates.max(dim=1)
+                    score = score + best_score
+                better = score > dp[:, end, class_id]
+                dp[:, end, class_id] = torch.where(
+                    better,
+                    score,
+                    dp[:, end, class_id],
+                )
+                previous_time[:, end, class_id] = torch.where(
+                    better,
+                    torch.full_like(prior_class, start),
+                    previous_time[:, end, class_id],
+                )
+                previous_class[:, end, class_id] = torch.where(
+                    better,
+                    prior_class,
+                    previous_class[:, end, class_id],
+                )
+    decoded = torch.empty(
+        batch_size,
+        time_count,
+        dtype=torch.long,
+        device=log_emission.device,
+    )
+    for batch_index in range(batch_size):
+        end = time_count
+        end_class = int(dp[batch_index, time_count].argmax())
+        fallback = False
+        while end > 0:
+            start = int(previous_time[batch_index, end, end_class])
+            if start < 0:
+                fallback = True
+                break
+            decoded[batch_index, start:end] = end_class
+            prior_class = int(previous_class[batch_index, end, end_class])
+            end = start
+            if end > 0:
+                end_class = prior_class
+        if fallback:
+            decoded[batch_index] = logits[batch_index].argmax(dim=-1)
+    return decoded
 
 
 def _decode_one(logits, parameters):

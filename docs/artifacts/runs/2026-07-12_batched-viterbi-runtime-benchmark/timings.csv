@@ -1,0 +1,3 @@
+implementation,batch_size,time_count,class_count,elapsed_s,projected_full_batch_s,exact_match
+batched,192,96,5,1.764223,1.764223,true
+scalar_first4,4,96,5,1.615537,77.545774,true
