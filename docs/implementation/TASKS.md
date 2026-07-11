@@ -26,7 +26,7 @@ G4.1–G4.2、G5 seed 17 正式筛选、G6 仿真三随机种子五方法锁定�
 - synthetic-to-real 轨道已实现形状安全的部分参数迁移和无标签鼎新适配；单方法跨 schema 冒烟复制 97.93% 目标编码器元素并通过 8/8 门禁，正式轨道等待仿真三 seed checkpoint 完整。
 - 鼎新统一表示和 consumer 已显式继承并校验上游表示族，real-only 与 synthetic-to-real 使用不同 family 字段和独立 run，不会因复用脚本而混入同一结果表。
 - 时间偏移/响应时延恢复已实现四方法专用表示与下游探针：G1 train 拟合、G1 validation 选择 Ridge 强度，G2 35 场景只评价；主统计单位固定为 48 条潜在轨迹。
-- 时间机制正式表示已完成 144/144、5/5 门禁；Ridge 探针正式 consumer 正在运行，表示训练阶段未打开时间偏移或响应时延真值。
+- 时间机制正式链路已完成：144/144 表示、24 个 G1 Ridge 探针、840 个 G2 场景评价、3360 条指标、630 条配对统计及 5/5、6/6 两级门禁。Chronaris 在时钟偏移/响应时延 MAE 与容差命中率上领先，MulT 在响应时延 Spearman 上领先。
 - 仿真端到端微调辅助链路已实现并通过定向测试：五个可训练方法更新完整编码器，朴素同步只更新相同容量任务头；三任务联合损失只由 train 拟合、validation 早停，G2 held-out 只评价，输出独立 `end_to_end_finetuned_v1` 表。
 - 论文证据包生成器已实现并通过 8/8 合成输入验收：正式上游完成后自动汇总至少 7 个独立证据角色（含既有 UAB/NASA 公开适配，迁移轨道完成后为 8 个），生成鼎新/仿真六方法主图、压力斜率热图、机制恢复图、消融图、鼎新代表时间线与仿真 oracle 复盘，并输出 7 图可追溯 figure manifest。
 - 公共自监督增强已移到 CPU 确定性执行，模型前向和 target tensor 才进入 GPU；该路径完成单 epoch CUDA 实跑，可避开此前 `_feature_age` 的 WSL 小算子 launch failure，同时保持训练配置和增强 realization 不变。
