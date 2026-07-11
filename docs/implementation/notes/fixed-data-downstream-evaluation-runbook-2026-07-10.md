@@ -79,10 +79,37 @@
 - best/last checkpoint 分开命名。
 - `--resume` 跳过 hash 已匹配的 completed fold。
 - 配置或输入 hash 改变时拒绝复用旧 fold。
-- 本机 WSL/RTX 4090 同时只运行一个正式 CUDA 训练进程；仿真与鼎新 GPU 队列串行。若独占 CUDA 后仍再次出现驱动级 `cudaErrorLaunchFailure`，保留 checkpoint 并允许只改变设备到 CPU 后恢复；checkpoint 必须记录 `training_device_history`，其他训练配置不得改变。Chronaris 已确认 CPU 更快，继续使用 CPU。
+- 本机 WSL/RTX 4090 同时只运行一个正式 CUDA 训练进程；仿真与鼎新 GPU 队列串行。若独占 CUDA 后仍再次出现驱动级 `cudaErrorLaunchFailure`，保留 checkpoint 并允许只改变设备到 CPU 后恢复；checkpoint 必须记录 `training_device_history`，其他训练配置不得改变。仿真 Chronaris 使用同批实测更快的 CPU；鼎新 100 ms 合并输入的 Chronaris 使用实测更快的 GPU。
 - 公共观测增强、pretext target 和错误时移固定在 CPU 构造；只把增强后的双流 batch 与 target tensor 送入训练设备。checkpoint 记录 `augmentation_device=cpu`，不得为了设备切换改变 augmentation realization。
 
-### 1.8 端到端微调辅助表
+### 1.8 鼎新 real-only 锁定主表
+
+- 六方法输入统一先经过 100 ms 固定因果时间箱；缺少 `model_input_contract.json` 的旧 checkpoint 不允许恢复。
+- 五个可训练方法使用三随机种子、三个留一视图主折和两个留一架次辅助折、最多 50 epoch、patience 8；任务目标与 outer-test 在 75 个 checkpoint 完整前保持关闭。
+- 单折实测中，Chronaris GPU 为 40.07 秒/epoch，CPU 为 91.86 秒/epoch，因此五个可训练方法全部在唯一 GPU 队列串行。
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_dingxin_locked_pretraining.py \
+  --run-id 2026-07-12_dingxin-locked-pretraining-coalesced \
+  --seed 17 --seed 29 --seed 43 \
+  --max-epochs 50 --patience 8 --batch-size 32 \
+  --baseline-device cuda --chronaris-device cuda --resume
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_dingxin_locked_representations.py \
+  --run-id 2026-07-12_dingxin-locked-representations-coalesced \
+  --pretraining-run-id 2026-07-12_dingxin-locked-pretraining-coalesced \
+  --baseline-device cuda --chronaris-device cuda --resume
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_dingxin_locked_consumers.py \
+  --run-id 2026-07-12_dingxin-locked-consumers-coalesced \
+  --representation-run-id 2026-07-12_dingxin-locked-representations-coalesced \
+  --minirocket-kernels 10000 --resume
+```
+
+### 1.9 端到端微调辅助表
 
 - 必须等待仿真任务无关锁定训练、统一表示和冻结 consumer 三个 evidence manifest 均为 `completed` 后启动。
 - 五个可训练编码器从各自任务无关 `best.pt` 初始化；朴素时间同步只更新相同容量任务头。
@@ -98,7 +125,7 @@
   --baseline-device cuda --chronaris-device cpu --resume
 ```
 
-### 1.9 仿真预训练到鼎新无标签适配
+### 1.10 仿真预训练到鼎新无标签适配
 
 - 五个可训练方法都从各自同 seed 的 G1 锁定 checkpoint 初始化；只复制同名同形状参数，鼎新 schema 相关输入层和重构层重新初始化。
 - 六方法使用相同仿真额外数据预算；朴素时间同步仍只在鼎新训练折拟合无监督归一化与 PCA。
@@ -108,22 +135,22 @@
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
   scripts/evaluation/application_tasks/run_dingxin_locked_pretraining.py \
-  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt \
+  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-coalesced \
   --initialization-pretraining-run-id 2026-07-12_simulation-locked-pretraining \
   --seed 17 --seed 29 --seed 43 \
   --max-epochs 20 --patience 5 --batch-size 32 \
-  --baseline-device cuda --chronaris-device cpu --resume
+  --baseline-device cuda --chronaris-device cuda --resume
 
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
   scripts/evaluation/application_tasks/run_dingxin_locked_representations.py \
-  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations \
-  --pretraining-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt \
-  --baseline-device cuda --chronaris-device cpu --resume
+  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced \
+  --pretraining-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-coalesced \
+  --baseline-device cuda --chronaris-device cuda --resume
 
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
   scripts/evaluation/application_tasks/run_dingxin_locked_consumers.py \
-  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-consumers \
-  --representation-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations \
+  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced \
+  --representation-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced \
   --minirocket-kernels 10000 --resume
 ```
 

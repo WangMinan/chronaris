@@ -23,7 +23,9 @@ from chronaris.modeling.common.run_observer import configure_task_eval_cli_loggi
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", default="2026-07-12_dingxin-locked-pretraining")
+    parser.add_argument(
+        "--run-id", default="2026-07-12_dingxin-locked-pretraining-coalesced"
+    )
     parser.add_argument("--seed", action="append", type=int, default=[])
     parser.add_argument(
         "--method",

@@ -55,10 +55,10 @@ SIX_METHODS = (
 
 @dataclass(frozen=True, slots=True)
 class DingxinLockedRepresentationConfig:
-    run_id: str = "2026-07-12_dingxin-locked-representations"
+    run_id: str = "2026-07-12_dingxin-locked-representations-coalesced"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
-    pretraining_run_id: str = "2026-07-12_dingxin-locked-pretraining"
+    pretraining_run_id: str = "2026-07-12_dingxin-locked-pretraining-coalesced"
     selected_candidates_path: str = (
         "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/"
         "selected_candidates.json"

@@ -23,8 +23,13 @@ from chronaris.modeling.common.run_observer import configure_task_eval_cli_loggi
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", default="2026-07-12_dingxin-locked-representations")
-    parser.add_argument("--pretraining-run-id", default="2026-07-12_dingxin-locked-pretraining")
+    parser.add_argument(
+        "--run-id", default="2026-07-12_dingxin-locked-representations-coalesced"
+    )
+    parser.add_argument(
+        "--pretraining-run-id",
+        default="2026-07-12_dingxin-locked-pretraining-coalesced",
+    )
     parser.add_argument("--fit-batch-size", type=int, default=8)
     parser.add_argument("--export-batch-size", type=int, default=8)
     parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")

@@ -43,7 +43,7 @@ LOGGER.addHandler(logging.NullHandler())
 
 @dataclass(frozen=True, slots=True)
 class DingxinLockedPretrainingConfig:
-    run_id: str = "2026-07-12_dingxin-locked-pretraining"
+    run_id: str = "2026-07-12_dingxin-locked-pretraining-coalesced"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     selected_candidates_path: str = (
