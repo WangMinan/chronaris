@@ -10,11 +10,11 @@
 
 ## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 8/8 协议验证，并启动 3 seeds × 5 folds × 5 methods 的 75 单元队列；G6 仿真 seeds 17/29/43 正式队列同时运行。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
+G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通过单折五方法 8/8 协议验证，并保存第一训练单元至 epoch 37；当前先独占 RTX 4090 完成 G6 仿真 seeds 29/43，再串行恢复鼎新 75 单元队列。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
 
 ### 本轮新增进度
 
-- 选定配置鼎新确认完成第 1/5 折；Chronaris 在 epoch 28 早停、最佳 epoch 20，任务目标和 outer-test 指标保持关闭。
+- 选定配置 seed 17 开发确认完成前两个留一视图折；第一折 Chronaris 在 epoch 28 早停、最佳 epoch 20。该冗余开发队列已停止，后续由正式三 seed 五折协议承接。
 - 第 1 折六方法 train/validation/outer-test 表示完成 18/18 导出；这只冻结输入，不提前运行 outer-test consumer。
 - Chronaris 锁定训练中的连续对齐、物理一致性和因果方向损失已真实参与反向传播，公共自监督损失仍是唯一早停依据。
 - 单 epoch 五方法锁定实跑为 9/9；四个基线使用 RTX 4090，Chronaris 使用实测更快的 CPU 路径。正式三随机种子 run 已启动并可逐 epoch 恢复。
@@ -211,6 +211,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。为规避 WSL GPU 双进程 launch failure，待仿真 CUDA 队列完成后再独占 GPU 恢复。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
+- 进行中：Chronaris 四项固定消融 × seeds 17/29/43 已启动 CPU 锁定重训；不占用当前唯一 CUDA 正式队列。
 - 已实现待上游门禁：synthetic-to-real 三 seed 五折无标签适配及其统一表示/consumer 复用。
 - 待执行：端到端微调辅助表；不得替代冻结表示主结果。
 
