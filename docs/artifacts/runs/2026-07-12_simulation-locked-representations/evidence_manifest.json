@@ -1,0 +1,23 @@
+{
+  "format": "chronaris.simulation_locked_representation_evidence.v1",
+  "run_id": "2026-07-12_simulation-locked-representations",
+  "status": "completed",
+  "seed_count": 3,
+  "export_count": 54,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7,
+  "task_oracle_opened": false,
+  "baseline_device": "cuda",
+  "chronaris_device": "cpu",
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_simulation-locked-representations",
+  "output_paths": {
+    "seeds": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/seed_inventory.csv",
+    "exports": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/representation_inventory.csv",
+    "data": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/data_manifest.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_simulation-locked-representations/evidence_manifest.json"
+  }
+}
