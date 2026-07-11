@@ -1,0 +1,50 @@
+{
+  "upstream_run_ids": [
+    "dingxin_real_weak_supervision",
+    "simulation_clean_locked",
+    "simulation_stress_locked",
+    "simulation_mechanism_recovery",
+    "simulation_chronaris_ablation",
+    "simulation_end_to_end_auxiliary",
+    "dingxin_synthetic_pretrain_adaptation",
+    "public_dataset_adaptation"
+  ],
+  "reader_visible_language": "zh-CN",
+  "real_and_simulated_evidence_mixed": false,
+  "stage_name": "downstream_thesis_evidence_pack",
+  "run_id": "2026-07-12_downstream-evidence-pack",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T22:58:35.629130Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T22:58:33.687009Z",
+      "event": "start",
+      "upstream_run_ids": [
+        "dingxin_real_weak_supervision",
+        "simulation_clean_locked",
+        "simulation_stress_locked",
+        "simulation_mechanism_recovery",
+        "simulation_chronaris_ablation",
+        "simulation_end_to_end_auxiliary",
+        "dingxin_synthetic_pretrain_adaptation",
+        "public_dataset_adaptation"
+      ],
+      "reader_visible_language": "zh-CN",
+      "real_and_simulated_evidence_mixed": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T22:58:35.629130Z",
+      "event": "finished",
+      "status": "completed",
+      "figure_count": 7,
+      "evidence_row_count": 8,
+      "acceptance_pass_count": 9,
+      "acceptance_check_count": 9
+    }
+  ],
+  "status": "completed",
+  "figure_count": 7,
+  "evidence_row_count": 8,
+  "acceptance_pass_count": 9,
+  "acceptance_check_count": 9
+}

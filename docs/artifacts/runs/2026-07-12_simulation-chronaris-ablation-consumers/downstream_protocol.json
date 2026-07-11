@@ -1,0 +1,33 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_downstream.v1",
+  "config": {
+    "run_id": "2026-07-12_simulation-chronaris-ablation-consumers",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-12_simulation-chronaris-ablation-pretraining",
+    "representation_run_id": "2026-07-12_simulation-chronaris-ablation-representations",
+    "full_pretraining_run_id": "2026-07-12_simulation-locked-pretraining",
+    "full_consumer_run_id": "2026-07-12_simulation-locked-consumers",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "variants": [
+      "no_continuous_evolution",
+      "no_physics",
+      "no_causal_mask",
+      "single_scale_lag"
+    ],
+    "minirocket_kernels": 10000,
+    "tcn_device": "cuda",
+    "resume": true
+  },
+  "fit_role": "train",
+  "hyperparameter_selection_role": "validation",
+  "locked_evaluation_role": "held_out",
+  "reference_method": "chronaris",
+  "independent_statistical_unit": "trajectory"
+}

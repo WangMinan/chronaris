@@ -1,0 +1,31 @@
+2026-07-12 06:50:24,374 INFO chronaris.pipelines.task_eval.simulation_chronaris_ablation_consumers: simulation_chronaris_ablation_consumers observer start run_id=2026-07-12_simulation-chronaris-ablation-consumers run_root=docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-consumers
+2026-07-12 06:53:01,657 ERROR chronaris.pipelines.task_eval.simulation_chronaris_ablation_consumers: simulation_chronaris_ablation_consumers failed run_id=2026-07-12_simulation-chronaris-ablation-consumers
+Traceback (most recent call last):
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'available'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/simulation_chronaris_ablation_consumer_run.py", line 200, in run_simulation_chronaris_ablation_consumers
+    delta_rows = _build_full_ablation_metric_deltas(comparison_metrics)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/simulation_chronaris_ablation_consumer_run.py", line 256, in _build_full_ablation_metric_deltas
+    if len(full) != 1 or not bool(full.iloc[0]["available"]):
+                                  ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/pandas/core/series.py", line 1133, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/pandas/core/series.py", line 1249, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'available'
+2026-07-12 06:54:42,737 INFO chronaris.pipelines.task_eval.simulation_chronaris_ablation_consumers: simulation_chronaris_ablation_consumers observer start run_id=2026-07-12_simulation-chronaris-ablation-consumers run_root=docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-consumers

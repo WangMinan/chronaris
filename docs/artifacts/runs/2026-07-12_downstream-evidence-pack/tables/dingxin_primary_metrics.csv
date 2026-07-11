@@ -1,0 +1,19 @@
+task,task_label,consumer,metric,metric_label,method,mean,std,count,direction,method_label,method_order
+maneuver_intensity_classification,机动强度弱监督分类,minirocket,macro_f1,Macro-F1（越高越好）,physiology_only,0.7327190466725351,0.012994386191430873,3,higher,生理单流,0
+maneuver_intensity_classification,机动强度弱监督分类,minirocket,macro_f1,Macro-F1（越高越好）,vehicle_only,0.929774477922626,0.010363597904988467,3,higher,航电单流,1
+maneuver_intensity_classification,机动强度弱监督分类,minirocket,macro_f1,Macro-F1（越高越好）,naive_time_sync,0.9407407407407408,0.0,3,higher,朴素时间同步,2
+maneuver_intensity_classification,机动强度弱监督分类,minirocket,macro_f1,Macro-F1（越高越好）,mult,0.8780537201589832,0.05336321554270993,3,higher,MulT,3
+maneuver_intensity_classification,机动强度弱监督分类,minirocket,macro_f1,Macro-F1（越高越好）,contiformer,0.9409316261641733,0.01929833277402185,3,higher,ContiFormer,4
+maneuver_intensity_classification,机动强度弱监督分类,minirocket,macro_f1,Macro-F1（越高越好）,chronaris,0.7393898643008995,0.0558414485154081,3,higher,Chronaris,5
+high_physiology_response_classification,高生理响应识别,minirocket,macro_auprc,宏平均 AUPRC（越高越好）,physiology_only,0.8221390998960635,0.00268550051861243,3,higher,生理单流,0
+high_physiology_response_classification,高生理响应识别,minirocket,macro_auprc,宏平均 AUPRC（越高越好）,vehicle_only,0.8744543941816403,0.006660909774767499,3,higher,航电单流,1
+high_physiology_response_classification,高生理响应识别,minirocket,macro_auprc,宏平均 AUPRC（越高越好）,naive_time_sync,0.857180233056764,0.021212532614211736,3,higher,朴素时间同步,2
+high_physiology_response_classification,高生理响应识别,minirocket,macro_auprc,宏平均 AUPRC（越高越好）,mult,0.8697951100132418,0.009170943121623358,3,higher,MulT,3
+high_physiology_response_classification,高生理响应识别,minirocket,macro_auprc,宏平均 AUPRC（越高越好）,contiformer,0.8593034418817725,0.010824824595063202,3,higher,ContiFormer,4
+high_physiology_response_classification,高生理响应识别,minirocket,macro_auprc,宏平均 AUPRC（越高越好）,chronaris,0.8838786894481233,0.025416551790056738,3,higher,Chronaris,5
+physiology_response_regression,未来生理响应预测,minirocket,rmse,RMSE（越低越好）,physiology_only,0.8011302124922386,0.17808836230938319,3,lower,生理单流,0
+physiology_response_regression,未来生理响应预测,minirocket,rmse,RMSE（越低越好）,vehicle_only,0.3028348229171605,0.006825317814575899,3,lower,航电单流,1
+physiology_response_regression,未来生理响应预测,minirocket,rmse,RMSE（越低越好）,naive_time_sync,0.326836596113663,0.02374229414689816,3,lower,朴素时间同步,2
+physiology_response_regression,未来生理响应预测,minirocket,rmse,RMSE（越低越好）,mult,0.29117097989424773,0.016942131151533698,3,lower,MulT,3
+physiology_response_regression,未来生理响应预测,minirocket,rmse,RMSE（越低越好）,contiformer,0.3113713306039174,0.020204731643889907,3,lower,ContiFormer,4
+physiology_response_regression,未来生理响应预测,minirocket,rmse,RMSE（越低越好）,chronaris,0.33649470190840175,0.06329897958957094,3,lower,Chronaris,5

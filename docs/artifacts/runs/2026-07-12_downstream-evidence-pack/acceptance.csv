@@ -1,0 +1,10 @@
+check_id,passed,actual,expected
+all_required_upstreams_completed,True,8,>=6
+seven_chinese_figures,True,7,7
+evidence_layers_not_mixed,True,8,>=6
+dingxin_primary_table,True,18,18
+simulation_primary_table,True,18,18
+seven_stress_factors,True,7,7
+two_mechanism_targets,True,2,2
+four_ablation_variants,True,4,4
+matched_dingxin_transfer_comparison,True,54,54

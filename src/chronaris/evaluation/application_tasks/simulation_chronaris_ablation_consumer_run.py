@@ -253,20 +253,20 @@ def _build_full_ablation_metric_deltas(rows):
     output = []
     for key, group in selected.groupby(keys, sort=True, dropna=False):
         full = group[group["method"] == "chronaris"]
-        if len(full) != 1 or not bool(full.iloc[0]["available"]):
+        if len(full) != 1 or not _metric_row_available(full.iloc[0]):
             continue
         full_value = float(full.iloc[0]["value"])
-        for row in group.itertuples(index=False):
-            if row.method == "chronaris" or not bool(row.available):
+        for _, row in group.iterrows():
+            if row["method"] == "chronaris" or not _metric_row_available(row):
                 continue
-            ablation_value = float(row.value)
+            ablation_value = float(row["value"])
             raw = full_value - ablation_value
             normalized = raw if key[-1] == "higher" else -raw
             output.append(
                 {
                     **dict(zip(keys, key, strict=True)),
                     "full_method": "chronaris",
-                    "ablation_method": row.method,
+                    "ablation_method": row["method"],
                     "full_value": full_value,
                     "ablation_value": ablation_value,
                     "full_advantage_normalized": normalized,
@@ -274,6 +274,14 @@ def _build_full_ablation_metric_deltas(rows):
                 }
             )
     return tuple(output)
+
+
+def _metric_row_available(row):
+    if "status" in row.index and pd.notna(row["status"]):
+        return str(row["status"]) == "available"
+    if "available" in row.index and pd.notna(row["available"]):
+        return bool(row["available"])
+    raise ValueError("metric row must declare status or available")
 
 
 def _formal_protocol(*, seed, minirocket_kernels, tcn_device):

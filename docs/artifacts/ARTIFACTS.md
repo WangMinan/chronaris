@@ -10,6 +10,8 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_downstream-evidence-pack/`：**固定数据下游评估论文证据包**。锁定汇总鼎新真实弱监督、仿真 clean、七因素压力、时间机制恢复、Chronaris 四机制消融、端到端辅助、仿真预训练到鼎新适配和 UAB/NASA 公开数据适配共 8 层证据，生成 7 幅中文图、预声明主指标表、54 项迁移增量、证据矩阵和结论边界，9/9 门禁通过。七图已逐图抽查并从渲染源码移除机器折 ID、轨迹 ID 和未解释英文；真实与仿真、冻结与标签微调继续独立表述。
+- `runs/2026-07-12_simulation-chronaris-ablation-consumers/`：**Chronaris 四机制锁定下游消融**。四变体 × 三随机种子完成 12/12 个冻结 consumer、768 条指标、384 条完整模型方向归一优势和 72 条 48 轨迹配对统计，6/6 门禁通过。完整模型相对去连续演化在负荷分类/回归/机动分段为 +0.0691/+0.0278/+0.0142，相对去因果掩码为 +0.0060/+0.0082/+0.0662，相对单尺度时延为 +0.0056/+0.0118/+0.0623；去物理约束为 -0.0193/+0.0118/+0.0044。结果支持分机制、分任务解释，不支持四机制全任务一致正向。
 - `runs/2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced/`：**仿真预训练到鼎新适配的冻结下游评估**。90/90 个方法—折—seed consumer、5,040 条指标、3,360 条融合增益和 504 条主折汇总完成，8/8 门禁通过；表示族唯一为 `synthetic_pretrain_real_adapt_v1`。与 real-only 相同 seed、三个主视图折、消费者和指标配对后，Chronaris 的机动分类 Macro-F1 变化 -0.0048，高生理响应 AUPRC 变化 -0.0336，生理响应 RMSE 方向归一改善 +0.0062。迁移后绝对值为 0.7346、0.8503 和 0.3303；结果不支持仿真预训练带来一致真实任务收益。
 - `runs/2026-07-12_dingxin-synthetic-pretrain-adapt-representations-coalesced/`：**仿真预训练到鼎新适配的统一表示**。15/15 个 seed—折单元导出生理单流、航电单流、朴素时间同步、MulT、ContiFormer 和 Chronaris 的 train/validation/outer-test 三角色表示，共 270/270 份 `[N,96,64]`，6/6 门禁通过。表示族固定为 `synthetic_pretrain_real_adapt_v1`，outer-test 只导出表示而不在本阶段计算任务指标。
 - `runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/`：**仿真预训练到鼎新无标签适配的三随机种子五折重训**。五个可训练方法共完成 75/75 个“方法—折—seed”单元，8/8 门禁通过，全部实际使用 RTX 4090；早停只读取公共自监督 validation，任务目标与 outer-test 访问均为零。六方法使用相同仿真预训练数据预算；跨 schema 只复制同名同形任务无关参数，字段相关输入与重构层重新初始化。复制目标编码器元素比例按方法为 97.93%、24.61%、84.47%、36.96% 和 39.05%，源 checkpoint 哈希逐单元记录。重型 checkpoint 留在被忽略目录，本 run 只完成无标签适配，不形成迁移效果结论。

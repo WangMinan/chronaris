@@ -1,0 +1,19 @@
+task,task_label,consumer,metric,metric_label,method,mean,std,count,direction,method_label,method_order
+simulated_future_workload_classification,仿真负荷状态分类,minirocket,macro_f1,Macro-F1（越高越好）,physiology_only,0.4156305066237505,0.019591907870417168,3,higher,生理单流,0
+simulated_future_workload_classification,仿真负荷状态分类,minirocket,macro_f1,Macro-F1（越高越好）,vehicle_only,0.4454984942539264,0.07972540577941448,3,higher,航电单流,1
+simulated_future_workload_classification,仿真负荷状态分类,minirocket,macro_f1,Macro-F1（越高越好）,naive_time_sync,0.4296788586518587,0.057794983646038266,3,higher,朴素时间同步,2
+simulated_future_workload_classification,仿真负荷状态分类,minirocket,macro_f1,Macro-F1（越高越好）,mult,0.519107258486259,0.0048160565986332645,3,higher,MulT,3
+simulated_future_workload_classification,仿真负荷状态分类,minirocket,macro_f1,Macro-F1（越高越好）,contiformer,0.46171732651526187,0.04407355887655078,3,higher,ContiFormer,4
+simulated_future_workload_classification,仿真负荷状态分类,minirocket,macro_f1,Macro-F1（越高越好）,chronaris,0.48866302457348026,0.008121686937938691,3,higher,Chronaris,5
+simulated_future_workload_regression,仿真负荷连续值预测,minirocket,rmse,RMSE（越低越好）,physiology_only,0.26640326718608526,0.012611841189226512,3,lower,生理单流,0
+simulated_future_workload_regression,仿真负荷连续值预测,minirocket,rmse,RMSE（越低越好）,vehicle_only,0.22942907049663644,0.04150044951205359,3,lower,航电单流,1
+simulated_future_workload_regression,仿真负荷连续值预测,minirocket,rmse,RMSE（越低越好）,naive_time_sync,0.24401788876914657,0.047093076010274404,3,lower,朴素时间同步,2
+simulated_future_workload_regression,仿真负荷连续值预测,minirocket,rmse,RMSE（越低越好）,mult,0.197858317859099,0.005240887677478258,3,lower,MulT,3
+simulated_future_workload_regression,仿真负荷连续值预测,minirocket,rmse,RMSE（越低越好）,contiformer,0.19343534177599808,0.00743257897251599,3,lower,ContiFormer,4
+simulated_future_workload_regression,仿真负荷连续值预测,minirocket,rmse,RMSE（越低越好）,chronaris,0.2038769776111514,0.01655947685566007,3,lower,Chronaris,5
+simulated_maneuver_state_segmentation,仿真机动状态分段,causal_tcn_duration,frame_macro_f1,逐时刻 Macro-F1（越高越好）,physiology_only,0.3190453055063496,0.037489080829415745,3,higher,生理单流,0
+simulated_maneuver_state_segmentation,仿真机动状态分段,causal_tcn_duration,frame_macro_f1,逐时刻 Macro-F1（越高越好）,vehicle_only,0.34930649775620387,0.010048216969258455,3,higher,航电单流,1
+simulated_maneuver_state_segmentation,仿真机动状态分段,causal_tcn_duration,frame_macro_f1,逐时刻 Macro-F1（越高越好）,naive_time_sync,0.40525194257951697,0.0011447021871955545,3,higher,朴素时间同步,2
+simulated_maneuver_state_segmentation,仿真机动状态分段,causal_tcn_duration,frame_macro_f1,逐时刻 Macro-F1（越高越好）,mult,0.44165302684120517,0.016087592957890272,3,higher,MulT,3
+simulated_maneuver_state_segmentation,仿真机动状态分段,causal_tcn_duration,frame_macro_f1,逐时刻 Macro-F1（越高越好）,contiformer,0.35605981973309,0.041389601548540586,3,higher,ContiFormer,4
+simulated_maneuver_state_segmentation,仿真机动状态分段,causal_tcn_duration,frame_macro_f1,逐时刻 Macro-F1（越高越好）,chronaris,0.4687076115800664,0.02504828304406268,3,higher,Chronaris,5

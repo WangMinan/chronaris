@@ -49,3 +49,31 @@ def test_full_ablation_metric_delta_normalizes_metric_direction() -> None:
     assert len(deltas) == 2
     assert all(row["positive_favors_full"] for row in deltas)
     assert all(abs(row["full_advantage_normalized"] - 0.1) < 1e-8 for row in deltas)
+
+
+def test_full_ablation_metric_delta_accepts_formal_status_schema() -> None:
+    common = {
+        "seed": 17,
+        "task": "simulated_future_workload_classification",
+        "consumer": "minirocket",
+        "role": "held_out",
+        "metric": "macro_f1",
+        "direction": "higher",
+        "status": "available",
+    }
+    rows = [
+        {**common, "method": "chronaris", "value": 0.8},
+        {**common, "method": "chronaris_no_physics", "value": 0.7},
+        {
+            **common,
+            "method": "chronaris_no_causal_mask",
+            "value": float("nan"),
+            "status": "unavailable",
+        },
+    ]
+
+    deltas = _build_full_ablation_metric_deltas(rows)
+
+    assert len(deltas) == 1
+    assert deltas[0]["ablation_method"] == "chronaris_no_physics"
+    assert abs(deltas[0]["full_advantage_normalized"] - 0.1) < 1e-8

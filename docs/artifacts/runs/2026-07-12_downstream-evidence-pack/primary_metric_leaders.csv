@@ -1,0 +1,7 @@
+data_layer,task,metric,direction,leading_method,leading_method_label,mean,std,descriptive_only
+鼎新,机动强度弱监督分类,Macro-F1（越高越好）,higher,contiformer,ContiFormer,0.9409316261641733,0.01929833277402185,True
+鼎新,高生理响应识别,宏平均 AUPRC（越高越好）,higher,chronaris,Chronaris,0.8838786894481233,0.025416551790056738,True
+鼎新,未来生理响应预测,RMSE（越低越好）,lower,mult,MulT,0.29117097989424773,0.016942131151533698,True
+半物理仿真,仿真负荷状态分类,Macro-F1（越高越好）,higher,mult,MulT,0.519107258486259,0.0048160565986332645,True
+半物理仿真,仿真负荷连续值预测,RMSE（越低越好）,lower,contiformer,ContiFormer,0.19343534177599808,0.00743257897251599,True
+半物理仿真,仿真机动状态分段,逐时刻 Macro-F1（越高越好）,higher,chronaris,Chronaris,0.4687076115800664,0.02504828304406268,True

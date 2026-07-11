@@ -1,0 +1,9 @@
+target,method,value
+relative_clock_offset_magnitude_s,naive_time_sync,1.2830117949861146
+primary_physiology_response_lag_s,naive_time_sync,8.291882590133648
+relative_clock_offset_magnitude_s,mult,0.9995184912065428
+primary_physiology_response_lag_s,mult,7.857747216351295
+relative_clock_offset_magnitude_s,contiformer,1.3001574755424545
+primary_physiology_response_lag_s,contiformer,9.027159628388041
+relative_clock_offset_magnitude_s,chronaris,0.8883362532460264
+primary_physiology_response_lag_s,chronaris,7.485868782176155
