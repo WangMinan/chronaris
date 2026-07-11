@@ -1,0 +1,238 @@
+{
+  "candidate_budget_per_method": 4,
+  "task_labels_opened": false,
+  "simulation_ground_truth_opened": false,
+  "locked_test_opened": false,
+  "stage_name": "encoder_candidate_screen_seed17",
+  "run_id": "2026-07-11_encoder-candidate-screen-smoke",
+  "last_event": "candidate_screen_complete",
+  "updated_at_utc": "2026-07-11T05:47:37.578415Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T05:42:39.102877Z",
+      "event": "start",
+      "candidate_budget_per_method": 4,
+      "task_labels_opened": false,
+      "simulation_ground_truth_opened": false,
+      "locked_test_opened": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:42.287895Z",
+      "event": "candidate_complete",
+      "method_name": "physiology_only",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.4147265776991844
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:46.897173Z",
+      "event": "candidate_complete",
+      "method_name": "physiology_only",
+      "candidate_id": "B",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.431881919503212
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:48.958137Z",
+      "event": "candidate_complete",
+      "method_name": "physiology_only",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.4044749140739441
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:51.075637Z",
+      "event": "candidate_complete",
+      "method_name": "physiology_only",
+      "candidate_id": "D",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.414653442800045
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:53.278634Z",
+      "event": "candidate_complete",
+      "method_name": "vehicle_only",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.46371621638536453
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:55.504099Z",
+      "event": "candidate_complete",
+      "method_name": "vehicle_only",
+      "candidate_id": "B",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.5144552811980247
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:57.604748Z",
+      "event": "candidate_complete",
+      "method_name": "vehicle_only",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.399298295378685
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:42:59.774528Z",
+      "event": "candidate_complete",
+      "method_name": "vehicle_only",
+      "candidate_id": "D",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.46355094760656357
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:03.839994Z",
+      "event": "candidate_complete",
+      "method_name": "mult",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.4045720100402832
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:07.947830Z",
+      "event": "candidate_complete",
+      "method_name": "mult",
+      "candidate_id": "B",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.41386912018060684
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:11.381471Z",
+      "event": "candidate_complete",
+      "method_name": "mult",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.4184032455086708
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:15.409522Z",
+      "event": "candidate_complete",
+      "method_name": "mult",
+      "candidate_id": "D",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.4083644971251488
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:20.256054Z",
+      "event": "candidate_complete",
+      "method_name": "contiformer",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.4568106159567833
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:22.558318Z",
+      "event": "candidate_complete",
+      "method_name": "contiformer",
+      "candidate_id": "B",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.5091263204813004
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:24.924972Z",
+      "event": "candidate_complete",
+      "method_name": "contiformer",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.40631653368473053
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:43:27.272715Z",
+      "event": "candidate_complete",
+      "method_name": "contiformer",
+      "candidate_id": "D",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.456663116812706
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:44:33.175219Z",
+      "event": "candidate_complete",
+      "method_name": "chronaris",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.409156434237957
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:45:36.645116Z",
+      "event": "candidate_complete",
+      "method_name": "chronaris",
+      "candidate_id": "B",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.3942679837346077
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:46:35.700402Z",
+      "event": "candidate_complete",
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.40432196855545044
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:47:37.563132Z",
+      "event": "candidate_complete",
+      "method_name": "chronaris",
+      "candidate_id": "D",
+      "status": "completed",
+      "best_epoch": 1,
+      "completed_epochs": 1,
+      "best_public_selection_loss": 0.40980467945337296
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:47:37.578415Z",
+      "event": "candidate_screen_complete",
+      "completed_candidate_count": 20,
+      "selected_method_count": 5,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "method_name": "chronaris",
+  "candidate_id": "D",
+  "status": "completed",
+  "best_epoch": 1,
+  "completed_epochs": 1,
+  "best_public_selection_loss": 0.40980467945337296,
+  "completed_candidate_count": 20,
+  "selected_method_count": 5,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

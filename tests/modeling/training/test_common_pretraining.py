@@ -7,6 +7,7 @@ import pytest
 
 from chronaris.modeling.training import (
     CommonPretrainingConfig,
+    EncoderCandidateConfig,
     TrainedFusionAdapter,
     load_common_pretraining_checkpoint,
     train_common_pretext_method,
@@ -184,3 +185,38 @@ def test_common_pretraining_accepts_lazy_batch_provider(tmp_path) -> None:
 
     assert result.status == "completed"
     assert result.step_count == 2
+
+
+def test_common_pretraining_round_trips_hidden_32_candidate(tmp_path) -> None:
+    batch = collate_observation_samples([_sample("train", 0), _sample("held_out", 1)])
+    fold = FoldLineage(
+        fold_id="fold_candidate_c",
+        train_sample_ids=("train",),
+        validation_sample_ids=(),
+        held_out_sample_ids=("held_out",),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.held_out_sample_ids,
+    )
+    candidate = EncoderCandidateConfig(candidate_id="C", hidden_dim=32)
+
+    result = train_common_pretext_method(
+        "physiology_only",
+        batch=batch,
+        fold=fold,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        vehicle_field_labels=(),
+        normalizer=normalizer,
+        output_root=tmp_path,
+        config=CommonPretrainingConfig(epochs=1, batch_size=1),
+        candidate_config=candidate,
+    )
+    encoder, _heads, _normalizer, payload = load_common_pretraining_checkpoint(
+        result.best_checkpoint_path
+    )
+
+    assert payload["candidate_config"]["candidate_id"] == "C"
+    assert encoder.config_manifest()["backbone_config"]["hidden_dim"] == 32

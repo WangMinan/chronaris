@@ -7,6 +7,7 @@ import pytest
 import torch
 
 from chronaris.modeling.training import (
+    ENCODER_SCREEN_CANDIDATES,
     TRAINABLE_FUSION_METHODS,
     build_trainable_fusion_encoder,
 )
@@ -65,3 +66,39 @@ def test_five_trainable_encoders_share_differentiable_sequence_contract(method_n
         assert output.auxiliary["physical_consistency"] != "not_applicable"
     else:
         assert output.auxiliary["physical_consistency"] == "not_applicable"
+
+
+@pytest.mark.parametrize("method_name", TRAINABLE_FUSION_METHODS)
+def test_hidden_32_candidate_preserves_64_dimensional_contract(method_name):
+    batch = collate_observation_samples([_sample("candidate-c")])
+    candidate = next(
+        value for value in ENCODER_SCREEN_CANDIDATES if value.candidate_id == "C"
+    )
+    encoder = build_trainable_fusion_encoder(
+        method_name,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        candidate_config=candidate,
+    )
+
+    output = encoder(batch)
+
+    assert output.sequence_embedding.shape == (1, 96, 64)
+    assert encoder.config_manifest()["backbone_config"]["hidden_dim"] == 32
+
+
+def test_frozen_candidate_table_matches_protocol():
+    assert [value.candidate_id for value in ENCODER_SCREEN_CANDIDATES] == [
+        "A",
+        "B",
+        "C",
+        "D",
+    ]
+    assert [value.hidden_dim for value in ENCODER_SCREEN_CANDIDATES] == [64, 64, 32, 64]
+    assert [value.learning_rate for value in ENCODER_SCREEN_CANDIDATES] == [
+        1e-3,
+        3e-4,
+        1e-3,
+        1e-3,
+    ]
+    assert [value.dropout for value in ENCODER_SCREEN_CANDIDATES] == [0.1, 0.1, 0.1, 0.2]

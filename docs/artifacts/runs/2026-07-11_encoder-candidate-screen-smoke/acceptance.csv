@@ -1,0 +1,7 @@
+check,passed
+twenty_candidates_completed,True
+one_candidate_selected_per_method,True
+all_candidates_public_pretext_only,True
+ground_truth_remained_closed,True
+locked_test_remained_sealed,True
+external_contract_is_64_dimensional,True

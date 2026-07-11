@@ -1,0 +1,58 @@
+{
+  "format": "chronaris.encoder_candidate_screen_evidence.v1",
+  "run_id": "2026-07-11_encoder-candidate-screen-smoke",
+  "status": "completed",
+  "candidate_count": 20,
+  "selected_method_count": 5,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6,
+  "files": [
+    {
+      "path": "acceptance.csv",
+      "sha256": "527705cb948d0b97089123c276755114052ede0166a7cca20f06b40e95c91a97",
+      "size_bytes": 233
+    },
+    {
+      "path": "candidate_ranking.csv",
+      "sha256": "f83c2f0a81ecd5fa34aecb198b0b1f3d3c04efb79ad7a47c00cb44af0e6b3778",
+      "size_bytes": 5254
+    },
+    {
+      "path": "data_manifest.csv",
+      "sha256": "4dd6caeb339eda1a4f8897ba26a9950adee29cb368d209b6447d987eea788d82",
+      "size_bytes": 61088
+    },
+    {
+      "path": "progress.json",
+      "sha256": "7fa92d97e8f13d8a2ab80ec0f77e3b76c43f46f8f2ba003cb10d7ffdbb42e326",
+      "size_bytes": 6826
+    },
+    {
+      "path": "resume_command.txt",
+      "sha256": "555dca3cf714b76654d899496c843282b6aa9c3b80e93641c63ec05c2f427c3a",
+      "size_bytes": 240
+    },
+    {
+      "path": "run.log",
+      "sha256": "b4ea8be4d2349485e1d8b61ba4bb8431d01309b9f8e52fd0c188a6c1b5960664",
+      "size_bytes": 244
+    },
+    {
+      "path": "screen_protocol.json",
+      "sha256": "ee7297ce96ad1cbb694e71caa14d452911cbb8c5d5aac2e7af9cbf7f114d75a0",
+      "size_bytes": 15133
+    },
+    {
+      "path": "selected_candidates.json",
+      "sha256": "93fccf070c5d9944c59a76321e350b7cd0a52bfa6cd6da5c25d8e55c75dc788c",
+      "size_bytes": 1555
+    },
+    {
+      "path": "summary.md",
+      "sha256": "b9b6b849019fc5f9b8267589cf2db24e7f18a995ff792e98a3c5b06a3d35488b",
+      "size_bytes": 726
+    }
+  ],
+  "heavy_checkpoint_count": 40,
+  "claim_boundary": "本轮只完成 seed 17 的 G1 公共自监督候选排序，不构成锁定测试结论。"
+}

@@ -41,7 +41,7 @@ class SingleStreamEncoderConfig:
     def __post_init__(self) -> None:
         if self.active_stream not in {"physiology", "vehicle"}:
             raise ValueError("active_stream must be physiology or vehicle")
-        if self.input_feature_dim <= 0 or self.hidden_dim != FUSION_OUTPUT_DIM:
+        if self.input_feature_dim <= 0 or self.hidden_dim <= 0:
             raise ValueError("single-stream dimensions are invalid")
         if self.num_heads <= 0 or self.hidden_dim % self.num_heads:
             raise ValueError("hidden_dim must be divisible by num_heads")
@@ -71,6 +71,11 @@ class ContinuousTimeSingleStreamEncoder(nn.Module):
             dropout=config.dropout,
             causal=True,
         )
+        self.contract_projection = (
+            nn.Identity()
+            if config.hidden_dim == FUSION_OUTPUT_DIM
+            else nn.Linear(config.hidden_dim, FUSION_OUTPUT_DIM)
+        )
 
     def forward(self, batch: DualStreamObservationBatch) -> SingleStreamEncoding:
         queried = causal_query_stream(batch, stream_name=self.config.active_stream)
@@ -93,9 +98,8 @@ class ContinuousTimeSingleStreamEncoder(nn.Module):
             time_axis=queried.timestamps_s.to(inputs.dtype),
             mask=attention_mask,
         )
-        sequence = torch.nan_to_num(encoded) * queried.modality_mask.unsqueeze(-1).to(
-            encoded.dtype
-        )
+        sequence = torch.nan_to_num(self.contract_projection(encoded))
+        sequence = sequence * queried.modality_mask.unsqueeze(-1).to(sequence.dtype)
         return SingleStreamEncoding(
             sequence_embedding=sequence,
             valid_mask=queried.modality_mask,

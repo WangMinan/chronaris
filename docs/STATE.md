@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示、公共自监督训练、仿真应用型下游消费者，以及鼎新目标—原始上下文—训练内划分—五折表示—固定 consumer—inner-train 嵌套目标—validation-only consumer 的 G4 链路均已完成；最新 validation run 12/12 通过。本轮未修改既有确认指标或形成模型排名。当前实施里程碑进入 G5 seed 17 固定候选 screen。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1–G4 全链路已完成；G5 已把 A–D 四候选、公共损失早停、方法内归一化、旧 checkpoint 兼容和 epoch 级恢复落实到代码，并在 96/23/1 的 G1 开发划分上完成 20 候选单 epoch smoke。smoke 6/6 通过且未打开任务标签、仿真真值或封存测试；当前启动 seed 17 正式候选筛选，既有确认指标仍未修改。
 
 ## 当前执行入口
 
@@ -32,6 +32,7 @@
 - G4.2 鼎新五折冻结表示 consumer 工程冒烟：[artifacts/runs/2026-07-11_dingxin-consumer-smoke/report.md](artifacts/runs/2026-07-11_dingxin-consumer-smoke/report.md)
 - G4.2 鼎新 inner-train 嵌套目标：[artifacts/runs/2026-07-11_dingxin-nested-targets/report.md](artifacts/runs/2026-07-11_dingxin-nested-targets/report.md)
 - G4.2 鼎新嵌套目标 validation-only consumer：[artifacts/runs/2026-07-11_dingxin-nested-validation/report.md](artifacts/runs/2026-07-11_dingxin-nested-validation/report.md)
+- G5 编码器候选筛选全链路 smoke：[artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md)
 
 ## 已锁定事实
 
@@ -163,7 +164,7 @@
 
 ## 当前未完成
 
-- G4.2 全链路已闭环；尚未启动 G5 seed 17 候选 screen、G6 多 seed 锁定确认、压力测试、消融和论文证据包。
+- G4.2 全链路已闭环；G5 单 epoch smoke 已完成，但正式 seed 17 候选排序、鼎新 validation 确认、G6 多 seed 锁定确认、压力测试、消融和论文证据包尚未完成。
 - 仿真应用消费者目前仍是 16 条轨迹上的接口 smoke，不是完整 G1 开发筛选结果。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
@@ -177,7 +178,7 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 4. 已完成：真实外层折六方法表示—固定 consumer smoke；鼎新指标与仿真指标分目录保存，不形成混合平均分。
 5. 已完成：按 inner-train 重建嵌套目标。
 6. 已完成：仅在 validation 复跑固定 consumer，outer-test 指标保持关闭。
-7. 当前：启动 seed 17 四候选 screen；期间继续禁止读取 Dingxin outer-test 和 G2 locked test。
+7. 当前：运行 G1 seed 17 四候选正式 screen；完成每方法唯一候选冻结后，才进入鼎新 validation 确认。期间继续禁止读取鼎新 outer-test 和 G2 locked test。
 
 ## 本轮验证
 
@@ -201,7 +202,8 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 - G4.2 上下文绑定与加载器聚焦测试：`7 passed`；93 个完整原始输入、90 个完整响应绑定，`12/12` 验收通过。
 - G4.2 训练内划分聚焦测试：`4 passed`；五折角色穷尽互斥、共享航电区间零重叠、任务覆盖和确定性重建均通过，正式 run `11/11` 验收通过。
 - G4.2 流式归一化、随机化 PCA、懒加载公共训练与 OOF 导出聚焦测试：`21 passed`；主协议首折真实 run 为 5 个训练 checkpoint、6 个总 checkpoint、18 个表示，`12/12` 验收通过。
-- 完整测试：`328 passed, 8 skipped, 317 warnings`。
+- G5 候选配置、早停、排名和恢复聚焦测试：`17 passed`；20 候选单 epoch G1 smoke 为 `6/6`，耗时 5 分 03 秒、峰值内存 4.34 GB。
+- 完整测试：`338 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 
