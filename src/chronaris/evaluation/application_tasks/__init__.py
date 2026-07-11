@@ -109,6 +109,21 @@ from chronaris.evaluation.application_tasks.dingxin_selected_representation_run 
     DingxinSelectedRepresentationResult,
     run_dingxin_selected_representations,
 )
+from chronaris.evaluation.application_tasks.dingxin_locked_pretraining_run import (
+    DingxinLockedPretrainingConfig,
+    DingxinLockedPretrainingResult,
+    run_dingxin_locked_pretraining,
+)
+from chronaris.evaluation.application_tasks.dingxin_locked_representation_run import (
+    DingxinLockedRepresentationConfig,
+    DingxinLockedRepresentationResult,
+    run_dingxin_locked_representations,
+)
+from chronaris.evaluation.application_tasks.dingxin_locked_consumer_run import (
+    DingxinLockedConsumerConfig,
+    DingxinLockedConsumerResult,
+    run_dingxin_locked_consumers,
+)
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run import (
     SimulationLockedPretrainingConfig,
     SimulationLockedPretrainingResult,
@@ -139,6 +154,22 @@ from chronaris.evaluation.application_tasks.simulation_stress_consumer_run impor
     SimulationStressConsumerResult,
     run_simulation_stress_consumers,
 )
+from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_pretraining_run import (
+    CHRONARIS_ABLATION_VARIANTS,
+    SimulationChronarisAblationPretrainingConfig,
+    SimulationChronarisAblationPretrainingResult,
+    run_simulation_chronaris_ablation_pretraining,
+)
+from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_representation_run import (
+    SimulationChronarisAblationRepresentationConfig,
+    SimulationChronarisAblationRepresentationResult,
+    run_simulation_chronaris_ablation_representations,
+)
+from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_consumer_run import (
+    SimulationChronarisAblationConsumerConfig,
+    SimulationChronarisAblationConsumerResult,
+    run_simulation_chronaris_ablation_consumers,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
@@ -148,6 +179,12 @@ __all__ = [
     "DingxinSelectedScreenResult",
     "DingxinSelectedRepresentationConfig",
     "DingxinSelectedRepresentationResult",
+    "DingxinLockedPretrainingConfig",
+    "DingxinLockedPretrainingResult",
+    "DingxinLockedRepresentationConfig",
+    "DingxinLockedRepresentationResult",
+    "DingxinLockedConsumerConfig",
+    "DingxinLockedConsumerResult",
     "SimulationLockedPretrainingConfig",
     "SimulationLockedPretrainingResult",
     "SimulationLockedRepresentationConfig",
@@ -160,6 +197,13 @@ __all__ = [
     "SimulationStressRepresentationResult",
     "SimulationStressConsumerConfig",
     "SimulationStressConsumerResult",
+    "CHRONARIS_ABLATION_VARIANTS",
+    "SimulationChronarisAblationPretrainingConfig",
+    "SimulationChronarisAblationPretrainingResult",
+    "SimulationChronarisAblationRepresentationConfig",
+    "SimulationChronarisAblationRepresentationResult",
+    "SimulationChronarisAblationConsumerConfig",
+    "SimulationChronarisAblationConsumerResult",
     "FixedDataAuditResult",
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
@@ -201,12 +245,18 @@ __all__ = [
     "run_encoder_candidate_screen",
     "run_dingxin_selected_screen",
     "run_dingxin_selected_representations",
+    "run_dingxin_locked_pretraining",
+    "run_dingxin_locked_representations",
+    "run_dingxin_locked_consumers",
     "run_simulation_locked_pretraining",
     "run_simulation_locked_representations",
     "run_simulation_locked_consumers",
     "run_simulation_stress_generation",
     "run_simulation_stress_representations",
     "run_simulation_stress_consumers",
+    "run_simulation_chronaris_ablation_pretraining",
+    "run_simulation_chronaris_ablation_representations",
+    "run_simulation_chronaris_ablation_consumers",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",

@@ -93,6 +93,7 @@ def train_locked_chronaris(
     augmentation_policy: AugmentationPolicy | None = None,
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     candidate_config: EncoderCandidateConfig | None = None,
+    variant: str = "full",
     resume: bool = True,
 ) -> LockedChronarisTrainingResult:
     resolved = config or LockedChronarisTrainingConfig()
@@ -112,6 +113,7 @@ def train_locked_chronaris(
         physiology_feature_names=physiology_feature_names,
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
+        variant=variant,
     )
     resume_payload = None
     if resume and last_path.exists():
@@ -128,6 +130,7 @@ def train_locked_chronaris(
             vehicle_feature_names=vehicle_feature_names,
             vehicle_field_labels=vehicle_field_labels,
             candidate_config=candidate,
+            chronaris_variant=variant,
         ).to(resolved.device)
         heads = CommonPretextHeadBundle(
             representation_dim=FUSION_OUTPUT_DIM,

@@ -53,6 +53,7 @@ def run_dingxin_method_consumers(
     output_root: str | Path,
     config: DingxinConsumerConfig | None = None,
     evaluation_roles: tuple[str, ...] = ("validation", "held_out"),
+    smoke_only: bool = True,
     resume: bool = True,
 ) -> DingxinMethodConsumerResult:
     resolved = config or DingxinConsumerConfig()
@@ -65,6 +66,7 @@ def run_dingxin_method_consumers(
         targets=targets,
         config=resolved,
         evaluation_roles=evaluation_roles,
+        smoke_only=smoke_only,
     )
     manifest_path = root / "consumer_manifest.json"
     existing = _load_existing_components(
@@ -73,6 +75,7 @@ def run_dingxin_method_consumers(
         resume=resume,
     )
     train = outputs["train"]
+    validation = outputs["validation"]
     component_status = {}
     resource_rows = []
     consumers = {}
@@ -88,6 +91,13 @@ def run_dingxin_method_consumers(
                 sample_ids=train.sample_ids,
                 targets=targets,
                 config=resolved,
+                validation_pooled_embedding=(
+                    validation.pooled_embedding.detach().cpu().numpy()
+                ),
+                validation_sequence_embedding=(
+                    validation.sequence_embedding.detach().cpu().numpy()
+                ),
+                validation_sample_ids=validation.sample_ids,
             )
             _atomic_joblib_dump(
                 path,
@@ -105,7 +115,7 @@ def run_dingxin_method_consumers(
                 "consumer": consumer_name,
                 "status": status,
                 "elapsed_s": time.perf_counter() - started,
-                "smoke_only": True,
+                "smoke_only": bool(smoke_only),
             }
         )
     metric_rows, prediction_rows = _evaluate_consumers(
@@ -116,6 +126,7 @@ def run_dingxin_method_consumers(
         consumers=consumers,
         seed=resolved.random_state,
         evaluation_roles=evaluation_roles,
+        smoke_only=smoke_only,
     )
     prediction_path = root / "prediction_rows.csv"
     pd.DataFrame(prediction_rows).to_csv(prediction_path, index=False)
@@ -144,7 +155,7 @@ def run_dingxin_method_consumers(
         "consumer_fit_role": "train",
         "evaluation_roles": list(evaluation_roles),
         "label_used_for_encoder_training": False,
-        "smoke_only": True,
+        "smoke_only": bool(smoke_only),
     }
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
@@ -169,7 +180,8 @@ def run_dingxin_method_consumers(
 
 
 def _evaluate_consumers(
-    *, method_name, fold_id, outputs, targets, consumers, seed, evaluation_roles
+    *, method_name, fold_id, outputs, targets, consumers, seed, evaluation_roles,
+    smoke_only
 ):
     metric_rows = []
     prediction_rows = []
@@ -226,6 +238,7 @@ def _evaluate_consumers(
                 role=role,
                 sample_count=len(maneuver_ids),
                 threshold_scope=targets.threshold_scope,
+                smoke_only=smoke_only,
             )
             _append_metric_rows(
                 metric_rows,
@@ -238,6 +251,7 @@ def _evaluate_consumers(
                 role=role,
                 sample_count=len(response_ids),
                 threshold_scope=targets.threshold_scope,
+                smoke_only=smoke_only,
             )
             _append_metric_rows(
                 metric_rows,
@@ -250,6 +264,7 @@ def _evaluate_consumers(
                 role=role,
                 sample_count=len(response_ids),
                 threshold_scope=targets.threshold_scope,
+                smoke_only=smoke_only,
             )
             prediction_rows.extend(
                 _prediction_rows(
@@ -262,6 +277,7 @@ def _evaluate_consumers(
                     truth=maneuver_truth,
                     prediction=prediction["maneuver_prediction"][maneuver_positions],
                     threshold_scope=targets.threshold_scope,
+                    smoke_only=smoke_only,
                 )
             )
             prediction_rows.extend(
@@ -275,6 +291,7 @@ def _evaluate_consumers(
                     truth=response_truth,
                     prediction=prediction["response_prediction"][response_positions],
                     threshold_scope=targets.threshold_scope,
+                    smoke_only=smoke_only,
                 )
             )
             prediction_rows.extend(
@@ -288,6 +305,7 @@ def _evaluate_consumers(
                     truth=high_truth,
                     prediction=high_prediction,
                     threshold_scope=targets.threshold_scope,
+                    smoke_only=smoke_only,
                 )
             )
     return metric_rows, prediction_rows
@@ -295,7 +313,7 @@ def _evaluate_consumers(
 
 def _append_metric_rows(
     rows, metrics, *, method, task, consumer, seed, fold, role, sample_count,
-    threshold_scope
+    threshold_scope, smoke_only
 ):
     for metric, (value, direction) in metrics.items():
         available = value is not None and np.isfinite(value)
@@ -315,14 +333,14 @@ def _append_metric_rows(
                 "reason": None if available else "metric_not_defined",
                 "sample_count": sample_count,
                 "threshold_scope": threshold_scope,
-                "smoke_only": True,
+                "smoke_only": bool(smoke_only),
             }
         )
 
 
 def _prediction_rows(
     *, method, consumer, fold, role, sample_ids, task, truth, prediction,
-    threshold_scope
+    threshold_scope, smoke_only
 ):
     return [
         {
@@ -335,14 +353,15 @@ def _prediction_rows(
             "truth": float(truth[index]),
             "prediction": float(prediction[index]),
             "threshold_scope": threshold_scope,
-            "smoke_only": True,
+            "smoke_only": bool(smoke_only),
         }
         for index, sample_id in enumerate(sample_ids)
     ]
 
 
 def _protocol_hash(
-    *, method_name, fold_id, outputs, targets, config, evaluation_roles
+    *, method_name, fold_id, outputs, targets, config, evaluation_roles,
+    smoke_only
 ):
     digest = hashlib.sha256()
     for role in ("train", *evaluation_roles):
@@ -361,6 +380,7 @@ def _protocol_hash(
         "representation_digest": digest.hexdigest(),
         "fit_role": "train",
         "evaluation_roles": list(evaluation_roles),
+        "smoke_only": bool(smoke_only),
     }
     return hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")

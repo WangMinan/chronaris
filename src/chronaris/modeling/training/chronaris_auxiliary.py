@@ -69,7 +69,7 @@ def build_chronaris_auxiliary_losses(
         tuple(
             component.raw_value
             for component in physics_audit.components
-            if component.raw_value is not None
+            if component.active and component.raw_value is not None
         )
         if hasattr(physics_audit, "components")
         else ()

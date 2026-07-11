@@ -161,6 +161,7 @@ def build_trainable_fusion_encoder(
     vehicle_feature_names: tuple[str, ...],
     vehicle_field_labels: tuple[tuple[str, str], ...] = (),
     candidate_config: EncoderCandidateConfig | None = None,
+    chronaris_variant: str = "full",
 ) -> TrainableFusionEncoder:
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
@@ -206,6 +207,7 @@ def build_trainable_fusion_encoder(
                 physiology_feature_names=physiology_feature_names,
                 vehicle_feature_names=vehicle_feature_names,
                 field_labels=vehicle_field_labels,
+                variant=chronaris_variant,
                 hidden_dim=candidate.hidden_dim,
                 embedding_dim=candidate.hidden_dim,
                 encoder_hidden_dim=candidate.hidden_dim,

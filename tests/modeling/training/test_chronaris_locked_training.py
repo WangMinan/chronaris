@@ -112,3 +112,51 @@ def test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop(tmp_path
     assert payload["selection_uses_public_pretext_only"] is True
     assert payload["label_used_for_encoder_training"] is False
     assert payload["simulation_oracle_opened"] is False
+
+
+def test_locked_chronaris_ablation_round_trips_variant(tmp_path) -> None:
+    batch = collate_observation_samples(
+        (
+            _sample("train", 0.0),
+            _sample("validation", 1.0),
+            _sample("held_out", 2.0),
+        )
+    )
+    fold = FoldLineage(
+        fold_id="locked_ablation_fold",
+        train_sample_ids=("train",),
+        validation_sample_ids=("validation",),
+        held_out_sample_ids=("held_out",),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+    )
+    result = train_locked_chronaris(
+        batch=batch,
+        fold=fold,
+        physiology_feature_names=("physiology.spo2",),
+        vehicle_feature_names=("vehicle.speed",),
+        vehicle_field_labels=(("vehicle.speed", "true airspeed"),),
+        normalizer=normalizer,
+        output_root=tmp_path,
+        config=LockedChronarisTrainingConfig(
+            max_epochs=1,
+            batch_size=1,
+            patience=1,
+        ),
+        variant="no_physics",
+    )
+    encoder, _heads, _normalizer, payload = load_common_pretraining_checkpoint(
+        result.best_checkpoint_path
+    )
+
+    assert payload["encoder_manifest"]["backbone_config"]["variant"] == "no_physics"
+    assert encoder.backbone.config.variant == "no_physics"
+    physics_rows = [
+        row
+        for row in result.auxiliary_rows
+        if row["term_name"] == "chronaris_physical_consistency"
+    ]
+    assert physics_rows[0]["count"] == 0

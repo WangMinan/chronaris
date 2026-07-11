@@ -6,10 +6,10 @@ from dataclasses import asdict, dataclass
 from typing import Sequence
 
 import numpy as np
-from sklearn.linear_model import LogisticRegression, Ridge
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-
+from chronaris.evaluation.application_tasks.consumer_model_selection import (
+    fit_classifier,
+    fit_regressor,
+)
 from chronaris.evaluation.application_tasks.dingxin_consumer_targets import (
     DingxinFoldConsumerTargets,
     MANEUVER_TASK,
@@ -25,6 +25,9 @@ class DingxinConsumerConfig:
     classification_c: float = 1.0
     regression_alpha: float = 1.0
     minimum_global_channel_std: float = 1e-7
+    classification_c_grid: tuple[float, ...] = (0.1, 1.0, 10.0)
+    regression_alpha_grid: tuple[float, ...] = (0.1, 1.0, 10.0, 100.0)
+    tune_on_validation: bool = False
 
 
 @dataclass(slots=True)
@@ -38,6 +41,9 @@ class DingxinTaskConsumerBundle:
     channel_indices: np.ndarray | None
     fit_maneuver_sample_ids: tuple[str, ...]
     fit_response_sample_ids: tuple[str, ...]
+    selected_maneuver_c: float
+    selected_response_alpha: float
+    selected_high_response_c: float
 
     def predict(self, values):
         transformed = self._transform(values)
@@ -70,6 +76,12 @@ class DingxinTaskConsumerBundle:
             "variance_filter_fit_role": (
                 None if self.channel_indices is None else "train"
             ),
+            "selected_maneuver_c": self.selected_maneuver_c,
+            "selected_response_alpha": self.selected_response_alpha,
+            "selected_high_response_c": self.selected_high_response_c,
+            "hyperparameter_selection_role": (
+                "validation" if self.config.tune_on_validation else "fixed"
+            ),
         }
 
     def _transform(self, values):
@@ -94,6 +106,9 @@ def fit_dingxin_task_consumer(
     sample_ids: Sequence[str],
     targets: DingxinFoldConsumerTargets,
     config: DingxinConsumerConfig | None = None,
+    validation_pooled_embedding=None,
+    validation_sequence_embedding=None,
+    validation_sample_ids: Sequence[str] = (),
 ) -> DingxinTaskConsumerBundle:
     resolved = config or DingxinConsumerConfig()
     ordered_ids = tuple(str(value) for value in sample_ids)
@@ -105,10 +120,35 @@ def fit_dingxin_task_consumer(
     response_positions = np.asarray(
         [positions[sample_id] for sample_id in response_ids], dtype=np.int64
     )
+    validation_ids = tuple(str(value) for value in validation_sample_ids)
+    validation_maneuver_ids = targets.sample_ids(
+        role="validation", task=MANEUVER_TASK
+    )
+    validation_response_ids = targets.sample_ids(
+        role="validation", task=RESPONSE_TASK
+    )
+    if resolved.tune_on_validation and validation_ids != validation_maneuver_ids:
+        raise ValueError("Dingxin validation targets must cover validation representation")
+    validation_positions = {
+        sample_id: index for index, sample_id in enumerate(validation_ids)
+    }
+    validation_response_positions = (
+        np.asarray(
+            [validation_positions[sample_id] for sample_id in validation_response_ids],
+            dtype=np.int64,
+        )
+        if resolved.tune_on_validation
+        else np.asarray([], dtype=np.int64)
+    )
     transformer = None
     channel_indices = None
     if consumer_name == "linear":
         transformed = np.asarray(pooled_embedding, dtype=np.float32)
+        validation_transformed = (
+            np.asarray(validation_pooled_embedding, dtype=np.float32)
+            if resolved.tune_on_validation
+            else None
+        )
     elif consumer_name == "minirocket":
         from aeon.transformations.collection.convolution_based import MiniRocket
 
@@ -126,22 +166,78 @@ def fit_dingxin_task_consumer(
             random_state=resolved.random_state,
         )
         transformed = transformer.fit_transform(collection[:, channel_indices])
+        validation_transformed = (
+            transformer.transform(
+                np.ascontiguousarray(
+                    np.asarray(validation_sequence_embedding, dtype=np.float32).transpose(
+                        0, 2, 1
+                    )
+                )[:, channel_indices]
+            )
+            if resolved.tune_on_validation
+            else None
+        )
     else:
         raise ValueError(f"unsupported Dingxin consumer: {consumer_name}")
-    maneuver_classifier = _classifier(resolved).fit(
+    maneuver_classifier, selected_maneuver_c = fit_classifier(
         transformed,
         targets.maneuver_classes(maneuver_ids),
+        validation_transformed,
+        (
+            targets.maneuver_classes(validation_maneuver_ids)
+            if resolved.tune_on_validation
+            else None
+        ),
+        c_values=(
+            resolved.classification_c_grid
+            if resolved.tune_on_validation
+            else (resolved.classification_c,)
+        ),
+        random_state=resolved.random_state,
+        scaler_with_mean=(consumer_name == "linear"),
+        classification_labels=(0, 1, 2),
     )
-    response_regressor = make_pipeline(
-        StandardScaler(),
-        Ridge(alpha=resolved.regression_alpha),
-    ).fit(
+    response_regressor, selected_response_alpha = fit_regressor(
         transformed[response_positions],
         targets.response_values(response_ids),
+        (
+            validation_transformed[validation_response_positions]
+            if resolved.tune_on_validation
+            else None
+        ),
+        (
+            targets.response_values(validation_response_ids)
+            if resolved.tune_on_validation
+            else None
+        ),
+        alpha_values=(
+            resolved.regression_alpha_grid
+            if resolved.tune_on_validation
+            else (resolved.regression_alpha,)
+        ),
+        scaler_with_mean=(consumer_name == "linear"),
     )
-    high_response_classifier = _classifier(resolved).fit(
+    high_response_classifier, selected_high_response_c = fit_classifier(
         transformed[response_positions],
         targets.high_response_classes(response_ids),
+        (
+            validation_transformed[validation_response_positions]
+            if resolved.tune_on_validation
+            else None
+        ),
+        (
+            targets.high_response_classes(validation_response_ids)
+            if resolved.tune_on_validation
+            else None
+        ),
+        c_values=(
+            resolved.classification_c_grid
+            if resolved.tune_on_validation
+            else (resolved.classification_c,)
+        ),
+        random_state=resolved.random_state,
+        scaler_with_mean=(consumer_name == "linear"),
+        classification_labels=(0, 1),
     )
     return DingxinTaskConsumerBundle(
         consumer_name=consumer_name,
@@ -153,15 +249,7 @@ def fit_dingxin_task_consumer(
         channel_indices=channel_indices,
         fit_maneuver_sample_ids=maneuver_ids,
         fit_response_sample_ids=response_ids,
-    )
-
-
-def _classifier(config):
-    return make_pipeline(
-        StandardScaler(),
-        LogisticRegression(
-            C=config.classification_c,
-            max_iter=500,
-            random_state=config.random_state,
-        ),
+        selected_maneuver_c=selected_maneuver_c,
+        selected_response_alpha=selected_response_alpha,
+        selected_high_response_c=selected_high_response_c,
     )
