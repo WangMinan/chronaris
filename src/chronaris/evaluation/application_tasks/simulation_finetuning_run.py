@@ -205,7 +205,10 @@ def run_simulation_end_to_end_finetuning(config: SimulationFineTuningConfig):
                         "completed_epochs": training.completed_epochs,
                         "stopped_early": training.stopped_early,
                         "training_elapsed_s": training.training_elapsed_s,
-                        "training_device": device,
+                        "training_device": training.training_device_history[-1],
+                        "training_device_history": json.dumps(
+                            training.training_device_history
+                        ),
                         "encoder_update_mode": training.encoder_update_mode,
                         "source_checkpoint_path": str(source_path),
                         "source_checkpoint_sha256": sha256_file(source_path),
