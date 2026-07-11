@@ -1,0 +1,8 @@
+check_id,passed,actual,expected
+all_locked_seeds,True,1,1
+six_checkpoints_per_seed,True,[6],6
+eighteen_exports_per_seed,True,[18],18
+all_exports,True,18,18
+fixed_context_counts,True,"[(384, 96, 192)]","[384, 96, 192]"
+three_aligned_roles,True,[3],3
+task_oracle_closed,True,False,False

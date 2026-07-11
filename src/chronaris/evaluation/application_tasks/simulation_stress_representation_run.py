@@ -20,6 +20,7 @@ from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run im
     LOCKED_SEEDS,
 )
 from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    _resolve_device,
     load_locked_seed_adapters,
     require_complete_locked_checkpoint_set,
 )
@@ -61,6 +62,8 @@ class SimulationStressRepresentationConfig:
     )
     seeds: tuple[int, ...] = LOCKED_SEEDS
     export_batch_size: int = 32
+    baseline_device: str = "auto"
+    chronaris_device: str = "cpu"
     resume: bool = True
 
 
@@ -109,6 +112,8 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
     scenario_ids = tuple(
         scenario.scenario_id for scenario in locked_stress_observation_scenarios()
     )
+    baseline_device = _resolve_device(config.baseline_device)
+    chronaris_device = _resolve_device(config.chronaris_device)
     with open_task_eval_run_observer(
         run_root=compact_root,
         run_id=config.run_id,
@@ -118,6 +123,8 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
             "seeds": list(config.seeds),
             "scenario_count": len(scenario_ids),
             "task_oracle_opened": False,
+            "baseline_device": baseline_device,
+            "chronaris_device": chronaris_device,
         },
     ) as progress:
         export_rows = []
@@ -131,6 +138,8 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                 pretraining_data=pretraining_data,
                 heavy_root=clean_representation_root,
                 resume=True,
+                baseline_device=baseline_device,
+                chronaris_device=chronaris_device,
             )
             for scenario_id in scenario_ids:
                 data = load_simulation_stress_context_data(
@@ -198,6 +207,8 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
             data_rows=data_rows,
             acceptance=acceptance,
             status=status,
+            baseline_device=baseline_device,
+            chronaris_device=chronaris_device,
         )
         progress.finish(
             status=status,
@@ -270,6 +281,8 @@ def _write_outputs(**values):
         "config": asdict(values["config"]),
         "task_oracle_opened": False,
         "frozen_checkpoint_reuse": True,
+        "baseline_device": values["baseline_device"],
+        "chronaris_device": values["chronaris_device"],
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -283,7 +296,8 @@ def _write_outputs(**values):
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_simulation_stress_representations.py "
-        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} --resume\n",
+        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} "
+        f"--baseline-device {values['baseline_device']} --chronaris-device {values['chronaris_device']} --resume\n",
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
@@ -294,6 +308,8 @@ def _write_outputs(**values):
         "acceptance_pass_count": passed,
         "acceptance_check_count": len(values["acceptance"]),
         "task_oracle_opened": False,
+        "baseline_device": values["baseline_device"],
+        "chronaris_device": values["chronaris_device"],
         "heavy_run_root": str(values["heavy_root"]),
         "output_paths": {key: str(path) for key, path in paths.items()},
     })

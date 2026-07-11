@@ -1,0 +1,41 @@
+{
+  "seeds": [
+    17
+  ],
+  "checkpoint_count_verified_before_g2_open": 5,
+  "task_oracle_opened": false,
+  "stage_name": "simulation_locked_representation_export",
+  "run_id": "2026-07-12_simulation-locked-representations-gpu-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T13:00:23.914550Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T13:00:14.519380Z",
+      "event": "start",
+      "seeds": [
+        17
+      ],
+      "checkpoint_count_verified_before_g2_open": 5,
+      "task_oracle_opened": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:00:23.897367Z",
+      "event": "locked_seed_representation_complete",
+      "seed": 17,
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:00:23.914550Z",
+      "event": "finished",
+      "status": "completed",
+      "export_count": 18,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7
+    }
+  ],
+  "seed": 17,
+  "export_count": 18,
+  "status": "completed",
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7
+}
