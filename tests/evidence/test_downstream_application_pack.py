@@ -21,6 +21,7 @@ from chronaris.evidence.downstream_application_pack import (
 def test_downstream_evidence_pack_builds_separated_chinese_figures(tmp_path: Path) -> None:
     config = DownstreamEvidencePackConfig(
         compact_output_root=str(tmp_path),
+        heavy_output_root=str(tmp_path / "heavy"),
         transfer_consumer_run_id=None,
     )
     run_ids = (
@@ -139,14 +140,74 @@ def test_downstream_evidence_pack_builds_separated_chinese_figures(tmp_path: Pat
         / "full_ablation_metric_delta.csv",
         index=False,
     )
+    dingxin_prediction_rows = []
+    for task in (
+        "maneuver_intensity_classification",
+        "physiology_response_regression",
+    ):
+        for index in range(1, 5):
+            dingxin_prediction_rows.append(
+                {
+                    "seed": 17,
+                    "method": "chronaris",
+                    "consumer": "minirocket",
+                    "fold": "leave_one_view_out__fold01",
+                    "role": "held_out",
+                    "sample_id": f"view_a::context_end_{index * 5:04d}",
+                    "task": task,
+                    "truth": float(index % 3),
+                    "prediction": float((index + 1) % 3),
+                }
+            )
+    dingxin_heavy = Path(config.heavy_output_root) / config.dingxin_consumer_run_id
+    dingxin_heavy.mkdir(parents=True)
+    pd.DataFrame(dingxin_prediction_rows).to_csv(
+        dingxin_heavy / "prediction_rows.csv", index=False
+    )
+    simulation_prediction_rows = []
+    simulation_manifest_rows = []
+    for index, start in enumerate((30.0, 60.0, 90.0, 120.0)):
+        sample_id = f"held_out_profile::context_{index}"
+        simulation_prediction_rows.append(
+            {
+                "seed": 17,
+                "method": "chronaris",
+                "consumer": "minirocket",
+                "role": "held_out",
+                "sample_id": sample_id,
+                "workload_class_true": index % 3,
+                "workload_class_pred": (index + 1) % 3,
+                "future_workload_true": 0.2 + index * 0.1,
+                "future_workload_pred": 0.22 + index * 0.09,
+            }
+        )
+        simulation_manifest_rows.append(
+            {
+                "sample_id": sample_id,
+                "trajectory_id": "trajectory_001",
+                "context_start_s": start,
+            }
+        )
+    simulation_heavy = (
+        Path(config.heavy_output_root) / config.simulation_consumer_run_id
+    )
+    simulation_heavy.mkdir(parents=True)
+    pd.DataFrame(simulation_prediction_rows).to_csv(
+        simulation_heavy / "workload_predictions.csv", index=False
+    )
+    representation_root = tmp_path / config.simulation_representation_run_id
+    representation_root.mkdir(parents=True)
+    pd.DataFrame(simulation_manifest_rows).to_csv(
+        representation_root / "data_manifest.csv", index=False
+    )
 
     result = run_downstream_evidence_pack(config)
 
     root = tmp_path / config.run_id
     assert result.status == "completed"
-    assert result.figure_count == 5
+    assert result.figure_count == 7
     assert result.acceptance_pass_count == result.acceptance_check_count == 8
-    assert len(list((root / "figures").glob("*.png"))) == 5
+    assert len(list((root / "figures").glob("*.png"))) == 7
     assert "真实双流上的弱监督" in (root / "claim_boundary.md").read_text()
     evidence = pd.read_csv(root / "evidence_matrix.csv")
     assert evidence["data_layer"].nunique() >= 2
