@@ -1,0 +1,9 @@
+check_id,passed,actual,expected
+all_method_fold_seed_runs,True,75,75
+all_checkpoints_complete,True,"['completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed']",completed_or_resumed
+public_validation_losses_finite,True,75,75
+chronaris_auxiliary_schedule_consistent,True,True,True
+normalizers_inner_train_only,True,"[31, 31, 38, 19, 38]",inner_train counts
+outer_test_never_requested,True,"[0, 0, 0, 0, 0]",0
+task_targets_closed,True,False,False
+transfer_initialization_contract,True,,all initialized when configured; none otherwise

@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_dingxin-locked-pretraining-coalesced/`：**鼎新三随机种子五外层折锁定重训**。五个选定配置共完成 75/75 个“方法—折—种子” checkpoint，8/8 门禁通过。六方法公共输入使用 100 ms 因果时间箱，归一化仅拟合 inner-train；五个可训练方法均实际使用 RTX 4090。Chronaris 方法专属损失参与反向传播，但早停只读取公共自监督 validation；15 个 Chronaris 单元最佳 epoch 范围为 8–46。任务目标与 outer-test 访问数全程为零；约 948 MB checkpoint 只位于被忽略目录，本 run 不形成任务排名。
 - `runs/2026-07-12_simulation-locked-stress-consumers/`：**G2 七因素锁定压力下游评估**。三随机种子、35 场景和六方法完成 630/630 个冻结 consumer 评估，生成 20,160 条指标、4,032 条退化斜率和 630 条 48 轨迹配对统计，6/6 门禁通过；压力场景不重训、不调参。Chronaris 在 21 个预声明“任务—因素”组合的最高单因素压力下有 15 个绝对表现位于前二，但随机/连续缺失的主指标平均退化斜率为 -0.0733/-0.1264，均为六方法第六。该结果支持单因素重压下的绝对任务竞争力，不支持全因素退化最慢；混合重压也不写成统一优势。
 - `runs/2026-07-12_simulation-chronaris-ablation-pretraining/`：**Chronaris 四项机制消融锁定重训**。无连续演化、无物理一致性、无因果掩码和单尺度时延四个变体在 seeds 17/29/43 上共完成 12/12 个 checkpoint，6/6 门禁通过。训练和保留确认只读取 G1 公共自监督目标，G2 锁定测试与任务真值全程关闭；重型 checkpoint 约 38 MB，位于被忽略目录。本 run 只冻结消融 encoder，不形成任务性能结论。
 - `runs/2026-07-12_simulation-chronaris-ablation-representations/`：**Chronaris 机制消融 G1→G2 统一表示**。12 个锁定消融 checkpoint 全部完整后，每个变体—种子均导出 G1 train、G1 validation 和 G2 held-out 三个角色，共 36/36 份 `[N,96,64]` 表示，5/5 门禁通过。表示阶段不读取任务真值；后续只允许与完整 Chronaris 共用同一冻结 consumer 协议做 48 轨迹配对消融。
