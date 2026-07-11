@@ -135,3 +135,94 @@ def canonical_observation_scenarios() -> tuple[ObservationScenarioConfig, ...]:
             observation_snr_db=10.0,
         ),
     )
+
+
+def locked_stress_observation_scenarios() -> tuple[ObservationScenarioConfig, ...]:
+    """Return the frozen single-factor levels plus the mixed-severe scenario."""
+
+    scenarios = []
+    for value in (0.0, 20.0, 50.0, 100.0):
+        scenarios.append(
+            _stress_base(
+                f"timestamp_jitter_{int(value):03d}ms",
+                vehicle_jitter_std_ms=value,
+                physiology_jitter_std_ms=value,
+            )
+        )
+    for value in (0.0, 0.25, 1.0, 3.0):
+        signs = (1.0,) if value == 0 else (-1.0, 1.0)
+        scenarios.extend(
+            _stress_base(
+                f"clock_offset_{sign * value:+.2f}s",
+                physiology_clock_offset_s=sign * value,
+            )
+            for sign in signs
+        )
+    for value in (0.0, 50.0, 100.0, 250.0):
+        signs = (1.0,) if value == 0 else (-1.0, 1.0)
+        scenarios.extend(
+            _stress_base(
+                f"clock_drift_{int(sign * value):+04d}ppm",
+                physiology_clock_drift_ppm=sign * value,
+            )
+            for sign in signs
+        )
+    for value in (0.0, 0.10, 0.30, 0.50):
+        scenarios.append(
+            _stress_base(
+                f"random_missing_{int(value * 100):02d}pct",
+                vehicle_random_missing_rate=value,
+                physiology_random_missing_rate=value,
+            )
+        )
+    for value in (0.0, 5.0, 15.0, 30.0):
+        scenarios.append(
+            _stress_base(
+                f"contiguous_gap_{int(value):02d}s",
+                vehicle_block_gap_s=value,
+                physiology_block_gap_s=value,
+            )
+        )
+    for value in (2.0, 5.0, 15.0, 30.0):
+        scenarios.append(
+            _stress_base(
+                f"physiology_lag_{int(value):02d}s",
+                additional_physiology_lag_s=value,
+            )
+        )
+    for value in (30.0, 20.0, 10.0, 5.0):
+        scenarios.append(
+            _stress_base(
+                f"observation_snr_{int(value):02d}db",
+                observation_snr_db=value,
+            )
+        )
+    scenarios.append(
+        _stress_base(
+            "mixed_severe",
+            vehicle_jitter_std_ms=100.0,
+            physiology_jitter_std_ms=100.0,
+            vehicle_clock_offset_s=-3.0,
+            physiology_clock_offset_s=3.0,
+            vehicle_clock_drift_ppm=-250.0,
+            physiology_clock_drift_ppm=250.0,
+            vehicle_random_missing_rate=0.30,
+            physiology_random_missing_rate=0.30,
+            vehicle_block_gap_s=15.0,
+            physiology_block_gap_s=15.0,
+            additional_physiology_lag_s=30.0,
+            observation_snr_db=10.0,
+        )
+    )
+    return tuple(scenarios)
+
+
+def _stress_base(scenario_id: str, **overrides) -> ObservationScenarioConfig:
+    values = {
+        "scenario_id": scenario_id,
+        "vehicle_jitter_std_ms": 0.0,
+        "physiology_jitter_std_ms": 0.0,
+        "observation_snr_db": 30.0,
+        **overrides,
+    }
+    return ObservationScenarioConfig(**values)

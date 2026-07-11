@@ -1,0 +1,468 @@
+{
+  "latent_sortie_count": 48,
+  "stress_scenario_count": 35,
+  "method_names_accepted_by_generator": false,
+  "stage_name": "simulation_locked_stress_generation",
+  "run_id": "2026-07-12_aviation-simulation-locked-stress-audit",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T10:18:42.122629Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T10:17:24.512663Z",
+      "event": "start",
+      "latent_sortie_count": 48,
+      "stress_scenario_count": 35,
+      "method_names_accepted_by_generator": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:26.118768Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_000",
+      "trajectory_index": 0,
+      "completed_latent_count": 1,
+      "completed_scenario_count": 35
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:27.770105Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_000",
+      "trajectory_index": 1,
+      "completed_latent_count": 2,
+      "completed_scenario_count": 70
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:29.257322Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_000",
+      "trajectory_index": 2,
+      "completed_latent_count": 3,
+      "completed_scenario_count": 105
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:30.690718Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_000",
+      "trajectory_index": 3,
+      "completed_latent_count": 4,
+      "completed_scenario_count": 140
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:32.252650Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_000",
+      "trajectory_index": 4,
+      "completed_latent_count": 5,
+      "completed_scenario_count": 175
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:33.903708Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_000",
+      "trajectory_index": 5,
+      "completed_latent_count": 6,
+      "completed_scenario_count": 210
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:35.457483Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_001",
+      "trajectory_index": 0,
+      "completed_latent_count": 7,
+      "completed_scenario_count": 245
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:37.065637Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_001",
+      "trajectory_index": 1,
+      "completed_latent_count": 8,
+      "completed_scenario_count": 280
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:38.687666Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_001",
+      "trajectory_index": 2,
+      "completed_latent_count": 9,
+      "completed_scenario_count": 315
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:40.262096Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_001",
+      "trajectory_index": 3,
+      "completed_latent_count": 10,
+      "completed_scenario_count": 350
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:41.739210Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_001",
+      "trajectory_index": 4,
+      "completed_latent_count": 11,
+      "completed_scenario_count": 385
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:43.168140Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_001",
+      "trajectory_index": 5,
+      "completed_latent_count": 12,
+      "completed_scenario_count": 420
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:44.748511Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_002",
+      "trajectory_index": 0,
+      "completed_latent_count": 13,
+      "completed_scenario_count": 455
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:46.359923Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_002",
+      "trajectory_index": 1,
+      "completed_latent_count": 14,
+      "completed_scenario_count": 490
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:47.879695Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_002",
+      "trajectory_index": 2,
+      "completed_latent_count": 15,
+      "completed_scenario_count": 525
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:49.559869Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_002",
+      "trajectory_index": 3,
+      "completed_latent_count": 16,
+      "completed_scenario_count": 560
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:51.274257Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_002",
+      "trajectory_index": 4,
+      "completed_latent_count": 17,
+      "completed_scenario_count": 595
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:53.325058Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_002",
+      "trajectory_index": 5,
+      "completed_latent_count": 18,
+      "completed_scenario_count": 630
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:54.840591Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_003",
+      "trajectory_index": 0,
+      "completed_latent_count": 19,
+      "completed_scenario_count": 665
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:56.637446Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_003",
+      "trajectory_index": 1,
+      "completed_latent_count": 20,
+      "completed_scenario_count": 700
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:58.317211Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_003",
+      "trajectory_index": 2,
+      "completed_latent_count": 21,
+      "completed_scenario_count": 735
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:17:59.900205Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_003",
+      "trajectory_index": 3,
+      "completed_latent_count": 22,
+      "completed_scenario_count": 770
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:01.535470Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_003",
+      "trajectory_index": 4,
+      "completed_latent_count": 23,
+      "completed_scenario_count": 805
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:03.153699Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_003",
+      "trajectory_index": 5,
+      "completed_latent_count": 24,
+      "completed_scenario_count": 840
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:04.756197Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_004",
+      "trajectory_index": 0,
+      "completed_latent_count": 25,
+      "completed_scenario_count": 875
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:06.311686Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_004",
+      "trajectory_index": 1,
+      "completed_latent_count": 26,
+      "completed_scenario_count": 910
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:07.741908Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_004",
+      "trajectory_index": 2,
+      "completed_latent_count": 27,
+      "completed_scenario_count": 945
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:09.556713Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_004",
+      "trajectory_index": 3,
+      "completed_latent_count": 28,
+      "completed_scenario_count": 980
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:11.192839Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_004",
+      "trajectory_index": 4,
+      "completed_latent_count": 29,
+      "completed_scenario_count": 1015
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:12.682710Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_004",
+      "trajectory_index": 5,
+      "completed_latent_count": 30,
+      "completed_scenario_count": 1050
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:14.177006Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_005",
+      "trajectory_index": 0,
+      "completed_latent_count": 31,
+      "completed_scenario_count": 1085
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:16.038630Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_005",
+      "trajectory_index": 1,
+      "completed_latent_count": 32,
+      "completed_scenario_count": 1120
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:17.611610Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_005",
+      "trajectory_index": 2,
+      "completed_latent_count": 33,
+      "completed_scenario_count": 1155
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:19.195937Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_005",
+      "trajectory_index": 3,
+      "completed_latent_count": 34,
+      "completed_scenario_count": 1190
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:20.689126Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_005",
+      "trajectory_index": 4,
+      "completed_latent_count": 35,
+      "completed_scenario_count": 1225
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:22.292392Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_005",
+      "trajectory_index": 5,
+      "completed_latent_count": 36,
+      "completed_scenario_count": 1260
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:24.207191Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_006",
+      "trajectory_index": 0,
+      "completed_latent_count": 37,
+      "completed_scenario_count": 1295
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:25.956828Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_006",
+      "trajectory_index": 1,
+      "completed_latent_count": 38,
+      "completed_scenario_count": 1330
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:27.567126Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_006",
+      "trajectory_index": 2,
+      "completed_latent_count": 39,
+      "completed_scenario_count": 1365
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:29.186390Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_006",
+      "trajectory_index": 3,
+      "completed_latent_count": 40,
+      "completed_scenario_count": 1400
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:30.763347Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_006",
+      "trajectory_index": 4,
+      "completed_latent_count": 41,
+      "completed_scenario_count": 1435
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:32.306363Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_006",
+      "trajectory_index": 5,
+      "completed_latent_count": 42,
+      "completed_scenario_count": 1470
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:33.988538Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_007",
+      "trajectory_index": 0,
+      "completed_latent_count": 43,
+      "completed_scenario_count": 1505
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:35.701775Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_007",
+      "trajectory_index": 1,
+      "completed_latent_count": 44,
+      "completed_scenario_count": 1540
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:37.171926Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_007",
+      "trajectory_index": 2,
+      "completed_latent_count": 45,
+      "completed_scenario_count": 1575
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:38.682403Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_007",
+      "trajectory_index": 3,
+      "completed_latent_count": 46,
+      "completed_scenario_count": 1610
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:40.408603Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_007",
+      "trajectory_index": 4,
+      "completed_latent_count": 47,
+      "completed_scenario_count": 1645
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:42.022452Z",
+      "event": "latent_trajectory_completed",
+      "split_id": "locked_test",
+      "profile_id": "locked_test_profile_007",
+      "trajectory_index": 5,
+      "completed_latent_count": 48,
+      "completed_scenario_count": 1680
+    },
+    {
+      "timestamp_utc": "2026-07-11T10:18:42.122629Z",
+      "event": "finished",
+      "status": "completed",
+      "latent_sortie_count": 48,
+      "observed_scenario_count": 1680,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7
+    }
+  ],
+  "split_id": "locked_test",
+  "profile_id": "locked_test_profile_007",
+  "trajectory_index": 5,
+  "completed_latent_count": 48,
+  "completed_scenario_count": 1680,
+  "status": "completed",
+  "observed_scenario_count": 1680,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7
+}

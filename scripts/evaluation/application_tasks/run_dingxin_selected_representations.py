@@ -28,6 +28,7 @@ def main() -> int:
     parser.add_argument("--compact-output-root", default="docs/artifacts/runs")
     parser.add_argument("--heavy-output-root", default="artifacts/application_evaluation")
     parser.add_argument("--seed", type=int, default=17)
+    parser.add_argument("--fold-id", action="append", default=[])
     parser.add_argument("--fit-batch-size", type=int, default=2)
     parser.add_argument("--export-batch-size", type=int, default=2)
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
@@ -39,6 +40,11 @@ def main() -> int:
             compact_output_root=args.compact_output_root,
             heavy_output_root=args.heavy_output_root,
             seed=args.seed,
+            fold_ids=(
+                tuple(args.fold_id)
+                if args.fold_id
+                else DingxinSelectedRepresentationConfig().fold_ids
+            ),
             fit_batch_size=args.fit_batch_size,
             export_batch_size=args.export_batch_size,
             resume=args.resume,

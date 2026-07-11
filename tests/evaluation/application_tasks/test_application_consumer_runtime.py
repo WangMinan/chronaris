@@ -10,6 +10,9 @@ from chronaris.evaluation.application_tasks.application_consumer_runtime import 
     ApplicationConsumerProtocol,
     run_application_method_consumers,
 )
+from chronaris.evaluation.application_tasks.application_frozen_evaluation import (
+    evaluate_frozen_application_consumers,
+)
 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import (
     ApplicationConsumerSmokeTargets,
 )
@@ -78,6 +81,16 @@ def test_method_consumer_runtime_resumes_and_rebuilds_prediction(tmp_path: Path)
         protocol=protocol,
         resume=True,
     )
+    frozen = evaluate_frozen_application_consumers(
+        method_name="chronaris",
+        output=outputs["held_out"],
+        targets=targets,
+        model_root=tmp_path,
+        output_root=tmp_path / "stress_predictions",
+        fold_id="fold_a",
+        evaluation_id="stress_case",
+        seed=17,
+    )
     prediction_path = tmp_path / "chronaris" / "predictions.npz"
     original = first.model_manifest["prediction_sha256"]
     prediction_path.unlink()
@@ -140,3 +153,7 @@ def test_method_consumer_runtime_resumes_and_rebuilds_prediction(tmp_path: Path)
     assert len(first.metric_rows) == 64
     assert len(first.tcn_training_rows) == 1
     assert prediction_path.is_file()
+    assert len(frozen.metric_rows) == 32
+    assert all(row["role"] == "held_out" for row in frozen.metric_rows)
+    assert Path(frozen.prediction_path).is_file()
+    assert frozen.source_model_protocol_sha256 == first.protocol_sha256

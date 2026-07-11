@@ -1,0 +1,8 @@
+check_id,passed,actual,expected
+forty_eight_g2_sorties,True,48,48
+thirty_five_stress_scenarios,True,35,35
+all_paired_observations,True,1680,1680
+g2_generator_family_only,True,{'locked_test'},{'locked_test'}
+latent_truth_shared_per_trajectory,True,48,48
+observation_randomness_paired_per_trajectory,True,1,1
+method_independent_source,True,False,False

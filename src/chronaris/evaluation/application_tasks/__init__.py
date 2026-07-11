@@ -30,6 +30,10 @@ from chronaris.evaluation.application_tasks.application_consumer_smoke import (
     ApplicationConsumerSmokeResult,
     run_application_consumer_smoke,
 )
+from chronaris.evaluation.application_tasks.application_frozen_evaluation import (
+    ApplicationFrozenEvaluationResult,
+    evaluate_frozen_application_consumers,
+)
 from chronaris.evaluation.application_tasks.dingxin_target_archive import (
     DingxinTargetArchiveConfig,
     DingxinTargetArchiveResult,
@@ -110,6 +114,31 @@ from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run im
     SimulationLockedPretrainingResult,
     run_simulation_locked_pretraining,
 )
+from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    SimulationLockedRepresentationConfig,
+    SimulationLockedRepresentationResult,
+    run_simulation_locked_representations,
+)
+from chronaris.evaluation.application_tasks.simulation_locked_consumer_run import (
+    SimulationLockedConsumerConfig,
+    SimulationLockedConsumerResult,
+    run_simulation_locked_consumers,
+)
+from chronaris.evaluation.application_tasks.simulation_stress_run import (
+    SimulationStressGenerationConfig,
+    SimulationStressGenerationResult,
+    run_simulation_stress_generation,
+)
+from chronaris.evaluation.application_tasks.simulation_stress_representation_run import (
+    SimulationStressRepresentationConfig,
+    SimulationStressRepresentationResult,
+    run_simulation_stress_representations,
+)
+from chronaris.evaluation.application_tasks.simulation_stress_consumer_run import (
+    SimulationStressConsumerConfig,
+    SimulationStressConsumerResult,
+    run_simulation_stress_consumers,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
@@ -121,6 +150,16 @@ __all__ = [
     "DingxinSelectedRepresentationResult",
     "SimulationLockedPretrainingConfig",
     "SimulationLockedPretrainingResult",
+    "SimulationLockedRepresentationConfig",
+    "SimulationLockedRepresentationResult",
+    "SimulationLockedConsumerConfig",
+    "SimulationLockedConsumerResult",
+    "SimulationStressGenerationConfig",
+    "SimulationStressGenerationResult",
+    "SimulationStressRepresentationConfig",
+    "SimulationStressRepresentationResult",
+    "SimulationStressConsumerConfig",
+    "SimulationStressConsumerResult",
     "FixedDataAuditResult",
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
@@ -129,6 +168,7 @@ __all__ = [
     "CommonPretrainingLoopSmokeResult",
     "ApplicationConsumerSmokeConfig",
     "ApplicationConsumerSmokeResult",
+    "ApplicationFrozenEvaluationResult",
     "DingxinTargetArchiveConfig",
     "DingxinTargetArchiveResult",
     "DingxinContextBindingConfig",
@@ -162,10 +202,16 @@ __all__ = [
     "run_dingxin_selected_screen",
     "run_dingxin_selected_representations",
     "run_simulation_locked_pretraining",
+    "run_simulation_locked_representations",
+    "run_simulation_locked_consumers",
+    "run_simulation_stress_generation",
+    "run_simulation_stress_representations",
+    "run_simulation_stress_consumers",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",
     "run_application_consumer_smoke",
+    "evaluate_frozen_application_consumers",
     "run_dingxin_target_archive",
     "run_dingxin_context_binding_audit",
     "run_dingxin_inner_split",

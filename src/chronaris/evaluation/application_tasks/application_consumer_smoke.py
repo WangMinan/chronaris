@@ -245,7 +245,7 @@ def run_application_consumer_smoke(
         }
         downstream_protocol = {
             "format": "chronaris.application_consumer_protocol.v2",
-            "consumer_runtime_revision": "component_recovery_deterministic_tcn.v2",
+            "consumer_runtime_revision": "validation_selected_residual_tcn.v3",
             "config": asdict(protocol),
             "methods": list(APPLICATION_METHODS),
             "consumer_configuration_method_invariant": True,

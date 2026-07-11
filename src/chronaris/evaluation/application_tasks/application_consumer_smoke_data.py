@@ -95,6 +95,8 @@ def build_guarded_application_consumer_targets(
     data: ApplicationConsumerSmokeData,
     *,
     completed_pretraining_checkpoints: Sequence[str | Path],
+    smoke_only: bool = True,
+    workload_thresholds: tuple[float, float] | None = None,
 ) -> ApplicationConsumerSmokeTargets:
     _require_five_completed_checkpoints(completed_pretraining_checkpoints)
     role_by_sample = {
@@ -147,7 +149,16 @@ def build_guarded_application_consumer_targets(
     workload_array = np.asarray(workload_values, dtype=np.float32)
     roles = tuple(role_by_sample[sample_id] for sample_id in data.batch.sample_ids)
     train_mask = np.asarray([role == "train" for role in roles])
-    lower, upper = np.quantile(workload_array[train_mask], (1 / 3, 2 / 3))
+    if workload_thresholds is None:
+        if not train_mask.any():
+            raise ValueError("application targets require train data or frozen thresholds")
+        lower, upper = np.quantile(workload_array[train_mask], (1 / 3, 2 / 3))
+        threshold_source = "train_only_quantiles"
+    else:
+        lower, upper = map(float, workload_thresholds)
+        if not lower < upper:
+            raise ValueError("frozen workload thresholds must be increasing")
+        threshold_source = "frozen_clean_train_thresholds"
     workload_class = np.where(
         workload_array <= lower,
         0,
@@ -162,6 +173,7 @@ def build_guarded_application_consumer_targets(
         "context_start_grid_s": list(APPLICATION_CONTEXT_STARTS_S),
         "future_workload_window_relative_s": [0.0, 5.0],
         "workload_thresholds_train_only": [float(lower), float(upper)],
+        "workload_threshold_source": threshold_source,
         "maneuver_state_names": list(MANEUVER_STATE_NAMES),
         "query_point_count": int(maneuver_state.shape[1]),
         "oracle_opened_after_checkpoint_count": 5,
@@ -171,7 +183,7 @@ def build_guarded_application_consumer_targets(
             "maneuver_state",
         ],
         "oracle_files": oracle_rows,
-        "smoke_only": True,
+        "smoke_only": bool(smoke_only),
     }
     return ApplicationConsumerSmokeTargets(
         sample_ids=data.batch.sample_ids,
