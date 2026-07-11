@@ -40,7 +40,9 @@ class DownstreamEvidencePackConfig:
     run_id: str = "2026-07-12_downstream-evidence-pack"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
-    dingxin_consumer_run_id: str = "2026-07-12_dingxin-locked-consumers"
+    dingxin_consumer_run_id: str = (
+        "2026-07-12_dingxin-locked-consumers-coalesced"
+    )
     simulation_consumer_run_id: str = "2026-07-12_simulation-locked-consumers"
     simulation_representation_run_id: str = (
         "2026-07-12_simulation-locked-representations"
@@ -53,7 +55,7 @@ class DownstreamEvidencePackConfig:
     finetuning_run_id: str = "2026-07-12_simulation-end-to-end-finetuning"
     public_adapter_run_id: str | None = "2026-06-07_public-adapter-calibration"
     transfer_consumer_run_id: str | None = (
-        "2026-07-12_dingxin-synthetic-pretrain-adapt-consumers"
+        "2026-07-12_dingxin-synthetic-pretrain-adapt-consumers-coalesced"
     )
 
 

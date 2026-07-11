@@ -23,8 +23,13 @@ from chronaris.modeling.common.run_observer import configure_task_eval_cli_loggi
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--run-id", default="2026-07-12_dingxin-locked-consumers")
-    parser.add_argument("--representation-run-id", default="2026-07-12_dingxin-locked-representations")
+    parser.add_argument(
+        "--run-id", default="2026-07-12_dingxin-locked-consumers-coalesced"
+    )
+    parser.add_argument(
+        "--representation-run-id",
+        default="2026-07-12_dingxin-locked-representations-coalesced",
+    )
     parser.add_argument("--minirocket-kernels", type=int, default=10_000)
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()

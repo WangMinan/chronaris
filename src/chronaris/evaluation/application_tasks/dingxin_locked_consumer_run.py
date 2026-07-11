@@ -42,10 +42,12 @@ MAIN_VIEW_FOLDS = DEFAULT_FOLDS[:3]
 
 @dataclass(frozen=True, slots=True)
 class DingxinLockedConsumerConfig:
-    run_id: str = "2026-07-12_dingxin-locked-consumers"
+    run_id: str = "2026-07-12_dingxin-locked-consumers-coalesced"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
-    representation_run_id: str = "2026-07-12_dingxin-locked-representations"
+    representation_run_id: str = (
+        "2026-07-12_dingxin-locked-representations-coalesced"
+    )
     nested_target_path: str = (
         "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_targets.csv"
     )
