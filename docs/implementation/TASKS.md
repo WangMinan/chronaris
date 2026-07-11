@@ -219,10 +219,10 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 已完成：端到端辅助表 18/18、864 条指标、7/7 门禁。MulT 在微调分类/分段领先，Chronaris 仅回归 RMSE 0.2666 略领先；Chronaris 三项对应指标均弱于冻结主表，因此把该表写成小样本适配与过拟合诊断，不替代冻结表示结论。
 - 已完成：压力冻结 consumer 的持续时间约束批量解码。真实 `[192,96,5]` logits 与逐样本结果逐位一致，运行时约提升 43.95 倍；旧标量运行未完成场景单元并已隔离，正式压力 run 从空根恢复。
 - 验证刷新：完整测试 `370 passed, 8 skipped, 319 warnings`，覆盖新加入的因果时间合并、显式 OvR 高维求解器和批量持续时间约束逐位等价路径。
-- 进行中：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced`；前两个留一视图折均 15/15 完成，总进度 30/75，已进入第三折。第二折 Chronaris 三个 seed 的最佳 epoch 为 15/10/46，早停仍只使用公共自监督 validation。CPU 构造增强、全方法唯一 GPU 训练；任何缺少 `model_input_contract.json` 的旧 checkpoint 均拒绝恢复。
+- 进行中：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced`；三个留一视图主折均 15/15 完成，总进度 45/75，已进入留一架次辅助折。第二/第三主折 Chronaris 三个 seed 的最佳 epoch 分别为 15/10/46 和 15/40/8，早停仍只使用公共自监督 validation。CPU 构造增强、全方法唯一 GPU 训练；任何缺少 `model_input_contract.json` 的旧 checkpoint 均拒绝恢复。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
-- 进行中：Chronaris 四项固定消融 × seeds 17/29/43 的 CPU 锁定重训已完成 10/12 个单元；seed 43 正在无物理一致性变体，不占用当前唯一 CUDA 正式队列。
+- 进行中：Chronaris 四项固定消融 × seeds 17/29/43 的 CPU 锁定重训已完成 11/12 个单元；仅余 seed 43 的单尺度时延变体，不占用当前唯一 CUDA 正式队列。
 - 已验证：无物理约束变体完成 G1 train/validation 与 G2 held-out 三角色表示导出，3/3 输出、5/5 验收通过；正式消融表示等待 12 个变体 checkpoint。
 - 已实现待上游门禁：synthetic-to-real 三 seed 五折无标签适配及其统一表示/consumer 复用。
 - 已实现待上游门禁：端到端微调辅助表；三 seed 六方法、独立表示族和 48 轨迹统计均已编排，不得替代冻结表示主结果。
