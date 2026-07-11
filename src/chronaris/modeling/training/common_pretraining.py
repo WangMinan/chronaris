@@ -7,7 +7,7 @@ import json
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Mapping
+from typing import Callable, Mapping, Sequence
 
 import torch
 from torch import nn
@@ -119,7 +119,7 @@ class TrainedFusionAdapter:
 def train_common_pretext_method(
     method_name: str,
     *,
-    batch: DualStreamObservationBatch,
+    batch: DualStreamObservationBatch | None,
     fold: FoldLineage,
     physiology_feature_names: tuple[str, ...],
     vehicle_feature_names: tuple[str, ...],
@@ -128,12 +128,15 @@ def train_common_pretext_method(
     output_root: str | Path,
     config: CommonPretrainingConfig | None = None,
     augmentation_policy: AugmentationPolicy | None = None,
+    batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     resume: bool = True,
 ) -> CommonPretrainingResult:
     if method_name not in TRAINABLE_FUSION_METHODS:
         raise ValueError(f"unsupported trainable method: {method_name}")
     resolved_config = config or CommonPretrainingConfig()
     resolved_policy = augmentation_policy or AugmentationPolicy()
+    if (batch is None) == (batch_provider is None):
+        raise ValueError("provide exactly one of batch or batch_provider")
     root = Path(output_root) / method_name
     best_path = root / "best.pt"
     last_path = root / "last.pt"
@@ -146,6 +149,7 @@ def train_common_pretext_method(
         physiology_feature_names=physiology_feature_names,
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
+        data_access_mode=("lazy_batch_provider" if batch_provider else "materialized_batch"),
     )
     if resume and best_path.exists() and last_path.exists():
         payload = _load_checkpoint_payload(best_path)
@@ -187,7 +191,15 @@ def train_common_pretext_method(
             _batch_ids(fold.train_sample_ids, resolved_config.batch_size),
             start=1,
         ):
-            raw = select_observation_batch(batch, sample_ids)
+            raw = (
+                batch_provider(sample_ids)
+                if batch_provider is not None
+                else select_observation_batch(batch, sample_ids)
+            )
+            if tuple(raw.sample_ids) != tuple(sample_ids):
+                raise RepresentationContractError(
+                    "pretraining batch provider changed sample order"
+                )
             normalized = normalizer.transform(raw)
             plans = build_batch_augmentation_realizations(
                 sample_ids,

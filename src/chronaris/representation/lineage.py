@@ -115,9 +115,14 @@ class CheckpointRegistry:
         if self.path.exists():
             self._load()
 
-    def register(self, record: CheckpointRecord) -> None:
+    def register(
+        self,
+        record: CheckpointRecord,
+        *,
+        replace_existing: bool = False,
+    ) -> None:
         existing = self.records.get(record.registry_key)
-        if existing is not None and existing != record:
+        if existing is not None and existing != record and not replace_existing:
             raise RepresentationContractError(
                 f"checkpoint registry conflict for {record.registry_key}"
             )

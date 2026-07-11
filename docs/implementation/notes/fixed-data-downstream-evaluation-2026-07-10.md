@@ -454,6 +454,16 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 当前目标阈值仍由 outer-train 拟合，只允许后续固定配置 smoke 使用；正式 screen 必须先以 inner-train 生成嵌套目标 archive，不能复用这些阈值做候选选择。
 - 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-inner-splits/`，11/11 验收通过；本 run 未训练模型、未读取 outer-test 指标，也未形成方法排名。
 
+### 9.7 2026-07-11 G4.2 主协议首折公共预训练执行结果
+
+- 归一化、公共预训练和 OOF 导出已支持按样本小批量读取固定 snapshot；精确中位数/四分位距只聚合 inner-train 的观察值，不生成整折稠密原始 bundle。
+- 朴素同步在因果 forward-fill 后使用固定 seed 的随机化主成分分析（PCA），solver 与随机种子进入 checkpoint；缺失新元数据的旧 checkpoint 会显式重建。
+- 留一视图第一折的 inner-train、validation、outer-test 各 31 个上下文。生理单流、航电单流、MulT、ContiFormer 和 Chronaris 各训练 1 epoch、31 step；朴素同步只拟合无监督变换。
+- 五方法累计训练 213.63 秒，Chronaris 为 148.73 秒；完整成功链路峰值内存为 1967.4 MB，低于 2.5 GB 门限。
+- 六方法共注册 6 个 checkpoint，并导出 train/validation/outer-test 共 18 份 `[N,96,64]` 表示；恢复复核 18/18 复用，同角色六方法样本、查询轴和 source hash 对齐。
+- checkpoint solver 元数据缺失、重训后 registry hash 更新和非恢复模式下恢复校验三个问题均由安全门实际暴露并修复；最终 run 12/12 通过。
+- 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke/`；约 79 MB checkpoint 与表示位于被忽略目录。预训练未打开两项任务目标，outer-test 不生成指标或排名。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

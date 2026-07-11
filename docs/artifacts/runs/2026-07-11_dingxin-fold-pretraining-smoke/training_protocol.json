@@ -1,0 +1,26 @@
+{
+  "format": "chronaris.dingxin_fold_pretraining_protocol.v1",
+  "config": {
+    "epochs": 1,
+    "batch_size": 1,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "seed": 17
+  },
+  "augmentation_policy": {
+    "point_dropout_probability": 0.1,
+    "block_duration_min_s": 1.0,
+    "block_duration_max_s": 5.0,
+    "modality_dropout_probability": 0.05,
+    "timestamp_jitter_sigma_s": 0.05,
+    "clock_offset_limit_s": 0.25
+  },
+  "normalizer_fit_sample_hash": "175a6f0149428fea1c5eb5c953b1554a4ae8a1e13a6134e77a39be5bc1b0bca6",
+  "normalizer_transform_sha256": "3a0ba9aebc043cea865a383643170964473fffaa5793e24c0ca399ec8b7b91ed",
+  "normalizer_elapsed_s": 3.004345952067524,
+  "normalizer_batch_size": 2,
+  "export_batch_size": 2,
+  "label_used_for_encoder_training": false,
+  "outer_test_metrics_opened": false
+}
