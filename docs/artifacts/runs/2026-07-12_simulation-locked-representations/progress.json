@@ -1,0 +1,57 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "checkpoint_count_verified_before_g2_open": 15,
+  "task_oracle_opened": false,
+  "stage_name": "simulation_locked_representation_export",
+  "run_id": "2026-07-12_simulation-locked-representations",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T13:26:03.534440Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T13:24:40.331165Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "checkpoint_count_verified_before_g2_open": 15,
+      "task_oracle_opened": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:25:11.462156Z",
+      "event": "locked_seed_representation_complete",
+      "seed": 17,
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:25:37.456036Z",
+      "event": "locked_seed_representation_complete",
+      "seed": 29,
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:26:03.520742Z",
+      "event": "locked_seed_representation_complete",
+      "seed": 43,
+      "export_count": 18
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:26:03.534440Z",
+      "event": "finished",
+      "status": "completed",
+      "export_count": 54,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7
+    }
+  ],
+  "seed": 43,
+  "export_count": 54,
+  "status": "completed",
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7
+}

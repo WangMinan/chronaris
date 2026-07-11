@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_simulation-locked-representations/`：**仿真三随机种子六方法统一表示**。三个随机种子的生理单流、航电单流、朴素时间同步、MulT、ContiFormer 和 Chronaris 均导出 G1 train、G1 validation、G2 held-out 表示，共 54/54 份 `[N,96,64]`、7/7 门禁通过。五个任务无关 encoder 全部来自锁定 checkpoint，朴素时间同步只在训练折拟合；所有 checkpoint 完整后才读取 G2 原始观测，任务真值与指标在本 run 中保持关闭。
 - `runs/2026-07-12_simulation-locked-pretraining/`：**仿真选定配置三随机种子锁定重训**。seeds 17/29/43 的生理单流、航电单流、MulT、ContiFormer 和 Chronaris 共 15 个训练单元均完成 50 epoch，15/15 checkpoint 和 9/9 门禁通过。训练只读取 G1 原始异步双流，Chronaris 专属机制损失参与反向传播但早停只读取公共自监督 validation；任务真值和 G2 锁定测试始终关闭。本 run 冻结正式表示导出的任务无关 encoder，不构成任务性能排名。
 - `runs/2026-07-12_dingxin-coalesced-pretraining-smoke/`：**鼎新公共因果时间箱五方法运行时验证**。六方法统一在归一化和增强前使用 100 ms 固定因果时间箱，箱内同字段取均值、时间戳取最后真实观测；首个上下文航电/生理事件由 1779/150 点变为 300/120 点且末端时间不变。留一视图第一折 seed 17 的五方法均完成 1 epoch、8/8 门禁通过，四个 GPU 深度基线为 8.59–16.46 秒、Chronaris CPU 为 91.86 秒。该 run 只锁定输入与运行时合同，不形成任务排名。
 - `runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/`：**鼎新 Chronaris 合并输入 GPU 运行时验证**。与公共时间箱 run 使用相同折、seed、配置和输入，Chronaris 在 RTX 4090 完成 1 epoch，训练耗时 40.07 秒、8/8 门禁通过；相对同批 CPU 91.86 秒明显更快。因此正式鼎新队列采用单 GPU 串行，重复驱动故障时才按 checkpoint 设备历史迁移 CPU。本 run 不形成任务排名。

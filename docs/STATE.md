@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选和 G6 仿真三随机种子五方法锁定重训均已完成，15/15 checkpoint、9/9 门禁通过；正式统一表示正在按“深度基线 GPU、Chronaris CPU”串行导出。鼎新稀疏长表现统一采用 100 ms 方法无关因果时间箱，首个真实上下文航电/生理事件由 1779/150 点压缩为 300/120 点；Chronaris 单 epoch 从旧路径约 615.6 秒降为 GPU 40.07 秒，正式五折三随机种子将使用新 run ID 和单 GPU 串行训练，旧 checkpoint 不允许跨输入合同恢复。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计；任务真值仍等待统一表示完成后才打开。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选、G6 仿真三随机种子五方法锁定重训和三随机种子六方法统一表示均已完成：15/15 checkpoint、54/54 表示、9/9 与 7/7 两级门禁通过；G2 任务真值现已按协议只在正式 consumer 阶段打开，MiniROCKET 与 GPU TCN 正在运行。鼎新稀疏长表现统一采用 100 ms 方法无关因果时间箱，首个真实上下文航电/生理事件由 1779/150 点压缩为 300/120 点；Chronaris 单 epoch 从旧路径约 615.6 秒降为 GPU 40.07 秒，正式五折三随机种子将使用新 run ID 和单 GPU 串行训练，旧 checkpoint 不允许跨输入合同恢复。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计。
 
 ## 当前执行入口
 
@@ -40,6 +40,7 @@
 - G6 Chronaris 机制消融表示协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md)
 - G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
 - G6 仿真三随机种子五方法锁定重训：[artifacts/runs/2026-07-12_simulation-locked-pretraining/report.md](artifacts/runs/2026-07-12_simulation-locked-pretraining/report.md)
+- G6 仿真三随机种子六方法统一表示：[artifacts/runs/2026-07-12_simulation-locked-representations/report.md](artifacts/runs/2026-07-12_simulation-locked-representations/report.md)
 - G6 鼎新公共因果时间箱五方法运行时验证：[artifacts/runs/2026-07-12_dingxin-coalesced-pretraining-smoke/report.md](artifacts/runs/2026-07-12_dingxin-coalesced-pretraining-smoke/report.md)
 - G6 鼎新 Chronaris GPU 运行时验证：[artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/report.md](artifacts/runs/2026-07-12_dingxin-coalesced-chronaris-gpu-smoke/report.md)
 
@@ -56,7 +57,7 @@
 
 ## 当前长程队列
 
-- 仿真锁定重训：seeds 17/29/43 的五方法共 15 个训练单元全部完成 50 epoch，9/9 门禁通过；任务目标与 G2 始终关闭。正式六方法三角色表示导出已启动，深度基线在 RTX 4090、Chronaris 在实测更快的 CPU 路径运行。
+- 仿真 clean 主线：seeds 17/29/43 的五方法共 15 个训练单元全部完成 50 epoch；六方法 train/validation/G2 共 54 份表示完成。任务真值在表示完成后首次打开，正式 Logistic/Ridge、MiniROCKET 和 GPU TCN consumer 正在运行。
 - 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元。旧 run 的部分 checkpoint 属于未合并稀疏事件输入，现被输入合同门禁拒绝恢复；新 run 将统一使用 100 ms 因果时间箱和单 GPU 串行训练，任务目标、outer-test 表示和指标继续关闭。
 - 设备调度：公共增强已固定在 CPU，模型 tensor 才送入 GPU；鼎新五方法的合并输入 GPU 冒烟连续完成且无 launch failure。正式队列继续保持单 CUDA 进程，checkpoint 记录设备历史，重复故障才原地迁移 CPU。
 - CUDA 故障点已收敛到增强阶段的小粒度索引算子；公共增强、pretext target 和错误时移现固定在 CPU 确定性构造，再只把模型输入与 target tensor 送入 GPU。单 epoch CUDA 冒烟已确认 `training_device=cuda`、`augmentation_device=cpu`，鼎新基线队列将在严格单进程下采用该路径，若仍失败再按设备历史迁移 CPU。
