@@ -1,0 +1,17 @@
+{
+  "format": "chronaris.dingxin_nested_validation_protocol.v1",
+  "config": {
+    "n_kernels": 10000,
+    "random_state": 17,
+    "n_jobs": 1,
+    "classification_c": 1.0,
+    "regression_alpha": 1.0,
+    "minimum_global_channel_std": 1e-07
+  },
+  "fit_role": "train",
+  "evaluation_roles": [
+    "validation"
+  ],
+  "outer_test_metrics_opened": false,
+  "method_specific_hyperparameters": false
+}

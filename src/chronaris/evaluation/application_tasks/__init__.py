@@ -65,6 +65,11 @@ from chronaris.evaluation.application_tasks.dingxin_nested_target_run import (
     DingxinNestedTargetResult,
     run_dingxin_nested_targets,
 )
+from chronaris.evaluation.application_tasks.dingxin_nested_consumer_run import (
+    DingxinNestedConsumerConfig,
+    DingxinNestedConsumerResult,
+    run_dingxin_nested_validation_consumers,
+)
 from chronaris.evaluation.application_tasks.snapshot_live_source import (
     InfluxSnapshotPointSource,
     SnapshotPointSource,
@@ -110,6 +115,8 @@ __all__ = [
     "DingxinConsumerSmokeResult",
     "DingxinNestedTargetConfig",
     "DingxinNestedTargetResult",
+    "DingxinNestedConsumerConfig",
+    "DingxinNestedConsumerResult",
     "DeepBaselineAdapterSmokeConfig",
     "DeepBaselineAdapterSmokeResult",
     "InfluxSnapshotPointSource",
@@ -134,6 +141,7 @@ __all__ = [
     "run_dingxin_pretraining_aggregate",
     "run_dingxin_consumer_smoke",
     "run_dingxin_nested_targets",
+    "run_dingxin_nested_validation_consumers",
     "run_deep_baseline_adapter_smoke",
     "run_simulation_audit",
     "run_representation_contract_smoke",

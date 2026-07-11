@@ -52,6 +52,7 @@ def run_dingxin_method_consumers(
     targets: DingxinFoldConsumerTargets,
     output_root: str | Path,
     config: DingxinConsumerConfig | None = None,
+    evaluation_roles: tuple[str, ...] = ("validation", "held_out"),
     resume: bool = True,
 ) -> DingxinMethodConsumerResult:
     resolved = config or DingxinConsumerConfig()
@@ -63,6 +64,7 @@ def run_dingxin_method_consumers(
         outputs=outputs,
         targets=targets,
         config=resolved,
+        evaluation_roles=evaluation_roles,
     )
     manifest_path = root / "consumer_manifest.json"
     existing = _load_existing_components(
@@ -113,6 +115,7 @@ def run_dingxin_method_consumers(
         targets=targets,
         consumers=consumers,
         seed=resolved.random_state,
+        evaluation_roles=evaluation_roles,
     )
     prediction_path = root / "prediction_rows.csv"
     pd.DataFrame(prediction_rows).to_csv(prediction_path, index=False)
@@ -139,7 +142,7 @@ def run_dingxin_method_consumers(
         },
         "target_manifest": targets.to_manifest(),
         "consumer_fit_role": "train",
-        "evaluation_roles": ["validation", "held_out"],
+        "evaluation_roles": list(evaluation_roles),
         "label_used_for_encoder_training": False,
         "smoke_only": True,
     }
@@ -166,11 +169,11 @@ def run_dingxin_method_consumers(
 
 
 def _evaluate_consumers(
-    *, method_name, fold_id, outputs, targets, consumers, seed
+    *, method_name, fold_id, outputs, targets, consumers, seed, evaluation_roles
 ):
     metric_rows = []
     prediction_rows = []
-    for role in ("validation", "held_out"):
+    for role in evaluation_roles:
         output = outputs[role]
         positions = {sample_id: index for index, sample_id in enumerate(output.sample_ids)}
         maneuver_ids = targets.sample_ids(role=role, task=MANEUVER_TASK)
@@ -222,6 +225,7 @@ def _evaluate_consumers(
                 fold=fold_id,
                 role=role,
                 sample_count=len(maneuver_ids),
+                threshold_scope=targets.threshold_scope,
             )
             _append_metric_rows(
                 metric_rows,
@@ -233,6 +237,7 @@ def _evaluate_consumers(
                 fold=fold_id,
                 role=role,
                 sample_count=len(response_ids),
+                threshold_scope=targets.threshold_scope,
             )
             _append_metric_rows(
                 metric_rows,
@@ -244,6 +249,7 @@ def _evaluate_consumers(
                 fold=fold_id,
                 role=role,
                 sample_count=len(response_ids),
+                threshold_scope=targets.threshold_scope,
             )
             prediction_rows.extend(
                 _prediction_rows(
@@ -255,6 +261,7 @@ def _evaluate_consumers(
                     task=MANEUVER_TASK,
                     truth=maneuver_truth,
                     prediction=prediction["maneuver_prediction"][maneuver_positions],
+                    threshold_scope=targets.threshold_scope,
                 )
             )
             prediction_rows.extend(
@@ -267,6 +274,7 @@ def _evaluate_consumers(
                     task="physiology_response_regression",
                     truth=response_truth,
                     prediction=prediction["response_prediction"][response_positions],
+                    threshold_scope=targets.threshold_scope,
                 )
             )
             prediction_rows.extend(
@@ -279,13 +287,15 @@ def _evaluate_consumers(
                     task="high_physiology_response_classification",
                     truth=high_truth,
                     prediction=high_prediction,
+                    threshold_scope=targets.threshold_scope,
                 )
             )
     return metric_rows, prediction_rows
 
 
 def _append_metric_rows(
-    rows, metrics, *, method, task, consumer, seed, fold, role, sample_count
+    rows, metrics, *, method, task, consumer, seed, fold, role, sample_count,
+    threshold_scope
 ):
     for metric, (value, direction) in metrics.items():
         available = value is not None and np.isfinite(value)
@@ -304,14 +314,15 @@ def _append_metric_rows(
                 "status": "available" if available else "unavailable",
                 "reason": None if available else "metric_not_defined",
                 "sample_count": sample_count,
-                "threshold_scope": "outer_train_smoke_only",
+                "threshold_scope": threshold_scope,
                 "smoke_only": True,
             }
         )
 
 
 def _prediction_rows(
-    *, method, consumer, fold, role, sample_ids, task, truth, prediction
+    *, method, consumer, fold, role, sample_ids, task, truth, prediction,
+    threshold_scope
 ):
     return [
         {
@@ -323,16 +334,18 @@ def _prediction_rows(
             "task": task,
             "truth": float(truth[index]),
             "prediction": float(prediction[index]),
-            "threshold_scope": "outer_train_smoke_only",
+            "threshold_scope": threshold_scope,
             "smoke_only": True,
         }
         for index, sample_id in enumerate(sample_ids)
     ]
 
 
-def _protocol_hash(*, method_name, fold_id, outputs, targets, config):
+def _protocol_hash(
+    *, method_name, fold_id, outputs, targets, config, evaluation_roles
+):
     digest = hashlib.sha256()
-    for role in ("train", "validation", "held_out"):
+    for role in ("train", *evaluation_roles):
         output = outputs[role]
         digest.update(role.encode())
         digest.update("\n".join(output.sample_ids).encode())
@@ -347,7 +360,7 @@ def _protocol_hash(*, method_name, fold_id, outputs, targets, config):
         "threshold_scope": targets.threshold_scope,
         "representation_digest": digest.hexdigest(),
         "fit_role": "train",
-        "evaluation_roles": ["validation", "held_out"],
+        "evaluation_roles": list(evaluation_roles),
     }
     return hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
