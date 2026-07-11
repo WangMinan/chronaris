@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.simulation_stress_representation_protocol.v1",
+  "config": {
+    "run_id": "2026-07-12_simulation-locked-stress-representations",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-12_simulation-locked-pretraining",
+    "clean_representation_run_id": "2026-07-12_simulation-locked-representations",
+    "stress_generation_run_id": "2026-07-12_aviation-simulation-locked-stress",
+    "stress_audit_run_id": "2026-07-12_aviation-simulation-locked-stress-audit",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "formal_simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "export_batch_size": 32,
+    "baseline_device": "cuda",
+    "chronaris_device": "cpu",
+    "resume": true
+  },
+  "task_oracle_opened": false,
+  "frozen_checkpoint_reuse": true,
+  "baseline_device": "cuda",
+  "chronaris_device": "cpu"
+}
