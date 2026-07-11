@@ -11,6 +11,7 @@ from chronaris.evidence.downstream_application_data import (
     SIMULATION_PRIMARY,
     STRESS_LABELS,
     TARGET_LABELS,
+    build_dingxin_transfer_delta_table,
 )
 from chronaris.evidence.downstream_application_pack import (
     DownstreamEvidencePackConfig,
@@ -213,3 +214,38 @@ def test_downstream_evidence_pack_builds_separated_chinese_figures(tmp_path: Pat
     evidence = pd.read_csv(root / "evidence_matrix.csv")
     assert evidence["data_layer"].nunique() >= 2
     assert not evidence["claim_boundary"].isna().any()
+
+
+def test_dingxin_transfer_delta_is_matched_and_direction_aware() -> None:
+    rows = []
+    for seed in (17, 29, 43):
+        for specification in DINGXIN_PRIMARY:
+            for method in METHOD_ORDER:
+                direction = (
+                    "lower" if specification["metric"] == "rmse" else "higher"
+                )
+                rows.append(
+                    {
+                        "seed": seed,
+                        "method": method,
+                        "task": specification["task"],
+                        "consumer": specification["consumer"],
+                        "metric": specification["metric"],
+                        "direction": direction,
+                        "mean": 0.5,
+                        "worst_fold_value": 0.4,
+                        "fold_count": 3,
+                        "available_fold_count": 3,
+                    }
+                )
+    real = pd.DataFrame(rows)
+    transfer = real.copy()
+    transfer.loc[transfer["direction"].eq("higher"), "mean"] += 0.1
+    transfer.loc[transfer["direction"].eq("lower"), "mean"] -= 0.1
+
+    result = build_dingxin_transfer_delta_table(real, transfer)
+
+    assert len(result) == 54
+    assert result["normalized_improvement"].round(8).eq(0.1).all()
+    assert result["transfer_improved"].all()
+    assert result["statistical_unit"].eq("view_fold").all()

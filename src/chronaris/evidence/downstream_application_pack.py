@@ -14,6 +14,7 @@ from chronaris.evidence.downstream_application_data import (
     METHOD_LABELS,
     SIMULATION_PRIMARY,
     build_ablation_primary_table,
+    build_dingxin_transfer_delta_table,
     build_mechanism_mae_table,
     build_primary_metric_table,
     build_stress_heatmap_table,
@@ -126,6 +127,14 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
         stress_table = build_stress_heatmap_table(stress)
         mechanism_table = build_mechanism_mae_table(mechanism)
         ablation_table = build_ablation_primary_table(ablation)
+        transfer_table = None
+        if "dingxin_synthetic_pretrain_adaptation" in upstream:
+            transfer = pd.read_csv(
+                Path(config.compact_output_root)
+                / config.transfer_consumer_run_id
+                / "main_view_fold_summary.csv"
+            )
+            transfer_table = build_dingxin_transfer_delta_table(dingxin, transfer)
         dingxin_predictions = pd.read_csv(
             Path(config.heavy_output_root)
             / config.dingxin_consumer_run_id
@@ -148,6 +157,11 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
         stress_table.to_csv(tables / "stress_degradation_slopes.csv")
         mechanism_table.to_csv(tables / "mechanism_recovery_mae.csv", index=False)
         ablation_table.to_csv(tables / "chronaris_ablation_advantage.csv", index=False)
+        if transfer_table is not None:
+            transfer_table.to_csv(
+                tables / "dingxin_synthetic_pretrain_transfer_delta.csv",
+                index=False,
+            )
         figures_root = root / "figures"
         figures = (
             plot_method_primary_metrics(
@@ -211,6 +225,7 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
             stress_table=stress_table,
             mechanism_table=mechanism_table,
             ablation_table=ablation_table,
+            transfer_table=transfer_table,
         )
         status = "completed" if all(row["passed"] for row in acceptance) else "partial"
         pd.DataFrame(acceptance).to_csv(root / "acceptance.csv", index=False)
@@ -225,6 +240,7 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
             acceptance=acceptance,
             font_family=font_family,
             status=status,
+            transfer_table=transfer_table,
         )
         progress.finish(
             status=status,
@@ -399,7 +415,7 @@ def _figure_source_runs(figure_id, config):
 
 
 def _acceptance_rows(**values):
-    return (
+    rows = [
         _check("all_required_upstreams_completed", len(values["upstream"]) >= 6, len(values["upstream"]), ">=6"),
         _check("seven_chinese_figures", len(values["figures"]) == 7 and all(row["language"] == "zh-CN" for row in values["figures"]), len(values["figures"]), 7),
         _check("evidence_layers_not_mixed", len(values["evidence_rows"]) >= 6 and all(row["claim_boundary"] for row in values["evidence_rows"]), len(values["evidence_rows"]), ">=6"),
@@ -408,7 +424,20 @@ def _acceptance_rows(**values):
         _check("seven_stress_factors", values["stress_table"].shape[1] == 7, values["stress_table"].shape[1], 7),
         _check("two_mechanism_targets", values["mechanism_table"]["target"].nunique() == 2, values["mechanism_table"]["target"].nunique(), 2),
         _check("four_ablation_variants", values["ablation_table"]["ablation_method"].nunique() == 4, values["ablation_table"]["ablation_method"].nunique(), 4),
-    )
+    ]
+    if "dingxin_synthetic_pretrain_adaptation" in values["upstream"]:
+        transfer_table = values["transfer_table"]
+        rows.append(
+            _check(
+                "matched_dingxin_transfer_comparison",
+                transfer_table is not None
+                and len(transfer_table) == 54
+                and transfer_table["statistical_unit"].eq("view_fold").all(),
+                0 if transfer_table is None else len(transfer_table),
+                54,
+            )
+        )
+    return tuple(rows)
 
 
 def _write_documents(**values):
@@ -432,6 +461,27 @@ def _write_documents(**values):
         f"- {row['data_layer']}—{row['task']}：{row['leading_method_label']}，{row['metric']}={row['mean']:.4f}。"
         for row in values["winners"]
     ]
+    transfer_lines = []
+    if values["transfer_table"] is not None:
+        transfer_summary = (
+            values["transfer_table"]
+            .groupby(["task_label", "method_label"], sort=False)[
+                "normalized_improvement"
+            ]
+            .mean()
+            .reset_index()
+        )
+        transfer_lines = [
+            "## 仿真预训练到鼎新适配的同协议增量",
+            "",
+            "以下数值按指标方向统一，正值表示迁移改善；统计单位仍为视图折，只作描述性比较。",
+            "",
+            *[
+                f"- {row.task_label}—{row.method_label}：{row.normalized_improvement:+.4f}。"
+                for row in transfer_summary.itertuples(index=False)
+            ],
+            "",
+        ]
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text(
         "\n".join(
@@ -447,6 +497,7 @@ def _write_documents(**values):
                 "",
                 "这些领先关系是结果汇总，不替代折级或轨迹级配对统计；真实弱监督、仿真真值与端到端微调保持独立表述。",
                 "",
+                *transfer_lines,
             )
         ),
         encoding="utf-8",
