@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
+import torch
 
 from chronaris.representation import (
     TrainOnlyPCAProjector,
@@ -40,6 +41,34 @@ def test_robust_normalizer_rejects_held_out_fit_overlap():
             train_sample_ids=("train", "test"),
             held_out_sample_ids=("test",),
         )
+
+
+def test_robust_normalizer_batch_provider_matches_materialized_fit():
+    samples = {
+        "train_a": _sample("train_a"),
+        "train_b": _sample("train_b", shift=2.0),
+        "test": _sample("test", shift=1000.0),
+    }
+    batch = collate_observation_samples(tuple(samples.values()))
+    expected = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=("train_a", "train_b"),
+        held_out_sample_ids=("test",),
+    )
+    actual = TrainOnlyRobustNormalizer().fit_from_batch_provider(
+        lambda sample_ids: collate_observation_samples(
+            tuple(samples[sample_id] for sample_id in sample_ids)
+        ),
+        train_sample_ids=("train_b", "train_a"),
+        held_out_sample_ids=("test",),
+        batch_size=1,
+    )
+
+    assert actual.fit_sample_ids == ("train_a", "train_b")
+    assert actual.physiology is not None
+    assert expected.physiology is not None
+    assert torch.equal(actual.physiology.center, expected.physiology.center)
+    assert torch.equal(actual.physiology.scale, expected.physiology.scale)
 
 
 def test_pca_ignores_held_out_extreme_values_and_zero_pads_to_64():

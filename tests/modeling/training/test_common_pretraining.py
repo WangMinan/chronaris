@@ -144,3 +144,43 @@ def test_common_pretraining_rejects_changed_resume_protocol(tmp_path) -> None:
             **common,
             config=CommonPretrainingConfig(learning_rate=1e-4),
         )
+
+
+def test_common_pretraining_accepts_lazy_batch_provider(tmp_path) -> None:
+    samples = {
+        "train_a": _sample("train_a", 0),
+        "train_b": _sample("train_b", 1),
+        "validation": _sample("validation", 2),
+        "held_out": _sample("held_out", 3),
+    }
+    provider = lambda sample_ids: collate_observation_samples(
+        tuple(samples[sample_id] for sample_id in sample_ids)
+    )
+    fold = FoldLineage(
+        fold_id="fold_lazy",
+        train_sample_ids=("train_a", "train_b"),
+        validation_sample_ids=("validation",),
+        held_out_sample_ids=("held_out",),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
+        provider,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+        batch_size=1,
+    )
+
+    result = train_common_pretext_method(
+        "physiology_only",
+        batch=None,
+        batch_provider=provider,
+        fold=fold,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        vehicle_field_labels=(),
+        normalizer=normalizer,
+        output_root=tmp_path,
+        config=CommonPretrainingConfig(epochs=1, batch_size=1),
+    )
+
+    assert result.status == "completed"
+    assert result.step_count == 2

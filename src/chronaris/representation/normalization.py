@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, replace
-from typing import Mapping, Sequence
+from typing import Callable, Mapping, Sequence
 
 import numpy as np
 import torch
@@ -82,6 +82,59 @@ class TrainOnlyRobustNormalizer:
         self.fit_sample_hash = stable_sample_hash(train_ids)
         return self
 
+    def fit_from_batch_provider(
+        self,
+        batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch],
+        *,
+        train_sample_ids: Sequence[str],
+        held_out_sample_ids: Sequence[str] = (),
+        batch_size: int = 2,
+    ) -> "TrainOnlyRobustNormalizer":
+        """Fit exact train-only statistics without materializing every sample at once."""
+        if self.fit_sample_hash is not None:
+            raise RepresentationContractError("normalizer is already fitted")
+        train_ids = tuple(sorted(set(str(value) for value in train_sample_ids)))
+        held_out = set(str(value) for value in held_out_sample_ids)
+        if not train_ids:
+            raise RepresentationContractError("normalizer train sample list is empty")
+        if batch_size <= 0:
+            raise ValueError("normalizer provider batch size must be positive")
+        overlap = sorted(set(train_ids) & held_out)
+        if overlap:
+            raise RepresentationContractError(
+                f"held-out samples cannot fit normalization: {overlap[:5]}"
+            )
+        physiology_parts: list[list[torch.Tensor]] | None = None
+        vehicle_parts: list[list[torch.Tensor]] | None = None
+        for offset in range(0, len(train_ids), batch_size):
+            sample_ids = train_ids[offset : offset + batch_size]
+            batch = batch_provider(sample_ids)
+            if tuple(batch.sample_ids) != sample_ids:
+                raise RepresentationContractError(
+                    "normalizer batch provider changed sample order"
+                )
+            physiology_parts = _append_observed_feature_parts(
+                physiology_parts,
+                batch.physiology_values,
+                batch.physiology_feature_mask,
+            )
+            vehicle_parts = _append_observed_feature_parts(
+                vehicle_parts,
+                batch.vehicle_values,
+                batch.vehicle_feature_mask,
+            )
+        self.physiology = _fit_stream_statistics_from_observed_parts(
+            physiology_parts,
+            minimum_scale=self.minimum_scale,
+        )
+        self.vehicle = _fit_stream_statistics_from_observed_parts(
+            vehicle_parts,
+            minimum_scale=self.minimum_scale,
+        )
+        self.fit_sample_ids = train_ids
+        self.fit_sample_hash = stable_sample_hash(train_ids)
+        return self
+
     def transform(self, batch: DualStreamObservationBatch) -> DualStreamObservationBatch:
         physiology, vehicle = self._require_fitted()
         return replace(
@@ -142,10 +195,20 @@ class TrainOnlyRobustNormalizer:
 class TrainOnlyPCAProjector:
     """Unsupervised SVD projection fitted only on explicitly listed train samples."""
 
-    def __init__(self, *, output_dim: int = FUSION_OUTPUT_DIM) -> None:
+    def __init__(
+        self,
+        *,
+        output_dim: int = FUSION_OUTPUT_DIM,
+        solver: str = "full",
+        random_state: int = 17,
+    ) -> None:
         if output_dim <= 0:
             raise ValueError("output_dim must be positive")
+        if solver not in {"full", "randomized"}:
+            raise ValueError("PCA solver must be full or randomized")
         self.output_dim = int(output_dim)
+        self.solver = solver
+        self.random_state = int(random_state)
         self.center: np.ndarray | None = None
         self.components: np.ndarray | None = None
         self.explained_variance_ratio: np.ndarray | None = None
@@ -184,11 +247,23 @@ class TrainOnlyPCAProjector:
         fitted = matrix[select]
         self.center = fitted.mean(axis=0)
         centered = fitted - self.center
-        _u, singular_values, vh = np.linalg.svd(centered, full_matrices=False)
-        component_count = min(self.output_dim, vh.shape[0], matrix.shape[1])
+        component_count = min(self.output_dim, *centered.shape)
+        if self.solver == "randomized" and component_count < min(centered.shape):
+            from sklearn.utils.extmath import randomized_svd
+
+            _u, singular_values, vh = randomized_svd(
+                centered,
+                n_components=component_count,
+                n_iter=4,
+                random_state=self.random_state,
+                flip_sign=True,
+            )
+        else:
+            _u, singular_values, vh = np.linalg.svd(centered, full_matrices=False)
+        component_count = min(component_count, vh.shape[0])
         self.components = vh[:component_count].copy()
         variance = singular_values**2
-        total = float(variance.sum())
+        total = float(np.square(centered).sum())
         self.explained_variance_ratio = (
             variance[:component_count] / total
             if total > 0
@@ -218,10 +293,14 @@ class TrainOnlyPCAProjector:
         ):
             raise RepresentationContractError("PCA projector must be fitted before export")
         payload: dict[str, object] = {
-            "transform": "train_only_svd_pca",
+            "transform": f"train_only_{self.solver}_svd_pca",
+            "solver": self.solver,
+            "random_state": self.random_state,
             "input_dim": int(self.components.shape[1]),
             "component_count": int(self.components.shape[0]),
             "output_dim": self.output_dim,
+            "solver": self.solver,
+            "random_state": self.random_state,
             "fit_sample_ids": list(self.fit_sample_ids),
             "fit_sample_hash": self.fit_sample_hash,
             "center_sha256": hashlib.sha256(self.center.tobytes()).hexdigest(),
@@ -241,6 +320,8 @@ class TrainOnlyPCAProjector:
             raise RepresentationContractError("PCA projector must be fitted before save")
         return {
             "output_dim": self.output_dim,
+            "solver": self.solver,
+            "random_state": self.random_state,
             "center": torch.from_numpy(self.center.copy()),
             "components": torch.from_numpy(self.components.copy()),
             "explained_variance_ratio": torch.from_numpy(
@@ -252,7 +333,11 @@ class TrainOnlyPCAProjector:
 
     @classmethod
     def from_state_dict(cls, payload: Mapping[str, object]) -> "TrainOnlyPCAProjector":
-        projector = cls(output_dim=int(payload["output_dim"]))
+        projector = cls(
+            output_dim=int(payload["output_dim"]),
+            solver=str(payload.get("solver", "full")),
+            random_state=int(payload.get("random_state", 17)),
+        )
         projector.center = _tensor_to_numpy(payload["center"])
         projector.components = _tensor_to_numpy(payload["components"])
         projector.explained_variance_ratio = _tensor_to_numpy(
@@ -295,6 +380,56 @@ def _fit_stream_statistics(
         if bool(torch.isfinite(iqr)) and float(iqr) >= minimum_scale:
             scale[index] = iqr
             active[index] = True
+    return StreamRobustStatistics(center, scale, active, counts)
+
+
+def _append_observed_feature_parts(
+    parts: list[list[torch.Tensor]] | None,
+    values: torch.Tensor,
+    mask: torch.Tensor,
+) -> list[list[torch.Tensor]]:
+    feature_count = int(values.shape[-1])
+    if parts is None:
+        parts = [[] for _ in range(feature_count)]
+    if len(parts) != feature_count:
+        raise RepresentationContractError("normalizer provider feature count changed")
+    cpu_values = values.detach().cpu()
+    cpu_mask = mask.detach().cpu()
+    for feature_index in range(feature_count):
+        observed = cpu_values[..., feature_index][cpu_mask[..., feature_index]]
+        if observed.numel():
+            parts[feature_index].append(observed.clone())
+    return parts
+
+
+def _fit_stream_statistics_from_observed_parts(
+    parts: list[list[torch.Tensor]] | None,
+    *,
+    minimum_scale: float,
+) -> StreamRobustStatistics:
+    if parts is None:
+        raise RepresentationContractError("normalizer provider returned no chunks")
+    feature_count = len(parts)
+    dtype = next(
+        (part.dtype for feature_parts in parts for part in feature_parts),
+        torch.float32,
+    )
+    center = torch.zeros(feature_count, dtype=dtype)
+    scale = torch.ones(feature_count, dtype=dtype)
+    active = torch.zeros(feature_count, dtype=torch.bool)
+    counts = torch.zeros(feature_count, dtype=torch.int64)
+    for feature_index in range(feature_count):
+        observed_parts = parts[feature_index]
+        if not observed_parts:
+            continue
+        observed = torch.cat(observed_parts)
+        counts[feature_index] = observed.numel()
+        median = torch.quantile(observed, 0.5)
+        iqr = torch.quantile(observed, 0.75) - torch.quantile(observed, 0.25)
+        center[feature_index] = median
+        if bool(torch.isfinite(iqr)) and float(iqr) >= minimum_scale:
+            scale[feature_index] = iqr
+            active[feature_index] = True
     return StreamRobustStatistics(center, scale, active, counts)
 
 

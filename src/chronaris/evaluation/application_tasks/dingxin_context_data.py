@@ -256,3 +256,34 @@ def schema_manifest(index: DingxinLazyContextIndex):
         ),
         "precomputed_dense_context_bundle": False,
     }
+
+
+def dingxin_vehicle_field_labels(
+    index: DingxinLazyContextIndex,
+    *,
+    field_role_manifest_path: str | Path,
+) -> tuple[tuple[str, str], ...]:
+    """Map canonical vehicle inputs to metadata labels used by physics rules."""
+    roles = pd.read_csv(field_role_manifest_path)
+    sortie_id = sorted(index.plan.vehicle_raw_to_index)[0]
+    frame = roles[
+        (roles["sortie_id"].astype(str) == sortie_id)
+        & (roles["stream_kind"].astype(str) == "vehicle")
+    ]
+    raw_labels = {
+        f"{row.measurement}.{row.source_field}": str(row.display_label)
+        for row in frame.itertuples(index=False)
+    }
+    raw_by_index = {
+        position: raw_name
+        for raw_name, position in index.plan.vehicle_raw_to_index[sortie_id].items()
+    }
+    return tuple(
+        (
+            canonical,
+            raw_labels.get(raw_by_index.get(position, ""), canonical),
+        )
+        for position, canonical in enumerate(
+            index.plan.schema.vehicle_feature_names
+        )
+    )

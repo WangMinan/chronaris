@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Callable, Mapping, Sequence
 
 import numpy as np
 import torch
@@ -149,6 +149,73 @@ class ResumableOOFExporter:
             manifest_path=manifest_path,
         )
 
+    def export_from_batch_provider(
+        self,
+        *,
+        encoder: FusionStreamEncoder,
+        batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch],
+        checkpoint: CheckpointRecord,
+        export_role: str,
+        batch_size: int = 2,
+    ) -> OOFExportResult:
+        """Export a frozen role through bounded raw-input batches."""
+        verify_checkpoint_record(checkpoint)
+        if batch_size <= 0:
+            raise ValueError("OOF provider batch size must be positive")
+        if encoder.method_name != checkpoint.method_name:
+            raise RepresentationContractError(
+                "encoder method does not match checkpoint lineage"
+            )
+        allowed_ids = tuple(checkpoint.fold.sample_ids_for_role(export_role))
+        root = (
+            self.output_root
+            / checkpoint.method_name
+            / checkpoint.fold.fold_id
+            / export_role
+        )
+        representation_path = root / "fusion_stream.npz"
+        manifest_path = root / "representation_manifest.json"
+        if self.resume and representation_path.exists() and manifest_path.exists():
+            try:
+                existing = load_fusion_stream_batch(root)
+            except (OSError, ValueError, RepresentationContractError):
+                existing = None
+            if existing is not None and (
+                existing.method_name == checkpoint.method_name
+                and existing.fold_id == checkpoint.fold.fold_id
+                and existing.checkpoint_sha256 == checkpoint.checkpoint_sha256
+                and existing.sample_ids == allowed_ids
+            ):
+                return _result_from_paths(
+                    batch=existing,
+                    export_role=export_role,
+                    status="resumed",
+                    root=root,
+                    representation_path=representation_path,
+                    manifest_path=manifest_path,
+                )
+        outputs = []
+        for offset in range(0, len(allowed_ids), batch_size):
+            sample_ids = allowed_ids[offset : offset + batch_size]
+            raw = batch_provider(sample_ids)
+            if tuple(raw.sample_ids) != sample_ids:
+                raise RepresentationContractError(
+                    "OOF batch provider changed sample order"
+                )
+            output = encoder(raw)
+            _validate_output_lineage(output, checkpoint, sample_ids)
+            outputs.append(output)
+        combined = _concatenate_fusion_batches(outputs)
+        write_fusion_stream_batch(combined, root=root, export_role=export_role)
+        return _result_from_paths(
+            batch=combined,
+            export_role=export_role,
+            status="completed",
+            root=root,
+            representation_path=representation_path,
+            manifest_path=manifest_path,
+        )
+
 
 def write_fusion_stream_batch(
     batch: FusionStreamBatch,
@@ -269,6 +336,60 @@ def validate_oof_coverage(
     import hashlib
 
     return hashlib.sha256(payload).hexdigest()
+
+
+def _validate_output_lineage(
+    output: FusionStreamBatch,
+    checkpoint: CheckpointRecord,
+    sample_ids: Sequence[str],
+) -> None:
+    if output.method_name != checkpoint.method_name:
+        raise RepresentationContractError("encoder output method lineage mismatch")
+    if output.fold_id != checkpoint.fold.fold_id:
+        raise RepresentationContractError("encoder output fold lineage mismatch")
+    if output.checkpoint_sha256 != checkpoint.checkpoint_sha256:
+        raise RepresentationContractError("encoder output checkpoint lineage mismatch")
+    if output.sample_ids != tuple(sample_ids):
+        raise RepresentationContractError("encoder changed sample order")
+
+
+def _concatenate_fusion_batches(
+    batches: Sequence[FusionStreamBatch],
+) -> FusionStreamBatch:
+    if not batches:
+        raise RepresentationContractError("OOF provider produced no batches")
+    first = batches[0]
+    for batch in batches[1:]:
+        if (
+            batch.method_name != first.method_name
+            or batch.fold_id != first.fold_id
+            or batch.checkpoint_sha256 != first.checkpoint_sha256
+            or batch.sequence_embedding.shape[1:] != first.sequence_embedding.shape[1:]
+        ):
+            raise RepresentationContractError("OOF provider batch lineage changed")
+    return FusionStreamBatch(
+        sample_ids=tuple(
+            sample_id for batch in batches for sample_id in batch.sample_ids
+        ),
+        timestamps_s=torch.cat(
+            tuple(batch.timestamps_s.detach().cpu() for batch in batches), dim=0
+        ),
+        sequence_embedding=torch.cat(
+            tuple(batch.sequence_embedding.detach().cpu() for batch in batches), dim=0
+        ),
+        valid_mask=torch.cat(
+            tuple(batch.valid_mask.detach().cpu() for batch in batches), dim=0
+        ),
+        pooled_embedding=torch.cat(
+            tuple(batch.pooled_embedding.detach().cpu() for batch in batches), dim=0
+        ),
+        method_name=first.method_name,
+        fold_id=first.fold_id,
+        checkpoint_sha256=first.checkpoint_sha256,
+        source_sample_hashes=tuple(
+            value for batch in batches for value in batch.source_sample_hashes
+        ),
+    )
 
 
 def _result_from_paths(

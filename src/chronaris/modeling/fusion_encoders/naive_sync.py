@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Callable, Mapping, Sequence
 
 import numpy as np
 import torch
@@ -45,7 +45,11 @@ class NaiveTimeSyncEncoder:
     def __init__(self, config: NaiveTimeSyncConfig | None = None) -> None:
         self.config = config or NaiveTimeSyncConfig()
         self.normalizer = TrainOnlyRobustNormalizer()
-        self.projector = TrainOnlyPCAProjector(output_dim=self.config.output_dim)
+        self.projector = TrainOnlyPCAProjector(
+            output_dim=self.config.output_dim,
+            solver="randomized",
+            random_state=17,
+        )
 
     def fit(
         self,
@@ -84,6 +88,65 @@ class NaiveTimeSyncEncoder:
             row_sample_ids=row_sample_ids,
             train_sample_ids=train_sample_ids,
             held_out_sample_ids=held_out_sample_ids,
+        )
+        return self
+
+    def fit_from_batch_provider(
+        self,
+        batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch],
+        *,
+        train_sample_ids: Sequence[str],
+        held_out_sample_ids: Sequence[str],
+        normalizer: TrainOnlyRobustNormalizer | None = None,
+        batch_size: int = 2,
+    ) -> "NaiveTimeSyncEncoder":
+        train_ids = tuple(sorted(set(str(value) for value in train_sample_ids)))
+        held_out_ids = tuple(sorted(set(str(value) for value in held_out_sample_ids)))
+        if not train_ids or set(train_ids) & set(held_out_ids):
+            raise RepresentationContractError(
+                "naive time-sync fit and held-out samples must be non-empty/disjoint"
+            )
+        if normalizer is None:
+            self.normalizer.fit_from_batch_provider(
+                batch_provider,
+                train_sample_ids=train_ids,
+                held_out_sample_ids=held_out_ids,
+                batch_size=batch_size,
+            )
+        else:
+            if normalizer.fit_sample_ids != train_ids:
+                raise RepresentationContractError(
+                    "shared normalizer fit samples do not match naive time-sync train samples"
+                )
+            if set(normalizer.fit_sample_ids) & set(held_out_ids):
+                raise RepresentationContractError(
+                    "shared normalizer includes held-out samples"
+                )
+            self.normalizer = normalizer
+        feature_rows = []
+        row_sample_ids = []
+        for offset in range(0, len(train_ids), batch_size):
+            sample_ids = train_ids[offset : offset + batch_size]
+            batch = batch_provider(sample_ids)
+            if tuple(batch.sample_ids) != sample_ids:
+                raise RepresentationContractError(
+                    "naive time-sync batch provider changed sample order"
+                )
+            normalized = self.normalizer.transform(batch)
+            features, _valid = self._query_features(normalized)
+            feature_rows.append(
+                features.detach().cpu().numpy().reshape(-1, features.shape[-1])
+            )
+            row_sample_ids.extend(
+                sample_id
+                for sample_id in sample_ids
+                for _ in range(features.shape[1])
+            )
+        self.projector.fit(
+            np.concatenate(feature_rows, axis=0),
+            row_sample_ids=tuple(row_sample_ids),
+            train_sample_ids=train_ids,
+            held_out_sample_ids=held_out_ids,
         )
         return self
 

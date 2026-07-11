@@ -99,4 +99,42 @@ def test_naive_sync_checkpoint_round_trips_projection_arrays(tmp_path):
     )(batch)
 
     assert loaded.projector.fit_sample_ids == ("train",)
+    assert loaded.projector.solver == "randomized"
     assert torch.equal(first.sequence_embedding, second.sequence_embedding)
+
+
+def test_naive_sync_batch_provider_matches_materialized_fit():
+    samples = {
+        "train": _sample("train"),
+        "test": _sample("test", shift=2.0),
+    }
+    batch = collate_observation_samples(tuple(samples.values()))
+    expected = NaiveTimeSyncEncoder().fit(
+        batch,
+        train_sample_ids=("train",),
+        held_out_sample_ids=("test",),
+    )
+    normalizer = expected.normalizer
+    actual = NaiveTimeSyncEncoder().fit_from_batch_provider(
+        lambda sample_ids: collate_observation_samples(
+            tuple(samples[sample_id] for sample_id in sample_ids)
+        ),
+        train_sample_ids=("train",),
+        held_out_sample_ids=("test",),
+        normalizer=normalizer,
+        batch_size=1,
+    )
+
+    assert actual.projector.solver == "randomized"
+    assert torch.equal(
+        NaiveTimeSyncFusionAdapter(
+            encoder=actual,
+            fold_id="fold_a",
+            checkpoint_sha256="5" * 64,
+        )(batch).sequence_embedding,
+        NaiveTimeSyncFusionAdapter(
+            encoder=expected,
+            fold_id="fold_a",
+            checkpoint_sha256="5" * 64,
+        )(batch).sequence_embedding,
+    )

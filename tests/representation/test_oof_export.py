@@ -60,6 +60,25 @@ def test_checkpoint_registry_detects_mutated_checkpoint(tmp_path):
         registry.require("chronaris", "fold_a")
 
 
+def test_checkpoint_registry_requires_explicit_replace(tmp_path):
+    first = _checkpoint(tmp_path)
+    registry = CheckpointRegistry(tmp_path / "registry.json")
+    registry.register(first)
+    Path(first.checkpoint_path).write_text("replacement\n", encoding="utf-8")
+    replacement = build_checkpoint_record(
+        method_name="chronaris",
+        fold=first.fold,
+        checkpoint_path=first.checkpoint_path,
+        seed=17,
+    )
+
+    with pytest.raises(RepresentationContractError, match="conflict"):
+        registry.register(replacement)
+    registry.register(replacement, replace_existing=True)
+
+    assert registry.require("chronaris", "fold_a") == replacement
+
+
 def test_resumable_oof_export_reuses_only_valid_complete_output(tmp_path):
     record = _checkpoint(tmp_path)
     batch = collate_observation_samples([_sample("test")])
@@ -165,3 +184,55 @@ def test_oof_coverage_rejects_duplicates_or_omissions(tmp_path):
             method_name="chronaris",
             expected_sample_ids=("test",),
         )
+
+
+def test_resumable_oof_export_accepts_lazy_batch_provider(tmp_path):
+    fold = FoldLineage(
+        fold_id="fold_lazy",
+        train_sample_ids=("train",),
+        validation_sample_ids=(),
+        held_out_sample_ids=("test_a", "test_b"),
+    )
+    checkpoint_path = tmp_path / "chronaris.checkpoint"
+    checkpoint_path.write_text("lazy provider checkpoint\n", encoding="utf-8")
+    record = build_checkpoint_record(
+        method_name="chronaris",
+        fold=fold,
+        checkpoint_path=checkpoint_path,
+        seed=17,
+    )
+    samples = {
+        "test_a": _sample("test_a"),
+        "test_b": _sample("test_b", shift=1.0),
+    }
+    provider = lambda sample_ids: collate_observation_samples(
+        tuple(samples[sample_id] for sample_id in sample_ids)
+    )
+    encoder = ContractProbeEncoder(
+        method_name="chronaris",
+        fold_id=fold.fold_id,
+        checkpoint_sha256=record.checkpoint_sha256,
+    )
+    exporter = ResumableOOFExporter(tmp_path / "exports", resume=True)
+
+    first = exporter.export_from_batch_provider(
+        encoder=encoder,
+        batch_provider=provider,
+        checkpoint=record,
+        export_role="held_out",
+        batch_size=1,
+    )
+    resumed = exporter.export_from_batch_provider(
+        encoder=encoder,
+        batch_provider=provider,
+        checkpoint=record,
+        export_role="held_out",
+        batch_size=1,
+    )
+
+    assert first.status == "completed"
+    assert resumed.status == "resumed"
+    assert load_fusion_stream_batch(first.output_root).sample_ids == (
+        "test_a",
+        "test_b",
+    )
