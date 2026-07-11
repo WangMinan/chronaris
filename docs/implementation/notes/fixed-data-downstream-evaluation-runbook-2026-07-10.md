@@ -134,6 +134,16 @@
 
 不直接覆盖 `2026-07-03_thesis-protocol-snapshot`；先生成候选矩阵并通过 review，之后再建立新的协议快照。
 
+正式锁定上游全部完成后运行：
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evidence/build_downstream_application_pack.py \
+  --run-id 2026-07-12_downstream-evidence-pack
+```
+
+该命令必须生成 5 幅中文主图、`figure_manifest.csv`、`evidence_matrix.csv`、预声明主指标表、`claim_boundary.md` 和 evidence manifest；随后逐图人工抽查，不以脚本成功代替可读性检查。
+
 ## 3. 每个正式 run 的固定文件
 
 ```text
