@@ -157,6 +157,102 @@ def build_primary_metric_table(
     return pd.DataFrame(rows)
 
 
+def build_dingxin_transfer_delta_table(
+    real_only: pd.DataFrame,
+    synthetic_pretrain_adapted: pd.DataFrame,
+    specifications: Sequence[Mapping[str, str]] = DINGXIN_PRIMARY,
+) -> pd.DataFrame:
+    """Build a matched, direction-aware Dingxin transfer comparison."""
+
+    primary_keys = {
+        (item["task"], item["consumer"], item["metric"])
+        for item in specifications
+    }
+
+    def _select(frame: pd.DataFrame, value_name: str) -> pd.DataFrame:
+        required = {
+            "seed",
+            "method",
+            "task",
+            "consumer",
+            "metric",
+            "direction",
+            "mean",
+            "worst_fold_value",
+            "fold_count",
+            "available_fold_count",
+        }
+        missing = required.difference(frame.columns)
+        if missing:
+            raise ValueError(
+                "Dingxin transfer comparison is missing columns: "
+                + ", ".join(sorted(missing))
+            )
+        selected = frame[
+            frame.apply(
+                lambda row: (row["task"], row["consumer"], row["metric"])
+                in primary_keys,
+                axis=1,
+            )
+        ].copy()
+        selected = selected[
+            selected["fold_count"].eq(3)
+            & selected["available_fold_count"].eq(3)
+        ]
+        keys = ["seed", "method", "task", "consumer", "metric", "direction"]
+        if selected.duplicated(keys).any():
+            raise ValueError("Dingxin transfer comparison keys are not unique")
+        return selected[keys + ["mean", "worst_fold_value"]].rename(
+            columns={
+                "mean": value_name,
+                "worst_fold_value": f"{value_name}_worst_fold",
+            }
+        )
+
+    real = _select(real_only, "real_only_mean")
+    transfer = _select(synthetic_pretrain_adapted, "transfer_mean")
+    keys = ["seed", "method", "task", "consumer", "metric", "direction"]
+    merged = real.merge(
+        transfer,
+        on=keys,
+        how="outer",
+        validate="one_to_one",
+        indicator=True,
+    )
+    if not merged["_merge"].eq("both").all():
+        missing = merged.loc[merged["_merge"].ne("both"), keys + ["_merge"]]
+        raise ValueError(
+            "Dingxin real-only and transfer primary keys differ: "
+            + missing.to_json(orient="records", force_ascii=False)
+        )
+    merged = merged.drop(columns="_merge")
+    merged["raw_delta_transfer_minus_real"] = (
+        merged["transfer_mean"] - merged["real_only_mean"]
+    )
+    merged["normalized_improvement"] = merged[
+        "raw_delta_transfer_minus_real"
+    ].where(
+        merged["direction"].eq("higher"),
+        -merged["raw_delta_transfer_minus_real"],
+    )
+    merged["transfer_improved"] = merged["normalized_improvement"].gt(0.0)
+    merged["method_label"] = merged["method"].map(METHOD_LABELS)
+    task_labels = {item["task"]: item["title"] for item in specifications}
+    metric_labels = {item["metric"]: item["metric_label"] for item in specifications}
+    merged["task_label"] = merged["task"].map(task_labels)
+    merged["metric_label"] = merged["metric"].map(metric_labels)
+    merged["statistical_unit"] = "view_fold"
+    merged["descriptive_only"] = True
+    merged["method_order"] = merged["method"].map(
+        {value: index for index, value in enumerate(METHOD_ORDER)}
+    )
+    return (
+        merged.sort_values(["task", "method_order", "seed"], kind="stable")
+        .drop(columns="method_order")
+        .reset_index(drop=True)
+    )
+
+
 def build_stress_heatmap_table(slopes: pd.DataFrame) -> pd.DataFrame:
     primary_keys = {
         (item["task"], item["consumer"], item["metric"])
