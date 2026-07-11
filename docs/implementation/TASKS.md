@@ -23,7 +23,7 @@ G4.1–G4.2、G5 seed 17 正式筛选、G6 仿真三随机种子五方法锁定�
 - G1→G2 clean 表示与正式 consumer 均完成：18/18 单元、1152 条指标、768 条双流增益、90 条 48 轨迹配对统计和 7/7 门禁。压力表示完成 630/630 与 5/5 门禁，冻结 consumer 复用和退化斜率正在运行。
 - 鼎新正式表示与 consumer 编排已实现：75 个 checkpoint 完整后才导出 270 份六方法三角色表示，validation 只负责选参，outer-test 只负责一次锁定评价。
 - Chronaris 四项机制消融已接入锁定训练、checkpoint 回载、表示导出和相同下游 consumer；完整模型与消融按 48 条 G2 潜在轨迹配对。
-- synthetic-to-real 轨道已实现形状安全的部分参数迁移和无标签鼎新适配；单方法跨 schema 冒烟复制 97.93% 目标编码器元素并通过 8/8 门禁，正式轨道等待仿真三 seed checkpoint 完整。
+- synthetic-to-real 轨道的三随机种子五折无标签适配已完成 75/75 个训练单元和 8/8 门禁；五个方法全部在 RTX 4090 上训练，任务目标与 outer-test 访问均为零。跨 schema 复制比例按模型为生理单流 97.93%、航电单流 24.61%、MulT 84.47%、ContiFormer 36.96%、Chronaris 39.05%，字段相关输入与重构层保持重新初始化。
 - 鼎新统一表示和 consumer 已显式继承并校验上游表示族，real-only 与 synthetic-to-real 使用不同 family 字段和独立 run，不会因复用脚本而混入同一结果表。
 - 时间偏移/响应时延恢复已实现四方法专用表示与下游探针：G1 train 拟合、G1 validation 选择 Ridge 强度，G2 35 场景只评价；主统计单位固定为 48 条潜在轨迹。
 - 时间机制正式链路已完成：144/144 表示、24 个 G1 Ridge 探针、840 个 G2 场景评价、3360 条指标、630 条配对统计及 5/5、6/6 两级门禁。Chronaris 在时钟偏移/响应时延 MAE 与容差命中率上领先，MulT 在响应时延 Spearman 上领先。
@@ -228,7 +228,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 已完成：Chronaris 四项固定消融 × seeds 17/29/43 共 12/12 个 checkpoint、6/6 门禁；训练和保留确认全程不打开 G2 或任务真值。
 - 已完成：12 个消融 checkpoint 导出 G1 train、G1 validation 和 G2 held-out 共 36/36 份统一表示，5/5 门禁通过；任务真值在表示阶段保持关闭。
 - 已验证：无物理约束变体完成 G1 train/validation 与 G2 held-out 三角色表示导出，3/3 输出、5/5 验收通过；正式消融表示等待 12 个变体 checkpoint。
-- 已实现待上游门禁：synthetic-to-real 三 seed 五折无标签适配及其统一表示/consumer 复用。
+- 已完成：synthetic-to-real 三 seed 五折无标签适配 75/75 个训练单元、8/8 门禁；统一表示正在自动导出，consumer 将在 270/270 表示门禁后运行。
 - 已实现待上游门禁：端到端微调辅助表；三 seed 六方法、独立表示族和 48 轨迹统计均已编排，不得替代冻结表示主结果。
 
 ### G7：stress 与论文证据包

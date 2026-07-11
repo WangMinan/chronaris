@@ -1,0 +1,21 @@
+{
+  "format": "chronaris.dingxin_locked_pretraining_evidence.v1",
+  "run_id": "2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced",
+  "status": "completed",
+  "method_fold_seed_count": 75,
+  "acceptance_pass_count": 8,
+  "acceptance_check_count": 8,
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/locked_pretraining_results.csv",
+    "folds": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/fold_audit.csv",
+    "auxiliary": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/chronaris_auxiliary_metrics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-pretraining-coalesced/evidence_manifest.json"
+  }
+}
