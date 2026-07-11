@@ -1,0 +1,82 @@
+{
+  "format": "chronaris.simulation_locked_downstream_protocol.v1",
+  "config": {
+    "run_id": "2026-07-12_simulation-locked-consumers",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-12_simulation-locked-pretraining",
+    "representation_run_id": "2026-07-12_simulation-locked-representations",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "minirocket_kernels": 10000,
+    "tcn_device": "cuda",
+    "resume": true
+  },
+  "consumer": {
+    "linear": {
+      "random_state": 17,
+      "classification_c": 1.0,
+      "regression_alpha": 1.0,
+      "classification_c_grid": [
+        0.1,
+        1.0,
+        10.0
+      ],
+      "regression_alpha_grid": [
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "tune_on_validation": true
+    },
+    "minirocket": {
+      "n_kernels": 10000,
+      "random_state": 17,
+      "n_jobs": 1,
+      "classification_c": 1.0,
+      "regression_alpha": 1.0,
+      "classification_c_grid": [
+        0.1,
+        1.0,
+        10.0
+      ],
+      "regression_alpha_grid": [
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "tune_on_validation": true,
+      "minimum_case_channel_std": 1e-07,
+      "classification_solver": "liblinear_ovr"
+    },
+    "tcn": {
+      "input_dim": 64,
+      "hidden_channels": 64,
+      "class_count": 5,
+      "kernel_size": 5,
+      "dilations": [
+        1,
+        2
+      ],
+      "dropout": 0.1,
+      "epochs": 40,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "seed": 17,
+      "patience": 6,
+      "minimum_delta": 0.0,
+      "device": "cuda"
+    }
+  },
+  "fit_role": "train",
+  "hyperparameter_selection_role": "validation",
+  "locked_evaluation_role": "held_out",
+  "independent_statistical_unit": "trajectory"
+}
