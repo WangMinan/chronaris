@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-07-11_dingxin-application-targets",
+  "status": "completed",
+  "evidence_layer": "dingxin_weak_supervision_target_archives",
+  "training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "human_expert_labels_available": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_dingxin-application-targets",
+  "output_paths": {
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/source_manifest.json",
+    "target_archive_manifest": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/target_archive_manifest.csv",
+    "target_availability": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/target_availability.csv",
+    "threshold_lineage": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/threshold_lineage.csv",
+    "response_source_comparison": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/response_source_comparison.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-application-targets/evidence_manifest.json"
+  }
+}

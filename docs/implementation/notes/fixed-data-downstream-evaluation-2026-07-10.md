@@ -425,6 +425,16 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 紧凑证据位于 `docs/artifacts/runs/2026-07-11_application-consumer-smoke/`，12/12 验收通过；约 15 MB 表示、消费者模型和逐样本预测只在被忽略目录。
 - G4 尚未整体完成。下一步先完成鼎新两项弱监督 target archive、固定 snapshot 上下文和真实外层折接入，再进入 G5 screen。
 
+### 9.4 2026-07-11 G4.2 目标归档执行结果
+
+- 机动强度弱监督分类直接继承 G1 五个外层折的训练折拟合阈值、fit sample hash 和 96 个上下文标签；20 个标签源航电字段继续全部标记为禁止输入。
+- 生理响应没有沿用 G1 的窗口均值兼容值，而是从冻结生理原始点重新计算当前与未来 5 秒窗口中位数的绝对变化；每折只用可用训练上下文拟合字段覆盖、IQR 缩放和高响应四分位阈值。
+- 原始 snapshot 在每条流约 181 秒结束，三个 view 的 `context_end_0035` 只能获得约 1 秒未来点。正式协议将它们标记为 `future_interval_not_fully_observed`，从 93 个审计候选中保留 90 个完整生理响应目标。
+- 五折原始点中位数目标与 G1 窗口均值兼容目标的 Spearman 为 0.9349–0.9432；两者保持对照 lineage，但只使用原始点中位数目标进入后续正式实验。
+- 五折两个任务共写出 10 个确定性 archive 和独立阈值文件；真实 resume 复用 10/10，重写 hash 稳定，五个 snapshot 文件前后 SHA-256 不变。
+- 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-application-targets/`，12/12 验收通过；约 248 KB 目标 archive 位于被忽略目录。本 run 未训练模型或生成指标。
+- 下一步为按 archive context 时间范围构造 30 秒防泄漏原始异步双流，并接入真实外层折表示训练。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

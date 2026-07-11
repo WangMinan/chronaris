@@ -1,0 +1,64 @@
+{
+  "format": "chronaris.dingxin_target_sources.v1",
+  "source_hashes": {
+    "context_sample_manifest.jsonl": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+    "fold_task_labels.csv": "5ea52e9c7576f0af505658ce60a69b19ec88d8d0cee8b486de2addf33de8fe8d",
+    "fold_label_thresholds.csv": "5d114ee408238b2a013d2a6f666b0fcd02e6ff457c97803250a76b909339aecb",
+    "field_role_manifest.csv": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+    "split_manifest.json": "e69fccc8474ca00de3edf69ceaa64b1d4cca35106b26b8e1bcf79260d2d0a5e8",
+    "snapshot_manifest.json": "a8b5b4afa8121d4dd11dd295a33955405c3255d95d0c3dc2f8851bea8967363d"
+  },
+  "verified_snapshot_files": [
+    {
+      "stream_kind": "vehicle",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": null,
+      "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251005_四01_ACT-4_云_J20_22#01/vehicle_points.jsonl.gz",
+      "sha256": "0fcb1e9123c679391ca5cf817ab6aeaef1ff9aaf9fd8748bcff97f25004a3cb1",
+      "point_count": 28824
+    },
+    {
+      "stream_kind": "physiology",
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "view_id": "20251005_四01_ACT-4_云_J20_22#01__pilot_10033",
+      "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/physiology_points.jsonl.gz",
+      "sha256": "ae36282aa273e8c77c6053daaa9fe5e1934129072907541a5e3aa6fa0539d44f",
+      "point_count": 905
+    },
+    {
+      "stream_kind": "vehicle",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": null,
+      "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/vehicle_points.jsonl.gz",
+      "sha256": "eac71fd17d8bb989fd0de0aa75000390310a61de45ad035b29704a49be015ac2",
+      "point_count": 28824
+    },
+    {
+      "stream_kind": "physiology",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035",
+      "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/physiology_points.jsonl.gz",
+      "sha256": "2dc3b2ba6d394deaafc11c62771ad351d2008c030eb6bee63ebeda824c4c33aa",
+      "point_count": 905
+    },
+    {
+      "stream_kind": "physiology",
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "view_id": "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033",
+      "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/physiology_points.jsonl.gz",
+      "sha256": "c3968bc4621d4e2729e7b298fbea72fd9f1c4a8e3013f22ff0db4be9f7aebed3",
+      "point_count": 905
+    }
+  ],
+  "snapshot_hashes_after": {
+    "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251005_四01_ACT-4_云_J20_22#01/vehicle_points.jsonl.gz": "0fcb1e9123c679391ca5cf817ab6aeaef1ff9aaf9fd8748bcff97f25004a3cb1",
+    "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/physiology_points.jsonl.gz": "ae36282aa273e8c77c6053daaa9fe5e1934129072907541a5e3aa6fa0539d44f",
+    "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/vehicle_points.jsonl.gz": "eac71fd17d8bb989fd0de0aa75000390310a61de45ad035b29704a49be015ac2",
+    "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/physiology_points.jsonl.gz": "2dc3b2ba6d394deaafc11c62771ad351d2008c030eb6bee63ebeda824c4c33aa",
+    "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/physiology_points.jsonl.gz": "c3968bc4621d4e2729e7b298fbea72fd9f1c4a8e3013f22ff0db4be9f7aebed3"
+  },
+  "fold_count": 5,
+  "classification_source_contract": "g1_fold_fitted_aligned_window_statistics",
+  "response_source_contract": "fixed_raw_point_window_median",
+  "human_expert_labels_available": false
+}
