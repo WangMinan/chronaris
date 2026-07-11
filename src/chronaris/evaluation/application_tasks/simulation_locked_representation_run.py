@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shutil
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -240,6 +241,22 @@ def load_locked_seed_adapters(
     if len(normalizer_hashes) != 1 or normalizer is None:
         raise ValueError("locked seed checkpoints do not share one normalizer")
     naive_path = heavy_root / "checkpoints" / f"seed_{seed}" / "naive_time_sync" / "best.pt"
+    reuse_source = None
+    if not naive_path.is_file() and resume:
+        for candidate_path in sorted(
+            (heavy_root / "checkpoints").glob(
+                "seed_*/naive_time_sync/best.pt"
+            )
+        ):
+            candidate_encoder = load_naive_time_sync_checkpoint(candidate_path)
+            if (
+                candidate_encoder.normalizer.to_manifest()["transform_sha256"]
+                == normalizer.to_manifest()["transform_sha256"]
+            ):
+                naive_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(candidate_path, naive_path)
+                reuse_source = str(candidate_path)
+                break
     if not naive_path.is_file() or not resume:
         naive = NaiveTimeSyncEncoder().fit(
             pretraining_data.batch,
@@ -257,7 +274,14 @@ def load_locked_seed_adapters(
         fold_id=fold_id,
         checkpoint_sha256=naive_hash,
     )
-    rows.append({"method_name": "naive_time_sync", "path": str(naive_path), "sha256": naive_hash})
+    rows.append(
+        {
+            "method_name": "naive_time_sync",
+            "path": str(naive_path),
+            "sha256": naive_hash,
+            "reuse_source": reuse_source,
+        }
+    )
     return adapters, rows
 
 
