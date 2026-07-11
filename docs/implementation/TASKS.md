@@ -24,6 +24,7 @@ G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新正式重训已通�
 - 鼎新正式表示与 consumer 编排已实现：75 个 checkpoint 完整后才导出 270 份六方法三角色表示，validation 只负责选参，outer-test 只负责一次锁定评价。
 - Chronaris 四项机制消融已接入锁定训练、checkpoint 回载、表示导出和相同下游 consumer；完整模型与消融按 48 条 G2 潜在轨迹配对。
 - synthetic-to-real 轨道已实现形状安全的部分参数迁移和无标签鼎新适配；单方法跨 schema 冒烟复制 97.93% 目标编码器元素并通过 8/8 门禁，正式轨道等待仿真三 seed checkpoint 完整。
+- 鼎新统一表示和 consumer 已显式继承并校验上游表示族，real-only 与 synthetic-to-real 使用不同 family 字段和独立 run，不会因复用脚本而混入同一结果表。
 - 时间偏移/响应时延恢复已实现四方法专用表示与下游探针：G1 train 拟合、G1 validation 选择 Ridge 强度，G2 35 场景只评价；主统计单位固定为 48 条潜在轨迹。
 - 仿真端到端微调辅助链路已实现并通过定向测试：五个可训练方法更新完整编码器，朴素同步只更新相同容量任务头；三任务联合损失只由 train 拟合、validation 早停，G2 held-out 只评价，输出独立 `end_to_end_finetuned_v1` 表。
 - 论文证据包生成器已实现并通过 8/8 合成输入验收：正式上游完成后自动汇总 6 个独立证据角色，生成鼎新/仿真六方法主图、压力斜率热图、机制恢复图与消融图，并输出可追溯 figure manifest。

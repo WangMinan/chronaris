@@ -92,6 +92,19 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    pretraining_protocol = json.loads(
+        (
+            Path(config.compact_output_root)
+            / config.pretraining_run_id
+            / "protocol.json"
+        ).read_text(encoding="utf-8")
+    )
+    representation_family = str(pretraining_protocol.get("representation_family"))
+    if representation_family not in {
+        "frozen_task_agnostic_v1",
+        "synthetic_pretrain_real_adapt_v1",
+    }:
+        raise ValueError("Dingxin pretraining representation family is unsupported")
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
@@ -116,6 +129,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
             "checkpoint_count_verified_before_outer_test": len(checkpoints),
             "task_targets_opened": False,
             "outer_test_metrics_opened": False,
+            "representation_family": representation_family,
         },
     ) as progress:
         seed_fold_rows = []
@@ -231,6 +245,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
                         "alignment_sha256": alignments,
                         "task_targets_opened": False,
                         "outer_test_metrics_opened": False,
+                        "representation_family": representation_family,
                     },
                 )
                 seed_fold_rows.append(
@@ -265,6 +280,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
             export_rows=export_rows,
             acceptance=acceptance,
             status=status,
+            representation_family=representation_family,
         )
         progress.finish(
             status=status,
@@ -349,6 +365,7 @@ def _write_outputs(**values):
         "checkpoint_set_verified_before_outer_test": True,
         "task_targets_opened": False,
         "outer_test_metrics_opened": False,
+        "representation_family": values["representation_family"],
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -376,6 +393,7 @@ def _write_outputs(**values):
         "acceptance_pass_count": passed,
         "acceptance_check_count": len(values["acceptance"]),
         "outer_test_metrics_opened": False,
+        "representation_family": values["representation_family"],
         "heavy_run_root": str(values["heavy_root"]),
         "output_paths": {key: str(path) for key, path in paths.items()},
     })

@@ -85,6 +85,17 @@ def run_dingxin_locked_consumers(config: DingxinLockedConsumerConfig):
     )
     if evidence.get("status") != "completed":
         raise ValueError("Dingxin locked consumers require completed representations")
+    representation_protocol = json.loads(
+        (representation_compact / "protocol.json").read_text(encoding="utf-8")
+    )
+    representation_family = str(
+        representation_protocol.get("representation_family")
+    )
+    if representation_family not in {
+        "frozen_task_agnostic_v1",
+        "synthetic_pretrain_real_adapt_v1",
+    }:
+        raise ValueError("Dingxin consumer representation family is unsupported")
     with open_task_eval_run_observer(
         run_root=compact_root,
         run_id=config.run_id,
@@ -95,6 +106,7 @@ def run_dingxin_locked_consumers(config: DingxinLockedConsumerConfig):
             "folds": list(config.fold_ids),
             "outer_test_metrics_opened": True,
             "window_level_significance_allowed": False,
+            "representation_family": representation_family,
         },
     ) as progress:
         result_rows = []
@@ -146,7 +158,13 @@ def run_dingxin_locked_consumers(config: DingxinLockedConsumerConfig):
                             "outer_test_metrics_opened": True,
                         }
                     )
-                    metric_rows.extend(dict(row) for row in result.metric_rows)
+                    metric_rows.extend(
+                        {
+                            **dict(row),
+                            "representation_family": representation_family,
+                        }
+                        for row in result.metric_rows
+                    )
                     prediction_rows.extend(
                         {"seed": seed, **dict(row)}
                         for row in result.prediction_rows
@@ -186,6 +204,7 @@ def run_dingxin_locked_consumers(config: DingxinLockedConsumerConfig):
             prediction_rows=prediction_rows,
             acceptance=acceptance,
             status=status,
+            representation_family=representation_family,
         )
         progress.finish(
             status=status,
@@ -240,6 +259,11 @@ def aggregate_dingxin_main_fold_metrics(metric_rows):
                 "worst_fold_value": worst,
                 "statistical_unit": "view_fold",
                 "window_level_p_value_reported": False,
+                "representation_family": (
+                    str(group["representation_family"].iloc[0])
+                    if "representation_family" in group
+                    else "frozen_task_agnostic_v1"
+                ),
             }
         )
     return tuple(rows)
@@ -264,6 +288,7 @@ def _acceptance_rows(*, config, results, metrics, summary):
         _check("outer_test_metrics_available", bool(outer), len(outer), ">0"),
         _check("main_summary_uses_three_view_folds", bool(summary) and all(row["fold_count"] == 3 and row["statistical_unit"] == "view_fold" for row in summary), len(summary), ">0 with 3 folds"),
         _check("no_window_level_p_values", all(not row["window_level_p_value_reported"] for row in summary), False, False),
+        _check("one_representation_family", len({row["representation_family"] for row in metrics}) == 1, sorted({row["representation_family"] for row in metrics}), "one family"),
     )
 
 
@@ -301,6 +326,7 @@ def _write_outputs(**values):
         "evaluation_roles": ["validation", "held_out"],
         "main_statistical_unit": "view_fold",
         "window_level_significance_allowed": False,
+        "representation_family": values["representation_family"],
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -331,6 +357,7 @@ def _write_outputs(**values):
         "metric_count": len(values["metric_rows"]),
         "fusion_gain_count": len(values["fusion_gain_rows"]),
         "main_summary_count": len(values["main_summary_rows"]),
+        "representation_family": values["representation_family"],
         "acceptance_pass_count": passed,
         "acceptance_check_count": len(values["acceptance"]),
         "heavy_run_root": str(values["heavy_root"]),
