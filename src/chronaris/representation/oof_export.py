@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Mapping, Sequence
+from typing import Callable, Sequence
 
 import numpy as np
 import torch
@@ -222,6 +222,7 @@ def write_fusion_stream_batch(
     *,
     root: str | Path,
     export_role: str,
+    label_used_for_encoder_training: bool = False,
 ) -> tuple[Path, Path]:
     output_root = Path(root)
     output_root.mkdir(parents=True, exist_ok=True)
@@ -247,7 +248,7 @@ def write_fusion_stream_batch(
         "source_sample_hashes": list(batch.source_sample_hashes),
         "representation_archive": representation_path.name,
         "representation_sha256": representation_hash,
-        "label_used_for_encoder_training": False,
+        "label_used_for_encoder_training": bool(label_used_for_encoder_training),
         "output_dim": int(batch.sequence_embedding.shape[-1]),
         "query_point_count": int(batch.sequence_embedding.shape[1]),
     }

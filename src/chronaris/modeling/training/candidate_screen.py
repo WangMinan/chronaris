@@ -215,6 +215,16 @@ def train_pretext_candidate(
     elapsed_offset = (
         float(resume_payload["training_elapsed_s"]) if resume_payload is not None else 0.0
     )
+    device_history = list(
+        resume_payload.get(
+            "training_device_history",
+            [resume_payload.get("config", {}).get("device", "cpu")],
+        )
+        if resume_payload is not None
+        else [resolved.device]
+    )
+    if device_history[-1] != resolved.device:
+        device_history.append(resolved.device)
     start_epoch = (
         int(resume_payload["completed_epochs"]) + 1 if resume_payload is not None else 1
     )
@@ -314,6 +324,7 @@ def train_pretext_candidate(
             elapsed=elapsed_offset + time.perf_counter() - started,
             transfer_source=transfer_source,
             transfer_initialization=transfer_initialization,
+            device_history=device_history,
         )
         _atomic_save(last_path, payload)
         if improved:
@@ -331,6 +342,8 @@ def train_pretext_candidate(
             "stopped_early": stopped_early,
             "epoch_rows": epoch_rows,
             "step_count": step_count,
+            "config": asdict(resolved),
+            "training_device_history": device_history,
         }
     )
     _atomic_save(best_path, final_payload)
@@ -449,6 +462,7 @@ def _checkpoint_payload(**values):
         "selection_weights": dict(PUBLIC_SELECTION_WEIGHTS),
         "transfer_source": values.get("transfer_source"),
         "transfer_initialization": values.get("transfer_initialization"),
+        "training_device_history": list(values["device_history"]),
     }
 
 
@@ -472,16 +486,13 @@ def _checkpoint_is_semantically_compatible(
     transfer_source,
 ) -> bool:
     """Allow code-only changes when every persisted training input still matches."""
-    expected_config = asdict(config)
-    stored_config = dict(payload.get("config", {}))
-    if "device" not in stored_config:
-        if expected_config.get("device") != "cpu":
-            return False
-        expected_config.pop("device")
+    config_matches = _training_configs_match_ignoring_device(
+        payload.get("config", {}), asdict(config)
+    )
     return all(
         (
             payload.get("candidate_config") == asdict(candidate),
-            stored_config == expected_config,
+            config_matches,
             payload.get("augmentation_policy") == asdict(policy),
             payload.get("fold") == fold.to_dict(),
             payload.get("normalizer", {}).get("transform_sha256")
@@ -495,6 +506,14 @@ def _checkpoint_is_semantically_compatible(
             payload.get("transfer_source") == transfer_source,
         )
     )
+
+
+def _training_configs_match_ignoring_device(stored, expected) -> bool:
+    stored_values = dict(stored)
+    expected_values = dict(expected)
+    stored_values.pop("device", None)
+    expected_values.pop("device", None)
+    return stored_values == expected_values
 
 
 def _load_payload(path: Path):

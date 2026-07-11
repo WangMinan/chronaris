@@ -181,6 +181,11 @@ from chronaris.evaluation.application_tasks.simulation_mechanism_consumer_run im
     SimulationMechanismConsumerResult,
     run_simulation_mechanism_consumers,
 )
+from chronaris.evaluation.application_tasks.simulation_finetuning_run import (
+    SimulationFineTuningConfig,
+    SimulationFineTuningResult,
+    run_simulation_end_to_end_finetuning,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
@@ -220,6 +225,8 @@ __all__ = [
     "SimulationMechanismRepresentationResult",
     "SimulationMechanismConsumerConfig",
     "SimulationMechanismConsumerResult",
+    "SimulationFineTuningConfig",
+    "SimulationFineTuningResult",
     "FixedDataAuditResult",
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
@@ -275,6 +282,7 @@ __all__ = [
     "run_simulation_chronaris_ablation_consumers",
     "run_simulation_mechanism_representations",
     "run_simulation_mechanism_consumers",
+    "run_simulation_end_to_end_finetuning",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",
