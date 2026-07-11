@@ -95,11 +95,32 @@ from chronaris.evaluation.application_tasks.candidate_screen_run import (
     EncoderCandidateScreenRunResult,
     run_encoder_candidate_screen,
 )
+from chronaris.evaluation.application_tasks.dingxin_selected_screen_run import (
+    DingxinSelectedScreenConfig,
+    DingxinSelectedScreenResult,
+    run_dingxin_selected_screen,
+)
+from chronaris.evaluation.application_tasks.dingxin_selected_representation_run import (
+    DingxinSelectedRepresentationConfig,
+    DingxinSelectedRepresentationResult,
+    run_dingxin_selected_representations,
+)
+from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run import (
+    SimulationLockedPretrainingConfig,
+    SimulationLockedPretrainingResult,
+    run_simulation_locked_pretraining,
+)
 
 __all__ = [
     "FixedDataAuditConfig",
     "EncoderCandidateScreenRunConfig",
     "EncoderCandidateScreenRunResult",
+    "DingxinSelectedScreenConfig",
+    "DingxinSelectedScreenResult",
+    "DingxinSelectedRepresentationConfig",
+    "DingxinSelectedRepresentationResult",
+    "SimulationLockedPretrainingConfig",
+    "SimulationLockedPretrainingResult",
     "FixedDataAuditResult",
     "FixedDataSnapshotConfig",
     "ChronarisContinuousAdapterSmokeConfig",
@@ -138,6 +159,9 @@ __all__ = [
     "DEFAULT_SNAPSHOT_RUN_ID",
     "run_fixed_data_audit",
     "run_encoder_candidate_screen",
+    "run_dingxin_selected_screen",
+    "run_dingxin_selected_representations",
+    "run_simulation_locked_pretraining",
     "run_fixed_data_snapshot",
     "run_chronaris_continuous_adapter_smoke",
     "run_common_pretraining_loop_smoke",

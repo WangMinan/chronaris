@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import hashlib
-from dataclasses import replace
+import copy
 
 import numpy as np
 import torch
@@ -166,6 +166,47 @@ def test_physics_status_distinguishes_active_disabled_and_unavailable() -> None:
         component.weighted_value is None
         for component in disabled_components
     )
+
+
+def test_task_independent_fast_path_preserves_sequence_and_gradients() -> None:
+    torch.manual_seed(31)
+    batch = collate_observation_samples([_sample("train"), _sample("test")])
+    config = ChronarisContinuousEncoderConfig(
+        physiology_feature_names=PHYSIOLOGY_NAMES,
+        vehicle_feature_names=VEHICLE_NAMES,
+        dropout=0.0,
+    )
+    full = ChronarisContinuousFusionEncoder(config)
+    fast = copy.deepcopy(full)
+
+    full_output = full(batch, compute_diagnostics=True)
+    fast_output = fast(batch, compute_diagnostics=False)
+
+    torch.testing.assert_close(
+        full_output.sequence_embedding,
+        fast_output.sequence_embedding,
+        rtol=1e-6,
+        atol=1e-7,
+    )
+    assert all(
+        component.reason == "task_independent_pretext_fast_path"
+        for component in fast_output.physics_audit.components
+    )
+    full_gradients = torch.autograd.grad(
+        full_output.sequence_embedding.square().mean(),
+        tuple(full.parameters()),
+        allow_unused=True,
+    )
+    fast_gradients = torch.autograd.grad(
+        fast_output.sequence_embedding.square().mean(),
+        tuple(fast.parameters()),
+        allow_unused=True,
+    )
+    for actual, expected in zip(full_gradients, fast_gradients, strict=True):
+        if actual is None or expected is None:
+            assert actual is expected
+        else:
+            torch.testing.assert_close(actual, expected, rtol=1e-5, atol=1e-6)
 
 
 def test_fixed_ablation_matrix_changes_only_declared_mechanisms() -> None:

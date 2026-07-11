@@ -106,6 +106,7 @@ class SingleStreamODERNNPrototype(nn.Module):
         stream: TorchAlignmentStreamBatch,
         *,
         reference_offsets_s: torch.Tensor | None = None,
+        include_observation_diagnostics: bool = True,
     ) -> StreamPrototypeOutput:
         """Run the minimal deterministic ODE-RNN forward pass for one stream."""
 
@@ -139,10 +140,12 @@ class SingleStreamODERNNPrototype(nn.Module):
                 observation_embeddings[:, point_index],
                 valid_mask,
             )
-            evolved_hidden_steps.append(evolved_state * valid_mask_float)
+            if include_observation_diagnostics:
+                evolved_hidden_steps.append(evolved_state * valid_mask_float)
             updated_hidden_steps.append(hidden_state * valid_mask_float)
-            reconstruction_steps.append(self.decoder(hidden_state) * valid_mask_float)
-            projection_steps.append(self.projection_head(hidden_state) * valid_mask_float)
+            if include_observation_diagnostics:
+                reconstruction_steps.append(self.decoder(hidden_state) * valid_mask_float)
+                projection_steps.append(self.projection_head(hidden_state) * valid_mask_float)
 
         reference_hidden_states: torch.Tensor | None = None
         reference_projected_states: torch.Tensor | None = None
@@ -171,13 +174,28 @@ class SingleStreamODERNNPrototype(nn.Module):
         else:
             resolved_reference_offsets = None
 
+        if include_observation_diagnostics:
+            evolved_hidden_tensor = torch.stack(evolved_hidden_steps, dim=1)
+            reconstruction_tensor = torch.stack(reconstruction_steps, dim=1)
+            projection_tensor = torch.stack(projection_steps, dim=1)
+        else:
+            evolved_hidden_tensor = stream.values.new_zeros(
+                (batch_size, point_count, self.config.hidden_dim)
+            )
+            reconstruction_tensor = stream.values.new_zeros(
+                (batch_size, point_count, self.feature_dim)
+            )
+            projection_tensor = stream.values.new_zeros(
+                (batch_size, point_count, self.config.projection_dim)
+            )
+
         return StreamPrototypeOutput(
             feature_names=stream.feature_names,
             observation_embeddings=observation_embeddings,
-            evolved_hidden_states=torch.stack(evolved_hidden_steps, dim=1),
+            evolved_hidden_states=evolved_hidden_tensor,
             updated_hidden_states=updated_hidden_tensor,
-            reconstructions=torch.stack(reconstruction_steps, dim=1),
-            projected_states=torch.stack(projection_steps, dim=1),
+            reconstructions=reconstruction_tensor,
+            projected_states=projection_tensor,
             mask=stream.mask,
             feature_valid_mask=stream.feature_valid_mask,
             offsets_s=stream.offsets_s,
@@ -340,6 +358,7 @@ class DualStreamODERNNPrototype(nn.Module):
         batch: TorchAlignmentBatch,
         *,
         reference_offsets_s: torch.Tensor | None = None,
+        include_observation_diagnostics: bool = True,
     ) -> DualStreamPrototypeOutput:
         """Run the deterministic dual-stream forward pass."""
 
@@ -348,10 +367,12 @@ class DualStreamODERNNPrototype(nn.Module):
             physiology=self.physiology_stream(
                 batch.physiology,
                 reference_offsets_s=reference_offsets_s,
+                include_observation_diagnostics=include_observation_diagnostics,
             ),
             vehicle=self.vehicle_stream(
                 batch.vehicle,
                 reference_offsets_s=reference_offsets_s,
+                include_observation_diagnostics=include_observation_diagnostics,
             ),
         )
 

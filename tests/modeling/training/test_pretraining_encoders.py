@@ -10,6 +10,8 @@ from chronaris.modeling.training import (
     ENCODER_SCREEN_CANDIDATES,
     TRAINABLE_FUSION_METHODS,
     build_trainable_fusion_encoder,
+    build_chronaris_auxiliary_losses,
+    chronaris_auxiliary_weight_schedule,
 )
 from chronaris.representation import (
     ObservationSchema,
@@ -102,3 +104,29 @@ def test_frozen_candidate_table_matches_protocol():
         1e-3,
     ]
     assert [value.dropout for value in ENCODER_SCREEN_CANDIDATES] == [0.1, 0.1, 0.1, 0.2]
+
+
+def test_chronaris_auxiliary_losses_are_differentiable_and_causal_margin_active():
+    torch.manual_seed(23)
+    batch = collate_observation_samples([_sample("auxiliary")])
+    encoder = build_trainable_fusion_encoder(
+        "chronaris",
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+    )
+
+    positive = encoder(batch, compute_chronaris_diagnostics=True)
+    negative = encoder(batch, compute_chronaris_diagnostics=True)
+    weights = chronaris_auxiliary_weight_schedule(20)
+    losses = build_chronaris_auxiliary_losses(
+        positive,
+        negative,
+        weights=weights,
+    )
+    losses.total_loss.backward()
+
+    assert losses.alignment_count > 0
+    assert losses.causal_count == losses.alignment_count
+    assert losses.causal_direction >= 0.099
+    assert torch.isfinite(losses.total_loss)
+    assert any(parameter.grad is not None for parameter in encoder.parameters())

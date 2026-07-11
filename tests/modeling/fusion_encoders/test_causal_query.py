@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from dataclasses import replace
 
 import numpy as np
 import torch
@@ -86,3 +87,57 @@ def test_causal_contiformer_attention_blocks_future_query_leakage():
     second, _ = encoder(changed, time_axis=time, mask=mask)
 
     assert torch.allclose(first[:, :2], second[:, :2], atol=1e-6, rtol=1e-6)
+
+
+def test_vectorized_causal_query_matches_feature_loop_and_value_gradients():
+    batch = collate_observation_samples([_sample()])
+    vector_values = batch.physiology_values.detach().clone().requires_grad_(True)
+    legacy_values = batch.physiology_values.detach().clone().requires_grad_(True)
+    vector_batch = replace(batch, physiology_values=vector_values)
+    legacy_batch = replace(batch, physiology_values=legacy_values)
+
+    vectorized = causal_query_stream(vector_batch, stream_name="physiology")
+    legacy = _legacy_causal_query(legacy_batch)
+
+    torch.testing.assert_close(vectorized.values, legacy[0])
+    assert torch.equal(vectorized.feature_mask, legacy[1])
+    torch.testing.assert_close(vectorized.observation_age_s, legacy[2])
+    assert torch.equal(vectorized.source_indices, legacy[3])
+    vector_gradient = torch.autograd.grad(vectorized.values.sum(), vector_values)[0]
+    legacy_gradient = torch.autograd.grad(legacy[0].sum(), legacy_values)[0]
+    torch.testing.assert_close(vector_gradient, legacy_gradient)
+
+
+def _legacy_causal_query(batch):
+    values = batch.physiology_values
+    timestamps = batch.physiology_timestamps_s
+    feature_mask = batch.physiology_feature_mask
+    queries = batch.query_timestamps_s.to(timestamps.dtype)
+    output = torch.zeros((len(values), queries.shape[1], values.shape[-1]))
+    mask = torch.zeros_like(output, dtype=torch.bool)
+    age = torch.full_like(output, torch.inf)
+    sources = torch.full_like(output, -1, dtype=torch.int64)
+    for sample_index in range(len(values)):
+        for feature_index in range(values.shape[-1]):
+            observed = feature_mask[sample_index, :, feature_index]
+            feature_times = timestamps[sample_index][observed]
+            feature_values = values[sample_index, :, feature_index][observed]
+            indices = torch.searchsorted(
+                feature_times,
+                queries[sample_index],
+                right=True,
+            ) - 1
+            available = indices >= 0
+            safe = indices.clamp_min(0)
+            output[sample_index, available, feature_index] = feature_values[
+                safe[available]
+            ]
+            mask[sample_index, available, feature_index] = True
+            age[sample_index, available, feature_index] = (
+                queries[sample_index, available] - feature_times[safe[available]]
+            ).to(age.dtype)
+            observed_rows = torch.nonzero(observed, as_tuple=False).flatten()
+            sources[sample_index, available, feature_index] = observed_rows[
+                safe[available]
+            ]
+    return output, mask, age, sources
