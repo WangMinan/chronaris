@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示、公共自监督训练、仿真应用型下游消费者、鼎新弱监督目标归档、防泄漏原始上下文绑定、训练内验证划分、五折六方法真实预训练与统一表示，以及固定线性/MiniROCKET consumer 工程冒烟均已完成；最新 consumer run 15/15 通过。本轮未修改既有确认指标或形成模型排名。当前实施里程碑为 G4.2 inner-train 嵌套目标与正式候选筛选准备。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。固定数据审计、原始点冻结、方法无关仿真、六方法生产表示、公共自监督训练、仿真应用型下游消费者、鼎新弱监督目标归档、防泄漏原始上下文绑定、训练内验证划分、五折六方法真实预训练与统一表示、固定 consumer 工程冒烟，以及 inner-train 嵌套目标均已完成；最新嵌套目标 run 10/10 通过。本轮未修改既有确认指标或形成模型排名。当前实施里程碑为 G4.2 嵌套 validation consumer 与正式候选筛选准备。
 
 ## 当前执行入口
 
@@ -30,6 +30,7 @@
 - G4.2 鼎新主协议首折公共预训练与表示导出：[artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke/report.md](artifacts/runs/2026-07-11_dingxin-fold-pretraining-smoke/report.md)
 - G4.2 鼎新五折公共预训练与统一表示聚合审计：[artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/report.md](artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/report.md)
 - G4.2 鼎新五折冻结表示 consumer 工程冒烟：[artifacts/runs/2026-07-11_dingxin-consumer-smoke/report.md](artifacts/runs/2026-07-11_dingxin-consumer-smoke/report.md)
+- G4.2 鼎新 inner-train 嵌套目标：[artifacts/runs/2026-07-11_dingxin-nested-targets/report.md](artifacts/runs/2026-07-11_dingxin-nested-targets/report.md)
 
 ## 已锁定事实
 
@@ -149,10 +150,15 @@
 - 时间 embargo 后五折实际角色目标累计为 440 个机动分类上下文和 425 个生理响应上下文；三个未来区间不足样本继续缺席，没有以零值补齐。
 - 约 36 MB 消费者模型与逐样本预测位于被忽略目录，紧凑证据约 680 KB，15/15 通过；鼎新指标与仿真指标保持独立目录。
 - 当前 consumer 仍使用 outer-train 拟合的阈值，只服务固定配置工程冒烟；正式候选筛选前必须按 inner-train 重建嵌套目标，因此当前指标不用于模型排名。
+- 五折机动语义尺度、分位阈值、生理字段有效性/IQR 和高响应阈值已全部改为 inner-train 拟合；validation 与 outer-test 只应用参数，不参与估计。
+- 嵌套目标生成 10 个确定性 archive，机动分类 440 个角色上下文、生理响应 425 个可用角色上下文；snapshot 哈希保持不变，10/10 通过。
+- 相对 outer-train 工程冒烟口径，五折共有 75/440 个机动类别和 51/425 个高响应标签变化；连续生理响应 Spearman 为 0.9787–0.9971，证明嵌套重拟合改变了尺度而非简单改名。
+- 三个采用时间块与 embargo 的 validation 只覆盖中/高机动类；该真实分布漂移被保留，不移动阈值补类。后续 macro-F1 必须固定三类标签集合。
+- 嵌套目标重型 archive 约 108 KB、紧凑证据约 292 KB；本 run 不训练模型、不生成指标或排名。
 
 ## 当前未完成
 
-- 鼎新目标、snapshot 原始上下文、训练内 validation、30 个 checkpoint、90 份六方法表示和五折固定 consumer 均已闭环；尚未生成正式 inner-train 嵌套目标，也尚未启动候选 screen。
+- 鼎新目标、snapshot 原始上下文、训练内 validation、30 个 checkpoint、90 份六方法表示、固定 consumer 和 10 个 inner-train 嵌套目标 archive 均已闭环；尚未用嵌套目标复跑 validation consumer，也尚未启动候选 screen。
 - 仿真应用消费者目前仍是 16 条轨迹上的接口 smoke，不是完整 G1 开发筛选结果。
 - 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
 
@@ -164,7 +170,8 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 2. 归一化、增强和公共预训练只拟合 inner-train；outer-test 在候选冻结前只用于一次 smoke 结构验证，不参与选择。MiniROCKET 方差过滤和正式任务阈值在后续 consumer 阶段也必须只拟合 inner-train。
 3. 已完成：五折六方法 checkpoint、train/validation/test 表示逐项匹配 schema、fit sample 和 source hash。
 4. 已完成：真实外层折六方法表示—固定 consumer smoke；鼎新指标与仿真指标分目录保存，不形成混合平均分。
-5. 当前：按 inner-train 重建嵌套目标并复核 consumer；G4.2 验收通过后才启动 seed 17 四候选 screen，期间禁止读取 G2 locked test。
+5. 已完成：按 inner-train 重建嵌套目标。
+6. 当前：仅在 validation 复跑固定 consumer，保持 outer-test 指标关闭；G4.2 验收通过后才启动 seed 17 四候选 screen，期间禁止读取 G2 locked test。
 
 ## 本轮验证
 
@@ -188,7 +195,7 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 - G4.2 上下文绑定与加载器聚焦测试：`7 passed`；93 个完整原始输入、90 个完整响应绑定，`12/12` 验收通过。
 - G4.2 训练内划分聚焦测试：`4 passed`；五折角色穷尽互斥、共享航电区间零重叠、任务覆盖和确定性重建均通过，正式 run `11/11` 验收通过。
 - G4.2 流式归一化、随机化 PCA、懒加载公共训练与 OOF 导出聚焦测试：`21 passed`；主协议首折真实 run 为 5 个训练 checkpoint、6 个总 checkpoint、18 个表示，`12/12` 验收通过。
-- 完整测试：`327 passed, 8 skipped, 317 warnings`。
+- 完整测试：`328 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 

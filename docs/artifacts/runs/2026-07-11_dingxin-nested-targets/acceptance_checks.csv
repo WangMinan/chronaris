@@ -1,0 +1,11 @@
+check_id,passed,actual,expected
+five_nested_folds,True,5,5
+ten_deterministic_archives,True,10,10
+all_thresholds_inner_train,True,['inner_train_nested'],['inner_train_nested']
+classification_train_has_three_classes,True,"[[0, 1, 2], [0, 1, 2], [0, 1, 2], [0, 1, 2], [0, 1, 2]]",five x three classes
+response_train_has_two_classes,True,"[[0, 1], [0, 1], [0, 1], [0, 1], [0, 1]]",five x binary
+classification_role_count,True,440,440
+response_available_role_count,True,425,425
+deterministic_rebuild,True,True,True
+snapshot_hashes_unchanged,True,True,True
+no_metrics_or_training,True,False,False

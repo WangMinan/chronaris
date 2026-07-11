@@ -482,6 +482,15 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 约 36 MB 模型与逐样本预测位于被忽略目录；紧凑指标、协议、资源、增益和验收位于 `docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/`，15/15 通过。
 - 当前指标仍使用 outer-train 目标阈值，只验证真实链路、指标方向和恢复，不进入候选选择或论文确认表。下一步必须按 inner-train 重拟合所有目标参数。
 
+### 9.10 2026-07-11 G4.2 inner-train 嵌套目标执行结果
+
+- 机动分类不复用 outer-train score，而是从既有对齐窗口的原始航电统计重新拟合 inner-train 语义中位数/IQR、分位边界，再应用到 validation/outer-test。
+- 生理响应从冻结 snapshot 重新计算当前/未来 5 秒原始点中位数差，并只用 inner-train 选择字段、拟合字段 IQR 和高响应四分位阈值。
+- 五折共生成 10 个确定性 archive；机动分类 440 个角色上下文，生理响应 425 个可用角色上下文。两轮完整重建哈希一致，snapshot 文件哈希不变。
+- 相对 outer-train 工程冒烟目标，机动类别改变 75/440，高响应标签改变 51/425；连续响应分数 Spearman 为 0.9787–0.9971，说明嵌套尺度重拟合产生了实质影响。
+- 三个时间块 validation 只覆盖中/高机动类。该分布漂移按真实结果保留，不通过移动阈值或合并类别补齐；后续分类指标固定三类标签集合。
+- 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-nested-targets/`，重型 archive 约 108 KB，10/10 通过；本 run 不训练模型、生成指标或形成排名。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

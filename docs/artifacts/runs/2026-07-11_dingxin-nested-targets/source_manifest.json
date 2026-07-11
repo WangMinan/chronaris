@@ -1,0 +1,11 @@
+{
+  "format": "chronaris.dingxin_nested_target_sources.v1",
+  "snapshot_hashes": {
+    "sorties/20251005_四01_ACT-4_云_J20_22#01/vehicle_points.jsonl.gz": "0fcb1e9123c679391ca5cf817ab6aeaef1ff9aaf9fd8748bcff97f25004a3cb1",
+    "sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/physiology_points.jsonl.gz": "ae36282aa273e8c77c6053daaa9fe5e1934129072907541a5e3aa6fa0539d44f",
+    "sorties/20251002_单01_ACT-8_翼云_J16_12#01/vehicle_points.jsonl.gz": "eac71fd17d8bb989fd0de0aa75000390310a61de45ad035b29704a49be015ac2",
+    "sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/physiology_points.jsonl.gz": "2dc3b2ba6d394deaafc11c62771ad351d2008c030eb6bee63ebeda824c4c33aa",
+    "sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/physiology_points.jsonl.gz": "c3968bc4621d4e2729e7b298fbea72fd9f1c4a8e3013f22ff0db4be9f7aebed3"
+  },
+  "threshold_scope": "inner_train_nested"
+}
