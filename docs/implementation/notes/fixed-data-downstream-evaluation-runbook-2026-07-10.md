@@ -172,7 +172,7 @@
   --run-id 2026-07-12_downstream-evidence-pack
 ```
 
-该命令必须生成 5 幅中文主图、`figure_manifest.csv`、`evidence_matrix.csv`、预声明主指标表、`claim_boundary.md` 和 evidence manifest；随后逐图人工抽查，不以脚本成功代替可读性检查。
+该命令必须生成 7 幅中文图（包括一个鼎新代表时间线和一个仿真 oracle 复盘）、`figure_manifest.csv`、`evidence_matrix.csv`、预声明主指标表、`claim_boundary.md` 和 evidence manifest；随后逐图人工抽查，不以脚本成功代替可读性检查。
 
 ## 3. 每个正式 run 的固定文件
 

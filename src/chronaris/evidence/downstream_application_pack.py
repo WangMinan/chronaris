@@ -21,8 +21,10 @@ from chronaris.evidence.downstream_application_data import (
 from chronaris.evidence.downstream_application_figures import (
     configure_chinese_matplotlib,
     plot_ablation_advantage,
+    plot_dingxin_representative_case,
     plot_mechanism_recovery,
     plot_method_primary_metrics,
+    plot_simulation_oracle_case,
     plot_stress_slope_heatmap,
 )
 from chronaris.modeling.common.run_observer import open_task_eval_run_observer
@@ -37,8 +39,12 @@ LOGGER.addHandler(logging.NullHandler())
 class DownstreamEvidencePackConfig:
     run_id: str = "2026-07-12_downstream-evidence-pack"
     compact_output_root: str = "docs/artifacts/runs"
+    heavy_output_root: str = "artifacts/application_evaluation"
     dingxin_consumer_run_id: str = "2026-07-12_dingxin-locked-consumers"
     simulation_consumer_run_id: str = "2026-07-12_simulation-locked-consumers"
+    simulation_representation_run_id: str = (
+        "2026-07-12_simulation-locked-representations"
+    )
     stress_consumer_run_id: str = "2026-07-12_simulation-locked-stress-consumers"
     mechanism_consumer_run_id: str = "2026-07-12_simulation-mechanism-consumers"
     ablation_consumer_run_id: str = (
@@ -117,6 +123,21 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
         stress_table = build_stress_heatmap_table(stress)
         mechanism_table = build_mechanism_mae_table(mechanism)
         ablation_table = build_ablation_primary_table(ablation)
+        dingxin_predictions = pd.read_csv(
+            Path(config.heavy_output_root)
+            / config.dingxin_consumer_run_id
+            / "prediction_rows.csv"
+        )
+        simulation_predictions = pd.read_csv(
+            Path(config.heavy_output_root)
+            / config.simulation_consumer_run_id
+            / "workload_predictions.csv"
+        )
+        simulation_sample_manifest = pd.read_csv(
+            Path(config.compact_output_root)
+            / config.simulation_representation_run_id
+            / "data_manifest.csv"
+        )
         tables = root / "tables"
         tables.mkdir(exist_ok=True)
         dingxin_table.to_csv(tables / "dingxin_primary_metrics.csv", index=False)
@@ -150,6 +171,15 @@ def run_downstream_evidence_pack(config: DownstreamEvidencePackConfig):
                 ablation_table,
                 SIMULATION_PRIMARY,
                 figures_root / "chronaris_mechanism_ablation.png",
+            ),
+            plot_dingxin_representative_case(
+                dingxin_predictions,
+                figures_root / "dingxin_representative_case.png",
+            ),
+            plot_simulation_oracle_case(
+                simulation_predictions,
+                simulation_sample_manifest,
+                figures_root / "simulation_oracle_case.png",
             ),
         )
         figure_rows = [
@@ -335,6 +365,8 @@ def _figure_source_runs(figure_id, config):
         return config.dingxin_consumer_run_id
     if figure_id.startswith("simulation_clean"):
         return config.simulation_consumer_run_id
+    if figure_id.startswith("simulation_oracle"):
+        return config.simulation_consumer_run_id
     if "stress" in figure_id:
         return config.stress_consumer_run_id
     if "mechanism_recovery" in figure_id:
@@ -345,7 +377,7 @@ def _figure_source_runs(figure_id, config):
 def _acceptance_rows(**values):
     return (
         _check("all_required_upstreams_completed", len(values["upstream"]) >= 6, len(values["upstream"]), ">=6"),
-        _check("five_chinese_figures", len(values["figures"]) == 5 and all(row["language"] == "zh-CN" for row in values["figures"]), len(values["figures"]), 5),
+        _check("seven_chinese_figures", len(values["figures"]) == 7 and all(row["language"] == "zh-CN" for row in values["figures"]), len(values["figures"]), 7),
         _check("evidence_layers_not_mixed", len(values["evidence_rows"]) >= 6 and all(row["claim_boundary"] for row in values["evidence_rows"]), len(values["evidence_rows"]), ">=6"),
         _check("dingxin_primary_table", len(values["dingxin_table"]) == 18, len(values["dingxin_table"]), 18),
         _check("simulation_primary_table", len(values["simulation_table"]) == 18, len(values["simulation_table"]), 18),
