@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-12_aviation-simulation-locked-stress-audit/`：**G2 锁定压力场景生成与审计**。48 条 G2 潜在轨迹各生成 35 个观测版本，覆盖时间戳抖动、时钟偏移、时钟漂移、随机缺失、连续缺失、生理响应额外时延、观测信噪比的全部固定等级和 mixed-severe，共 1,680 个场景。同一轨迹跨等级共享 latent、事件、负荷真值和 observation seed，只改变观测配置；方法无关源码与成对随机性 7/7 验收通过。约 1.7 GB 原始双流和真值位于被忽略目录，本 run 只形成压力输入，不含模型任务指标。
 - `runs/2026-07-11_encoder-candidate-screen-seed17/`：**seed 17 编码器候选正式筛选**。五个可训练方法各完成 A–D 四候选、最多 50 epoch 的公共自监督训练，共 20/20 checkpoint；排序只使用 23 个 G1 validation profile，另 1 个预留 profile 仅确认五个选定配置。Chronaris、MulT、ContiFormer、生理单流选择 A，航电单流选择 C；预留确认损失均有限。任务标签、仿真真值和封存测试保持关闭，7/7 验收通过。Chronaris 参考采样向量化与旧算法输出/梯度一致；CPU 17.07 秒/epoch，RTX 4090 为 49.87 秒/epoch，因此该主干正式筛选使用 CPU。约 117 MB checkpoint 位于被忽略目录；本 run 冻结配置但不构成锁定测试结论。
 - `runs/2026-07-11_encoder-candidate-screen-smoke/`：**seed 17 编码器候选筛选全链路冒烟验证**。G1 原始异步双流按 96 个训练 profile、23 个候选排序 validation profile 和 1 个开发确认 profile 组织；五个可训练方法各运行 A–D 四候选单 epoch，共 20 个 checkpoint。验证增强固定，排序只使用三项公共自监督损失并做方法内 min-max；任务标签、仿真真值和封存测试均未打开。全链路耗时 5 分 03 秒、峰值内存 4.34 GB、重型 checkpoint 约 114 MB，6/6 验收通过。该 run 只证明正式 50 epoch/patience 8 筛选可运行，单 epoch 排名不作为候选结论。
 - `runs/2026-07-11_dingxin-nested-validation/`：**鼎新嵌套目标 validation-only consumer**。五折六方法使用 inner-train 嵌套目标拟合固定线性与 MiniROCKET，形成 30 个方法—折 bundle；组件恢复 60/60，预测哈希 30/30 一致。只评价 validation，生成 840 条全部可计算指标和 560 条双流增益；指标 role 唯一为 validation、threshold scope 唯一为 inner-train nested，outer-test 零预测/指标。三个 validation 缺低机动类时 macro-F1 固定三类集合，不补类。约 35 MB 模型/预测位于被忽略目录，12/12 通过；本 run 是正式 screen 前协议确认，不形成排名。

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import inspect
+import json
 from pathlib import Path
 
 import numpy as np
@@ -15,6 +16,7 @@ from chronaris.simulation.aviation_dual_stream import (
     generate_benchmark,
     generate_latent_trajectory,
     generate_sortie,
+    locked_stress_observation_scenarios,
     sample_pilot_profile,
     smoke_observation_scenarios,
     smoke_split_specs,
@@ -94,6 +96,31 @@ def test_latent_trajectory_unchanged_across_observation_scenarios() -> None:
     assert audit["latent_hash_shared"]
     assert audit["trajectory_id_shared"]
     assert audit["scenario_ids_unique"]
+
+
+def test_locked_stress_grid_has_frozen_single_factor_levels() -> None:
+    scenarios = locked_stress_observation_scenarios()
+    by_id = {scenario.scenario_id: scenario for scenario in scenarios}
+
+    assert len(scenarios) == 35
+    assert len(by_id) == 35
+    assert {
+        scenario.physiology_jitter_std_ms
+        for scenario in scenarios
+        if scenario.scenario_id.startswith("timestamp_jitter_")
+    } == {0.0, 20.0, 50.0, 100.0}
+    assert {
+        abs(scenario.physiology_clock_offset_s)
+        for scenario in scenarios
+        if scenario.scenario_id.startswith("clock_offset_")
+    } == {0.0, 0.25, 1.0, 3.0}
+    assert {
+        abs(scenario.physiology_clock_drift_ppm)
+        for scenario in scenarios
+        if scenario.scenario_id.startswith("clock_drift_")
+    } == {0.0, 50.0, 100.0, 250.0}
+    assert by_id["mixed_severe"].additional_physiology_lag_s == 30.0
+    assert by_id["mixed_severe"].observation_snr_db == 10.0
 
 
 def test_g1_g2_use_distinct_generation_paths() -> None:
@@ -195,6 +222,7 @@ def test_smoke_benchmark_writes_paired_scenarios_and_resumes(tmp_path) -> None:
         split_specs=smoke_split_specs(),
         observation_scenarios=smoke_observation_scenarios(),
         resume=True,
+        paired_observation_seed=True,
     )
     first = generate_benchmark(config)
 
@@ -204,6 +232,14 @@ def test_smoke_benchmark_writes_paired_scenarios_and_resumes(tmp_path) -> None:
     assert first.split_identity["disjoint"]
     assert all(row["latent_hash_shared"] for row in first.paired_rows)
     assert Path(first.simulation_manifest_path).exists()
+    manifest = json.loads(Path(first.simulation_manifest_path).read_text(encoding="utf-8"))
+    seeds_by_trajectory = {}
+    for row in manifest["scenario_rows"]:
+        seeds_by_trajectory.setdefault(row["trajectory_id"], set()).add(
+            row["observation_seed"]
+        )
+    assert manifest["paired_observation_seed"] is True
+    assert all(len(values) == 1 for values in seeds_by_trajectory.values())
 
     second = generate_benchmark(config)
     assert second.resumed_scenario_count == 8

@@ -4,6 +4,7 @@ from .config import (
     AviationScenarioConfig,
     ObservationScenarioConfig,
     canonical_observation_scenarios,
+    locked_stress_observation_scenarios,
 )
 from .benchmark import (
     SimulationBenchmarkConfig,
@@ -37,6 +38,7 @@ __all__ = [
     "SimulationBenchmarkResult",
     "SimulationSplitSpec",
     "canonical_observation_scenarios",
+    "locked_stress_observation_scenarios",
     "generate_latent_trajectory",
     "generate_benchmark",
     "generate_sortie",

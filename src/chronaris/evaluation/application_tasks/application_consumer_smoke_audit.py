@@ -17,6 +17,7 @@ def build_paired_unit_statistic_rows(
     sample_manifest_rows,
     reference_method: str = "chronaris",
     seed: int = 17,
+    smoke_only: bool = True,
 ):
     trajectory_by_sample = {
         row["sample_id"]: row["trajectory_id"] for row in sample_manifest_rows
@@ -74,7 +75,7 @@ def build_paired_unit_statistic_rows(
                     "bootstrap_upper": statistic.bootstrap_upper,
                     "permutation_p_value": statistic.permutation_p_value,
                     "independent_unit_count": statistic.independent_unit_count,
-                    "smoke_only": True,
+                    "smoke_only": bool(smoke_only),
                 }
             )
     return rows

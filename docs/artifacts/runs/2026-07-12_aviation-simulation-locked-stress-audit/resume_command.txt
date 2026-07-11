@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/simulation/generate_aviation_locked_stress.py --resume

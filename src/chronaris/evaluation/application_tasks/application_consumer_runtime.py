@@ -85,6 +85,8 @@ def run_application_method_consumers(
     started = time.perf_counter()
     train = outputs["train"]
     train_targets = _select_targets(targets, train.sample_ids)
+    validation = outputs["validation"]
+    validation_targets = _select_targets(targets, validation.sample_ids)
     paths = {
         "linear": root / "linear.joblib",
         "minirocket": root / "minirocket.joblib",
@@ -99,6 +101,9 @@ def run_application_method_consumers(
             train.pooled_embedding.detach().cpu().numpy(),
             train_targets["workload_class"],
             train_targets["future_workload_mean"],
+            validation_pooled=validation.pooled_embedding.detach().cpu().numpy(),
+            validation_class_target=validation_targets["workload_class"],
+            validation_regression_target=validation_targets["future_workload_mean"],
         )
         component_elapsed["linear"] = time.perf_counter() - linear_started
         _save_joblib_consumer(paths["linear"], protocol_hash, linear)
@@ -113,6 +118,9 @@ def run_application_method_consumers(
             train.sequence_embedding.detach().cpu().numpy(),
             train_targets["workload_class"],
             train_targets["future_workload_mean"],
+            validation_sequence=validation.sequence_embedding.detach().cpu().numpy(),
+            validation_class_target=validation_targets["workload_class"],
+            validation_regression_target=validation_targets["future_workload_mean"],
         )
         component_elapsed["minirocket"] = time.perf_counter() - rocket_started
         _save_joblib_consumer(paths["minirocket"], protocol_hash, minirocket)
@@ -127,6 +135,8 @@ def run_application_method_consumers(
             train.sequence_embedding,
             train_targets["maneuver_state"],
             config=resolved.tcn,
+            validation_sequence=validation.sequence_embedding,
+            validation_labels=validation_targets["maneuver_state"],
         )
         duration = fit_duration_viterbi_parameters(
             train_targets["maneuver_state"],
@@ -182,7 +192,7 @@ def run_application_method_consumers(
     prediction_path = root / "predictions.npz"
     prediction_hash = write_deterministic_npz(prediction_path, prediction_payload)
     model_manifest = {
-        "format": "chronaris.application_consumer_models.v1",
+        "format": "chronaris.application_consumer_models.v2",
         "method_name": method_name,
         "fold_id": fold_id,
         "protocol_sha256": protocol_hash,
@@ -204,6 +214,13 @@ def run_application_method_consumers(
             len(minirocket.channel_indices)
         ),
         "minirocket_variance_filter_fit_role": "train",
+        "linear_selected_classification_c": linear.selected_classification_c,
+        "linear_selected_regression_alpha": linear.selected_regression_alpha,
+        "minirocket_selected_classification_c": minirocket.selected_classification_c,
+        "minirocket_selected_regression_alpha": minirocket.selected_regression_alpha,
+        "hyperparameter_selection_role": (
+            "validation" if resolved.linear.tune_on_validation else "fixed"
+        ),
     }
     manifest_path.write_text(
         json.dumps(model_manifest, ensure_ascii=False, indent=2) + "\n",
@@ -226,12 +243,15 @@ def run_application_method_consumers(
 def _evaluate_models(
     *, method_name, outputs, targets, fold_id, linear, minirocket, tcn_model, duration, seed
 ):
+    smoke_only = bool(targets.manifest.get("smoke_only", True))
     metric_rows = []
     workload_rows = []
     unit_rows = []
     prediction_payload = {}
     tcn_model.eval()
     for role in ("validation", "held_out"):
+        if role not in outputs:
+            continue
         output = outputs[role]
         selected = _select_targets(targets, output.sample_ids)
         for consumer_name, consumer, values in (
@@ -253,6 +273,7 @@ def _evaluate_models(
                 seed=seed,
                 fold=fold_id,
                 role=role,
+                smoke_only=smoke_only,
             )
             _append_metrics(
                 metric_rows,
@@ -266,6 +287,7 @@ def _evaluate_models(
                 seed=seed,
                 fold=fold_id,
                 role=role,
+                smoke_only=smoke_only,
             )
             for index, sample_id in enumerate(output.sample_ids):
                 workload_rows.append(
@@ -278,7 +300,7 @@ def _evaluate_models(
                         "workload_class_pred": int(prediction["class_prediction"][index]),
                         "future_workload_true": float(selected["future_workload_mean"][index]),
                         "future_workload_pred": float(prediction["regression_prediction"][index]),
-                        "smoke_only": True,
+                        "smoke_only": smoke_only,
                     }
                 )
                 unit_rows.extend(
@@ -288,12 +310,14 @@ def _evaluate_models(
                             "classification_correct",
                             float(prediction["class_prediction"][index] == selected["workload_class"][index]),
                             "higher",
+                            smoke_only=smoke_only,
                         ),
                         _unit_row(
                             method_name, consumer_name, role, sample_id,
                             "regression_absolute_error",
                             abs(float(prediction["regression_prediction"][index]) - float(selected["future_workload_mean"][index])),
                             "lower",
+                            smoke_only=smoke_only,
                         ),
                     )
                 )
@@ -321,6 +345,7 @@ def _evaluate_models(
                 seed=seed,
                 fold=fold_id,
                 role=role,
+                smoke_only=smoke_only,
             )
             for index, sample_id in enumerate(output.sample_ids):
                 unit_rows.append(
@@ -329,6 +354,7 @@ def _evaluate_models(
                         "frame_accuracy",
                         float(np.mean(prediction[index].numpy() == selected["maneuver_state"][index])),
                         "higher",
+                        smoke_only=smoke_only,
                     )
                 )
             prediction_payload[f"{role}_{consumer_name}_state"] = prediction.numpy().astype(np.int64)
@@ -349,7 +375,9 @@ def _select_targets(targets, sample_ids):
     }
 
 
-def _append_metrics(rows, metrics, *, method_name, task, consumer, seed, fold, role):
+def _append_metrics(
+    rows, metrics, *, method_name, task, consumer, seed, fold, role, smoke_only
+):
     for name, (value, direction) in metrics.items():
         available = value is not None and np.isfinite(value)
         rows.append(
@@ -366,12 +394,14 @@ def _append_metrics(rows, metrics, *, method_name, task, consumer, seed, fold, r
                 "direction": direction,
                 "status": "available" if available else "unavailable",
                 "reason": None if available else "metric_not_defined",
-                "smoke_only": True,
+                "smoke_only": smoke_only,
             }
         )
 
 
-def _unit_row(method, consumer, role, sample_id, metric, value, direction):
+def _unit_row(
+    method, consumer, role, sample_id, metric, value, direction, *, smoke_only=True
+):
     return {
         "method": method,
         "consumer": consumer,
@@ -380,7 +410,7 @@ def _unit_row(method, consumer, role, sample_id, metric, value, direction):
         "metric": metric,
         "value": value,
         "direction": direction,
-        "smoke_only": True,
+        "smoke_only": smoke_only,
     }
 
 
@@ -398,9 +428,11 @@ def _save_tcn_consumer(
         {
             "format": "chronaris.application_tcn.v1",
             "protocol_sha256": protocol_sha256,
-            "config": asdict(protocol.tcn),
+            "config": {**asdict(protocol.tcn), "device": "cpu"},
             "state_dict": tcn_result.model.state_dict(),
             "training_rows": list(tcn_result.training_rows),
+            "best_epoch": tcn_result.best_epoch,
+            "stopped_early": tcn_result.stopped_early,
             "class_weights": tcn_result.class_weights,
             "duration": {
                 "initial_log_probability": duration.initial_log_probability,
@@ -450,7 +482,7 @@ def _load_model_components(*, root, manifest_path, protocol_sha256, resume):
 def _protocol_hash(method_name, outputs, targets, protocol, fold_id):
     payload = {
         "format": "chronaris.application_consumer_protocol.v2",
-        "consumer_runtime_revision": "component_recovery_deterministic_tcn.v2",
+        "consumer_runtime_revision": "validation_selected_residual_tcn.v3",
         "method_name": method_name,
         "fold_id": fold_id,
         "checkpoint_sha256": outputs["train"].checkpoint_sha256,

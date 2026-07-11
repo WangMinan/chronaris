@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Mapping
 
+import torch
+
 from chronaris.modeling.fusion_encoders import (
     NaiveTimeSyncFusionAdapter,
     load_naive_time_sync_checkpoint,
@@ -102,7 +104,10 @@ def export_application_context_representations(
     role_sample_ids: Mapping[str, tuple[str, ...]],
     output_root: str | Path,
     resume: bool,
+    batch_size: int | None = None,
 ):
+    if batch_size is not None and batch_size <= 0:
+        raise ValueError("application representation batch size must be positive")
     root = Path(output_root)
     outputs = {method: {} for method in APPLICATION_METHODS}
     rows = []
@@ -128,7 +133,11 @@ def export_application_context_representations(
                     output = candidate
                     status = "resumed"
             if output is None:
-                output = adapter(role_batch)
+                output = _encode_in_batches(
+                    adapter,
+                    role_batch,
+                    batch_size=batch_size,
+                )
                 write_fusion_stream_batch(
                     output,
                     root=destination,
@@ -156,3 +165,37 @@ def export_application_context_representations(
         for role in ("train", "validation", "held_out")
     }
     return outputs, rows, alignment_hashes
+
+
+def _encode_in_batches(adapter, batch, *, batch_size):
+    if batch_size is None or len(batch.sample_ids) <= batch_size:
+        return adapter(batch)
+    outputs = []
+    for offset in range(0, len(batch.sample_ids), batch_size):
+        ids = batch.sample_ids[offset : offset + batch_size]
+        outputs.append(adapter(select_observation_batch(batch, ids)))
+    first = outputs[0]
+    if any(
+        output.method_name != first.method_name
+        or output.fold_id != first.fold_id
+        or output.checkpoint_sha256 != first.checkpoint_sha256
+        for output in outputs[1:]
+    ):
+        raise ValueError("batched application representation lineage changed")
+    return type(first)(
+        sample_ids=tuple(value for output in outputs for value in output.sample_ids),
+        timestamps_s=torch.cat([output.timestamps_s for output in outputs], dim=0),
+        sequence_embedding=torch.cat(
+            [output.sequence_embedding for output in outputs], dim=0
+        ),
+        valid_mask=torch.cat([output.valid_mask for output in outputs], dim=0),
+        pooled_embedding=torch.cat(
+            [output.pooled_embedding for output in outputs], dim=0
+        ),
+        method_name=first.method_name,
+        fold_id=first.fold_id,
+        checkpoint_sha256=first.checkpoint_sha256,
+        source_sample_hashes=tuple(
+            value for output in outputs for value in output.source_sample_hashes
+        ),
+    )

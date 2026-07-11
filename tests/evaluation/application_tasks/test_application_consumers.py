@@ -6,6 +6,7 @@ import torch
 
 from chronaris.evaluation.application_tasks.application_consumers import (
     CausalTCNEmissionModel,
+    LinearConsumerConfig,
     LinearFrozenConsumer,
     MiniRocketConsumerConfig,
     MiniRocketFrozenConsumer,
@@ -28,6 +29,25 @@ def test_linear_consumer_uses_fixed_pooled_state_models() -> None:
     assert prediction["class_prediction"].shape == (3,)
     assert prediction["class_probability"].shape == (3, 3)
     assert prediction["regression_prediction"].shape == (3,)
+
+
+def test_linear_consumer_selects_only_from_fixed_validation_grid() -> None:
+    rng = np.random.default_rng(19)
+    pooled = rng.normal(size=(18, 8)).astype(np.float32)
+    classes = np.asarray([index % 3 for index in range(18)])
+    regression = np.linspace(-1.0, 1.0, 18)
+    config = LinearConsumerConfig(tune_on_validation=True)
+    consumer = LinearFrozenConsumer(config).fit(
+        pooled[:12],
+        classes[:12],
+        regression[:12],
+        validation_pooled=pooled[12:],
+        validation_class_target=classes[12:],
+        validation_regression_target=regression[12:],
+    )
+
+    assert consumer.selected_classification_c in config.classification_c_grid
+    assert consumer.selected_regression_alpha in config.regression_alpha_grid
 
 
 def test_minirocket_uses_channel_first_transform_and_fixed_consumers() -> None:
@@ -105,6 +125,55 @@ def test_tcn_training_and_viterbi_use_train_labels_only() -> None:
     assert parameters.train_sequence_count == 6
     assert decoded.shape == (2, 24)
     assert set(decoded.unique().tolist()).issubset({0, 1, 2})
+
+
+def test_tcn_uses_validation_loss_for_early_stopping() -> None:
+    torch.manual_seed(31)
+    train_sequence = torch.randn(6, 24, 4)
+    train_labels = torch.tensor(
+        [[0] * 8 + [1] * 8 + [2] * 8 for _ in range(6)]
+    )
+    validation_sequence = torch.randn(2, 24, 4)
+    validation_labels = torch.tensor([[2] * 24, [1] * 24])
+    result = fit_causal_tcn_emission(
+        train_sequence,
+        train_labels,
+        config=TCNConsumerConfig(
+            input_dim=4,
+            hidden_channels=8,
+            class_count=3,
+            dropout=0.0,
+            epochs=5,
+            patience=2,
+        ),
+        validation_sequence=validation_sequence,
+        validation_labels=validation_labels,
+    )
+
+    assert result.best_epoch >= 1
+    assert all(row["selection_role"] == "validation" for row in result.training_rows)
+    assert len(result.training_rows) <= 5
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA unavailable")
+def test_tcn_can_train_on_gpu_and_returns_portable_cpu_model() -> None:
+    sequence = torch.randn(4, 16, 4)
+    labels = torch.tensor([[0] * 8 + [1] * 8 for _ in range(4)])
+    result = fit_causal_tcn_emission(
+        sequence,
+        labels,
+        config=TCNConsumerConfig(
+            input_dim=4,
+            hidden_channels=8,
+            class_count=2,
+            dropout=0.0,
+            epochs=1,
+            device="cuda",
+        ),
+    )
+
+    assert next(result.model.parameters()).device.type == "cpu"
+    assert torch.isfinite(result.model(sequence[:1])).all()
 
 
 def test_tcn_training_is_seed_reproducible_with_dropout() -> None:

@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G1–G4 已完成，G5 seed 17 正式筛选也已完成：20/20 候选、5/5 唯一配置、预留 G1 profile 开发确认和 7/7 验收全部通过；全程未打开任务标签、仿真真值或封存测试。当前进入选定配置的鼎新 validation 确认与 G6 多 seed 锁定实验，既有确认指标仍未修改。
+固定数据下游评估与完整论文实验长程 goal 正在执行，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`。G5 seed 17 正式筛选已经完成；鼎新第一个外层折的五个选定配置和 18 份六方法表示也已完成。G6 seeds 17/29/43 正在运行，基线使用 RTX 4090、Chronaris 使用同批实测更快的 CPU 连续演化路径。G2 的 48 条潜在轨迹已扩展为 35 个严格成对压力场景，共 1,680 个观测版本并通过 7/7 审计；既有确认指标仍未修改。
 
 ## 当前执行入口
 
@@ -34,6 +34,7 @@
 - G4.2 鼎新嵌套目标 validation-only consumer：[artifacts/runs/2026-07-11_dingxin-nested-validation/report.md](artifacts/runs/2026-07-11_dingxin-nested-validation/report.md)
 - G5 编码器候选筛选全链路 smoke：[artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-smoke/summary.md)
 - G5 seed 17 正式编码器候选筛选：[artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md](artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/summary.md)
+- G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
 
 ## 已锁定事实
 
@@ -162,12 +163,18 @@
 - validation-only 共生成 840 条全部可计算指标和 560 条方向归一双流增益；所有指标的 threshold scope 均为 inner-train nested，role 唯一为 validation。
 - outer-test 未进入评价循环，不生成预测或指标；约 35 MB 模型/预测被忽略，紧凑证据约 348 KB，12/12 通过。
 - 三个缺少低机动类的 validation 触发预期的类别分布告警，但 macro-F1 固定三类集合；不移动阈值、不删折、不补类。
+- 选定配置鼎新确认的第一个外层折已完成五方法训练；Chronaris 在第 28 epoch 早停、最佳 epoch 为 20。该折六方法 train/validation/outer-test 三角色共 18 份表示已导出，任务目标与 outer-test 指标仍关闭。
+- Chronaris 锁定训练已把连续对齐、物理一致性和因果方向三项损失真正接入反向传播；前 10 epoch 权重为 0，随后渐进升权。早停始终只使用公共自监督验证损失。
+- 锁定训练单 epoch 五方法实跑完成 5/5 checkpoint、9/9 验收；四个基线在 RTX 4090 上训练，Chronaris 使用 CPU，峰值内存 3.50 GB、总耗时 1 分 41 秒。
+- 正式下游 consumer 已升级为 G1 validation 固定网格选参的 Logistic/Ridge 与 MiniRocket、两层 64-channel 残差因果 TCN、patience 6 早停和训练折持续时间约束；TCN 支持 CUDA 训练并返回可移植 CPU checkpoint。
+- G2 压力扩展固定 7 个单因素的全部等级和 mixed-severe，共 35 个场景；同一潜在轨迹跨等级复用相同 observation seed，避免把随机噪声重采样混入退化斜率。
+- 48 条 G2 潜在轨迹共生成 1,680 个压力观测版本，latent、trajectory 和 observation randomness 均严格成对，方法无关生成器 7/7 验收通过；约 1.7 GB 重型数据只位于被忽略目录。
 
 ## 当前未完成
 
-- G5 正式候选排序已完成；鼎新 validation 确认、G6 多 seed 锁定确认、压力测试、消融和论文证据包尚未完成。
+- G5 正式候选排序已完成；鼎新 validation 确认完成 1/5 折，G6 多 seed 锁定训练正在运行。压力数据生成已完成，压力表示、冻结 consumer、消融和论文证据包尚未完成。
 - 仿真应用消费者目前仍是 16 条轨迹上的接口 smoke，不是完整 G1 开发筛选结果。
-- 尚未运行 screen、locked confirmation、stress sweep、消融或论文证据包。
+- 正式 G1→G2 consumer 代码已闭环但须等待 15 个锁定 checkpoint 与 54 份 clean 表示完成后才打开任务真值；当前尚未形成锁定任务指标。
 
 ## 下一验收门
 
@@ -180,7 +187,8 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 5. 已完成：按 inner-train 重建嵌套目标。
 6. 已完成：仅在 validation 复跑固定 consumer，outer-test 指标保持关闭。
 7. 已完成：G1 seed 17 四候选正式 screen 与预留 profile 确认。
-8. 当前：只使用五个选定配置进入鼎新 validation 确认；继续禁止读取鼎新 outer-test 和 G2 locked test。
+8. 进行中：只使用五个选定配置进入鼎新 validation 确认；第 1 折训练与 18 份表示已完成，outer-test 指标仍关闭。
+9. 进行中：seeds 17/29/43 只重训五个唯一配置；G2 任务真值必须等 15 个 checkpoint 和 54 份 clean 表示全部完成后再打开。
 
 ## 本轮验证
 
@@ -205,7 +213,7 @@ G4.2 必须继续完成真实外层折的训练内验证、公共预训练和统
 - G4.2 训练内划分聚焦测试：`4 passed`；五折角色穷尽互斥、共享航电区间零重叠、任务覆盖和确定性重建均通过，正式 run `11/11` 验收通过。
 - G4.2 流式归一化、随机化 PCA、懒加载公共训练与 OOF 导出聚焦测试：`21 passed`；主协议首折真实 run 为 5 个训练 checkpoint、6 个总 checkpoint、18 个表示，`12/12` 验收通过。
 - G5 候选配置、早停、排名和恢复聚焦测试：`17 passed`；20 候选单 epoch G1 smoke 为 `6/6`，耗时 5 分 03 秒、峰值内存 4.34 GB。
-- 完整测试：`340 passed, 8 skipped, 317 warnings`。
+- 完整测试：`352 passed, 8 skipped, 317 warnings`。
 - `compileall src scripts tests` 与 `git diff --check`：通过；LFS 和读者术语检查将在本里程碑提交前再次执行。
 - 当前 Git 改动中没有 raw snapshot、完整仿真 bundle、checkpoint 或稠密表示；拟入仓内容仅为代码、测试、紧凑清单和审计报告。
 

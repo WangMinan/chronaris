@@ -8,9 +8,19 @@
 
 当前分支：`codex/fixed-data-downstream-evaluation-20260710`。
 
-## 当前里程碑：G5 seed 17 编码器候选筛选
+## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2 已完成。G5 seed 17 正式筛选也已完成：20/20 候选、5/5 唯一配置和预留 G1 profile 开发确认均闭环，7/7 验收通过。当前进入选定配置的鼎新 validation 确认与 G6 多 seed 锁定实验。
+G4.1–G4.2 与 G5 seed 17 正式筛选已经完成。鼎新第一个外层折的五个选定配置与 18 份统一表示已完成；G6 seeds 17/29/43 正式队列正在运行。G7 的 35 场景 G2 压力数据已先行生成并完成 7/7 审计，压力模型评价继续等待锁定 checkpoint。
+
+### 本轮新增进度
+
+- 选定配置鼎新确认完成第 1/5 折；Chronaris 在 epoch 28 早停、最佳 epoch 20，任务目标和 outer-test 指标保持关闭。
+- 第 1 折六方法 train/validation/outer-test 表示完成 18/18 导出；这只冻结输入，不提前运行 outer-test consumer。
+- Chronaris 锁定训练中的连续对齐、物理一致性和因果方向损失已真实参与反向传播，公共自监督损失仍是唯一早停依据。
+- 单 epoch 五方法锁定实跑为 9/9；四个基线使用 RTX 4090，Chronaris 使用实测更快的 CPU 路径。正式三随机种子 run 已启动并可逐 epoch 恢复。
+- 正式 consumer 使用 validation 固定网格选择 Logistic/Ridge 与 MiniRocket 参数；机动分段使用两层残差因果 TCN、kernel 5、dilation 1/2、patience 6，并可在 GPU 上训练。
+- G2 压力扩展包含 7 个单因素的 34 个等级版本和 1 个 mixed-severe 版本；48 条轨迹共 1,680 个观测场景，同轨迹复用相同 observation seed，7/7 验收通过。
+- G1→G2 clean 表示、正式 consumer、压力表示、冻结 consumer 复用、退化斜率和轨迹级配对统计的可恢复编排已经实现；按协议等待上游锁定 checkpoint 后再执行。
 
 ### G1–G4.1 已完成
 
@@ -192,14 +202,15 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 
 ### G6：locked confirmation
 
-- seeds 17、29、43。
-- 鼎新主/辅助 split、G1 -> G2、synthetic-to-real。
-- frozen consumer 主表和端到端微调辅助表。
-- fixed Chronaris 四项消融。
+- 进行中：seeds 17、29、43 的五个唯一配置重训；基线优先 GPU、Chronaris 使用同批基准更快设备。
+- 进行中：鼎新五折选定配置 validation 确认；第 1 折训练与统一表示已完成。
+- 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
+- 待执行：鼎新主/辅助 split、synthetic-to-real、端到端微调辅助表和 Chronaris 四项固定消融。
 
 ### G7：stress 与论文证据包
 
-- locked checkpoint 跑全部单因素 stress 和 mixed-severe。
+- 已完成：48 条 G2 轨迹 × 35 个严格成对观测版本，生成器不接收方法名，7/7 审计通过。
+- 待锁定 checkpoint：跑全部单因素表示、冻结 consumer、退化斜率和 mixed-severe。
 - 结构诊断只放附录。
 - 输出中文论文图表、证据矩阵、claim boundary 和新协议快照候选。
 

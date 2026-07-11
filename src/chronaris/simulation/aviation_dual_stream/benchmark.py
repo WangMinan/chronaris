@@ -45,6 +45,7 @@ class SimulationBenchmarkConfig:
     split_specs: tuple[SimulationSplitSpec, ...] = ()
     observation_scenarios: tuple[ObservationScenarioConfig, ...] = ()
     resume: bool = True
+    paired_observation_seed: bool = False
 
     @property
     def run_root(self) -> Path:
@@ -135,7 +136,7 @@ def generate_benchmark(
                     observation_seed = (
                         split.observation_seed_base
                         + (profile_index * split.trajectories_per_profile + trajectory_index) * 100
-                        + scenario_index
+                        + (0 if config.paired_observation_seed else scenario_index)
                     )
                     sortie = render_sortie(
                         latent,
@@ -167,6 +168,7 @@ def generate_benchmark(
                             "profile_id": profile.profile_id,
                             "trajectory_id": latent.trajectory_id,
                             "scenario_id": scenario.scenario_id,
+                            "observation_seed": observation_seed,
                             "scenario_manifest_path": stored.scenario_manifest_path,
                             "raw_sha256": stored.raw_sha256,
                             "ground_truth_sha256": stored.ground_truth_sha256,
@@ -202,6 +204,7 @@ def generate_benchmark(
         "latent_sortie_count": latent_count,
         "observed_scenario_count": len(scenario_rows),
         "resumed_scenario_count": resumed_count,
+        "paired_observation_seed": config.paired_observation_seed,
         "split_identity": split_identity,
         "scenario_rows": scenario_rows,
     }

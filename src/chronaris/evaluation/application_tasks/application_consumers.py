@@ -6,11 +6,13 @@ from dataclasses import dataclass
 
 import numpy as np
 import torch
-from sklearn.linear_model import LogisticRegression, Ridge
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 from torch import nn
 from torch.nn import functional as F
+
+from chronaris.evaluation.application_tasks.consumer_model_selection import (
+    fit_classifier,
+    fit_regressor,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,6 +22,9 @@ class MiniRocketConsumerConfig:
     n_jobs: int = 1
     classification_c: float = 1.0
     regression_alpha: float = 1.0
+    classification_c_grid: tuple[float, ...] = (0.1, 1.0, 10.0)
+    regression_alpha_grid: tuple[float, ...] = (0.1, 1.0, 10.0, 100.0)
+    tune_on_validation: bool = False
     minimum_case_channel_std: float = 1e-7
 
 
@@ -32,8 +37,19 @@ class MiniRocketFrozenConsumer:
         self.classifier = None
         self.regressor = None
         self.channel_indices = None
+        self.selected_classification_c = None
+        self.selected_regression_alpha = None
 
-    def fit(self, sequence, class_target, regression_target):
+    def fit(
+        self,
+        sequence,
+        class_target,
+        regression_target,
+        *,
+        validation_sequence=None,
+        validation_class_target=None,
+        validation_regression_target=None,
+    ):
         from aeon.transformations.collection.convolution_based import MiniRocket
 
         values = _as_collection(sequence)
@@ -55,33 +71,43 @@ class MiniRocketFrozenConsumer:
             random_state=self.config.random_state,
         )
         transformed = self.transformer.fit_transform(values)
-        self.classifier = make_pipeline(
-            StandardScaler(),
-            LogisticRegression(
-                C=self.config.classification_c,
-                max_iter=500,
-                random_state=self.config.random_state,
+        validation_transformed = None
+        if self.config.tune_on_validation:
+            if validation_sequence is None:
+                raise ValueError("MiniRocket tuning requires validation sequence")
+            validation_values = _as_collection(validation_sequence)[:, self.channel_indices]
+            validation_transformed = self.transformer.transform(validation_values)
+        self.classifier, self.selected_classification_c = fit_classifier(
+            transformed,
+            class_target,
+            validation_transformed,
+            validation_class_target,
+            c_values=(
+                self.config.classification_c_grid
+                if self.config.tune_on_validation
+                else (self.config.classification_c,)
             ),
-        ).fit(transformed, np.asarray(class_target, dtype=np.int64))
-        self.regressor = make_pipeline(
-            StandardScaler(),
-            Ridge(alpha=self.config.regression_alpha),
-        ).fit(transformed, np.asarray(regression_target, dtype=np.float64))
+            random_state=self.config.random_state,
+            scaler_with_mean=False,
+        )
+        self.regressor, self.selected_regression_alpha = fit_regressor(
+            transformed,
+            regression_target,
+            validation_transformed,
+            validation_regression_target,
+            alpha_values=(
+                self.config.regression_alpha_grid
+                if self.config.tune_on_validation
+                else (self.config.regression_alpha,)
+            ),
+            scaler_with_mean=False,
+        )
         return self
 
     def predict(self, sequence):
         if self.transformer is None or self.classifier is None or self.regressor is None:
             raise RuntimeError("MiniRocket consumer must be fitted before predict")
         values = _as_collection(sequence)[:, self.channel_indices]
-        if bool(
-            np.any(
-                values.std(axis=-1)
-                <= self.config.minimum_case_channel_std
-            )
-        ):
-            raise ValueError(
-                "MiniRocket evaluation data violates train-only channel variance contract"
-            )
         transformed = self.transformer.transform(values)
         return {
             "class_prediction": self.classifier.predict(transformed),
@@ -98,6 +124,9 @@ class LinearConsumerConfig:
     random_state: int = 17
     classification_c: float = 1.0
     regression_alpha: float = 1.0
+    classification_c_grid: tuple[float, ...] = (0.1, 1.0, 10.0)
+    regression_alpha_grid: tuple[float, ...] = (0.1, 1.0, 10.0, 100.0)
+    tune_on_validation: bool = False
 
 
 class LinearFrozenConsumer:
@@ -107,23 +136,54 @@ class LinearFrozenConsumer:
         self.config = config or LinearConsumerConfig()
         self.classifier = None
         self.regressor = None
+        self.selected_classification_c = None
+        self.selected_regression_alpha = None
 
-    def fit(self, pooled, class_target, regression_target):
+    def fit(
+        self,
+        pooled,
+        class_target,
+        regression_target,
+        *,
+        validation_pooled=None,
+        validation_class_target=None,
+        validation_regression_target=None,
+    ):
         values = np.asarray(pooled, dtype=np.float32)
         if values.ndim != 2:
             raise ValueError("linear pooled states must have shape [N,D]")
-        self.classifier = make_pipeline(
-            StandardScaler(),
-            LogisticRegression(
-                C=self.config.classification_c,
-                max_iter=500,
-                random_state=self.config.random_state,
+        validation_values = (
+            np.asarray(validation_pooled, dtype=np.float32)
+            if self.config.tune_on_validation
+            else None
+        )
+        if self.config.tune_on_validation and validation_values is None:
+            raise ValueError("linear tuning requires validation pooled states")
+        self.classifier, self.selected_classification_c = fit_classifier(
+            values,
+            class_target,
+            validation_values,
+            validation_class_target,
+            c_values=(
+                self.config.classification_c_grid
+                if self.config.tune_on_validation
+                else (self.config.classification_c,)
             ),
-        ).fit(values, np.asarray(class_target, dtype=np.int64))
-        self.regressor = make_pipeline(
-            StandardScaler(),
-            Ridge(alpha=self.config.regression_alpha),
-        ).fit(values, np.asarray(regression_target, dtype=np.float64))
+            random_state=self.config.random_state,
+            scaler_with_mean=True,
+        )
+        self.regressor, self.selected_regression_alpha = fit_regressor(
+            values,
+            regression_target,
+            validation_values,
+            validation_regression_target,
+            alpha_values=(
+                self.config.regression_alpha_grid
+                if self.config.tune_on_validation
+                else (self.config.regression_alpha,)
+            ),
+            scaler_with_mean=True,
+        )
         return self
 
     def predict(self, pooled):
@@ -150,6 +210,17 @@ class TCNConsumerConfig:
     learning_rate: float = 1e-3
     weight_decay: float = 1e-4
     seed: int = 17
+    patience: int = 6
+    minimum_delta: float = 0.0
+    device: str = "cpu"
+
+    def __post_init__(self) -> None:
+        if self.device not in {"cpu", "cuda"}:
+            raise ValueError("TCN device must be cpu or cuda")
+        if self.device == "cuda" and not torch.cuda.is_available():
+            raise ValueError("TCN requested unavailable CUDA device")
+        if self.patience <= 0 or self.minimum_delta < 0:
+            raise ValueError("TCN early-stopping configuration is invalid")
 
 
 class CausalConv1d(nn.Module):
@@ -167,6 +238,27 @@ class CausalConv1d(nn.Module):
         return self.conv(F.pad(values, (self.left_padding, 0)))
 
 
+class CausalResidualBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, *, kernel_size, dilation, dropout):
+        super().__init__()
+        self.conv = CausalConv1d(
+            in_channels,
+            out_channels,
+            kernel_size=kernel_size,
+            dilation=dilation,
+        )
+        self.dropout = nn.Dropout(dropout)
+        self.residual = (
+            nn.Identity()
+            if in_channels == out_channels
+            else nn.Conv1d(in_channels, out_channels, kernel_size=1)
+        )
+
+    def forward(self, values):
+        transformed = self.dropout(F.gelu(self.conv(values)))
+        return transformed + self.residual(values)
+
+
 class CausalTCNEmissionModel(nn.Module):
     def __init__(self, config: TCNConsumerConfig | None = None) -> None:
         super().__init__()
@@ -174,16 +266,13 @@ class CausalTCNEmissionModel(nn.Module):
         layers = []
         input_channels = self.config.input_dim
         for dilation in self.config.dilations:
-            layers.extend(
-                (
-                    CausalConv1d(
-                        input_channels,
-                        self.config.hidden_channels,
-                        kernel_size=self.config.kernel_size,
-                        dilation=dilation,
-                    ),
-                    nn.GELU(),
-                    nn.Dropout(self.config.dropout),
+            layers.append(
+                CausalResidualBlock(
+                    input_channels,
+                    self.config.hidden_channels,
+                    kernel_size=self.config.kernel_size,
+                    dilation=dilation,
+                    dropout=self.config.dropout,
                 )
             )
             input_channels = self.config.hidden_channels
@@ -206,6 +295,8 @@ class TCNTrainingResult:
     model: CausalTCNEmissionModel
     training_rows: tuple[dict[str, object], ...]
     class_weights: torch.Tensor
+    best_epoch: int
+    stopped_early: bool
 
 
 def fit_causal_tcn_emission(
@@ -213,29 +304,54 @@ def fit_causal_tcn_emission(
     train_labels,
     *,
     config: TCNConsumerConfig | None = None,
+    validation_sequence=None,
+    validation_labels=None,
 ) -> TCNTrainingResult:
     resolved = config or TCNConsumerConfig()
-    values = torch.as_tensor(train_sequence, dtype=torch.float32)
-    labels = torch.as_tensor(train_labels, dtype=torch.long)
+    values = torch.as_tensor(
+        train_sequence, dtype=torch.float32, device=resolved.device
+    )
+    labels = torch.as_tensor(train_labels, dtype=torch.long, device=resolved.device)
     if values.shape[:2] != labels.shape:
         raise ValueError("TCN train sequence/label shape mismatch")
+    validation_values = (
+        torch.as_tensor(
+            validation_sequence, dtype=torch.float32, device=resolved.device
+        )
+        if validation_sequence is not None
+        else None
+    )
+    validation_targets = (
+        torch.as_tensor(validation_labels, dtype=torch.long, device=resolved.device)
+        if validation_labels is not None
+        else None
+    )
+    if (validation_values is None) != (validation_targets is None):
+        raise ValueError("TCN validation sequence and labels must be supplied together")
+    if validation_values is not None and validation_values.shape[:2] != validation_targets.shape:
+        raise ValueError("TCN validation sequence/label shape mismatch")
     counts = torch.bincount(labels.flatten(), minlength=resolved.class_count).float()
     weights = torch.where(
         counts > 0,
         counts.sum() / (resolved.class_count * counts.clamp_min(1)),
         torch.zeros_like(counts),
     )
-    with torch.random.fork_rng(devices=[]):
+    rng_devices = [torch.cuda.current_device()] if resolved.device == "cuda" else []
+    with torch.random.fork_rng(devices=rng_devices):
         torch.manual_seed(resolved.seed)
-        model = CausalTCNEmissionModel(resolved)
+        model = CausalTCNEmissionModel(resolved).to(resolved.device)
         optimizer = torch.optim.AdamW(
             model.parameters(),
             lr=resolved.learning_rate,
             weight_decay=resolved.weight_decay,
         )
         rows = []
-        model.train()
+        best_loss = float("inf")
+        best_epoch = 0
+        best_state = None
+        stale_epochs = 0
         for epoch in range(1, resolved.epochs + 1):
+            model.train()
             optimizer.zero_grad(set_to_none=True)
             logits = model(values)
             loss = F.cross_entropy(
@@ -246,15 +362,58 @@ def fit_causal_tcn_emission(
             loss.backward()
             gradient_norm = float(nn.utils.clip_grad_norm_(model.parameters(), 1.0))
             optimizer.step()
+            model.eval()
+            with torch.inference_mode():
+                if validation_values is None:
+                    selection_loss = float(loss.detach())
+                else:
+                    validation_logits = model(validation_values)
+                    selection_loss = float(
+                        F.cross_entropy(
+                            validation_logits.reshape(-1, resolved.class_count),
+                            validation_targets.reshape(-1),
+                            weight=weights,
+                        )
+                    )
+            improved = selection_loss < best_loss - resolved.minimum_delta
+            if improved:
+                best_loss = selection_loss
+                best_epoch = epoch
+                best_state = {
+                    name: value.detach().clone()
+                    for name, value in model.state_dict().items()
+                }
+                stale_epochs = 0
+            else:
+                stale_epochs += 1
             rows.append(
                 {
                     "epoch": epoch,
-                    "loss": float(loss.detach()),
+                    "train_loss": float(loss.detach()),
+                    "selection_loss": selection_loss,
+                    "selection_role": (
+                        "validation" if validation_values is not None else "train"
+                    ),
+                    "improved": improved,
+                    "epochs_without_improvement": stale_epochs,
                     "gradient_norm_before_clip": gradient_norm,
                     "valid_query_count": int(labels.numel()),
                 }
             )
-    return TCNTrainingResult(model, tuple(rows), weights)
+            if stale_epochs >= resolved.patience:
+                break
+        if best_state is None:
+            raise RuntimeError("TCN training produced no best state")
+        model.load_state_dict(best_state)
+        model = model.cpu()
+        weights = weights.cpu()
+    return TCNTrainingResult(
+        model,
+        tuple(rows),
+        weights,
+        best_epoch,
+        len(rows) < resolved.epochs,
+    )
 
 
 @dataclass(frozen=True, slots=True)
