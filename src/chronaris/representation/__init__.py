@@ -64,6 +64,7 @@ from chronaris.representation.pretext_targets import (
     build_common_pretext_targets,
     build_lag_discrimination_inputs,
     map_augmented_query_sources_to_original,
+    move_common_pretext_targets,
 )
 
 __all__ = [
@@ -108,6 +109,7 @@ __all__ = [
     "load_fusion_stream_batch",
     "load_simulation_observed_context",
     "map_augmented_query_sources_to_original",
+    "move_common_pretext_targets",
     "validate_fusion_method_alignment",
     "validate_oof_coverage",
     "verify_fit_sample_isolation",

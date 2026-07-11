@@ -20,6 +20,7 @@ from chronaris.representation import (
     build_batch_augmentation_realizations,
     build_common_pretext_targets,
     build_lag_discrimination_inputs,
+    move_common_pretext_targets,
     select_observation_batch,
 )
 from chronaris.representation.contracts import RepresentationContractError
@@ -52,10 +53,7 @@ def confirm_selected_pretext_checkpoint(
         for offset in range(0, len(ids), batch_size):
             current_ids = ids[offset : offset + batch_size]
             raw = select_observation_batch(batch, current_ids)
-            normalized = move_observation_batch(
-                normalizer.transform(raw),
-                device=device,
-            )
+            normalized = normalizer.transform(raw)
             plans = build_batch_augmentation_realizations(
                 current_ids,
                 epoch=0,
@@ -72,9 +70,15 @@ def confirm_selected_pretext_checkpoint(
                 augmented.batch,
                 augmented.augmentation_ids,
             )
+            positive_batch = move_observation_batch(augmented.batch, device=device)
+            negative_batch = move_observation_batch(
+                lag_inputs.negative_batch,
+                device=device,
+            )
+            targets = move_common_pretext_targets(targets, device=device)
             output = heads(
-                encoder(augmented.batch).sequence_embedding,
-                encoder(lag_inputs.negative_batch).sequence_embedding,
+                encoder(positive_batch).sequence_embedding,
+                encoder(negative_batch).sequence_embedding,
                 targets,
                 weights=CommonPretextWeights(),
             )
@@ -104,6 +108,7 @@ def confirm_selected_pretext_checkpoint(
         "checkpoint_path": str(checkpoint_path),
         "checkpoint_training_device": payload["config"].get("device", "legacy_cpu"),
         "confirmation_device": device,
+        "augmentation_device": "cpu",
         "task_labels_opened": False,
         "simulation_ground_truth_opened": False,
     }
