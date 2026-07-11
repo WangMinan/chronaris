@@ -127,6 +127,25 @@ def test_tcn_training_and_viterbi_use_train_labels_only() -> None:
     assert set(decoded.unique().tolist()).issubset({0, 1, 2})
 
 
+def test_batched_viterbi_matches_independent_single_sequence_decode() -> None:
+    torch.manual_seed(29)
+    labels = torch.tensor(
+        [[0] * 8 + [1] * 7 + [2] * 9 for _ in range(8)]
+    )
+    parameters = fit_duration_viterbi_parameters(labels, class_count=3)
+    logits = torch.randn(7, 24, 3)
+
+    batched = duration_constrained_viterbi_decode(logits, parameters)
+    independent = torch.stack(
+        [
+            duration_constrained_viterbi_decode(logits[index], parameters)
+            for index in range(len(logits))
+        ]
+    )
+
+    assert torch.equal(batched, independent)
+
+
 def test_tcn_uses_validation_loss_for_early_stopping() -> None:
     torch.manual_seed(31)
     train_sequence = torch.randn(6, 24, 4)

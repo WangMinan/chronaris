@@ -1,0 +1,10 @@
+{
+  "format": "chronaris.evidence_manifest.v1",
+  "run_id": "2026-07-12_batched-viterbi-runtime-benchmark",
+  "status": "completed",
+  "evidence_role": "downstream_runtime_protocol",
+  "input_shape": [192, 96, 5],
+  "speedup": 43.954638,
+  "exact_match": true,
+  "metric_definition_changed": false
+}

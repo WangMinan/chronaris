@@ -215,6 +215,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 已完成：仿真 seeds 17/29/43 五方法均完成 50 epoch，15 个训练单元、54 份六方法三角色表示、9/9 与 7/7 门禁全部通过。首次 consumer 运行确认默认 `lbfgs` 高维网格约需 29 分钟/方法；同一冻结变换上显式 OvR `liblinear` 三值网格合计 6.97 秒，已在不读取 G2 比较结果的前提下统一锁定并准备从空根重跑。
 - 已完成：G2 压力 35 场景的三随机种子六方法表示共 630 份、5/5 门禁；任务真值与指标在表示阶段保持关闭。
 - 已完成：G2 clean 正式指标。Chronaris 在线性低容量负荷探针与机动状态/片段质量上领先；MulT 在 MiniRocket 负荷任务和边界定位上领先。Chronaris 对最佳单流的分段 frame/segmental 平均增益为 0.1194/0.1109，但边界 F1@1s 平均增益为 -0.0053，不把边界任务写成优势。
+- 已完成：压力冻结 consumer 的持续时间约束批量解码。真实 `[192,96,5]` logits 与逐样本结果逐位一致，运行时约提升 43.95 倍；旧标量运行未完成场景单元并已隔离，正式压力 run 从空根恢复。
 - 排队执行：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced` 新根；CPU 构造增强、全方法单进程 GPU 训练。任何缺少 `model_input_contract.json` 的旧 checkpoint 均 fail closed，不与新输入混用。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
