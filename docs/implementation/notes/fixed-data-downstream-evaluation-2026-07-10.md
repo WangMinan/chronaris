@@ -473,6 +473,15 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 约 393 MB checkpoint 与稠密表示只位于被忽略目录；紧凑子 run 与聚合清单进入 `docs/artifacts/runs/`。全部预训练保持任务目标关闭、outer-test 指标关闭，未形成方法排名。
 - 聚合证据为 `docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/`。下一步使用这 90 份冻结表示接入统一线性与 MiniROCKET 工程冒烟，并在正式 screen 前重建 inner-train 嵌套目标。
 
+### 9.9 2026-07-11 G4.2 五折固定 consumer 工程冒烟
+
+- 五个固定外层折的 90 份冻结表示已接入方法不变的线性模型与 MiniROCKET 10,000 kernels；分类 C、回归 alpha、随机 seed 和训练折方差过滤合同对六方法完全一致。
+- 每个方法—折组合同时拟合机动强度三分类、生理响应连续回归和高生理响应二分类，形成 30 个 bundle、60 个消费者组件；组件第二遍恢复 60/60，预测文件哈希 30/30 一致。
+- 时间 embargo 后，五折角色清单累计使用 440 个机动分类上下文和 425 个生理响应上下文；未来区间不足的三个末端样本继续不可用，没有补零或复制目标。
+- validation 与 outer-test 共生成 1680 条 smoke-only 指标，全部可计算；方向归一双流增益接口生成 1120 条。首次 consumer 拟合累计 144.34 秒。
+- 约 36 MB 模型与逐样本预测位于被忽略目录；紧凑指标、协议、资源、增益和验收位于 `docs/artifacts/runs/2026-07-11_dingxin-consumer-smoke/`，15/15 通过。
+- 当前指标仍使用 outer-train 目标阈值，只验证真实链路、指标方向和恢复，不进入候选选择或论文确认表。下一步必须按 inner-train 重拟合所有目标参数。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G4.2 鼎新弱监督目标与真实外层折接入
 
-G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成统一下游消费者与指标。G4.2 已完成鼎新两项独立目标 archive、防泄漏原始点上下文、五折任务绑定、训练内 validation，以及三个留一视图和两个留一架次折的公共预训练与统一表示。当前接入五折固定 consumer 工程冒烟；完成前不进入候选 screen。
+G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成统一下游消费者与指标。G4.2 已完成鼎新两项独立目标 archive、防泄漏原始点上下文、五折任务绑定、训练内 validation、五折公共预训练与统一表示，以及固定线性/MiniROCKET consumer 工程冒烟。当前重建 inner-train 嵌套目标；完成前不进入候选 screen。
 
 ### G1–G4.1 已完成
 
@@ -35,6 +35,9 @@ G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成
 - 五折总计 30 个 checkpoint、90 份表示，五个子 run 60/60、聚合审计 13/13；所有 archive、checkpoint hash、fit hash、角色样本和公共 schema 已重验。
 - 五折五方法累计训练 1066.45 秒，最高峰值 2047.1 MB；约 393 MB 重型产物仅位于被忽略目录，任务目标与 outer-test 指标保持关闭。
 - 五折聚合审计接入后完整测试为 `325 passed, 8 skipped`。
+- 五折冻结表示 consumer 形成 30 个方法—折组合、60 个组件、1680 条全可计算 smoke 指标和 1120 条双流增益；首次拟合 144.34 秒，恢复 60/60，15/15 通过。
+- 五折实际使用 440 个机动分类角色上下文和 425 个生理响应角色上下文；36 MB 重型模型/预测被忽略，真实与仿真指标保持分层。
+- consumer 工程冒烟接入后完整测试为 `327 passed, 8 skipped`。
 
 ### 当前输入与不可变边界
 
@@ -147,7 +150,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 2. 已完成：从固定 snapshot 构造与目标 context 一一对应的 30 秒原始异步双流，审计标签源字段排除、部分末窗和未来区间隔离。
 3. 已完成：在 outer-train group 内建立防重叠 inner-train/validation，固化 leave-one-view-out 主协议和 leave-one-sortie-out 辅助协议。
 4. 已完成：五折五方法公共预训练 checkpoint、朴素时间同步无监督变换和六方法 train/validation/test 表示全部生成。
-5. 当前：接入固定线性/MiniROCKET consumer 的真实数据 smoke；真实与仿真 metric root 分离。G4.2 通过后再进入 seed 17 四候选 screen。
+5. 已完成：固定线性/MiniROCKET consumer 的真实数据 smoke，真实与仿真 metric root 分离。
+6. 当前：以 inner-train 重拟合机动阈值、生理字段尺度与高响应阈值，生成嵌套目标并复跑 validation consumer；G4.2 通过后再进入 seed 17 四候选 screen。
 
 ## 已锁定规范
 
