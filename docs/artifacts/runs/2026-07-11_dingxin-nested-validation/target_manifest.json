@@ -1,0 +1,105 @@
+{
+  "format": "chronaris.dingxin_nested_consumer_targets.v1",
+  "folds": [
+    {
+      "fold_id": "leave_one_view_out__fold01",
+      "threshold_scope": "inner_train_nested",
+      "target_source_sha256": "e5c7de198a46117e95223b612eefb87954e6463e1d6b9c3cf9b2bd86ad92d938",
+      "role_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 30,
+        "validation": 30,
+        "held_out": 30
+      }
+    },
+    {
+      "fold_id": "leave_one_view_out__fold02",
+      "threshold_scope": "inner_train_nested",
+      "target_source_sha256": "ad2ddfcd2ff3ce1a5850232838b9cedfec14b8df405ad05b97933ca651336c7a",
+      "role_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 31,
+        "validation": 31,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 30,
+        "validation": 30,
+        "held_out": 30
+      }
+    },
+    {
+      "fold_id": "leave_one_view_out__fold03",
+      "threshold_scope": "inner_train_nested",
+      "target_source_sha256": "e759e47f17efeae0e6754d3bb9b9c462e28084f833592e678427485b59d0ce4e",
+      "role_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 38,
+        "validation": 12,
+        "held_out": 30
+      }
+    },
+    {
+      "fold_id": "leave_one_sortie_out__fold01",
+      "threshold_scope": "inner_train_nested",
+      "target_source_sha256": "830517dbaf2788c95a663e2075ccddf4da8cf72119579277b4b052861323fbde",
+      "role_counts": {
+        "train": 19,
+        "validation": 7,
+        "held_out": 62
+      },
+      "maneuver_counts": {
+        "train": 19,
+        "validation": 7,
+        "held_out": 62
+      },
+      "response_counts": {
+        "train": 19,
+        "validation": 6,
+        "held_out": 60
+      }
+    },
+    {
+      "fold_id": "leave_one_sortie_out__fold02",
+      "threshold_scope": "inner_train_nested",
+      "target_source_sha256": "be42a238c7661c69711de75819c1ded91cc39434c6da425bffc19f2a818adb6e",
+      "role_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "maneuver_counts": {
+        "train": 38,
+        "validation": 14,
+        "held_out": 31
+      },
+      "response_counts": {
+        "train": 38,
+        "validation": 12,
+        "held_out": 30
+      }
+    }
+  ]
+}

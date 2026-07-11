@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G4.2 鼎新弱监督目标与真实外层折接入
 
-G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成统一下游消费者与指标。G4.2 已完成鼎新两项独立目标 archive、防泄漏原始点上下文、五折任务绑定、训练内 validation、五折公共预训练与统一表示、固定 consumer 工程冒烟和 inner-train 嵌套目标。当前仅用嵌套目标复跑 validation consumer；完成前不进入候选 screen。
+G4.1–G4.2 已完成仿真应用 consumer、鼎新目标与防泄漏上下文、五折训练内 validation、六方法公共预训练与统一表示、固定 consumer、inner-train 嵌套目标和 validation-only 复核。G4 验收门已关闭，当前进入 G5 seed 17 固定候选 screen。
 
 ### G1–G4.1 已完成
 
@@ -41,6 +41,7 @@ G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成
 - 五折 inner-train 嵌套目标形成 10 个确定性 archive，机动分类/生理响应可用角色数为 440/425；75 个机动类别与 51 个高响应标签相对工程冒烟口径改变，10/10 通过。
 - 三个时间块 validation 不含低机动类；保留真实分布并固定三类 macro-F1 合同，禁止通过调阈值补类。
 - 嵌套目标与固定类别指标合同接入后完整测试为 `328 passed, 8 skipped`。
+- 嵌套 validation-only consumer 形成 30 个方法—折 bundle、840 条全可计算指标和 560 条增益；恢复 60/60，outer-test 零指标，12/12 通过。
 
 ### 当前输入与不可变边界
 
@@ -155,7 +156,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 4. 已完成：五折五方法公共预训练 checkpoint、朴素时间同步无监督变换和六方法 train/validation/test 表示全部生成。
 5. 已完成：固定线性/MiniROCKET consumer 的真实数据 smoke，真实与仿真 metric root 分离。
 6. 已完成：以 inner-train 重拟合机动阈值、生理字段尺度与高响应阈值，生成嵌套目标。
-7. 当前：只在 validation 复跑固定 consumer，并修正固定类别指标合同；outer-test 继续关闭。G4.2 通过后再进入 seed 17 四候选 screen。
+7. 已完成：只在 validation 复跑固定 consumer，并修正固定类别指标合同；outer-test 继续关闭。
+8. 当前：冻结 G4 协议，运行 seed 17 四候选 screen；只使用仿真开发 validation 和鼎新 validation，不读取任何 outer-test/locked-test。
 
 ## 已锁定规范
 

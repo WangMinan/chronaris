@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-07-11_dingxin-nested-validation",
+  "status": "completed",
+  "evidence_layer": "dingxin_nested_validation_smoke",
+  "metric_count": 840,
+  "fusion_gain_count": 560,
+  "outer_test_metrics_opened": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_dingxin-nested-validation",
+  "output_paths": {
+    "consumer_inventory": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/consumer_inventory.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/resource_budget.csv",
+    "metric_long": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/metric_long.csv",
+    "fusion_gain": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/fusion_gain.csv",
+    "target_manifest": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/target_manifest.json",
+    "consumer_protocol": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/consumer_protocol.json",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-nested-validation/evidence_manifest.json"
+  }
+}

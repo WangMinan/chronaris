@@ -1,0 +1,220 @@
+{
+  "threshold_scope": "inner_train_nested",
+  "evaluation_roles": [
+    "validation"
+  ],
+  "outer_test_metrics_opened": false,
+  "confirmed_metrics_changed": false,
+  "stage_name": "dingxin_nested_validation_consumers",
+  "run_id": "2026-07-11_dingxin-nested-validation",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T05:28:04.043955Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T05:28:01.027275Z",
+      "event": "start",
+      "threshold_scope": "inner_train_nested",
+      "evaluation_roles": [
+        "validation"
+      ],
+      "outer_test_metrics_opened": false,
+      "confirmed_metrics_changed": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:01.618429Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:01.717679Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "vehicle_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:01.815743Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:01.914322Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.012268Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.111603Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold01",
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.300199Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.397822Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "vehicle_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.495670Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.592866Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.690911Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.789587Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold02",
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.932091Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:02.992404Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "vehicle_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.053694Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.115566Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.176089Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.237773Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_view_out__fold03",
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.363000Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.406386Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "vehicle_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.449196Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.492006Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.536720Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.581749Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.728465Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "physiology_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.788852Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "vehicle_only"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.849541Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.911325Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:03.972546Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:04.033663Z",
+      "event": "nested_method_fold_complete",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:28:04.043955Z",
+      "event": "finished",
+      "status": "completed",
+      "acceptance_pass_count": 12,
+      "acceptance_check_count": 12,
+      "metric_count": 840,
+      "fusion_gain_count": 560
+    }
+  ],
+  "fold_id": "leave_one_sortie_out__fold02",
+  "method_name": "chronaris",
+  "status": "completed",
+  "acceptance_pass_count": 12,
+  "acceptance_check_count": 12,
+  "metric_count": 840,
+  "fusion_gain_count": 560
+}

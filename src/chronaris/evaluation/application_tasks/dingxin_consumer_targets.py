@@ -166,3 +166,76 @@ def load_dingxin_fold_consumer_targets(
         high_response_by_sample_id=high_values,
         target_source_sha256=source_hash,
     )
+
+
+def load_dingxin_nested_fold_consumer_targets(
+    *,
+    fold_id: str,
+    nested_target_path: str | Path,
+) -> DingxinFoldConsumerTargets:
+    path = Path(nested_target_path)
+    frame = pd.read_csv(path)
+    fold = frame[frame["fold_id"].astype(str) == fold_id].copy()
+    if fold.empty or set(fold["threshold_scope"].astype(str)) != {
+        "inner_train_nested"
+    }:
+        raise ValueError(f"nested Dingxin targets unavailable for {fold_id}")
+    role_by_id = {
+        str(row.context_id): str(row.role)
+        for row in fold.itertuples(index=False)
+    }
+    maneuver = fold[
+        (fold["task_slug"] == MANEUVER_TASK)
+        & (fold["status"] == "completed")
+    ]
+    response = fold[
+        (fold["task_slug"] == RESPONSE_TASK)
+        & (fold["status"] == "completed")
+    ]
+    maneuver_values = {
+        str(row.context_id): int(row.class_target)
+        for row in maneuver.itertuples(index=False)
+    }
+    response_values = {
+        str(row.context_id): float(row.continuous_target)
+        for row in response.itertuples(index=False)
+    }
+    high_values = {
+        str(row.context_id): int(row.binary_target)
+        for row in response.itertuples(index=False)
+    }
+    train_maneuver = {
+        value
+        for sample_id, value in maneuver_values.items()
+        if role_by_id[sample_id] == "train"
+    }
+    train_high = {
+        value
+        for sample_id, value in high_values.items()
+        if role_by_id[sample_id] == "train"
+    }
+    if train_maneuver != {0, 1, 2} or train_high != {0, 1}:
+        raise ValueError(f"nested Dingxin train target coverage failed for {fold_id}")
+    source_hash = hashlib.sha256(
+        path.read_bytes()
+        + json.dumps(
+            {
+                "fold_id": fold_id,
+                "roles": role_by_id,
+                "maneuver": maneuver_values,
+                "response": response_values,
+                "high": high_values,
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        ).encode("utf-8")
+    ).hexdigest()
+    return DingxinFoldConsumerTargets(
+        fold_id=fold_id,
+        role_by_sample_id=role_by_id,
+        maneuver_class_by_sample_id=maneuver_values,
+        response_value_by_sample_id=response_values,
+        high_response_by_sample_id=high_values,
+        target_source_sha256=source_hash,
+        threshold_scope="inner_train_nested",
+    )

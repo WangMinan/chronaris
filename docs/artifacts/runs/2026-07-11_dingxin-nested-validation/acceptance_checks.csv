@@ -1,0 +1,13 @@
+check_id,passed,actual,expected
+thirty_method_fold_bundles,True,30,30
+five_nested_target_folds,True,5,5
+all_targets_inner_train_nested,True,False,False
+resume_reuses_sixty_components,True,60,60
+prediction_hashes_stable,True,30,30
+fixed_consumer_config,True,1,1
+validation_only_metric_matrix,True,840,840
+outer_test_metrics_closed,True,False,False
+metric_status_structured,True,0,structured
+fixed_class_macro_f1_present,True,True,True
+expected_fusion_gain_matrix,True,560,560
+smoke_only_not_confirmed,True,False,False

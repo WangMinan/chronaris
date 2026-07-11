@@ -491,6 +491,14 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - 三个时间块 validation 只覆盖中/高机动类。该分布漂移按真实结果保留，不通过移动阈值或合并类别补齐；后续分类指标固定三类标签集合。
 - 紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-nested-targets/`，重型 archive 约 108 KB，10/10 通过；本 run 不训练模型、生成指标或形成排名。
 
+### 9.11 2026-07-11 G4.2 嵌套 validation consumer 收口
+
+- 五折六方法使用 inner-train 嵌套目标重新拟合固定线性与 MiniROCKET consumer，只把 validation 传入评价循环；outer-test 表示不生成预测或指标。
+- 30 个方法—折 bundle 的 60 个组件第二遍全部恢复，预测哈希 30/30 一致；生成 840 条 validation-only 指标和 560 条方向归一双流增益，全部可计算。
+- 所有指标的 `threshold_scope` 为 inner-train nested、role 为 validation；outer-test 指标命中数为 0，12/12 验收通过。
+- 三个时间块 validation 仅包含中/高机动类，运行产生预期的分布告警。macro-F1 使用固定低/中/高三类集合，未移动阈值或删除折。
+- 约 35 MB consumer 模型与预测位于被忽略目录；紧凑证据为 `docs/artifacts/runs/2026-07-11_dingxin-nested-validation/`。G4 至此闭环，下一步进入 G5 seed 17 固定候选 screen。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：
