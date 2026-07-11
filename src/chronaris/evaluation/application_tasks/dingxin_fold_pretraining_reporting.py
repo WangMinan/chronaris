@@ -57,12 +57,12 @@ def write_dingxin_fold_pretraining_outputs(
     paths["report"].write_text(
         "\n".join(
             (
-                "# 鼎新主协议折六方法公共预训练与表示导出报告",
+                "# 鼎新外层折六方法公共预训练与表示导出报告",
                 "",
                 "## 结论",
                 "",
                 f"- 状态：{'完成' if status == 'completed' else '部分完成'}；验收 {passed}/{len(acceptance_rows)} 通过。",
-                "- 以留一视图主协议第一个外层折为资源与恢复冒烟：inner-train、validation、outer-test 各 31 个完整 30 秒上下文。",
+                f"- 外层折 `{split_manifest['fold_id']}` 作为资源与恢复冒烟：inner-train、validation、outer-test 分别为 {len(split_manifest['train_sample_ids'])}/{len(split_manifest['validation_sample_ids'])}/{len(split_manifest['held_out_sample_ids'])} 个完整 30 秒上下文。",
                 "- 五个可训练方法共享 inner-train 归一化、增强、三个公共目标和 1 epoch 预算；朴素时间同步只拟合 inner-train 无监督随机化主成分投影。",
                 f"- 五方法累计训练 {total_elapsed:.2f} 秒；运行峰值内存 {maximum_rss:.1f} MB。",
                 "- 六方法三种角色共导出 18 份 `[N,96,64]` 表示，第二次执行全部从已完成产物恢复，并通过同角色样本与查询轴对齐。",

@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-07-11_dingxin-five-fold-pretraining",
+  "status": "completed",
+  "evidence_layer": "dingxin_five_fold_pretraining_smoke",
+  "fold_count": 5,
+  "checkpoint_count": 30,
+  "representation_count": 90,
+  "downstream_targets_opened": false,
+  "outer_test_metrics_opened": false,
+  "confirmed_metrics_changed": false,
+  "output_paths": {
+    "fold_summary": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/fold_summary.csv",
+    "checkpoint_inventory": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/checkpoint_inventory.csv",
+    "representation_inventory": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/representation_inventory.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/resource_budget.csv",
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/source_manifest.json",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-five-fold-pretraining/evidence_manifest.json"
+  }
+}

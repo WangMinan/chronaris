@@ -16,9 +16,9 @@
     "timestamp_jitter_sigma_s": 0.05,
     "clock_offset_limit_s": 0.25
   },
-  "normalizer_fit_sample_hash": "175a6f0149428fea1c5eb5c953b1554a4ae8a1e13a6134e77a39be5bc1b0bca6",
-  "normalizer_transform_sha256": "3a0ba9aebc043cea865a383643170964473fffaa5793e24c0ca399ec8b7b91ed",
-  "normalizer_elapsed_s": 3.1122512971051037,
+  "normalizer_fit_sample_hash": "ce1c09269685f2de858cbb6711e5ac41db51f3910311fb546fe448825ac4986a",
+  "normalizer_transform_sha256": "61db86dcccdbadc9cd5268ba362797d8246d8ab179310e4cabc417f46ed8f4cd",
+  "normalizer_elapsed_s": 1.8188111740164459,
   "normalizer_batch_size": 2,
   "export_batch_size": 2,
   "label_used_for_encoder_training": false,

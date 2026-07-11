@@ -10,6 +10,7 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-11_dingxin-five-fold-pretraining/`：**鼎新五折六方法公共预训练与统一表示聚合审计**。三个留一视图主协议折与两个留一架次辅助折均完成，每折 6 个 checkpoint、18 份 train/validation/outer-test 表示，合计 30 个 checkpoint 和 90 份 `[N,96,64]` 表示。聚合层逐项重验 archive/manifest、样本顺序、source hash、checkpoint 文件与 inner-train fit hash；每折恢复 18/18，五个子 run 60/60、聚合 13/13。五折五方法累计训练 1066.45 秒，最高峰值 2047.1 MB；约 393 MB 重型产物位于被忽略目录。任务目标与 outer-test 指标全程关闭，本 run 不形成模型排名。
 - `runs/2026-07-11_dingxin-fold-pretraining-smoke/`：**鼎新主协议首折六方法公共预训练与统一表示导出**。留一视图第一折的 inner-train/validation/outer-test 各 31 个完整上下文；五个可训练方法共享 inner-train 归一化、增强和三个公共目标，各完成 1 epoch、31 step，朴素同步仅拟合因果 forward-fill 与随机化主成分分析。六个 checkpoint 导出三角色共 18 份 `[N,96,64]` 表示，恢复 18/18 复用并通过同角色对齐。累计训练 213.63 秒、完整成功链路峰值 1967.4 MB，约 79 MB 重型产物位于被忽略目录；紧凑证据约 292 KB，12/12 验收通过。本 run 未打开任务目标、未计算 outer-test 指标或形成排名。
 - `runs/2026-07-11_dingxin-inner-splits/`：**鼎新外层折训练内验证划分**。五个外层折均形成 inner-train、validation、overlap embargo 和 outer-test 四种互斥角色；训练组含两个架次时完整留出一个架次，只含同一架次时按末端七个时间块验证并删除重叠上下文。五折 inner-train/validation 为 31/31、31/31、38/14、19/7、38/14，共享航电原始时间区间重叠数为 0；分类各角色覆盖三类，生理响应各角色均覆盖连续值和高/非高两类，11/11 验收通过。现有 outer-train 阈值只供固定配置 smoke，正式候选筛选前必须嵌套重拟合。本 run 未训练模型、未读取 outer-test 指标或形成排名。
 - `runs/2026-07-11_dingxin-context-bindings/`：**鼎新原始双流上下文与弱监督目标绑定**。96 个标签上下文中 93 个具备完整 30 秒输入，三个部分末窗只有 25.991 秒并结构化不可用；五折机动分类绑定 93 个、生理响应绑定 90 个唯一可用上下文。公共 schema 为 12 个生理字段、955 个航电字段，20 个机动标签源在 raw 映射层删除，最大输入相对时间 29.999 秒。允许字段采用 78.6 MB CSR 缓存而非 GB 级稠密 bundle，完整审计 12.34 秒、峰值 767 MB；目标、阈值、snapshot 哈希和外层 group 隔离均通过，12/12 验收完成。本 run 未训练模型或生成任务指标。

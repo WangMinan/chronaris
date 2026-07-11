@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G4.2 鼎新弱监督目标与真实外层折接入
 
-G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成统一下游消费者与指标。G4.2 已完成鼎新两项独立目标 archive、防泄漏原始点上下文、五折任务绑定和训练内 validation；留一视图主协议首折已完成真实公共预训练和统一表示，当前扩展其余四折。五折未全部完成前不进入候选 screen。
+G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成统一下游消费者与指标。G4.2 已完成鼎新两项独立目标 archive、防泄漏原始点上下文、五折任务绑定、训练内 validation，以及三个留一视图和两个留一架次折的公共预训练与统一表示。当前接入五折固定 consumer 工程冒烟；完成前不进入候选 screen。
 
 ### G1–G4.1 已完成
 
@@ -32,6 +32,9 @@ G4.1 已把仿真负荷与机动状态真值接入六方法冻结表示，完成
 - 主协议首折已完成五个可训练方法各 31 step、六个 checkpoint 和 18 份三角色表示；18/18 恢复、同角色六方法对齐和 2.5 GB 内存门均通过。
 - 完整首折累计训练 213.63 秒、峰值 1967.4 MB，Chronaris 训练 148.73 秒；约 79 MB 重型产物仅位于被忽略目录。本 run 未打开任务目标或计算 outer-test 指标。
 - 流式训练与首折表示接入后完整测试为 `323 passed, 8 skipped`。
+- 五折总计 30 个 checkpoint、90 份表示，五个子 run 60/60、聚合审计 13/13；所有 archive、checkpoint hash、fit hash、角色样本和公共 schema 已重验。
+- 五折五方法累计训练 1066.45 秒，最高峰值 2047.1 MB；约 393 MB 重型产物仅位于被忽略目录，任务目标与 outer-test 指标保持关闭。
+- 五折聚合审计接入后完整测试为 `325 passed, 8 skipped`。
 
 ### 当前输入与不可变边界
 
@@ -143,8 +146,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 1. 已完成：生成鼎新机动分类与生理响应两个独立目标 archive，逐样本记录 G1 阈值、原始点中位数、snapshot 与外层折 hash。
 2. 已完成：从固定 snapshot 构造与目标 context 一一对应的 30 秒原始异步双流，审计标签源字段排除、部分末窗和未来区间隔离。
 3. 已完成：在 outer-train group 内建立防重叠 inner-train/validation，固化 leave-one-view-out 主协议和 leave-one-sortie-out 辅助协议。
-4. 当前：首折已完成；继续训练其余四折的五方法公共预训练 checkpoint、朴素时间同步无监督变换并导出六方法 train/validation/test 表示。
-5. 接入固定线性/MiniROCKET consumer 的真实数据 smoke；真实与仿真 metric root 分离。G4.2 通过后再进入 seed 17 四候选 screen。
+4. 已完成：五折五方法公共预训练 checkpoint、朴素时间同步无监督变换和六方法 train/validation/test 表示全部生成。
+5. 当前：接入固定线性/MiniROCKET consumer 的真实数据 smoke；真实与仿真 metric root 分离。G4.2 通过后再进入 seed 17 四候选 screen。
 
 ## 已锁定规范
 
@@ -231,6 +234,6 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 1. 已通过：两项鼎新 target archive 的时间边界、训练折阈值、样本覆盖、字段 lineage 和 unavailable 测试。
 2. 已通过：机动标签源字段在原始映射中零命中，未来生理点在输入中零命中，三个部分末窗结构化不可用。
 3. 已通过：leave-one-view-out 与 leave-one-sortie-out 的 inner-train/validation/outer-test group 或时间块无重叠；后续所有变换必须只用 inner-train。
-4. 首折已通过：target、原始点 context 与表示 sample ID 一一对应；其余折继续保持漏样本、重复样本、跨折 checkpoint 直接失败。
+4. 已通过：五折 target、原始点 context 与表示 sample ID 一一对应；漏样本、重复样本、跨折 checkpoint 直接失败。
 5. 至少一个真实外层折完成六方法表示和固定 consumer smoke，所有鼎新结果继续标记弱监督并与仿真指标分层。
 6. G1–G4.1 聚焦测试保持通过，并运行完整 `pytest`、`compileall`、`git diff --check`、术语、密钥、LFS 和重型产物忽略检查。

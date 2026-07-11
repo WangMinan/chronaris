@@ -1,0 +1,62 @@
+{
+  "format": "chronaris.dingxin_five_fold_pretraining_sources.v1",
+  "fold_run_ids": [
+    "2026-07-11_dingxin-fold-pretraining-smoke",
+    "2026-07-11_dingxin-fold-pretraining-view02",
+    "2026-07-11_dingxin-fold-pretraining-view03",
+    "2026-07-11_dingxin-fold-pretraining-sortie01",
+    "2026-07-11_dingxin-fold-pretraining-sortie02"
+  ],
+  "fold_sources": [
+    {
+      "fold_run_id": "2026-07-11_dingxin-fold-pretraining-smoke",
+      "fold_id": "leave_one_view_out__fold01",
+      "schema_sha256": "dd36f05f8880bee8c5ba77d76ac069241098d7e78a13a386149e512e273e1315",
+      "source_hashes": {
+        "field_role_manifest": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+        "context_manifest": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+        "inner_split_manifest": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6"
+      }
+    },
+    {
+      "fold_run_id": "2026-07-11_dingxin-fold-pretraining-view02",
+      "fold_id": "leave_one_view_out__fold02",
+      "schema_sha256": "dd36f05f8880bee8c5ba77d76ac069241098d7e78a13a386149e512e273e1315",
+      "source_hashes": {
+        "field_role_manifest": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+        "context_manifest": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+        "inner_split_manifest": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6"
+      }
+    },
+    {
+      "fold_run_id": "2026-07-11_dingxin-fold-pretraining-view03",
+      "fold_id": "leave_one_view_out__fold03",
+      "schema_sha256": "dd36f05f8880bee8c5ba77d76ac069241098d7e78a13a386149e512e273e1315",
+      "source_hashes": {
+        "field_role_manifest": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+        "context_manifest": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+        "inner_split_manifest": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6"
+      }
+    },
+    {
+      "fold_run_id": "2026-07-11_dingxin-fold-pretraining-sortie01",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "schema_sha256": "dd36f05f8880bee8c5ba77d76ac069241098d7e78a13a386149e512e273e1315",
+      "source_hashes": {
+        "field_role_manifest": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+        "context_manifest": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+        "inner_split_manifest": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6"
+      }
+    },
+    {
+      "fold_run_id": "2026-07-11_dingxin-fold-pretraining-sortie02",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "schema_sha256": "dd36f05f8880bee8c5ba77d76ac069241098d7e78a13a386149e512e273e1315",
+      "source_hashes": {
+        "field_role_manifest": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+        "context_manifest": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+        "inner_split_manifest": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6"
+      }
+    }
+  ]
+}
