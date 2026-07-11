@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_simulation_end_to_end_finetuning.py --run-id 2026-07-12_simulation-end-to-end-finetuning --seed 17 --seed 29 --seed 43 --learning-rate 0.0001 --max-epochs 20 --patience 5 --batch-size 128 --baseline-device cpu --chronaris-device cpu --resume
