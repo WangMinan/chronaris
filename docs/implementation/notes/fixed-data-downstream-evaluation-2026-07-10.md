@@ -414,6 +414,17 @@ scripts/evaluation/application_tasks/run_application_benchmark.py
 - fusion gain 的高/低方向转换测试通过。
 - metrics long 表能完整反查 fold、seed、method、consumer 和 checkpoint。
 
+### 9.3 2026-07-11 G4.1 执行结果
+
+- G4.1 没有直接复用只有单一 0–30 秒上下文的旧表示，而是从 16 条 G1 仿真训练轨迹分别提取 30/60/90/120 秒四个上下文，形成覆盖五类机动状态的 64 个样本和 32/16/16 profile 隔离划分。
+- 六方法复用 G3b.4 的冻结 checkpoint，在新上下文上导出 train/validation/held-out 共 18 份 `[N,96,64]` 表示；真值只在五个可训练 checkpoint 与全部表示完成后打开。
+- 固定线性探针、MiniROCKET 10,000 kernels、两层因果 TCN 和训练折持续时间解码已形成统一可恢复接口。MiniROCKET 对单窗口内恒定潜在维执行同一训练折方差规则；TCN 初始化、dropout 和优化步骤共用隔离随机流。
+- 分类输出 macro-F1、balanced accuracy、macro-AUPRC、Brier 和 ECE；回归输出 MAE、RMSE 和 Spearman；分段输出 frame macro-F1、三档 segmental F1、两档 boundary F1、edit 和检测延迟。
+- 六方法共产生 384 条可计算的 smoke-only 指标、256 条方向归一融合增益和 30 条以 4 条留出轨迹为独立单位的配对统计接口；这些结果不参与模型选择。
+- 删除 Chronaris 留出表示、MiniROCKET 和 TCN 后分别只重建目标组件，未删除模型 SHA-256 保持不变，重建预测哈希一致；公共预训练 checkpoint 前后哈希不变。
+- 紧凑证据位于 `docs/artifacts/runs/2026-07-11_application-consumer-smoke/`，12/12 验收通过；约 15 MB 表示、消费者模型和逐样本预测只在被忽略目录。
+- G4 尚未整体完成。下一步先完成鼎新两项弱监督 target archive、固定 snapshot 上下文和真实外层折接入，再进入 G5 screen。
+
 ## 10. 运行与收口入口
 
 工作包 G（开发筛选、锁定训练、压力测试和消融）、工作包 H（附录诊断、论文证据包）、恢复策略、失败处理和最终验证拆分到：

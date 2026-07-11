@@ -1,0 +1,31 @@
+{
+  "run_id": "2026-07-11_application-consumer-smoke",
+  "status": "completed",
+  "evidence_layer": "application_consumer_smoke_only",
+  "training_invoked": true,
+  "encoder_training_invoked": false,
+  "confirmed_metrics_changed": false,
+  "downstream_metrics_smoke_only": true,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke",
+  "workload_prediction_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/workload_predictions.csv",
+  "unit_score_path": "artifacts/application_evaluation/2026-07-11_application-consumer-smoke/trajectory_unit_scores.csv",
+  "output_paths": {
+    "data_manifest": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/data_manifest.json",
+    "target_manifest": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/target_manifest.json",
+    "checkpoint_manifest": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/checkpoint_manifest.json",
+    "representation_manifest": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/representation_manifest.json",
+    "downstream_protocol": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/downstream_protocol.json",
+    "consumer_model_manifest": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/consumer_model_manifest.json",
+    "metric_long": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/metric_long.csv",
+    "fold_metrics": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/fold_metrics.csv",
+    "fusion_gain": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/fusion_gain.csv",
+    "paired_statistics": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/paired_statistics.csv",
+    "tcn_training": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/tcn_training.csv",
+    "resource_budget": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/resource_budget.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/acceptance_checks.csv",
+    "report": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_application-consumer-smoke/evidence_manifest.json"
+  }
+}

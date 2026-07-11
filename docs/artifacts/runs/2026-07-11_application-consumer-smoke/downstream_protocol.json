@@ -1,0 +1,53 @@
+{
+  "format": "chronaris.application_consumer_protocol.v2",
+  "consumer_runtime_revision": "component_recovery_deterministic_tcn.v2",
+  "config": {
+    "linear": {
+      "random_state": 17,
+      "classification_c": 1.0,
+      "regression_alpha": 1.0
+    },
+    "minirocket": {
+      "n_kernels": 10000,
+      "random_state": 17,
+      "n_jobs": 1,
+      "classification_c": 1.0,
+      "regression_alpha": 1.0,
+      "minimum_case_channel_std": 1e-07
+    },
+    "tcn": {
+      "input_dim": 64,
+      "hidden_channels": 64,
+      "class_count": 5,
+      "kernel_size": 3,
+      "dilations": [
+        1,
+        2
+      ],
+      "dropout": 0.1,
+      "epochs": 3,
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "seed": 17
+    }
+  },
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "consumer_configuration_method_invariant": true,
+  "fit_role": "train",
+  "evaluation_roles": [
+    "validation",
+    "held_out"
+  ],
+  "duration_parameters_fit_role": "train",
+  "threshold_parameters_fit_role": "train",
+  "minirocket_variance_filter_fit_role": "train",
+  "minirocket_variance_filter_rule": "retain channels whose within-window standard deviation exceeds the fixed threshold for every training context",
+  "smoke_only": true
+}
