@@ -98,6 +98,35 @@
   --baseline-device cuda --chronaris-device cpu --resume
 ```
 
+### 1.9 仿真预训练到鼎新无标签适配
+
+- 五个可训练方法都从各自同 seed 的 G1 锁定 checkpoint 初始化；只复制同名同形状参数，鼎新 schema 相关输入层和重构层重新初始化。
+- 六方法使用相同仿真额外数据预算；朴素时间同步仍只在鼎新训练折拟合无监督归一化与 PCA。
+- 鼎新 inner-train/validation 上只运行公共自监督目标，任务标签和 outer-test 保持关闭；辅助轨道固定最多 20 epoch、patience 5。
+- 表示和 consumer 必须使用独立 run_id，表示族固定为 `synthetic_pretrain_real_adapt_v1`，不得覆盖 real-only 主表。
+
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_dingxin_locked_pretraining.py \
+  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt \
+  --initialization-pretraining-run-id 2026-07-12_simulation-locked-pretraining \
+  --seed 17 --seed 29 --seed 43 \
+  --max-epochs 20 --patience 5 --batch-size 32 \
+  --baseline-device cuda --chronaris-device cpu --resume
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_dingxin_locked_representations.py \
+  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations \
+  --pretraining-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt \
+  --baseline-device cuda --chronaris-device cpu --resume
+
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/evaluation/application_tasks/run_dingxin_locked_consumers.py \
+  --run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-consumers \
+  --representation-run-id 2026-07-12_dingxin-synthetic-pretrain-adapt-representations \
+  --minirocket-kernels 10000 --resume
+```
+
 ## 2. 工作包 H：附录诊断与论文证据包
 
 ### 2.1 结构诊断附录
