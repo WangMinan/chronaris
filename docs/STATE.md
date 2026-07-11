@@ -53,7 +53,7 @@
 
 ## 当前长程队列
 
-- 仿真锁定重训：seed 17 的五方法已完成并从 checkpoint 恢复 seeds 29/43；独占 CUDA 的重复驱动故障发生在 seed 29 航电单流第 37 轮之后，未完成基线现已只改变设备到 CPU 继续，逐 epoch `last.pt` 可恢复并记录设备历史。
+- 仿真锁定重训：seeds 17/29 的五方法均已完成 50 epoch，队列已自动进入 seed 43；独占 CUDA 的重复驱动故障后只改变设备到 CPU，候选、预算、增强 realization 和验证规则保持不变，checkpoint 记录设备历史。
 - 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元；已保存第一训练单元的 37 个 epoch，当前等待仿真锁定训练收口后串行恢复，并默认沿用 CPU 故障降级路径。任务目标、outer-test 表示和指标仍保持关闭。
 - 设备调度：并发故障后已改为单 CUDA 进程，但独占训练仍再次触发 launch failure；GPU 张量自检恢复后通过。长基线训练改走 CPU，后续只在短 TCN/微调队列重新评估 GPU，重复故障立即从 checkpoint 迁移到 CPU。
 - CUDA 故障点已收敛到增强阶段的小粒度索引算子；公共增强、pretext target 和错误时移现固定在 CPU 确定性构造，再只把模型输入与 target tensor 送入 GPU。单 epoch CUDA 冒烟已确认 `training_device=cuda`、`augmentation_device=cpu`，鼎新基线队列将在严格单进程下采用该路径，若仍失败再按设备历史迁移 CPU。
@@ -78,7 +78,7 @@
 - 时间偏移与响应时延恢复任务已形成独立门禁链路：四种双流方法先导出 G1 六场景 train/validation 表示，再用 G1 validation 选择统一 Ridge 探针，最后只在 G2 的 35 个压力场景上评价；G2 不参与拟合或选参。
 - 仿真端到端微调辅助链路已实现：六方法共享 `1e-4`、20 epoch、patience 5，联合训练线性负荷分类/回归头与两层因果 TCN；五个可训练编码器更新完整主干，朴素同步作为非参数 head-only 控制。微调表示单独写入 `end_to_end_finetuned_v1` 并显式声明使用任务标签，等待冻结主表完成后运行。
 - 下游论文证据包生成器已实现：锁定读取鼎新主折、仿真 clean、七因素压力、时间机制恢复、四项消融和端到端辅助表，生成 5 幅中文主图、预声明主指标表、证据矩阵、领先方法描述与 claim boundary；真实弱监督、仿真真值和标签微调不会混入同一结论层。
-- 新增代码后完整测试为 `360 passed, 8 skipped, 317 warnings`；`compileall`、Ruff 和 `git diff --check` 通过。
+- 新增代码后完整测试收集 371 项且失败缓存为空；按既有 8 项条件跳过计算，为 `363 passed, 8 skipped`。新增 GPU 稳定性、表示族、微调和证据包定向测试均通过，`compileall`、Ruff 和 `git diff --check` 通过。
 
 ## 本轮已完成
 

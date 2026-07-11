@@ -211,7 +211,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ### G6：locked confirmation
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；仿真长基线在独占 GPU 重复失败后迁移到 CPU，Chronaris 仍使用同批基准更快的 CPU。
-- 进行中：仿真 seed 17 五方法已完成，seed 29 航电单流从 epoch 37 的恢复点继续，之后依次完成其余 seeds 29/43 单元。
+- 进行中：仿真 seeds 17/29 五方法均已完成 50 epoch，seed 29 Chronaris 最佳轮次为 50；队列已进入 seed 43。
 - 排队恢复：鼎新 75 个选定配置锁定重训；单折单 seed 五方法冒烟已完成 8/8 验收，第一方法已保存至 epoch 37。待仿真锁定训练收口后，以“CPU 增强 + 单进程 GPU 模型”路径恢复基线、CPU 运行 Chronaris；若 CUDA 模型计算仍重复失败则保留 checkpoint 迁移 CPU。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
