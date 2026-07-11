@@ -34,6 +34,7 @@ from chronaris.simulation.aviation_dual_stream import (
     canonical_observation_scenarios,
     locked_stress_observation_scenarios,
 )
+from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
 LOGGER = logging.getLogger(
@@ -314,8 +315,9 @@ def _load_g1_role(root, *, seed, method, role, scenarios):
     sample_ids = []
     pooled = []
     hashes = []
+    representation_hashes = []
     for scenario_id in scenarios:
-        output = load_fusion_stream_batch(
+        representation_root = (
             root
             / "representations"
             / f"seed_{seed}"
@@ -323,15 +325,22 @@ def _load_g1_role(root, *, seed, method, role, scenarios):
             / role
             / scenario_id
         )
+        output = load_fusion_stream_batch(representation_root)
         sample_ids.extend(output.sample_ids)
         pooled.append(output.pooled_embedding.detach().cpu().numpy())
         hashes.append(output.checkpoint_sha256)
+        representation_hashes.append(
+            sha256_file(representation_root / "fusion_stream.npz")
+        )
     if len(set(hashes)) != 1:
         raise ValueError("mechanism role representation checkpoint changed")
     return {
         "sample_ids": tuple(sample_ids),
         "pooled": np.concatenate(pooled, axis=0),
         "checkpoint_sha256": hashes[0],
+        "representation_set_sha256": hashlib.sha256(
+            "".join(representation_hashes).encode()
+        ).hexdigest(),
     }
 
 
@@ -351,6 +360,10 @@ def _fit_or_load(
         "train_sample_ids": list(train["sample_ids"]),
         "validation_sample_ids": list(validation["sample_ids"]),
         "checkpoint_sha256": train["checkpoint_sha256"],
+        "train_representation_set_sha256": train["representation_set_sha256"],
+        "validation_representation_set_sha256": validation[
+            "representation_set_sha256"
+        ],
     }
     protocol_sha256 = hashlib.sha256(
         json.dumps(protocol, sort_keys=True).encode()
