@@ -1,0 +1,149 @@
+{
+  "variants": [
+    "no_continuous_evolution",
+    "no_physics",
+    "no_causal_mask",
+    "single_scale_lag"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "g2_locked_test_opened": false,
+  "task_targets_opened": false,
+  "stage_name": "simulation_chronaris_ablation_pretraining",
+  "run_id": "2026-07-12_simulation-chronaris-ablation-pretraining",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T19:30:55.497637Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T11:47:27.412176Z",
+      "event": "start",
+      "variants": [
+        "no_continuous_evolution",
+        "no_physics",
+        "no_causal_mask",
+        "single_scale_lag"
+      ],
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "g2_locked_test_opened": false,
+      "task_targets_opened": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T12:08:53.733528Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 17,
+      "variant": "no_continuous_evolution",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T12:31:56.588957Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 17,
+      "variant": "no_physics",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T12:55:31.968103Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 17,
+      "variant": "no_causal_mask",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T13:27:04.803219Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 17,
+      "variant": "single_scale_lag",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T14:31:22.647813Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 29,
+      "variant": "no_continuous_evolution",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T14:51:47.490623Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 29,
+      "variant": "no_physics",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T15:42:45.277126Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 29,
+      "variant": "no_causal_mask",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T18:04:07.857791Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 29,
+      "variant": "single_scale_lag",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T18:25:51.979693Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 43,
+      "variant": "no_continuous_evolution",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T18:47:16.785362Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 43,
+      "variant": "no_physics",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T19:08:52.918496Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 43,
+      "variant": "no_causal_mask",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T19:30:55.479140Z",
+      "event": "simulation_chronaris_ablation_variant_complete",
+      "seed": 43,
+      "variant": "single_scale_lag",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-11T19:30:55.497637Z",
+      "event": "finished",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "seed": 43,
+  "variant": "single_scale_lag",
+  "status": "completed",
+  "best_epoch": 50,
+  "variant_seed_count": 12,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

@@ -222,7 +222,8 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 - 进行中：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced`；三个留一视图主折均 15/15 完成，总进度 45/75，已进入留一架次辅助折。第二/第三主折 Chronaris 三个 seed 的最佳 epoch 分别为 15/10/46 和 15/40/8，早停仍只使用公共自监督 validation。CPU 构造增强、全方法唯一 GPU 训练；任何缺少 `model_input_contract.json` 的旧 checkpoint 均拒绝恢复。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。
-- 进行中：Chronaris 四项固定消融 × seeds 17/29/43 的 CPU 锁定重训已完成 11/12 个单元；仅余 seed 43 的单尺度时延变体，不占用当前唯一 CUDA 正式队列。
+- 已完成：Chronaris 四项固定消融 × seeds 17/29/43 共 12/12 个 checkpoint、6/6 门禁；训练和保留确认全程不打开 G2 或任务真值。
+- 已完成：12 个消融 checkpoint 导出 G1 train、G1 validation 和 G2 held-out 共 36/36 份统一表示，5/5 门禁通过；任务真值在表示阶段保持关闭。
 - 已验证：无物理约束变体完成 G1 train/validation 与 G2 held-out 三角色表示导出，3/3 输出、5/5 验收通过；正式消融表示等待 12 个变体 checkpoint。
 - 已实现待上游门禁：synthetic-to-real 三 seed 五折无标签适配及其统一表示/consumer 复用。
 - 已实现待上游门禁：端到端微调辅助表；三 seed 六方法、独立表示族和 48 轨迹统计均已编排，不得替代冻结表示主结果。

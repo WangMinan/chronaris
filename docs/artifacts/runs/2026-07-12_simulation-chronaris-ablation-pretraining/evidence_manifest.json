@@ -1,0 +1,19 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_pretraining_evidence.v1",
+  "run_id": "2026-07-12_simulation-chronaris-ablation-pretraining",
+  "status": "completed",
+  "variant_seed_count": 12,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_simulation-chronaris-ablation-pretraining",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/ablation_pretraining_results.csv",
+    "epochs": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/epoch_metrics.jsonl",
+    "auxiliary": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/chronaris_auxiliary_metrics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining/evidence_manifest.json"
+  }
+}
