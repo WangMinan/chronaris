@@ -5,6 +5,7 @@ from __future__ import annotations
 import numpy as np
 from sklearn.linear_model import LogisticRegression, Ridge
 from sklearn.metrics import f1_score, mean_squared_error
+from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -19,19 +20,24 @@ def fit_classifier(
     random_state,
     scaler_with_mean,
     classification_labels=None,
+    solver="lbfgs",
 ):
     best = None
     best_score = float("-inf")
     selected = None
     for c_value in c_values:
+        estimator = LogisticRegression(
+            C=float(c_value),
+            class_weight="balanced",
+            max_iter=5_000,
+            random_state=random_state,
+            solver="liblinear" if solver == "liblinear_ovr" else solver,
+        )
+        if solver == "liblinear_ovr":
+            estimator = OneVsRestClassifier(estimator, n_jobs=1)
         candidate = make_pipeline(
             StandardScaler(with_mean=scaler_with_mean),
-            LogisticRegression(
-                C=float(c_value),
-                class_weight="balanced",
-                max_iter=5_000,
-                random_state=random_state,
-            ),
+            estimator,
         ).fit(train_values, np.asarray(train_target, dtype=np.int64))
         score = (
             f1_score(
@@ -49,6 +55,11 @@ def fit_classifier(
             best_score = float(score)
             selected = float(c_value)
     return best, selected
+
+
+def classifier_classes(classifier) -> np.ndarray:
+    """Return fitted class order for either direct or explicit OvR logistic heads."""
+    return np.asarray(classifier[-1].classes_, dtype=np.int64)
 
 
 def fit_regressor(

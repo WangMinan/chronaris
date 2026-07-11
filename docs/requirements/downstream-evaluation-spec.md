@@ -312,6 +312,7 @@ StandardScaler -> LogisticRegression
 C in {0.1, 1, 10}
 class_weight = balanced
 max_iter = 5000
+solver = lbfgs
 ```
 
 回归：
@@ -329,10 +330,10 @@ alpha in {0.1, 1, 10, 100}
 MiniRocket(n_kernels=10000, max_dilations_per_kernel=32,
            random_state=seed)
 -> StandardScaler(with_mean=False)
--> 与线性探针相同的 LogisticRegression 或 Ridge 网格
+-> OneVsRestClassifier(LogisticRegression(solver=liblinear)) 或 Ridge 网格
 ```
 
-所有方法的 `n_kernels`、随机种子和后端 estimator 网格一致；不为 Chronaris 单独增加搜索。
+所有方法的 `n_kernels`、随机种子、OvR 逻辑回归求解器和后端 estimator 网格一致；不为 Chronaris 单独增加搜索。显式 OvR `liblinear` 用于约 10,000 维、小样本的 MiniRocket 输出，避免默认多项 `lbfgs` 在每个 C 上重复执行昂贵的高维二阶优化；64 维线性探针仍使用 `lbfgs`。首个正式仿真方法的冻结变换基准中，三个 `liblinear` C 值各耗时 2.20–2.40 秒，而默认 `lbfgs` 三值网格约 29 分钟；求解器在任何锁定测试比较完成前按运行时锁定。
 
 ### 11.3 状态分段模型
 

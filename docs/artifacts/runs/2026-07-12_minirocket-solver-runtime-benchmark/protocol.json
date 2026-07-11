@@ -1,0 +1,18 @@
+{
+  "format": "chronaris.minirocket_solver_runtime_benchmark.v1",
+  "seed": 17,
+  "method_name": "physiology_only",
+  "train_sample_count": 384,
+  "validation_sample_count": 96,
+  "transformed_feature_count": 9996,
+  "transform_elapsed_s": 0.6196509842,
+  "classification_c_grid": [0.1, 1.0, 10.0],
+  "max_iter": 5000,
+  "class_weight": "balanced",
+  "selected_solver": "liblinear_ovr",
+  "selection_basis": "runtime_and_high_dimensional_small_sample_fit",
+  "locked_test_opened": false,
+  "train_representation_sha256": "74c9dab51ef5b0dbfa2ff1be0d5fc1a049aae87e8963761b935be71de6da7f8e",
+  "validation_representation_sha256": "3e6588399510a7237350cb217b01eddf77f7c9f25012fc8e37735786331c7c70",
+  "lbfgs_model_sha256": "78a5732cb80ec3ef46aa99ae6863cc9b6c64df98526f83ac11f7bf86f694209b"
+}

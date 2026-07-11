@@ -10,7 +10,7 @@
 
 ## 当前里程碑：G6 多随机种子锁定训练与 G7 压力基准
 
-G4.1–G4.2、G5 seed 17 正式筛选、G6 仿真三随机种子五方法锁定重训和三随机种子六方法统一表示已经完成；仿真 15/15 checkpoint、54/54 表示及两级门禁全部通过，正式 consumer 已按协议打开 G2 真值并运行。鼎新正式重训新增 100 ms 方法无关因果时间箱：首个上下文航电/生理事件由 1779/150 点压缩为 300/120 点，Chronaris GPU 单 epoch 为 40.07 秒，旧未合并 checkpoint 已由协议门禁隔离。G7 的 35 场景 G2 压力数据已完成 7/7 审计，压力模型评价等待 clean consumer 收口。
+G4.1–G4.2、G5 seed 17 正式筛选、G6 仿真三随机种子五方法锁定重训和三随机种子六方法统一表示已经完成；仿真 15/15 checkpoint、54/54 表示及两级门禁全部通过。首次 consumer 已在方法比较前定位并修正高维 `lbfgs` 运行时瓶颈，旧单方法运行隔离为 runtime benchmark；35 场景 G2 压力表示正在导出，clean consumer 随后从空根按统一 OvR `liblinear` 重跑。鼎新正式重训新增 100 ms 方法无关因果时间箱：首个上下文航电/生理事件由 1779/150 点压缩为 300/120 点，Chronaris GPU 单 epoch为 40.07 秒，旧未合并 checkpoint 已由协议门禁隔离。
 
 ### 本轮新增进度
 
@@ -212,7 +212,7 @@ transform、consumer checkpoint、emission、逐样本预测与逐点状态序�
 ### G6：locked confirmation
 
 - 进行中：seeds 17、29、43 的五个唯一配置重训；仿真长基线在独占 GPU 重复失败后迁移到 CPU，Chronaris 仍使用同批基准更快的 CPU。
-- 已完成：仿真 seeds 17/29/43 五方法均完成 50 epoch，15 个训练单元、54 份六方法三角色表示、9/9 与 7/7 门禁全部通过；正式 clean consumer 正在运行。
+- 已完成：仿真 seeds 17/29/43 五方法均完成 50 epoch，15 个训练单元、54 份六方法三角色表示、9/9 与 7/7 门禁全部通过。首次 consumer 运行确认默认 `lbfgs` 高维网格约需 29 分钟/方法；同一冻结变换上显式 OvR `liblinear` 三值网格合计 6.97 秒，已在不读取 G2 比较结果的前提下统一锁定并准备从空根重跑。
 - 排队执行：鼎新 75 个选定配置锁定重训使用 `2026-07-12_dingxin-locked-pretraining-coalesced` 新根；CPU 构造增强、全方法单进程 GPU 训练。任何缺少 `model_input_contract.json` 的旧 checkpoint 均 fail closed，不与新输入混用。
 - 待上游完成后自动执行：G1→G2 clean 三随机种子六方法表示、validation 选参、锁定 held-out 指标和 48 轨迹配对统计。
 - 已实现待队列门禁打开：鼎新 270 份统一表示、主/辅助 split 正式 consumer，以及 Chronaris 四项固定消融的训练—表示—consumer 链路。

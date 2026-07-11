@@ -1,0 +1,5 @@
+solver,c,elapsed_s,validation_macro_f1,measurement_scope
+lbfgs_grid,10.0,1743.676718,0.5503146824,full_minirocket_component_file_interval
+liblinear_ovr,0.1,2.198662,0.5154460203,frozen_transform_classifier_fit
+liblinear_ovr,1.0,2.401156,0.5175720982,frozen_transform_classifier_fit
+liblinear_ovr,10.0,2.365446,0.5389255990,frozen_transform_classifier_fit
