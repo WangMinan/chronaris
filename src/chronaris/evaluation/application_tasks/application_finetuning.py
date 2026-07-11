@@ -69,6 +69,7 @@ class EndToEndFineTuningResult:
     stopped_early: bool
     training_elapsed_s: float
     encoder_update_mode: str
+    training_device_history: tuple[str, ...]
     epoch_rows: tuple[Mapping[str, object], ...]
 
 
@@ -170,7 +171,16 @@ def train_end_to_end_application_method(
     resume_payload = None
     if resume and last_path.is_file():
         resume_payload = torch.load(last_path, map_location=config.device, weights_only=True)
-        if resume_payload.get("protocol_sha256") != protocol_hash:
+        if (
+            resume_payload.get("protocol_sha256") != protocol_hash
+            and not _resume_is_device_only_migration(
+                resume_payload,
+                config=config,
+                source_path=source_path,
+                role_sample_ids=role_sample_ids,
+                targets=targets,
+            )
+        ):
             raise RepresentationContractError("fine-tuning protocol changed")
         model.load_state_dict(resume_payload["model_state_dict"], strict=True)
         optimizer.load_state_dict(resume_payload["optimizer_state_dict"])
@@ -190,6 +200,16 @@ def train_end_to_end_application_method(
     stale = int(resume_payload.get("epochs_without_improvement", 0)) if resume_payload else 0
     completed_epochs = int(resume_payload.get("completed_epochs", 0)) if resume_payload else 0
     elapsed_offset = float(resume_payload.get("training_elapsed_s", 0.0)) if resume_payload else 0.0
+    device_history = list(
+        resume_payload.get(
+            "training_device_history",
+            [resume_payload.get("config", {}).get("device", "cpu")],
+        )
+        if resume_payload
+        else [config.device]
+    )
+    if device_history[-1] != config.device:
+        device_history.append(config.device)
     started = time.perf_counter()
     for epoch in range(completed_epochs + 1, config.max_epochs + 1):
         model.train()
@@ -271,6 +291,7 @@ def train_end_to_end_application_method(
             stale=stale,
             elapsed=elapsed_offset + time.perf_counter() - started,
             training_status="running",
+            device_history=device_history,
         )
         _atomic_save(last_path, payload)
         if improved:
@@ -296,6 +317,7 @@ def train_end_to_end_application_method(
         stale=stale,
         elapsed=elapsed_offset + time.perf_counter() - started,
         training_status="completed",
+        device_history=device_history,
     )
     _atomic_save(best_path, final_payload)
     _atomic_save(last_path, final_payload)
@@ -419,6 +441,7 @@ def _checkpoint_payload(**values):
         "representation_family": "end_to_end_finetuned_v1",
         "label_used_for_encoder_training": True,
         "encoder_update_mode": model.encoder_update_mode,
+        "training_device_history": list(values["device_history"]),
         "role_sample_ids": {key: list(values["role_sample_ids"][key]) for key in ("train", "validation", "held_out")},
         "target_manifest": dict(values["target_manifest"]),
         "regression_train_mean": values["regression_mean"],
@@ -454,5 +477,39 @@ def _result(payload, best_path, last_path, *, status):
         stopped_early=bool(payload["stopped_early"]),
         training_elapsed_s=float(payload["training_elapsed_s"]),
         encoder_update_mode=str(payload["encoder_update_mode"]),
+        training_device_history=tuple(
+            payload.get(
+                "training_device_history",
+                [payload.get("config", {}).get("device", "cpu")],
+            )
+        ),
         epoch_rows=tuple(payload["epoch_rows"]),
+    )
+
+
+def _resume_is_device_only_migration(
+    payload,
+    *,
+    config,
+    source_path,
+    role_sample_ids,
+    targets,
+) -> bool:
+    stored_config = dict(payload.get("config", {}))
+    expected_config = asdict(config)
+    stored_config.pop("device", None)
+    expected_config.pop("device", None)
+    expected_roles = {
+        key: list(role_sample_ids[key])
+        for key in ("train", "validation", "held_out")
+    }
+    return all(
+        (
+            stored_config == expected_config,
+            payload.get("source_checkpoint_sha256") == sha256_file(source_path),
+            payload.get("role_sample_ids") == expected_roles,
+            payload.get("target_manifest") == dict(targets.manifest),
+            payload.get("representation_family") == "end_to_end_finetuned_v1",
+            payload.get("label_used_for_encoder_training") is True,
+        )
     )
