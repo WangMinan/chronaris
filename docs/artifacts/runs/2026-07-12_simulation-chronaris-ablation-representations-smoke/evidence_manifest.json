@@ -1,0 +1,19 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_representation_evidence.v1",
+  "run_id": "2026-07-12_simulation-chronaris-ablation-representations-smoke",
+  "status": "completed",
+  "variant_seed_count": 1,
+  "export_count": 3,
+  "acceptance_pass_count": 5,
+  "acceptance_check_count": 5,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_simulation-chronaris-ablation-representations-smoke",
+  "output_paths": {
+    "inventory": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/seed_variant_inventory.csv",
+    "exports": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/representation_inventory.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md",
+    "resume": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/evidence_manifest.json"
+  }
+}

@@ -37,6 +37,7 @@
 - G6 鼎新锁定重训单折协议验证：[artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md](artifacts/runs/2026-07-12_dingxin-locked-pretraining-smoke/report.md)
 - G6 仿真预训练到鼎新适配协议验证：[artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/report.md](artifacts/runs/2026-07-12_dingxin-synthetic-pretrain-adapt-smoke/report.md)
 - G6 Chronaris 机制消融重训协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-pretraining-smoke/report.md)
+- G6 Chronaris 机制消融表示协议验证：[artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md](artifacts/runs/2026-07-12_simulation-chronaris-ablation-representations-smoke/report.md)
 - G7 G2 锁定压力场景生成审计：[artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md](artifacts/runs/2026-07-12_aviation-simulation-locked-stress-audit/report.md)
 
 ## 已锁定事实
@@ -56,6 +57,7 @@
 - 鼎新锁定重训：3 seeds × 5 个外层折 × 5 个选定配置，共 75 个训练单元；已保存第一训练单元的 37 个 epoch，当前为避免 WSL GPU 并发故障而等待仿真 CUDA 队列完成后串行恢复。任务目标、outer-test 表示和指标仍保持关闭。
 - 设备调度：同一时刻只运行一个 CUDA 正式训练进程；一次双进程并发触发的驱动级 launch failure 已由 checkpoint 恢复处理，GPU 张量自检随后通过。
 - Chronaris 机制消融：四个变体 × 三个随机种子的 CPU 锁定重训已启动，与仿真基线的单 GPU 队列并行；后续仍需等待完整模型与消融表示后才能打开任务真值。
+- 消融表示冒烟：无物理约束变体已从锁定 checkpoint 回载并导出 G1 train、G1 validation、G2 held-out 三角色共 3 份统一表示，672 个上下文耗时约 22 秒，5/5 门禁通过。
 - 上游完成后按门禁顺序自动进入六方法统一表示、validation 选参 consumer、G2 clean 锁定指标、35 场景压力曲线和四项 Chronaris 机制消融。
 
 ## 分支与历史实现
