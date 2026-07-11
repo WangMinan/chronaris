@@ -148,8 +148,6 @@ def run_simulation_end_to_end_finetuning(config: SimulationFineTuningConfig):
         metric_rows = []
         unit_rows = []
         for seed in config.seeds:
-            seed_outputs = {}
-            seed_models = {}
             for method in APPLICATION_METHODS:
                 device = chronaris_device if method == "chronaris" else baseline_device
                 source_path, model = _load_source_model(
@@ -194,8 +192,6 @@ def run_simulation_end_to_end_finetuning(config: SimulationFineTuningConfig):
                 model._finetune_regression_std = float(
                     completed_payload["regression_train_std"]
                 )
-                seed_outputs[method] = outputs
-                seed_models[method] = model
                 result_rows.append(
                     {
                         "seed": seed,
@@ -250,14 +246,17 @@ def run_simulation_end_to_end_finetuning(config: SimulationFineTuningConfig):
                     status=training.status,
                     best_epoch=training.best_epoch,
                 )
-            metrics, units = _evaluate_seed(
-                seed=seed,
-                models=seed_models,
-                outputs=seed_outputs,
-                targets=targets,
-            )
-            metric_rows.extend(metrics)
-            unit_rows.extend(units)
+                metrics, units = _evaluate_seed(
+                    seed=seed,
+                    models={method: model},
+                    outputs={method: outputs},
+                    targets=targets,
+                )
+                metric_rows.extend(metrics)
+                unit_rows.extend(units)
+                del model, outputs
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
         gain_rows = compute_fusion_gain_rows(
             metric_rows,
             fusion_methods=("naive_time_sync", "mult", "contiformer", "chronaris"),
