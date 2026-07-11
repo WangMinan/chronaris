@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-07-11_dingxin-nested-targets",
+  "status": "completed",
+  "evidence_layer": "dingxin_inner_train_nested_targets",
+  "training_invoked": false,
+  "metrics_generated": false,
+  "confirmed_metrics_changed": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-11_dingxin-nested-targets",
+  "output_paths": {
+    "nested_targets": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_targets.csv",
+    "nested_thresholds": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_thresholds.csv",
+    "fold_summary": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/fold_summary.csv",
+    "archive_manifest": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/target_archive_manifest.csv",
+    "outer_comparison": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/outer_target_comparison.csv",
+    "acceptance_checks": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/acceptance_checks.csv",
+    "source_manifest": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/source_manifest.json",
+    "report": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/report.md",
+    "claim_boundary": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/claim_boundary.md",
+    "resume_command": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/resume_command.txt",
+    "evidence_manifest": "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/evidence_manifest.json"
+  }
+}

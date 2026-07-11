@@ -1,0 +1,34 @@
+{
+  "threshold_scope": "inner_train_nested",
+  "training_invoked": false,
+  "metrics_generated": false,
+  "confirmed_metrics_changed": false,
+  "stage_name": "dingxin_inner_train_nested_targets",
+  "run_id": "2026-07-11_dingxin-nested-targets",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-11T05:17:26.515772Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-11T05:17:25.607640Z",
+      "event": "start",
+      "threshold_scope": "inner_train_nested",
+      "training_invoked": false,
+      "metrics_generated": false,
+      "confirmed_metrics_changed": false
+    },
+    {
+      "timestamp_utc": "2026-07-11T05:17:26.515772Z",
+      "event": "finished",
+      "status": "completed",
+      "fold_count": 5,
+      "archive_count": 10,
+      "acceptance_pass_count": 10,
+      "acceptance_check_count": 10
+    }
+  ],
+  "status": "completed",
+  "fold_count": 5,
+  "archive_count": 10,
+  "acceptance_pass_count": 10,
+  "acceptance_check_count": 10
+}

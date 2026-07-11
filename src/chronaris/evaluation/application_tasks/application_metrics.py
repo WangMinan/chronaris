@@ -39,7 +39,16 @@ def classification_metrics(
     ]
     one_hot = binary.astype(float)
     return {
-        "macro_f1": (f1_score(truth, prediction, average="macro", zero_division=0), "higher"),
+        "macro_f1": (
+            f1_score(
+                truth,
+                prediction,
+                labels=classes,
+                average="macro",
+                zero_division=0,
+            ),
+            "higher",
+        ),
         "balanced_accuracy": (balanced_accuracy_score(truth, prediction), "higher"),
         "macro_auprc": (float(np.mean(per_class)) if per_class else None, "higher"),
         "brier_score": (float(np.mean(np.sum((probability - one_hot) ** 2, axis=1))), "lower"),
