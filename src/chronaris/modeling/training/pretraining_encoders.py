@@ -87,8 +87,17 @@ class TrainableFusionEncoder(nn.Module):
     def forward(
         self,
         batch: DualStreamObservationBatch,
+        *,
+        compute_chronaris_diagnostics: bool = False,
     ) -> PretrainingEncoderOutput:
-        encoded = self.backbone(batch)
+        encoded = (
+            self.backbone(
+                batch,
+                compute_diagnostics=compute_chronaris_diagnostics,
+            )
+            if self.method_name == "chronaris"
+            else self.backbone(batch)
+        )
         if self.method_name in {"physiology_only", "vehicle_only"}:
             sequence = encoded.sequence_embedding
             available = encoded.valid_mask

@@ -32,9 +32,22 @@ from chronaris.modeling.training.candidate_ranking import rank_encoder_candidate
 from chronaris.modeling.training.candidate_confirmation import (
     confirm_selected_pretext_checkpoint,
 )
+from chronaris.modeling.training.chronaris_auxiliary import (
+    ChronarisAuxiliaryLosses,
+    build_chronaris_auxiliary_losses,
+    chronaris_auxiliary_losses_to_rows,
+)
+from chronaris.modeling.training.chronaris_locked_training import (
+    LockedChronarisTrainingConfig,
+    LockedChronarisTrainingResult,
+    train_locked_chronaris,
+)
 
 __all__ = [
     "ChronarisAuxiliaryWeights",
+    "ChronarisAuxiliaryLosses",
+    "LockedChronarisTrainingConfig",
+    "LockedChronarisTrainingResult",
     "ENCODER_SCREEN_CANDIDATES",
     "EncoderCandidateConfig",
     "CommonPretextHeadBundle",
@@ -51,10 +64,13 @@ __all__ = [
     "TrainableFusionEncoder",
     "TrainedFusionAdapter",
     "build_trainable_fusion_encoder",
+    "build_chronaris_auxiliary_losses",
     "load_common_pretraining_checkpoint",
     "train_common_pretext_method",
     "train_pretext_candidate",
+    "train_locked_chronaris",
     "chronaris_auxiliary_weight_schedule",
+    "chronaris_auxiliary_losses_to_rows",
     "confirm_selected_pretext_checkpoint",
     "pretext_loss_terms_to_rows",
     "rank_encoder_candidates",

@@ -32,7 +32,6 @@ from chronaris.evaluation.application_tasks.dingxin_pretraining_aggregate import
     DEFAULT_FOLD_RUN_IDS,
 )
 from chronaris.modeling.common.run_observer import open_task_eval_run_observer
-from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
 LOGGER = logging.getLogger("chronaris.pipelines.task_eval.dingxin_nested_validation")
@@ -48,6 +47,7 @@ class DingxinNestedConsumerConfig:
         "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_targets.csv"
     )
     fold_run_ids: tuple[str, ...] = DEFAULT_FOLD_RUN_IDS
+    fold_root_paths: tuple[str, ...] = ()
     seed: int = 17
     resume: bool = True
 
@@ -92,8 +92,16 @@ def run_dingxin_nested_validation_consumers(
         resource_rows = []
         target_manifests = []
         prediction_match_count = 0
-        for fold_run_id in config.fold_run_ids:
-            fold_root = Path(config.compact_output_root) / fold_run_id
+        fold_roots = (
+            tuple(Path(value) for value in config.fold_root_paths)
+            if config.fold_root_paths
+            else tuple(
+                Path(config.compact_output_root) / fold_run_id
+                for fold_run_id in config.fold_run_ids
+            )
+        )
+        for fold_root in fold_roots:
+            fold_run_id = fold_root.name
             split = json.loads(
                 (fold_root / "split_manifest.json").read_text(encoding="utf-8")
             )

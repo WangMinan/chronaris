@@ -135,6 +135,25 @@ def build_chronaris_physics_audit(
     return ChronarisPhysicsAudit(tuple(components), total)
 
 
+def build_skipped_chronaris_physics_audit(reference: torch.Tensor) -> ChronarisPhysicsAudit:
+    """Represent a deliberate task-independent fast path without claiming zero loss."""
+
+    components = tuple(
+        PhysicsComponentStatus(
+            component_name=name,
+            status="unavailable",
+            available=False,
+            active=False,
+            count=0,
+            raw_value=None,
+            weighted_value=None,
+            reason="task_independent_pretext_fast_path",
+        )
+        for name in (*RIGID_COMPONENTS, *PHYSIOLOGY_COMPONENTS)
+    )
+    return ChronarisPhysicsAudit(components, reference.new_zeros(()))
+
+
 def physics_audit_to_rows(
     audit: ChronarisPhysicsAudit,
 ) -> tuple[dict[str, object], ...]:

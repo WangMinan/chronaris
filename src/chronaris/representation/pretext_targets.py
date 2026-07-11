@@ -222,26 +222,24 @@ def _shift_and_compact_vehicle(batch, shifts, *, duration_s):
 
 
 def _feature_age(times, feature_mask, *, dtype):
-    result = torch.full(
-        feature_mask.shape,
-        torch.inf,
-        dtype=dtype,
-        device=feature_mask.device,
+    observed_times = torch.where(
+        feature_mask,
+        times.unsqueeze(-1),
+        torch.full(
+            feature_mask.shape,
+            -torch.inf,
+            dtype=times.dtype,
+            device=times.device,
+        ),
     )
-    last_seen = torch.full(
-        (feature_mask.shape[-1],),
-        -torch.inf,
-        dtype=times.dtype,
-        device=times.device,
+    last_seen = torch.cummax(observed_times, dim=0).values
+    available = torch.isfinite(last_seen)
+    ages = (times.unsqueeze(-1) - last_seen).clamp_min(0).to(dtype)
+    return torch.where(
+        available,
+        ages,
+        torch.full_like(ages, torch.inf),
     )
-    for point_index, time_s in enumerate(times):
-        observed = feature_mask[point_index]
-        last_seen = torch.where(observed, time_s, last_seen)
-        available = torch.isfinite(last_seen)
-        result[point_index, available] = (
-            time_s - last_seen[available]
-        ).clamp_min(0).to(dtype)
-    return result
 
 
 def _context_duration_s(query_timestamps_s: torch.Tensor) -> float:

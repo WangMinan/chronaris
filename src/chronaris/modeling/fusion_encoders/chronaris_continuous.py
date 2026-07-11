@@ -15,6 +15,7 @@ from chronaris.modeling.fusion_encoders.alignment_bridge import (
 from chronaris.modeling.fusion_encoders.chronaris_physics import (
     ChronarisPhysicsAudit,
     build_chronaris_physics_audit,
+    build_skipped_chronaris_physics_audit,
     physics_audit_to_rows,
 )
 from chronaris.modeling.fusion_encoders.multiscale_causal import (
@@ -206,6 +207,8 @@ class ChronarisContinuousFusionEncoder(nn.Module):
     def forward(
         self,
         batch: DualStreamObservationBatch,
+        *,
+        compute_diagnostics: bool = True,
     ) -> ChronarisContinuousEncoding:
         alignment_batch = build_alignment_batch_from_observations(
             batch,
@@ -219,6 +222,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
         alignment = self.continuous_backbone(
             alignment_batch,
             reference_offsets_s=query_times,
+            include_observation_diagnostics=compute_diagnostics,
         )
         physiology_states = alignment.physiology.reference_hidden_states
         vehicle_states = alignment.vehicle.reference_hidden_states
@@ -242,13 +246,17 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                 query_timestamps_s=query_times,
             )
         )
-        physics = build_chronaris_physics_audit(
-            alignment,
-            alignment_batch,
-            field_labels=self.config.field_label_mapping,
-            enabled=self.config.physics_enabled,
-            weight=self.config.physics_weight,
-            huber_delta=self.config.physics_huber_delta,
+        physics = (
+            build_chronaris_physics_audit(
+                alignment,
+                alignment_batch,
+                field_labels=self.config.field_label_mapping,
+                enabled=self.config.physics_enabled,
+                weight=self.config.physics_weight,
+                huber_delta=self.config.physics_huber_delta,
+            )
+            if compute_diagnostics
+            else build_skipped_chronaris_physics_audit(fusion.sequence_embedding)
         )
         return ChronarisContinuousEncoding(
             sequence_embedding=self.output_dropout(fusion.sequence_embedding),

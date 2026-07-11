@@ -62,10 +62,12 @@ def causal_query_stream(
     if stream_name == "physiology":
         values = batch.physiology_values
         timestamps = batch.physiology_timestamps_s
+        point_mask = batch.physiology_point_mask
         feature_mask = batch.physiology_feature_mask
     elif stream_name == "vehicle":
         values = batch.vehicle_values
         timestamps = batch.vehicle_timestamps_s
+        point_mask = batch.vehicle_point_mask
         feature_mask = batch.vehicle_feature_mask
     else:
         raise ValueError("stream_name must be physiology or vehicle")
@@ -94,32 +96,55 @@ def causal_query_stream(
         dtype=torch.int64,
         device=values.device,
     )
+    feature_indices = torch.arange(feature_count, device=values.device).view(1, -1)
     for sample_index in range(batch_size):
-        sample_queries = queries[sample_index]
-        for feature_index in range(feature_count):
-            observed = feature_mask[sample_index, :, feature_index]
-            if not bool(observed.any()):
-                continue
-            feature_times = timestamps[sample_index][observed].to(queries.device)
-            feature_values = values[sample_index, :, feature_index][observed]
-            source_indices = torch.searchsorted(
-                feature_times,
-                sample_queries,
-                right=True,
-            ) - 1
-            available = source_indices >= 0
-            resolved_indices = source_indices.clamp_min(0)
-            output_values[sample_index, available, feature_index] = feature_values[
-                resolved_indices[available]
-            ]
-            output_mask[sample_index, available, feature_index] = True
-            output_age[sample_index, available, feature_index] = (
-                sample_queries[available] - feature_times[resolved_indices[available]]
-            ).to(values.dtype)
-            observed_indices = torch.nonzero(observed, as_tuple=False).flatten()
-            output_source_indices[sample_index, available, feature_index] = (
-                observed_indices[resolved_indices[available]]
-            )
+        valid_rows = torch.nonzero(point_mask[sample_index], as_tuple=False).flatten()
+        if len(valid_rows) == 0:
+            continue
+        compact_times = timestamps[sample_index].index_select(0, valid_rows)
+        compact_masks = feature_mask[sample_index].index_select(0, valid_rows)
+        original_row_indices = valid_rows.view(-1, 1).expand(-1, feature_count)
+        latest_original_rows = torch.cummax(
+            torch.where(
+                compact_masks,
+                original_row_indices,
+                torch.full_like(original_row_indices, -1),
+            ),
+            dim=0,
+        ).values
+        query_rows = torch.searchsorted(
+            compact_times,
+            queries[sample_index],
+            right=True,
+        ) - 1
+        query_has_any_row = query_rows >= 0
+        source_indices = latest_original_rows.index_select(
+            0,
+            query_rows.clamp_min(0),
+        )
+        available = (source_indices >= 0) & query_has_any_row.unsqueeze(-1)
+        safe_sources = source_indices.clamp_min(0)
+        gathered_values = values[sample_index][safe_sources, feature_indices]
+        gathered_times = timestamps[sample_index].index_select(
+            0,
+            safe_sources.reshape(-1),
+        ).reshape(query_count, feature_count)
+        output_values[sample_index] = torch.where(
+            available,
+            gathered_values,
+            torch.zeros_like(gathered_values),
+        )
+        output_mask[sample_index] = available
+        output_age[sample_index] = torch.where(
+            available,
+            queries[sample_index].unsqueeze(-1) - gathered_times,
+            torch.full_like(gathered_times, torch.inf),
+        ).to(values.dtype)
+        output_source_indices[sample_index] = torch.where(
+            available,
+            source_indices,
+            torch.full_like(source_indices, -1),
+        )
     return CausalQueryStream(
         values=output_values,
         feature_mask=output_mask,
