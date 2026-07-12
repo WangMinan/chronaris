@@ -154,6 +154,11 @@ from chronaris.evaluation.application_tasks.simulation_stress_consumer_run impor
     SimulationStressConsumerResult,
     run_simulation_stress_consumers,
 )
+from chronaris.evaluation.application_tasks.chronaris_v2_promotion_run import (
+    ChronarisV2PromotionConfig,
+    ChronarisV2PromotionResult,
+    run_chronaris_v2_promotion_audit,
+)
 from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_pretraining_run import (
     CHRONARIS_ABLATION_VARIANTS,
     SimulationChronarisAblationPretrainingConfig,
@@ -213,6 +218,8 @@ __all__ = [
     "SimulationStressRepresentationResult",
     "SimulationStressConsumerConfig",
     "SimulationStressConsumerResult",
+    "ChronarisV2PromotionConfig",
+    "ChronarisV2PromotionResult",
     "CHRONARIS_ABLATION_VARIANTS",
     "SimulationChronarisAblationPretrainingConfig",
     "SimulationChronarisAblationPretrainingResult",
@@ -277,6 +284,7 @@ __all__ = [
     "run_simulation_stress_generation",
     "run_simulation_stress_representations",
     "run_simulation_stress_consumers",
+    "run_chronaris_v2_promotion_audit",
     "run_simulation_chronaris_ablation_pretraining",
     "run_simulation_chronaris_ablation_representations",
     "run_simulation_chronaris_ablation_consumers",
