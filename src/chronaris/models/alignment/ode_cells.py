@@ -93,6 +93,28 @@ class ODERNNCell(nn.Module):
             derivative = self.ode_func(hidden_state.new_zeros(()), hidden_state)
             return hidden_state + (clamped_delta_t.unsqueeze(-1) * derivative)
 
+        if self.ode_method == "rk4":
+            # torchdiffeq's fixed-grid RK4 uses one alternative 3/8-rule step
+            # when only [0, delta_t] is supplied. The dynamics are autonomous,
+            # so every row can use its own delta while sharing four batched
+            # network evaluations instead of launching one odeint per sample.
+            delta = clamped_delta_t.unsqueeze(-1)
+            zero_time = hidden_state.new_zeros(())
+            k1 = self.ode_func(zero_time, hidden_state)
+            k2 = self.ode_func(
+                zero_time,
+                hidden_state + delta * k1 / 3.0,
+            )
+            k3 = self.ode_func(
+                zero_time,
+                hidden_state + delta * (k2 - k1 / 3.0),
+            )
+            k4 = self.ode_func(
+                zero_time,
+                hidden_state + delta * (k1 - k2 + k3),
+            )
+            return hidden_state + delta * (k1 + 3.0 * (k2 + k3) + k4) / 8.0
+
         evolved_rows: list[torch.Tensor] = []
         zero_time = hidden_state.new_zeros(())
 
@@ -131,19 +153,15 @@ class ODERNNCell(nn.Module):
         if observation_mask.shape != (hidden_state.shape[0],):
             raise ValueError("observation_mask must have shape [B].")
 
-        updated_rows: list[torch.Tensor] = []
-        for sample_index in range(hidden_state.shape[0]):
-            if torch.is_nonzero(observation_mask[sample_index]):
-                updated_rows.append(
-                    self.observation_update(
-                        observation_embedding[sample_index],
-                        hidden_state[sample_index],
-                    )
-                )
-            else:
-                updated_rows.append(hidden_state[sample_index])
-
-        return torch.stack(updated_rows, dim=0)
+        updated_state = self.observation_update(
+            observation_embedding,
+            hidden_state,
+        )
+        return torch.where(
+            observation_mask.unsqueeze(-1),
+            updated_state,
+            hidden_state,
+        )
 
     def forward(
         self,
