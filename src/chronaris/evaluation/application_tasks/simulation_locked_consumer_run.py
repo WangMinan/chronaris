@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shlex
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -37,6 +38,9 @@ from chronaris.evaluation.application_tasks.simulation_locked_context_data impor
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run import (
     LOCKED_SEEDS,
 )
+from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    _locked_v2_candidate_id,
+)
 from chronaris.modeling.common.run_observer import open_task_eval_run_observer
 from chronaris.modeling.training import TRAINABLE_FUSION_METHODS
 from chronaris.representation import load_fusion_stream_batch
@@ -52,6 +56,8 @@ class SimulationLockedConsumerConfig:
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     representation_run_id: str = "2026-07-12_simulation-locked-representations"
     simulation_root: str = (
         "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
@@ -86,6 +92,10 @@ def run_simulation_locked_consumers(config: SimulationLockedConsumerConfig):
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    baseline_pretraining_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.pretraining_run_id)
+    )
     representation_root = Path(config.heavy_output_root) / config.representation_run_id
     representation_compact = Path(config.compact_output_root) / config.representation_run_id
     compact_root.mkdir(parents=True, exist_ok=True)
@@ -99,6 +109,10 @@ def run_simulation_locked_consumers(config: SimulationLockedConsumerConfig):
         pretraining_root,
         config.selected_candidates_path,
         config.seeds,
+        baseline_root=baseline_pretraining_root,
+        locked_candidate_id=_locked_v2_candidate_id(
+            config.locked_configuration_path
+        ),
     )
     data = load_simulation_locked_context_data(config.simulation_root)
     targets = build_guarded_application_consumer_targets(
@@ -274,19 +288,38 @@ def _formal_protocol(*, seed, minirocket_kernels, tcn_device):
     )
 
 
-def _checkpoint_paths(root, selected_path, seeds):
+def _checkpoint_paths(
+    root,
+    selected_path,
+    seeds,
+    *,
+    baseline_root=None,
+    locked_candidate_id=None,
+):
+    baseline_root = root if baseline_root is None else baseline_root
     selected = json.loads(Path(selected_path).read_text(encoding="utf-8"))
     paths = {}
     for seed in seeds:
         for method in TRAINABLE_FUSION_METHODS:
             candidate = str(selected[method]["candidate_id"])
-            path = (
-                root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
-                if method == "chronaris"
-                else root / "checkpoints" / f"seed_{seed}" / method / candidate / "best.pt"
-            )
+            if method == "chronaris" and locked_candidate_id is not None:
+                path = (
+                    root / "checkpoints" / f"seed_{seed}" / method
+                    / locked_candidate_id / "last.pt"
+                )
+            elif method == "chronaris":
+                path = root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
+            else:
+                path = (
+                    baseline_root / "checkpoints" / f"seed_{seed}" / method
+                    / candidate / "best.pt"
+                )
             payload = torch.load(path, map_location="cpu", weights_only=True)
-            if payload.get("training_status") != "completed":
+            payload_seed = payload.get("seed", payload.get("config", {}).get("seed"))
+            if (
+                payload.get("training_status") != "completed"
+                or int(payload_seed) != seed
+            ):
                 raise ValueError("locked consumer checkpoint is incomplete")
             paths[(seed, method)] = path
     return paths
@@ -379,9 +412,7 @@ def _write_outputs(**values):
     unit_score_path = values["heavy_root"] / "unit_score_rows.csv"
     pd.DataFrame(values["unit_rows"]).to_csv(unit_score_path, index=False)
     paths["resume"].write_text(
-        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_locked_consumers.py "
-        f"--run-id {values['config'].run_id} --minirocket-kernels {values['config'].minirocket_kernels} --tcn-device {values['tcn_device']} --resume\n",
+        _resume_command(values["config"], tcn_device=values["tcn_device"]),
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
@@ -400,6 +431,26 @@ def _write_outputs(**values):
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
     return paths
+
+
+def _resume_command(config, *, tcn_device):
+    args = [
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+        "scripts/evaluation/application_tasks/run_simulation_locked_consumers.py",
+        "--run-id", config.run_id,
+        "--pretraining-run-id", config.pretraining_run_id,
+        "--representation-run-id", config.representation_run_id,
+        "--minirocket-kernels", str(config.minirocket_kernels),
+        "--tcn-device", tcn_device,
+        "--resume",
+    ]
+    for flag, value in (
+        ("--baseline-pretraining-run-id", config.baseline_pretraining_run_id),
+        ("--locked-configuration-path", config.locked_configuration_path),
+    ):
+        if value is not None:
+            args.extend((flag, value))
+    return " ".join(shlex.quote(str(value)) for value in args) + "\n"
 
 
 def _check(check_id, passed, actual, expected):

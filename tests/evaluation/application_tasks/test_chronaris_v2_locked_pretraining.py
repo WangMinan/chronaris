@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 
 import pytest
+import torch
 
 from chronaris.evaluation.application_tasks.chronaris_v2_locked_dingxin_pretraining import (
     _load_locked_candidate,
@@ -13,6 +14,10 @@ from chronaris.evaluation.application_tasks.dingxin_locked_representation_run im
 from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
     _locked_v2_candidate_id as _simulation_locked_v2_candidate_id,
 )
+from chronaris.evaluation.application_tasks.simulation_locked_consumer_run import (
+    _checkpoint_paths as _simulation_consumer_checkpoint_paths,
+)
+from chronaris.modeling.training import TRAINABLE_FUSION_METHODS
 
 
 def test_locked_candidate_requires_clean_task_independent_lock(tmp_path) -> None:
@@ -62,3 +67,37 @@ def test_locked_candidate_rejects_outer_test_opened_lock(tmp_path) -> None:
 
     with pytest.raises(PermissionError, match="clean locked configuration"):
         _load_locked_candidate(path)
+
+
+def test_simulation_consumer_checkpoint_set_can_mix_v1_baselines_and_v2(tmp_path) -> None:
+    v2_root = tmp_path / "v2"
+    baseline_root = tmp_path / "baseline"
+    selected_path = tmp_path / "selected.json"
+    selected_path.write_text(
+        json.dumps(
+            {method: {"candidate_id": f"{method}_selected"}
+             for method in TRAINABLE_FUSION_METHODS}
+        ),
+        encoding="utf-8",
+    )
+    seed = 17
+    for method in TRAINABLE_FUSION_METHODS:
+        if method == "chronaris":
+            path = v2_root / "checkpoints" / f"seed_{seed}" / method / "v2_locked" / "last.pt"
+            payload = {"training_status": "completed", "config": {"seed": seed}}
+        else:
+            path = baseline_root / "checkpoints" / f"seed_{seed}" / method / f"{method}_selected" / "best.pt"
+            payload = {"training_status": "completed", "seed": seed}
+        path.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(payload, path)
+
+    paths = _simulation_consumer_checkpoint_paths(
+        v2_root,
+        selected_path,
+        (seed,),
+        baseline_root=baseline_root,
+        locked_candidate_id="v2_locked",
+    )
+
+    assert paths[(seed, "chronaris")].name == "last.pt"
+    assert paths[(seed, "mult")].is_relative_to(baseline_root)

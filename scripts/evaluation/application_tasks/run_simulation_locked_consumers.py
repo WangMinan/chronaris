@@ -24,6 +24,10 @@ from chronaris.modeling.common.run_observer import configure_task_eval_cli_loggi
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default="2026-07-12_simulation-locked-consumers")
+    parser.add_argument("--pretraining-run-id", default="2026-07-12_simulation-locked-pretraining")
+    parser.add_argument("--baseline-pretraining-run-id")
+    parser.add_argument("--locked-configuration-path")
+    parser.add_argument("--representation-run-id", default="2026-07-12_simulation-locked-representations")
     parser.add_argument("--minirocket-kernels", type=int, default=10_000)
     parser.add_argument("--tcn-device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
@@ -32,6 +36,10 @@ def main() -> int:
     result = run_simulation_locked_consumers(
         SimulationLockedConsumerConfig(
             run_id=args.run_id,
+            pretraining_run_id=args.pretraining_run_id,
+            baseline_pretraining_run_id=args.baseline_pretraining_run_id,
+            locked_configuration_path=args.locked_configuration_path,
+            representation_run_id=args.representation_run_id,
             minirocket_kernels=args.minirocket_kernels,
             tcn_device=args.tcn_device,
             resume=args.resume,
