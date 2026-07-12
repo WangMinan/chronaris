@@ -1,0 +1,72 @@
+{
+  "nasa_csm": {
+    "benchmark_only": {
+      "candidate_id": "fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0",
+      "seed": 17,
+      "macro_f1": 0.606294219156491,
+      "balanced_accuracy": 0.6004541316309266,
+      "sample_count": 1451,
+      "fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17",
+      "protocol": "p28_refresh_full_loso_confirm",
+      "confusion_matrix_plot": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/plots/objective_benchmark_only_confusion_matrix.png"
+    },
+    "loft_only": {
+      "candidate_id": "fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0",
+      "seed": 17,
+      "macro_f1": 0.6456990540323874,
+      "balanced_accuracy": 0.6388062471365358,
+      "sample_count": 1359,
+      "fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17",
+      "protocol": "p28_refresh_full_loso_confirm",
+      "confusion_matrix_plot": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/plots/objective_loft_only_confusion_matrix.png"
+    },
+    "combined": {
+      "candidate_id": "fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0",
+      "seed": 17,
+      "macro_f1": 0.5759924862462916,
+      "balanced_accuracy": 0.5783007537665923,
+      "sample_count": 2810,
+      "fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17",
+      "protocol": "p28_refresh_full_loso_confirm",
+      "confusion_matrix_plot": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/nasa_csm/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/plots/objective_combined_confusion_matrix.png"
+    }
+  },
+  "uab_workload_dataset": {
+    "n_back": {
+      "candidate_id": "fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0",
+      "seed": 17,
+      "rmse": 5.0362688345434465,
+      "mae": 4.017162012877324,
+      "sample_count": 28052,
+      "fold_count": 16,
+      "objective_macro_f1": 0.3326329469702711,
+      "objective_balanced_accuracy": 0.33335446772799343,
+      "objective_sample_count": 28052,
+      "objective_fold_count": 16,
+      "summary_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/uab_workload_dataset/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/uab_workload_dataset/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17",
+      "protocol": "p28_refresh_full_loso_confirm"
+    },
+    "heat_the_chair": {
+      "candidate_id": "fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0",
+      "seed": 17,
+      "rmse": 1.4444251062369275,
+      "mae": 1.1664611902745332,
+      "sample_count": 5440,
+      "fold_count": 17,
+      "objective_macro_f1": 0.49456410256410255,
+      "objective_balanced_accuracy": 0.5308149482605653,
+      "objective_sample_count": 5440,
+      "objective_fold_count": 17,
+      "summary_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/uab_workload_dataset/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17/deep_baseline_summary.json",
+      "artifact_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-13_chronaris-v2-public-adapter-confirmation/confirm/uab_workload_dataset/fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0__seed17",
+      "protocol": "p28_refresh_full_loso_confirm"
+    }
+  }
+}

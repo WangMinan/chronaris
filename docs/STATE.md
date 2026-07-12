@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-Chronaris v2 主线修复、任务无关筛选和一次性锁定晋级审计已经闭环。最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置；鼎新五折复验、独立仿真确认、七类压力、同族时间机制和正式消融均已完成。六项主指标均未越过预声明硬门槛，附加门禁中的无损融合、类别召回差距和连续缺失前三也未通过，因此审计结论为 `not_promoted`，论文主模型保持 Chronaris v1，既有确认指标不变。v2 在独立仿真机动分段上取得六方法最高均值，但 `0.4123` 仍低于硬门槛 `0.4687`；随机缺失斜率进入第 2，连续缺失为第 4。锁定后的 NASA/UAB 公开数据适配正在运行一次性外部确认，结果只形成适配证据，不回流本轮开发。
+Chronaris v2 主线修复、任务无关筛选、一次性锁定晋级审计和锁定后公开数据确认已经全部闭环。最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置；鼎新五折复验、独立仿真确认、七类压力、同族时间机制和正式消融均已完成。六项主指标均未越过预声明硬门槛，附加门禁中的无损融合、类别召回差距和连续缺失前三也未通过，因此审计结论为 `not_promoted`，论文主模型保持 Chronaris v1，既有确认指标不变。v2 在独立仿真机动分段上取得六方法最高均值，但 `0.4123` 仍低于硬门槛 `0.4687`；随机缺失斜率进入第 2，连续缺失为第 4。锁定后的 NASA/UAB 只运行一项固定公开数据适配配置：NASA 综合分类 Macro-F1 为 `0.5664 ± 0.0085`，UAB N-back 与椅背加热任务 RMSE 为 `5.0962 ± 0.0578`、`1.4556 ± 0.0202`。这些结果只形成公开数据适配证据，不回流本轮开发。
 
 ## 当前执行入口
 
@@ -26,6 +26,8 @@ Chronaris v2 主线修复、任务无关筛选和一次性锁定晋级审计已�
 - v2 修正物理与缺失课程正式消融：[artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/evidence_manifest.json)
 - v1/v2 同封存族时间机制参照：[artifacts/runs/2026-07-13_chronaris-v1-sealed-reference-mechanism/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v1-sealed-reference-mechanism/evidence_manifest.json)
 - v2 一次性锁定晋级审计：[artifacts/runs/2026-07-13_chronaris-v2-promotion-audit/report.md](artifacts/runs/2026-07-13_chronaris-v2-promotion-audit/report.md)
+- v2 锁定后 NASA/UAB 公开数据适配：[artifacts/runs/2026-07-13_chronaris-v2-public-adapter-confirmation/report.md](artifacts/runs/2026-07-13_chronaris-v2-public-adapter-confirmation/report.md)
+- v2 锁定复验与差距证据包：[artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/report.md](artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/report.md)
 - v2 独立仿真确认族封存：[artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md](artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)

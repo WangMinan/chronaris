@@ -1,0 +1,7 @@
+dataset_id,candidate_id,seed,fold_count,combined_macro_f1,combined_balanced_accuracy,benchmark_only_macro_f1,loft_only_macro_f1,mean_rmse,mean_mae,n_back_rmse,heat_the_chair_rmse
+nasa_csm,fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0,17,17,0.5759924862462916,0.5783007537665923,0.606294219156491,0.6456990540323874,,,,
+nasa_csm,fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0,29,17,0.5596681847458088,0.5503086100326228,0.6115627681747736,0.6498692384514985,,,,
+nasa_csm,fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0,43,17,0.5635106213702662,0.578181786051234,0.6023985408043379,0.6162811294714922,,,,
+uab_workload_dataset,fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0,17,17,,,,,3.240346970390187,2.5918116015759285,5.036268834543447,1.4444251062369275
+uab_workload_dataset,fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0,29,17,,,,,3.2974860851055,2.6371385703332866,5.15153966873347,1.44343250147753
+uab_workload_dataset,fusion_h96_l2_hd4_do0p1_bias0_lagnone_lr0p001_bs128_mse_td1_none_wd0,43,17,,,,,3.289829714806518,2.645066111229861,5.1006779526068105,1.4789814770062255

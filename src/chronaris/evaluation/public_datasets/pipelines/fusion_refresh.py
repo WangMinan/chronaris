@@ -6,7 +6,6 @@ import json
 import logging
 import math
 import os
-import shutil
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,6 +20,9 @@ import pandas as pd
 from chronaris.evaluation import (
     evaluate_classification_predictions,
     evaluate_regression_predictions,
+)
+from chronaris.evidence.downstream_application_figures import (
+    configure_chinese_matplotlib,
 )
 from chronaris.evaluation.public_datasets.pipelines.deep_baseline import (
     StageIDeepBaselineConfig,
@@ -1195,6 +1197,7 @@ def _render_refresh_figures(
     training_curves: pd.DataFrame,
     best_by_dataset_task: Mapping[str, object],
 ) -> dict[str, str]:
+    configure_chinese_matplotlib()
     figure_paths = {
         "fig_public_fusion_refresh_screen_leaderboard": str(
             artifact_root / "fig_public_fusion_refresh_screen_leaderboard.png"
@@ -1256,17 +1259,33 @@ def _plot_screen_leaderboard(frame: pd.DataFrame, path: str) -> None:
         fig.savefig(path, dpi=200)
         plt.close(fig)
         return
-    fig, axes = plt.subplots(1, max(frame["dataset_id"].nunique(), 1), figsize=(12, 5), squeeze=False)
+    dataset_labels = {
+        "nasa_csm": "NASA 认知状态数据",
+        "uab_workload_dataset": "UAB 工作负荷数据",
+    }
+    fig, axes = plt.subplots(
+        1,
+        max(frame["dataset_id"].nunique(), 1),
+        figsize=(12, 5),
+        squeeze=False,
+    )
     for axis, (dataset_id, subset) in zip(axes[0], frame.groupby("dataset_id", sort=False), strict=False):
         top = subset.head(10).copy()
-        labels = top["candidate_id"].str.replace("fusion_", "", regex=False)
+        labels = (
+            ["锁定公开适配配置"] * len(top)
+            if top["candidate_id"].nunique() == 1
+            else [f"配置 {index + 1}" for index in range(len(top))]
+        )
         values = top["selection_score"].astype(float)
         axis.barh(np.arange(len(top)), values, color="#2f6f9f")
         axis.set_yticks(np.arange(len(top)))
         axis.set_yticklabels(labels, fontsize=7)
         axis.invert_yaxis()
-        axis.set_title(f"{dataset_id} screen top candidates")
-        axis.set_xlabel(str(top["primary_metric"].iloc[0]) if not top.empty else "score")
+        axis.set_title(f"{dataset_labels.get(dataset_id, dataset_id)}：开发阶段固定配置")
+        metric = str(top["primary_metric"].iloc[0]) if not top.empty else "score"
+        axis.set_xlabel("综合 Macro-F1" if metric == "combined_macro_f1" else "平均 RMSE")
+        if not values.empty:
+            axis.set_xlim(0, float(values.max()) * 1.16)
         for index, value in enumerate(values):
             axis.text(value, index, f"{value:.4f}", va="center", fontsize=7)
     fig.tight_layout()
@@ -1280,12 +1299,12 @@ def _plot_confirm_vs_baselines(best: Mapping[str, object], path: str) -> None:
     if nasa:
         rows.append(
             (
-                "NASA combined macro-F1",
+                "NASA 综合认知状态分类 Macro-F1",
                 [
-                    ("public", BASELINES["nasa_csm"]["combined"]["macro_f1"]["public_baseline"]),
+                    ("公开参考", BASELINES["nasa_csm"]["combined"]["macro_f1"]["public_baseline"]),
                     ("MulT", BASELINES["nasa_csm"]["combined"]["macro_f1"]["mult"]),
                     ("ContiFormer", BASELINES["nasa_csm"]["combined"]["macro_f1"]["contiformer"]),
-                    ("Chronaris refresh", float(nasa["macro_f1"])),
+                    ("Chronaris 公开适配", float(nasa["macro_f1"])),
                 ],
             )
         )
@@ -1294,12 +1313,12 @@ def _plot_confirm_vs_baselines(best: Mapping[str, object], path: str) -> None:
         if group in uab:
             rows.append(
                 (
-                    f"UAB {group} RMSE",
+                    f"UAB {'N-back' if group == 'n_back' else '椅背加热任务'} RMSE",
                     [
-                        ("public", BASELINES["uab_workload_dataset"][group]["rmse"]["public_baseline"]),
+                        ("公开参考", BASELINES["uab_workload_dataset"][group]["rmse"]["public_baseline"]),
                         ("MulT", BASELINES["uab_workload_dataset"][group]["rmse"]["mult"]),
                         ("ContiFormer", BASELINES["uab_workload_dataset"][group]["rmse"]["contiformer"]),
-                        ("Chronaris refresh", float(uab[group]["rmse"])),
+                        ("Chronaris 公开适配", float(uab[group]["rmse"])),
                     ],
                 )
             )
@@ -1328,10 +1347,10 @@ def _plot_confirm_vs_baselines(best: Mapping[str, object], path: str) -> None:
 def _plot_refresh_delta_heatmap(best: Mapping[str, object], path: str) -> None:
     labels: list[str] = []
     rows: list[list[float]] = []
-    columns = ["vs public", "vs MulT", "vs ContiFormer", "vs classical"]
+    columns = ["相对公开参考", "相对 MulT", "相对 ContiFormer", "相对传统方法"]
     nasa = ((best.get("nasa_csm") or {}).get("combined") or {})
     if nasa:
-        labels.append("NASA combined macro-F1")
+        labels.append("NASA 综合分类 Macro-F1")
         value = float(nasa["macro_f1"])
         base = BASELINES["nasa_csm"]["combined"]["macro_f1"]
         rows.append(
@@ -1345,7 +1364,7 @@ def _plot_refresh_delta_heatmap(best: Mapping[str, object], path: str) -> None:
     uab = best.get("uab_workload_dataset") or {}
     for group in ("n_back", "heat_the_chair"):
         if group in uab:
-            labels.append(f"UAB {group} RMSE")
+            labels.append(f"UAB {'N-back' if group == 'n_back' else '椅背加热任务'} RMSE")
             value = float(uab[group]["rmse"])
             base = BASELINES["uab_workload_dataset"][group]["rmse"]
             rows.append(
@@ -1362,7 +1381,7 @@ def _plot_refresh_delta_heatmap(best: Mapping[str, object], path: str) -> None:
     fig, axis = plt.subplots(figsize=(8, max(3, len(labels) * 0.7)))
     vmax = np.nanmax(np.abs(data)) if np.isfinite(data).any() else 1.0
     image = axis.imshow(data, cmap="RdYlGn", vmin=-vmax, vmax=vmax, aspect="auto")
-    axis.set_title("P28 refresh improvement over baselines")
+    axis.set_title("锁定公开适配相对既有方法的方向归一变化")
     axis.set_xticks(np.arange(len(columns)))
     axis.set_xticklabels(columns, rotation=15, ha="right")
     axis.set_yticks(np.arange(len(labels)))
@@ -1378,17 +1397,29 @@ def _plot_refresh_delta_heatmap(best: Mapping[str, object], path: str) -> None:
 
 def _plot_config_sensitivity(frame: pd.DataFrame, path: str) -> None:
     fig, axes = plt.subplots(2, 2, figsize=(10, 7))
-    fields = ["hidden_dim", "dropout", "fusion_event_bias_weight", "fusion_lag_window_points"]
-    for axis, field in zip(axes.ravel(), fields, strict=True):
+    fields = [
+        ("hidden_dim", "内部宽度"),
+        ("dropout", "随机失活率"),
+        ("fusion_event_bias_weight", "事件偏置权重"),
+        ("fusion_lag_window_points", "时延窗口点数"),
+    ]
+    single_locked = not frame.empty and frame["candidate_id"].nunique() == 1
+    for axis, (field, label) in zip(axes.ravel(), fields, strict=True):
         if frame.empty:
-            axis.text(0.5, 0.5, "no screen rows", ha="center", va="center")
+            axis.text(0.5, 0.5, "无开发记录", ha="center", va="center")
             axis.axis("off")
             continue
         values = frame[field].fillna(-1).astype(float)
-        axis.scatter(values, frame["selection_score"].astype(float), alpha=0.8)
-        axis.set_xlabel(field)
-        axis.set_ylabel("selection_score")
-    fig.suptitle("Public fusion config sensitivity")
+        if single_locked:
+            shown = "未启用" if float(values.iloc[0]) < 0 else f"{float(values.iloc[0]):g}"
+            axis.text(0.5, 0.58, label, ha="center", va="center", fontsize=13)
+            axis.text(0.5, 0.38, shown, ha="center", va="center", fontsize=18)
+            axis.axis("off")
+        else:
+            axis.scatter(values, frame["selection_score"].astype(float), alpha=0.8)
+            axis.set_xlabel(label)
+            axis.set_ylabel("开发阶段选择分数")
+    fig.suptitle("锁定公开适配配置（不使用公开标签选择模型）")
     fig.tight_layout()
     fig.savefig(path, dpi=200)
     plt.close(fig)
@@ -1407,10 +1438,11 @@ def _plot_training_curves(training_curves: pd.DataFrame, confirm_frame: pd.DataF
             if subset.empty:
                 continue
             grouped = subset.groupby("epoch", sort=True)["train_loss"].mean()
-            axis.plot(grouped.index, grouped.values, marker="o", label=f"{row['dataset_id']} {row['candidate_id'][:18]}")
-    axis.set_title("Best confirm training loss curves")
-    axis.set_xlabel("epoch")
-    axis.set_ylabel("train loss")
+            dataset = "NASA" if row["dataset_id"] == "nasa_csm" else "UAB"
+            axis.plot(grouped.index, grouped.values, marker="o", label=f"{dataset}，seed {int(row['seed'])}")
+    axis.set_title("锁定公开适配确认的训练损失曲线")
+    axis.set_xlabel("训练轮次")
+    axis.set_ylabel("训练损失")
     axis.legend(loc="best", fontsize=7)
     fig.tight_layout()
     fig.savefig(path, dpi=200)
@@ -1418,14 +1450,44 @@ def _plot_training_curves(training_curves: pd.DataFrame, confirm_frame: pd.DataF
 
 
 def _copy_best_nasa_confusion(best: Mapping[str, object], path: str) -> None:
-    source = ((best.get("nasa_csm") or {}).get("combined") or {}).get("confusion_matrix_plot")
+    combined = ((best.get("nasa_csm") or {}).get("combined") or {})
+    summary_path = combined.get("summary_path")
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
-    if source and Path(source).exists():
-        shutil.copyfile(source, output)
+    matrix = None
+    if summary_path and Path(summary_path).exists():
+        summary = json.loads(Path(summary_path).read_text(encoding="utf-8"))
+        matrix = (
+            ((summary.get("objective") or {}).get("groups") or {})
+            .get("combined", {})
+            .get("confusion_matrix")
+        )
+    if matrix:
+        values = np.asarray(matrix, dtype=int)
+        fig, axis = plt.subplots(figsize=(5.2, 4.4))
+        image = axis.imshow(values, cmap="Blues", aspect="equal")
+        labels = ["状态 1", "状态 2", "状态 5"]
+        axis.set_xticks(np.arange(len(labels)), labels)
+        axis.set_yticks(np.arange(len(labels)), labels)
+        axis.set_xlabel("预测类别")
+        axis.set_ylabel("真实类别")
+        axis.set_title("NASA 综合认知状态分类混淆矩阵")
+        for row_index in range(values.shape[0]):
+            for col_index in range(values.shape[1]):
+                axis.text(
+                    col_index,
+                    row_index,
+                    str(values[row_index, col_index]),
+                    ha="center",
+                    va="center",
+                )
+        fig.colorbar(image, ax=axis, fraction=0.046, pad=0.04)
+        fig.tight_layout()
+        fig.savefig(output, dpi=200)
+        plt.close(fig)
         return
-    fig, axis = plt.subplots(figsize=(4, 3))
-    axis.text(0.5, 0.5, "NASA combined confusion matrix unavailable", ha="center", va="center")
+    fig, axis = plt.subplots(figsize=(5.2, 3.5))
+    axis.text(0.5, 0.5, "NASA 综合分类混淆矩阵不可用", ha="center", va="center")
     axis.axis("off")
     fig.tight_layout()
     fig.savefig(output, dpi=200)
@@ -1441,7 +1503,7 @@ def _plot_refresh_win_summary(best: Mapping[str, object], path: str) -> None:
             delta = value - float(baseline)
             records.append(
                 {
-                    "row": "NASA combined macro-F1",
+                    "row": "NASA 综合分类 Macro-F1",
                     "baseline": label.replace("_baseline", ""),
                     "status": _status_from_delta(delta, threshold=0.02),
                     "delta": delta,
@@ -1458,7 +1520,7 @@ def _plot_refresh_win_summary(best: Mapping[str, object], path: str) -> None:
             rel = abs(delta) / abs(float(baseline)) if abs(float(baseline)) > 1e-12 else 0.0
             records.append(
                 {
-                    "row": f"UAB {group} RMSE",
+                    "row": f"UAB {'N-back' if group == 'n_back' else '椅背加热任务'} RMSE",
                     "baseline": label.replace("_baseline", ""),
                     "status": "T" if rel < 0.02 else ("W" if delta > 0 else "L"),
                     "delta": delta,
@@ -1472,6 +1534,13 @@ def _plot_refresh_win_summary(best: Mapping[str, object], path: str) -> None:
     rows = list(dict.fromkeys(frame["row"]))
     baselines = list(dict.fromkeys(frame["baseline"]))
     status_to_num = {"L": -1, "T": 0, "W": 1}
+    status_labels = {"L": "劣", "T": "平", "W": "优"}
+    baseline_labels = {
+        "public": "公开参考",
+        "classical": "传统方法",
+        "mult": "MulT",
+        "contiformer": "ContiFormer",
+    }
     data = np.full((len(rows), len(baselines)), np.nan)
     lookup = {
         (record["row"], record["baseline"]): record
@@ -1484,9 +1553,13 @@ def _plot_refresh_win_summary(best: Mapping[str, object], path: str) -> None:
                 data[row_index, col_index] = status_to_num[record["status"]]
     fig, axis = plt.subplots(figsize=(8, max(3.5, 0.55 * len(rows))))
     image = axis.imshow(data, cmap="RdYlGn", vmin=-1, vmax=1, aspect="auto")
-    axis.set_title("P28 Chronaris W/T/L summary")
+    axis.set_title("Chronaris 锁定公开适配相对既有方法的优/平/劣")
     axis.set_xticks(np.arange(len(baselines)))
-    axis.set_xticklabels(baselines, rotation=15, ha="right")
+    axis.set_xticklabels(
+        [baseline_labels.get(value, value) for value in baselines],
+        rotation=15,
+        ha="right",
+    )
     axis.set_yticks(np.arange(len(rows)))
     axis.set_yticklabels(rows)
     for row_index, row_label in enumerate(rows):
@@ -1497,7 +1570,7 @@ def _plot_refresh_win_summary(best: Mapping[str, object], path: str) -> None:
             axis.text(
                 col_index,
                 row_index,
-                f"{record['status']}\n{float(record['delta']):+.4f}",
+                f"{status_labels[record['status']]}\n{float(record['delta']):+.4f}",
                 ha="center",
                 va="center",
                 fontsize=8,
@@ -1561,6 +1634,64 @@ def _completed_fold_count(rows: Sequence[Mapping[str, object]]) -> int:
 
 
 def _render_refresh_report(run_id: str, summary: Mapping[str, object], confirm_frame: pd.DataFrame) -> str:
+    if (summary.get("protocol") or {}).get("external_confirmation_only"):
+        nasa = confirm_frame[confirm_frame["dataset_id"].eq("nasa_csm")]
+        uab = confirm_frame[confirm_frame["dataset_id"].eq("uab_workload_dataset")]
+
+        def _mean_std(frame: pd.DataFrame, column: str) -> tuple[float, float]:
+            values = frame[column].dropna().astype(float)
+            return float(values.mean()), float(values.std(ddof=1))
+
+        nasa_mean, nasa_std = _mean_std(nasa, "combined_macro_f1")
+        nback_mean, nback_std = _mean_std(uab, "n_back_rmse")
+        heat_mean, heat_std = _mean_std(uab, "heat_the_chair_rmse")
+        figure_labels = {
+            "fig_public_fusion_refresh_screen_leaderboard": "锁定配置说明",
+            "fig_public_fusion_refresh_confirm_vs_baselines": "公开适配与既有方法比较",
+            "fig_public_fusion_refresh_delta_heatmap": "方向归一变化热图",
+            "fig_public_fusion_config_sensitivity": "锁定配置参数",
+            "fig_public_fusion_training_curves_best": "训练损失曲线",
+            "fig_public_fusion_best_confusion_nasa_combined": "NASA 综合分类混淆矩阵",
+            "fig_public_fusion_win_summary": "相对既有方法的优平劣汇总",
+        }
+        lines = [
+            "# Chronaris v2 锁定后公开数据适配确认",
+            "",
+            "本次确认只运行一项由 v2 锁定配置映射得到的公开数据适配配置，"
+            "没有使用公开标签选择模型。NASA 与 UAB 结果均汇总 seeds 17、29、43 的"
+            "完整留一受试者折，第二输入流仅作上下文构造，不等同于鼎新航电流。",
+            "",
+            "## 三随机种子结果",
+            "",
+            f"- NASA 综合认知状态分类 Macro-F1：`{nasa_mean:.4f} ± {nasa_std:.4f}`；"
+            f"公开参考为 `{BASELINES['nasa_csm']['combined']['macro_f1']['public_baseline']:.4f}`。",
+            f"- UAB N-back 工作负荷回归 RMSE：`{nback_mean:.4f} ± {nback_std:.4f}`；"
+            f"公开参考为 `{BASELINES['uab_workload_dataset']['n_back']['rmse']['public_baseline']:.4f}`。",
+            f"- UAB 椅背加热任务回归 RMSE：`{heat_mean:.4f} ± {heat_std:.4f}`；"
+            f"公开参考为 `{BASELINES['uab_workload_dataset']['heat_the_chair']['rmse']['public_baseline']:.4f}`。",
+            "",
+            "NASA 公开适配形成明确改善；UAB N-back 仍落后于公开参考与 ContiFormer，"
+            "椅背加热任务与公开参考及 ContiFormer 接近。该结果只作为锁定后的公开数据"
+            "适配证据，不改变 Chronaris v2 未晋级和论文主模型保持 v1 的结论。",
+            "",
+            "## 图件",
+            "",
+        ]
+        for name, path in (summary.get("figure_paths") or {}).items():
+            lines.append(f"- {figure_labels.get(name, name)}：`{path}`")
+        lines.extend(
+            [
+                "",
+                "## 可恢复入口",
+                "",
+                f"- 配置：`{summary['config_path']}`",
+                f"- 折级指标：`{summary['fold_metrics_csv']}`",
+                f"- 训练曲线：`{summary['training_curves_csv']}`",
+                f"- 证据清单：`{summary['evidence_manifest_path']}`",
+            ]
+        )
+        return "\n".join(lines)
+
     best = summary.get("best_by_dataset_task") or {}
     nasa = ((best.get("nasa_csm") or {}).get("combined") or {})
     uab = best.get("uab_workload_dataset") or {}

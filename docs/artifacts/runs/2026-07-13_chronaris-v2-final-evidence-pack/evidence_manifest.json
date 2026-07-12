@@ -1,0 +1,15 @@
+{
+  "format": "chronaris.v2_final_evidence_pack.v1",
+  "run_id": "2026-07-13_chronaris-v2-final-evidence-pack",
+  "status": "completed",
+  "promoted": false,
+  "paper_main_model": "chronaris_v1",
+  "figure_paths": {
+    "primary": "docs/artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/figures/six_primary_metrics.png",
+    "stress": "docs/artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/figures/stress_slopes.png",
+    "mechanism": "docs/artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/figures/timing_mechanism.png",
+    "ablation": "docs/artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/figures/formal_ablation.png"
+  },
+  "report_path": "docs/artifacts/runs/2026-07-13_chronaris-v2-final-evidence-pack/report.md",
+  "confirmed_v1_evidence_changed": false
+}

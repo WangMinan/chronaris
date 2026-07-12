@@ -275,7 +275,7 @@ def _report(audit, primary, public, figures):
         "鼎新结果属于固定数据同协议复验；独立仿真族、公开数据适配和正式消融均在配置锁定后运行，结果不回流当前开发轮次。",
         f"六主指标图：`{figures['primary']}`；压力斜率图：`{figures['stress']}`。",
         f"时间机制图：`{figures['mechanism']}`；正式消融图：`{figures['ablation']}`。",
-        f"公开数据适配汇总包含 {len(public)} 个数据集—任务条目，第二输入流仅作上下文构造。",
+        f"公开数据适配汇总包含 {len(public)} 个数据集—随机种子条目，第二输入流仅作上下文构造。",
         "",
     ))
 

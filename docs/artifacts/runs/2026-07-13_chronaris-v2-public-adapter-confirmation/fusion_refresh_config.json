@@ -1,0 +1,48 @@
+{
+  "run_id": "2026-07-13_chronaris-v2-public-adapter-confirmation",
+  "runtime_device": "cuda",
+  "config": {
+    "run_id": "2026-07-13_chronaris-v2-public-adapter-confirmation",
+    "dataset_prepared_roots": {
+      "nasa_csm": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/nasa_csm",
+      "uab_workload_dataset": "/tmp/chronaris_stage_i_public_fusion_refresh/20260701T-stage-i-public-fusion-refresh-r1/uab_workload_dataset"
+    },
+    "artifact_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation",
+    "report_root": "/home/wangminan/projects/chronaris/docs/artifacts/runs",
+    "datasets": [
+      "nasa_csm",
+      "uab_workload_dataset"
+    ],
+    "screen_epochs": 5,
+    "confirm_epochs": 20,
+    "screen_max_folds": 2,
+    "confirm_max_folds": null,
+    "screen_candidate_limit": 1,
+    "confirm_top_k": 1,
+    "screen_seed": 17,
+    "confirm_seeds": [
+      17,
+      29,
+      43
+    ],
+    "device": "cuda",
+    "require_cuda": true,
+    "resume": true,
+    "resume_run_id": null,
+    "resume_from_progress": null,
+    "skip_completed": true,
+    "allow_partial": false,
+    "screen_only": false,
+    "confirm_only": false,
+    "candidate_filter": [],
+    "dataset_filter": [],
+    "heartbeat_seconds": 60.0,
+    "batch_log_interval": 20,
+    "batch_size": null,
+    "learning_rate": null,
+    "train_sampling_policy": null,
+    "locked_configuration_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/locked_configuration.json",
+    "promotion_evidence_path": "docs/artifacts/runs/2026-07-13_chronaris-v2-promotion-audit/evidence_manifest.json",
+    "external_confirmation_only": true
+  }
+}

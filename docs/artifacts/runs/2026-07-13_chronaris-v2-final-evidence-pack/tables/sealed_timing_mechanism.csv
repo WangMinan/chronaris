@@ -1,0 +1,3 @@
+target,v1_mae_s,v2_mae_s,v2_over_v1,within_10_percent
+relative_clock_offset_magnitude_s,0.8864231815265994,0.8944220415242609,1.0090237486613176,True
+primary_physiology_response_lag_s,7.5198953855567385,7.154617939346052,0.9514251957663845,True

@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evidence/run_chronaris_v2_final_pack.py --run-id 2026-07-13_chronaris-v2-final-evidence-pack

@@ -1,0 +1,19 @@
+{
+  "format": "chronaris.v2_final_evidence_pack_protocol.v1",
+  "config": {
+    "run_id": "2026-07-13_chronaris-v2-final-evidence-pack",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "promotion_run_id": "2026-07-13_chronaris-v2-promotion-audit",
+    "dingxin_consumer_run_id": "2026-07-13_chronaris-v2-dingxin-locked-consumers",
+    "sealed_consumer_run_id": "2026-07-13_chronaris-v2-sealed-confirmation-consumers",
+    "v2_mechanism_run_id": "2026-07-13_chronaris-v2-mechanism-consumers",
+    "v1_mechanism_run_id": "2026-07-13_chronaris-v1-sealed-reference-mechanism",
+    "ablation_consumer_run_id": "2026-07-13_chronaris-v2-simulation-ablation-consumers",
+    "public_confirmation_run_id": "2026-07-13_chronaris-v2-public-adapter-confirmation"
+  },
+  "confirmed_v1_evidence_changed": false,
+  "results_returned_to_same_development_round": false,
+  "dingxin_evidence_role": "fixed_data_same_protocol_recheck",
+  "public_second_stream_role": "context_construction"
+}
