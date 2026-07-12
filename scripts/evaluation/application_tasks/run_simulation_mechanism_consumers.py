@@ -24,6 +24,8 @@ from chronaris.modeling.common.run_observer import configure_task_eval_cli_loggi
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default="2026-07-12_simulation-mechanism-consumers")
+    parser.add_argument("--mechanism-representation-run-id", default="2026-07-12_simulation-mechanism-representations")
+    parser.add_argument("--stress-representation-run-id", default="2026-07-12_simulation-locked-stress-representations")
     parser.add_argument("--seed", action="append", type=int, default=[])
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
@@ -31,6 +33,8 @@ def main() -> int:
     result = run_simulation_mechanism_consumers(
         SimulationMechanismConsumerConfig(
             run_id=args.run_id,
+            mechanism_representation_run_id=args.mechanism_representation_run_id,
+            stress_representation_run_id=args.stress_representation_run_id,
             seeds=tuple(args.seed) or (17, 29, 43),
             resume=args.resume,
         )

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shlex
 from dataclasses import asdict
 from pathlib import Path
 
@@ -58,9 +59,7 @@ def write_simulation_mechanism_outputs(**values):
     prediction_path = values["heavy_root"] / "prediction_rows.csv"
     pd.DataFrame(values["prediction_rows"]).to_csv(prediction_path, index=False)
     paths["resume"].write_text(
-        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_mechanism_consumers.py "
-        f"--run-id {values['config'].run_id} --resume\n",
+        _resume_command(values["config"]),
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
@@ -78,6 +77,21 @@ def write_simulation_mechanism_outputs(**values):
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
     return paths
+
+
+def _resume_command(config):
+    args = [
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+        "scripts/evaluation/application_tasks/run_simulation_mechanism_consumers.py",
+        "--run-id", config.run_id,
+        "--mechanism-representation-run-id",
+        config.mechanism_representation_run_id,
+        "--stress-representation-run-id", config.stress_representation_run_id,
+        "--resume",
+    ]
+    for seed in config.seeds:
+        args.extend(("--seed", str(seed)))
+    return " ".join(shlex.quote(str(value)) for value in args) + "\n"
 
 
 def _write_json(path, payload):
