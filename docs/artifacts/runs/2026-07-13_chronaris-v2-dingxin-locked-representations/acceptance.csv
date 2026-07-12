@@ -1,0 +1,7 @@
+check_id,passed,actual,expected
+all_seed_folds,True,15,15
+six_checkpoints_per_seed_fold,True,"[6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]",6
+eighteen_exports_per_seed_fold,True,"[18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18]",18
+all_representation_exports,True,270,270
+three_aligned_roles,True,"[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]",3
+outer_test_metrics_closed,True,False,False

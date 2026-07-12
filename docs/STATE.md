@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。直接因果生理残差修复、24 项固定超参数网格和鼎新三个 inner-validation 折复核均已完成；保真门禁已按 24 维航电专属、16 维生理专属切片执行，避免共享维度干扰小样本探针。三候选全部通过三折门禁，最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置。独立仿真确认族已生成单独访问授权记录，原 seal manifest 保持不变；seeds 17/29/43 × 鼎新五折的 15 个 v2 任务无关 checkpoint 已全部完成，outer-test provider 请求为 0，当前正在重新导出同一共享因果查询有效域上的六方法表示。封存仿真、压力、时间机制、正式消融、一次性晋级审计和锁定后 NASA/UAB 公开数据适配均已实现并按上游 evidence 状态排队。只有六项预声明主指标的三随机种子均值全部排名第一且附加门禁通过时才晋级 v2；否则保留当前 v1 与既有论文证据。
+固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。直接因果生理残差修复、24 项固定超参数网格和鼎新三个 inner-validation 折复核均已完成；保真门禁已按 24 维航电专属、16 维生理专属切片执行，避免共享维度干扰小样本探针。三候选全部通过三折门禁，最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置。独立仿真确认族已生成单独访问授权记录，原 seal manifest 保持不变；鼎新 15/15 checkpoint、270/270 六方法表示和 90/90 冻结 consumer 已完成。固定数据同协议复验中，v2 Chronaris 的机动分类 Macro-F1、高响应 AUPRC 和连续响应 RMSE 分别为 0.7254、0.8410、0.3346，三项均未超过预声明最佳值，因此 v2 已不具备本轮晋级条件；后续仿真、压力、时间机制、正式消融、一次性差距审计和锁定后 NASA/UAB 公开数据适配仍按既定协议继续，结果不得回流调参。当前 v1 与既有论文证据保持不变。
 
 ## 当前执行入口
 
@@ -20,6 +20,8 @@
 - v2 鼎新三折配置锁定：[artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/evidence_manifest.json](artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/evidence_manifest.json)
 - v2 独立仿真确认访问授权：[artifacts/runs/2026-07-13_chronaris-v2-confirmation-access/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-confirmation-access/evidence_manifest.json)
 - v2 鼎新三随机种子五折锁定重训：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-pretraining/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-pretraining/evidence_manifest.json)
+- v2 鼎新六方法锁定表示：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-representations/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-representations/evidence_manifest.json)
+- v2 鼎新固定数据同协议复验：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/evidence_manifest.json)
 - v2 独立仿真确认族封存：[artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md](artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)

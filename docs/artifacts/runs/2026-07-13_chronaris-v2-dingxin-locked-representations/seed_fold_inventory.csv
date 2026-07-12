@@ -1,0 +1,16 @@
+seed,fold_id,checkpoint_count,export_count,alignment_role_count,outer_test_representation_exported,outer_test_metrics_opened
+17,leave_one_view_out__fold01,6,18,3,True,False
+17,leave_one_view_out__fold02,6,18,3,True,False
+17,leave_one_view_out__fold03,6,18,3,True,False
+17,leave_one_sortie_out__fold01,6,18,3,True,False
+17,leave_one_sortie_out__fold02,6,18,3,True,False
+29,leave_one_view_out__fold01,6,18,3,True,False
+29,leave_one_view_out__fold02,6,18,3,True,False
+29,leave_one_view_out__fold03,6,18,3,True,False
+29,leave_one_sortie_out__fold01,6,18,3,True,False
+29,leave_one_sortie_out__fold02,6,18,3,True,False
+43,leave_one_view_out__fold01,6,18,3,True,False
+43,leave_one_view_out__fold02,6,18,3,True,False
+43,leave_one_view_out__fold03,6,18,3,True,False
+43,leave_one_sortie_out__fold01,6,18,3,True,False
+43,leave_one_sortie_out__fold02,6,18,3,True,False

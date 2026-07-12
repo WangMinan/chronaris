@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.dingxin_locked_consumer_evidence.v1",
+  "run_id": "2026-07-13_chronaris-v2-dingxin-locked-consumers",
+  "status": "completed",
+  "method_fold_seed_count": 90,
+  "metric_count": 5040,
+  "fusion_gain_count": 3360,
+  "main_summary_count": 504,
+  "representation_family": "frozen_task_agnostic_v2",
+  "acceptance_pass_count": 8,
+  "acceptance_check_count": 8,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-13_chronaris-v2-dingxin-locked-consumers",
+  "prediction_path": "artifacts/application_evaluation/2026-07-13_chronaris-v2-dingxin-locked-consumers/prediction_rows.csv",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/consumer_inventory.csv",
+    "metrics": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/metric_long.csv",
+    "gains": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/fusion_gain.csv",
+    "summary": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/main_view_fold_summary.csv",
+    "resources": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/resource_metrics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/report.md",
+    "claim": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/evidence_manifest.json"
+  }
+}
