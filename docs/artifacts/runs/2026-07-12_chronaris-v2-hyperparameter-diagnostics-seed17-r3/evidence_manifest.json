@@ -1,0 +1,14 @@
+{
+  "confirmed_metrics_changed": false,
+  "format": "chronaris.v2_hyperparameter_diagnostics_evidence.v1",
+  "outer_test_opened": false,
+  "run_id": "2026-07-12_chronaris-v2-hyperparameter-diagnostics-seed17-r3",
+  "sealed_confirmation_opened": false,
+  "selected_candidate_ids": [
+    "v2_h96_continuous_basis_euler_lr1e3",
+    "v2_h96_continuous_basis_rk4_lr1e3",
+    "v2_h96_fixed_five_rk4_lr1e3"
+  ],
+  "status": "selected_top_three",
+  "task_labels_opened": false
+}

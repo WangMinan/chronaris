@@ -1,0 +1,8 @@
+{
+  "confirmed_metrics_changed": false,
+  "format": "chronaris.v2_hyperparameter_screen_evidence.v1",
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_chronaris-v2-hyperparameter-screen-seed17-r3",
+  "run_id": "2026-07-12_chronaris-v2-hyperparameter-screen-seed17-r3",
+  "selection_status": "awaiting_task_independent_gate_diagnostics",
+  "status": "training_complete"
+}
