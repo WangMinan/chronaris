@@ -24,6 +24,12 @@ from chronaris.modeling.common.run_observer import configure_task_eval_cli_loggi
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-id", default="2026-07-12_simulation-locked-representations")
+    parser.add_argument(
+        "--pretraining-run-id",
+        default="2026-07-12_simulation-locked-pretraining",
+    )
+    parser.add_argument("--baseline-pretraining-run-id")
+    parser.add_argument("--locked-configuration-path")
     parser.add_argument("--export-batch-size", type=int, default=32)
     parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--chronaris-device", choices=("auto", "cpu", "cuda"), default="cpu")
@@ -33,6 +39,9 @@ def main() -> int:
     result = run_simulation_locked_representations(
         SimulationLockedRepresentationConfig(
             run_id=args.run_id,
+            pretraining_run_id=args.pretraining_run_id,
+            baseline_pretraining_run_id=args.baseline_pretraining_run_id,
+            locked_configuration_path=args.locked_configuration_path,
             export_batch_size=args.export_batch_size,
             baseline_device=args.baseline_device,
             chronaris_device=args.chronaris_device,

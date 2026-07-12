@@ -50,6 +50,8 @@ class SimulationLockedRepresentationConfig:
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     simulation_root: str = (
         "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
     )
@@ -82,6 +84,10 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    baseline_pretraining_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.pretraining_run_id)
+    )
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
     selected_payload = json.loads(
@@ -91,10 +97,15 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
         method: str(selected_payload[method]["candidate_id"])
         for method in TRAINABLE_FUSION_METHODS
     }
+    locked_candidate_id = _locked_v2_candidate_id(
+        config.locked_configuration_path
+    )
     checkpoints = require_complete_locked_checkpoint_set(
         pretraining_root,
+        baseline_root=baseline_pretraining_root,
         seeds=config.seeds,
         selected_ids=selected_ids,
+        locked_candidate_id=locked_candidate_id,
     )
     pretraining_data = load_simulation_locked_pretraining_data(config.simulation_root)
     data = load_simulation_locked_context_data(config.simulation_root)
@@ -118,6 +129,7 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
                 seed=seed,
                 checkpoints=checkpoints,
                 selected_ids=selected_ids,
+                locked_candidate_id=locked_candidate_id,
                 pretraining_data=pretraining_data,
                 heavy_root=heavy_root,
                 resume=config.resume,
@@ -192,26 +204,66 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
     )
 
 
-def require_complete_locked_checkpoint_set(root, *, seeds, selected_ids):
+def require_complete_locked_checkpoint_set(
+    root,
+    *,
+    seeds,
+    selected_ids,
+    baseline_root=None,
+    locked_candidate_id=None,
+):
+    baseline_root = root if baseline_root is None else baseline_root
     paths = {}
     for seed in seeds:
         for method in TRAINABLE_FUSION_METHODS:
-            path = (
-                root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
-                if method == "chronaris"
-                else root / "checkpoints" / f"seed_{seed}" / method / selected_ids[method] / "best.pt"
-            )
+            if method == "chronaris" and locked_candidate_id is not None:
+                path = (
+                    root
+                    / "checkpoints"
+                    / f"seed_{seed}"
+                    / method
+                    / locked_candidate_id
+                    / "last.pt"
+                )
+            elif method == "chronaris":
+                path = root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
+            else:
+                path = (
+                    baseline_root
+                    / "checkpoints"
+                    / f"seed_{seed}"
+                    / method
+                    / selected_ids[method]
+                    / "best.pt"
+                )
             if not path.is_file():
                 raise FileNotFoundError(f"locked representation requires complete checkpoint set: {path}")
             payload = torch.load(path, map_location="cpu", weights_only=True)
-            if payload.get("training_status") != "completed" or int(payload["seed"]) != seed:
+            payload_seed = payload.get("seed", payload.get("config", {}).get("seed"))
+            if (
+                payload.get("training_status") != "completed"
+                or int(payload_seed) != seed
+            ):
                 raise ValueError("locked representation checkpoint is incomplete or seed-mismatched")
             paths[(seed, method)] = path
     return paths
 
 
+def _locked_v2_candidate_id(path):
+    if path is None:
+        return None
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    if payload.get("configuration_locked") is not True:
+        raise PermissionError("v2 simulation export requires a locked configuration")
+    candidate = payload.get("candidate")
+    if not isinstance(candidate, dict) or not candidate.get("candidate_id"):
+        raise PermissionError("v2 locked configuration has no candidate")
+    return str(candidate["candidate_id"])
+
+
 def load_locked_seed_adapters(
     *, seed, checkpoints, selected_ids, pretraining_data, heavy_root, resume,
+    locked_candidate_id=None,
     baseline_device="cpu", chronaris_device="cpu"
 ):
     adapters = {}
@@ -226,7 +278,12 @@ def load_locked_seed_adapters(
             path,
             device=_resolve_device(device),
         )
-        if payload["candidate_config"]["candidate_id"] != selected_ids[method]:
+        expected_candidate_id = (
+            locked_candidate_id
+            if method == "chronaris" and locked_candidate_id is not None
+            else selected_ids[method]
+        )
+        if payload["candidate_config"]["candidate_id"] != expected_candidate_id:
             raise ValueError("locked representation candidate mismatch")
         normalizer_hashes.add(loaded_normalizer.to_manifest()["transform_sha256"])
         normalizer = loaded_normalizer if normalizer is None else normalizer
@@ -332,6 +389,11 @@ def _write_outputs(**values):
         "task_oracle_opened": False,
         "baseline_device": values["baseline_device"],
         "chronaris_device": values["chronaris_device"],
+        "representation_family": (
+            "frozen_task_agnostic_v2"
+            if values["config"].locked_configuration_path is not None
+            else "frozen_task_agnostic_v1"
+        ),
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -360,6 +422,11 @@ def _write_outputs(**values):
         "task_oracle_opened": False,
         "baseline_device": values["baseline_device"],
         "chronaris_device": values["chronaris_device"],
+        "representation_family": (
+            "frozen_task_agnostic_v2"
+            if values["config"].locked_configuration_path is not None
+            else "frozen_task_agnostic_v1"
+        ),
         "heavy_run_root": str(values["heavy_root"]),
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
