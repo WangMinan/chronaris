@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import hashlib
+from dataclasses import replace
 
+import pytest
 import torch
 
 from chronaris.evaluation.representation_diagnostics import (
@@ -92,6 +94,43 @@ def test_representation_health_and_fidelity_are_finite() -> None:
     assert health.valid_vector_count == len(validation_ids) * 96
     assert fidelity.variance_weighted_r2 > 0.99
     assert fidelity.normalized_rmse < 0.01
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA unavailable")
+def test_fidelity_probe_aligns_cuda_representations_without_cpu_indices() -> None:
+    train_ids = tuple(f"train_{index}" for index in range(10))
+    validation_ids = tuple(f"validation_{index}" for index in range(5))
+
+    def on_cuda(batch: FusionStreamBatch) -> FusionStreamBatch:
+        return replace(
+            batch,
+            timestamps_s=batch.timestamps_s.cuda(),
+            sequence_embedding=batch.sequence_embedding.cuda(),
+            valid_mask=batch.valid_mask.cuda(),
+            pooled_embedding=batch.pooled_embedding.cuda(),
+        )
+
+    train_source = on_cuda(_fusion("chronaris", train_ids))
+    train_target = on_cuda(
+        _fusion("vehicle_only", tuple(reversed(train_ids)), offset=0.25)
+    )
+    validation_source = on_cuda(_fusion("chronaris", validation_ids, offset=0.5))
+    validation_target = on_cuda(
+        _fusion(
+            "vehicle_only",
+            tuple(reversed(validation_ids)),
+            offset=0.75,
+        )
+    )
+
+    fidelity = fit_fidelity_probe(
+        train_source,
+        train_target,
+        validation_source,
+        validation_target,
+    )
+
+    assert torch.isfinite(torch.tensor(fidelity.normalized_rmse))
 
 
 def test_counterfactuals_change_only_requested_stream() -> None:

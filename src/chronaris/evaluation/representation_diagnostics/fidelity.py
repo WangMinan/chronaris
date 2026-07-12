@@ -114,15 +114,20 @@ def fit_feature_recovery_probe(
 
 
 def _fit_ridge_metrics(train_x, train_y, validation_x, validation_y, *, ridge_alpha):
-    train_x = train_x.to(torch.float64)
-    train_y = train_y.to(torch.float64)
-    validation_x = validation_x.to(torch.float64)
-    validation_y = validation_y.to(torch.float64)
+    device = train_x.device
+    train_x = train_x.to(device=device, dtype=torch.float64)
+    train_y = train_y.to(device=device, dtype=torch.float64)
+    validation_x = validation_x.to(device=device, dtype=torch.float64)
+    validation_y = validation_y.to(device=device, dtype=torch.float64)
     x_mean = train_x.mean(dim=0, keepdim=True)
     y_mean = train_y.mean(dim=0, keepdim=True)
     x_centered = train_x - x_mean
     y_centered = train_y - y_mean
-    identity = torch.eye(x_centered.shape[1], dtype=torch.float64)
+    identity = torch.eye(
+        x_centered.shape[1],
+        dtype=torch.float64,
+        device=device,
+    )
     weights = torch.linalg.solve(
         x_centered.transpose(0, 1) @ x_centered + ridge_alpha * identity,
         x_centered.transpose(0, 1) @ y_centered,
@@ -152,6 +157,7 @@ def _aligned_pooled(
     order = torch.tensor(
         [target_index[sample_id] for sample_id in source.sample_ids],
         dtype=torch.long,
+        device=target.pooled_embedding.device,
     )
     if tuple(source.source_sample_hashes) != tuple(
         target.source_sample_hashes[index] for index in order.tolist()
