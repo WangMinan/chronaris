@@ -439,6 +439,9 @@ def _load_trained_lag_head(payload, *, device):
     head = ChronarisV2ObjectiveHeads(
         physiology_feature_count=len(payload["physiology_feature_names"]),
         vehicle_feature_count=len(payload["vehicle_feature_names"]),
+        physiology_teacher_mode=str(
+            candidate.get("physiology_teacher_mode", "none")
+        ),
     ).to(device)
     head.load_state_dict(payload["v2_head_state_dict"], strict=True)
     head.eval()

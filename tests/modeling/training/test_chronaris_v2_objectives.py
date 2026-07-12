@@ -33,6 +33,7 @@ from chronaris.modeling.training.chronaris_v2_training import (
     _shared_pcgrad_backward,
 )
 from chronaris.modeling.training.common_pretraining import (
+    TrainedFusionAdapter,
     load_common_pretraining_checkpoint,
 )
 from chronaris.representation import (
@@ -132,6 +133,53 @@ def test_v2_targets_and_losses_are_lag_conditioned_without_same_time_alignment()
     assert torch.isfinite(output.total_loss)
 
 
+def test_physiology_teacher_distillation_uses_declared_subspace_path() -> None:
+    torch.manual_seed(29)
+    batch = _batch()
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=("a",),
+        held_out_sample_ids=("b",),
+    )
+    normalized = normalizer.transform(batch)
+    encoder = ChronarisV2FusionEncoder(
+        ChronarisV2EncoderConfig(
+            physiology_feature_names=("physiology.spo2", "physiology.eeg"),
+            vehicle_feature_names=("vehicle.speed_mps", "vehicle.pitch_rad"),
+            internal_hidden_dim=32,
+            physiology_hidden_dim=16,
+            vehicle_hidden_dim=32,
+            num_heads=4,
+            dropout=0.0,
+        )
+    )
+    encoder.attach_normalizer(normalizer)
+    encoding = encoder(normalized, compute_diagnostics=True)
+    heads = ChronarisV2ObjectiveHeads(
+        physiology_feature_count=2,
+        vehicle_feature_count=2,
+        physiology_teacher_mode="physiology_path",
+    )
+    teacher = torch.randn(2, 96, 64)
+    output = heads(
+        encoding,
+        build_chronaris_v2_objective_targets(normalized),
+        weights=chronaris_v2_objective_weight_schedule(
+            20,
+            physiology_teacher_weight=0.5,
+        ),
+        physiology_teacher_sequence=teacher,
+        physiology_teacher_mask=torch.ones(2, 96, dtype=torch.bool),
+    )
+    output.total_loss.backward()
+
+    terms = {term.name: term for term in output.terms}
+    assert terms["physiology_teacher_distillation"].weight == 0.5
+    assert terms["physiology_teacher_distillation"].count == 2 * 96 * 64
+    assert heads.physiology_teacher_projection is not None
+    assert heads.physiology_teacher_projection.weight.grad is not None
+
+
 def test_curriculum_matches_predeclared_missingness_levels() -> None:
     assert chronaris_v2_curriculum_stage(1).point_dropout_probability == 0.10
     assert chronaris_v2_curriculum_stage(6).point_dropout_probability == 0.20
@@ -140,6 +188,13 @@ def test_curriculum_matches_predeclared_missingness_levels() -> None:
     assert chronaris_v2_augmentation_policy(20).point_dropout_probability == 0.40
     assert chronaris_v2_objective_weight_schedule(10).future_physiology_delta == 0
     assert chronaris_v2_objective_weight_schedule(20).future_physiology_delta == 0.5
+    assert (
+        chronaris_v2_objective_weight_schedule(
+            15,
+            physiology_teacher_weight=1.0,
+        ).physiology_teacher_distillation
+        == 0.5
+    )
 
 
 def test_v2_early_stopping_cannot_preempt_joint_unfreeze() -> None:
@@ -246,3 +301,53 @@ def test_v2_grid_and_one_epoch_training_round_trip(tmp_path) -> None:
     assert encoder.backbone.config.architecture_version == "v2"
     assert payload["label_used_for_encoder_training"] is False
     assert payload["simulation_oracle_opened"] is False
+
+    checkpoint_sha256 = hashlib.sha256(
+        (tmp_path / candidate.candidate_id / "last.pt").read_bytes()
+    ).hexdigest()
+    teacher_targets = TrainedFusionAdapter(
+        encoder=encoder,
+        normalizer=_normalizer,
+        fold_id=fold.fold_id,
+        checkpoint_sha256=checkpoint_sha256,
+    )(batch)
+    repair = ChronarisV2CandidateConfig(
+        candidate_id="repair_test",
+        internal_hidden_dim=64,
+        lag_mode="fixed_five",
+        ode_method="euler",
+        learning_rate=3e-4,
+        physiology_teacher_mode="physiology_path",
+        physiology_teacher_weight=0.5,
+        phase_epoch_offset=20,
+    )
+    repaired = train_chronaris_v2_candidate(
+        candidate=repair,
+        batch=batch,
+        fold=fold,
+        physiology_feature_names=("physiology.spo2", "physiology.eeg"),
+        vehicle_feature_names=("vehicle.speed_mps", "vehicle.pitch_rad"),
+        vehicle_field_labels=(),
+        normalizer=normalizer,
+        output_root=tmp_path / "repair",
+        config=ChronarisV2TrainingConfig(
+            max_epochs=1,
+            batch_size=1,
+            patience=1,
+            seed=17,
+        ),
+        physiology_teacher_targets=teacher_targets,
+        initialization_checkpoint=result.last_checkpoint_path,
+    )
+    repair_payload = torch.load(
+        repaired.last_checkpoint_path,
+        map_location="cpu",
+        weights_only=True,
+    )
+
+    assert repair_payload["epoch_rows"][0]["effective_epoch"] == 21
+    assert repair_payload["physiology_teacher_manifest"]["target_sha256"]
+    assert repair_payload["initialization_manifest"]["checkpoint_sha256"]
+    assert "physiology_teacher_projection.weight" in repair_payload[
+        "v2_head_state_dict"
+    ]

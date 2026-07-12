@@ -19,6 +19,10 @@ DISPLAY_NAMES = {
     "structure_06_corrected_physics": "修正物理约束",
     "structure_07_missing_curriculum": "缺失课程",
     "structure_08_complete_v2": "完整 v2",
+    "fidelity_00_complete_v2_reference": "完整 v2 参考",
+    "fidelity_01_private_teacher_w050": "生理私有子空间蒸馏",
+    "fidelity_02_path_teacher_w050": "生理路径蒸馏（权重 0.5）",
+    "fidelity_03_path_teacher_w100": "生理路径蒸馏（权重 1.0）",
 }
 
 

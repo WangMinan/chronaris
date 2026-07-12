@@ -3,17 +3,15 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
-from typing import Callable, Mapping, Sequence
+from typing import Callable, Sequence
 
 import torch
 from torch import nn
 
 from chronaris.modeling.fusion_encoders.chronaris_v2 import (
-    V2_SUBSPACE_SLICES,
     ChronarisV2EncoderConfig,
     ChronarisV2FusionEncoder,
 )
@@ -24,6 +22,20 @@ from chronaris.modeling.training.candidate_screen import (
 from chronaris.modeling.training.chronaris_v2_curriculum import (
     chronaris_v2_augmentation_policy,
     chronaris_v2_curriculum_stage,
+)
+from chronaris.modeling.training.chronaris_v2_checkpointing import (
+    ChronarisV2TrainingResult,
+    build_v2_checkpoint_payload,
+    load_v2_checkpoint,
+    save_v2_checkpoint,
+    v2_protocol_hash,
+    v2_training_result,
+)
+from chronaris.modeling.training.chronaris_v2_distillation import (
+    initialization_manifest as build_initialization_manifest,
+    initialize_v2_repair_candidate,
+    physiology_teacher_manifest,
+    select_physiology_teacher_targets,
 )
 from chronaris.modeling.training.chronaris_v2_objectives import (
     ChronarisV2ObjectiveOutput,
@@ -50,6 +62,7 @@ from chronaris.modeling.training.pretraining_encoders import TrainableFusionEnco
 from chronaris.representation import (
     DualStreamObservationBatch,
     FoldLineage,
+    FusionStreamBatch,
     TrainOnlyRobustNormalizer,
     apply_augmentation_realizations,
     build_batch_augmentation_realizations,
@@ -70,6 +83,9 @@ class ChronarisV2CandidateConfig:
     learning_rate: float
     dropout: float = 0.1
     structure_candidate_id: str = "structure_08_complete_v2"
+    physiology_teacher_mode: str = "none"
+    physiology_teacher_weight: float = 0.0
+    phase_epoch_offset: int = 0
 
     def __post_init__(self) -> None:
         if not self.candidate_id:
@@ -84,6 +100,20 @@ class ChronarisV2CandidateConfig:
             raise ValueError("v2 candidate learning rate is outside the locked grid")
         if not 0 <= self.dropout < 1:
             raise ValueError("v2 candidate dropout is invalid")
+        if self.physiology_teacher_mode not in {
+            "none",
+            "private",
+            "physiology_path",
+        }:
+            raise ValueError("v2 physiology teacher mode is invalid")
+        if self.physiology_teacher_weight < 0:
+            raise ValueError("v2 physiology teacher weight must be non-negative")
+        if (self.physiology_teacher_mode == "none") != (
+            self.physiology_teacher_weight == 0
+        ):
+            raise ValueError("v2 physiology teacher mode/weight mismatch")
+        if self.phase_epoch_offset not in {0, 20}:
+            raise ValueError("v2 phase epoch offset must be 0 or 20")
         structure = chronaris_v2_structure_candidate(self.structure_candidate_id)
         if structure.architecture_version != "v2":
             raise ValueError("v1 structure candidate must use the v1 training pipeline")
@@ -158,20 +188,6 @@ class ChronarisV2TrainingConfig:
             raise ValueError("v2 training requested unavailable CUDA")
 
 
-@dataclass(frozen=True, slots=True)
-class ChronarisV2TrainingResult:
-    status: str
-    best_checkpoint_path: str
-    last_checkpoint_path: str
-    best_epoch: int
-    completed_epochs: int
-    stopped_early: bool
-    best_public_selection_loss: float
-    training_elapsed_s: float
-    epoch_rows: tuple[Mapping[str, object], ...]
-    gradient_rows: tuple[Mapping[str, object], ...]
-
-
 def train_chronaris_v2_candidate(
     *,
     candidate: ChronarisV2CandidateConfig,
@@ -184,15 +200,26 @@ def train_chronaris_v2_candidate(
     output_root: str | Path,
     config: ChronarisV2TrainingConfig | None = None,
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
+    physiology_teacher_targets: FusionStreamBatch | None = None,
+    initialization_checkpoint: str | Path | None = None,
     resume: bool = True,
 ) -> ChronarisV2TrainingResult:
     resolved = config or ChronarisV2TrainingConfig()
     if (batch is None) == (batch_provider is None):
         raise ValueError("provide exactly one of batch or batch_provider")
+    if (candidate.physiology_teacher_mode == "none") != (
+        physiology_teacher_targets is None
+    ):
+        raise ValueError("physiology teacher targets do not match candidate protocol")
+    teacher_manifest = physiology_teacher_manifest(physiology_teacher_targets)
+    initialization_manifest = build_initialization_manifest(
+        initialization_checkpoint,
+        normalizer=normalizer,
+    )
     root = Path(output_root) / candidate.candidate_id
     best_path = root / "best.pt"
     last_path = root / "last.pt"
-    protocol_hash = _protocol_hash(
+    protocol_hash = v2_protocol_hash(
         candidate=asdict(candidate),
         config=asdict(resolved),
         fold=fold.to_dict(),
@@ -201,14 +228,21 @@ def train_chronaris_v2_candidate(
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
         data_access_mode="provider" if batch_provider else "materialized",
+        physiology_teacher=teacher_manifest,
+        initialization=initialization_manifest,
     )
     resume_payload = None
     if resume and last_path.exists():
-        resume_payload = _load(last_path, device=resolved.device)
+        resume_payload = load_v2_checkpoint(last_path, device=resolved.device)
         if resume_payload.get("protocol_sha256") != protocol_hash:
             raise RepresentationContractError("Chronaris v2 checkpoint protocol changed")
         if resume_payload.get("training_status") == "completed":
-            return _result(_load(best_path), best_path, last_path, status="resumed")
+            return v2_training_result(
+                load_v2_checkpoint(best_path),
+                best_path,
+                last_path,
+                status="resumed",
+            )
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(resolved.seed)
         structure = chronaris_v2_structure_candidate(
@@ -251,7 +285,16 @@ def train_chronaris_v2_candidate(
         v2_heads = ChronarisV2ObjectiveHeads(
             physiology_feature_count=len(physiology_feature_names),
             vehicle_feature_count=len(vehicle_feature_names),
+            physiology_teacher_mode=candidate.physiology_teacher_mode,
         ).to(resolved.device)
+    if resume_payload is None and initialization_checkpoint is not None:
+        initialize_v2_repair_candidate(
+            initialization_checkpoint,
+            encoder=encoder,
+            common_heads=common_heads,
+            v2_heads=v2_heads,
+            device=resolved.device,
+        )
     optimizer = torch.optim.AdamW(
         (
             {
@@ -305,14 +348,15 @@ def train_chronaris_v2_candidate(
         controller.conflict_history.extend(resume_payload.get("conflict_history", ()))
     started = time.perf_counter()
     for epoch in range(start_epoch, resolved.max_epochs + 1):
-        phase = _set_training_phase(backbone, epoch)
+        effective_epoch = epoch + candidate.phase_epoch_offset
+        phase = _set_training_phase(backbone, effective_epoch)
         encoder.train()
         common_heads.train()
         v2_heads.train()
         epoch_total = 0.0
         step_count = 0
         curriculum = chronaris_v2_augmentation_policy(
-            epoch if structure.missingness_curriculum else 1
+            effective_epoch if structure.missingness_curriculum else 1
         )
         for sample_ids in _batch_ids(fold.train_sample_ids, resolved.batch_size):
             raw = _load_batch(batch, batch_provider, sample_ids)
@@ -358,7 +402,9 @@ def train_chronaris_v2_candidate(
                 common_targets,
                 weights=CommonPretextWeights(),
             )
-            objective_enabled = structure.lag_conditioned_objective and epoch > 10
+            objective_enabled = (
+                structure.lag_conditioned_objective and effective_epoch > 10
+            )
             if objective_enabled:
                 lag_labels = _known_lag_labels(
                     sample_ids,
@@ -369,16 +415,22 @@ def train_chronaris_v2_candidate(
                 clean_encoding = backbone(clean, compute_diagnostics=True)
                 lag_encoding = backbone(known_lag, compute_diagnostics=False)
                 v2_targets = build_chronaris_v2_objective_targets(clean)
-                objective_weights = chronaris_v2_objective_weight_schedule(epoch)
+                objective_weights = chronaris_v2_objective_weight_schedule(
+                    effective_epoch,
+                    physiology_teacher_weight=(
+                        candidate.physiology_teacher_weight
+                    ),
+                )
                 if not structure.corrected_physics:
-                    objective_weights = ChronarisV2ObjectiveWeights(
-                        vehicle_private_retention=objective_weights.vehicle_private_retention,
-                        physiology_private_retention=objective_weights.physiology_private_retention,
-                        future_physiology_delta=objective_weights.future_physiology_delta,
-                        lag_bin_classification=objective_weights.lag_bin_classification,
-                        clean_corruption_consistency=objective_weights.clean_corruption_consistency,
+                    objective_weights = replace(
+                        objective_weights,
                         physical_consistency=0.0,
                     )
+                teacher_sequence, teacher_mask = select_physiology_teacher_targets(
+                    physiology_teacher_targets,
+                    sample_ids,
+                    device=resolved.device,
+                )
                 v2_output = v2_heads(
                     clean_encoding,
                     v2_targets,
@@ -386,6 +438,8 @@ def train_chronaris_v2_candidate(
                     corrupted_encoding=positive.auxiliary["chronaris_encoding"],
                     lag_encoding=lag_encoding,
                     lag_labels=lag_labels,
+                    physiology_teacher_sequence=teacher_sequence,
+                    physiology_teacher_mask=teacher_mask,
                 )
             else:
                 v2_output = ChronarisV2ObjectiveOutput(
@@ -473,15 +527,18 @@ def train_chronaris_v2_candidate(
         epoch_rows.append(
             {
                 "epoch": epoch,
+                "effective_epoch": effective_epoch,
                 "phase": phase,
                 "train_total_loss": epoch_total / max(step_count, 1),
                 "validation_losses": validation_losses,
                 "public_selection_loss": score,
                 "improved": improved,
                 "epochs_without_improvement": without_improvement,
-                "curriculum_stage": chronaris_v2_curriculum_stage(epoch).stage_index,
+                "curriculum_stage": chronaris_v2_curriculum_stage(
+                    effective_epoch
+                ).stage_index,
                 "effective_curriculum_stage": (
-                    chronaris_v2_curriculum_stage(epoch).stage_index
+                    chronaris_v2_curriculum_stage(effective_epoch).stage_index
                     if structure.missingness_curriculum
                     else 1
                 ),
@@ -489,7 +546,7 @@ def train_chronaris_v2_candidate(
                 "gradient_conflict_rate": controller.conflict_rate,
             }
         )
-        payload = _payload(
+        payload = build_v2_checkpoint_payload(
             encoder=encoder,
             common_heads=common_heads,
             v2_heads=v2_heads,
@@ -506,17 +563,19 @@ def train_chronaris_v2_candidate(
             gradient_rows=gradient_rows,
             controller=controller,
             elapsed=elapsed_offset + time.perf_counter() - started,
+            physiology_teacher_manifest=teacher_manifest,
+            initialization_manifest=initialization_manifest,
         )
-        _save(last_path, payload)
+        save_v2_checkpoint(last_path, payload)
         if improved:
-            _save(best_path, payload)
+            save_v2_checkpoint(best_path, payload)
         if (
             _early_stopping_allowed(epoch, resolved)
             and without_improvement >= resolved.patience
         ):
             break
     elapsed = elapsed_offset + time.perf_counter() - started
-    final = _load(best_path)
+    final = load_v2_checkpoint(best_path)
     final.update(
         training_status="completed",
         completed_epochs=len(epoch_rows),
@@ -526,14 +585,14 @@ def train_chronaris_v2_candidate(
         gradient_rows=gradient_rows,
         conflict_history=controller.conflict_history,
     )
-    _save(best_path, final)
-    last = _load(last_path)
+    save_v2_checkpoint(best_path, final)
+    last = load_v2_checkpoint(last_path)
     last.update(
         training_status="completed",
         stopped_early=final["stopped_early"],
     )
-    _save(last_path, last)
-    return _result(final, best_path, last_path, status="completed")
+    save_v2_checkpoint(last_path, last)
+    return v2_training_result(final, best_path, last_path, status="completed")
 
 
 def _set_training_phase(backbone: ChronarisV2FusionEncoder, epoch: int) -> str:
@@ -592,6 +651,7 @@ def _grouped_optimization_losses(common_output, v2_output):
     fidelity_names = (
         "vehicle_private_retention",
         "physiology_private_retention",
+        "physiology_teacher_distillation",
         "clean_corruption_consistency",
     )
     causal_names = ("future_physiology_delta", "lag_bin_classification")
@@ -677,64 +737,6 @@ def _validation_losses(**values):
     }
 
 
-def _payload(**values):
-    encoder = values["encoder"]
-    backbone = encoder.backbone
-    return {
-        "format": "chronaris.common_pretraining_checkpoint.v2",
-        "training_status": "running",
-        "method_name": "chronaris",
-        "architecture_version": "v2",
-        "protocol_sha256": values["protocol_hash"],
-        "encoder_state_dict": encoder.state_dict(),
-        "common_head_state_dict": values["common_heads"].state_dict(),
-        "head_state_dict": values["common_heads"].state_dict(),
-        "v2_head_state_dict": values["v2_heads"].state_dict(),
-        "optimizer_state_dict": values["optimizer"].state_dict(),
-        "normalizer": dict(values["normalizer"].to_manifest()),
-        "fold": values["fold"].to_dict(),
-        "candidate_config": asdict(values["candidate"]),
-        "config": asdict(values["config"]),
-        "encoder_manifest": dict(encoder.config_manifest()),
-        "physiology_feature_names": list(backbone.config.physiology_feature_names),
-        "vehicle_feature_names": list(backbone.config.vehicle_feature_names),
-        "vehicle_field_labels": [list(value) for value in backbone.config.field_labels],
-        "subspace_slices": {
-            name: list(bounds) for name, bounds in V2_SUBSPACE_SLICES.items()
-        },
-        "semantic_group_mapping_sha256": backbone.semantic_group_map.mapping_sha256,
-        "physics_mapping_sha256": backbone.physics_mapping_sha256,
-        "lag_config": dict(backbone.lag_config_manifest()),
-        "normalization_inverse_transform": dict(
-            values["normalizer"].to_manifest()
-        ),
-        "best_epoch": values["best_epoch"],
-        "completed_epochs": values["completed_epochs"],
-        "best_public_selection_loss": values["best_score"],
-        "stopped_early": False,
-        "training_elapsed_s": values["elapsed"],
-        "epoch_rows": list(values["epoch_rows"]),
-        "gradient_rows": list(values["gradient_rows"]),
-        "conflict_history": list(values["controller"].conflict_history),
-        "pcgrad_active": values["controller"].use_pcgrad,
-        "parameter_count": encoder.parameter_count,
-        "head_parameter_count": sum(
-            parameter.numel()
-            for parameter in (
-                *values["common_heads"].parameters(),
-                *values["v2_heads"].parameters(),
-            )
-        ),
-        "training_rows": [],
-        "augmentation_rows": [],
-        "label_used_for_encoder_training": False,
-        "simulation_oracle_opened": False,
-        "locked_test_opened": False,
-        "selection_uses_public_pretext_only": True,
-        "early_stopping_uses_public_pretext_only": True,
-    }
-
-
 def _known_lag_labels(sample_ids, epoch, seed):
     return torch.tensor(
         [
@@ -750,7 +752,11 @@ def _known_lag_labels(sample_ids, epoch, seed):
 
 
 def _load_batch(batch, provider, sample_ids):
-    loaded = provider(sample_ids) if provider is not None else select_observation_batch(batch, sample_ids)
+    loaded = (
+        provider(sample_ids)
+        if provider is not None
+        else select_observation_batch(batch, sample_ids)
+    )
     if tuple(loaded.sample_ids) != tuple(sample_ids):
         raise RepresentationContractError("v2 batch provider changed sample order")
     return loaded
@@ -758,42 +764,7 @@ def _load_batch(batch, provider, sample_ids):
 
 def _batch_ids(sample_ids, batch_size):
     values = tuple(sample_ids)
-    return tuple(values[index : index + batch_size] for index in range(0, len(values), batch_size))
-
-
-def _protocol_hash(**payload):
-    payload["code_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-    return hashlib.sha256(
-        json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
-    ).hexdigest()
-
-
-def _save(path, payload):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(path.name + ".tmp")
-    torch.save(payload, temporary)
-    temporary.replace(path)
-
-
-def _load(path, *, device="cpu"):
-    payload = torch.load(path, map_location=device, weights_only=True)
-    if payload.get("format") != "chronaris.common_pretraining_checkpoint.v2":
-        raise RepresentationContractError("unsupported Chronaris v2 checkpoint")
-    if payload.get("architecture_version") != "v2":
-        raise RepresentationContractError("Chronaris v2 checkpoint version mismatch")
-    return payload
-
-
-def _result(payload, best_path, last_path, *, status):
-    return ChronarisV2TrainingResult(
-        status=status,
-        best_checkpoint_path=str(best_path),
-        last_checkpoint_path=str(last_path),
-        best_epoch=int(payload["best_epoch"]),
-        completed_epochs=int(payload["completed_epochs"]),
-        stopped_early=bool(payload["stopped_early"]),
-        best_public_selection_loss=float(payload["best_public_selection_loss"]),
-        training_elapsed_s=float(payload["training_elapsed_s"]),
-        epoch_rows=tuple(payload["epoch_rows"]),
-        gradient_rows=tuple(payload["gradient_rows"]),
+    return tuple(
+        values[index : index + batch_size]
+        for index in range(0, len(values), batch_size)
     )

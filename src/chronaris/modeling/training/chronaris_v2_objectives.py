@@ -24,6 +24,7 @@ class ChronarisV2ObjectiveWeights:
     lag_bin_classification: float
     clean_corruption_consistency: float
     physical_consistency: float
+    physiology_teacher_distillation: float = 0.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,12 +63,20 @@ class ChronarisV2ObjectiveHeads(nn.Module):
         *,
         physiology_feature_count: int,
         vehicle_feature_count: int,
+        physiology_teacher_mode: str = "none",
     ) -> None:
         super().__init__()
         if physiology_feature_count <= 0 or vehicle_feature_count <= 0:
             raise ValueError("Chronaris v2 objective feature counts must be positive")
         self.physiology_feature_count = physiology_feature_count
         self.vehicle_feature_count = vehicle_feature_count
+        if physiology_teacher_mode not in {
+            "none",
+            "private",
+            "physiology_path",
+        }:
+            raise ValueError("Chronaris v2 physiology teacher mode is invalid")
+        self.physiology_teacher_mode = physiology_teacher_mode
         self.vehicle_reconstruction = nn.Linear(24, vehicle_feature_count)
         self.physiology_reconstruction = nn.Linear(16, physiology_feature_count)
         self.future_physiology = nn.Linear(
@@ -77,6 +86,16 @@ class ChronarisV2ObjectiveHeads(nn.Module):
         self.lag_classifier = nn.Sequential(
             nn.LayerNorm(24),
             nn.Linear(24, len(LAG_BIN_CENTERS_S)),
+        )
+        teacher_input_dim = {
+            "none": None,
+            "private": 16,
+            "physiology_path": 40,
+        }[physiology_teacher_mode]
+        self.physiology_teacher_projection = (
+            None
+            if teacher_input_dim is None
+            else nn.Linear(teacher_input_dim, 64)
         )
 
     def forward(
@@ -88,6 +107,8 @@ class ChronarisV2ObjectiveHeads(nn.Module):
         corrupted_encoding=None,
         lag_encoding=None,
         lag_labels: torch.Tensor | None = None,
+        physiology_teacher_sequence: torch.Tensor | None = None,
+        physiology_teacher_mask: torch.Tensor | None = None,
     ) -> ChronarisV2ObjectiveOutput:
         vehicle_prediction = self.vehicle_reconstruction(
             clean_encoding.vehicle_private
@@ -125,6 +146,40 @@ class ChronarisV2ObjectiveHeads(nn.Module):
                 weights.future_physiology_delta,
             ),
         ]
+        if physiology_teacher_sequence is not None or physiology_teacher_mask is not None:
+            if (
+                physiology_teacher_sequence is None
+                or physiology_teacher_mask is None
+                or self.physiology_teacher_projection is None
+            ):
+                raise ValueError("physiology teacher target/mode mismatch")
+            teacher_source = (
+                clean_encoding.physiology_private
+                if self.physiology_teacher_mode == "private"
+                else torch.cat(
+                    (
+                        clean_encoding.physiology_private,
+                        clean_encoding.causal_shared,
+                    ),
+                    dim=-1,
+                )
+            )
+            teacher_prediction = self.physiology_teacher_projection(teacher_source)
+            teacher_valid = (
+                physiology_teacher_mask
+                & clean_encoding.modality_available_mask
+            )
+            terms.append(
+                _masked_huber_term(
+                    "physiology_teacher_distillation",
+                    teacher_prediction,
+                    physiology_teacher_sequence.detach(),
+                    teacher_valid.unsqueeze(-1).expand_as(teacher_prediction),
+                    weights.physiology_teacher_distillation,
+                )
+            )
+        elif weights.physiology_teacher_distillation > 0:
+            raise ValueError("active physiology teacher loss requires targets")
         if corrupted_encoding is not None:
             shared_valid = (
                 clean_encoding.modality_available_mask
@@ -185,6 +240,8 @@ class ChronarisV2ObjectiveHeads(nn.Module):
 
 def chronaris_v2_objective_weight_schedule(
     epoch: int,
+    *,
+    physiology_teacher_weight: float = 0.0,
 ) -> ChronarisV2ObjectiveWeights:
     if epoch <= 0:
         raise ValueError("objective epoch must be one-based")
@@ -201,6 +258,7 @@ def chronaris_v2_objective_weight_schedule(
         lag_bin_classification=0.20 * fraction,
         clean_corruption_consistency=0.20 * fraction,
         physical_consistency=0.10 * fraction,
+        physiology_teacher_distillation=physiology_teacher_weight * fraction,
     )
 
 
