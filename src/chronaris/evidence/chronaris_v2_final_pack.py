@@ -74,6 +74,7 @@ def run_chronaris_v2_final_pack(
     v1_mechanism = pd.read_csv(v1_mechanism_root / "metric_long.csv")
     ablation = pd.read_csv(ablation_root / "full_ablation_metric_delta.csv")
     public = json.loads((public_root / "fusion_refresh_summary.json").read_text(encoding="utf-8"))
+    public_confirm = pd.read_csv(public["confirm_leaderboard_csv"])
     tables = root / "tables"
     figures = root / "figures"
     tables.mkdir(exist_ok=True)
@@ -82,7 +83,7 @@ def run_chronaris_v2_final_pack(
     stress_table = build_stress_heatmap_table(stress)
     mechanism_table = _mechanism_comparison(v1_mechanism, v2_mechanism)
     ablation_table = _ablation_primary(ablation)
-    public_table = _public_summary(public)
+    public_table = _public_summary(public_confirm)
     primary_summary.to_csv(tables / "six_primary_metrics.csv", index=False)
     gate_details.to_csv(tables / "additional_gate_details.csv", index=False)
     stress_table.to_csv(tables / "missingness_and_stress_slopes.csv")
@@ -168,12 +169,20 @@ def _ablation_primary(frame):
     return selected.groupby(["ablation_method", "task", "consumer", "metric"], as_index=False)["full_advantage_normalized"].mean()
 
 
-def _public_summary(summary):
-    rows = []
-    for dataset, tasks in summary.get("best_by_dataset_task", {}).items():
-        for task, values in tasks.items():
-            rows.append({"dataset": dataset, "task": task, **dict(values)})
-    return pd.DataFrame(rows)
+def _public_summary(frame):
+    columns = [
+        "dataset_id", "candidate_id", "seed", "fold_count",
+        "combined_macro_f1", "combined_balanced_accuracy",
+        "benchmark_only_macro_f1", "loft_only_macro_f1",
+        "mean_rmse", "mean_mae", "n_back_rmse", "heat_the_chair_rmse",
+    ]
+    available = [column for column in columns if column in frame.columns]
+    result = frame[available].copy()
+    if result.empty or set(result["dataset_id"]) != {
+        "nasa_csm", "uab_workload_dataset"
+    }:
+        raise ValueError("public confirmation does not cover NASA and UAB")
+    return result.sort_values(["dataset_id", "seed"], kind="stable")
 
 
 def _plot_primary(frame, path):

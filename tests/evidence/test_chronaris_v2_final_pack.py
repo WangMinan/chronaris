@@ -36,10 +36,10 @@ def test_mechanism_comparison_is_same_target_and_version_paired() -> None:
 
 
 def test_public_summary_flattens_dataset_task_entries() -> None:
-    result = _public_summary({
-        "best_by_dataset_task": {"nasa_csm": {"combined": {"macro_f1": 0.5}}}
-    })
+    result = _public_summary(pd.DataFrame([
+        {"dataset_id": "nasa_csm", "candidate_id": "locked", "seed": 17, "fold_count": 17, "combined_macro_f1": 0.5},
+        {"dataset_id": "uab_workload_dataset", "candidate_id": "locked", "seed": 17, "fold_count": 16, "mean_rmse": 1.0},
+    ]))
 
-    assert result.to_dict("records") == [
-        {"dataset": "nasa_csm", "task": "combined", "macro_f1": 0.5}
-    ]
+    assert list(result["dataset_id"]) == ["nasa_csm", "uab_workload_dataset"]
+    assert list(result["seed"]) == [17, 17]
