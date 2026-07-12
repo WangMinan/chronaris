@@ -17,6 +17,9 @@ from chronaris.evaluation.application_tasks.simulation_locked_representation_run
 from chronaris.evaluation.application_tasks.simulation_locked_consumer_run import (
     _checkpoint_paths as _simulation_consumer_checkpoint_paths,
 )
+from chronaris.evaluation.application_tasks.simulation_stress_consumer_run import (
+    _checkpoint_paths as _simulation_stress_checkpoint_paths,
+)
 from chronaris.modeling.training import TRAINABLE_FUSION_METHODS
 
 
@@ -101,3 +104,11 @@ def test_simulation_consumer_checkpoint_set_can_mix_v1_baselines_and_v2(tmp_path
 
     assert paths[(seed, "chronaris")].name == "last.pt"
     assert paths[(seed, "mult")].is_relative_to(baseline_root)
+    stress_paths = _simulation_stress_checkpoint_paths(
+        v2_root,
+        selected_path,
+        (seed,),
+        baseline_root=baseline_root,
+        locked_candidate_id="v2_locked",
+    )
+    assert stress_paths == paths

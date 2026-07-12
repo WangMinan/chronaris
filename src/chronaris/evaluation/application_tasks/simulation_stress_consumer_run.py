@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shlex
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -27,6 +28,9 @@ from chronaris.evaluation.application_tasks.application_metrics import (
 )
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run import (
     LOCKED_SEEDS,
+)
+from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    _locked_v2_candidate_id,
 )
 from chronaris.evaluation.application_tasks.simulation_stress_context_data import (
     load_simulation_stress_context_data,
@@ -53,11 +57,15 @@ class SimulationStressConsumerConfig:
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     clean_consumer_run_id: str = "2026-07-12_simulation-locked-consumers"
     stress_representation_run_id: str = (
         "2026-07-12_simulation-locked-stress-representations"
     )
     stress_generation_run_id: str = "2026-07-12_aviation-simulation-locked-stress"
+    split_id: str = "locked_test"
+    profile_prefix: str = "locked_test_profile_"
     selected_candidates_path: str = (
         "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/"
         "selected_candidates.json"
@@ -86,6 +94,10 @@ def run_simulation_stress_consumers(config: SimulationStressConsumerConfig):
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    baseline_pretraining_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.pretraining_run_id)
+    )
     clean_consumer_root = Path(config.heavy_output_root) / config.clean_consumer_run_id
     stress_representation_root = (
         Path(config.heavy_output_root) / config.stress_representation_run_id
@@ -103,6 +115,10 @@ def run_simulation_stress_consumers(config: SimulationStressConsumerConfig):
         pretraining_root,
         config.selected_candidates_path,
         config.seeds,
+        baseline_root=baseline_pretraining_root,
+        locked_candidate_id=_locked_v2_candidate_id(
+            config.locked_configuration_path
+        ),
     )
     clean_targets = json.loads(
         (
@@ -137,6 +153,8 @@ def run_simulation_stress_consumers(config: SimulationStressConsumerConfig):
             data = load_simulation_stress_context_data(
                 stress_root,
                 scenario_id=scenario_id,
+                split_id=config.split_id,
+                profile_prefix=config.profile_prefix,
             )
             targets = build_guarded_application_consumer_targets(
                 data,
@@ -275,19 +293,38 @@ def run_simulation_stress_consumers(config: SimulationStressConsumerConfig):
     )
 
 
-def _checkpoint_paths(root, selected_path, seeds):
+def _checkpoint_paths(
+    root,
+    selected_path,
+    seeds,
+    *,
+    baseline_root=None,
+    locked_candidate_id=None,
+):
+    baseline_root = root if baseline_root is None else baseline_root
     selected = json.loads(Path(selected_path).read_text(encoding="utf-8"))
     result = {}
     for seed in seeds:
         for method in TRAINABLE_FUSION_METHODS:
             candidate = str(selected[method]["candidate_id"])
-            path = (
-                root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
-                if method == "chronaris"
-                else root / "checkpoints" / f"seed_{seed}" / method / candidate / "best.pt"
-            )
+            if method == "chronaris" and locked_candidate_id is not None:
+                path = (
+                    root / "checkpoints" / f"seed_{seed}" / method
+                    / locked_candidate_id / "last.pt"
+                )
+            elif method == "chronaris":
+                path = root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
+            else:
+                path = (
+                    baseline_root / "checkpoints" / f"seed_{seed}" / method
+                    / candidate / "best.pt"
+                )
             payload = torch.load(path, map_location="cpu", weights_only=True)
-            if payload.get("training_status") != "completed":
+            payload_seed = payload.get("seed", payload.get("config", {}).get("seed"))
+            if (
+                payload.get("training_status") != "completed"
+                or int(payload_seed) != seed
+            ):
                 raise ValueError("stress consumer checkpoint is incomplete")
             result[(seed, method)] = path
     return result
@@ -359,9 +396,7 @@ def _write_outputs(**values):
     workload_path = values["heavy_root"] / "workload_predictions.csv"
     pd.DataFrame(values["workload_rows"]).to_csv(workload_path, index=False)
     paths["resume"].write_text(
-        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_stress_consumers.py "
-        f"--run-id {values['config'].run_id} --resume\n",
+        _resume_command(values["config"]),
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
@@ -379,6 +414,28 @@ def _write_outputs(**values):
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
     return paths
+
+
+def _resume_command(config):
+    args = [
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+        "scripts/evaluation/application_tasks/run_simulation_stress_consumers.py",
+        "--run-id", config.run_id,
+        "--pretraining-run-id", config.pretraining_run_id,
+        "--clean-consumer-run-id", config.clean_consumer_run_id,
+        "--stress-representation-run-id", config.stress_representation_run_id,
+        "--stress-generation-run-id", config.stress_generation_run_id,
+        "--split-id", config.split_id,
+        "--profile-prefix", config.profile_prefix,
+        "--resume",
+    ]
+    for flag, value in (
+        ("--baseline-pretraining-run-id", config.baseline_pretraining_run_id),
+        ("--locked-configuration-path", config.locked_configuration_path),
+    ):
+        if value is not None:
+            args.extend((flag, value))
+    return " ".join(shlex.quote(str(value)) for value in args) + "\n"
 
 
 def _check(check_id, passed, actual, expected):
