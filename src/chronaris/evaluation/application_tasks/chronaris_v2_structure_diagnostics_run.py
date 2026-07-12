@@ -15,6 +15,7 @@ from chronaris.evaluation.application_tasks.simulation_locked_pretraining_data i
     load_simulation_locked_pretraining_data,
 )
 from chronaris.evaluation.application_tasks.chronaris_v2_structure_figures import (
+    DISPLAY_NAMES,
     render_structure_gate_figure,
 )
 from chronaris.modeling.training import rank_task_independent_candidates
@@ -182,6 +183,10 @@ def run_chronaris_v2_structure_diagnostics(
         ),
         encoding="utf-8",
     )
+    (compact_root / "gap_report.md").write_text(
+        _gap_report(ranking),
+        encoding="utf-8",
+    )
     _write_json(
         compact_root / "evidence_manifest.json",
         {
@@ -194,6 +199,52 @@ def run_chronaris_v2_structure_diagnostics(
         },
     )
     return compact_root
+
+
+def _gap_report(ranking) -> str:
+    lines = [
+        "# Chronaris v2 结构门禁差距报告",
+        "",
+        "本报告只使用任务无关开发证据，不读取下游标签或锁定确认结果。",
+        "",
+        "| 结构候选 | 航电保真 | 生理保真 | 时间机制 / v1 | 有效秩 | 未通过项 |",
+        "| --- | ---: | ---: | ---: | ---: | --- |",
+    ]
+    for row in ranking:
+        failures = []
+        if row["vehicle_fidelity_ratio"] < 0.98:
+            failures.append("航电保真")
+        if row["physiology_fidelity_ratio"] < 0.98:
+            failures.append("生理保真")
+        if row["time_mechanism_ratio"] > 1.10:
+            failures.append("时间机制")
+        if row["effective_rank"] < 2 or row["near_zero_variance_fraction"] > 0.10:
+            failures.append("表示健康")
+        if not row["causal_future_invariance_passed"]:
+            failures.append("因果不变性")
+        if not row["invalid_query_pooling_passed"]:
+            failures.append("有效池化")
+        if not row["lag_mask_passed"]:
+            failures.append("滞后掩码")
+        lines.append(
+            "| {name} | {vehicle:.3f} | {physiology:.3f} | {time:.3f} | "
+            "{rank:.2f} | {failures} |".format(
+                name=DISPLAY_NAMES.get(row["candidate_id"], row["candidate_id"]),
+                vehicle=row["vehicle_fidelity_ratio"],
+                physiology=row["physiology_fidelity_ratio"],
+                time=row["time_mechanism_ratio"],
+                rank=row["effective_rank"],
+                failures="、".join(failures) if failures else "无",
+            )
+        )
+    lines.extend(
+        (
+            "",
+            "若完整 v2 仍有未通过项，本轮不启动超参数筛选；后续优化必须建立新的预注册开发轮次，并继续保持当前独立仿真确认族封存。",
+            "",
+        )
+    )
+    return "\n".join(lines)
 
 
 def _final_training_checkpoint(best_checkpoint_path):
