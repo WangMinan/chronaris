@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shlex
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -19,6 +20,7 @@ from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run im
     LOCKED_SEEDS,
 )
 from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    _locked_v2_candidate_id,
     _resolve_device,
     load_locked_seed_adapters,
     require_complete_locked_checkpoint_set,
@@ -50,6 +52,8 @@ class SimulationMechanismRepresentationConfig:
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     clean_representation_run_id: str = "2026-07-12_simulation-locked-representations"
     simulation_root: str = (
         "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
@@ -84,6 +88,10 @@ def run_simulation_mechanism_representations(
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    baseline_pretraining_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.pretraining_run_id)
+    )
     clean_representation_root = (
         Path(config.heavy_output_root) / config.clean_representation_run_id
     )
@@ -99,10 +107,15 @@ def run_simulation_mechanism_representations(
         method: str(selected[method]["candidate_id"])
         for method in TRAINABLE_FUSION_METHODS
     }
+    locked_candidate_id = _locked_v2_candidate_id(
+        config.locked_configuration_path
+    )
     checkpoints = require_complete_locked_checkpoint_set(
         pretraining_root,
+        baseline_root=baseline_pretraining_root,
         seeds=config.seeds,
         selected_ids=selected_ids,
+        locked_candidate_id=locked_candidate_id,
     )
     pretraining_data = load_simulation_locked_pretraining_data(config.simulation_root)
     scenarios = tuple(value.scenario_id for value in canonical_observation_scenarios())
@@ -129,6 +142,7 @@ def run_simulation_mechanism_representations(
                 seed=seed,
                 checkpoints=checkpoints,
                 selected_ids=selected_ids,
+                locked_candidate_id=locked_candidate_id,
                 pretraining_data=pretraining_data,
                 heavy_root=clean_representation_root,
                 resume=True,
@@ -282,10 +296,15 @@ def _write_outputs(**values):
     pd.DataFrame(values["data_rows"]).to_csv(paths["data"], index=False)
     pd.DataFrame(values["acceptance"]).to_csv(paths["acceptance"], index=False)
     _write_json(paths["protocol"], {
-        "format": "chronaris.simulation_mechanism_representation_protocol.v1",
+        "format": "chronaris.simulation_mechanism_representation_protocol.v2",
         "config": asdict(values["config"]),
         "methods": list(MECHANISM_METHODS),
         "task_oracle_opened": False,
+        "representation_family": (
+            "frozen_task_agnostic_v2"
+            if values["config"].locked_configuration_path is not None
+            else "frozen_task_agnostic_v1"
+        ),
         "baseline_device": values["baseline_device"],
         "chronaris_device": values["chronaris_device"],
     })
@@ -298,26 +317,55 @@ def _write_outputs(**values):
         "",
     )), encoding="utf-8")
     paths["resume"].write_text(
-        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_mechanism_representations.py "
-        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} "
-        f"--baseline-device {values['baseline_device']} --chronaris-device {values['chronaris_device']} --resume\n",
+        _resume_command(
+            values["config"],
+            baseline_device=values["baseline_device"],
+            chronaris_device=values["chronaris_device"],
+        ),
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
-        "format": "chronaris.simulation_mechanism_representation_evidence.v1",
+        "format": "chronaris.simulation_mechanism_representation_evidence.v2",
         "run_id": values["config"].run_id,
         "status": values["status"],
         "export_count": len(values["export_rows"]),
         "acceptance_pass_count": passed,
         "acceptance_check_count": len(values["acceptance"]),
         "task_oracle_opened": False,
+        "representation_family": (
+            "frozen_task_agnostic_v2"
+            if values["config"].locked_configuration_path is not None
+            else "frozen_task_agnostic_v1"
+        ),
         "baseline_device": values["baseline_device"],
         "chronaris_device": values["chronaris_device"],
         "heavy_run_root": str(values["heavy_root"]),
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
     return paths
+
+
+def _resume_command(config, *, baseline_device, chronaris_device):
+    args = [
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+        "scripts/evaluation/application_tasks/run_simulation_mechanism_representations.py",
+        "--run-id", config.run_id,
+        "--pretraining-run-id", config.pretraining_run_id,
+        "--clean-representation-run-id", config.clean_representation_run_id,
+        "--export-batch-size", str(config.export_batch_size),
+        "--baseline-device", baseline_device,
+        "--chronaris-device", chronaris_device,
+        "--resume",
+    ]
+    for seed in config.seeds:
+        args.extend(("--seed", str(seed)))
+    for flag, value in (
+        ("--baseline-pretraining-run-id", config.baseline_pretraining_run_id),
+        ("--locked-configuration-path", config.locked_configuration_path),
+    ):
+        if value is not None:
+            args.extend((flag, value))
+    return " ".join(shlex.quote(str(value)) for value in args) + "\n"
 
 
 def _check(check_id, passed, actual, expected):
