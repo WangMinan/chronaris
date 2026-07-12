@@ -23,6 +23,10 @@ from chronaris.evaluation.application_tasks.chronaris_v2_structure_merge import 
     ChronarisV2StructureMergeConfig,
     merge_chronaris_v2_structure_screens,
 )
+from chronaris.evaluation.application_tasks.simulation_stress_representation_run import (
+    SimulationStressRepresentationConfig,
+    _require_confirmation_access,
+)
 from chronaris.modeling.training import chronaris_v2_structure_candidates
 
 
@@ -162,6 +166,46 @@ def test_confirmation_unlock_requires_a_task_independent_locked_config(tmp_path)
             locked_configuration_path=lock_path,
             output_path=tmp_path / "access.json",
         )
+
+
+def test_sealed_representation_access_is_bound_to_locked_configuration(tmp_path) -> None:
+    sealed = SealedConfirmationManifest(
+        family_id="family",
+        generator_protocol_sha256=_sha("protocol"),
+        payload_sha256=_sha("payload"),
+        sealed_before_configuration_lock=True,
+    )
+    sealed_path = tmp_path / "sealed.json"
+    sealed_path.write_text(json.dumps(sealed.to_dict()), encoding="utf-8")
+    lock_path = tmp_path / "lock.json"
+    lock_path.write_text(
+        json.dumps(
+            {
+                "format": "chronaris.v2_locked_configuration.v1",
+                "configuration_locked": True,
+                "selection_uses_downstream_labels": False,
+                "outer_test_opened": False,
+            }
+        ),
+        encoding="utf-8",
+    )
+    access_path = tmp_path / "access.json"
+    authorize_sealed_confirmation(
+        sealed_manifest_path=sealed_path,
+        locked_configuration_path=lock_path,
+        output_path=access_path,
+    )
+    config = SimulationStressRepresentationConfig(
+        sealed_manifest_path=str(sealed_path),
+        confirmation_access_path=str(access_path),
+        locked_configuration_path=str(lock_path),
+    )
+
+    _require_confirmation_access(config)
+
+    lock_path.write_text("{}", encoding="utf-8")
+    with pytest.raises(PermissionError, match="does not match"):
+        _require_confirmation_access(config)
 
 
 def test_structure_gate_uses_final_training_state_not_public_loss_best(tmp_path) -> None:

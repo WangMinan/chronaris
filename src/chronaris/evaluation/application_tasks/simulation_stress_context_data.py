@@ -19,12 +19,14 @@ def load_simulation_stress_context_data(
     stress_root: str | Path,
     *,
     scenario_id: str,
+    split_id: str = "locked_test",
+    profile_prefix: str = "locked_test_profile_",
 ) -> ApplicationConsumerSmokeData:
     root = Path(stress_root)
     paths = tuple(
         sorted(
-            (root / "locked_test").glob(
-                f"locked_test_profile_*/g2_event_spline__*/{scenario_id}/"
+            (root / split_id).glob(
+                f"{profile_prefix}*/g2_event_spline__*/{scenario_id}/"
                 "raw_dual_stream.npz"
             )
         )
@@ -48,7 +50,7 @@ def load_simulation_stress_context_data(
                     "sample_id": sample.sample_id,
                     "group_id": sample.group_id,
                     "profile_id": next(
-                        part for part in path.parts if part.startswith("locked_test_profile_")
+                        part for part in path.parts if part.startswith(profile_prefix)
                     ),
                     "trajectory_id": path.parents[1].name,
                     "role": "held_out",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shlex
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -13,6 +14,11 @@ from chronaris.evaluation.application_tasks.application_consumer_representations
     APPLICATION_METHODS,
     _encode_in_batches,
 )
+from chronaris.evaluation.application_tasks.chronaris_v2_protocol import (
+    SealedConfirmationAccess,
+    assert_confirmation_access,
+    load_sealed_confirmation_manifest,
+)
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_data import (
     load_simulation_locked_pretraining_data,
 )
@@ -20,6 +26,7 @@ from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run im
     LOCKED_SEEDS,
 )
 from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    _locked_v2_candidate_id,
     _resolve_device,
     load_locked_seed_adapters,
     require_complete_locked_checkpoint_set,
@@ -50,9 +57,15 @@ class SimulationStressRepresentationConfig:
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     clean_representation_run_id: str = "2026-07-12_simulation-locked-representations"
     stress_generation_run_id: str = "2026-07-12_aviation-simulation-locked-stress"
     stress_audit_run_id: str = "2026-07-12_aviation-simulation-locked-stress-audit"
+    sealed_manifest_path: str | None = None
+    confirmation_access_path: str | None = None
+    split_id: str = "locked_test"
+    profile_prefix: str = "locked_test_profile_"
     selected_candidates_path: str = (
         "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/"
         "selected_candidates.json"
@@ -84,6 +97,10 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    baseline_pretraining_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.pretraining_run_id)
+    )
     clean_representation_root = (
         Path(config.heavy_output_root) / config.clean_representation_run_id
     )
@@ -93,18 +110,26 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
     _require_completed_evidence(
         Path(config.compact_output_root) / config.clean_representation_run_id
     )
-    _require_completed_evidence(
-        Path(config.compact_output_root) / config.stress_audit_run_id
-    )
+    if config.sealed_manifest_path is None:
+        _require_completed_evidence(
+            Path(config.compact_output_root) / config.stress_audit_run_id
+        )
+    else:
+        _require_confirmation_access(config)
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
     selected_ids = {
         method: str(selected[method]["candidate_id"])
         for method in TRAINABLE_FUSION_METHODS
     }
+    locked_candidate_id = _locked_v2_candidate_id(
+        config.locked_configuration_path
+    )
     checkpoints = require_complete_locked_checkpoint_set(
         pretraining_root,
+        baseline_root=baseline_pretraining_root,
         seeds=config.seeds,
         selected_ids=selected_ids,
+        locked_candidate_id=locked_candidate_id,
     )
     pretraining_data = load_simulation_locked_pretraining_data(
         config.formal_simulation_root
@@ -135,6 +160,7 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                 seed=seed,
                 checkpoints=checkpoints,
                 selected_ids=selected_ids,
+                locked_candidate_id=locked_candidate_id,
                 pretraining_data=pretraining_data,
                 heavy_root=clean_representation_root,
                 resume=True,
@@ -145,6 +171,8 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                 data = load_simulation_stress_context_data(
                     stress_root,
                     scenario_id=scenario_id,
+                    split_id=config.split_id,
+                    profile_prefix=config.profile_prefix,
                 )
                 if seed == config.seeds[0]:
                     data_rows.extend(data.sample_manifest_rows)
@@ -248,6 +276,23 @@ def _require_completed_evidence(root):
         raise ValueError(f"stress representations require completed evidence: {root}")
 
 
+def _require_confirmation_access(config):
+    if config.confirmation_access_path is None or config.locked_configuration_path is None:
+        raise PermissionError(
+            "sealed confirmation export requires access and locked configuration paths"
+        )
+    sealed = load_sealed_confirmation_manifest(config.sealed_manifest_path)
+    access = SealedConfirmationAccess(
+        **json.loads(Path(config.confirmation_access_path).read_text(encoding="utf-8"))
+    )
+    if access.locked_configuration_sha256 != sha256_file(
+        Path(config.locked_configuration_path)
+    ):
+        raise PermissionError("confirmation access does not match locked configuration")
+    for method in APPLICATION_METHODS:
+        assert_confirmation_access(sealed, access, method_name=method)
+
+
 def _acceptance_rows(config, exports, scenarios):
     expected_scenarios = len(config.seeds) * 35
     expected_exports = expected_scenarios * 6
@@ -277,16 +322,24 @@ def _write_outputs(**values):
     pd.DataFrame(values["data_rows"]).to_csv(paths["data"], index=False)
     pd.DataFrame(values["acceptance"]).to_csv(paths["acceptance"], index=False)
     _write_json(paths["protocol"], {
-        "format": "chronaris.simulation_stress_representation_protocol.v1",
+        "format": "chronaris.simulation_stress_representation_protocol.v2",
         "config": asdict(values["config"]),
         "task_oracle_opened": False,
         "frozen_checkpoint_reuse": True,
+        "sealed_confirmation_authorized": (
+            values["config"].sealed_manifest_path is not None
+        ),
+        "representation_family": (
+            "frozen_task_agnostic_v2"
+            if values["config"].locked_configuration_path is not None
+            else "frozen_task_agnostic_v1"
+        ),
         "baseline_device": values["baseline_device"],
         "chronaris_device": values["chronaris_device"],
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
-        "# G2 锁定压力场景表示导出",
+        "# 独立仿真确认与压力场景表示导出",
         "",
         f"状态：{values['status']}；验收 {passed}/{len(values['acceptance'])}。",
         f"共导出 {len(values['export_rows'])} 份三随机种子、六方法、35 场景冻结表示。",
@@ -294,26 +347,62 @@ def _write_outputs(**values):
         "",
     )), encoding="utf-8")
     paths["resume"].write_text(
-        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_stress_representations.py "
-        f"--run-id {values['config'].run_id} --export-batch-size {values['config'].export_batch_size} "
-        f"--baseline-device {values['baseline_device']} --chronaris-device {values['chronaris_device']} --resume\n",
+        _resume_command(
+            values["config"],
+            baseline_device=values["baseline_device"],
+            chronaris_device=values["chronaris_device"],
+        ),
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
-        "format": "chronaris.simulation_stress_representation_evidence.v1",
+        "format": "chronaris.simulation_stress_representation_evidence.v2",
         "run_id": values["config"].run_id,
         "status": values["status"],
         "export_count": len(values["export_rows"]),
         "acceptance_pass_count": passed,
         "acceptance_check_count": len(values["acceptance"]),
         "task_oracle_opened": False,
+        "sealed_confirmation_authorized": (
+            values["config"].sealed_manifest_path is not None
+        ),
+        "representation_family": (
+            "frozen_task_agnostic_v2"
+            if values["config"].locked_configuration_path is not None
+            else "frozen_task_agnostic_v1"
+        ),
         "baseline_device": values["baseline_device"],
         "chronaris_device": values["chronaris_device"],
         "heavy_run_root": str(values["heavy_root"]),
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
     return paths
+
+
+def _resume_command(config, *, baseline_device, chronaris_device):
+    args = [
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+        "scripts/evaluation/application_tasks/run_simulation_stress_representations.py",
+        "--run-id", config.run_id,
+        "--pretraining-run-id", config.pretraining_run_id,
+        "--clean-representation-run-id", config.clean_representation_run_id,
+        "--stress-generation-run-id", config.stress_generation_run_id,
+        "--stress-audit-run-id", config.stress_audit_run_id,
+        "--split-id", config.split_id,
+        "--profile-prefix", config.profile_prefix,
+        "--export-batch-size", str(config.export_batch_size),
+        "--baseline-device", baseline_device,
+        "--chronaris-device", chronaris_device,
+        "--resume",
+    ]
+    for flag, value in (
+        ("--baseline-pretraining-run-id", config.baseline_pretraining_run_id),
+        ("--locked-configuration-path", config.locked_configuration_path),
+        ("--sealed-manifest-path", config.sealed_manifest_path),
+        ("--confirmation-access-path", config.confirmation_access_path),
+    ):
+        if value is not None:
+            args.extend((flag, value))
+    return " ".join(shlex.quote(str(value)) for value in args) + "\n"
 
 
 def _check(check_id, passed, actual, expected):
