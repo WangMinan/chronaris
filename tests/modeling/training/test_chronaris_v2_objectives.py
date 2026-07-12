@@ -30,6 +30,7 @@ from chronaris.modeling.training.chronaris_v2_training import (
     chronaris_v2_hyperparameter_grid,
     train_chronaris_v2_candidate,
     _early_stopping_allowed,
+    _shared_pcgrad_backward,
 )
 from chronaris.modeling.training.common_pretraining import (
     load_common_pretraining_checkpoint,
@@ -180,6 +181,27 @@ def test_pcgrad_controller_counts_conflicted_steps_not_individual_pairs() -> Non
     assert controller.conflict_history == [True, False]
     assert controller.conflict_rate == 0.5
     assert controller.use_pcgrad
+
+
+def test_shared_pcgrad_leaves_exclusive_head_gradient_unprojected() -> None:
+    shared = torch.nn.Parameter(torch.tensor([1.0]))
+    exclusive = torch.nn.Parameter(torch.tensor([2.0]))
+    losses = {
+        "left": (shared + exclusive).square().sum(),
+        "right": (-shared + exclusive).square().sum(),
+    }
+    pairwise = _shared_pcgrad_backward(
+        losses,
+        total_loss=sum(losses.values()),
+        shared_parameters=(shared,),
+        exclusive_parameters=(exclusive,),
+    )
+
+    assert next(iter(pairwise.values())) < -0.999
+    assert exclusive.grad is not None
+    torch.testing.assert_close(exclusive.grad, torch.tensor([8.0]))
+    assert shared.grad is not None
+    assert torch.isfinite(shared.grad).all()
 
 
 def test_v2_grid_and_one_epoch_training_round_trip(tmp_path) -> None:

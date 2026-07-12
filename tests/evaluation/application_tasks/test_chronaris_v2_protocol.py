@@ -4,6 +4,7 @@ import hashlib
 import json
 
 import pytest
+import pandas as pd
 
 from chronaris.evaluation.application_tasks.chronaris_v2_protocol import (
     PRIMARY_METRIC_THRESHOLDS,
@@ -18,6 +19,11 @@ from chronaris.evaluation.application_tasks.chronaris_v2_hyperparameter_screen i
 from chronaris.evaluation.application_tasks.chronaris_v2_structure_diagnostics_run import (
     _final_training_checkpoint,
 )
+from chronaris.evaluation.application_tasks.chronaris_v2_structure_merge import (
+    ChronarisV2StructureMergeConfig,
+    merge_chronaris_v2_structure_screens,
+)
+from chronaris.modeling.training import chronaris_v2_structure_candidates
 
 
 def _sha(value: str) -> str:
@@ -129,3 +135,34 @@ def test_structure_gate_uses_final_training_state_not_public_loss_best(tmp_path)
     last.write_bytes(b"final-state")
 
     assert _final_training_checkpoint(best) == last
+
+
+def test_device_partitioned_structure_rows_merge_without_checkpoint_copy(tmp_path) -> None:
+    candidates = chronaris_v2_structure_candidates()
+    common = {
+        "status": "completed",
+        "checkpoint_sha256": "a" * 64,
+        "task_labels_opened": False,
+        "simulation_oracle_opened": False,
+        "locked_test_opened": False,
+    }
+    first = [{"candidate_id": value.candidate_id, **common} for value in candidates[:5]]
+    first[0]["status"] = "immutable_reference"
+    second = [{"candidate_id": candidates[0].candidate_id, **common}] + [
+        {"candidate_id": value.candidate_id, **common} for value in candidates[5:]
+    ]
+    second[0]["status"] = "immutable_reference"
+    for run_id, rows in (("gpu", first), ("cpu", second)):
+        root = tmp_path / run_id
+        root.mkdir()
+        pd.DataFrame(rows).to_csv(root / "candidate_training.csv", index=False)
+
+    output = merge_chronaris_v2_structure_screens(
+        ChronarisV2StructureMergeConfig(
+            run_id="combined",
+            source_run_ids=("gpu", "cpu"),
+            compact_output_root=str(tmp_path),
+        )
+    )
+
+    assert len(pd.read_csv(output / "candidate_training.csv")) == 8

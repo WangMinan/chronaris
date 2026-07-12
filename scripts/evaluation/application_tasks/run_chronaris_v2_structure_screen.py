@@ -28,6 +28,11 @@ def main() -> int:
     parser.add_argument("--max-epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--max-candidates", type=int, default=7)
+    parser.add_argument(
+        "--candidate-ids",
+        default="",
+        help="Comma-separated registered v2 structure candidates; overrides the prefix.",
+    )
     args = parser.parse_args()
     root = run_chronaris_v2_structure_screen(
         ChronarisV2StructureScreenConfig(
@@ -36,6 +41,11 @@ def main() -> int:
             max_epochs=args.max_epochs,
             batch_size=args.batch_size,
             max_candidates=args.max_candidates,
+            candidate_ids=tuple(
+                value.strip()
+                for value in args.candidate_ids.split(",")
+                if value.strip()
+            ),
         )
     )
     print(root)

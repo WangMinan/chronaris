@@ -38,10 +38,19 @@ class ChronarisV2StructureScreenConfig:
     max_epochs: int = 50
     batch_size: int = 128
     max_candidates: int = 7
+    candidate_ids: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if not 1 <= self.max_candidates <= 7:
             raise ValueError("structure screen max_candidates must be in [1,7]")
+        registered = {
+            value.candidate_id for value in chronaris_v2_structure_training_grid()
+        }
+        if self.candidate_ids and (
+            len(self.candidate_ids) != len(set(self.candidate_ids))
+            or not set(self.candidate_ids) <= registered
+        ):
+            raise ValueError("structure screen candidate_ids are invalid")
 
 
 def run_chronaris_v2_structure_screen(
@@ -84,7 +93,16 @@ def run_chronaris_v2_structure_screen(
             "locked_test_opened": False,
         }
     ]
-    candidates = chronaris_v2_structure_training_grid()[: resolved.max_candidates]
+    grid = chronaris_v2_structure_training_grid()
+    candidates = (
+        tuple(
+            candidate
+            for candidate in grid
+            if candidate.candidate_id in resolved.candidate_ids
+        )
+        if resolved.candidate_ids
+        else grid[: resolved.max_candidates]
+    )
     for candidate in candidates:
         result = train_chronaris_v2_candidate(
             candidate=candidate,

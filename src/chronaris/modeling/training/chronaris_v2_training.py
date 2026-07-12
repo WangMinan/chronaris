@@ -396,11 +396,25 @@ def train_chronaris_v2_candidate(
                 common_output,
                 v2_output,
             )
+            total_loss = common_output.total_loss + v2_output.total_loss
+            shared_parameters = tuple(encoder.parameters())
+            exclusive_parameters = tuple(
+                (*common_heads.parameters(), *v2_heads.parameters())
+            )
+            cosines = {}
             if len(named_losses) > 1:
-                cosines = loss_gradient_cosines(
-                    named_losses,
-                    tuple(encoder.parameters()),
-                )
+                if controller.use_pcgrad:
+                    cosines = _shared_pcgrad_backward(
+                        named_losses,
+                        total_loss=total_loss,
+                        shared_parameters=shared_parameters,
+                        exclusive_parameters=exclusive_parameters,
+                    )
+                else:
+                    cosines = loss_gradient_cosines(
+                        named_losses,
+                        shared_parameters,
+                    )
                 controller.observe_step(tuple(cosines.values()))
                 gradient_rows.extend(
                     {
@@ -414,20 +428,24 @@ def train_chronaris_v2_candidate(
                     }
                     for (left, right), value in cosines.items()
                 )
-            if controller.use_pcgrad and len(named_losses) > 1:
-                pcgrad_backward(
-                    named_losses,
-                    tuple((*encoder.parameters(), *common_heads.parameters(), *v2_heads.parameters())),
-                )
-            else:
-                (common_output.total_loss + v2_output.total_loss).backward()
+                if controller.use_pcgrad and not any(
+                    parameter.grad is not None for parameter in shared_parameters
+                ):
+                    _shared_pcgrad_backward(
+                        named_losses,
+                        total_loss=total_loss,
+                        shared_parameters=shared_parameters,
+                        exclusive_parameters=exclusive_parameters,
+                    )
+            if not controller.use_pcgrad or len(named_losses) <= 1:
+                total_loss.backward()
             nn.utils.clip_grad_norm_(
                 (*encoder.parameters(), *common_heads.parameters(), *v2_heads.parameters()),
                 resolved.gradient_clip_norm,
             )
             optimizer.step()
             epoch_total += float(
-                (common_output.total_loss + v2_output.total_loss).detach()
+                total_loss.detach()
             )
             step_count += 1
         validation_losses = _validation_losses(
@@ -586,6 +604,30 @@ def _grouped_optimization_losses(common_output, v2_output):
     if "physical_consistency" in v2_terms:
         groups["physical_consistency"] = v2_terms["physical_consistency"]
     return groups
+
+
+def _shared_pcgrad_backward(
+    losses,
+    *,
+    total_loss,
+    shared_parameters,
+    exclusive_parameters,
+):
+    """Project shared gradients while leaving task-exclusive heads unprojected."""
+
+    pairwise = pcgrad_backward(losses, shared_parameters)
+    exclusive_gradients = torch.autograd.grad(
+        total_loss,
+        exclusive_parameters,
+        allow_unused=True,
+    )
+    for parameter, gradient in zip(
+        exclusive_parameters,
+        exclusive_gradients,
+        strict=True,
+    ):
+        parameter.grad = None if gradient is None else gradient.clone()
+    return pairwise
 
 
 def _validation_losses(**values):
