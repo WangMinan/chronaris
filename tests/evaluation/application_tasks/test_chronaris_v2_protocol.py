@@ -86,7 +86,8 @@ def test_hyperparameter_screen_cannot_start_before_structure_gate(tmp_path) -> N
     )
     config = ChronarisV2HyperparameterScreenConfig(
         compact_output_root=str(tmp_path),
-        structure_diagnostics_run_id="structure",
+        architecture_gate_run_id="structure",
+        architecture_gate_candidate_id="structure_08_complete_v2",
         device="cpu",
         max_candidates=1,
         max_epochs=1,
@@ -94,6 +95,43 @@ def test_hyperparameter_screen_cannot_start_before_structure_gate(tmp_path) -> N
 
     with pytest.raises(PermissionError, match="closed"):
         _assert_complete_v2_passed_structure_gate(config)
+
+
+def test_hyperparameter_screen_accepts_selected_task_independent_architecture(
+    tmp_path,
+) -> None:
+    root = tmp_path / "architecture"
+    root.mkdir()
+    (root / "evidence_manifest.json").write_text(
+        json.dumps(
+            {
+                "status": "gates_passed",
+                "selected_candidate_ids": ["direct"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    pd.DataFrame(
+        [
+            {
+                "candidate_id": "direct",
+                "gate_passed": True,
+                "task_labels_opened": False,
+                "outer_test_opened": False,
+                "sealed_confirmation_opened": False,
+            }
+        ]
+    ).to_csv(root / "task_independent_ranking.csv", index=False)
+    config = ChronarisV2HyperparameterScreenConfig(
+        compact_output_root=str(tmp_path),
+        architecture_gate_run_id="architecture",
+        architecture_gate_candidate_id="direct",
+        device="cpu",
+        max_candidates=1,
+        max_epochs=1,
+    )
+
+    _assert_complete_v2_passed_structure_gate(config)
 
 
 def test_confirmation_unlock_requires_a_task_independent_locked_config(tmp_path) -> None:

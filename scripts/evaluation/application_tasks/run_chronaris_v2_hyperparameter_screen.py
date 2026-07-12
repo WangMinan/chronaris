@@ -25,8 +25,12 @@ def main() -> int:
         default="2026-07-12_chronaris-v2-hyperparameter-screen-seed17",
     )
     parser.add_argument(
-        "--structure-diagnostics-run-id",
-        default="2026-07-12_chronaris-v2-structure-diagnostics-seed17",
+        "--architecture-gate-run-id",
+        default="2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1",
+    )
+    parser.add_argument(
+        "--architecture-gate-candidate-id",
+        default="direct_residual_01_causal_query",
     )
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cuda")
     parser.add_argument("--max-epochs", type=int, default=50)
@@ -36,7 +40,8 @@ def main() -> int:
     root = run_chronaris_v2_hyperparameter_screen(
         ChronarisV2HyperparameterScreenConfig(
             run_id=args.run_id,
-            structure_diagnostics_run_id=args.structure_diagnostics_run_id,
+            architecture_gate_run_id=args.architecture_gate_run_id,
+            architecture_gate_candidate_id=args.architecture_gate_candidate_id,
             device=args.device,
             max_epochs=args.max_epochs,
             batch_size=args.batch_size,

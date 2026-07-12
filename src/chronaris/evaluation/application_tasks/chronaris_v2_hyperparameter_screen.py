@@ -24,9 +24,10 @@ from chronaris.representation import TrainOnlyRobustNormalizer
 @dataclass(frozen=True, slots=True)
 class ChronarisV2HyperparameterScreenConfig:
     run_id: str = "2026-07-12_chronaris-v2-hyperparameter-screen-seed17"
-    structure_diagnostics_run_id: str = (
-        "2026-07-12_chronaris-v2-structure-diagnostics-seed17"
+    architecture_gate_run_id: str = (
+        "2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1"
     )
+    architecture_gate_candidate_id: str = "direct_residual_01_causal_query"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     simulation_root: str = (
@@ -50,7 +51,7 @@ def run_chronaris_v2_hyperparameter_screen(
     heavy_root = Path(resolved.heavy_output_root) / resolved.run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
-    _assert_complete_v2_passed_structure_gate(resolved)
+    _assert_architecture_gate_passed(resolved)
     data = load_simulation_locked_pretraining_data(resolved.simulation_root)
     normalizer = TrainOnlyRobustNormalizer().fit(
         data.batch,
@@ -59,7 +60,9 @@ def run_chronaris_v2_hyperparameter_screen(
             data.fold.validation_sample_ids + data.fold.held_out_sample_ids
         ),
     )
-    candidates = chronaris_v2_hyperparameter_grid()[: resolved.max_candidates]
+    candidates = chronaris_v2_hyperparameter_grid(
+        physiology_residual_mode="direct_causal_query"
+    )[: resolved.max_candidates]
     rows = []
     for candidate in candidates:
         result = train_chronaris_v2_candidate(
@@ -122,7 +125,15 @@ def run_chronaris_v2_hyperparameter_screen(
             },
         )
     acceptance = (
-        _check("exact_grid_registered", len(chronaris_v2_hyperparameter_grid()) == 24),
+        _check(
+            "exact_grid_registered",
+            len(
+                chronaris_v2_hyperparameter_grid(
+                    physiology_residual_mode="direct_causal_query"
+                )
+            )
+            == 24,
+        ),
         _check("requested_candidates_completed", len(rows) == len(candidates)),
         _check(
             "forbidden_sources_closed",
@@ -141,9 +152,12 @@ def run_chronaris_v2_hyperparameter_screen(
             "format": "chronaris.v2_hyperparameter_screen_protocol.v1",
             "config": asdict(resolved),
             "candidate_grid": [
-                asdict(value) for value in chronaris_v2_hyperparameter_grid()
+                asdict(value)
+                for value in chronaris_v2_hyperparameter_grid(
+                    physiology_residual_mode="direct_causal_query"
+                )
             ],
-            "structure_gate_verified_before_training": True,
+            "architecture_gate_verified_before_training": True,
             "task_labels_opened": False,
             "outer_test_opened": False,
             "sealed_confirmation_opened": False,
@@ -164,15 +178,33 @@ def run_chronaris_v2_hyperparameter_screen(
     return compact_root
 
 
-def _assert_complete_v2_passed_structure_gate(config) -> None:
-    root = Path(config.compact_output_root) / config.structure_diagnostics_run_id
+def _assert_architecture_gate_passed(config) -> None:
+    root = Path(config.compact_output_root) / config.architecture_gate_run_id
     manifest = json.loads((root / "evidence_manifest.json").read_text(encoding="utf-8"))
     ranking = pd.read_csv(root / "task_independent_ranking.csv")
-    complete = ranking[ranking["candidate_id"] == "structure_08_complete_v2"]
-    if manifest.get("status") != "ranked" or len(complete) != 1:
-        raise PermissionError("hyperparameter screen is closed before structure ranking")
-    if not bool(complete.iloc[0]["gate_passed"]):
-        raise PermissionError("complete v2 did not pass the structure gate")
+    selected = ranking[
+        ranking["candidate_id"] == config.architecture_gate_candidate_id
+    ]
+    manifest_selected = set(manifest.get("selected_candidate_ids", ()))
+    if manifest.get("status") != "gates_passed" or len(selected) != 1:
+        raise PermissionError("hyperparameter screen is closed before architecture gate")
+    if config.architecture_gate_candidate_id not in manifest_selected:
+        raise PermissionError("architecture candidate was not selected by the gate run")
+    row = selected.iloc[0]
+    if not bool(row["gate_passed"]):
+        raise PermissionError("selected v2 architecture did not pass the gate")
+    forbidden = (
+        "task_labels_opened",
+        "outer_test_opened",
+        "sealed_confirmation_opened",
+    )
+    if any(bool(row.get(name, False)) for name in forbidden):
+        raise PermissionError("architecture gate opened a forbidden evidence source")
+
+
+# Compatibility alias for older callers; the check now targets the versioned
+# architecture gate instead of silently reopening the failed structure gate.
+_assert_complete_v2_passed_structure_gate = _assert_architecture_gate_passed
 
 
 def _check(name: str, passed: bool):

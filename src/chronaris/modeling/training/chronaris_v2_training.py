@@ -129,7 +129,10 @@ class ChronarisV2CandidateConfig:
         return 4 if self.internal_hidden_dim == 64 else 8
 
 
-def chronaris_v2_hyperparameter_grid() -> tuple[ChronarisV2CandidateConfig, ...]:
+def chronaris_v2_hyperparameter_grid(
+    *,
+    physiology_residual_mode: str = "learned",
+) -> tuple[ChronarisV2CandidateConfig, ...]:
     candidates = []
     for hidden in (64, 96, 128):
         for lag_mode in ("fixed_five", "continuous_basis"):
@@ -145,6 +148,7 @@ def chronaris_v2_hyperparameter_grid() -> tuple[ChronarisV2CandidateConfig, ...]
                             lag_mode=lag_mode,
                             ode_method=ode_method,
                             learning_rate=learning_rate,
+                            physiology_residual_mode=physiology_residual_mode,
                         )
                     )
     return tuple(candidates)

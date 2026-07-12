@@ -301,7 +301,6 @@ def test_v2_grid_and_one_epoch_training_round_trip(tmp_path) -> None:
     assert encoder.backbone.config.architecture_version == "v2"
     assert payload["label_used_for_encoder_training"] is False
     assert payload["simulation_oracle_opened"] is False
-
     checkpoint_sha256 = hashlib.sha256(
         (tmp_path / candidate.candidate_id / "last.pt").read_bytes()
     ).hexdigest()
@@ -351,3 +350,13 @@ def test_v2_grid_and_one_epoch_training_round_trip(tmp_path) -> None:
     assert "physiology_teacher_projection.weight" in repair_payload[
         "v2_head_state_dict"
     ]
+
+
+def test_v2_hyperparameter_grid_can_lock_direct_causal_residual() -> None:
+    candidates = chronaris_v2_hyperparameter_grid(
+        physiology_residual_mode="direct_causal_query"
+    )
+    assert len(candidates) == 24
+    assert {value.physiology_residual_mode for value in candidates} == {
+        "direct_causal_query"
+    }
