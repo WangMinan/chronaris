@@ -1,0 +1,311 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "scenarios": [
+    "clean_asynchronous",
+    "sampling_jitter",
+    "clock_offset_and_drift",
+    "random_missing",
+    "block_missing_and_long_lag",
+    "mixed_severe"
+  ],
+  "task_oracle_opened": false,
+  "baseline_device": "cuda",
+  "chronaris_device": "cuda",
+  "stage_name": "simulation_mechanism_representation_export",
+  "run_id": "2026-07-13_chronaris-v2-mechanism-representations",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-12T18:47:49.400501Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-12T18:43:57.058136Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "scenarios": [
+        "clean_asynchronous",
+        "sampling_jitter",
+        "clock_offset_and_drift",
+        "random_missing",
+        "block_missing_and_long_lag",
+        "mixed_severe"
+      ],
+      "task_oracle_opened": false,
+      "baseline_device": "cuda",
+      "chronaris_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:44:12.067774Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "train",
+      "scenario_id": "clean_asynchronous"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:44:22.157252Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "train",
+      "scenario_id": "sampling_jitter"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:44:34.463979Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "train",
+      "scenario_id": "clock_offset_and_drift"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:44:45.808089Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "train",
+      "scenario_id": "random_missing"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:44:56.654360Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "train",
+      "scenario_id": "block_missing_and_long_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:05.580126Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "train",
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:08.034531Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "validation",
+      "scenario_id": "clean_asynchronous"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:10.576417Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "validation",
+      "scenario_id": "sampling_jitter"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:15.636250Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "validation",
+      "scenario_id": "clock_offset_and_drift"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:18.046540Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "validation",
+      "scenario_id": "random_missing"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:20.794756Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "validation",
+      "scenario_id": "block_missing_and_long_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:22.931131Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 17,
+      "role": "validation",
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:32.759613Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "train",
+      "scenario_id": "clean_asynchronous"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:41.521349Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "train",
+      "scenario_id": "sampling_jitter"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:45:52.231169Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "train",
+      "scenario_id": "clock_offset_and_drift"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:00.893737Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "train",
+      "scenario_id": "random_missing"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:10.248741Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "train",
+      "scenario_id": "block_missing_and_long_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:20.784298Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "train",
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:23.339984Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "validation",
+      "scenario_id": "clean_asynchronous"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:25.714366Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "validation",
+      "scenario_id": "sampling_jitter"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:28.314829Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "validation",
+      "scenario_id": "clock_offset_and_drift"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:30.435641Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "validation",
+      "scenario_id": "random_missing"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:32.602121Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "validation",
+      "scenario_id": "block_missing_and_long_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:34.726381Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 29,
+      "role": "validation",
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:44.942656Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "train",
+      "scenario_id": "clean_asynchronous"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:46:55.875986Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "train",
+      "scenario_id": "sampling_jitter"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:05.025736Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "train",
+      "scenario_id": "clock_offset_and_drift"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:14.704491Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "train",
+      "scenario_id": "random_missing"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:26.935567Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "train",
+      "scenario_id": "block_missing_and_long_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:35.346960Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "train",
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:37.469471Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "validation",
+      "scenario_id": "clean_asynchronous"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:39.879219Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "validation",
+      "scenario_id": "sampling_jitter"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:42.226406Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "validation",
+      "scenario_id": "clock_offset_and_drift"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:44.740587Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "validation",
+      "scenario_id": "random_missing"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:47.023341Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "validation",
+      "scenario_id": "block_missing_and_long_lag"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:49.363159Z",
+      "event": "simulation_mechanism_scenario_complete",
+      "seed": 43,
+      "role": "validation",
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:47:49.400501Z",
+      "event": "finished",
+      "status": "completed",
+      "export_count": 144,
+      "acceptance_pass_count": 5,
+      "acceptance_check_count": 5
+    }
+  ],
+  "seed": 43,
+  "role": "validation",
+  "scenario_id": "mixed_severe",
+  "status": "completed",
+  "export_count": 144,
+  "acceptance_pass_count": 5,
+  "acceptance_check_count": 5
+}

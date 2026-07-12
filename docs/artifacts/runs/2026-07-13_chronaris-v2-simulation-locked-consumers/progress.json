@@ -1,0 +1,170 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "checkpoint_count": 15,
+  "task_oracle_opened_after_representation": true,
+  "locked_metrics_opened": true,
+  "stage_name": "simulation_locked_consumers",
+  "run_id": "2026-07-13_chronaris-v2-simulation-locked-consumers",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-12T18:40:06.909806Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-12T18:35:41.814090Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "checkpoint_count": 15,
+      "task_oracle_opened_after_representation": true,
+      "locked_metrics_opened": true
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:35:58.066724Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "physiology_only",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:36:11.524422Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "vehicle_only",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:36:25.614295Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "naive_time_sync",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:36:40.066952Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "mult",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:36:54.455452Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "contiformer",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:37:08.024924Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "chronaris",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:37:23.803787Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "physiology_only",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:37:38.276838Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "vehicle_only",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:37:52.852843Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "naive_time_sync",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:38:07.212518Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "mult",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:38:23.339251Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "contiformer",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:38:36.786836Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "chronaris",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:38:53.107518Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "physiology_only",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:39:08.976184Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "vehicle_only",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:39:22.104552Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "naive_time_sync",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:39:37.802764Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "mult",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:39:51.184858Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "contiformer",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:40:06.504319Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "chronaris",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T18:40:06.909806Z",
+      "event": "finished",
+      "status": "completed",
+      "method_seed_count": 18,
+      "metric_count": 1152,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7
+    }
+  ],
+  "seed": 43,
+  "method_name": "chronaris",
+  "status": "completed",
+  "method_seed_count": 18,
+  "metric_count": 1152,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7
+}

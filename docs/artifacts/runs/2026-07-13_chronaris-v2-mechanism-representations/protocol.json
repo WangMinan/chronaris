@@ -1,0 +1,33 @@
+{
+  "format": "chronaris.simulation_mechanism_representation_protocol.v2",
+  "config": {
+    "run_id": "2026-07-13_chronaris-v2-mechanism-representations",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-13_chronaris-v2-simulation-locked-pretraining",
+    "baseline_pretraining_run_id": "2026-07-12_simulation-locked-pretraining",
+    "locked_configuration_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/locked_configuration.json",
+    "clean_representation_run_id": "2026-07-13_chronaris-v2-simulation-locked-representations",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "export_batch_size": 32,
+    "baseline_device": "cuda",
+    "chronaris_device": "cuda",
+    "resume": true
+  },
+  "methods": [
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "task_oracle_opened": false,
+  "representation_family": "frozen_task_agnostic_v2",
+  "baseline_device": "cuda",
+  "chronaris_device": "cuda"
+}

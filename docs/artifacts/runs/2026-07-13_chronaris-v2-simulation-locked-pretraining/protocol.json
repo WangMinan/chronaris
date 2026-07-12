@@ -1,0 +1,36 @@
+{
+  "config": {
+    "batch_size": 128,
+    "compact_output_root": "docs/artifacts/runs",
+    "device": "cuda",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "locked_configuration_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/locked_configuration.json",
+    "max_epochs": 50,
+    "resume": true,
+    "run_id": "2026-07-13_chronaris-v2-simulation-locked-pretraining",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
+  },
+  "format": "chronaris.v2_simulation_locked_pretraining_protocol.v1",
+  "locked_candidate": {
+    "candidate_id": "v2_h96_continuous_basis_euler_lr1e3",
+    "dropout": 0.1,
+    "internal_hidden_dim": 96,
+    "lag_mode": "continuous_basis",
+    "learning_rate": 0.001,
+    "ode_method": "euler",
+    "phase_epoch_offset": 0,
+    "physiology_residual_mode": "direct_causal_query",
+    "physiology_teacher_mode": "none",
+    "physiology_teacher_weight": 0.0,
+    "structure_candidate_id": "structure_08_complete_v2"
+  },
+  "locked_configuration_sha256": "76ea29620114850b8e00d0483e8749645653d4aa69c3f51338d0db8eedc29cdb",
+  "representation_family": "frozen_task_agnostic_v2",
+  "sealed_confirmation_opened": false,
+  "task_oracle_opened": false
+}

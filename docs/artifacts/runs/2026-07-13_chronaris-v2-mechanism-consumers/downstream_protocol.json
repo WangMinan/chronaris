@@ -1,0 +1,26 @@
+{
+  "format": "chronaris.simulation_mechanism_downstream_protocol.v1",
+  "config": {
+    "run_id": "2026-07-13_chronaris-v2-mechanism-consumers",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "mechanism_representation_run_id": "2026-07-13_chronaris-v2-mechanism-representations",
+    "stress_representation_run_id": "2026-07-13_chronaris-v2-sealed-confirmation-representations",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "alpha_grid": [
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "resume": true
+  },
+  "fit_role": "g1_train",
+  "hyperparameter_selection_role": "g1_validation",
+  "locked_evaluation_role": "g2_stress",
+  "independent_statistical_unit": "trajectory"
+}
