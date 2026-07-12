@@ -253,6 +253,40 @@ def masked_mean_pool(
     ).sum(dim=1) / valid_count.to(sequence_embedding.dtype)
 
 
+def shared_causal_query_valid_mask(
+    batch: DualStreamObservationBatch,
+) -> torch.Tensor:
+    """Return the method-independent query domain with any causal observation.
+
+    A method may use a stricter modality-specific mask for its own pooling, but
+    exported methods must share this data-derived domain so alignment checks do
+    not confuse single-stream availability with query lineage.
+    """
+
+    query = batch.query_timestamps_s
+
+    def _has_history(timestamps, point_mask):
+        return (
+            point_mask.unsqueeze(1)
+            & (timestamps.unsqueeze(1) <= query.unsqueeze(-1) + 1e-7)
+        ).any(dim=-1)
+
+    physiology = _has_history(
+        batch.physiology_timestamps_s,
+        batch.physiology_point_mask,
+    )
+    vehicle = _has_history(
+        batch.vehicle_timestamps_s,
+        batch.vehicle_point_mask,
+    )
+    shared = physiology | vehicle
+    if bool((shared.sum(dim=1) == 0).any()):
+        raise RepresentationContractError(
+            "each sample requires at least one causally available query"
+        )
+    return shared
+
+
 def validate_fusion_method_alignment(
     outputs: Sequence[FusionStreamBatch],
 ) -> str:

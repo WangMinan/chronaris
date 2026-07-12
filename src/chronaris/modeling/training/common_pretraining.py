@@ -43,6 +43,7 @@ from chronaris.representation import (
     build_lag_discrimination_inputs,
     select_observation_batch,
     masked_mean_pool,
+    shared_causal_query_valid_mask,
 )
 from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError
 
@@ -107,13 +108,13 @@ class TrainedFusionAdapter:
         with torch.inference_mode():
             encoded = self.encoder(normalized)
         sequence = encoded.sequence_embedding
-        valid = encoded.modality_available_mask
+        shared_valid = shared_causal_query_valid_mask(batch).to(device)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),
             sequence_embedding=sequence,
-            valid_mask=valid,
-            pooled_embedding=masked_mean_pool(sequence, valid),
+            valid_mask=shared_valid,
+            pooled_embedding=masked_mean_pool(sequence, shared_valid),
             method_name=self.method_name,
             fold_id=self.fold_id,
             checkpoint_sha256=self.checkpoint_sha256,

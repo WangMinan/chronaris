@@ -15,6 +15,7 @@ from chronaris.representation import (
     ObservedDualStreamSample,
     collate_observation_samples,
     select_observation_batch,
+    shared_causal_query_valid_mask,
     validate_fusion_method_alignment,
 )
 from chronaris.representation.contracts import RepresentationContractError
@@ -112,6 +113,28 @@ def test_method_alignment_rejects_query_or_sample_drift():
     shifted = replace(second, timestamps_s=second.timestamps_s + 0.01)
     with pytest.raises(RepresentationContractError, match="timestamps mismatch"):
         validate_fusion_method_alignment([first, shifted])
+
+
+def test_shared_query_mask_uses_any_causally_available_modality():
+    sample = _sample("a")
+    batch = collate_observation_samples([sample])
+
+    valid = shared_causal_query_valid_mask(batch)
+
+    assert valid.shape == (1, QUERY_POINT_COUNT)
+    assert valid[0, 0]
+    assert valid.all()
+
+    delayed = replace(
+        sample,
+        physiology_timestamps_s=np.asarray([0.5, 1.0], dtype=np.float64),
+        vehicle_timestamps_s=np.asarray([0.5, 1.5], dtype=np.float64),
+    )
+    delayed_valid = shared_causal_query_valid_mask(
+        collate_observation_samples([delayed])
+    )
+    assert not delayed_valid[0, 0]
+    assert delayed_valid[0, 2]
 
 
 def test_fusion_contract_rejects_non_64_dimensional_output():
