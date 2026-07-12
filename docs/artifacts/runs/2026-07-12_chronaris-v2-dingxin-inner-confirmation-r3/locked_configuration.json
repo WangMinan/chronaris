@@ -1,0 +1,22 @@
+{
+  "candidate": {
+    "candidate_id": "v2_h96_continuous_basis_euler_lr1e3",
+    "dropout": 0.1,
+    "internal_hidden_dim": 96,
+    "lag_mode": "continuous_basis",
+    "learning_rate": 0.001,
+    "ode_method": "euler",
+    "phase_epoch_offset": 0,
+    "physiology_residual_mode": "direct_causal_query",
+    "physiology_teacher_mode": "none",
+    "physiology_teacher_weight": 0.0,
+    "structure_candidate_id": "structure_08_complete_v2"
+  },
+  "configuration_locked": true,
+  "format": "chronaris.v2_locked_configuration.v1",
+  "outer_test_opened": false,
+  "sealed_confirmation_opened": false,
+  "selection_uses_downstream_labels": false,
+  "source_hyperparameter_diagnostics_run_id": "2026-07-12_chronaris-v2-hyperparameter-diagnostics-seed17-r3",
+  "status": "configuration_locked"
+}

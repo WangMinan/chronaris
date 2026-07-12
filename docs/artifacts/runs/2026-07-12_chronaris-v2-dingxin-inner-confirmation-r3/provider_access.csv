@@ -1,0 +1,4 @@
+fold_id,provider_request_count,cache_hit_count,forbidden_request_count
+leave_one_view_out__fold01,18,0,0
+leave_one_view_out__fold02,18,0,0
+leave_one_view_out__fold03,21,0,0

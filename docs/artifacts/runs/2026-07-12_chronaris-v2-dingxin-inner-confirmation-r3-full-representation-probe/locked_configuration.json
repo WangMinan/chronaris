@@ -1,0 +1,10 @@
+{
+  "candidate": null,
+  "configuration_locked": false,
+  "format": "chronaris.v2_locked_configuration.v1",
+  "outer_test_opened": false,
+  "sealed_confirmation_opened": false,
+  "selection_uses_downstream_labels": false,
+  "source_hyperparameter_diagnostics_run_id": "2026-07-12_chronaris-v2-hyperparameter-diagnostics-seed17-r3",
+  "status": "gates_failed"
+}

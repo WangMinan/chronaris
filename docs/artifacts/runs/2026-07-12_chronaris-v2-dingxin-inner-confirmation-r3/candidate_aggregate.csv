@@ -1,0 +1,4 @@
+candidate_id,fold_count,mean_public_self_supervised_validation_loss,worst_fold_fidelity_ratio,parameter_count,three_fold_gate_passed,rank,locked
+v2_h96_continuous_basis_euler_lr1e3,3,1.8899149696032207,1.2661334571536602,443767,True,1,True
+v2_h96_continuous_basis_rk4_lr1e3,3,1.890346810221672,1.8648013024242454,443767,True,3,False
+v2_h96_fixed_five_rk4_lr1e3,3,1.8900921841462452,1.7855228055053458,443767,True,2,False

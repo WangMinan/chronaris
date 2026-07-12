@@ -1,0 +1,10 @@
+{
+  "candidate_count": 3,
+  "confirmed_metrics_changed": false,
+  "fold_count": 3,
+  "format": "chronaris.v2_dingxin_inner_confirmation_evidence.v1",
+  "locked_candidate_id": "v2_h96_continuous_basis_euler_lr1e3",
+  "outer_test_request_count": 0,
+  "run_id": "2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3",
+  "status": "configuration_locked"
+}

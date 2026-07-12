@@ -1,0 +1,17 @@
+{
+  "confirmed_metrics_changed": false,
+  "family_id": "2026-07-12_chronaris-v2-independent-confirmation-family",
+  "format": "chronaris.v2_confirmation_access_evidence.v1",
+  "locked_configuration_sha256": "76ea29620114850b8e00d0483e8749645653d4aa69c3f51338d0db8eedc29cdb",
+  "method_scope": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "payload_sha256": "a7f526ae508ef8e74ba492721e25ef8f9c9435ec901bbfb69892e433a55ec54d",
+  "run_id": "2026-07-13_chronaris-v2-confirmation-access",
+  "status": "authorized"
+}
