@@ -199,6 +199,25 @@ def run_chronaris_v2_locked_dingxin_pretraining(
             "confirmed_metrics_changed": False,
         },
     )
+    (compact_root / "report.md").write_text(
+        "\n".join((
+            "# Chronaris v2 鼎新锁定重训",
+            "",
+            f"状态：{status}；完成 {len(rows)}/{expected} 个随机种子—外层折 checkpoint。",
+            "训练只读取 inner-train 与 validation 原始观测，outer-test provider 请求为 0。",
+            "任务标签、仿真真值和既有确认指标均未参与训练或早停。",
+            "",
+        )),
+        encoding="utf-8",
+    )
+    (compact_root / "resume_command.txt").write_text(
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
+        "scripts/evaluation/application_tasks/"
+        "run_chronaris_v2_locked_dingxin_pretraining.py "
+        f"--run-id {resolved.run_id} --device {resolved.device} "
+        f"--max-epochs {resolved.max_epochs}\n",
+        encoding="utf-8",
+    )
     return compact_root
 
 
