@@ -1,7 +1,5 @@
-*.pt filter=lfs diff=lfs merge=lfs -text
-*.npz filter=lfs diff=lfs merge=lfs -text
-*.jsonl filter=lfs diff=lfs merge=lfs -text
-*.csv filter=lfs diff=lfs merge=lfs -text
+# Git LFS is intentionally disabled for the active repository history.
+# Dense generated outputs are ignored; compact evidence files use regular Git.
 *.csv !text !filter !merge !diff
 *.jsonl !text !filter !merge !diff
 *.npz !text !filter !merge !diff

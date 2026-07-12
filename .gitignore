@@ -89,3 +89,16 @@ docs/artifacts/assets/stage_i_task_heads_optimization/**/gpu_perf_batches.csv
 docs/artifacts/assets/**/sequence_bundle.npz
 docs/artifacts/assets/**/feature_table.parquet
 docs/artifacts/assets/**/raw_window_summary.jsonl
+
+# Reproducible dense research byproducts stay on the development host.
+# Compact metrics, manifests, reports, and figures remain versioned.
+docs/artifacts/**/training_curves*.csv
+docs/artifacts/**/gpu_perf_batches*.csv
+docs/artifacts/**/*task_manifest*.jsonl
+docs/artifacts/**/raw_window_summary.jsonl
+docs/artifacts/**/*predictions*.csv
+docs/artifacts/**/t3_similarity_distribution.csv
+docs/artifacts/**/llm_request_response_audit.jsonl
+docs/artifacts/**/feature_bundle.npz
+docs/artifacts/**/sequence_bundle.npz
+docs/artifacts/**/*.partial.csv
