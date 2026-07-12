@@ -17,6 +17,7 @@ if str(SRC) not in sys.path:
 
 from chronaris.evaluation.public_datasets.pipelines.fusion_refresh import (  # noqa: E402
     StageIPublicFusionRefreshConfig,
+    _locked_public_bridge_candidate,
     build_public_fusion_refresh_candidates,
     run_task_eval_public_fusion_refresh,
 )
@@ -38,6 +39,41 @@ _write_mini_nasa_csm_dataset = _HELPER_MODULE._write_mini_nasa_csm_dataset
 
 
 class StageIPublicFusionRefreshTest(unittest.TestCase):
+    def test_external_confirmation_uses_one_candidate_bound_to_v2_lock(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            lock = root / "lock.json"
+            promotion = root / "promotion.json"
+            lock.write_text(json.dumps({
+                "format": "chronaris.v2_locked_configuration.v1",
+                "configuration_locked": True,
+                "selection_uses_downstream_labels": False,
+                "candidate": {
+                    "candidate_id": "v2_locked",
+                    "internal_hidden_dim": 96,
+                    "dropout": 0.1,
+                    "learning_rate": 1e-3,
+                },
+            }), encoding="utf-8")
+            promotion.write_text(json.dumps({
+                "status": "completed",
+                "locked_results_returned_to_development": False,
+            }), encoding="utf-8")
+            config = StageIPublicFusionRefreshConfig(
+                run_id="external",
+                dataset_prepared_roots={},
+                locked_configuration_path=str(lock),
+                promotion_evidence_path=str(promotion),
+                external_confirmation_only=True,
+            )
+
+            candidate, bridge = _locked_public_bridge_candidate(config)
+
+            self.assertEqual(candidate.hidden_dim, 96)
+            self.assertEqual(candidate.dropout, 0.1)
+            self.assertEqual(bridge["screen_candidate_limit"], 1)
+            self.assertFalse(bridge["public_label_candidate_selection"])
+
     def test_candidate_grid_records_required_refresh_dimensions(self) -> None:
         candidates, grid = build_public_fusion_refresh_candidates(limit=2)
         self.assertEqual(len(candidates), 2)

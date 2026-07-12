@@ -138,6 +138,9 @@ class StageIPublicFusionRefreshConfig:
     batch_size: int | None = None
     learning_rate: float | None = None
     train_sampling_policy: str | None = None
+    locked_configuration_path: str | None = None
+    promotion_evidence_path: str | None = None
+    external_confirmation_only: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -264,6 +267,10 @@ def _run_task_eval_public_fusion_refresh_core(
         batch_size=config.batch_size,
         learning_rate=config.learning_rate,
     )
+    if config.external_confirmation_only:
+        candidate, bridge = _locked_public_bridge_candidate(config)
+        candidates = (candidate,)
+        candidate_grid.update(bridge)
     if config.candidate_filter:
         selected_candidate_ids = set(config.candidate_filter)
         candidates = tuple(
@@ -588,8 +595,13 @@ def _run_task_eval_public_fusion_refresh_core(
                 "max_folds": config.confirm_max_folds,
                 "seeds": list(config.confirm_seeds),
             },
-            "selection": "top-k by NASA combined macro-F1 or UAB mean RMSE",
+            "selection": (
+                "single locked public-adapter bridge; no public-label model choice"
+                if config.external_confirmation_only
+                else "top-k by NASA combined macro-F1 or UAB mean RMSE"
+            ),
             "evidence_role": "public_adapter_context_proxy_evidence",
+            "external_confirmation_only": config.external_confirmation_only,
         },
     }
     summary_path.write_text(
@@ -679,6 +691,53 @@ def build_public_fusion_refresh_candidates(
         "batch_size_override": batch_size,
         "learning_rate_override": learning_rate,
         "screen_candidates": [asdict(candidate) for candidate in candidates],
+    }
+
+
+def _locked_public_bridge_candidate(config):
+    if not config.locked_configuration_path or not config.promotion_evidence_path:
+        raise PermissionError(
+            "external public confirmation requires lock and promotion evidence"
+        )
+    lock = json.loads(
+        _resolve_path(config.locked_configuration_path).read_text(encoding="utf-8")
+    )
+    promotion = json.loads(
+        _resolve_path(config.promotion_evidence_path).read_text(encoding="utf-8")
+    )
+    if (
+        lock.get("format") != "chronaris.v2_locked_configuration.v1"
+        or lock.get("configuration_locked") is not True
+        or lock.get("selection_uses_downstream_labels") is not False
+    ):
+        raise PermissionError("public confirmation requires a clean v2 lock")
+    if promotion.get("status") != "completed" or promotion.get(
+        "locked_results_returned_to_development", False
+    ):
+        raise PermissionError("public confirmation requires completed one-shot audit")
+    source = lock["candidate"]
+    candidate = _candidate(
+        int(source["internal_hidden_dim"]),
+        2,
+        float(source["dropout"]),
+        0.0,
+        None,
+        float(source["learning_rate"]),
+        config.batch_size or 128,
+        "mse",
+        1.0,
+        "none",
+        0.0,
+    )
+    return candidate, {
+        "screen_candidate_policy": "single_locked_v2_public_adapter_bridge",
+        "screen_candidate_limit": 1,
+        "screen_candidates": [asdict(candidate)],
+        "locked_source_candidate_id": source["candidate_id"],
+        "public_label_candidate_selection": False,
+        "bridge_scope": (
+            "public context stream adapter; not equivalent to Dingxin vehicle stream"
+        ),
     }
 
 

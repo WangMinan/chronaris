@@ -98,6 +98,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--screen-only", action="store_true")
     parser.add_argument("--confirm-only", action="store_true")
     parser.add_argument("--candidate-filter", nargs="+", default=())
+    parser.add_argument("--locked-configuration-path")
+    parser.add_argument("--promotion-evidence-path")
+    parser.add_argument("--external-confirmation-only", action="store_true")
     parser.add_argument(
         "--dataset-filter",
         nargs="+",
@@ -150,6 +153,9 @@ def main() -> int:
             batch_size=args.batch_size,
             learning_rate=args.learning_rate,
             train_sampling_policy=args.train_sampling_policy,
+            locked_configuration_path=args.locked_configuration_path,
+            promotion_evidence_path=args.promotion_evidence_path,
+            external_confirmation_only=args.external_confirmation_only,
         )
     )
     print(json.dumps(result.summary, ensure_ascii=False, indent=2))
