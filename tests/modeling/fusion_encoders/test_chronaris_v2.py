@@ -12,6 +12,7 @@ from chronaris.modeling.fusion_encoders.chronaris_v2 import (
     load_chronaris_v2_checkpoint,
     save_chronaris_v2_checkpoint,
 )
+from chronaris.modeling.fusion_encoders.causal_query import causal_query_stream
 from chronaris.modeling.fusion_encoders.learned_causal import (
     LearnedRelativeCausalFusion,
     LearnedRelativeCausalFusionConfig,
@@ -177,6 +178,33 @@ def test_chronaris_v2_preserves_contract_subspaces_and_causality() -> None:
         rtol=1e-5,
         atol=1e-5,
     )
+
+
+def test_direct_physiology_residual_preserves_causal_observed_values() -> None:
+    batch = collate_observation_samples((_sample("direct"),))
+    encoder = ChronarisV2FusionEncoder(
+        ChronarisV2EncoderConfig(
+            physiology_feature_names=PHYSIOLOGY_NAMES,
+            vehicle_feature_names=VEHICLE_NAMES,
+            internal_hidden_dim=32,
+            physiology_hidden_dim=16,
+            vehicle_hidden_dim=32,
+            num_heads=4,
+            dropout=0.0,
+            physics_enabled=False,
+            physiology_residual_mode="direct_causal_query",
+        )
+    ).eval()
+    output = encoder(batch, compute_diagnostics=False)
+    queried = causal_query_stream(batch, stream_name="physiology")
+
+    torch.testing.assert_close(
+        output.physiology_private[..., : len(PHYSIOLOGY_NAMES)][
+            queried.feature_mask
+        ],
+        queried.values[queried.feature_mask],
+    )
+    assert output.physiology_private.shape[-1] == 16
 
 
 def test_continuous_basis_has_positive_ordered_initial_centers() -> None:

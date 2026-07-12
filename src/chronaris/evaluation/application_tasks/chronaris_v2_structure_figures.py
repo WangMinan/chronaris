@@ -23,6 +23,8 @@ DISPLAY_NAMES = {
     "fidelity_01_private_teacher_w050": "生理私有子空间蒸馏",
     "fidelity_02_path_teacher_w050": "生理路径蒸馏（权重 0.5）",
     "fidelity_03_path_teacher_w100": "生理路径蒸馏（权重 1.0）",
+    "direct_residual_00_complete_v2_reference": "完整 v2 参考",
+    "direct_residual_01_causal_query": "直接因果生理残差",
 }
 
 

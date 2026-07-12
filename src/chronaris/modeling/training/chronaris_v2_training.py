@@ -86,6 +86,7 @@ class ChronarisV2CandidateConfig:
     physiology_teacher_mode: str = "none"
     physiology_teacher_weight: float = 0.0
     phase_epoch_offset: int = 0
+    physiology_residual_mode: str = "learned"
 
     def __post_init__(self) -> None:
         if not self.candidate_id:
@@ -114,6 +115,11 @@ class ChronarisV2CandidateConfig:
             raise ValueError("v2 physiology teacher mode/weight mismatch")
         if self.phase_epoch_offset not in {0, 20}:
             raise ValueError("v2 phase epoch offset must be 0 or 20")
+        if self.physiology_residual_mode not in {
+            "learned",
+            "direct_causal_query",
+        }:
+            raise ValueError("v2 physiology residual mode is invalid")
         structure = chronaris_v2_structure_candidate(self.structure_candidate_id)
         if structure.architecture_version != "v2":
             raise ValueError("v1 structure candidate must use the v1 training pipeline")
@@ -269,6 +275,7 @@ def train_chronaris_v2_candidate(
                 learned_causal_attention=structure.learned_causal_attention,
                 private_shared_subspaces=structure.private_shared_subspaces,
                 corrected_physics=structure.corrected_physics,
+                physiology_residual_mode=candidate.physiology_residual_mode,
             )
         )
         backbone.attach_normalizer(normalizer)

@@ -97,6 +97,9 @@ def v2_protocol_hash(**payload):
     ):
         code_digest.update(name.encode())
         code_digest.update((module_root / name).read_bytes())
+    encoder_path = module_root.parent / "fusion_encoders" / "chronaris_v2.py"
+    code_digest.update(str(encoder_path.name).encode())
+    code_digest.update(encoder_path.read_bytes())
     payload["code_sha256"] = code_digest.hexdigest()
     return hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()

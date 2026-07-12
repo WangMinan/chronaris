@@ -14,6 +14,7 @@ from torch import nn
 from chronaris.modeling.fusion_encoders.alignment_bridge import (
     build_alignment_batch_from_observations,
 )
+from chronaris.modeling.fusion_encoders.causal_query import causal_query_stream
 from chronaris.modeling.fusion_encoders.chronaris_physics import (
     ChronarisPhysicsAudit,
     build_chronaris_physics_audit,
@@ -75,6 +76,7 @@ class ChronarisV2EncoderConfig:
     learned_causal_attention: bool = True
     private_shared_subspaces: bool = True
     corrected_physics: bool = True
+    physiology_residual_mode: str = "learned"
 
     def __post_init__(self) -> None:
         if self.architecture_version != "v2":
@@ -100,6 +102,18 @@ class ChronarisV2EncoderConfig:
             raise ValueError("Chronaris v2 screen only supports euler or rk4")
         if not 0 <= self.dropout < 1:
             raise ValueError("Chronaris v2 dropout is invalid")
+        if self.physiology_residual_mode not in {
+            "learned",
+            "direct_causal_query",
+        }:
+            raise ValueError("Chronaris v2 physiology residual mode is invalid")
+        if (
+            self.physiology_residual_mode == "direct_causal_query"
+            and len(self.physiology_feature_names) > 16
+        ):
+            raise ValueError(
+                "direct physiology residual requires at most 16 observed features"
+            )
         if self.physics_weight < 0 or self.physics_huber_delta <= 0:
             raise ValueError("Chronaris v2 physics configuration is invalid")
         if not self.learned_causal_attention and (
@@ -308,6 +322,24 @@ class ChronarisV2FusionEncoder(nn.Module):
             self.vehicle_private_missing.view(1, 1, -1),
         )
         physiology_private = self.physiology_private_projection(physiology_states)
+        if self.config.physiology_residual_mode == "direct_causal_query":
+            queried_physiology = causal_query_stream(
+                batch,
+                stream_name="physiology",
+            )
+            direct_count = queried_physiology.values.shape[-1]
+            direct_values = torch.where(
+                queried_physiology.feature_mask,
+                queried_physiology.values,
+                torch.zeros_like(queried_physiology.values),
+            )
+            physiology_private = torch.cat(
+                (
+                    direct_values,
+                    physiology_private[..., direct_count:],
+                ),
+                dim=-1,
+            )
         physiology_private = torch.where(
             physiology_valid.unsqueeze(-1),
             physiology_private,
