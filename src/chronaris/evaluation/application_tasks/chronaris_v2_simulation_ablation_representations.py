@@ -118,6 +118,24 @@ def run_chronaris_v2_simulation_ablation_representations(
         "export_count": len(rows),
         "heavy_run_root": str(heavy_root),
     })
+    (compact_root / "report.md").write_text(
+        "\n".join((
+            "# Chronaris v2 正式机制消融表示导出",
+            "",
+            f"状态：{status}；完成 {len(rows)}/{expected} 份训练、验证与锁定测试表示。",
+            "表示阶段只读取原始观测，不计算下游任务指标。",
+            "",
+        )), encoding="utf-8",
+    )
+    (compact_root / "resume_command.txt").write_text(
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
+        "scripts/evaluation/application_tasks/"
+        "run_chronaris_v2_simulation_ablation_representations.py "
+        f"--run-id {resolved.run_id} "
+        f"--pretraining-run-id {resolved.pretraining_run_id} "
+        f"--device {resolved.device} --resume\n",
+        encoding="utf-8",
+    )
     return compact_root
 
 

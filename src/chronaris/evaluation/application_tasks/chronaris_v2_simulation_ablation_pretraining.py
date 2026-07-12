@@ -141,6 +141,23 @@ def run_chronaris_v2_simulation_ablation_pretraining(
         "heavy_run_root": str(heavy_root),
         "confirmed_v1_evidence_changed": False,
     })
+    (compact_root / "report.md").write_text(
+        "\n".join((
+            "# Chronaris v2 正式机制消融重训",
+            "",
+            f"状态：{status}；完成 {len(rows)}/{expected} 个变体—随机种子 checkpoint。",
+            "去修正物理约束和去缺失课程分别与完整 v2 形成单因素结构对照；任务真值与封存确认族未参与训练。",
+            "",
+        )), encoding="utf-8",
+    )
+    (compact_root / "resume_command.txt").write_text(
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
+        "scripts/evaluation/application_tasks/"
+        "run_chronaris_v2_simulation_ablation_pretraining.py "
+        f"--run-id {resolved.run_id} --device {resolved.device} "
+        f"--max-epochs {resolved.max_epochs} --resume\n",
+        encoding="utf-8",
+    )
     return compact_root
 
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import shlex
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -417,10 +418,7 @@ def _write_outputs(**values):
     pd.DataFrame(values["workload_rows"]).to_csv(workload_path, index=False)
     pd.DataFrame(values["unit_rows"]).to_csv(unit_path, index=False)
     paths["resume"].write_text(
-        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_simulation_chronaris_ablation_consumers.py "
-        f"--run-id {values['config'].run_id} --minirocket-kernels {values['config'].minirocket_kernels} "
-        f"--tcn-device {values['tcn_device']} --resume\n",
+        _resume_command(values["config"], tcn_device=values["tcn_device"]),
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {
@@ -438,6 +436,32 @@ def _write_outputs(**values):
         "output_paths": {key: str(path) for key, path in paths.items()},
     })
     return paths
+
+
+def _resume_command(config, *, tcn_device):
+    args = [
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+        "scripts/evaluation/application_tasks/run_simulation_chronaris_ablation_consumers.py",
+        "--run-id", config.run_id,
+        "--pretraining-run-id", config.pretraining_run_id,
+        "--representation-run-id", config.representation_run_id,
+        "--full-pretraining-run-id", config.full_pretraining_run_id,
+        "--full-consumer-run-id", config.full_consumer_run_id,
+        "--minirocket-kernels", str(config.minirocket_kernels),
+        "--tcn-device", tcn_device,
+        "--resume",
+    ]
+    for seed in config.seeds:
+        args.extend(("--seed", str(seed)))
+    for variant in config.variants:
+        args.extend(("--variant", variant))
+    for flag, value in (
+        ("--baseline-pretraining-run-id", config.baseline_pretraining_run_id),
+        ("--locked-configuration-path", config.locked_configuration_path),
+    ):
+        if value is not None:
+            args.extend((flag, value))
+    return " ".join(shlex.quote(str(value)) for value in args) + "\n"
 
 
 def _check(check_id, passed, actual, expected):
