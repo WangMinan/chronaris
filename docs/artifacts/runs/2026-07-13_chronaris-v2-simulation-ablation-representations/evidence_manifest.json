@@ -1,0 +1,7 @@
+{
+  "format": "chronaris.v2_simulation_ablation_representation_evidence.v1",
+  "run_id": "2026-07-13_chronaris-v2-simulation-ablation-representations",
+  "status": "completed",
+  "export_count": 18,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-13_chronaris-v2-simulation-ablation-representations"
+}

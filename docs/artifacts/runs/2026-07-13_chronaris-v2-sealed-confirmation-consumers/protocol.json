@@ -1,0 +1,30 @@
+{
+  "format": "chronaris.simulation_stress_consumer_protocol.v1",
+  "config": {
+    "run_id": "2026-07-13_chronaris-v2-sealed-confirmation-consumers",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-07-13_chronaris-v2-simulation-locked-pretraining",
+    "baseline_pretraining_run_id": "2026-07-12_simulation-locked-pretraining",
+    "locked_configuration_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/locked_configuration.json",
+    "clean_consumer_run_id": "2026-07-13_chronaris-v2-simulation-locked-consumers",
+    "stress_representation_run_id": "2026-07-13_chronaris-v2-sealed-confirmation-representations",
+    "stress_generation_run_id": "2026-07-12_chronaris-v2-independent-confirmation-family",
+    "split_id": "sealed_confirmation",
+    "profile_prefix": "sealed_confirmation_profile_",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "resume": true
+  },
+  "frozen_workload_thresholds": [
+    0.5745705763498942,
+    0.8364219069480896
+  ],
+  "consumer_refit_allowed": false,
+  "paired_bootstrap_repetitions": 2000,
+  "paired_permutation_repetitions": 10000
+}

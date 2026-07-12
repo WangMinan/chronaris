@@ -1,0 +1,47 @@
+{
+  "format": "chronaris.v2_simulation_ablation_pretraining_protocol.v1",
+  "config": {
+    "run_id": "2026-07-13_chronaris-v2-simulation-ablation-pretraining",
+    "locked_configuration_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/locked_configuration.json",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "variants": [
+      "no_corrected_physics",
+      "no_missingness_curriculum"
+    ],
+    "max_epochs": 50,
+    "batch_size": 128,
+    "device": "cuda",
+    "resume": true
+  },
+  "locked_candidate": {
+    "candidate_id": "v2_h96_continuous_basis_euler_lr1e3",
+    "internal_hidden_dim": 96,
+    "lag_mode": "continuous_basis",
+    "ode_method": "euler",
+    "learning_rate": 0.001,
+    "dropout": 0.1,
+    "structure_candidate_id": "structure_08_complete_v2",
+    "physiology_teacher_mode": "none",
+    "physiology_teacher_weight": 0.0,
+    "phase_epoch_offset": 0,
+    "physiology_residual_mode": "direct_causal_query"
+  },
+  "isolated_comparisons": {
+    "corrected_physics": [
+      "structure_08_complete_v2",
+      "structure_07_missing_curriculum"
+    ],
+    "missingness_curriculum": [
+      "structure_08_complete_v2",
+      "structure_06_corrected_physics"
+    ]
+  },
+  "downstream_results_used_for_configuration": false
+}
