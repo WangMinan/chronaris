@@ -53,9 +53,15 @@ def test_stress_targets_reuse_frozen_clean_thresholds_without_train_role(
         path = tmp_path / f"{method}.pt"
         torch.save(
             {
-                "format": "chronaris.common_pretraining_checkpoint.v1",
+                "format": (
+                    "chronaris.common_pretraining_checkpoint.v2"
+                    if method == "chronaris"
+                    else "chronaris.common_pretraining_checkpoint.v1"
+                ),
                 "training_status": "completed",
                 "label_used_for_encoder_training": False,
+                "simulation_oracle_opened": False,
+                "locked_test_opened": False,
                 "method_name": method,
             },
             path,
