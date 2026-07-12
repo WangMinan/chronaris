@@ -154,6 +154,24 @@ def run_chronaris_v2_locked_simulation_pretraining(
             "confirmed_metrics_changed": False,
         },
     )
+    (compact_root / "report.md").write_text(
+        "\n".join((
+            "# Chronaris v2 仿真 G1 锁定重训",
+            "",
+            f"状态：{status}；完成 {len(rows)}/{len(resolved.seeds)} 个随机种子 checkpoint。",
+            "训练只读取 G1 train/validation 原始观测；任务真值与独立封存确认族保持关闭。",
+            "",
+        )),
+        encoding="utf-8",
+    )
+    (compact_root / "resume_command.txt").write_text(
+        "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
+        "scripts/evaluation/application_tasks/"
+        "run_chronaris_v2_locked_simulation_pretraining.py "
+        f"--run-id {resolved.run_id} --device {resolved.device} "
+        f"--max-epochs {resolved.max_epochs}\n",
+        encoding="utf-8",
+    )
     return compact_root
 
 
