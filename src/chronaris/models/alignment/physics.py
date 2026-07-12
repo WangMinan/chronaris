@@ -15,7 +15,6 @@ from chronaris.models.alignment.physics_features import (
 )
 from chronaris.models.alignment.physics_residuals import build_rigid_body_vehicle_residuals
 from chronaris.models.alignment.physics_state_mapping import (
-    RigidBodyPhysicsDiagnostics,
     build_rigid_body_state_mapping,
     inspect_rigid_body_physics,
 )

@@ -39,7 +39,6 @@ from chronaris.modeling.training.chronaris_v2_distillation import (
 )
 from chronaris.modeling.training.chronaris_v2_objectives import (
     ChronarisV2ObjectiveOutput,
-    ChronarisV2ObjectiveWeights,
     ChronarisV2ObjectiveHeads,
     build_chronaris_v2_objective_targets,
     build_known_lag_batch,

@@ -218,7 +218,8 @@ def _plot_stress(table, path):
 
 def _plot_mechanism(table, path):
     fig, axis = plt.subplots(figsize=(8, 4.8))
-    x = np.arange(len(table)); width = 0.36
+    x = np.arange(len(table))
+    width = 0.36
     axis.bar(x - width / 2, table["v1_mae_s"], width, label="Chronaris v1")
     axis.bar(x + width / 2, table["v2_mae_s"], width, label="Chronaris v2")
     labels = table["target"].map({
