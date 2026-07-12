@@ -1,0 +1,28 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_consumer_evidence.v1",
+  "run_id": "2026-07-13_chronaris-v2-simulation-ablation-consumers",
+  "status": "completed",
+  "variant_seed_count": 6,
+  "metric_count": 384,
+  "paired_statistic_count": 36,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-13_chronaris-v2-simulation-ablation-consumers",
+  "workload_prediction_path": "artifacts/application_evaluation/2026-07-13_chronaris-v2-simulation-ablation-consumers/workload_predictions.csv",
+  "unit_score_path": "artifacts/application_evaluation/2026-07-13_chronaris-v2-simulation-ablation-consumers/unit_score_rows.csv",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/consumer_inventory.csv",
+    "metrics": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/metric_long.csv",
+    "deltas": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/full_ablation_metric_delta.csv",
+    "paired": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/paired_statistics.csv",
+    "training": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/tcn_training.csv",
+    "resources": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/resource_metrics.csv",
+    "targets": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/target_manifest.json",
+    "acceptance": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/downstream_protocol.json",
+    "report": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/report.md",
+    "claim": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/evidence_manifest.json"
+  }
+}

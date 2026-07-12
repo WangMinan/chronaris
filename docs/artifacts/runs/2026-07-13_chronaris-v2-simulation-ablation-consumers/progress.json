@@ -1,0 +1,94 @@
+{
+  "variants": [
+    "no_corrected_physics",
+    "no_missingness_curriculum"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "full_locked_consumer_verified": true,
+  "task_oracle_opened_after_representation": true,
+  "stage_name": "simulation_chronaris_ablation_consumers",
+  "run_id": "2026-07-13_chronaris-v2-simulation-ablation-consumers",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-12T19:08:46.347708Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-12T19:07:13.137169Z",
+      "event": "start",
+      "variants": [
+        "no_corrected_physics",
+        "no_missingness_curriculum"
+      ],
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "full_locked_consumer_verified": true,
+      "task_oracle_opened_after_representation": true
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:07:34.054400Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_corrected_physics",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:07:47.491319Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_missingness_curriculum",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:08:01.636572Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_corrected_physics",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:08:15.789341Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_missingness_curriculum",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:08:31.741770Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_corrected_physics",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:08:46.110730Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_missingness_curriculum",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-07-12T19:08:46.347708Z",
+      "event": "finished",
+      "status": "completed",
+      "variant_seed_count": 6,
+      "metric_count": 384,
+      "paired_statistic_count": 36,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "seed": 43,
+  "variant": "no_missingness_curriculum",
+  "status": "completed",
+  "variant_seed_count": 6,
+  "metric_count": 384,
+  "paired_statistic_count": 36,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

@@ -1,0 +1,7 @@
+check_id,passed,actual,expected
+all_variant_seed_consumers,True,6,6
+all_consumers_complete,True,"['completed', 'completed', 'completed', 'completed', 'completed', 'completed']",completed_or_resumed
+validation_hyperparameter_selection,True,True,True
+formal_metric_scope,True,384,>0 formal rows
+full_ablation_metric_deltas,True,192,>0
+paired_trajectory_statistics,True,36,>0 with 48 units
