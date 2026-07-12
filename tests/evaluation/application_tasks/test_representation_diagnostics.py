@@ -16,6 +16,13 @@ from chronaris.representation.contracts import (
     DualStreamObservationBatch,
     FusionStreamBatch,
 )
+from chronaris.evaluation.application_tasks.chronaris_v2_candidate_diagnostics import (
+    _clock_offset_probe_mae,
+    _load_trained_lag_head,
+)
+from chronaris.modeling.training.chronaris_v2_objectives import (
+    ChronarisV2ObjectiveHeads,
+)
 
 
 def _fusion(method: str, sample_ids: tuple[str, ...], offset: float = 0.0):
@@ -158,3 +165,49 @@ def test_gradient_conflict_rows_detect_opposing_losses() -> None:
     cosine = next(row for row in rows if row["row_type"] == "gradient_cosine")
     assert cosine["value"] < -0.999
     assert cosine["conflict"] is True
+
+
+def test_synthetic_clock_probe_recovers_timestamp_shift() -> None:
+    class TimestampAdapter:
+        def __call__(self, batch):
+            pooled = torch.zeros(len(batch.sample_ids), 64)
+            pooled[:, 0] = batch.vehicle_timestamps_s.mean(dim=1).to(torch.float32)
+            sequence = pooled.unsqueeze(1).expand(-1, 96, -1).clone()
+            return FusionStreamBatch(
+                sample_ids=batch.sample_ids,
+                timestamps_s=batch.query_timestamps_s,
+                sequence_embedding=sequence,
+                valid_mask=torch.ones(len(batch.sample_ids), 96, dtype=torch.bool),
+                pooled_embedding=pooled,
+                method_name="clock_sensitive",
+                fold_id="fold",
+                checkpoint_sha256="b" * 64,
+                source_sample_hashes=batch.source_sample_hashes,
+            )
+
+    batch = _observation_batch()
+    mae = _clock_offset_probe_mae(TimestampAdapter(), batch, batch)
+
+    assert mae < 1e-3
+
+
+def test_lag_probe_uses_classifier_only_after_lag_objective_is_enabled() -> None:
+    head = ChronarisV2ObjectiveHeads(
+        physiology_feature_count=2,
+        vehicle_feature_count=2,
+    )
+    payload = {
+        "format": "chronaris.common_pretraining_checkpoint.v2",
+        "candidate_config": {
+            "structure_candidate_id": "structure_05_lag_objective"
+        },
+        "physiology_feature_names": ["p0", "p1"],
+        "vehicle_feature_names": ["v0", "v1"],
+        "v2_head_state_dict": head.state_dict(),
+    }
+
+    assert _load_trained_lag_head(payload, device="cpu") is not None
+    payload["candidate_config"]["structure_candidate_id"] = (
+        "structure_04_private_shared"
+    )
+    assert _load_trained_lag_head(payload, device="cpu") is None

@@ -95,9 +95,10 @@ def run_chronaris_v2_hyperparameter_screen(
                 "best_epoch": result.best_epoch,
                 "public_selection_loss": result.best_public_selection_loss,
                 "parameter_count": int(payload["parameter_count"]),
-                "checkpoint_path": result.best_checkpoint_path,
+                "checkpoint_path": result.last_checkpoint_path,
+                "checkpoint_role": "final_task_independent_training_state",
                 "checkpoint_sha256": _sha256_file(
-                    Path(result.best_checkpoint_path)
+                    Path(result.last_checkpoint_path)
                 ),
                 "task_labels_opened": bool(
                     payload["label_used_for_encoder_training"]

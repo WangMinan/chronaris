@@ -113,6 +113,38 @@ def test_learned_causal_attention_excludes_future_keys() -> None:
         output.scale_gate_weights.sum(dim=-1),
         output.scale_available_mask.any(dim=-1).to(torch.float32),
     )
+    output.shared_embedding.sum().backward()
+    assert model.query_projection.weight.grad is not None
+    assert model.key_projection.weight.grad is not None
+    assert model.value_projection.weight.grad is not None
+    assert model.query_projection.weight.data_ptr() != model.key_projection.weight.data_ptr()
+
+
+def test_learned_causal_missing_tokens_preserve_one_modality_and_zero_empty_queries() -> None:
+    model = LearnedRelativeCausalFusion(
+        LearnedRelativeCausalFusionConfig(
+            physiology_dim=8,
+            vehicle_dim=8,
+            attention_dim=16,
+            num_heads=4,
+            dropout=0.0,
+        )
+    ).eval()
+    physiology_valid = torch.tensor([[False, True, False]])
+    vehicle_valid = torch.tensor([[True, False, False]])
+    output = model(
+        LearnedRelativeCausalFusionInput(
+            physiology_states=torch.randn(1, 3, 8),
+            vehicle_states=torch.randn(1, 3, 8),
+            physiology_valid_mask=physiology_valid,
+            vehicle_valid_mask=vehicle_valid,
+            query_timestamps_s=torch.tensor([[0.0, 5.0, 10.0]]),
+        )
+    )
+
+    assert output.modality_available_mask.tolist() == [[True, True, False]]
+    assert torch.isfinite(output.shared_embedding).all()
+    assert torch.count_nonzero(output.shared_embedding[:, 2]) == 0
 
 
 def test_chronaris_v2_preserves_contract_subspaces_and_causality() -> None:

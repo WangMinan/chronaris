@@ -145,14 +145,15 @@ def run_chronaris_v2_dingxin_inner_confirmation(
                     "public_self_supervised_validation_loss": (
                         result.best_public_selection_loss
                     ),
-                    "checkpoint_path": result.best_checkpoint_path,
+                    "checkpoint_path": result.last_checkpoint_path,
+                    "checkpoint_role": "final_task_independent_training_state",
                     "checkpoint_sha256": _sha256_file(
-                        Path(result.best_checkpoint_path)
+                        Path(result.last_checkpoint_path)
                     ),
                 }
             )
             diagnostic = diagnose_chronaris_candidate(
-                candidate_checkpoint=result.best_checkpoint_path,
+                candidate_checkpoint=result.last_checkpoint_path,
                 candidate_id=candidate.candidate_id,
                 physiology_reference_checkpoint=physiology_reference,
                 vehicle_reference_checkpoint=vehicle_reference,

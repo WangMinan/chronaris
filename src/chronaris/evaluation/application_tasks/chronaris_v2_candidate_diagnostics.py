@@ -19,6 +19,13 @@ from chronaris.modeling.training import (
     TrainedFusionAdapter,
     load_common_pretraining_checkpoint,
 )
+from chronaris.modeling.training.chronaris_v2_objectives import (
+    ChronarisV2ObjectiveHeads,
+    LAG_BIN_CENTERS_S,
+)
+from chronaris.modeling.training.chronaris_v2_selection import (
+    chronaris_v2_structure_candidate,
+)
 from chronaris.modeling.training.pretraining_encoders import TrainableFusionEncoder
 from chronaris.modeling.fusion_encoders.semantic_groups import (
     build_vehicle_semantic_group_map,
@@ -179,8 +186,11 @@ def diagnose_chronaris_candidate(
     health = representation_health(candidate_validation)
     mechanism_ids = validation.sample_ids[:mechanism_sample_count]
     mechanism_batch = select_observation_batch(validation, mechanism_ids)
-    clock_offset_mae = _clock_offset_recovery_mae(
+    clock_train_ids = train.sample_ids[: max(mechanism_sample_count * 4, 8)]
+    clock_train_batch = select_observation_batch(train, clock_train_ids)
+    clock_offset_mae = _clock_offset_probe_mae(
         candidate_adapter,
+        clock_train_batch,
         mechanism_batch,
     )
     response_lag_mae = _response_lag_recovery_mae(
@@ -188,6 +198,7 @@ def diagnose_chronaris_candidate(
         candidate_normalizer,
         mechanism_batch,
         device=device,
+        lag_head=_load_trained_lag_head(payload, device=device),
     )
     future_invariance = _future_invariance_passed(
         candidate_encoder,
@@ -328,30 +339,53 @@ def _recovery_ratio(candidate_normalized_rmse, reference_normalized_rmse):
     return min(reference / candidate, 1e6)
 
 
-def _clock_offset_recovery_mae(adapter, batch):
+def _clock_offset_probe_mae(adapter, train_batch, validation_batch):
+    """Fit a small Ridge probe to synthetic clock shifts on development data."""
+
     offsets = (-1.0, -0.5, 0.0, 0.5, 1.0)
-    reference = adapter(batch).pooled_embedding
-    errors = []
-    for injected in offsets:
+    train_x, train_y = _clock_probe_matrix(adapter, train_batch, offsets)
+    validation_x, validation_y = _clock_probe_matrix(
+        adapter,
+        validation_batch,
+        offsets,
+    )
+    train_x = train_x.to(torch.float64)
+    train_y = train_y.to(torch.float64)
+    validation_x = validation_x.to(torch.float64)
+    x_mean = train_x.mean(dim=0, keepdim=True)
+    y_mean = train_y.mean()
+    centered = train_x - x_mean
+    identity = torch.eye(centered.shape[1], dtype=torch.float64)
+    weights = torch.linalg.solve(
+        centered.transpose(0, 1) @ centered + 1e-3 * identity,
+        centered.transpose(0, 1) @ (train_y - y_mean),
+    )
+    prediction = (validation_x - x_mean) @ weights + y_mean
+    return float((prediction - validation_y.to(torch.float64)).abs().mean())
+
+
+def _clock_probe_matrix(adapter, batch, offsets):
+    representations = []
+    for offset in offsets:
         shifted = replace(
             batch,
-            vehicle_timestamps_s=batch.vehicle_timestamps_s + injected,
+            vehicle_timestamps_s=batch.vehicle_timestamps_s + offset,
         )
-        scores = []
-        for correction in offsets:
-            corrected = replace(
-                shifted,
-                vehicle_timestamps_s=shifted.vehicle_timestamps_s + correction,
-            )
-            representation = adapter(corrected).pooled_embedding
-            scores.append(float((representation - reference).square().mean()))
-        best_correction = offsets[min(range(len(scores)), key=scores.__getitem__)]
-        estimated_injected = -best_correction
-        errors.append(abs(estimated_injected - injected))
-    return sum(errors) / len(errors)
+        representations.append(adapter(shifted).pooled_embedding.cpu())
+    stacked = torch.stack(representations, dim=1)
+    stacked = stacked - stacked.mean(dim=1, keepdim=True)
+    labels = stacked.new_tensor(offsets).view(1, -1).expand(stacked.shape[0], -1)
+    return stacked.reshape(-1, stacked.shape[-1]), labels.reshape(-1)
 
 
-def _response_lag_recovery_mae(encoder, normalizer, batch, *, device):
+def _response_lag_recovery_mae(
+    encoder,
+    normalizer,
+    batch,
+    *,
+    device,
+    lag_head=None,
+):
     normalized = normalizer.transform(batch)
     probe = _encode(encoder, normalized, device=device)
     scale_count = probe.fusion_output.scale_gate_weights.shape[-1]
@@ -360,6 +394,8 @@ def _response_lag_recovery_mae(encoder, normalizer, batch, *, device):
         if scale_count == 3
         else (1.0, 3.5, 7.5, 15.0, 25.0)
     )
+    if lag_head is not None:
+        centers = LAG_BIN_CENTERS_S
     labels = torch.tensor(
         [centers[index % len(centers)] for index in range(len(batch.sample_ids))],
         dtype=batch.vehicle_timestamps_s.dtype,
@@ -369,6 +405,14 @@ def _response_lag_recovery_mae(encoder, normalizer, batch, *, device):
         vehicle_timestamps_s=batch.vehicle_timestamps_s + labels.unsqueeze(-1),
     )
     encoded = _encode(encoder, normalizer.transform(shifted), device=device)
+    if lag_head is not None:
+        pooled = masked_mean_pool(
+            encoded.causal_shared,
+            encoded.modality_available_mask,
+        )
+        prediction = lag_head.lag_classifier(pooled).argmax(dim=-1)
+        estimate = pooled.new_tensor(LAG_BIN_CENTERS_S).index_select(0, prediction)
+        return float((estimate.cpu() - labels).abs().mean())
     gates = encoded.fusion_output.scale_gate_weights
     valid = encoded.fusion_output.scale_available_mask
     weights = gates * valid.to(gates.dtype)
@@ -378,6 +422,27 @@ def _response_lag_recovery_mae(encoder, normalizer, batch, *, device):
         1e-8
     )
     return float((estimate.cpu() - labels).abs().mean())
+
+
+def _load_trained_lag_head(payload, *, device):
+    if payload.get("format") != "chronaris.common_pretraining_checkpoint.v2":
+        return None
+    candidate = payload.get("candidate_config", {})
+    structure_id = candidate.get(
+        "structure_candidate_id",
+        "structure_08_complete_v2",
+    )
+    if not chronaris_v2_structure_candidate(
+        str(structure_id)
+    ).lag_conditioned_objective:
+        return None
+    head = ChronarisV2ObjectiveHeads(
+        physiology_feature_count=len(payload["physiology_feature_names"]),
+        vehicle_feature_count=len(payload["vehicle_feature_names"]),
+    ).to(device)
+    head.load_state_dict(payload["v2_head_state_dict"], strict=True)
+    head.eval()
+    return head
 
 
 def _future_invariance_passed(encoder, normalizer, batch, *, device):

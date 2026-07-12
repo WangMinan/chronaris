@@ -14,6 +14,9 @@ from chronaris.evaluation.application_tasks.chronaris_v2_candidate_diagnostics i
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_data import (
     load_simulation_locked_pretraining_data,
 )
+from chronaris.evaluation.application_tasks.chronaris_v2_structure_figures import (
+    render_structure_gate_figure,
+)
 from chronaris.modeling.training import rank_task_independent_candidates
 
 
@@ -98,7 +101,9 @@ def run_chronaris_v2_structure_diagnostics(
             continue
         results.append(
             diagnose_chronaris_candidate(
-                candidate_checkpoint=row["checkpoint_path"],
+                candidate_checkpoint=_final_training_checkpoint(
+                    row["checkpoint_path"]
+                ),
                 candidate_id=str(row["candidate_id"]),
                 v1_clock_offset_mae_s=clock_baseline,
                 v1_response_lag_mae_s=lag_baseline,
@@ -114,6 +119,10 @@ def run_chronaris_v2_structure_diagnostics(
     pd.DataFrame(ranking).to_csv(
         compact_root / "task_independent_ranking.csv",
         index=False,
+    )
+    figure_path = render_structure_gate_figure(
+        compact_root / "task_independent_ranking.csv",
+        compact_root / "structure_gate_overview.png",
     )
     _write_json(
         compact_root / "diagnostic_details.json",
@@ -165,6 +174,7 @@ def run_chronaris_v2_structure_diagnostics(
                 "# Chronaris v2 结构候选任务无关门禁",
                 "",
                 f"状态：{status}；诊断 {len(results)} 个候选，门内候选 {sum(row['gate_passed'] for row in ranking)} 个，前三复核候选 {len(selected)} 个。",
+                "航电/生理保真比定义为：最佳单流在同一原始语义目标上的归一化恢复误差，除以候选融合表示的对应恢复误差；达到 0.98 表示融合后恢复能力不比单流低超过 2%。",
                 "排序未读取机动分类、生理响应、outer-test 或封存仿真确认结果。",
                 "若门内候选为空，不启动超参数筛选；需形成新的预注册开发轮次修复表示保真或时间机制。",
                 "",
@@ -179,10 +189,19 @@ def run_chronaris_v2_structure_diagnostics(
             "run_id": resolved.run_id,
             "status": status,
             "selected_candidate_ids": [row["candidate_id"] for row in selected],
+            "figure_path": str(figure_path),
             "confirmed_metrics_changed": False,
         },
     )
     return compact_root
+
+
+def _final_training_checkpoint(best_checkpoint_path):
+    best = Path(best_checkpoint_path)
+    last = best.with_name("last.pt")
+    if not last.is_file():
+        raise FileNotFoundError(f"final task-independent checkpoint is missing: {last}")
+    return last
 
 
 def _check(name: str, passed: bool):

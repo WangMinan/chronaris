@@ -15,6 +15,9 @@ from chronaris.evaluation.application_tasks.chronaris_v2_hyperparameter_screen i
     ChronarisV2HyperparameterScreenConfig,
     _assert_complete_v2_passed_structure_gate,
 )
+from chronaris.evaluation.application_tasks.chronaris_v2_structure_diagnostics_run import (
+    _final_training_checkpoint,
+)
 
 
 def _sha(value: str) -> str:
@@ -115,3 +118,14 @@ def test_confirmation_unlock_requires_a_task_independent_locked_config(tmp_path)
             locked_configuration_path=lock_path,
             output_path=tmp_path / "access.json",
         )
+
+
+def test_structure_gate_uses_final_training_state_not_public_loss_best(tmp_path) -> None:
+    root = tmp_path / "candidate"
+    root.mkdir()
+    best = root / "best.pt"
+    last = root / "last.pt"
+    best.write_bytes(b"public-best")
+    last.write_bytes(b"final-state")
+
+    assert _final_training_checkpoint(best) == last
