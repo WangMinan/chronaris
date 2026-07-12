@@ -31,6 +31,12 @@ from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_pretra
 from chronaris.evaluation.application_tasks.simulation_locked_context_data import (
     load_simulation_locked_context_data,
 )
+from chronaris.evaluation.application_tasks.simulation_locked_consumer_run import (
+    _checkpoint_paths as _locked_checkpoint_paths,
+)
+from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
+    _locked_v2_candidate_id,
+)
 from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run import (
     LOCKED_SEEDS,
 )
@@ -53,6 +59,8 @@ class SimulationChronarisAblationConsumerConfig:
     pretraining_run_id: str = "2026-07-12_simulation-chronaris-ablation-pretraining"
     representation_run_id: str = "2026-07-12_simulation-chronaris-ablation-representations"
     full_pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     full_consumer_run_id: str = "2026-07-12_simulation-locked-consumers"
     simulation_root: str = (
         "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal"
@@ -303,29 +311,20 @@ def _formal_protocol(*, seed, minirocket_kernels, tcn_device):
 
 
 def _full_checkpoint_paths(config):
-    selected = json.loads(
-        Path(config.selected_candidates_path).read_text(encoding="utf-8")
-    )
     root = Path(config.heavy_output_root) / config.full_pretraining_run_id
-    paths = {}
-    for seed in config.seeds:
-        for method in TRAINABLE_FUSION_METHODS:
-            candidate = str(selected[method]["candidate_id"])
-            path = (
-                root / "checkpoints" / f"seed_{seed}" / method / "best.pt"
-                if method == "chronaris"
-                else root
-                / "checkpoints"
-                / f"seed_{seed}"
-                / method
-                / candidate
-                / "best.pt"
-            )
-            payload = torch.load(path, map_location="cpu", weights_only=True)
-            if payload.get("training_status") != "completed":
-                raise ValueError("full locked checkpoint is incomplete")
-            paths[(seed, method)] = path
-    return paths
+    baseline_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.full_pretraining_run_id)
+    )
+    return _locked_checkpoint_paths(
+        root,
+        config.selected_candidates_path,
+        config.seeds,
+        baseline_root=baseline_root,
+        locked_candidate_id=_locked_v2_candidate_id(
+            config.locked_configuration_path
+        ),
+    )
 
 
 def _load_outputs(root, *, seed, method_name):

@@ -21,6 +21,13 @@ from chronaris.evaluation.application_tasks.simulation_stress_consumer_run impor
     _checkpoint_paths as _simulation_stress_checkpoint_paths,
 )
 from chronaris.modeling.training import TRAINABLE_FUSION_METHODS
+from chronaris.evaluation.application_tasks.chronaris_v2_simulation_ablation_pretraining import (
+    ChronarisV2SimulationAblationConfig,
+)
+from chronaris.evaluation.application_tasks.chronaris_v2_simulation_ablation_representations import (
+    ChronarisV2SimulationAblationRepresentationConfig,
+    _require_checkpoints as _require_v2_ablation_checkpoints,
+)
 
 
 def test_locked_candidate_requires_clean_task_independent_lock(tmp_path) -> None:
@@ -112,3 +119,33 @@ def test_simulation_consumer_checkpoint_set_can_mix_v1_baselines_and_v2(tmp_path
         locked_candidate_id="v2_locked",
     )
     assert stress_paths == paths
+
+
+def test_v2_formal_ablation_checkpoint_is_structure_bound(tmp_path) -> None:
+    variant = "no_corrected_physics"
+    root = tmp_path / "run"
+    path = (
+        root / "checkpoints" / "seed_17" / variant / "chronaris"
+        / f"locked__{variant}" / "last.pt"
+    )
+    path.parent.mkdir(parents=True)
+    torch.save(
+        {
+            "training_status": "completed",
+            "config": {"seed": 17},
+            "candidate_config": {
+                "candidate_id": f"locked__{variant}",
+                "structure_candidate_id": "structure_07_missing_curriculum",
+            },
+        },
+        path,
+    )
+    config = ChronarisV2SimulationAblationRepresentationConfig(
+        seeds=(17,), variants=(variant,)
+    )
+
+    checkpoints = _require_v2_ablation_checkpoints(root, config)
+
+    assert checkpoints[(17, variant)] == path
+    with pytest.raises(ValueError, match="unsupported"):
+        ChronarisV2SimulationAblationConfig(variants=("invented",))
