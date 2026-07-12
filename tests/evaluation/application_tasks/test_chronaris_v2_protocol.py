@@ -202,6 +202,13 @@ def test_sealed_representation_access_is_bound_to_locked_configuration(tmp_path)
     )
 
     _require_confirmation_access(config)
+    _require_confirmation_access(
+        SimulationStressRepresentationConfig(
+            sealed_manifest_path=str(sealed_path),
+            confirmation_access_path=str(access_path),
+            confirmation_locked_configuration_path=str(lock_path),
+        )
+    )
 
     lock_path.write_text("{}", encoding="utf-8")
     with pytest.raises(PermissionError, match="does not match"):

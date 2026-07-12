@@ -59,6 +59,7 @@ class SimulationStressRepresentationConfig:
     pretraining_run_id: str = "2026-07-12_simulation-locked-pretraining"
     baseline_pretraining_run_id: str | None = None
     locked_configuration_path: str | None = None
+    confirmation_locked_configuration_path: str | None = None
     clean_representation_run_id: str = "2026-07-12_simulation-locked-representations"
     stress_generation_run_id: str = "2026-07-12_aviation-simulation-locked-stress"
     stress_audit_run_id: str = "2026-07-12_aviation-simulation-locked-stress-audit"
@@ -277,7 +278,11 @@ def _require_completed_evidence(root):
 
 
 def _require_confirmation_access(config):
-    if config.confirmation_access_path is None or config.locked_configuration_path is None:
+    confirmation_lock = (
+        config.confirmation_locked_configuration_path
+        or config.locked_configuration_path
+    )
+    if config.confirmation_access_path is None or confirmation_lock is None:
         raise PermissionError(
             "sealed confirmation export requires access and locked configuration paths"
         )
@@ -286,7 +291,7 @@ def _require_confirmation_access(config):
         **json.loads(Path(config.confirmation_access_path).read_text(encoding="utf-8"))
     )
     if access.locked_configuration_sha256 != sha256_file(
-        Path(config.locked_configuration_path)
+        Path(confirmation_lock)
     ):
         raise PermissionError("confirmation access does not match locked configuration")
     for method in APPLICATION_METHODS:
@@ -397,6 +402,7 @@ def _resume_command(config, *, baseline_device, chronaris_device):
     for flag, value in (
         ("--baseline-pretraining-run-id", config.baseline_pretraining_run_id),
         ("--locked-configuration-path", config.locked_configuration_path),
+        ("--confirmation-locked-configuration-path", config.confirmation_locked_configuration_path),
         ("--sealed-manifest-path", config.sealed_manifest_path),
         ("--confirmation-access-path", config.confirmation_access_path),
     ):

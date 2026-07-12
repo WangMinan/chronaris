@@ -27,6 +27,7 @@ def main() -> int:
     parser.add_argument("--pretraining-run-id", default="2026-07-12_simulation-locked-pretraining")
     parser.add_argument("--baseline-pretraining-run-id")
     parser.add_argument("--locked-configuration-path")
+    parser.add_argument("--confirmation-locked-configuration-path")
     parser.add_argument("--clean-representation-run-id", default="2026-07-12_simulation-locked-representations")
     parser.add_argument("--stress-generation-run-id", default="2026-07-12_aviation-simulation-locked-stress")
     parser.add_argument("--stress-audit-run-id", default="2026-07-12_aviation-simulation-locked-stress-audit")
@@ -46,6 +47,9 @@ def main() -> int:
             pretraining_run_id=args.pretraining_run_id,
             baseline_pretraining_run_id=args.baseline_pretraining_run_id,
             locked_configuration_path=args.locked_configuration_path,
+            confirmation_locked_configuration_path=(
+                args.confirmation_locked_configuration_path
+            ),
             clean_representation_run_id=args.clean_representation_run_id,
             stress_generation_run_id=args.stress_generation_run_id,
             stress_audit_run_id=args.stress_audit_run_id,
