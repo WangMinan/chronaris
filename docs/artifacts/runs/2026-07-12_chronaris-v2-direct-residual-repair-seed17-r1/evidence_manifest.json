@@ -1,0 +1,10 @@
+{
+  "confirmed_metrics_changed": false,
+  "format": "chronaris.v2_direct_residual_repair_evidence.v1",
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1",
+  "run_id": "2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1",
+  "selected_candidate_ids": [
+    "direct_residual_01_causal_query"
+  ],
+  "status": "gates_passed"
+}

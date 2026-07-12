@@ -1,0 +1,8 @@
+{
+  "candidate_count": 3,
+  "confirmed_metrics_changed": false,
+  "format": "chronaris.v2_fidelity_repair_evidence.v1",
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-12_chronaris-v2-fidelity-repair-seed17-r2-cpu",
+  "run_id": "2026-07-12_chronaris-v2-fidelity-repair-seed17-r2-cpu",
+  "status": "diagnosed"
+}

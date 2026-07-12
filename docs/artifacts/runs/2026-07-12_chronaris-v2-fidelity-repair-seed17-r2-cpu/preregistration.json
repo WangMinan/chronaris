@@ -1,0 +1,71 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "fidelity_01_private_teacher_w050",
+      "display_name": "生理私有子空间蒸馏",
+      "physiology_teacher_mode": "private",
+      "physiology_teacher_weight": 0.5
+    },
+    {
+      "candidate_id": "fidelity_02_path_teacher_w050",
+      "display_name": "生理路径蒸馏（权重 0.5）",
+      "physiology_teacher_mode": "physiology_path",
+      "physiology_teacher_weight": 0.5
+    },
+    {
+      "candidate_id": "fidelity_03_path_teacher_w100",
+      "display_name": "生理路径蒸馏（权重 1.0）",
+      "physiology_teacher_mode": "physiology_path",
+      "physiology_teacher_weight": 1.0
+    }
+  ],
+  "config": {
+    "batch_size": 128,
+    "compact_output_root": "docs/artifacts/runs",
+    "complete_v2_checkpoint": "artifacts/application_evaluation/2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery/checkpoints/structure_08_complete_v2/last.pt",
+    "device": "cpu",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "max_candidates": 3,
+    "max_epochs": 30,
+    "physiology_teacher_checkpoint": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/physiology_only/A/best.pt",
+    "run_id": "2026-07-12_chronaris-v2-fidelity-repair-seed17-r2-cpu",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "structure_diagnostics_run_id": "2026-07-12_chronaris-v2-structure-diagnostics-seed17",
+    "vehicle_reference_checkpoint": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/vehicle_only/C/best.pt"
+  },
+  "fixed_architecture": {
+    "hidden_dim": 64,
+    "lag_mode": "fixed_five",
+    "learning_rate": 0.0003,
+    "phase_epoch_offset": 20,
+    "solver": "euler",
+    "structure_candidate_id": "structure_08_complete_v2",
+    "subspace_slices": {
+      "causal_shared": [
+        40,
+        64
+      ],
+      "physiology_private": [
+        24,
+        40
+      ],
+      "vehicle_private": [
+        0,
+        24
+      ]
+    }
+  },
+  "format": "chronaris.v2_fidelity_repair_preregistration.v1",
+  "locked_test_opened": false,
+  "sealed_confirmation_opened": false,
+  "selection_inputs": [
+    "public_self_supervised_validation_loss",
+    "single_stream_fidelity",
+    "representation_health",
+    "synthetic_time_mechanism_recovery",
+    "causal_and_pooling_invariants",
+    "parameter_count"
+  ],
+  "simulation_oracle_opened": false,
+  "task_labels_opened": false
+}

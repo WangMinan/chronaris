@@ -1,0 +1,26 @@
+{
+  "candidate_source_map": {
+    "structure_01_v1": "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
+    "structure_02_semantic_groups": "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
+    "structure_03_learned_causal": "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
+    "structure_04_private_shared": "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
+    "structure_05_lag_objective": "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery",
+    "structure_06_corrected_physics": "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery",
+    "structure_07_missing_curriculum": "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery",
+    "structure_08_complete_v2": "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery"
+  },
+  "checkpoint_files_moved": false,
+  "config": {
+    "compact_output_root": "docs/artifacts/runs",
+    "run_id": "2026-07-12_chronaris-v2-structure-screen-seed17-combined",
+    "source_run_ids": [
+      "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
+      "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery"
+    ]
+  },
+  "duplicate_candidate_policy": "later source_run_ids entry supersedes earlier development recovery",
+  "format": "chronaris.v2_structure_screen_merge.v1",
+  "locked_test_opened": false,
+  "simulation_oracle_opened": false,
+  "task_labels_opened": false
+}

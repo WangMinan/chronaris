@@ -1,0 +1,24 @@
+{
+  "config": {
+    "compact_output_root": "docs/artifacts/runs",
+    "device": "cpu",
+    "physiology_reference_checkpoint": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/physiology_only/A/best.pt",
+    "require_all_candidates": true,
+    "run_id": "2026-07-12_chronaris-v2-structure-diagnostics-seed17",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "structure_training_run_id": "2026-07-12_chronaris-v2-structure-screen-seed17-combined",
+    "vehicle_reference_checkpoint": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/vehicle_only/C/best.pt"
+  },
+  "downstream_labels_opened": false,
+  "format": "chronaris.v2_structure_diagnostics_protocol.v1",
+  "outer_test_opened": false,
+  "sealed_confirmation_opened": false,
+  "selection_inputs": [
+    "public_self_supervised_validation_loss",
+    "single_stream_fidelity",
+    "representation_health",
+    "synthetic_time_mechanism_recovery",
+    "causal_and_pooling_invariants",
+    "parameter_count"
+  ]
+}

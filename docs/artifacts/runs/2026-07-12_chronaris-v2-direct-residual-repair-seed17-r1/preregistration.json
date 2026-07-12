@@ -1,0 +1,29 @@
+{
+  "candidate": {
+    "candidate_id": "direct_residual_01_causal_query",
+    "direct_feature_capacity": 16,
+    "learning_rate": 0.0003,
+    "phase_epoch_offset": 20,
+    "physiology_residual_mode": "direct_causal_query",
+    "task_label_usage": false
+  },
+  "config": {
+    "batch_size": 128,
+    "compact_output_root": "docs/artifacts/runs",
+    "complete_v2_checkpoint": "artifacts/application_evaluation/2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery/checkpoints/structure_08_complete_v2/last.pt",
+    "device": "cpu",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "max_epochs": 5,
+    "physiology_reference_checkpoint": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/physiology_only/A/best.pt",
+    "run_id": "2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "structure_diagnostics_run_id": "2026-07-12_chronaris-v2-structure-diagnostics-seed17",
+    "vehicle_reference_checkpoint": "artifacts/application_evaluation/2026-07-11_encoder-candidate-screen-seed17/checkpoints/vehicle_only/C/best.pt"
+  },
+  "format": "chronaris.v2_direct_residual_repair_preregistration.v1",
+  "locked_test_opened": false,
+  "rationale": "preserve normalized physiology observations in the fixed private slice without a learnable projection absorbing the fidelity loss",
+  "sealed_confirmation_opened": false,
+  "simulation_oracle_opened": false,
+  "task_labels_opened": false
+}

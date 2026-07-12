@@ -1,0 +1,11 @@
+{
+  "candidate_count": 8,
+  "confirmed_metrics_changed": false,
+  "format": "chronaris.v2_structure_screen_merge_evidence.v1",
+  "run_id": "2026-07-12_chronaris-v2-structure-screen-seed17-combined",
+  "source_run_ids": [
+    "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
+    "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery"
+  ],
+  "status": "completed"
+}

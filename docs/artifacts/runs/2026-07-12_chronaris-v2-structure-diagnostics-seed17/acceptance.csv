@@ -1,0 +1,5 @@
+check,passed
+all_requested_candidates_diagnosed,True
+forbidden_sources_closed,True
+v1_time_baseline_available,True
+ranking_selects_gate_passed_only,True

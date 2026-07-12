@@ -1,0 +1,8 @@
+{
+  "confirmed_metrics_changed": false,
+  "figure_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-structure-diagnostics-seed17/structure_gate_overview.png",
+  "format": "chronaris.v2_structure_diagnostics_evidence.v1",
+  "run_id": "2026-07-12_chronaris-v2-structure-diagnostics-seed17",
+  "selected_candidate_ids": [],
+  "status": "gates_failed"
+}

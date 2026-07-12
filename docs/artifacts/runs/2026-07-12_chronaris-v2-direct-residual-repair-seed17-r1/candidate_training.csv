@@ -1,0 +1,2 @@
+candidate_id,status,completed_epochs,best_epoch,public_selection_loss,checkpoint_path,checkpoint_sha256,task_labels_opened,simulation_oracle_opened,locked_test_opened
+direct_residual_01_causal_query,completed,5,5,0.3398083597421646,artifacts/application_evaluation/2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1/checkpoints/direct_residual_01_causal_query/last.pt,e7bb916c96eb6e42883e985b8a039127f35e9440bb18a6bc67effd64299f5861,False,False,False

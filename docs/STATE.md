@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。v1 失真诊断已经定位为航电信息路径不足、时延注意力近似均匀、尺度门控偏向最短档及多损失负梯度冲突；v2 版本化骨架、训练目标、物理逆变换、缺失课程、逐步 PCGrad 和 fail-closed 选模协议均已实现。当前正在运行 seed 17 的 8 项结构筛选；24 项超参数筛选只有在完整 v2 通过任务无关结构门禁后才允许启动。只有六项预声明主指标的三随机种子均值全部排名第一且附加门禁通过时才晋级 v2；否则保留当前 v1 与既有论文证据。
+固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。v1 失真诊断已经定位为航电信息路径不足、时延注意力近似均匀、尺度门控偏向最短档及多损失负梯度冲突；v2 版本化骨架、训练目标、物理逆变换、缺失课程、逐步 PCGrad 和 fail-closed 选模协议均已实现。8 项结构筛选的完整 v2 只因生理保真不足未过门禁；投影蒸馏修复仍未解决该问题，最终通过在固定 16 维生理专属切片中保留直接因果查询值，使航电/生理保真比分别达到 1.1396/2.3466、时间机制误差比为 0.8804，并通过未来因果、无效池化和时延掩码门禁。当前正在执行 seed 17 的 24 项任务无关超参数筛选。只有六项预声明主指标的三随机种子均值全部排名第一且附加门禁通过时才晋级 v2；否则保留当前 v1 与既有论文证据。
 
 ## 当前执行入口
 
@@ -14,6 +14,7 @@
 - v2 训练协议烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-training-smoke-r2/report.md](artifacts/runs/2026-07-12_chronaris-v2-training-smoke-r2/report.md)
 - v2 结构筛选烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-structure-screen-smoke/summary.md](artifacts/runs/2026-07-12_chronaris-v2-structure-screen-smoke/summary.md)
 - v2 结构门禁烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-structure-diagnostics-smoke/summary.md](artifacts/runs/2026-07-12_chronaris-v2-structure-diagnostics-smoke/summary.md)
+- v2 直接因果生理残差正式门禁：[artifacts/runs/2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1/summary.md](artifacts/runs/2026-07-12_chronaris-v2-direct-residual-repair-seed17-r1/summary.md)
 - v2 独立仿真确认族封存：[artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md](artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
