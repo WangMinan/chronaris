@@ -29,6 +29,7 @@ from chronaris.modeling.training.chronaris_v2_training import (
     ChronarisV2TrainingConfig,
     chronaris_v2_hyperparameter_grid,
     train_chronaris_v2_candidate,
+    _early_stopping_allowed,
 )
 from chronaris.modeling.training.common_pretraining import (
     load_common_pretraining_checkpoint,
@@ -138,6 +139,17 @@ def test_curriculum_matches_predeclared_missingness_levels() -> None:
     assert chronaris_v2_augmentation_policy(20).point_dropout_probability == 0.40
     assert chronaris_v2_objective_weight_schedule(10).future_physiology_delta == 0
     assert chronaris_v2_objective_weight_schedule(20).future_physiology_delta == 0.5
+
+
+def test_v2_early_stopping_cannot_preempt_joint_unfreeze() -> None:
+    config = ChronarisV2TrainingConfig(
+        max_epochs=50,
+        patience=1,
+        minimum_epochs_before_early_stopping=30,
+    )
+
+    assert not _early_stopping_allowed(29, config)
+    assert _early_stopping_allowed(30, config)
 
 
 def test_pcgrad_switches_after_observed_conflict_rate_exceeds_twenty_percent() -> None:

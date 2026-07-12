@@ -8,6 +8,7 @@ import pytest
 from chronaris.evaluation.application_tasks.chronaris_v2_protocol import (
     PRIMARY_METRIC_THRESHOLDS,
     SealedConfirmationManifest,
+    authorize_sealed_confirmation,
     audit_v2_promotion,
 )
 from chronaris.evaluation.application_tasks.chronaris_v2_hyperparameter_screen import (
@@ -84,3 +85,33 @@ def test_hyperparameter_screen_cannot_start_before_structure_gate(tmp_path) -> N
 
     with pytest.raises(PermissionError, match="closed"):
         _assert_complete_v2_passed_structure_gate(config)
+
+
+def test_confirmation_unlock_requires_a_task_independent_locked_config(tmp_path) -> None:
+    sealed = SealedConfirmationManifest(
+        family_id="family",
+        generator_protocol_sha256=_sha("protocol"),
+        payload_sha256=_sha("payload"),
+        sealed_before_configuration_lock=True,
+    )
+    sealed_path = tmp_path / "sealed.json"
+    sealed_path.write_text(json.dumps(sealed.to_dict()), encoding="utf-8")
+    lock_path = tmp_path / "lock.json"
+    lock_path.write_text(
+        json.dumps(
+            {
+                "format": "chronaris.v2_locked_configuration.v1",
+                "configuration_locked": False,
+                "selection_uses_downstream_labels": False,
+                "outer_test_opened": False,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(PermissionError, match="locked configuration"):
+        authorize_sealed_confirmation(
+            sealed_manifest_path=sealed_path,
+            locked_configuration_path=lock_path,
+            output_path=tmp_path / "access.json",
+        )

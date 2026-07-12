@@ -9,6 +9,7 @@
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- v2 开发与晋级协议锁定：[artifacts/runs/2026-07-12_chronaris-v2-protocol-lock/report.md](artifacts/runs/2026-07-12_chronaris-v2-protocol-lock/report.md)
 - v1 失真诊断：[artifacts/runs/2026-07-12_chronaris-v1-distortion-diagnostics/report.md](artifacts/runs/2026-07-12_chronaris-v1-distortion-diagnostics/report.md)
 - v2 训练协议烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-training-smoke-r2/report.md](artifacts/runs/2026-07-12_chronaris-v2-training-smoke-r2/report.md)
 - v2 结构筛选烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-structure-screen-smoke/summary.md](artifacts/runs/2026-07-12_chronaris-v2-structure-screen-smoke/summary.md)

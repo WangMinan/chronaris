@@ -140,9 +140,15 @@ class ChronarisV2TrainingConfig:
     gradient_clip_norm: float = 1.0
     seed: int = 17
     device: str = "cpu"
+    minimum_epochs_before_early_stopping: int = 30
 
     def __post_init__(self) -> None:
-        if min(self.max_epochs, self.batch_size, self.patience) <= 0:
+        if min(
+            self.max_epochs,
+            self.batch_size,
+            self.patience,
+            self.minimum_epochs_before_early_stopping,
+        ) <= 0:
             raise ValueError("v2 training epoch/batch/patience must be positive")
         if self.weight_decay < 0 or self.gradient_clip_norm <= 0:
             raise ValueError("v2 optimizer configuration is invalid")
@@ -486,7 +492,10 @@ def train_chronaris_v2_candidate(
         _save(last_path, payload)
         if improved:
             _save(best_path, payload)
-        if without_improvement >= resolved.patience:
+        if (
+            _early_stopping_allowed(epoch, resolved)
+            and without_improvement >= resolved.patience
+        ):
             break
     elapsed = elapsed_offset + time.perf_counter() - started
     final = _load(best_path)
@@ -534,6 +543,16 @@ def _set_training_phase(backbone: ChronarisV2FusionEncoder, epoch: int) -> str:
         for parameter in backbone.mixed_output_projection.parameters():
             parameter.requires_grad_(fusion_trainable)
     return phase
+
+
+def _early_stopping_allowed(
+    epoch: int,
+    config: ChronarisV2TrainingConfig,
+) -> bool:
+    return epoch >= min(
+        config.max_epochs,
+        config.minimum_epochs_before_early_stopping,
+    )
 
 
 def _grouped_optimization_losses(common_output, v2_output):

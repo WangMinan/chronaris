@@ -51,6 +51,22 @@ class SealedConfirmationManifest:
         return asdict(self)
 
 
+@dataclass(frozen=True, slots=True)
+class SealedConfirmationAccess:
+    family_id: str
+    payload_sha256: str
+    locked_configuration_sha256: str
+    phase: str
+    method_scope: tuple[str, ...]
+    unlocked: bool
+
+    def __post_init__(self) -> None:
+        if self.phase != "locked_confirmation" or not self.unlocked:
+            raise ValueError("confirmation access must represent a locked unlock event")
+        if len(self.method_scope) != 6 or len(set(self.method_scope)) != 6:
+            raise ValueError("confirmation access must cover exactly six methods")
+
+
 def write_sealed_confirmation_manifest(
     path: str | Path,
     *,
@@ -94,6 +110,65 @@ def load_sealed_confirmation_manifest(
     return SealedConfirmationManifest(
         **json.loads(Path(path).read_text(encoding="utf-8"))
     )
+
+
+def authorize_sealed_confirmation(
+    *,
+    sealed_manifest_path: str | Path,
+    locked_configuration_path: str | Path,
+    output_path: str | Path,
+) -> SealedConfirmationAccess:
+    """Create a separate unlock record while preserving the original seal."""
+
+    sealed = load_sealed_confirmation_manifest(sealed_manifest_path)
+    if sealed.unlocked:
+        raise ValueError("the immutable sealed manifest must remain locked")
+    configuration_path = Path(locked_configuration_path)
+    configuration = json.loads(configuration_path.read_text(encoding="utf-8"))
+    if configuration.get("format") != "chronaris.v2_locked_configuration.v1":
+        raise PermissionError("confirmation access requires the v2 lock format")
+    if configuration.get("configuration_locked") is not True:
+        raise PermissionError("confirmation access requires a locked configuration")
+    if configuration.get("selection_uses_downstream_labels") is not False:
+        raise PermissionError("locked configuration was selected with forbidden labels")
+    if configuration.get("outer_test_opened") is not False:
+        raise PermissionError("locked configuration opened outer-test before confirmation")
+    methods = (
+        "physiology_only",
+        "vehicle_only",
+        "naive_time_sync",
+        "mult",
+        "contiformer",
+        "chronaris",
+    )
+    access = SealedConfirmationAccess(
+        family_id=sealed.family_id,
+        payload_sha256=sealed.payload_sha256,
+        locked_configuration_sha256=_sha256_file(configuration_path),
+        phase="locked_confirmation",
+        method_scope=methods,
+        unlocked=True,
+    )
+    target = Path(output_path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(
+        json.dumps(asdict(access), ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n",
+        encoding="utf-8",
+    )
+    return access
+
+
+def assert_confirmation_access(
+    sealed: SealedConfirmationManifest,
+    access: SealedConfirmationAccess,
+    *,
+    method_name: str,
+) -> None:
+    if access.family_id != sealed.family_id or access.payload_sha256 != sealed.payload_sha256:
+        raise PermissionError("confirmation unlock record does not match the sealed family")
+    if method_name not in access.method_scope:
+        raise PermissionError("confirmation method is outside the six-method scope")
 
 
 def audit_v2_promotion(
@@ -158,3 +233,11 @@ def audit_v2_promotion(
         "confirmed_v1_evidence_changed": False,
         "results_may_return_to_same_development_round": False,
     }
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
