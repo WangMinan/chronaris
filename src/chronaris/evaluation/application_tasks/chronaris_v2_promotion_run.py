@@ -47,7 +47,7 @@ class ChronarisV2PromotionConfig:
         "2026-07-13_chronaris-v2-mechanism-consumers"
     )
     v1_mechanism_consumer_run_id: str = (
-        "2026-07-12_simulation-mechanism-consumers"
+        "2026-07-13_chronaris-v1-sealed-reference-mechanism"
     )
     locked_configuration_path: str = (
         "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-"
@@ -80,6 +80,7 @@ def run_chronaris_v2_promotion_audit(
         config.dingxin_consumer_run_id,
         config.simulation_confirmation_consumer_run_id,
         config.mechanism_consumer_run_id,
+        config.v1_mechanism_consumer_run_id,
     ):
         _require_completed_evidence(Path(config.compact_output_root) / run_id)
     dingxin = pd.read_csv(
