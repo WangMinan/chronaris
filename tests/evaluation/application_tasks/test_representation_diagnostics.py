@@ -21,6 +21,7 @@ from chronaris.representation.contracts import (
 from chronaris.evaluation.application_tasks.chronaris_v2_candidate_diagnostics import (
     _clock_offset_probe_mae,
     _load_trained_lag_head,
+    _private_subspace_representation,
 )
 from chronaris.modeling.training.chronaris_v2_objectives import (
     ChronarisV2ObjectiveHeads,
@@ -131,6 +132,21 @@ def test_fidelity_probe_aligns_cuda_representations_without_cpu_indices() -> Non
     )
 
     assert torch.isfinite(torch.tensor(fidelity.normalized_rmse))
+
+
+def test_private_subspace_probe_zeros_unrelated_representation_dimensions() -> None:
+    representation = _fusion("chronaris", ("a", "b"), offset=7.0)
+    private = torch.randn(2, 96, 24)
+
+    isolated = _private_subspace_representation(representation, private)
+
+    torch.testing.assert_close(isolated.sequence_embedding[..., :24], private)
+    assert torch.count_nonzero(isolated.sequence_embedding[..., 24:]) == 0
+    torch.testing.assert_close(
+        isolated.pooled_embedding[..., :24],
+        private.mean(dim=1),
+    )
+    assert torch.count_nonzero(isolated.pooled_embedding[..., 24:]) == 0
 
 
 def test_counterfactuals_change_only_requested_stream() -> None:

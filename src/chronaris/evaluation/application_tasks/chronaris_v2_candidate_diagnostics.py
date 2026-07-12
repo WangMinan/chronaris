@@ -129,6 +129,37 @@ def diagnose_chronaris_candidate(
     )
     normalized_train = candidate_normalizer.transform(train)
     normalized_validation = candidate_normalizer.transform(validation)
+    candidate_physiology_probe_train = candidate_train
+    candidate_physiology_probe_validation = candidate_validation
+    candidate_vehicle_probe_train = candidate_train
+    candidate_vehicle_probe_validation = candidate_validation
+    if payload.get("architecture_version") == "v2":
+        train_encoding = _encode(
+            candidate_encoder,
+            normalized_train,
+            device=device,
+        )
+        validation_encoding = _encode(
+            candidate_encoder,
+            normalized_validation,
+            device=device,
+        )
+        candidate_physiology_probe_train = _private_subspace_representation(
+            candidate_train,
+            train_encoding.physiology_private,
+        )
+        candidate_physiology_probe_validation = _private_subspace_representation(
+            candidate_validation,
+            validation_encoding.physiology_private,
+        )
+        candidate_vehicle_probe_train = _private_subspace_representation(
+            candidate_train,
+            train_encoding.vehicle_private,
+        )
+        candidate_vehicle_probe_validation = _private_subspace_representation(
+            candidate_validation,
+            validation_encoding.vehicle_private,
+        )
     physiology_train_target = _stream_feature_targets(
         normalized_train,
         stream_name="physiology",
@@ -156,9 +187,9 @@ def diagnose_chronaris_candidate(
         groups=vehicle_groups,
     )
     candidate_physiology_feature_probe = fit_feature_recovery_probe(
-        candidate_train,
+        candidate_physiology_probe_train,
         physiology_train_target,
-        candidate_validation,
+        candidate_physiology_probe_validation,
         physiology_validation_target,
         target_name="physiology_observed_features",
     )
@@ -170,9 +201,9 @@ def diagnose_chronaris_candidate(
         target_name="physiology_observed_features",
     )
     candidate_vehicle_feature_probe = fit_feature_recovery_probe(
-        candidate_train,
+        candidate_vehicle_probe_train,
         vehicle_train_target,
-        candidate_validation,
+        candidate_vehicle_probe_validation,
         vehicle_validation_target,
         target_name="vehicle_semantic_groups",
     )
@@ -337,6 +368,32 @@ def _recovery_ratio(candidate_normalized_rmse, reference_normalized_rmse):
     candidate = max(float(candidate_normalized_rmse), 1e-12)
     reference = max(float(reference_normalized_rmse), 1e-12)
     return min(reference / candidate, 1e6)
+
+
+def _private_subspace_representation(
+    representation,
+    private_sequence: torch.Tensor,
+):
+    """Expose one declared v2 private slice without cross-modal probe leakage."""
+
+    expected = representation.sequence_embedding.shape[:2]
+    if private_sequence.ndim != 3 or private_sequence.shape[:2] != expected:
+        raise ValueError("private subspace sequence shape changed")
+    if private_sequence.shape[-1] > representation.sequence_embedding.shape[-1]:
+        raise ValueError("private subspace exceeds the representation contract")
+    private = private_sequence.to(representation.sequence_embedding.device)
+    private = torch.where(
+        representation.valid_mask.unsqueeze(-1),
+        private,
+        torch.zeros_like(private),
+    )
+    sequence = torch.zeros_like(representation.sequence_embedding)
+    sequence[..., : private.shape[-1]] = private
+    return replace(
+        representation,
+        sequence_embedding=sequence,
+        pooled_embedding=masked_mean_pool(sequence, representation.valid_mask),
+    )
 
 
 def _clock_offset_probe_mae(adapter, train_batch, validation_batch):
