@@ -146,10 +146,20 @@ def test_device_partitioned_structure_rows_merge_without_checkpoint_copy(tmp_pat
         "simulation_oracle_opened": False,
         "locked_test_opened": False,
     }
-    first = [{"candidate_id": value.candidate_id, **common} for value in candidates[:5]]
+    first = [
+        {"candidate_id": value.candidate_id, "device_partition": "gpu", **common}
+        for value in candidates[:6]
+    ]
     first[0]["status"] = "immutable_reference"
-    second = [{"candidate_id": candidates[0].candidate_id, **common}] + [
-        {"candidate_id": value.candidate_id, **common} for value in candidates[5:]
+    second = [
+        {
+            "candidate_id": candidates[0].candidate_id,
+            "device_partition": "gpu",
+            **common,
+        }
+    ] + [
+        {"candidate_id": value.candidate_id, "device_partition": "cpu", **common}
+        for value in candidates[4:]
     ]
     second[0]["status"] = "immutable_reference"
     for run_id, rows in (("gpu", first), ("cpu", second)):
@@ -165,4 +175,12 @@ def test_device_partitioned_structure_rows_merge_without_checkpoint_copy(tmp_pat
         )
     )
 
-    assert len(pd.read_csv(output / "candidate_training.csv")) == 8
+    merged = pd.read_csv(output / "candidate_training.csv")
+    assert len(merged) == 8
+    assert (
+        merged.loc[
+            merged["candidate_id"] == candidates[4].candidate_id,
+            "device_partition",
+        ].item()
+        == "cpu"
+    )

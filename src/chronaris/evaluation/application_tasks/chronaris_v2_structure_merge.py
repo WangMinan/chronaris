@@ -16,7 +16,7 @@ class ChronarisV2StructureMergeConfig:
     run_id: str = "2026-07-12_chronaris-v2-structure-screen-seed17-combined"
     source_run_ids: tuple[str, ...] = (
         "2026-07-12_chronaris-v2-structure-screen-seed17-r4",
-        "2026-07-12_chronaris-v2-structure-screen-seed17-r4-cpu-recovery",
+        "2026-07-12_chronaris-v2-structure-screen-seed17-r5-cpu-recovery",
     )
     compact_output_root: str = "docs/artifacts/runs"
 
