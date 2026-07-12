@@ -12,6 +12,10 @@ from chronaris.modeling.fusion_encoders.chronaris_continuous import (
     ChronarisContinuousEncoderConfig,
     ChronarisContinuousFusionEncoder,
 )
+from chronaris.modeling.fusion_encoders.chronaris_v2 import (
+    ChronarisV2EncoderConfig,
+    ChronarisV2FusionEncoder,
+)
 from chronaris.modeling.fusion_encoders.deep_baselines import (
     CausalContiFormerFusionEncoder,
     CausalMulTFusionEncoder,
@@ -123,6 +127,7 @@ class TrainableFusionEncoder(nn.Module):
                 "causal_direction": "available",
                 "alignment_output": encoded.alignment_output,
                 "fusion_output": encoded.fusion_output,
+                "chronaris_encoding": encoded,
             }
         if sequence.shape[-1] != FUSION_OUTPUT_DIM:
             raise ValueError("pretraining encoder violated 64-dimensional contract")
@@ -162,6 +167,9 @@ def build_trainable_fusion_encoder(
     vehicle_field_labels: tuple[tuple[str, str], ...] = (),
     candidate_config: EncoderCandidateConfig | None = None,
     chronaris_variant: str = "full",
+    chronaris_architecture_version: str = "v1",
+    chronaris_lag_mode: str = "fixed_five",
+    chronaris_ode_method: str = "euler",
 ) -> TrainableFusionEncoder:
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
@@ -202,20 +210,41 @@ def build_trainable_fusion_encoder(
             else CausalContiFormerFusionEncoder(config)
         )
     elif method_name == "chronaris":
-        backbone = ChronarisContinuousFusionEncoder(
-            ChronarisContinuousEncoderConfig(
-                physiology_feature_names=physiology_feature_names,
-                vehicle_feature_names=vehicle_feature_names,
-                field_labels=vehicle_field_labels,
-                variant=chronaris_variant,
-                hidden_dim=candidate.hidden_dim,
-                embedding_dim=candidate.hidden_dim,
-                encoder_hidden_dim=candidate.hidden_dim,
-                decoder_hidden_dim=candidate.hidden_dim,
-                dynamics_hidden_dim=candidate.hidden_dim,
-                dropout=candidate.dropout,
+        if chronaris_architecture_version == "v1":
+            backbone = ChronarisContinuousFusionEncoder(
+                ChronarisContinuousEncoderConfig(
+                    physiology_feature_names=physiology_feature_names,
+                    vehicle_feature_names=vehicle_feature_names,
+                    field_labels=vehicle_field_labels,
+                    variant=chronaris_variant,
+                    hidden_dim=candidate.hidden_dim,
+                    embedding_dim=candidate.hidden_dim,
+                    encoder_hidden_dim=candidate.hidden_dim,
+                    decoder_hidden_dim=candidate.hidden_dim,
+                    dynamics_hidden_dim=candidate.hidden_dim,
+                    ode_method=chronaris_ode_method,
+                    dropout=candidate.dropout,
+                )
             )
-        )
+        elif chronaris_architecture_version == "v2":
+            if chronaris_variant != "full":
+                raise ValueError("Chronaris v2 fixed skeleton does not accept v1 ablation variants")
+            backbone = ChronarisV2FusionEncoder(
+                ChronarisV2EncoderConfig(
+                    physiology_feature_names=physiology_feature_names,
+                    vehicle_feature_names=vehicle_feature_names,
+                    field_labels=vehicle_field_labels,
+                    internal_hidden_dim=candidate.hidden_dim,
+                    physiology_hidden_dim=max(16, candidate.hidden_dim // 2),
+                    vehicle_hidden_dim=candidate.hidden_dim,
+                    num_heads=candidate.num_heads,
+                    lag_mode=chronaris_lag_mode,
+                    ode_method=chronaris_ode_method,
+                    dropout=candidate.dropout,
+                )
+            )
+        else:
+            raise ValueError("Chronaris architecture version must be v1 or v2")
     else:
         raise ValueError(f"unsupported trainable fusion method: {method_name}")
     return TrainableFusionEncoder(method_name=method_name, backbone=backbone)

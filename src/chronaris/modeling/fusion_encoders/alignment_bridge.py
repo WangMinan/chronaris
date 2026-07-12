@@ -33,6 +33,7 @@ def build_alignment_batch_from_observations(
             timestamps_s=batch.physiology_timestamps_s,
             point_mask=batch.physiology_point_mask,
             feature_mask=batch.physiology_feature_mask,
+            observation_age_s=batch.physiology_observation_age_s,
             feature_names=physiology_feature_names,
         ),
         vehicle=_build_stream(
@@ -40,6 +41,7 @@ def build_alignment_batch_from_observations(
             timestamps_s=batch.vehicle_timestamps_s,
             point_mask=batch.vehicle_point_mask,
             feature_mask=batch.vehicle_feature_mask,
+            observation_age_s=batch.vehicle_observation_age_s,
             feature_names=vehicle_feature_names,
         ),
     )
@@ -51,6 +53,7 @@ def _build_stream(
     timestamps_s: torch.Tensor,
     point_mask: torch.Tensor,
     feature_mask: torch.Tensor,
+    observation_age_s: torch.Tensor,
     feature_names: tuple[str, ...],
 ) -> TorchAlignmentStreamBatch:
     if values.ndim != 3 or timestamps_s.shape != values.shape[:2]:
@@ -59,12 +62,13 @@ def _build_stream(
         raise RepresentationContractError("invalid raw stream mask shape")
     if not torch.equal(point_mask, feature_mask.any(dim=-1)):
         raise RepresentationContractError("point mask must equal any feature mask")
-    values, timestamps_s, point_mask, feature_mask = (
+    values, timestamps_s, point_mask, feature_mask, observation_age_s = (
         _coalesce_simultaneous_observations(
             values=values,
             timestamps_s=timestamps_s,
             point_mask=point_mask,
             feature_mask=feature_mask,
+            observation_age_s=observation_age_s,
         )
     )
     clean_values = torch.where(feature_mask, values, torch.zeros_like(values))
@@ -84,6 +88,7 @@ def _build_stream(
         delta_t_s=delta_t_s,
         point_counts=point_mask.sum(dim=1).to(torch.int64),
         feature_names=feature_names,
+        observation_age_s=observation_age_s,
     )
 
 
@@ -93,7 +98,8 @@ def _coalesce_simultaneous_observations(
     timestamps_s: torch.Tensor,
     point_mask: torch.Tensor,
     feature_mask: torch.Tensor,
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    observation_age_s: torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
     """Merge long-table fields sharing one timestamp into one observation event."""
     sample_rows = []
     maximum_count = 0
@@ -114,9 +120,11 @@ def _coalesce_simultaneous_observations(
         group_count = len(unique_times)
         sample_values = values[sample_index].index_select(0, indices)
         sample_features = feature_mask[sample_index].index_select(0, indices)
+        sample_ages = observation_age_s[sample_index].index_select(0, indices)
         group_indices = inverse.unsqueeze(-1).expand(-1, feature_count)
         value_sums = values.new_zeros((group_count, feature_count))
         observation_counts = values.new_zeros((group_count, feature_count))
+        age_sums = values.new_zeros((group_count, feature_count))
         value_sums.scatter_add_(
             0,
             group_indices,
@@ -127,13 +135,25 @@ def _coalesce_simultaneous_observations(
             group_indices,
             sample_features.to(values.dtype),
         )
+        age_sums.scatter_add_(
+            0,
+            group_indices,
+            sample_ages * sample_features.to(sample_ages.dtype),
+        )
         coalesced_mask = observation_counts > 0
         coalesced_values = torch.where(
             coalesced_mask,
             value_sums / observation_counts.clamp_min(1.0),
             torch.zeros_like(value_sums),
         )
-        sample_rows.append((coalesced_values, unique_times, coalesced_mask))
+        coalesced_ages = torch.where(
+            coalesced_mask,
+            age_sums / observation_counts.clamp_min(1.0),
+            torch.zeros_like(age_sums),
+        )
+        sample_rows.append(
+            (coalesced_values, unique_times, coalesced_mask, coalesced_ages)
+        )
         maximum_count = max(maximum_count, group_count)
     maximum_count = max(maximum_count, 1)
     coalesced_values = values.new_zeros(
@@ -143,18 +163,28 @@ def _coalesce_simultaneous_observations(
     coalesced_features = feature_mask.new_zeros(
         (values.shape[0], maximum_count, feature_count)
     )
-    for sample_index, (sample_values, sample_times, sample_features) in enumerate(
+    coalesced_ages = values.new_zeros(
+        (values.shape[0], maximum_count, feature_count)
+    )
+    for sample_index, (
+        sample_values,
+        sample_times,
+        sample_features,
+        sample_ages,
+    ) in enumerate(
         sample_rows
     ):
         count = len(sample_times)
         coalesced_values[sample_index, :count] = sample_values
         coalesced_times[sample_index, :count] = sample_times
         coalesced_features[sample_index, :count] = sample_features
+        coalesced_ages[sample_index, :count] = sample_ages
     return (
         coalesced_values,
         coalesced_times,
         coalesced_features.any(dim=-1),
         coalesced_features,
+        coalesced_ages,
     )
 
 

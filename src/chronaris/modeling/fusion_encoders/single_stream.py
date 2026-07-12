@@ -17,6 +17,7 @@ from chronaris.representation.contracts import (
     DualStreamObservationBatch,
     FusionStreamBatch,
     RepresentationContractError,
+    masked_mean_pool,
 )
 from chronaris.representation.normalization import TrainOnlyRobustNormalizer
 
@@ -136,8 +137,8 @@ class SingleStreamFusionAdapter:
         self.backbone.eval()
         with torch.inference_mode():
             encoded = self.backbone(normalized)
-        query_valid = torch.ones_like(encoded.valid_mask)
-        pooled = encoded.sequence_embedding.mean(dim=1)
+        query_valid = encoded.valid_mask
+        pooled = masked_mean_pool(encoded.sequence_embedding, query_valid)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),

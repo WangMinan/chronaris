@@ -151,6 +151,7 @@ class StageFPhysicsContext:
     physiology_denormalize_mean: torch.Tensor | None = None
     physiology_denormalize_std: torch.Tensor | None = None
     field_labels: Mapping[str, str] = field(default_factory=dict)
+    strict_axis_pairs: bool = False
 
 
 def build_vehicle_feature_groups(

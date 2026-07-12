@@ -15,6 +15,7 @@ def build_rigid_body_vehicle_residuals(
     mapping: RigidBodyStateMapping,
     *,
     huber_delta: float,
+    strict_axis_pairs: bool = False,
 ) -> dict[str, torch.Tensor]:
     """Compute rigid-body vehicle residuals on feature-space trajectories."""
 
@@ -26,6 +27,7 @@ def build_rigid_body_vehicle_residuals(
         source_features=mapping.speed,
         target_features=mapping.acceleration,
         huber_delta=huber_delta,
+        strict_axis_pairs=strict_axis_pairs,
     )
     vertical = _derivative_residual(
         values,
@@ -35,6 +37,7 @@ def build_rigid_body_vehicle_residuals(
         source_features=mapping.altitude,
         target_features=mapping.vertical_speed,
         huber_delta=huber_delta,
+        strict_axis_pairs=strict_axis_pairs,
     )
     rotation_losses = [
         _derivative_residual(
@@ -45,6 +48,12 @@ def build_rigid_body_vehicle_residuals(
             source_features=attitude,
             target_features=rate,
             huber_delta=huber_delta,
+            strict_axis_pairs=strict_axis_pairs,
+            periodic_source=(
+                strict_axis_pairs
+                and len(attitude) == 1
+                and any(token in attitude[0].lower() for token in ("rad", "radian"))
+            ),
         )
         for attitude, rate in (
             (mapping.pitch, mapping.pitch_rate),
@@ -69,14 +78,31 @@ def _derivative_residual(
     source_features: tuple[str, ...],
     target_features: tuple[str, ...],
     huber_delta: float,
+    strict_axis_pairs: bool,
+    periodic_source: bool = False,
 ) -> torch.Tensor | None:
     source_indices = _indices_for_feature_names(feature_names, source_features)
     target_indices = _indices_for_feature_names(feature_names, target_features)
     if not source_indices or not target_indices:
         return None
-    source_series, source_valid = _aggregate_selected_features(values, valid_mask, source_indices)
-    target_series, target_valid = _aggregate_selected_features(values, valid_mask, target_indices)
-    derivative, derivative_valid = _first_derivative(source_series, times_s, source_valid)
+    if strict_axis_pairs and (len(source_indices) != 1 or len(target_indices) != 1):
+        return None
+    source_series, source_valid = _aggregate_selected_features(
+        values,
+        valid_mask,
+        source_indices,
+    )
+    target_series, target_valid = _aggregate_selected_features(
+        values,
+        valid_mask,
+        target_indices,
+    )
+    derivative, derivative_valid = _first_derivative(
+        source_series,
+        times_s,
+        source_valid,
+        periodic=periodic_source,
+    )
     residual_valid = derivative_valid & target_valid[:, 1:]
     if not bool(torch.any(residual_valid)):
         return None
@@ -123,6 +149,7 @@ def _first_derivative(
     valid_mask: torch.Tensor,
     *,
     epsilon: float = 1e-6,
+    periodic: bool = False,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     if values.ndim != 2:
         raise ValueError("values must have shape [B, T].")
@@ -131,6 +158,8 @@ def _first_derivative(
     if valid_mask.shape != values.shape:
         raise ValueError("valid_mask must match values shape.")
     delta_value = values[:, 1:] - values[:, :-1]
+    if periodic:
+        delta_value = torch.atan2(torch.sin(delta_value), torch.cos(delta_value))
     delta_time = times_s[:, 1:] - times_s[:, :-1]
     derivative = delta_value / torch.clamp(delta_time, min=epsilon)
     derivative_valid = valid_mask[:, 1:] & valid_mask[:, :-1] & (delta_time > 0)

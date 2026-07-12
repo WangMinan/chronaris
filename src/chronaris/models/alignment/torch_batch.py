@@ -22,6 +22,7 @@ class TorchAlignmentStreamBatch:
     delta_t_s: torch.Tensor
     point_counts: torch.Tensor
     feature_names: tuple[str, ...]
+    observation_age_s: torch.Tensor | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,6 +75,7 @@ def _build_stream_batch(
         delta_t_s=torch.as_tensor(delta_t_s_np, dtype=dtype, device=device),
         point_counts=torch.as_tensor(stream.point_counts, dtype=torch.int64, device=device),
         feature_names=stream.feature_names,
+        observation_age_s=None,
     )
 
 

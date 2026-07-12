@@ -62,6 +62,11 @@ def build_chronaris_physics_audit(
     enabled: bool,
     weight: float,
     huber_delta: float = 1.0,
+    vehicle_denormalize_center: torch.Tensor | None = None,
+    vehicle_denormalize_scale: torch.Tensor | None = None,
+    physiology_denormalize_center: torch.Tensor | None = None,
+    physiology_denormalize_scale: torch.Tensor | None = None,
+    strict_axis_pairs: bool = False,
 ) -> ChronarisPhysicsAudit:
     """Compute available components while keeping unavailable distinct from zero."""
 
@@ -77,6 +82,11 @@ def build_chronaris_physics_audit(
             batch.physiology.feature_names
         ),
         field_labels=labels,
+        vehicle_denormalize_mean=vehicle_denormalize_center,
+        vehicle_denormalize_std=vehicle_denormalize_scale,
+        physiology_denormalize_mean=physiology_denormalize_center,
+        physiology_denormalize_std=physiology_denormalize_scale,
+        strict_axis_pairs=strict_axis_pairs,
     )
     breakdown = build_stage_f_physics_losses(
         output,
@@ -135,7 +145,11 @@ def build_chronaris_physics_audit(
     return ChronarisPhysicsAudit(tuple(components), total)
 
 
-def build_skipped_chronaris_physics_audit(reference: torch.Tensor) -> ChronarisPhysicsAudit:
+def build_skipped_chronaris_physics_audit(
+    reference: torch.Tensor,
+    *,
+    reason: str = "task_independent_pretext_fast_path",
+) -> ChronarisPhysicsAudit:
     """Represent a deliberate task-independent fast path without claiming zero loss."""
 
     components = tuple(
@@ -147,7 +161,7 @@ def build_skipped_chronaris_physics_audit(reference: torch.Tensor) -> ChronarisP
             count=0,
             raw_value=None,
             weighted_value=None,
-            reason="task_independent_pretext_fast_path",
+            reason=reason,
         )
         for name in (*RIGID_COMPONENTS, *PHYSIOLOGY_COMPONENTS)
     )

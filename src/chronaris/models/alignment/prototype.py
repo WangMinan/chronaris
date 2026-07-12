@@ -66,6 +66,7 @@ class SingleStreamODERNNPrototype(nn.Module):
         feature_dim: int,
         *,
         config: AlignmentPrototypeConfig | None = None,
+        observation_encoder: nn.Module | None = None,
     ) -> None:
         super().__init__()
         if feature_dim <= 0:
@@ -73,7 +74,7 @@ class SingleStreamODERNNPrototype(nn.Module):
 
         self.feature_dim = feature_dim
         self.config = config or AlignmentPrototypeConfig()
-        self.encoder = ObservationEncoder(
+        self.encoder = observation_encoder or ObservationEncoder(
             feature_dim,
             embedding_dim=self.config.embedding_dim,
             hidden_dim=self.config.encoder_hidden_dim,
@@ -118,7 +119,11 @@ class SingleStreamODERNNPrototype(nn.Module):
         batch_size, point_count, _ = stream.values.shape
         value_dtype = stream.values.dtype
         point_mask = stream.mask.to(dtype=value_dtype).unsqueeze(-1)
-        observation_embeddings = self.encoder(stream.values, stream.feature_valid_mask) * point_mask
+        observation_embeddings = self.encoder(
+            stream.values,
+            stream.feature_valid_mask,
+            stream.observation_age_s,
+        ) * point_mask
 
         hidden_state = stream.values.new_zeros((batch_size, self.config.hidden_dim))
         evolved_hidden_steps: list[torch.Tensor] = []

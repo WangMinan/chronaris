@@ -26,6 +26,11 @@ from chronaris.modeling.training.pretraining_encoders import (
     TrainableFusionEncoder,
     build_trainable_fusion_encoder,
 )
+from chronaris.modeling.fusion_encoders.chronaris_v2 import (
+    V2_SUBSPACE_SLICES,
+    ChronarisV2EncoderConfig,
+    ChronarisV2FusionEncoder,
+)
 from chronaris.representation import (
     AugmentationPolicy,
     DualStreamObservationBatch,
@@ -37,6 +42,7 @@ from chronaris.representation import (
     build_common_pretext_targets,
     build_lag_discrimination_inputs,
     select_observation_batch,
+    masked_mean_pool,
 )
 from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError
 
@@ -101,17 +107,13 @@ class TrainedFusionAdapter:
         with torch.inference_mode():
             encoded = self.encoder(normalized)
         sequence = encoded.sequence_embedding
-        valid = torch.ones(
-            sequence.shape[:2],
-            dtype=torch.bool,
-            device=sequence.device,
-        )
+        valid = encoded.modality_available_mask
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),
             sequence_embedding=sequence,
             valid_mask=valid,
-            pooled_embedding=sequence.mean(dim=1),
+            pooled_embedding=masked_mean_pool(sequence, valid),
             method_name=self.method_name,
             fold_id=self.fold_id,
             checkpoint_sha256=self.checkpoint_sha256,
@@ -315,20 +317,45 @@ def load_common_pretraining_checkpoint(
     physiology_names = tuple(payload["physiology_feature_names"])
     vehicle_names = tuple(payload["vehicle_feature_names"])
     field_labels = tuple(tuple(value) for value in payload["vehicle_field_labels"])
-    candidate = EncoderCandidateConfig(**payload.get("candidate_config", {}))
-    chronaris_variant = str(
-        payload.get("encoder_manifest", {})
-        .get("backbone_config", {})
-        .get("variant", "full")
+    backbone_config = dict(
+        payload.get("encoder_manifest", {}).get("backbone_config", {})
     )
-    encoder = build_trainable_fusion_encoder(
-        method_name,
-        physiology_feature_names=physiology_names,
-        vehicle_feature_names=vehicle_names,
-        vehicle_field_labels=field_labels,
-        candidate_config=candidate,
-        chronaris_variant=chronaris_variant,
-    ).to(device)
+    architecture_version = str(backbone_config.get("architecture_version", "v1"))
+    if method_name == "chronaris" and architecture_version == "v2":
+        backbone = ChronarisV2FusionEncoder(
+            ChronarisV2EncoderConfig.from_checkpoint_dict(backbone_config)
+        )
+        if payload.get("semantic_group_mapping_sha256") != (
+            backbone.semantic_group_map.mapping_sha256
+        ):
+            raise RepresentationContractError(
+                "Chronaris v2 semantic group mapping changed"
+            )
+        if payload.get("physics_mapping_sha256") != backbone.physics_mapping_sha256:
+            raise RepresentationContractError(
+                "Chronaris v2 physics mapping changed"
+            )
+        if payload.get("lag_config") != dict(backbone.lag_config_manifest()):
+            raise RepresentationContractError("Chronaris v2 lag configuration changed")
+        if payload.get("subspace_slices") != {
+            name: list(bounds) for name, bounds in V2_SUBSPACE_SLICES.items()
+        }:
+            raise RepresentationContractError("Chronaris v2 subspace slices changed")
+        encoder = TrainableFusionEncoder(
+            method_name="chronaris",
+            backbone=backbone,
+        ).to(device)
+    else:
+        candidate = EncoderCandidateConfig(**payload.get("candidate_config", {}))
+        chronaris_variant = str(backbone_config.get("variant", "full"))
+        encoder = build_trainable_fusion_encoder(
+            method_name,
+            physiology_feature_names=physiology_names,
+            vehicle_feature_names=vehicle_names,
+            vehicle_field_labels=field_labels,
+            candidate_config=candidate,
+            chronaris_variant=chronaris_variant,
+        ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,
@@ -370,7 +397,10 @@ def _code_sha256() -> str:
 
 def _load_checkpoint_payload(path, *, device="cpu"):
     payload = torch.load(path, map_location=device, weights_only=True)
-    if payload.get("format") != "chronaris.common_pretraining_checkpoint.v1":
+    if payload.get("format") not in {
+        "chronaris.common_pretraining_checkpoint.v1",
+        "chronaris.common_pretraining_checkpoint.v2",
+    }:
         raise RepresentationContractError("unsupported common pretraining checkpoint")
     return payload
 

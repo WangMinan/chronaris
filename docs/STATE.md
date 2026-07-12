@@ -4,11 +4,16 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 的实验和证据链已经闭环，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`，只剩全量回归测试与工作树审计。鼎新 real-only、仿真 clean、时间机制、端到端辅助、七因素压力、仿真到鼎新适配和 Chronaris 四机制消融均完成锁定评价。Chronaris 在鼎新高生理响应识别 AUPRC 0.8839、仿真机动分段 Macro-F1 0.4687、时钟偏移 MAE 0.8883 秒和响应时延 MAE 7.4859 秒上形成分项领先；机动分类、负荷分类/回归和边界定位由不同基线领先。压力结果中 Chronaris 在最高单因素压力的 21 个主指标组合里有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六。仿真预训练迁移没有形成一致收益；四项消融进一步显示连续演化主要支撑负荷任务，因果掩码和多尺度时延主要支撑机动分段，物理约束不形成全任务一致增益。最终论文证据包汇总 8 层证据、7 幅已抽查中文图和 54 项迁移配对，9/9 门禁通过。
+固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。v1 失真诊断已经定位为航电信息路径不足、时延注意力近似均匀、尺度门控偏向最短档及多损失负梯度冲突；v2 版本化骨架、训练目标、物理逆变换、缺失课程、逐步 PCGrad 和 fail-closed 选模协议均已实现。当前正在运行 seed 17 的 8 项结构筛选；24 项超参数筛选只有在完整 v2 通过任务无关结构门禁后才允许启动。只有六项预声明主指标的三随机种子均值全部排名第一且附加门禁通过时才晋级 v2；否则保留当前 v1 与既有论文证据。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- v1 失真诊断：[artifacts/runs/2026-07-12_chronaris-v1-distortion-diagnostics/report.md](artifacts/runs/2026-07-12_chronaris-v1-distortion-diagnostics/report.md)
+- v2 训练协议烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-training-smoke-r2/report.md](artifacts/runs/2026-07-12_chronaris-v2-training-smoke-r2/report.md)
+- v2 结构筛选烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-structure-screen-smoke/summary.md](artifacts/runs/2026-07-12_chronaris-v2-structure-screen-smoke/summary.md)
+- v2 结构门禁烟雾验证：[artifacts/runs/2026-07-12_chronaris-v2-structure-diagnostics-smoke/summary.md](artifacts/runs/2026-07-12_chronaris-v2-structure-diagnostics-smoke/summary.md)
+- v2 独立仿真确认族封存：[artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md](artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 - 固定数据证据策略：[requirements/foundation/fixed-data-evidence-strategy.md](requirements/foundation/fixed-data-evidence-strategy.md)

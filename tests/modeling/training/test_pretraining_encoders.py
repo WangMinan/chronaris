@@ -106,6 +106,23 @@ def test_frozen_candidate_table_matches_protocol():
     assert [value.dropout for value in ENCODER_SCREEN_CANDIDATES] == [0.1, 0.1, 0.1, 0.2]
 
 
+def test_chronaris_v2_builder_is_versioned_and_keeps_64_dimensional_contract():
+    batch = collate_observation_samples([_sample("chronaris-v2")])
+    encoder = build_trainable_fusion_encoder(
+        "chronaris",
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        chronaris_architecture_version="v2",
+    )
+
+    output = encoder(batch)
+    manifest = encoder.config_manifest()
+
+    assert output.sequence_embedding.shape == (1, 96, 64)
+    assert manifest["backbone_class"] == "ChronarisV2FusionEncoder"
+    assert manifest["backbone_config"]["architecture_version"] == "v2"
+
+
 def test_chronaris_auxiliary_losses_are_differentiable_and_causal_margin_active():
     torch.manual_seed(23)
     batch = collate_observation_samples([_sample("auxiliary")])

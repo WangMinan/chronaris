@@ -36,6 +36,7 @@ from chronaris.representation.contracts import (
     DualStreamObservationBatch,
     FusionStreamBatch,
     RepresentationContractError,
+    masked_mean_pool,
 )
 from chronaris.representation.normalization import TrainOnlyRobustNormalizer
 
@@ -60,6 +61,7 @@ class ChronarisContinuousEncoderConfig:
     physiology_feature_names: tuple[str, ...]
     vehicle_feature_names: tuple[str, ...]
     field_labels: tuple[tuple[str, str], ...] = ()
+    architecture_version: str = "v1"
     variant: str = "full"
     hidden_dim: int = FUSION_OUTPUT_DIM
     embedding_dim: int = FUSION_OUTPUT_DIM
@@ -74,6 +76,8 @@ class ChronarisContinuousEncoderConfig:
     dropout: float = 0.1
 
     def __post_init__(self) -> None:
+        if self.architecture_version != "v1":
+            raise ValueError("ChronarisContinuousEncoderConfig requires architecture_version=v1")
         if not self.physiology_feature_names or not self.vehicle_feature_names:
             raise ValueError("Chronaris feature names must be non-empty")
         if len(set(self.physiology_feature_names)) != len(
@@ -145,6 +149,7 @@ class ChronarisContinuousEncoderConfig:
 
     def effective_mechanisms(self) -> Mapping[str, object]:
         return {
+            "architecture_version": self.architecture_version,
             "continuous_evolution_enabled": self.continuous_evolution_enabled,
             "physics_enabled": self.physics_enabled,
             "causal_mask_enabled": self.causal_mask_enabled,
@@ -295,12 +300,8 @@ class ChronarisContinuousFusionAdapter:
             encoded = self.backbone(normalized)
         self.last_encoding = encoded
         sequence = encoded.sequence_embedding
-        query_valid = torch.ones(
-            sequence.shape[:2],
-            dtype=torch.bool,
-            device=sequence.device,
-        )
-        pooled = sequence.mean(dim=1)
+        query_valid = encoded.modality_available_mask
+        pooled = masked_mean_pool(sequence, query_valid)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),

@@ -39,6 +39,7 @@ class ObservationEncoder(nn.Module):
         self,
         values: torch.Tensor,
         feature_valid_mask: torch.Tensor,
+        observation_age_s: torch.Tensor | None = None,
     ) -> torch.Tensor:
         """Encode a batch of observation matrices."""
 
@@ -48,6 +49,8 @@ class ObservationEncoder(nn.Module):
             raise ValueError("feature_valid_mask must match values shape.")
         if values.shape[-1] != self.feature_dim:
             raise ValueError("Input feature dimension does not match encoder feature_dim.")
+        if observation_age_s is not None and observation_age_s.shape != values.shape:
+            raise ValueError("observation_age_s must match values shape.")
 
         if self.use_feature_valid_mask:
             encoder_input = torch.cat((values, feature_valid_mask.to(dtype=values.dtype)), dim=-1)

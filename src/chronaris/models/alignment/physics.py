@@ -380,6 +380,7 @@ def _build_rigid_body_stage_f_physics_losses(
             batch.vehicle.feature_names,
             rigid_mapping,
             huber_delta=huber_delta,
+            strict_axis_pairs=context.strict_axis_pairs,
         )
         vehicle_envelope = _feature_envelope_penalty(
             vehicle_values,

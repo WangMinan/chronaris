@@ -19,6 +19,7 @@ from chronaris.representation.contracts import (
     DualStreamObservationBatch,
     FusionStreamBatch,
     RepresentationContractError,
+    masked_mean_pool,
 )
 from chronaris.representation.normalization import (
     TrainOnlyPCAProjector,
@@ -208,13 +209,8 @@ class NaiveTimeSyncFusionAdapter:
         self.checkpoint_sha256 = checkpoint_sha256
 
     def __call__(self, batch: DualStreamObservationBatch) -> FusionStreamBatch:
-        sequence, _modality_available = self.encoder.encode(batch)
-        query_valid = torch.ones(
-            sequence.shape[:2],
-            dtype=torch.bool,
-            device=sequence.device,
-        )
-        pooled = sequence.mean(dim=1)
+        sequence, query_valid = self.encoder.encode(batch)
+        pooled = masked_mean_pool(sequence, query_valid)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s,

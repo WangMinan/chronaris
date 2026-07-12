@@ -231,6 +231,28 @@ class FusionStreamEncoder(Protocol):
     def __call__(self, batch: DualStreamObservationBatch) -> FusionStreamBatch: ...
 
 
+def masked_mean_pool(
+    sequence_embedding: torch.Tensor,
+    valid_mask: torch.Tensor,
+) -> torch.Tensor:
+    """Pool only real query positions while failing closed on empty samples."""
+
+    if sequence_embedding.ndim != 3:
+        raise RepresentationContractError(
+            "masked_mean_pool sequence must have shape [B,T,D]"
+        )
+    if valid_mask.shape != sequence_embedding.shape[:2] or valid_mask.dtype != torch.bool:
+        raise RepresentationContractError("masked_mean_pool valid mask mismatch")
+    valid_count = valid_mask.sum(dim=1, keepdim=True)
+    if bool((valid_count == 0).any()):
+        raise RepresentationContractError(
+            "masked_mean_pool requires at least one valid query per sample"
+        )
+    return (
+        sequence_embedding * valid_mask.unsqueeze(-1).to(sequence_embedding.dtype)
+    ).sum(dim=1) / valid_count.to(sequence_embedding.dtype)
+
+
 def validate_fusion_method_alignment(
     outputs: Sequence[FusionStreamBatch],
 ) -> str:
