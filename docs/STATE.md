@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。直接因果生理残差修复、24 项固定超参数网格和鼎新三个 inner-validation 折复核均已完成；保真门禁已按 24 维航电专属、16 维生理专属切片执行，避免共享维度干扰小样本探针。三候选全部通过三折门禁，最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置。独立仿真确认族已生成单独访问授权记录，原 seal manifest 保持不变；鼎新 15/15 checkpoint、270/270 六方法表示和 90/90 冻结 consumer 已完成。固定数据同协议复验中，v2 Chronaris 的机动分类 Macro-F1、高响应 AUPRC 和连续响应 RMSE 分别为 0.7254、0.8410、0.3346，三项均未超过预声明最佳值，因此 v2 已不具备本轮晋级条件；后续仿真、压力、时间机制、正式消融、一次性差距审计和锁定后 NASA/UAB 公开数据适配仍按既定协议继续，结果不得回流调参。当前 v1 与既有论文证据保持不变。
+Chronaris v2 主线修复、任务无关筛选和一次性锁定晋级审计已经闭环。最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置；鼎新五折复验、独立仿真确认、七类压力、同族时间机制和正式消融均已完成。六项主指标均未越过预声明硬门槛，附加门禁中的无损融合、类别召回差距和连续缺失前三也未通过，因此审计结论为 `not_promoted`，论文主模型保持 Chronaris v1，既有确认指标不变。v2 在独立仿真机动分段上取得六方法最高均值，但 `0.4123` 仍低于硬门槛 `0.4687`；随机缺失斜率进入第 2，连续缺失为第 4。锁定后的 NASA/UAB 公开数据适配正在运行一次性外部确认，结果只形成适配证据，不回流本轮开发。
 
 ## 当前执行入口
 
@@ -22,6 +22,10 @@
 - v2 鼎新三随机种子五折锁定重训：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-pretraining/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-pretraining/evidence_manifest.json)
 - v2 鼎新六方法锁定表示：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-representations/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-representations/evidence_manifest.json)
 - v2 鼎新固定数据同协议复验：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-consumers/evidence_manifest.json)
+- v2 独立仿真六方法锁定确认：[artifacts/runs/2026-07-13_chronaris-v2-sealed-confirmation-consumers/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-sealed-confirmation-consumers/evidence_manifest.json)
+- v2 修正物理与缺失课程正式消融：[artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-simulation-ablation-consumers/evidence_manifest.json)
+- v1/v2 同封存族时间机制参照：[artifacts/runs/2026-07-13_chronaris-v1-sealed-reference-mechanism/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v1-sealed-reference-mechanism/evidence_manifest.json)
+- v2 一次性锁定晋级审计：[artifacts/runs/2026-07-13_chronaris-v2-promotion-audit/report.md](artifacts/runs/2026-07-13_chronaris-v2-promotion-audit/report.md)
 - v2 独立仿真确认族封存：[artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md](artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
