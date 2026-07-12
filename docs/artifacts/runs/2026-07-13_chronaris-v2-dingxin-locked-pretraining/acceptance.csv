@@ -1,0 +1,5 @@
+check,passed
+all_seed_fold_checkpoints,True
+all_training_complete,True
+forbidden_sources_closed,True
+outer_test_provider_requests_zero,True

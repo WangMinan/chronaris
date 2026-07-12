@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-12
+更新时间：2026-07-13
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。直接因果生理残差修复、24 项固定超参数网格和鼎新三个 inner-validation 折复核均已完成；保真门禁已按 24 维航电专属、16 维生理专属切片执行，避免共享维度干扰小样本探针。三候选全部通过三折门禁，最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置。独立仿真确认族已生成单独 unlock record，原 seal manifest 保持不变；当前正在进行 seeds 17/29/43 × 鼎新五折的 v2 任务无关重训，完成全部 checkpoint 后才允许表示阶段读取 outer-test 原始输入。只有六项预声明主指标的三随机种子均值全部排名第一且附加门禁通过时才晋级 v2；否则保留当前 v1 与既有论文证据。
+固定数据下游评估与完整论文实验证据链已经闭环，当前从 `main@23b968e` 建立 `codex/chronaris-v2-mainline-20260712` 长程实现分支，进入 Chronaris v2 主线能力修复、任务无关表示优化与锁定复验。直接因果生理残差修复、24 项固定超参数网格和鼎新三个 inner-validation 折复核均已完成；保真门禁已按 24 维航电专属、16 维生理专属切片执行，避免共享维度干扰小样本探针。三候选全部通过三折门禁，最终锁定 96 维、连续时延 basis、Euler、`lr=1e-3` 配置。独立仿真确认族已生成单独访问授权记录，原 seal manifest 保持不变；seeds 17/29/43 × 鼎新五折的 15 个 v2 任务无关 checkpoint 已全部完成，outer-test provider 请求为 0，当前正在重新导出同一共享因果查询有效域上的六方法表示。封存仿真、压力、时间机制、正式消融、一次性晋级审计和锁定后 NASA/UAB 公开数据适配均已实现并按上游 evidence 状态排队。只有六项预声明主指标的三随机种子均值全部排名第一且附加门禁通过时才晋级 v2；否则保留当前 v1 与既有论文证据。
 
 ## 当前执行入口
 
@@ -19,6 +19,7 @@
 - v2 任务无关超参数前三：[artifacts/runs/2026-07-12_chronaris-v2-hyperparameter-diagnostics-seed17-r3/evidence_manifest.json](artifacts/runs/2026-07-12_chronaris-v2-hyperparameter-diagnostics-seed17-r3/evidence_manifest.json)
 - v2 鼎新三折配置锁定：[artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/evidence_manifest.json](artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/evidence_manifest.json)
 - v2 独立仿真确认访问授权：[artifacts/runs/2026-07-13_chronaris-v2-confirmation-access/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-confirmation-access/evidence_manifest.json)
+- v2 鼎新三随机种子五折锁定重训：[artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-pretraining/evidence_manifest.json](artifacts/runs/2026-07-13_chronaris-v2-dingxin-locked-pretraining/evidence_manifest.json)
 - v2 独立仿真确认族封存：[artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md](artifacts/runs/2026-07-12_chronaris-v2-confirmation-family-seal/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)

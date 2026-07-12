@@ -1,0 +1,6 @@
+fold_id,provider_request_count,cache_hit_count,forbidden_request_count
+leave_one_view_out__fold01,316,298,0
+leave_one_view_out__fold02,216,198,0
+leave_one_view_out__fold03,319,297,0
+leave_one_sortie_out__fold01,300,288,0
+leave_one_sortie_out__fold02,469,447,0

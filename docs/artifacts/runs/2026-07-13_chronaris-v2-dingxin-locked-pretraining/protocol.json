@@ -1,0 +1,46 @@
+{
+  "config": {
+    "batch_size": 32,
+    "compact_output_root": "docs/artifacts/runs",
+    "device": "cuda",
+    "fixed_audit_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+    "fold_ids": [
+      "leave_one_view_out__fold01",
+      "leave_one_view_out__fold02",
+      "leave_one_view_out__fold03",
+      "leave_one_sortie_out__fold01",
+      "leave_one_sortie_out__fold02"
+    ],
+    "heavy_output_root": "artifacts/application_evaluation",
+    "inner_split_root": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits",
+    "locked_configuration_path": "docs/artifacts/runs/2026-07-12_chronaris-v2-dingxin-inner-confirmation-r3/locked_configuration.json",
+    "max_epochs": 50,
+    "resume": true,
+    "run_id": "2026-07-13_chronaris-v2-dingxin-locked-pretraining",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot"
+  },
+  "format": "chronaris.v2_dingxin_locked_pretraining_protocol.v1",
+  "locked_candidate": {
+    "candidate_id": "v2_h96_continuous_basis_euler_lr1e3",
+    "dropout": 0.1,
+    "internal_hidden_dim": 96,
+    "lag_mode": "continuous_basis",
+    "learning_rate": 0.001,
+    "ode_method": "euler",
+    "phase_epoch_offset": 0,
+    "physiology_residual_mode": "direct_causal_query",
+    "physiology_teacher_mode": "none",
+    "physiology_teacher_weight": 0.0,
+    "structure_candidate_id": "structure_08_complete_v2"
+  },
+  "locked_configuration_sha256": "76ea29620114850b8e00d0483e8749645653d4aa69c3f51338d0db8eedc29cdb",
+  "model_input_bin_width_s": 0.1,
+  "outer_test_opened": false,
+  "representation_family": "frozen_task_agnostic_v2",
+  "selection_uses_downstream_labels": false
+}
