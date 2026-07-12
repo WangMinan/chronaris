@@ -59,6 +59,8 @@ class DingxinLockedRepresentationConfig:
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     pretraining_run_id: str = "2026-07-12_dingxin-locked-pretraining-coalesced"
+    baseline_pretraining_run_id: str | None = None
+    locked_configuration_path: str | None = None
     selected_candidates_path: str = (
         "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/"
         "selected_candidates.json"
@@ -93,6 +95,10 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
     compact_root = Path(config.compact_output_root) / config.run_id
     heavy_root = Path(config.heavy_output_root) / config.run_id
     pretraining_root = Path(config.heavy_output_root) / config.pretraining_run_id
+    baseline_pretraining_root = (
+        Path(config.heavy_output_root)
+        / (config.baseline_pretraining_run_id or config.pretraining_run_id)
+    )
     pretraining_protocol = json.loads(
         (
             Path(config.compact_output_root)
@@ -104,6 +110,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
     if representation_family not in {
         "frozen_task_agnostic_v1",
         "synthetic_pretrain_real_adapt_v1",
+        "frozen_task_agnostic_v2",
     }:
         raise ValueError("Dingxin pretraining representation family is unsupported")
     if float(pretraining_protocol.get("model_input_bin_width_s", -1.0)) != float(
@@ -117,11 +124,16 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
         method: str(selected[method]["candidate_id"])
         for method in TRAINABLE_FUSION_METHODS
     }
+    locked_candidate_id = _locked_v2_candidate_id(
+        config.locked_configuration_path
+    )
     checkpoints = require_complete_dingxin_locked_checkpoints(
         pretraining_root,
+        baseline_root=baseline_pretraining_root,
         seeds=config.seeds,
         fold_ids=config.fold_ids,
         selected_ids=selected_ids,
+        locked_candidate_id=locked_candidate_id,
     )
     baseline_device = _resolve_device(config.baseline_device)
     chronaris_device = _resolve_device(config.chronaris_device)
@@ -309,21 +321,70 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
     )
 
 
-def require_complete_dingxin_locked_checkpoints(root, *, seeds, fold_ids, selected_ids):
+def require_complete_dingxin_locked_checkpoints(
+    root,
+    *,
+    seeds,
+    fold_ids,
+    selected_ids,
+    baseline_root=None,
+    locked_candidate_id=None,
+):
+    baseline_root = root if baseline_root is None else baseline_root
     paths = {}
     for seed in seeds:
         for fold_id in fold_ids:
             for method in TRAINABLE_FUSION_METHODS:
-                path = (
-                    root / "checkpoints" / f"seed_{seed}" / fold_id / method / "best.pt"
-                    if method == "chronaris"
-                    else root / "checkpoints" / f"seed_{seed}" / fold_id / method / selected_ids[method] / "best.pt"
-                )
+                if method == "chronaris" and locked_candidate_id is not None:
+                    path = (
+                        root
+                        / "checkpoints"
+                        / f"seed_{seed}"
+                        / fold_id
+                        / method
+                        / locked_candidate_id
+                        / "last.pt"
+                    )
+                elif method == "chronaris":
+                    path = (
+                        root
+                        / "checkpoints"
+                        / f"seed_{seed}"
+                        / fold_id
+                        / method
+                        / "best.pt"
+                    )
+                else:
+                    path = (
+                        baseline_root
+                        / "checkpoints"
+                        / f"seed_{seed}"
+                        / fold_id
+                        / method
+                        / selected_ids[method]
+                        / "best.pt"
+                    )
                 payload = torch.load(path, map_location="cpu", weights_only=True)
-                if payload.get("training_status") != "completed" or int(payload["seed"]) != seed:
+                payload_seed = payload.get("seed", payload.get("config", {}).get("seed"))
+                if (
+                    payload.get("training_status") != "completed"
+                    or int(payload_seed) != seed
+                ):
                     raise ValueError("Dingxin locked checkpoint incomplete or seed-mismatched")
                 paths[(seed, fold_id, method)] = path
     return paths
+
+
+def _locked_v2_candidate_id(path):
+    if path is None:
+        return None
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    if payload.get("configuration_locked") is not True:
+        raise PermissionError("v2 representation export requires a locked configuration")
+    candidate = payload.get("candidate")
+    if not isinstance(candidate, dict) or not candidate.get("candidate_id"):
+        raise PermissionError("v2 locked configuration has no candidate")
+    return str(candidate["candidate_id"])
 
 
 def _resolve_device(value):

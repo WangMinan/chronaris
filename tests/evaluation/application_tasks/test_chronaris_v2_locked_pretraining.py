@@ -7,6 +7,9 @@ import pytest
 from chronaris.evaluation.application_tasks.chronaris_v2_locked_dingxin_pretraining import (
     _load_locked_candidate,
 )
+from chronaris.evaluation.application_tasks.dingxin_locked_representation_run import (
+    _locked_v2_candidate_id,
+)
 
 
 def test_locked_candidate_requires_clean_task_independent_lock(tmp_path) -> None:
@@ -35,6 +38,7 @@ def test_locked_candidate_requires_clean_task_independent_lock(tmp_path) -> None
 
     assert candidate.candidate_id == "locked"
     assert candidate.physiology_residual_mode == "direct_causal_query"
+    assert _locked_v2_candidate_id(path) == "locked"
 
 
 def test_locked_candidate_rejects_outer_test_opened_lock(tmp_path) -> None:

@@ -30,6 +30,8 @@ def main() -> int:
         "--pretraining-run-id",
         default="2026-07-12_dingxin-locked-pretraining-coalesced",
     )
+    parser.add_argument("--baseline-pretraining-run-id")
+    parser.add_argument("--locked-configuration-path")
     parser.add_argument("--fit-batch-size", type=int, default=8)
     parser.add_argument("--export-batch-size", type=int, default=8)
     parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")
@@ -41,6 +43,8 @@ def main() -> int:
         DingxinLockedRepresentationConfig(
             run_id=args.run_id,
             pretraining_run_id=args.pretraining_run_id,
+            baseline_pretraining_run_id=args.baseline_pretraining_run_id,
+            locked_configuration_path=args.locked_configuration_path,
             fit_batch_size=args.fit_batch_size,
             export_batch_size=args.export_batch_size,
             baseline_device=args.baseline_device,

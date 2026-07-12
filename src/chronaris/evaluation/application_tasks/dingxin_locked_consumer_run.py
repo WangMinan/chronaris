@@ -96,6 +96,7 @@ def run_dingxin_locked_consumers(config: DingxinLockedConsumerConfig):
     if representation_family not in {
         "frozen_task_agnostic_v1",
         "synthetic_pretrain_real_adapt_v1",
+        "frozen_task_agnostic_v2",
     }:
         raise ValueError("Dingxin consumer representation family is unsupported")
     with open_task_eval_run_observer(
