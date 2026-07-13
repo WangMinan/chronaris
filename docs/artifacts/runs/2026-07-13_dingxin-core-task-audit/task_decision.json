@@ -1,0 +1,23 @@
+{
+  "criteria": {
+    "current_history_gain_less_than": 0.02,
+    "directional_outer_folds_at_least": 2,
+    "future_dual_stream_gain_at_least": 0.03,
+    "future_history_gain_at_least": 0.03,
+    "future_macro_f1_at_least": 0.75
+  },
+  "decision_irreversible_after_lock": true,
+  "decision_status": "locked",
+  "future_target_promoted": false,
+  "observed": {
+    "current_history_gain": -0.017965603749917475,
+    "future_directional_outer_fold_count": 0,
+    "future_dual_stream_gain": -0.10256410256410257,
+    "future_dual_stream_macro_f1": 0.1111111111111111,
+    "future_history_gain": -0.005083514887436451
+  },
+  "outer_test_accessed": false,
+  "primary_maneuver_target": "current_5s",
+  "valid_outer_fold_count": 3,
+  "valid_task_decision_split_count": 6
+}

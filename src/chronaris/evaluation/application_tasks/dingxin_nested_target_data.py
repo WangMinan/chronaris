@@ -103,7 +103,7 @@ def build_dingxin_nested_targets(
                     "role": role_by_id[row["context_id"]],
                     "context_id": row["context_id"],
                     "class_target": CLASS_MAPPING.get(row["class_label"], -1),
-                    "continuous_target": None,
+                    "continuous_target": row["score"],
                     "binary_target": -1,
                     "status": row["status"],
                     "fit_sample_hash": classification_fit_hash,
@@ -245,6 +245,32 @@ def _build_nested_response_rows(
                 }
             )
     return rows, threshold_rows, fit_hash
+
+
+def build_response_targets_for_split(
+    *,
+    train_context_ids,
+    evaluation_context_ids,
+    delta_index,
+    candidate_fields,
+    minimum_field_count=2,
+    train_valid_ratio=0.80,
+    eps=1e-6,
+):
+    """Fit response fields, scales, and risk threshold on one task-decision train role."""
+
+    return _build_nested_response_rows(
+        fold_id="task_decision",
+        role_ids={
+            "train": tuple(train_context_ids),
+            "evaluation": tuple(evaluation_context_ids),
+        },
+        delta_index=delta_index,
+        candidate_fields=tuple(candidate_fields),
+        minimum_field_count=minimum_field_count,
+        train_valid_ratio=train_valid_ratio,
+        eps=eps,
+    )
 
 
 def _response_score(

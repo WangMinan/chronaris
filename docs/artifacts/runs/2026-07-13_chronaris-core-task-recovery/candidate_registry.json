@@ -1,0 +1,428 @@
+{
+  "candidates": [
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "physiology_only-c01",
+      "high_response_weight": 0.5,
+      "method_name": "physiology_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "physiology_only-c02",
+      "high_response_weight": 1.0,
+      "method_name": "physiology_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "physiology_only-c03",
+      "high_response_weight": 0.5,
+      "method_name": "physiology_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "physiology_only-c04",
+      "high_response_weight": 1.0,
+      "method_name": "physiology_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "physiology_only-c05",
+      "high_response_weight": 0.5,
+      "method_name": "physiology_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "physiology_only-c06",
+      "high_response_weight": 1.0,
+      "method_name": "physiology_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "physiology_only-c07",
+      "high_response_weight": 0.5,
+      "method_name": "physiology_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "physiology_only-c08",
+      "high_response_weight": 1.0,
+      "method_name": "physiology_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "physiology_only-c09",
+      "high_response_weight": 0.5,
+      "method_name": "physiology_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "physiology_only-c10",
+      "high_response_weight": 1.0,
+      "method_name": "physiology_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "physiology_only-c11",
+      "high_response_weight": 0.5,
+      "method_name": "physiology_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "physiology_only-c12",
+      "high_response_weight": 1.0,
+      "method_name": "physiology_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "vehicle_only-c01",
+      "high_response_weight": 0.5,
+      "method_name": "vehicle_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "vehicle_only-c02",
+      "high_response_weight": 1.0,
+      "method_name": "vehicle_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "vehicle_only-c03",
+      "high_response_weight": 0.5,
+      "method_name": "vehicle_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "vehicle_only-c04",
+      "high_response_weight": 1.0,
+      "method_name": "vehicle_only",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "vehicle_only-c05",
+      "high_response_weight": 0.5,
+      "method_name": "vehicle_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "vehicle_only-c06",
+      "high_response_weight": 1.0,
+      "method_name": "vehicle_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "vehicle_only-c07",
+      "high_response_weight": 0.5,
+      "method_name": "vehicle_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "vehicle_only-c08",
+      "high_response_weight": 1.0,
+      "method_name": "vehicle_only",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "vehicle_only-c09",
+      "high_response_weight": 0.5,
+      "method_name": "vehicle_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "vehicle_only-c10",
+      "high_response_weight": 1.0,
+      "method_name": "vehicle_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "vehicle_only-c11",
+      "high_response_weight": 0.5,
+      "method_name": "vehicle_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "vehicle_only-c12",
+      "high_response_weight": 1.0,
+      "method_name": "vehicle_only",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "mult-c01",
+      "high_response_weight": 0.5,
+      "method_name": "mult",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "mult-c02",
+      "high_response_weight": 1.0,
+      "method_name": "mult",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "mult-c03",
+      "high_response_weight": 0.5,
+      "method_name": "mult",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "mult-c04",
+      "high_response_weight": 1.0,
+      "method_name": "mult",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "mult-c05",
+      "high_response_weight": 0.5,
+      "method_name": "mult",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "mult-c06",
+      "high_response_weight": 1.0,
+      "method_name": "mult",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "mult-c07",
+      "high_response_weight": 0.5,
+      "method_name": "mult",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "mult-c08",
+      "high_response_weight": 1.0,
+      "method_name": "mult",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "mult-c09",
+      "high_response_weight": 0.5,
+      "method_name": "mult",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "mult-c10",
+      "high_response_weight": 1.0,
+      "method_name": "mult",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "mult-c11",
+      "high_response_weight": 0.5,
+      "method_name": "mult",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "mult-c12",
+      "high_response_weight": 1.0,
+      "method_name": "mult",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "contiformer-c01",
+      "high_response_weight": 0.5,
+      "method_name": "contiformer",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "contiformer-c02",
+      "high_response_weight": 1.0,
+      "method_name": "contiformer",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "contiformer-c03",
+      "high_response_weight": 0.5,
+      "method_name": "contiformer",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "contiformer-c04",
+      "high_response_weight": 1.0,
+      "method_name": "contiformer",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "contiformer-c05",
+      "high_response_weight": 0.5,
+      "method_name": "contiformer",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "contiformer-c06",
+      "high_response_weight": 1.0,
+      "method_name": "contiformer",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "contiformer-c07",
+      "high_response_weight": 0.5,
+      "method_name": "contiformer",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "contiformer-c08",
+      "high_response_weight": 1.0,
+      "method_name": "contiformer",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "contiformer-c09",
+      "high_response_weight": 0.5,
+      "method_name": "contiformer",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "contiformer-c10",
+      "high_response_weight": 1.0,
+      "method_name": "contiformer",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "contiformer-c11",
+      "high_response_weight": 0.5,
+      "method_name": "contiformer",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "contiformer-c12",
+      "high_response_weight": 1.0,
+      "method_name": "contiformer",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "chronaris-c01",
+      "high_response_weight": 0.5,
+      "method_name": "chronaris",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "chronaris-c02",
+      "high_response_weight": 1.0,
+      "method_name": "chronaris",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "chronaris-c03",
+      "high_response_weight": 0.5,
+      "method_name": "chronaris",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "chronaris-c04",
+      "high_response_weight": 1.0,
+      "method_name": "chronaris",
+      "train_stride_s": 5.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "chronaris-c05",
+      "high_response_weight": 0.5,
+      "method_name": "chronaris",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "chronaris-c06",
+      "high_response_weight": 1.0,
+      "method_name": "chronaris",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "chronaris-c07",
+      "high_response_weight": 0.5,
+      "method_name": "chronaris",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "chronaris-c08",
+      "high_response_weight": 1.0,
+      "method_name": "chronaris",
+      "train_stride_s": 2.5
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "chronaris-c09",
+      "high_response_weight": 0.5,
+      "method_name": "chronaris",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.05,
+      "candidate_id": "chronaris-c10",
+      "high_response_weight": 1.0,
+      "method_name": "chronaris",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "chronaris-c11",
+      "high_response_weight": 0.5,
+      "method_name": "chronaris",
+      "train_stride_s": 1.0
+    },
+    {
+      "backbone_lr_ratio": 0.1,
+      "candidate_id": "chronaris-c12",
+      "high_response_weight": 1.0,
+      "method_name": "chronaris",
+      "train_stride_s": 1.0
+    }
+  ],
+  "failed_candidate_consumes_budget": true,
+  "format": "chronaris.core_task_recovery_candidates.v1",
+  "infrastructure_retry_limit_per_candidate": 1,
+  "registry_sha256": "45ab200109cbdb1cfc041e7bba8ddaa367856dbfb80ad6c396615b9647a74212"
+}

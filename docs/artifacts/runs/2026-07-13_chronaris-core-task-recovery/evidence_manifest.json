@@ -1,0 +1,19 @@
+{
+  "branch_name": "codex/chronaris-core-task-recovery-20260713",
+  "claim_eligible": false,
+  "confirmation_run": "docs/artifacts/runs/2026-07-13_chronaris-core-task-recovery-confirmation",
+  "confirmed_metrics_changed": false,
+  "invalid_reason": "outer_train_and_held_out_time_support_overlap",
+  "outer_test_access_count": 1,
+  "outer_test_authorization_consumed": true,
+  "outer_test_opened": true,
+  "outputs": {
+    "candidate_registry": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-13_chronaris-core-task-recovery/candidate_registry.json",
+    "outer_test_access_lock": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-13_chronaris-core-task-recovery/outer_test_access_lock.json",
+    "protocol_lock": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-13_chronaris-core-task-recovery/protocol_lock.json"
+  },
+  "run_id": "2026-07-13_chronaris-core-task-recovery",
+  "simulation_secondary_started": false,
+  "source_commit": "23b968e0e9e2b33080fb87781622f325715df9e7",
+  "status": "closed_invalid_protocol_overlap"
+}

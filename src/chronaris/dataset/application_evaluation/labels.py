@@ -108,7 +108,10 @@ def _build_maneuver_labels(
     fit_sample_hash: str,
     minimum_semantic_count: int,
     eps: float,
+    target_mode: str = "current_5s",
 ) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    if target_mode not in {"current_5s", "future_5s"}:
+        raise ValueError("maneuver target mode must be current_5s or future_5s")
     roles_by_sortie: dict[str, list[FieldRoleRecord]] = defaultdict(list)
     for role in roles:
         if role.selected_for_maneuver_label and role.semantic_key:
@@ -116,7 +119,15 @@ def _build_maneuver_labels(
     raw_by_context: dict[str, dict[str, tuple[float, float]]] = {}
     for context_id in tuple(train_context_ids) + tuple(test_context_ids):
         context = context_by_id[context_id]
-        record = record_by_sample[context.end_sample_id]
+        target_sample_id = (
+            context.end_sample_id
+            if target_mode == "current_5s"
+            else context.target_sample_id
+        )
+        if target_sample_id is None:
+            raw_by_context[context_id] = {}
+            continue
+        record = record_by_sample[target_sample_id]
         raw_by_context[context_id] = _maneuver_raw_values(
             getattr(record, "raw_vehicle_stats"),
             roles_by_sortie.get(context.sortie_id, ()),
@@ -218,7 +229,11 @@ def _build_maneuver_labels(
             rows.append(
                 {
                     "task_id": MANEUVER_TASK_ID,
-                    "task_name": "机动强度弱监督分类",
+                    "task_name": (
+                        "当前机动强度弱监督分类"
+                        if target_mode == "current_5s"
+                        else "未来机动强度弱监督预测"
+                    ),
                     "task_type": "classification",
                     "split_role": split_role,
                     "context_id": context_id,
@@ -232,6 +247,33 @@ def _build_maneuver_labels(
                 }
             )
     return rows, thresholds
+
+
+def build_maneuver_labels_for_split(
+    *,
+    record_by_sample: Mapping[str, object],
+    context_by_id: Mapping[str, ApplicationContextRecord],
+    train_context_ids: Sequence[str],
+    evaluation_context_ids: Sequence[str],
+    roles: Sequence[FieldRoleRecord],
+    fit_sample_hash: str,
+    target_mode: str,
+    minimum_semantic_count: int = 4,
+    eps: float = 1e-6,
+) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    """Public split-local entry point used by the core-task audit."""
+
+    return _build_maneuver_labels(
+        record_by_sample=record_by_sample,
+        context_by_id=context_by_id,
+        train_context_ids=train_context_ids,
+        test_context_ids=evaluation_context_ids,
+        roles=roles,
+        fit_sample_hash=fit_sample_hash,
+        minimum_semantic_count=minimum_semantic_count,
+        eps=eps,
+        target_mode=target_mode,
+    )
 
 
 def _build_response_labels(

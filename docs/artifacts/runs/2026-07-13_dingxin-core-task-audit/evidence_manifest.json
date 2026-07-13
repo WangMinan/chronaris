@@ -1,0 +1,17 @@
+{
+  "classification_metric_count": 72,
+  "confirmed_metrics_changed": false,
+  "outer_test_accessed": false,
+  "primary_maneuver_target": "current_5s",
+  "response_metric_count": 36,
+  "run_id": "2026-07-13_dingxin-core-task-audit",
+  "source_hashes": {
+    "context_sample_manifest.jsonl": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+    "field_role_manifest.csv": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+    "fold_label_thresholds.csv": "5d114ee408238b2a013d2a6f666b0fcd02e6ff457c97803250a76b909339aecb",
+    "fold_task_labels.csv": "5ea52e9c7576f0af505658ce60a69b19ec88d8d0cee8b486de2addf33de8fe8d",
+    "snapshot_manifest.json": "a8b5b4afa8121d4dd11dd295a33955405c3255d95d0c3dc2f8851bea8967363d",
+    "split_manifest.json": "e69fccc8474ca00de3edf69ceaa64b1d4cca35106b26b8e1bcf79260d2d0a5e8"
+  },
+  "status": "completed"
+}

@@ -1,0 +1,32 @@
+{
+  "branch_name": "codex/chronaris-core-task-recovery-20260713",
+  "candidate_budget_per_trainable_method": 12,
+  "confirmation_seeds": [
+    17,
+    29,
+    43
+  ],
+  "data_manifest_sha256": "142bc4ebbd2cd928158768c02a470fffa80b8ed21841d70c4e05177c49933dc1",
+  "development_seed": 17,
+  "format": "chronaris.core_task_recovery_protocol.v1",
+  "input_history_s": 30.0,
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "outer_split_manifest_sha256": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6",
+  "outer_test_opened": false,
+  "protocol_sha256": "27c1da2de9242284be9c2558ec9dd5f9b3150d2d0abb4ab8236d22c77a0d7209",
+  "source_commit": "23b968e0e9e2b33080fb87781622f325715df9e7",
+  "source_file_sha256": {
+    "data_manifest": "142bc4ebbd2cd928158768c02a470fffa80b8ed21841d70c4e05177c49933dc1",
+    "outer_split_manifest": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6",
+    "task_definition": "ed61afb49e2e3b885f8c246eedae070e08957c195c314f850dc955befcb1075a"
+  },
+  "target_horizon_s": 5.0,
+  "task_definition_sha256": "ed61afb49e2e3b885f8c246eedae070e08957c195c314f850dc955befcb1075a"
+}

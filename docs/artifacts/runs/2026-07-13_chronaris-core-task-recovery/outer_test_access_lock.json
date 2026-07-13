@@ -1,0 +1,10 @@
+{
+  "actual_open_count": 1,
+  "authorized_open_count": 1,
+  "consumed": true,
+  "consumed_by_run_id": "2026-07-13_chronaris-core-task-recovery-confirmation",
+  "format": "chronaris.outer_test_access_authorization.v1",
+  "locked_configuration_sha256": "5eb38a8aff6d04466829eeff9e87ed9196201f9b6998d39a18cccfc5c2a9a327",
+  "outer_test_opened": true,
+  "protocol_sha256": "27c1da2de9242284be9c2558ec9dd5f9b3150d2d0abb4ab8236d22c77a0d7209"
+}

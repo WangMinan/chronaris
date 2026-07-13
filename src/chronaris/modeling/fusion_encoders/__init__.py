@@ -45,6 +45,7 @@ from chronaris.modeling.fusion_encoders.naive_sync import (
     NaiveTimeSyncConfig,
     NaiveTimeSyncEncoder,
     NaiveTimeSyncFusionAdapter,
+    build_causal_observed_features,
     load_naive_time_sync_checkpoint,
     save_naive_time_sync_checkpoint,
 )
@@ -55,6 +56,15 @@ from chronaris.modeling.fusion_encoders.multiscale_causal import (
     MultiScaleCausalFusionOutput,
     MultiScaleCausalLagFusion,
     build_seconds_lag_mask,
+)
+from chronaris.modeling.fusion_encoders.observed_residual import (
+    CORE_TASK_SLUGS,
+    RESIDUAL_MODES,
+    ObservedStateResidual,
+    ObservedStateResidualConfig,
+    ObservedStateResidualOutput,
+    fit_observed_state_projector,
+    masked_sequence_mean,
 )
 
 __all__ = [
@@ -80,10 +90,16 @@ __all__ = [
     "NaiveTimeSyncEncoder",
     "NaiveTimeSyncFusionAdapter",
     "PhysicsComponentStatus",
+    "CORE_TASK_SLUGS",
+    "RESIDUAL_MODES",
+    "ObservedStateResidual",
+    "ObservedStateResidualConfig",
+    "ObservedStateResidualOutput",
     "SingleStreamEncoderConfig",
     "SingleStreamFusionAdapter",
     "causal_query_stream",
     "build_seconds_lag_mask",
+    "build_causal_observed_features",
     "build_alignment_batch_from_observations",
     "build_chronaris_ablation_configs",
     "build_chronaris_physics_audit",
@@ -98,4 +114,6 @@ __all__ = [
     "save_single_stream_checkpoint",
     "save_chronaris_continuous_checkpoint",
     "validate_chronaris_ablation_diff",
+    "fit_observed_state_projector",
+    "masked_sequence_mean",
 ]

@@ -56,7 +56,7 @@ def test_fold_labels_record_both_application_tasks_and_split_roles() -> None:
 
     assert result.status == "completed"
     assert {row["task_name"] for row in result.label_rows} == {
-        "机动强度弱监督分类",
+        "当前机动强度弱监督分类",
         "机动诱发生理响应预测",
     }
     assert {row["split_role"] for row in result.label_rows} == {"train", "test"}

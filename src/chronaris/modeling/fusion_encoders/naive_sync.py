@@ -179,17 +179,10 @@ class NaiveTimeSyncEncoder:
         self,
         batch: DualStreamObservationBatch,
     ) -> tuple[torch.Tensor, torch.Tensor]:
-        physiology = causal_query_stream(batch, stream_name="physiology")
-        vehicle = causal_query_stream(batch, stream_name="vehicle")
-        features = torch.cat(
-            (
-                _stream_features(physiology, maximum_age_s=self.config.maximum_age_s),
-                _stream_features(vehicle, maximum_age_s=self.config.maximum_age_s),
-            ),
-            dim=-1,
+        return build_causal_observed_features(
+            batch,
+            maximum_age_s=self.config.maximum_age_s,
         )
-        valid = physiology.modality_mask | vehicle.modality_mask
-        return features, valid
 
 
 class NaiveTimeSyncFusionAdapter:
@@ -208,13 +201,11 @@ class NaiveTimeSyncFusionAdapter:
         self.checkpoint_sha256 = checkpoint_sha256
 
     def __call__(self, batch: DualStreamObservationBatch) -> FusionStreamBatch:
-        sequence, _modality_available = self.encoder.encode(batch)
-        query_valid = torch.ones(
-            sequence.shape[:2],
-            dtype=torch.bool,
-            device=sequence.device,
-        )
-        pooled = sequence.mean(dim=1)
+        sequence, query_valid = self.encoder.encode(batch)
+        valid_count = query_valid.sum(dim=1, keepdim=True).clamp_min(1)
+        pooled = (
+            sequence * query_valid.unsqueeze(-1).to(sequence.dtype)
+        ).sum(dim=1) / valid_count.to(sequence.dtype)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s,
@@ -286,3 +277,32 @@ def _stream_features(
     )
     age = torch.log1p(age) / math.log1p(maximum_age_s)
     return torch.cat((stream.values, mask_float, age), dim=-1)
+
+
+def build_causal_observed_features(
+    batch: DualStreamObservationBatch,
+    *,
+    maximum_age_s: float = 30.0,
+    active_stream: str = "both",
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Return the common causal values/mask/log-age feature path for both streams."""
+
+    if maximum_age_s <= 0:
+        raise ValueError("maximum_age_s must be positive")
+    physiology = causal_query_stream(batch, stream_name="physiology")
+    vehicle = causal_query_stream(batch, stream_name="vehicle")
+    if active_stream == "both":
+        features = torch.cat((
+            _stream_features(physiology, maximum_age_s=maximum_age_s),
+            _stream_features(vehicle, maximum_age_s=maximum_age_s),
+        ), dim=-1)
+        valid = physiology.modality_mask | vehicle.modality_mask
+    elif active_stream == "physiology":
+        features = _stream_features(physiology, maximum_age_s=maximum_age_s)
+        valid = physiology.modality_mask
+    elif active_stream == "vehicle":
+        features = _stream_features(vehicle, maximum_age_s=maximum_age_s)
+        valid = vehicle.modality_mask
+    else:
+        raise ValueError("active_stream must be both, physiology, or vehicle")
+    return features, valid

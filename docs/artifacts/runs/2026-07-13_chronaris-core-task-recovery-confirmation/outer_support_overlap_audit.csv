@@ -1,0 +1,4 @@
+fold_id,train_context_count,held_out_context_count,overlap_pair_count,overlapping_train_context_count,overlapping_held_out_context_count,exact_sortie_anchor_pair_count,support_isolated
+leave_one_view_out__fold01,31,31,361,31,31,31,False
+leave_one_view_out__fold02,31,31,361,31,31,31,False
+leave_one_view_out__fold03,38,31,0,0,0,0,True

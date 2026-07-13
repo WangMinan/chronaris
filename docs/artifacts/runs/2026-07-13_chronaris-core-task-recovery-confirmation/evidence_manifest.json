@@ -1,0 +1,17 @@
+{
+  "claim_eligible": false,
+  "format": "chronaris.core_task_recovery_confirmation.v1",
+  "historical_confirmed_artifacts_overwritten": false,
+  "invalid_reason": "outer_train_and_held_out_time_support_overlap",
+  "isolated_fold_ids": [
+    "leave_one_view_out__fold03"
+  ],
+  "locked_configuration_sha256": "5eb38a8aff6d04466829eeff9e87ed9196201f9b6998d39a18cccfc5c2a9a327",
+  "method_seed_fold_count": 54,
+  "metric_count": 162,
+  "outer_support_audit_path": "docs/artifacts/runs/2026-07-13_chronaris-core-task-recovery-confirmation/outer_support_overlap_audit.json",
+  "outer_test_access_count": 1,
+  "promotion_passed": false,
+  "run_id": "2026-07-13_chronaris-core-task-recovery-confirmation",
+  "status": "invalid_protocol_overlap"
+}

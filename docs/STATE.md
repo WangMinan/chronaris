@@ -1,14 +1,18 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-12
+更新时间：2026-07-13
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 的实验和证据链已经闭环，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`，只剩全量回归测试与工作树审计。鼎新 real-only、仿真 clean、时间机制、端到端辅助、七因素压力、仿真到鼎新适配和 Chronaris 四机制消融均完成锁定评价。Chronaris 在鼎新高生理响应识别 AUPRC 0.8839、仿真机动分段 Macro-F1 0.4687、时钟偏移 MAE 0.8883 秒和响应时延 MAE 7.4859 秒上形成分项领先；机动分类、负荷分类/回归和边界定位由不同基线领先。压力结果中 Chronaris 在最高单因素压力的 21 个主指标组合里有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六。仿真预训练迁移没有形成一致收益；四项消融进一步显示连续演化主要支撑负荷任务，因果掩码和多尺度时延主要支撑机动分段，物理约束不形成全任务一致增益。最终论文证据包汇总 8 层证据、7 幅已抽查中文图和 54 项迁移配对，9/9 门禁通过。
+当前分支为 `codex/chronaris-core-task-recovery-20260713`。Chronaris 核心任务恢复已完成任务审计、观测信息保留残差、任务感知消费者、六方法等预算三折开发和一次性外层确认；但外层支持审计发现前两个留一视图折的训练上下文 `31/31` 均与外层留出集时间区间重叠，各有 31 个同架次同锚点配对。因此本轮三折外层汇总已标记为不可用于论文或模型晋级，唯一授权已经消费，不启动仿真次级确认。仅有的无重叠折上，Chronaris 三随机种子的机动分类宏平均 F1（Macro-F1）为 0.7778、生理响应均方根误差（RMSE）为 0.8222、高响应精确率—召回率曲线下面积（AUPRC）为 0.8127，只承担失败诊断。2026-07-12 鼎新留一视图主表使用同一外层划分，其原始数值保持不变，但读者可见结论同步降级；仿真、时间机制、压力和公开数据适配证据不受此次鼎新划分审计影响。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- 核心任务恢复协议与唯一授权：[artifacts/runs/2026-07-13_chronaris-core-task-recovery/](artifacts/runs/2026-07-13_chronaris-core-task-recovery/)
+- 核心任务恢复开发漏斗：[artifacts/runs/2026-07-13_chronaris-core-task-recovery-development/report.md](artifacts/runs/2026-07-13_chronaris-core-task-recovery-development/report.md)
+- 一次性外层确认与支持区间审计：[artifacts/runs/2026-07-13_chronaris-core-task-recovery-confirmation/report.md](artifacts/runs/2026-07-13_chronaris-core-task-recovery-confirmation/report.md)
+- 当前/未来机动任务审计：[artifacts/runs/2026-07-13_dingxin-core-task-audit/report.md](artifacts/runs/2026-07-13_dingxin-core-task-audit/report.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 - 固定数据证据策略：[requirements/foundation/fixed-data-evidence-strategy.md](requirements/foundation/fixed-data-evidence-strategy.md)
@@ -51,6 +55,9 @@
 
 ## 已锁定事实
 
+- 鼎新读者可见主结果必须先通过完整 35 秒输入—目标支持区间隔离；样本 ID 互斥不等价于同架次时间支持隔离。
+- 现有留一视图主协议的前两折不满足上述条件；相关历史数值只保留追溯，不再作为论文主张依据。
+- 本轮外层授权已消费。若后续确需重建鼎新确认，必须先形成新的按架次隔离或完整支持清除协议，并重新预注册，不能复用本轮结果选模。
 - 后续不把新增鼎新一手双流、人工工作负荷评价或专家事件标注作为依赖。
 - 现有鼎新范围固定为 2 个 sortie、3 个 view、111 个 5 秒窗口。
 - 鼎新主任务改为机动强度弱监督分类和机动诱发生理响应预测；历史任务字段只用于兼容。
@@ -62,11 +69,12 @@
 
 ## 当前长程队列
 
+- 核心任务恢复：开发阶段的观测信息保留路径在内层验证上达到机动分类 0.8175、生理响应 RMSE 0.8268、高响应 AUPRC 0.7335，并完成六方法同预算锁定。一次性外层运行生成 54 个方法—随机种子—折单元和 162 条指标，但支持区间审计判定协议无效；原始三折均值不进入论文，仿真次级确认按门禁停止。
 - 仿真 clean 主线：18/18 方法—随机种子 consumer、1152 条指标、768 条双流增益和 90 条轨迹级配对统计全部完成，7/7 门禁通过。Chronaris 在线性探针的仿真负荷分类/回归分别以 macro-F1 0.5110、RMSE 0.1928 居首，在持续时间约束分段的 frame macro-F1 0.4687、segmental F1@0.25 0.5319 居首；MiniRocket 负荷任务与边界 F1/延迟由 MulT 领先，因此结论是可解释的分项优势，不是全面第一。
 - 仿真压力主线：3 seeds × 35 场景 × 6 方法共 630 份 `[192,96,64]` 表示和 630/630 个冻结 consumer 评估全部完成，两级门禁分别为 5/5、6/6。共生成 20,160 条指标、4,032 条退化斜率和 630 条 48 轨迹配对统计；所有 consumer 和阈值冻结自 G1 clean，压力场景不重训、不调参。Chronaris 在最高单因素压力下 15/21 个主指标组合位于前二，但随机和连续缺失的主指标平均退化斜率为 -0.0733/-0.1264，均排第六。
 - 时间机制主线：144 份 G1 表示、24 个 Ridge 探针、840 个 G2 场景评价、3360 条指标和 630 条 48 轨迹配对统计全部完成，表示/consumer 门禁为 5/5、6/6。Chronaris 的时钟偏移 MAE 0.8883 秒、响应时延 MAE 7.4859 秒及两项容差命中率在四方法中最佳；MulT 的响应时延 Spearman 0.3584 高于 Chronaris 0.1766，排序相关性不作为 Chronaris 优势。
 - 端到端辅助表：18/18 方法—随机种子、54 份独立表示、864 条指标和 7/7 门禁完成。MulT 在标签微调后的负荷分类和机动分段领先；Chronaris 仅在负荷回归 RMSE 0.2666 略居首。Chronaris 微调后的 macro-F1/RMSE/分段 frame macro-F1 为 0.3145/0.2666/0.3638，弱于冻结主表 0.5110/0.1928/0.4687，说明现有小样本端到端适配产生过拟合，冻结任务无关表示继续作为论文主表。
-- 鼎新 real-only 主线：75/75 个训练单元、270/270 份 `frozen_task_agnostic_v1` 统一表示、90/90 个冻结 consumer 和 5,040 条指标全部完成，三级门禁分别为 8/8、6/6、8/8。主协议只用三个留一视图折汇总，两个留一架次折只作辅助；不报告窗口级显著性。Chronaris 的高生理响应 AUPRC 0.8839 和最差折平均 0.6516 均居首，相对最佳单流增益 0.0094；机动强度 Macro-F1 0.7394 与生理响应 RMSE 0.3365 均低于最佳基线。
+- 鼎新 real-only 历史主线：75/75 个训练单元、270/270 份统一表示、90/90 个冻结 consumer 和 5,040 条指标仍作为历史产物保留。2026-07-13 审计确认其三个留一视图主折中有两折存在跨视图时间支持重叠，因此 AUPRC 0.8839、机动分类 0.7394 和生理响应 RMSE 0.3365 均不得继续作为论文主结果；两个留一架次辅助折尚未在本轮重新提升为主协议。
 - 设备调度：公共增强已固定在 CPU，模型 tensor 才送入 GPU；鼎新五方法的合并输入 GPU 冒烟连续完成且无 launch failure。正式队列继续保持单 CUDA 进程，checkpoint 记录设备历史，重复故障才原地迁移 CPU。
 - CUDA 故障点已收敛到增强阶段的小粒度索引算子；公共增强、pretext target 和错误时移现固定在 CPU 确定性构造，再只把模型输入与 target tensor 送入 GPU。单 epoch CUDA 冒烟已确认 `training_device=cuda`、`augmentation_device=cpu`，鼎新基线队列将在严格单进程下采用该路径，若仍失败再按设备历史迁移 CPU。
 - 锁定表示混合设备冒烟已完成：seed 17 六方法在 baseline CUDA、Chronaris CPU、朴素同步 CPU/PCA 下导出 train/validation/G2 共 18 份表示，耗时约 2 分 41 秒，18/18 输出、7/7 验收通过；任务 oracle 保持关闭。
@@ -82,6 +90,8 @@
 
 ## 本轮新增锁定链路
 
+- 核心任务恢复新增真实有效掩码、训练折随机化主成分投影、航电观测保留路径、连续融合残差、任务路由、MiniRocket 时序卷积特征变换、逻辑回归分类器和极端随机树回归器；外层确认入口现会在读取外层留出集前强制检查完整支持区间隔离。
+- 本轮一次性确认的 `actual_open_count=1` 且授权已消费。支持审计输出 361/361 个跨角色重叠配对和 31/31 个同锚点配对到前两折，产物状态为 `invalid_protocol_overlap`、`claim_eligible=false`。
 - 鼎新正式训练器只允许 inner-train/validation batch provider，outer-test 请求会 fail closed；训练折归一化、公共早停损失、checkpoint hash、设备与资源峰值均写入 manifest。
 - 鼎新正式表示导出要求 75 个 checkpoint 全部完成后才允许打开 outer-test 原始输入，统一导出 3 seeds × 5 folds × 6 methods × 3 roles 共 270 份 `[N,96,64]` 表示。
 - 鼎新正式下游消费者只在 validation 网格选择 Logistic/Ridge/MiniRocket 超参数；三个留一视图折作为主统计单位，两个留一架次折只作辅助，不报告窗口级显著性。
@@ -91,7 +101,7 @@
 - 时间偏移与响应时延恢复任务已形成独立门禁链路：四种双流方法先导出 G1 六场景 train/validation 表示，再用 G1 validation 选择统一 Ridge 探针，最后只在 G2 的 35 个压力场景上评价；G2 不参与拟合或选参。
 - 仿真端到端微调辅助链路已实现：六方法共享 `1e-4`、20 epoch、patience 5，联合训练线性负荷分类/回归头与两层因果 TCN；五个可训练编码器更新完整主干，朴素同步作为非参数 head-only 控制。微调表示单独写入 `end_to_end_finetuned_v1` 并显式声明使用任务标签，等待冻结主表完成后运行。
 - 下游论文证据包已正式生成：锁定读取鼎新主折、仿真 clean、七因素压力、时间机制恢复、四项消融、端到端辅助表、仿真预训练适配和既有 UAB/NASA 公开适配证据，形成 8 层证据、7 幅中文图、预声明主指标表、54 项迁移增量表、证据矩阵和结论边界，9/9 门禁通过。7 图已逐图抽查并移除机器折 ID、轨迹 ID和未解释英文。
-- 因果时间合并、OvR 高维求解器和批量持续时间解码接入后，完整测试为 `370 passed, 8 skipped, 319 warnings`；新增批量解码逐位等价、GPU 稳定性、表示族、微调和证据包测试均通过。
+- 核心任务恢复、一次性授权、方向化排名和外层支持隔离检查接入后，完整测试为 `381 passed, 8 skipped, 319 warnings`；新增残差零门控、有效查询、任务训练、协议锁和重叠审计测试均通过。
 - 100 ms 因果时间箱、同时间观测聚合、缺失模态和旧 checkpoint 拒绝恢复的聚焦测试为 `10 passed`；run-level protocol 显式记录箱宽、时间戳策略和方法无关约束。
 - MiniRocket 高维逻辑回归求解器已在 G2 指标比较前锁定：显式 OvR `liblinear` 对所有方法共用，64 维线性探针保留 `lbfgs`；应用消费者与鼎新消费者聚焦测试 `13 passed`。
 - 持续时间约束解码已将相互独立的 batch 维向量化；`[192,96,5]` 真实 logits 从逐样本外推 77.55 秒降至 1.76 秒，约 43.95 倍。随机批次与真实前四样本均逐位等价，压力 consumer 从空根重启。

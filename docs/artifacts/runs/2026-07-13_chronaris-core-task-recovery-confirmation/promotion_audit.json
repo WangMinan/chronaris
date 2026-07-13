@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "rank": 2,
+      "rank_first": false,
+      "strict_threshold": 0.9409316261641733,
+      "task": "maneuver",
+      "threshold_passed": false,
+      "value": 0.9259236734291777
+    },
+    {
+      "rank": 3,
+      "rank_first": false,
+      "strict_threshold": 0.2912,
+      "task": "response",
+      "threshold_passed": true,
+      "value": 0.2740553400694102
+    },
+    {
+      "rank": 2,
+      "rank_first": false,
+      "strict_threshold": 0.8839,
+      "task": "high_response",
+      "threshold_passed": true,
+      "value": 0.937568096410324
+    }
+  ],
+  "invalid_reason": "outer_train_and_held_out_time_support_overlap",
+  "promotion_passed": false,
+  "protocol_valid": false,
+  "raw_metric_promotion_passed": false
+}

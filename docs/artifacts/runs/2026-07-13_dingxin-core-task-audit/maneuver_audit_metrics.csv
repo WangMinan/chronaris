@@ -1,0 +1,73 @@
+outer_fold_id,task_decision_split_id,maneuver_target_mode,modality,history_s,train_count,evaluation_count,macro_f1,status,outer_test_accessed,reason
+leave_one_view_out__fold01,task-decision-time-01,current_5s,physiology_only,5.0,14,11,0.1878787878787879,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,current_5s,physiology_only,30.0,14,11,0.35555555555555557,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,current_5s,vehicle_only,5.0,14,11,0.23529411764705885,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,current_5s,vehicle_only,30.0,14,11,0.20833333333333334,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,current_5s,dual_stream,5.0,14,11,0.23529411764705885,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,current_5s,dual_stream,30.0,14,11,0.20833333333333334,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,future_5s,physiology_only,5.0,14,11,0.05555555555555555,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,future_5s,physiology_only,30.0,14,11,0.06666666666666667,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,future_5s,vehicle_only,5.0,14,11,0.07407407407407407,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,future_5s,vehicle_only,30.0,14,11,0.08333333333333333,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,future_5s,dual_stream,5.0,14,11,0.07407407407407407,completed,False,
+leave_one_view_out__fold01,task-decision-time-01,future_5s,dual_stream,30.0,14,11,0.08333333333333333,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,current_5s,physiology_only,5.0,15,10,0.3703703703703704,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,current_5s,physiology_only,30.0,15,10,0.07407407407407407,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,current_5s,vehicle_only,5.0,15,10,0.2222222222222222,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,current_5s,vehicle_only,30.0,15,10,0.19528619528619529,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,current_5s,dual_stream,5.0,15,10,0.34920634920634924,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,current_5s,dual_stream,30.0,15,10,0.19528619528619529,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,future_5s,physiology_only,5.0,15,10,0.2380952380952381,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,future_5s,physiology_only,30.0,15,10,0.06666666666666667,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,future_5s,vehicle_only,5.0,15,10,0.2745098039215686,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,future_5s,vehicle_only,30.0,15,10,0.25,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,future_5s,dual_stream,5.0,15,10,0.2745098039215686,completed,False,
+leave_one_view_out__fold01,task-decision-time-03,future_5s,dual_stream,30.0,15,10,0.25,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,current_5s,physiology_only,5.0,14,11,0.1878787878787879,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,current_5s,physiology_only,30.0,14,11,0.35555555555555557,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,current_5s,vehicle_only,5.0,14,11,0.23529411764705885,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,current_5s,vehicle_only,30.0,14,11,0.20833333333333334,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,current_5s,dual_stream,5.0,14,11,0.23529411764705885,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,current_5s,dual_stream,30.0,14,11,0.20833333333333334,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,future_5s,physiology_only,5.0,14,11,0.05555555555555555,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,future_5s,physiology_only,30.0,14,11,0.06666666666666667,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,future_5s,vehicle_only,5.0,14,11,0.07407407407407407,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,future_5s,vehicle_only,30.0,14,11,0.08333333333333333,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,future_5s,dual_stream,5.0,14,11,0.07407407407407407,completed,False,
+leave_one_view_out__fold02,task-decision-time-01,future_5s,dual_stream,30.0,14,11,0.08333333333333333,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,current_5s,physiology_only,5.0,15,10,0.3703703703703704,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,current_5s,physiology_only,30.0,15,10,0.07407407407407407,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,current_5s,vehicle_only,5.0,15,10,0.2222222222222222,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,current_5s,vehicle_only,30.0,15,10,0.19528619528619529,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,current_5s,dual_stream,5.0,15,10,0.34920634920634924,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,current_5s,dual_stream,30.0,15,10,0.19528619528619529,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,future_5s,physiology_only,5.0,15,10,0.2380952380952381,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,future_5s,physiology_only,30.0,15,10,0.06666666666666667,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,future_5s,vehicle_only,5.0,15,10,0.2745098039215686,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,future_5s,vehicle_only,30.0,15,10,0.25,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,future_5s,dual_stream,5.0,15,10,0.2745098039215686,completed,False,
+leave_one_view_out__fold02,task-decision-time-03,future_5s,dual_stream,30.0,15,10,0.25,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,current_5s,physiology_only,5.0,12,14,0.0,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,current_5s,physiology_only,30.0,12,14,0.08333333333333333,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,current_5s,vehicle_only,5.0,12,14,0.09523809523809523,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,current_5s,vehicle_only,30.0,12,14,0.2222222222222222,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,current_5s,dual_stream,5.0,12,14,0.09523809523809523,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,current_5s,dual_stream,30.0,12,14,0.2222222222222222,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,future_5s,physiology_only,5.0,12,14,0.19047619047619047,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,future_5s,physiology_only,30.0,12,14,0.3076923076923077,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,future_5s,vehicle_only,5.0,12,14,0.0,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,future_5s,vehicle_only,30.0,12,14,0.0,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,future_5s,dual_stream,5.0,12,14,0.0,completed,False,
+leave_one_view_out__fold03,task-decision-time-01,future_5s,dual_stream,30.0,12,14,0.0,completed,False,
+leave_one_view_out__fold03,task-decision-time-03,current_5s,physiology_only,5.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,current_5s,physiology_only,30.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,current_5s,vehicle_only,5.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,current_5s,vehicle_only,30.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,current_5s,dual_stream,5.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,current_5s,dual_stream,30.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,future_5s,physiology_only,5.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,future_5s,physiology_only,30.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,future_5s,vehicle_only,5.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,future_5s,vehicle_only,30.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,future_5s,dual_stream,5.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
+leave_one_view_out__fold03,task-decision-time-03,future_5s,dual_stream,30.0,0,0,,unavailable_target_fit,False,only 2 fitted semantic scalers; require 4
