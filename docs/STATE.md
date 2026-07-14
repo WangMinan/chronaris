@@ -1,15 +1,16 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-14
+更新时间：2026-07-15
 
 ## 一句话状态
 
-鼎新核心任务可行性审计已完成，当前分支为 `codex/dingxin-core-feasibility-20260714`。在不读取外层测试的前提下，12 个有界候选分别得到机动强度分类 Macro-F1 `0.8241`、未来生理响应 RMSE `0.8368` 和高生理响应识别 AUPRC `0.7875` 的最佳训练内均值，均未越过 `0.950/0.285/0.900` 的预声明门槛。按退出协议，冻结专家安全融合没有启动，也不允许继续进入任务感知主干开发。结果表明完整 30 秒航电历史对机动分类最有价值，双流直接观测只给连续响应带来很小增益；当前差距同时涉及跨视图标签标尺、类别覆盖、目标分布和表示压缩，不能只归因于 Chronaris encoder 或冻结 consumer。既有锁定外层指标和论文证据包保持不变。
+鼎新任务协议修复与跨视图稳定化审计已完成，当前分支为 `codex/dingxin-task-stability-20260714`。新协议形成 6 个唯一、三类完整的主选模验证单元，完整 35 秒支持区间互不重叠且额外保留 35 秒间隔；第三个外层训练池在不降低约束时无法形成合法单元，已作为分布压力诊断隔离。22 个预注册轻量候选在严格协议下的最佳结果为：机动强度分类平均/中位/最差 Macro-F1 `0.8286/0.9111/0.6627`，连续生理响应中位 RMSE 比率 `1.0000`，高生理响应平均/中位归一化平均精确率 `0.2089/0.0687`。三项相对门禁均未完整通过，`allow_safe_fusion=false`、`allow_task_aware_research=false`。本轮未读取外层测试，未修改或训练 Chronaris 主干；既有锁定指标和论文证据包保持不变。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
-- 鼎新核心任务可行性审计：[artifacts/runs/2026-07-14_dingxin-core-feasibility/gap_report.md](artifacts/runs/2026-07-14_dingxin-core-feasibility/gap_report.md)
+- 鼎新任务协议修复与跨视图稳定化：[artifacts/runs/2026-07-14_dingxin-task-stability/gap_report.md](artifacts/runs/2026-07-14_dingxin-task-stability/gap_report.md)
+- 前轮鼎新核心任务可行性审计：[artifacts/runs/2026-07-14_dingxin-core-feasibility/gap_report.md](artifacts/runs/2026-07-14_dingxin-core-feasibility/gap_report.md)
 - 未推送核心恢复工作盘点：[implementation/notes/unpublished-core-recovery-inventory-2026-07-14.md](implementation/notes/unpublished-core-recovery-inventory-2026-07-14.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
