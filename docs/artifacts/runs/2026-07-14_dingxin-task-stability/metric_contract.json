@@ -1,0 +1,52 @@
+{
+  "aggregation": {
+    "bootstrap_ci": "hierarchical resampling of pools then supports",
+    "mean": "mean of outer-pool support means",
+    "median_quartiles_and_worst": "unique validation support units",
+    "outer_pool_weighting": "equal_weight_after_within_pool_aggregation",
+    "statistics": [
+      "mean",
+      "median",
+      "worst",
+      "q25",
+      "q75",
+      "bootstrap_ci"
+    ],
+    "unit": "unique_validation_support_hash",
+    "window_level_significance": false
+  },
+  "format": "chronaris.dingxin_task_stability_metric_contract.v1",
+  "high_response": {
+    "additional": [
+      "auprc",
+      "auroc",
+      "balanced_accuracy",
+      "auprc_lift"
+    ],
+    "normalized_ap": "(AUPRC - prevalence) / (1 - prevalence)",
+    "random_auprc_baseline": "validation prevalence"
+  },
+  "maneuver": {
+    "additional": [
+      "support_aware_macro_f1",
+      "per_class_recall",
+      "ordinal_mae",
+      "continuous_score_mae",
+      "continuous_score_spearman"
+    ],
+    "diagnostic_missing_class_rule": "exclude_from_main_ranking",
+    "primary": "fixed_three_class_macro_f1"
+  },
+  "response": {
+    "absolute_outer_threshold_not_used_for_inner_selection": true,
+    "additional": [
+      "rmse",
+      "mae",
+      "nrmse_std",
+      "nrmse_iqr",
+      "spearman"
+    ],
+    "response_skill": "1 - MSE_model / MSE_train_mean_baseline",
+    "rmse_ratio": "RMSE_model / RMSE_train_mean_baseline"
+  }
+}

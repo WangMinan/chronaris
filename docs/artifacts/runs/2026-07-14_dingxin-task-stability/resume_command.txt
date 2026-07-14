@@ -1,0 +1,1 @@
+PYTHONPATH=src /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_dingxin_task_stability.py --resume

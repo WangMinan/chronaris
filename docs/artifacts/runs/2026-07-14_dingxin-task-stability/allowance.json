@@ -1,0 +1,45 @@
+{
+  "allow_safe_fusion": false,
+  "allow_task_aware_research": false,
+  "decision": "gap",
+  "field_or_dual_stable_gain": false,
+  "gate_checks": {
+    "high_response": {
+      "mean_auprc_lift": false,
+      "mean_normalized_ap": true,
+      "median_normalized_ap": false,
+      "positive_normalized_ap_fraction": true
+    },
+    "maneuver": {
+      "mean_macro_f1": false,
+      "median_macro_f1": true,
+      "median_score_spearman": true,
+      "minimum_class_recall": false,
+      "positive_baseline_lift": true,
+      "worst_macro_f1": true
+    },
+    "response": {
+      "field_or_dual_stable_gain": false,
+      "mean_response_skill": false,
+      "median_rmse_ratio": false,
+      "median_spearman": false,
+      "positive_skill_fraction": false
+    }
+  },
+  "gate_failures": [
+    "maneuver",
+    "response",
+    "response_near_miss",
+    "high_response"
+  ],
+  "high_response_gate_passed": false,
+  "maneuver_gate_passed": false,
+  "outer_test_opened": false,
+  "primary_blocker": "cross_support_generalization_instability",
+  "protocol_valid": true,
+  "response_gate_passed": false,
+  "response_near_miss_passed": false,
+  "response_task_risk": "blocked",
+  "safe_fusion_started": false,
+  "task_aware_training_started": false
+}

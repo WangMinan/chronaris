@@ -1,0 +1,8 @@
+{
+  "allow_safe_fusion": false,
+  "allow_task_aware_research": false,
+  "completed_candidate_split_units": 132,
+  "decision": "gap",
+  "outer_test_opened": false,
+  "status": "completed"
+}

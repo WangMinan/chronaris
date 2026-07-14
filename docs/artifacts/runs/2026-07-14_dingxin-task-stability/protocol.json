@@ -1,0 +1,77 @@
+{
+  "baseline_commit": "26e9c8ebaa124de2cfc9075421aca77f20e5e700",
+  "candidate_count": 22,
+  "chronaris_backbone_modified": false,
+  "chronaris_backbone_trained": false,
+  "final_outer_thresholds": {
+    "high_response_auprc": {
+      "operator": ">",
+      "value": 0.8838786894
+    },
+    "maneuver_macro_f1": {
+      "operator": ">",
+      "value": 0.9409316262
+    },
+    "response_rmse": {
+      "operator": "<",
+      "value": 0.2911709799
+    }
+  },
+  "format": "chronaris.dingxin_task_stability_protocol.v1",
+  "git_head": "109d63f9494d192e4bd7ae59186636c601598c5b",
+  "held_out_predictions_opened": false,
+  "historical_outer_sample_predictions_opened": false,
+  "input_feature_contract": {
+    "explicit_query_or_block_position_used": false,
+    "input_feature_contract_sha256": "a33817c1d142c279934d5d318bbb35644581a8c429b901bb34fe533190a92323",
+    "time_like_allowed_field_count": 60,
+    "time_like_present_channel_count": 30,
+    "time_like_present_channels_sha256": "ebc6f35bd5472f1b6f53fadab2b41659c515d4bc283eec3efe8f180621e456e4",
+    "vehicle_channel_count_after": 925,
+    "vehicle_channel_count_before": 955,
+    "view_pilot_or_sortie_identity_used": false
+  },
+  "main_split_count": 6,
+  "mainline_commit": "23b968e0e9e2b33080fb87781622f325715df9e7",
+  "outer_test_opened": false,
+  "protocol_repair_reason": "corrected target-fit batch handling and interpreted the 35-second embargo after each full 35-second support interval",
+  "protocol_repair_rerun_count": 1,
+  "relative_gates": {
+    "high_response": {
+      "mean_auprc_lift": 0.15,
+      "mean_normalized_ap": 0.2,
+      "median_normalized_ap": 0.2,
+      "positive_normalized_ap_fraction": 0.6666666666666666
+    },
+    "maneuver": {
+      "mean_macro_f1": 0.85,
+      "median_macro_f1": 0.85,
+      "median_score_spearman": 0.5,
+      "minimum_class_recall": 0.55,
+      "worst_macro_f1": 0.65
+    },
+    "response": {
+      "mean_response_skill": 0.0,
+      "median_rmse_ratio": 0.95,
+      "median_spearman": 0.2,
+      "positive_skill_fraction": 0.6666666666666666
+    },
+    "response_near_miss": {
+      "median_rmse_ratio": 1.0,
+      "positive_skill_fraction": 0.5
+    }
+  },
+  "run_id": "2026-07-14_dingxin-task-stability",
+  "safe_fusion_started": false,
+  "source_sha256": {
+    "context_catalog": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+    "feature_export_e_manifest": "57bb0de3477e48441df1d31dbdb8639745baacc082f48ba28ea12b0416c6a161",
+    "feature_export_f_manifest": "9b0070432c5daf8279fe82b416bf62823763c7d0c0a7f5ebbea9dfb8dc824a3e",
+    "field_roles": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+    "fixed_data_manifest": "c9f78946d1e698153fba9308a04f74f28a375d7864070ca143f76aeae74bacad",
+    "legacy_inner_split": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6",
+    "outer_split_contract": "e69fccc8474ca00de3edf69ceaa64b1d4cca35106b26b8e1bcf79260d2d0a5e8",
+    "snapshot_manifest": "a8b5b4afa8121d4dd11dd295a33955405c3255d95d0c3dc2f8851bea8967363d"
+  },
+  "unique_validation_support_count": 6
+}
