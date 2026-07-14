@@ -1,0 +1,4 @@
+task,metric,direction,threshold,best_candidate_id,best_mean_value,mean_gate_passed,fold_gate_pass_count,required_fold_count
+maneuver,macro_f1,higher,0.95,summary_vehicle_30s_linear,0.8240740740740741,False,2,3
+response,rmse,lower,0.285,summary_dual_30s_linear,0.8368327881469777,False,0,3
+high_response,auprc,higher,0.9,sequence_minirocket_5000,0.7875212623373158,False,1,3

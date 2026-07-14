@@ -1,0 +1,4 @@
+fold_id,train_context_count,validation_context_count,support_overlap_pair_count,support_isolated,outer_test_accessed,source_train_context_count,purged_train_context_count,outer_context_identifiers_in_development_manifest
+leave_one_view_out__fold01,31,31,0,True,False,31,0,0
+leave_one_view_out__fold02,31,31,0,True,False,31,0,0
+leave_one_view_out__fold03,36,14,0,True,False,38,2,0

@@ -1,0 +1,4 @@
+task,metric,value,threshold,gate_passed,status,outer_test_accessed
+maneuver,macro_f1,,,False,blocked_by_upper_bound_gate,False
+response,rmse,,,False,blocked_by_upper_bound_gate,False
+high_response,auprc,,,False,blocked_by_upper_bound_gate,False

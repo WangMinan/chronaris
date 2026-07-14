@@ -1,0 +1,9 @@
+dependency,version,status
+numpy,2.2.6,available
+pandas,2.3.3,available
+scikit-learn,1.7.2,available
+torch,2.11.0,available
+aeon,1.5.0,available
+matplotlib,3.10.9,available
+python,3.11.15,available
+platform,Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35,available

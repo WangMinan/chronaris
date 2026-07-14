@@ -1,0 +1,227 @@
+{
+  "allowed_roles": [
+    "inner_train",
+    "inner_validation"
+  ],
+  "base_commit": "23b968e0e9e2b33080fb87781622f325715df9e7",
+  "branch_name": "codex/dingxin-core-feasibility-20260714",
+  "candidate_budget": 12,
+  "candidate_count": 12,
+  "candidate_panel": [
+    {
+      "candidate_id": "summary_vehicle_5s_linear",
+      "head_family": "linear",
+      "history_s": 5.0,
+      "modality": "vehicle",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "summary_vehicle_30s_linear",
+      "head_family": "linear",
+      "history_s": 30.0,
+      "modality": "vehicle",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "summary_dual_30s_linear",
+      "head_family": "linear",
+      "history_s": 30.0,
+      "modality": "dual",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "summary_physiology_30s_linear",
+      "head_family": "linear",
+      "history_s": 30.0,
+      "modality": "physiology",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "summary_vehicle_30s_histgb",
+      "head_family": "histgb",
+      "history_s": 30.0,
+      "modality": "vehicle",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "summary_dual_30s_histgb",
+      "head_family": "histgb",
+      "history_s": 30.0,
+      "modality": "dual",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "sequence_minirocket_1000",
+      "head_family": "linear_panel",
+      "history_s": 30.0,
+      "modality": "task_specific",
+      "representation": "minirocket_1000"
+    },
+    {
+      "candidate_id": "sequence_minirocket_5000",
+      "head_family": "linear_panel",
+      "history_s": 30.0,
+      "modality": "task_specific",
+      "representation": "minirocket_5000"
+    },
+    {
+      "candidate_id": "sequence_multirocket",
+      "head_family": "linear_panel",
+      "history_s": 30.0,
+      "modality": "task_specific",
+      "representation": "multirocket"
+    },
+    {
+      "candidate_id": "sequence_hydra",
+      "head_family": "linear_panel",
+      "history_s": 30.0,
+      "modality": "task_specific",
+      "representation": "hydra"
+    },
+    {
+      "candidate_id": "fieldwise_physiology_30s",
+      "head_family": "fieldwise_ridge",
+      "history_s": 30.0,
+      "modality": "physiology",
+      "representation": "causal_summary"
+    },
+    {
+      "candidate_id": "historical_frozen_panel",
+      "head_family": "historical_linear_and_minirocket",
+      "history_s": 30.0,
+      "modality": "method_panel",
+      "representation": "frozen_64d"
+    }
+  ],
+  "confirmed_metrics_mutable": false,
+  "consumer_config": {
+    "feature_selection_fit_role": "inner_train",
+    "high_response": [
+      "bce",
+      "balanced_bce",
+      "continuous_regression_threshold",
+      "joint_regression_risk"
+    ],
+    "maneuver": [
+      "balanced_logistic",
+      "linear_svm",
+      "ordinal_cumulative",
+      "continuous_score_then_bucket",
+      "hist_gradient_boosting"
+    ],
+    "response": [
+      "ridge_raw_or_log1p",
+      "huber",
+      "pls",
+      "kernel_ridge",
+      "hist_gradient_boosting",
+      "fieldwise_ridge"
+    ],
+    "selection_role": "inner_validation"
+  },
+  "folds": [
+    "leave_one_view_out__fold01",
+    "leave_one_view_out__fold02",
+    "leave_one_view_out__fold03"
+  ],
+  "forbidden_roles": [
+    "held_out",
+    "outer_test"
+  ],
+  "format": "chronaris.dingxin_core_feasibility_protocol.v1",
+  "git_head": "9e2bb48020f0af9b360e769eff27b919a0ef7c3a",
+  "historical_reference": {
+    "high_response_auprc": 0.8838786894481233,
+    "maneuver_macro_f1": 0.9409316261641733,
+    "response_rmse": 0.29117097989424773
+  },
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "outer_test_opened": false,
+  "protocol_sha256": "bd900ff5965e1416344d15314cda452ae30fc75d040175f45a9cf5ea153b8c6d",
+  "random_seeds": [
+    17
+  ],
+  "run_id": "2026-07-14_dingxin-core-feasibility",
+  "snapshot_file_sha256": {
+    "sorties/20251002_单01_ACT-8_翼云_J16_12#01/vehicle_points.jsonl.gz": "eac71fd17d8bb989fd0de0aa75000390310a61de45ad035b29704a49be015ac2",
+    "sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/physiology_points.jsonl.gz": "c3968bc4621d4e2729e7b298fbea72fd9f1c4a8e3013f22ff0db4be9f7aebed3",
+    "sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/physiology_points.jsonl.gz": "2dc3b2ba6d394deaafc11c62771ad351d2008c030eb6bee63ebeda824c4c33aa",
+    "sorties/20251005_四01_ACT-4_云_J20_22#01/vehicle_points.jsonl.gz": "0fcb1e9123c679391ca5cf817ab6aeaef1ff9aaf9fd8748bcff97f25004a3cb1",
+    "sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/physiology_points.jsonl.gz": "ae36282aa273e8c77c6053daaa9fe5e1934129072907541a5e3aa6fa0539d44f"
+  },
+  "source_file_sha256": {
+    "context_catalog": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+    "development_splits": "40c1b3273e58156c7546556e907dc23ba0e3fb183ccc28afa8170061c333e1bc",
+    "development_target_folds": "973e35acf7c2fddfe8a6cd7fa46ce5bb898a2b755479416e31fd7997fce7295c",
+    "development_targets": "bd39ea96c0810dd79a735b5befe80420a8717eabf991cf269f3d6027d3b8d5e3",
+    "development_thresholds": "4d5c9513495198c7d0ac6272277b6a5b942ed514882cae175b4a4ac32cd79d11",
+    "feature_export_e_manifest": "57bb0de3477e48441df1d31dbdb8639745baacc082f48ba28ea12b0416c6a161",
+    "feature_export_f_manifest": "9b0070432c5daf8279fe82b416bf62823763c7d0c0a7f5ebbea9dfb8dc824a3e",
+    "field_roles": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+    "fixed_data_manifest": "c9f78946d1e698153fba9308a04f74f28a375d7864070ca143f76aeae74bacad",
+    "historical_validation_metrics": "e9cb2240503dda7cf5b7b0374996803a27a2ed87587aa9e5ae4f80ee44f64e4a",
+    "inner_splits": "fa4745b77272e580a4929a6e459ba872b549d4de2740fc9a2563f45e152d19d6",
+    "nested_targets": "f50e606a48c73845011d8bd8430525173a0a19bed7225a855d6f3b3647a88951",
+    "nested_thresholds": "2eeef999f69bdcf3cb4f1c460524dc79bc0deb5c388e83793b3aad2ff365ab5c",
+    "snapshot_manifest": "a8b5b4afa8121d4dd11dd295a33955405c3255d95d0c3dc2f8851bea8967363d"
+  },
+  "support_isolation": [
+    {
+      "fold_id": "leave_one_view_out__fold01",
+      "outer_context_identifiers_in_development_manifest": 0,
+      "outer_test_accessed": false,
+      "purged_train_context_count": 0,
+      "source_train_context_count": 31,
+      "support_isolated": true,
+      "support_overlap_pair_count": 0,
+      "train_context_count": 31,
+      "validation_context_count": 31
+    },
+    {
+      "fold_id": "leave_one_view_out__fold02",
+      "outer_context_identifiers_in_development_manifest": 0,
+      "outer_test_accessed": false,
+      "purged_train_context_count": 0,
+      "source_train_context_count": 31,
+      "support_isolated": true,
+      "support_overlap_pair_count": 0,
+      "train_context_count": 31,
+      "validation_context_count": 31
+    },
+    {
+      "fold_id": "leave_one_view_out__fold03",
+      "outer_context_identifiers_in_development_manifest": 0,
+      "outer_test_accessed": false,
+      "purged_train_context_count": 2,
+      "source_train_context_count": 38,
+      "support_isolated": true,
+      "support_overlap_pair_count": 0,
+      "train_context_count": 36,
+      "validation_context_count": 14
+    }
+  ],
+  "upper_bound_gates": {
+    "high_response": {
+      "direction": "higher",
+      "metric": "auprc",
+      "threshold": 0.9
+    },
+    "maneuver": {
+      "direction": "higher",
+      "metric": "macro_f1",
+      "threshold": 0.95
+    },
+    "response": {
+      "direction": "lower",
+      "metric": "rmse",
+      "threshold": 0.285
+    }
+  }
+}

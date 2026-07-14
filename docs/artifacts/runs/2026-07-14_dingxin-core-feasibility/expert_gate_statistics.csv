@@ -1,0 +1,4 @@
+task,fold_id,selected_gate,direct_metric,continuous_metric,fused_metric,status
+maneuver,,,,,,not_trained_upper_bound_failed
+response,,,,,,not_trained_upper_bound_failed
+high_response,,,,,,not_trained_upper_bound_failed
