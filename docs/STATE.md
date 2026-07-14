@@ -1,14 +1,16 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-12
+更新时间：2026-07-14
 
 ## 一句话状态
 
-固定数据下游评估与完整论文实验长程 goal 的实验和证据链已经闭环，当前分支为 `codex/fixed-data-downstream-evaluation-20260710`，只剩全量回归测试与工作树审计。鼎新 real-only、仿真 clean、时间机制、端到端辅助、七因素压力、仿真到鼎新适配和 Chronaris 四机制消融均完成锁定评价。Chronaris 在鼎新高生理响应识别 AUPRC 0.8839、仿真机动分段 Macro-F1 0.4687、时钟偏移 MAE 0.8883 秒和响应时延 MAE 7.4859 秒上形成分项领先；机动分类、负荷分类/回归和边界定位由不同基线领先。压力结果中 Chronaris 在最高单因素压力的 21 个主指标组合里有 15 个绝对表现位于前二，但随机/连续缺失退化斜率均为第六。仿真预训练迁移没有形成一致收益；四项消融进一步显示连续演化主要支撑负荷任务，因果掩码和多尺度时延主要支撑机动分段，物理约束不形成全任务一致增益。最终论文证据包汇总 8 层证据、7 幅已抽查中文图和 54 项迁移配对，9/9 门禁通过。
+鼎新核心任务可行性审计已完成，当前分支为 `codex/dingxin-core-feasibility-20260714`。在不读取外层测试的前提下，12 个有界候选分别得到机动强度分类 Macro-F1 `0.8241`、未来生理响应 RMSE `0.8368` 和高生理响应识别 AUPRC `0.7875` 的最佳训练内均值，均未越过 `0.950/0.285/0.900` 的预声明门槛。按退出协议，冻结专家安全融合没有启动，也不允许继续进入任务感知主干开发。结果表明完整 30 秒航电历史对机动分类最有价值，双流直接观测只给连续响应带来很小增益；当前差距同时涉及跨视图标签标尺、类别覆盖、目标分布和表示压缩，不能只归因于 Chronaris encoder 或冻结 consumer。既有锁定外层指标和论文证据包保持不变。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- 鼎新核心任务可行性审计：[artifacts/runs/2026-07-14_dingxin-core-feasibility/gap_report.md](artifacts/runs/2026-07-14_dingxin-core-feasibility/gap_report.md)
+- 未推送核心恢复工作盘点：[implementation/notes/unpublished-core-recovery-inventory-2026-07-14.md](implementation/notes/unpublished-core-recovery-inventory-2026-07-14.md)
 - 详细实施计划：[implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-2026-07-10.md)
 - 长程运行手册：[implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md](implementation/notes/fixed-data-downstream-evaluation-runbook-2026-07-10.md)
 - 固定数据证据策略：[requirements/foundation/fixed-data-evidence-strategy.md](requirements/foundation/fixed-data-evidence-strategy.md)
@@ -214,10 +216,11 @@
 - G2 压力扩展固定 7 个单因素的全部等级和 mixed-severe，共 35 个场景；同一潜在轨迹跨等级复用相同 observation seed，避免把随机噪声重采样混入退化斜率。
 - 48 条 G2 潜在轨迹共生成 1,680 个压力观测版本，latent、trajectory 和 observation randomness 均严格成对，方法无关生成器 7/7 验收通过；约 1.7 GB 重型数据只位于被忽略目录。
 
-## 当前未完成
+## 当前收口状态
 
-- 运行完整测试、源码编译、Ruff、术语、Git 差异和重型产物边界审计。
-- 把最终验证计数回写到状态与任务文档后提交；不新增候选、不追加为了制造领先而设计的实验。
+- 本轮新增聚焦测试 `9 passed`；按仓库真实运行拓扑加载原始工作区的被忽略历史工件、同时使用本分支源码与测试执行完整 pytest，结果为 `381 passed, 8 skipped, 319 warnings`。
+- 本轮改动文件 Ruff、`compileall src scripts tests` 和 `git diff --check` 已通过；三幅中文审计图已逐图检查，重型因果查询缓存与候选状态保持在 Git 忽略目录。
+- 上限门禁失败后的退出动作已经执行：不新增候选、不启动冻结专家安全融合、不打开外层测试，也不追加为了制造领先而设计的实验。
 
 ## 最终验收门
 
