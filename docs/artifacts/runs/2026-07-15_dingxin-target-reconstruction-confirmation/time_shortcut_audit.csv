@@ -1,0 +1,13 @@
+method,task,median_standardized_gain
+physiology_only,future_maneuver_score,-2.6315987933634997
+vehicle_only,future_maneuver_score,-0.08742619431025234
+naive_time_sync,future_maneuver_score,-2.497195512820513
+mult,future_maneuver_score,-2.92345399698341
+contiformer,future_maneuver_score,-0.14290281329923307
+chronaris,future_maneuver_score,-3.047888386123681
+physiology_only,future_maneuver_trend,-0.9171262699564585
+vehicle_only,future_maneuver_trend,0.4874538815927816
+naive_time_sync,future_maneuver_trend,-0.6537784434173504
+mult,future_maneuver_trend,-0.3765082510202875
+contiformer,future_maneuver_trend,-0.16810344827586213
+chronaris,future_maneuver_trend,-0.6907242562252323

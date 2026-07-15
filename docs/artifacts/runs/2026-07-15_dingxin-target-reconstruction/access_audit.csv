@@ -1,0 +1,8 @@
+split_id,outer_pool_id,main_selection,sealed_outer_sample_count,sealed_outer_sample_opened,request_count,cache_hit_count,forbidden_request_count,outer_test_opened
+leave_one_view_out__fold01__candidate_339,leave_one_view_out__fold01,True,32,False,0,0,0,False
+leave_one_view_out__fold01__candidate_353,leave_one_view_out__fold01,True,32,False,0,0,0,False
+leave_one_view_out__fold02__candidate_328,leave_one_view_out__fold02,True,32,False,0,0,0,False
+leave_one_view_out__fold02__candidate_329,leave_one_view_out__fold02,True,32,False,0,0,0,False
+leave_one_view_out__fold01__candidate_340,leave_one_view_out__fold01,True,32,False,0,0,0,False
+leave_one_view_out__fold01__candidate_327,leave_one_view_out__fold01,True,32,False,0,0,0,False
+legacy_diagnostic__leave_one_view_out__fold03,leave_one_view_out__fold03,False,32,False,0,0,0,False

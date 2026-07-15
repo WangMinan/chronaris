@@ -1,0 +1,7 @@
+{
+  "allow_safe_fusion": false,
+  "completed_method_split_units": 42,
+  "decision": "gap",
+  "outer_test_opened": false,
+  "status": "completed"
+}

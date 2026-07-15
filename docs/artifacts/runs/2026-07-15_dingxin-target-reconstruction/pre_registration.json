@@ -1,0 +1,80 @@
+{
+  "baseline_commit": "c7667de7e89e9cb7c74eba1cecad712d4d0ddc7f",
+  "confirmed_metrics_immutable": true,
+  "development_split_manifest_sha256": "ca1406ea84944335630bee96fc4088a937d2ba007d664d2723a3f36d5eb6ffd3",
+  "format": "chronaris.dingxin_target_reconstruction_preregistration.v1",
+  "gates": {
+    "future_maneuver_score": {
+      "minimum_median_spearman": 0.65
+    },
+    "future_maneuver_trend": {
+      "minimum_mean_macro_f1": 0.75,
+      "minimum_worst_macro_f1": 0.6
+    },
+    "high_residual_response": {
+      "minimum_mean_normalized_ap": 0.25,
+      "minimum_median_normalized_ap": 0.15,
+      "minimum_positive_split_count": 5
+    },
+    "matched_clean_panel": {
+      "required_main_split_count": 6,
+      "required_method_count": 6
+    },
+    "physiology_residual": {
+      "maximum_median_rmse_ratio": 0.9,
+      "minimum_mean_skill": 0.1,
+      "minimum_positive_skill_split_count": 4
+    },
+    "third_pool": {
+      "minimum_completed_continuous_tasks": 2
+    },
+    "time_shortcut": {
+      "minimum_standardized_gain": 0.15
+    }
+  },
+  "input_contract": "task_1b_time_like_vehicle_channels_removed",
+  "main_split_count": 6,
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "outer_test_opened": false,
+  "physiology_descriptors": {
+    "aggregation": "train_reliability_weighted_median",
+    "eeg": [
+      "centered_rms",
+      "mad",
+      "line_length",
+      "spectral_entropy"
+    ],
+    "slow_physiology": [
+      "median",
+      "slope",
+      "mad"
+    ]
+  },
+  "pressure_split_id": "legacy_diagnostic__leave_one_view_out__fold03",
+  "registered_before_task_training": true,
+  "tasks": {
+    "future_maneuver_score": "next_5s_score_using_inner_train_semantic_scales",
+    "future_maneuver_trend": "decrease_stable_increase_from_train_abs_delta_q33",
+    "high_residual_response": "train_q75_of_residual_response",
+    "legacy_tasks": "reported_only_not_used_for_task_1c_gate",
+    "physiology_residual": "robust_future_state_minus_cross_fitted_physiology_inertia"
+  },
+  "teacher_distillation_allowed": false,
+  "time_shortcut_control": "train_fitted_cubic_phase_residualization",
+  "training_config": {
+    "batch_size": 16,
+    "device": "cuda",
+    "export_batch_size": 8,
+    "max_epochs": 12,
+    "patience": 4,
+    "resume": true,
+    "seed": 17
+  }
+}

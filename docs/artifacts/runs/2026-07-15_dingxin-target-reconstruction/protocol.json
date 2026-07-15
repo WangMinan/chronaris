@@ -1,0 +1,105 @@
+{
+  "baseline_commit": "c7667de7e89e9cb7c74eba1cecad712d4d0ddc7f",
+  "chronaris_backbone_modified": false,
+  "chronaris_backbone_trained": false,
+  "config": {
+    "batch_size": 16,
+    "compact_output_root": "docs/artifacts/runs",
+    "device": "cuda",
+    "e_manifest": "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json",
+    "f_manifest": "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json",
+    "fixed_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "max_epochs": 12,
+    "patience": 4,
+    "resume": true,
+    "run_id": "2026-07-15_dingxin-target-reconstruction",
+    "seed": 17,
+    "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
+    "source_workspace_root": "/home/wangminan/projects/chronaris",
+    "stability_root": "docs/artifacts/runs/2026-07-14_dingxin-task-stability"
+  },
+  "format": "chronaris.dingxin_target_reconstruction_protocol.v1",
+  "git_head": "571f599b1e97ccec481c1b68a346bcc6e955853e",
+  "held_out_predictions_opened": false,
+  "legacy_confirmed_metrics_changed": false,
+  "legacy_outer_metrics_used_for_selection": false,
+  "main_split_count": 6,
+  "matched_method_count": 6,
+  "outer_test_opened": false,
+  "panel_status": {
+    "completed_main_split_count": 6,
+    "completed_method_count": 6,
+    "completed_primary_metric_units": 144,
+    "expected_primary_metric_units": 144,
+    "missing_method_split_units": 0,
+    "representation_export_count": 84
+  },
+  "pressure_split_count": 1,
+  "pretraining_protocol": {
+    "augmentation_policy": {
+      "block_duration_max_s": 5.0,
+      "block_duration_min_s": 1.0,
+      "clock_offset_limit_s": 0.25,
+      "modality_dropout_probability": 0.05,
+      "point_dropout_probability": 0.1,
+      "timestamp_jitter_sigma_s": 0.05
+    },
+    "candidate": {
+      "candidate_id": "A",
+      "dropout": 0.1,
+      "hidden_dim": 64,
+      "layers": 2,
+      "learning_rate": 0.001,
+      "num_heads": 4
+    },
+    "format": "chronaris.dingxin_matched_clean_pretraining.v1",
+    "input_feature_contract": {
+      "explicit_query_or_block_position_used": false,
+      "input_feature_contract_sha256": "847ec764d23f838f9598ac1f90e7d9e049b87d297ece3b687dceba9c30650c6c",
+      "removal_mode": "zero_value_false_feature_mask_recomputed_point_mask",
+      "time_like_allowed_field_count": 60,
+      "time_like_present_channel_count": 30,
+      "time_like_present_channels_sha256": "ebc6f35bd5472f1b6f53fadab2b41659c515d4bc283eec3efe8f180621e456e4",
+      "vehicle_channel_count_after": 925,
+      "vehicle_channel_count_before": 955,
+      "view_pilot_or_sortie_identity_used": false
+    },
+    "method_names": [
+      "physiology_only",
+      "vehicle_only",
+      "naive_time_sync",
+      "mult",
+      "contiformer",
+      "chronaris"
+    ],
+    "model_input_bin_width_s": 0.1,
+    "outer_test_opened": false,
+    "split_count": 7,
+    "task_targets_opened": false,
+    "training_config": {
+      "batch_size": 16,
+      "device": "cuda",
+      "export_batch_size": 8,
+      "max_epochs": 12,
+      "patience": 4,
+      "resume": true,
+      "seed": 17
+    }
+  },
+  "protocol_valid": true,
+  "run_id": "2026-07-15_dingxin-target-reconstruction",
+  "safe_fusion_started": false,
+  "source_sha256": {
+    "context_catalog": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+    "feature_export_e_manifest": "57bb0de3477e48441df1d31dbdb8639745baacc082f48ba28ea12b0416c6a161",
+    "feature_export_f_manifest": "9b0070432c5daf8279fe82b416bf62823763c7d0c0a7f5ebbea9dfb8dc824a3e",
+    "field_roles": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+    "fixed_data_manifest": "c9f78946d1e698153fba9308a04f74f28a375d7864070ca143f76aeae74bacad",
+    "snapshot_manifest": "a8b5b4afa8121d4dd11dd295a33955405c3255d95d0c3dc2f8851bea8967363d",
+    "task_stability_allowance": "910c58f3be39512bb4fae683217c4b079b5c583e3e2cc9a0346d543c19c1897f",
+    "task_stability_protocol": "851eae9f1304366db73815ad406e469e101df5845ef0d765faa3a052789a07d8",
+    "task_stability_splits": "ca1406ea84944335630bee96fc4088a937d2ba007d664d2723a3f36d5eb6ffd3"
+  },
+  "teacher_distillation_started": false
+}

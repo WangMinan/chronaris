@@ -1,0 +1,68 @@
+{
+  "allow_safe_fusion": false,
+  "allow_task_aware_research": false,
+  "checks": {
+    "future_maneuver_score_passed": false,
+    "future_maneuver_trend_passed": false,
+    "high_residual_response_passed": false,
+    "matched_clean_panel_complete": true,
+    "physiology_residual_passed": false,
+    "protocol_valid": true,
+    "third_pool_continuous_evaluation_completed": true,
+    "time_shortcut_suppressed": true
+  },
+  "chronaris_backbone_modified": false,
+  "chronaris_backbone_trained": false,
+  "decision": "gap",
+  "failed_checks": [
+    "future_maneuver_score_passed",
+    "future_maneuver_trend_passed",
+    "physiology_residual_passed",
+    "high_residual_response_passed"
+  ],
+  "gates": {
+    "future_maneuver_score": {
+      "minimum_median_spearman": 0.65
+    },
+    "future_maneuver_trend": {
+      "minimum_mean_macro_f1": 0.75,
+      "minimum_worst_macro_f1": 0.6
+    },
+    "high_residual_response": {
+      "minimum_mean_normalized_ap": 0.25,
+      "minimum_median_normalized_ap": 0.15,
+      "minimum_positive_split_count": 5
+    },
+    "matched_clean_panel": {
+      "required_main_split_count": 6,
+      "required_method_count": 6
+    },
+    "physiology_residual": {
+      "maximum_median_rmse_ratio": 0.9,
+      "minimum_mean_skill": 0.1,
+      "minimum_positive_skill_split_count": 4
+    },
+    "third_pool": {
+      "minimum_completed_continuous_tasks": 2
+    },
+    "time_shortcut": {
+      "minimum_standardized_gain": 0.15
+    }
+  },
+  "observed": {
+    "future_maneuver_score_median_spearman": 0.5174825174825175,
+    "future_maneuver_trend_mean_macro_f1": 0.5582817645317646,
+    "future_maneuver_trend_worst_macro_f1": 0.19047619047619047,
+    "high_residual_mean_normalized_ap": 0.08333333333333333,
+    "high_residual_median_normalized_ap": 0.0,
+    "high_residual_positive_split_count": 1,
+    "physiology_residual_mean_skill": -0.2744399833807254,
+    "physiology_residual_median_rmse_ratio": 1.184606793462769,
+    "physiology_residual_positive_skill_split_count": 2,
+    "third_pool_continuous_task_count": 2,
+    "time_shortcut_standardized_gain": 0.20076726342710982
+  },
+  "outer_test_opened": false,
+  "primary_blocker": "future_maneuver_score_passed",
+  "teacher_distillation_started": false
+}

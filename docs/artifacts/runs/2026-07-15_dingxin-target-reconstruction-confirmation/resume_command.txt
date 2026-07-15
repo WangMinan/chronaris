@@ -1,0 +1,1 @@
+PYTHONPATH=src /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_dingxin_target_reconstruction.py --run-id 2026-07-15_dingxin-target-reconstruction-confirmation --max-epochs 50 --patience 8 --batch-size 16 --device cuda --resume
