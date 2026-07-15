@@ -4,11 +4,12 @@
 
 ## 一句话状态
 
-鼎新目标重构与统一条件六方法确认已完成，当前分支为 `codex/dingxin-target-reconstruction-20260715`。六种方法在统一删除 30 个时间类航电通道、最多 50 epoch 与 patience 8 的相同无标签预算及相同任务头下完成 42 个方法—验证单元训练和 84 份训练内表示导出。未来机动连续分数最佳中位斯皮尔曼秩相关系数为 `0.5979`，未来机动趋势最佳平均/最差宏平均 F1 为 `0.6598/0.3535`；生理剩余响应最佳中位 RMSE 比率为 `1.1614`、平均技能为 `-0.2529`，高剩余响应最佳平均/中位归一化平均精确率为 `0.0833/0.0000`。只有第三训练池连续目标评价通过，时间捷径抑制和四项任务门禁均失败，因此安全融合与任务感知主干训练均不放行。本轮外层测试始终关闭，Chronaris 主干未修改或使用任务标签训练，既有确认指标和论文证据包保持不变。
+阶段 1、1B、1C 已经线性合入并推送 `main@719c47c`，完整回归为 `398 passed, 8 skipped`。当前从更新后的 `main` 建立 `codex/dingxin-task-aware-safe-residual-20260715`，已预注册“原始鼎新任务监督安全基座 -> 冻结连续因果残差 -> 部分解冻 -> 选择性训练外教师蒸馏”路径。正式任务仍为当前机动分类、原始连续生理响应和原始高生理响应识别，统一删除 30 个时间类航电通道并复用 6 个唯一验证支持；外层测试继续关闭，最终历史门槛不参与本轮选模。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- 任务感知安全残差融合预注册：[implementation/notes/dingxin-task-aware-safe-residual-2026-07-15.md](implementation/notes/dingxin-task-aware-safe-residual-2026-07-15.md)
 - 鼎新目标重构与统一条件确认：[artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md)
 - 鼎新目标重构短预算筛选：[artifacts/runs/2026-07-15_dingxin-target-reconstruction/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction/gap_report.md)
 - 目标重构预注册：[implementation/notes/dingxin-target-reconstruction-2026-07-15.md](implementation/notes/dingxin-target-reconstruction-2026-07-15.md)
