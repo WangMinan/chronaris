@@ -17,6 +17,9 @@ from chronaris.evaluation.application_tasks.target_reconstruction_physiology imp
     _descriptors,
     _weighted_median,
 )
+from chronaris.evaluation.application_tasks.target_reconstruction_training import (
+    _load_sealed_outer_lineage,
+)
 from chronaris.representation import DualStreamObservationBatch
 
 
@@ -113,6 +116,17 @@ def test_allowance_requires_every_preregistered_gate() -> None:
     )
     assert failed["allow_safe_fusion"] is False
     assert failed["primary_blocker"] == "time_shortcut_suppressed"
+
+
+def test_sealed_outer_lineage_binds_ids_without_loading_samples(tmp_path) -> None:
+    path = tmp_path / "split_manifest.json"
+    path.write_text(
+        '{"split_protocols":[{"fold_id":"fold01",'
+        '"classification_test_context_ids":["a","b"],'
+        '"response_test_context_ids":["b","c"]}]}',
+        encoding="utf-8",
+    )
+    assert _load_sealed_outer_lineage(path) == {"fold01": ("a", "b", "c")}
 
 
 def _batch() -> DualStreamObservationBatch:

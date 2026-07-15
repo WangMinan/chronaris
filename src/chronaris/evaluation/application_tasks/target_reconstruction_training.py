@@ -79,6 +79,7 @@ def train_matched_clean_representations(
     fixed = Path(fixed_root)
     role_path = fixed / "field_role_manifest.csv"
     context_path = fixed / "context_sample_manifest.jsonl"
+    outer_lineage = _load_sealed_outer_lineage(fixed / "split_manifest.json")
     index = build_dingxin_lazy_context_index(
         snapshot_root=snapshot_root,
         field_role_manifest_path=role_path,
@@ -99,11 +100,15 @@ def train_matched_clean_representations(
     export_rows = []
     access_rows = []
     for plan in plans:
+        outer_pool_id = str(plan["outer_pool_id"])
+        sealed_outer_ids = outer_lineage.get(outer_pool_id, ())
+        if not sealed_outer_ids:
+            raise ValueError(f"sealed outer lineage is unavailable for {outer_pool_id}")
         fold = FoldLineage(
             fold_id=str(plan["fold_id"]),
             train_sample_ids=tuple(str(value) for value in plan["train_sample_ids"]),
             validation_sample_ids=tuple(str(value) for value in plan["validation_sample_ids"]),
-            held_out_sample_ids=(),
+            held_out_sample_ids=sealed_outer_ids,
         )
         provider, access = clean_guarded_provider(
             base_provider,
@@ -285,6 +290,8 @@ def train_matched_clean_representations(
                 "split_id": fold.fold_id,
                 "outer_pool_id": str(plan["outer_pool_id"]),
                 "main_selection": bool(plan["main_selection"]),
+                "sealed_outer_sample_count": len(sealed_outer_ids),
+                "sealed_outer_sample_opened": False,
                 **access,
                 "outer_test_opened": False,
             }
@@ -305,6 +312,22 @@ def train_matched_clean_representations(
         "outer_test_opened": False,
     }
     return pd.DataFrame(training_rows), pd.DataFrame(export_rows), pd.DataFrame(access_rows), protocol
+
+
+def _load_sealed_outer_lineage(path: Path) -> dict[str, tuple[str, ...]]:
+    """Bind real outer IDs for overlap guards without loading their observations."""
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    result = {}
+    for row in payload["split_protocols"]:
+        identifiers = tuple(
+            sorted(
+                set(str(value) for value in row["classification_test_context_ids"])
+                | set(str(value) for value in row["response_test_context_ids"])
+            )
+        )
+        result[str(row["fold_id"])] = identifiers
+    return result
 
 
 def _load_or_fit_normalizer(path, *, provider, fold, batch_size):
