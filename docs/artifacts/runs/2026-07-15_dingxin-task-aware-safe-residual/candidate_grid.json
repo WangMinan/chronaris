@@ -1,0 +1,47 @@
+{
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "candidate_id": "observed_vehicle_scalar",
+      "gate_mode": "scalar",
+      "gate_penalty": 0.01,
+      "learning_rate": 0.01,
+      "maneuver_anchor": "naive_time_sync",
+      "response_anchor": "vehicle_only"
+    },
+    {
+      "candidate_id": "vehicle_vehicle_scalar",
+      "gate_mode": "scalar",
+      "gate_penalty": 0.01,
+      "learning_rate": 0.01,
+      "maneuver_anchor": "vehicle_only",
+      "response_anchor": "vehicle_only"
+    },
+    {
+      "candidate_id": "observed_physiology_scalar",
+      "gate_mode": "scalar",
+      "gate_penalty": 0.01,
+      "learning_rate": 0.01,
+      "maneuver_anchor": "naive_time_sync",
+      "response_anchor": "physiology_only"
+    },
+    {
+      "candidate_id": "vehicle_observed_scalar",
+      "gate_mode": "scalar",
+      "gate_penalty": 0.01,
+      "learning_rate": 0.01,
+      "maneuver_anchor": "vehicle_only",
+      "response_anchor": "naive_time_sync"
+    },
+    {
+      "candidate_id": "observed_vehicle_channel",
+      "gate_mode": "channel",
+      "gate_penalty": 0.01,
+      "learning_rate": 0.01,
+      "maneuver_anchor": "naive_time_sync",
+      "response_anchor": "vehicle_only"
+    }
+  ],
+  "maximum_candidate_count": 12,
+  "outer_test_opened": false
+}

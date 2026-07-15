@@ -1,6 +1,6 @@
 # Implementation Notes
 
-更新时间：2026-07-10
+更新时间：2026-07-15
 
 本目录保存旧 `docs/implementation/notes` 的计划、阶段收口记录和必要进度笔记。当前主动执行入口已经统一到 [../TASKS.md](../TASKS.md)。
 
@@ -17,7 +17,7 @@
 - [fixed-data-downstream-evaluation-2026-07-10.md](fixed-data-downstream-evaluation-2026-07-10.md)：固定数据下游评估长程 goal 的详细实施计划，覆盖 G1 数据审计到六方法编码、锁定实验和证据包。
 - [fixed-data-downstream-evaluation-runbook-2026-07-10.md](fixed-data-downstream-evaluation-runbook-2026-07-10.md)：与详细实施计划配套的 screen/confirm/stress、恢复、失败处理和最终验证手册。
 - [dingxin-target-reconstruction-2026-07-15.md](dingxin-target-reconstruction-2026-07-15.md)：鼎新未来机动与生理剩余响应目标重构、时间捷径抑制、六方法统一条件比较和退出门禁预注册。
-- [dingxin-task-aware-safe-residual-2026-07-15.md](dingxin-task-aware-safe-residual-2026-07-15.md)：鼎新原始核心任务监督、安全基座、Chronaris 连续因果残差、部分解冻和配置锁定门禁预注册。
+- [dingxin-task-aware-safe-residual-2026-07-15.md](dingxin-task-aware-safe-residual-2026-07-15.md)：鼎新原始核心任务监督、安全基座、Chronaris 连续因果残差和部分解冻预注册及执行结果；冻结与部分解冻安全门禁通过，但研究门禁未通过，未进入训练外教师蒸馏和配置锁定。
 - [goal-prompt-stage-i-p10-p15-2026-06-07.md](goal-prompt-stage-i-p10-p15-2026-06-07.md)：用于新 session goal 模式推进 主动证据汇总器-刚体旋转审计 的长程 prompt。
 - [iteration-playbook.md](iteration-playbook.md)：跨阶段执行模板。
 

@@ -1,0 +1,25 @@
+{
+  "allow_partial_unfreeze": true,
+  "allow_teacher_distillation": false,
+  "completed_candidate_split_count": 30,
+  "completed_split_count": 6,
+  "configuration_locked": false,
+  "decision": "partial_research_gap",
+  "elapsed_s": 25.39144559399574,
+  "frozen_safety_passed": true,
+  "gate_contract": {
+    "high_response_maximum_auprc_drop": 0.005,
+    "maneuver_maximum_drop": 0.005,
+    "minimum_safe_support_count": 4,
+    "response_maximum_relative_rmse_increase": 0.01
+  },
+  "historical_outer_metrics_used_for_selection": false,
+  "matched_method_split_count": 36,
+  "outer_test_opened": false,
+  "partial_safety_passed": true,
+  "research_gate_passed": false,
+  "selected_candidate_id": "vehicle_observed_scalar",
+  "selected_partial_candidate_id": null,
+  "status": "task_aware_safe_residual_complete",
+  "task_targets_opened": true
+}

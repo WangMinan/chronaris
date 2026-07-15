@@ -1,0 +1,35 @@
+{
+  "backbone_learning_rate_ratios": [
+    0.02,
+    0.05
+  ],
+  "format": "chronaris.dingxin_task_aware_partial_unfreeze.v1",
+  "input_feature_contract": {
+    "explicit_query_or_block_position_used": false,
+    "input_feature_contract_sha256": "847ec764d23f838f9598ac1f90e7d9e049b87d297ece3b687dceba9c30650c6c",
+    "removal_mode": "zero_value_false_feature_mask_recomputed_point_mask",
+    "time_like_allowed_field_count": 60,
+    "time_like_present_channel_count": 30,
+    "time_like_present_channels_sha256": "ebc6f35bd5472f1b6f53fadab2b41659c515d4bc283eec3efe8f180621e456e4",
+    "vehicle_channel_count_after": 925,
+    "vehicle_channel_count_before": 955,
+    "view_pilot_or_sortie_identity_used": false
+  },
+  "outer_test_opened": false,
+  "partial_unfreeze_scope": [
+    "observation_encoders",
+    "observation_updates",
+    "causal_fusion_output_projection",
+    "lag_scale_gate"
+  ],
+  "selection_support_count": 6,
+  "source_frozen_candidate": {
+    "candidate_id": "vehicle_observed_scalar",
+    "gate_mode": "scalar",
+    "gate_penalty": 0.01,
+    "learning_rate": 0.01,
+    "maneuver_anchor": "vehicle_only",
+    "response_anchor": "naive_time_sync"
+  },
+  "task_targets_opened": true
+}
