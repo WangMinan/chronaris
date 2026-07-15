@@ -1,0 +1,13 @@
+{
+  "activation_gate_passed": false,
+  "allow_stage_3b": false,
+  "configuration_locked": false,
+  "decision": "stage_3a_gap",
+  "historical_outer_metrics_used_for_selection": false,
+  "outer_test_opened": false,
+  "research_gate_passed": false,
+  "safety_gate_passed": true,
+  "selected": null,
+  "selected_candidate_id": null,
+  "top_two_candidate_ids": []
+}

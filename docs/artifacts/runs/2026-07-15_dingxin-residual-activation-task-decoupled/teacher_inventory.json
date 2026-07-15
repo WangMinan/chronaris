@@ -1,0 +1,19 @@
+{
+  "high_response_teachers": [
+    "航电单流",
+    "跨模态 Transformer"
+  ],
+  "maneuver_teachers": [
+    "航电单流",
+    "连续时间注意力基线"
+  ],
+  "outer_test_opened": false,
+  "response_teachers": [
+    "跨模态 Transformer",
+    "连续时间注意力基线",
+    "朴素时间同步"
+  ],
+  "selection": "teacher_consensus_and_oof_advantage_over_safe_anchor",
+  "teacher_runtime_required": false,
+  "training_prediction_protocol": "cross_fitted_out_of_fold"
+}

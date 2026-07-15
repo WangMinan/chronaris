@@ -1,0 +1,26 @@
+{
+  "continuous_path": "dual_stream_continuous_causal_residual",
+  "forbidden_gate_inputs": [
+    "absolute_flight_progress",
+    "window_index",
+    "view_identity",
+    "pilot_identity",
+    "sortie_identity"
+  ],
+  "gate_inputs": [
+    "chronaris_summary",
+    "safe_anchor_confidence",
+    "safe_anchor_margin"
+  ],
+  "gate_range": [
+    0.0,
+    0.5
+  ],
+  "model_name": "Chronaris",
+  "outer_test_opened": false,
+  "reader_visible_version_suffix": false,
+  "residual_initialization": "small_random",
+  "safe_direct_branch_integrated": true,
+  "task_specific_adapters": true,
+  "teacher_runtime_required": false
+}

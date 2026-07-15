@@ -1,0 +1,16 @@
+{
+  "activation_gate_passed": false,
+  "allow_stage_3b": false,
+  "completed_candidate_split_count": 48,
+  "completed_split_count": 6,
+  "configuration_locked": false,
+  "decision": "stage_3a_gap",
+  "elapsed_s": 31.874072411999805,
+  "historical_outer_metrics_used_for_selection": false,
+  "outer_test_opened": false,
+  "research_gate_passed": false,
+  "safety_gate_passed": true,
+  "selected_candidate_id": null,
+  "status": "residual_activation_complete",
+  "top_two_candidate_ids": []
+}

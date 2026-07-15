@@ -4,11 +4,13 @@
 
 ## 一句话状态
 
-阶段 1、1B、1C 已经线性合入并推送 `main@719c47c`，阶段 2 已在分支 `codex/dingxin-task-aware-safe-residual-20260715` 完成训练内冻结安全残差和部分解冻筛选。冻结安全残差以航电机动基座和直接观测响应基座形成机动平均/中位/最差宏平均 F1 `0.9164/0.9630/0.7500`，连续响应中位 RMSE 比率 `1.0071`，高响应平均归一化平均精确率 `0.3773`；三项均在 `6/6` 个唯一验证支持上满足无损门禁。两种部分解冻学习率比例各只改善一项任务，未通过“至少两项改善”的研究门禁，因此未启动训练外教师蒸馏、未锁定配置、未打开外层测试，既有确认指标保持不变。
+阶段 3A 已在分支 `codex/dingxin-residual-activation-20260715` 完成教师辅助残差激活与任务解耦筛选。任务独立检查点选择后，最佳候选的机动平均宏平均 F1 为 `0.9460`，连续响应中位 RMSE 比率为 `0.8626`，高响应平均归一化平均精确率为 `0.4042`；但连续响应平均技能仍为 `-0.0171`，跨验证支持的中位残差贡献比仅 `0.0005`，没有进入预注册的 `[0.02,0.30]` 有效区间。安全门禁通过，残差激活与研究门禁失败，因此按协议不执行三随机种子稳定性确认、不锁定配置、不打开外层测试，既有确认指标保持不变。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- 教师辅助残差激活与任务解耦差距报告：[artifacts/runs/2026-07-15_dingxin-residual-activation-task-decoupled/gap_report.md](artifacts/runs/2026-07-15_dingxin-residual-activation-task-decoupled/gap_report.md)
+- 残差激活预注册：[implementation/notes/dingxin-residual-activation-2026-07-15.md](implementation/notes/dingxin-residual-activation-2026-07-15.md)
 - 鼎新任务感知安全残差阶段 2 差距报告：[artifacts/runs/2026-07-15_dingxin-task-aware-safe-residual/gap_report.md](artifacts/runs/2026-07-15_dingxin-task-aware-safe-residual/gap_report.md)
 - 任务感知安全残差融合预注册：[implementation/notes/dingxin-task-aware-safe-residual-2026-07-15.md](implementation/notes/dingxin-task-aware-safe-residual-2026-07-15.md)
 - 鼎新目标重构与统一条件确认：[artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md)
