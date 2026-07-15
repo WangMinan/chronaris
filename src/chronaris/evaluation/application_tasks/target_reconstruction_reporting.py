@@ -122,6 +122,7 @@ def _report_text(*, protocol, allowance, best, frames):
     high = best["high_residual_response"]
     failed = allowance["failed_checks"]
     check_labels = {
+        "time_shortcut_suppressed": "飞行进程捷径抑制",
         "future_maneuver_score_passed": "未来机动连续分数",
         "future_maneuver_trend_passed": "未来机动变化趋势",
         "physiology_residual_passed": "生理剩余响应",
