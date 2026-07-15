@@ -16,15 +16,26 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--resume", action="store_true")
     parser.add_argument(
+        "--run-id",
+        default="2026-07-15_dingxin-target-reconstruction-confirmation",
+    )
+    parser.add_argument(
         "--source-workspace-root",
         default="/home/wangminan/projects/chronaris",
     )
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cuda")
+    parser.add_argument("--max-epochs", type=int, default=50)
+    parser.add_argument("--patience", type=int, default=8)
+    parser.add_argument("--batch-size", type=int, default=16)
     args = parser.parse_args()
     result = run_dingxin_target_reconstruction(
         DingxinTargetReconstructionConfig(
+            run_id=args.run_id,
             source_workspace_root=args.source_workspace_root,
             device=args.device,
+            max_epochs=args.max_epochs,
+            patience=args.patience,
+            batch_size=args.batch_size,
             resume=args.resume,
         )
     )

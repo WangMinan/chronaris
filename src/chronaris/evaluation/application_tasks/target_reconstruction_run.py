@@ -48,7 +48,7 @@ PRESSURE_SPLIT_ID = "legacy_diagnostic__leave_one_view_out__fold03"
 
 @dataclass(frozen=True, slots=True)
 class DingxinTargetReconstructionConfig:
-    run_id: str = "2026-07-15_dingxin-target-reconstruction"
+    run_id: str = "2026-07-15_dingxin-target-reconstruction-confirmation"
     compact_output_root: str = "docs/artifacts/runs"
     heavy_output_root: str = "artifacts/application_evaluation"
     source_workspace_root: str = "/home/wangminan/projects/chronaris"
@@ -58,9 +58,9 @@ class DingxinTargetReconstructionConfig:
     f_manifest: str = "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
     snapshot_root: str = "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot"
     seed: int = 17
-    max_epochs: int = 12
+    max_epochs: int = 50
     batch_size: int = 16
-    patience: int = 4
+    patience: int = 8
     device: str = "cuda"
     resume: bool = True
 

@@ -100,9 +100,13 @@ def write_target_reconstruction_outputs(
             ),
         },
     )
+    run_config = protocol["config"]
     (root / "resume_command.txt").write_text(
         "PYTHONPATH=src /home/wangminan/env/anaconda3/envs/chronaris/bin/python "
-        "scripts/evaluation/application_tasks/run_dingxin_target_reconstruction.py --resume\n",
+        "scripts/evaluation/application_tasks/run_dingxin_target_reconstruction.py "
+        f"--run-id {run_config['run_id']} --max-epochs {run_config['max_epochs']} "
+        f"--patience {run_config['patience']} --batch-size {run_config['batch_size']} "
+        f"--device {run_config['device']} --resume\n",
         encoding="utf-8",
     )
     return {
