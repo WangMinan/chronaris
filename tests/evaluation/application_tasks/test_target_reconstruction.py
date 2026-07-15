@@ -10,6 +10,9 @@ from chronaris.evaluation.application_tasks.clean_input_contract import (
 from chronaris.evaluation.application_tasks.target_reconstruction_contracts import (
     decide_target_reconstruction_allowance,
 )
+from chronaris.evaluation.application_tasks.target_reconstruction_evaluation import (
+    _extra_metrics,
+)
 from chronaris.evaluation.application_tasks.target_reconstruction_maneuver import (
     _trend_class,
 )
@@ -127,6 +130,16 @@ def test_sealed_outer_lineage_binds_ids_without_loading_samples(tmp_path) -> Non
         encoding="utf-8",
     )
     assert _load_sealed_outer_lineage(path) == {"fold01": ("a", "b", "c")}
+
+
+def test_high_response_primary_metric_is_not_duplicated_as_an_extra() -> None:
+    extras = _extra_metrics(
+        "high_residual_response",
+        np.asarray([0, 1]),
+        np.asarray([0, 1]),
+        np.asarray([0.1, 0.9]),
+    )
+    assert set(extras) == {"auprc", "prevalence"}
 
 
 def _batch() -> DualStreamObservationBatch:

@@ -322,7 +322,7 @@ def _classification_prediction(train, validation, target):
         LogisticRegression(
             C=1.0,
             class_weight="balanced",
-            solver="liblinear",
+            solver="lbfgs",
             max_iter=2_000,
             random_state=17,
         ),
@@ -342,7 +342,7 @@ def _classification_probability(train, validation, target):
         LogisticRegression(
             C=1.0,
             class_weight="balanced",
-            solver="liblinear",
+            solver="lbfgs",
             max_iter=2_000,
             random_state=17,
         ),
@@ -389,7 +389,8 @@ def _extra_metrics(task, train_target, validation_target, prediction):
         return {key: values[key] for key in ("rmse_ratio", "response_skill", "spearman")}
     if task == "high_residual_response":
         values = _safe_high_response_metrics(validation_target, prediction)
-        return {key: values[key] for key in ("normalized_ap", "auprc", "prevalence")}
+        # normalized_ap is already the task's primary metric row.
+        return {key: values[key] for key in ("auprc", "prevalence")}
     return {}
 
 
