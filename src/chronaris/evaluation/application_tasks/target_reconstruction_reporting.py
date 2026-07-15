@@ -244,7 +244,8 @@ def _plot_descriptors(frame, path):
     selected = frame[frame["selected"].astype(bool)].copy()
     selected = selected.groupby("descriptor_key", as_index=False)["reliability_weight"].median().nlargest(15, "reliability_weight")
     fig, axis = plt.subplots(figsize=(10.5, 6.0))
-    axis.barh(selected["descriptor_key"], selected["reliability_weight"], color="#72B7B2")
+    labels = [_descriptor_label(value) for value in selected["descriptor_key"]]
+    axis.barh(labels, selected["reliability_weight"], color="#72B7B2")
     axis.invert_yaxis()
     axis.set_xlabel("训练内生理惯性基线可靠性权重")
     axis.set_title("稳定进入残差目标的生理描述量")
@@ -255,16 +256,46 @@ def _plot_descriptors(frame, path):
 
 
 def _plot_third_pool(frame, path):
-    fig, axis = plt.subplots(figsize=(10.5, 5.0))
-    labels = [f"{METHOD_LABELS[row.method]}\n{row.task_name}" for row in frame.itertuples(index=False)]
-    axis.bar(labels, frame["value"], color="#B279A2")
-    axis.set_title("第三训练池连续目标压力评价")
-    axis.set_ylabel("任务主指标")
-    axis.tick_params(axis="x", rotation=40)
-    axis.grid(axis="y", alpha=0.25)
+    fig, axes = plt.subplots(1, 2, figsize=(13, 4.8))
+    specifications = (
+        ("future_maneuver_score", "未来机动连续分数", "Spearman 秩相关"),
+        ("physiology_residual", "生理惯性之外的连续残差", "RMSE（越低越好）"),
+    )
+    for axis, (task, title, ylabel) in zip(axes, specifications, strict=True):
+        subset = frame[frame["task"] == task]
+        axis.bar(
+            [METHOD_LABELS[value] for value in subset["method"]],
+            subset["value"],
+            color="#B279A2",
+        )
+        axis.set_title(title)
+        axis.set_ylabel(ylabel)
+        axis.tick_params(axis="x", rotation=35)
+        axis.grid(axis="y", alpha=0.25)
+    fig.suptitle("第三训练池连续目标压力评价")
     fig.tight_layout()
     fig.savefig(path, dpi=180)
     plt.close(fig)
+
+
+def _descriptor_label(value):
+    field, statistic = str(value).split("::", maxsplit=1)
+    field_label = {
+        "eeg.fp1": "Fp1 脑电",
+        "eeg.f3": "F3 脑电",
+        "eeg.fz": "Fz 脑电",
+        "spo2.toi1": "TOI-1 组织氧",
+        "spo2.toi2": "TOI-2 组织氧",
+    }.get(field, field)
+    statistic_label = {
+        "centered_rms": "去均值均方根",
+        "mad": "绝对中位差",
+        "line_length": "线长度",
+        "spectral_entropy": "谱熵",
+        "median": "中位数",
+        "slope": "局部斜率",
+    }.get(statistic, statistic)
+    return f"{field_label} · {statistic_label}"
 
 
 def _configure_chinese_fonts():
