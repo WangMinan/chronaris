@@ -9,6 +9,7 @@ import pytest
 
 from chronaris.dataset.application_evaluation.snapshot_io import write_raw_point_snapshot
 from chronaris.representation import (
+    DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
     build_dingxin_observation_schema_plan,
     load_dingxin_observed_context,
     load_simulation_observed_context,
@@ -169,3 +170,23 @@ def test_dingxin_loader_builds_common_schema_and_excludes_label_source(tmp_path)
     assert any("label_source" in value for value in plan.schema.excluded_feature_names)
     assert sample.vehicle_values[:, 0].tolist() == [10.0, 11.0, 39.0]
     assert sample.physiology_values[:, 0].tolist() == [1.0, 3.0, 29.0]
+
+    future_roles = pd.read_csv(roles_path)
+    future_roles["selected_for_maneuver_label"] = (
+        future_roles["source_field"] == "label_source"
+    )
+    future_roles.to_csv(roles_path, index=False)
+    future_plan = build_dingxin_observation_schema_plan(
+        snapshot_root=root,
+        field_role_manifest_path=roles_path,
+        maneuver_history_policy=DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
+    )
+
+    assert future_plan.schema.schema_id == (
+        "dingxin_future_prediction_common_observed.v1"
+    )
+    assert future_plan.schema.vehicle_feature_names == (
+        "vehicle.channel_00.label_source",
+        "vehicle.channel_00.safe",
+    )
+    assert not future_plan.schema.excluded_feature_names

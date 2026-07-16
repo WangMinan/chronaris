@@ -1,0 +1,354 @@
+{
+  "folds": [
+    "leave_one_sortie_out__fold01",
+    "leave_one_sortie_out__fold02"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "selected_candidates": {
+    "physiology_only": "A",
+    "vehicle_only": "C",
+    "mult": "A",
+    "contiformer": "A",
+    "chronaris": "A"
+  },
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "transfer_initialization_enabled": false,
+  "model_input_bin_width_s": 0.1,
+  "maneuver_history_policy": "include_past_maneuver_sources",
+  "stage_name": "dingxin_locked_pretraining",
+  "run_id": "2026-07-16_simple-downstream-pretraining-confirmation",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-15T18:00:00.587081Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-15T17:19:47.293688Z",
+      "event": "start",
+      "folds": [
+        "leave_one_sortie_out__fold01",
+        "leave_one_sortie_out__fold02"
+      ],
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "selected_candidates": {
+        "physiology_only": "A",
+        "vehicle_only": "C",
+        "mult": "A",
+        "contiformer": "A",
+        "chronaris": "A"
+      },
+      "methods": [
+        "physiology_only",
+        "vehicle_only",
+        "mult",
+        "contiformer",
+        "chronaris"
+      ],
+      "task_targets_opened": false,
+      "outer_test_accessed": false,
+      "transfer_initialization_enabled": false,
+      "model_input_bin_width_s": 0.1,
+      "maneuver_history_policy": "include_past_maneuver_sources"
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:58.481203Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:58.644481Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "vehicle_only",
+      "status": "resumed",
+      "best_epoch": 25
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:58.870756Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "mult",
+      "status": "resumed",
+      "best_epoch": 12
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:59.036074Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "contiformer",
+      "status": "resumed",
+      "best_epoch": 25
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:59.225432Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "chronaris",
+      "status": "resumed",
+      "best_epoch": 11
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:59.391111Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:59.557648Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "vehicle_only",
+      "status": "resumed",
+      "best_epoch": 24
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:59.778973Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "mult",
+      "status": "resumed",
+      "best_epoch": 38
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:19:59.949050Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "contiformer",
+      "status": "resumed",
+      "best_epoch": 48
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:20:00.143340Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "chronaris",
+      "status": "resumed",
+      "best_epoch": 11
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:20:00.311115Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "physiology_only",
+      "status": "resumed",
+      "best_epoch": 42
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:20:00.478403Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "vehicle_only",
+      "status": "resumed",
+      "best_epoch": 24
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:20:00.700500Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "mult",
+      "status": "resumed",
+      "best_epoch": 31
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:20:00.873406Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "contiformer",
+      "status": "resumed",
+      "best_epoch": 49
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:22:39.394438Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 10
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:24:08.748409Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "physiology_only",
+      "status": "completed",
+      "best_epoch": 33
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:24:51.143673Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "vehicle_only",
+      "status": "completed",
+      "best_epoch": 16
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:26:05.615042Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "mult",
+      "status": "completed",
+      "best_epoch": 29
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:27:26.881019Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "contiformer",
+      "status": "completed",
+      "best_epoch": 37
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:34:44.123590Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 15
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:35:40.440191Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "physiology_only",
+      "status": "completed",
+      "best_epoch": 23
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:36:16.489323Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "vehicle_only",
+      "status": "completed",
+      "best_epoch": 12
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:37:40.416672Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "mult",
+      "status": "completed",
+      "best_epoch": 33
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:38:31.426239Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "contiformer",
+      "status": "completed",
+      "best_epoch": 20
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:45:50.666572Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 29,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 15
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:47:02.445762Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "physiology_only",
+      "status": "completed",
+      "best_epoch": 32
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:47:41.581869Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "vehicle_only",
+      "status": "completed",
+      "best_epoch": 14
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:49:21.181557Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "mult",
+      "status": "completed",
+      "best_epoch": 43
+    },
+    {
+      "timestamp_utc": "2026-07-15T17:49:55.615594Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "contiformer",
+      "status": "completed",
+      "best_epoch": 11
+    },
+    {
+      "timestamp_utc": "2026-07-15T18:00:00.409149Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 43,
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 24
+    },
+    {
+      "timestamp_utc": "2026-07-15T18:00:00.587081Z",
+      "event": "finished",
+      "status": "completed",
+      "method_fold_seed_count": 30,
+      "acceptance_pass_count": 8,
+      "acceptance_check_count": 8
+    }
+  ],
+  "seed": 43,
+  "fold_id": "leave_one_sortie_out__fold02",
+  "method_name": "chronaris",
+  "status": "completed",
+  "best_epoch": 24,
+  "method_fold_seed_count": 30,
+  "acceptance_pass_count": 8,
+  "acceptance_check_count": 8
+}

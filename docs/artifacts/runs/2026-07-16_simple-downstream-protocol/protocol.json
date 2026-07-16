@@ -1,0 +1,68 @@
+{
+  "config": {
+    "compact_output_root": "docs/artifacts/runs",
+    "fixed_audit_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "historical_representation_root": "docs/artifacts/runs/2026-07-12_dingxin-locked-representations-coalesced",
+    "repository_root": "/home/wangminan/projects/chronaris",
+    "required_seeds": [
+      17,
+      29,
+      43
+    ],
+    "run_id": "2026-07-16_simple-downstream-protocol",
+    "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot"
+  },
+  "diagnostic_split_strategy": "leave_one_view_out",
+  "end_to_end_retraining_allowed": false,
+  "expected_vehicle_context_count": 60,
+  "expected_view_context_count": 90,
+  "format": "chronaris.simple_downstream_protocol.v1",
+  "future_duration_s": 5.0,
+  "generated_at_utc": "2026-07-15T16:43:43.655548+00:00",
+  "heavy_artifacts": {
+    "context_manifest": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/context_manifest.csv",
+    "fold_manifest": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/fold_manifest.csv",
+    "maneuver_statistics": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/maneuver_statistics.csv",
+    "maneuver_targets": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/maneuver_targets.csv",
+    "physiology_statistics": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/physiology_statistics.csv",
+    "physiology_targets": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/physiology_targets.csv",
+    "thresholds": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/fold_fitted_parameters.csv"
+  },
+  "history_duration_s": 30.0,
+  "maneuver_classification_c": 1.0,
+  "maneuver_regression_alpha": 1.0,
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "outer_result_driven_tuning_allowed": false,
+  "physiology_regression_alpha": 1.0,
+  "primary_split_strategy": "leave_one_sortie_out",
+  "query_point_count": 96,
+  "representation_output_dim": 64,
+  "run_id": "2026-07-16_simple-downstream-protocol",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "source_hashes": {
+    "context_sample_manifest.jsonl": "b38e537e2ec0bdee70fc38bd52c7f6958b1663d02e0dfb29e4dae0b0efda2300",
+    "field_role_manifest.csv": "60e7ca48043ffb80f34ec05da7336e48b9db8c08e2528ae7564d74566a6eeb92",
+    "fold_label_thresholds.csv": "5d114ee408238b2a013d2a6f666b0fcd02e6ff457c97803250a76b909339aecb",
+    "fold_task_labels.csv": "5ea52e9c7576f0af505658ce60a69b19ec88d8d0cee8b486de2addf33de8fe8d",
+    "snapshot_manifest.json": "a8b5b4afa8121d4dd11dd295a33955405c3255d95d0c3dc2f8851bea8967363d",
+    "split_manifest.json": "e69fccc8474ca00de3edf69ceaa64b1d4cca35106b26b8e1bcf79260d2d0a5e8"
+  },
+  "status": "completed",
+  "task_ids": [
+    "dingxin_future_maneuver_score_v1",
+    "dingxin_future_maneuver_class_v1",
+    "dingxin_future_physiology_fields_v1"
+  ]
+}

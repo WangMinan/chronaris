@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from chronaris.representation import (
+    DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
     DingxinObservationSchemaPlan,
     DingxinSnapshotPointCache,
     build_dingxin_observation_schema_plan,
@@ -52,10 +53,12 @@ def build_dingxin_lazy_context_index(
     snapshot_root: str | Path,
     field_role_manifest_path: str | Path,
     context_manifest_path: str | Path,
+    maneuver_history_policy: str = DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
 ) -> DingxinLazyContextIndex:
     plan = build_dingxin_observation_schema_plan(
         snapshot_root=snapshot_root,
         field_role_manifest_path=field_role_manifest_path,
+        maneuver_history_policy=maneuver_history_policy,
     )
     contexts = pd.read_json(context_manifest_path, lines=True)
     view_plans = {

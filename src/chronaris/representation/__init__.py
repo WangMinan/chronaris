@@ -32,6 +32,8 @@ from chronaris.representation.contract_probe import (
     ContractProbeEncoder,
 )
 from chronaris.representation.loaders import (
+    DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+    DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
     DingxinObservationSchemaPlan,
     DingxinSnapshotPointCache,
     build_dingxin_observation_schema_plan,
@@ -98,6 +100,8 @@ __all__ = [
     "ResumableOOFExporter",
     "SIX_METHOD_NAMES",
     "build_dingxin_observation_schema_plan",
+    "DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY",
+    "DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY",
     "build_dingxin_snapshot_point_cache",
     "build_checkpoint_record",
     "build_common_pretext_targets",

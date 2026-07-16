@@ -1,0 +1,72 @@
+{
+  "files": {
+    "acceptance": {
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-protocol/acceptance.csv",
+      "sha256": "0deccca3eabb7b6ab2f47e3fe255c39da0f674f65c9851671f6e195b8efc42fa",
+      "size_bytes": 309
+    },
+    "compatibility_report": {
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-protocol/representation_compatibility_report.json",
+      "sha256": "9841a2e9edf3a923d70edfe0e3f83739826f8057e277b57fc59f94adff67ae2c",
+      "size_bytes": 21488
+    },
+    "context_manifest": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/context_manifest.csv",
+      "sha256": "1f1482db7a37be7b0e31b76c4670bac988dd05663aa05da76fd48894c9887a26",
+      "size_bytes": 22565
+    },
+    "fold_manifest": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/fold_manifest.csv",
+      "sha256": "e0f10d1260ef4c52828797c467d68a84bc9d112ed44abffcf202b24945d470ba",
+      "size_bytes": 484
+    },
+    "maneuver_statistics": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/maneuver_statistics.csv",
+      "sha256": "e9cd4177a76d458c7ea3d16e04912c8f9db7fbc58fa37ef601d0f6aef9071440",
+      "size_bytes": 133484
+    },
+    "maneuver_targets": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/maneuver_targets.csv",
+      "sha256": "ca0ac878a1d388e1b6d3e2dea7d728d511ab3207df61fb6eec3cebd4d3b49f69",
+      "size_bytes": 74446
+    },
+    "physiology_statistics": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/physiology_statistics.csv",
+      "sha256": "e636a79d4e30f8d16873841f7cba811225c449d881a0022e59eb4989972b5565",
+      "size_bytes": 295173
+    },
+    "physiology_targets": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/physiology_targets.csv",
+      "sha256": "4404d728d34d3a1c53f68fb09d06c5ac89e87c80671b2b906ff7f0aec389a4b1",
+      "size_bytes": 783585
+    },
+    "protocol": {
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-protocol/protocol.json",
+      "sha256": "75db7299501a9808a96d8be5f6187c8e87ced931f8f2825f25fad4fc2786e325",
+      "size_bytes": 3089
+    },
+    "report": {
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-protocol/report.md",
+      "sha256": "6d2dcd278fa623bfd0999c3b282e23f5dea0cbe6443a623d3f52bc33083a010b",
+      "size_bytes": 1876
+    },
+    "resume_command": {
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-protocol/resume_command.txt",
+      "sha256": "95fecca9334272b532f340aa26554fb09f46863c8fe1df58a3969f088a239f90",
+      "size_bytes": 412
+    },
+    "task_summary": {
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-protocol/task_manifest_summary.json",
+      "sha256": "f6728176031597227fcfb1ee4f36e71d1d93f89a252e770934817a272502d3a9",
+      "size_bytes": 1432
+    },
+    "thresholds": {
+      "path": "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/fold_fitted_parameters.csv",
+      "sha256": "a68d5186335a66b3a7154d3480dc1fb7bc3dcf9bdb643baa9255e47baad19359",
+      "size_bytes": 9742
+    }
+  },
+  "format": "chronaris.simple_downstream_evidence_manifest.v1",
+  "run_id": "2026-07-16_simple-downstream-protocol",
+  "status": "completed"
+}

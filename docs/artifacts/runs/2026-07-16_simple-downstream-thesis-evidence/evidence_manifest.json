@@ -1,0 +1,33 @@
+{
+  "format": "chronaris.simple_downstream_thesis_evidence.v1",
+  "run_id": "2026-07-16_simple-downstream-thesis-evidence",
+  "status": "completed",
+  "config": {
+    "run_id": "2026-07-16_simple-downstream-thesis-evidence",
+    "confirmation_run_id": "2026-07-16_simple-downstream-confirmation",
+    "pretraining_run_id": "2026-07-16_simple-downstream-pretraining-confirmation",
+    "representation_run_id": "2026-07-16_simple-downstream-representations-confirmation",
+    "task_protocol_run_id": "2026-07-16_simple-downstream-protocol",
+    "prior_evidence_pack_run_id": "2026-07-12_downstream-evidence-pack",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation"
+  },
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7,
+  "formal_result_opened": true,
+  "result_driven_tuning_allowed": false,
+  "training_performed": false,
+  "confirmed_metrics_changed": false,
+  "summary_max_absolute_difference": 4.547473508864641e-13,
+  "raw_metric_max_absolute_difference": 1.8189894035458565e-12,
+  "output_paths": {
+    "report": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md",
+    "validation_report": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/validation_report.md",
+    "artifact": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/artifact.json",
+    "primary_table": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/tables/primary_result_table.csv",
+    "fold_table": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/tables/fold_primary_metrics.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/acceptance.csv",
+    "chart_map": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/chart_map.json",
+    "source_inventory": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/source_inventory.csv"
+  }
+}

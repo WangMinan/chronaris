@@ -1,14 +1,24 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-15
+更新时间：2026-07-16
 
 ## 一句话状态
 
-鼎新目标重构与统一条件六方法确认已完成，当前分支为 `codex/dingxin-target-reconstruction-20260715`。六种方法在统一删除 30 个时间类航电通道、最多 50 epoch 与 patience 8 的相同无标签预算及相同任务头下完成 42 个方法—验证单元训练和 84 份训练内表示导出。未来机动连续分数最佳中位斯皮尔曼秩相关系数为 `0.5979`，未来机动趋势最佳平均/最差宏平均 F1 为 `0.6598/0.3535`；生理剩余响应最佳中位 RMSE 比率为 `1.1614`、平均技能为 `-0.2529`，高剩余响应最佳平均/中位归一化平均精确率为 `0.0833/0.0000`。只有第三训练池连续目标评价通过，时间捷径抑制和四项任务门禁均失败，因此安全融合与任务感知主干训练均不放行。本轮外层测试始终关闭，Chronaris 主干未修改或使用任务标签训练，既有确认指标和论文证据包保持不变。
+鼎新简化下游评价已在分支 `codex/simple-downstream-rebuild-20260715` 完整收口。任务无关预训练 30/30 单元、六方法表示导出 72/72 份、固定下游算法评价 36/36 单元全部完成，504 条指标、108 项逐样本文件哈希和原始预测独立复算均通过。航电单流在未来机动上取得宏平均 F1 `0.8084`、Spearman `0.6165` 和相对当前状态技能 `0.6685`；Chronaris 对应为 `0.1948/0.0685/-123.5859`。未来生理字段中六种方法的正技能字段比例均为 `0`，都未超过持久性基线。既有仿真仍支持 Chronaris 的时间机制恢复局部优势，但缺失退化和部分消融结果不利；当前结论为“时间机制局部有效，真实下游整体优势尚未成立”，正式结果打开后不再调参。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- 当前简化下游评价协议：[requirements/simple-downstream-evaluation-v1.md](requirements/simple-downstream-evaluation-v1.md)
+- 当前实施说明：[implementation/notes/simple-downstream-rebuild-2026-07-15.md](implementation/notes/simple-downstream-rebuild-2026-07-15.md)
+- 简化任务协议与兼容性审计：[artifacts/runs/2026-07-16_simple-downstream-protocol/report.md](artifacts/runs/2026-07-16_simple-downstream-protocol/report.md)
+- 选定配置预训练工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md)
+- 六方法完整表示工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md)
+- 固定下游算法工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md)
+- 正式预训练确认：[artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md)
+- 正式表示导出确认：[artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md)
+- 正式下游评价：[artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md)
+- 论文证据与独立复核：[artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md](artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md)
 - 鼎新目标重构与统一条件确认：[artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md)
 - 鼎新目标重构短预算筛选：[artifacts/runs/2026-07-15_dingxin-target-reconstruction/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction/gap_report.md)
 - 目标重构预注册：[implementation/notes/dingxin-target-reconstruction-2026-07-15.md](implementation/notes/dingxin-target-reconstruction-2026-07-15.md)
@@ -59,14 +69,18 @@
 
 - 后续不把新增鼎新一手双流、人工工作负荷评价或专家事件标注作为依赖。
 - 现有鼎新范围固定为 2 个 sortie、3 个 view、111 个 5 秒窗口。
-- 鼎新主任务改为机动强度弱监督分类和机动诱发生理响应预测；历史任务字段只用于兼容。
+- 当前真实数据任务使用 90 个完整未来 view-context；机动任务按唯一 vehicle-context 去重或加权，生理任务按 view-context 评价。
+- 留一架次是主要分组确认，留一视图只作同一飞行过程中的视图适配诊断；不做显著性声明。
+- 过去 30 秒内的正常运动学历史允许进入新主协议，未来 5 秒目标窗口、身份字段和绝对飞行进程禁止进入模型。
+- 新主结果固定为统一任务无关表示加相同 Ridge/Logistic；正式结果打开后不再调参。
+- 鼎新主任务固定为未来机动连续分数预测、辅助强度分类和未来生理字段预测；历史任务字段只用于兼容。
 - 仿真器生成原始异步双流和独立 oracle，不生成任何方法的融合向量。
 - 主比较固定为生理单流、航电单流、朴素时间同步、MulT、ContiFormer 和 Chronaris。
-- 六方法统一输出 `[B,T,64]`；冻结表示评价是主结果，端到端微调是辅助结果。
+- 六方法统一导出 96 点、64 维任务无关表示，并以相同无标签池化形成 64 维窗口表示；冻结表示评价是新主结果，既有端到端结果只作过拟合诊断，不再重训。
 - 融合表示结构诊断只放附录，不参与模型选择。
 - UAB/NASA 保持公开数据适配和上下文构造第二输入流证据，不等价于鼎新真实航电流。
 
-## 当前长程队列
+## 已收口的固定数据长程记录
 
 - 仿真 clean 主线：18/18 方法—随机种子 consumer、1152 条指标、768 条双流增益和 90 条轨迹级配对统计全部完成，7/7 门禁通过。Chronaris 在线性探针的仿真负荷分类/回归分别以 macro-F1 0.5110、RMSE 0.1928 居首，在持续时间约束分段的 frame macro-F1 0.4687、segmental F1@0.25 0.5319 居首；MiniRocket 负荷任务与边界 F1/延迟由 MulT 领先，因此结论是可解释的分项优势，不是全面第一。
 - 仿真压力主线：3 seeds × 35 场景 × 6 方法共 630 份 `[192,96,64]` 表示和 630/630 个冻结 consumer 评估全部完成，两级门禁分别为 5/5、6/6。共生成 20,160 条指标、4,032 条退化斜率和 630 条 48 轨迹配对统计；所有 consumer 和阈值冻结自 G1 clean，压力场景不重训、不调参。Chronaris 在最高单因素压力下 15/21 个主指标组合位于前二，但随机和连续缺失的主指标平均退化斜率为 -0.0733/-0.1264，均排第六。

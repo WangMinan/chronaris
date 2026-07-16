@@ -1,0 +1,26 @@
+[
+  {
+    "figure": "dingxin_future_maneuver.png",
+    "question": "哪种冻结表示最适合未来机动预测",
+    "family": "horizontal bars with fold points",
+    "claim": "航电单流稳定领先"
+  },
+  {
+    "figure": "dingxin_future_physiology.png",
+    "question": "哪种表示能超过短期生理持久性",
+    "family": "horizontal bars with log ratio",
+    "claim": "六方法均未超过持久性"
+  },
+  {
+    "figure": "simulation_mechanism_boundary.png",
+    "question": "时间恢复优势是否同时转化为压力鲁棒性",
+    "family": "bars plus heatmap",
+    "claim": "时间恢复领先但缺失鲁棒性不领先"
+  },
+  {
+    "figure": "chronaris_ablation_boundary.png",
+    "question": "Chronaris 组件贡献是否跨任务一致",
+    "family": "grouped bars",
+    "claim": "连续演化与因果掩码局部有效，物理约束结果混合"
+  }
+]

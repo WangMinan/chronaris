@@ -1,6 +1,6 @@
 # Chronaris 需求规格入口
 
-更新时间：2026-07-10
+更新时间：2026-07-16
 
 ## 1. 毕业论文目标
 
@@ -72,3 +72,7 @@
 - [downstream-evaluation-spec.md](downstream-evaluation-spec.md)：真实/仿真任务、标签公式、划分、下游算法、指标与模型选择。
 - [synthetic-benchmark-spec.md](synthetic-benchmark-spec.md)：G1/G2 仿真生成族、观测场景、oracle、压力等级和验收。
 - [model-contracts/application-fusion-stream-contract.md](model-contracts/application-fusion-stream-contract.md)：六方法共同消费的异步双流和 `[B,T,64]` 融合表示合同。
+
+## 7. 当前简化下游评价规格
+
+2026-07-16 起，鼎新真实数据的当前执行入口切换为 [鼎新简化下游评价协议 v1](simple-downstream-evaluation-v1.md)。该协议保留固定数据与统一表示基础设施，但以留一架次分组确认、未来机动连续预测和未来生理字段预测为主，不再自动续跑旧目标重构门禁。旧规格和产物继续作为历史研究记录，不覆盖新协议。

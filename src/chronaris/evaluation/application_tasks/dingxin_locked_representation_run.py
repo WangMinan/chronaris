@@ -33,6 +33,7 @@ from chronaris.modeling.training import (
     load_common_pretraining_checkpoint,
 )
 from chronaris.representation import (
+    DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
     CheckpointRegistry,
     ResumableOOFExporter,
     build_checkpoint_record,
@@ -72,6 +73,7 @@ class DingxinLockedRepresentationConfig:
     export_batch_size: int = 8
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    maneuver_history_policy: str = DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY
     resume: bool = True
 
 
@@ -110,6 +112,16 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
         DINGXIN_MODEL_INPUT_BIN_WIDTH_S
     ):
         raise ValueError("Dingxin pretraining and representation input bins differ")
+    if (
+        str(
+            pretraining_protocol.get(
+                "maneuver_history_policy",
+                DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+            )
+        )
+        != config.maneuver_history_policy
+    ):
+        raise ValueError("Dingxin pretraining and representation field policies differ")
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
@@ -147,6 +159,7 @@ def run_dingxin_locked_representations(config: DingxinLockedRepresentationConfig
                     snapshot_root=config.snapshot_root,
                     fixed_audit_root=config.fixed_audit_root,
                     inner_split_root=config.inner_split_root,
+                    maneuver_history_policy=config.maneuver_history_policy,
                 )
                 provider = data.load_batch
                 fold_root = compact_root / "folds" / f"seed_{seed}" / fold_id
@@ -373,6 +386,7 @@ def _write_outputs(**values):
         "outer_test_metrics_opened": False,
         "representation_family": values["representation_family"],
         "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
+        "maneuver_history_policy": values["config"].maneuver_history_policy,
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -383,12 +397,24 @@ def _write_outputs(**values):
         "所有训练 checkpoint 完成后才导出 outer-test 表示；任务目标、consumer 和 outer-test 指标保持关闭。",
         "",
     )), encoding="utf-8")
+    seed_flags = " ".join(
+        f"--seed {seed}" for seed in values["config"].seeds
+    )
+    fold_flags = " ".join(
+        f"--fold-id {fold_id}" for fold_id in values["config"].fold_ids
+    )
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_dingxin_locked_representations.py "
         f"--run-id {values['config'].run_id} "
         f"--pretraining-run-id {values['config'].pretraining_run_id} "
-        f"--export-batch-size {values['config'].export_batch_size} --resume\n",
+        f"{seed_flags} {fold_flags} "
+        "--maneuver-history-policy "
+        f"{values['config'].maneuver_history_policy} "
+        f"--fit-batch-size {values['config'].fit_batch_size} "
+        f"--export-batch-size {values['config'].export_batch_size} "
+        f"--baseline-device {values['baseline_device']} "
+        f"--chronaris-device {values['chronaris_device']} --resume\n",
         encoding="utf-8",
     )
     _write_json(paths["evidence"], {

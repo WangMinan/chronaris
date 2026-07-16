@@ -1,0 +1,123 @@
+{
+  "folds": [
+    "leave_one_sortie_out__fold01"
+  ],
+  "seeds": [
+    17
+  ],
+  "selected_candidates": {
+    "physiology_only": "A",
+    "vehicle_only": "C",
+    "mult": "A",
+    "contiformer": "A",
+    "chronaris": "A"
+  },
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "task_targets_opened": false,
+  "outer_test_accessed": false,
+  "transfer_initialization_enabled": false,
+  "model_input_bin_width_s": 0.1,
+  "maneuver_history_policy": "include_past_maneuver_sources",
+  "stage_name": "dingxin_locked_pretraining",
+  "run_id": "2026-07-16_simple-downstream-pretraining-smoke",
+  "last_event": "finished",
+  "updated_at_utc": "2026-07-15T16:54:25.352918Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-07-15T16:53:14.073337Z",
+      "event": "start",
+      "folds": [
+        "leave_one_sortie_out__fold01"
+      ],
+      "seeds": [
+        17
+      ],
+      "selected_candidates": {
+        "physiology_only": "A",
+        "vehicle_only": "C",
+        "mult": "A",
+        "contiformer": "A",
+        "chronaris": "A"
+      },
+      "methods": [
+        "physiology_only",
+        "vehicle_only",
+        "mult",
+        "contiformer",
+        "chronaris"
+      ],
+      "task_targets_opened": false,
+      "outer_test_accessed": false,
+      "transfer_initialization_enabled": false,
+      "model_input_bin_width_s": 0.1,
+      "maneuver_history_policy": "include_past_maneuver_sources"
+    },
+    {
+      "timestamp_utc": "2026-07-15T16:53:33.587853Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "physiology_only",
+      "status": "completed",
+      "best_epoch": 3
+    },
+    {
+      "timestamp_utc": "2026-07-15T16:53:36.764235Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "vehicle_only",
+      "status": "completed",
+      "best_epoch": 3
+    },
+    {
+      "timestamp_utc": "2026-07-15T16:53:41.208087Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "mult",
+      "status": "completed",
+      "best_epoch": 3
+    },
+    {
+      "timestamp_utc": "2026-07-15T16:53:44.427591Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "contiformer",
+      "status": "completed",
+      "best_epoch": 3
+    },
+    {
+      "timestamp_utc": "2026-07-15T16:54:25.185508Z",
+      "event": "dingxin_locked_method_complete",
+      "seed": 17,
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_epoch": 2
+    },
+    {
+      "timestamp_utc": "2026-07-15T16:54:25.352918Z",
+      "event": "finished",
+      "status": "completed",
+      "method_fold_seed_count": 5,
+      "acceptance_pass_count": 8,
+      "acceptance_check_count": 8
+    }
+  ],
+  "seed": 17,
+  "fold_id": "leave_one_sortie_out__fold01",
+  "method_name": "chronaris",
+  "status": "completed",
+  "best_epoch": 2,
+  "method_fold_seed_count": 5,
+  "acceptance_pass_count": 8,
+  "acceptance_check_count": 8
+}

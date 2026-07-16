@@ -1,0 +1,35 @@
+{
+  "format": "chronaris.simple_downstream_consumer_protocol.v1",
+  "status": "completed",
+  "config": {
+    "run_id": "2026-07-16_simple-downstream-confirmation",
+    "representation_run_id": "2026-07-16_simple-downstream-representations-confirmation",
+    "task_protocol_run_id": "2026-07-16_simple-downstream-protocol",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "fold_ids": [
+      "leave_one_sortie_out__fold01",
+      "leave_one_sortie_out__fold02"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "methods": [
+      "physiology_only",
+      "vehicle_only",
+      "naive_time_sync",
+      "mult",
+      "contiformer",
+      "chronaris"
+    ],
+    "evaluation_scope": "formal_confirmation",
+    "classification_c": 1.0,
+    "regression_alpha": 1.0
+  },
+  "representation_protocol_sha256": "1474b84164db4ef6f0e69b59b99234c735acaf33a4ba536fc9e52ea76b17890a",
+  "task_protocol_run_id": "2026-07-16_simple-downstream-protocol",
+  "outer_metrics_opened": true,
+  "result_driven_tuning_allowed": false
+}

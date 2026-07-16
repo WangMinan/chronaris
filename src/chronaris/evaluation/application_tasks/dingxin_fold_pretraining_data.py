@@ -12,6 +12,7 @@ from chronaris.evaluation.application_tasks.dingxin_context_data import (
     dingxin_vehicle_field_labels,
 )
 from chronaris.representation import (
+    DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
     FoldLineage,
     coalesce_observation_batch,
 )
@@ -21,15 +22,25 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 DINGXIN_MODEL_INPUT_BIN_WIDTH_S = 0.1
 
 
-def ensure_dingxin_model_input_contract(root: str | Path) -> Path:
+def ensure_dingxin_model_input_contract(
+    root: str | Path,
+    *,
+    maneuver_history_policy: str = DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+) -> Path:
     root = Path(root)
     path = root / "model_input_contract.json"
     expected = {
-        "format": "chronaris.dingxin_model_input_contract.v1",
+        "format": (
+            "chronaris.dingxin_model_input_contract.v1"
+            if maneuver_history_policy == DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY
+            else "chronaris.dingxin_model_input_contract.v2"
+        ),
         "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
         "causal_bin_timestamp": "last_real_observation",
         "duplicate_feature_reducer": "arithmetic_mean",
     }
+    if maneuver_history_policy != DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY:
+        expected["maneuver_history_policy"] = maneuver_history_policy
     if path.is_file():
         observed = json.loads(path.read_text(encoding="utf-8"))
         if observed != expected:
@@ -68,6 +79,7 @@ def load_dingxin_fold_pretraining_data(
     snapshot_root: str | Path,
     fixed_audit_root: str | Path,
     inner_split_root: str | Path,
+    maneuver_history_policy: str = DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
 ) -> DingxinFoldPretrainingData:
     fixed_root = Path(fixed_audit_root)
     split_root = Path(inner_split_root)
@@ -102,6 +114,7 @@ def load_dingxin_fold_pretraining_data(
         snapshot_root=snapshot_root,
         field_role_manifest_path=paths["field_role_manifest"],
         context_manifest_path=paths["context_manifest"],
+        maneuver_history_policy=maneuver_history_policy,
     )
     expected = set(
         fold.train_sample_ids

@@ -1,0 +1,5 @@
+check_id,passed,actual,expected
+all_requested_units,True,6,6
+all_units_completed,True,"['completed', 'completed', 'completed', 'completed', 'completed', 'completed']",completed
+fixed_consumer_parameters,True,"[1.0, 1.0]","[1.0, 1.0]"
+metrics_finite,True,84,all finite

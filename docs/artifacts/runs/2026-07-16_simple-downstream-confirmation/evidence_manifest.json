@@ -1,0 +1,25 @@
+{
+  "format": "chronaris.simple_downstream_consumer_evidence.v1",
+  "run_id": "2026-07-16_simple-downstream-confirmation",
+  "status": "completed",
+  "evaluation_scope": "formal_confirmation",
+  "evaluated_unit_count": 36,
+  "acceptance_pass_count": 4,
+  "acceptance_check_count": 4,
+  "outer_metrics_opened": true,
+  "result_driven_tuning_allowed": false,
+  "confirmed_metrics_changed": false,
+  "representation_heavy_root": "artifacts/application_evaluation/2026-07-16_simple-downstream-representations-confirmation",
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-16_simple-downstream-confirmation",
+  "output_paths": {
+    "metrics_long": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+    "metrics_summary": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_summary.csv",
+    "units": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/unit_inventory.csv",
+    "predictions": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/prediction_inventory.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md",
+    "resume": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/evidence_manifest.json"
+  }
+}
