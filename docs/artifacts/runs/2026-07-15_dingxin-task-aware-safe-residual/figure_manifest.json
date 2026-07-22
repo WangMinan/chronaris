@@ -1,0 +1,22 @@
+{
+  "figures": [
+    {
+      "chart_type": "annotated heatmap",
+      "family": "Matrix & Cohort",
+      "path": "frozen_safety_supports.png",
+      "question": "冻结安全残差在多少个唯一验证支持上不伤害任务基座？",
+      "row_count": 5,
+      "takeaway": "五个候选均在三个任务的 6/6 支持上满足安全门禁。"
+    },
+    {
+      "chart_type": "three-panel categorical bar",
+      "family": "Comparison & Ranking",
+      "path": "partial_unfreeze_deltas.png",
+      "question": "部分解冻相对冻结状态是否形成跨任务增益？",
+      "row_count": 336,
+      "takeaway": "两个学习率比例都只改善一个任务，未达到研究门禁。"
+    }
+  ],
+  "outer_test_opened": false,
+  "palette_policy": "hard two-root cap"
+}

@@ -1,0 +1,107 @@
+{
+  "configuration_locked": false,
+  "files": [
+    {
+      "path": "protocol.json",
+      "sha256": "abcb9b2be0d4a52774d67d69e7911eed09366c1ce29c5dae3549f3f9dd9bfb75",
+      "size_bytes": 3801
+    },
+    {
+      "path": "architecture_manifest.json",
+      "sha256": "0472168e4f35f02e7974634b088dcfe68a00e7bfe3cf20efa17fa03ba7baf543",
+      "size_bytes": 618
+    },
+    {
+      "path": "candidate_grid.json",
+      "sha256": "e0ec74e00ebae84ed3d32bdf84eab89c79b51c75d55151ace1ae8927acd53ba8",
+      "size_bytes": 2790
+    },
+    {
+      "path": "teacher_inventory.json",
+      "sha256": "8b1daa071e7fcf6e41504bf3c57b886df5b59fee40f3d1c59a73eaa61a84d71a",
+      "size_bytes": 488
+    },
+    {
+      "path": "candidate_support_metrics.csv",
+      "sha256": "002f1cbaaf2260e20142b3b2c0cb11629d7069daaa3d2867fd282f0e7e29ba0d",
+      "size_bytes": 401132
+    },
+    {
+      "path": "candidate_training.csv",
+      "sha256": "4112d254af3b0308dd974cba3ea0d5928040602ee5427c8182239fe6d0af7f1c",
+      "size_bytes": 659561
+    },
+    {
+      "path": "gradient_conflict.csv",
+      "sha256": "1fe51111ba2929e5f0bd46ba3431993c69b4077b94a5b8b91102941d478a8a36",
+      "size_bytes": 123956
+    },
+    {
+      "path": "residual_activation_diagnostics.csv",
+      "sha256": "06031f2addb1b2e29c9bc611982ad096138981912653dd4dc230e5977b9c7397",
+      "size_bytes": 8088
+    },
+    {
+      "path": "sample_gate_statistics.csv",
+      "sha256": "1fb0d91b32f1d6b9901516e9fa860abf27cb495739744cd9867a8139b840778d",
+      "size_bytes": 30159
+    },
+    {
+      "path": "teacher_oof_statistics.csv",
+      "sha256": "5af79fa3f189b3de2683c0fa1fd348a0b741927ac1b9dd680607efc17fe9a397",
+      "size_bytes": 1360
+    },
+    {
+      "path": "access_audit.csv",
+      "sha256": "bd5494cd962f207308db45ec019f78f3c91ebd037597ab497268f0f3dec64271",
+      "size_bytes": 479
+    },
+    {
+      "path": "candidate_summary.csv",
+      "sha256": "548da6672addf1ba4c5de5d5a14435485ba9915113a6ff242843d8f3d8ae1d8b",
+      "size_bytes": 3338
+    },
+    {
+      "path": "selected_candidates.json",
+      "sha256": "56475a67e67e7bd82000bc96e16065217b8a3950c08196c84ab70097734e7a26",
+      "size_bytes": 360
+    },
+    {
+      "path": "allowance.json",
+      "sha256": "3036f48925852323547cef84f75757359a968d1385f6b3b9c470af32973cf614",
+      "size_bytes": 340
+    },
+    {
+      "path": "progress.json",
+      "sha256": "1c77d0afb0f054f0688da7ab6a11e0014f3ff5d87e38cc3458ee9aee8070f934",
+      "size_bytes": 490
+    },
+    {
+      "path": "resume_command.txt",
+      "sha256": "f3fd6451a2cd7cbeb2fb76b6b5b19400b243c51b3f461705a97d257b4cd0cc3a",
+      "size_bytes": 215
+    },
+    {
+      "path": "figure_manifest.json",
+      "sha256": "34edca1362d4260db7867e45e9a46b47fbb7a3766bdaab31666c932904c49e72",
+      "size_bytes": 534
+    },
+    {
+      "path": "residual_activation_task_metrics.png",
+      "sha256": "277d10bce9ff62346c34422971422f73d20864c00e0e6d6f2cb39a73051254b3",
+      "size_bytes": 158335
+    },
+    {
+      "path": "residual_activation_usage.png",
+      "sha256": "9c4b1cef38382d3a0120310c14a6be9c9761bf4d2b21e78fb8709ad206fd4cc5",
+      "size_bytes": 130076
+    },
+    {
+      "path": "gap_report.md",
+      "sha256": "dfe82ac0843a83bb0169b5ff04ff1620d5859a5ea3484cf3e89351849928d24d",
+      "size_bytes": 3305
+    }
+  ],
+  "format": "chronaris.dingxin_residual_activation_evidence.v1",
+  "outer_test_opened": false
+}

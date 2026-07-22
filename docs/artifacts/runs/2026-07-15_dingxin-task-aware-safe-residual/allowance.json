@@ -1,0 +1,20 @@
+{
+  "allow_partial_unfreeze": true,
+  "allow_teacher_distillation": false,
+  "configuration_locked": false,
+  "decision": "partial_research_gap",
+  "frozen_safety_passed": true,
+  "gate_contract": {
+    "high_response_maximum_auprc_drop": 0.005,
+    "maneuver_maximum_drop": 0.005,
+    "minimum_safe_support_count": 4,
+    "response_maximum_relative_rmse_increase": 0.01
+  },
+  "historical_outer_metrics_used_for_selection": false,
+  "outer_test_opened": false,
+  "partial_safety_passed": true,
+  "research_gate_passed": false,
+  "selected_candidate_id": "vehicle_observed_scalar",
+  "selected_partial_candidate_id": null,
+  "task_targets_opened": true
+}

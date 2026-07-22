@@ -2,18 +2,15 @@
 
 更新时间：2026-07-16
 
-## 当前任务：简化鼎新下游评价
+## 当前任务：安全滞后感知融合新主线（待审计后提交计划）
 
-在不依赖新增鼎新数据或人工标签的前提下，复用当前成熟代码基础，把默认研究入口缩减为导师要求的融合表示下游比较：六种方法输出任务无关统一表示，再由相同 Ridge/Logistic 消费者完成未来机动与未来生理状态预测。
+两条鼎新真实数据研究线（简化下游评价、任务感知安全残差/残差激活）均已收口退出。当前唯一活动分支为 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）。下一步顺序：先只读审计当前 Chronaris 与新公开数据（PhysioNet、CLARE），再提交研究计划与评价协议，然后开发新主线；不根据任一已收口线已打开的外层结果继续调参。门控残差与安全回退作为新主线设计基础保留复用。
 
-当前分支：`codex/simple-downstream-rebuild-20260715`。
+## 历史已收口线 1：简化鼎新下游评价（最新真实数据协议冻结确认）
 
-执行事实源：
+在不依赖新增鼎新数据或人工标签的前提下，复用成熟代码基础，把默认研究入口缩减为导师要求的融合表示下游比较：六种方法输出任务无关统一表示，再由相同 Ridge/Logistic 消费者完成未来机动与未来生理状态预测。原分支 `codex/simple-downstream-rebuild-20260715`，evidence tag `evidence/simple-downstream-confirmation-20260716`。
 
-- [鼎新简化下游评价协议 v1](../requirements/simple-downstream-evaluation-v1.md)
-- [鼎新简化下游评价执行说明](notes/simple-downstream-rebuild-2026-07-15.md)
-
-### 当前顺序
+### 收口顺序
 
 1. **已完成：**固化协议、分支和文档入口，停止旧门禁自动续跑。
 2. **已完成：**审计现有 checkpoint、270 份表示与新字段合同的兼容性；结论为必须按新字段合同重训。
@@ -22,33 +19,42 @@
 5. **已完成：**一个留一架次折、seed 17、六方法工程冒烟；预训练、完整表示和下游算法三段均通过，不以模型分数作为门禁。
 6. **已完成：**使用冻结的 50 epoch、batch size 32、patience 8 配置完成两个留一架次折、三随机种子的一次正式确认；30/30 预训练单元、72/72 表示导出和 36/36 下游评价单元均完成。
 7. **已完成：**复用既有仿真、时间机制和消融证据，保留有利与不利结果，形成论文报告、四张图、结果表和独立复核记录。
-8. **已收口：**正式结果已经打开，不再根据两个架次调参，也不新增不能改变跨架次主结论的留一视图训练线；后续进入论文写作与导师 review。
+8. **已收口：**正式结果已经打开，不再根据两个架次调参，也不新增不能改变跨架次主结论的留一视图训练线。
 
-当前实跑入口：
-
-- [协议和表示兼容性审计](../artifacts/runs/2026-07-16_simple-downstream-protocol/report.md)
-- [选定配置预训练工程冒烟](../artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md)
-- [六方法完整表示工程冒烟](../artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md)
-- [固定下游算法工程冒烟](../artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md)
-- [正式预训练确认](../artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md)
-- [正式表示导出确认](../artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md)
-- [正式下游评价](../artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md)
-- [论文证据与独立复核](../artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md)
-
-### 正式结果判断
+### 正式结果判断（不利结果保留，不删除、不覆盖）
 
 - 未来机动由航电单流领先：宏平均 F1 `0.8084`、平衡准确率 `0.8111`、Spearman `0.6165`、相对当前状态技能 `0.6685`。
 - Chronaris 的未来机动宏平均 F1 为 `0.1948`，相对当前状态技能为 `-123.5859`，没有形成真实任务优势。
 - 未来生理字段中六种方法的正技能字段比例均为 `0`；最佳标准化 RMSE 宏平均为航电单流 `7.0838`，Chronaris 为 `8.8901`，所有方法均未超过持久性基线。
 - 既有仿真中 Chronaris 的时钟偏移和生理响应时延恢复误差最低，但随机缺失、连续缺失和部分组件消融结果不利。论文统一采用“时间机制局部有效，真实下游整体优势尚未成立”。
 
-### 当前禁止事项
+## 历史已收口线 2：任务感知安全残差与残差激活（晋级门禁未通过）
+
+在不依赖新增鼎新数据或人工标签、不读取外层测试的前提下，完成教师辅助残差激活与任务解耦，验证 Chronaris 连续因果支路能否在安全基座之上形成跨验证支持稳定增量。原分支 `codex/dingxin-residual-activation-20260715`（含祖先 `codex/dingxin-task-aware-safe-residual-20260715`），evidence tag `evidence/dingxin-safe-residual-gap-20260715`。
+
+### 残差激活结果与退出决定
+
+- 8 个候选 × 6 个唯一训练内验证支持共 48 个运行全部完成；教师预测来自交叉拟合模型，正式推理不需要教师集成。
+- 排名最高的样本条件门控教师辅助候选取得机动平均宏平均 F1 `0.9460`（相对安全基座 `0.9037`），连续响应中位 RMSE 比率降至 `0.8626`，高响应平均归一化平均精确率 `0.4042`。
+- 但连续响应平均技能仍为 `-0.0171`，最佳候选跨支持中位残差贡献比仅 `0.0005`，全部 8 候选低于 `0.02` 激活下限，不能证明连续因果支路形成稳定增量。
+- `activation_gate_passed=false`、`safety_gate_passed=true`、`research_gate_passed=false`、`allow_stage_3b=false`、`configuration_locked=false`、`outer_test_opened=false`。
+- 证据入口：[教师辅助残差激活与任务解耦](../artifacts/runs/2026-07-15_dingxin-residual-activation-task-decoupled/gap_report.md)。
+
+### 任务感知安全残差阶段 2 结果（冻结阶段无损）
+
+- 六方法同预算任务基座：机动分类由航电单流领先，平均宏平均 F1 `0.9037`；连续响应由直接观测基座取得最低中位 RMSE 比率 `1.0071`；高响应平均归一化平均精确率 `0.3652`。
+- 冻结安全残差（航电机动基座 + 直接观测响应基座）：机动平均/中位/最差宏平均 F1 `0.9164/0.9630/0.7500`，高响应平均/中位归一化平均精确率 `0.3773/0.4202`；三项无损支持数均为 `6/6`。
+- 部分解冻比例 `0.02` 只改善高响应，`0.05` 只轻微改善连续响应，均只改善 `1/3` 任务；研究门禁失败，训练外教师蒸馏与配置锁定未启动。
+- `frozen_safety_passed=true`、`partial_safety_passed=true`、`research_gate_passed=false`、`allow_teacher_distillation=false`。
+- 证据入口：[鼎新任务感知安全残差阶段 2](../artifacts/runs/2026-07-15_dingxin-task-aware-safe-residual/gap_report.md)。
+
+### 两条已收口线的统一禁止事项
 
 - 不把代码仓回退到 `0a38171`；该提交只作历史复现参考。
 - 不默认复用旧 checkpoint 或表示；产物必须先通过新协议兼容性审计。
 - 不重跑端到端联合训练、教师蒸馏、仿真预训练适配或旧目标门禁。
 - 不使用留一视图结果声称新架次泛化。
-- 不根据正式留一架次结果修改目标、字段、模型、消费者或划分。
+- 不根据正式留一架次或残差激活结果修改目标、字段、模型、消费者或划分。
 - 不覆盖历史确认指标和论文协议快照。
 
 ## 历史里程碑：目标重构与统一条件比较已收口

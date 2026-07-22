@@ -4,21 +4,28 @@
 
 ## 一句话状态
 
-鼎新简化下游评价已在分支 `codex/simple-downstream-rebuild-20260715` 完整收口。任务无关预训练 30/30 单元、六方法表示导出 72/72 份、固定下游算法评价 36/36 单元全部完成，504 条指标、108 项逐样本文件哈希和原始预测独立复算均通过。航电单流在未来机动上取得宏平均 F1 `0.8084`、Spearman `0.6165` 和相对当前状态技能 `0.6685`；Chronaris 对应为 `0.1948/0.0685/-123.5859`。未来生理字段中六种方法的正技能字段比例均为 `0`，都未超过持久性基线。既有仿真仍支持 Chronaris 的时间机制恢复局部优势，但缺失退化和部分消融结果不利；当前结论为“时间机制局部有效，真实下游整体优势尚未成立”，正式结果打开后不再调参。
+两条鼎新真实数据研究线已收口并退出当前执行入口，仓库开始唯一新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）。简化下游评价线作为真实数据最新协议冻结确认保留，不利结果不删除、不覆盖：航电单流在未来机动上宏平均 F1 `0.8084`、相对当前状态技能 `0.6685`，Chronaris 为 `0.1948/-123.5859`；未来生理字段六方法正技能字段比例均为 `0`，均未超持久性基线。安全残差线（含残差激活筛选）冻结阶段无损、安全门禁通过，但研究晋级门禁未通过：最佳候选连续响应平均技能 `-0.0171`、中位残差贡献比 `0.0005`，未进入 `[0.02,0.30]` 有效区间。上述两条线均已关闭，不再根据其已打开的外层结果继续调参；门控残差与安全回退作为新主线设计基础保留复用。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
-- 当前简化下游评价协议：[requirements/simple-downstream-evaluation-v1.md](requirements/simple-downstream-evaluation-v1.md)
-- 当前实施说明：[implementation/notes/simple-downstream-rebuild-2026-07-15.md](implementation/notes/simple-downstream-rebuild-2026-07-15.md)
-- 简化任务协议与兼容性审计：[artifacts/runs/2026-07-16_simple-downstream-protocol/report.md](artifacts/runs/2026-07-16_simple-downstream-protocol/report.md)
-- 选定配置预训练工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md)
-- 六方法完整表示工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md)
-- 固定下游算法工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md)
-- 正式预训练确认：[artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md)
-- 正式表示导出确认：[artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md)
-- 正式下游评价：[artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md)
-- 论文证据与独立复核：[artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md](artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md)
+- **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`；计划与评价协议待审计完成后提交（见 TASKS.md）。
+- 历史已收口线 1 — 简化下游评价（最新真实数据协议冻结确认）：
+  - 协议：[requirements/simple-downstream-evaluation-v1.md](requirements/simple-downstream-evaluation-v1.md)
+  - 实施说明：[implementation/notes/simple-downstream-rebuild-2026-07-15.md](implementation/notes/simple-downstream-rebuild-2026-07-15.md)
+  - 简化任务协议与兼容性审计：[artifacts/runs/2026-07-16_simple-downstream-protocol/report.md](artifacts/runs/2026-07-16_simple-downstream-protocol/report.md)
+  - 选定配置预训练工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-pretraining-smoke/report.md)
+  - 六方法完整表示工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-representations-smoke/report.md)
+  - 固定下游算法工程冒烟：[artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md](artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md)
+  - 正式预训练确认：[artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation/report.md)
+  - 正式表示导出确认：[artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md)
+  - 正式下游评价：[artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md](artifacts/runs/2026-07-16_simple-downstream-confirmation/report.md)
+  - 论文证据与独立复核：[artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md](artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/report.md)
+- 历史已收口线 2 — 任务感知安全残差（含残差激活筛选）：
+  - 教师辅助残差激活与任务解耦差距报告：[artifacts/runs/2026-07-15_dingxin-residual-activation-task-decoupled/gap_report.md](artifacts/runs/2026-07-15_dingxin-residual-activation-task-decoupled/gap_report.md)
+  - 残差激活预注册：[implementation/notes/dingxin-residual-activation-2026-07-15.md](implementation/notes/dingxin-residual-activation-2026-07-15.md)
+  - 鼎新任务感知安全残差阶段 2 差距报告：[artifacts/runs/2026-07-15_dingxin-task-aware-safe-residual/gap_report.md](artifacts/runs/2026-07-15_dingxin-task-aware-safe-residual/gap_report.md)
+  - 任务感知安全残差融合预注册：[implementation/notes/dingxin-task-aware-safe-residual-2026-07-15.md](implementation/notes/dingxin-task-aware-safe-residual-2026-07-15.md)
 - 鼎新目标重构与统一条件确认：[artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction-confirmation/gap_report.md)
 - 鼎新目标重构短预算筛选：[artifacts/runs/2026-07-15_dingxin-target-reconstruction/gap_report.md](artifacts/runs/2026-07-15_dingxin-target-reconstruction/gap_report.md)
 - 目标重构预注册：[implementation/notes/dingxin-target-reconstruction-2026-07-15.md](implementation/notes/dingxin-target-reconstruction-2026-07-15.md)

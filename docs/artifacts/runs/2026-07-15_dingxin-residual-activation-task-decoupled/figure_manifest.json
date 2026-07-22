@@ -1,0 +1,16 @@
+{
+  "figures": [
+    {
+      "path": "residual_activation_task_metrics.png",
+      "purpose": "比较三个鼎新核心任务的训练内表现",
+      "sha256": "277d10bce9ff62346c34422971422f73d20864c00e0e6d6f2cb39a73051254b3"
+    },
+    {
+      "path": "residual_activation_usage.png",
+      "purpose": "审计残差修正比例与连续因果支路贡献区间",
+      "sha256": "9c4b1cef38382d3a0120310c14a6be9c9761bf4d2b21e78fb8709ad206fd4cc5"
+    }
+  ],
+  "outer_test_opened": false,
+  "reader_visible_internal_tokens": false
+}

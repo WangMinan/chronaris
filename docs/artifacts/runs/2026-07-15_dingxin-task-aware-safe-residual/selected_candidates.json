@@ -1,0 +1,33 @@
+{
+  "outer_test_opened": false,
+  "partial_unfreeze_candidates": [
+    {
+      "backbone_learning_rate_ratio": 0.02
+    },
+    {
+      "backbone_learning_rate_ratio": 0.05
+    }
+  ],
+  "selected": {
+    "candidate_id": "vehicle_observed_scalar",
+    "frozen_safety_passed": true,
+    "gate_mode": "scalar",
+    "gate_non_degenerate": true,
+    "high_response_mean_normalized_ap": 0.3773424293960008,
+    "high_response_median_normalized_ap": 0.4201785714285714,
+    "high_response_positive_split_count": 5,
+    "high_response_safe_support_count": 6,
+    "maneuver_anchor": "vehicle_only",
+    "maneuver_mean_macro_f1": 0.9163580246913581,
+    "maneuver_median_macro_f1": 0.962962962962963,
+    "maneuver_safe_support_count": 6,
+    "maneuver_worst_macro_f1": 0.75,
+    "outer_test_opened": false,
+    "ranking_score": 1.2865523424471463,
+    "response_anchor": "naive_time_sync",
+    "response_mean_skill": -0.20350676752923294,
+    "response_median_rmse_ratio": 1.0071481116402126,
+    "response_positive_skill_count": 3,
+    "response_safe_support_count": 6
+  }
+}

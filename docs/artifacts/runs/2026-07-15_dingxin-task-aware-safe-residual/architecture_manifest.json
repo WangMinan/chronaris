@@ -1,0 +1,20 @@
+{
+  "continuous_path": "dual_stream_continuous_causal_residual",
+  "frozen_stage_backbone_trained": false,
+  "fusion_equation": "task_output = safe_anchor + sigmoid(gate) * chronaris_delta",
+  "gate_initialization": "near_zero_with_zero_residual_projection",
+  "model_name": "Chronaris",
+  "outer_test_opened": false,
+  "partial_stage_backbone_scope": [
+    "observation_encoders",
+    "observation_updates",
+    "causal_fusion_output_projection",
+    "lag_scale_gate"
+  ],
+  "reader_visible_version_suffix": false,
+  "safe_anchor_roles": {
+    "high_response": "independent_risk_anchor",
+    "maneuver": "vehicle_or_direct_observation_anchor",
+    "response": "vehicle_or_physiology_inertia_anchor"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "candidate_count": 8,
+  "candidates": [
+    {
+      "adapter_mode": "shared",
+      "candidate_id": "fixed015_full_shared",
+      "distillation_weight": 0.35,
+      "gate_mode": "fixed",
+      "initial_gate": 0.15,
+      "learning_rate": 0.005,
+      "objective_mode": "full",
+      "use_distillation": false,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "fixed025_residual_task",
+      "distillation_weight": 0.35,
+      "gate_mode": "fixed",
+      "initial_gate": 0.25,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": false,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "global015_residual_task",
+      "distillation_weight": 0.35,
+      "gate_mode": "global",
+      "initial_gate": 0.15,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": false,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "conditional015_residual_task",
+      "distillation_weight": 0.35,
+      "gate_mode": "conditional",
+      "initial_gate": 0.15,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": false,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "conditional025_residual_task",
+      "distillation_weight": 0.35,
+      "gate_mode": "conditional",
+      "initial_gate": 0.25,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": false,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "conditional015_residual_task_distill",
+      "distillation_weight": 0.35,
+      "gate_mode": "conditional",
+      "initial_gate": 0.15,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": true,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "conditional025_residual_task_distill",
+      "distillation_weight": 0.35,
+      "gate_mode": "conditional",
+      "initial_gate": 0.25,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": true,
+      "warmup_epochs": 8
+    },
+    {
+      "adapter_mode": "task_specific",
+      "candidate_id": "global025_residual_task_distill",
+      "distillation_weight": 0.35,
+      "gate_mode": "global",
+      "initial_gate": 0.25,
+      "learning_rate": 0.005,
+      "objective_mode": "explicit_residual",
+      "use_distillation": true,
+      "warmup_epochs": 8
+    }
+  ],
+  "maximum_candidate_count": 8,
+  "outer_test_opened": false,
+  "unbounded_search_allowed": false
+}

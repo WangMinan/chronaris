@@ -1,0 +1,10 @@
+{
+  "allow_teacher_distillation": false,
+  "configuration_locked": false,
+  "decision": "gap",
+  "outer_test_opened": false,
+  "partial_safety_passed": true,
+  "research_gate_passed": false,
+  "selected": null,
+  "selected_partial_candidate_id": null
+}

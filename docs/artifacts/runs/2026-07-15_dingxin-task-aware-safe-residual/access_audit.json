@@ -1,0 +1,7 @@
+{
+  "outer_label_request_count": 0,
+  "outer_metric_request_count": 0,
+  "outer_observation_request_count": 0,
+  "outer_prediction_request_count": 0,
+  "outer_test_opened": false
+}

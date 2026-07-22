@@ -1,0 +1,7 @@
+split_id,request_count,cache_hit_count,forbidden_request_count,outer_test_opened
+leave_one_view_out__fold01__candidate_327,4,1,0,False
+leave_one_view_out__fold01__candidate_339,4,1,0,False
+leave_one_view_out__fold01__candidate_340,4,1,0,False
+leave_one_view_out__fold01__candidate_353,4,1,0,False
+leave_one_view_out__fold02__candidate_328,4,1,0,False
+leave_one_view_out__fold02__candidate_329,4,1,0,False
