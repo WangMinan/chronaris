@@ -1,0 +1,25 @@
+{
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "effective_rank": 5.13,
+      "dimension_utilization": 0.078,
+      "vehicle_recovery_transductive_r2": 0.944,
+      "cross_gate_mean": 0.0219
+    },
+    {
+      "label": "chronaris_multiscale",
+      "effective_rank": 2.73,
+      "dimension_utilization": 0.047,
+      "vehicle_recovery_transductive_r2": 0.914,
+      "cross_gate_mean": null
+    },
+    {
+      "label": "vehicle_only",
+      "effective_rank": 6.56,
+      "dimension_utilization": 0.125,
+      "vehicle_recovery_transductive_r2": 0.933,
+      "cross_gate_mean": null
+    }
+  ]
+}
