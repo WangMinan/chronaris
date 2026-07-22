@@ -1,0 +1,86 @@
+{
+  "fold_id": "leave_one_sortie_out__fold01",
+  "seed": 17,
+  "fields": [
+    "eeg.af3",
+    "eeg.af4",
+    "eeg.f3",
+    "eeg.f4",
+    "eeg.f7",
+    "eeg.f8",
+    "eeg.fp1",
+    "eeg.fp2",
+    "eeg.fpz",
+    "eeg.fz",
+    "spo2.toi1",
+    "spo2.toi2"
+  ],
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "view_context_count": 60,
+      "field_count": 12,
+      "standardized_rmse_macro": 10.845,
+      "standardized_mae_macro": 10.7396,
+      "skill_vs_persistence": -2080.6954,
+      "positive_skill_field_ratio": 0.0,
+      "eeg_rmse_macro": 12.5837,
+      "spo2_rmse_macro": 2.1513
+    },
+    {
+      "label": "chronaris_multiscale",
+      "view_context_count": 60,
+      "field_count": 12,
+      "standardized_rmse_macro": 10.7661,
+      "standardized_mae_macro": 10.6696,
+      "skill_vs_persistence": -2014.6102,
+      "positive_skill_field_ratio": 0.0,
+      "eeg_rmse_macro": 12.2723,
+      "spo2_rmse_macro": 3.2352
+    },
+    {
+      "label": "mult",
+      "view_context_count": 60,
+      "field_count": 12,
+      "standardized_rmse_macro": 10.6069,
+      "standardized_mae_macro": 10.5078,
+      "skill_vs_persistence": -1649.8129,
+      "positive_skill_field_ratio": 0.0,
+      "eeg_rmse_macro": 12.243,
+      "spo2_rmse_macro": 2.4263
+    },
+    {
+      "label": "contiformer",
+      "view_context_count": 60,
+      "field_count": 12,
+      "standardized_rmse_macro": 8.7018,
+      "standardized_mae_macro": 8.5516,
+      "skill_vs_persistence": -2127.8003,
+      "positive_skill_field_ratio": 0.0,
+      "eeg_rmse_macro": 9.9896,
+      "spo2_rmse_macro": 2.2631
+    },
+    {
+      "label": "vehicle_only",
+      "view_context_count": 60,
+      "field_count": 12,
+      "standardized_rmse_macro": 8.6733,
+      "standardized_mae_macro": 8.5528,
+      "skill_vs_persistence": -2116.0209,
+      "positive_skill_field_ratio": 0.0,
+      "eeg_rmse_macro": 9.7739,
+      "spo2_rmse_macro": 3.17
+    },
+    {
+      "label": "physiology_only",
+      "view_context_count": 60,
+      "field_count": 12,
+      "standardized_rmse_macro": 10.7526,
+      "standardized_mae_macro": 10.6419,
+      "skill_vs_persistence": -1614.5118,
+      "positive_skill_field_ratio": 0.0,
+      "eeg_rmse_macro": 12.5657,
+      "spo2_rmse_macro": 1.6872
+    }
+  ]
+}
