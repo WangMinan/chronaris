@@ -51,7 +51,7 @@ WINDOW_START_S = 60.0
 WINDOW_DUR_S = 30.0
 FS_HZ = 10
 N_PTS = int(WINDOW_DUR_S * FS_HZ)
-N_SUBJECTS = 10  # tractable subset
+N_SUBJECTS = 20  # stronger cohort
 EPOCHS = 12
 BATCH = 8
 
