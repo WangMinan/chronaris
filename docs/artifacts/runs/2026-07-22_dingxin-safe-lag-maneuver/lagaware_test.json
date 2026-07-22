@@ -1,0 +1,8 @@
+{
+  "label": "chronaris_safe_lag_lagaware",
+  "maneuver_macro_f1": 0.1667,
+  "phys_std_rmse": 10.8269,
+  "phys_skill": -2130.2029,
+  "phys_pos_ratio": 0.0,
+  "phys_spo2_rmse": 2.3257
+}
