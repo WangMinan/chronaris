@@ -54,7 +54,13 @@ N_PTS = int(WINDOW_DUR_S * FS_HZ)
 N_SUBJECTS = 10  # tractable subset
 EPOCHS = 12
 BATCH = 8
-SEED = 17
+
+
+def _seed() -> int:
+    return int(sys.argv[1]) if len(sys.argv) > 1 else 17
+
+
+SEED = _seed()
 
 PHYS_FILES = {  # stream token -> columns to use
     "lslshimmereda": ("ppg_finger_mV", "eda_hand_l_kOhms"),
@@ -192,7 +198,7 @@ def main() -> None:
             physiology_feature_names=schema.physiology_feature_names,
             vehicle_feature_names=schema.vehicle_feature_names,
             vehicle_field_labels=veh_labels, normalizer=normalizer,
-            output_root=str(HEAVY / "checkpoints" / label), config=config,
+            output_root=str(HEAVY / "checkpoints" / f"seed{SEED}" / label), config=config,
             augmentation_policy=AugmentationPolicy(), chronaris_fusion_kind=fk, resume=False,
         )
         enc, _h, ln, _p = load_common_pretraining_checkpoint(res.best_checkpoint_path)
@@ -210,10 +216,10 @@ def main() -> None:
     print(f"{'method':<24}{'macro_f1':>10}{'bal_acc':>10}")
     for r in results:
         print(f"{r['label']:<24}{r['macro_f1']:>10}{r['balanced_accuracy']:>10}")
-    (RUN_DIR / "difficulty_metrics.json").write_text(json.dumps({
+    (RUN_DIR / f"difficulty_metrics_seed{SEED}.json").write_text(json.dumps({
         "n_subjects": len(set(groups)), "n_samples": len(samples), "test_subjects": sorted(test_subs),
         "seed": SEED, "epochs": EPOCHS, "results": results}, indent=2))
-    print(f"\nwrote {RUN_DIR / 'difficulty_metrics.json'}")
+    print(f"\nwrote {RUN_DIR / f'difficulty_metrics_seed{SEED}.json'}")
 
 
 if __name__ == "__main__":
