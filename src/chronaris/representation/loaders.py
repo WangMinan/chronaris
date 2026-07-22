@@ -35,6 +35,14 @@ SIMULATION_OBSERVED_KEYS = frozenset(
         "physiology_feature_names",
     }
 )
+DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY = "exclude_maneuver_label_sources"
+DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY = "include_past_maneuver_sources"
+DINGXIN_MANEUVER_HISTORY_POLICIES = frozenset(
+    {
+        DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+        DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
+    }
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -207,8 +215,14 @@ def build_dingxin_observation_schema_plan(
     *,
     snapshot_root: str | Path,
     field_role_manifest_path: str | Path,
+    maneuver_history_policy: str = DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
 ) -> DingxinObservationSchemaPlan:
     """Build one leakage-safe feature order shared by every fixed Dingxin sortie."""
+
+    if maneuver_history_policy not in DINGXIN_MANEUVER_HISTORY_POLICIES:
+        raise RepresentationContractError(
+            f"unsupported Dingxin maneuver-history policy: {maneuver_history_policy}"
+        )
 
     root = Path(snapshot_root)
     manifest_path = root / "snapshot_manifest.json"
@@ -223,6 +237,8 @@ def build_dingxin_observation_schema_plan(
         "semantic_category",
         "allowed_in_maneuver_input",
     }
+    if maneuver_history_policy == DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY:
+        required.add("selected_for_maneuver_label")
     missing = sorted(required - set(roles.columns))
     if missing:
         raise RepresentationContractError(
@@ -248,7 +264,11 @@ def build_dingxin_observation_schema_plan(
         vehicle_rows: dict[str, tuple[str, str]] = {}
         for row in frame.itertuples(index=False):
             raw_name = f"{row.measurement}.{row.source_field}"
-            if not bool(row.allowed_in_maneuver_input):
+            include_past_maneuver_source = bool(
+                maneuver_history_policy == DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY
+                and row.selected_for_maneuver_label
+            )
+            if not bool(row.allowed_in_maneuver_input) and not include_past_maneuver_source:
                 excluded.append(f"{sortie}:{raw_name}")
                 continue
             role = f"observed:{row.semantic_category}"
@@ -277,7 +297,11 @@ def build_dingxin_observation_schema_plan(
     )
     source_manifest_hash = _combined_file_hash((manifest_path, roles_path))
     schema = ObservationSchema(
-        schema_id="dingxin_fixed_common_observed.v1",
+        schema_id=(
+            "dingxin_future_prediction_common_observed.v1"
+            if maneuver_history_policy == DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY
+            else "dingxin_fixed_common_observed.v1"
+        ),
         source_kind="dingxin_fixed_snapshot",
         physiology_feature_names=physiology_names,
         vehicle_feature_names=vehicle_names,

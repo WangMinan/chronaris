@@ -1,0 +1,21 @@
+{
+  "format": "chronaris.simple_downstream_representation_evidence.v1",
+  "run_id": "2026-07-16_simple-downstream-representations-confirmation",
+  "status": "completed",
+  "seed_fold_count": 6,
+  "export_count": 72,
+  "acceptance_pass_count": 5,
+  "acceptance_check_count": 5,
+  "task_targets_opened": false,
+  "outer_metrics_opened": false,
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-16_simple-downstream-representations-confirmation",
+  "output_paths": {
+    "folds": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/seed_fold_inventory.csv",
+    "exports": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/representation_inventory.jsonl",
+    "acceptance": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/report.md",
+    "resume": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-16_simple-downstream-representations-confirmation/evidence_manifest.json"
+  }
+}

@@ -1,0 +1,7 @@
+seed,fold_id,method_name,consumer_train_count,held_out_count,maneuver_vehicle_context_count,physiology_field_count,status
+17,leave_one_sortie_out__fold01,physiology_only,30,60,30,12,completed
+17,leave_one_sortie_out__fold01,vehicle_only,30,60,30,12,completed
+17,leave_one_sortie_out__fold01,naive_time_sync,30,60,30,12,completed
+17,leave_one_sortie_out__fold01,mult,30,60,30,12,completed
+17,leave_one_sortie_out__fold01,contiformer,30,60,30,12,completed
+17,leave_one_sortie_out__fold01,chronaris,30,60,30,12,completed

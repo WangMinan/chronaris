@@ -1,0 +1,40 @@
+{
+  "confirmed_metrics_changed": false,
+  "folds": [
+    {
+      "fit_sample_hash": "37138483544702a1aa4b71c8285212489167d4caef08a05434ef31f264bb1573",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "held_out_context_count": 60,
+      "held_out_sortie": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "held_out_vehicle_context_count": 30,
+      "split_strategy": "leave_one_sortie_out",
+      "train_context_count": 30,
+      "train_vehicle_context_count": 30
+    },
+    {
+      "fit_sample_hash": "a80051b3afd408ff91d49cfa2b620d7bb6a8e91911fa45b46c30e6290a03e24c",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "held_out_context_count": 30,
+      "held_out_sortie": "20251005_四01_ACT-4_云_J20_22#01",
+      "held_out_vehicle_context_count": 30,
+      "split_strategy": "leave_one_sortie_out",
+      "train_context_count": 60,
+      "train_vehicle_context_count": 30
+    }
+  ],
+  "format": "chronaris.simple_downstream_task_summary.v1",
+  "generated_at_utc": "2026-07-15T16:43:43.655548+00:00",
+  "historical_representation_status": "retraining_required",
+  "maneuver_semantic_count": 10,
+  "model_training_started": false,
+  "physiology_field_count": 12,
+  "selected_physiology_field_count_by_fold": {
+    "leave_one_sortie_out__fold01": 12,
+    "leave_one_sortie_out__fold02": 11
+  },
+  "sortie_count": 2,
+  "status": "completed",
+  "vehicle_context_count": 60,
+  "view_context_count": 90,
+  "view_count": 3
+}

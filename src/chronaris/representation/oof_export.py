@@ -157,8 +157,9 @@ class ResumableOOFExporter:
         checkpoint: CheckpointRecord,
         export_role: str,
         batch_size: int = 2,
+        catalog_sample_ids: Sequence[str] | None = None,
     ) -> OOFExportResult:
-        """Export a frozen role through bounded raw-input batches."""
+        """Export a frozen role or explicit target-free catalog in bounded batches."""
         verify_checkpoint_record(checkpoint)
         if batch_size <= 0:
             raise ValueError("OOF provider batch size must be positive")
@@ -166,7 +167,15 @@ class ResumableOOFExporter:
             raise RepresentationContractError(
                 "encoder method does not match checkpoint lineage"
             )
-        allowed_ids = tuple(checkpoint.fold.sample_ids_for_role(export_role))
+        allowed_ids = (
+            tuple(checkpoint.fold.sample_ids_for_role(export_role))
+            if catalog_sample_ids is None
+            else tuple(str(value) for value in catalog_sample_ids)
+        )
+        if not allowed_ids or len(set(allowed_ids)) != len(allowed_ids):
+            raise RepresentationContractError(
+                "representation export catalog must contain unique sample IDs"
+            )
         root = (
             self.output_root
             / checkpoint.method_name

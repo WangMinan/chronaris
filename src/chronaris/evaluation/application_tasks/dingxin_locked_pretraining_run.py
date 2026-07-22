@@ -33,7 +33,11 @@ from chronaris.modeling.training import (
     train_locked_chronaris,
     train_pretext_candidate,
 )
-from chronaris.representation import AugmentationPolicy, TrainOnlyRobustNormalizer
+from chronaris.representation import (
+    DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+    AugmentationPolicy,
+    TrainOnlyRobustNormalizer,
+)
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
@@ -62,6 +66,7 @@ class DingxinLockedPretrainingConfig:
     patience: int = 8
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    maneuver_history_policy: str = DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY
     resume: bool = True
 
     def __post_init__(self) -> None:
@@ -87,7 +92,10 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
     heavy_root = Path(config.heavy_output_root) / config.run_id
     compact_root.mkdir(parents=True, exist_ok=True)
     heavy_root.mkdir(parents=True, exist_ok=True)
-    ensure_dingxin_model_input_contract(heavy_root)
+    ensure_dingxin_model_input_contract(
+        heavy_root,
+        maneuver_history_policy=config.maneuver_history_policy,
+    )
     selected = json.loads(Path(config.selected_candidates_path).read_text(encoding="utf-8"))
     selected_ids = {
         method: str(selected[method]["candidate_id"])
@@ -124,6 +132,7 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
             "outer_test_accessed": False,
             "transfer_initialization_enabled": bool(initialization_checkpoints),
             "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
+            "maneuver_history_policy": config.maneuver_history_policy,
         },
     ) as progress:
         result_rows = []
@@ -135,6 +144,7 @@ def run_dingxin_locked_pretraining(config: DingxinLockedPretrainingConfig):
                 snapshot_root=config.snapshot_root,
                 fixed_audit_root=config.fixed_audit_root,
                 inner_split_root=config.inner_split_root,
+                maneuver_history_policy=config.maneuver_history_policy,
             )
             provider, access = _build_guarded_cached_provider(
                 data.load_batch,
@@ -495,6 +505,7 @@ def _write_outputs(**values):
             else "frozen_task_agnostic_v1"
         ),
         "model_input_bin_width_s": DINGXIN_MODEL_INPUT_BIN_WIDTH_S,
+        "maneuver_history_policy": values["config"].maneuver_history_policy,
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
@@ -513,17 +524,26 @@ def _write_outputs(**values):
     method_flags = " ".join(
         f"--method {method}" for method in values["config"].methods
     )
+    fold_flags = " ".join(
+        f"--fold-id {fold_id}" for fold_id in values["config"].fold_ids
+    )
     initialization_flag = (
         ""
         if values["config"].initialization_pretraining_run_id is None
         else "--initialization-pretraining-run-id "
         f"{values['config'].initialization_pretraining_run_id} "
     )
+    history_policy_flag = (
+        "--maneuver-history-policy "
+        f"{values['config'].maneuver_history_policy} "
+    )
     paths["resume"].write_text(
         "/home/wangminan/env/anaconda3/envs/chronaris/bin/python "
         "scripts/evaluation/application_tasks/run_dingxin_locked_pretraining.py "
         f"--run-id {values['config'].run_id} {seed_flags} {method_flags} "
+        f"{fold_flags} "
         f"{initialization_flag}"
+        f"{history_policy_flag}"
         f"--max-epochs {values['config'].max_epochs} "
         f"--batch-size {values['config'].batch_size} --patience {values['config'].patience} "
         f"--baseline-device {values['baseline_device']} --chronaris-device {values['chronaris_device']} --resume\n",

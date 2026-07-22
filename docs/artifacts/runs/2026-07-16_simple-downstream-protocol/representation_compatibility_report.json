@@ -1,0 +1,500 @@
+{
+  "checks": {
+    "encoder_task_label_isolation": true,
+    "historical_maneuver_fields_allowed": false,
+    "new_contexts_covered": false,
+    "outer_metrics_closed_during_export": true,
+    "required_methods_present": true,
+    "required_seeds_present": true,
+    "task_agnostic_representation_family": true,
+    "three_roles_per_unit": true,
+    "uniform_64d_96point_contract": true
+  },
+  "context_coverage_failures": [
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "physiology_only",
+      "missing_count": 5,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "vehicle_only",
+      "missing_count": 5,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "naive_time_sync",
+      "missing_count": 5,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "mult",
+      "missing_count": 5,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "contiformer",
+      "missing_count": 5,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "chronaris",
+      "missing_count": 5,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "physiology_only",
+      "missing_count": 10,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "vehicle_only",
+      "missing_count": 10,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "naive_time_sync",
+      "missing_count": 10,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "mult",
+      "missing_count": 10,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "contiformer",
+      "missing_count": 10,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "chronaris",
+      "missing_count": 10,
+      "seed": 17
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "physiology_only",
+      "missing_count": 5,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "vehicle_only",
+      "missing_count": 5,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "naive_time_sync",
+      "missing_count": 5,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "mult",
+      "missing_count": 5,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "contiformer",
+      "missing_count": 5,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "chronaris",
+      "missing_count": 5,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "physiology_only",
+      "missing_count": 10,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "vehicle_only",
+      "missing_count": 10,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "naive_time_sync",
+      "missing_count": 10,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "mult",
+      "missing_count": 10,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "contiformer",
+      "missing_count": 10,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "chronaris",
+      "missing_count": 10,
+      "seed": 29
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "physiology_only",
+      "missing_count": 5,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "vehicle_only",
+      "missing_count": 5,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "naive_time_sync",
+      "missing_count": 5,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "mult",
+      "missing_count": 5,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "contiformer",
+      "missing_count": 5,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold01",
+      "method": "chronaris",
+      "missing_count": 5,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "physiology_only",
+      "missing_count": 10,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "vehicle_only",
+      "missing_count": 10,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "naive_time_sync",
+      "missing_count": 10,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "mult",
+      "missing_count": 10,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "contiformer",
+      "missing_count": 10,
+      "seed": 43
+    },
+    {
+      "examples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028"
+      ],
+      "fold_id": "leave_one_sortie_out__fold02",
+      "method": "chronaris",
+      "missing_count": 10,
+      "seed": 43
+    }
+  ],
+  "excluded_historical_maneuver_source_count": 20,
+  "expected_context_count": 90,
+  "format": "chronaris.simple_representation_compatibility.v1",
+  "inventory_row_count": 270,
+  "label_training_violations": [],
+  "loso_inventory_row_count": 108,
+  "maneuver_source_field_count": 20,
+  "manifest_count_checked": 108,
+  "missing_units": [],
+  "output_contract_violations": [],
+  "reason": "historical representations exclude maneuver-source fields that are legal past predictors in the simplified future-task protocol",
+  "source_paths": {
+    "field_roles": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-10_fixed-data-audit/field_role_manifest.csv",
+    "inventory": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-12_dingxin-locked-representations-coalesced/representation_inventory.jsonl",
+    "protocol": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-07-12_dingxin-locked-representations-coalesced/protocol.json"
+  },
+  "status": "retraining_required"
+}

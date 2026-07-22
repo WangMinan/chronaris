@@ -205,9 +205,10 @@ def test_resumable_oof_export_accepts_lazy_batch_provider(tmp_path):
         "test_a": _sample("test_a"),
         "test_b": _sample("test_b", shift=1.0),
     }
-    provider = lambda sample_ids: collate_observation_samples(
-        tuple(samples[sample_id] for sample_id in sample_ids)
-    )
+    def provider(sample_ids):
+        return collate_observation_samples(
+            tuple(samples[sample_id] for sample_id in sample_ids)
+        )
     encoder = ContractProbeEncoder(
         method_name="chronaris",
         fold_id=fold.fold_id,
@@ -236,3 +237,45 @@ def test_resumable_oof_export_accepts_lazy_batch_provider(tmp_path):
         "test_a",
         "test_b",
     )
+
+
+def test_lazy_export_accepts_explicit_target_free_catalog(tmp_path):
+    fold = FoldLineage(
+        fold_id="fold_catalog",
+        train_sample_ids=("train",),
+        validation_sample_ids=(),
+        held_out_sample_ids=("test",),
+    )
+    checkpoint_path = tmp_path / "chronaris.checkpoint"
+    checkpoint_path.write_text("catalog checkpoint\n", encoding="utf-8")
+    record = build_checkpoint_record(
+        method_name="chronaris",
+        fold=fold,
+        checkpoint_path=checkpoint_path,
+        seed=17,
+    )
+    samples = {
+        "catalog_a": _sample("catalog_a"),
+        "catalog_b": _sample("catalog_b", shift=1.0),
+    }
+    def provider(sample_ids):
+        return collate_observation_samples(
+            tuple(samples[sample_id] for sample_id in sample_ids)
+        )
+    encoder = ContractProbeEncoder(
+        method_name="chronaris",
+        fold_id=fold.fold_id,
+        checkpoint_sha256=record.checkpoint_sha256,
+    )
+
+    result = ResumableOOFExporter(tmp_path / "exports").export_from_batch_provider(
+        encoder=encoder,
+        batch_provider=provider,
+        checkpoint=record,
+        export_role="consumer_train",
+        batch_size=1,
+        catalog_sample_ids=("catalog_a", "catalog_b"),
+    )
+
+    assert result.sample_ids == ("catalog_a", "catalog_b")
+    assert result.export_role == "consumer_train"

@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/dingxin/report_simple_downstream.py --run-id 2026-07-16_simple-downstream-thesis-evidence

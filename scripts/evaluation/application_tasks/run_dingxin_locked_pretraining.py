@@ -19,6 +19,10 @@ from chronaris.evaluation.application_tasks import (  # noqa: E402
     run_dingxin_locked_pretraining,
 )
 from chronaris.modeling.common.run_observer import configure_task_eval_cli_logging  # noqa: E402
+from chronaris.representation import (  # noqa: E402
+    DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+    DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
+)
 
 
 def main() -> int:
@@ -40,6 +44,14 @@ def main() -> int:
     parser.add_argument("--initialization-pretraining-run-id")
     parser.add_argument("--baseline-device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--chronaris-device", choices=("auto", "cpu", "cuda"), default="cpu")
+    parser.add_argument(
+        "--maneuver-history-policy",
+        choices=(
+            DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+            DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
+        ),
+        default=DINGXIN_EXCLUDE_MANEUVER_HISTORY_POLICY,
+    )
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     configure_task_eval_cli_logging(sys.stderr)
@@ -65,6 +77,7 @@ def main() -> int:
             initialization_pretraining_run_id=args.initialization_pretraining_run_id,
             baseline_device=args.baseline_device,
             chronaris_device=args.chronaris_device,
+            maneuver_history_policy=args.maneuver_history_policy,
             resume=args.resume,
         )
     )

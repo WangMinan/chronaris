@@ -1,0 +1,6 @@
+check_id,status,observed,expected
+complete_future_view_contexts,passed,90,90
+independent_vehicle_contexts,passed,60,60
+future_target_duration_ms,passed,5000,5000
+historical_representation_primary_compatibility,passed,retraining_required,explicit compatibility decision
+training_not_started,passed,False,False

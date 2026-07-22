@@ -1,0 +1,45 @@
+{
+  "format": "chronaris.simple_downstream_representation_protocol.v1",
+  "status": "completed",
+  "config": {
+    "run_id": "2026-07-16_simple-downstream-representations-confirmation",
+    "pretraining_run_id": "2026-07-16_simple-downstream-pretraining-confirmation",
+    "task_protocol_run_id": "2026-07-16_simple-downstream-protocol",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "selected_candidates_path": "docs/artifacts/runs/2026-07-11_encoder-candidate-screen-seed17/selected_candidates.json",
+    "snapshot_root": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot",
+    "fixed_audit_root": "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+    "inner_split_root": "docs/artifacts/runs/2026-07-11_dingxin-inner-splits",
+    "fold_ids": [
+      "leave_one_sortie_out__fold01",
+      "leave_one_sortie_out__fold02"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "fit_batch_size": 8,
+    "export_batch_size": 8,
+    "baseline_device": "cuda",
+    "chronaris_device": "cuda",
+    "maneuver_history_policy": "include_past_maneuver_sources",
+    "resume": true
+  },
+  "selected_candidates": {
+    "physiology_only": "A",
+    "vehicle_only": "C",
+    "mult": "A",
+    "contiformer": "A",
+    "chronaris": "A"
+  },
+  "baseline_device": "cuda",
+  "chronaris_device": "cuda",
+  "representation_family": "frozen_task_agnostic_v1",
+  "model_input_bin_width_s": 0.1,
+  "task_context_sha256": "1f1482db7a37be7b0e31b76c4670bac988dd05663aa05da76fd48894c9887a26",
+  "pretraining_protocol_sha256": "a3653a117bac7b44548705b688b1e4201bf3266f47c305a24888da9fbc3facb4",
+  "task_targets_opened": false,
+  "outer_metrics_opened": false
+}

@@ -1,0 +1,8 @@
+check_id,passed,actual,expected
+formal_units_complete,True,36,36
+formal_metrics_finite,True,504,504
+published_summary_recomputed,True,4.547473508864641e-13,<=1e-12
+raw_prediction_metrics_recomputed,True,"{'hashes_match': True, 'hash_count': 108, 'checked_metric_count': 504, 'max_metric_difference': 1.8189894035458565e-12}",all hashes and <=1e-10
+future_context_contract,True,"{'view_context_count': 90, 'vehicle_context_count': 60, 'strict_future_boundaries': True, 'held_out_class_support': {'leave_one_sortie_out__fold01': {'0': 10, '1': 10, '2': 10}, 'leave_one_sortie_out__fold02': {'0': 10, '1': 10, '2': 10}}}","90 views, 60 vehicles, strict future"
+held_out_class_support,True,"{'leave_one_sortie_out__fold01': {'0': 10, '1': 10, '2': 10}, 'leave_one_sortie_out__fold02': {'0': 10, '1': 10, '2': 10}}","{'0': 10, '1': 10, '2': 10}"
+protocol_chain_closed_before_confirmation,True,"{'pretraining_targets_closed': True, 'pretraining_outer_test_closed': True, 'representation_targets_closed': True, 'representation_metrics_closed': True, 'formal_result_opened': True, 'result_driven_tuning_disabled': True}",all true

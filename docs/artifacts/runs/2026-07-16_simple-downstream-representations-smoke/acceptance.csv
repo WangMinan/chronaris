@@ -1,0 +1,6 @@
+check_id,passed,actual,expected
+all_seed_folds,True,1,1
+six_checkpoints_per_seed_fold,True,[6],6
+two_complete_catalogs_per_method,True,12,12
+ninety_contexts_per_seed_fold,True,[90],90
+future_prediction_schema,True,['dingxin_future_prediction_common_observed.v1'],dingxin_future_prediction_common_observed.v1

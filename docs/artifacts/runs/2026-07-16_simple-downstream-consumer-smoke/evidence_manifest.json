@@ -1,0 +1,25 @@
+{
+  "format": "chronaris.simple_downstream_consumer_evidence.v1",
+  "run_id": "2026-07-16_simple-downstream-consumer-smoke",
+  "status": "completed",
+  "evaluation_scope": "engineering_smoke",
+  "evaluated_unit_count": 6,
+  "acceptance_pass_count": 4,
+  "acceptance_check_count": 4,
+  "outer_metrics_opened": true,
+  "result_driven_tuning_allowed": false,
+  "confirmed_metrics_changed": false,
+  "representation_heavy_root": "artifacts/application_evaluation/2026-07-16_simple-downstream-representations-smoke",
+  "heavy_run_root": "artifacts/application_evaluation/2026-07-16_simple-downstream-consumer-smoke",
+  "output_paths": {
+    "metrics_long": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/metrics_long.csv",
+    "metrics_summary": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/metrics_summary.csv",
+    "units": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/unit_inventory.csv",
+    "predictions": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/prediction_inventory.csv",
+    "acceptance": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/protocol.json",
+    "report": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/report.md",
+    "resume": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-07-16_simple-downstream-consumer-smoke/evidence_manifest.json"
+  }
+}

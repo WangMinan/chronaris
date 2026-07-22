@@ -1,0 +1,1870 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Chronaris 鼎新未来下游评价复核报告",
+    "description": "冻结协议下的鼎新未来机动、生理字段与既有仿真机制证据复核。",
+    "generatedAt": "2026-07-16T23:59:00+08:00",
+    "sources": [
+      {
+        "id": "formal_metrics",
+        "label": "鼎新未来任务正式确认指标",
+        "path": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+        "query": {
+          "description": "读取两折三随机种子的冻结表示下游指标并按方法汇总。",
+          "sql": "SELECT method_name, method_label,\n       maneuver_macro_f1, maneuver_balanced_accuracy, maneuver_spearman,\n       maneuver_normalized_mae, maneuver_skill_vs_current_maneuver,\n       maneuver_rmse_ratio_vs_current,\n       physiology_standardized_rmse_macro, physiology_standardized_mae_macro,\n       physiology_skill_vs_persistence, physiology_rmse_ratio_vs_persistence,\n       physiology_positive_skill_field_ratio\nFROM primary_results_source\nORDER BY method_order",
+          "engine": "sqlite",
+          "language": "sql",
+          "executed_at": "2026-07-16T23:59:00+08:00",
+          "tables_used": [
+            "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv"
+          ],
+          "filters": [
+            "留一架次两个折",
+            "随机种子 17、29、43",
+            "六种冻结表示方法"
+          ],
+          "metric_definitions": [
+            "机动宏平均 F1 为三类等权 F1",
+            "生理 RMSE 为训练折尺度标准化后的字段宏平均"
+          ]
+        }
+      },
+      {
+        "id": "formal_protocol",
+        "label": "鼎新简化下游冻结协议",
+        "path": "docs/requirements/simple-downstream-evaluation-v1.md",
+        "query": {
+          "description": "任务、时间边界、样本单位、划分和消费者配置冻结合同。",
+          "language": "markdown",
+          "executed_at": "2026-07-16T23:59:00+08:00",
+          "tables_used": [
+            "docs/requirements/simple-downstream-evaluation-v1.md"
+          ]
+        }
+      },
+      {
+        "id": "simulation_evidence",
+        "label": "既有仿真机制、压力与消融证据表",
+        "path": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/evidence_manifest.json",
+        "query": {
+          "description": "复用既有锁定仿真的时间恢复、压力退化和组件消融汇总，不重新训练。",
+          "language": "python",
+          "executed_at": "2026-07-16T23:59:00+08:00",
+          "tables_used": [
+            "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/mechanism_recovery_mae.csv",
+            "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/stress_degradation_slopes.csv",
+            "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/chronaris_ablation_advantage.csv"
+          ]
+        }
+      },
+      {
+        "id": "validation_report",
+        "label": "正式结果独立复算与数据验证",
+        "path": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/validation_report.md",
+        "query": {
+          "description": "逐样本哈希、指标复算、任务时间边界与折级支持检查。",
+          "language": "python",
+          "executed_at": "2026-07-16T23:59:00+08:00",
+          "tables_used": [
+            "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/prediction_inventory.csv",
+            "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/context_manifest.csv"
+          ]
+        }
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# Chronaris 鼎新未来下游评价复核报告"
+      },
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "sourceId": "formal_metrics",
+        "body": "## 技术摘要\n\n**协议冻结后的确认评价没有支持 Chronaris 在鼎新真实未来任务上的整体优势。** 六种方法使用相同 64 维冻结表示出口、相同逻辑回归与岭回归，完成两个留一架次折和三个随机种子。航电单流在未来机动上明显领先；未来生理字段中，六种方法的正技能字段比例均为 0，均未超过持久性基线。"
+      },
+      {
+        "id": "technical_summary_mechanism",
+        "type": "markdown",
+        "sourceId": "simulation_evidence",
+        "body": "**仿真仍支持有限的时间机制结论，但不能替代真实任务效果。** Chronaris 的时钟偏移与生理响应时延恢复误差最低；同时，随机缺失和连续缺失退化不利，物理约束消融结果混合。研究应停止结果驱动调参，转入有边界写作。"
+      },
+      {
+        "id": "maneuver_finding",
+        "type": "markdown",
+        "source": {
+          "id": "formal_metrics",
+          "label": "鼎新未来任务正式确认指标",
+          "path": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+          "query": {
+            "description": "从报告汇总表中选择图表字段。",
+            "sql": "SELECT method_name, method_label,\n       maneuver_macro_f1, maneuver_balanced_accuracy, maneuver_spearman,\n       maneuver_normalized_mae, maneuver_skill_vs_current_maneuver,\n       maneuver_rmse_ratio_vs_current,\n       physiology_standardized_rmse_macro, physiology_standardized_mae_macro,\n       physiology_skill_vs_persistence, physiology_rmse_ratio_vs_persistence,\n       physiology_positive_skill_field_ratio\nFROM primary_results_source\nORDER BY method_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "primary_results_source"
+            ]
+          }
+        },
+        "body": "## 航电历史足以完成未来机动预测\n\n航电单流的三分类宏平均 F1 为 **0.808**，连续分数 Spearman 相关为 **0.617**，相对当前机动状态技能为 **0.668**。Chronaris 对应值为 **0.195**、**0.069** 和 **-123.586**。下图按方法比较同一任务，说明融合表示没有带来额外可用信息。"
+      },
+      {
+        "id": "maneuver_chart_block",
+        "type": "chart",
+        "chartId": "maneuver_macro_f1"
+      },
+      {
+        "id": "physiology_finding",
+        "type": "markdown",
+        "source": {
+          "id": "formal_metrics",
+          "label": "鼎新未来任务正式确认指标",
+          "path": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+          "query": {
+            "description": "从报告汇总表中选择图表字段。",
+            "sql": "SELECT method_name, method_label,\n       maneuver_macro_f1, maneuver_balanced_accuracy, maneuver_spearman,\n       maneuver_normalized_mae, maneuver_skill_vs_current_maneuver,\n       maneuver_rmse_ratio_vs_current,\n       physiology_standardized_rmse_macro, physiology_standardized_mae_macro,\n       physiology_skill_vs_persistence, physiology_rmse_ratio_vs_persistence,\n       physiology_positive_skill_field_ratio\nFROM primary_results_source\nORDER BY method_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "primary_results_source"
+            ]
+          }
+        },
+        "body": "## 生理字段预测没有越过持久性基线\n\n字段级标准化 RMSE 宏平均的最佳方法是航电单流（**7.084**），ContiFormer 为 **7.227**，Chronaris 为 **8.890**。两个折中所有方法的正技能字段比例都为 0，因此模型间排名不能替代“是否超过当前状态延续”的基准判断。"
+      },
+      {
+        "id": "physiology_chart_block",
+        "type": "chart",
+        "chartId": "physiology_rmse"
+      },
+      {
+        "id": "mechanism_finding",
+        "type": "markdown",
+        "source": {
+          "id": "simulation_mechanism_recovery_mae.csv",
+          "label": "既有锁定仿真证据表",
+          "path": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/mechanism_recovery_mae.csv",
+          "query": {
+            "description": "从既有仿真汇总表中选择图表或表格字段。",
+            "sql": "SELECT method, method_label, clock_offset_mae_s, response_lag_mae_s\nFROM mechanism_recovery_source\nORDER BY method_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "mechanism_recovery_source"
+            ]
+          }
+        },
+        "body": "## 仿真只支持时间机制的局部有效性\n\nChronaris 的时钟偏移恢复误差为 **0.888 秒**，生理响应时延恢复误差为 **7.486 秒**，均为四种融合方法中的最低值。但其随机缺失和连续缺失方向归一化斜率分别为 **-0.073** 和 **-0.126**，没有形成整体鲁棒性领先。"
+      },
+      {
+        "id": "recovery_chart_block",
+        "type": "chart",
+        "chartId": "clock_offset_recovery"
+      },
+      {
+        "id": "mechanism_tables_note",
+        "type": "markdown",
+        "body": "完整压力与消融表保留了不利结果。正斜率表示压力增强时退化较慢；消融优势为正表示完整 Chronaris 优于对应消融。"
+      },
+      {
+        "id": "stress_table_block",
+        "type": "table",
+        "tableId": "stress_boundary_table"
+      },
+      {
+        "id": "ablation_table_block",
+        "type": "table",
+        "tableId": "ablation_boundary_table"
+      },
+      {
+        "id": "scope_definitions",
+        "type": "markdown",
+        "sourceId": "formal_protocol",
+        "body": "## 评价范围与指标定义\n\n数据包含两个飞行架次、三个飞行员视图和 111 个基础窗口；构造后保留 90 个完整未来视图上下文，其中未来机动有 60 个独立飞机上下文。输入为预测时刻前 30 秒，目标为随后 5 秒。未来机动报告连续相关、归一化误差、相对当前状态技能与辅助三分类；未来生理按训练折标准化后逐字段报告，并以持久性预测为基线。"
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "sourceId": "formal_protocol",
+        "body": "## 冻结表示与固定下游算法保证比较一致\n\n五种可训练编码器在任务目标和留出架次关闭时完成任务无关预训练，朴素时间同步在训练折拟合；六种方法均输出 64 维窗口表示。分类统一使用 `C=1.0` 的逻辑回归，连续任务统一使用 `alpha=1.0` 的岭回归。正式结果打开后没有更换任务、字段、模型或下游算法。"
+      },
+      {
+        "id": "validation_limitations",
+        "type": "markdown",
+        "sourceId": "validation_report",
+        "body": "## 计算链路正确，但只能作描述性确认\n\n36 个评价单元和 504 条指标全部有限；报告阶段复核 108 个逐样本文件哈希，并从逐样本预测独立复算核心指标，差异均为浮点舍入量级。但只有两个架次，不能进行有效显著性推断；数据此前已多次查看，本轮不是从未打开的盲测；未来生理在两折分别保留 12 和 11 个有效字段。"
+      },
+      {
+        "id": "recommendations",
+        "type": "markdown",
+        "body": "## 建议停止调参并按混合证据写作\n\n1. 把鼎新未来机动和未来生理任务作为真实数据主表，如实报告航电单流领先及生理任务未超过持久性。\n2. 把仿真时间恢复、压力退化和机制消融作为独立证据，保留缺失压力与物理约束的负面结果。\n3. 不再根据两个架次的正式结果修改 Chronaris，不重跑端到端训练、教师蒸馏或仿真迁移。\n4. 论文结论使用‘时间机制局部有效，但真实下游整体优势尚未成立’。"
+      },
+      {
+        "id": "further_questions",
+        "type": "markdown",
+        "body": "## 仍待回答的问题\n\n- 更多独立架次下，航电单流优势是否稳定，生理响应是否能出现超过持久性的可预测变化？\n- Chronaris 的缺失退化来自连续演化、掩码处理还是预训练目标？该问题不在本轮论文主线继续扩展。\n- 留一视图只能诊断同一轨迹下的视图适配，不能改变本轮跨架次主结论；本轮不新增该训练线。"
+      }
+    ],
+    "charts": [
+      {
+        "id": "maneuver_macro_f1",
+        "title": "未来机动三分类宏平均 F1",
+        "description": "两个留一架次折、三个随机种子的描述性均值，越高越好。",
+        "type": "bar",
+        "intent": "comparison",
+        "question": "哪种冻结表示最适合未来机动三分类？",
+        "rationale": "方法类别与单一同尺度指标适合横向条形比较。",
+        "dataset": "primary_results",
+        "encodings": {
+          "x": {
+            "field": "method_label"
+          },
+          "y": {
+            "field": "maneuver_macro_f1"
+          }
+        },
+        "options": {
+          "orientation": "horizontal"
+        },
+        "source": {
+          "id": "formal_metrics",
+          "label": "鼎新未来任务正式确认指标",
+          "path": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+          "query": {
+            "description": "从报告汇总表中选择图表字段。",
+            "sql": "SELECT method_name, method_label,\n       maneuver_macro_f1, maneuver_balanced_accuracy, maneuver_spearman,\n       maneuver_normalized_mae, maneuver_skill_vs_current_maneuver,\n       maneuver_rmse_ratio_vs_current,\n       physiology_standardized_rmse_macro, physiology_standardized_mae_macro,\n       physiology_skill_vs_persistence, physiology_rmse_ratio_vs_persistence,\n       physiology_positive_skill_field_ratio\nFROM primary_results_source\nORDER BY method_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "primary_results_source"
+            ]
+          }
+        }
+      },
+      {
+        "id": "physiology_rmse",
+        "title": "未来生理字段标准化 RMSE",
+        "description": "字段级 RMSE 宏平均，越低越好；所有方法均未超过持久性基线。",
+        "type": "bar",
+        "intent": "comparison",
+        "question": "哪种冻结表示的未来生理字段误差最低？",
+        "rationale": "方法类别与单一误差指标适合横向条形比较。",
+        "dataset": "primary_results",
+        "encodings": {
+          "x": {
+            "field": "method_label"
+          },
+          "y": {
+            "field": "physiology_standardized_rmse_macro"
+          }
+        },
+        "options": {
+          "orientation": "horizontal"
+        },
+        "source": {
+          "id": "formal_metrics",
+          "label": "鼎新未来任务正式确认指标",
+          "path": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+          "query": {
+            "description": "从报告汇总表中选择图表字段。",
+            "sql": "SELECT method_name, method_label,\n       maneuver_macro_f1, maneuver_balanced_accuracy, maneuver_spearman,\n       maneuver_normalized_mae, maneuver_skill_vs_current_maneuver,\n       maneuver_rmse_ratio_vs_current,\n       physiology_standardized_rmse_macro, physiology_standardized_mae_macro,\n       physiology_skill_vs_persistence, physiology_rmse_ratio_vs_persistence,\n       physiology_positive_skill_field_ratio\nFROM primary_results_source\nORDER BY method_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "primary_results_source"
+            ]
+          }
+        }
+      },
+      {
+        "id": "clock_offset_recovery",
+        "title": "仿真时钟偏移恢复误差",
+        "description": "平均绝对误差，单位为秒，越低越好。",
+        "type": "bar",
+        "intent": "comparison",
+        "question": "哪种融合表示更好地保留相对时钟偏移？",
+        "rationale": "四种方法的单一同尺度误差适合横向条形比较。",
+        "dataset": "mechanism_recovery",
+        "encodings": {
+          "x": {
+            "field": "method_label"
+          },
+          "y": {
+            "field": "clock_offset_mae_s"
+          }
+        },
+        "options": {
+          "orientation": "horizontal"
+        },
+        "source": {
+          "id": "simulation_mechanism_recovery_mae.csv",
+          "label": "既有锁定仿真证据表",
+          "path": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/mechanism_recovery_mae.csv",
+          "query": {
+            "description": "从既有仿真汇总表中选择图表或表格字段。",
+            "sql": "SELECT method, method_label, clock_offset_mae_s, response_lag_mae_s\nFROM mechanism_recovery_source\nORDER BY method_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "mechanism_recovery_source"
+            ]
+          }
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "stress_boundary_table",
+        "title": "观测压力退化斜率",
+        "description": "方向归一化后越大表示退化越慢；包含 Chronaris 的有利与不利场景。",
+        "dataset": "stress_boundary",
+        "columns": [
+          {
+            "field": "method_label",
+            "label": "方法",
+            "type": "text"
+          },
+          {
+            "field": "stress_label",
+            "label": "压力因素",
+            "type": "text"
+          },
+          {
+            "field": "degradation_slope",
+            "label": "退化斜率",
+            "type": "number",
+            "format": "number"
+          }
+        ],
+        "defaultSort": {
+          "field": "degradation_slope",
+          "direction": "desc"
+        },
+        "source": {
+          "id": "simulation_stress_degradation_slopes.csv",
+          "label": "既有锁定仿真证据表",
+          "path": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/stress_degradation_slopes.csv",
+          "query": {
+            "description": "从既有仿真汇总表中选择图表或表格字段。",
+            "sql": "SELECT method_name, method_label, stress_factor, stress_label,\n       degradation_slope\nFROM stress_boundary_source\nORDER BY method_order, stress_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "stress_boundary_source"
+            ]
+          }
+        }
+      },
+      {
+        "id": "ablation_boundary_table",
+        "title": "Chronaris 仿真组件消融",
+        "description": "正值表示完整模型优于对应消融；不同任务不比较绝对大小。",
+        "dataset": "ablation_boundary",
+        "columns": [
+          {
+            "field": "task_label",
+            "label": "仿真任务",
+            "type": "text"
+          },
+          {
+            "field": "ablation_label",
+            "label": "消融项",
+            "type": "text"
+          },
+          {
+            "field": "full_model_advantage",
+            "label": "完整模型优势",
+            "type": "number",
+            "format": "number"
+          }
+        ],
+        "defaultSort": {
+          "field": "full_model_advantage",
+          "direction": "desc"
+        },
+        "source": {
+          "id": "simulation_chronaris_ablation_advantage.csv",
+          "label": "既有锁定仿真证据表",
+          "path": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/chronaris_ablation_advantage.csv",
+          "query": {
+            "description": "从既有仿真汇总表中选择图表或表格字段。",
+            "sql": "SELECT task_name, task_label, ablation_method, ablation_label,\n       full_model_advantage\nFROM ablation_boundary_source\nORDER BY task_order, ablation_order",
+            "engine": "sqlite",
+            "language": "sql",
+            "tables_used": [
+              "ablation_boundary_source"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "status": "ready",
+    "generatedAt": "2026-07-16T23:59:00+08:00",
+    "datasets": {
+      "primary_results": [
+        {
+          "method_name": "physiology_only",
+          "method_label": "生理单流",
+          "maneuver_macro_f1": 0.1703431372549019,
+          "maneuver_balanced_accuracy": 0.3166666666666666,
+          "maneuver_spearman": -0.11672228401928066,
+          "maneuver_normalized_mae": 42.429764026099015,
+          "maneuver_skill_vs_current_maneuver": -873.6035508806681,
+          "maneuver_rmse_ratio_vs_current": 23.773906445153553,
+          "physiology_standardized_rmse_macro": 21.70861812054898,
+          "physiology_standardized_mae_macro": 21.602078247552186,
+          "physiology_skill_vs_persistence": -5263.133857764899,
+          "physiology_rmse_ratio_vs_persistence": 70.17900968110793,
+          "physiology_positive_skill_field_ratio": 0.0
+        },
+        {
+          "method_name": "vehicle_only",
+          "method_label": "航电单流",
+          "maneuver_macro_f1": 0.8083707604885869,
+          "maneuver_balanced_accuracy": 0.8111111111111112,
+          "maneuver_spearman": 0.6165368928439007,
+          "maneuver_normalized_mae": 0.7155233971093627,
+          "maneuver_skill_vs_current_maneuver": 0.6684512257565,
+          "maneuver_rmse_ratio_vs_current": 0.5755407964398309,
+          "physiology_standardized_rmse_macro": 7.083758117045963,
+          "physiology_standardized_mae_macro": 6.89062528762178,
+          "physiology_skill_vs_persistence": -1276.3749441210034,
+          "physiology_rmse_ratio_vs_persistence": 33.464571435181966,
+          "physiology_positive_skill_field_ratio": 0.0
+        },
+        {
+          "method_name": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "maneuver_macro_f1": 0.1666666666666666,
+          "maneuver_balanced_accuracy": 0.3333333333333333,
+          "maneuver_spearman": 0.5056729699666296,
+          "maneuver_normalized_mae": 32.371972354345246,
+          "maneuver_skill_vs_current_maneuver": -469.43088639399775,
+          "maneuver_rmse_ratio_vs_current": 18.08995181898557,
+          "physiology_standardized_rmse_macro": 16.049266070257854,
+          "physiology_standardized_mae_macro": 15.990822655325251,
+          "physiology_skill_vs_persistence": -2359.6886947217404,
+          "physiology_rmse_ratio_vs_persistence": 48.42942500418295,
+          "physiology_positive_skill_field_ratio": 0.0
+        },
+        {
+          "method_name": "mult",
+          "method_label": "MulT",
+          "maneuver_macro_f1": 0.19719556230712412,
+          "maneuver_balanced_accuracy": 0.3333333333333333,
+          "maneuver_spearman": 0.19985168705969591,
+          "maneuver_normalized_mae": 18.461891874211677,
+          "maneuver_skill_vs_current_maneuver": -223.14010903901783,
+          "maneuver_rmse_ratio_vs_current": 10.579596279308491,
+          "physiology_standardized_rmse_macro": 12.47664796422084,
+          "physiology_standardized_mae_macro": 12.379095561735374,
+          "physiology_skill_vs_persistence": -2191.1200995117974,
+          "physiology_rmse_ratio_vs_persistence": 43.68721963863441,
+          "physiology_positive_skill_field_ratio": 0.0
+        },
+        {
+          "method_name": "contiformer",
+          "method_label": "ContiFormer",
+          "maneuver_macro_f1": 0.3843173619640649,
+          "maneuver_balanced_accuracy": 0.4777777777777778,
+          "maneuver_spearman": 0.5088616981831665,
+          "maneuver_normalized_mae": 2.223990118177527,
+          "maneuver_skill_vs_current_maneuver": -1.4614415219132006,
+          "maneuver_rmse_ratio_vs_current": 1.4081260482426952,
+          "physiology_standardized_rmse_macro": 7.227150715957188,
+          "physiology_standardized_mae_macro": 7.083390326926036,
+          "physiology_skill_vs_persistence": -1283.5043247460576,
+          "physiology_rmse_ratio_vs_persistence": 33.54956042900147,
+          "physiology_positive_skill_field_ratio": 0.0
+        },
+        {
+          "method_name": "chronaris",
+          "method_label": "Chronaris",
+          "maneuver_macro_f1": 0.19475568004979762,
+          "maneuver_balanced_accuracy": 0.3444444444444444,
+          "maneuver_spearman": 0.06852057842046715,
+          "maneuver_normalized_mae": 19.418350358269855,
+          "maneuver_skill_vs_current_maneuver": -123.5859137369901,
+          "maneuver_rmse_ratio_vs_current": 10.90873226779228,
+          "physiology_standardized_rmse_macro": 8.890097372764638,
+          "physiology_standardized_mae_macro": 8.736999450774736,
+          "physiology_skill_vs_persistence": -1268.8988846079658,
+          "physiology_rmse_ratio_vs_persistence": 34.48383222457989,
+          "physiology_positive_skill_field_ratio": 0.0
+        }
+      ],
+      "fold_primary_metrics": [
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.35555555555555557,
+          "std": 0.038490017945975105,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.46666666666666673,
+          "std": 0.12018504251546637,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.3333333333333333,
+          "std": 0.03333333333333335,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.3333333333333333,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.3222222222222222,
+          "std": 0.019245008972987525,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.8000000000000002,
+          "std": 1.3597399555105182e-16,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.3333333333333333,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.48888888888888876,
+          "std": 0.10183501544346316,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.3333333333333333,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.3333333333333333,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.31111111111111106,
+          "std": 0.0384900179459751,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "balanced_accuracy",
+          "mean": 0.8222222222222223,
+          "std": 0.01924500897298746,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.22284469343292868,
+          "std": 0.09730319662813022,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.34674329501915696,
+          "std": 0.15779953869581917,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.22772445794758164,
+          "std": 0.0653544378885489,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.1666666666666666,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.17728758169934633,
+          "std": 0.018395964459473356,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.7978402124473826,
+          "std": 0.0011865690814363687,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.1666666666666666,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.42189142890897263,
+          "std": 0.15126722814935512,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.1666666666666666,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.1666666666666666,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.16339869281045746,
+          "std": 0.0056602967567609885,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "macro_f1",
+          "mean": 0.8189013085297915,
+          "std": 0.01845923445499617,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 17.291220394095763,
+          "std": 2.136191866325194,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 1.4468503777566093,
+          "std": 1.0274408905396415,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 29.069835870249367,
+          "std": 26.99353864915131,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 10.721488804882648,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 14.903445225691046,
+          "std": 3.1828394260414226,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 0.7231105901297744,
+          "std": 0.013150469025154694,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 21.54548032244395,
+          "std": 6.04697206900871,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 3.001129858598445,
+          "std": 1.5126359189706182,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 7.853947878173993,
+          "std": 6.889782652441776,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 54.02245590380784,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 69.95608282650699,
+          "std": 26.714518571225195,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "normalized_mae",
+          "mean": 0.7079362040889507,
+          "std": 0.03955809014786708,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 9.77002101849982,
+          "std": 1.287650799341563,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 1.0255079204712743,
+          "std": 0.5298540398930017,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 16.26326816346764,
+          "std": 14.916026746539472,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 6.123977993977483,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 8.45816801430327,
+          "std": 1.7354066399595267,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 0.5857414750711706,
+          "std": 0.009724107931221821,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 12.047443517084739,
+          "std": 3.347893013674748,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 1.790744176014116,
+          "std": 0.8461279240351183,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 4.895924395149346,
+          "std": 4.151689132600694,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 30.05592564399365,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 39.08964487600384,
+          "std": 14.882459554810662,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "rmse_ratio_vs_current",
+          "mean": 0.5653401178084914,
+          "std": 0.02231541668976067,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.10255839822024466,
+          "std": 0.026662937960540367,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.5040415276232851,
+          "std": 0.10908202505050027,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.3115313311086392,
+          "std": 0.1130883009046319,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.3744160177975528,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": -0.1885799035965888,
+          "std": 0.012365243958231983,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.6063774564330738,
+          "std": 0.04277047945045691,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.034482758620689634,
+          "std": 0.1614870496772971,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.5136818687430479,
+          "std": 0.08380455468699971,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.08817204301075264,
+          "std": 0.0926940452226134,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.6369299221357063,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": -0.044864664441972534,
+          "std": 0.017188311647219897,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_maneuver",
+          "metric_name": "spearman",
+          "mean": 0.6266963292547274,
+          "std": 0.056762406327800136,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "positive_skill_field_ratio",
+          "mean": 0.0,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 43.42842727027664,
+          "std": 1.0249884849249173,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 46.1542278876619,
+          "std": 0.2688973942483871,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 60.219994738487095,
+          "std": 4.326354081292264,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 44.5205263759299,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 87.62824193148276,
+          "std": 9.922376846661688,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 46.01436834650509,
+          "std": 0.00020037486641106734,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 25.539237178883155,
+          "std": 1.106641837378226,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 20.94489297034103,
+          "std": 0.297872895103838,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 27.154444538781707,
+          "std": 3.453334928572459,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 52.33832363243604,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 52.72977743073307,
+          "std": 2.289256028025148,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "rmse_ratio_vs_persistence",
+          "mean": 20.91477452385885,
+          "std": 0.0008690817581310322,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 9.414353315803957,
+          "std": 0.4042580332757444,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 8.528062579591827,
+          "std": 0.12881197967667213,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 16.592451662844734,
+          "std": 1.6156319588859982,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 10.380370925199855,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 27.228370861348935,
+          "std": 3.0359958170673,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 8.554224781078712,
+          "std": 0.0013229411560410625,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 8.059645585745514,
+          "std": 1.0339701481274808,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 5.638718074260246,
+          "std": 0.048564713080232295,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 8.165739460626012,
+          "std": 1.6750350052518033,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 21.601274385450647,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 15.975785633755445,
+          "std": 0.796175635994041,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_mae_macro",
+          "mean": 5.227025794164847,
+          "std": 0.0005396830906829915,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 9.462590179412652,
+          "std": 0.39405933093475576,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 8.621316983772482,
+          "std": 0.14166863177995268,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 16.608845837482527,
+          "std": 1.6180371248765877,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 10.43658926600587,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 27.240696838095218,
+          "std": 3.036148998772233,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold01",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 8.68522345234603,
+          "std": 0.0007884026666562166,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "chronaris",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 8.317604566116623,
+          "std": 1.0919319448896865,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "contiformer",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 5.832984448141893,
+          "std": 0.054639605450484977,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "mult",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 8.344450090959151,
+          "std": 1.641828802281988,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "naive_time_sync",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 21.661942874509844,
+          "std": 0.0,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "physiology_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 16.176539403002742,
+          "std": 0.7893655456475013,
+          "seed_count": 3
+        },
+        {
+          "fold_id": "leave_one_sortie_out__fold02",
+          "method_name": "vehicle_only",
+          "task_name": "future_physiology",
+          "metric_name": "standardized_rmse_macro",
+          "mean": 5.482292781745895,
+          "std": 0.0012491867690953692,
+          "seed_count": 3
+        }
+      ],
+      "mechanism_recovery": [
+        {
+          "method": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "clock_offset_mae_s": 1.2830117949861146,
+          "response_lag_mae_s": 8.291882590133648
+        },
+        {
+          "method": "mult",
+          "method_label": "MulT",
+          "clock_offset_mae_s": 0.9995184912065428,
+          "response_lag_mae_s": 7.857747216351295
+        },
+        {
+          "method": "contiformer",
+          "method_label": "ContiFormer",
+          "clock_offset_mae_s": 1.3001574755424543,
+          "response_lag_mae_s": 9.02715962838804
+        },
+        {
+          "method": "chronaris",
+          "method_label": "Chronaris",
+          "clock_offset_mae_s": 0.8883362532460264,
+          "response_lag_mae_s": 7.485868782176155
+        }
+      ],
+      "stress_boundary": [
+        {
+          "method_name": "physiology_only",
+          "method_label": "生理单流",
+          "stress_factor": "timestamp_jitter_ms",
+          "stress_label": "时间戳抖动",
+          "degradation_slope": 0.0097228012048602
+        },
+        {
+          "method_name": "physiology_only",
+          "method_label": "生理单流",
+          "stress_factor": "absolute_clock_offset_s",
+          "stress_label": "时钟偏移",
+          "degradation_slope": -0.0052972896036388
+        },
+        {
+          "method_name": "physiology_only",
+          "method_label": "生理单流",
+          "stress_factor": "random_missing_rate",
+          "stress_label": "随机缺失",
+          "degradation_slope": -0.0232636426419898
+        },
+        {
+          "method_name": "physiology_only",
+          "method_label": "生理单流",
+          "stress_factor": "contiguous_gap_s",
+          "stress_label": "连续缺失",
+          "degradation_slope": -0.0397867178255442
+        },
+        {
+          "method_name": "physiology_only",
+          "method_label": "生理单流",
+          "stress_factor": "snr_degradation_db",
+          "stress_label": "观测噪声",
+          "degradation_slope": -0.4232328962644445
+        },
+        {
+          "method_name": "vehicle_only",
+          "method_label": "航电单流",
+          "stress_factor": "timestamp_jitter_ms",
+          "stress_label": "时间戳抖动",
+          "degradation_slope": 0.0008431706661486
+        },
+        {
+          "method_name": "vehicle_only",
+          "method_label": "航电单流",
+          "stress_factor": "absolute_clock_offset_s",
+          "stress_label": "时钟偏移",
+          "degradation_slope": 1.6381015514585493e-17
+        },
+        {
+          "method_name": "vehicle_only",
+          "method_label": "航电单流",
+          "stress_factor": "random_missing_rate",
+          "stress_label": "随机缺失",
+          "degradation_slope": 0.0089652482379774
+        },
+        {
+          "method_name": "vehicle_only",
+          "method_label": "航电单流",
+          "stress_factor": "contiguous_gap_s",
+          "stress_label": "连续缺失",
+          "degradation_slope": -0.0368809167329936
+        },
+        {
+          "method_name": "vehicle_only",
+          "method_label": "航电单流",
+          "stress_factor": "snr_degradation_db",
+          "stress_label": "观测噪声",
+          "degradation_slope": -0.0112091201965079
+        },
+        {
+          "method_name": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "stress_factor": "timestamp_jitter_ms",
+          "stress_label": "时间戳抖动",
+          "degradation_slope": -0.0172328346418456
+        },
+        {
+          "method_name": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "stress_factor": "absolute_clock_offset_s",
+          "stress_label": "时钟偏移",
+          "degradation_slope": 0.0038777705205412
+        },
+        {
+          "method_name": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "stress_factor": "random_missing_rate",
+          "stress_label": "随机缺失",
+          "degradation_slope": -0.0516941098923821
+        },
+        {
+          "method_name": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "stress_factor": "contiguous_gap_s",
+          "stress_label": "连续缺失",
+          "degradation_slope": -0.1039250656093879
+        },
+        {
+          "method_name": "naive_time_sync",
+          "method_label": "朴素时间同步",
+          "stress_factor": "snr_degradation_db",
+          "stress_label": "观测噪声",
+          "degradation_slope": -0.1514180754939734
+        },
+        {
+          "method_name": "mult",
+          "method_label": "MulT",
+          "stress_factor": "timestamp_jitter_ms",
+          "stress_label": "时间戳抖动",
+          "degradation_slope": 0.0301985123889452
+        },
+        {
+          "method_name": "mult",
+          "method_label": "MulT",
+          "stress_factor": "absolute_clock_offset_s",
+          "stress_label": "时钟偏移",
+          "degradation_slope": -0.0047853744553328
+        },
+        {
+          "method_name": "mult",
+          "method_label": "MulT",
+          "stress_factor": "random_missing_rate",
+          "stress_label": "随机缺失",
+          "degradation_slope": 0.0238209610389841
+        },
+        {
+          "method_name": "mult",
+          "method_label": "MulT",
+          "stress_factor": "contiguous_gap_s",
+          "stress_label": "连续缺失",
+          "degradation_slope": -0.125801991349272
+        },
+        {
+          "method_name": "mult",
+          "method_label": "MulT",
+          "stress_factor": "snr_degradation_db",
+          "stress_label": "观测噪声",
+          "degradation_slope": -0.0777528421825651
+        },
+        {
+          "method_name": "contiformer",
+          "method_label": "ContiFormer",
+          "stress_factor": "timestamp_jitter_ms",
+          "stress_label": "时间戳抖动",
+          "degradation_slope": 0.0037346145953216
+        },
+        {
+          "method_name": "contiformer",
+          "method_label": "ContiFormer",
+          "stress_factor": "absolute_clock_offset_s",
+          "stress_label": "时钟偏移",
+          "degradation_slope": 0.0041454936660794
+        },
+        {
+          "method_name": "contiformer",
+          "method_label": "ContiFormer",
+          "stress_factor": "random_missing_rate",
+          "stress_label": "随机缺失",
+          "degradation_slope": 7.20515613876999e-05
+        },
+        {
+          "method_name": "contiformer",
+          "method_label": "ContiFormer",
+          "stress_factor": "contiguous_gap_s",
+          "stress_label": "连续缺失",
+          "degradation_slope": -0.0166411525594093
+        },
+        {
+          "method_name": "contiformer",
+          "method_label": "ContiFormer",
+          "stress_factor": "snr_degradation_db",
+          "stress_label": "观测噪声",
+          "degradation_slope": -0.043225698797326
+        },
+        {
+          "method_name": "chronaris",
+          "method_label": "Chronaris",
+          "stress_factor": "timestamp_jitter_ms",
+          "stress_label": "时间戳抖动",
+          "degradation_slope": 0.0021601345938139
+        },
+        {
+          "method_name": "chronaris",
+          "method_label": "Chronaris",
+          "stress_factor": "absolute_clock_offset_s",
+          "stress_label": "时钟偏移",
+          "degradation_slope": 0.0038999301628862
+        },
+        {
+          "method_name": "chronaris",
+          "method_label": "Chronaris",
+          "stress_factor": "random_missing_rate",
+          "stress_label": "随机缺失",
+          "degradation_slope": -0.0733229711104711
+        },
+        {
+          "method_name": "chronaris",
+          "method_label": "Chronaris",
+          "stress_factor": "contiguous_gap_s",
+          "stress_label": "连续缺失",
+          "degradation_slope": -0.1264275852736406
+        },
+        {
+          "method_name": "chronaris",
+          "method_label": "Chronaris",
+          "stress_factor": "snr_degradation_db",
+          "stress_label": "观测噪声",
+          "degradation_slope": -0.0383168462030576
+        }
+      ],
+      "ablation_boundary": [
+        {
+          "task_name": "simulated_future_workload_classification",
+          "task_label": "负荷分类",
+          "ablation_method": "chronaris_no_continuous_evolution",
+          "ablation_label": "去连续演化",
+          "full_model_advantage": 0.0690735970209087
+        },
+        {
+          "task_name": "simulated_future_workload_classification",
+          "task_label": "负荷分类",
+          "ablation_method": "chronaris_no_physics",
+          "ablation_label": "去物理约束",
+          "full_model_advantage": -0.0192873683758149
+        },
+        {
+          "task_name": "simulated_future_workload_classification",
+          "task_label": "负荷分类",
+          "ablation_method": "chronaris_no_causal_mask",
+          "ablation_label": "去因果掩码",
+          "full_model_advantage": 0.0060295617128569
+        },
+        {
+          "task_name": "simulated_future_workload_classification",
+          "task_label": "负荷分类",
+          "ablation_method": "chronaris_single_scale_lag",
+          "ablation_label": "单尺度时延",
+          "full_model_advantage": 0.0056426193084883
+        },
+        {
+          "task_name": "simulated_future_workload_regression",
+          "task_label": "负荷回归",
+          "ablation_method": "chronaris_no_continuous_evolution",
+          "ablation_label": "去连续演化",
+          "full_model_advantage": 0.0277857784992131
+        },
+        {
+          "task_name": "simulated_future_workload_regression",
+          "task_label": "负荷回归",
+          "ablation_method": "chronaris_no_physics",
+          "ablation_label": "去物理约束",
+          "full_model_advantage": 0.0118344781981249
+        },
+        {
+          "task_name": "simulated_future_workload_regression",
+          "task_label": "负荷回归",
+          "ablation_method": "chronaris_no_causal_mask",
+          "ablation_label": "去因果掩码",
+          "full_model_advantage": 0.0082330150981071
+        },
+        {
+          "task_name": "simulated_future_workload_regression",
+          "task_label": "负荷回归",
+          "ablation_method": "chronaris_single_scale_lag",
+          "ablation_label": "单尺度时延",
+          "full_model_advantage": 0.0118173035154869
+        },
+        {
+          "task_name": "simulated_maneuver_state_segmentation",
+          "task_label": "机动分段",
+          "ablation_method": "chronaris_no_continuous_evolution",
+          "ablation_label": "去连续演化",
+          "full_model_advantage": 0.0142422200431407
+        },
+        {
+          "task_name": "simulated_maneuver_state_segmentation",
+          "task_label": "机动分段",
+          "ablation_method": "chronaris_no_physics",
+          "ablation_label": "去物理约束",
+          "full_model_advantage": 0.0043852659852447
+        },
+        {
+          "task_name": "simulated_maneuver_state_segmentation",
+          "task_label": "机动分段",
+          "ablation_method": "chronaris_no_causal_mask",
+          "ablation_label": "去因果掩码",
+          "full_model_advantage": 0.0662232467314287
+        },
+        {
+          "task_name": "simulated_maneuver_state_segmentation",
+          "task_label": "机动分段",
+          "ablation_method": "chronaris_single_scale_lag",
+          "ablation_label": "单尺度时延",
+          "full_model_advantage": 0.0623341322957389
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "formal_metrics",
+      "label": "鼎新未来任务正式确认指标",
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv",
+      "query": {
+        "description": "读取两折三随机种子的冻结表示下游指标并按方法汇总。",
+        "sql": "SELECT method_name, method_label,\n       maneuver_macro_f1, maneuver_balanced_accuracy, maneuver_spearman,\n       maneuver_normalized_mae, maneuver_skill_vs_current_maneuver,\n       maneuver_rmse_ratio_vs_current,\n       physiology_standardized_rmse_macro, physiology_standardized_mae_macro,\n       physiology_skill_vs_persistence, physiology_rmse_ratio_vs_persistence,\n       physiology_positive_skill_field_ratio\nFROM primary_results_source\nORDER BY method_order",
+        "engine": "sqlite",
+        "language": "sql",
+        "executed_at": "2026-07-16T23:59:00+08:00",
+        "tables_used": [
+          "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/metrics_long.csv"
+        ],
+        "filters": [
+          "留一架次两个折",
+          "随机种子 17、29、43",
+          "六种冻结表示方法"
+        ],
+        "metric_definitions": [
+          "机动宏平均 F1 为三类等权 F1",
+          "生理 RMSE 为训练折尺度标准化后的字段宏平均"
+        ]
+      }
+    },
+    {
+      "id": "formal_protocol",
+      "label": "鼎新简化下游冻结协议",
+      "path": "docs/requirements/simple-downstream-evaluation-v1.md",
+      "query": {
+        "description": "任务、时间边界、样本单位、划分和消费者配置冻结合同。",
+        "language": "markdown",
+        "executed_at": "2026-07-16T23:59:00+08:00",
+        "tables_used": [
+          "docs/requirements/simple-downstream-evaluation-v1.md"
+        ]
+      }
+    },
+    {
+      "id": "simulation_evidence",
+      "label": "既有仿真机制、压力与消融证据表",
+      "path": "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/evidence_manifest.json",
+      "query": {
+        "description": "复用既有锁定仿真的时间恢复、压力退化和组件消融汇总，不重新训练。",
+        "language": "python",
+        "executed_at": "2026-07-16T23:59:00+08:00",
+        "tables_used": [
+          "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/mechanism_recovery_mae.csv",
+          "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/stress_degradation_slopes.csv",
+          "docs/artifacts/runs/2026-07-12_downstream-evidence-pack/tables/chronaris_ablation_advantage.csv"
+        ]
+      }
+    },
+    {
+      "id": "validation_report",
+      "label": "正式结果独立复算与数据验证",
+      "path": "docs/artifacts/runs/2026-07-16_simple-downstream-thesis-evidence/validation_report.md",
+      "query": {
+        "description": "逐样本哈希、指标复算、任务时间边界与折级支持检查。",
+        "language": "python",
+        "executed_at": "2026-07-16T23:59:00+08:00",
+        "tables_used": [
+          "docs/artifacts/runs/2026-07-16_simple-downstream-confirmation/prediction_inventory.csv",
+          "artifacts/application_evaluation/2026-07-16_simple-downstream-protocol/context_manifest.csv"
+        ]
+      }
+    }
+  ]
+}

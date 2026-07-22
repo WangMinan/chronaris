@@ -1,0 +1,25 @@
+2026-07-16 01:01:19,636 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-16_simple-downstream-pretraining-confirmation run_root=docs/artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation
+2026-07-16 01:18:49,679 ERROR chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining failed run_id=2026-07-16_simple-downstream-pretraining-confirmation
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/dingxin_locked_pretraining_run.py", line 182, in run_dingxin_locked_pretraining
+    result = train_locked_chronaris(
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/chronaris_locked_training.py", line 210, in train_locked_chronaris
+    augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 103, in apply_augmentation_realizations
+    vehicle = _augment_stream(
+              ^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 238, in _augment_stream
+    output_age[sample_index, :retained_count] = _feature_age(
+                                                ^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/representation/augmentation_apply.py", line 307, in _feature_age
+    time_s - last_seen[available]
+             ~~~~~~~~~^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: unspecified launch failure
+Search for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2026-07-16 01:19:47,294 INFO chronaris.pipelines.task_eval.dingxin_locked_pretraining: dingxin_locked_pretraining observer start run_id=2026-07-16_simple-downstream-pretraining-confirmation run_root=docs/artifacts/runs/2026-07-16_simple-downstream-pretraining-confirmation

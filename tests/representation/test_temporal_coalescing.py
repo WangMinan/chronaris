@@ -13,6 +13,7 @@ from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import
 )
 
 from chronaris.representation import (
+    DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
     ObservationSchema,
     ObservedDualStreamSample,
     coalesce_observation_batch,
@@ -103,3 +104,16 @@ def test_dingxin_model_input_contract_rejects_legacy_checkpoint(tmp_path) -> Non
 
     with pytest.raises(ValueError, match="predate"):
         ensure_dingxin_model_input_contract(tmp_path)
+
+
+def test_future_prediction_input_contract_records_history_policy(tmp_path) -> None:
+    path = ensure_dingxin_model_input_contract(
+        tmp_path,
+        maneuver_history_policy=DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
+    )
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["format"] == "chronaris.dingxin_model_input_contract.v2"
+    assert payload["maneuver_history_policy"] == (
+        DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY
+    )
