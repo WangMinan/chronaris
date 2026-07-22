@@ -133,6 +133,7 @@ def train_common_pretext_method(
     augmentation_policy: AugmentationPolicy | None = None,
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     candidate_config: EncoderCandidateConfig | None = None,
+    chronaris_fusion_kind: str = "multiscale",
     resume: bool = True,
 ) -> CommonPretrainingResult:
     if method_name not in TRAINABLE_FUSION_METHODS:
@@ -155,6 +156,7 @@ def train_common_pretext_method(
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
         candidate_config=resolved_candidate,
+        chronaris_fusion_kind=chronaris_fusion_kind,
         data_access_mode=("lazy_batch_provider" if batch_provider else "materialized_batch"),
     )
     if resume and best_path.exists() and last_path.exists():
@@ -174,6 +176,7 @@ def train_common_pretext_method(
             vehicle_feature_names=vehicle_feature_names,
             vehicle_field_labels=vehicle_field_labels,
             candidate_config=resolved_candidate,
+            chronaris_fusion_kind=chronaris_fusion_kind,
         )
         heads = CommonPretextHeadBundle(
             representation_dim=FUSION_OUTPUT_DIM,
@@ -321,6 +324,11 @@ def load_common_pretraining_checkpoint(
         .get("backbone_config", {})
         .get("variant", "full")
     )
+    chronaris_fusion_kind = str(
+        payload.get("encoder_manifest", {})
+        .get("backbone_config", {})
+        .get("fusion_kind", "multiscale")
+    )
     encoder = build_trainable_fusion_encoder(
         method_name,
         physiology_feature_names=physiology_names,
@@ -328,6 +336,7 @@ def load_common_pretraining_checkpoint(
         vehicle_field_labels=field_labels,
         candidate_config=candidate,
         chronaris_variant=chronaris_variant,
+        chronaris_fusion_kind=chronaris_fusion_kind,
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(

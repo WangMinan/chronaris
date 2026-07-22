@@ -98,6 +98,7 @@ def train_locked_chronaris(
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     candidate_config: EncoderCandidateConfig | None = None,
     variant: str = "full",
+    fusion_kind: str = "multiscale",
     initialization_checkpoint: str | Path | None = None,
     resume: bool = True,
 ) -> LockedChronarisTrainingResult:
@@ -128,6 +129,7 @@ def train_locked_chronaris(
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
         variant=variant,
+        fusion_kind=fusion_kind,
         transfer_source=transfer_source,
     )
     resume_payload = None
@@ -146,6 +148,7 @@ def train_locked_chronaris(
                 vehicle_feature_names=vehicle_feature_names,
                 vehicle_field_labels=vehicle_field_labels,
                 variant=variant,
+                fusion_kind=fusion_kind,
                 transfer_source=transfer_source,
             )
         ):
@@ -161,6 +164,7 @@ def train_locked_chronaris(
             vehicle_field_labels=vehicle_field_labels,
             candidate_config=candidate,
             chronaris_variant=variant,
+            chronaris_fusion_kind=fusion_kind,
         ).to(resolved.device)
         heads = CommonPretextHeadBundle(
             representation_dim=FUSION_OUTPUT_DIM,
@@ -427,6 +431,7 @@ def _checkpoint_is_semantically_compatible(
     vehicle_feature_names,
     vehicle_field_labels,
     variant,
+    fusion_kind,
     transfer_source,
 ):
     return all(
@@ -447,6 +452,10 @@ def _checkpoint_is_semantically_compatible(
             .get("backbone_config", {})
             .get("variant", "full")
             == variant,
+            payload.get("encoder_manifest", {})
+            .get("backbone_config", {})
+            .get("fusion_kind", "multiscale")
+            == fusion_kind,
             payload.get("transfer_source") == transfer_source,
             payload.get("label_used_for_encoder_training") is False,
             payload.get("simulation_oracle_opened") is False,

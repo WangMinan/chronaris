@@ -25,6 +25,11 @@ from chronaris.modeling.fusion_encoders.multiscale_causal import (
     MultiScaleCausalFusionOutput,
     MultiScaleCausalLagFusion,
 )
+from chronaris.modeling.fusion_encoders.safe_lag_fusion import (
+    SafeLagAwareFusion,
+    SafeLagAwareFusionConfig,
+    SafeLagAwareFusionOutput,
+)
 from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.models.alignment.config import AlignmentPrototypeConfig
 from chronaris.models.alignment.prototype import (
@@ -47,6 +52,7 @@ CHRONARIS_VARIANTS = (
     "no_causal_mask",
     "single_scale_lag",
 )
+FUSION_KINDS = ("multiscale", "safe_lag")
 ABLATION_TARGET_FIELDS = {
     "no_continuous_evolution": frozenset({"continuous_evolution_enabled"}),
     "no_physics": frozenset({"physics_enabled"}),
@@ -61,6 +67,7 @@ class ChronarisContinuousEncoderConfig:
     vehicle_feature_names: tuple[str, ...]
     field_labels: tuple[tuple[str, str], ...] = ()
     variant: str = "full"
+    fusion_kind: str = "multiscale"
     hidden_dim: int = FUSION_OUTPUT_DIM
     embedding_dim: int = FUSION_OUTPUT_DIM
     encoder_hidden_dim: int = FUSION_OUTPUT_DIM
@@ -84,6 +91,8 @@ class ChronarisContinuousEncoderConfig:
             raise ValueError("vehicle feature names must be unique")
         if self.variant not in CHRONARIS_VARIANTS:
             raise ValueError(f"unsupported Chronaris variant: {self.variant}")
+        if self.fusion_kind not in FUSION_KINDS:
+            raise ValueError(f"unsupported Chronaris fusion_kind: {self.fusion_kind}")
         dimensions = (
             self.hidden_dim,
             self.embedding_dim,
@@ -150,6 +159,7 @@ class ChronarisContinuousEncoderConfig:
             "causal_mask_enabled": self.causal_mask_enabled,
             "lag_ranges_s": [list(value) for value in self.lag_ranges_s],
             "scale_gate_enabled": self.scale_gate_enabled,
+            "fusion_kind": self.fusion_kind,
         }
 
     def to_checkpoint_dict(self) -> Mapping[str, object]:
@@ -178,7 +188,7 @@ class ChronarisContinuousEncoding:
     sequence_embedding: torch.Tensor
     modality_available_mask: torch.Tensor
     alignment_output: DualStreamPrototypeOutput
-    fusion_output: MultiScaleCausalFusionOutput
+    fusion_output: MultiScaleCausalFusionOutput | SafeLagAwareFusionOutput
     physics_audit: ChronarisPhysicsAudit
 
 
@@ -193,15 +203,26 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             len(config.vehicle_feature_names),
             config=config.alignment_config(),
         )
-        self.causal_fusion = MultiScaleCausalLagFusion(
-            MultiScaleCausalFusionConfig(
-                hidden_dim=config.hidden_dim,
-                output_dim=FUSION_OUTPUT_DIM,
-                lag_ranges_s=config.lag_ranges_s,
-                use_causal_mask=config.causal_mask_enabled,
-                use_scale_gate=config.scale_gate_enabled,
+        if config.fusion_kind == "safe_lag":
+            self.causal_fusion = SafeLagAwareFusion(
+                SafeLagAwareFusionConfig(
+                    hidden_dim=config.hidden_dim,
+                    output_dim=FUSION_OUTPUT_DIM,
+                    lag_ranges_s=config.lag_ranges_s,
+                    use_causal_mask=config.causal_mask_enabled,
+                    use_scale_gate=config.scale_gate_enabled,
+                )
             )
-        )
+        else:
+            self.causal_fusion = MultiScaleCausalLagFusion(
+                MultiScaleCausalFusionConfig(
+                    hidden_dim=config.hidden_dim,
+                    output_dim=FUSION_OUTPUT_DIM,
+                    lag_ranges_s=config.lag_ranges_s,
+                    use_causal_mask=config.causal_mask_enabled,
+                    use_scale_gate=config.scale_gate_enabled,
+                )
+            )
         self.output_dropout = nn.Dropout(config.dropout)
 
     def forward(
