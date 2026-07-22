@@ -53,9 +53,17 @@ RUN_DIR = REPO / "docs/artifacts/runs/2026-07-22_dingxin-safe-lag-maneuver"
 HEAVY = REPO / "artifacts/application_evaluation/2026-07-22_dingxin-safe-lag-maneuver"
 
 FOLD_ID = "leave_one_sortie_out__fold01"
-SEED = 17
 EPOCHS = 30
 BATCH = 4
+
+
+def _seed() -> int:
+    if len(sys.argv) > 1:
+        return int(sys.argv[1])
+    return 17
+
+
+SEED = _seed()
 
 
 def _export_reps(adapter: TrainedFusionAdapter, provider, sample_ids) -> dict[str, np.ndarray]:
@@ -123,7 +131,7 @@ def main() -> None:
             vehicle_feature_names=schema.vehicle_feature_names,
             vehicle_field_labels=vehicle_labels,
             normalizer=normalizer,
-            output_root=str(HEAVY / "checkpoints" / label),
+            output_root=str(HEAVY / "checkpoints" / f"seed{SEED}" / label),
             config=config,
             augmentation_policy=policy,
             chronaris_fusion_kind=fusion_kind,
@@ -172,10 +180,10 @@ def main() -> None:
             f"{r['label']:<26}{r.get('macro_f1')!s:>10}{r.get('balanced_accuracy')!s:>10}"
             f"{r.get('spearman')!s:>10}{r.get('relative_current_state_skill')!s:>10}"
         )
-    (RUN_DIR / "maneuver_metrics.json").write_text(
+    (RUN_DIR / f"maneuver_metrics_seed{SEED}.json").write_text(
         json.dumps({"fold_id": FOLD_ID, "seed": SEED, "epochs": EPOCHS, "results": results}, indent=2)
     )
-    print(f"\nwrote {RUN_DIR / 'maneuver_metrics.json'}")
+    print(f"\nwrote {RUN_DIR / f'maneuver_metrics_seed{SEED}.json'}")
 
 
 if __name__ == "__main__":
