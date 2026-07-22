@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import torch
 from torch.nn import functional as F
 
+from chronaris.modeling.fusion_encoders.multiscale_causal import build_seconds_lag_mask
 from chronaris.modeling.training.pretext import ChronarisAuxiliaryWeights
 
 
@@ -141,3 +142,67 @@ def _reference_pair(alignment):
     ):
         raise ValueError("Chronaris alignment lacks reference-grid states")
     return physiology, vehicle, physiology_valid & vehicle_valid
+
+
+@dataclass(frozen=True, slots=True)
+class LagAwareAlignmentResult:
+    loss: torch.Tensor
+    count: int
+    best_lag_index: torch.Tensor | None
+
+
+def lag_aware_alignment_loss(
+    alignment,
+    *,
+    min_lag_s: float = 0.0,
+    max_lag_s: float = 15.0,
+) -> LagAwareAlignmentResult:
+    """Lag-tolerant causal alignment for the lag-response hypothesis (audit Q4 fix).
+
+    The original ``continuous_alignment`` minimises ``1 - cos(phys_t, veh_t)`` at the
+    *same* reference index, which contradicts physiology lagging vehicle inputs. Here,
+    for each physiology reference point we take the *maximum* cosine similarity against
+    vehicle reference points within a causal lag window ``[min_lag_s, max_lag_s]`` (i.e.
+    vehicle history), then minimise ``1 - max_sim``. This lets physiology align with the
+    best causal lag instead of being forced to zero lag.
+
+    Returns a scalar loss plus the per-query best-lag index (for diagnostics). If no
+    valid causal-lag pair exists, returns a zero loss tied to the physiology states.
+    """
+
+    if min_lag_s < 0 or max_lag_s <= min_lag_s:
+        raise ValueError("lag window must satisfy 0 <= min_lag_s < max_lag_s")
+    physiology, vehicle, valid = _reference_pair(alignment)
+    query_times = alignment.physiology.reference_offsets_s
+    if query_times is None:
+        query_times = alignment.vehicle.reference_offsets_s
+    if query_times is None:
+        zero = physiology.sum() * 0.0
+        return LagAwareAlignmentResult(loss=zero, count=0, best_lag_index=None)
+    query_times = query_times.to(vehicle.device)
+    lag_mask = build_seconds_lag_mask(
+        query_times,
+        query_times,
+        query_valid_mask=valid,
+        key_valid_mask=valid,
+        lower_s=min_lag_s,
+        upper_s=max_lag_s,
+        range_index=0,
+        use_causal_mask=True,
+    )  # [B, T_query, T_key], True where key is a valid causal lag of query
+    normalized_phys = F.normalize(physiology, dim=-1, eps=1e-12)
+    normalized_veh = F.normalize(vehicle, dim=-1, eps=1e-12)
+    similarity = torch.matmul(
+        normalized_phys, normalized_veh.transpose(-1, -2)
+    )  # [B, T_query, T_key]
+    has_lag = lag_mask.any(dim=-1) & valid
+    if not bool(has_lag.any()):
+        zero = physiology.sum() * 0.0
+        return LagAwareAlignmentResult(loss=zero, count=0, best_lag_index=None)
+    masked_sim = similarity.masked_fill(~lag_mask, torch.finfo(similarity.dtype).min)
+    best_sim, best_idx = masked_sim.max(dim=-1)
+    loss = (1.0 - best_sim[has_lag]).mean()
+    return LagAwareAlignmentResult(
+        loss=loss, count=int(has_lag.sum().item()), best_lag_index=best_idx
+    )
+
