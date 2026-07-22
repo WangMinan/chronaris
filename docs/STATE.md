@@ -9,7 +9,10 @@
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
-- **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`；计划与评价协议待审计完成后提交（见 TASKS.md）。
+- **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
+  - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)
+  - 研究计划：[implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md](implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md)
+  - 评价协议 v2：[requirements/safe-lag-aware-fusion-evaluation-v2.md](requirements/safe-lag-aware-fusion-evaluation-v2.md)
 - 历史已收口线 1 — 简化下游评价（最新真实数据协议冻结确认）：
   - 协议：[requirements/simple-downstream-evaluation-v1.md](requirements/simple-downstream-evaluation-v1.md)
   - 实施说明：[implementation/notes/simple-downstream-rebuild-2026-07-15.md](implementation/notes/simple-downstream-rebuild-2026-07-15.md)

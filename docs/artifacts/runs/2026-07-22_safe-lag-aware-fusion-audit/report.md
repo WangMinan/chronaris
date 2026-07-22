@@ -42,18 +42,18 @@
 
 ## 四、新数据审计
 
-### 4.1 PhysioNet 虚拟飞行任务（主公开真实双流外部验证）
+### 4.1 CogPilot / PhysioNet 虚拟飞行任务（主公开真实双流外部验证）
 
-来源：PhysioNet `virtual-reality-piloting` 1.0.0（`/home/wangminan/dataset/chronaris/physio_net`）。许可：`LICENSE.txt`（PhysioNet 受限数据，按受限数据处理，不公开可识别信息）。官方 SHA 清单 `SHA256SUMS.txt`（9021 行）随数据发布，作为权威完整性校验。
+来源：PhysioNet “Multimodal Physiological Monitoring During Virtual Reality Piloting Tasks”（**CogPilot**），版本 1.0.0，DOI 10.13026/azwa-ge48，路径 `/home/wangminan/dataset/chronaris/physio_net`。模拟器 X-Plane 11，机型模拟 T-6 Texan II，操纵 HOTAS。双许可：PhysioNet Restricted Health Data License v1.5.0（`LICENSE.txt`）+ 美国空军 Acceptable Use Agreement（FA8750-19-2-1000，**强制引用** “CogPilot Dataset provided by the United States Air Force pursuant to Cooperative Agreement Number FA8750-19-2-1000”）。按受限健康数据处理，不得再分发，任务完成后应清除副本；只发布清单、匿名统计、哈希、指标、图与开源代码。官方 `SHA256SUMS.txt`（9021 行）为权威完整性校验。
 
-- 规模：约 40.5 GiB，8899 文件，8246 个 CSV；35 名参与者；419 次 ILS 进近任务运行 + 安静基线运行；4 个难度等级（PerfMetrics 各 104/106/104/105 次）。
-- 生理流（人体）：`lslshimmerecg`（ECG）、`lslshimmereda`（EDA，约 10 GiB）、`lslshimmeremg`（EMG）、`lslrespitrace`（呼吸，约 1024 Hz）、`lslshimmerresp`、`lslshimmertorsoacc`（躯干加速度，约 128 Hz）、`lslhtcviveeye`（眼动/瞳孔，约 16.9 GiB）。
-- 机器/任务流（飞机）：`lslxp11xpcac`（X-Plane 飞机加速度等）、`lslxp11xpcplt`（X-Plane 飞机位姿/轨迹）、`lslxp11`（X-Plane 状态）。这正是所需双流：人体生理 + 模拟飞机状态/操纵/性能。
-- 时间戳：`time_dn` 为 MATLAB datenum（天，自公元 0 年）；各流独立采样、不同速率，通过 LSL 时间戳对齐到公共时钟。
-- 标签：`PerfMetrics.csv`（419 行）含难度等级与累计总误差（`cumulative_total_error`，按难度上升：1≈3155、2≈2931、3≈3651、4≈4685），按参与者—试次分组。
-- 可构造任务（语义依据）：(a) 飞行任务难度/负荷四分类（标签：PerfMetrics.difficulty，分组：参与者，预存）；(b) 着陆/飞行误差回归（标签：cumulative_total_error，预存）；(c) 飞机/操纵事件条件下生理响应残差（输入侧事件定义，衍生）；(d) event-to-response 滞后/匹配（机制任务）。
-- 划分：以参与者或参与者—试次为分组，主评价 LOSO 或 group-held-out，同一参与者窗口不跨训练/测试。
-- 不可发布：原始波形与可识别信息；只发布清单、匿名统计、哈希、指标、图。
+- 规模：约 40.5 GiB，8899 文件；**35 名参与者**；419 次 ILS 进近飞行 + 68 次静息；4 个难度等级（L1–L4，路径 `level-01B..04B` 编码，PerfMetrics 各 104/106/104/105 次）；先验飞行经验严重失衡（14 名零小时新手）。
+- 生理流（人体）：ECG（约 504 Hz，`ecg_projection_*_mV`）、EDA+PPG（128 Hz，`eda_hand_l_kOhms`/`ppg_finger_mV`）、EMG+前臂加速度（约 510 Hz，`emg_wrist_*_mV`/`accelerometry_forearm_*`）、呼吸 Shimmer（约 504 Hz）/Respitrace（1025 Hz，仅 34% 运行）、躯干加速度（128 Hz，86%）、HTC Vive 眼动（252 Hz，26 通道，含 `validity_*` 哨兵位）。
+- 机器流（飞机，约 4.5 Hz）：`lslxp11xpcac` 18 通道（`aircraft_velocity_{e,u,n}_mps`、`aircraft_{pitch,roll,yaw}_deg`、`aircraft_indicated_airspeed_kias`、`aircraft_groundspeed_mps`、`aircraft_climb_rate_mps`、`aircraft_agl_altitude_m`、`aircraft_{latitude,longitude,elevation}`、`aircraft_ils_deflection_{gs,h}`、`aircraft_landing_gear` 等）；`lslxp11xpcplt` 6 通道（仅头部位姿）。
+- **硬约束：数据集不含原始操纵输入流**（无杆/油门/舵），只能用前臂 EMG/加速度（操纵手）与飞机状态（输入效果）间接恢复。新主线不得假设存在操纵输入流。
+- 时间同步：所有流共享 `time_dn`（MATLAB datenum），经 **LSL 公共时钟**对齐，跨流起始差小于 14 µs——这使 event-to-response 滞后估计天然良态，正是验证“滞后感知融合”的理想公开数据。
+- 标签：难度（1–4，路径/`PerfMetrics.difficulty`）；运行级累计误差 `cumulative_total_error`（按难度上升 3155/2931/3651/4685，std≈mean）；**逐样本误差**（约 4.5 Hz，`glideslope/localizer/airspeed/total_error`，仅在 speed>0 且 AGL>200ft 的 ILS 段有效）。标签均预存，无身份捷径。
+- 可构造任务（语义依据，均按参与者分组）：(a) 飞行难度/负荷四分类或 L1-vs-L4 二分类；(b) 累计飞行误差回归；(c) 逐样本飞行误差时序回归；(d) 飞机事件（滚转、ILS 偏差、起落架）条件下生理响应残差——输入侧事件定义；(e) event-to-response 滞后/匹配（机制任务，受益于 LSL 公共时钟）。
+- 划分：分组单位必须是 **参与者（≡会话）**；用 GroupKFold（5 折）或留一参与者（LOSO，35 折）；同一参与者的 ILS 与静息运行不得跨训练/测试；按先验飞行经验分层或报告子群指标。
 
 ### 4.2 CLARE（跨受试者多模态生理与认知负荷辅助验证）
 

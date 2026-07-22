@@ -2,9 +2,21 @@
 
 更新时间：2026-07-16
 
-## 当前任务：安全滞后感知融合新主线（待审计后提交计划）
+## 当前任务：安全滞后感知融合新主线
 
-两条鼎新真实数据研究线（简化下游评价、任务感知安全残差/残差激活）均已收口退出。当前唯一活动分支为 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）。下一步顺序：先只读审计当前 Chronaris 与新公开数据（PhysioNet、CLARE），再提交研究计划与评价协议，然后开发新主线；不根据任一已收口线已打开的外层结果继续调参。门控残差与安全回退作为新主线设计基础保留复用。
+两条鼎新真实数据研究线（简化下游评价、任务感知安全残差/残差激活）均已收口退出。当前唯一活动分支为 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）。阶段 1 审计与阶段 2 计划/协议已完成：
+
+- 审计：[当前 Chronaris + CogPilot/CLARE 审计](../artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)（逐项代码证据确认九项缺陷，物理约束健康；CogPilot 为公开主双流、CLARE 为辅助跨受试者）。
+- 计划：[安全滞后感知融合研究计划](notes/safe-lag-aware-fusion-research-plan-2026-07-18.md)。
+- 协议：[安全滞后感知融合评价协议 v2](../requirements/safe-lag-aware-fusion-evaluation-v2.md)。
+
+### 下一步顺序（阶段 3–5）
+
+1. 开发新主干：单流旁路 + 安全门控残差（`z_out=[phys_private, vehicle_private, gate·z_cross]`）、滞后感知条件对齐（替换同刻余弦）、多统计量汇聚、辅助损失自早期启用、多准则 checkpoint、尺度门控抗塌缩、跨流增量预训练、`representation_diagnostics`。
+2. 波次 A–D 实验（公开 CogPilot/CLARE + 鼎新 inner-validation，不读取锁定外层）。
+3. 晋级门禁全满足后运行一次鼎新锁定分组确认。
+
+不根据任一已收口线已打开的外层结果继续调参；门控残差与安全回退作为新主线设计基础保留复用。
 
 ## 历史已收口线 1：简化鼎新下游评价（最新真实数据协议冻结确认）
 
