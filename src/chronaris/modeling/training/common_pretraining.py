@@ -19,6 +19,7 @@ from chronaris.modeling.training.pretext import (
     chronaris_auxiliary_weight_schedule,
     pretext_loss_terms_to_rows,
 )
+from chronaris.modeling.training.chronaris_auxiliary import lag_aware_alignment_loss
 from chronaris.modeling.training.pretraining_encoders import (
     ENCODER_SCREEN_CANDIDATES,
     TRAINABLE_FUSION_METHODS,
@@ -134,6 +135,7 @@ def train_common_pretext_method(
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     candidate_config: EncoderCandidateConfig | None = None,
     chronaris_fusion_kind: str = "multiscale",
+    chronaris_lag_aware_weight: float = 0.0,
     resume: bool = True,
 ) -> CommonPretrainingResult:
     if method_name not in TRAINABLE_FUSION_METHODS:
@@ -157,6 +159,7 @@ def train_common_pretext_method(
         vehicle_field_labels=vehicle_field_labels,
         candidate_config=resolved_candidate,
         chronaris_fusion_kind=chronaris_fusion_kind,
+        chronaris_lag_aware_weight=chronaris_lag_aware_weight,
         data_access_mode=("lazy_batch_provider" if batch_provider else "materialized_batch"),
     )
     if resume and best_path.exists() and last_path.exists():
@@ -236,7 +239,16 @@ def train_common_pretext_method(
                 targets,
                 weights=CommonPretextWeights(),
             )
-            loss_output.total_loss.backward()
+            total_loss = loss_output.total_loss
+            if chronaris_lag_aware_weight > 0.0:
+                alignment_output = getattr(positive, "alignment_output", None)
+                if alignment_output is not None:
+                    total_loss = total_loss + chronaris_lag_aware_weight * (
+                        lag_aware_alignment_loss(
+                            alignment_output, min_lag_s=0.0, max_lag_s=15.0
+                        ).loss
+                    )
+            total_loss.backward()
             parameters = tuple((*encoder.parameters(), *heads.parameters()))
             gradient_norm = float(
                 nn.utils.clip_grad_norm_(
