@@ -12,9 +12,9 @@
 
 ### 下一步顺序（阶段 3–5）
 
-1. 开发新主干：单流旁路 + 安全门控残差（`z_out=[phys_private, vehicle_private, gate·z_cross]`）、滞后感知条件对齐（替换同刻余弦）、多统计量汇聚、辅助损失自早期启用、多准则 checkpoint、尺度门控抗塌缩、跨流增量预训练、`representation_diagnostics`。
-2. 波次 A–D 实验（公开 CogPilot/CLARE + 鼎新 inner-validation，不读取锁定外层）。
-3. 晋级门禁全满足后运行一次鼎新锁定分组确认。
+1. **已完成：**新主干 `SafeLagAwareFusion`（单流旁路 + 安全门控残差 `z_out=[phys_private, vehicle_private, gate·z_cross]`）、`lag_aware_alignment_loss`（因果滞后容限对齐，替代同刻余弦）、`representation_diagnostics`（有效秩/协方差谱/维度利用率）；通过 `fusion_kind` 接入两条训练路径，协议哈希与 checkpoint 兼容校验区分融合类型；12+3 项聚焦测试通过，完整测试 `426 passed, 8 skipped`。
+2. **部分完成（波次 A）：**G1 仿真 15 epoch 工程冒烟已验证机制——safe_lag 航电恢复 R² `0.944` > 旧 multiscale `0.914`、有效秩 `5.13` > `2.73`、安全门控 `0.022` 近回退。尚需：完整预算（50 epoch、多种子）鼎新 inner-validation 机动负迁移验证、波次 B（跨流增量）、波次 C（CogPilot/CLARE 预训练迁移）、波次 D（任务感知头）。
+3. **待运行：**晋级门禁全满足后运行一次鼎新锁定分组确认（评价协议 v2 §5–6）。门禁未满足前不合入 main。
 
 不根据任一已收口线已打开的外层结果继续调参；门控残差与安全回退作为新主线设计基础保留复用。
 
