@@ -16,20 +16,24 @@
 
 ## 结果（fold01, seed 17）
 
-| 方法 | macro-F1 | balanced accuracy | Spearman |
+| 方法 | macro-F1 | balanced accuracy | 说明 |
 | --- | --- | --- | --- |
-| Chronaris safe_lag | **0.3387** | 0.4333 | 0.4127 |
-| Chronaris multiscale（旧融合） | 0.1667 | 0.3333 | 0.5471 |
-| vehicle_only（航电单流） | 0.4821 | 0.5000 | 0.4554 |
+| **Chronaris safe_lag** | **0.3387** | 0.4333 | 新主线 |
+| Chronaris multiscale（旧融合） | 0.1667 | 0.3333 | 旧主干 |
+| MulT | 0.1667 | 0.3333 | 融合基线 |
+| ContiFormer | 0.1538 | 0.3000 | 融合基线 |
+| vehicle_only（航电单流） | 0.4821 | 0.5000 | 单流参考 |
+
+（safe_lag 的 Spearman 0.4127；multiscale 0.5471——连续分数排序与三类 macro-F1 不一致，三类 macro-F1 为导师要求对应主指标。）
 
 ## 判断
 
-- **负迁移显著减小**：safe_lag 机动 macro-F1 `0.3387` 是旧 multiscale 融合 `0.1667` 的约 2.0 倍。旧融合在该航电强势任务上仍处灾难性低位（与已收口确认中 Chronaris `0.195` 一致），安全旁路（`vehicle_private` 直达输出、门控近回退）在真实任务上把航电信息保了回来。
-- **尚未达到航电单流**：safe_lag 仍低于 vehicle_only `0.4821`。门禁 6（“争取接近或超过航电单流”）未满足——跨模态分支仍轻微干扰，或 30 epoch 未充分、单种子未稳定。
-- 同口径同消费者内的相对比较有效；绝对值（vehicle 0.482）低于已收口确认（0.808），因本轮为单折单种子 30 epoch，非 50 epoch 双折三种子锁定确认。
+- **超过全部融合基线（晋级门禁 4 方向性满足）**：safe_lag 机动 macro-F1 `0.3387` 同时高于旧 Chronaris `0.1667`、MulT `0.1667`、ContiFormer `0.1538`。安全旁路（`vehicle_private` 直达输出、门控近回退）使新主线成为该航电强势任务上唯一显著减小负迁移的融合方法。
+- **负迁移显著减小但未消除**：safe_lag 是旧融合与本轮全部融合基线的约 2 倍；旧融合仍处灾难性低位（与已收口确认中 Chronaris `0.195` 一致）。
+- **尚未达到航电单流**：safe_lag `0.3387` 低于 vehicle_only `0.4821`。门禁 6（“争取接近或超过航电单流”）未满足——`vehicle_private` 仅占 64 维中的 24 维，而 vehicle_only 占全部 64 维；跨模态分支仍轻微干扰，30 epoch 单种子未充分。
 
 ## 边界与下一步
 
-- 单折单种子 30 epoch；非锁定确认。晋级门禁 4（超过全部融合基线）在同口径内已满足（safe_lag > multiscale），但门禁 5/6（超单流、接近航电单流）未满足。
+- 单折单种子 30 epoch；非锁定确认。晋级门禁 4（同口径超过全部融合基线 MulT/ContiFormer/旧 Chronaris）方向性满足；门禁 5/6（超单流、接近航电单流）未满足，需多种子稳定与进一步缩小与航电单流差距。
 - 下一步杠杆：把 `lag_aware_alignment_loss` 与多统计量汇聚接入训练调度、延长至 50 epoch、三随机种子（17/29/43）、两折；目标让 safe_lag 接近或超过 vehicle_only。
 - 重型 checkpoint 位于被忽略目录 `artifacts/application_evaluation/2026-07-22_dingxin-safe-lag-maneuver/`。
