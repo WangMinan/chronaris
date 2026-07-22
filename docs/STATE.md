@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差，`z_out=[phys_private, vehicle_private, gate·z_cross]`）、`lag_aware_alignment_loss`（因果滞后容限对齐，替代同刻余弦）与 `representation_diagnostics`（有效秩/协方差谱/维度利用率）。波次 A 工程冒烟（G1 仿真，15 epoch、seed 17）已验证机制：safe_lag 航电恢复 R² `0.944` 高于旧 multiscale `0.914`、有效秩 `5.13` 为旧 `2.73` 的 1.88 倍、安全门控均值 `0.022` 近安全回退；完整测试 `426 passed, 8 skipped`。两条鼎新已收口线（简化下游评价、任务感知安全残差）的不利结果保留不覆盖；下一步为按评价协议 v2 运行鼎新 inner-validation 多种子确认与 CogPilot/CLARE 公开验证（晋级门禁未满足前不合入 main）。
+新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差，`z_out=[phys_private, vehicle_private, gate·z_cross]`）、`lag_aware_alignment_loss`（因果滞后容限对齐）与 `representation_diagnostics`。波次 A 仿真机制冒烟与**鼎新真实未来机动单折确认**均已运行：safe_lag 仿真航电恢复 R² `0.944` > 旧 `0.914`、有效秩 `5.13` > `2.73`；鼎新 fold01/seed17/30epoch 机动 macro-F1 `0.3387` 是旧融合 `0.1667` 的约 2 倍（同口径超全部融合基线），但仍低于航电单流 `0.4821`。完整测试 `429 passed, 8 skipped`。晋级门禁整体未满足（未达航电单流、公开数据与多种子锁定确认未运行），研究分支不合入 main。
 
 ## 当前执行入口
 
@@ -14,6 +14,7 @@
   - 研究计划：[implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md](implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md)
   - 评价协议 v2：[requirements/safe-lag-aware-fusion-evaluation-v2.md](requirements/safe-lag-aware-fusion-evaluation-v2.md)
   - 波次 A 工程冒烟（机制验证）：[artifacts/runs/2026-07-22_safe-lag-wave-a-smoke/report.md](artifacts/runs/2026-07-22_safe-lag-wave-a-smoke/report.md)
+  - 鼎新未来机动单折确认（真实下游）：[artifacts/runs/2026-07-22_dingxin-safe-lag-maneuver/report.md](artifacts/runs/2026-07-22_dingxin-safe-lag-maneuver/report.md)
 - 历史已收口线 1 — 简化下游评价（最新真实数据协议冻结确认）：
   - 协议：[requirements/simple-downstream-evaluation-v1.md](requirements/simple-downstream-evaluation-v1.md)
   - 实施说明：[implementation/notes/simple-downstream-rebuild-2026-07-15.md](implementation/notes/simple-downstream-rebuild-2026-07-15.md)
