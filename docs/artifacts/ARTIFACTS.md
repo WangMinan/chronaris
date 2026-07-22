@@ -10,6 +10,8 @@
 
 ## 当前核心 runs
 
+- `runs/2026-07-23_cogpilot-difficulty/`：**CogPilot 飞行难度四分类（公开数据双流增量正向证据）**。LOSO（10 参与者训练/3 测试），12 epoch、seed 17：safe_lag macro-F1 `0.4122` 同时高于旧融合 `0.4017`、最佳单流 vehicle_only `0.3396`、physiology_only `0.1521`。难度同时驱动生理唤醒与飞机操纵/状态，融合真正超过最佳单流（晋级门禁 3/5 方向性满足）；与鼎新车辆主导机动任务形成对照。单 LOSO 折非锁定确认；重型 checkpoint 位于被忽略目录。
+
 - `runs/2026-07-22_dingxin-safe-lag-maneuver/`：**鼎新未来机动安全滞后感知融合单折确认（真实下游）**。留一架次 fold01、seed 17、30 epoch，三组同口径同消费者比较：safe_lag 机动 macro-F1 `0.3387` 是旧 multiscale 融合 `0.1667` 的约 2 倍（同口径超全部融合基线），但仍低于航电单流 `0.4821`。证明安全旁路在真实任务上显著减小负迁移；非锁定确认（单折单种子）。重型 checkpoint 位于被忽略目录。
 
 - `runs/2026-07-22_safe-lag-wave-a-smoke/`：**安全滞后感知融合波次 A 工程冒烟（机制验证）**。在 G1 仿真固定集（48 训练+12 验证+24 留出，15 epoch、seed 17）训练 chronaris safe_lag / multiscale / vehicle_only 三组；从 checkpoint 重算诊断（标准化特征 + 直推式恢复探针）。safe_lag 航电恢复 R² `0.944` 高于旧 multiscale `0.914`（亦高于航电单流 `0.933`），有效秩 `5.13` 为旧 `2.73` 的 1.88 倍，安全门控均值 `0.022` 近安全回退。支持“安全旁路改善航电保真与抗塌缩”的机制判断，非锁定确认；重型 checkpoint 位于被忽略目录。
