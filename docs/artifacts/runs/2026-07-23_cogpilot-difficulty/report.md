@@ -34,3 +34,14 @@
 - 单 LOSO 折（3 测试受试者）、12 epoch、10 参与者、单 seed——**非锁定确认**，但为公开数据上的真实正向证据。
 - 下一步：扩展至全部 35 参与者、GroupKFold-5/全 LOSO、增种子、延长预算，并按评价协议 v2 在“难度分类 + 累计误差回归 + 事件后生理响应”上形成公开数据主结果，作为鼎新车辆主导任务之外的融合优势证据。
 - 重型 checkpoint 位于被忽略目录 `artifacts/application_evaluation/2026-07-23_cogpilot-difficulty/`。
+
+## 两种子稳定性（gate 8，公开数据）
+
+| 方法 | seed17 | seed29 | 均值 |
+| --- | --- | --- | --- |
+| Chronaris safe_lag | 0.4122 | 0.3353 | **0.3738** |
+| Chronaris multiscale | 0.4017 | 0.3045 | 0.3531 |
+| vehicle_only | 0.3396 | 0.2060 | 0.2728 |
+| physiology_only | 0.1521 | 0.2103 | 0.1812 |
+
+**两种子均稳定**：safe_lag 在 seed17 与 seed29 都同时高于旧融合、最佳单流 vehicle_only 与 physiology_only。均值 safe_lag `0.3738` > multiscale `0.3531` > vehicle `0.2728` > physiology `0.1812`；相对最佳单流 vehicle_only 的均值增量 `+0.101`（相对 +37%）。公开数据双流增量与安全旁路优势跨种子成立（与鼎新机动任务的不稳定形成对照——任务语义决定稳定性）。
