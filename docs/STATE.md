@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差，`z_out=[phys_private, vehicle_private, gate·z_cross]`）、`lag_aware_alignment_loss`（因果滞后容限对齐）与 `representation_diagnostics`。波次 A 仿真机制冒烟与**鼎新真实未来机动单折确认**均已运行：safe_lag 仿真航电恢复 R² `0.944` > 旧 `0.914`、有效秩 `5.13` > `2.73`；鼎新 fold01/seed17/30epoch 机动 macro-F1 `0.3387` 是旧融合 `0.1667` 的约 2 倍（同口径超全部融合基线），但仍低于航电单流 `0.4821`。完整测试 `429 passed, 8 skipped`。晋级门禁整体未满足（未达航电单流、公开数据与多种子锁定确认未运行），研究分支不合入 main。
+新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差）、`lag_aware_alignment_loss`（因果滞后容限对齐）与 `representation_diagnostics`。仿真波次 A 验证机制（航电恢复 R² 0.944 > 旧 0.914、有效秩 5.13 > 2.73）。鼎新真实未来机动三种子（fold01, 30 epoch）诚实结果：safe_lag 均值 `0.224` 仅微弱且不稳定高于旧融合 `0.188`（seed17 领先、seed43 反超），远低于航电单流 `0.481`；生理任务六方法均 0 正技能字段。晋级门禁 4/5/6/8 均未满足，研究分支不合入 main。下一步：接入 lag_aware 损失与多统计量汇聚、延长预算增种子，争取稳定融合优势。
 
 ## 当前执行入口
 

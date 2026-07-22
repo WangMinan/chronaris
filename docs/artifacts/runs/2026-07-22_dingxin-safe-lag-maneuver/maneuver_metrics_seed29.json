@@ -1,0 +1,46 @@
+{
+  "fold_id": "leave_one_sortie_out__fold01",
+  "seed": 29,
+  "epochs": 30,
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "method": "chronaris",
+      "fusion_kind": "safe_lag",
+      "step_count": 150,
+      "elapsed_s": 224.9,
+      "independent_vehicle_context_count": 30,
+      "spearman": 0.4078,
+      "normalized_mae": 4.4059,
+      "skill_vs_current_maneuver": -5.6925,
+      "macro_f1": 0.1667,
+      "balanced_accuracy": 0.3333
+    },
+    {
+      "label": "chronaris_multiscale",
+      "method": "chronaris",
+      "fusion_kind": "multiscale",
+      "step_count": 150,
+      "elapsed_s": 223.0,
+      "independent_vehicle_context_count": 30,
+      "spearman": 0.4216,
+      "normalized_mae": 6.3808,
+      "skill_vs_current_maneuver": -12.169,
+      "macro_f1": 0.1667,
+      "balanced_accuracy": 0.3333
+    },
+    {
+      "label": "vehicle_only",
+      "method": "vehicle_only",
+      "fusion_kind": "multiscale",
+      "step_count": 150,
+      "elapsed_s": 63.5,
+      "independent_vehicle_context_count": 30,
+      "spearman": 0.4527,
+      "normalized_mae": 1.0596,
+      "skill_vs_current_maneuver": 0.3564,
+      "macro_f1": 0.4807,
+      "balanced_accuracy": 0.5
+    }
+  ]
+}
