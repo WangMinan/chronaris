@@ -1,0 +1,42 @@
+{
+  "n_events": 637,
+  "n_subjects": 20,
+  "test_subjects": [
+    "sub-cp003",
+    "sub-cp008",
+    "sub-cp013",
+    "sub-cp017",
+    "sub-cp022"
+  ],
+  "seed": 17,
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "r2": 0.004,
+      "mae": 17.7857,
+      "skill_vs_mean": -0.038,
+      "elapsed_s": 598.4
+    },
+    {
+      "label": "chronaris_multiscale",
+      "r2": 0.016,
+      "mae": 17.5225,
+      "skill_vs_mean": -0.022,
+      "elapsed_s": 599.6
+    },
+    {
+      "label": "vehicle_only",
+      "r2": 0.069,
+      "mae": 17.2178,
+      "skill_vs_mean": -0.005,
+      "elapsed_s": 48.3
+    },
+    {
+      "label": "physiology_only",
+      "r2": -0.004,
+      "mae": 17.4616,
+      "skill_vs_mean": -0.019,
+      "elapsed_s": 48.0
+    }
+  ]
+}
