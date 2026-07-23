@@ -66,13 +66,15 @@ PHYS_FILES = {  # stream token -> columns to use
     "lslshimmereda": ("ppg_finger_mV", "eda_hand_l_kOhms"),
     "lslshimmerresp": ("respiration_trace_mV",),
 }
+ECG_FILE = "lslshimmerecg"
+ECG_COL = "ecg_projection_ll_ra_mV"
 VEH_FILE = "lslxp11xpcac"
 VEH_COLS = (
     "aircraft_indicated_airspeed_kias", "aircraft_pitch_deg", "aircraft_roll_deg",
     "aircraft_agl_altitude_m", "aircraft_climb_rate_mps",
     "aircraft_ils_deflection_gs", "aircraft_ils_deflection_h", "aircraft_velocity_u_mps",
 )
-PHYS_NAMES = ("physiology.ppg", "physiology.eda", "physiology.resp")
+PHYS_NAMES = ("physiology.ppg", "physiology.eda", "physiology.resp", "physiology.hr")
 VEH_NAMES = tuple(f"vehicle.{c.replace('aircraft_','')}" for c in VEH_COLS)
 
 
@@ -98,8 +100,26 @@ def _resample(t_s, vals, cols, query):
     return out
 
 
+def _hr_series(t, ecg, query):
+    """Instantaneous heart rate (bpm) from R-R intervals, interpolated to the query grid."""
+    from scipy.signal import find_peaks
+    finite = np.isfinite(ecg)
+    if finite.sum() < 50:
+        return np.full(len(query), 80.0)
+    t, ecg = t[finite], ecg[finite]
+    thr = np.nanpercentile(ecg, 90)
+    dt = float(np.median(np.diff(t))) if len(t) > 1 else 1e-3
+    pk, _ = find_peaks(ecg, height=thr, distance=max(1, int(0.4 / max(dt, 1e-6))))
+    if len(pk) < 3:
+        return np.full(len(query), 80.0)
+    rr_t = 0.5 * (t[pk][1:] + t[pk][:-1])
+    rr = np.diff(t[pk])
+    hr = np.clip(60.0 / np.maximum(rr, 1e-3), 30.0, 200.0)
+    return np.interp(query, rr_t, hr)
+
+
 def _load_run(run_dir, query):
-    """Load physiology + vehicle windows for one run; return (phys[N,3], veh[N,8]) or None."""
+    """Load physiology (ppg/eda/resp + ECG-derived HR) + vehicle windows."""
     phys_chunks = []
     for token, cols in PHYS_FILES.items():
         f = list(Path(run_dir).glob(f"*stream-{token}*_dat.csv"))
@@ -108,6 +128,14 @@ def _load_run(run_dir, query):
         df = pd.read_csv(f[0])
         t = (df.iloc[:, 0].to_numpy(dtype=np.float64) - df.iloc[0, 0]) * 86400.0
         phys_chunks.append(_resample(t, df, cols, query))
+    # ECG-derived heart rate (strong arousal signal aircraft state cannot provide)
+    f = list(Path(run_dir).glob(f"*stream-{ECG_FILE}*_dat.csv"))
+    if not f:
+        return None
+    df = pd.read_csv(f[0])
+    t = (df.iloc[:, 0].to_numpy(dtype=np.float64) - df.iloc[0, 0]) * 86400.0
+    hr = _hr_series(t, df[ECG_COL].to_numpy(dtype=np.float64), query).reshape(-1, 1)
+    phys_chunks.append(hr)
     phys = np.concatenate(phys_chunks, axis=1)
     f = list(Path(run_dir).glob(f"*stream-{VEH_FILE}*_dat.csv"))
     if not f:
@@ -216,10 +244,10 @@ def main() -> None:
     print(f"{'method':<24}{'macro_f1':>10}{'bal_acc':>10}")
     for r in results:
         print(f"{r['label']:<24}{r['macro_f1']:>10}{r['balanced_accuracy']:>10}")
-    (RUN_DIR / f"difficulty_metrics_seed{SEED}.json").write_text(json.dumps({
+    (RUN_DIR / f"difficulty_metrics_{N_SUBJECTS}subj_seed{SEED}.json").write_text(json.dumps({
         "n_subjects": len(set(groups)), "n_samples": len(samples), "test_subjects": sorted(test_subs),
         "seed": SEED, "epochs": EPOCHS, "results": results}, indent=2))
-    print(f"\nwrote {RUN_DIR / f'difficulty_metrics_seed{SEED}.json'}")
+    print(f"\nwrote {RUN_DIR / f'difficulty_metrics_{N_SUBJECTS}subj_seed{SEED}.json'}")
 
 
 if __name__ == "__main__":
