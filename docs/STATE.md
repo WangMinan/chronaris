@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差）、`lag_aware_alignment_loss`（因果滞后容限对齐，已接入训练）与 `representation_diagnostics`。**公开 CogPilot 飞行难度四分类 LOSO 两种子（seed17/29）safe_lag 均值 0.374 稳定超过旧融合 0.353、最佳单流 vehicle_only 0.273、physiology_only 0.181（门禁 3/5 满足，跨种子一致）**。鼎新未来机动三种子（车辆主导任务）safe_lag 均值 0.224 未稳定超航电单流 0.481，门禁 4/6/8 未满足。关键洞见：任务语义决定融合是否有增量。晋级门禁整体未完全满足，研究分支不合入 main。
+新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差）、`lag_aware_alignment_loss`（因果滞后容限对齐，已接入训练）与 `representation_diagnostics`。**公开 CogPilot 难度分类中 safe_lag 稳健优于旧 multiscale 融合（10subj 两种子与 20subj 均成立），但未稳健超最佳单流 vehicle_only（10subj 超、20subj 被反超 0.5045 vs 0.4654）**。鼎新未来机动三种子（车辆主导任务）safe_lag 均值 0.224 未稳定超航电单流 0.481，门禁 4/6/8 未满足。关键洞见：任务语义决定融合是否有增量。晋级门禁整体未完全满足，研究分支不合入 main。
 
 ## 当前执行入口
 

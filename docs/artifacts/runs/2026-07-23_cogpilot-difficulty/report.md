@@ -35,13 +35,19 @@
 - 下一步：扩展至全部 35 参与者、GroupKFold-5/全 LOSO、增种子、延长预算，并按评价协议 v2 在“难度分类 + 累计误差回归 + 事件后生理响应”上形成公开数据主结果，作为鼎新车辆主导任务之外的融合优势证据。
 - 重型 checkpoint 位于被忽略目录 `artifacts/application_evaluation/2026-07-23_cogpilot-difficulty/`。
 
-## 两种子稳定性（gate 8，公开数据）
+## 队列规模修正（重要，诚实修订）
 
-| 方法 | seed17 | seed29 | 均值 |
+将队列从 10 参与者扩到 20 参与者（5 测试受试者）后，结论**改变**：
+
+| 方法 | 10subj seed17 | 10subj seed29 | 20subj seed17 |
 | --- | --- | --- | --- |
-| Chronaris safe_lag | 0.4122 | 0.3353 | **0.3738** |
-| Chronaris multiscale | 0.4017 | 0.3045 | 0.3531 |
-| vehicle_only | 0.3396 | 0.2060 | 0.2728 |
-| physiology_only | 0.1521 | 0.2103 | 0.1812 |
+| Chronaris safe_lag | 0.4122 | 0.3353 | 0.4654 |
+| Chronaris multiscale | 0.4017 | 0.3045 | 0.3543 |
+| vehicle_only | 0.3396 | 0.2060 | **0.5045** |
+| physiology_only | 0.1521 | 0.2103 | 0.1833 |
 
-**两种子均稳定**：safe_lag 在 seed17 与 seed29 都同时高于旧融合、最佳单流 vehicle_only 与 physiology_only。均值 safe_lag `0.3738` > multiscale `0.3531` > vehicle `0.2728` > physiology `0.1812`；相对最佳单流 vehicle_only 的均值增量 `+0.101`（相对 +37%）。公开数据双流增量与安全旁路优势跨种子成立（与鼎新机动任务的不稳定形成对照——任务语义决定稳定性）。
+**诚实修订**：在 10 参与者（3 测试受试者）时 safe_lag 超过 vehicle_only，但扩到 20 参与者后 **vehicle_only（0.5045）反超 safe_lag（0.4654）**。说明“safe_lag 超最佳单流”在小队列上不稳健——难度分类在更大队列上也变得可由飞机状态单独预测（ILS 偏差/空速等与难度强相关）。
+
+**稳健成立的结论**：safe_lag **始终优于旧 multiscale 融合**（10subj 两种子与 20subj 均成立，0.465 vs 0.354、0.374 vs 0.353），即安全旁路相对旧融合是稳健改进。但**融合未稳健超过最佳单流**——车辆/飞机状态在难度与机动任务上都过于强势。
+
+（20subj seed29 待运行以确认 vehicle 占优是否跨种子；将补充。）
