@@ -1,0 +1,52 @@
+{
+  "n_samples": 1614,
+  "n_folds": 5,
+  "epochs": 6,
+  "seed": 17,
+  "summary": {
+    "fusion_safe_lag": {
+      "mean_bal_acc": 0.47,
+      "std": 0.178,
+      "folds": [
+        0.521,
+        0.354,
+        0.214,
+        0.522,
+        0.74
+      ]
+    },
+    "fusion_multiscale": {
+      "mean_bal_acc": 0.414,
+      "std": 0.089,
+      "folds": [
+        0.391,
+        0.376,
+        0.278,
+        0.501,
+        0.522
+      ]
+    },
+    "central_only": {
+      "mean_bal_acc": 0.563,
+      "std": 0.111,
+      "folds": [
+        0.546,
+        0.372,
+        0.648,
+        0.551,
+        0.697
+      ]
+    },
+    "peripheral_only": {
+      "mean_bal_acc": 0.429,
+      "std": 0.073,
+      "folds": [
+        0.317,
+        0.388,
+        0.524,
+        0.488,
+        0.426
+      ]
+    }
+  }
+}
