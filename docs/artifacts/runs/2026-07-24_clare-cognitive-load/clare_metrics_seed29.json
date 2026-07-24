@@ -1,0 +1,41 @@
+{
+  "n_samples": 1614,
+  "n_subjects": 16,
+  "test_subjects": [
+    "1026",
+    "1337",
+    "1624",
+    "1717"
+  ],
+  "seed": 29,
+  "results": [
+    {
+      "label": "fusion_safe_lag",
+      "spearman": -0.113,
+      "macro_f1": 0.406,
+      "bal_acc": 0.409,
+      "elapsed_s": 1371.3
+    },
+    {
+      "label": "fusion_multiscale",
+      "spearman": -0.179,
+      "macro_f1": 0.388,
+      "bal_acc": 0.384,
+      "elapsed_s": 1370.8
+    },
+    {
+      "label": "central_only",
+      "spearman": 0.147,
+      "macro_f1": 0.523,
+      "bal_acc": 0.58,
+      "elapsed_s": 120.9
+    },
+    {
+      "label": "peripheral_only",
+      "spearman": -0.366,
+      "macro_f1": 0.377,
+      "bal_acc": 0.37,
+      "elapsed_s": 118.7
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差）、`lag_aware_alignment_loss`（因果滞后容限对齐，已接入训练）与 `representation_diagnostics`。****CLARE 认知负荷（公开数据）fusion_safe_lag 二分类 bal-acc 0.564 同时超两个单流（central EEG 0.437、peripheral 0.401）与旧融合 0.353——gate5（双流任务超最佳单流）在公开数据上满足**。CogPilot 难度车辆主导（融合未超 vehicle）**。鼎新未来机动三种子（车辆主导任务）safe_lag 均值 0.224 未稳定超航电单流 0.481，门禁 4/6/8 未满足。关键洞见：任务语义决定融合是否有增量。晋级门禁整体未完全满足，研究分支不合入 main。
+新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差）、`lag_aware_alignment_loss`（因果滞后容限对齐，已接入训练）与 `representation_diagnostics`。**CLARE 认知负荷 seed17 融合超双单流(0.564)但 seed29 central 反超(0.580 vs 0.409)，两种子平局不稳健；CogPilot 难度车辆主导（融合未超 vehicle）**。鼎新未来机动三种子（车辆主导任务）safe_lag 均值 0.224 未稳定超航电单流 0.481，门禁 4/6/8 未满足。关键洞见：任务语义决定融合是否有增量。晋级门禁整体未完全满足，研究分支不合入 main。
 
 ## 当前执行入口
 
