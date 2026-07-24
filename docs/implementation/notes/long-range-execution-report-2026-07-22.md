@@ -99,7 +99,9 @@
 
 ## 14. 是否达到最低晋级目标与拉伸目标
 
-**未达成（诚实修订：单种子胜出均不稳健）。** CLARE 认知负荷 seed 17 时 fusion_safe_lag(0.564) 超双单流，但 **seed 29 时 central_only(0.580) 反超 fusion_safe_lag(0.409)**，两种子均值 fusion_safe_lag(0.487) ≈ central_only(0.509) 平局、胜者随种子翻转——**门禁 5 不稳健**。这与 CogPilot-10subj、Dingxin-seed17 的单种子胜出一样是种子假象。CogPilot 难度车辆主导（融合未超 vehicle）；鼎新未来机动三种子 safe_lag 均值 0.224 未稳定超航电单流 0.481（门禁 4/6/8 未满足）；鼎新生理六方法 0 正技能字段。锁定确认未运行。**跨全部任务+2 种子，融合未稳健超最佳单流**——高种子方差（少受试者+冻结表示+线性消费者）使融合优势落入噪声。**唯一稳健结论**：safe_lag 跨数据集稳健优于旧 multiscale（架构改进，但边际）。最低晋级目标与拉伸目标整体未达成。
+**未达成（5 折 GroupKFold 低方差定论）。** CLARE 认知负荷 5 折 GroupKFold：central_only(EEG 单流) 均值 balanced-acc `0.563` > fusion_safe_lag `0.470`（5 折胜 4 折）> peripheral `0.429` > fusion_multiscale `0.414`。seed-17 单切分“融合 0.564 胜”经低方差 CV 证为假象——**EEG 单流稳健胜出融合**，门禁 5 不成立。CogPilot 难度车辆主导（融合未超 vehicle）；鼎新未来机动三种子 safe_lag 0.224 未稳定超航电单流 0.481（门禁 4/6/8 未满足）；鼎新生理六方法 0 正技能字段。锁定确认未运行。
+
+**跨全部真实任务（鼎新机动/生理、CogPilot 难度±HR、CLARE 2 种子+5 折 CV、CogPilot 事件→响应、合成时延）融合未稳健超最佳单流**——所有单种子胜出均为高方差假象，低方差 CV 均不成立。根因：公共重构预训练偏强单流信号（航电/EEG），融合稀释之（审计 Q10）。**唯一稳健结论**：safe_lag 跨数据集稳健优于旧 multiscale（架构改进真实但边际：CLARE 0.470 vs 0.414、CogPilot 0.465 vs 0.354、仿真航电恢复 R² 0.944 vs 0.914）。最低晋级目标与拉伸目标整体未达成。
 
 ## 15. 当前最强配置与 commit SHA
 
