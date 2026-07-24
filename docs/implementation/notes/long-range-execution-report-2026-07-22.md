@@ -50,16 +50,16 @@
 
 **公开数据（CogPilot 难度）：诚实修订（车辆主导）**——见 `runs/2026-07-23_cogpilot-difficulty/`。10 参与者时 safe_lag 超 vehicle，扩到 20 参与者后 vehicle_only（0.5045）反超 safe_lag（0.4654）；safe_lag 始终优于旧 multiscale（0.354）。难度标签由飞机状态决定，融合难超单流。富生理探针（加 ECG-HR）未翻转结论（safe_lag 0.383 < vehicle 0.5045）。
 
-**公开数据（CLARE 认知负荷）：真实跨模态融合胜出（gate 5 满足）**——见 `runs/2026-07-24_clare-cognitive-load/`。LOSO（16 受试者/4 测试），中枢 EEG + 外周 EDA/HR，二分类低/高认知负荷：
+**公开数据（CLARE 认知负荷）：5 折 GroupKFold 定论——EEG 单流稳健胜融合**——见 `runs/2026-07-24_clare-groupkfold/`（定论）与 `runs/2026-07-24_clare-cognitive-load/`（2 种子，证单切分高方差）。中枢 EEG + 外周 EDA/HR，二分类低/高认知负荷，5 折 GroupKFold 均值 balanced-acc：
 
-| 方法 | Spearman | macro-F1 | balanced-accuracy |
-| --- | --- | --- | --- |
-| **fusion_safe_lag（中枢+外周）** | 0.071 | **0.491** | **0.564** |
-| fusion_multiscale（旧融合） | −0.391 | 0.359 | 0.353 |
-| central_only（EEG） | 0.083 | 0.428 | 0.437 |
-| peripheral_only（EDA+HR） | −0.329 | 0.404 | 0.401 |
+| 方法 | 5 折均值 balanced-acc | std |
+| --- | --- | --- |
+| **central_only（EEG 单流）** | **0.563** | 0.111 |
+| fusion_safe_lag（中枢+外周） | 0.470 | 0.178 |
+| peripheral_only（EDA+HR） | 0.429 | 0.073 |
+| fusion_multiscale（旧融合） | 0.414 | 0.089 |
 
-判断：fusion_safe_lag 二分类 balanced-accuracy `0.564` **同时高于两个单流**（central 0.437、peripheral 0.401，均低于随机 0.5）与旧融合 `0.353`。认知负荷确需中枢+外周双流，融合做到任一单流做不到的事——**门禁 5（双流任务超最佳单流）在公开数据上满足**。单流低于随机/融合高于随机，是跨模态增量的直接证据。（单 LOSO 折、8 epoch、单 seed，非锁定确认；seed 29 稳定性确认运行中。）
+判断：**EEG 单流稳健胜融合**（0.563 vs 0.470，5 折胜 4 折）。seed-17 单切分“融合 0.564 胜”经低方差 CV 证为高方差假象——门禁 5 不成立。认知负荷任务 EEG 信号本身强，融合（公共重构预训练偏外周）稀释之；safe_lag 旁路部分缓解（0.470 > multiscale 0.414）。
 
 **鼎新训练内结果（已运行，单折三种子）**——见 `runs/2026-07-22_dingxin-safe-lag-maneuver/`。留一架次 fold01、30 epoch，未来机动 3 分类 macro-F1（同口径同消费者）：
 
