@@ -51,7 +51,13 @@ N_PT = int(WIN_S * FS)
 N_SUBJECTS = 16
 EPOCHS = 8
 BATCH = 8
-SEED = 17
+
+
+def _seed() -> int:
+    return int(sys.argv[1]) if len(sys.argv) > 1 else 17
+
+
+SEED = _seed()
 CENTRAL_NAMES = ("central.eeg_tp9", "central.eeg_af7", "central.eeg_af8", "central.eeg_tp10")
 PERIPH_NAMES = ("peripheral.eda", "peripheral.hr")
 SCHEMA = ObservationSchema(schema_id="clare_cogload.v1", source_kind="clare_public",
@@ -183,7 +189,7 @@ def main() -> None:
         res = train_common_pretext_method(
             method, batch=batch, fold=fold, physiology_feature_names=CENTRAL_NAMES,
             vehicle_feature_names=PERIPH_NAMES, vehicle_field_labels=veh_labels,
-            normalizer=normalizer, output_root=str(HEAVY / "checkpoints" / label),
+            normalizer=normalizer, output_root=str(HEAVY / "checkpoints" / f"seed{SEED}" / label),
             config=CommonPretrainingConfig(epochs=EPOCHS, batch_size=BATCH, seed=SEED),
             augmentation_policy=AugmentationPolicy(), chronaris_fusion_kind=fk, resume=False)
         enc, _h, ln, _p = load_common_pretraining_checkpoint(res.best_checkpoint_path)
@@ -206,10 +212,10 @@ def main() -> None:
     print(f"{'method':<22}{'spearman':>10}{'macro_f1':>10}{'bal_acc':>9}")
     for r in results:
         print(f"{r['label']:<22}{r['spearman']:>10}{r['macro_f1']:>10}{r['bal_acc']:>9}")
-    (RUN_DIR / "clare_metrics.json").write_text(json.dumps({
+    (RUN_DIR / f"clare_metrics_seed{SEED}.json").write_text(json.dumps({
         "n_samples": len(samples), "n_subjects": len(set(groups)), "test_subjects": sorted(test_subs),
         "seed": SEED, "results": results}, indent=2))
-    print(f"\nwrote {RUN_DIR / 'clare_metrics.json'}")
+    print(f"\nwrote {RUN_DIR / f'clare_metrics_seed{SEED}.json'}")
 
 
 if __name__ == "__main__":
