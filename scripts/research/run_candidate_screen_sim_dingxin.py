@@ -358,15 +358,7 @@ def _run_clare(state, args) -> None:
                     label_by_id,
                     args.batch_size,
                     seed,
-                )
-                application.update(
-                    _regression_metrics(
-                        adapter,
-                        provider,
-                        fold,
-                        score_by_id,
-                        args.batch_size,
-                    )
+                    score_by_id=score_by_id,
                 )
                 _append(
                     state,
@@ -520,7 +512,16 @@ def _dingxin_application_metrics(adapter, provider, fold, targets, batch_size, s
     }
 
 
-def _classification_metrics(adapter, provider, fold, target_by_id, batch_size, seed):
+def _classification_metrics(
+    adapter,
+    provider,
+    fold,
+    target_by_id,
+    batch_size,
+    seed,
+    *,
+    score_by_id=None,
+):
     train_embedding = _export(adapter, provider, fold.train_sample_ids, batch_size)
     validation_embedding = _export(
         adapter, provider, fold.validation_sample_ids, batch_size
@@ -539,7 +540,7 @@ def _classification_metrics(adapter, provider, fold, target_by_id, batch_size, s
             random_state=seed,
         ),
     ).fit(train_embedding, train_target).predict(validation_embedding)
-    return {
+    metrics = {
         "validation_macro_f1": f1_score(
             validation_target,
             prediction,
@@ -550,29 +551,28 @@ def _classification_metrics(adapter, provider, fold, target_by_id, batch_size, s
             validation_target, prediction
         ),
     }
-
-
-def _regression_metrics(adapter, provider, fold, target_by_id, batch_size):
-    train_embedding = _export(adapter, provider, fold.train_sample_ids, batch_size)
-    validation_embedding = _export(
-        adapter, provider, fold.validation_sample_ids, batch_size
-    )
-    train_target = np.asarray(
-        [target_by_id[value] for value in fold.train_sample_ids], dtype=float
-    )
-    validation_target = np.asarray(
-        [target_by_id[value] for value in fold.validation_sample_ids], dtype=float
-    )
-    prediction = make_pipeline(StandardScaler(), Ridge(alpha=10.0)).fit(
-        train_embedding, train_target
-    ).predict(validation_embedding)
-    rho = spearmanr(validation_target, prediction).correlation
-    return {
-        "validation_score_rmse": math.sqrt(
-            mean_squared_error(validation_target, prediction)
-        ),
-        "validation_score_spearman": float(rho) if math.isfinite(rho) else None,
-    }
+    if score_by_id is not None:
+        train_score = np.asarray(
+            [score_by_id[value] for value in fold.train_sample_ids], dtype=float
+        )
+        validation_score = np.asarray(
+            [score_by_id[value] for value in fold.validation_sample_ids], dtype=float
+        )
+        score_prediction = make_pipeline(StandardScaler(), Ridge(alpha=10.0)).fit(
+            train_embedding, train_score
+        ).predict(validation_embedding)
+        rho = spearmanr(validation_score, score_prediction).correlation
+        metrics.update(
+            {
+                "validation_score_rmse": math.sqrt(
+                    mean_squared_error(validation_score, score_prediction)
+                ),
+                "validation_score_spearman": (
+                    float(rho) if math.isfinite(rho) else None
+                ),
+            }
+        )
+    return metrics
 
 
 def _training_metrics(result, payload):
