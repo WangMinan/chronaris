@@ -165,7 +165,7 @@ def evaluate_candidate_mechanisms(
         (
             mechanism_enabled,
             lag_aware_weight > 0,
-            explicit_shift_weight > 0,
+            shift_head is not None,
             event_pair_weight > 0,
         )
     ):

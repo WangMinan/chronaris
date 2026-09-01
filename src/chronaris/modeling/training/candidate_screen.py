@@ -141,6 +141,7 @@ def train_pretext_candidate(
     chronaris_fusion_kind: str = "multiscale",
     chronaris_lag_aware_weight: float = 0.0,
     chronaris_mechanism_enabled: bool = False,
+    chronaris_explicit_shift_enabled: bool = False,
     chronaris_explicit_shift_weight: float = 0.0,
     chronaris_event_pair_weight: float = 0.0,
     include_candidate_subdirectory: bool = True,
@@ -169,6 +170,7 @@ def train_pretext_candidate(
             chronaris_fusion_kind=chronaris_fusion_kind,
             chronaris_lag_aware_weight=chronaris_lag_aware_weight,
             chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+            chronaris_explicit_shift_enabled=chronaris_explicit_shift_enabled,
             chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
             chronaris_event_pair_weight=chronaris_event_pair_weight,
             include_candidate_subdirectory=include_candidate_subdirectory,
@@ -195,6 +197,7 @@ def _train_pretext_candidate(
     chronaris_fusion_kind: str = "multiscale",
     chronaris_lag_aware_weight: float = 0.0,
     chronaris_mechanism_enabled: bool = False,
+    chronaris_explicit_shift_enabled: bool = False,
     chronaris_explicit_shift_weight: float = 0.0,
     chronaris_event_pair_weight: float = 0.0,
     include_candidate_subdirectory: bool = True,
@@ -215,6 +218,7 @@ def _train_pretext_candidate(
         or chronaris_fusion_kind != "multiscale"
         or chronaris_lag_aware_weight > 0
         or chronaris_mechanism_enabled
+        or chronaris_explicit_shift_enabled
         or chronaris_explicit_shift_weight > 0
         or chronaris_event_pair_weight > 0
     ):
@@ -224,6 +228,9 @@ def _train_pretext_candidate(
     if (batch is None) == (batch_provider is None):
         raise ValueError("provide exactly one of batch or batch_provider")
     resolved = config or CandidateScreenConfig()
+    explicit_shift_enabled = (
+        chronaris_explicit_shift_enabled or chronaris_explicit_shift_weight > 0
+    )
     if chronaris_event_pair_weight > 0 and not resolved.semantic_event_enabled:
         raise ValueError("event-pair objective requires semantic event fusion")
     policy = augmentation_policy or AugmentationPolicy()
@@ -257,6 +264,7 @@ def _train_pretext_candidate(
         chronaris_variant=chronaris_variant,
         chronaris_lag_aware_weight=chronaris_lag_aware_weight,
         chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+        chronaris_explicit_shift_enabled=explicit_shift_enabled,
         chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
         chronaris_event_pair_weight=chronaris_event_pair_weight,
     )
@@ -284,6 +292,7 @@ def _train_pretext_candidate(
                 chronaris_variant=chronaris_variant,
                 chronaris_lag_aware_weight=chronaris_lag_aware_weight,
                 chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+                chronaris_explicit_shift_enabled=explicit_shift_enabled,
                 chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
                 chronaris_event_pair_weight=chronaris_event_pair_weight,
             )
@@ -315,7 +324,7 @@ def _train_pretext_candidate(
     ).to(resolved.device)
     shift_head = (
         ExplicitTimeShiftHead(FUSION_OUTPUT_DIM).to(resolved.device)
-        if chronaris_explicit_shift_weight > 0
+        if explicit_shift_enabled
         else None
     )
     trainable_parameters = tuple(encoder.parameters()) + tuple(heads.parameters())
@@ -618,6 +627,7 @@ def _train_pretext_candidate(
             chronaris_variant=chronaris_variant,
             chronaris_lag_aware_weight=chronaris_lag_aware_weight,
             chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+            chronaris_explicit_shift_enabled=(shift_head is not None),
             chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
             chronaris_event_pair_weight=chronaris_event_pair_weight,
             training_rows=training_rows,

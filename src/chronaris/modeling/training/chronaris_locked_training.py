@@ -41,6 +41,7 @@ class LockedChronarisTrainingConfig:
     learnable_semantic_queries: bool = False
     lag_aware_weight: float = 0.0
     explicit_shift_weight: float = 0.0
+    explicit_shift_enabled: bool = False
     event_pair_weight: float = 0.0
     heartbeat_interval_s: float = 60.0
 
@@ -142,6 +143,7 @@ def train_locked_chronaris(
         chronaris_fusion_kind=fusion_kind,
         chronaris_lag_aware_weight=resolved.lag_aware_weight,
         chronaris_mechanism_enabled=True,
+        chronaris_explicit_shift_enabled=resolved.explicit_shift_enabled,
         chronaris_explicit_shift_weight=resolved.explicit_shift_weight,
         chronaris_event_pair_weight=resolved.event_pair_weight,
         include_candidate_subdirectory=False,

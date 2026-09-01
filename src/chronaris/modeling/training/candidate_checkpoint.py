@@ -65,6 +65,9 @@ def build_candidate_checkpoint_payload(**values):
         "chronaris_lag_aware_weight": values["chronaris_lag_aware_weight"],
         "chronaris_mechanism_enabled": values["chronaris_mechanism_enabled"],
         "chronaris_auxiliary_enabled": values["chronaris_mechanism_enabled"],
+        "chronaris_explicit_shift_enabled": values[
+            "chronaris_explicit_shift_enabled"
+        ],
         "chronaris_explicit_shift_weight": values["chronaris_explicit_shift_weight"],
         "chronaris_event_pair_weight": values["chronaris_event_pair_weight"],
         "early_stopping_uses_public_pretext_only": True,
@@ -109,6 +112,7 @@ def candidate_checkpoint_is_compatible(
     chronaris_variant,
     chronaris_lag_aware_weight,
     chronaris_mechanism_enabled,
+    chronaris_explicit_shift_enabled,
     chronaris_explicit_shift_weight,
     chronaris_event_pair_weight,
 ) -> bool:
@@ -135,6 +139,8 @@ def candidate_checkpoint_is_compatible(
             == chronaris_lag_aware_weight,
             bool(payload.get("chronaris_mechanism_enabled", False))
             == chronaris_mechanism_enabled,
+            bool(payload.get("chronaris_explicit_shift_enabled", False))
+            == chronaris_explicit_shift_enabled,
             float(payload.get("chronaris_explicit_shift_weight", 0.0))
             == chronaris_explicit_shift_weight,
             float(payload.get("chronaris_event_pair_weight", 0.0))

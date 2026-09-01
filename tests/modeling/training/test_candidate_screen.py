@@ -511,6 +511,7 @@ def test_explicit_shift_weight_changes_final_encoder_parameters(tmp_path) -> Non
     )
     zero = train_pretext_candidate(
         output_root=tmp_path / "zero",
+        chronaris_explicit_shift_enabled=True,
         chronaris_explicit_shift_weight=0.0,
         **common,
     )
@@ -522,6 +523,10 @@ def test_explicit_shift_weight_changes_final_encoder_parameters(tmp_path) -> Non
     zero_payload = torch.load(zero.best_checkpoint_path, map_location="cpu", weights_only=True)
     active_payload = torch.load(active.best_checkpoint_path, map_location="cpu", weights_only=True)
 
+    assert zero_payload["chronaris_explicit_shift_enabled"] is True
+    assert zero_payload["epoch_rows"][0]["mechanism_validation"][
+        "explicit_time_shift_accuracy"
+    ] is not None
     assert any(
         not torch.equal(zero_payload["encoder_state_dict"][name], value)
         for name, value in active_payload["encoder_state_dict"].items()
