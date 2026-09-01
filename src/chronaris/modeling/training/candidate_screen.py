@@ -16,6 +16,7 @@ from chronaris.modeling.training.candidate_checkpoint import (
     build_candidate_checkpoint_payload,
     candidate_checkpoint_is_compatible,
     candidate_protocol_hash,
+    candidate_source_code_sha256,
     load_candidate_payload,
     training_configs_match_ignoring_device,
 )
@@ -273,7 +274,9 @@ def _train_pretext_candidate(
         if initialization_checkpoint is not None
         else None
     )
+    source_code_sha256 = candidate_source_code_sha256()
     protocol_hash = candidate_protocol_hash(
+        source_code_sha256=source_code_sha256,
         method_name=method_name,
         candidate=asdict(candidate),
         config=asdict(resolved),
@@ -625,6 +628,7 @@ def _train_pretext_candidate(
             explicit_time_shift_head=shift_head,
             optimizer=optimizer,
             protocol_hash=protocol_hash,
+            source_code_sha256=source_code_sha256,
             physiology_feature_names=physiology_feature_names,
             vehicle_feature_names=vehicle_feature_names,
             vehicle_field_labels=vehicle_field_labels,

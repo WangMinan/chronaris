@@ -26,6 +26,7 @@ def build_candidate_checkpoint_payload(**values):
         "training_status": "running",
         "method_name": values["method_name"],
         "protocol_sha256": values["protocol_hash"],
+        "source_code_sha256": values["source_code_sha256"],
         "encoder_state_dict": encoder.state_dict(),
         "head_state_dict": heads.state_dict(),
         "optimizer_state_dict": optimizer.state_dict(),
@@ -88,12 +89,48 @@ def build_candidate_checkpoint_payload(**values):
 
 
 def candidate_protocol_hash(**payload) -> str:
-    digest = hashlib.sha256()
-    for name in ("candidate_screen.py", "candidate_mechanisms.py", "pretext.py"):
-        digest.update(Path(__file__).with_name(name).read_bytes())
-    payload["code_sha256"] = digest.hexdigest()
+    payload.setdefault("source_code_sha256", candidate_source_code_sha256())
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
     return hashlib.sha256(encoded).hexdigest()
+
+
+def candidate_source_code_sha256() -> str:
+    chronaris_root = Path(__file__).parents[2]
+    paths = [
+        Path(__file__),
+        Path(__file__).with_name("candidate_screen.py"),
+        Path(__file__).with_name("candidate_mechanisms.py"),
+        Path(__file__).with_name("pretext.py"),
+        Path(__file__).with_name("pretraining_encoders.py"),
+        chronaris_root / "models/fusion/semantic_event.py",
+    ]
+    paths.extend(sorted((chronaris_root / "modeling/fusion_encoders").glob("*.py")))
+    paths.extend(
+        chronaris_root / "models/alignment" / name
+        for name in (
+            "config.py",
+            "decoders.py",
+            "encoders.py",
+            "ode_cells.py",
+            "prototype.py",
+            "torch_batch.py",
+        )
+    )
+    paths.extend(
+        chronaris_root / "representation" / name
+        for name in (
+            "augmentation.py",
+            "augmentation_apply.py",
+            "contracts.py",
+            "normalization.py",
+            "pretext_targets.py",
+        )
+    )
+    digest = hashlib.sha256()
+    for path in sorted(paths):
+        digest.update(str(path.relative_to(chronaris_root)).encode())
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
 
 
 def candidate_checkpoint_is_compatible(
@@ -119,6 +156,7 @@ def candidate_checkpoint_is_compatible(
     return all(
         (
             payload.get("candidate_config") == asdict(candidate),
+            payload.get("source_code_sha256") == candidate_source_code_sha256(),
             training_configs_match_ignoring_device(
                 payload.get("config", {}), asdict(config)
             ),

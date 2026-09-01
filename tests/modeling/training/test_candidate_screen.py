@@ -250,6 +250,7 @@ def test_candidate_screen_resumes_running_last_checkpoint_from_next_epoch(tmp_pa
     first = train_pretext_candidate(**common)
     last_path = tmp_path / "physiology_only" / "C" / "last.pt"
     payload = torch.load(last_path, map_location="cpu", weights_only=True)
+    assert len(payload["source_code_sha256"]) == 64
     payload["training_status"] = "running"
     payload["completed_epochs"] = 2
     payload["epoch"] = 2

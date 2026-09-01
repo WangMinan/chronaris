@@ -4,7 +4,7 @@
 
 ## 当前任务：论文主线连续对齐与可学习语义融合
 
-唯一活动开发分支为 `research/thesis-continuous-semantic-fusion-202609`。执行合同为 [论文主线连续对齐与语义融合评价协议 v3](../requirements/thesis-continuous-semantic-fusion-evaluation-v3.md)，现场保护与基线预检见 [2026-09-01_thesis-mainline-preflight](../artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)。
+唯一活动开发分支为 `research/thesis-continuous-semantic-fusion-202609`。当前执行合同为 [论文主线连续对齐与语义融合评价协议 v3.1](../requirements/thesis-continuous-semantic-fusion-evaluation-v3.1.md)，v3 原协议保留追溯；现场保护与基线预检见 [2026-09-01_thesis-mainline-preflight](../artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)。
 
 执行顺序：
 
@@ -12,7 +12,7 @@
 2. **已完成：**确定性训练、真实 validation checkpoint、单次归一化、训练折缩放、正确上下文时长、原生时间公开数据输入、lazy batch provider 和受控缓存已完成。证据见 [可信训练修复](../artifacts/runs/2026-09-01_training-trust-repair/report.md)与[原生时间输入修复](../artifacts/runs/2026-09-01_native-time-euler-repair/report.md)。
 3. **已完成：**批量 mask Euler 子步、可学习事件语义查询、五分类显式时移和跨 group 事件—响应配对目标均已实现；仿真训练内验证冻结选择单步 Euler，0.5 秒子步对齐损失略高，四阶 Runge-Kutta 超过 2 倍运行时间门。证据见[可学习事件语义与训练目标实现](../artifacts/runs/2026-09-01_learnable-semantic-objectives/report.md)与[连续演化数值方案选择](../artifacts/runs/2026-09-01_ode-solver-validation/report.md)。
 4. **已完成：**人工确认去重为四个唯一候选；seed 17 干净基线矩阵完成 29 个有效单元，鼎新、仿真波次 A、CogPilot 和 CLARE 五折均保持外层结果关闭。CogPilot safe-lag 训练内宏平均 F1 为 `0.3708`，高于两条单流；CLARE safe-lag 五折均值 `0.4680`，高于两条单流但低于旧融合 `0.5251`，且最差折 `0.0769`，只说明链路可运行和方差较高。证据见[干净基线矩阵](../artifacts/runs/2026-09-01_seed17-clean-baseline/report.md)。
-5. **当前：**先优化原生高频 ODE-RNN 执行路径并做输出/梯度等价验证，再以 seeds 17/29/43 完成四候选训练内筛选和机制门禁；最多允许两轮单原因改进。
+5. **当前：**原生高频 ODE-RNN 等价批量执行、墙钟心跳和源码漂移 fail-fast 已完成；真实 CogPilot 单轮由 `1438.6` 秒降至 batch 4 的 `573.2` 秒和 batch 13 的 `190.4` 秒。首次运行因源码快照漂移退出排序，现按 v3.1 在单一冻结 commit 下以 seeds 17/29/43 重跑仿真、鼎新、CogPilot 和 CLARE 四候选训练内筛选；最多还允许一次单原因改进。
 6. **待门禁：**冻结并运行仿真、CogPilot、CLARE、鼎新、核心消融、负对照和运行时实验；应用增量不足不触发无限调参。
 
 2026 年 7 月公开与研究分支结果保留用于追溯，但受协议缺陷影响的结果均标记 `superseded_due_to_protocol_defects`，不进入毕业论文主表。下方安全滞后感知融合任务作为历史研究记录保留。
@@ -27,7 +27,7 @@
 
 ### 下一步顺序（阶段 3–5）
 
-1. **已完成：**新主干 `SafeLagAwareFusion`（单流旁路 + 安全门控残差 `z_out=[phys_private, vehicle_private, gate·z_cross]`）、`lag_aware_alignment_loss`（因果滞后容限对齐，替代同刻余弦）、`representation_diagnostics`（有效秩/协方差谱/维度利用率）；通过 `fusion_kind` 接入两条训练路径，协议哈希与 checkpoint 兼容校验区分融合类型；12+3 项聚焦测试通过，完整测试 `426 passed, 8 skipped`。
+1. **已完成：**新主干 `SafeLagAwareFusion`（生理单流旁路、航电单流旁路和安全门控跨模态残差）、`lag_aware_alignment_loss`（因果滞后容限对齐，替代同刻余弦）、`representation_diagnostics`（有效秩、协方差谱和维度利用率）；通过 `fusion_kind` 接入两条训练路径，协议哈希与 checkpoint 兼容校验区分融合类型；12+3 项聚焦测试通过，完整测试 `426 passed, 8 skipped`。
 2. **部分完成（波次 A）：**G1 仿真 15 epoch 工程冒烟已验证机制——safe_lag 航电恢复 R² `0.944` > 旧 multiscale `0.914`、有效秩 `5.13` > `2.73`、安全门控 `0.022` 近回退。尚需：完整预算（50 epoch、多种子）鼎新 inner-validation 机动负迁移验证、波次 B（跨流增量）、波次 C（CogPilot/CLARE 预训练迁移）、波次 D（任务感知头）。
 3. **待运行：**晋级门禁全满足后运行一次鼎新锁定分组确认（评价协议 v2 §5–6）。门禁未满足前不合入 main。
 

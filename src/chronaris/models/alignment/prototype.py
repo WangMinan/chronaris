@@ -124,8 +124,6 @@ class SingleStreamODERNNPrototype(nn.Module):
         hidden_state = stream.values.new_zeros((batch_size, self.config.hidden_dim))
         evolved_hidden_steps: list[torch.Tensor] = []
         updated_hidden_steps: list[torch.Tensor] = []
-        reconstruction_steps: list[torch.Tensor] = []
-        projection_steps: list[torch.Tensor] = []
 
         for point_index in range(point_count):
             valid_mask = stream.mask[:, point_index]
@@ -144,9 +142,6 @@ class SingleStreamODERNNPrototype(nn.Module):
             if include_observation_diagnostics:
                 evolved_hidden_steps.append(evolved_state * valid_mask_float)
             updated_hidden_steps.append(hidden_state * valid_mask_float)
-            if include_observation_diagnostics:
-                reconstruction_steps.append(self.decoder(hidden_state) * valid_mask_float)
-                projection_steps.append(self.projection_head(hidden_state) * valid_mask_float)
 
         reference_hidden_states: torch.Tensor | None = None
         reference_projected_states: torch.Tensor | None = None
@@ -177,8 +172,8 @@ class SingleStreamODERNNPrototype(nn.Module):
 
         if include_observation_diagnostics:
             evolved_hidden_tensor = torch.stack(evolved_hidden_steps, dim=1)
-            reconstruction_tensor = torch.stack(reconstruction_steps, dim=1)
-            projection_tensor = torch.stack(projection_steps, dim=1)
+            reconstruction_tensor = self.decoder(updated_hidden_tensor) * point_mask
+            projection_tensor = self.projection_head(updated_hidden_tensor) * point_mask
         else:
             evolved_hidden_tensor = stream.values.new_zeros(
                 (batch_size, point_count, self.config.hidden_dim)

@@ -184,3 +184,10 @@ def test_explicit_time_shift_builds_all_five_classes_including_zero() -> None:
         shifted.shifted_batch.vehicle_timestamps_s[2][zero_mask],
         batch.vehicle_timestamps_s[2][original_mask],
     )
+    balanced = build_explicit_time_shift_inputs(
+        batch,
+        ids,
+        class_indices=(4, 4, 4, 4, 4),
+    )
+    assert balanced.class_indices.tolist() == [4, 4, 4, 4, 4]
+    assert balanced.shifts_s.tolist() == [10.0] * 5

@@ -157,19 +157,8 @@ class ODERNNCell(nn.Module):
         if observation_mask.shape != (hidden_state.shape[0],):
             raise ValueError("observation_mask must have shape [B].")
 
-        updated_rows: list[torch.Tensor] = []
-        for sample_index in range(hidden_state.shape[0]):
-            if torch.is_nonzero(observation_mask[sample_index]):
-                updated_rows.append(
-                    self.observation_update(
-                        observation_embedding[sample_index],
-                        hidden_state[sample_index],
-                    )
-                )
-            else:
-                updated_rows.append(hidden_state[sample_index])
-
-        return torch.stack(updated_rows, dim=0)
+        proposal = self.observation_update(observation_embedding, hidden_state)
+        return torch.where(observation_mask.unsqueeze(-1), proposal, hidden_state)
 
     def forward(
         self,
