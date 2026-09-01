@@ -1,4 +1,4 @@
-"""Three-seed four-candidate training-internal screen on simulation and Dingxin."""
+"""Three-seed four-candidate training-internal screen for protocol v3."""
 
 from __future__ import annotations
 
@@ -13,10 +13,14 @@ import pandas as pd
 import torch
 from scipy.stats import spearmanr
 from sklearn.linear_model import LogisticRegression, Ridge
-from sklearn.metrics import f1_score, mean_squared_error
+from sklearn.metrics import balanced_accuracy_score, f1_score, mean_squared_error
+from sklearn.model_selection import GroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+from chronaris.dataset.clare_native import build_clare_native_dataset
+from chronaris.dataset.cogpilot_native import build_cogpilot_difficulty_dataset
+from chronaris.dataset.group_splits import split_group_train_validation
 from chronaris.evaluation.application_tasks.dingxin_fold_pretraining_data import (
     load_dingxin_fold_pretraining_data,
 )
@@ -42,6 +46,8 @@ DINGXIN_SNAPSHOT = REPO / "artifacts/application_evaluation/2026-07-10_dingxin-i
 FIXED_AUDIT = REPO / "docs/artifacts/runs/2026-07-10_fixed-data-audit"
 INNER_SPLIT = REPO / "docs/artifacts/runs/2026-07-11_dingxin-inner-splits"
 NESTED_TARGETS = REPO / "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_targets.csv"
+COGPILOT_ROOT = Path("/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils")
+CLARE_ROOT = Path("/home/wangminan/dataset/chronaris/clare")
 RUN_ROOT = REPO / "docs/artifacts/runs/2026-09-01_candidate-screen-sim-dingxin"
 HEAVY_ROOT = REPO / "artifacts/application_evaluation/2026-09-01_candidate-screen-sim-dingxin"
 FOLD_IDS = (
@@ -62,9 +68,15 @@ def main() -> int:
         _run_simulation(state, args)
     if "dingxin" in args.stages:
         _run_dingxin(state, args)
+    if "cogpilot" in args.stages:
+        _run_cogpilot(state, args)
+    if "clare" in args.stages:
+        _run_clare(state, args)
     expected = len(args.seeds) * len(_candidate_specs()) * (
         (1 if "simulation" in args.stages else 0)
         + (len(FOLD_IDS) if "dingxin" in args.stages else 0)
+        + (1 if "cogpilot" in args.stages else 0)
+        + (5 if "clare" in args.stages else 0)
     )
     state["completed_for_requested_stages"] = sum(
         row["stage"] in args.stages for row in state["rows"]
@@ -194,6 +206,177 @@ def _run_dingxin(state, args) -> None:
                         "fold": fold_id,
                         "seed": seed,
                         "candidate": candidate["id"],
+                        **application,
+                        **_training_metrics(result, payload),
+                    },
+                )
+
+
+def _run_cogpilot(state, args) -> None:
+    dataset = build_cogpilot_difficulty_dataset(
+        COGPILOT_ROOT,
+        subject_limit=args.cogpilot_subjects,
+        cache_root=HEAVY_ROOT / "cogpilot/native_cache",
+    )
+    selected = _first_indices(dataset.records, lambda row: (row.group_id, row.label))
+    sample_ids = tuple(dataset.sample_ids[index] for index in selected)
+    groups = np.asarray([dataset.group_ids[index] for index in selected])
+    labels = np.asarray([dataset.labels[index] for index in selected], dtype=int)
+    outer_train, outer_test = next(
+        GroupKFold(n_splits=5).split(sample_ids, labels, groups)
+    )
+    for seed in args.seeds:
+        train, validation = split_group_train_validation(
+            outer_train,
+            groups,
+            seed=seed,
+        )
+        fold = FoldLineage(
+            fold_id=f"cogpilot_candidate_outer_train_seed{seed}",
+            train_sample_ids=tuple(sample_ids[index] for index in train),
+            validation_sample_ids=tuple(sample_ids[index] for index in validation),
+            held_out_sample_ids=tuple(sample_ids[index] for index in outer_test),
+        )
+        provider = _guarded_provider(
+            dataset.batch_provider,
+            allowed=fold.train_sample_ids + fold.validation_sample_ids,
+            forbidden=fold.held_out_sample_ids,
+        )
+        normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
+            provider,
+            train_sample_ids=fold.train_sample_ids,
+            held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+            batch_size=args.batch_size,
+        )
+        label_by_id = dict(zip(sample_ids, labels, strict=True))
+        for candidate in _candidate_specs():
+            unit = f"cogpilot::seed{seed}::{candidate['id']}"
+            if _done(state, unit):
+                continue
+            result, adapter, payload = _train(
+                unit=unit,
+                seed=seed,
+                candidate=candidate,
+                fold=fold,
+                provider=provider,
+                schema=dataset.schema,
+                normalizer=normalizer,
+                args=args,
+            )
+            application = _classification_metrics(
+                adapter,
+                provider,
+                fold,
+                label_by_id,
+                args.batch_size,
+                seed,
+            )
+            _append(
+                state,
+                {
+                    "unit": unit,
+                    "stage": "cogpilot",
+                    "fold": fold.fold_id,
+                    "seed": seed,
+                    "candidate": candidate["id"],
+                    "selected_sample_count": len(sample_ids),
+                    **application,
+                    **_training_metrics(result, payload),
+                },
+            )
+
+
+def _run_clare(state, args) -> None:
+    dataset = build_clare_native_dataset(
+        CLARE_ROOT,
+        subject_limit=args.clare_subjects,
+        window_stride=args.clare_window_stride,
+        cache_root=HEAVY_ROOT / "clare/native_cache",
+    )
+    selected = _first_dual_stream_indices(
+        dataset,
+        lambda row: (row.group_id, row.sample_id.split("__", 1)[1].split("_", 1)[0]),
+    )
+    sample_ids = tuple(dataset.sample_ids[index] for index in selected)
+    groups = np.asarray([dataset.group_ids[index] for index in selected])
+    scores = np.asarray([dataset.labels[index] for index in selected], dtype=int)
+    binary = (scores >= 7).astype(int)
+    label_by_id = dict(zip(sample_ids, binary, strict=True))
+    score_by_id = dict(zip(sample_ids, scores, strict=True))
+    splitter = GroupKFold(n_splits=5)
+    for fold_index, (outer_train, outer_test) in enumerate(
+        splitter.split(sample_ids, binary, groups),
+        start=1,
+    ):
+        for seed in args.seeds:
+            train, validation = split_group_train_validation(
+                outer_train,
+                groups,
+                seed=seed + fold_index,
+            )
+            fold = FoldLineage(
+                fold_id=f"clare_candidate_outer_train_fold{fold_index}_seed{seed}",
+                train_sample_ids=tuple(sample_ids[index] for index in train),
+                validation_sample_ids=tuple(
+                    sample_ids[index] for index in validation
+                ),
+                held_out_sample_ids=tuple(sample_ids[index] for index in outer_test),
+            )
+            provider = _guarded_provider(
+                dataset.batch_provider,
+                allowed=fold.train_sample_ids + fold.validation_sample_ids,
+                forbidden=fold.held_out_sample_ids,
+            )
+            normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(
+                provider,
+                train_sample_ids=fold.train_sample_ids,
+                held_out_sample_ids=(
+                    fold.validation_sample_ids + fold.held_out_sample_ids
+                ),
+                batch_size=args.batch_size,
+            )
+            for candidate in _candidate_specs():
+                unit = (
+                    f"clare::fold{fold_index}::seed{seed}::{candidate['id']}"
+                )
+                if _done(state, unit):
+                    continue
+                result, adapter, payload = _train(
+                    unit=unit,
+                    seed=seed,
+                    candidate=candidate,
+                    fold=fold,
+                    provider=provider,
+                    schema=dataset.schema,
+                    normalizer=normalizer,
+                    args=args,
+                )
+                application = _classification_metrics(
+                    adapter,
+                    provider,
+                    fold,
+                    label_by_id,
+                    args.batch_size,
+                    seed,
+                )
+                application.update(
+                    _regression_metrics(
+                        adapter,
+                        provider,
+                        fold,
+                        score_by_id,
+                        args.batch_size,
+                    )
+                )
+                _append(
+                    state,
+                    {
+                        "unit": unit,
+                        "stage": "clare",
+                        "fold": fold_index,
+                        "seed": seed,
+                        "candidate": candidate["id"],
+                        "selected_sample_count": len(sample_ids),
                         **application,
                         **_training_metrics(result, payload),
                     },
@@ -337,6 +520,61 @@ def _dingxin_application_metrics(adapter, provider, fold, targets, batch_size, s
     }
 
 
+def _classification_metrics(adapter, provider, fold, target_by_id, batch_size, seed):
+    train_embedding = _export(adapter, provider, fold.train_sample_ids, batch_size)
+    validation_embedding = _export(
+        adapter, provider, fold.validation_sample_ids, batch_size
+    )
+    train_target = np.asarray(
+        [target_by_id[value] for value in fold.train_sample_ids], dtype=int
+    )
+    validation_target = np.asarray(
+        [target_by_id[value] for value in fold.validation_sample_ids], dtype=int
+    )
+    prediction = make_pipeline(
+        StandardScaler(),
+        LogisticRegression(
+            max_iter=3000,
+            class_weight="balanced",
+            random_state=seed,
+        ),
+    ).fit(train_embedding, train_target).predict(validation_embedding)
+    return {
+        "validation_macro_f1": f1_score(
+            validation_target,
+            prediction,
+            average="macro",
+            zero_division=0,
+        ),
+        "validation_balanced_accuracy": balanced_accuracy_score(
+            validation_target, prediction
+        ),
+    }
+
+
+def _regression_metrics(adapter, provider, fold, target_by_id, batch_size):
+    train_embedding = _export(adapter, provider, fold.train_sample_ids, batch_size)
+    validation_embedding = _export(
+        adapter, provider, fold.validation_sample_ids, batch_size
+    )
+    train_target = np.asarray(
+        [target_by_id[value] for value in fold.train_sample_ids], dtype=float
+    )
+    validation_target = np.asarray(
+        [target_by_id[value] for value in fold.validation_sample_ids], dtype=float
+    )
+    prediction = make_pipeline(StandardScaler(), Ridge(alpha=10.0)).fit(
+        train_embedding, train_target
+    ).predict(validation_embedding)
+    rho = spearmanr(validation_target, prediction).correlation
+    return {
+        "validation_score_rmse": math.sqrt(
+            mean_squared_error(validation_target, prediction)
+        ),
+        "validation_score_spearman": float(rho) if math.isfinite(rho) else None,
+    }
+
+
 def _training_metrics(result, payload):
     best_epoch = int(payload["best_epoch"])
     best = next(row for row in payload["epoch_rows"] if row["epoch"] == best_epoch)
@@ -384,6 +622,31 @@ def _guarded_provider(base_provider, *, allowed, forbidden):
     return provider
 
 
+def _first_indices(records, key):
+    seen = set()
+    selected = []
+    for index, record in enumerate(records):
+        value = key(record)
+        if value not in seen:
+            selected.append(index)
+            seen.add(value)
+    return tuple(selected)
+
+
+def _first_dual_stream_indices(dataset, key):
+    seen = set()
+    selected = []
+    for index, record in enumerate(dataset.records):
+        value = key(record)
+        if value in seen:
+            continue
+        sample = dataset.load_sample(record.sample_id)
+        if sample.physiology_feature_mask.any() and sample.vehicle_feature_mask.any():
+            selected.append(index)
+            seen.add(value)
+    return tuple(selected)
+
+
 def _candidate_specs():
     return (
         {"id": "base", "semantic": False, "shift_weight": 0.0, "pair_weight": 0.0},
@@ -404,12 +667,15 @@ def _parse_args():
     parser.add_argument(
         "--stages",
         nargs="+",
-        choices=("simulation", "dingxin"),
+        choices=("simulation", "dingxin", "cogpilot", "clare"),
         default=("simulation", "dingxin"),
     )
     parser.add_argument("--seeds", nargs="+", type=int, default=(17, 29, 43))
     parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--batch-size", type=int, default=4)
+    parser.add_argument("--cogpilot-subjects", type=int, default=20)
+    parser.add_argument("--clare-subjects", type=int, default=8)
+    parser.add_argument("--clare-window-stride", type=int, default=1)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     return parser.parse_args()
@@ -470,7 +736,7 @@ def _render_report(state):
             "",
             f"当前完成 `{len(state['rows'])}` 个单元，覆盖：{', '.join(stages) or '无'}。",
             "",
-            "本运行只使用仿真 validation 与鼎新 inner-validation；outer-test 样本由 provider fail closed，未生成外层预测或指标。",
+            "本运行只使用仿真验证集、鼎新内部验证集以及公开数据各外层训练集中的受试者分组验证集；外层确认样本由数据提供器拒绝访问，未生成外层预测或指标。",
             "",
         ]
     )
