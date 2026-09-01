@@ -316,12 +316,11 @@ class ChronarisContinuousFusionAdapter:
             encoded = self.backbone(normalized)
         self.last_encoding = encoded
         sequence = encoded.sequence_embedding
-        query_valid = torch.ones(
-            sequence.shape[:2],
-            dtype=torch.bool,
-            device=sequence.device,
-        )
-        pooled = sequence.mean(dim=1)
+        query_valid = encoded.modality_available_mask.to(device=sequence.device)
+        count = query_valid.sum(dim=1, keepdim=True).clamp_min(1).to(sequence.dtype)
+        pooled = (
+            sequence * query_valid.unsqueeze(-1).to(sequence.dtype)
+        ).sum(dim=1) / count
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),

@@ -24,7 +24,7 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import r2_score, mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
+from chronaris.dataset.group_splits import split_group_train_validation
 from chronaris.modeling.training.common_pretraining import (
     CommonPretrainingConfig,
     TrainedFusionAdapter,
@@ -151,7 +151,8 @@ def build_events():
                         vehicle_values=veh_ctx.astype(np.float32),
                         vehicle_timestamps_s=(q_ctx - q_ctx[0]).astype(np.float32),
                         vehicle_feature_mask=np.ones_like(veh_ctx, dtype=bool),
-                        source_sample_hash=hashlib.sha256(sid.encode()).hexdigest())
+                        source_sample_hash=hashlib.sha256(sid.encode()).hexdigest(),
+                        context_duration_s=CTX_S)
                     out.append((sample, eda_delta, sub.name))
             except (StopIteration, ValueError):
                 continue
@@ -159,11 +160,9 @@ def build_events():
 
 
 def _export(adapter, batch):
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.no_grad():
-        o = adapter(normalized)
+        o = adapter(batch)
     return o.pooled_embedding.detach().cpu().numpy().astype(np.float64)
 
 
@@ -182,12 +181,25 @@ def main() -> None:
     print(f"[event] train={len(train_idx)} test={len(test_idx)}", flush=True)
 
     batch = collate_observation_samples(samples)
-    fold = FoldLineage(fold_id="ev_loso", train_sample_ids=tuple(samples[i].sample_id for i in train_idx),
-                       validation_sample_ids=(), held_out_sample_ids=tuple(samples[i].sample_id for i in test_idx))
-    normalizer = TrainOnlyRobustNormalizer().fit(batch, train_sample_ids=fold.train_sample_ids, held_out_sample_ids=fold.held_out_sample_ids)
+    pretrain_idx, validation_idx = split_group_train_validation(
+        train_idx,
+        groups,
+        seed=SEED,
+    )
+    fold = FoldLineage(
+        fold_id="ev_loso",
+        train_sample_ids=tuple(samples[i].sample_id for i in pretrain_idx),
+        validation_sample_ids=tuple(samples[i].sample_id for i in validation_idx),
+        held_out_sample_ids=tuple(samples[i].sample_id for i in test_idx),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+    )
     veh_labels = tuple((n, n) for n in schema.vehicle_feature_names)
 
-    ytr_mean, ytr_std = y[train_idx].mean(), y[train_idx].std()
+    ytr_mean = y[train_idx].mean()
     runs = [("chronaris_safe_lag", "chronaris", "safe_lag"),
             ("chronaris_multiscale", "chronaris", "multiscale"),
             ("vehicle_only", "vehicle_only", "multiscale"),

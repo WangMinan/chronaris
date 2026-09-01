@@ -24,10 +24,11 @@ import numpy as np
 import pandas as pd
 import torch
 from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import f1_score, balanced_accuracy_score
 
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
+from chronaris.dataset.group_splits import split_group_train_validation
 from chronaris.modeling.training.common_pretraining import (
     CommonPretrainingConfig,
     TrainedFusionAdapter,
@@ -181,11 +182,9 @@ def build_samples():
 
 
 def _export_pooled(adapter, batch):
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.no_grad():
-        out = adapter(normalized)
+        out = adapter(batch)
     return out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
 
 
@@ -197,20 +196,30 @@ def main() -> None:
     config = CommonPretrainingConfig(epochs=EPOCHS, batch_size=BATCH, seed=SEED)
 
     # LOSO: hold out ~25% of subjects as test (deterministic, by sorted subject)
-    uniq = sorted(set(groups)); n_test = max(1, len(uniq)//4)
+    uniq = sorted(set(groups))
     test_subs = set(uniq[::4])  # every 4th subject -> ~25%, spread across the cohort
     train_idx = [i for i, g in enumerate(groups) if g not in test_subs]
     test_idx = [i for i, g in enumerate(groups) if g in test_subs]
     print(f"[cogpilot] train={len(train_idx)} test={len(test_idx)} test_subs={sorted(test_subs)}", flush=True)
 
-    fold_train = tuple(samples[i].sample_id for i in train_idx)
+    pretrain_idx, validation_idx = split_group_train_validation(
+        train_idx,
+        groups,
+        seed=SEED,
+    )
+    fold_train = tuple(samples[i].sample_id for i in pretrain_idx)
+    fold_validation = tuple(samples[i].sample_id for i in validation_idx)
     fold_test = tuple(samples[i].sample_id for i in test_idx)
     from chronaris.representation.lineage import FoldLineage
     fold = FoldLineage(fold_id="cogpilot_loso", train_sample_ids=fold_train,
-                       validation_sample_ids=(),
+                       validation_sample_ids=fold_validation,
                        held_out_sample_ids=fold_test)
     batch = collate_observation_samples(samples)
-    normalizer = TrainOnlyRobustNormalizer().fit(batch, train_sample_ids=fold_train, held_out_sample_ids=fold_test)
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold_train,
+        held_out_sample_ids=fold_validation + fold_test,
+    )
     veh_labels = tuple((n, n) for n in schema.vehicle_feature_names)
 
     runs = [("chronaris_safe_lag", "chronaris", "safe_lag"),
@@ -232,9 +241,16 @@ def main() -> None:
         enc, _h, ln, _p = load_common_pretraining_checkpoint(res.best_checkpoint_path)
         adapter = TrainedFusionAdapter(encoder=enc, normalizer=ln, fold_id="cogpilot", checkpoint_sha256="0"*64)
         emb = _export_pooled(adapter, batch)
-        Xtr = StandardScaler().fit_transform(emb[train_idx]); Xte = StandardScaler().fit_transform(emb[test_idx])
-        clf = LogisticRegression(max_iter=2000, C=1.0, class_weight="balanced", random_state=SEED).fit(Xtr, labels[train_idx])
-        pred = clf.predict(Xte)
+        clf = make_pipeline(
+            StandardScaler(),
+            LogisticRegression(
+                max_iter=2000,
+                C=1.0,
+                class_weight="balanced",
+                random_state=SEED,
+            ),
+        ).fit(emb[train_idx], labels[train_idx])
+        pred = clf.predict(emb[test_idx])
         f1 = f1_score(labels[test_idx], pred, average="macro")
         ba = balanced_accuracy_score(labels[test_idx], pred)
         rec = {"label": label, "macro_f1": round(f1, 4), "balanced_accuracy": round(ba, 4), "elapsed_s": round(time.perf_counter()-t0, 1)}

@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import json
 import sys
-from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
@@ -90,7 +89,7 @@ def _export(adapter: TrainedFusionAdapter, samples) -> tuple[np.ndarray, np.ndar
     normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.inference_mode():
-        out = adapter(normalized)
+        out = adapter(batch)
     pooled = out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
     # cross-gate (safe-lag only): run the backbone and read the fusion output.
     cross_gate_mean = float("nan")

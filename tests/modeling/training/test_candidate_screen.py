@@ -357,3 +357,48 @@ def test_candidate_screen_schema_safe_transfer_records_partial_initialization(
     assert manifest["skipped_shape_tensor_count"] > 0
     assert 0 < manifest["copied_element_fraction"] < 1
     assert manifest["schema_specific_layers_reinitialized"] is True
+
+
+def test_candidate_same_seed_ignores_prior_rng_consumption(tmp_path) -> None:
+    batch = collate_observation_samples(
+        [
+            _sample("train_a", 0),
+            _sample("train_b", 1),
+            _sample("validation", 2),
+            _sample("held_out", 3),
+        ]
+    )
+    fold = FoldLineage(
+        fold_id="deterministic_fold",
+        train_sample_ids=("train_a", "train_b"),
+        validation_sample_ids=("validation",),
+        held_out_sample_ids=("held_out",),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+    )
+    common = dict(
+        method_name="physiology_only",
+        candidate=EncoderCandidateConfig(candidate_id="C", hidden_dim=32),
+        batch=batch,
+        fold=fold,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        vehicle_field_labels=(),
+        normalizer=normalizer,
+        config=CandidateScreenConfig(max_epochs=1, batch_size=2, patience=1, seed=17),
+        resume=False,
+    )
+    first = train_pretext_candidate(output_root=tmp_path / "first", **common)
+    torch.rand(31)
+    np.random.random(31)
+    second = train_pretext_candidate(output_root=tmp_path / "second", **common)
+    first_payload = torch.load(first.best_checkpoint_path, map_location="cpu", weights_only=True)
+    second_payload = torch.load(second.best_checkpoint_path, map_location="cpu", weights_only=True)
+
+    assert first_payload["canonical_training_state_sha256"] == second_payload[
+        "canonical_training_state_sha256"
+    ]
+    assert first.epoch_rows == second.epoch_rows

@@ -1,0 +1,13 @@
+check_id,description,status,evidence
+TR01,公共预训练复用 validation candidate trainer,pass,common_pretraining compatibility wrapper
+TR02,同 seed 训练隔离于调用者随机流,pass,tests/modeling/training/test_candidate_screen.py and test_rng.py
+TR03,checkpoint v2 保存完整训练与随机状态,pass,focused checkpoint tests
+TR04,v1 checkpoint 禁止论文续训,pass,candidate and locked resume guards
+TR05,适配器仅归一化一次并按有效 mask 汇聚,pass,test_common_pretraining.py
+TR06,下游缩放器只在外层训练折拟合,pass,CogPilot and CLARE sklearn pipelines
+TR07,公开数据训练内验证按受试者分组,pass,dataset group split test
+TR08,聚焦测试,pass,16 passed
+TR09,完整测试,pass,"433 passed, 8 skipped"
+TR10,CUDA 短重放,pass,2 passed on RTX 4090
+TR11,Python 编译与差异检查,pass,compileall and git diff --check
+TR12,原生时间公开数据输入,pending,next sub-stage

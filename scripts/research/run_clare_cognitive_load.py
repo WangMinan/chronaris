@@ -20,11 +20,12 @@ import pandas as pd
 import torch
 from scipy.signal import find_peaks
 from sklearn.linear_model import LogisticRegression, Ridge
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import f1_score, balanced_accuracy_score
 from scipy.stats import spearmanr
 
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
+from chronaris.dataset.group_splits import split_group_train_validation
 from chronaris.modeling.training.common_pretraining import (
     CommonPretrainingConfig,
     TrainedFusionAdapter,
@@ -146,17 +147,16 @@ def build_samples():
                     vehicle_values=periph.astype(np.float32),
                     vehicle_timestamps_s=((q - lo).astype(np.float32)),
                     vehicle_feature_mask=np.ones_like(periph, dtype=bool),
-                    source_sample_hash=hashlib.sha256(sample_id.encode()).hexdigest()))
+                    source_sample_hash=hashlib.sha256(sample_id.encode()).hexdigest(),
+                    context_duration_s=10.0))
                 labels.append(int(labval)); groups.append(sid)
     return samples, np.array(labels), np.array(groups)
 
 
 def _export(adapter, batch):
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.no_grad():
-        o = adapter(normalized)
+        o = adapter(batch)
     return o.pooled_embedding.detach().cpu().numpy().astype(np.float64)
 
 
@@ -171,9 +171,22 @@ def main() -> None:
     print(f"[clare] train={len(train_idx)} test={len(test_idx)}", flush=True)
 
     batch = collate_observation_samples(samples)
-    fold = FoldLineage(fold_id="clare_loso", train_sample_ids=tuple(samples[i].sample_id for i in train_idx),
-                       validation_sample_ids=(), held_out_sample_ids=tuple(samples[i].sample_id for i in test_idx))
-    normalizer = TrainOnlyRobustNormalizer().fit(batch, train_sample_ids=fold.train_sample_ids, held_out_sample_ids=fold.held_out_sample_ids)
+    pretrain_idx, validation_idx = split_group_train_validation(
+        train_idx,
+        groups,
+        seed=SEED,
+    )
+    fold = FoldLineage(
+        fold_id="clare_loso",
+        train_sample_ids=tuple(samples[i].sample_id for i in pretrain_idx),
+        validation_sample_ids=tuple(samples[i].sample_id for i in validation_idx),
+        held_out_sample_ids=tuple(samples[i].sample_id for i in test_idx),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+    )
     veh_labels = tuple((n, n) for n in PERIPH_NAMES)
 
     # binary: low (<=6) vs high (>=7) for a balanced LOSO classification
@@ -195,14 +208,23 @@ def main() -> None:
         enc, _h, ln, _p = load_common_pretraining_checkpoint(res.best_checkpoint_path)
         adapter = TrainedFusionAdapter(encoder=enc, normalizer=ln, fold_id="clare", checkpoint_sha256="0" * 64)
         emb = _export(adapter, batch)
-        Xtr = StandardScaler().fit_transform(emb[train_idx]); Xte = StandardScaler().fit_transform(emb[test_idx])
         # regression (Spearman) on raw 1-9
-        rg = Ridge(alpha=10.0).fit(Xtr, labels[train_idx])
-        pred_r = rg.predict(Xte)
+        rg = make_pipeline(StandardScaler(), Ridge(alpha=10.0)).fit(
+            emb[train_idx], labels[train_idx]
+        )
+        pred_r = rg.predict(emb[test_idx])
         rho = float(spearmanr(labels[test_idx], pred_r).correlation)
         # binary low/high
-        clf = LogisticRegression(max_iter=2000, C=1.0, class_weight="balanced", random_state=SEED).fit(Xtr, ybin[train_idx])
-        pred_b = clf.predict(Xte)
+        clf = make_pipeline(
+            StandardScaler(),
+            LogisticRegression(
+                max_iter=2000,
+                C=1.0,
+                class_weight="balanced",
+                random_state=SEED,
+            ),
+        ).fit(emb[train_idx], ybin[train_idx])
+        pred_b = clf.predict(emb[test_idx])
         f1 = f1_score(ybin[test_idx], pred_b, average="macro")
         ba = balanced_accuracy_score(ybin[test_idx], pred_b)
         rec = {"label": label, "spearman": round(rho, 3), "macro_f1": round(f1, 3), "bal_acc": round(ba, 3), "elapsed_s": round(time.perf_counter() - t0, 1)}

@@ -51,7 +51,10 @@ def describe_transfer_source(
 ) -> TransferSourceDescriptor:
     path = Path(checkpoint_path)
     payload = torch.load(path, map_location="cpu", weights_only=True)
-    if payload.get("format") != "chronaris.common_pretraining_checkpoint.v1":
+    if payload.get("format") not in {
+        "chronaris.common_pretraining_checkpoint.v1",
+        "chronaris.common_pretraining_checkpoint.v2",
+    }:
         raise ValueError("unsupported transfer source checkpoint")
     if payload.get("training_status") != "completed":
         raise ValueError("transfer source checkpoint is incomplete")

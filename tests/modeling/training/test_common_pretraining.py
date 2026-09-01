@@ -94,9 +94,19 @@ def test_common_pretraining_checkpoint_resume_and_export(tmp_path) -> None:
     encoder, _heads, loaded_normalizer, payload = load_common_pretraining_checkpoint(
         first.best_checkpoint_path
     )
+    class CountingNormalizer:
+        def __init__(self, wrapped):
+            self.wrapped = wrapped
+            self.call_count = 0
+
+        def transform(self, values):
+            self.call_count += 1
+            return self.wrapped.transform(values)
+
+    counting_normalizer = CountingNormalizer(loaded_normalizer)
     adapter = TrainedFusionAdapter(
         encoder=encoder,
-        normalizer=loaded_normalizer,
+        normalizer=counting_normalizer,
         fold_id=fold.fold_id,
         checkpoint_sha256=sha256_file(first.best_checkpoint_path),
     )
@@ -108,23 +118,26 @@ def test_common_pretraining_checkpoint_resume_and_export(tmp_path) -> None:
     assert all(row["status"] == "active" for row in first.training_rows)
     assert len(first.augmentation_rows) == 2
     assert payload["simulation_oracle_opened"] is False
+    assert payload["format"] == "chronaris.common_pretraining_checkpoint.v2"
+    assert len(payload["canonical_training_state_sha256"]) == 64
+    assert counting_normalizer.call_count == 1
     assert output.sequence_embedding.shape == (1, 96, 64)
 
 
 def test_common_pretraining_rejects_changed_resume_protocol(tmp_path) -> None:
     batch = collate_observation_samples(
-        [_sample("train", 0), _sample("held_out", 2)]
+        [_sample("train", 0), _sample("validation", 1), _sample("held_out", 2)]
     )
     fold = FoldLineage(
         fold_id="fold_a",
         train_sample_ids=("train",),
-        validation_sample_ids=(),
+        validation_sample_ids=("validation",),
         held_out_sample_ids=("held_out",),
     )
     normalizer = TrainOnlyRobustNormalizer().fit(
         batch,
         train_sample_ids=fold.train_sample_ids,
-        held_out_sample_ids=fold.held_out_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
     )
     common = dict(
         method_name="physiology_only",
@@ -188,17 +201,19 @@ def test_common_pretraining_accepts_lazy_batch_provider(tmp_path) -> None:
 
 
 def test_common_pretraining_round_trips_hidden_32_candidate(tmp_path) -> None:
-    batch = collate_observation_samples([_sample("train", 0), _sample("held_out", 1)])
+    batch = collate_observation_samples(
+        [_sample("train", 0), _sample("validation", 1), _sample("held_out", 2)]
+    )
     fold = FoldLineage(
         fold_id="fold_candidate_c",
         train_sample_ids=("train",),
-        validation_sample_ids=(),
+        validation_sample_ids=("validation",),
         held_out_sample_ids=("held_out",),
     )
     normalizer = TrainOnlyRobustNormalizer().fit(
         batch,
         train_sample_ids=fold.train_sample_ids,
-        held_out_sample_ids=fold.held_out_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
     )
     candidate = EncoderCandidateConfig(candidate_id="C", hidden_dim=32)
 

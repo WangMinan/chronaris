@@ -20,7 +20,6 @@ from scipy.stats import spearmanr
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import StandardScaler
 
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training.common_pretraining import (
     TrainedFusionAdapter,
     load_common_pretraining_checkpoint,
@@ -68,11 +67,9 @@ def _future_maneuver_intensity(paths) -> np.ndarray:
 
 def _export(adapter: TrainedFusionAdapter, samples) -> np.ndarray:
     batch = collate_observation_samples(samples)
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.inference_mode():
-        out = adapter(normalized)
+        out = adapter(batch)
     return out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
 
 

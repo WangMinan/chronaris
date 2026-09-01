@@ -35,7 +35,6 @@ from chronaris.evaluation.dingxin.simple_downstream_protocol import (
     extract_simple_raw_targets,
     fit_simple_loso_targets,
 )
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training.common_pretraining import (
     CommonPretrainingConfig,
     TrainedFusionAdapter,
@@ -68,11 +67,9 @@ SEED = _seed()
 
 def _export_reps(adapter: TrainedFusionAdapter, provider, sample_ids) -> dict[str, np.ndarray]:
     batch = provider(list(sample_ids))
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.inference_mode():
-        out = adapter(normalized)
+        out = adapter(batch)
     pooled = out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
     return {str(sid): pooled[i] for i, sid in enumerate(batch.sample_ids)}
 

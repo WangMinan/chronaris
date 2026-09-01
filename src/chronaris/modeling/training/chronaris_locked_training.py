@@ -28,6 +28,12 @@ from chronaris.modeling.training.pretraining_encoders import (
     EncoderCandidateConfig,
     build_trainable_fusion_encoder,
 )
+from chronaris.modeling.training.rng import (
+    canonical_training_state_sha256,
+    capture_rng_state,
+    isolated_training_rng,
+    restore_rng_state,
+)
 from chronaris.modeling.training.transfer_initialization import (
     describe_transfer_source,
     initialize_encoder_from_transfer_source,
@@ -55,6 +61,7 @@ class LockedChronarisTrainingConfig:
     gradient_clip_norm: float = 1.0
     seed: int = 17
     device: str = "cpu"
+    deterministic: bool = True
 
     def __post_init__(self) -> None:
         if min(self.max_epochs, self.batch_size, self.patience) <= 0:
@@ -85,6 +92,48 @@ class LockedChronarisTrainingResult:
 
 
 def train_locked_chronaris(
+    *,
+    batch: DualStreamObservationBatch | None,
+    fold: FoldLineage,
+    physiology_feature_names: tuple[str, ...],
+    vehicle_feature_names: tuple[str, ...],
+    vehicle_field_labels: tuple[tuple[str, str], ...],
+    normalizer: TrainOnlyRobustNormalizer,
+    output_root: str | Path,
+    config: LockedChronarisTrainingConfig | None = None,
+    augmentation_policy: AugmentationPolicy | None = None,
+    batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
+    candidate_config: EncoderCandidateConfig | None = None,
+    variant: str = "full",
+    fusion_kind: str = "multiscale",
+    initialization_checkpoint: str | Path | None = None,
+    resume: bool = True,
+) -> LockedChronarisTrainingResult:
+    resolved = config or LockedChronarisTrainingConfig()
+    with isolated_training_rng(
+        resolved.seed,
+        deterministic=resolved.deterministic,
+    ):
+        return _train_locked_chronaris(
+            batch=batch,
+            fold=fold,
+            physiology_feature_names=physiology_feature_names,
+            vehicle_feature_names=vehicle_feature_names,
+            vehicle_field_labels=vehicle_field_labels,
+            normalizer=normalizer,
+            output_root=output_root,
+            config=resolved,
+            augmentation_policy=augmentation_policy,
+            batch_provider=batch_provider,
+            candidate_config=candidate_config,
+            variant=variant,
+            fusion_kind=fusion_kind,
+            initialization_checkpoint=initialization_checkpoint,
+            resume=resume,
+        )
+
+
+def _train_locked_chronaris(
     *,
     batch: DualStreamObservationBatch | None,
     fold: FoldLineage,
@@ -135,6 +184,10 @@ def train_locked_chronaris(
     resume_payload = None
     if resume and last_path.exists():
         resume_payload = _load(last_path)
+        if resume_payload.get("format") != "chronaris.common_pretraining_checkpoint.v2":
+            raise RepresentationContractError(
+                "v1 pretraining checkpoints are inference-only and cannot resume"
+            )
         if (
             resume_payload.get("protocol_sha256") != protocol_hash
             and not _checkpoint_is_semantically_compatible(
@@ -155,21 +208,19 @@ def train_locked_chronaris(
             raise RepresentationContractError("locked Chronaris protocol changed")
         if resume_payload.get("training_status") == "completed":
             return _result(_load(best_path), best_path, last_path, status="resumed")
-    with torch.random.fork_rng(devices=[]):
-        torch.manual_seed(resolved.seed)
-        encoder = build_trainable_fusion_encoder(
-            "chronaris",
-            physiology_feature_names=physiology_feature_names,
-            vehicle_feature_names=vehicle_feature_names,
-            vehicle_field_labels=vehicle_field_labels,
-            candidate_config=candidate,
-            chronaris_variant=variant,
-            chronaris_fusion_kind=fusion_kind,
-        ).to(resolved.device)
-        heads = CommonPretextHeadBundle(
-            representation_dim=FUSION_OUTPUT_DIM,
-            target_feature_count=len(physiology_feature_names) + len(vehicle_feature_names),
-        ).to(resolved.device)
+    encoder = build_trainable_fusion_encoder(
+        "chronaris",
+        physiology_feature_names=physiology_feature_names,
+        vehicle_feature_names=vehicle_feature_names,
+        vehicle_field_labels=vehicle_field_labels,
+        candidate_config=candidate,
+        chronaris_variant=variant,
+        chronaris_fusion_kind=fusion_kind,
+    ).to(resolved.device)
+    heads = CommonPretextHeadBundle(
+        representation_dim=FUSION_OUTPUT_DIM,
+        target_feature_count=len(physiology_feature_names) + len(vehicle_feature_names),
+    ).to(resolved.device)
     optimizer = torch.optim.AdamW(
         (*encoder.parameters(), *heads.parameters()),
         lr=candidate.learning_rate,
@@ -180,6 +231,7 @@ def train_locked_chronaris(
         encoder.load_state_dict(resume_payload["encoder_state_dict"], strict=True)
         heads.load_state_dict(resume_payload["head_state_dict"], strict=True)
         optimizer.load_state_dict(resume_payload["optimizer_state_dict"])
+        restore_rng_state(resume_payload["rng_state"])
         transfer_initialization = resume_payload.get("transfer_initialization")
     elif initialization_checkpoint is not None:
         transfer_initialization = initialize_encoder_from_transfer_source(
@@ -378,8 +430,9 @@ def _batch_ids(sample_ids, batch_size):
 
 def _payload(**values):
     encoder, heads, optimizer = values["encoder"], values["heads"], values["optimizer"]
-    return {
-        "format": "chronaris.common_pretraining_checkpoint.v1",
+    rng_state = capture_rng_state()
+    payload = {
+        "format": "chronaris.common_pretraining_checkpoint.v2",
         "training_status": "running",
         "method_name": "chronaris",
         "protocol_sha256": values["protocol_hash"],
@@ -416,7 +469,15 @@ def _payload(**values):
         "early_stopping_uses_public_pretext_only": True,
         "transfer_source": values.get("transfer_source"),
         "transfer_initialization": values.get("transfer_initialization"),
+        "rng_state": rng_state,
     }
+    payload["canonical_training_state_sha256"] = canonical_training_state_sha256(
+        payload["encoder_state_dict"],
+        payload["head_state_dict"],
+        payload["optimizer_state_dict"],
+        rng_state,
+    )
+    return payload
 
 
 def _checkpoint_is_semantically_compatible(
@@ -470,7 +531,10 @@ def _protocol_hash(**payload):
 
 def _load(path):
     payload = torch.load(path, map_location="cpu", weights_only=True)
-    if payload.get("format") != "chronaris.common_pretraining_checkpoint.v1":
+    if payload.get("format") not in {
+        "chronaris.common_pretraining_checkpoint.v1",
+        "chronaris.common_pretraining_checkpoint.v2",
+    }:
         raise RepresentationContractError("unsupported locked Chronaris checkpoint")
     return payload
 

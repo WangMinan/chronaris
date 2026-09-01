@@ -63,7 +63,7 @@ def _export(adapter: TrainedFusionAdapter, samples) -> tuple[np.ndarray, float]:
     normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.inference_mode():
-        out = adapter(normalized)
+        out = adapter(batch)
     pooled = out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
     cross_gate = float("nan")
     backbone = getattr(adapter.encoder, "backbone", adapter.encoder)
@@ -100,7 +100,6 @@ def main() -> None:
     train = _load("train", 48)
     held = _load("locked_test", 24)
     all_samples = train + held + _load("validation", 12)
-    tgt_train = _vehicle_means(train)
     tgt_eval = _vehicle_means(held)
 
     runs = [
@@ -119,7 +118,6 @@ def main() -> None:
             encoder=encoder, normalizer=normalizer,
             fold_id="wave_a", checkpoint_sha256="0" * 64,
         )
-        rep_train, _ = _export(adapter, train)
         rep_eval, gate_eval = _export(adapter, held)
         rep_all, _ = _export(adapter, all_samples)
         geom = compute_representation_geometry(rep_all)

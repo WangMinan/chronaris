@@ -22,7 +22,6 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training.common_pretraining import (
     CommonPretrainingConfig,
     TrainedFusionAdapter,
@@ -68,16 +67,15 @@ def _lagged(base, tau, idx):
 
 
 def _export(adapter, batch):
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.no_grad():
-        out = adapter(normalized)
+        out = adapter(batch)
     return out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
 
 
 def main() -> None:
-    RUN_DIR.mkdir(parents=True, exist_ok=True); HEAVY.mkdir(parents=True, exist_ok=True)
+    RUN_DIR.mkdir(parents=True, exist_ok=True)
+    HEAVY.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(SEED)
     # training set: each train trajectory x 4 random-lag copies
     train_base = [load_simulation_observed_context(p, context_start_s=0.0, context_duration_s=30.0,
@@ -90,12 +88,14 @@ def main() -> None:
             train_samples.append(_lagged(base, tau, i * 10 + k))
     schema = train_base[0].schema
     batch = collate_observation_samples(train_samples)
-    fold = FoldLineage(fold_id="lag_train",
-                       train_sample_ids=tuple(s.sample_id for s in train_samples[:-1]),
-                       validation_sample_ids=(),
-                       held_out_sample_ids=(train_samples[-1].sample_id,))
+    fold = FoldLineage(
+        fold_id="lag_train",
+        train_sample_ids=tuple(s.sample_id for s in train_samples[:-8]),
+        validation_sample_ids=tuple(s.sample_id for s in train_samples[-8:-4]),
+        held_out_sample_ids=tuple(s.sample_id for s in train_samples[-4:]),
+    )
     normalizer = TrainOnlyRobustNormalizer().fit(batch, train_sample_ids=fold.train_sample_ids,
-                                                 held_out_sample_ids=fold.held_out_sample_ids)
+                                                 held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids)
     veh_labels = tuple((n, n) for n in schema.vehicle_feature_names)
 
     runs = [("chronaris_safe_lag", "chronaris", "safe_lag", 0.0),
@@ -125,8 +125,11 @@ def main() -> None:
     eval_samples, tau_labels, groups = [], [], []
     for i, base in enumerate(eval_base):
         for tau in EVAL_LAGS:
-            eval_samples.append(_lagged(base, tau, i)); tau_labels.append(tau); groups.append(i)
-    tau_labels = np.array(tau_labels); groups = np.array(groups)
+            eval_samples.append(_lagged(base, tau, i))
+            tau_labels.append(tau)
+            groups.append(i)
+    tau_labels = np.array(tau_labels)
+    groups = np.array(groups)
     eval_batch = collate_observation_samples(eval_samples)
     train_mask = (groups % 2 == 0)
 
@@ -142,7 +145,11 @@ def main() -> None:
         pred_cls = np.argmin(np.abs(pred[:, None] - np.array(EVAL_LAGS)[None, :]), axis=1)
         acc = float((true_cls == pred_cls).mean())
         rec = {"label": label, "lag_mae_s": round(float(mae), 3), "lag_class_accuracy": round(acc, 3)}
-        results.append(rec); print(f"  {label}: lag_MAE={rec['lag_mae_s']}s class_acc={rec['lag_class_accuracy']}", flush=True)
+        results.append(rec)
+        print(
+            f"  {label}: lag_MAE={rec['lag_mae_s']}s class_acc={rec['lag_class_accuracy']}",
+            flush=True,
+        )
 
     print("\n===== Lag-trained cross-modal recovery =====")
     print(f"{'method':<34}{'lag_MAE_s':>11}{'class_acc':>11}")

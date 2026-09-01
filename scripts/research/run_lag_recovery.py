@@ -22,7 +22,6 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training.common_pretraining import (
     TrainedFusionAdapter,
     load_common_pretraining_checkpoint,
@@ -71,11 +70,9 @@ def _lagged_sample(base, tau: float, idx: int):
 
 
 def _export(adapter, batch):
-    device = next(adapter.encoder.parameters()).device
-    normalized = adapter.normalizer.transform(move_observation_batch(batch, device=device))
     adapter.encoder.eval()
     with torch.no_grad():
-        out = adapter(normalized)
+        out = adapter(batch)
     return out.pooled_embedding.detach().cpu().numpy().astype(np.float64)
 
 
