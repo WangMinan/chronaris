@@ -293,7 +293,7 @@ def _run_clare(state, args) -> None:
         window_stride=args.clare_window_stride,
         cache_root=HEAVY_ROOT / "clare/native_cache",
     )
-    selected = _first_dual_stream_indices(
+    selected = _middle_dual_stream_indices(
         dataset,
         lambda row: (row.group_id, row.sample_id.split("__", 1)[1].split("_", 1)[0]),
     )
@@ -633,17 +633,19 @@ def _first_indices(records, key):
     return tuple(selected)
 
 
-def _first_dual_stream_indices(dataset, key):
-    seen = set()
-    selected = []
+def _middle_dual_stream_indices(dataset, key):
+    groups = {}
     for index, record in enumerate(dataset.records):
-        value = key(record)
-        if value in seen:
-            continue
-        sample = dataset.load_sample(record.sample_id)
-        if sample.physiology_feature_mask.any() and sample.vehicle_feature_mask.any():
-            selected.append(index)
-            seen.add(value)
+        groups.setdefault(key(record), []).append(index)
+    selected = []
+    for indices in groups.values():
+        middle = (len(indices) - 1) / 2
+        for position in sorted(range(len(indices)), key=lambda value: abs(value - middle)):
+            index = indices[position]
+            sample = dataset.load_sample(dataset.sample_ids[index])
+            if sample.physiology_feature_mask.any() and sample.vehicle_feature_mask.any():
+                selected.append(index)
+                break
     return tuple(selected)
 
 
