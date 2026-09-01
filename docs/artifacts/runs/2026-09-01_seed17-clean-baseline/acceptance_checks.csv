@@ -1,0 +1,13 @@
+check_id,description,status,evidence
+CB01,鼎新滞后对齐权重 0 与 0.1 均完成训练内验证,pass,2 valid Dingxin rows in baseline_matrix.json
+CB02,仿真波次 A 三方法同预算完成,pass,3 Wave A rows
+CB03,CogPilot 飞行难度四方法训练内分组验证完成,pass,4 CogPilot rows
+CB04,CLARE 五折四方法训练内分组验证完成,pass,20 active CLARE rows
+CB05,CLARE 完整缺失模态不填充,pass,5 of 54 windows filtered and recorded
+CB06,首次不公平 CLARE 尝试保留并标为 superseded,pass,3 trace rows retained
+CB07,所有有效训练单元使用 CUDA,pass,checkpoint config and device history
+CB08,训练折归一化与 validation-backed checkpoint,pass,protocol hashes and checkpoint manifests
+CB09,公开数据外层结果保持关闭,pass,outer_results_opened false and no outer embeddings exported
+CB10,鼎新外层确认结果保持关闭,pass,only inner train and validation IDs exported
+CB11,矩阵不进入论文主表,pass,paper_table_eligible false
+CB12,完整测试,pass,"448 passed, 8 skipped"

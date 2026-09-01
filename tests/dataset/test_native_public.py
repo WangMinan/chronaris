@@ -120,6 +120,49 @@ def test_cogpilot_builder_keeps_native_stream_densities(tmp_path) -> None:
     assert not np.array_equal(sample.physiology_timestamps_s, sample.vehicle_timestamps_s)
 
 
+def test_cogpilot_builder_skips_runs_with_missing_streams(tmp_path) -> None:
+    incomplete = tmp_path / "sub-cp001" / "ses-1" / "level-01B_run-001"
+    complete = tmp_path / "sub-cp001" / "ses-1" / "level-02B_run-002"
+    incomplete.mkdir(parents=True)
+    complete.mkdir(parents=True)
+    (incomplete / "placeholder.txt").write_text("missing streams")
+
+    origin = 738000.0
+    seconds = np.arange(0.0, 100.0)
+    paths = {
+        "lslshimmereda": pd.DataFrame(
+            {
+                "time_dn": origin + seconds / 86400.0,
+                "ppg_finger_mV": seconds,
+                "eda_hand_l_kOhms": seconds,
+            }
+        ),
+        "lslshimmerresp": pd.DataFrame(
+            {
+                "time_dn": origin + seconds / 86400.0,
+                "respiration_trace_mV": seconds,
+            }
+        ),
+        "lslshimmerecg": pd.DataFrame(
+            {
+                "time_dn": origin + seconds / 86400.0,
+                "ecg_projection_ll_ra_mV": seconds,
+            }
+        ),
+    }
+    from chronaris.dataset.cogpilot_native import VEH_COLS
+
+    vehicle = {"time_dn": origin + seconds / 86400.0}
+    vehicle.update({name: seconds for name in VEH_COLS})
+    paths["lslxp11xpcac"] = pd.DataFrame(vehicle)
+    for token, frame in paths.items():
+        frame.to_csv(complete / f"sample_stream-{token}_dat.csv", index=False)
+
+    dataset = build_cogpilot_difficulty_dataset(tmp_path, subject_limit=1)
+
+    assert dataset.sample_ids == ("sub-cp001::level-02B_run-002",)
+
+
 def test_clare_windows_start_at_recording_timestamp_without_interpolation(tmp_path) -> None:
     subject = "1001"
     for folder in ("EEG", "EDA", "ECG", "Labels"):

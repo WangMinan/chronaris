@@ -1,0 +1,1142 @@
+{
+  "format": "chronaris.seed17_clean_baseline.v3",
+  "seed": 17,
+  "outer_results_opened": false,
+  "paper_table_eligible": false,
+  "rows": [
+    {
+      "unit": "dingxin::hardmax_weight_0",
+      "stage": "dingxin",
+      "label": "hardmax_weight_0",
+      "lag_aware_weight": 0.0,
+      "validation_macro_f1": 0.41269841269841273,
+      "validation_balanced_accuracy": 0.5,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.5547909357594785,
+      "mechanism_validation": {
+        "weighted_total": 0.30089841716045096,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 417,
+            "weight": 0.2,
+            "raw_loss": 0.38396096994265094,
+            "weighted_loss": 0.07679219579668067,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 16,
+            "weight": 0.1,
+            "raw_loss": 2.1445689648389816,
+            "weighted_loss": 0.21445690467953682,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 417,
+            "weight": 0.1,
+            "raw_loss": 0.09649316375132659,
+            "weighted_loss": 0.009649316684233486,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 27.868315540021285,
+      "protocol_sha256": "361b5fd02742d33065e9dc89b8a92ee07250bc0787efb91d5e5e8dce802c45eb"
+    },
+    {
+      "unit": "dingxin::hardmax_weight_0p1",
+      "stage": "dingxin",
+      "label": "hardmax_weight_0p1",
+      "lag_aware_weight": 0.1,
+      "validation_macro_f1": 0.16666666666666666,
+      "validation_balanced_accuracy": 0.3333333333333333,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.585623120192587,
+      "mechanism_validation": {
+        "weighted_total": 0.3315191394910753,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 417,
+            "weight": 0.2,
+            "raw_loss": 0.3581790731107588,
+            "weighted_loss": 0.07163581589786269,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 16,
+            "weight": 0.1,
+            "raw_loss": 2.1801771968603134,
+            "weighted_loss": 0.21801772713661194,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 417,
+            "weight": 0.1,
+            "raw_loss": 0.09629458392695557,
+            "weighted_loss": 0.009629458470417442,
+            "reason": null
+          },
+          {
+            "term_name": "lag_aware_alignment",
+            "status": "active",
+            "count": 475,
+            "weight": 0.1,
+            "raw_loss": 0.32236137986183167,
+            "weighted_loss": 0.03223613798618317,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 27.885567852994427,
+      "protocol_sha256": "df3568d9a5aa9dc732ac86cdeb13ec8e626f0128190a480cb952925a858b353c"
+    },
+    {
+      "unit": "wave_a::safe_lag",
+      "stage": "wave_a",
+      "label": "safe_lag",
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.5661833355075182,
+      "mechanism_validation": {
+        "weighted_total": 0.20726555270206837,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 393,
+            "weight": 0.2,
+            "raw_loss": 0.6393546339209754,
+            "weighted_loss": 0.12787093108391945,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 15,
+            "weight": 0.1,
+            "raw_loss": 0.7022601366043091,
+            "weighted_loss": 0.07022601490219434,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 393,
+            "weight": 0.1,
+            "raw_loss": 0.09168606537747323,
+            "weighted_loss": 0.009168606715954594,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 13.223955794004723,
+      "protocol_sha256": "a4653d55690ef0bd6243a517471d099510d5700669e4de01ddb9a71bf6f97d38"
+    },
+    {
+      "unit": "wave_a::legacy_fusion",
+      "stage": "wave_a",
+      "label": "legacy_fusion",
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.5571913319014165,
+      "mechanism_validation": {
+        "weighted_total": 0.20210782258295035,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 393,
+            "weight": 0.2,
+            "raw_loss": 0.6452037229489431,
+            "weighted_loss": 0.12904074852551517,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 15,
+            "weight": 0.1,
+            "raw_loss": 0.6410653094450632,
+            "weighted_loss": 0.06410653330385685,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 393,
+            "weight": 0.1,
+            "raw_loss": 0.0896054061162866,
+            "weighted_loss": 0.008960540753578336,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 13.337022882886231,
+      "protocol_sha256": "0405771b1913a3dc8a8d17626e0211b743c76dfdf66f01f77ba79fdf88d9d4c2"
+    },
+    {
+      "unit": "wave_a::vehicle_single_stream",
+      "stage": "wave_a",
+      "label": "vehicle_single_stream",
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.3598071951194016,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 0.6898697949945927,
+      "protocol_sha256": "a99b7d229afa2271aa93999ea61d4e350a2da8de991028af1ef318d43844e5ae"
+    },
+    {
+      "unit": "cogpilot::safe_lag",
+      "stage": "cogpilot",
+      "label": "safe_lag",
+      "validation_macro_f1": 0.3708333333333333,
+      "validation_balanced_accuracy": 0.41666666666666663,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.6215850889510912e+17,
+      "mechanism_validation": {
+        "weighted_total": 1.6215850889510912e+17,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 883,
+            "weight": 0.2,
+            "raw_loss": 0.8871777503163736,
+            "weighted_loss": 0.17743554898661099,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 1.6215850145049915e+18,
+            "weighted_loss": 1.6215850889510912e+17,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 883,
+            "weight": 0.1,
+            "raw_loss": 0.10246856573078937,
+            "weighted_loss": 0.010246856539960558,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 1438.5973312100396,
+      "protocol_sha256": "edb81d1d6ae8f226b878a758f5adc6bd5a416c076500654091d6324f33fef7f2"
+    },
+    {
+      "unit": "cogpilot::legacy_fusion",
+      "stage": "cogpilot",
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.125,
+      "validation_balanced_accuracy": 0.25,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.6215850889510912e+17,
+      "mechanism_validation": {
+        "weighted_total": 1.6215850889510912e+17,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 883,
+            "weight": 0.2,
+            "raw_loss": 0.8871777503163736,
+            "weighted_loss": 0.17743554898661099,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 1.6215850145049915e+18,
+            "weighted_loss": 1.6215850889510912e+17,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 883,
+            "weight": 0.1,
+            "raw_loss": 0.10246856573078937,
+            "weighted_loss": 0.010246856539960558,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 1421.0209127638955,
+      "protocol_sha256": "0354286f8e5d6aa1350e9ae26d543e0053be3e2528477b2aeb62a2bb93922217"
+    },
+    {
+      "unit": "cogpilot::physiology_single_stream",
+      "stage": "cogpilot",
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.20833333333333331,
+      "validation_balanced_accuracy": 0.3333333333333333,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.489510339012003,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 20.713143924018368,
+      "protocol_sha256": "2c42dc87679d0bcea5a7122e22fa9310b84aa888f1dc94534f9980c495a3f631"
+    },
+    {
+      "unit": "cogpilot::context_single_stream",
+      "stage": "cogpilot",
+      "label": "context_single_stream",
+      "validation_macro_f1": 0.2767857142857143,
+      "validation_balanced_accuracy": 0.3333333333333333,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.497295979113722,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 19.597714385017753,
+      "protocol_sha256": "e43fbe3afb2ed6fc9265667f320629cd604da6a4ec1890b4e7642925d9a09c4e"
+    },
+    {
+      "unit": "clare::fold1::safe_lag",
+      "stage": "clare",
+      "fold": 1,
+      "label": "safe_lag",
+      "validation_macro_f1": 0.29411764705882354,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": 0.021591675854376522,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.500935834140672e+16,
+      "mechanism_validation": {
+        "weighted_total": 2.500935834140672e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8408609305367325,
+            "weighted_loss": 0.16817218950300505,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 2.5009358055075568e+17,
+            "weighted_loss": 2.500935834140672e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.09253438036098624,
+            "weighted_loss": 0.009253438169870412,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 256.01526450086385,
+      "protocol_sha256": "bfbd225a6fb47434fb39135b77b75dbbfc0df3d570a10976f8d71b28887519ba",
+      "status": "superseded_due_to_missing_modality_contract"
+    },
+    {
+      "unit": "clare::fold1::legacy_fusion",
+      "stage": "clare",
+      "fold": 1,
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.29411764705882354,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": 0.3166779125308557,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.500935834140672e+16,
+      "mechanism_validation": {
+        "weighted_total": 2.500935834140672e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8408609305367325,
+            "weighted_loss": 0.16817218950300505,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 2.5009358055075568e+17,
+            "weighted_loss": 2.500935834140672e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.09253438036098624,
+            "weighted_loss": 0.009253438169870412,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 249.35232566506602,
+      "protocol_sha256": "c7f0fdb4b6bfd211d29a0a7d38a6849efb5433fb75ae7b0d262deabd5586228e",
+      "status": "superseded_due_to_missing_modality_contract"
+    },
+    {
+      "unit": "clare::fold1::physiology_single_stream",
+      "stage": "clare",
+      "fold": 1,
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.3684210526315789,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": -0.010795837927188261,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.2905695738411998,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.613319513155147,
+      "protocol_sha256": "2f0561fee83dfeca910188d0297d34c8a7e9e16d70cff5d393118616aa694bfc",
+      "status": "superseded_due_to_missing_modality_contract"
+    },
+    {
+      "unit": "clare_valid::fold1::safe_lag",
+      "stage": "clare",
+      "fold": 1,
+      "label": "safe_lag",
+      "validation_macro_f1": 0.6571428571428571,
+      "validation_balanced_accuracy": 0.7142857142857143,
+      "validation_spearman": -0.07916947813271392,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.091784902869429e+17,
+      "mechanism_validation": {
+        "weighted_total": 1.091784902869429e+17,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8347062105482275,
+            "weighted_loss": 0.16694124553239706,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 1.0917849128910193e+18,
+            "weighted_loss": 1.091784902869429e+17,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.09445870627056469,
+            "weighted_loss": 0.009445870786227963,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 222.5836577389855,
+      "protocol_sha256": "39fcc67a198ce4db6339faf7f431acc7998269ecda1d1a94d62d84003769e14d"
+    },
+    {
+      "unit": "clare_valid::fold1::legacy_fusion",
+      "stage": "clare",
+      "fold": 1,
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.6571428571428571,
+      "validation_balanced_accuracy": 0.7142857142857143,
+      "validation_spearman": 0.4246362918027384,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.091784902869429e+17,
+      "mechanism_validation": {
+        "weighted_total": 1.091784902869429e+17,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8347062105482275,
+            "weighted_loss": 0.16694124553239706,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 1.0917849128910193e+18,
+            "weighted_loss": 1.091784902869429e+17,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.09445870627056469,
+            "weighted_loss": 0.009445870786227963,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 221.22940173000097,
+      "protocol_sha256": "566751de3af303ab735de8d86c2c3d399ed0268bb30e86f6d2a4febae03bda40"
+    },
+    {
+      "unit": "clare_valid::fold1::physiology_single_stream",
+      "stage": "clare",
+      "fold": 1,
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.3142857142857143,
+      "validation_balanced_accuracy": 0.3142857142857143,
+      "validation_spearman": -0.536193283717017,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.5066491575736258,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.04776846896857,
+      "protocol_sha256": "43060ce20836196a5ccee324053999ec7875dae32c0dc0f168809abd072c5dda"
+    },
+    {
+      "unit": "clare_valid::fold1::context_single_stream",
+      "stage": "clare",
+      "fold": 1,
+      "label": "context_single_stream",
+      "validation_macro_f1": 0.5,
+      "validation_balanced_accuracy": 0.5142857142857142,
+      "validation_spearman": -0.043183351708753044,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.49585631951341513,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 3.9056759600061923,
+      "protocol_sha256": "7abc5b9a4f75fcb15d1cb6388ef1d60a11c7a5f925dcca51b96fcb5fafc5069a"
+    },
+    {
+      "unit": "clare_valid::fold2::safe_lag",
+      "stage": "clare",
+      "fold": 2,
+      "label": "safe_lag",
+      "validation_macro_f1": 0.07692307692307693,
+      "validation_balanced_accuracy": 0.08333333333333333,
+      "validation_spearman": -0.40230030392638466,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 7.888881468414362e+16,
+      "mechanism_validation": {
+        "weighted_total": 7.888881468414362e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 338,
+            "weight": 0.2,
+            "raw_loss": 0.8239183466462694,
+            "weighted_loss": 0.16478367528971835,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 7.888881396831574e+17,
+            "weighted_loss": 7.888881468414362e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 338,
+            "weight": 0.1,
+            "raw_loss": 0.11382759499126638,
+            "weighted_loss": 0.011382759975809493,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 221.14084331714548,
+      "protocol_sha256": "de4ec6b905901397f46eaba3fcdeeba186f829f9efd411ff79886e2be3fd2d23"
+    },
+    {
+      "unit": "clare_valid::fold2::legacy_fusion",
+      "stage": "clare",
+      "fold": 2,
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.2,
+      "validation_balanced_accuracy": 0.25,
+      "validation_spearman": -0.15086261397239425,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 7.888881468414362e+16,
+      "mechanism_validation": {
+        "weighted_total": 7.888881468414362e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 338,
+            "weight": 0.2,
+            "raw_loss": 0.8239183466462694,
+            "weighted_loss": 0.16478367528971835,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 7.888881396831574e+17,
+            "weighted_loss": 7.888881468414362e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 338,
+            "weight": 0.1,
+            "raw_loss": 0.11382759499126638,
+            "weighted_loss": 0.011382759975809493,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 221.0751746459864,
+      "protocol_sha256": "3938c13e292a8f2c4e1c75882fa96596332f5e211691c64bc1987b53f3eb79fa"
+    },
+    {
+      "unit": "clare_valid::fold2::physiology_single_stream",
+      "stage": "clare",
+      "fold": 2,
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.07692307692307693,
+      "validation_balanced_accuracy": 0.08333333333333333,
+      "validation_spearman": 0.10057507598159617,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.5215369715621156,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 3.987182324985042,
+      "protocol_sha256": "540978f85dfbc32aba3dc129b2e4bf224f8c29229f7f25249682c820d26b8b2b"
+    },
+    {
+      "unit": "clare_valid::fold2::context_single_stream",
+      "stage": "clare",
+      "fold": 2,
+      "label": "context_single_stream",
+      "validation_macro_f1": 0.2,
+      "validation_balanced_accuracy": 0.25,
+      "validation_spearman": 0.772272904858685,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.5525393545225465,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 3.9131277999840677,
+      "protocol_sha256": "2b85c7e4111ed5fcb61be4878ac79ae18f11f1522d0e3377cf56681b9df82d4e"
+    },
+    {
+      "unit": "clare_valid::fold3::safe_lag",
+      "stage": "clare",
+      "fold": 3,
+      "label": "safe_lag",
+      "validation_macro_f1": 0.5804195804195804,
+      "validation_balanced_accuracy": 0.6142857142857143,
+      "validation_spearman": -0.1799306321198044,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 8.20947686840948e+16,
+      "mechanism_validation": {
+        "weighted_total": 8.20947686840948e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8389671002373551,
+            "weighted_loss": 0.16779342898816774,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 8.209476768193577e+17,
+            "weighted_loss": 8.20947686840948e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.09593413774714325,
+            "weighted_loss": 0.009593414066528732,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 217.42630314803682,
+      "protocol_sha256": "c027d64a25e09877ff5b5ca2115d22d76169af9a51dc17a65ef4300d30614a68"
+    },
+    {
+      "unit": "clare_valid::fold3::legacy_fusion",
+      "stage": "clare",
+      "fold": 3,
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.6666666666666666,
+      "validation_balanced_accuracy": 0.6857142857142857,
+      "validation_spearman": -0.021591675854376522,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 8.20947686840948e+16,
+      "mechanism_validation": {
+        "weighted_total": 8.20947686840948e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8389671002373551,
+            "weighted_loss": 0.16779342898816774,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 8.209476768193577e+17,
+            "weighted_loss": 8.20947686840948e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.09593413774714325,
+            "weighted_loss": 0.009593414066528732,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 217.444106008159,
+      "protocol_sha256": "56ef3fda0417531c39b251f33632cc6acb040121bfac39f1a5da017522a6706c"
+    },
+    {
+      "unit": "clare_valid::fold3::physiology_single_stream",
+      "stage": "clare",
+      "fold": 3,
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.24475524475524477,
+      "validation_balanced_accuracy": 0.24285714285714285,
+      "validation_spearman": -0.3742557148091931,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.45324294730237513,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.019615835044533,
+      "protocol_sha256": "957a56a7f6685cc686eea82f395d3a4b86c8b8a0177fbd5e15728c0548730db5"
+    },
+    {
+      "unit": "clare_valid::fold3::context_single_stream",
+      "stage": "clare",
+      "fold": 3,
+      "label": "context_single_stream",
+      "validation_macro_f1": 0.3684210526315789,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": -0.327473750458044,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.45398493821278973,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 3.821011545136571,
+      "protocol_sha256": "aa0d0bb4f6a63eedbe2641299085fc320af698170a90d68b90722586a3b1d13b"
+    },
+    {
+      "unit": "clare_valid::fold4::safe_lag",
+      "stage": "clare",
+      "fold": 4,
+      "label": "safe_lag",
+      "validation_macro_f1": 0.6571428571428571,
+      "validation_balanced_accuracy": 0.7142857142857143,
+      "validation_spearman": 0.5613835722137897,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.2955191103699899e+17,
+      "mechanism_validation": {
+        "weighted_total": 1.2955191103699899e+17,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8664288974169528,
+            "weighted_loss": 0.17328578202110348,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 1.2955191203915804e+18,
+            "weighted_loss": 1.2955191103699899e+17,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.11737425474054886,
+            "weighted_loss": 0.011737425526547612,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 251.26319506508298,
+      "protocol_sha256": "b669ebc47d87afddc69ac3d0147db41fc7beb7756a31165b9579d74baf1027ea"
+    },
+    {
+      "unit": "clare_valid::fold4::legacy_fusion",
+      "stage": "clare",
+      "fold": 4,
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.7333333333333334,
+      "validation_balanced_accuracy": 0.7285714285714285,
+      "validation_spearman": 0.694532239982445,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.2955191103699899e+17,
+      "mechanism_validation": {
+        "weighted_total": 1.2955191103699899e+17,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 330,
+            "weight": 0.2,
+            "raw_loss": 0.8664288974169528,
+            "weighted_loss": 0.17328578202110348,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 1.2955191203915804e+18,
+            "weighted_loss": 1.2955191103699899e+17,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 330,
+            "weight": 0.1,
+            "raw_loss": 0.11737425474054886,
+            "weighted_loss": 0.011737425526547612,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 251.03740027104504,
+      "protocol_sha256": "780bb1b3134c717987da47adec8b023387541ff1f0a132833f3551c8b1812ef5"
+    },
+    {
+      "unit": "clare_valid::fold4::physiology_single_stream",
+      "stage": "clare",
+      "fold": 4,
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.8285714285714285,
+      "validation_balanced_accuracy": 0.8285714285714285,
+      "validation_spearman": 0.6261585997769192,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.3077660976917307,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.637014637934044,
+      "protocol_sha256": "15fd295bb854c7aae1fdb806b10546b6b00c49ed2b56e704dc0205b86a472016"
+    },
+    {
+      "unit": "clare_valid::fold4::context_single_stream",
+      "stage": "clare",
+      "fold": 4,
+      "label": "context_single_stream",
+      "validation_macro_f1": 0.29411764705882354,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": -0.05038057699354522,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 1.2679750140222557,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.456120384158567,
+      "protocol_sha256": "145b43f4dba65d800c1f2f5f22fd551bb49f7e3f66f034ee58acf97323d18cfa"
+    },
+    {
+      "unit": "clare_valid::fold5::safe_lag",
+      "stage": "clare",
+      "fold": 5,
+      "label": "safe_lag",
+      "validation_macro_f1": 0.3684210526315789,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": 0.43344792633557944,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.0719602227653292e+16,
+      "mechanism_validation": {
+        "weighted_total": 2.0719602227653292e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 423,
+            "weight": 0.2,
+            "raw_loss": 0.8407408345675638,
+            "weighted_loss": 0.1681481662512389,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 2.071960234397532e+17,
+            "weighted_loss": 2.0719602227653292e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 423,
+            "weight": 0.1,
+            "raw_loss": 0.1173799134808511,
+            "weighted_loss": 0.01173799142822729,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 243.5656072779093,
+      "protocol_sha256": "00cd4d14c9609c18415937e8e514ad24a7af88a82ab2de59edb35e0845b14351"
+    },
+    {
+      "unit": "clare_valid::fold5::legacy_fusion",
+      "stage": "clare",
+      "fold": 5,
+      "label": "legacy_fusion",
+      "validation_macro_f1": 0.3684210526315789,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": 0.40147225963869243,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 2.0719602227653292e+16,
+      "mechanism_validation": {
+        "weighted_total": 2.0719602227653292e+16,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 423,
+            "weight": 0.2,
+            "raw_loss": 0.8407408345675638,
+            "weighted_loss": 0.1681481662512389,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "active",
+            "count": 3,
+            "weight": 0.1,
+            "raw_loss": 2.071960234397532e+17,
+            "weighted_loss": 2.0719602227653292e+16,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 423,
+            "weight": 0.1,
+            "raw_loss": 0.1173799134808511,
+            "weighted_loss": 0.01173799142822729,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": null,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0
+      },
+      "training_elapsed_s": 242.26421143091284,
+      "protocol_sha256": "8e78278159f57f65e2d628eaca08f97de9b0d1d384159400dd86c0c62cf7ebd9"
+    },
+    {
+      "unit": "clare_valid::fold5::physiology_single_stream",
+      "stage": "clare",
+      "fold": 5,
+      "label": "physiology_single_stream",
+      "validation_macro_f1": 0.3684210526315789,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": -0.2735695928511444,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.3511668787990909,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.4826246839948,
+      "protocol_sha256": "c2d441f4f29252a40e76d6ab6ca3710883b476c4b52e84ad524f0131578ed685"
+    },
+    {
+      "unit": "clare_valid::fold5::context_single_stream",
+      "stage": "clare",
+      "fold": 5,
+      "label": "context_single_stream",
+      "validation_macro_f1": 0.3684210526315789,
+      "validation_balanced_accuracy": 0.5,
+      "validation_spearman": 0.8064973711325945,
+      "best_epoch": 1,
+      "validation_self_supervised_loss": 0.37060174318077943,
+      "mechanism_validation": {
+        "weighted_total": 0.0,
+        "terms": []
+      },
+      "training_elapsed_s": 4.309059107908979,
+      "protocol_sha256": "260b3d201c5f62c469888a22d30325a9cf37a0ecc513f361a1baa03fd3850b6b"
+    }
+  ],
+  "completed": true,
+  "clare_stream_filter": {
+    "source_sample_count": 54,
+    "both_stream_sample_count": 49,
+    "removed_complete_modality_missing_count": 5
+  }
+}

@@ -79,6 +79,7 @@ class CandidateScreenConfig:
     ode_method: str = "euler"
     semantic_event_enabled: bool = False
     learnable_semantic_queries: bool = False
+    heartbeat_interval_s: float = 60.0
 
     def __post_init__(self) -> None:
         if self.max_epochs <= 0 or self.batch_size <= 0 or self.patience <= 0:
@@ -99,6 +100,8 @@ class CandidateScreenConfig:
             raise ValueError("unsupported candidate Chronaris ODE method")
         if self.learnable_semantic_queries and not self.semantic_event_enabled:
             raise ValueError("learnable semantic queries require semantic_event_enabled")
+        if not 0 < self.heartbeat_interval_s <= 60:
+            raise ValueError("heartbeat_interval_s must be in (0,60]")
 
 
 @dataclass(frozen=True, slots=True)
@@ -391,6 +394,7 @@ def _train_pretext_candidate(
         else _batch_ids(fold.train_sample_ids, resolved.batch_size)
     )
     started = time.perf_counter()
+    last_heartbeat = started
     for epoch in range(start_epoch, resolved.max_epochs + 1):
         encoder.train()
         heads.train()
@@ -523,6 +527,14 @@ def _train_pretext_candidate(
             )
             _accumulate_loss_terms(train_totals, output.terms)
             step_count += 1
+            now = time.perf_counter()
+            if now - last_heartbeat >= resolved.heartbeat_interval_s:
+                print(
+                    f"[candidate-heartbeat] method={method_name} epoch={epoch} "
+                    f"step={step_count} elapsed_s={elapsed_offset + now - started:.1f}",
+                    flush=True,
+                )
+                last_heartbeat = now
         train_losses = _finalize_loss_totals(train_totals)
         validation_losses = _evaluate_public_losses(
             encoder=encoder,

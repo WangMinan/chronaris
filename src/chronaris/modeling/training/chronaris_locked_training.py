@@ -42,6 +42,7 @@ class LockedChronarisTrainingConfig:
     lag_aware_weight: float = 0.0
     explicit_shift_weight: float = 0.0
     event_pair_weight: float = 0.0
+    heartbeat_interval_s: float = 60.0
 
     def __post_init__(self) -> None:
         if min(self.max_epochs, self.batch_size, self.patience) <= 0:
@@ -68,6 +69,8 @@ class LockedChronarisTrainingConfig:
             raise ValueError("learnable semantic queries require semantic_event_enabled")
         if self.event_pair_weight > 0 and not self.semantic_event_enabled:
             raise ValueError("event-pair objective requires semantic_event_enabled")
+        if not 0 < self.heartbeat_interval_s <= 60:
+            raise ValueError("heartbeat_interval_s must be in (0,60]")
 
 
 @dataclass(frozen=True, slots=True)
@@ -130,6 +133,7 @@ def train_locked_chronaris(
             ode_method=resolved.ode_method,
             semantic_event_enabled=resolved.semantic_event_enabled,
             learnable_semantic_queries=resolved.learnable_semantic_queries,
+            heartbeat_interval_s=resolved.heartbeat_interval_s,
         ),
         augmentation_policy=augmentation_policy,
         batch_provider=batch_provider,

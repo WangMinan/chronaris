@@ -197,11 +197,14 @@ def _load_native_sample(record: CogPilotNativeRecord) -> ObservedDualStreamSampl
 
 
 def _required_paths(run: Path) -> tuple[tuple[Path, ...], Path, Path] | None:
-    try:
-        physiology = tuple(next(run.glob(f"*stream-{token}*_dat.csv")) for token in PHYS_FILES)
-        return physiology, next(run.glob(f"*stream-{ECG_FILE}*_dat.csv")), next(run.glob(f"*stream-{VEH_FILE}*_dat.csv"))
-    except StopIteration:
+    physiology = tuple(
+        next(run.glob(f"*stream-{token}*_dat.csv"), None) for token in PHYS_FILES
+    )
+    ecg = next(run.glob(f"*stream-{ECG_FILE}*_dat.csv"), None)
+    vehicle = next(run.glob(f"*stream-{VEH_FILE}*_dat.csv"), None)
+    if any(path is None for path in physiology) or ecg is None or vehicle is None:
         return None
+    return physiology, ecg, vehicle
 
 
 def _first_timestamp(path: Path) -> float:

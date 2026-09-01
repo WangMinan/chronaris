@@ -45,6 +45,7 @@ class CommonPretrainingConfig:
     ode_method: str = "euler"
     semantic_event_enabled: bool = False
     learnable_semantic_queries: bool = False
+    heartbeat_interval_s: float = 60.0
 
     def __post_init__(self) -> None:
         if self.epochs <= 0 or self.batch_size <= 0:
@@ -65,6 +66,8 @@ class CommonPretrainingConfig:
             raise ValueError("unsupported pretraining Chronaris ODE method")
         if self.learnable_semantic_queries and not self.semantic_event_enabled:
             raise ValueError("learnable semantic queries require semantic_event_enabled")
+        if not 0 < self.heartbeat_interval_s <= 60:
+            raise ValueError("heartbeat_interval_s must be in (0,60]")
 
 
 @dataclass(frozen=True, slots=True)
@@ -179,6 +182,7 @@ def train_common_pretext_method(
             ode_method=resolved_config.ode_method,
             semantic_event_enabled=resolved_config.semantic_event_enabled,
             learnable_semantic_queries=resolved_config.learnable_semantic_queries,
+            heartbeat_interval_s=resolved_config.heartbeat_interval_s,
         ),
         augmentation_policy=resolved_policy,
         batch_provider=batch_provider,
