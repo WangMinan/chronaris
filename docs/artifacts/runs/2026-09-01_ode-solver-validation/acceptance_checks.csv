@@ -1,0 +1,11 @@
+check_id,description,status,evidence
+OV01,仅仿真训练集参与拟合,pass,12 training samples in solver_validation_metrics.json
+OV02,仅仿真训练内验证参与选择,pass,5 validation samples and held_out_opened false
+OV03,单步 Euler 梯度有限,pass,training rows and solver metrics
+OV04,最大 0.5 秒 Euler 子步梯度有限,pass,training rows and solver metrics
+OV05,四阶 Runge-Kutta 梯度有限,pass,training rows and solver metrics
+OV06,最大 0.5 秒 Euler 子步运行时间不超过 2 倍,pass,24.70 s versus 21.54 s
+OV07,四阶 Runge-Kutta 运行时间不超过 2 倍,fail,149.02 s versus 21.54 s
+OV08,按对齐损失和运行时间门冻结数值方案,pass,single-step Euler selected
+OV09,公开数据外层折与鼎新确认结果保持关闭,pass,solver runner only reads simulation train and validation
+OV10,候选一与候选二重合处理,pending,human decision required before candidate matrix

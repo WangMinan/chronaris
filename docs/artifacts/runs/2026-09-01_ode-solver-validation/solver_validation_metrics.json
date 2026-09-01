@@ -1,0 +1,55 @@
+{
+  "seed": 17,
+  "epochs": 2,
+  "device": "cuda",
+  "train_sample_count": 12,
+  "validation_sample_count": 5,
+  "held_out_opened": false,
+  "runtime_limit_ratio": 2.0,
+  "rows": [
+    {
+      "label": "single_step_euler",
+      "ode_method": "euler",
+      "max_ode_step_s": null,
+      "validation_alignment_loss": 0.27858983318010966,
+      "training_elapsed_s": 21.537755695870146,
+      "gradients_finite": true,
+      "best_epoch": 2,
+      "protocol_sha256": "158631767c4776c3a3e691bf81b45ee21a9034b3c62a4ac6b082a0aceabc9d71",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-01_ode-solver-validation/single_step_euler/chronaris/best.pt"
+    },
+    {
+      "label": "euler_max_0p5s",
+      "ode_method": "euler",
+      "max_ode_step_s": 0.5,
+      "validation_alignment_loss": 0.28245532194773354,
+      "training_elapsed_s": 24.696891671977937,
+      "gradients_finite": true,
+      "best_epoch": 2,
+      "protocol_sha256": "f199022d39f2460cb86363afe8b73585d38a1dc30a55a762047a76382e96a050",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-01_ode-solver-validation/euler_max_0p5s/chronaris/best.pt"
+    },
+    {
+      "label": "rk4",
+      "ode_method": "rk4",
+      "max_ode_step_s": null,
+      "validation_alignment_loss": 0.2820149794220924,
+      "training_elapsed_s": 149.01696872198954,
+      "gradients_finite": true,
+      "best_epoch": 2,
+      "protocol_sha256": "f6c1c736050d37ef756942764b1582884f61564005c35d50336bb908d113d871",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-01_ode-solver-validation/rk4/chronaris/best.pt"
+    }
+  ],
+  "selected": {
+    "label": "single_step_euler",
+    "ode_method": "euler",
+    "max_ode_step_s": null,
+    "validation_alignment_loss": 0.27858983318010966,
+    "training_elapsed_s": 21.537755695870146,
+    "gradients_finite": true,
+    "best_epoch": 2,
+    "protocol_sha256": "158631767c4776c3a3e691bf81b45ee21a9034b3c62a4ac6b082a0aceabc9d71",
+    "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-01_ode-solver-validation/single_step_euler/chronaris/best.pt"
+  }
+}

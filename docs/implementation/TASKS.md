@@ -10,8 +10,8 @@
 
 1. **已完成：**保护当前工作树，创建历史证据标签和唯一论文开发分支；完整测试 `429 passed, 8 skipped`，CUDA、数据与磁盘预检通过。
 2. **已完成：**确定性训练、真实 validation checkpoint、单次归一化、训练折缩放、正确上下文时长、原生时间公开数据输入、lazy batch provider 和受控缓存已完成。证据见 [可信训练修复](../artifacts/runs/2026-09-01_training-trust-repair/report.md)与[原生时间输入修复](../artifacts/runs/2026-09-01_native-time-euler-repair/report.md)。
-3. **部分完成：**批量 mask Euler 子步、可学习事件语义查询、五分类显式时移和跨 group 事件—响应配对目标均已实现；完整测试 `447 passed, 8 skipped`，CUDA 组合目标单 epoch 通过。工程证据见[可学习事件语义与训练目标实现](../artifacts/runs/2026-09-01_learnable-semantic-objectives/report.md)。当前先运行仿真 validation 选择 ODE 方案。
-4. **待执行：**运行 seed 17 干净基线矩阵，再以 seeds 17/29/43 完成训练内候选筛选和机制门禁；最多允许两轮单原因改进。
+3. **已完成：**批量 mask Euler 子步、可学习事件语义查询、五分类显式时移和跨 group 事件—响应配对目标均已实现；仿真训练内验证冻结选择单步 Euler，0.5 秒子步对齐损失略高，四阶 Runge-Kutta 超过 2 倍运行时间门。证据见[可学习事件语义与训练目标实现](../artifacts/runs/2026-09-01_learnable-semantic-objectives/report.md)与[连续演化数值方案选择](../artifacts/runs/2026-09-01_ode-solver-validation/report.md)。
+4. **等待人工确认：**数值方案选择使原候选一与候选二成为同一配置。确认保留重复对照或去重后，运行 seed 17 干净基线矩阵，再以 seeds 17/29/43 完成训练内候选筛选和机制门禁；最多允许两轮单原因改进。
 5. **待门禁：**冻结并运行仿真、CogPilot、CLARE、鼎新、核心消融、负对照和运行时实验；应用增量不足不触发无限调参。
 
 2026 年 7 月公开与研究分支结果保留用于追溯，但受协议缺陷影响的结果均标记 `superseded_due_to_protocol_defects`，不进入毕业论文主表。下方安全滞后感知融合任务作为历史研究记录保留。

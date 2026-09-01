@@ -167,9 +167,10 @@ def test_common_pretraining_accepts_lazy_batch_provider(tmp_path) -> None:
         "validation": _sample("validation", 2),
         "held_out": _sample("held_out", 3),
     }
-    provider = lambda sample_ids: collate_observation_samples(
-        tuple(samples[sample_id] for sample_id in sample_ids)
-    )
+    def provider(sample_ids):
+        return collate_observation_samples(
+            tuple(samples[sample_id] for sample_id in sample_ids)
+        )
     fold = FoldLineage(
         fold_id="fold_lazy",
         train_sample_ids=("train_a", "train_b"),

@@ -36,6 +36,7 @@ class LockedChronarisTrainingConfig:
     device: str = "cpu"
     deterministic: bool = True
     max_ode_step_s: float | None = None
+    ode_method: str = "euler"
     semantic_event_enabled: bool = False
     learnable_semantic_queries: bool = False
     lag_aware_weight: float = 0.0
@@ -55,6 +56,8 @@ class LockedChronarisTrainingConfig:
             not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
         ):
             raise ValueError("max_ode_step_s must be finite and positive when set")
+        if self.ode_method not in {"euler", "midpoint", "rk4", "dopri5"}:
+            raise ValueError("unsupported locked Chronaris ODE method")
         if min(
             self.lag_aware_weight,
             self.explicit_shift_weight,
@@ -124,6 +127,7 @@ def train_locked_chronaris(
             device=resolved.device,
             deterministic=resolved.deterministic,
             max_ode_step_s=resolved.max_ode_step_s,
+            ode_method=resolved.ode_method,
             semantic_event_enabled=resolved.semantic_event_enabled,
             learnable_semantic_queries=resolved.learnable_semantic_queries,
         ),

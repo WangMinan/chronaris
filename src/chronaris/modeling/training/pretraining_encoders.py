@@ -167,6 +167,7 @@ def build_trainable_fusion_encoder(
     chronaris_variant: str = "full",
     chronaris_fusion_kind: str = "multiscale",
     chronaris_max_ode_step_s: float | None = None,
+    chronaris_ode_method: str = "euler",
     chronaris_semantic_event_enabled: bool = False,
     chronaris_learnable_semantic_queries: bool = False,
 ) -> TrainableFusionEncoder:
@@ -217,6 +218,7 @@ def build_trainable_fusion_encoder(
                 variant=chronaris_variant,
                 fusion_kind=chronaris_fusion_kind,
                 max_ode_step_s=chronaris_max_ode_step_s,
+                ode_method=chronaris_ode_method,
                 semantic_event_enabled=chronaris_semantic_event_enabled,
                 learnable_semantic_queries=chronaris_learnable_semantic_queries,
                 hidden_dim=candidate.hidden_dim,

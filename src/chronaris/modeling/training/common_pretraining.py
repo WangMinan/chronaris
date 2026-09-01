@@ -42,6 +42,7 @@ class CommonPretrainingConfig:
     device: str = "cpu"
     deterministic: bool = True
     max_ode_step_s: float | None = None
+    ode_method: str = "euler"
     semantic_event_enabled: bool = False
     learnable_semantic_queries: bool = False
 
@@ -60,6 +61,8 @@ class CommonPretrainingConfig:
             not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
         ):
             raise ValueError("max_ode_step_s must be finite and positive when set")
+        if self.ode_method not in {"euler", "midpoint", "rk4", "dopri5"}:
+            raise ValueError("unsupported pretraining Chronaris ODE method")
         if self.learnable_semantic_queries and not self.semantic_event_enabled:
             raise ValueError("learnable semantic queries require semantic_event_enabled")
 
@@ -173,6 +176,7 @@ def train_common_pretext_method(
             device=resolved_config.device,
             deterministic=resolved_config.deterministic,
             max_ode_step_s=resolved_config.max_ode_step_s,
+            ode_method=resolved_config.ode_method,
             semantic_event_enabled=resolved_config.semantic_event_enabled,
             learnable_semantic_queries=resolved_config.learnable_semantic_queries,
         ),
@@ -214,6 +218,7 @@ def load_common_pretraining_checkpoint(
     chronaris_variant = str(backbone_config.get("variant", "full"))
     chronaris_fusion_kind = str(backbone_config.get("fusion_kind", "multiscale"))
     chronaris_max_ode_step_s = backbone_config.get("max_ode_step_s")
+    chronaris_ode_method = str(backbone_config.get("ode_method", "euler"))
     chronaris_semantic_event_enabled = bool(
         backbone_config.get("semantic_event_enabled", False)
     )
@@ -229,6 +234,7 @@ def load_common_pretraining_checkpoint(
         chronaris_variant=chronaris_variant,
         chronaris_fusion_kind=chronaris_fusion_kind,
         chronaris_max_ode_step_s=chronaris_max_ode_step_s,
+        chronaris_ode_method=chronaris_ode_method,
         chronaris_semantic_event_enabled=chronaris_semantic_event_enabled,
         chronaris_learnable_semantic_queries=chronaris_learnable_semantic_queries,
     ).to(device)
