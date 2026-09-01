@@ -10,7 +10,7 @@
 
 1. **已完成：**保护当前工作树，创建历史证据标签和唯一论文开发分支；完整测试 `429 passed, 8 skipped`，CUDA、数据与磁盘预检通过。
 2. **已完成：**确定性训练、真实 validation checkpoint、单次归一化、训练折缩放、正确上下文时长、原生时间公开数据输入、lazy batch provider 和受控缓存已完成。证据见 [可信训练修复](../artifacts/runs/2026-09-01_training-trust-repair/report.md)与[原生时间输入修复](../artifacts/runs/2026-09-01_native-time-euler-repair/report.md)。
-3. **当前：**批量 mask Euler 子步已实现并通过 CPU/CUDA 验证；继续实现可学习事件语义查询、显式时移分类和跨 group 事件—响应配对目标，再运行仿真 validation 选择 ODE 方案。
+3. **部分完成：**批量 mask Euler 子步、可学习事件语义查询、五分类显式时移和跨 group 事件—响应配对目标均已实现；完整测试 `447 passed, 8 skipped`，CUDA 组合目标单 epoch 通过。工程证据见[可学习事件语义与训练目标实现](../artifacts/runs/2026-09-01_learnable-semantic-objectives/report.md)。当前先运行仿真 validation 选择 ODE 方案。
 4. **待执行：**运行 seed 17 干净基线矩阵，再以 seeds 17/29/43 完成训练内候选筛选和机制门禁；最多允许两轮单原因改进。
 5. **待门禁：**冻结并运行仿真、CogPilot、CLARE、鼎新、核心消融、负对照和运行时实验；应用增量不足不触发无限调参。
 

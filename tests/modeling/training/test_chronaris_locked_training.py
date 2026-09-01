@@ -107,7 +107,7 @@ def test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop(tmp_path
         "chronaris_physical_consistency",
         "chronaris_causal_direction",
     }
-    assert all(row["weight"] == 0 for row in first.auxiliary_rows)
+    assert all(row["weight"] > 0 for row in first.auxiliary_rows)
     assert payload["chronaris_auxiliary_enabled"] is True
     assert payload["early_stopping_uses_public_pretext_only"] is True
     assert payload["selection_uses_public_pretext_only"] is True

@@ -42,6 +42,8 @@ class CommonPretrainingConfig:
     device: str = "cpu"
     deterministic: bool = True
     max_ode_step_s: float | None = None
+    semantic_event_enabled: bool = False
+    learnable_semantic_queries: bool = False
 
     def __post_init__(self) -> None:
         if self.epochs <= 0 or self.batch_size <= 0:
@@ -58,6 +60,8 @@ class CommonPretrainingConfig:
             not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
         ):
             raise ValueError("max_ode_step_s must be finite and positive when set")
+        if self.learnable_semantic_queries and not self.semantic_event_enabled:
+            raise ValueError("learnable semantic queries require semantic_event_enabled")
 
 
 @dataclass(frozen=True, slots=True)
@@ -134,6 +138,9 @@ def train_common_pretext_method(
     candidate_config: EncoderCandidateConfig | None = None,
     chronaris_fusion_kind: str = "multiscale",
     chronaris_lag_aware_weight: float = 0.0,
+    chronaris_mechanism_enabled: bool = False,
+    chronaris_explicit_shift_weight: float = 0.0,
+    chronaris_event_pair_weight: float = 0.0,
     resume: bool = True,
 ) -> CommonPretrainingResult:
     """Compatibility wrapper around the validation-backed candidate trainer."""
@@ -166,11 +173,16 @@ def train_common_pretext_method(
             device=resolved_config.device,
             deterministic=resolved_config.deterministic,
             max_ode_step_s=resolved_config.max_ode_step_s,
+            semantic_event_enabled=resolved_config.semantic_event_enabled,
+            learnable_semantic_queries=resolved_config.learnable_semantic_queries,
         ),
         augmentation_policy=resolved_policy,
         batch_provider=batch_provider,
         chronaris_fusion_kind=chronaris_fusion_kind,
         chronaris_lag_aware_weight=chronaris_lag_aware_weight,
+        chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+        chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
+        chronaris_event_pair_weight=chronaris_event_pair_weight,
         include_candidate_subdirectory=False,
         resume=resume,
     )
@@ -202,6 +214,12 @@ def load_common_pretraining_checkpoint(
     chronaris_variant = str(backbone_config.get("variant", "full"))
     chronaris_fusion_kind = str(backbone_config.get("fusion_kind", "multiscale"))
     chronaris_max_ode_step_s = backbone_config.get("max_ode_step_s")
+    chronaris_semantic_event_enabled = bool(
+        backbone_config.get("semantic_event_enabled", False)
+    )
+    chronaris_learnable_semantic_queries = bool(
+        backbone_config.get("learnable_semantic_queries", False)
+    )
     encoder = build_trainable_fusion_encoder(
         method_name,
         physiology_feature_names=physiology_names,
@@ -211,6 +229,8 @@ def load_common_pretraining_checkpoint(
         chronaris_variant=chronaris_variant,
         chronaris_fusion_kind=chronaris_fusion_kind,
         chronaris_max_ode_step_s=chronaris_max_ode_step_s,
+        chronaris_semantic_event_enabled=chronaris_semantic_event_enabled,
+        chronaris_learnable_semantic_queries=chronaris_learnable_semantic_queries,
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(

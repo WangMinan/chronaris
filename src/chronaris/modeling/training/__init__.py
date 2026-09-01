@@ -3,8 +3,11 @@ from chronaris.modeling.training.pretext import (
     CommonPretextHeadBundle,
     CommonPretextLossOutput,
     CommonPretextWeights,
+    ExplicitTimeShiftHead,
     PretextLossTerm,
     chronaris_auxiliary_weight_schedule,
+    event_pair_contrastive_loss_term,
+    explicit_time_shift_loss_term,
     pretext_loss_terms_to_rows,
 )
 from chronaris.modeling.training.pretraining_encoders import (
@@ -56,6 +59,7 @@ __all__ = [
     "LockedChronarisTrainingResult",
     "ENCODER_SCREEN_CANDIDATES",
     "EncoderCandidateConfig",
+    "ExplicitTimeShiftHead",
     "CommonPretextHeadBundle",
     "CommonPretextLossOutput",
     "CommonPretrainingConfig",
@@ -80,6 +84,8 @@ __all__ = [
     "describe_transfer_source",
     "initialize_encoder_from_transfer_source",
     "chronaris_auxiliary_weight_schedule",
+    "event_pair_contrastive_loss_term",
+    "explicit_time_shift_loss_term",
     "chronaris_auxiliary_losses_to_rows",
     "confirm_selected_pretext_checkpoint",
     "pretext_loss_terms_to_rows",

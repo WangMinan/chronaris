@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Sequence
 
 import torch
 from torch import nn
@@ -138,19 +139,129 @@ class CommonPretextHeadBundle(nn.Module):
         )
 
 
+class ExplicitTimeShiftHead(nn.Module):
+    """Five-class shift head kept separate from legacy common checkpoints."""
+
+    def __init__(self, representation_dim: int) -> None:
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.LayerNorm(representation_dim),
+            nn.Linear(representation_dim, 5),
+        )
+
+    def forward(
+        self,
+        sequence: torch.Tensor,
+        valid_mask: torch.Tensor,
+    ) -> torch.Tensor:
+        if sequence.ndim != 3 or valid_mask.shape != sequence.shape[:2]:
+            raise ValueError("explicit time-shift head expects [B,Q,D] and [B,Q]")
+        count = valid_mask.sum(dim=1, keepdim=True).clamp_min(1).to(sequence.dtype)
+        pooled = (sequence * valid_mask.unsqueeze(-1).to(sequence.dtype)).sum(dim=1) / count
+        return self.network(pooled)
+
+
+def explicit_time_shift_loss_term(
+    logits: torch.Tensor,
+    class_indices: torch.Tensor,
+    *,
+    weight: float,
+) -> PretextLossTerm:
+    if logits.ndim != 2 or logits.shape[1] != 5:
+        raise ValueError("explicit time-shift logits must have shape [B,5]")
+    if class_indices.shape != logits.shape[:1]:
+        raise ValueError("explicit time-shift class shape mismatch")
+    raw = F.cross_entropy(logits, class_indices.to(logits.device))
+    return PretextLossTerm(
+        term_name="explicit_time_shift",
+        weight=float(weight),
+        status="active",
+        count=len(class_indices),
+        raw_loss=raw,
+        weighted_loss=raw * weight,
+        reason=None,
+    )
+
+
+def event_pair_contrastive_loss_term(
+    semantic_output,
+    group_ids: Sequence[str],
+    *,
+    temperature: float,
+    weight: float,
+) -> tuple[PretextLossTerm, dict[str, float | int | None]]:
+    if temperature <= 0:
+        raise ValueError("event-pair temperature must be positive")
+    names = tuple(semantic_output.query_names)
+    if "flight_event" not in names or "physiology_response" not in names:
+        raise ValueError("event-pair loss requires flight_event and physiology_response queries")
+    event_states = semantic_output.query_context_states[:, names.index("flight_event")]
+    response_states = semantic_output.query_context_states[:, names.index("physiology_response")]
+    if len(group_ids) != len(event_states):
+        raise ValueError("event-pair group count mismatch")
+    anchors: list[int] = []
+    negatives: list[int] = []
+    groups = tuple(str(value) for value in group_ids)
+    for anchor, group in enumerate(groups):
+        for offset in range(1, len(groups)):
+            candidate = (anchor + offset) % len(groups)
+            if groups[candidate] != group:
+                anchors.append(anchor)
+                negatives.append(candidate)
+                break
+    if not anchors:
+        zero = event_states.sum() * 0.0
+        return (
+            PretextLossTerm(
+                term_name="event_response_pairing",
+                weight=float(weight),
+                status="unavailable",
+                count=0,
+                raw_loss=None,
+                weighted_loss=zero,
+                reason="no_cross_group_negative",
+            ),
+            {
+                "positive_similarity": None,
+                "negative_similarity": None,
+                "recall_at_1": None,
+                "valid_pair_count": 0,
+            },
+        )
+    anchor_index = torch.as_tensor(anchors, dtype=torch.long, device=event_states.device)
+    negative_index = torch.as_tensor(negatives, dtype=torch.long, device=event_states.device)
+    event = F.normalize(event_states.index_select(0, anchor_index), dim=-1, eps=1e-12)
+    positive = F.normalize(response_states.index_select(0, anchor_index), dim=-1, eps=1e-12)
+    negative = F.normalize(response_states.index_select(0, negative_index), dim=-1, eps=1e-12)
+    positive_similarity = (event * positive).sum(dim=-1)
+    negative_similarity = (event * negative).sum(dim=-1)
+    logits = torch.stack((positive_similarity, negative_similarity), dim=-1) / temperature
+    raw = F.cross_entropy(logits, torch.zeros(len(anchors), dtype=torch.long, device=logits.device))
+    term = PretextLossTerm(
+        term_name="event_response_pairing",
+        weight=float(weight),
+        status="active",
+        count=len(anchors),
+        raw_loss=raw,
+        weighted_loss=raw * weight,
+        reason=None,
+    )
+    return term, {
+        "positive_similarity": float(positive_similarity.mean().detach().cpu()),
+        "negative_similarity": float(negative_similarity.mean().detach().cpu()),
+        "recall_at_1": float((positive_similarity > negative_similarity).float().mean().detach().cpu()),
+        "valid_pair_count": len(anchors),
+    }
+
+
 def chronaris_auxiliary_weight_schedule(
     epoch: int,
 ) -> ChronarisAuxiliaryWeights:
-    """Keep auxiliary weights zero for 10 epochs, then ramp through epoch 20."""
+    """Linearly warm mechanism losses from epoch one through epoch five."""
 
     if epoch <= 0:
         raise ValueError("training epoch must be one-based and positive")
-    if epoch <= 10:
-        fraction = 0.0
-    elif epoch >= 20:
-        fraction = 1.0
-    else:
-        fraction = (epoch - 10) / 10.0
+    fraction = min(epoch / 5.0, 1.0)
     return ChronarisAuxiliaryWeights(
         continuous_alignment=0.2 * fraction,
         physical_consistency=0.1 * fraction,

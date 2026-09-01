@@ -1,0 +1,16 @@
+check_id,description,status,evidence
+SO01,三个固定语义查询角色,pass,test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal
+SO02,可学习 query 残差非零梯度,pass,test_learnable_semantic_query_residual_receives_nonzero_gradient
+SO03,query 参数 v2 checkpoint 恢复,pass,test_candidate_trains_and_restores_learnable_semantic_objectives
+SO04,语义只修改 16 维门控跨模态支路,pass,first 48 dimensions unchanged in encoder test
+SO05,未来扰动历史最大影响不超过 1e-6,pass,causal semantic prefix encoder test
+SO06,五分类显式时移包含零时移,pass,test_explicit_time_shift_builds_all_five_classes_including_zero
+SO07,时移权重 0 与 0.1 改变梯度和最终参数,pass,pretext and candidate tests
+SO08,事件配对仅使用跨 group 负例,pass,test_event_pairing_uses_only_cross_group_negatives_and_reports_unavailable
+SO09,正确配对相似度高于错配,pass,synthetic contrastive unit test
+SO10,第 1 至第 5 epoch 线性 warm-up,pass,test_chronaris_auxiliary_schedule_matches_frozen_ramp
+SO11,candidate common locked 复用单一训练循环,pass,locked compatibility wrapper and focused tests
+SO12,聚焦子系统测试,pass,85 passed
+SO13,完整测试,pass,"447 passed, 8 skipped"
+SO14,CUDA 组合目标短重放,pass,RTX 4090 one epoch completed
+SO15,多随机种子机制门,pending,training-internal screening stage

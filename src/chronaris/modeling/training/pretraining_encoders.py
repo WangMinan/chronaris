@@ -123,6 +123,9 @@ class TrainableFusionEncoder(nn.Module):
                 "causal_direction": "available",
                 "alignment_output": encoded.alignment_output,
                 "fusion_output": encoded.fusion_output,
+                "semantic_event_output": encoded.semantic_event_output,
+                "aggregated_lag_attention": encoded.aggregated_lag_attention,
+                "mechanism_diagnostics": encoded.mechanism_diagnostics,
             }
         if sequence.shape[-1] != FUSION_OUTPUT_DIM:
             raise ValueError("pretraining encoder violated 64-dimensional contract")
@@ -164,6 +167,8 @@ def build_trainable_fusion_encoder(
     chronaris_variant: str = "full",
     chronaris_fusion_kind: str = "multiscale",
     chronaris_max_ode_step_s: float | None = None,
+    chronaris_semantic_event_enabled: bool = False,
+    chronaris_learnable_semantic_queries: bool = False,
 ) -> TrainableFusionEncoder:
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
@@ -212,6 +217,8 @@ def build_trainable_fusion_encoder(
                 variant=chronaris_variant,
                 fusion_kind=chronaris_fusion_kind,
                 max_ode_step_s=chronaris_max_ode_step_s,
+                semantic_event_enabled=chronaris_semantic_event_enabled,
+                learnable_semantic_queries=chronaris_learnable_semantic_queries,
                 hidden_dim=candidate.hidden_dim,
                 embedding_dim=candidate.hidden_dim,
                 encoder_hidden_dim=candidate.hidden_dim,

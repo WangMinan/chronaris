@@ -15,6 +15,7 @@ from chronaris.representation.contracts import (
 
 
 LAG_DISCRIMINATION_SHIFTS_S = (-10.0, -5.0, 5.0, 10.0)
+EXPLICIT_TIME_SHIFT_CLASSES_S = (-10.0, -5.0, 0.0, 5.0, 10.0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -51,6 +52,14 @@ class CommonPretextTargets:
 class LagDiscriminationInputs:
     negative_batch: DualStreamObservationBatch
     shifts_s: torch.Tensor
+    augmentation_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class ExplicitTimeShiftInputs:
+    shifted_batch: DualStreamObservationBatch
+    shifts_s: torch.Tensor
+    class_indices: torch.Tensor
     augmentation_ids: tuple[str, ...]
 
 
@@ -185,6 +194,38 @@ def build_lag_discrimination_inputs(
     return LagDiscriminationInputs(
         negative_batch=shifted,
         shifts_s=shifts,
+        augmentation_ids=ids,
+    )
+
+
+def build_explicit_time_shift_inputs(
+    batch: DualStreamObservationBatch,
+    augmentation_ids: Sequence[str],
+) -> ExplicitTimeShiftInputs:
+    """Build deterministic five-class vehicle shifts including the zero-shift class."""
+
+    ids = tuple(str(value) for value in augmentation_ids)
+    if len(ids) != len(batch.sample_ids):
+        raise RepresentationContractError("explicit time-shift ID count mismatch")
+    class_indices = torch.as_tensor(
+        [int(value[8:16], 16) % len(EXPLICIT_TIME_SHIFT_CLASSES_S) for value in ids],
+        dtype=torch.long,
+        device=batch.vehicle_timestamps_s.device,
+    )
+    shifts = torch.as_tensor(
+        EXPLICIT_TIME_SHIFT_CLASSES_S,
+        dtype=batch.vehicle_timestamps_s.dtype,
+        device=batch.vehicle_timestamps_s.device,
+    ).index_select(0, class_indices)
+    shifted = _shift_and_compact_vehicle(
+        batch,
+        shifts,
+        duration_s=_context_duration_s(batch.query_timestamps_s),
+    )
+    return ExplicitTimeShiftInputs(
+        shifted_batch=shifted,
+        shifts_s=shifts,
+        class_indices=class_indices,
         augmentation_ids=ids,
     )
 

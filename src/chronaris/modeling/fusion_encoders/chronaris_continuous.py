@@ -36,6 +36,14 @@ from chronaris.models.alignment.prototype import (
     DualStreamODERNNPrototype,
     DualStreamPrototypeOutput,
 )
+from chronaris.models.fusion.causal import compute_vehicle_event_scores
+from chronaris.models.fusion.semantic_event import (
+    CausalEventFusion,
+    CausalEventFusionConfig,
+    SemanticEventTensorInput,
+    SemanticEventTensorOutput,
+    SemanticQuerySpec,
+)
 from chronaris.representation.contracts import (
     FUSION_OUTPUT_DIM,
     DualStreamObservationBatch,
@@ -77,6 +85,8 @@ class ChronarisContinuousEncoderConfig:
     ode_rtol: float = 1e-3
     ode_atol: float = 1e-4
     max_ode_step_s: float | None = None
+    semantic_event_enabled: bool = False
+    learnable_semantic_queries: bool = False
     physics_weight: float = 0.1
     physics_huber_delta: float = 1.0
     dropout: float = 0.1
@@ -107,6 +117,10 @@ class ChronarisContinuousEncoderConfig:
             raise ValueError("Chronaris dropout is invalid")
         if self.physics_weight < 0 or self.physics_huber_delta <= 0:
             raise ValueError("Chronaris physics configuration is invalid")
+        if self.learnable_semantic_queries and not self.semantic_event_enabled:
+            raise ValueError("learnable semantic queries require semantic_event_enabled")
+        if self.semantic_event_enabled and self.fusion_kind != "safe_lag":
+            raise ValueError("semantic event fusion requires safe_lag fusion")
         labels = dict(self.field_labels)
         if len(labels) != len(self.field_labels):
             raise ValueError("Chronaris field label keys must be unique")
@@ -163,6 +177,8 @@ class ChronarisContinuousEncoderConfig:
             "scale_gate_enabled": self.scale_gate_enabled,
             "fusion_kind": self.fusion_kind,
             "max_ode_step_s": self.max_ode_step_s,
+            "semantic_event_enabled": self.semantic_event_enabled,
+            "learnable_semantic_queries": self.learnable_semantic_queries,
         }
 
     def to_checkpoint_dict(self) -> Mapping[str, object]:
@@ -193,6 +209,9 @@ class ChronarisContinuousEncoding:
     alignment_output: DualStreamPrototypeOutput
     fusion_output: MultiScaleCausalFusionOutput | SafeLagAwareFusionOutput
     physics_audit: ChronarisPhysicsAudit
+    semantic_event_output: SemanticEventTensorOutput | None
+    aggregated_lag_attention: torch.Tensor
+    mechanism_diagnostics: Mapping[str, object]
 
 
 class ChronarisContinuousFusionEncoder(nn.Module):
@@ -226,6 +245,21 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                     use_scale_gate=config.scale_gate_enabled,
                 )
             )
+        self.semantic_event_fusion = (
+            CausalEventFusion(
+                CausalEventFusionConfig(
+                    state_dim=config.hidden_dim,
+                    learnable_queries=config.learnable_semantic_queries,
+                    query_specs=(
+                        SemanticQuerySpec("flight_event", "vehicle_plus_event"),
+                        SemanticQuerySpec("physiology_response", "physiology_plus_gap"),
+                        SemanticQuerySpec("human_aircraft_coordination", "coordination_gap"),
+                    ),
+                )
+            )
+            if config.semantic_event_enabled
+            else None
+        )
         self.output_dropout = nn.Dropout(config.dropout)
 
     def forward(
@@ -270,6 +304,41 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                 query_timestamps_s=query_times,
             )
         )
+        aggregated_lag_attention = _aggregate_lag_attention(fusion)
+        semantic_output = None
+        if self.semantic_event_fusion is not None:
+            if not isinstance(fusion, SafeLagAwareFusionOutput):
+                raise RepresentationContractError(
+                    "semantic event fusion requires safe-lag output"
+                )
+            semantic_output, semantic_context = _causal_semantic_sequence(
+                self.semantic_event_fusion,
+                physiology_states=physiology_states,
+                vehicle_states=vehicle_states,
+                physiology_valid=physiology_valid,
+                vehicle_valid=vehicle_valid,
+                attention_weights=aggregated_lag_attention,
+                query_times=query_times,
+            )
+            cross_features = fusion.cross_features + self.causal_fusion.cross_projection(
+                semantic_context
+            )
+            sequence = torch.cat(
+                (
+                    fusion.physiology_private,
+                    fusion.vehicle_private,
+                    fusion.cross_gate * cross_features,
+                ),
+                dim=-1,
+            )
+            sequence = torch.nan_to_num(sequence) * fusion.modality_available_mask.unsqueeze(
+                -1
+            ).to(sequence.dtype)
+            fusion = replace(
+                fusion,
+                sequence_embedding=sequence,
+                cross_features=cross_features,
+            )
         physics = (
             build_chronaris_physics_audit(
                 alignment,
@@ -288,7 +357,103 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             alignment_output=alignment,
             fusion_output=fusion,
             physics_audit=physics,
+            semantic_event_output=semantic_output,
+            aggregated_lag_attention=aggregated_lag_attention,
+            mechanism_diagnostics={
+                "semantic_event_enabled": self.config.semantic_event_enabled,
+                "learnable_semantic_queries": self.config.learnable_semantic_queries,
+                "query_names": (
+                    list(semantic_output.query_names) if semantic_output is not None else []
+                ),
+            },
         )
+
+
+def _aggregate_lag_attention(
+    fusion: MultiScaleCausalFusionOutput | SafeLagAwareFusionOutput,
+) -> torch.Tensor:
+    attention = torch.stack(fusion.attention_weights, dim=2)
+    return (attention * fusion.scale_gate_weights.unsqueeze(-1)).sum(dim=2)
+
+
+def _causal_semantic_sequence(
+    semantic_fusion: CausalEventFusion,
+    *,
+    physiology_states: torch.Tensor,
+    vehicle_states: torch.Tensor,
+    physiology_valid: torch.Tensor,
+    vehicle_valid: torch.Tensor,
+    attention_weights: torch.Tensor,
+    query_times: torch.Tensor,
+) -> tuple[SemanticEventTensorOutput, torch.Tensor]:
+    batch_size, point_count, state_dim = vehicle_states.shape
+    prefix = query_times[:, None, :] <= query_times[:, :, None]
+    physiology_prefix = prefix & physiology_valid[:, None, :]
+    vehicle_prefix = prefix & vehicle_valid[:, None, :]
+    expanded_physiology = (
+        physiology_states[:, None] * physiology_prefix.unsqueeze(-1).to(physiology_states.dtype)
+    ).reshape(batch_size * point_count, point_count, state_dim)
+    expanded_vehicle = (
+        vehicle_states[:, None] * vehicle_prefix.unsqueeze(-1).to(vehicle_states.dtype)
+    ).reshape(batch_size * point_count, point_count, state_dim)
+    event_scores = compute_vehicle_event_scores(vehicle_states)
+    expanded_scores = (
+        event_scores[:, None] * vehicle_prefix.to(event_scores.dtype)
+    ).reshape(batch_size * point_count, point_count)
+    expanded_offsets = query_times[:, None].expand(-1, point_count, -1).reshape(
+        batch_size * point_count,
+        point_count,
+    )
+    sequence_output = semantic_fusion(
+        SemanticEventTensorInput(
+            physiology_states=expanded_physiology,
+            vehicle_states=expanded_vehicle,
+            attention_weights=attention_weights.reshape(
+                batch_size * point_count,
+                1,
+                point_count,
+            ),
+            vehicle_event_scores=expanded_scores,
+            vehicle_offsets_s=expanded_offsets,
+        )
+    )
+    context = sequence_output.query_context_states.reshape(
+        batch_size,
+        point_count,
+        -1,
+        state_dim,
+    ).mean(dim=2)
+
+    def terminal(value: torch.Tensor) -> torch.Tensor:
+        return value.reshape(batch_size, point_count, *value.shape[1:])[:, -1]
+
+    return (
+        replace(
+            sequence_output,
+            query_states=terminal(sequence_output.query_states),
+            query_context_states=terminal(sequence_output.query_context_states),
+            event_token_states=terminal(sequence_output.event_token_states),
+            event_token_scores=terminal(sequence_output.event_token_scores),
+            event_token_center_offsets_s=terminal(
+                sequence_output.event_token_center_offsets_s
+            ),
+            event_token_start_offsets_s=terminal(
+                sequence_output.event_token_start_offsets_s
+            ),
+            event_token_end_offsets_s=terminal(sequence_output.event_token_end_offsets_s),
+            event_token_mask=terminal(sequence_output.event_token_mask),
+            query_to_event_attention=terminal(
+                sequence_output.query_to_event_attention
+            ),
+            event_attribution_scores=terminal(
+                sequence_output.event_attribution_scores
+            ),
+            query_attribution_scores=terminal(
+                sequence_output.query_attribution_scores
+            ),
+        ),
+        context,
+    )
 
 
 class ChronarisContinuousFusionAdapter:

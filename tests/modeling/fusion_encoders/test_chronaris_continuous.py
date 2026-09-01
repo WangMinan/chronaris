@@ -145,6 +145,59 @@ def test_max_ode_step_is_checkpointed_without_changing_default() -> None:
     ) == stepped
 
 
+def test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal() -> None:
+    torch.manual_seed(37)
+    batch = collate_observation_samples([_sample("train"), _sample("test")])
+    changed = collate_observation_samples([_sample("test", future_scale=1000.0)])
+    disabled = ChronarisContinuousFusionEncoder(
+        ChronarisContinuousEncoderConfig(
+            physiology_feature_names=PHYSIOLOGY_NAMES,
+            vehicle_feature_names=VEHICLE_NAMES,
+            fusion_kind="safe_lag",
+            dropout=0.0,
+        )
+    )
+    enabled = ChronarisContinuousFusionEncoder(
+        ChronarisContinuousEncoderConfig(
+            physiology_feature_names=PHYSIOLOGY_NAMES,
+            vehicle_feature_names=VEHICLE_NAMES,
+            fusion_kind="safe_lag",
+            semantic_event_enabled=True,
+            learnable_semantic_queries=True,
+            dropout=0.0,
+        )
+    )
+    enabled.load_state_dict(disabled.state_dict(), strict=False)
+
+    disabled_output = disabled(batch, compute_diagnostics=False)
+    enabled_output = enabled(batch, compute_diagnostics=False)
+    changed_output = enabled(changed, compute_diagnostics=False)
+    past = batch.query_timestamps_s[0] < 20.0
+
+    torch.testing.assert_close(
+        enabled_output.sequence_embedding[..., :48],
+        disabled_output.sequence_embedding[..., :48],
+    )
+    future_effect = (
+        enabled_output.sequence_embedding[1, past]
+        - changed_output.sequence_embedding[0, past]
+    ).abs().max()
+    assert float(future_effect.detach()) <= 1e-6
+    assert enabled_output.semantic_event_output is not None
+    assert enabled_output.semantic_event_output.query_names == (
+        "flight_event",
+        "physiology_response",
+        "human_aircraft_coordination",
+    )
+    assert enabled_output.aggregated_lag_attention.shape == (2, 96, 96)
+
+    enabled.zero_grad(set_to_none=True)
+    enabled(batch, compute_diagnostics=False).sequence_embedding.square().mean().backward()
+    residual = enabled.semantic_event_fusion.query_bank.query_residual
+    assert residual.grad is not None
+    assert torch.count_nonzero(residual.grad) > 0
+
+
 def test_no_continuous_evolution_is_a_real_path_ablation() -> None:
     torch.manual_seed(19)
     batch = collate_observation_samples([_sample("train"), _sample("test")])

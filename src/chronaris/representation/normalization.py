@@ -299,8 +299,6 @@ class TrainOnlyPCAProjector:
             "input_dim": int(self.components.shape[1]),
             "component_count": int(self.components.shape[0]),
             "output_dim": self.output_dim,
-            "solver": self.solver,
-            "random_state": self.random_state,
             "fit_sample_ids": list(self.fit_sample_ids),
             "fit_sample_hash": self.fit_sample_hash,
             "center_sha256": hashlib.sha256(self.center.tobytes()).hexdigest(),

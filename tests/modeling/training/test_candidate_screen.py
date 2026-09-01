@@ -402,3 +402,133 @@ def test_candidate_same_seed_ignores_prior_rng_consumption(tmp_path) -> None:
         "canonical_training_state_sha256"
     ]
     assert first.epoch_rows == second.epoch_rows
+
+
+def test_candidate_trains_and_restores_learnable_semantic_objectives(tmp_path) -> None:
+    batch = collate_observation_samples(
+        [
+            _sample("train_a", 0),
+            _sample("train_b", 1),
+            _sample("validation", 2),
+            _sample("held_out", 3),
+        ]
+    )
+    fold = FoldLineage(
+        fold_id="semantic_objective_fold",
+        train_sample_ids=("train_a", "train_b"),
+        validation_sample_ids=("validation",),
+        held_out_sample_ids=("held_out",),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+    )
+    result = train_pretext_candidate(
+        "chronaris",
+        candidate=EncoderCandidateConfig(candidate_id="C", hidden_dim=32),
+        batch=batch,
+        fold=fold,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        vehicle_field_labels=(),
+        normalizer=normalizer,
+        output_root=tmp_path,
+        config=CandidateScreenConfig(
+            max_epochs=1,
+            batch_size=2,
+            patience=1,
+            semantic_event_enabled=True,
+            learnable_semantic_queries=True,
+        ),
+        chronaris_fusion_kind="safe_lag",
+        chronaris_mechanism_enabled=True,
+        chronaris_explicit_shift_weight=0.1,
+        chronaris_event_pair_weight=0.1,
+        resume=False,
+    )
+    encoder, _heads, _normalizer, payload = load_common_pretraining_checkpoint(
+        result.best_checkpoint_path
+    )
+    rows = payload["training_rows"]
+
+    assert payload["explicit_time_shift_head_state_dict"] is not None
+    assert {
+        "chronaris_continuous_alignment",
+        "chronaris_physical_consistency",
+        "chronaris_causal_direction",
+        "explicit_time_shift",
+        "event_response_pairing",
+    }.issubset({row["term_name"] for row in rows})
+    assert all(
+        row["related_parameter_gradient_norm"] > 0
+        for row in rows
+        if row["term_name"] in {"explicit_time_shift", "event_response_pairing"}
+    )
+    assert encoder.backbone.config.semantic_event_enabled is True
+    assert encoder.backbone.config.learnable_semantic_queries is True
+    assert encoder.backbone.semantic_event_fusion.query_bank.query_residual.shape == (3, 32)
+    torch.testing.assert_close(
+        encoder.backbone.semantic_event_fusion.query_bank.query_residual,
+        payload["encoder_state_dict"][
+            "backbone.semantic_event_fusion.query_bank.query_residual"
+        ],
+    )
+
+
+def test_explicit_shift_weight_changes_final_encoder_parameters(tmp_path) -> None:
+    batch = collate_observation_samples(
+        [
+            _sample("train_a", 0),
+            _sample("train_b", 1),
+            _sample("validation", 2),
+            _sample("held_out", 3),
+        ]
+    )
+    fold = FoldLineage(
+        fold_id="shift_weight_fold",
+        train_sample_ids=("train_a", "train_b"),
+        validation_sample_ids=("validation",),
+        held_out_sample_ids=("held_out",),
+    )
+    normalizer = TrainOnlyRobustNormalizer().fit(
+        batch,
+        train_sample_ids=fold.train_sample_ids,
+        held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids,
+    )
+    common = dict(
+        method_name="chronaris",
+        candidate=EncoderCandidateConfig(candidate_id="C", hidden_dim=32),
+        batch=batch,
+        fold=fold,
+        physiology_feature_names=("physiology.a",),
+        vehicle_feature_names=("vehicle.a",),
+        vehicle_field_labels=(),
+        normalizer=normalizer,
+        config=CandidateScreenConfig(max_epochs=1, batch_size=2, patience=1, seed=17),
+        chronaris_fusion_kind="safe_lag",
+        resume=False,
+    )
+    zero = train_pretext_candidate(
+        output_root=tmp_path / "zero",
+        chronaris_explicit_shift_weight=0.0,
+        **common,
+    )
+    active = train_pretext_candidate(
+        output_root=tmp_path / "active",
+        chronaris_explicit_shift_weight=0.1,
+        **common,
+    )
+    zero_payload = torch.load(zero.best_checkpoint_path, map_location="cpu", weights_only=True)
+    active_payload = torch.load(active.best_checkpoint_path, map_location="cpu", weights_only=True)
+
+    assert any(
+        not torch.equal(zero_payload["encoder_state_dict"][name], value)
+        for name, value in active_payload["encoder_state_dict"].items()
+    )
+    shift_rows = [
+        row
+        for row in active_payload["training_rows"]
+        if row["term_name"] == "explicit_time_shift"
+    ]
+    assert shift_rows and shift_rows[0]["weighted_loss"] > 0
