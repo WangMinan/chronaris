@@ -125,6 +125,26 @@ def test_continuous_encoder_is_causal_and_traces_real_ode_updates() -> None:
     assert trace.maximum_positive_delta_t_s > 0
 
 
+def test_max_ode_step_is_checkpointed_without_changing_default() -> None:
+    default = ChronarisContinuousEncoderConfig(
+        physiology_feature_names=PHYSIOLOGY_NAMES,
+        vehicle_feature_names=VEHICLE_NAMES,
+    )
+    stepped = ChronarisContinuousEncoderConfig(
+        physiology_feature_names=PHYSIOLOGY_NAMES,
+        vehicle_feature_names=VEHICLE_NAMES,
+        max_ode_step_s=0.5,
+    )
+
+    assert default.max_ode_step_s is None
+    assert default.alignment_config().max_ode_step_s is None
+    assert stepped.alignment_config().max_ode_step_s == 0.5
+    assert stepped.effective_mechanisms()["max_ode_step_s"] == 0.5
+    assert ChronarisContinuousEncoderConfig.from_checkpoint_dict(
+        stepped.to_checkpoint_dict()
+    ) == stepped
+
+
 def test_no_continuous_evolution_is_a_real_path_ablation() -> None:
     torch.manual_seed(19)
     batch = collate_observation_samples([_sample("train"), _sample("test")])

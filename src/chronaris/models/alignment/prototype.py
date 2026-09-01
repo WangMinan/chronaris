@@ -88,6 +88,7 @@ class SingleStreamODERNNPrototype(nn.Module):
             ode_method=self.config.ode_method,
             ode_rtol=self.config.ode_rtol,
             ode_atol=self.config.ode_atol,
+            max_ode_step_s=self.config.max_ode_step_s,
         )
         self.decoder = ObservationDecoder(
             self.config.hidden_dim,

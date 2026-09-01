@@ -163,6 +163,7 @@ def build_trainable_fusion_encoder(
     candidate_config: EncoderCandidateConfig | None = None,
     chronaris_variant: str = "full",
     chronaris_fusion_kind: str = "multiscale",
+    chronaris_max_ode_step_s: float | None = None,
 ) -> TrainableFusionEncoder:
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
@@ -210,6 +211,7 @@ def build_trainable_fusion_encoder(
                 field_labels=vehicle_field_labels,
                 variant=chronaris_variant,
                 fusion_kind=chronaris_fusion_kind,
+                max_ode_step_s=chronaris_max_ode_step_s,
                 hidden_dim=candidate.hidden_dim,
                 embedding_dim=candidate.hidden_dim,
                 encoder_hidden_dim=candidate.hidden_dim,

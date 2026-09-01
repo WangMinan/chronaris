@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable, Mapping, Sequence
@@ -40,6 +41,7 @@ class CommonPretrainingConfig:
     seed: int = 17
     device: str = "cpu"
     deterministic: bool = True
+    max_ode_step_s: float | None = None
 
     def __post_init__(self) -> None:
         if self.epochs <= 0 or self.batch_size <= 0:
@@ -52,6 +54,10 @@ class CommonPretrainingConfig:
             raise ValueError("pretraining device must be cpu or cuda")
         if self.device == "cuda" and not torch.cuda.is_available():
             raise ValueError("pretraining requested unavailable CUDA device")
+        if self.max_ode_step_s is not None and (
+            not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
+        ):
+            raise ValueError("max_ode_step_s must be finite and positive when set")
 
 
 @dataclass(frozen=True, slots=True)
@@ -159,6 +165,7 @@ def train_common_pretext_method(
             seed=resolved_config.seed,
             device=resolved_config.device,
             deterministic=resolved_config.deterministic,
+            max_ode_step_s=resolved_config.max_ode_step_s,
         ),
         augmentation_policy=resolved_policy,
         batch_provider=batch_provider,
@@ -191,16 +198,10 @@ def load_common_pretraining_checkpoint(
     vehicle_names = tuple(payload["vehicle_feature_names"])
     field_labels = tuple(tuple(value) for value in payload["vehicle_field_labels"])
     candidate = EncoderCandidateConfig(**payload.get("candidate_config", {}))
-    chronaris_variant = str(
-        payload.get("encoder_manifest", {})
-        .get("backbone_config", {})
-        .get("variant", "full")
-    )
-    chronaris_fusion_kind = str(
-        payload.get("encoder_manifest", {})
-        .get("backbone_config", {})
-        .get("fusion_kind", "multiscale")
-    )
+    backbone_config = payload.get("encoder_manifest", {}).get("backbone_config", {})
+    chronaris_variant = str(backbone_config.get("variant", "full"))
+    chronaris_fusion_kind = str(backbone_config.get("fusion_kind", "multiscale"))
+    chronaris_max_ode_step_s = backbone_config.get("max_ode_step_s")
     encoder = build_trainable_fusion_encoder(
         method_name,
         physiology_feature_names=physiology_names,
@@ -209,6 +210,7 @@ def load_common_pretraining_checkpoint(
         candidate_config=candidate,
         chronaris_variant=chronaris_variant,
         chronaris_fusion_kind=chronaris_fusion_kind,
+        chronaris_max_ode_step_s=chronaris_max_ode_step_s,
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(

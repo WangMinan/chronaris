@@ -76,6 +76,7 @@ class ChronarisContinuousEncoderConfig:
     ode_method: str = "euler"
     ode_rtol: float = 1e-3
     ode_atol: float = 1e-4
+    max_ode_step_s: float | None = None
     physics_weight: float = 0.1
     physics_huber_delta: float = 1.0
     dropout: float = 0.1
@@ -149,6 +150,7 @@ class ChronarisContinuousEncoderConfig:
             ode_method=self.ode_method,
             ode_rtol=self.ode_rtol,
             ode_atol=self.ode_atol,
+            max_ode_step_s=self.max_ode_step_s,
             enable_continuous_evolution=self.continuous_evolution_enabled,
         )
 
@@ -160,6 +162,7 @@ class ChronarisContinuousEncoderConfig:
             "lag_ranges_s": [list(value) for value in self.lag_ranges_s],
             "scale_gate_enabled": self.scale_gate_enabled,
             "fusion_kind": self.fusion_kind,
+            "max_ode_step_s": self.max_ode_step_s,
         }
 
     def to_checkpoint_dict(self) -> Mapping[str, object]:

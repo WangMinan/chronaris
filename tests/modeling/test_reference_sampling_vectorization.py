@@ -102,3 +102,37 @@ def test_vectorized_reference_sampling_matches_legacy_output_and_gradients() -> 
             assert actual is expected
         else:
             torch.testing.assert_close(actual, expected, rtol=1e-5, atol=1e-6)
+
+
+def test_masked_euler_substeps_match_manual_updates_and_keep_gradients_finite() -> None:
+    torch.manual_seed(29)
+    config = AlignmentPrototypeConfig(
+        hidden_dim=4,
+        embedding_dim=3,
+        encoder_hidden_dim=5,
+        decoder_hidden_dim=5,
+        dynamics_hidden_dim=6,
+        projection_dim=4,
+        ode_method="euler",
+        max_ode_step_s=0.5,
+    )
+    model = SingleStreamODERNNPrototype(1, config=config)
+    initial = torch.randn(3, 4, requires_grad=True)
+    deltas = torch.tensor([0.0, 0.5, 1.2])
+
+    actual = model.ode_rnn_cell.evolve_hidden_state(initial, deltas)
+    expected = initial
+    counts = torch.tensor([0, 1, 3])
+    sizes = torch.tensor([0.0, 0.5, 0.4])
+    for step in range(3):
+        proposal = expected + sizes[:, None] * model.ode_rnn_cell.ode_func(
+            expected.new_zeros(()), expected
+        )
+        expected = torch.where((counts > step)[:, None], proposal, expected)
+
+    torch.testing.assert_close(actual, expected)
+    gradients = torch.autograd.grad(
+        actual.square().sum(),
+        (initial, *model.ode_rnn_cell.ode_func.parameters()),
+    )
+    assert all(torch.isfinite(value).all() for value in gradients)

@@ -54,6 +54,7 @@ class ODERNNCell(nn.Module):
         ode_method: str = "rk4",
         ode_rtol: float = 1e-3,
         ode_atol: float = 1e-4,
+        max_ode_step_s: float | None = None,
     ) -> None:
         super().__init__()
         if embedding_dim <= 0:
@@ -66,6 +67,7 @@ class ODERNNCell(nn.Module):
         self.ode_method = ode_method
         self.ode_rtol = ode_rtol
         self.ode_atol = ode_atol
+        self.max_ode_step_s = max_ode_step_s
         self.ode_func = HiddenStateODEFunc(
             hidden_dim,
             dynamics_hidden_dim=dynamics_hidden_dim,
@@ -90,6 +92,8 @@ class ODERNNCell(nn.Module):
             min=0.0,
         )
         if self.ode_method == "euler":
+            if self.max_ode_step_s is not None:
+                return self._evolve_euler_substeps(hidden_state, clamped_delta_t)
             derivative = self.ode_func(hidden_state.new_zeros(()), hidden_state)
             return hidden_state + (clamped_delta_t.unsqueeze(-1) * derivative)
 
@@ -115,6 +119,28 @@ class ODERNNCell(nn.Module):
             evolved_rows.append(trajectory[-1, 0])
 
         return torch.stack(evolved_rows, dim=0)
+
+    def _evolve_euler_substeps(
+        self,
+        hidden_state: torch.Tensor,
+        delta_t_s: torch.Tensor,
+    ) -> torch.Tensor:
+        step_counts = torch.ceil(delta_t_s / self.max_ode_step_s).to(torch.long)
+        step_sizes = torch.where(
+            step_counts > 0,
+            delta_t_s / step_counts.clamp_min(1).to(delta_t_s.dtype),
+            torch.zeros_like(delta_t_s),
+        )
+        evolved = hidden_state
+        zero_time = hidden_state.new_zeros(())
+        for step_index in range(int(step_counts.max().item())):
+            active = step_counts > step_index
+            proposal = evolved + step_sizes.unsqueeze(-1) * self.ode_func(
+                zero_time,
+                evolved,
+            )
+            evolved = torch.where(active.unsqueeze(-1), proposal, evolved)
+        return evolved
 
     def update_hidden_state(
         self,

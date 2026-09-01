@@ -2,6 +2,7 @@
 from __future__ import annotations
 import hashlib
 import json
+import math
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -63,6 +64,7 @@ class CandidateScreenConfig:
     minimum_delta: float = 0.0
     device: str = "cpu"
     deterministic: bool = True
+    max_ode_step_s: float | None = None
 
     def __post_init__(self) -> None:
         if self.max_epochs <= 0 or self.batch_size <= 0 or self.patience <= 0:
@@ -75,6 +77,10 @@ class CandidateScreenConfig:
             raise ValueError("candidate screen device must be cpu or cuda")
         if self.device == "cuda" and not torch.cuda.is_available():
             raise ValueError("candidate screen requested unavailable CUDA device")
+        if self.max_ode_step_s is not None and (
+            not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
+        ):
+            raise ValueError("max_ode_step_s must be finite and positive when set")
 
 
 @dataclass(frozen=True, slots=True)
@@ -245,6 +251,7 @@ def _train_pretext_candidate(
         vehicle_field_labels=vehicle_field_labels,
         candidate_config=candidate,
         chronaris_fusion_kind=chronaris_fusion_kind,
+        chronaris_max_ode_step_s=resolved.max_ode_step_s,
     ).to(resolved.device)
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,

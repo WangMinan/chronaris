@@ -12,6 +12,7 @@
 
 - `runs/2026-09-01_thesis-mainline-preflight/`：**论文主线现场保护与基线预检**。从 `eab2c0b` 建立唯一论文开发分支和历史证据标签，完整测试 `429 passed, 8 skipped`，RTX 4090、CogPilot、CLARE、鼎新、仿真和磁盘预检通过；当前用户未提交改动保持原样。该 run 不训练模型、不产生论文指标。
 - `runs/2026-09-01_training-trust-repair/`：**论文主线可信训练第一批修复**。公共预训练统一复用 validation-backed candidate trainer，三条训练路径封闭随机状态并使用 v2 checkpoint；表示导出只归一化一次，CogPilot/CLARE 下游缩放只拟合训练折并增加受试者分组 inner-validation。聚焦测试 `16 passed`、完整测试 `433 passed, 8 skipped`、CUDA 短重放 `2 passed`。该 run 只形成工程可信度证据，不产生论文任务指标；原生时间公开数据输入仍待下一子阶段完成。
+- `runs/2026-09-01_native-time-euler-repair/`：**原生时间输入与连续演化子步修复**。CogPilot/CLARE 双流保留各自原始时间戳、采样密度和缺失 mask，多传感器按时间戳并集组织；lazy batch provider 和有界缓存避免一次性读取完整公共数据。ODE-RNN 增加兼容默认关闭的批量 mask Euler 子步。真实数据抽样可直接产生有限的 96 点、64 维表示；聚焦测试 `26 passed`、完整测试 `439 passed, 8 skipped`，RTX 4090 前后向通过。该 run 不选择 ODE 方案、不产生任务指标。
 
 > 2026 年 7 月的安全滞后感知融合、CogPilot 和 CLARE 研究结果现仅作历史追溯；受训练确定性、重复归一化、测试折缩放或上下文时间轴缺陷影响的报告均已退出毕业论文主结果，等待评价协议 v3 重跑。下列原始条目和数字不覆盖、不删除。
 
