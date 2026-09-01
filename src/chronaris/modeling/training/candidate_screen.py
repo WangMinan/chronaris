@@ -1,6 +1,8 @@
 """Early-stopped, public-pretext-only encoder candidate screening."""
 from __future__ import annotations
+from contextlib import contextmanager
 import math
+import threading
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -148,34 +150,57 @@ def train_pretext_candidate(
     resume: bool = True,
 ) -> CandidateScreenResult:
     resolved = config or CandidateScreenConfig()
-    with isolated_training_rng(
-        resolved.seed,
-        deterministic=resolved.deterministic,
-    ):
-        return _train_pretext_candidate(
-            method_name,
-            candidate=candidate,
-            batch=batch,
-            fold=fold,
-            physiology_feature_names=physiology_feature_names,
-            vehicle_feature_names=vehicle_feature_names,
-            vehicle_field_labels=vehicle_field_labels,
-            normalizer=normalizer,
-            output_root=output_root,
-            config=resolved,
-            augmentation_policy=augmentation_policy,
-            batch_provider=batch_provider,
-            initialization_checkpoint=initialization_checkpoint,
-            chronaris_variant=chronaris_variant,
-            chronaris_fusion_kind=chronaris_fusion_kind,
-            chronaris_lag_aware_weight=chronaris_lag_aware_weight,
-            chronaris_mechanism_enabled=chronaris_mechanism_enabled,
-            chronaris_explicit_shift_enabled=chronaris_explicit_shift_enabled,
-            chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
-            chronaris_event_pair_weight=chronaris_event_pair_weight,
-            include_candidate_subdirectory=include_candidate_subdirectory,
-            resume=resume,
-        )
+    with _periodic_training_heartbeat(method_name, resolved.heartbeat_interval_s):
+        with isolated_training_rng(
+            resolved.seed,
+            deterministic=resolved.deterministic,
+        ):
+            return _train_pretext_candidate(
+                method_name,
+                candidate=candidate,
+                batch=batch,
+                fold=fold,
+                physiology_feature_names=physiology_feature_names,
+                vehicle_feature_names=vehicle_feature_names,
+                vehicle_field_labels=vehicle_field_labels,
+                normalizer=normalizer,
+                output_root=output_root,
+                config=resolved,
+                augmentation_policy=augmentation_policy,
+                batch_provider=batch_provider,
+                initialization_checkpoint=initialization_checkpoint,
+                chronaris_variant=chronaris_variant,
+                chronaris_fusion_kind=chronaris_fusion_kind,
+                chronaris_lag_aware_weight=chronaris_lag_aware_weight,
+                chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+                chronaris_explicit_shift_enabled=chronaris_explicit_shift_enabled,
+                chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
+                chronaris_event_pair_weight=chronaris_event_pair_weight,
+                include_candidate_subdirectory=include_candidate_subdirectory,
+                resume=resume,
+            )
+
+
+@contextmanager
+def _periodic_training_heartbeat(method_name: str, interval_s: float):
+    stopped = threading.Event()
+    started = time.perf_counter()
+
+    def emit_until_stopped() -> None:
+        while not stopped.wait(interval_s):
+            print(
+                f"[candidate-heartbeat] method={method_name} status=alive "
+                f"wall_elapsed_s={time.perf_counter() - started:.1f}",
+                flush=True,
+            )
+
+    thread = threading.Thread(target=emit_until_stopped, daemon=True)
+    thread.start()
+    try:
+        yield
+    finally:
+        stopped.set()
+        thread.join()
 
 
 def _train_pretext_candidate(
@@ -403,7 +428,6 @@ def _train_pretext_candidate(
         else _batch_ids(fold.train_sample_ids, resolved.batch_size)
     )
     started = time.perf_counter()
-    last_heartbeat = started
     for epoch in range(start_epoch, resolved.max_epochs + 1):
         encoder.train()
         heads.train()
@@ -536,14 +560,6 @@ def _train_pretext_candidate(
             )
             _accumulate_loss_terms(train_totals, output.terms)
             step_count += 1
-            now = time.perf_counter()
-            if now - last_heartbeat >= resolved.heartbeat_interval_s:
-                print(
-                    f"[candidate-heartbeat] method={method_name} epoch={epoch} "
-                    f"step={step_count} elapsed_s={elapsed_offset + now - started:.1f}",
-                    flush=True,
-                )
-                last_heartbeat = now
         train_losses = _finalize_loss_totals(train_totals)
         validation_losses = _evaluate_public_losses(
             encoder=encoder,

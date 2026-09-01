@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import hashlib
+import time
 
 import numpy as np
 import torch
 
 from chronaris.modeling.training.candidate_screen import (
+    _periodic_training_heartbeat,
     _training_configs_match_ignoring_device,
 )
 
@@ -54,6 +56,12 @@ def _sample(sample_id: str, offset: float):
         vehicle_feature_mask=np.ones((4, 1), dtype=bool),
         source_sample_hash=hashlib.sha256(sample_id.encode()).hexdigest(),
     )
+
+
+def test_periodic_heartbeat_runs_while_a_batch_is_busy(capsys) -> None:
+    with _periodic_training_heartbeat("chronaris", 0.01):
+        time.sleep(0.025)
+    assert "method=chronaris status=alive" in capsys.readouterr().out
 
 
 def _sample_two_features(sample_id: str, offset: float):
