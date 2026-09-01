@@ -1,5 +1,7 @@
 # CLARE GroupKFold-5：低方差定论（诚实修订 seed-17 假象）
 
+> 状态：`superseded_due_to_protocol_defects`。五折结果仍受重复归一化、测试折特征缩放拟合、错误上下文时长和单随机种子影响，不能作为方法稳健排序定论；原数字保留用于追溯，等待评价协议 v3 重跑。
+
 状态：completed（公开数据，5 折 GroupKFold 定论）。日期：2026-07-24。
 
 ## 目的

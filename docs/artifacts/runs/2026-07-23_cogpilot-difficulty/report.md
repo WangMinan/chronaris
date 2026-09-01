@@ -1,5 +1,7 @@
 # CogPilot 飞行难度分类（公开数据双流增量证据，gate 3/5）
 
+> 状态：`superseded_due_to_protocol_defects`。本结果受重复归一化和测试折特征缩放拟合影响，并采用提前规则网格化的双流输入；原数字保留用于追溯，不进入毕业论文主结果。
+
 状态：completed（公开数据真实下游结果，单 LOSO 折）。分支：`research/safe-lag-aware-fusion-20260718`。日期：2026-07-23。
 
 ## 目的

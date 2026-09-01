@@ -1,5 +1,7 @@
 # CLARE 认知负荷：中枢-外周融合真实跨模态胜出（gate 5 公开数据）
 
+> 状态：`superseded_due_to_protocol_defects`。本结果受重复归一化、测试折特征缩放拟合和 10 秒观测窗口被按 30 秒查询轴外推影响；原数字保留用于追溯，不进入毕业论文主结果。
+
 状态：completed（公开数据真实下游，单 LOSO 折）。日期：2026-07-24。
 
 ## 目的
@@ -37,3 +39,16 @@
 ## 与其他任务的统一解释
 
 鼎新机动、CogPilot 难度的标签由航电/飞机状态决定（融合难超该单流）；CLARE 认知负荷标签真正依赖中枢+外周双流（融合超双单流）。**任务语义决定融合是否有增量**——这一假设在 CLARE 上得到正向验证。
+
+## 两种子诚实修订（seed 29 未复现 seed 17 胜出）
+
+| 方法 | seed17 bal-acc | seed29 bal-acc | 均值 |
+| --- | --- | --- | --- |
+| fusion_safe_lag | 0.564 | 0.409 | 0.487 |
+| central_only（EEG） | 0.437 | 0.580 | **0.509** |
+| peripheral_only | 0.401 | 0.370 | 0.386 |
+| fusion_multiscale | 0.353 | 0.384 | 0.369 |
+
+**诚实修订**：seed 17 时 fusion_safe_lag(0.564) 超两单流，但 seed 29 时 central_only(0.580) 反超 fusion_safe_lag(0.409)。两种子均值 fusion_safe_lag(0.487) ≈ central_only(0.509)，**平局、胜者随种子翻转**。CLARE“融合超最佳单流”**不稳健**，与 CogPilot-10subj、Dingxin-seed17 的单种子胜出一样是种子假象。
+
+**唯一稳健结论**：fusion_safe_lag(均值 0.487) > fusion_multiscale(0.369)，架构改进跨种子成立但边际。融合未在任一任务上稳健超最佳单流——高种子方差（少受试者+冻结表示+线性消费者）使融合优势落入噪声。

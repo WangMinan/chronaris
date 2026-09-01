@@ -1,6 +1,20 @@
 # Chronaris 当前任务
 
-更新时间：2026-07-16
+更新时间：2026-09-01
+
+## 当前任务：论文主线连续对齐与可学习语义融合
+
+唯一活动开发分支为 `research/thesis-continuous-semantic-fusion-202609`。执行合同为 [论文主线连续对齐与语义融合评价协议 v3](../requirements/thesis-continuous-semantic-fusion-evaluation-v3.md)，现场保护与基线预检见 [2026-09-01_thesis-mainline-preflight](../artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)。
+
+执行顺序：
+
+1. **已完成：**保护当前工作树，创建历史证据标签和唯一论文开发分支；完整测试 `429 passed, 8 skipped`，CUDA、数据与磁盘预检通过。
+2. **当前：**修复确定性训练、真实 validation checkpoint、单次归一化、训练折缩放、正确上下文时长和原生时间公开数据输入。
+3. **待执行：**实现批量 Euler 子步、可学习事件语义查询、显式时移分类和跨 group 事件—响应配对目标。
+4. **待执行：**运行 seed 17 干净基线矩阵，再以 seeds 17/29/43 完成训练内候选筛选和机制门禁；最多允许两轮单原因改进。
+5. **待门禁：**冻结并运行仿真、CogPilot、CLARE、鼎新、核心消融、负对照和运行时实验；应用增量不足不触发无限调参。
+
+2026 年 7 月公开与研究分支结果保留用于追溯，但受协议缺陷影响的结果均标记 `superseded_due_to_protocol_defects`，不进入毕业论文主表。下方安全滞后感知融合任务作为历史研究记录保留。
 
 ## 当前任务：安全滞后感知融合新主线
 

@@ -1,14 +1,18 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-16
+更新时间：2026-09-01
 
 ## 一句话状态
 
-新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）已完成审计、研究计划与评价协议 v2，并实现新主干：`SafeLagAwareFusion`（单流旁路 + 安全门控残差）、`lag_aware_alignment_loss`（因果滞后容限对齐，已接入训练）与 `representation_diagnostics`。**CLARE 认知负荷 5 折 GroupKFold 低方差定论：central(EEG) 0.563 稳健胜 fusion_safe_lag 0.470（seed17 单切分胜出为高方差假象）；CogPilot 难度车辆主导（融合未超 vehicle）**。鼎新未来机动三种子（车辆主导任务）safe_lag 均值 0.224 未稳定超航电单流 0.481，门禁 4/6/8 未满足。关键洞见：任务语义决定融合是否有增量。晋级门禁整体未完全满足，研究分支不合入 main。
+论文主线已切换到 `research/thesis-continuous-semantic-fusion-202609`。2026 年 7 月安全滞后感知融合研究确认了单流旁路和安全门控的结构价值，但其公开数据、鼎新滞后对照和波次 A 结果受到训练确定性、重复归一化、测试折缩放或上下文时间轴问题影响，已退出毕业论文主结果。当前按评价协议 v3 先修复实验可信度，再实现可学习事件语义查询、显式时移监督和原生时间公开数据适配；协议与机制是硬门，真实任务双流增量是论文增强目标。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
+- **当前论文主线**：分支 `research/thesis-continuous-semantic-fusion-202609`。
+  - 评价协议 v3：[requirements/thesis-continuous-semantic-fusion-evaluation-v3.md](requirements/thesis-continuous-semantic-fusion-evaluation-v3.md)
+  - 现场保护与基线预检：[artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md](artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)
+  - 历史证据标签：`evidence/safe-lag-exploration-20260724`
 - **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
   - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)
   - 研究计划：[implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md](implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md)

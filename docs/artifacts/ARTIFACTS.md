@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-07-16
+更新时间：2026-09-01
 
 ## 目录定位
 
@@ -9,6 +9,10 @@
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
 ## 当前核心 runs
+
+- `runs/2026-09-01_thesis-mainline-preflight/`：**论文主线现场保护与基线预检**。从 `eab2c0b` 建立唯一论文开发分支和历史证据标签，完整测试 `429 passed, 8 skipped`，RTX 4090、CogPilot、CLARE、鼎新、仿真和磁盘预检通过；当前用户未提交改动保持原样。该 run 不训练模型、不产生论文指标。
+
+> 2026 年 7 月的安全滞后感知融合、CogPilot 和 CLARE 研究结果现仅作历史追溯；受训练确定性、重复归一化、测试折缩放或上下文时间轴缺陷影响的报告均已退出毕业论文主结果，等待评价协议 v3 重跑。下列原始条目和数字不覆盖、不删除。
 
 - `runs/2026-07-23_cogpilot-difficulty/`：**CogPilot 飞行难度四分类（公开数据双流增量正向证据）**。LOSO（10 参与者训练/3 测试），12 epoch、seed 17：safe_lag macro-F1 `0.4122` 同时高于旧融合 `0.4017`、最佳单流 vehicle_only `0.3396`、physiology_only `0.1521`。难度同时驱动生理唤醒与飞机操纵/状态，融合真正超过最佳单流（晋级门禁 3/5 方向性满足）；与鼎新车辆主导机动任务形成对照。单 LOSO 折非锁定确认；重型 checkpoint 位于被忽略目录。
 
