@@ -73,6 +73,7 @@ def test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop(tmp_path
         patience=1,
         seed=17,
         max_ode_step_s=5.0,
+        learning_rate=7e-4,
     )
     first = train_locked_chronaris(
         batch=batch,
@@ -114,6 +115,7 @@ def test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop(tmp_path
     assert payload["label_used_for_encoder_training"] is False
     assert payload["simulation_oracle_opened"] is False
     assert payload["encoder_manifest"]["backbone_config"]["max_ode_step_s"] == 5.0
+    assert payload["candidate_config"]["learning_rate"] == 7e-4
     assert _encoder.backbone.config.max_ode_step_s == 5.0
 
 

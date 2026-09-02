@@ -54,6 +54,7 @@ class SafeLagAwareFusionConfig:
     lag_ranges_s: tuple[tuple[float, float], ...] = DEFAULT_LAG_RANGES_S
     use_causal_mask: bool = True
     use_scale_gate: bool = True
+    use_private_bypass: bool = True
     attention_temperature: float = 1.0
     boundary_epsilon_s: float = 1e-6
     # A large negative bias makes the sigmoid gate start near 0 (safe fallback).
@@ -208,6 +209,9 @@ class SafeLagAwareFusion(nn.Module):
         # Private bypass + safe gated cross residual.
         physiology_private = self.physiology_private_projection(inputs.physiology_states)
         vehicle_private = self.vehicle_private_projection(inputs.vehicle_states)
+        if not self.config.use_private_bypass:
+            physiology_private = torch.zeros_like(physiology_private)
+            vehicle_private = torch.zeros_like(vehicle_private)
         cross_features = self.cross_projection(attended)
         cross_gate = torch.sigmoid(self.cross_gate(gate_inputs))
         gated_cross = cross_gate * cross_features

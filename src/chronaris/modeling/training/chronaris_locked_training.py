@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable, Mapping, Sequence
 
@@ -44,12 +44,15 @@ class LockedChronarisTrainingConfig:
     explicit_shift_enabled: bool = False
     event_pair_weight: float = 0.0
     heartbeat_interval_s: float = 60.0
+    learning_rate: float | None = None
 
     def __post_init__(self) -> None:
         if min(self.max_epochs, self.batch_size, self.patience) <= 0:
             raise ValueError("locked Chronaris epoch/batch/patience must be positive")
         if self.weight_decay < 0 or self.gradient_clip_norm <= 0:
             raise ValueError("locked Chronaris optimizer configuration is invalid")
+        if self.learning_rate is not None and self.learning_rate <= 0:
+            raise ValueError("locked Chronaris learning rate must be positive")
         if self.device not in {"cpu", "cuda"}:
             raise ValueError("locked Chronaris device must be cpu or cuda")
         if self.device == "cuda" and not torch.cuda.is_available():
@@ -111,6 +114,8 @@ def train_locked_chronaris(
 ) -> LockedChronarisTrainingResult:
     resolved = config or LockedChronarisTrainingConfig()
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
+    if resolved.learning_rate is not None:
+        candidate = replace(candidate, learning_rate=resolved.learning_rate)
     result = train_pretext_candidate(
         "chronaris",
         candidate=candidate,

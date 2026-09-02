@@ -195,5 +195,6 @@ def test_safe_lag_supports_ablation_matrix() -> None:
         fusion_kind="safe_lag",
     )
     ablations = build_chronaris_ablation_configs(base)
-    assert len(ablations) == 5
+    assert len(ablations) == 6
     assert all(config.fusion_kind == "safe_lag" for config in ablations)
+    assert ablations[-1].variant == "no_single_stream_bypass"

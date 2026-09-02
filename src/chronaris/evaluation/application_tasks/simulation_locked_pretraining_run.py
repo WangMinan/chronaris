@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 import pandas as pd
@@ -50,6 +50,14 @@ class SimulationLockedPretrainingConfig:
     patience: int = 8
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    learning_rate: float | None = None
+    chronaris_weight_decay: float = 1e-5
+    chronaris_fusion_kind: str = "multiscale"
+    chronaris_semantic_event_enabled: bool = False
+    chronaris_learnable_semantic_queries: bool = False
+    chronaris_explicit_shift_weight: float = 0.0
+    chronaris_event_pair_weight: float = 0.0
+    heartbeat_interval_s: float = 60.0
     resume: bool = True
 
     def __post_init__(self) -> None:
@@ -57,6 +65,10 @@ class SimulationLockedPretrainingConfig:
             raise ValueError("locked seeds must be non-empty and unique")
         if not set(self.seeds).issubset(LOCKED_SEEDS):
             raise ValueError("locked seeds must be selected from 17, 29, 43")
+        if self.learning_rate is not None and self.learning_rate <= 0:
+            raise ValueError("locked learning rate must be positive")
+        if self.chronaris_fusion_kind not in {"multiscale", "safe_lag"}:
+            raise ValueError("unsupported locked Chronaris fusion kind")
 
 
 @dataclass(frozen=True, slots=True)
@@ -115,6 +127,8 @@ def run_simulation_locked_pretraining(
         for seed in config.seeds:
             for method_name in TRAINABLE_FUSION_METHODS:
                 candidate = candidates[selected_ids[method_name]]
+                if config.learning_rate is not None:
+                    candidate = replace(candidate, learning_rate=config.learning_rate)
                 output_root = heavy_root / "checkpoints" / f"seed_{seed}"
                 if method_name == "chronaris":
                     result = train_locked_chronaris(
@@ -131,9 +145,26 @@ def run_simulation_locked_pretraining(
                             patience=config.patience,
                             seed=seed,
                             device=chronaris_device,
+                            learning_rate=config.learning_rate,
+                            weight_decay=config.chronaris_weight_decay,
+                            semantic_event_enabled=(
+                                config.chronaris_semantic_event_enabled
+                            ),
+                            learnable_semantic_queries=(
+                                config.chronaris_learnable_semantic_queries
+                            ),
+                            explicit_shift_enabled=(
+                                config.chronaris_explicit_shift_weight > 0
+                            ),
+                            explicit_shift_weight=(
+                                config.chronaris_explicit_shift_weight
+                            ),
+                            event_pair_weight=config.chronaris_event_pair_weight,
+                            heartbeat_interval_s=config.heartbeat_interval_s,
                         ),
                         augmentation_policy=AugmentationPolicy(),
                         candidate_config=candidate,
+                        fusion_kind=config.chronaris_fusion_kind,
                         resume=config.resume,
                     )
                     method_epoch_rows = result.epoch_rows
@@ -156,6 +187,7 @@ def run_simulation_locked_pretraining(
                             patience=config.patience,
                             seed=seed,
                             device=baseline_device,
+                            heartbeat_interval_s=config.heartbeat_interval_s,
                         ),
                         augmentation_policy=AugmentationPolicy(),
                         resume=config.resume,
@@ -287,17 +319,45 @@ def _acceptance_rows(*, config, rows, auxiliary_rows, data):
         _check("chronaris_auxiliary_recorded", bool(chronaris_rows), len(chronaris_rows), ">0"),
         _check(
             "chronaris_auxiliary_schedule_consistent",
-            (
-                any(row["weight"] > 0 for row in chronaris_rows)
-                if config.max_epochs > 10
-                else all(row["weight"] == 0 for row in chronaris_rows)
+            _auxiliary_schedule_matches_config(config, chronaris_rows),
+            sorted(
+                {
+                    (row["term_name"], row["weight"] > 0)
+                    for row in chronaris_rows
+                }
             ),
-            any(row["weight"] > 0 for row in chronaris_rows),
-            config.max_epochs > 10,
+            "core terms active; optional terms follow configured weights",
         ),
         _check("g1_train_validation_confirmation_counts", len(data.fold.train_sample_ids) == 96 and len(data.fold.validation_sample_ids) == 23 and len(data.fold.held_out_sample_ids) == 1, [len(data.fold.train_sample_ids), len(data.fold.validation_sample_ids), len(data.fold.held_out_sample_ids)], [96, 23, 1]),
         _check("normalizer_train_only", all(not row["g2_locked_test_opened"] for row in rows), False, False),
         _check("task_targets_closed", all(not row["task_targets_opened"] for row in rows), False, False),
+    )
+
+
+def _auxiliary_schedule_matches_config(config, rows):
+    by_name = {
+        name: [row for row in rows if row["term_name"] == name]
+        for name in {
+            "chronaris_continuous_alignment",
+            "chronaris_physical_consistency",
+            "chronaris_causal_direction",
+            "explicit_time_shift",
+            "event_response_pairing",
+        }
+    }
+    required = {
+        "chronaris_continuous_alignment": True,
+        "chronaris_physical_consistency": True,
+        "chronaris_causal_direction": True,
+        "explicit_time_shift": config.chronaris_explicit_shift_weight > 0,
+        "event_response_pairing": config.chronaris_event_pair_weight > 0,
+    }
+    return all(
+        (bool(values) and any(row["weight"] > 0 for row in values))
+        if active
+        else all(row["weight"] == 0 for row in values)
+        for name, active in required.items()
+        for values in (by_name[name],)
     )
 
 

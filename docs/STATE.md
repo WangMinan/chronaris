@@ -19,6 +19,7 @@
   - seed 17 干净基线矩阵：[artifacts/runs/2026-09-01_seed17-clean-baseline/report.md](artifacts/runs/2026-09-01_seed17-clean-baseline/report.md)
   - 原生高频 ODE-RNN 等价执行与协议漂移修复：[artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md](artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md)
   - v3.2 四候选三随机种子训练内冻结：[artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md](artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md)
+  - 论文级冻结实验清单与模型配置：[requirements/thesis-frozen-paper-evaluation-v3.2.md](requirements/thesis-frozen-paper-evaluation-v3.2.md)、[requirements/thesis-frozen-models-v3.2.json](requirements/thesis-frozen-models-v3.2.json)
   - 历史证据标签：`evidence/safe-lag-exploration-20260724`
 - **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
   - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)

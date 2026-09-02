@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import copy
+from dataclasses import replace
 
 import numpy as np
 import torch
@@ -80,7 +81,7 @@ def _sample(sample_id: str, *, future_scale: float = 1.0):
     )
 
 
-def _adapter(batch, *, variant: str = "full"):
+def _adapter(batch, *, variant: str = "full", fusion_kind: str = "multiscale"):
     normalizer = TrainOnlyRobustNormalizer().fit(
         batch,
         train_sample_ids=("train",),
@@ -90,6 +91,7 @@ def _adapter(batch, *, variant: str = "full"):
         physiology_feature_names=PHYSIOLOGY_NAMES,
         vehicle_feature_names=VEHICLE_NAMES,
         variant=variant,
+        fusion_kind=fusion_kind,
     )
     return ChronarisContinuousFusionAdapter(
         backbone=ChronarisContinuousFusionEncoder(config).eval(),
@@ -217,6 +219,29 @@ def test_no_continuous_evolution_is_a_real_path_ablation() -> None:
     assert not torch.equal(full_output.sequence_embedding, disabled_output.sequence_embedding)
 
 
+def test_no_single_stream_bypass_zeroes_only_private_branches() -> None:
+    torch.manual_seed(21)
+    batch = collate_observation_samples([_sample("train"), _sample("test")])
+    held_out = collate_observation_samples([_sample("test")])
+    full = _adapter(batch, variant="full", fusion_kind="safe_lag")
+    disabled = _adapter(
+        batch,
+        variant="no_single_stream_bypass",
+        fusion_kind="safe_lag",
+    )
+    disabled.backbone.load_state_dict(full.backbone.state_dict(), strict=True)
+
+    full_output = full(held_out)
+    disabled_output = disabled(held_out)
+
+    assert torch.count_nonzero(full_output.sequence_embedding[..., :48]) > 0
+    assert torch.count_nonzero(disabled_output.sequence_embedding[..., :48]) == 0
+    torch.testing.assert_close(
+        disabled_output.sequence_embedding[..., 48:],
+        full_output.sequence_embedding[..., 48:],
+    )
+
+
 def test_physics_status_distinguishes_active_disabled_and_unavailable() -> None:
     torch.manual_seed(23)
     batch = collate_observation_samples([_sample("train"), _sample("test")])
@@ -309,6 +334,11 @@ def test_fixed_ablation_matrix_changes_only_declared_mechanisms() -> None:
     ]
     for config in variants[1:]:
         assert validate_chronaris_ablation_diff(full, config)
+
+    safe = replace(full, fusion_kind="safe_lag")
+    safe_variants = build_chronaris_ablation_configs(safe)
+    assert safe_variants[-1].variant == "no_single_stream_bypass"
+    assert validate_chronaris_ablation_diff(safe, safe_variants[-1])
 
 
 def test_chronaris_checkpoint_round_trip(tmp_path) -> None:

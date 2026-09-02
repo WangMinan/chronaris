@@ -1,10 +1,10 @@
-"""Locked G1 retraining for the four mechanism-removal Chronaris variants."""
+"""Locked G1 retraining for fixed mechanism-removal Chronaris variants."""
 
 from __future__ import annotations
 
 import json
 import logging
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
 import pandas as pd
@@ -17,6 +17,7 @@ from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run im
     LOCKED_SEEDS,
 )
 from chronaris.modeling.common.run_observer import open_task_eval_run_observer
+from chronaris.modeling.fusion_encoders.chronaris_continuous import CHRONARIS_VARIANTS
 from chronaris.modeling.training import (
     ENCODER_SCREEN_CANDIDATES,
     LockedChronarisTrainingConfig,
@@ -55,15 +56,27 @@ class SimulationChronarisAblationPretrainingConfig:
     batch_size: int = 128
     patience: int = 8
     device: str = "cpu"
+    learning_rate: float | None = None
+    weight_decay: float = 1e-5
+    fusion_kind: str = "multiscale"
+    semantic_event_enabled: bool = False
+    learnable_semantic_queries: bool = False
+    explicit_shift_weight: float = 0.0
+    event_pair_weight: float = 0.0
+    heartbeat_interval_s: float = 60.0
     resume: bool = True
 
     def __post_init__(self) -> None:
         if not self.seeds or not set(self.seeds).issubset(LOCKED_SEEDS):
             raise ValueError("ablation seeds must be selected from 17, 29, 43")
         if not self.variants or not set(self.variants).issubset(
-            CHRONARIS_ABLATION_VARIANTS
+            set(CHRONARIS_VARIANTS) - {"full"}
         ):
             raise ValueError("unsupported Chronaris ablation variant")
+        if self.learning_rate is not None and self.learning_rate <= 0:
+            raise ValueError("ablation learning rate must be positive")
+        if self.fusion_kind not in {"multiscale", "safe_lag"}:
+            raise ValueError("unsupported ablation fusion kind")
 
 
 @dataclass(frozen=True, slots=True)
@@ -94,6 +107,8 @@ def run_simulation_chronaris_ablation_pretraining(
         value for value in ENCODER_SCREEN_CANDIDATES
         if value.candidate_id == candidate_id
     )
+    if config.learning_rate is not None:
+        candidate = replace(candidate, learning_rate=config.learning_rate)
     data = load_simulation_locked_pretraining_data(config.simulation_root)
     normalizer = TrainOnlyRobustNormalizer().fit(
         data.batch,
@@ -138,10 +153,21 @@ def run_simulation_chronaris_ablation_pretraining(
                         patience=config.patience,
                         seed=seed,
                         device=config.device,
+                        learning_rate=config.learning_rate,
+                        weight_decay=config.weight_decay,
+                        semantic_event_enabled=config.semantic_event_enabled,
+                        learnable_semantic_queries=(
+                            config.learnable_semantic_queries
+                        ),
+                        explicit_shift_enabled=config.explicit_shift_weight > 0,
+                        explicit_shift_weight=config.explicit_shift_weight,
+                        event_pair_weight=config.event_pair_weight,
+                        heartbeat_interval_s=config.heartbeat_interval_s,
                     ),
                     augmentation_policy=AugmentationPolicy(),
                     candidate_config=candidate,
                     variant=variant,
+                    fusion_kind=config.fusion_kind,
                     resume=config.resume,
                 )
                 confirmation = confirm_selected_pretext_checkpoint(

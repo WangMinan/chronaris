@@ -59,6 +59,7 @@ CHRONARIS_VARIANTS = (
     "no_physics",
     "no_causal_mask",
     "single_scale_lag",
+    "no_single_stream_bypass",
 )
 FUSION_KINDS = ("multiscale", "safe_lag")
 ABLATION_TARGET_FIELDS = {
@@ -66,6 +67,7 @@ ABLATION_TARGET_FIELDS = {
     "no_physics": frozenset({"physics_enabled"}),
     "no_causal_mask": frozenset({"causal_mask_enabled"}),
     "single_scale_lag": frozenset({"lag_ranges_s", "scale_gate_enabled"}),
+    "no_single_stream_bypass": frozenset({"private_bypass_enabled"}),
 }
 
 
@@ -121,6 +123,8 @@ class ChronarisContinuousEncoderConfig:
             raise ValueError("learnable semantic queries require semantic_event_enabled")
         if self.semantic_event_enabled and self.fusion_kind != "safe_lag":
             raise ValueError("semantic event fusion requires safe_lag fusion")
+        if self.variant == "no_single_stream_bypass" and self.fusion_kind != "safe_lag":
+            raise ValueError("single-stream bypass ablation requires safe_lag fusion")
         labels = dict(self.field_labels)
         if len(labels) != len(self.field_labels):
             raise ValueError("Chronaris field label keys must be unique")
@@ -150,6 +154,10 @@ class ChronarisContinuousEncoderConfig:
         return self.variant != "single_scale_lag"
 
     @property
+    def private_bypass_enabled(self) -> bool:
+        return self.variant != "no_single_stream_bypass"
+
+    @property
     def field_label_mapping(self) -> Mapping[str, str]:
         return dict(self.field_labels)
 
@@ -175,6 +183,7 @@ class ChronarisContinuousEncoderConfig:
             "causal_mask_enabled": self.causal_mask_enabled,
             "lag_ranges_s": [list(value) for value in self.lag_ranges_s],
             "scale_gate_enabled": self.scale_gate_enabled,
+            "private_bypass_enabled": self.private_bypass_enabled,
             "fusion_kind": self.fusion_kind,
             "max_ode_step_s": self.max_ode_step_s,
             "semantic_event_enabled": self.semantic_event_enabled,
@@ -233,6 +242,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                     lag_ranges_s=config.lag_ranges_s,
                     use_causal_mask=config.causal_mask_enabled,
                     use_scale_gate=config.scale_gate_enabled,
+                    use_private_bypass=config.private_bypass_enabled,
                 )
             )
         else:
@@ -537,6 +547,10 @@ def build_chronaris_ablation_configs(
         replace(full_config, variant=variant)
         for variant in CHRONARIS_VARIANTS
         if variant != "full"
+        and not (
+            variant == "no_single_stream_bypass"
+            and full_config.fusion_kind != "safe_lag"
+        )
     )
 
 
