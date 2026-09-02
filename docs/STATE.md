@@ -4,13 +4,13 @@
 
 ## 一句话状态
 
-论文主线已切换到 `research/thesis-continuous-semantic-fusion-202609`。2026 年 7 月安全滞后感知融合研究确认了单流旁路和安全门控的结构价值，但其公开数据、鼎新滞后对照和波次 A 结果受到训练确定性、重复归一化、测试折缩放或上下文时间轴问题影响，已退出毕业论文主结果。当前按评价协议 v3.1 在单一源码快照下重跑四候选训练内筛选；协议与机制是硬门，真实任务双流增量是论文增强目标。
+论文主线已切换到 `research/thesis-continuous-semantic-fusion-202609`。v3.1 完成 144/144 个训练内单元并通过显式时移和事件配对门，但公共数据物理项受到高采样率生理二阶导尺度放大，不能进入排序。当前按评价协议 v3.2 将物理目标限定到有效航电运动学字段并进行最后一次完整训练内重跑；协议与机制是硬门，真实任务双流增量是论文增强目标。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
 - **当前论文主线**：分支 `research/thesis-continuous-semantic-fusion-202609`。
-  - 当前评价协议 v3.1：[requirements/thesis-continuous-semantic-fusion-evaluation-v3.1.md](requirements/thesis-continuous-semantic-fusion-evaluation-v3.1.md)；[v3 原协议](requirements/thesis-continuous-semantic-fusion-evaluation-v3.md)保留追溯
+  - 当前评价协议 v3.2：[requirements/thesis-continuous-semantic-fusion-evaluation-v3.2.md](requirements/thesis-continuous-semantic-fusion-evaluation-v3.2.md)；[v3.1](requirements/thesis-continuous-semantic-fusion-evaluation-v3.1.md)与[v3 原协议](requirements/thesis-continuous-semantic-fusion-evaluation-v3.md)保留追溯
   - 现场保护与基线预检：[artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md](artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)
   - 可信训练第一批修复：[artifacts/runs/2026-09-01_training-trust-repair/report.md](artifacts/runs/2026-09-01_training-trust-repair/report.md)
   - 原生时间输入与 Euler 子步修复：[artifacts/runs/2026-09-01_native-time-euler-repair/report.md](artifacts/runs/2026-09-01_native-time-euler-repair/report.md)

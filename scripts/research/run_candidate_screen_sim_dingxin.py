@@ -1,4 +1,4 @@
-"""Three-seed four-candidate training-internal screen for protocol v3.1."""
+"""Three-seed four-candidate training-internal screen for protocol v3.2."""
 
 from __future__ import annotations
 
@@ -53,9 +53,9 @@ INNER_SPLIT = REPO / "docs/artifacts/runs/2026-07-11_dingxin-inner-splits"
 NESTED_TARGETS = REPO / "docs/artifacts/runs/2026-07-11_dingxin-nested-targets/nested_targets.csv"
 COGPILOT_ROOT = Path("/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils")
 CLARE_ROOT = Path("/home/wangminan/dataset/chronaris/clare")
-PROTOCOL_VERSION = "v3.1"
-RUN_ROOT = REPO / "docs/artifacts/runs/2026-09-01_candidate-screen-v3p1"
-HEAVY_ROOT = REPO / "artifacts/application_evaluation/2026-09-01_candidate-screen-v3p1"
+PROTOCOL_VERSION = "v3.2"
+RUN_ROOT = REPO / "docs/artifacts/runs/2026-09-02_candidate-screen-v3p2"
+HEAVY_ROOT = REPO / "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2"
 FOLD_IDS = (
     "leave_one_view_out__fold01",
     "leave_one_view_out__fold02",
@@ -554,7 +554,7 @@ def _load_state(resume, args):
             raise RuntimeError("candidate screen resume rejected source or protocol drift")
         return state
     return {
-        "format": "chronaris.training_internal_candidate_screen.v3.1",
+        "format": "chronaris.training_internal_candidate_screen.v3.2",
         "protocol_version": args.protocol_version,
         "source_commit": source_commit,
         "source_code_sha256": source_sha256,

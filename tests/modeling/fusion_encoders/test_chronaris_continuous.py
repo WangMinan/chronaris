@@ -239,6 +239,18 @@ def test_physics_status_distinguishes_active_disabled_and_unavailable() -> None:
         component.weighted_value is None
         for component in disabled_components
     )
+    physiology_components = [
+        component
+        for component in full_components
+        if component.component_name.startswith("physiology_")
+    ]
+    assert physiology_components
+    assert all(
+        component.status == "unavailable"
+        and component.count == 0
+        and component.reason == "outside_motion_kinematics_contract"
+        for component in physiology_components
+    )
 
 
 def test_task_independent_fast_path_preserves_sequence_and_gradients() -> None:
