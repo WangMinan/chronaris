@@ -1,10 +1,10 @@
 # Chronaris 当前状态
 
-更新时间：2026-09-01
+更新时间：2026-09-03
 
 ## 一句话状态
 
-论文主线已切换到 `research/thesis-continuous-semantic-fusion-202609`。v3.1 完成 144/144 个训练内单元并通过显式时移和事件配对门，但公共数据物理项受到高采样率生理二阶导尺度放大，不能进入排序。当前按评价协议 v3.2 将物理目标限定到有效航电运动学字段并进行最后一次完整训练内重跑；协议与机制是硬门，真实任务双流增量是论文增强目标。
+论文主线位于 `research/thesis-continuous-semantic-fusion-202609`。评价协议 v3.2 已在冻结提交上完成 144/144 个训练内单元，协议隔离、五分类时移、事件—响应配对和运动学字段范围检查通过，冻结“同时加入时移与语义配对目标”的 Chronaris 候选。公开数据与鼎新外层结果仍关闭；下一步先完成受控仿真的连续演化、运动学约束和安全单流旁路硬门，再打开一次冻结外层实验。
 
 ## 当前执行入口
 
@@ -18,6 +18,7 @@
   - 连续演化数值方案训练内验证：[artifacts/runs/2026-09-01_ode-solver-validation/report.md](artifacts/runs/2026-09-01_ode-solver-validation/report.md)
   - seed 17 干净基线矩阵：[artifacts/runs/2026-09-01_seed17-clean-baseline/report.md](artifacts/runs/2026-09-01_seed17-clean-baseline/report.md)
   - 原生高频 ODE-RNN 等价执行与协议漂移修复：[artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md](artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md)
+  - v3.2 四候选三随机种子训练内冻结：[artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md](artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md)
   - 历史证据标签：`evidence/safe-lag-exploration-20260724`
 - **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
   - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)
