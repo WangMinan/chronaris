@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import subprocess
@@ -27,10 +28,6 @@ from chronaris.evaluation.application_tasks.simulation_chronaris_ablation_repres
 from chronaris.evaluation.application_tasks.simulation_locked_consumer_run import (
     SimulationLockedConsumerConfig,
     run_simulation_locked_consumers,
-)
-from chronaris.evaluation.application_tasks.simulation_locked_pretraining_run import (
-    SimulationLockedPretrainingConfig,
-    run_simulation_locked_pretraining,
 )
 from chronaris.evaluation.application_tasks.simulation_locked_representation_run import (
     SimulationLockedRepresentationConfig,
@@ -56,19 +53,20 @@ from chronaris.evaluation.application_tasks.simulation_stress_representation_run
 
 REPO = Path(__file__).resolve().parents[2]
 SELECTED = REPO / "docs/requirements/thesis-frozen-models-v3.2.json"
-PROTOCOL = REPO / "docs/requirements/thesis-frozen-paper-evaluation-v3.2.md"
-STATE_ROOT = REPO / "docs/artifacts/runs/2026-09-03_thesis-simulation-v3p2"
+PROTOCOL = REPO / "docs/requirements/thesis-frozen-paper-evaluation-v3.2.1.md"
+STATE_ROOT = REPO / "docs/artifacts/runs/2026-09-03_thesis-simulation-v3p2p1"
+PRETRAINING_COMMIT = "58db4458dc64bb452526431413924283deff63bd"
 RUNS = {
     "pretraining": "2026-09-03_thesis-simulation-pretraining-v3p2",
-    "representations": "2026-09-03_thesis-simulation-representations-v3p2",
-    "consumers": "2026-09-03_thesis-simulation-consumers-v3p2",
-    "stress_representations": "2026-09-03_thesis-simulation-stress-representations-v3p2",
-    "stress_consumers": "2026-09-03_thesis-simulation-stress-consumers-v3p2",
-    "mechanism_representations": "2026-09-03_thesis-simulation-mechanism-representations-v3p2",
-    "mechanism_consumers": "2026-09-03_thesis-simulation-mechanism-consumers-v3p2",
-    "ablation_pretraining": "2026-09-03_thesis-simulation-ablation-pretraining-v3p2",
-    "ablation_representations": "2026-09-03_thesis-simulation-ablation-representations-v3p2",
-    "ablation_consumers": "2026-09-03_thesis-simulation-ablation-consumers-v3p2",
+    "representations": "2026-09-03_thesis-simulation-representations-v3p2p1",
+    "consumers": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+    "stress_representations": "2026-09-03_thesis-simulation-stress-representations-v3p2p1",
+    "stress_consumers": "2026-09-03_thesis-simulation-stress-consumers-v3p2p1",
+    "mechanism_representations": "2026-09-03_thesis-simulation-mechanism-representations-v3p2p1",
+    "mechanism_consumers": "2026-09-03_thesis-simulation-mechanism-consumers-v3p2p1",
+    "ablation_pretraining": "2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1",
+    "ablation_representations": "2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+    "ablation_consumers": "2026-09-03_thesis-simulation-ablation-consumers-v3p2p1",
 }
 ABLATIONS = (
     "no_continuous_evolution",
@@ -91,29 +89,7 @@ def main() -> int:
         "resume": args.resume,
     }
     if "pretraining" in stages:
-        _record(
-            state,
-            "pretraining",
-            run_simulation_locked_pretraining(
-                SimulationLockedPretrainingConfig(
-                    run_id=RUNS["pretraining"],
-                    max_epochs=50,
-                    batch_size=128,
-                    patience=8,
-                    baseline_device=args.device,
-                    chronaris_device=args.device,
-                    learning_rate=3e-4,
-                    chronaris_weight_decay=1e-4,
-                    chronaris_fusion_kind="safe_lag",
-                    chronaris_semantic_event_enabled=True,
-                    chronaris_learnable_semantic_queries=True,
-                    chronaris_explicit_shift_weight=0.1,
-                    chronaris_event_pair_weight=0.1,
-                    heartbeat_interval_s=30.0,
-                    **common,
-                )
-            ),
-        )
+        _record(state, "pretraining", _verify_pretraining())
     if "clean" in stages:
         _record(
             state,
@@ -124,6 +100,7 @@ def main() -> int:
                     pretraining_run_id=RUNS["pretraining"],
                     baseline_device=args.device,
                     chronaris_device=args.device,
+                    require_valid_mask_match=False,
                     **common,
                 )
             ),
@@ -208,6 +185,7 @@ def main() -> int:
                     clean_representation_run_id=RUNS["representations"],
                     baseline_device=args.device,
                     chronaris_device=args.device,
+                    require_valid_mask_match=False,
                     **common,
                 )
             ),
@@ -236,6 +214,7 @@ def main() -> int:
                     clean_representation_run_id=RUNS["representations"],
                     baseline_device=args.device,
                     chronaris_device=args.device,
+                    require_valid_mask_match=False,
                     **common,
                 )
             ),
@@ -273,7 +252,11 @@ def _parse_args():
     )
     parser.add_argument("--seeds", nargs="+", type=int, default=(17, 29, 43))
     parser.add_argument("--device", choices=("cuda",), default="cuda")
-    parser.add_argument("--protocol-version", choices=("v3.2",), default="v3.2")
+    parser.add_argument(
+        "--protocol-version",
+        choices=("v3.2.1",),
+        default="v3.2.1",
+    )
     parser.add_argument("--resume", action=argparse.BooleanOptionalAction, default=True)
     return parser.parse_args()
 
@@ -289,6 +272,7 @@ def _load_state(args):
         "selected_models_sha256": _sha256(SELECTED),
         "protocol_sha256": _sha256(PROTOCOL),
         "cuda_device_name": torch.cuda.get_device_name(0),
+        "pretraining_source_commit": PRETRAINING_COMMIT,
         "outer_public_results_opened": False,
         "run_ids": RUNS,
     }
@@ -298,12 +282,43 @@ def _load_state(args):
         if any(state.get(key) != value for key, value in identity.items()):
             raise RuntimeError("simulation evaluation resume rejected frozen identity drift")
         return state
-    return {"format": "chronaris.thesis_frozen_simulation.v3.2", **identity, "results": {}}
+    return {
+        "format": "chronaris.thesis_frozen_simulation.v3.2.1",
+        **identity,
+        "results": {},
+    }
 
 
 def _record(state, stage, result):
-    state["results"][stage] = asdict(result)
+    state["results"][stage] = result if isinstance(result, dict) else asdict(result)
     _write_state(state)
+
+
+def _verify_pretraining():
+    compact = REPO / "docs/artifacts/runs" / RUNS["pretraining"]
+    evidence = json.loads(
+        (compact / "evidence_manifest.json").read_text(encoding="utf-8")
+    )
+    with (compact / "locked_pretraining_results.csv").open(
+        encoding="utf-8", newline=""
+    ) as handle:
+        rows = list(csv.DictReader(handle))
+    if evidence.get("status") != "completed" or len(rows) != 15:
+        raise RuntimeError("frozen simulation pretraining evidence is incomplete")
+    for row in rows:
+        path = Path(row["checkpoint_path"])
+        if not path.is_file() or _sha256(path) != row["checkpoint_sha256"]:
+            raise RuntimeError(f"frozen pretraining checkpoint changed: {path}")
+    return {
+        "run_id": RUNS["pretraining"],
+        "status": "reused_completed",
+        "source_commit": PRETRAINING_COMMIT,
+        "checkpoint_count": len(rows),
+        "acceptance_pass_count": evidence["acceptance_pass_count"],
+        "acceptance_check_count": evidence["acceptance_check_count"],
+        "g2_locked_test_opened": evidence["g2_locked_test_opened"],
+        "task_targets_opened": evidence["task_targets_opened"],
+    }
 
 
 def _write_state(state):

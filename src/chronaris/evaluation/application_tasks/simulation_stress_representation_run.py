@@ -64,6 +64,7 @@ class SimulationStressRepresentationConfig:
     export_batch_size: int = 32
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    require_valid_mask_match: bool = True
     resume: bool = True
 
 
@@ -180,7 +181,10 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                             "task_oracle_opened": False,
                         }
                     )
-                alignment = validate_fusion_method_alignment(outputs)
+                alignment = validate_fusion_method_alignment(
+                    outputs,
+                    require_valid_mask_match=config.require_valid_mask_match,
+                )
                 scenario_rows.append(
                     {
                         "seed": seed,

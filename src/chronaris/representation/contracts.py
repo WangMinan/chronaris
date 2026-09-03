@@ -233,8 +233,10 @@ class FusionStreamEncoder(Protocol):
 
 def validate_fusion_method_alignment(
     outputs: Sequence[FusionStreamBatch],
+    *,
+    require_valid_mask_match: bool = True,
 ) -> str:
-    """Require identical sample/query/mask lineage and return a stable alignment hash."""
+    """Require shared sample/query lineage and return a stable alignment hash."""
 
     if not outputs:
         raise RepresentationContractError("at least one fusion output is required")
@@ -252,12 +254,19 @@ def validate_fusion_method_alignment(
             raise RepresentationContractError("fusion method source lineage mismatch")
         if not torch.equal(output.timestamps_s, first.timestamps_s):
             raise RepresentationContractError("fusion method query timestamps mismatch")
-        if not torch.equal(output.valid_mask, first.valid_mask):
+        if require_valid_mask_match and not torch.equal(
+            output.valid_mask, first.valid_mask
+        ):
             raise RepresentationContractError("fusion method valid mask mismatch")
     digest = hashlib.sha256()
     digest.update(json.dumps(first.sample_ids, ensure_ascii=False).encode("utf-8"))
     digest.update(first.timestamps_s.detach().cpu().numpy().tobytes())
-    digest.update(first.valid_mask.detach().cpu().numpy().tobytes())
+    if require_valid_mask_match:
+        digest.update(first.valid_mask.detach().cpu().numpy().tobytes())
+    else:
+        for output in outputs:
+            digest.update(output.method_name.encode("utf-8"))
+            digest.update(output.valid_mask.detach().cpu().numpy().tobytes())
     for value in first.source_sample_hashes:
         digest.update(value.encode("ascii"))
     return digest.hexdigest()

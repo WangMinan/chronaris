@@ -105,6 +105,7 @@ def export_application_context_representations(
     output_root: str | Path,
     resume: bool,
     batch_size: int | None = None,
+    require_valid_mask_match: bool = True,
 ):
     if batch_size is not None and batch_size <= 0:
         raise ValueError("application representation batch size must be positive")
@@ -160,7 +161,8 @@ def export_application_context_representations(
             )
     alignment_hashes = {
         role: validate_fusion_method_alignment(
-            [outputs[method][role] for method in APPLICATION_METHODS]
+            [outputs[method][role] for method in APPLICATION_METHODS],
+            require_valid_mask_match=require_valid_mask_match,
         )
         for role in ("train", "validation", "held_out")
     }

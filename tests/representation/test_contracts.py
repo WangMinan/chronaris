@@ -113,6 +113,25 @@ def test_method_alignment_rejects_query_or_sample_drift():
     with pytest.raises(RepresentationContractError, match="timestamps mismatch"):
         validate_fusion_method_alignment([first, shifted])
 
+    valid = second.valid_mask.clone()
+    valid[:, -1] = False
+    sequence = second.sequence_embedding.clone()
+    sequence[:, -1] = 0
+    masked = replace(
+        second,
+        sequence_embedding=sequence,
+        valid_mask=valid,
+        pooled_embedding=sequence[:, :-1].mean(dim=1),
+    )
+    with pytest.raises(RepresentationContractError, match="valid mask mismatch"):
+        validate_fusion_method_alignment([first, masked])
+    assert len(
+        validate_fusion_method_alignment(
+            [first, masked],
+            require_valid_mask_match=False,
+        )
+    ) == 64
+
 
 def test_fusion_contract_rejects_non_64_dimensional_output():
     batch = collate_observation_samples([_sample("a")])
