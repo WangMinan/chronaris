@@ -1,0 +1,140 @@
+{
+  "variants": [
+    "no_continuous_evolution",
+    "no_physics",
+    "no_causal_mask",
+    "no_single_stream_bypass"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "full_locked_consumer_verified": true,
+  "task_oracle_opened_after_representation": true,
+  "stage_name": "simulation_chronaris_ablation_consumers",
+  "run_id": "2026-09-03_thesis-simulation-ablation-consumers-v3p2p1",
+  "last_event": "finished",
+  "updated_at_utc": "2026-09-04T04:57:16.451091Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-09-04T04:54:55.190674Z",
+      "event": "start",
+      "variants": [
+        "no_continuous_evolution",
+        "no_physics",
+        "no_causal_mask",
+        "no_single_stream_bypass"
+      ],
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "full_locked_consumer_verified": true,
+      "task_oracle_opened_after_representation": true
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:55:07.422267Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_continuous_evolution",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:55:18.239683Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_physics",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:55:30.033912Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_causal_mask",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:55:41.669046Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 17,
+      "variant": "no_single_stream_bypass",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:55:52.346289Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_continuous_evolution",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:56:05.868879Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_physics",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:56:17.036327Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_causal_mask",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:56:29.292194Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 29,
+      "variant": "no_single_stream_bypass",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:56:41.704772Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_continuous_evolution",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:56:52.216793Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_physics",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:57:04.759691Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_causal_mask",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:57:16.028532Z",
+      "event": "simulation_chronaris_ablation_consumer_complete",
+      "seed": 43,
+      "variant": "no_single_stream_bypass",
+      "status": "completed"
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:57:16.451091Z",
+      "event": "finished",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "metric_count": 768,
+      "paired_statistic_count": 72,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "seed": 43,
+  "variant": "no_single_stream_bypass",
+  "status": "completed",
+  "variant_seed_count": 12,
+  "metric_count": 768,
+  "paired_statistic_count": 72,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

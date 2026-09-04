@@ -495,6 +495,7 @@ class ChronarisContinuousFusionAdapter:
         self.last_encoding = encoded
         sequence = encoded.sequence_embedding
         query_valid = encoded.modality_available_mask.to(device=sequence.device)
+        sequence = sequence.masked_fill(~query_valid.any(dim=1)[:, None, None], 0)
         count = query_valid.sum(dim=1, keepdim=True).clamp_min(1).to(sequence.dtype)
         pooled = (
             sequence * query_valid.unsqueeze(-1).to(sequence.dtype)

@@ -1,0 +1,19 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_representation_evidence.v1",
+  "run_id": "2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+  "status": "completed",
+  "variant_seed_count": 12,
+  "export_count": 36,
+  "acceptance_pass_count": 5,
+  "acceptance_check_count": 5,
+  "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+  "output_paths": {
+    "inventory": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/seed_variant_inventory.csv",
+    "exports": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/representation_inventory.csv",
+    "acceptance": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/protocol.json",
+    "report": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/report.md",
+    "resume": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/evidence_manifest.json"
+  }
+}

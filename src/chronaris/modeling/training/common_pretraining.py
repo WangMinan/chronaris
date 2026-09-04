@@ -113,6 +113,7 @@ class TrainedFusionAdapter:
             encoded = self.encoder(normalized)
         sequence = encoded.sequence_embedding
         valid = encoded.modality_available_mask.to(device=sequence.device)
+        sequence = sequence.masked_fill(~valid.any(dim=1)[:, None, None], 0)
         count = valid.sum(dim=1, keepdim=True).clamp_min(1).to(sequence.dtype)
         pooled = (sequence * valid.unsqueeze(-1).to(sequence.dtype)).sum(dim=1) / count
         return FusionStreamBatch(

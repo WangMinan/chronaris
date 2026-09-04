@@ -223,7 +223,9 @@ class DeepBaselineFusionAdapter:
         self.backbone.eval()
         with torch.inference_mode():
             encoded = self.backbone(normalized)
-        query_valid = torch.ones_like(encoded.modality_available_mask)
+        query_valid = encoded.modality_available_mask.any(dim=1, keepdim=True).expand_as(
+            encoded.modality_available_mask
+        )
         pooled = encoded.sequence_embedding.mean(dim=1)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,

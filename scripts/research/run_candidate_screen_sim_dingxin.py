@@ -26,6 +26,10 @@ from chronaris.evaluation.application_tasks.thesis_candidate_screen_metrics impo
     public_validation_metrics,
     summarize_candidate_training,
 )
+from chronaris.evaluation.application_tasks.thesis_native_data import (
+    first_record_indices,
+    middle_dual_stream_indices,
+)
 from chronaris.modeling.training import (
     CommonPretrainingConfig,
     EncoderCandidateConfig,
@@ -232,7 +236,10 @@ def _run_cogpilot(state, args) -> None:
         subject_limit=args.cogpilot_subjects,
         cache_root=HEAVY_ROOT / "cogpilot/native_cache",
     )
-    selected = _first_indices(dataset.records, lambda row: (row.group_id, row.label))
+    selected = first_record_indices(
+        dataset.records,
+        lambda row: (row.group_id, row.label),
+    )
     sample_ids = tuple(dataset.sample_ids[index] for index in selected)
     groups = np.asarray([dataset.group_ids[index] for index in selected])
     labels = np.asarray([dataset.labels[index] for index in selected], dtype=int)
@@ -308,7 +315,7 @@ def _run_clare(state, args) -> None:
         window_stride=args.clare_window_stride,
         cache_root=HEAVY_ROOT / "clare/native_cache",
     )
-    selected = _middle_dual_stream_indices(
+    selected = middle_dual_stream_indices(
         dataset,
         lambda row: (row.group_id, row.sample_id.split("__", 1)[1].split("_", 1)[0]),
     )
@@ -464,33 +471,6 @@ def _guarded_provider(base_provider, *, allowed, forbidden):
         return base_provider(sample_ids)
 
     return provider
-
-
-def _first_indices(records, key):
-    seen = set()
-    selected = []
-    for index, record in enumerate(records):
-        value = key(record)
-        if value not in seen:
-            selected.append(index)
-            seen.add(value)
-    return tuple(selected)
-
-
-def _middle_dual_stream_indices(dataset, key):
-    groups = {}
-    for index, record in enumerate(dataset.records):
-        groups.setdefault(key(record), []).append(index)
-    selected = []
-    for indices in groups.values():
-        middle = (len(indices) - 1) / 2
-        for position in sorted(range(len(indices)), key=lambda value: abs(value - middle)):
-            index = indices[position]
-            sample = dataset.load_sample(dataset.sample_ids[index])
-            if sample.physiology_feature_mask.any() and sample.vehicle_feature_mask.any():
-                selected.append(index)
-                break
-    return tuple(selected)
 
 
 def _candidate_specs():

@@ -35,10 +35,15 @@ VEH_COLS = (
     "aircraft_ils_deflection_h",
     "aircraft_velocity_u_mps",
 )
-PHYS_NAMES = ("physiology.ppg", "physiology.eda", "physiology.resp", "physiology.hr")
+PHYS_NAMES = (
+    "physiology.ppg",
+    "physiology.eda_conductance_us",
+    "physiology.resp",
+    "physiology.ecg",
+)
 VEH_NAMES = tuple(f"vehicle.{name.removeprefix('aircraft_')}" for name in VEH_COLS)
 COGPILOT_SCHEMA = ObservationSchema(
-    schema_id="cogpilot_native.v3",
+    schema_id="cogpilot_native.v4",
     source_kind="cogpilot_public",
     physiology_feature_names=PHYS_NAMES,
     vehicle_feature_names=VEH_NAMES,
@@ -46,6 +51,7 @@ COGPILOT_SCHEMA = ObservationSchema(
     vehicle_feature_roles=tuple("observed" for _ in VEH_NAMES),
 )
 _DAY_TO_SECONDS = 86400.0
+_PREPROCESSING_VERSION = "native_physio_integrity_v3.2.2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -82,6 +88,7 @@ def build_cogpilot_difficulty_dataset(
                 sample_id,
                 start,
                 context_duration_s,
+                _PREPROCESSING_VERSION,
             )
             records.append(
                 CogPilotNativeRecord(
@@ -134,6 +141,7 @@ def build_cogpilot_event_response_dataset(
                     start,
                     context_duration_s,
                     response,
+                    _PREPROCESSING_VERSION,
                 )
                 records.append(
                     CogPilotNativeRecord(
@@ -168,11 +176,14 @@ def _load_native_sample(record: CogPilotNativeRecord) -> ObservedDualStreamSampl
     next_feature = 0
     for path, columns in zip(record.physiology_paths, PHYS_FILES.values(), strict=True):
         timestamps, values = _read_window(path, columns, record)
+        if "eda_hand_l_kOhms" in columns:
+            column = columns.index("eda_hand_l_kOhms")
+            values[:, column] = _resistance_to_conductance(values[:, column])
         indices = tuple(range(next_feature, next_feature + len(columns)))
         physiology_series.append((timestamps, values, indices))
         next_feature += len(columns)
-    hr_timestamps, hr_values = _heart_rate_window(record.ecg_path, record)
-    physiology_series.append((hr_timestamps, hr_values[:, None], (len(PHYS_NAMES) - 1,)))
+    ecg_timestamps, ecg_values = _read_window(record.ecg_path, (ECG_COL,), record)
+    physiology_series.append((ecg_timestamps, ecg_values, (len(PHYS_NAMES) - 1,)))
     physiology_timestamps, physiology_values, physiology_mask = merge_native_feature_series(
         physiology_series,
         feature_count=len(PHYS_NAMES),
@@ -223,28 +234,6 @@ def _read_window(
     return relative[keep], frame.loc[keep, list(columns)].to_numpy(np.float64)
 
 
-def _heart_rate_window(
-    path: Path,
-    record: CogPilotNativeRecord,
-) -> tuple[np.ndarray, np.ndarray]:
-    frame = pd.read_csv(path, usecols=("time_dn", ECG_COL))
-    relative = (frame["time_dn"].to_numpy(np.float64) - record.window_start_native) * record.time_scale
-    ecg = frame[ECG_COL].to_numpy(np.float64)
-    support = np.isfinite(ecg) & (relative >= -2.0) & (relative < record.context_duration_s + 2.0)
-    relative, ecg = relative[support], ecg[support]
-    if len(relative) < 3:
-        return np.empty(0, dtype=np.float64), np.empty(0, dtype=np.float64)
-    threshold = np.nanpercentile(ecg, 90)
-    spacing = max(1, int(0.4 / max(float(np.median(np.diff(relative))), 1e-6)))
-    peaks, _ = find_peaks(ecg, height=threshold, distance=spacing)
-    if len(peaks) < 2:
-        return np.empty(0, dtype=np.float64), np.empty(0, dtype=np.float64)
-    timestamps = 0.5 * (relative[peaks][1:] + relative[peaks][:-1])
-    values = np.clip(60.0 / np.maximum(np.diff(relative[peaks]), 1e-3), 30.0, 200.0)
-    keep = (timestamps >= 0.0) & (timestamps < record.context_duration_s)
-    return timestamps[keep], values[keep]
-
-
 def _event_times_and_responses(
     vehicle_path: Path,
     eda_path: Path,
@@ -267,7 +256,9 @@ def _event_times_and_responses(
         peaks = np.sort(peaks[np.argsort(roll_rate[peaks])[-3:]])
     eda = pd.read_csv(eda_path, usecols=("time_dn", "eda_hand_l_kOhms"))
     eda_time = eda["time_dn"].to_numpy(np.float64)
-    eda_value = eda["eda_hand_l_kOhms"].to_numpy(np.float64)
+    eda_value = _resistance_to_conductance(
+        eda["eda_hand_l_kOhms"].to_numpy(np.float64)
+    )
     rows = []
     for peak in peaks:
         event_time = times[peak]
@@ -283,5 +274,20 @@ def _event_times_and_responses(
         )
         if event_time - context_duration_s / _DAY_TO_SECONDS < max(times[0], eda_time[0]) or not pre.any() or not post.any():
             continue
-        rows.append((float(event_time), float(eda_value[post].mean() - eda_value[pre].mean())))
+        rows.append(
+            (
+                float(event_time),
+                float(np.median(eda_value[post]) - np.median(eda_value[pre])),
+            )
+        )
     return tuple(rows)
+
+
+def _resistance_to_conductance(values: np.ndarray) -> np.ndarray:
+    resistance = np.asarray(values, dtype=np.float64)
+    return np.divide(
+        1000.0,
+        resistance,
+        out=np.full_like(resistance, np.nan),
+        where=np.isfinite(resistance) & (resistance > 0),
+    )

@@ -7,7 +7,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.signal import find_peaks
 
 from chronaris.dataset.lazy_observed import (
     LazyObservedDataset,
@@ -20,15 +19,16 @@ from chronaris.representation import ObservationSchema, ObservedDualStreamSample
 
 CENTRAL_COLUMNS = ("TP9", "AF7", "AF8", "TP10")
 CENTRAL_NAMES = tuple(f"central.eeg_{name.lower()}" for name in CENTRAL_COLUMNS)
-PERIPH_NAMES = ("peripheral.eda", "peripheral.hr")
+PERIPH_NAMES = ("peripheral.eda", "peripheral.ecg")
 CLARE_SCHEMA = ObservationSchema(
-    schema_id="clare_native.v3",
+    schema_id="clare_native.v4",
     source_kind="clare_public",
     physiology_feature_names=CENTRAL_NAMES,
     vehicle_feature_names=PERIPH_NAMES,
     physiology_feature_roles=tuple("observed" for _ in CENTRAL_NAMES),
     vehicle_feature_roles=tuple("observed" for _ in PERIPH_NAMES),
 )
+_PREPROCESSING_VERSION = "native_physio_integrity_v3.2.2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -77,6 +77,7 @@ def build_clare_native_dataset(
                     start,
                     context_duration_s,
                     int(label),
+                    _PREPROCESSING_VERSION,
                 )
                 records.append(
                     ClareNativeRecord(
@@ -117,11 +118,15 @@ def _load_native_sample(record: ClareNativeRecord) -> ObservedDualStreamSample:
         ("GSR Conductance CAL",),
         record,
     )
-    hr_timestamps, hr_values = _heart_rate_window(record.ecg_path, record)
+    ecg_timestamps, ecg_values = _read_window(
+        record.ecg_path,
+        ("ECG LL-RA CAL",),
+        record,
+    )
     peripheral_timestamps, peripheral_values, peripheral_mask = merge_native_feature_series(
         (
             (eda_timestamps, eda_values, (0,)),
-            (hr_timestamps, hr_values[:, None], (1,)),
+            (ecg_timestamps, ecg_values, (1,)),
         ),
         feature_count=len(PERIPH_NAMES),
     )
@@ -149,27 +154,3 @@ def _read_window(
     timestamps = frame["Timestamp"].to_numpy(np.float64) - record.window_start_s
     keep = (timestamps >= 0.0) & (timestamps < record.context_duration_s)
     return timestamps[keep], frame.loc[keep, list(columns)].to_numpy(np.float64)
-
-
-def _heart_rate_window(
-    path: Path,
-    record: ClareNativeRecord,
-) -> tuple[np.ndarray, np.ndarray]:
-    frame = pd.read_csv(path, usecols=("Timestamp", "ECG LL-RA CAL"))
-    timestamps = frame["Timestamp"].to_numpy(np.float64) - record.window_start_s
-    ecg = frame["ECG LL-RA CAL"].to_numpy(np.float64)
-    support = np.isfinite(ecg) & (timestamps >= -2.0) & (
-        timestamps < record.context_duration_s + 2.0
-    )
-    timestamps, ecg = timestamps[support], ecg[support]
-    if len(timestamps) < 3:
-        return np.empty(0, dtype=np.float64), np.empty(0, dtype=np.float64)
-    threshold = np.nanpercentile(ecg, 90)
-    spacing = max(1, int(0.4 / max(float(np.median(np.diff(timestamps))), 1e-6)))
-    peaks, _ = find_peaks(ecg, height=threshold, distance=spacing)
-    if len(peaks) < 2:
-        return np.empty(0, dtype=np.float64), np.empty(0, dtype=np.float64)
-    output_timestamps = 0.5 * (timestamps[peaks][1:] + timestamps[peaks][:-1])
-    values = np.clip(60.0 / np.maximum(np.diff(timestamps[peaks]), 1e-3), 30.0, 200.0)
-    keep = (output_timestamps >= 0.0) & (output_timestamps < record.context_duration_s)
-    return output_timestamps[keep], values[keep]

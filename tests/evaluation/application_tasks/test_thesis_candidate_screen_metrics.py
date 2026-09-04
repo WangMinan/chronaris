@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from chronaris.evaluation.application_tasks.thesis_candidate_screen_metrics import (
     audit_thesis_candidate_screen,
 )

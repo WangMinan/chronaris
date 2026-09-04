@@ -113,6 +113,8 @@ class FusionStreamBatch:
 
 pooled embedding 按 valid mask 做均值池化；任何额外 delta、统计量或任务特征都不能追加到 64 维合同中。
 
+2026-09-04 补充：根据已确认的[无观测表示与安全门修订](../thesis-frozen-paper-evaluation-v3.2.3.md)，全窗无观测样本保留全假有效掩码，并输出严格为零的序列与池化表示。它仍保留在统一样本总体中，但不视为有观测状态估计；正常样本的掩码和数值不因该补充改变。
+
 ### 3.2 禁止字段
 
 融合表示文件和表示 manifest 不得包含：

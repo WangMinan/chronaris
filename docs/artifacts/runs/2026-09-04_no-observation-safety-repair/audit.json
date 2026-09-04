@@ -1,0 +1,57 @@
+{
+  "format": "chronaris.no_observation_safety_repair.v1",
+  "protocol_version": "v3.2.3",
+  "scope": "repair_acceptance_and_safety_only",
+  "smoke": [
+    {
+      "device": "cpu",
+      "sample_count": 2,
+      "unobserved_sample_count": 1,
+      "observed_sequence_unchanged": true,
+      "deterministic_replay": true,
+      "zero_unobserved_output": true,
+      "resume_status": "resumed",
+      "checkpoint_unchanged": true
+    },
+    {
+      "device": "cuda",
+      "sample_count": 2,
+      "unobserved_sample_count": 1,
+      "observed_sequence_unchanged": true,
+      "deterministic_replay": true,
+      "zero_unobserved_output": true,
+      "resume_status": "resumed",
+      "checkpoint_unchanged": true
+    }
+  ],
+  "safe_bypass_passed": false,
+  "failed_safety_units": 3,
+  "outer_results_authorized": false,
+  "source_commit_before_freeze": "7937334239e2cdc0263754de03328769ab90987c",
+  "checkpoint_sha256": "cc13e1b4b49ad1b9d930f597aaad17c40b43c79efc06a186c81b7384b48a1a04",
+  "protocol_sha256": "32afe4932abd767db407e07f8bdc1eee92c2a4f99c8dd9a2f17b4b61c3831f9c",
+  "cpu_pytest_sha256": "b7db7a337eaadb3ba31a45d812d4dd2fdf578fe8ed02b396bd2abeeb83ce6df1",
+  "implementation_sha256": {
+    "src/chronaris/representation/contracts.py": "430578464aafdf56235fff5e35385dffa798946dcdd530d6cb1ddf7fbf249000",
+    "src/chronaris/modeling/training/common_pretraining.py": "551e739e0bc3c0a992af484cf2d5d393b94f40cd842d4021f3472df7fa8fb764",
+    "src/chronaris/modeling/fusion_encoders/chronaris_continuous.py": "c923a043f98ea2cf13a909b4bf67b1e05d3bc21df87756fe8e9421567613e8a4",
+    "src/chronaris/modeling/fusion_encoders/single_stream.py": "c467c2fb7e379ba55dd3994cd61cdcc78b4505be1a2b8410ec737f2585bfa450",
+    "src/chronaris/modeling/fusion_encoders/deep_baselines.py": "88773d2e770ee0e36b49a666f7c4978a4f56f094e4039c026aecc2de48d6771e",
+    "src/chronaris/modeling/fusion_encoders/naive_sync.py": "caf3315fa8c74d7685ce76bfb22b3dc2a56c6699f584b4c723180f0adcd52927",
+    "src/chronaris/representation/contract_probe.py": "73f79c079b80c4b6c7a54f5fbdfa8820eb6bfb362a3e993c22465db9d9795b05",
+    "src/chronaris/evaluation/application_tasks/thesis_simulation_gates.py": "ffbda60a14088ffcbc908d5c19dd65044e55a39f8a46435a750fea1b4d6c5ca0",
+    "src/chronaris/evaluation/application_tasks/simulation_stress_representation_run.py": "3ce064680ed5b81af27e53319d41e6e1ff14f50893ec916834ff7af6e8299c9e",
+    "src/chronaris/evaluation/application_tasks/simulation_stress_consumer_run.py": "fb1226811626e0acfed3b9801acf72c1f177001cb27da10482c49ae18e613669",
+    "scripts/research/run_thesis_frozen_simulation.py": "c050ae00cb8d63ed4ab8b4728904d8d4cd187a7c6afeeff1f61514a4aecf2222"
+  },
+  "cpu_pytest_summary": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "15",
+    "tests": "496",
+    "time": "91.833",
+    "timestamp": "2026-09-04T18:35:51.607991+08:00",
+    "hostname": "DESKTOP-8RNE6N6"
+  }
+}

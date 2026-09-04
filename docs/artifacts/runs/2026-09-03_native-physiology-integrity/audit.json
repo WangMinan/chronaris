@@ -1,0 +1,44 @@
+{
+  "format": "chronaris.native_physiology_integrity.v1",
+  "protocol_version": "v3.2.2",
+  "outer_results_opened": false,
+  "tasks": {
+    "cogpilot_difficulty": {
+      "sample_count": 77,
+      "subject_count": 20,
+      "schema_id": "cogpilot_native.v4",
+      "lineage_sha256": "843d879ea3bda66ae9a2449a01c4cf59039c2f505942736138fff6d0d7fca701",
+      "maximum_physiology_timestamp_s": 29.999998211860657,
+      "maximum_vehicle_timestamp_s": 29.99807707965374,
+      "missing_physiology_sample_count": 4,
+      "missing_vehicle_sample_count": 0,
+      "eda_conductance_range_us": [0.11020000278949738, 52.29410171508789]
+    },
+    "cogpilot_event_response": {
+      "sample_count": 225,
+      "subject_count": 20,
+      "schema_id": "cogpilot_native.v4",
+      "lineage_sha256": "d0f1c5c2d4de4e7029982ff77273b5afae5999471c36a89aaf4a42522da38725",
+      "maximum_physiology_timestamp_s": 11.99999526143074,
+      "maximum_vehicle_timestamp_s": 11.99999526143074,
+      "missing_physiology_sample_count": 0,
+      "missing_vehicle_sample_count": 0,
+      "target_range_us": [-1.2312000000000118, 1.182599999999999],
+      "eda_conductance_range_us": [0.003074399894103408, 107.27429962158203]
+    },
+    "clare_cognitive_load": {
+      "sample_count": 60,
+      "subject_count": 16,
+      "schema_id": "clare_native.v4",
+      "lineage_sha256": "059f3f745396591202031bf1fd0e82d4cd36dce1e47b57a0e5b02dcafcc91f19",
+      "maximum_physiology_timestamp_s": 9.99609375,
+      "maximum_vehicle_timestamp_s": 9.999965499999973,
+      "missing_physiology_sample_count": 0,
+      "missing_vehicle_sample_count": 0,
+      "class_counts": {"0": 42, "1": 18},
+      "target_range": [2.0, 9.0]
+    }
+  },
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

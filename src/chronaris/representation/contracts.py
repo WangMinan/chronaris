@@ -202,14 +202,17 @@ class FusionStreamBatch:
         if not torch.isfinite(self.pooled_embedding).all():
             raise RepresentationContractError("pooled_embedding contains non-finite values")
         valid_count = self.valid_mask.sum(dim=1, keepdim=True)
-        if bool((valid_count == 0).any()):
+        unobserved = valid_count.squeeze(1) == 0
+        if bool((self.sequence_embedding[unobserved] != 0).any()) or bool(
+            (self.pooled_embedding[unobserved] != 0).any()
+        ):
             raise RepresentationContractError(
-                "each fusion sample must have at least one valid query point"
+                "unobserved fusion samples must have zero sequence and pooled embeddings"
             )
         expected_pool = (
             self.sequence_embedding
             * self.valid_mask.unsqueeze(-1).to(self.sequence_embedding.dtype)
-        ).sum(dim=1) / valid_count.to(self.sequence_embedding.dtype)
+        ).sum(dim=1) / valid_count.clamp_min(1).to(self.sequence_embedding.dtype)
         if not torch.allclose(
             self.pooled_embedding,
             expected_pool,

@@ -1,0 +1,116 @@
+{
+  "checkpoint_count_verified_before_g2_open": 12,
+  "task_oracle_opened": false,
+  "stage_name": "simulation_chronaris_ablation_representations",
+  "run_id": "2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+  "last_event": "finished",
+  "updated_at_utc": "2026-09-04T04:54:46.888947Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-09-04T04:28:06.602549Z",
+      "event": "start",
+      "checkpoint_count_verified_before_g2_open": 12,
+      "task_oracle_opened": false
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:30:14.273158Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 17,
+      "variant": "no_continuous_evolution",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:32:33.570223Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 17,
+      "variant": "no_physics",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:34:52.634687Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 17,
+      "variant": "no_causal_mask",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:36:54.274283Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 17,
+      "variant": "no_single_stream_bypass",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:39:00.865426Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 29,
+      "variant": "no_continuous_evolution",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:41:28.244013Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 29,
+      "variant": "no_physics",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:43:59.162613Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 29,
+      "variant": "no_causal_mask",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:46:19.207625Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 29,
+      "variant": "no_single_stream_bypass",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:48:26.733666Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 43,
+      "variant": "no_continuous_evolution",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:50:32.111500Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 43,
+      "variant": "no_physics",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:52:49.527884Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 43,
+      "variant": "no_causal_mask",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:54:46.881643Z",
+      "event": "simulation_chronaris_ablation_representation_complete",
+      "seed": 43,
+      "variant": "no_single_stream_bypass",
+      "export_count": 3
+    },
+    {
+      "timestamp_utc": "2026-09-04T04:54:46.888947Z",
+      "event": "finished",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "export_count": 36,
+      "acceptance_pass_count": 5,
+      "acceptance_check_count": 5
+    }
+  ],
+  "seed": 43,
+  "variant": "no_single_stream_bypass",
+  "export_count": 36,
+  "status": "completed",
+  "variant_seed_count": 12,
+  "acceptance_pass_count": 5,
+  "acceptance_check_count": 5
+}

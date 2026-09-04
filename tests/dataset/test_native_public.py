@@ -5,7 +5,12 @@ import numpy as np
 import pandas as pd
 
 from chronaris.dataset.clare_native import build_clare_native_dataset
-from chronaris.dataset.cogpilot_native import build_cogpilot_difficulty_dataset
+from chronaris.dataset.cogpilot_native import (
+    PHYS_NAMES,
+    _event_times_and_responses,
+    _resistance_to_conductance,
+    build_cogpilot_difficulty_dataset,
+)
 from chronaris.dataset.lazy_observed import (
     LazyObservedDataset,
     NativeSampleRecord,
@@ -115,9 +120,33 @@ def test_cogpilot_builder_keeps_native_stream_densities(tmp_path) -> None:
     )
     sample = dataset.load_sample(dataset.sample_ids[0])
 
+    assert sample.schema.schema_id == "cogpilot_native.v4"
+    assert PHYS_NAMES[-1] == "physiology.ecg"
+    np.testing.assert_allclose(
+        sample.physiology_values[sample.physiology_feature_mask[:, 1], 1],
+        1000.0 / np.arange(61.0, 91.0),
+        rtol=1e-6,
+    )
     assert len(sample.vehicle_timestamps_s) > len(sample.physiology_timestamps_s)
     assert (~sample.physiology_feature_mask[:, 2]).any()
     assert not np.array_equal(sample.physiology_timestamps_s, sample.vehicle_timestamps_s)
+
+    ecg_path = next(run.glob("*stream-lslshimmerecg*_dat.csv"))
+    ecg = pd.read_csv(ecg_path)
+    ecg.loc[seconds >= 90.0, "ecg_projection_ll_ra_mV"] = 1e9
+    ecg.to_csv(ecg_path, index=False)
+    replay = build_cogpilot_difficulty_dataset(
+        tmp_path,
+        subject_limit=1,
+        window_start_s=60.0,
+        context_duration_s=30.0,
+        cache_root=tmp_path / "cache_replay",
+    ).load_sample(dataset.sample_ids[0])
+    np.testing.assert_array_equal(
+        sample.physiology_timestamps_s,
+        replay.physiology_timestamps_s,
+    )
+    np.testing.assert_array_equal(sample.physiology_values, replay.physiology_values)
 
 
 def test_cogpilot_builder_skips_runs_with_missing_streams(tmp_path) -> None:
@@ -176,13 +205,71 @@ def test_clare_windows_start_at_recording_timestamp_without_interpolation(tmp_pa
     pd.DataFrame({"Timestamp": periph_t, "GSR Conductance CAL": periph_t}).to_csv(
         tmp_path / "EDA" / subject / "eda_data_experiment_0.csv", index=False
     )
-    pd.DataFrame({"Timestamp": periph_t, "ECG LL-RA CAL": np.sin(periph_t * 8)}).to_csv(
-        tmp_path / "ECG" / subject / "ecg_data_experiment_0.csv", index=False
-    )
+    ecg_path = tmp_path / "ECG" / subject / "ecg_data_experiment_0.csv"
+    ecg_t = np.concatenate((periph_t, (130.25,)))
+    pd.DataFrame(
+        {"Timestamp": ecg_t, "ECG LL-RA CAL": np.sin(ecg_t * 8)}
+    ).to_csv(ecg_path, index=False)
 
     dataset = build_clare_native_dataset(tmp_path, subject_limit=1, cache_root=tmp_path / "cache")
     sample = dataset.load_sample(dataset.sample_ids[0])
 
+    assert sample.schema.schema_id == "clare_native.v4"
+    assert sample.schema.vehicle_feature_names[-1] == "peripheral.ecg"
     assert sample.physiology_timestamps_s[0] == 0.0
     assert sample.vehicle_timestamps_s[0] == 0.25
     assert len(sample.physiology_timestamps_s) != len(sample.vehicle_timestamps_s)
+
+    ecg = pd.read_csv(ecg_path)
+    ecg.loc[ecg["Timestamp"] >= 130.0, "ECG LL-RA CAL"] = 1e9
+    ecg.to_csv(ecg_path, index=False)
+    replay = build_clare_native_dataset(
+        tmp_path,
+        subject_limit=1,
+        cache_root=tmp_path / "cache_replay",
+    ).load_sample(dataset.sample_ids[0])
+    np.testing.assert_array_equal(sample.vehicle_timestamps_s, replay.vehicle_timestamps_s)
+    np.testing.assert_array_equal(sample.vehicle_values, replay.vehicle_values)
+
+
+def test_cogpilot_resistance_conversion_masks_nonphysical_values() -> None:
+    converted = _resistance_to_conductance(
+        np.asarray((1000.0, 500.0, 0.0, -1.0, np.nan))
+    )
+
+    np.testing.assert_allclose(converted[:2], (1.0, 2.0))
+    assert np.isnan(converted[2:]).all()
+
+
+def test_cogpilot_event_response_uses_conductance_median_delta(tmp_path) -> None:
+    seconds = np.arange(0.0, 100.0, 0.1)
+    origin = 738000.0
+    vehicle_path = tmp_path / "vehicle.csv"
+    eda_path = tmp_path / "eda.csv"
+    pd.DataFrame(
+        {
+            "time_dn": origin + seconds / 86400.0,
+            "aircraft_roll_deg": np.sin(seconds * 0.5),
+        }
+    ).to_csv(vehicle_path, index=False)
+    conductance = 1.0 + seconds * 0.01
+    resistance = 1000.0 / conductance
+    resistance[500] = -1_000_000.0
+    pd.DataFrame(
+        {
+            "time_dn": origin + seconds / 86400.0,
+            "eda_hand_l_kOhms": resistance,
+        }
+    ).to_csv(eda_path, index=False)
+
+    events = _event_times_and_responses(
+        vehicle_path,
+        eda_path,
+        context_duration_s=12.0,
+        response_pre_s=2.0,
+        response_post_s=8.0,
+        minimum_event_gap_s=5.0,
+    )
+
+    assert events
+    np.testing.assert_allclose([value for _time, value in events], 0.05, atol=0.003)

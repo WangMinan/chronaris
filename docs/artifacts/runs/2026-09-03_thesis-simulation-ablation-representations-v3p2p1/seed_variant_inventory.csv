@@ -1,0 +1,13 @@
+seed,variant,checkpoint_variant,export_count,task_oracle_opened
+17,no_continuous_evolution,no_continuous_evolution,3,False
+17,no_physics,no_physics,3,False
+17,no_causal_mask,no_causal_mask,3,False
+17,no_single_stream_bypass,no_single_stream_bypass,3,False
+29,no_continuous_evolution,no_continuous_evolution,3,False
+29,no_physics,no_physics,3,False
+29,no_causal_mask,no_causal_mask,3,False
+29,no_single_stream_bypass,no_single_stream_bypass,3,False
+43,no_continuous_evolution,no_continuous_evolution,3,False
+43,no_physics,no_physics,3,False
+43,no_causal_mask,no_causal_mask,3,False
+43,no_single_stream_bypass,no_single_stream_bypass,3,False

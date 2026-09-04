@@ -1,16 +1,16 @@
 # Chronaris 当前状态
 
-更新时间：2026-09-03
+更新时间：2026-09-04
 
 ## 一句话状态
 
-论文主线位于 `research/thesis-continuous-semantic-fusion-202609`。评价协议 v3.2 已完成 144/144 个训练内单元并冻结双目标 Chronaris 候选；论文级受控仿真 15/15 个预训练 checkpoint、9/9 验收已完成。clean 表示首次导出发现旧跨方法审计错误要求各方法有效查询 mask 相同，任务指标尚未打开；v3.2.1 只修订该表示审计并逐文件复用冻结 checkpoint。公开数据与鼎新外层结果仍关闭。
+论文主线位于 `research/thesis-continuous-semantic-fusion-202609`。已按用户确认完成 v3.2.3 无观测表示与严格安全门修复，工程验收 6/6、CPU 全量测试 `481 passed, 15 skipped`，原失败窗口 CPU/CUDA 重放通过。严格安全门为 9/12 达标、3 个单元失败；不调模型、不放宽阈值，公开数据与鼎新外层继续关闭。当前冻结修订并仅恢复剩余仿真推理与分析，详见[修复报告](artifacts/runs/2026-09-04_no-observation-safety-repair/report.md)。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
 - **当前论文主线**：分支 `research/thesis-continuous-semantic-fusion-202609`。
-  - 当前评价协议 v3.2：[requirements/thesis-continuous-semantic-fusion-evaluation-v3.2.md](requirements/thesis-continuous-semantic-fusion-evaluation-v3.2.md)；[v3.1](requirements/thesis-continuous-semantic-fusion-evaluation-v3.1.md)与[v3 原协议](requirements/thesis-continuous-semantic-fusion-evaluation-v3.md)保留追溯
+  - 当前论文级冻结清单：[requirements/thesis-frozen-paper-evaluation-v3.2.3.md](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)；[v3.2.2](requirements/thesis-frozen-paper-evaluation-v3.2.2.md)、[v3.2.1](requirements/thesis-frozen-paper-evaluation-v3.2.1.md)和上位协议保留追溯
   - 现场保护与基线预检：[artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md](artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)
   - 可信训练第一批修复：[artifacts/runs/2026-09-01_training-trust-repair/report.md](artifacts/runs/2026-09-01_training-trust-repair/report.md)
   - 原生时间输入与 Euler 子步修复：[artifacts/runs/2026-09-01_native-time-euler-repair/report.md](artifacts/runs/2026-09-01_native-time-euler-repair/report.md)
@@ -19,7 +19,8 @@
   - seed 17 干净基线矩阵：[artifacts/runs/2026-09-01_seed17-clean-baseline/report.md](artifacts/runs/2026-09-01_seed17-clean-baseline/report.md)
   - 原生高频 ODE-RNN 等价执行与协议漂移修复：[artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md](artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md)
   - v3.2 四候选三随机种子训练内冻结：[artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md](artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md)
-  - 论文级冻结实验清单与模型配置：[requirements/thesis-frozen-paper-evaluation-v3.2.1.md](requirements/thesis-frozen-paper-evaluation-v3.2.1.md)、[requirements/thesis-frozen-models-v3.2.json](requirements/thesis-frozen-models-v3.2.json)
+  - 原生生理预处理完整性修复：[artifacts/runs/2026-09-03_native-physiology-integrity/report.md](artifacts/runs/2026-09-03_native-physiology-integrity/report.md)
+  - 论文级冻结实验清单与模型配置：[requirements/thesis-frozen-paper-evaluation-v3.2.2.md](requirements/thesis-frozen-paper-evaluation-v3.2.2.md)、[requirements/thesis-frozen-models-v3.2.json](requirements/thesis-frozen-models-v3.2.json)
   - 历史证据标签：`evidence/safe-lag-exploration-20260724`
 - **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
   - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)

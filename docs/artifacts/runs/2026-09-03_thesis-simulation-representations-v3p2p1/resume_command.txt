@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_simulation_locked_representations.py --run-id 2026-09-03_thesis-simulation-representations-v3p2p1 --export-batch-size 32 --baseline-device cuda --chronaris-device cuda --resume

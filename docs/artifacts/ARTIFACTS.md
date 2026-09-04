@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-09-01
+更新时间：2026-09-04
 
 ## 目录定位
 
@@ -9,6 +9,10 @@
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
 ## 当前核心 runs
+
+- `runs/2026-09-04_no-observation-safety-repair/`：**无观测表示与严格安全门修复**。用户确认 v3.2.3 后完成工程验收 6/6，CPU 完整测试 481 项通过、15 项跳过，实际失败窗口 CPU/CUDA 确定性推理与导出恢复通过。严格安全门 9/12 达标、3 个失败，全部原始指标保留；复用原训练与已完成表示，不调模型、不开放外层。
+
+- `runs/2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1/`、`runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/`、`runs/2026-09-03_thesis-simulation-ablation-consumers-v3p2p1/`：**四项结构消融三随机种子正式结果**。12 个完整训练检查点、36 份表示、768 条指标和 72 条配对统计已完成，验收分别为 6/6、5/5、6/6；完整性通过不等价于所有研究硬门成立。压力导出随后因无观测样本合同冲突退出，最新分析与待确认项见[冻结仿真实跑与安全门复核](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
 
 - `runs/2026-09-01_thesis-mainline-preflight/`：**论文主线现场保护与基线预检**。从 `eab2c0b` 建立唯一论文开发分支和历史证据标签，完整测试 `429 passed, 8 skipped`，RTX 4090、CogPilot、CLARE、鼎新、仿真和磁盘预检通过；当前用户未提交改动保持原样。该 run 不训练模型、不产生论文指标。
 - `runs/2026-09-01_training-trust-repair/`：**论文主线可信训练第一批修复**。公共预训练统一复用 validation-backed candidate trainer，三条训练路径封闭随机状态并使用 v2 checkpoint；表示导出只归一化一次，CogPilot/CLARE 下游缩放只拟合训练折并增加受试者分组 inner-validation。聚焦测试 `16 passed`、完整测试 `433 passed, 8 skipped`、CUDA 短重放 `2 passed`。该 run 只形成工程可信度证据，不产生论文任务指标；原生时间公开数据输入仍待下一子阶段完成。
@@ -21,6 +25,7 @@
 - `runs/2026-09-02_candidate-screen-v3p2/`：**论文模型四候选三随机种子训练内冻结**。评价协议 v3.2 在提交 `41683e98` 上完成仿真 12、鼎新 60、CogPilot 12、CLARE 60，共 144/144 个不重复单元；外层结果始终关闭。双目标候选在 seeds `17/29/43` 的均衡五分类时移准确率为 `0.2000/0.2909/0.3091`，正确—错误事件配对相似度差为 `0.2016/0.1447/0.1950`，以两个新机制门独占第一并冻结。目录保留原始紧凑结果、门禁审计、候选摘要和训练内应用指标；重型 checkpoint 继续位于被忽略目录。
 - `runs/2026-09-03_thesis-simulation-pretraining-v3p2/`：**论文级受控仿真六方法三随机种子预训练**。在外层打开前冻结提交 `58db4458` 上完成 15/15 个训练 checkpoint、9/9 验收；全部方法使用 CUDA，Chronaris 启用安全滞后感知融合、可学习事件语义、显式时移和事件配对目标。训练期间 G2、任务真值和下游指标保持关闭；重型 checkpoint 与逐步辅助损失留在被忽略目录。
 - `runs/2026-09-03_simulation-mask-alignment-repair/`：**跨方法有效查询 mask 审计修订**。clean 表示首次导出在旧 mask 相等假设处 fail-fast；实际 train/validation/held-out 的样本、查询时间和来源哈希一致，不同单流、朴素同步与双流方法的真实有效点数按各自观测支持不同。v3.2.1 保留各方法自身 mask 与池化合同，并把方法名和 mask 纳入对齐哈希；未生成任务指标，冻结 checkpoint 不重训。
+- `runs/2026-09-03_native-physiology-integrity/`：**原生生理预处理完整性修复**。CogPilot 皮电输入只保留正电阻并换算为皮肤电导，事件响应改为前后窗皮肤电导中位数差；CogPilot 与 CLARE 删除使用窗外和后续观测的派生心率，改为原生心电图信号。数据结构定义升级后，CogPilot 难度 77 个样本、事件响应 225 个样本和 CLARE 认知负荷 60 个样本通过 6/6 项验收，公开与鼎新外层结果仍关闭。
 
 > 2026 年 7 月的安全滞后感知融合、CogPilot 和 CLARE 研究结果现仅作历史追溯；受训练确定性、重复归一化、测试折缩放或上下文时间轴缺陷影响的报告均已退出毕业论文主结果，等待评价协议 v3 重跑。下列原始条目和数字不覆盖、不删除。
 

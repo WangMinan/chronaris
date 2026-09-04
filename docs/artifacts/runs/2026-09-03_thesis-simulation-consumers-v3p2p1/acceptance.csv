@@ -1,0 +1,8 @@
+check_id,passed,actual,expected
+all_method_seed_consumers,True,18,18
+all_consumers_complete,True,"['resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed', 'resumed']",completed_or_resumed
+validation_hyperparameter_selection,True,{'validation'},{'validation'}
+formal_metric_scope,True,1152,>0 formal rows
+g2_metrics_available,True,576,>0
+paired_trajectory_statistics,True,90,>0 with 48 units
+oracle_contract_limited,True,"['true_time_s', 'workload', 'maneuver_state']","['true_time_s', 'workload', 'maneuver_state']"

@@ -103,6 +103,32 @@ def test_fusion_contract_requires_valid_mask_mean_pooling():
         replace(output, pooled_embedding=output.pooled_embedding + 1.0)
 
 
+def test_unobserved_contract_keeps_samples_and_rejects_nonzero_values(tmp_path):
+    from chronaris.representation import load_fusion_stream_batch, write_fusion_stream_batch
+
+    batch = collate_observation_samples([_sample("a"), _sample("b")])
+    original = _fusion(batch, "chronaris")
+    mask = original.valid_mask.clone()
+    mask[1] = False
+    sequence = original.sequence_embedding.clone()
+    sequence[1] = 0
+    pooled = original.pooled_embedding.clone()
+    pooled[1] = 0
+    output = replace(original, valid_mask=mask, sequence_embedding=sequence, pooled_embedding=pooled)
+    write_fusion_stream_batch(output, root=tmp_path, export_role="stress_held_out")
+    loaded = load_fusion_stream_batch(tmp_path)
+    assert loaded.sample_ids == original.sample_ids
+    assert torch.equal(loaded.valid_mask, mask)
+    assert torch.equal(loaded.sequence_embedding[0], original.sequence_embedding[0])
+    assert torch.equal(loaded.pooled_embedding, pooled)
+    assert not loaded.sequence_embedding[1].any()
+    for field, values in (("sequence_embedding", sequence), ("pooled_embedding", pooled)):
+        bad = values.clone()
+        bad[1] = 1e-8
+        with pytest.raises(RepresentationContractError, match="unobserved fusion samples"):
+            replace(output, **{field: bad})
+
+
 def test_method_alignment_rejects_query_or_sample_drift():
     batch = collate_observation_samples([_sample("a"), _sample("b")])
     first = _fusion(batch, "chronaris")

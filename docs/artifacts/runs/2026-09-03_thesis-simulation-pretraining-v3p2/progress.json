@@ -1,0 +1,191 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "selected_candidates": {
+    "physiology_only": "A",
+    "vehicle_only": "C",
+    "mult": "A",
+    "contiformer": "A",
+    "chronaris": "C"
+  },
+  "g2_locked_test_opened": false,
+  "task_targets_opened": false,
+  "stage_name": "simulation_locked_pretraining",
+  "run_id": "2026-09-03_thesis-simulation-pretraining-v3p2",
+  "last_event": "finished",
+  "updated_at_utc": "2026-09-03T00:55:15.989737Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-09-02T17:53:50.432126Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "selected_candidates": {
+        "physiology_only": "A",
+        "vehicle_only": "C",
+        "mult": "A",
+        "contiformer": "A",
+        "chronaris": "C"
+      },
+      "g2_locked_test_opened": false,
+      "task_targets_opened": false
+    },
+    {
+      "timestamp_utc": "2026-09-02T17:55:12.500098Z",
+      "event": "locked_method_seed_complete",
+      "seed": 17,
+      "method_name": "physiology_only",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T17:56:30.877234Z",
+      "event": "locked_method_seed_complete",
+      "seed": 17,
+      "method_name": "vehicle_only",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T17:58:14.928182Z",
+      "event": "locked_method_seed_complete",
+      "seed": 17,
+      "method_name": "mult",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T17:59:41.927462Z",
+      "event": "locked_method_seed_complete",
+      "seed": 17,
+      "method_name": "contiformer",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T20:17:47.849216Z",
+      "event": "locked_method_seed_complete",
+      "seed": 17,
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T20:19:07.483360Z",
+      "event": "locked_method_seed_complete",
+      "seed": 29,
+      "method_name": "physiology_only",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T20:20:28.959711Z",
+      "event": "locked_method_seed_complete",
+      "seed": 29,
+      "method_name": "vehicle_only",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T20:22:11.048494Z",
+      "event": "locked_method_seed_complete",
+      "seed": 29,
+      "method_name": "mult",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T20:23:40.149202Z",
+      "event": "locked_method_seed_complete",
+      "seed": 29,
+      "method_name": "contiformer",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T22:39:18.067624Z",
+      "event": "locked_method_seed_complete",
+      "seed": 29,
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T22:40:39.132847Z",
+      "event": "locked_method_seed_complete",
+      "seed": 43,
+      "method_name": "physiology_only",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T22:42:02.414483Z",
+      "event": "locked_method_seed_complete",
+      "seed": 43,
+      "method_name": "vehicle_only",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T22:43:42.764538Z",
+      "event": "locked_method_seed_complete",
+      "seed": 43,
+      "method_name": "mult",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-02T22:45:08.397466Z",
+      "event": "locked_method_seed_complete",
+      "seed": 43,
+      "method_name": "contiformer",
+      "candidate_id": "A",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-03T00:55:15.862014Z",
+      "event": "locked_method_seed_complete",
+      "seed": 43,
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "status": "completed",
+      "best_epoch": 50
+    },
+    {
+      "timestamp_utc": "2026-09-03T00:55:15.989737Z",
+      "event": "finished",
+      "status": "completed",
+      "method_seed_count": 15,
+      "acceptance_pass_count": 9,
+      "acceptance_check_count": 9
+    }
+  ],
+  "seed": 43,
+  "method_name": "chronaris",
+  "candidate_id": "C",
+  "status": "completed",
+  "best_epoch": 50,
+  "method_seed_count": 15,
+  "acceptance_pass_count": 9,
+  "acceptance_check_count": 9
+}

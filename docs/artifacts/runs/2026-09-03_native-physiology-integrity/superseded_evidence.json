@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.protocol_supersession.v1",
+  "status": "superseded_due_to_native_physiology_preprocessing_defect",
+  "replacement_protocol": "docs/requirements/thesis-frozen-paper-evaluation-v3.2.2.md",
+  "entries": [
+    {
+      "path": "docs/artifacts/runs/2026-09-01_seed17-clean-baseline/baseline_matrix.json",
+      "sha256": "2074a3cb1f30f228b3a588e16268bfa47e92d0f52f1c63efe0a1c333d164cc22",
+      "affected_scope": "CogPilot and CLARE training-internal application metrics",
+      "selection_impact": "none; repair matrix only"
+    },
+    {
+      "path": "docs/artifacts/runs/2026-09-01_candidate-screen-v3p1/screen_results.json",
+      "sha256": "0262e259a1768580ecb258b025f0c1a97954cfc4ec39ef63f8a0eb6756118f6e",
+      "affected_scope": "CogPilot and CLARE training-internal application metrics",
+      "selection_impact": "none; the complete v3.1 matrix was already superseded by the physics objective repair"
+    },
+    {
+      "path": "docs/artifacts/runs/2026-09-02_candidate-screen-v3p2/screen_results.json",
+      "sha256": "f2b6247156c5b7fda22ecec015ed1a8a201866cc494463a120324c9989d71628",
+      "affected_scope": "CogPilot and CLARE training-internal application metrics only",
+      "selection_impact": "none; both-objective Chronaris was uniquely selected by two mechanism gates before application metrics"
+    }
+  ],
+  "historical_numbers_deleted": false,
+  "public_outer_results_existed_before_repair": false
+}

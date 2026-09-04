@@ -1,6 +1,6 @@
 # Chronaris Review 入口
 
-更新时间：2026-06-07
+更新时间：2026-09-04
 
 本目录用于保存 code review 相关产出，包括 review 计划、发现、修复记录和阶段性检查结果。
 
@@ -18,11 +18,17 @@
 
 ## 当前建议
 
-当前最值得 review 的范围已经切到中期前 `P10-P15` 主动任务队列，尤其是：
+当前论文主线 review 见[连续对齐与语义融合论文主线复核](stage/thesis-mainline/README.md)。该复核跟踪评价协议、仿真硬门、公开数据输入完整性、外层只开一次和结果汇总边界；生理预处理完整性已按 v3.2.2 修复，公开数据与鼎新外层结果继续等待仿真硬门。
 
-- `P10 evidence runner`：manifest、`evidence_layer`、失败保留 partial manifest、`--reuse-existing / --only` 行为。
-- `P11 thesis weak-label multitask sweep`：小网格是否有边界，是否保持 `risk_proxy / workload_proxy / event_replay_tag` 的 weak-label 表述。
-- `P12 chronaris_opt component ablation`：分类任务、回归任务和检索任务 是否始终写成 Dingxin weak-label benchmark，不越界成人工真值。
-- `P13/P14 public adapter calibration / transfer boundary`：UAB/NASA 是否保持 public adapter / calibration evidence 边界。
-- `P15 rigid_body rotation audit`：字段启用或缺失诊断是否可复现，报告是否避免把缺失项写成已验证约束。
+最新[冻结仿真实跑与安全门复核](stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)确认结构消融全部完成，发现压力导出的无观测样本合同冲突及安全门种子聚合规则缺口。用户已确认 v3.2.3，仅修复表示与严格审计；三随机种子的有利和不利结果保留，公开与鼎新外层继续关闭。
+
+## 历史建议
+
+历史 review 范围是中期前的证据执行、弱监督任务、组件消融、公开数据校准与运动学字段审计，尤其是：
+
+- 证据执行器：产物清单、证据层、失败保留的部分清单和选择性恢复行为。
+- 论文弱监督多任务筛选：小网格是否有边界，风险、工作负荷与事件复盘任务是否保持弱监督表述。
+- Chronaris 组件消融：分类、回归和检索是否始终写成鼎新弱监督基准，不越界成人工真值。
+- 公开数据适配与迁移边界：UAB/NASA 是否保持公开数据适配和校准证据边界。
+- 刚体旋转字段审计：字段启用或缺失诊断是否可复现，报告是否避免把缺失项写成已验证约束。
 - 所有新增产物是否能从 `docs/artifacts/ARTIFACTS.md` 或 `docs/implementation/TASKS.md` 追溯。

@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_simulation_locked_consumers.py --run-id 2026-09-03_thesis-simulation-consumers-v3p2p1 --minirocket-kernels 10000 --tcn-device cuda --resume
