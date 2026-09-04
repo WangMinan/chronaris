@@ -1,0 +1,7 @@
+target,seed,scenario_count,full_mae_s_median,no_continuous_mae_s_median,median_gain_s,positive_gain
+primary_physiology_response_lag_s,17,35,4.464254915806118,4.19681917676747,-0.19313242293146526,False
+primary_physiology_response_lag_s,29,35,6.271771486940285,4.005079163632431,-1.8704867077726197,False
+primary_physiology_response_lag_s,43,35,5.344624100723479,5.103204679078352,-0.09326610169025518,False
+relative_clock_offset_magnitude_s,17,35,0.2151966240877906,0.5507515755792459,0.36027319108446443,True
+relative_clock_offset_magnitude_s,29,35,0.3535705941418807,0.32159664295613766,0.03511320675412816,True
+relative_clock_offset_magnitude_s,43,35,0.4484845474362373,1.6114850143591564,1.099707204848528,True

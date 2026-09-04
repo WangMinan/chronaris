@@ -1,0 +1,1 @@
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/research/run_thesis_simulation_gates.py --protocol-version v3.2.3 --device cuda --resume

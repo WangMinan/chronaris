@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.simulation_stress_consumer_evidence.v1",
+  "run_id": "2026-09-04_thesis-simulation-stress-consumers-v3p2p3",
+  "status": "completed",
+  "evaluation_count": 630,
+  "metric_count": 20160,
+  "stress_slope_count": 4032,
+  "paired_statistic_count": 630,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6,
+  "heavy_run_root": "artifacts/application_evaluation/2026-09-04_thesis-simulation-stress-consumers-v3p2p3",
+  "workload_prediction_path": "artifacts/application_evaluation/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/workload_predictions.csv",
+  "output_paths": {
+    "evaluations": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/evaluation_inventory.csv",
+    "metrics": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/metric_long.csv",
+    "gains": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/fusion_gain.csv",
+    "slopes": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/stress_slopes.csv",
+    "paired": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/paired_statistics.csv",
+    "unobserved": "artifacts/application_evaluation/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/unobserved_predictions.csv",
+    "acceptance": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/protocol.json",
+    "report": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/report.md",
+    "claim": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/evidence_manifest.json"
+  }
+}

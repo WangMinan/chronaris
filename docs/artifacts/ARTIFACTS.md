@@ -10,6 +10,11 @@
 
 ## 当前核心 runs
 
+- `runs/2026-09-04_thesis-simulation-v3p2p3/`：**批准修复后的受控仿真完成状态**。提交 `6a2393e4` 上十个编排环节完成或核验复用；27 个既有训练检查点未改，公开数据与鼎新外层授权始终关闭。
+- `runs/2026-09-04_thesis-simulation-stress-representations-v3p2p3/`、`runs/2026-09-04_thesis-simulation-stress-consumers-v3p2p3/`：**完整压力评价**。630 份表示、20,160 条可计算指标、4,032 条退化斜率和 630 条配对统计；验收 5/5、6/6。三个生理单流无观测窗口保留在总体中，单独预测保存在被忽略目录。连续缺失与随机缺失下的不利退化全部保留。
+- `runs/2026-09-04_thesis-simulation-mechanism-representations-v3p2p3/`、`runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/`：**冻结时间机制评价**。144 份训练/验证表示、24 个诊断消费者、840 次评价、3,360 条指标与 630 条配对统计，验收 5/5、6/6。420 项相关系数因常量目标不可用；偏移目标为幅值、响应时延限主通道，不推广为全部时钟或响应恢复能力。
+- `runs/2026-09-04_thesis-simulation-gates-v3p2p3/`：**最终硬门与未来依赖定位**。显式时移、事件配对、连续演化和物理一致性四项通过；未来信息隔离和安全旁路失败，整体未通过。三个种子历史扰动均超过 10⁻⁶，事件分数全窗归一化的只读干预定位有 CPU/CUDA 证据；模型未修。恢复重放六份核心结果哈希一致、141 份缓存字节及修改时间不变。详见[完整分析与待确认边界](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)，不能作为外层授权。
+
 - `runs/2026-09-04_no-observation-safety-repair/`：**无观测表示与严格安全门修复**。用户确认 v3.2.3 后完成工程验收 6/6，CPU 完整测试 481 项通过、15 项跳过，实际失败窗口 CPU/CUDA 确定性推理与导出恢复通过。严格安全门 9/12 达标、3 个失败，全部原始指标保留；复用原训练与已完成表示，不调模型、不开放外层。
 
 - `runs/2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1/`、`runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/`、`runs/2026-09-03_thesis-simulation-ablation-consumers-v3p2p1/`：**四项结构消融三随机种子正式结果**。12 个完整训练检查点、36 份表示、768 条指标和 72 条配对统计已完成，验收分别为 6/6、5/5、6/6；完整性通过不等价于所有研究硬门成立。压力导出随后因无观测样本合同冲突退出，最新分析与待确认项见[冻结仿真实跑与安全门复核](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。

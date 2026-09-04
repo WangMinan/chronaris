@@ -4,7 +4,7 @@
 
 ## 一句话状态
 
-论文主线位于 `research/thesis-continuous-semantic-fusion-202609`。已按用户确认完成 v3.2.3 无观测表示与严格安全门修复，工程验收 6/6、CPU 全量测试 `481 passed, 15 skipped`，原失败窗口 CPU/CUDA 重放通过。严格安全门为 9/12 达标、3 个单元失败；不调模型、不放宽阈值，公开数据与鼎新外层继续关闭。当前冻结修订并仅恢复剩余仿真推理与分析，详见[修复报告](artifacts/runs/2026-09-04_no-observation-safety-repair/report.md)。
+论文主线位于 `research/thesis-continuous-semantic-fusion-202609`。v3.2.3 无观测表示与严格安全门修复、剩余受控仿真和总审计均已完成；六项机制门中四项通过，未来信息隔离与安全旁路失败，完整论文目标尚未完成。未来依赖已只读定位到语义事件分数的全窗归一化，模型未改、阈值未放宽、全部不利结果保留，公开数据与鼎新外层继续关闭。详见[最终复核与待确认事项](review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
 
 ## 当前执行入口
 
@@ -20,9 +20,14 @@
   - 原生高频 ODE-RNN 等价执行与协议漂移修复：[artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md](artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md)
   - v3.2 四候选三随机种子训练内冻结：[artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md](artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md)
   - 原生生理预处理完整性修复：[artifacts/runs/2026-09-03_native-physiology-integrity/report.md](artifacts/runs/2026-09-03_native-physiology-integrity/report.md)
-  - 论文级冻结实验清单与模型配置：[requirements/thesis-frozen-paper-evaluation-v3.2.2.md](requirements/thesis-frozen-paper-evaluation-v3.2.2.md)、[requirements/thesis-frozen-models-v3.2.json](requirements/thesis-frozen-models-v3.2.json)
+  - 无观测表示与严格安全门修复：[artifacts/runs/2026-09-04_no-observation-safety-repair/report.md](artifacts/runs/2026-09-04_no-observation-safety-repair/report.md)；工程验收 6/6，CPU 全量测试 `481 passed, 15 skipped`，原失败窗口 CPU/CUDA 重放通过
+  - 最终完整测试：CUDA 可用环境下 `488 passed, 8 skipped`，120.85 秒；测试与恢复哈希见[最终复核](review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)，测试通过不等价于研究硬门通过
+  - 剩余仿真执行：[十环节编排状态](artifacts/runs/2026-09-04_thesis-simulation-v3p2p3/run_state.json)；630 份压力表示、20,160 条压力指标、3,360 条时间机制指标全部完成
+  - 最终硬门：[总审计](artifacts/runs/2026-09-04_thesis-simulation-gates-v3p2p3/report.md)与[未来信息定位](artifacts/runs/2026-09-04_thesis-simulation-gates-v3p2p3/future_information_diagnosis.json)；严格安全门 9/12 达标，未来扰动 3/3 超阈值；恢复重放六份核心结果哈希一致，141 份缓存未改
+  - 修复与实验源码冻结：`6a2393e4190367e9504377ee2f2914926e610ae8`，标签 `evidence/thesis-v3p2p3-repair-20260904`；下一步模型行为修订需先确认，不启动额外训练内调参
+  - 论文级冻结实验清单与模型配置：[requirements/thesis-frozen-paper-evaluation-v3.2.3.md](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)、[requirements/thesis-frozen-models-v3.2.json](requirements/thesis-frozen-models-v3.2.json)
   - 历史证据标签：`evidence/safe-lag-exploration-20260724`
-- **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
+- **历史研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
   - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)
   - 研究计划：[implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md](implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md)
   - 评价协议 v2：[requirements/safe-lag-aware-fusion-evaluation-v2.md](requirements/safe-lag-aware-fusion-evaluation-v2.md)

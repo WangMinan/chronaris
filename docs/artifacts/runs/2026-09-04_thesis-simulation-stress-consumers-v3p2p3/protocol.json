@@ -1,0 +1,26 @@
+{
+  "format": "chronaris.simulation_stress_consumer_protocol.v1",
+  "config": {
+    "run_id": "2026-09-04_thesis-simulation-stress-consumers-v3p2p3",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-09-03_thesis-simulation-pretraining-v3p2",
+    "clean_consumer_run_id": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+    "stress_representation_run_id": "2026-09-04_thesis-simulation-stress-representations-v3p2p3",
+    "stress_generation_run_id": "2026-07-12_aviation-simulation-locked-stress",
+    "selected_candidates_path": "/home/wangminan/projects/chronaris/docs/requirements/thesis-frozen-models-v3.2.json",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "resume": true
+  },
+  "frozen_workload_thresholds": [
+    0.5745705763498942,
+    0.8364219069480896
+  ],
+  "consumer_refit_allowed": false,
+  "paired_bootstrap_repetitions": 2000,
+  "paired_permutation_repetitions": 10000
+}

@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.simulation_mechanism_consumer_evidence.v1",
+  "run_id": "2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3",
+  "status": "completed",
+  "model_count": 24,
+  "evaluation_count": 840,
+  "metric_count": 3360,
+  "paired_statistic_count": 630,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6,
+  "heavy_run_root": "artifacts/application_evaluation/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3",
+  "prediction_path": "artifacts/application_evaluation/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/prediction_rows.csv",
+  "output_paths": {
+    "models": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/model_inventory.csv",
+    "evaluations": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/evaluation_inventory.csv",
+    "metrics": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/metric_long.csv",
+    "paired": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/paired_statistics.csv",
+    "g1_targets": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/g1_target_manifest.json",
+    "stress_targets": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/stress_target_manifest.json",
+    "acceptance": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/downstream_protocol.json",
+    "report": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/report.md",
+    "claim": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3/evidence_manifest.json"
+  }
+}
