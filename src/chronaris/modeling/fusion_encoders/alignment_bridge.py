@@ -70,8 +70,8 @@ def _build_stream(
     clean_values = torch.where(feature_mask, values, torch.zeros_like(values))
     clean_timestamps = torch.where(
         point_mask,
-        timestamps_s.to(dtype=values.dtype),
-        torch.zeros_like(timestamps_s, dtype=values.dtype),
+        timestamps_s,
+        torch.zeros_like(timestamps_s),
     )
     delta_t_s = _stream_delta_t_seconds(clean_timestamps, point_mask)
     offsets_ms = torch.round(clean_timestamps * 1000.0).to(torch.int64)

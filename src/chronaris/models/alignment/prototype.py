@@ -154,7 +154,7 @@ class SingleStreamODERNNPrototype(nn.Module):
                 reference_offsets_s,
                 batch_size=batch_size,
                 device=stream.values.device,
-                dtype=value_dtype,
+                dtype=stream.offsets_s.dtype,
             )
             (
                 reference_hidden_states,

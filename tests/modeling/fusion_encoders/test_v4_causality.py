@@ -1,15 +1,43 @@
 from dataclasses import replace
 
 import torch
+import numpy as np
 from torch.nn import functional as F
 
 from chronaris.models.fusion.causal import (
     CausalFusionTensorInput, CausalMaskedCrossModalFusion,
     compute_vehicle_event_strengths, normalize_visible_event_scores,
+    build_causal_attention_mask,
 )
 from chronaris.models.fusion.semantic_event import CausalEventFusion, CausalEventFusionConfig, SemanticEventTensorInput
 from chronaris.modeling.fusion_encoders.multiscale_causal import MultiScaleCausalFusionInput
 from chronaris.modeling.fusion_encoders.safe_lag_fusion import SafeLagAwareFusion, SafeLagAwareFusionConfig
+
+
+def test_submicrosecond_future_is_not_rounded_into_visible_history():
+    from chronaris.modeling.fusion_encoders.chronaris_continuous import ChronarisContinuousEncoderConfig, ChronarisContinuousFusionEncoder
+    from chronaris.representation import collate_observation_samples
+    from tests.representation.test_contracts import _sample
+    future = 15.0 + 1e-7
+    mask = build_causal_attention_mask(torch.tensor([[15.]], dtype=torch.float64),
+                                      torch.tensor([[future]], dtype=torch.float64))
+    assert not mask.any()
+    torch.manual_seed(37)
+    sample = replace(_sample("boundary"), physiology_timestamps_s=np.asarray([0., future]))
+    changed_values = sample.physiology_values.copy()
+    changed_values[-1, 1] += 1000
+    original = collate_observation_samples([sample])
+    changed = collate_observation_samples([replace(sample, physiology_values=changed_values)])
+    encoder = ChronarisContinuousFusionEncoder(ChronarisContinuousEncoderConfig(
+        physiology_feature_names=sample.schema.physiology_feature_names,
+        vehicle_feature_names=sample.schema.vehicle_feature_names,
+        fusion_kind="safe_lag", hidden_dim=4, embedding_dim=4, encoder_hidden_dim=4,
+        decoder_hidden_dim=4, dynamics_hidden_dim=4, dropout=0,
+    )).eval()
+    with torch.inference_mode():
+        a, b = encoder(original, compute_diagnostics=False), encoder(changed, compute_diagnostics=False)
+    past = original.query_timestamps_s <= 15
+    torch.testing.assert_close(a.sequence_embedding[past], b.sequence_embedding[past], atol=1e-6, rtol=0)
 
 
 def test_causal_event_bias_and_empty_history_ignore_future_values():

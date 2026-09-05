@@ -1,0 +1,39 @@
+{
+  "checkpoint": "artifacts/application_evaluation/2026-09-05_v4-reference-smoke/chronaris/C/best.pt",
+  "sample_ids": [
+    "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+    "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000"
+  ],
+  "device": "NVIDIA GeForce RTX 4090",
+  "scope": "same_weights_same_inputs_inference_comparison",
+  "scalar_reference": {
+    "median_s": 0.8729440500028431,
+    "all_s": [
+      0.8953185924328864,
+      0.893805889878422,
+      0.8702244362793863,
+      0.8730393620207906,
+      0.8666600212454796,
+      0.870218588039279,
+      0.8729440500028431
+    ],
+    "peak_allocated_bytes": 30068224
+  },
+  "vectorized": {
+    "median_s": 0.10556202894076705,
+    "all_s": [
+      0.10647793719545007,
+      0.10608306992799044,
+      0.10556202894076705,
+      0.10668905079364777,
+      0.1051684720441699,
+      0.10493188397958875,
+      0.10547389602288604
+    ],
+    "peak_allocated_bytes": 47076352
+  },
+  "output_max_delta": 1.1175870895385742e-08,
+  "speedup": 8.26948912181926
+}

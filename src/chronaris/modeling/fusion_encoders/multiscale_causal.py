@@ -193,7 +193,7 @@ def build_seconds_lag_mask(
     upper_ok = delta <= (upper_s + epsilon_s)
     temporal = lower_ok & upper_ok
     if use_causal_mask:
-        temporal &= signed_delta >= -epsilon_s
+        temporal &= signed_delta >= 0
     return temporal & query_valid_mask.unsqueeze(-1) & key_valid_mask.unsqueeze(1)
 
 

@@ -134,62 +134,50 @@ class EventTokenExtractor(nn.Module):
         inputs: SemanticEventTensorInput,
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         _validate_semantic_inputs(inputs)
-        contribution_scores = inputs.attention_weights.sum(dim=1) * inputs.vehicle_event_scores
         batch_size, point_count, state_dim = inputs.vehicle_states.shape
+        if point_count == 0:
+            raise ValueError("event extraction requires reference points")
         top_k = self.config.event_top_k
-        token_states = inputs.vehicle_states.new_zeros((batch_size, top_k, state_dim))
-        token_scores = inputs.vehicle_states.new_zeros((batch_size, top_k))
-        center_offsets = inputs.vehicle_states.new_zeros((batch_size, top_k))
-        start_offsets = inputs.vehicle_states.new_zeros((batch_size, top_k))
-        end_offsets = inputs.vehicle_states.new_zeros((batch_size, top_k))
-        token_mask = torch.zeros((batch_size, top_k), dtype=torch.bool, device=inputs.vehicle_states.device)
-
-        for sample_index in range(batch_size):
-            scores = contribution_scores[sample_index]
-            if point_count == 0:
-                continue
-            visible = (inputs.vehicle_valid_mask[sample_index]
-                       if inputs.vehicle_valid_mask is not None else torch.ones_like(scores, dtype=torch.bool))
-            positive_scores = scores[visible & (scores > 0)]
-            if positive_scores.numel() > 0:
-                threshold = torch.quantile(
-                    positive_scores,
-                    q=min(self.config.event_score_quantile, 1.0),
-                )
-                active = visible & (scores >= threshold)
-            else:
-                if inputs.vehicle_valid_mask is not None:
-                    continue
-                active = torch.zeros_like(scores, dtype=torch.bool)
-                active[int(torch.argmax(inputs.vehicle_event_scores[sample_index]).item())] = True
-            segments = _collect_segments(active)
-            if not segments:
-                anchor_index = int(torch.argmax(inputs.vehicle_event_scores[sample_index]).item())
-                segments = [(anchor_index, anchor_index)]
-            ranked_segments = sorted(
-                segments,
-                key=lambda item: float(scores[item[0] : item[1] + 1].max().detach().cpu()),
-                reverse=True,
-            )[:top_k]
-            for token_index, (start_index, end_index) in enumerate(ranked_segments):
-                span = slice(start_index, end_index + 1)
-                span_scores = scores[span]
-                if not bool(torch.any(span_scores > 0)):
-                    span_scores = inputs.vehicle_event_scores[sample_index, span]
-                safe_scores = torch.clamp(span_scores, min=torch.finfo(span_scores.dtype).eps)
-                weight_sum = safe_scores.sum()
-                normalized = safe_scores / torch.clamp(weight_sum, min=torch.finfo(safe_scores.dtype).eps)
-                token_states[sample_index, token_index] = (
-                    inputs.vehicle_states[sample_index, span, :] * normalized.unsqueeze(-1)
-                ).sum(dim=0)
-                token_scores[sample_index, token_index] = span_scores.max()
-                offsets = inputs.vehicle_offsets_s[sample_index, span]
-                center_offsets[sample_index, token_index] = (offsets * normalized).sum()
-                start_offsets[sample_index, token_index] = offsets[0]
-                end_offsets[sample_index, token_index] = offsets[-1]
-                token_mask[sample_index, token_index] = True
-
-        return token_states, token_scores, center_offsets, start_offsets, end_offsets, token_mask
+        valid = (inputs.vehicle_valid_mask if inputs.vehicle_valid_mask is not None
+                 else torch.ones_like(inputs.vehicle_event_scores, dtype=torch.bool))
+        scores = (inputs.attention_weights.sum(dim=1) * inputs.vehicle_event_scores).masked_fill(~valid, 0)
+        # Selection is discrete in the scalar reference too. Stable sorting keeps
+        # the earliest segment when salience ties; pooling below remains differentiable.
+        with torch.no_grad():
+            positive = (scores > 0) & valid
+            count = positive.sum(dim=-1)
+            ordered = scores.masked_fill(~positive, torch.inf).sort(dim=-1).values
+            ordered = ordered.masked_fill((count == 0).unsqueeze(-1), 0)
+            rank = (count - 1).clamp_min(0).to(scores.dtype) * self.config.event_score_quantile
+            lower, upper = rank.floor().long(), rank.ceil().long()
+            threshold = torch.lerp(ordered.gather(1, lower[:, None]),
+                                   ordered.gather(1, upper[:, None]), (rank - lower)[:, None])
+            active = positive & (scores >= threshold)
+            if inputs.vehicle_valid_mask is None:
+                fallback = F.one_hot(inputs.vehicle_event_scores.argmax(-1), point_count).bool()
+                active = torch.where((count > 0)[:, None], active, fallback)
+            starts = active & ~F.pad(active[:, :-1], (1, 0), value=False)
+            segment_ids = starts.long().cumsum(-1) - 1
+            segment_count = starts.sum(-1)
+            membership = (segment_ids[:, None, :] == torch.arange(point_count, device=scores.device)[None, :, None]) & active[:, None, :]
+            maxima = scores[:, None, :].expand_as(membership).masked_fill(~membership, -torch.inf).amax(-1)
+            selected = maxima.argsort(dim=-1, descending=True, stable=True)[:, :top_k]
+            selected = F.pad(selected, (0, max(top_k - point_count, 0)))
+            token_mask = torch.arange(top_k, device=scores.device)[None] < segment_count[:, None]
+            membership = (segment_ids[:, None, :] == selected[:, :, None]) & active[:, None, :] & token_mask[:, :, None]
+        contribution = scores[:, None, :].expand(-1, top_k, -1)
+        use_contribution = (membership & (contribution > 0)).any(-1, keepdim=True)
+        span_scores = torch.where(use_contribution, contribution, inputs.vehicle_event_scores[:, None, :])
+        weights = span_scores.clamp_min(torch.finfo(scores.dtype).eps).masked_fill(~membership, 0)
+        weights = weights / weights.sum(-1, keepdim=True).clamp_min(torch.finfo(scores.dtype).eps)
+        states = inputs.vehicle_states.masked_fill(~valid.unsqueeze(-1), 0)
+        token_states = torch.bmm(weights, states)
+        token_scores = span_scores.expand_as(membership).masked_fill(~membership, -torch.inf).amax(-1).masked_fill(~token_mask, 0)
+        offsets = inputs.vehicle_offsets_s[:, None, :].expand_as(membership)
+        center = (weights * offsets).sum(-1).masked_fill(~token_mask, 0).to(states.dtype)
+        start = offsets.masked_fill(~membership, torch.inf).amin(-1).masked_fill(~token_mask, 0).to(states.dtype)
+        end = offsets.masked_fill(~membership, -torch.inf).amax(-1).masked_fill(~token_mask, 0).to(states.dtype)
+        return token_states, token_scores, center, start, end, token_mask
 
 
 class SemanticQueryBank(nn.Module):
@@ -343,20 +331,6 @@ def _masked_mean(states: torch.Tensor, mask: torch.Tensor | None) -> torch.Tenso
     if mask is None:
         return states.mean(dim=1)
     return states.masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / mask.sum(dim=1, keepdim=True).clamp_min(1)
-
-
-def _collect_segments(active: torch.Tensor) -> list[tuple[int, int]]:
-    segments: list[tuple[int, int]] = []
-    start_index: int | None = None
-    for index, is_active in enumerate(active.tolist()):
-        if is_active and start_index is None:
-            start_index = index
-        elif not is_active and start_index is not None:
-            segments.append((start_index, index - 1))
-            start_index = None
-    if start_index is not None:
-        segments.append((start_index, active.shape[0] - 1))
-    return segments
 
 
 def _masked_weighted_pool(

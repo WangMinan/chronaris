@@ -137,7 +137,8 @@ def build_causal_attention_mask(
     if lag_window_points is not None and lag_window_points <= 0:
         raise ValueError("lag_window_points must be positive when provided.")
 
-    mask = vehicle_offsets_s.unsqueeze(1) <= (physiology_offsets_s.unsqueeze(-1) + epsilon_s)
+    # Tolerances must not turn a strictly future observation into history.
+    mask = vehicle_offsets_s.unsqueeze(1) <= physiology_offsets_s.unsqueeze(-1)
     if lag_window_points is not None:
         visible_rank = mask.to(dtype=torch.int64).cumsum(dim=-1)
         visible_count = mask.sum(dim=-1)

@@ -50,7 +50,7 @@ def relation_samples(values, times, mask, feature_names, relation):
     valid = mask[:, 1:, source] & mask[:, :-1, source] & mask[:, 1:, target] & (dt > 0)
     source_values = values[..., source] * relation.source_multiplier
     rhs = values[:, 1:, target] * relation.target_multiplier
-    derivative = (source_values[:, 1:] - source_values[:, :-1]) / dt.clamp_min(1e-9)
+    derivative = (source_values[:, 1:] - source_values[:, :-1]) / dt.to(values.dtype).clamp_min(1e-9)
     return (derivative - rhs)[valid], rhs[valid]
 
 

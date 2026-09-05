@@ -286,7 +286,6 @@ class ChronarisContinuousFusionEncoder(nn.Module):
         )
         query_times = batch.query_timestamps_s.to(
             device=batch.physiology_values.device,
-            dtype=batch.physiology_values.dtype,
         )
         alignment = self.continuous_backbone(
             alignment_batch,
