@@ -7,12 +7,7 @@ from typing import Mapping
 
 import torch
 
-from chronaris.models.alignment.physics import build_stage_f_physics_losses
-from chronaris.models.alignment.physics_features import (
-    StageFPhysicsContext,
-    build_physiology_feature_groups,
-    build_vehicle_feature_groups,
-)
+from chronaris.models.alignment.physics import build_rigid_body_vehicle_residuals
 from chronaris.models.alignment.physics_state_mapping import (
     RigidBodyStateMapping,
     build_rigid_body_state_mapping,
@@ -68,30 +63,19 @@ def build_chronaris_physics_audit(
     if weight < 0 or huber_delta <= 0:
         raise ValueError("physics weight/delta configuration is invalid")
     labels = field_labels or {}
-    context = StageFPhysicsContext(
-        vehicle_groups=build_vehicle_feature_groups(
-            batch.vehicle.feature_names,
-            field_labels=labels,
-        ),
-        physiology_groups=build_physiology_feature_groups(
-            batch.physiology.feature_names
-        ),
-        field_labels=labels,
-    )
-    breakdown = build_stage_f_physics_losses(
-        output,
-        batch,
-        mode="feature_only",
-        family="rigid_body",
-        huber_delta=huber_delta,
-        context=context,
-    )
-    values = breakdown.component_tensors()
     mapping = build_rigid_body_state_mapping(
         batch.vehicle.feature_names,
         field_labels=labels,
     )
-    counts = _component_counts(batch, mapping, context)
+    values = build_rigid_body_vehicle_residuals(
+        output.vehicle.reconstructions,
+        batch.vehicle.offsets_s,
+        batch.vehicle.feature_valid_mask & batch.vehicle.mask.unsqueeze(-1),
+        batch.vehicle.feature_names,
+        mapping,
+        huber_delta=huber_delta,
+    )
+    counts = _component_counts(batch, mapping)
     components: list[PhysicsComponentStatus] = []
     for component_name in (*RIGID_COMPONENTS, *PHYSIOLOGY_COMPONENTS):
         count = counts[component_name]
@@ -108,7 +92,7 @@ def build_chronaris_physics_audit(
             weighted_value = None
         else:
             status = "unavailable"
-            reason = _unavailable_reason(component_name, mapping, context)
+            reason = _unavailable_reason(component_name, mapping)
             weighted_value = None
         components.append(
             PhysicsComponentStatus(
@@ -187,7 +171,6 @@ def physics_audit_to_rows(
 def _component_counts(
     batch: TorchAlignmentBatch,
     mapping: RigidBodyStateMapping,
-    context: StageFPhysicsContext,
 ) -> dict[str, int]:
     vehicle = batch.vehicle
     counts = {
@@ -210,15 +193,8 @@ def _component_counts(
             )
         ),
     }
-    physiology = batch.physiology
-    counts["physiology_smoothness"] = _second_difference_count(
-        physiology.mask,
-        physiology.offsets_s,
-    )
-    counts["physiology_spo2_delta"] = _selected_first_difference_count(
-        physiology,
-        context.physiology_groups.spo2,
-    )
+    counts["physiology_smoothness"] = 0
+    counts["physiology_spo2_delta"] = 0
     return counts
 
 
@@ -240,32 +216,9 @@ def _derivative_pair_count(stream, source_names, target_names) -> int:
     return int(valid.sum().item())
 
 
-def _second_difference_count(mask: torch.Tensor, times: torch.Tensor) -> int:
-    if mask.shape[1] <= 2:
-        return 0
-    valid = (
-        mask[:, :-2]
-        & mask[:, 1:-1]
-        & mask[:, 2:]
-        & (times[:, 1:-1] > times[:, :-2])
-        & (times[:, 2:] > times[:, 1:-1])
-    )
-    return int(valid.sum().item())
-
-
-def _selected_first_difference_count(stream, names) -> int:
-    feature_index = {name: index for index, name in enumerate(stream.feature_names)}
-    indices = [feature_index[name] for name in names if name in feature_index]
-    if not indices or stream.values.shape[1] <= 1:
-        return 0
-    valid = stream.feature_valid_mask[..., indices].any(dim=-1)
-    pairs = valid[:, :-1] & valid[:, 1:] & (
-        stream.offsets_s[:, 1:] > stream.offsets_s[:, :-1]
-    )
-    return int(pairs.sum().item())
-
-
-def _unavailable_reason(component_name, mapping, context) -> str:
+def _unavailable_reason(component_name, mapping) -> str:
+    if component_name in PHYSIOLOGY_COMPONENTS:
+        return "outside_motion_kinematics_contract"
     requirements = {
         "vehicle_rigid_body_translation": bool(mapping.speed and mapping.acceleration),
         "vehicle_rigid_body_vertical": bool(mapping.altitude and mapping.vertical_speed),
@@ -274,8 +227,6 @@ def _unavailable_reason(component_name, mapping, context) -> str:
             or (mapping.roll and mapping.roll_rate)
             or (mapping.yaw and mapping.yaw_rate)
         ),
-        "physiology_smoothness": True,
-        "physiology_spo2_delta": bool(context.physiology_groups.spo2),
     }
     return (
         "no_valid_derivative_pairs"

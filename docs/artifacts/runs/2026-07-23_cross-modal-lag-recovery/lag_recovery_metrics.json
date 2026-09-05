@@ -1,0 +1,27 @@
+{
+  "lags_s": [
+    -5.0,
+    -2.0,
+    0.0,
+    2.0,
+    5.0
+  ],
+  "n_trajectories": 24,
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "lag_mae_s": 6.628,
+      "lag_class_accuracy": 0.233
+    },
+    {
+      "label": "chronaris_multiscale",
+      "lag_mae_s": 4.48,
+      "lag_class_accuracy": 0.217
+    },
+    {
+      "label": "vehicle_only",
+      "lag_mae_s": 2.8,
+      "lag_class_accuracy": 0.2
+    }
+  ]
+}

@@ -61,6 +61,7 @@ class SimulationLockedRepresentationConfig:
     export_batch_size: int = 32
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    require_valid_mask_match: bool = True
     resume: bool = True
 
 
@@ -131,10 +132,12 @@ def run_simulation_locked_representations(config: SimulationLockedRepresentation
                 output_root=heavy_root / "representations" / f"seed_{seed}",
                 resume=config.resume,
                 batch_size=config.export_batch_size,
+                require_valid_mask_match=config.require_valid_mask_match,
             )
             verified_alignment = {
                 role: validate_fusion_method_alignment(
-                    [outputs[method][role] for method in APPLICATION_METHODS]
+                    [outputs[method][role] for method in APPLICATION_METHODS],
+                    require_valid_mask_match=config.require_valid_mask_match,
                 )
                 for role in ("train", "validation", "held_out")
             }

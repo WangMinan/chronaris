@@ -1,0 +1,38 @@
+{
+  "target": "future_maneuver_intensity_30_35s",
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "generalization": {
+        "r2": -1.919,
+        "spearman": 0.287
+      },
+      "transductive": {
+        "r2": 0.474,
+        "spearman": 0.332
+      }
+    },
+    {
+      "label": "chronaris_multiscale",
+      "generalization": {
+        "r2": -1.644,
+        "spearman": -0.029
+      },
+      "transductive": {
+        "r2": 0.372,
+        "spearman": 0.232
+      }
+    },
+    {
+      "label": "vehicle_only",
+      "generalization": {
+        "r2": -0.782,
+        "spearman": 0.503
+      },
+      "transductive": {
+        "r2": 0.363,
+        "spearman": 0.27
+      }
+    }
+  ]
+}

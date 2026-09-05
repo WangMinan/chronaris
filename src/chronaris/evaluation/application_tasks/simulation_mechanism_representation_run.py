@@ -62,6 +62,7 @@ class SimulationMechanismRepresentationConfig:
     export_batch_size: int = 32
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    require_valid_mask_match: bool = True
     resume: bool = True
 
 
@@ -186,7 +187,10 @@ def run_simulation_mechanism_representations(
                             "method_count": len(outputs),
                             "context_count": len(data.batch.sample_ids),
                             "alignment_sha256": validate_fusion_method_alignment(
-                                outputs
+                                outputs,
+                                require_valid_mask_match=(
+                                    config.require_valid_mask_match
+                                ),
                             ),
                             "task_oracle_opened": False,
                         }

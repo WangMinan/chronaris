@@ -1,0 +1,28 @@
+{
+  "format": "chronaris.thesis_v3p2p3_final_verification.v1",
+  "source_commit": "6a2393e4190367e9504377ee2f2914926e610ae8",
+  "source_clean": true,
+  "pytest": {
+    "total": 496,
+    "passed": 488,
+    "skipped": 8,
+    "failures": 0,
+    "errors": 0,
+    "xml_sha256": "2adcdf047ffb54a3c29006fd30d3aeb834d85a2c3cd5099a3d9cdfcba815e8e5",
+    "xml_path": "artifacts/application_evaluation/2026-09-04_no-observation-safety-repair/final-pytest.xml",
+    "reported_wall_s": 120.85
+  },
+  "diagnostic_script_hash_matches": true,
+  "diagnostic_cuda_matches_gate": true,
+  "diagnostic_checkpoints_unchanged": true,
+  "default_outer_run_roots_absent": true,
+  "all_hard_gates_passed": false,
+  "outer_results_authorized": false,
+  "next_model_behavior_change_requires_user_approval": true,
+  "core_evidence_sha256": {
+    "gate_audit.json": "9ddedc5fe21bbf4ac330aaac2a59c3a910de8b70f15d11e2b60b0488f32bbd56",
+    "future_information_diagnosis.json": "8e7b8df834059681295978cffe26c3ffb602151354f5736ae2c229cae8bf9b5b",
+    "resume_verification.json": "eeccb5c8827f4cf0a16aa548e2dc6836816af2b461b77ba005bc674811f20234",
+    "diagnose_future_information.py": "a979ca6ed575d4b37d7427751f5ef33006d696c49ba82fb34397d04b9af4a26d"
+  }
+}

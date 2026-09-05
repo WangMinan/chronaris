@@ -1,15 +1,39 @@
 # Chronaris 当前状态
 
-更新时间：2026-07-16
+更新时间：2026-09-05
 
 ## 一句话状态
 
-两条鼎新真实数据研究线已收口并退出当前执行入口，仓库开始唯一新主线 `research/safe-lag-aware-fusion-20260718`（安全滞后感知融合）。简化下游评价线作为真实数据最新协议冻结确认保留，不利结果不删除、不覆盖：航电单流在未来机动上宏平均 F1 `0.8084`、相对当前状态技能 `0.6685`，Chronaris 为 `0.1948/-123.5859`；未来生理字段六方法正技能字段比例均为 `0`，均未超持久性基线。安全残差线（含残差激活筛选）冻结阶段无损、安全门禁通过，但研究晋级门禁未通过：最佳候选连续响应平均技能 `-0.0171`、中位残差贡献比 `0.0005`，未进入 `[0.02,0.30]` 有效区间。上述两条线均已关闭，不再根据其已打开的外层结果继续调参；门控残差与安全回退作为新主线设计基础保留复用。
+仓库集成主线为 `main`，本轮冻结实验来源为 `research/thesis-continuous-semantic-fusion-202609`。用户于 2026-09-05 决定先合并已完成的实现、材料与实验记录，再从主分支开展后续改进。v3.2.3 无观测表示与严格安全门修复、剩余受控仿真和总审计均已完成；六项机制门中四项通过，未来信息隔离与安全旁路失败，完整论文目标尚未完成。未来依赖已只读定位到语义事件分数的全窗归一化，模型未改、阈值未放宽、全部不利结果保留，公开数据与鼎新外层继续关闭。详见[主分支集成复核](review/stage/thesis-mainline/main-integration-2026-09-05.md)与[最终实验复核](review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
-- **当前研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`；计划与评价协议待审计完成后提交（见 TASKS.md）。
+- **当前论文主线**：以 `main` 集成研究基线；`research/thesis-continuous-semantic-fusion-202609` 保留本轮实现与证据来源，后续改进从 `main` 创建新分支。
+  - 当前论文级冻结清单：[requirements/thesis-frozen-paper-evaluation-v3.2.3.md](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)；[v3.2.2](requirements/thesis-frozen-paper-evaluation-v3.2.2.md)、[v3.2.1](requirements/thesis-frozen-paper-evaluation-v3.2.1.md)和上位协议保留追溯
+  - 现场保护与基线预检：[artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md](artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)
+  - 可信训练第一批修复：[artifacts/runs/2026-09-01_training-trust-repair/report.md](artifacts/runs/2026-09-01_training-trust-repair/report.md)
+  - 原生时间输入与 Euler 子步修复：[artifacts/runs/2026-09-01_native-time-euler-repair/report.md](artifacts/runs/2026-09-01_native-time-euler-repair/report.md)
+  - 可学习事件语义与新训练目标：[artifacts/runs/2026-09-01_learnable-semantic-objectives/report.md](artifacts/runs/2026-09-01_learnable-semantic-objectives/report.md)
+  - 连续演化数值方案训练内验证：[artifacts/runs/2026-09-01_ode-solver-validation/report.md](artifacts/runs/2026-09-01_ode-solver-validation/report.md)
+  - seed 17 干净基线矩阵：[artifacts/runs/2026-09-01_seed17-clean-baseline/report.md](artifacts/runs/2026-09-01_seed17-clean-baseline/report.md)
+  - 原生高频 ODE-RNN 等价执行与协议漂移修复：[artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md](artifacts/runs/2026-09-01_native-ode-runtime-repair/report.md)
+  - v3.2 四候选三随机种子训练内冻结：[artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md](artifacts/runs/2026-09-02_candidate-screen-v3p2/report.md)
+  - 原生生理预处理完整性修复：[artifacts/runs/2026-09-03_native-physiology-integrity/report.md](artifacts/runs/2026-09-03_native-physiology-integrity/report.md)
+  - 无观测表示与严格安全门修复：[artifacts/runs/2026-09-04_no-observation-safety-repair/report.md](artifacts/runs/2026-09-04_no-observation-safety-repair/report.md)；工程验收 6/6，CPU 全量测试 `481 passed, 15 skipped`，原失败窗口 CPU/CUDA 重放通过
+  - 最终完整测试：CUDA 可用环境下 `488 passed, 8 skipped`，120.85 秒；测试与恢复哈希见[最终复核](review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)，测试通过不等价于研究硬门通过
+  - 剩余仿真执行：[十环节编排状态](artifacts/runs/2026-09-04_thesis-simulation-v3p2p3/run_state.json)；630 份压力表示、20,160 条压力指标、3,360 条时间机制指标全部完成
+  - 最终硬门：[总审计](artifacts/runs/2026-09-04_thesis-simulation-gates-v3p2p3/report.md)与[未来信息定位](artifacts/runs/2026-09-04_thesis-simulation-gates-v3p2p3/future_information_diagnosis.json)；严格安全门 9/12 达标，未来扰动 3/3 超阈值；恢复重放六份核心结果哈希一致，141 份缓存未改
+  - 修复与实验源码冻结：`6a2393e4190367e9504377ee2f2914926e610ae8`，标签 `evidence/thesis-v3p2p3-repair-20260904`；下一步模型行为修订需先确认，不启动额外训练内调参
+  - 论文级冻结实验清单与模型配置：[requirements/thesis-frozen-paper-evaluation-v3.2.3.md](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)、[requirements/thesis-frozen-models-v3.2.json](requirements/thesis-frozen-models-v3.2.json)
+  - 历史证据标签：`evidence/safe-lag-exploration-20260724`
+- **历史研究主线（安全滞后感知融合）**：分支 `research/safe-lag-aware-fusion-20260718`。审计、研究计划与评价协议 v2 已提交：
+  - 当前 Chronaris + CogPilot/CLARE 审计：[artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md](artifacts/runs/2026-07-22_safe-lag-aware-fusion-audit/report.md)
+  - 研究计划：[implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md](implementation/notes/safe-lag-aware-fusion-research-plan-2026-07-18.md)
+  - 评价协议 v2：[requirements/safe-lag-aware-fusion-evaluation-v2.md](requirements/safe-lag-aware-fusion-evaluation-v2.md)
+  - 波次 A 工程冒烟（机制验证）：[artifacts/runs/2026-07-22_safe-lag-wave-a-smoke/report.md](artifacts/runs/2026-07-22_safe-lag-wave-a-smoke/report.md)
+  - 鼎新未来机动单折确认（真实下游）：[artifacts/runs/2026-07-22_dingxin-safe-lag-maneuver/report.md](artifacts/runs/2026-07-22_dingxin-safe-lag-maneuver/report.md)
+  - CogPilot 飞行难度分类（公开数据正向）：[artifacts/runs/2026-07-23_cogpilot-difficulty/report.md](artifacts/runs/2026-07-23_cogpilot-difficulty/report.md)
 - 历史已收口线 1 — 简化下游评价（最新真实数据协议冻结确认）：
   - 协议：[requirements/simple-downstream-evaluation-v1.md](requirements/simple-downstream-evaluation-v1.md)
   - 实施说明：[implementation/notes/simple-downstream-rebuild-2026-07-15.md](implementation/notes/simple-downstream-rebuild-2026-07-15.md)

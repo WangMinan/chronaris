@@ -202,14 +202,17 @@ class FusionStreamBatch:
         if not torch.isfinite(self.pooled_embedding).all():
             raise RepresentationContractError("pooled_embedding contains non-finite values")
         valid_count = self.valid_mask.sum(dim=1, keepdim=True)
-        if bool((valid_count == 0).any()):
+        unobserved = valid_count.squeeze(1) == 0
+        if bool((self.sequence_embedding[unobserved] != 0).any()) or bool(
+            (self.pooled_embedding[unobserved] != 0).any()
+        ):
             raise RepresentationContractError(
-                "each fusion sample must have at least one valid query point"
+                "unobserved fusion samples must have zero sequence and pooled embeddings"
             )
         expected_pool = (
             self.sequence_embedding
             * self.valid_mask.unsqueeze(-1).to(self.sequence_embedding.dtype)
-        ).sum(dim=1) / valid_count.to(self.sequence_embedding.dtype)
+        ).sum(dim=1) / valid_count.clamp_min(1).to(self.sequence_embedding.dtype)
         if not torch.allclose(
             self.pooled_embedding,
             expected_pool,
@@ -233,8 +236,10 @@ class FusionStreamEncoder(Protocol):
 
 def validate_fusion_method_alignment(
     outputs: Sequence[FusionStreamBatch],
+    *,
+    require_valid_mask_match: bool = True,
 ) -> str:
-    """Require identical sample/query/mask lineage and return a stable alignment hash."""
+    """Require shared sample/query lineage and return a stable alignment hash."""
 
     if not outputs:
         raise RepresentationContractError("at least one fusion output is required")
@@ -252,12 +257,19 @@ def validate_fusion_method_alignment(
             raise RepresentationContractError("fusion method source lineage mismatch")
         if not torch.equal(output.timestamps_s, first.timestamps_s):
             raise RepresentationContractError("fusion method query timestamps mismatch")
-        if not torch.equal(output.valid_mask, first.valid_mask):
+        if require_valid_mask_match and not torch.equal(
+            output.valid_mask, first.valid_mask
+        ):
             raise RepresentationContractError("fusion method valid mask mismatch")
     digest = hashlib.sha256()
     digest.update(json.dumps(first.sample_ids, ensure_ascii=False).encode("utf-8"))
     digest.update(first.timestamps_s.detach().cpu().numpy().tobytes())
-    digest.update(first.valid_mask.detach().cpu().numpy().tobytes())
+    if require_valid_mask_match:
+        digest.update(first.valid_mask.detach().cpu().numpy().tobytes())
+    else:
+        for output in outputs:
+            digest.update(output.method_name.encode("utf-8"))
+            digest.update(output.valid_mask.detach().cpu().numpy().tobytes())
     for value in first.source_sample_hashes:
         digest.update(value.encode("ascii"))
     return digest.hexdigest()

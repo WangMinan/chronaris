@@ -1,0 +1,13 @@
+task,metric,consumer,seed,chronaris_value,best_single_value,degradation,threshold,passed
+simulated_future_workload_classification,macro_f1,linear,17,0.4356981181535421,0.4107181077767476,-0.02498001037679448,0.05,True
+simulated_future_workload_classification,macro_f1,linear,29,0.3301393810536263,0.4398319989330335,0.1096926178794072,0.05,False
+simulated_future_workload_classification,macro_f1,linear,43,0.3892795412414636,0.4105351170568562,0.021255575815392613,0.05,True
+simulated_future_workload_classification,macro_f1,minirocket,17,0.536815175901128,0.4189855072463768,-0.11782966865475125,0.05,True
+simulated_future_workload_classification,macro_f1,minirocket,29,0.4947903294304201,0.4628253744532815,-0.03196495497713864,0.05,True
+simulated_future_workload_classification,macro_f1,minirocket,43,0.450772763971152,0.5064038857552152,0.05563112178406321,0.05,False
+simulated_future_workload_regression,rmse,linear,17,0.2137379735706999,0.2440149766453903,-0.12407846227688646,0.05,True
+simulated_future_workload_regression,rmse,linear,29,0.2199267404221015,0.2389584612985002,-0.0796444736586448,0.05,True
+simulated_future_workload_regression,rmse,linear,43,0.2429492018466329,0.2444816897021416,-0.00626831341592804,0.05,True
+simulated_future_workload_regression,rmse,minirocket,17,0.2013992403636904,0.228972659520329,-0.12042232122560703,0.05,True
+simulated_future_workload_regression,rmse,minirocket,29,0.1904837624812205,0.1841731096372094,0.034264789558269726,0.05,True
+simulated_future_workload_regression,rmse,minirocket,43,0.2428252397939546,0.2007111303283821,0.20982448455484204,0.05,False

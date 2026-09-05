@@ -1,0 +1,9 @@
+check_id,status,observed,expected
+branch_created,passed,research/thesis-continuous-semantic-fusion-202609,unique thesis development branch
+history_tag_created,passed,evidence/safe-lag-exploration-20260724,annotated evidence tag
+user_changes_preserved,passed,dirty worktree unchanged,no reset or overwrite
+full_pytest,passed,"429 passed; 8 skipped","all tests pass"
+git_diff_check,passed,clean,no whitespace errors
+cuda_preflight,passed,NVIDIA GeForce RTX 4090,CUDA available
+data_preflight,passed,CogPilot+CLARE+Dingxin+simulation present,all required roots available
+disk_preflight,passed,203 GiB available,sufficient for protocol repair and screening

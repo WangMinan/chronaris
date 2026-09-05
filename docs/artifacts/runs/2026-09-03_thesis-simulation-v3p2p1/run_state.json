@@ -1,0 +1,97 @@
+{
+  "format": "chronaris.thesis_frozen_simulation.v3.2.1",
+  "protocol_version": "v3.2.1",
+  "source_commit": "7937334239e2cdc0263754de03328769ab90987c",
+  "runner_sha256": "14622cdcb4d37fa988120536c99c8c08d05e7408ca1ed9d9bc0c8436e2c83e27",
+  "selected_models_sha256": "8f49ff9b9ad936c4f9ec7159357f305b20fad0b5a86e5e45747cc1c5b3b26db4",
+  "protocol_sha256": "2a024143b57cc89165fa6254775f4550600e63d1c8bf02ba713eea6953d6a86f",
+  "cuda_device_name": "NVIDIA GeForce RTX 4090",
+  "pretraining_source_commit": "58db4458dc64bb452526431413924283deff63bd",
+  "outer_public_results_opened": false,
+  "run_ids": {
+    "pretraining": "2026-09-03_thesis-simulation-pretraining-v3p2",
+    "representations": "2026-09-03_thesis-simulation-representations-v3p2p1",
+    "consumers": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+    "stress_representations": "2026-09-03_thesis-simulation-stress-representations-v3p2p1",
+    "stress_consumers": "2026-09-03_thesis-simulation-stress-consumers-v3p2p1",
+    "mechanism_representations": "2026-09-03_thesis-simulation-mechanism-representations-v3p2p1",
+    "mechanism_consumers": "2026-09-03_thesis-simulation-mechanism-consumers-v3p2p1",
+    "ablation_pretraining": "2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1",
+    "ablation_representations": "2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+    "ablation_consumers": "2026-09-03_thesis-simulation-ablation-consumers-v3p2p1"
+  },
+  "results": {
+    "pretraining": {
+      "run_id": "2026-09-03_thesis-simulation-pretraining-v3p2",
+      "status": "reused_completed",
+      "source_commit": "58db4458dc64bb452526431413924283deff63bd",
+      "checkpoint_count": 15,
+      "acceptance_pass_count": 9,
+      "acceptance_check_count": 9,
+      "g2_locked_test_opened": false,
+      "task_targets_opened": false
+    },
+    "representations": {
+      "run_id": "2026-09-03_thesis-simulation-representations-v3p2p1",
+      "status": "completed",
+      "compact_run_root": "docs/artifacts/runs/2026-09-03_thesis-simulation-representations-v3p2p1",
+      "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-representations-v3p2p1",
+      "seed_count": 3,
+      "export_count": 54,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7,
+      "report_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-representations-v3p2p1/report.md",
+      "evidence_manifest_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-representations-v3p2p1/evidence_manifest.json"
+    },
+    "consumers": {
+      "run_id": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+      "status": "completed",
+      "compact_run_root": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1",
+      "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-consumers-v3p2p1",
+      "method_seed_count": 18,
+      "metric_count": 1152,
+      "fusion_gain_count": 768,
+      "paired_statistic_count": 90,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7,
+      "report_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/report.md",
+      "evidence_manifest_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/evidence_manifest.json"
+    },
+    "ablation_pretraining": {
+      "run_id": "2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6,
+      "compact_run_root": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1",
+      "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1",
+      "report_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1/report.md",
+      "evidence_manifest_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1/evidence_manifest.json"
+    },
+    "ablation_representations": {
+      "run_id": "2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "export_count": 36,
+      "acceptance_pass_count": 5,
+      "acceptance_check_count": 5,
+      "compact_run_root": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+      "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+      "report_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/report.md",
+      "evidence_manifest_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-representations-v3p2p1/evidence_manifest.json"
+    },
+    "ablation_consumers": {
+      "run_id": "2026-09-03_thesis-simulation-ablation-consumers-v3p2p1",
+      "status": "completed",
+      "variant_seed_count": 12,
+      "metric_count": 768,
+      "paired_statistic_count": 72,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6,
+      "compact_run_root": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-consumers-v3p2p1",
+      "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-ablation-consumers-v3p2p1",
+      "report_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-consumers-v3p2p1/report.md",
+      "evidence_manifest_path": "docs/artifacts/runs/2026-09-03_thesis-simulation-ablation-consumers-v3p2p1/evidence_manifest.json"
+    }
+  }
+}

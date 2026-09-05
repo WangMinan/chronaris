@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import torch
 import pytest
+from types import SimpleNamespace
 
 from chronaris.modeling.training import (
     CommonPretextHeadBundle,
     CommonPretextWeights,
+    ExplicitTimeShiftHead,
     chronaris_auxiliary_weight_schedule,
+    event_pair_contrastive_loss_term,
+    explicit_time_shift_loss_term,
 )
 from chronaris.representation import CommonPretextTargets
 
@@ -77,13 +81,69 @@ def test_pretext_unavailable_term_is_not_fabricated_as_zero() -> None:
 
 
 def test_chronaris_auxiliary_schedule_matches_frozen_ramp() -> None:
-    assert chronaris_auxiliary_weight_schedule(1).physical_consistency == 0.0
-    assert chronaris_auxiliary_weight_schedule(10).causal_direction == 0.0
-    epoch_11 = chronaris_auxiliary_weight_schedule(11)
-    assert epoch_11.continuous_alignment == pytest.approx(0.02)
-    assert epoch_11.physical_consistency == pytest.approx(0.01)
-    epoch_20 = chronaris_auxiliary_weight_schedule(20)
-    assert epoch_20.continuous_alignment == 0.2
-    assert epoch_20.physical_consistency == 0.1
-    assert epoch_20.causal_direction == 0.1
-    assert chronaris_auxiliary_weight_schedule(25) == epoch_20
+    epoch_1 = chronaris_auxiliary_weight_schedule(1)
+    assert epoch_1.continuous_alignment == pytest.approx(0.04)
+    assert epoch_1.physical_consistency == pytest.approx(0.02)
+    assert epoch_1.causal_direction == pytest.approx(0.02)
+    epoch_5 = chronaris_auxiliary_weight_schedule(5)
+    assert epoch_5.continuous_alignment == 0.2
+    assert epoch_5.physical_consistency == 0.1
+    assert epoch_5.causal_direction == 0.1
+    assert chronaris_auxiliary_weight_schedule(25) == epoch_5
+
+
+def test_explicit_shift_weight_changes_head_gradient() -> None:
+    torch.manual_seed(29)
+    sequence = torch.randn(5, 6, 64)
+    valid = torch.ones(5, 6, dtype=torch.bool)
+    labels = torch.arange(5)
+    zero_head = ExplicitTimeShiftHead(64)
+    active_head = ExplicitTimeShiftHead(64)
+    active_head.load_state_dict(zero_head.state_dict())
+
+    zero = explicit_time_shift_loss_term(zero_head(sequence, valid), labels, weight=0.0)
+    active = explicit_time_shift_loss_term(
+        active_head(sequence, valid), labels, weight=0.1
+    )
+    zero.weighted_loss.backward()
+    active.weighted_loss.backward()
+
+    assert torch.isfinite(active.raw_loss)
+    assert sum(parameter.grad.abs().sum() for parameter in zero_head.parameters()) == 0
+    assert sum(parameter.grad.abs().sum() for parameter in active_head.parameters()) > 0
+
+
+def test_event_pairing_uses_only_cross_group_negatives_and_reports_unavailable() -> None:
+    query_context = torch.tensor(
+        [
+            [[1.0, 0.0], [1.0, 0.0], [0.0, 0.0]],
+            [[0.0, 1.0], [0.0, 1.0], [0.0, 0.0]],
+        ]
+    )
+    semantic = SimpleNamespace(
+        query_names=(
+            "flight_event",
+            "physiology_response",
+            "human_aircraft_coordination",
+        ),
+        query_context_states=query_context,
+    )
+
+    active, metrics = event_pair_contrastive_loss_term(
+        semantic,
+        ("group_a", "group_b"),
+        temperature=0.1,
+        weight=0.1,
+    )
+    unavailable, _ = event_pair_contrastive_loss_term(
+        semantic,
+        ("group_a", "group_a"),
+        temperature=0.1,
+        weight=0.1,
+    )
+
+    assert active.status == "active" and active.count == 2
+    assert metrics["positive_similarity"] > metrics["negative_similarity"]
+    assert metrics["recall_at_1"] == 1.0
+    assert unavailable.status == "unavailable"
+    assert unavailable.reason == "no_cross_group_negative"

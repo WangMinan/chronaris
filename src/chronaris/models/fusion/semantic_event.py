@@ -30,6 +30,8 @@ class SemanticQuerySpec:
 class CausalEventFusionConfig:
     """Controls event-token extraction and query-to-event attribution."""
 
+    state_dim: int = 64
+    learnable_queries: bool = False
     attention_temperature: float = 1.0
     event_score_bias_weight: float = 0.25
     event_top_k: int = 4
@@ -43,6 +45,8 @@ class CausalEventFusionConfig:
     )
 
     def __post_init__(self) -> None:
+        if self.state_dim <= 0:
+            raise ValueError("state_dim must be positive.")
         if self.attention_temperature <= 0:
             raise ValueError("attention_temperature must be positive.")
         if self.event_score_bias_weight < 0:
@@ -183,11 +187,17 @@ class EventTokenExtractor(nn.Module):
 
 
 class SemanticQueryBank(nn.Module):
-    """Build deterministic semantic queries from fused physiology/vehicle context."""
+    """Build deterministic or residual-learned queries from dual-stream context."""
 
     def __init__(self, config: CausalEventFusionConfig | None = None) -> None:
         super().__init__()
         self.config = config or CausalEventFusionConfig()
+        if self.config.learnable_queries:
+            self.query_residual = nn.Parameter(
+                torch.zeros(len(self.config.query_specs), self.config.state_dim)
+            )
+        else:
+            self.register_parameter("query_residual", None)
 
     def build_queries(
         self,
@@ -208,7 +218,9 @@ class SemanticQueryBank(nn.Module):
         )
         query_rows: list[torch.Tensor] = []
         query_names: list[str] = []
-        for spec in self.config.query_specs:
+        if self.query_residual is not None and physiology_states.shape[-1] != self.config.state_dim:
+            raise ValueError("learnable semantic query state dimension does not match inputs")
+        for query_index, spec in enumerate(self.config.query_specs):
             if spec.recipe == "gap_plus_event":
                 query = gap_pool + weighted_event
             elif spec.recipe == "physiology_plus_gap":
@@ -219,6 +231,8 @@ class SemanticQueryBank(nn.Module):
                 query = gap_pool
             else:
                 raise ValueError(f"unsupported semantic query recipe: {spec.recipe}")
+            if self.query_residual is not None:
+                query = query + self.query_residual[query_index]
             query_rows.append(F.normalize(query, p=2, dim=-1, eps=1e-12))
             query_names.append(spec.name)
         return tuple(query_names), torch.stack(query_rows, dim=1)

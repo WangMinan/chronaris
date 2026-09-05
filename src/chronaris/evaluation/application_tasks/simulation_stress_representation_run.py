@@ -8,6 +8,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import pandas as pd
+import torch
 
 from chronaris.evaluation.application_tasks.application_consumer_representations import (
     APPLICATION_METHODS,
@@ -64,6 +65,7 @@ class SimulationStressRepresentationConfig:
     export_batch_size: int = 32
     baseline_device: str = "auto"
     chronaris_device: str = "cpu"
+    require_valid_mask_match: bool = True
     resume: bool = True
 
 
@@ -172,6 +174,12 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                             "scenario_id": scenario_id,
                             "status": status,
                             "sample_count": len(output.sample_ids),
+                            "unobserved_sample_count": int((~output.valid_mask.any(dim=1)).sum()),
+                            "unobserved_sample_ids": json.dumps([
+                                sample_id for sample_id, valid in zip(
+                                    output.sample_ids, output.valid_mask.any(dim=1).tolist(), strict=True
+                                ) if not valid
+                            ]),
                             "checkpoint_sha256": output.checkpoint_sha256,
                             "representation_sha256": sha256_file(
                                 destination / "fusion_stream.npz"
@@ -180,7 +188,10 @@ def run_simulation_stress_representations(config: SimulationStressRepresentation
                             "task_oracle_opened": False,
                         }
                     )
-                alignment = validate_fusion_method_alignment(outputs)
+                alignment = validate_fusion_method_alignment(
+                    outputs,
+                    require_valid_mask_match=config.require_valid_mask_match,
+                )
                 scenario_rows.append(
                     {
                         "seed": seed,
@@ -235,8 +246,12 @@ def _export_one(*, adapter, batch, destination, batch_size, resume):
         if (
             output.sample_ids == batch.sample_ids
             and output.checkpoint_sha256 == adapter.checkpoint_sha256
+            and output.method_name == adapter.method_name
+            and output.source_sample_hashes == batch.source_sample_hashes
+            and torch.equal(output.timestamps_s.cpu(), batch.query_timestamps_s.cpu())
         ):
             return output, "resumed"
+        raise ValueError("stress representation resume lineage changed")
     output = _encode_in_batches(adapter, batch, batch_size=batch_size)
     write_fusion_stream_batch(output, root=destination, export_role="stress_held_out")
     return load_fusion_stream_batch(destination), "completed"
@@ -286,11 +301,12 @@ def _write_outputs(**values):
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
-        "# G2 锁定压力场景表示导出",
+        "# 受控仿真压力场景表示导出",
         "",
         f"状态：{values['status']}；验收 {passed}/{len(values['acceptance'])}。",
         f"共导出 {len(values['export_rows'])} 份三随机种子、六方法、35 场景冻结表示。",
         "本阶段只读取原始观测，不打开任务真值或指标。",
+        "无观测样本保留全假掩码与零表示，不删除样本、不伪造有效点；各导出的无观测数量与样本标识记录在表示清单中。",
         "",
     )), encoding="utf-8")
     paths["resume"].write_text(

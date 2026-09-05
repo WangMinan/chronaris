@@ -158,6 +158,9 @@ def run_simulation_stress_consumers(config: SimulationStressConsumerConfig):
                         / scenario_id
                     )
                     output = load_fusion_stream_batch(representation_root)
+                    observation_available = dict(zip(
+                        output.sample_ids, output.valid_mask.any(dim=1).tolist(), strict=True
+                    ))
                     result = evaluate_frozen_application_consumers(
                         method_name=method,
                         output=output,
@@ -188,7 +191,8 @@ def run_simulation_stress_consumers(config: SimulationStressConsumerConfig):
                     unit_rows.extend(tagged_units)
                     scenario_unit_rows.extend(tagged_units)
                     workload_rows.extend(
-                        {"seed": seed, "scenario_id": scenario_id, **dict(row)}
+                        {"seed": seed, "scenario_id": scenario_id, **dict(row),
+                         "observation_available": observation_available[row["sample_id"]]}
                         for row in result.workload_prediction_rows
                     )
                     evaluation_rows.append(
@@ -319,6 +323,7 @@ def _write_outputs(**values):
         "gains": root / "fusion_gain.csv",
         "slopes": root / "stress_slopes.csv",
         "paired": root / "paired_statistics.csv",
+        "unobserved": values["heavy_root"] / "unobserved_predictions.csv",
         "acceptance": root / "acceptance.csv",
         "protocol": root / "protocol.json",
         "report": root / "report.md",
@@ -333,6 +338,7 @@ def _write_outputs(**values):
         ("slopes", values["slope_rows"]),
         ("paired", values["paired_rows"]),
         ("acceptance", values["acceptance"]),
+        ("unobserved", [row for row in values["workload_rows"] if not row["observation_available"]]),
     ):
         pd.DataFrame(rows).to_csv(paths[key], index=False)
     _write_json(paths["protocol"], {
@@ -345,11 +351,12 @@ def _write_outputs(**values):
     })
     passed = sum(row["passed"] for row in values["acceptance"])
     paths["report"].write_text("\n".join((
-        "# G2 锁定压力场景下游评估",
+        "# 受控仿真压力场景下游评估",
         "",
         f"状态：{values['status']}；验收 {passed}/{len(values['acceptance'])}。",
         f"完成 {len(values['evaluation_rows'])} 个冻结 consumer 评估、{len(values['metric_rows'])} 条指标和 {len(values['slope_rows'])} 条退化斜率。",
         "所有 consumer 与负荷阈值均冻结自 G1 clean train/validation，压力场景不重训、不调参。",
+        "无观测样本仍进入同一冻结消费者和总体指标；其预测单列保存，供解释无信息输入下的输出，不作为有观测恢复能力的证据。",
         "",
     )), encoding="utf-8")
     paths["claim"].write_text(

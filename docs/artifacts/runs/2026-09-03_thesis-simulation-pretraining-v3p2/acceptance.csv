@@ -1,0 +1,10 @@
+check_id,passed,actual,expected
+all_method_seed_runs,True,15,15
+all_checkpoints_complete,True,"['completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed', 'completed']",completed_or_resumed
+public_validation_losses_finite,True,15,15
+reserved_confirmation_complete,True,15,15
+chronaris_auxiliary_recorded,True,750,>0
+chronaris_auxiliary_schedule_consistent,True,"[('chronaris_causal_direction', True), ('chronaris_continuous_alignment', True), ('chronaris_physical_consistency', True), ('event_response_pairing', True), ('explicit_time_shift', True)]",core terms active; optional terms follow configured weights
+g1_train_validation_confirmation_counts,True,"[96, 23, 1]","[96, 23, 1]"
+normalizer_train_only,True,False,False
+task_targets_closed,True,False,False

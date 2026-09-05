@@ -1,0 +1,7 @@
+check_id,passed,actual,expected
+all_seed_method_target_models,True,24,24
+g1_validation_selection_only,True,True,True
+all_stress_evaluations,True,840,840
+forty_eight_trajectory_units,True,[48],48
+formal_metrics_available,True,3360,>0
+paired_trajectory_statistics,True,630,>0 with 48 units

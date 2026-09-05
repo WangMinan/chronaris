@@ -2,23 +2,18 @@
 
 from __future__ import annotations
 
-import hashlib
-import json
-import time
-from dataclasses import asdict, dataclass
+import math
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable, Mapping, Sequence
 
 import torch
-from torch import nn
-
 from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
-from chronaris.modeling.training.pretext import (
-    CommonPretextHeadBundle,
-    CommonPretextWeights,
-    chronaris_auxiliary_weight_schedule,
-    pretext_loss_terms_to_rows,
+from chronaris.modeling.training.candidate_screen import (
+    CandidateScreenConfig,
+    train_pretext_candidate,
 )
+from chronaris.modeling.training.pretext import CommonPretextHeadBundle
 from chronaris.modeling.training.pretraining_encoders import (
     ENCODER_SCREEN_CANDIDATES,
     TRAINABLE_FUSION_METHODS,
@@ -32,11 +27,6 @@ from chronaris.representation import (
     FoldLineage,
     FusionStreamBatch,
     TrainOnlyRobustNormalizer,
-    apply_augmentation_realizations,
-    build_batch_augmentation_realizations,
-    build_common_pretext_targets,
-    build_lag_discrimination_inputs,
-    select_observation_batch,
 )
 from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError
 
@@ -49,6 +39,13 @@ class CommonPretrainingConfig:
     weight_decay: float = 1e-4
     gradient_clip_norm: float = 1.0
     seed: int = 17
+    device: str = "cpu"
+    deterministic: bool = True
+    max_ode_step_s: float | None = None
+    ode_method: str = "euler"
+    semantic_event_enabled: bool = False
+    learnable_semantic_queries: bool = False
+    heartbeat_interval_s: float = 60.0
 
     def __post_init__(self) -> None:
         if self.epochs <= 0 or self.batch_size <= 0:
@@ -57,6 +54,20 @@ class CommonPretrainingConfig:
             raise ValueError("pretraining optimizer configuration is invalid")
         if self.gradient_clip_norm <= 0:
             raise ValueError("gradient clip norm must be positive")
+        if self.device not in {"cpu", "cuda"}:
+            raise ValueError("pretraining device must be cpu or cuda")
+        if self.device == "cuda" and not torch.cuda.is_available():
+            raise ValueError("pretraining requested unavailable CUDA device")
+        if self.max_ode_step_s is not None and (
+            not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
+        ):
+            raise ValueError("max_ode_step_s must be finite and positive when set")
+        if self.ode_method not in {"euler", "midpoint", "rk4", "dopri5"}:
+            raise ValueError("unsupported pretraining Chronaris ODE method")
+        if self.learnable_semantic_queries and not self.semantic_event_enabled:
+            raise ValueError("learnable semantic queries require semantic_event_enabled")
+        if not 0 < self.heartbeat_interval_s <= 60:
+            raise ValueError("heartbeat_interval_s must be in (0,60]")
 
 
 @dataclass(frozen=True, slots=True)
@@ -101,17 +112,16 @@ class TrainedFusionAdapter:
         with torch.inference_mode():
             encoded = self.encoder(normalized)
         sequence = encoded.sequence_embedding
-        valid = torch.ones(
-            sequence.shape[:2],
-            dtype=torch.bool,
-            device=sequence.device,
-        )
+        valid = encoded.modality_available_mask.to(device=sequence.device)
+        sequence = sequence.masked_fill(~valid.any(dim=1)[:, None, None], 0)
+        count = valid.sum(dim=1, keepdim=True).clamp_min(1).to(sequence.dtype)
+        pooled = (sequence * valid.unsqueeze(-1).to(sequence.dtype)).sum(dim=1) / count
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),
             sequence_embedding=sequence,
             valid_mask=valid,
-            pooled_embedding=sequence.mean(dim=1),
+            pooled_embedding=pooled,
             method_name=self.method_name,
             fold_id=self.fold_id,
             checkpoint_sha256=self.checkpoint_sha256,
@@ -133,172 +143,67 @@ def train_common_pretext_method(
     augmentation_policy: AugmentationPolicy | None = None,
     batch_provider: Callable[[Sequence[str]], DualStreamObservationBatch] | None = None,
     candidate_config: EncoderCandidateConfig | None = None,
+    chronaris_fusion_kind: str = "multiscale",
+    chronaris_lag_aware_weight: float = 0.0,
+    chronaris_mechanism_enabled: bool = False,
+    chronaris_explicit_shift_enabled: bool = False,
+    chronaris_explicit_shift_weight: float = 0.0,
+    chronaris_event_pair_weight: float = 0.0,
     resume: bool = True,
 ) -> CommonPretrainingResult:
+    """Compatibility wrapper around the validation-backed candidate trainer."""
+
     if method_name not in TRAINABLE_FUSION_METHODS:
         raise ValueError(f"unsupported trainable method: {method_name}")
     resolved_config = config or CommonPretrainingConfig()
     resolved_policy = augmentation_policy or AugmentationPolicy()
-    resolved_candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
-    if (batch is None) == (batch_provider is None):
-        raise ValueError("provide exactly one of batch or batch_provider")
-    root = Path(output_root) / method_name
-    best_path = root / "best.pt"
-    last_path = root / "last.pt"
-    protocol_hash = _training_protocol_hash(
+    resolved_candidate = replace(
+        candidate_config or ENCODER_SCREEN_CANDIDATES[0],
+        learning_rate=resolved_config.learning_rate,
+    )
+    candidate_result = train_pretext_candidate(
         method_name=method_name,
+        candidate=resolved_candidate,
+        batch=batch,
         fold=fold,
-        config=resolved_config,
-        augmentation_policy=resolved_policy,
-        normalizer=normalizer,
         physiology_feature_names=physiology_feature_names,
         vehicle_feature_names=vehicle_feature_names,
         vehicle_field_labels=vehicle_field_labels,
-        candidate_config=resolved_candidate,
-        data_access_mode=("lazy_batch_provider" if batch_provider else "materialized_batch"),
+        normalizer=normalizer,
+        output_root=output_root,
+        config=CandidateScreenConfig(
+            max_epochs=resolved_config.epochs,
+            batch_size=resolved_config.batch_size,
+            patience=resolved_config.epochs,
+            weight_decay=resolved_config.weight_decay,
+            gradient_clip_norm=resolved_config.gradient_clip_norm,
+            seed=resolved_config.seed,
+            device=resolved_config.device,
+            deterministic=resolved_config.deterministic,
+            max_ode_step_s=resolved_config.max_ode_step_s,
+            ode_method=resolved_config.ode_method,
+            semantic_event_enabled=resolved_config.semantic_event_enabled,
+            learnable_semantic_queries=resolved_config.learnable_semantic_queries,
+            heartbeat_interval_s=resolved_config.heartbeat_interval_s,
+        ),
+        augmentation_policy=resolved_policy,
+        batch_provider=batch_provider,
+        chronaris_fusion_kind=chronaris_fusion_kind,
+        chronaris_lag_aware_weight=chronaris_lag_aware_weight,
+        chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+        chronaris_explicit_shift_enabled=chronaris_explicit_shift_enabled,
+        chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
+        chronaris_event_pair_weight=chronaris_event_pair_weight,
+        include_candidate_subdirectory=False,
+        resume=resume,
     )
-    if resume and best_path.exists() and last_path.exists():
-        payload = _load_checkpoint_payload(best_path)
-        if payload.get("protocol_sha256") != protocol_hash:
-            raise RepresentationContractError(
-                f"pretraining checkpoint protocol changed for {method_name}"
-            )
-        if payload.get("training_status") == "completed":
-            return _result_from_payload(payload, best_path, last_path, status="resumed")
-
-    with torch.random.fork_rng(devices=[]):
-        torch.manual_seed(resolved_config.seed)
-        encoder = build_trainable_fusion_encoder(
-            method_name,
-            physiology_feature_names=physiology_feature_names,
-            vehicle_feature_names=vehicle_feature_names,
-            vehicle_field_labels=vehicle_field_labels,
-            candidate_config=resolved_candidate,
-        )
-        heads = CommonPretextHeadBundle(
-            representation_dim=FUSION_OUTPUT_DIM,
-            target_feature_count=(
-                len(physiology_feature_names) + len(vehicle_feature_names)
-            ),
-        )
-    optimizer = torch.optim.AdamW(
-        (*encoder.parameters(), *heads.parameters()),
-        lr=resolved_config.learning_rate,
-        weight_decay=resolved_config.weight_decay,
+    payload = _load_checkpoint_payload(candidate_result.best_checkpoint_path)
+    return _result_from_payload(
+        payload,
+        Path(candidate_result.best_checkpoint_path),
+        Path(candidate_result.last_checkpoint_path),
+        status=candidate_result.status,
     )
-    encoder.train()
-    heads.train()
-    training_rows = []
-    augmentation_rows = []
-    step_count = 0
-    started = time.perf_counter()
-    for epoch in range(1, resolved_config.epochs + 1):
-        auxiliary_weights = chronaris_auxiliary_weight_schedule(epoch)
-        for step_index, sample_ids in enumerate(
-            _batch_ids(fold.train_sample_ids, resolved_config.batch_size),
-            start=1,
-        ):
-            raw = (
-                batch_provider(sample_ids)
-                if batch_provider is not None
-                else select_observation_batch(batch, sample_ids)
-            )
-            if tuple(raw.sample_ids) != tuple(sample_ids):
-                raise RepresentationContractError(
-                    "pretraining batch provider changed sample order"
-                )
-            normalized = normalizer.transform(raw)
-            plans = build_batch_augmentation_realizations(
-                sample_ids,
-                epoch=epoch,
-                global_seed=resolved_config.seed,
-                policy=resolved_policy,
-            )
-            augmented = apply_augmentation_realizations(
-                normalized,
-                plans,
-                policy=resolved_policy,
-            )
-            targets = build_common_pretext_targets(normalized, augmented)
-            lag_inputs = build_lag_discrimination_inputs(
-                augmented.batch,
-                augmented.augmentation_ids,
-            )
-            optimizer.zero_grad(set_to_none=True)
-            positive = encoder(augmented.batch)
-            negative = encoder(lag_inputs.negative_batch)
-            loss_output = heads(
-                positive.sequence_embedding,
-                negative.sequence_embedding,
-                targets,
-                weights=CommonPretextWeights(),
-            )
-            loss_output.total_loss.backward()
-            parameters = tuple((*encoder.parameters(), *heads.parameters()))
-            gradient_norm = float(
-                nn.utils.clip_grad_norm_(
-                    parameters,
-                    resolved_config.gradient_clip_norm,
-                ).detach()
-            )
-            optimizer.step()
-            step_count += 1
-            for row in pretext_loss_terms_to_rows(loss_output.terms):
-                training_rows.append(
-                    {
-                        "method_name": method_name,
-                        "epoch": epoch,
-                        "step": step_index,
-                        "batch_sample_ids": list(sample_ids),
-                        "augmentation_ids": list(augmented.augmentation_ids),
-                        "gradient_norm_before_clip": gradient_norm,
-                        "continuous_alignment_weight": auxiliary_weights.continuous_alignment,
-                        "physical_consistency_weight": auxiliary_weights.physical_consistency,
-                        "causal_direction_weight": auxiliary_weights.causal_direction,
-                        **row,
-                    }
-                )
-            augmentation_rows.extend(
-                {
-                    "method_name": method_name,
-                    "epoch": epoch,
-                    "step": step_index,
-                    **row.to_dict(),
-                }
-                for row in augmented.audit_rows
-            )
-    elapsed = time.perf_counter() - started
-    payload = {
-        "format": "chronaris.common_pretraining_checkpoint.v1",
-        "training_status": "completed",
-        "method_name": method_name,
-        "protocol_sha256": protocol_hash,
-        "encoder_state_dict": encoder.state_dict(),
-        "head_state_dict": heads.state_dict(),
-        "optimizer_state_dict": optimizer.state_dict(),
-        "normalizer": dict(normalizer.to_manifest()),
-        "fold": fold.to_dict(),
-        "config": asdict(resolved_config),
-        "augmentation_policy": asdict(resolved_policy),
-        "physiology_feature_names": list(physiology_feature_names),
-        "vehicle_feature_names": list(vehicle_feature_names),
-        "vehicle_field_labels": [list(value) for value in vehicle_field_labels],
-        "encoder_manifest": dict(encoder.config_manifest()),
-        "candidate_config": asdict(resolved_candidate),
-        "seed": resolved_config.seed,
-        "epoch": resolved_config.epochs,
-        "step_count": step_count,
-        "training_elapsed_s": elapsed,
-        "parameter_count": encoder.parameter_count,
-        "head_parameter_count": sum(p.numel() for p in heads.parameters()),
-        "training_rows": training_rows,
-        "augmentation_rows": augmentation_rows,
-        "label_used_for_encoder_training": False,
-        "simulation_oracle_opened": False,
-    }
-    _atomic_torch_save(last_path, payload)
-    _atomic_torch_save(best_path, payload)
-    return _result_from_payload(payload, best_path, last_path, status="completed")
 
 
 def load_common_pretraining_checkpoint(
@@ -316,10 +221,16 @@ def load_common_pretraining_checkpoint(
     vehicle_names = tuple(payload["vehicle_feature_names"])
     field_labels = tuple(tuple(value) for value in payload["vehicle_field_labels"])
     candidate = EncoderCandidateConfig(**payload.get("candidate_config", {}))
-    chronaris_variant = str(
-        payload.get("encoder_manifest", {})
-        .get("backbone_config", {})
-        .get("variant", "full")
+    backbone_config = payload.get("encoder_manifest", {}).get("backbone_config", {})
+    chronaris_variant = str(backbone_config.get("variant", "full"))
+    chronaris_fusion_kind = str(backbone_config.get("fusion_kind", "multiscale"))
+    chronaris_max_ode_step_s = backbone_config.get("max_ode_step_s")
+    chronaris_ode_method = str(backbone_config.get("ode_method", "euler"))
+    chronaris_semantic_event_enabled = bool(
+        backbone_config.get("semantic_event_enabled", False)
+    )
+    chronaris_learnable_semantic_queries = bool(
+        backbone_config.get("learnable_semantic_queries", False)
     )
     encoder = build_trainable_fusion_encoder(
         method_name,
@@ -328,6 +239,11 @@ def load_common_pretraining_checkpoint(
         vehicle_field_labels=field_labels,
         candidate_config=candidate,
         chronaris_variant=chronaris_variant,
+        chronaris_fusion_kind=chronaris_fusion_kind,
+        chronaris_max_ode_step_s=chronaris_max_ode_step_s,
+        chronaris_ode_method=chronaris_ode_method,
+        chronaris_semantic_event_enabled=chronaris_semantic_event_enabled,
+        chronaris_learnable_semantic_queries=chronaris_learnable_semantic_queries,
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(
@@ -339,38 +255,12 @@ def load_common_pretraining_checkpoint(
     return encoder, heads, normalizer, payload
 
 
-def _training_protocol_hash(**payload) -> str:
-    normalized = {
-        key: (
-            value.to_dict()
-            if isinstance(value, FoldLineage)
-            else asdict(value)
-            if hasattr(value, "__dataclass_fields__")
-            else value.to_manifest()
-            if isinstance(value, TrainOnlyRobustNormalizer)
-            else value
-        )
-        for key, value in payload.items()
-    }
-    normalized["code_sha256"] = _code_sha256()
-    encoded = json.dumps(normalized, ensure_ascii=False, sort_keys=True).encode()
-    return hashlib.sha256(encoded).hexdigest()
-
-
-def _code_sha256() -> str:
-    digest = hashlib.sha256()
-    for path in (
-        Path(__file__),
-        Path(__file__).with_name("pretext.py"),
-        Path(__file__).with_name("pretraining_encoders.py"),
-    ):
-        digest.update(path.read_bytes())
-    return digest.hexdigest()
-
-
 def _load_checkpoint_payload(path, *, device="cpu"):
     payload = torch.load(path, map_location=device, weights_only=True)
-    if payload.get("format") != "chronaris.common_pretraining_checkpoint.v1":
+    if payload.get("format") not in {
+        "chronaris.common_pretraining_checkpoint.v1",
+        "chronaris.common_pretraining_checkpoint.v2",
+    }:
         raise RepresentationContractError("unsupported common pretraining checkpoint")
     return payload
 
@@ -388,22 +278,4 @@ def _result_from_payload(payload, best_path, last_path, *, status):
         step_count=int(payload["step_count"]),
         training_rows=tuple(payload["training_rows"]),
         augmentation_rows=tuple(payload["augmentation_rows"]),
-    )
-
-
-def _atomic_torch_save(path: Path, payload) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(path.name + ".tmp")
-    try:
-        torch.save(payload, temporary)
-        temporary.replace(path)
-    except Exception:
-        temporary.unlink(missing_ok=True)
-        raise
-
-
-def _batch_ids(sample_ids, batch_size):
-    return tuple(
-        tuple(sample_ids[index : index + batch_size])
-        for index in range(0, len(sample_ids), batch_size)
     )

@@ -1,0 +1,674 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "scenario_count": 35,
+  "task_oracle_opened": false,
+  "baseline_device": "cuda",
+  "chronaris_device": "cuda",
+  "stage_name": "simulation_locked_stress_representation_export",
+  "run_id": "2026-09-04_thesis-simulation-stress-representations-v3p2p3",
+  "last_event": "finished",
+  "updated_at_utc": "2026-09-04T11:42:36.421750Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-09-04T10:39:49.120920Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "scenario_count": 35,
+      "task_oracle_opened": false,
+      "baseline_device": "cuda",
+      "chronaris_device": "cuda"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:52.555441Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "timestamp_jitter_000ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:53.812612Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "timestamp_jitter_020ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:54.874674Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "timestamp_jitter_050ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:55.967649Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "timestamp_jitter_100ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:57.144050Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_+0.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:58.181526Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_-0.25s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:39:59.150298Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_+0.25s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:00.214298Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_-1.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:01.230775Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_+1.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:02.371174Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_-3.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:03.523015Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_offset_+3.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:04.517245Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_+000ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:05.719037Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_-050ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:09.129527Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_+050ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:11.686209Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_-100ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:13.824498Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_+100ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:15.289537Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_-250ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:16.871742Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "clock_drift_+250ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:18.244230Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "random_missing_00pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:19.196835Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "random_missing_10pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:20.048534Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "random_missing_30pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:20.757310Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "random_missing_50pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:21.920408Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "contiguous_gap_00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:23.083087Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "contiguous_gap_05s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:40:24.001691Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "contiguous_gap_15s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:41:26.744805Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "contiguous_gap_30s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:42:41.002469Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "physiology_lag_02s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:43:57.200211Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "physiology_lag_05s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:45:10.132170Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "physiology_lag_15s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:46:23.535767Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "physiology_lag_30s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:47:37.503842Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "observation_snr_30db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:48:54.920080Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "observation_snr_20db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:50:09.178300Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "observation_snr_10db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:51:21.486596Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "observation_snr_05db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:52:29.850091Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 17,
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:53:19.456823Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "timestamp_jitter_000ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:54:02.577851Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "timestamp_jitter_020ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:54:48.072047Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "timestamp_jitter_050ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:55:31.458461Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "timestamp_jitter_100ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:56:15.291658Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_+0.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:57:01.577616Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_-0.25s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:57:45.160684Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_+0.25s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:58:31.492468Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_-1.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T10:59:15.312733Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_+1.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:00:00.312205Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_-3.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:00:45.393956Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_offset_+3.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:01:29.113557Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_+000ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:02:12.982378Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_-050ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:02:59.303353Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_+050ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:03:42.990273Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_-100ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:04:29.264548Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_+100ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:05:13.302423Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_-250ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:05:56.857555Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "clock_drift_+250ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:06:43.053411Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "random_missing_00pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:07:27.205711Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "random_missing_10pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:08:11.334650Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "random_missing_30pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:08:58.199958Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "random_missing_50pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:09:41.785072Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "contiguous_gap_00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:10:26.571042Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "contiguous_gap_05s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:11:07.299842Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "contiguous_gap_15s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:11:43.626315Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "contiguous_gap_30s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:12:27.386270Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "physiology_lag_02s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:13:13.597924Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "physiology_lag_05s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:13:57.391449Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "physiology_lag_15s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:14:41.984029Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "physiology_lag_30s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:15:26.901177Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "observation_snr_30db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:16:09.856111Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "observation_snr_20db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:16:55.048947Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "observation_snr_10db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:17:37.367390Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "observation_snr_05db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:18:17.565692Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 29,
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:19:00.320990Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "timestamp_jitter_000ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:19:44.770785Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "timestamp_jitter_020ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:20:25.997713Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "timestamp_jitter_050ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:21:07.503968Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "timestamp_jitter_100ms"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:21:51.299463Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_+0.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:22:32.474551Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_-0.25s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:23:13.744313Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_+0.25s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:23:57.732887Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_-1.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:24:39.236473Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_+1.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:25:20.351817Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_-3.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:26:01.815212Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_offset_+3.00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:26:45.593322Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_+000ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:27:26.539151Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_-050ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:28:07.848287Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_+050ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:28:51.755490Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_-100ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:29:33.166312Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_+100ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:30:14.620028Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_-250ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:30:58.667671Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "clock_drift_+250ppm"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:31:40.100904Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "random_missing_00pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:32:21.919131Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "random_missing_10pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:33:03.597907Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "random_missing_30pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:33:47.365866Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "random_missing_50pct"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:34:28.792667Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "contiguous_gap_00s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:35:09.336929Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "contiguous_gap_05s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:35:48.956291Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "contiguous_gap_15s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:36:25.064875Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "contiguous_gap_30s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:37:06.263868Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "physiology_lag_02s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:37:47.536699Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "physiology_lag_05s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:38:28.772499Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "physiology_lag_15s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:39:12.684814Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "physiology_lag_30s"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:39:53.918407Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "observation_snr_30db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:40:35.004022Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "observation_snr_20db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:41:16.535308Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "observation_snr_10db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:41:58.287750Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "observation_snr_05db"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:42:36.364753Z",
+      "event": "stress_scenario_representation_complete",
+      "seed": 43,
+      "scenario_id": "mixed_severe"
+    },
+    {
+      "timestamp_utc": "2026-09-04T11:42:36.421750Z",
+      "event": "finished",
+      "status": "completed",
+      "export_count": 630,
+      "acceptance_pass_count": 5,
+      "acceptance_check_count": 5
+    }
+  ],
+  "seed": 43,
+  "scenario_id": "mixed_severe",
+  "status": "completed",
+  "export_count": 630,
+  "acceptance_pass_count": 5,
+  "acceptance_check_count": 5
+}

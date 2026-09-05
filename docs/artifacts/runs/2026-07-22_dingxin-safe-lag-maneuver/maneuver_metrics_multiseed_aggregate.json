@@ -1,0 +1,17 @@
+{
+  "17": {
+    "chronaris_safe_lag": 0.3387,
+    "chronaris_multiscale": 0.1667,
+    "vehicle_only": 0.4821
+  },
+  "29": {
+    "chronaris_safe_lag": 0.1667,
+    "chronaris_multiscale": 0.1667,
+    "vehicle_only": 0.4807
+  },
+  "43": {
+    "chronaris_safe_lag": 0.1667,
+    "chronaris_multiscale": 0.2315,
+    "vehicle_only": 0.4807
+  }
+}

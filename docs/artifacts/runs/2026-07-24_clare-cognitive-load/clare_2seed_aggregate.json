@@ -1,0 +1,22 @@
+{
+  "fusion_safe_lag": {
+    "seed17": 0.564,
+    "seed29": 0.409,
+    "mean": 0.486
+  },
+  "fusion_multiscale": {
+    "seed17": 0.353,
+    "seed29": 0.384,
+    "mean": 0.368
+  },
+  "central_only": {
+    "seed17": 0.437,
+    "seed29": 0.58,
+    "mean": 0.508
+  },
+  "peripheral_only": {
+    "seed17": 0.401,
+    "seed29": 0.37,
+    "mean": 0.386
+  }
+}

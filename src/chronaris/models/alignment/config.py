@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 _ALLOWED_ACTIVATIONS = {"gelu", "relu", "tanh"}
@@ -22,6 +23,7 @@ class AlignmentPrototypeConfig:
     ode_method: str = "rk4"
     ode_rtol: float = 1e-3
     ode_atol: float = 1e-4
+    max_ode_step_s: float | None = None
     use_feature_valid_mask: bool = True
     enable_continuous_evolution: bool = True
 
@@ -49,3 +51,7 @@ class AlignmentPrototypeConfig:
             raise ValueError("ode_rtol must be positive.")
         if self.ode_atol <= 0:
             raise ValueError("ode_atol must be positive.")
+        if self.max_ode_step_s is not None and (
+            not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
+        ):
+            raise ValueError("max_ode_step_s must be finite and positive when set.")

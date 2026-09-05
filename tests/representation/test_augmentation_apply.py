@@ -14,6 +14,7 @@ from chronaris.representation import (
     apply_augmentation_realizations,
     augmentation_executor_accepts_method_name,
     build_common_pretext_targets,
+    build_explicit_time_shift_inputs,
     build_lag_discrimination_inputs,
     collate_observation_samples,
 )
@@ -167,3 +168,26 @@ def test_lag_discrimination_shift_is_id_derived_and_keeps_stream_contract() -> N
         times = lagged.negative_batch.vehicle_timestamps_s[row][mask]
         assert bool((times[1:] >= times[:-1]).all())
         assert bool(((times >= 0) & (times < 30)).all())
+
+
+def test_explicit_time_shift_builds_all_five_classes_including_zero() -> None:
+    batch = collate_observation_samples([_sample(value) for value in "abcde"])
+    ids = tuple(("0" * 8 + f"{index:08x}").ljust(64, "0") for index in range(5))
+
+    shifted = build_explicit_time_shift_inputs(batch, ids)
+
+    assert shifted.shifts_s.tolist() == [-10.0, -5.0, 0.0, 5.0, 10.0]
+    assert shifted.class_indices.tolist() == [0, 1, 2, 3, 4]
+    zero_mask = shifted.shifted_batch.vehicle_point_mask[2]
+    original_mask = batch.vehicle_point_mask[2]
+    assert torch.equal(
+        shifted.shifted_batch.vehicle_timestamps_s[2][zero_mask],
+        batch.vehicle_timestamps_s[2][original_mask],
+    )
+    balanced = build_explicit_time_shift_inputs(
+        batch,
+        ids,
+        class_indices=(4, 4, 4, 4, 4),
+    )
+    assert balanced.class_indices.tolist() == [4, 4, 4, 4, 4]
+    assert balanced.shifts_s.tolist() == [10.0] * 5

@@ -1,0 +1,7 @@
+check_id,status,description
+NO01,pass,CPU exact replay
+NO02,pass,CUDA exact replay
+NO03,pass,zero representation with false mask
+NO04,pass,sample-preserving archive resume
+NO05,pass,unchanged frozen checkpoint
+NO06,pass,strict safety rejects three failing units

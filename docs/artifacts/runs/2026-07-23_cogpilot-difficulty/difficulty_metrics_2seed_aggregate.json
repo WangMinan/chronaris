@@ -1,0 +1,22 @@
+{
+  "chronaris_safe_lag": {
+    "seed17": 0.4122,
+    "seed29": 0.3353,
+    "mean": 0.3738
+  },
+  "chronaris_multiscale": {
+    "seed17": 0.4017,
+    "seed29": 0.3045,
+    "mean": 0.3531
+  },
+  "vehicle_only": {
+    "seed17": 0.3396,
+    "seed29": 0.206,
+    "mean": 0.2728
+  },
+  "physiology_only": {
+    "seed17": 0.1521,
+    "seed29": 0.2103,
+    "mean": 0.1812
+  }
+}

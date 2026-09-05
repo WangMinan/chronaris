@@ -1,0 +1,170 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "checkpoint_count": 15,
+  "task_oracle_opened_after_representation": true,
+  "locked_metrics_opened": true,
+  "stage_name": "simulation_locked_consumers",
+  "run_id": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+  "last_event": "finished",
+  "updated_at_utc": "2026-09-03T01:28:05.058637Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-09-03T01:27:21.165412Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "checkpoint_count": 15,
+      "task_oracle_opened_after_representation": true,
+      "locked_metrics_opened": true
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:23.909838Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "physiology_only",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:26.389928Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "vehicle_only",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:28.427804Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "naive_time_sync",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:30.750301Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "mult",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:32.895731Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "contiformer",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:35.130913Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 17,
+      "method_name": "chronaris",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:37.293861Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "physiology_only",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:39.548873Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "vehicle_only",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:41.684955Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "naive_time_sync",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:43.796796Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "mult",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:46.145491Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "contiformer",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:50.815860Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 29,
+      "method_name": "chronaris",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:53.327364Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "physiology_only",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:55.490936Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "vehicle_only",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:57.685356Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "naive_time_sync",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:27:59.828137Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "mult",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:28:02.042572Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "contiformer",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:28:04.710010Z",
+      "event": "locked_method_consumer_complete",
+      "seed": 43,
+      "method_name": "chronaris",
+      "status": "resumed"
+    },
+    {
+      "timestamp_utc": "2026-09-03T01:28:05.058637Z",
+      "event": "finished",
+      "status": "completed",
+      "method_seed_count": 18,
+      "metric_count": 1152,
+      "acceptance_pass_count": 7,
+      "acceptance_check_count": 7
+    }
+  ],
+  "seed": 43,
+  "method_name": "chronaris",
+  "status": "completed",
+  "method_seed_count": 18,
+  "metric_count": 1152,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7
+}

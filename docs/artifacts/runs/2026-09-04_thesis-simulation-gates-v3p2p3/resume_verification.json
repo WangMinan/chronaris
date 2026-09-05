@@ -1,0 +1,25 @@
+{
+  "source_commit": "6a2393e4190367e9504377ee2f2914926e610ae8",
+  "elapsed_s": 64.87667685910128,
+  "identical_output_hashes": true,
+  "before_sha256": {
+    "gate_audit.json": "9ddedc5fe21bbf4ac330aaac2a59c3a910de8b70f15d11e2b60b0488f32bbd56",
+    "physical_residuals.csv": "eebbbc3bd65fb53a276b6c799c68c122eda2a5688cc10a71baac51b685a0c04b",
+    "future_information.csv": "9d3d6d295f1344887137e2fce06ee9d6869d5a6047cc7591f7ee713bba6b03b9",
+    "continuous_recovery.csv": "667ebec2f07e2e7c3d27da8e746b1d1078a67017b6a6fefa28b77a1d98c548e4",
+    "no_continuous_metric_long.csv": "41103e53b86feb958d7e948cba0fd9bdcb1152e092aa14f269309310c3da4efb",
+    "safe_bypass.csv": "90011151eec367ef1842aa20a4fa8b44c216140c1c04d0cc263e5d2bc4bac076"
+  },
+  "after_sha256": {
+    "gate_audit.json": "9ddedc5fe21bbf4ac330aaac2a59c3a910de8b70f15d11e2b60b0488f32bbd56",
+    "physical_residuals.csv": "eebbbc3bd65fb53a276b6c799c68c122eda2a5688cc10a71baac51b685a0c04b",
+    "future_information.csv": "9d3d6d295f1344887137e2fce06ee9d6869d5a6047cc7591f7ee713bba6b03b9",
+    "continuous_recovery.csv": "667ebec2f07e2e7c3d27da8e746b1d1078a67017b6a6fefa28b77a1d98c548e4",
+    "no_continuous_metric_long.csv": "41103e53b86feb958d7e948cba0fd9bdcb1152e092aa14f269309310c3da4efb",
+    "safe_bypass.csv": "90011151eec367ef1842aa20a4fa8b44c216140c1c04d0cc263e5d2bc4bac076"
+  },
+  "cache_count": 141,
+  "cache_bytes_and_mtimes_unchanged": true,
+  "all_hard_gates_passed": false,
+  "outer_results_authorized": false
+}

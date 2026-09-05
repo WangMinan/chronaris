@@ -1,0 +1,37 @@
+{
+  "n_subjects": 10,
+  "n_samples": 109,
+  "test_subjects": [
+    "sub-cp003",
+    "sub-cp008",
+    "sub-cp013"
+  ],
+  "seed": 29,
+  "epochs": 12,
+  "results": [
+    {
+      "label": "chronaris_safe_lag",
+      "macro_f1": 0.3353,
+      "balanced_accuracy": 0.3333,
+      "elapsed_s": 325.7
+    },
+    {
+      "label": "chronaris_multiscale",
+      "macro_f1": 0.3045,
+      "balanced_accuracy": 0.3056,
+      "elapsed_s": 331.5
+    },
+    {
+      "label": "vehicle_only",
+      "macro_f1": 0.206,
+      "balanced_accuracy": 0.25,
+      "elapsed_s": 17.3
+    },
+    {
+      "label": "physiology_only",
+      "macro_f1": 0.2103,
+      "balanced_accuracy": 0.25,
+      "elapsed_s": 17.1
+    }
+  ]
+}

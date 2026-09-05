@@ -209,7 +209,11 @@ def _require_completed_pretraining(paths) -> None:
             raise FileNotFoundError(f"pretraining checkpoint missing: {path}")
         payload = torch.load(path, map_location="cpu", weights_only=True)
         if (
-            payload.get("format") != "chronaris.common_pretraining_checkpoint.v1"
+            payload.get("format")
+            not in {
+                "chronaris.common_pretraining_checkpoint.v1",
+                "chronaris.common_pretraining_checkpoint.v2",
+            }
             or payload.get("training_status") != "completed"
             or bool(payload.get("label_used_for_encoder_training"))
         ):

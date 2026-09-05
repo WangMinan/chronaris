@@ -1,0 +1,7 @@
+check_id,description,status,evidence
+NP01,CogPilot 皮肤电导换算与非正电阻缺失化,pass,"unit test and real observed range 0.003074-107.274300 uS"
+NP02,CogPilot 事件响应使用前后窗皮肤电导中位数差,pass,"225/225 finite targets; range -1.231200 to 1.182600 uS"
+NP03,CogPilot 保留原生心电图且不读取观测窗外数据,pass,"physiology.ecg; maximum timestamps below 30 s and 12 s"
+NP04,CLARE 保留原生心电图且不读取观测窗外数据,pass,"peripheral.ecg; maximum timestamp 9.999965 s"
+NP05,数据结构定义与缓存来源链升级,pass,"cogpilot_native.v4 and clare_native.v4; three task lineage hashes changed"
+NP06,冻结任务范围与外层关闭状态,pass,"77/225/60 samples; 20/20/16 subject groups; outer_results_exist=false"

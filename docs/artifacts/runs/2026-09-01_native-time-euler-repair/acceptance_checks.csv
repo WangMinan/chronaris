@@ -1,0 +1,14 @@
+check_id,description,status,evidence
+NT01,CogPilot 原生双流时间戳与采样密度保留,pass,real-data smoke and native loader tests
+NT02,CLARE 原生双流时间戳与采样密度保留,pass,real-data smoke and native loader tests
+NT03,同流多传感器使用时间戳并集和 feature mask,pass,test_native_series_union_preserves_sparse_feature_masks
+NT04,跨流不执行统一插值,pass,distinct stream timestamp arrays in loader tests
+NT05,窗口观测不超过固定上下文,pass,30 s 12 s and 10 s real-data smoke
+NT06,lazy batch provider 与有界内存磁盘缓存,pass,test_lazy_dataset_reuses_lineage_checked_disk_cache
+NT07,max_ode_step_s 默认保持 None,pass,test_max_ode_step_is_checkpointed_without_changing_default
+NT08,批量 mask Euler 子步数值与梯度有限,pass,test_masked_euler_substeps_match_manual_updates_and_keep_gradients_finite
+NT09,checkpoint 恢复 Euler 子步配置,pass,test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop
+NT10,聚焦测试,pass,26 passed
+NT11,完整测试,pass,"439 passed, 8 skipped"
+NT12,CUDA 短重放,pass,RTX 4090 finite forward and backward
+NT13,仿真 validation ODE 方案选择,pending,next controlled experiment

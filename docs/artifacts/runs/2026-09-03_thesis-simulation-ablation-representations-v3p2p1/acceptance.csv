@@ -1,0 +1,6 @@
+check_id,passed,actual,expected
+all_variant_seed_exports,True,12,12
+three_roles_per_variant_seed,True,"[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]",3
+checkpoint_variant_matches,True,True,True
+all_representation_exports,True,36,36
+task_oracle_closed,True,False,False

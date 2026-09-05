@@ -1,0 +1,29 @@
+{
+  "format": "chronaris.simulation_locked_consumer_evidence.v1",
+  "run_id": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+  "status": "completed",
+  "method_seed_count": 18,
+  "metric_count": 1152,
+  "fusion_gain_count": 768,
+  "paired_statistic_count": 90,
+  "acceptance_pass_count": 7,
+  "acceptance_check_count": 7,
+  "heavy_run_root": "artifacts/application_evaluation/2026-09-03_thesis-simulation-consumers-v3p2p1",
+  "workload_prediction_path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-consumers-v3p2p1/workload_predictions.csv",
+  "unit_score_path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-consumers-v3p2p1/unit_score_rows.csv",
+  "output_paths": {
+    "results": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/consumer_inventory.csv",
+    "metrics": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/metric_long.csv",
+    "gains": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/fusion_gain.csv",
+    "paired": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/paired_statistics.csv",
+    "training": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/tcn_training.csv",
+    "resources": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/resource_metrics.csv",
+    "targets": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/target_manifest.json",
+    "acceptance": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/acceptance.csv",
+    "protocol": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/downstream_protocol.json",
+    "report": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/report.md",
+    "claim": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/claim_boundary.md",
+    "resume": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/resume_command.txt",
+    "evidence": "docs/artifacts/runs/2026-09-03_thesis-simulation-consumers-v3p2p1/evidence_manifest.json"
+  }
+}

@@ -72,6 +72,8 @@ def test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop(tmp_path
         batch_size=2,
         patience=1,
         seed=17,
+        max_ode_step_s=5.0,
+        learning_rate=7e-4,
     )
     first = train_locked_chronaris(
         batch=batch,
@@ -106,12 +108,15 @@ def test_locked_chronaris_uses_auxiliary_backward_but_public_early_stop(tmp_path
         "chronaris_physical_consistency",
         "chronaris_causal_direction",
     }
-    assert all(row["weight"] == 0 for row in first.auxiliary_rows)
+    assert all(row["weight"] > 0 for row in first.auxiliary_rows)
     assert payload["chronaris_auxiliary_enabled"] is True
     assert payload["early_stopping_uses_public_pretext_only"] is True
     assert payload["selection_uses_public_pretext_only"] is True
     assert payload["label_used_for_encoder_training"] is False
     assert payload["simulation_oracle_opened"] is False
+    assert payload["encoder_manifest"]["backbone_config"]["max_ode_step_s"] == 5.0
+    assert payload["candidate_config"]["learning_rate"] == 7e-4
+    assert _encoder.backbone.config.max_ode_step_s == 5.0
 
 
 def test_locked_chronaris_ablation_round_trips_variant(tmp_path) -> None:

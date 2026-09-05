@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.thesis_frozen_models.v3.2",
+  "protocol_version": "v3.2",
+  "selection_evidence": "docs/artifacts/runs/2026-09-02_candidate-screen-v3p2/gate_audit.json",
+  "physiology_only": {
+    "candidate_id": "A"
+  },
+  "vehicle_only": {
+    "candidate_id": "C"
+  },
+  "mult": {
+    "candidate_id": "A"
+  },
+  "contiformer": {
+    "candidate_id": "A"
+  },
+  "chronaris": {
+    "candidate_id": "C",
+    "fusion_kind": "safe_lag",
+    "ode_method": "euler",
+    "max_ode_step_s": null,
+    "semantic_event_enabled": true,
+    "learnable_semantic_queries": true,
+    "explicit_shift_weight": 0.1,
+    "event_pair_weight": 0.1
+  }
+}

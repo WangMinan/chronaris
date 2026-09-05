@@ -1,0 +1,33 @@
+{
+  "format": "chronaris.simulation_chronaris_ablation_downstream.v1",
+  "config": {
+    "run_id": "2026-09-03_thesis-simulation-ablation-consumers-v3p2p1",
+    "compact_output_root": "docs/artifacts/runs",
+    "heavy_output_root": "artifacts/application_evaluation",
+    "pretraining_run_id": "2026-09-03_thesis-simulation-ablation-pretraining-v3p2p1",
+    "representation_run_id": "2026-09-03_thesis-simulation-ablation-representations-v3p2p1",
+    "full_pretraining_run_id": "2026-09-03_thesis-simulation-pretraining-v3p2",
+    "full_consumer_run_id": "2026-09-03_thesis-simulation-consumers-v3p2p1",
+    "simulation_root": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal",
+    "selected_candidates_path": "/home/wangminan/projects/chronaris/docs/requirements/thesis-frozen-models-v3.2.json",
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "variants": [
+      "no_continuous_evolution",
+      "no_physics",
+      "no_causal_mask",
+      "no_single_stream_bypass"
+    ],
+    "minirocket_kernels": 10000,
+    "tcn_device": "cuda",
+    "resume": true
+  },
+  "fit_role": "train",
+  "hyperparameter_selection_role": "validation",
+  "locked_evaluation_role": "held_out",
+  "reference_method": "chronaris",
+  "independent_statistical_unit": "trajectory"
+}

@@ -1,0 +1,113 @@
+{
+  "purpose": "read_only_failure_localization_not_model_selection",
+  "source_commit": "6a2393e4190367e9504377ee2f2914926e610ae8",
+  "sample_ids": [
+    "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+    "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+    "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+    "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+  ],
+  "cutoff_s": 15.0,
+  "future_perturbation": "valid observations strictly after cutoff plus 100000",
+  "threshold": 1e-06,
+  "outer_results_authorized": false,
+  "script_sha256": "a979ca6ed575d4b37d7427751f5ef33006d696c49ba82fb34397d04b9af4a26d",
+  "rows": [
+    {
+      "seed": 17,
+      "device": "cuda",
+      "checkpoint_sha256": "19f6f72863099d14620bbcf80d2ce817d0f86b6bb88d6905876a3a15f54e8af1",
+      "checkpoint_unchanged": true,
+      "historical_normalized_input_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "historical_alignment_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "repeat_baseline_delta": 0.0,
+      "historical_sequence_delta": 1.9754283130168915e-05,
+      "historical_branch_delta": {
+        "physiology_bypass": 0.0,
+        "vehicle_bypass": 0.0,
+        "cross_branch": 1.9754283130168915e-05
+      },
+      "historical_lag_attention_delta": 0.0,
+      "historical_event_score_delta": 0.30447518825531006,
+      "historical_delta_with_reference_scores": 0.0
+    },
+    {
+      "seed": 29,
+      "device": "cuda",
+      "checkpoint_sha256": "96f06575fe5547c180b12437df8d6d158bb3525b045f4716c2ea5d8d94f6867f",
+      "checkpoint_unchanged": true,
+      "historical_normalized_input_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "historical_alignment_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "repeat_baseline_delta": 0.0,
+      "historical_sequence_delta": 3.2652169466018677e-06,
+      "historical_branch_delta": {
+        "physiology_bypass": 0.0,
+        "vehicle_bypass": 0.0,
+        "cross_branch": 3.2652169466018677e-06
+      },
+      "historical_lag_attention_delta": 0.0,
+      "historical_event_score_delta": 0.060917794704437256,
+      "historical_delta_with_reference_scores": 0.0
+    },
+    {
+      "seed": 43,
+      "device": "cuda",
+      "checkpoint_sha256": "ee1ecb171cb34e145a06dd2739e9b6eabff5c35ca49157cf8fcce5e0ebe50d37",
+      "checkpoint_unchanged": true,
+      "historical_normalized_input_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "historical_alignment_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "repeat_baseline_delta": 0.0,
+      "historical_sequence_delta": 2.8718262910842896e-05,
+      "historical_branch_delta": {
+        "physiology_bypass": 0.0,
+        "vehicle_bypass": 0.0,
+        "cross_branch": 2.8718262910842896e-05
+      },
+      "historical_lag_attention_delta": 0.0,
+      "historical_event_score_delta": 0.34087371826171875,
+      "historical_delta_with_reference_scores": 0.0
+    },
+    {
+      "seed": 17,
+      "device": "cpu",
+      "checkpoint_sha256": "19f6f72863099d14620bbcf80d2ce817d0f86b6bb88d6905876a3a15f54e8af1",
+      "checkpoint_unchanged": true,
+      "historical_normalized_input_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "historical_alignment_delta": {
+        "physiology": 0.0,
+        "vehicle": 0.0
+      },
+      "repeat_baseline_delta": 0.0,
+      "historical_sequence_delta": 1.9752420485019684e-05,
+      "historical_branch_delta": {
+        "physiology_bypass": 0.0,
+        "vehicle_bypass": 0.0,
+        "cross_branch": 1.9752420485019684e-05
+      },
+      "historical_lag_attention_delta": 0.0,
+      "historical_event_score_delta": 0.30447518825531006,
+      "historical_delta_with_reference_scores": 0.0
+    }
+  ]
+}

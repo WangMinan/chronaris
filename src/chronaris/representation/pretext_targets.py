@@ -15,6 +15,7 @@ from chronaris.representation.contracts import (
 
 
 LAG_DISCRIMINATION_SHIFTS_S = (-10.0, -5.0, 5.0, 10.0)
+EXPLICIT_TIME_SHIFT_CLASSES_S = (-10.0, -5.0, 0.0, 5.0, 10.0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -51,6 +52,14 @@ class CommonPretextTargets:
 class LagDiscriminationInputs:
     negative_batch: DualStreamObservationBatch
     shifts_s: torch.Tensor
+    augmentation_ids: tuple[str, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class ExplicitTimeShiftInputs:
+    shifted_batch: DualStreamObservationBatch
+    shifts_s: torch.Tensor
+    class_indices: torch.Tensor
     augmentation_ids: tuple[str, ...]
 
 
@@ -185,6 +194,53 @@ def build_lag_discrimination_inputs(
     return LagDiscriminationInputs(
         negative_batch=shifted,
         shifts_s=shifts,
+        augmentation_ids=ids,
+    )
+
+
+def build_explicit_time_shift_inputs(
+    batch: DualStreamObservationBatch,
+    augmentation_ids: Sequence[str],
+    *,
+    class_indices: Sequence[int] | None = None,
+) -> ExplicitTimeShiftInputs:
+    """Build deterministic five-class vehicle shifts including the zero-shift class."""
+
+    ids = tuple(str(value) for value in augmentation_ids)
+    if len(ids) != len(batch.sample_ids):
+        raise RepresentationContractError("explicit time-shift ID count mismatch")
+    resolved_class_indices = torch.as_tensor(
+        (
+            [int(value[8:16], 16) % len(EXPLICIT_TIME_SHIFT_CLASSES_S) for value in ids]
+            if class_indices is None
+            else tuple(int(value) for value in class_indices)
+        ),
+        dtype=torch.long,
+        device=batch.vehicle_timestamps_s.device,
+    )
+    if resolved_class_indices.shape != (len(ids),) or bool(
+        (
+            (resolved_class_indices < 0)
+            | (resolved_class_indices >= len(EXPLICIT_TIME_SHIFT_CLASSES_S))
+        ).any()
+    ):
+        raise RepresentationContractError(
+            "explicit time-shift classes must have one value in [0,4] per sample"
+        )
+    shifts = torch.as_tensor(
+        EXPLICIT_TIME_SHIFT_CLASSES_S,
+        dtype=batch.vehicle_timestamps_s.dtype,
+        device=batch.vehicle_timestamps_s.device,
+    ).index_select(0, resolved_class_indices)
+    shifted = _shift_and_compact_vehicle(
+        batch,
+        shifts,
+        duration_s=_context_duration_s(batch.query_timestamps_s),
+    )
+    return ExplicitTimeShiftInputs(
+        shifted_batch=shifted,
+        shifts_s=shifts,
+        class_indices=resolved_class_indices,
         augmentation_ids=ids,
     )
 

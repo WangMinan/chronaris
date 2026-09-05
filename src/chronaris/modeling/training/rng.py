@@ -1,0 +1,129 @@
+"""Isolated, resumable random state for paper-facing training."""
+
+from __future__ import annotations
+
+import hashlib
+import os
+import random
+from collections.abc import Mapping, Sequence
+from contextlib import contextmanager
+
+import numpy as np
+import torch
+
+
+def capture_rng_state() -> dict[str, object]:
+    numpy_name, numpy_keys, numpy_position, numpy_gaussian, numpy_cached = (
+        np.random.get_state()
+    )
+    return {
+        "python": random.getstate(),
+        "numpy": {
+            "name": numpy_name,
+            "keys": numpy_keys.tolist(),
+            "position": numpy_position,
+            "has_gaussian": numpy_gaussian,
+            "cached_gaussian": numpy_cached,
+        },
+        "torch_cpu": torch.get_rng_state(),
+        "torch_cuda": (
+            tuple(torch.cuda.get_rng_state_all()) if torch.cuda.is_available() else ()
+        ),
+    }
+
+
+def restore_rng_state(state: Mapping[str, object]) -> None:
+    random.setstate(tuple(state["python"]))
+    numpy = dict(state["numpy"])
+    np.random.set_state(
+        (
+            str(numpy["name"]),
+            np.asarray(numpy["keys"], dtype=np.uint32),
+            int(numpy["position"]),
+            int(numpy["has_gaussian"]),
+            float(numpy["cached_gaussian"]),
+        )
+    )
+    torch.set_rng_state(torch.as_tensor(state["torch_cpu"], dtype=torch.uint8))
+    cuda_states = tuple(state.get("torch_cuda", ()))
+    if cuda_states:
+        if not torch.cuda.is_available() or len(cuda_states) != torch.cuda.device_count():
+            raise RuntimeError("checkpoint CUDA RNG state does not match the current host")
+        torch.cuda.set_rng_state_all(list(cuda_states))
+
+
+def seed_rng(seed: int) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+
+@contextmanager
+def isolated_training_rng(seed: int, *, deterministic: bool = True):
+    """Seed training without leaking its RNG or deterministic flags to callers."""
+
+    outer_state = capture_rng_state()
+    outer_deterministic = torch.are_deterministic_algorithms_enabled()
+    outer_warn_only = torch.is_deterministic_algorithms_warn_only_enabled()
+    outer_cudnn_deterministic = torch.backends.cudnn.deterministic
+    outer_cudnn_benchmark = torch.backends.cudnn.benchmark
+    previous_workspace = os.environ.get("CUBLAS_WORKSPACE_CONFIG")
+    try:
+        if deterministic:
+            os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+            torch.use_deterministic_algorithms(True)
+            torch.backends.cudnn.deterministic = True
+            torch.backends.cudnn.benchmark = False
+        seed_rng(seed)
+        yield
+    finally:
+        restore_rng_state(outer_state)
+        torch.use_deterministic_algorithms(
+            outer_deterministic,
+            warn_only=outer_warn_only,
+        )
+        torch.backends.cudnn.deterministic = outer_cudnn_deterministic
+        torch.backends.cudnn.benchmark = outer_cudnn_benchmark
+        if previous_workspace is None:
+            os.environ.pop("CUBLAS_WORKSPACE_CONFIG", None)
+        else:
+            os.environ["CUBLAS_WORKSPACE_CONFIG"] = previous_workspace
+
+
+def canonical_training_state_sha256(*values: object) -> str:
+    digest = hashlib.sha256()
+    for value in values:
+        _update_digest(digest, value)
+    return digest.hexdigest()
+
+
+def _update_digest(digest, value) -> None:
+    if isinstance(value, torch.Tensor):
+        tensor = value.detach().cpu().contiguous()
+        digest.update(b"tensor")
+        digest.update(str(tensor.dtype).encode())
+        digest.update(str(tuple(tensor.shape)).encode())
+        digest.update(tensor.numpy().tobytes())
+    elif isinstance(value, np.ndarray):
+        array = np.ascontiguousarray(value)
+        digest.update(b"ndarray")
+        digest.update(str(array.dtype).encode())
+        digest.update(str(array.shape).encode())
+        digest.update(array.tobytes())
+    elif isinstance(value, Mapping):
+        digest.update(b"mapping")
+        for key in sorted(value, key=lambda item: str(item)):
+            _update_digest(digest, key)
+            _update_digest(digest, value[key])
+    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+        digest.update(b"sequence")
+        for item in value:
+            _update_digest(digest, item)
+    elif isinstance(value, bytes):
+        digest.update(b"bytes")
+        digest.update(value)
+    else:
+        digest.update(type(value).__name__.encode())
+        digest.update(repr(value).encode())

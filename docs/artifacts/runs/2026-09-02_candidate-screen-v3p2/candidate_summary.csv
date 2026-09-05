@@ -1,0 +1,5 @@
+candidate,new_mechanism_gates_passed,parameter_count_median,training_elapsed_s_median,training_elapsed_s_total,selected
+base,0,30691.5,155.07780186343007,8465.444158098195,False
+explicit_shift,1,30691.5,154.5312369655585,8448.206137061119,False
+semantic_pair,1,30787.5,320.14106987195555,14629.017507556127,False
+both_objectives,2,30787.5,320.31537099403795,14631.617544086184,True

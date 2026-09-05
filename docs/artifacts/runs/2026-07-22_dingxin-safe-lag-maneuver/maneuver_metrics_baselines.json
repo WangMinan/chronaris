@@ -1,0 +1,16 @@
+{
+  "results": [
+    {
+      "label": "mult",
+      "macro_f1": 0.1667,
+      "balanced_accuracy": 0.3333,
+      "elapsed_s": 75.7
+    },
+    {
+      "label": "contiformer",
+      "macro_f1": 0.1538,
+      "balanced_accuracy": 0.3,
+      "elapsed_s": 57.7
+    }
+  ]
+}

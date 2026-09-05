@@ -3,6 +3,12 @@
 from typing import TYPE_CHECKING
 
 from chronaris.dataset.builder import SortieDatasetBuilder
+from chronaris.dataset.clare_native import build_clare_native_dataset
+from chronaris.dataset.cogpilot_native import (
+    build_cogpilot_difficulty_dataset,
+    build_cogpilot_event_response_dataset,
+)
+from chronaris.dataset.lazy_observed import LazyObservedDataset, NativeSampleRecord
 from chronaris.dataset.nasa_csm_tasks import NASACSMPreparedTaskSet, build_nasa_csm_task_entries
 from chronaris.dataset.task_contracts import (
     StageIDatasetSummary,
@@ -52,6 +58,8 @@ if TYPE_CHECKING:  # pragma: no cover - typing-only compatibility exports
 
 __all__ = [
     "NASACSMPreparedTaskSet",
+    "LazyObservedDataset",
+    "NativeSampleRecord",
     "ReferenceStrategy",
     "StageIDatasetSummary",
     "StageIPrivateTaskEntry",
@@ -75,6 +83,9 @@ __all__ = [
     "align_sortie_bundle",
     "attach_llm_preprocessing_context_to_task_entries",
     "build_sample_windows",
+    "build_clare_native_dataset",
+    "build_cogpilot_difficulty_dataset",
+    "build_cogpilot_event_response_dataset",
     "build_nasa_csm_task_entries",
     "build_task_eval_real_task_payload",
     "build_uab_task_entries",

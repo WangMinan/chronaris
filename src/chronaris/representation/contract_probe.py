@@ -72,6 +72,7 @@ class ContractProbeEncoder:
         ).to(device=base.device, dtype=base.dtype)
         sequence = torch.tanh(base @ projection)
         valid = (physiology[..., 3] > 0) | (vehicle[..., 3] > 0)
+        sequence = sequence.masked_fill(~valid.any(dim=1)[:, None, None], 0)
         counts = valid.sum(dim=1, keepdim=True).clamp_min(1)
         pooled = (
             sequence * valid.unsqueeze(-1).to(sequence.dtype)

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import copy
+from dataclasses import replace
 
 import numpy as np
 import torch
@@ -80,7 +81,7 @@ def _sample(sample_id: str, *, future_scale: float = 1.0):
     )
 
 
-def _adapter(batch, *, variant: str = "full"):
+def _adapter(batch, *, variant: str = "full", fusion_kind: str = "multiscale"):
     normalizer = TrainOnlyRobustNormalizer().fit(
         batch,
         train_sample_ids=("train",),
@@ -90,6 +91,7 @@ def _adapter(batch, *, variant: str = "full"):
         physiology_feature_names=PHYSIOLOGY_NAMES,
         vehicle_feature_names=VEHICLE_NAMES,
         variant=variant,
+        fusion_kind=fusion_kind,
     )
     return ChronarisContinuousFusionAdapter(
         backbone=ChronarisContinuousFusionEncoder(config).eval(),
@@ -125,6 +127,79 @@ def test_continuous_encoder_is_causal_and_traces_real_ode_updates() -> None:
     assert trace.maximum_positive_delta_t_s > 0
 
 
+def test_max_ode_step_is_checkpointed_without_changing_default() -> None:
+    default = ChronarisContinuousEncoderConfig(
+        physiology_feature_names=PHYSIOLOGY_NAMES,
+        vehicle_feature_names=VEHICLE_NAMES,
+    )
+    stepped = ChronarisContinuousEncoderConfig(
+        physiology_feature_names=PHYSIOLOGY_NAMES,
+        vehicle_feature_names=VEHICLE_NAMES,
+        max_ode_step_s=0.5,
+    )
+
+    assert default.max_ode_step_s is None
+    assert default.alignment_config().max_ode_step_s is None
+    assert stepped.alignment_config().max_ode_step_s == 0.5
+    assert stepped.effective_mechanisms()["max_ode_step_s"] == 0.5
+    assert ChronarisContinuousEncoderConfig.from_checkpoint_dict(
+        stepped.to_checkpoint_dict()
+    ) == stepped
+
+
+def test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal() -> None:
+    torch.manual_seed(37)
+    batch = collate_observation_samples([_sample("train"), _sample("test")])
+    changed = collate_observation_samples([_sample("test", future_scale=1000.0)])
+    disabled = ChronarisContinuousFusionEncoder(
+        ChronarisContinuousEncoderConfig(
+            physiology_feature_names=PHYSIOLOGY_NAMES,
+            vehicle_feature_names=VEHICLE_NAMES,
+            fusion_kind="safe_lag",
+            dropout=0.0,
+        )
+    )
+    enabled = ChronarisContinuousFusionEncoder(
+        ChronarisContinuousEncoderConfig(
+            physiology_feature_names=PHYSIOLOGY_NAMES,
+            vehicle_feature_names=VEHICLE_NAMES,
+            fusion_kind="safe_lag",
+            semantic_event_enabled=True,
+            learnable_semantic_queries=True,
+            dropout=0.0,
+        )
+    )
+    enabled.load_state_dict(disabled.state_dict(), strict=False)
+
+    disabled_output = disabled(batch, compute_diagnostics=False)
+    enabled_output = enabled(batch, compute_diagnostics=False)
+    changed_output = enabled(changed, compute_diagnostics=False)
+    past = batch.query_timestamps_s[0] < 20.0
+
+    torch.testing.assert_close(
+        enabled_output.sequence_embedding[..., :48],
+        disabled_output.sequence_embedding[..., :48],
+    )
+    future_effect = (
+        enabled_output.sequence_embedding[1, past]
+        - changed_output.sequence_embedding[0, past]
+    ).abs().max()
+    assert float(future_effect.detach()) <= 1e-6
+    assert enabled_output.semantic_event_output is not None
+    assert enabled_output.semantic_event_output.query_names == (
+        "flight_event",
+        "physiology_response",
+        "human_aircraft_coordination",
+    )
+    assert enabled_output.aggregated_lag_attention.shape == (2, 96, 96)
+
+    enabled.zero_grad(set_to_none=True)
+    enabled(batch, compute_diagnostics=False).sequence_embedding.square().mean().backward()
+    residual = enabled.semantic_event_fusion.query_bank.query_residual
+    assert residual.grad is not None
+    assert torch.count_nonzero(residual.grad) > 0
+
+
 def test_no_continuous_evolution_is_a_real_path_ablation() -> None:
     torch.manual_seed(19)
     batch = collate_observation_samples([_sample("train"), _sample("test")])
@@ -142,6 +217,29 @@ def test_no_continuous_evolution_is_a_real_path_ablation() -> None:
     assert trace.observation_positive_evolution_count == 0
     assert trace.reference_positive_evolution_count == 0
     assert not torch.equal(full_output.sequence_embedding, disabled_output.sequence_embedding)
+
+
+def test_no_single_stream_bypass_zeroes_only_private_branches() -> None:
+    torch.manual_seed(21)
+    batch = collate_observation_samples([_sample("train"), _sample("test")])
+    held_out = collate_observation_samples([_sample("test")])
+    full = _adapter(batch, variant="full", fusion_kind="safe_lag")
+    disabled = _adapter(
+        batch,
+        variant="no_single_stream_bypass",
+        fusion_kind="safe_lag",
+    )
+    disabled.backbone.load_state_dict(full.backbone.state_dict(), strict=True)
+
+    full_output = full(held_out)
+    disabled_output = disabled(held_out)
+
+    assert torch.count_nonzero(full_output.sequence_embedding[..., :48]) > 0
+    assert torch.count_nonzero(disabled_output.sequence_embedding[..., :48]) == 0
+    torch.testing.assert_close(
+        disabled_output.sequence_embedding[..., 48:],
+        full_output.sequence_embedding[..., 48:],
+    )
 
 
 def test_physics_status_distinguishes_active_disabled_and_unavailable() -> None:
@@ -165,6 +263,18 @@ def test_physics_status_distinguishes_active_disabled_and_unavailable() -> None:
     assert all(
         component.weighted_value is None
         for component in disabled_components
+    )
+    physiology_components = [
+        component
+        for component in full_components
+        if component.component_name.startswith("physiology_")
+    ]
+    assert physiology_components
+    assert all(
+        component.status == "unavailable"
+        and component.count == 0
+        and component.reason == "outside_motion_kinematics_contract"
+        for component in physiology_components
     )
 
 
@@ -224,6 +334,11 @@ def test_fixed_ablation_matrix_changes_only_declared_mechanisms() -> None:
     ]
     for config in variants[1:]:
         assert validate_chronaris_ablation_diff(full, config)
+
+    safe = replace(full, fusion_kind="safe_lag")
+    safe_variants = build_chronaris_ablation_configs(safe)
+    assert safe_variants[-1].variant == "no_single_stream_bypass"
+    assert validate_chronaris_ablation_diff(safe, safe_variants[-1])
 
 
 def test_chronaris_checkpoint_round_trip(tmp_path) -> None:

@@ -1,0 +1,128 @@
+{
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "methods": [
+    "naive_time_sync",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "oracle_opened_after_representations": true,
+  "g2_used_for_model_selection": false,
+  "stage_name": "simulation_mechanism_consumers",
+  "run_id": "2026-09-04_thesis-simulation-mechanism-consumers-v3p2p3",
+  "last_event": "finished",
+  "updated_at_utc": "2026-09-04T12:30:17.322420Z",
+  "events": [
+    {
+      "timestamp_utc": "2026-09-04T12:29:58.071034Z",
+      "event": "start",
+      "seeds": [
+        17,
+        29,
+        43
+      ],
+      "methods": [
+        "naive_time_sync",
+        "mult",
+        "contiformer",
+        "chronaris"
+      ],
+      "oracle_opened_after_representations": true,
+      "g2_used_for_model_selection": false
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:29:59.151577Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 17,
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:00.335139Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 17,
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:03.957999Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 17,
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:05.133939Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 17,
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:06.205910Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 29,
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:07.368031Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 29,
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:08.520550Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 29,
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:09.668398Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 29,
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:10.738475Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 43,
+      "method_name": "naive_time_sync"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:11.866564Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 43,
+      "method_name": "mult"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:12.991506Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 43,
+      "method_name": "contiformer"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:14.129471Z",
+      "event": "simulation_mechanism_method_complete",
+      "seed": 43,
+      "method_name": "chronaris"
+    },
+    {
+      "timestamp_utc": "2026-09-04T12:30:17.322420Z",
+      "event": "finished",
+      "status": "completed",
+      "model_count": 24,
+      "evaluation_count": 840,
+      "metric_count": 3360,
+      "acceptance_pass_count": 6,
+      "acceptance_check_count": 6
+    }
+  ],
+  "seed": 43,
+  "method_name": "chronaris",
+  "status": "completed",
+  "model_count": 24,
+  "evaluation_count": 840,
+  "metric_count": 3360,
+  "acceptance_pass_count": 6,
+  "acceptance_check_count": 6
+}

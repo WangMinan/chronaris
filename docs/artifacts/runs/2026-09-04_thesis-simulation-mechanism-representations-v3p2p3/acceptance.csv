@@ -1,0 +1,6 @@
+check_id,passed,actual,expected
+all_seed_role_scenarios,True,36,36
+four_dual_stream_methods,True,"[4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]",4
+fixed_context_counts,True,"[('train', 384), ('validation', 96)]","[('train', 384), ('validation', 96)]"
+all_representation_exports,True,144,144
+task_oracle_closed,True,False,False
