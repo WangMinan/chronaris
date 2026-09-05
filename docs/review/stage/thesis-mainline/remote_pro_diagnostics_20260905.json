@@ -1,0 +1,673 @@
+{
+  "source_commit": "207f14a05ab7dd5175aa83adef91d644b319f045",
+  "script_sha256": "9273d8a3ac1319a87afd39ccd000c1dcc76f13a29f42c3159c7a967672c4a675",
+  "scope": "read_only_diagnostic_not_training_or_model_selection",
+  "checkpoints": [
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/chronaris/last.pt",
+      "sha256": "88401c2a11f4aaecaf2d183702cf2a46374375759c8ae2a0ea9c2530a5b90209",
+      "method": "chronaris",
+      "seed": 17,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 31127,
+      "elapsed_s": 7833.9663810930215,
+      "selection_loss_epoch40": 0.5811420436948538,
+      "selection_loss_epoch50": 0.5626843376085162
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/contiformer/A/last.pt",
+      "sha256": "8a110066c3a8f175f4b1bc0e2c2b2668b6cd7141249445fb5013a73a7ba8b58f",
+      "method": "contiformer",
+      "seed": 17,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 112512,
+      "elapsed_s": 82.72109739296138,
+      "selection_loss_epoch40": 0.3559970408678055,
+      "selection_loss_epoch50": 0.33757365867495537
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/mult/A/last.pt",
+      "sha256": "f4637b7b9c20dbb5a59bb718e8aa1d90954149a047648f00882cadaff61fd66d",
+      "method": "mult",
+      "seed": 17,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 1014784,
+      "elapsed_s": 96.60570192383602,
+      "selection_loss_epoch40": 0.23451216518878937,
+      "selection_loss_epoch50": 0.21038230508565903
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/physiology_only/A/last.pt",
+      "sha256": "b0de4fc06efa23645dc9928f188cba4c2e9fb290e985bd6ed4baa68251300c27",
+      "method": "physiology_only",
+      "seed": 17,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 110208,
+      "elapsed_s": 75.35748506803066,
+      "selection_loss_epoch40": 0.3659161850810051,
+      "selection_loss_epoch50": 0.3622199557721615
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/vehicle_only/C/last.pt",
+      "sha256": "20d4628362274708f0e02c6d6b27548fe0d7b10a9bae91e6e70e9811eaeba297",
+      "method": "vehicle_only",
+      "seed": 17,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 31072,
+      "elapsed_s": 74.17967440304346,
+      "selection_loss_epoch40": 0.33997999131679535,
+      "selection_loss_epoch50": 0.31819941848516464
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_29/chronaris/last.pt",
+      "sha256": "c062f5ffb99bedb776bd71bc96759fe432058da85eecdaef8a7726925f9884f2",
+      "method": "chronaris",
+      "seed": 29,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 31127,
+      "elapsed_s": 7639.975870369934,
+      "selection_loss_epoch40": 0.5733421463519335,
+      "selection_loss_epoch50": 0.5559456488117576
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_29/contiformer/A/last.pt",
+      "sha256": "cac7a1f682734bd9f5ff46cb2e5e3c1d48d6cf3d5931c8d6be76bd37252283e7",
+      "method": "contiformer",
+      "seed": 29,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 112512,
+      "elapsed_s": 82.42702114908025,
+      "selection_loss_epoch40": 0.3269449919462204,
+      "selection_loss_epoch50": 0.3009672351181507
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_29/mult/A/last.pt",
+      "sha256": "649a7cae1fee281765e54e554cc109acb15e026ea838b32548a2a5b991d5f0ef",
+      "method": "mult",
+      "seed": 29,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 1014784,
+      "elapsed_s": 95.1991363489069,
+      "selection_loss_epoch40": 0.21185748279094696,
+      "selection_loss_epoch50": 0.1888299435377121
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_29/physiology_only/A/last.pt",
+      "sha256": "3f111888faa27c41eb62b5c7b592a444d7bc96b4f4ebef22f6a3ac6fa3889bcd",
+      "method": "physiology_only",
+      "seed": 29,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 110208,
+      "elapsed_s": 74.80755521403626,
+      "selection_loss_epoch40": 0.3635900355875492,
+      "selection_loss_epoch50": 0.3596259653568268
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_29/vehicle_only/C/last.pt",
+      "sha256": "2c7349a372d063abbdfe1cd37363d0bac313f87cf9b5015e15260ef4d1de18ef",
+      "method": "vehicle_only",
+      "seed": 29,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 31072,
+      "elapsed_s": 74.83185880398378,
+      "selection_loss_epoch40": 0.33057547360658646,
+      "selection_loss_epoch50": 0.305648997426033
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_43/chronaris/last.pt",
+      "sha256": "e19a92887eee45e824930d86352000090bb2d56f5596d3e5c4005820230d6d84",
+      "method": "chronaris",
+      "seed": 43,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 31127,
+      "elapsed_s": 7279.0264949880075,
+      "selection_loss_epoch40": 0.5926060453057289,
+      "selection_loss_epoch50": 0.568576218560338
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_43/contiformer/A/last.pt",
+      "sha256": "c98c07e059bc1a586d422a4ea17b882ee0b5eb3d14d561af0f413aa986ba88c5",
+      "method": "contiformer",
+      "seed": 43,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 112512,
+      "elapsed_s": 80.33575743506663,
+      "selection_loss_epoch40": 0.3442857712507248,
+      "selection_loss_epoch50": 0.32679063081741333
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_43/mult/A/last.pt",
+      "sha256": "7f57457d39a683a4235db7602941306a7d134951702feb52d958b0443cf3694d",
+      "method": "mult",
+      "seed": 43,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 1014784,
+      "elapsed_s": 92.75824077287689,
+      "selection_loss_epoch40": 0.25703637674450874,
+      "selection_loss_epoch50": 0.23942683264613152
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_43/physiology_only/A/last.pt",
+      "sha256": "af37505bc21d07b9efe3a40b019e9fe108c93132dc257f1e80c46dba05d21ac1",
+      "method": "physiology_only",
+      "seed": 43,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 110208,
+      "elapsed_s": 73.81021475396119,
+      "selection_loss_epoch40": 0.36610057577490807,
+      "selection_loss_epoch50": 0.3629026226699352
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_43/vehicle_only/C/last.pt",
+      "sha256": "03403ca6f808e7cab350c79041354f259ea1dd02e34dc9f5d92f29d4750e54f8",
+      "method": "vehicle_only",
+      "seed": 43,
+      "steps": 50,
+      "adam_steps": [
+        50
+      ],
+      "epochs": 50,
+      "best_epoch": 50,
+      "train_samples": 96,
+      "batch_size": 128,
+      "parameters": 31072,
+      "elapsed_s": 76.00270947511308,
+      "selection_loss_epoch40": 0.3474302217364311,
+      "selection_loss_epoch50": 0.33302687853574753
+    }
+  ],
+  "datasets": {
+    "cogpilot": {
+      "root": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils",
+      "inventory": [
+        {
+          "subject_limit": 20,
+          "records": 229,
+          "subjects": 20,
+          "subject_ids": [
+            "sub-cp003",
+            "sub-cp004",
+            "sub-cp005",
+            "sub-cp006",
+            "sub-cp008",
+            "sub-cp009",
+            "sub-cp011",
+            "sub-cp012",
+            "sub-cp013",
+            "sub-cp014",
+            "sub-cp015",
+            "sub-cp016",
+            "sub-cp017",
+            "sub-cp018",
+            "sub-cp019",
+            "sub-cp020",
+            "sub-cp022",
+            "sub-cp023",
+            "sub-cp024",
+            "sub-cp025"
+          ]
+        },
+        {
+          "subject_limit": 1000,
+          "records": 399,
+          "subjects": 35,
+          "subject_ids": [
+            "sub-cp003",
+            "sub-cp004",
+            "sub-cp005",
+            "sub-cp006",
+            "sub-cp008",
+            "sub-cp009",
+            "sub-cp011",
+            "sub-cp012",
+            "sub-cp013",
+            "sub-cp014",
+            "sub-cp015",
+            "sub-cp016",
+            "sub-cp017",
+            "sub-cp018",
+            "sub-cp019",
+            "sub-cp020",
+            "sub-cp022",
+            "sub-cp023",
+            "sub-cp024",
+            "sub-cp025",
+            "sub-cp026",
+            "sub-cp027",
+            "sub-cp028",
+            "sub-cp029",
+            "sub-cp030",
+            "sub-cp031",
+            "sub-cp032",
+            "sub-cp033",
+            "sub-cp035",
+            "sub-cp036",
+            "sub-cp037",
+            "sub-cp038",
+            "sub-cp039",
+            "sub-cp042",
+            "sub-cp043"
+          ]
+        }
+      ],
+      "scope": "metadata candidates; not all windows signal-validated"
+    },
+    "clare": {
+      "root": "/home/wangminan/dataset/chronaris/clare",
+      "inventory": [
+        {
+          "subject_limit": 16,
+          "records": 1614,
+          "subjects": 16,
+          "subject_ids": [
+            "1026",
+            "1106",
+            "1175",
+            "1194",
+            "1337",
+            "1390",
+            "1419",
+            "1544",
+            "1624",
+            "1629",
+            "1674",
+            "1688",
+            "1717",
+            "1818",
+            "1892",
+            "1929"
+          ]
+        },
+        {
+          "subject_limit": 1000,
+          "records": 1938,
+          "subjects": 19,
+          "subject_ids": [
+            "1026",
+            "1106",
+            "1175",
+            "1194",
+            "1337",
+            "1390",
+            "1419",
+            "1544",
+            "1624",
+            "1629",
+            "1674",
+            "1688",
+            "1717",
+            "1818",
+            "1892",
+            "1929",
+            "1933",
+            "1953",
+            "1981"
+          ]
+        }
+      ],
+      "scope": "metadata candidates; not all windows signal-validated"
+    },
+    "short_window_augmentation": {
+      "10": 651,
+      "12": 592,
+      "30": 0
+    },
+    "dingxin": {
+      "sorties": 2,
+      "views": 3,
+      "files": [
+        {
+          "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251005_四01_ACT-4_云_J20_22#01/vehicle_points.jsonl.gz",
+          "sha256": "0fcb1e9123c679391ca5cf817ab6aeaef1ff9aaf9fd8748bcff97f25004a3cb1",
+          "points": 28824
+        },
+        {
+          "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/physiology_points.jsonl.gz",
+          "sha256": "ae36282aa273e8c77c6053daaa9fe5e1934129072907541a5e3aa6fa0539d44f",
+          "points": 905
+        },
+        {
+          "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/vehicle_points.jsonl.gz",
+          "sha256": "eac71fd17d8bb989fd0de0aa75000390310a61de45ad035b29704a49be015ac2",
+          "points": 28824
+        },
+        {
+          "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/physiology_points.jsonl.gz",
+          "sha256": "2dc3b2ba6d394deaafc11c62771ad351d2008c030eb6bee63ebeda824c4c33aa",
+          "points": 905
+        },
+        {
+          "path": "artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/physiology_points.jsonl.gz",
+          "sha256": "c3968bc4621d4e2729e7b298fbea72fd9f1c4a8e3013f22ff0db4be9f7aebed3",
+          "points": 905
+        }
+      ]
+    }
+  },
+  "models": {
+    "device": "cuda",
+    "sample_ids": [
+      "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+      "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+      "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+      "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+    ],
+    "rows": [
+      {
+        "seed": 17,
+        "checkpoint_sha256": "19f6f72863099d14620bbcf80d2ce817d0f86b6bb88d6905876a3a15f54e8af1",
+        "attention": [
+          {
+            "mean_normalized_entropy": 0.9999946355819702,
+            "max_weight_ratio": 1.0396853685379028,
+            "query_count": 376
+          },
+          {
+            "mean_normalized_entropy": 0.9999946355819702,
+            "max_weight_ratio": 1.0435216426849365,
+            "query_count": 308
+          },
+          {
+            "mean_normalized_entropy": 0.9999963641166687,
+            "max_weight_ratio": 1.033629059791565,
+            "query_count": 180
+          }
+        ],
+        "attention_ratio_bound": 1.4241190194809816,
+        "physics_before": {
+          "vehicle_rigid_body_translation": 0.0028642837423831224,
+          "vehicle_rigid_body_vertical": 0.026299547404050827,
+          "vehicle_rigid_body_rotation": 0.028791386634111404
+        },
+        "physics_zero_head": {
+          "vehicle_rigid_body_translation": 0.0,
+          "vehicle_rigid_body_vertical": 0.0,
+          "vehicle_rigid_body_rotation": 0.0
+        },
+        "zero_head_representation_delta": 0.0,
+        "decoder_mse_normalized_units": 0.6129069924354553,
+        "zero_decoder_mse_normalized_units": 0.547874391078949,
+        "event_valid_token_counts": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "stream_permutation_context_delta": {
+          "physiology": {
+            "flight_event": 0.08963938057422638,
+            "physiology_response": 0.09642104804515839,
+            "human_aircraft_coordination": 0.09421736001968384
+          },
+          "vehicle": {
+            "flight_event": 0.16351944208145142,
+            "physiology_response": 0.16012446582317352,
+            "human_aircraft_coordination": 0.15984973311424255
+          }
+        },
+        "single_stream_missing": {
+          "unobserved_physiology_branch_max": 0.1921100616455078,
+          "no_valid_cross_key_branch_max": 0.0025379376020282507
+        },
+        "checkpoint_unchanged": true
+      },
+      {
+        "seed": 29,
+        "checkpoint_sha256": "96f06575fe5547c180b12437df8d6d158bb3525b045f4716c2ea5d8d94f6867f",
+        "attention": [
+          {
+            "mean_normalized_entropy": 0.9999973773956299,
+            "max_weight_ratio": 1.0241602659225464,
+            "query_count": 376
+          },
+          {
+            "mean_normalized_entropy": 0.999997615814209,
+            "max_weight_ratio": 1.0229895114898682,
+            "query_count": 308
+          },
+          {
+            "mean_normalized_entropy": 0.9999977946281433,
+            "max_weight_ratio": 1.023056149482727,
+            "query_count": 180
+          }
+        ],
+        "attention_ratio_bound": 1.4241190194809816,
+        "physics_before": {
+          "vehicle_rigid_body_translation": 0.007079800590872765,
+          "vehicle_rigid_body_vertical": 0.004695727024227381,
+          "vehicle_rigid_body_rotation": 0.06404288858175278
+        },
+        "physics_zero_head": {
+          "vehicle_rigid_body_translation": 0.0,
+          "vehicle_rigid_body_vertical": 0.0,
+          "vehicle_rigid_body_rotation": 0.0
+        },
+        "zero_head_representation_delta": 0.0,
+        "decoder_mse_normalized_units": 0.6007615923881531,
+        "zero_decoder_mse_normalized_units": 0.547874391078949,
+        "event_valid_token_counts": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "stream_permutation_context_delta": {},
+        "single_stream_missing": null,
+        "checkpoint_unchanged": true
+      },
+      {
+        "seed": 43,
+        "checkpoint_sha256": "ee1ecb171cb34e145a06dd2739e9b6eabff5c35ca49157cf8fcce5e0ebe50d37",
+        "attention": [
+          {
+            "mean_normalized_entropy": 0.9999935030937195,
+            "max_weight_ratio": 1.0366833209991455,
+            "query_count": 376
+          },
+          {
+            "mean_normalized_entropy": 0.9999931454658508,
+            "max_weight_ratio": 1.0372378826141357,
+            "query_count": 308
+          },
+          {
+            "mean_normalized_entropy": 0.9999947547912598,
+            "max_weight_ratio": 1.037477970123291,
+            "query_count": 180
+          }
+        ],
+        "attention_ratio_bound": 1.4241190194809816,
+        "physics_before": {
+          "vehicle_rigid_body_translation": 0.010181091725826263,
+          "vehicle_rigid_body_vertical": 0.0067240577191114426,
+          "vehicle_rigid_body_rotation": 0.0077454522252082825
+        },
+        "physics_zero_head": {
+          "vehicle_rigid_body_translation": 0.0,
+          "vehicle_rigid_body_vertical": 0.0,
+          "vehicle_rigid_body_rotation": 0.0
+        },
+        "zero_head_representation_delta": 0.0,
+        "decoder_mse_normalized_units": 0.7127163410186768,
+        "zero_decoder_mse_normalized_units": 0.547874391078949,
+        "event_valid_token_counts": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "stream_permutation_context_delta": {},
+        "single_stream_missing": null,
+        "checkpoint_unchanged": true
+      }
+    ]
+  },
+  "tail": [
+    {
+      "seed": 17,
+      "samples": 192,
+      "consumer_sha256": "8672e9621e37f0e22e016e0293cda99ac780d99e69d1228b7f02e5aa910904c1",
+      "representation_sha256": "df31e3ee0c039c0f3150b00af1c9d9c073d4bb06c63d8321c4a32bcb84d35ac6",
+      "blocks": {
+        "physiology": {
+          "min_train_std": 0.03944007962273642,
+          "max_abs_standardized": 24.398618698120117,
+          "max_abs_prediction_contribution": 0.19411897659301758
+        },
+        "vehicle": {
+          "min_train_std": 0.10009506945462827,
+          "max_abs_standardized": 16.336971282958984,
+          "max_abs_prediction_contribution": 2.062302827835083
+        },
+        "cross": {
+          "min_train_std": 0.007467162650515835,
+          "max_abs_standardized": 191.51513671875,
+          "max_abs_prediction_contribution": 19.642837524414062
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "samples": 192,
+      "consumer_sha256": "0300935cf1dad313023a9ea9dd052e5293165be3a900788ddf366b1351834b98",
+      "representation_sha256": "eaa3a47c530fef6373557365e23dbccc9e66008db0984295f3b718db1291d5c4",
+      "blocks": {
+        "physiology": {
+          "min_train_std": 0.03706787014222212,
+          "max_abs_standardized": 18.06954002380371,
+          "max_abs_prediction_contribution": 1.5450457334518433
+        },
+        "vehicle": {
+          "min_train_std": 0.16435110874401102,
+          "max_abs_standardized": 6.50450325012207,
+          "max_abs_prediction_contribution": 1.3925700187683105
+        },
+        "cross": {
+          "min_train_std": 0.008734815952421062,
+          "max_abs_standardized": 115.13434600830078,
+          "max_abs_prediction_contribution": 10.238673210144043
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "samples": 192,
+      "consumer_sha256": "27518c2e210e8e6635c31343fbc36f7cedd585e3b4eb8a9cee4392a45983b83a",
+      "representation_sha256": "94c5bdc746b320c670bbc632249a1bad9da15f343564a71d155554216ecb08e3",
+      "blocks": {
+        "physiology": {
+          "min_train_std": 0.022475445774075828,
+          "max_abs_standardized": 18.396434783935547,
+          "max_abs_prediction_contribution": 0.723781168460846
+        },
+        "vehicle": {
+          "min_train_std": 0.14482169080360266,
+          "max_abs_standardized": 6.125086307525635,
+          "max_abs_prediction_contribution": 2.5380444526672363
+        },
+        "cross": {
+          "min_train_std": 0.00787133905751254,
+          "max_abs_standardized": 191.43658447265625,
+          "max_abs_prediction_contribution": 13.938636779785156
+        }
+      }
+    }
+  ]
+}
