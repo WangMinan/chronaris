@@ -1,15 +1,15 @@
 # Chronaris 当前状态
 
-更新时间：2026-09-04
+更新时间：2026-09-05
 
 ## 一句话状态
 
-论文主线位于 `research/thesis-continuous-semantic-fusion-202609`。v3.2.3 无观测表示与严格安全门修复、剩余受控仿真和总审计均已完成；六项机制门中四项通过，未来信息隔离与安全旁路失败，完整论文目标尚未完成。未来依赖已只读定位到语义事件分数的全窗归一化，模型未改、阈值未放宽、全部不利结果保留，公开数据与鼎新外层继续关闭。详见[最终复核与待确认事项](review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
+仓库集成主线为 `main`，本轮冻结实验来源为 `research/thesis-continuous-semantic-fusion-202609`。用户于 2026-09-05 决定先合并已完成的实现、材料与实验记录，再从主分支开展后续改进。v3.2.3 无观测表示与严格安全门修复、剩余受控仿真和总审计均已完成；六项机制门中四项通过，未来信息隔离与安全旁路失败，完整论文目标尚未完成。未来依赖已只读定位到语义事件分数的全窗归一化，模型未改、阈值未放宽、全部不利结果保留，公开数据与鼎新外层继续关闭。详见[主分支集成复核](review/stage/thesis-mainline/main-integration-2026-09-05.md)与[最终实验复核](review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
 
 ## 当前执行入口
 
 - 当前任务队列：[implementation/TASKS.md](implementation/TASKS.md)
-- **当前论文主线**：分支 `research/thesis-continuous-semantic-fusion-202609`。
+- **当前论文主线**：以 `main` 集成研究基线；`research/thesis-continuous-semantic-fusion-202609` 保留本轮实现与证据来源，后续改进从 `main` 创建新分支。
   - 当前论文级冻结清单：[requirements/thesis-frozen-paper-evaluation-v3.2.3.md](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)；[v3.2.2](requirements/thesis-frozen-paper-evaluation-v3.2.2.md)、[v3.2.1](requirements/thesis-frozen-paper-evaluation-v3.2.1.md)和上位协议保留追溯
   - 现场保护与基线预检：[artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md](artifacts/runs/2026-09-01_thesis-mainline-preflight/report.md)
   - 可信训练第一批修复：[artifacts/runs/2026-09-01_training-trust-repair/report.md](artifacts/runs/2026-09-01_training-trust-repair/report.md)
