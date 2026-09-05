@@ -567,7 +567,7 @@
 - [access](../../../src/chronaris/access)
 - [schema](../../../src/chronaris/schema)
 - [dataset](../../../src/chronaris/dataset)
-- [dataset_v1.py](../../../src/chronaris/pipelines/dataset_v1.py)
+- [样本组织实现](../../../src/chronaris/dataset)
 
 ## 6. 阶段 I 收口后现状与当前主线
 

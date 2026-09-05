@@ -1,5 +1,7 @@
 # Chronaris 中期事实清单
 
+> 历史写作快照：正文中的“当前”指文内原始更新日期；不替代[九月当前状态](../STATE.md)与[冻结实验复核](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
+
 更新时间：2026-07-02
 
 本清单冻结当前中期报告可引用事实。所有实验事实必须能追溯到 `docs/artifacts/` 下的报告、CSV、JSON 或 PNG。写中期报告时，优先引用本清单中的当前入口；历史报告只作为追溯材料，不从旧报告倒推当前状态。
@@ -21,12 +23,12 @@
 | 能力 | 当前状态 | 证据入口 |
 | --- | --- | --- |
 | 从 MySQL / InfluxDB 读取指定架次多源数据与元信息 | 已完成接入与 Stage H 资产化 | [../STATE.md](../STATE.md) |
-| 统一 schema、时间参考和样本组织 | 已完成 Stage H 标准化 view 与 sample contract | [../artifacts/stage_h/stage-h-closure-2026-04-27.md](../artifacts/stage_h/stage-h-closure-2026-04-27.md) |
-| 双流连续潜态建模 | 已完成 Stage I Phase C 真实 weak-label 联合训练 | [../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md) |
-| 物理一致性约束时间对齐 | translation + vertical 约束已在真实链路启用；rotation disabled diagnostics 已落盘 | [../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md) |
-| 因果掩码与语义事件融合 | 语义 support 覆盖 3 个双流 view | [../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md) |
-| 标准化融合特征与中间态接口 | Stage H 与 runtime replay 已形成样本、checkpoint、prediction 输出 | [../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md) |
-| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r6 图表；Dingxin 分类任务、回归任务和检索任务 另有 leakage-safe 组件诊断、third-party comparison 与 cross-evidence matrix | [../artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md](../artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md) |
+| 统一 schema、时间参考和样本组织 | 已完成 Stage H 标准化 view 与 sample contract | [../artifacts/stage_h/stage-h-closure-2026-04-27.md](../artifacts/archive/reports/stage_h/stage-h-closure-2026-04-27.md) |
+| 双流连续潜态建模 | 已完成 Stage I Phase C 真实 weak-label 联合训练 | [../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](../artifacts/runs/2026-06-07_dingxin-multitask-real-closure/report.md) |
+| 物理一致性约束时间对齐 | translation + vertical 约束已在真实链路启用；rotation disabled diagnostics 已落盘 | [../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/runs/2026-06-07_rigid-body-diagnostics/report.md) |
+| 因果掩码与语义事件融合 | 语义 support 覆盖 3 个双流 view | [../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/runs/2026-06-07_semantic-support/causal-support.md) |
+| 标准化融合特征与中间态接口 | Stage H 与 runtime replay 已形成样本、checkpoint、prediction 输出 | [../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/runs/2026-06-07_runtime-inference-service/report.md) |
+| 面向风险、负荷、事件复盘的验证 | risk/workload/event weak-label 任务已完成训练、sweep 和 r6 图表；Dingxin 分类任务、回归任务和检索任务 另有 leakage-safe 组件诊断、third-party comparison 与 cross-evidence matrix | [../artifacts/stage_i/stage-i-cross-evidence-matrix-20260702T-stage-i-cross-evidence-matrix-gpuopt-r1.md](../artifacts/runs/2026-07-02_cross-evidence-matrix/report.md) |
 
 ## 3. 数据与样本事实
 
@@ -58,7 +60,7 @@
 
 当前 Phase C 主线产物：
 
-- 报告：[../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md)
+- 报告：[../artifacts/stage_i/thesis-weak-label-evidence-20260607T-stage-i-multitask-real-closure-r2.md](../artifacts/runs/2026-06-07_dingxin-multitask-real-closure/report.md)
 - Summary：`docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json`
 - Checkpoint binary：远程开发机 local-only / 可重新生成资产；repo 内引用 `docs/artifacts/assets/stage_i_multitask/20260607T-stage-i-multitask-real-closure-r2/multitask_summary.json` 与对应报告，不再把 `.pt` 写入 git。
 
@@ -101,7 +103,7 @@
 当前 主动证据汇总器 稳定入口：
 
 - Manifest：`docs/artifacts/assets/stage_i_evidence/20260607T-stage-i-evidence-closure-r2/evidence_manifest.json`
-- 报告：[../artifacts/stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](../artifacts/stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md)
+- 报告：[../artifacts/stage_i/stage-i-evidence-closure-20260607T-stage-i-evidence-closure-r2.md](../artifacts/runs/2026-06-07_evidence-closure/report.md)
 - run_id：`20260607T-stage-i-evidence-closure-r2`
 - status：`completed`
 
@@ -129,7 +131,7 @@
 当前 bounded 版本：
 
 - Summary：`docs/artifacts/assets/stage_i_multitask_sweep/20260607T-stage-i-evidence-closure-r2-multitask/multitask_sweep_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](../artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
+- 报告：[../artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md](../artifacts/archive/reports/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260607T-stage-i-evidence-closure-r2-multitask.md)
 - sample_source：stage_h_window_stats_weak_label_input
 - sample_count：`111`
 - task_entry_count：`333`
@@ -141,7 +143,7 @@
 当前 live stable/resume 版本：
 
 - Summary：`docs/artifacts/assets/stage_i_multitask_sweep/20260613T-stage-i-p11-live-influx-r3-resume/multitask_sweep_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](../artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md)
+- 报告：[../artifacts/stage_i/stage-i-thesis-weak-label-multitask-sweep-20260613T-stage-i-p11-live-influx-r3-resume.md](../artifacts/runs/2026-06-13_dingxin-weak-label-sweep-resume/report.md)
 - run_id：`20260613T-stage-i-p11-live-influx-r3-resume`
 - status：`completed`
 - evidence_layer：`thesis_weak_label`
@@ -190,7 +192,7 @@ live stable 的两个完成 child run：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_private_component_ablation/20260607T-stage-i-evidence-closure-r2-private-proxy/chronaris_opt_component_ablation.json`
-- 报告：[../artifacts/stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md](../artifacts/stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md)
+- 报告：[../artifacts/stage_i/stage-i-private-component-ablation-20260607T-stage-i-evidence-closure-r2-private-proxy.md](../artifacts/runs/2026-06-07_dingxin-component-ablation/report.md)
 - evidence_layer：dingxin_weak_label
 - task_boundary：`t1_t2_t3_are_proxy_tasks_not_direct_thesis_tasks`
 - records：sample_count=`111`, view_count=`3`, sortie_count=`2`
@@ -223,7 +225,7 @@ live stable 的两个完成 child run：
 当前新增协议入口：
 
 - Summary：`docs/artifacts/assets/stage_i_private_leakage_safe_ablation/20260619T-stage-i-leakage-safe-ablation-r2/ablation_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](../artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md)
+- 报告：[../artifacts/stage_i/stage-i-private-leakage-safe-ablation-20260619T-stage-i-leakage-safe-ablation-r2.md](../artifacts/runs/2026-06-19_dingxin-leakage-safe-ablation/report.md)
 - protocol：`leakage_safe_v1`
 - audit_status：`pass`
 - records：sample_count=`111`, view_count=`3`, sortie_count=`2`
@@ -258,7 +260,7 @@ live stable 的两个完成 child run：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_public_adapter_calibration/20260607T-stage-i-evidence-closure-r2-public-adapter/public_adapter_calibration_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md](../artifacts/stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md)
+- 报告：[../artifacts/stage_i/stage-i-public-adapter-calibration-20260607T-stage-i-evidence-closure-r2-public-adapter.md](../artifacts/runs/2026-06-07_public-adapter-calibration/report.md)
 - evidence_layer：`public_adapter_calibration`
 - source_count：`5`
 - row_count：`22`
@@ -277,7 +279,7 @@ best_by_category：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_public_transfer_boundary/20260607T-stage-i-evidence-closure-r2-transfer-boundary/public_transfer_boundary_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md](../artifacts/stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md)
+- 报告：[../artifacts/stage_i/stage-i-public-transfer-boundary-20260607T-stage-i-evidence-closure-r2-transfer-boundary.md](../artifacts/runs/2026-06-07_public-transfer-boundary/report.md)
 - public_mainline_status：`public opt closed`
 
 数据边界：
@@ -334,7 +336,7 @@ best_by_category：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_rigid_body/20260607T-stage-i-rigid-body-r2/rigid_body_ablation_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md)
+- 报告：[../artifacts/stage_i/stage-i-rigid-body-20260607T-stage-i-rigid-body-r2.md](../artifacts/runs/2026-06-07_rigid-body-diagnostics/report.md)
 
 关键 family 指标：
 
@@ -358,7 +360,7 @@ rigid_body 已启用 residual：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_rotation_audit/20260619T-stage-i-rotation-audit-r3-figure-refresh/rigid_body_rotation_audit_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md](../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md)
+- 报告：[../artifacts/stage_i/stage-i-rigid-body-rotation-audit-20260619T-stage-i-rotation-audit-r3-figure-refresh.md](../artifacts/runs/2026-06-19_rotation-audit-figure-refresh/report.md)
 - evidence_layer：`rotation_diagnostics`
 - rotation_enabled：`false`
 - rotation_status：`disabled`
@@ -386,8 +388,8 @@ rigid_body 已启用 residual：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_support/20260607T-stage-i-support-semantic-r2/support_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md)
-- semantic event report：[../artifacts/stage_i/stage-i-semantic-event-support-20260607T-stage-i-semantic-support-r2.md](../artifacts/stage_i/stage-i-semantic-event-support-20260607T-stage-i-semantic-support-r2.md)
+- 报告：[../artifacts/stage_i/stage-i-causal-support-20260607T-stage-i-support-semantic-r2.md](../artifacts/runs/2026-06-07_semantic-support/causal-support.md)
+- semantic event report：[../artifacts/stage_i/stage-i-semantic-event-support-20260607T-stage-i-semantic-support-r2.md](../artifacts/runs/2026-06-07_semantic-event-support/report.md)
 
 语义 support 摘要：
 
@@ -420,7 +422,7 @@ rigid_body 已启用 residual：
 当前入口：
 
 - Summary：`docs/artifacts/assets/stage_i_runtime_inference/20260607T-stage-i-runtime-service-r2/runtime_inference_summary.json`
-- 报告：[../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md)
+- 报告：[../artifacts/stage_i/stage-i-runtime-inference-20260607T-stage-i-runtime-service-r2.md](../artifacts/runs/2026-06-07_runtime-inference-service/report.md)
 - sample_count：`40`
 - replay_mode：`batch`
 - mean_attention_entropy=`1.9059074968099594`
@@ -436,7 +438,7 @@ rigid_body 已启用 residual：
 - Summary：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_service_smoke_summary.json`
 - Schema contract：`docs/artifacts/assets/stage_i_runtime_service/20260613T-stage-i-runtime-service-smoke-r2-contract/runtime_schema_contract.json`
 - canonical payload route：已验证 `canonical_feature_schema_status=exact`；raw JSONL 已按 `docs/artifacts/cleanup/20260619-lfs-docs-prune.md` 从 docs/LFS 清理，当前引用以 `runtime_schema_contract.json` 和 r2 contract 报告为准。
-- 报告：[../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md)
+- 报告：[../artifacts/stage_i/stage-i-runtime-service-smoke-20260613T-stage-i-runtime-service-smoke-r2-contract.md](../artifacts/runs/2026-06-13_runtime-schema-contract/report.md)
 - checkpoint：远程开发机 local-only / 可重新生成资产；repo 内保留 `multitask_summary.json`、runtime schema contract 和报告作为可引用证据。
 - input_sample_count：`37`
 - view_count：`1`
@@ -484,7 +486,7 @@ Native 缺失的 vehicle measurement groups：
 
 当前图表入口：
 
-- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md)
+- 图表报告：[../artifacts/stage_i/stage-i-thesis-materials-20260621T-stage-i-thesis-materials-r6-report-figure-polish.md](../artifacts/runs/2026-06-21_thesis-materials-report-figures/report.md)
 - figure manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_manifest.json`
 - table manifest：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/table_manifest.json`
 - QA 清单：`docs/artifacts/assets/stage_i_thesis_figures/20260621T-stage-i-thesis-materials-r6-report-figure-polish/figure_quality_audit.csv`
@@ -523,7 +525,7 @@ Native 缺失的 vehicle measurement groups：
 
 当前历史中期证据包：
 
-- 报告：[../artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](../artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md)
+- 报告：[../artifacts/stage_i/stage-i-midterm-20260607T-stage-i-midterm-r3.md](../artifacts/runs/2026-06-07_midterm-evidence-pack/report.md)
 - 资产目录：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/`
 - Manifest：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_evidence_manifest.json`
 - Figure index：`docs/artifacts/assets/stage_i_midterm/20260607T-stage-i-midterm-r3/midterm_figure_index.csv`

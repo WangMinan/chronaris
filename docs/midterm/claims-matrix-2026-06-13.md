@@ -1,5 +1,7 @@
 # Chronaris 中期 Claims Matrix
 
+> 历史写作快照：正文中的“当前”指文内原始更新日期；不替代[九月当前状态](../STATE.md)与[冻结实验复核](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
+
 更新时间：2026-07-02
 
 本矩阵用于写中期报告、PPT 和后续论文综述时核对表述强度。每条 claim 都应同时满足：有证据路径、有证据层级、有禁止表述。

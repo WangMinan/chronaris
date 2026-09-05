@@ -2,7 +2,7 @@
 
 更新时间：2026-07-03
 
-本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
+本目录保存当前 Stage I 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../../../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
 ## 当前主入口
 

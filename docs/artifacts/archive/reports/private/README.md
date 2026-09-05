@@ -2,7 +2,7 @@
 
 更新时间：2026-06-07
 
-本目录保存鼎新真实数据 benchmark 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
+本目录保存鼎新真实数据 benchmark 报告集合；当前 AI coding 入口请先看 [../ARTIFACTS.md](../../../ARTIFACTS.md) 与 [../stage/stage-i/README.md](../stage/stage-i/README.md)。
 
 ## 当前主入口
 
@@ -11,7 +11,7 @@
 
 当前 `chronaris_opt` package：
 
-- [../assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](../assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json)
+- [../assets/stage_i_private/20260607T-stage-i-private-opt-package-r2/optimized_candidate_package.json](../../../runs/2026-06-07_dingxin-opt-package/optimized_candidate_package.json)
 
 ## 引用规则
 

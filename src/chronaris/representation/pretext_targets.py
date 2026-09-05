@@ -8,6 +8,7 @@ from typing import Sequence
 import torch
 
 from chronaris.representation.augmentation_apply import AppliedAugmentationBatch
+from chronaris.representation.temporal_coalescing import _feature_age
 from chronaris.representation.contracts import (
     DualStreamObservationBatch,
     RepresentationContractError,
@@ -289,27 +290,6 @@ def _shift_and_compact_vehicle(batch, shifts, *, duration_s):
         vehicle_point_mask=features.any(dim=-1),
         vehicle_feature_mask=features,
         vehicle_observation_age_s=ages,
-    )
-
-
-def _feature_age(times, feature_mask, *, dtype):
-    observed_times = torch.where(
-        feature_mask,
-        times.unsqueeze(-1),
-        torch.full(
-            feature_mask.shape,
-            -torch.inf,
-            dtype=times.dtype,
-            device=times.device,
-        ),
-    )
-    last_seen = torch.cummax(observed_times, dim=0).values
-    available = torch.isfinite(last_seen)
-    ages = (times.unsqueeze(-1) - last_seen).clamp_min(0).to(dtype)
-    return torch.where(
-        available,
-        ages,
-        torch.full_like(ages, torch.inf),
     )
 
 

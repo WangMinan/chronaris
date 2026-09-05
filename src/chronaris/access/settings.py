@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -131,3 +132,46 @@ def _load_java_properties(properties_path: str | Path) -> dict[str, str]:
         properties[key.strip()] = value.strip()
 
     return properties
+
+
+def _extract_local_secret(text: str, key: str) -> str:
+    matched = re.search(rf"^\+?\s*{re.escape(key)}:\s*(.+)$", text, re.MULTILINE)
+    if not matched:
+        raise RuntimeError(f"Missing secret key in docs/SECRETS.md: {key}")
+    return matched.group(1).strip()
+
+
+def resolve_influx_settings(
+    secrets_path: str | Path, *, default_url: str | None = None,
+) -> InfluxSettings:
+    """Prefer environment values; read only missing fields from the local file."""
+    url = os.environ.get("CHRONARIS_INFLUX_URL") or default_url
+    org = os.environ.get("CHRONARIS_INFLUX_ORG")
+    token = os.environ.get("CHRONARIS_INFLUX_TOKEN")
+    if not (url and org and token):
+        text = Path(secrets_path).read_text(encoding="utf-8")
+        url = url or _extract_local_secret(text, "influxdb.url")
+        org = org or _extract_local_secret(text, "influxdb.org")
+        token = token or _extract_local_secret(text, "influxdb.token")
+    return InfluxSettings(url=url, org=org, token_env=None, token_value=token)
+
+
+def resolve_mysql_settings(
+    database: str, secrets_path: str | Path, *,
+    default_host: str | None = None, default_port: int | None = None,
+) -> MySQLSettings:
+    """Resolve metadata credentials while retaining each caller's address defaults."""
+    host = os.environ.get("CHRONARIS_MYSQL_HOST") or default_host
+    port = os.environ.get("CHRONARIS_MYSQL_PORT") or default_port
+    user = os.environ.get("CHRONARIS_MYSQL_USER")
+    password = os.environ.get("CHRONARIS_MYSQL_PASSWORD")
+    if not (host and port and user and password):
+        text = Path(secrets_path).read_text(encoding="utf-8")
+        host = host or _extract_local_secret(text, "host")
+        port = port or _extract_local_secret(text, "port")
+        user = user or _extract_local_secret(text, "username")
+        password = password or _extract_local_secret(text, "password")
+    return MySQLSettings(
+        host=host, port=int(port), database=database, user=user,
+        password_env=None, password_value=password,
+    )

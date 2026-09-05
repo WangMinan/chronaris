@@ -167,24 +167,24 @@
 
 ### Train/Validation Total Loss
 
-![Train/Validation Total Loss](assets/task-eval-rigid-body-rigid-body-20260607T-task-eval-rigid-body-r2/train_validation_total_loss.png)
+![Train/Validation Total Loss](../../archive/reports/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/train_validation_total_loss.png)
 
 ### Train/Validation Alignment Loss
 
-![Train/Validation Alignment Loss](assets/task-eval-rigid-body-rigid-body-20260607T-task-eval-rigid-body-r2/train_validation_alignment_loss.png)
+![Train/Validation Alignment Loss](../../archive/reports/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/train_validation_alignment_loss.png)
 
 ### Per-Stream Reconstruction Loss
 
-![Per-Stream Reconstruction Loss](assets/task-eval-rigid-body-rigid-body-20260607T-task-eval-rigid-body-r2/reconstruction_stream_loss.png)
+![Per-Stream Reconstruction Loss](../../archive/reports/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/reconstruction_stream_loss.png)
 
 ### Train/Validation Physics Loss
 
-![Train/Validation Physics Loss](assets/task-eval-rigid-body-rigid-body-20260607T-task-eval-rigid-body-r2/train_validation_physics_loss.png)
+![Train/Validation Physics Loss](../../archive/reports/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/train_validation_physics_loss.png)
 
 ### Selected Physics Constraint Components
 
-![Selected Physics Constraint Components](assets/task-eval-rigid-body-rigid-body-20260607T-task-eval-rigid-body-r2/constraint_component_breakdown.png)
+![Selected Physics Constraint Components](../../archive/reports/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/constraint_component_breakdown.png)
 
 ### Reference Projection Cosine
 
-![Reference Projection Cosine](assets/task-eval-rigid-body-rigid-body-20260607T-task-eval-rigid-body-r2/reference_projection_cosine.png)
+![Reference Projection Cosine](../../archive/reports/stage_i/assets/stage-i-rigid-body-rigid-body-20260607T-stage-i-rigid-body-r2/reference_projection_cosine.png)

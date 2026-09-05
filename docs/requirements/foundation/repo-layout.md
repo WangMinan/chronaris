@@ -1,6 +1,6 @@
 # Repo Layout
 
-更新时间：2026-06-07
+更新时间：2026-09-05
 
 ## 1. 分层原则
 
@@ -34,7 +34,8 @@ chronaris/
 │  │  └─ 选题报告与基金申请书/
 │  ├─ artifacts/
 │  │  ├─ ARTIFACTS.md
-│  │  ├─ stage/
+│  │  ├─ runs/
+│  │  ├─ archive/
 │  │  └─ mid-term/
 │  └─ review/
 │     ├─ REVIEW.md
@@ -67,7 +68,7 @@ chronaris/
 
 ### `docs/artifacts`
 
-产物入口。`ARTIFACTS.md` 负责索引报告、图、CSV、JSON、checkpoint、manifest。`stage/` 按阶段组织产物，`mid-term/` 保存中期答辩证据包。
+产物入口。`ARTIFACTS.md` 负责索引报告、图、CSV、JSON、checkpoint、manifest。`runs/` 按日期和任务组织紧凑产物，`archive/` 保留早期报告与资产，`mid-term/` 保存中期答辩证据包。
 
 ### `docs/review`
 
@@ -116,6 +117,18 @@ Code review 产物入口。按阶段保存 review 范围、发现、修复状态
 - 事件抽取。
 - 因果掩码。
 - 非对称跨模态融合。
+
+### `src/chronaris/modeling` 与 `representation`
+
+- `modeling/fusion_encoders`：六方法的统一编码器与当前连续融合适配。
+- `modeling/training`：候选筛选、冻结预训练和检查点恢复。
+- `representation`：观测批次、有效掩码、归一化、增强与标准化表示合同。
+- `models/alignment` 与 `models/fusion` 提供可复用基础组件，当前主线通过编码器组装使用。
+
+### `src/chronaris/feature_export` 与 `evidence`
+
+- `feature_export`：早期特征导出流程和产物读取。
+- `evidence`：证据汇总与历史材料生成；当前论文评价编排位于 `evaluation/application_tasks`。
 
 ### `src/chronaris/features`
 

@@ -8,12 +8,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.evidence.case_study import (
+from chronaris.evidence.case_study import (  # noqa: E402
     StageICaseStudyConfig,
     run_task_eval_case_study,
     write_task_eval_case_study_report,

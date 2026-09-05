@@ -1,5 +1,7 @@
 # LLM 预处理对比 LLM 预处理对比实验计划
 
+> 历史写作快照：正文中的“当前”指文内原始更新日期；不替代[九月当前状态](../STATE.md)与[冻结实验复核](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
+
 更新时间：2026-06-14
 
 本计划用于承接 DeepSeek 在线时序数据预处理之后的下一轮实验。目标不是证明 LLM 替代人工标注，也不是把 LLM 变成核心因果模块；目标是用对比实验说明：把 LLM preprocessing context 接入现有 Stage I 数据融合管线后，在哪些环节带来了可审计、可解释、可复核的增量价值。

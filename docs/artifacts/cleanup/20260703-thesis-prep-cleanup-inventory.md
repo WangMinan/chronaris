@@ -1,5 +1,7 @@
 # 仓库收敛清理 thesis-prep cleanup inventory
 
+> 本文记录清理前的历史清单；代码块中的原路径仅作当时输出留档，当前可引用产物见[产物索引](../ARTIFACTS.md)。
+
 - generated_at_utc: 2026-07-03T13:27:29.872334Z
 - scope: pre-cleanup audit only; no tracked artifact deleted before this inventory was written
 - backup_root: `/home/wangminan/projects/chronaris-local-artifacts/cleanup-20260703/`

@@ -13,6 +13,7 @@ from chronaris.representation.augmentation import (
     AugmentationPolicy,
     AugmentationRealization,
 )
+from chronaris.representation.temporal_coalescing import _feature_age
 from chronaris.representation.contracts import (
     DualStreamObservationBatch,
     RepresentationContractError,
@@ -284,29 +285,6 @@ def _stable_time_order(
         )
     )
     return torch.as_tensor(order, dtype=torch.long, device=timestamps.device)
-
-
-def _feature_age(times, feature_mask, *, dtype):
-    result = torch.full(
-        feature_mask.shape,
-        torch.inf,
-        dtype=dtype,
-        device=feature_mask.device,
-    )
-    last_seen = torch.full(
-        (feature_mask.shape[-1],),
-        -torch.inf,
-        dtype=times.dtype,
-        device=times.device,
-    )
-    for point_index, time_s in enumerate(times):
-        observed = feature_mask[point_index]
-        last_seen = torch.where(observed, time_s, last_seen)
-        available = torch.isfinite(last_seen)
-        result[point_index, available] = (
-            time_s - last_seen[available]
-        ).clamp_min(0).to(dtype)
-    return result
 
 
 def _context_duration_s(query_timestamps_s: torch.Tensor) -> float:

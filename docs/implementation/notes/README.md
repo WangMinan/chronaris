@@ -1,10 +1,12 @@
 # Implementation Notes
 
+本目录保存按日期记录的历史计划与阶段复核，不作为自动执行队列。当前执行入口是[任务页](../TASKS.md)，当前研究判断见[状态页](../../STATE.md)。
+
 更新时间：2026-07-15
 
 本目录保存旧 `docs/implementation/notes` 的计划、阶段收口记录和必要进度笔记。当前主动执行入口已经统一到 [../TASKS.md](../TASKS.md)。
 
-## 当前仍需要引用的笔记
+## 历史计划与收口笔记
 
 - [coding-roadmap.md](coding-roadmap.md)：历史完整阶段路线图。
 - [stage-i-thesis-mainline-roadmap-2026-05-15.md](stage-i-thesis-mainline-roadmap-2026-05-15.md)：Stage I 论文主线重构路线图。

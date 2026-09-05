@@ -4,30 +4,30 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-import re
 import sys
 from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 SRC = REPO_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from chronaris.access import (
+from chronaris.access.settings import (  # noqa: E402
+    resolve_influx_settings,
+    resolve_mysql_settings,
+)
+from chronaris.access import (  # noqa: E402
     InfluxCliRunner,
     InfluxDistinctMeasurementReader,
-    InfluxSettings,
     MySQLCliRunner,
     MySQLCollectTaskReader,
     MySQLFlightTaskReader,
-    MySQLSettings,
     MySQLStorageAnalysisReader,
     StageHProfileResolver,
 )
-from chronaris.modeling.training.backbone_train import (
+from chronaris.modeling.training.backbone_train import (  # noqa: E402
     StageIBackboneTrainConfig,
     collect_task_eval_backbone_samples,
     run_task_eval_backbone_train,
@@ -52,47 +52,6 @@ DEFAULT_PREVIEW_SCOPES = {
 
 def _utc(ts: str) -> datetime:
     return datetime.fromisoformat(ts.replace("Z", "+00:00"))
-
-
-def _extract_secret(md_text: str, key: str) -> str:
-    pattern = re.compile(rf"^\+?\s*{re.escape(key)}:\s*(.+)$", re.MULTILINE)
-    matched = pattern.search(md_text)
-    if not matched:
-        raise RuntimeError(f"Missing secret key in docs/SECRETS.md: {key}")
-    return matched.group(1).strip()
-
-
-def _resolve_influx_settings() -> InfluxSettings:
-    url = os.environ.get("CHRONARIS_INFLUX_URL")
-    org = os.environ.get("CHRONARIS_INFLUX_ORG")
-    token = os.environ.get("CHRONARIS_INFLUX_TOKEN")
-    if not (url and org and token):
-        secrets_text = (REPO_ROOT / "docs" / "SECRETS.md").read_text(encoding="utf-8")
-        url = url or _extract_secret(secrets_text, "influxdb.url")
-        org = org or _extract_secret(secrets_text, "influxdb.org")
-        token = token or _extract_secret(secrets_text, "influxdb.token")
-    return InfluxSettings(url=url, org=org, token_env=None, token_value=token)
-
-
-def _resolve_mysql_settings(database: str) -> MySQLSettings:
-    host = os.environ.get("CHRONARIS_MYSQL_HOST")
-    port = os.environ.get("CHRONARIS_MYSQL_PORT")
-    user = os.environ.get("CHRONARIS_MYSQL_USER")
-    password = os.environ.get("CHRONARIS_MYSQL_PASSWORD")
-    if not (host and port and user and password):
-        secrets_text = (REPO_ROOT / "docs" / "SECRETS.md").read_text(encoding="utf-8")
-        host = host or _extract_secret(secrets_text, "host")
-        port = port or _extract_secret(secrets_text, "port")
-        user = user or _extract_secret(secrets_text, "username")
-        password = password or _extract_secret(secrets_text, "password")
-    return MySQLSettings(
-        host=host,
-        port=int(port),
-        database=database,
-        user=user,
-        password_env=None,
-        password_value=password,
-    )
 
 
 def _default_run_id() -> str:
@@ -131,8 +90,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     sortie_ids = tuple(args.sortie_ids or DEFAULT_SORTIES)
-    influx_settings = _resolve_influx_settings()
-    mysql_settings = _resolve_mysql_settings(args.mysql_database)
+    influx_settings = resolve_influx_settings(REPO_ROOT / "docs/SECRETS.md")
+    mysql_settings = resolve_mysql_settings(args.mysql_database, REPO_ROOT / "docs/SECRETS.md")
     mysql_runner = MySQLCliRunner(mysql_settings, mysql_binary=args.mysql_binary)
     influx_runner = InfluxCliRunner(influx_settings, influx_binary=args.influx_binary)
 

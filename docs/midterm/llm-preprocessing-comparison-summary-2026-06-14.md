@@ -1,5 +1,7 @@
 # LLM preprocessing 对比 对比实验结果摘要
 
+> 历史写作快照：正文中的“当前”指文内原始更新日期；不替代[九月当前状态](../STATE.md)与[冻结实验复核](../review/stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)。
+
 更新时间：2026-06-14
 
 ## 一句话结论

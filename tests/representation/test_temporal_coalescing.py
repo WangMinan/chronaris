@@ -49,6 +49,19 @@ def _batch():
     return collate_observation_samples([sample])
 
 
+def test_feature_age_preserves_missing_features_and_repeated_timestamps():
+    from chronaris.representation.temporal_coalescing import _feature_age
+
+    times = torch.tensor([0.0, 1.0, 1.0, 3.0], dtype=torch.float64)
+    mask = torch.tensor([[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 0]], dtype=torch.bool)
+    expected = torch.tensor([
+        [torch.inf, torch.inf, torch.inf], [0.0, torch.inf, torch.inf],
+        [0.0, 0.0, torch.inf], [2.0, 2.0, torch.inf],
+    ])
+    assert torch.equal(_feature_age(times, mask, dtype=torch.float32), expected)
+    assert _feature_age(times[:0], mask[:0], dtype=torch.float32).shape == (0, 3)
+
+
 def test_temporal_coalescing_uses_last_event_time_without_future_advance() -> None:
     batch = _batch()
 

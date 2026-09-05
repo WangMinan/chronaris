@@ -13,9 +13,12 @@ from chronaris.models.alignment.physics_features import (
     build_physiology_feature_groups,
     build_vehicle_feature_groups,
 )
-from chronaris.models.alignment.physics_residuals import build_rigid_body_vehicle_residuals
+from chronaris.models.alignment.physics_residuals import (
+    _first_derivative,
+    _masked_huber_loss,
+    build_rigid_body_vehicle_residuals,
+)
 from chronaris.models.alignment.physics_state_mapping import (
-    RigidBodyPhysicsDiagnostics,
     build_rigid_body_state_mapping,
     inspect_rigid_body_physics,
 )
@@ -632,26 +635,6 @@ def _aggregate_selected_features(
     return torch.where(has_valid, aggregated, torch.zeros_like(aggregated)), has_valid
 
 
-def _first_derivative(
-    values: torch.Tensor,
-    times_s: torch.Tensor,
-    valid_mask: torch.Tensor,
-    *,
-    epsilon: float = 1e-6,
-) -> tuple[torch.Tensor, torch.Tensor]:
-    if values.ndim != 2:
-        raise ValueError("values must have shape [B, T].")
-    if times_s.shape != values.shape:
-        raise ValueError("times_s must match values shape.")
-    if valid_mask.shape != values.shape:
-        raise ValueError("valid_mask must match values shape.")
-    delta_value = values[:, 1:] - values[:, :-1]
-    delta_time = times_s[:, 1:] - times_s[:, :-1]
-    derivative = delta_value / torch.clamp(delta_time, min=epsilon)
-    derivative_valid = valid_mask[:, 1:] & valid_mask[:, :-1] & (delta_time > 0)
-    return derivative, derivative_valid
-
-
 def _second_derivative_smoothness_loss(
     values: torch.Tensor,
     times_s: torch.Tensor,
@@ -689,22 +672,6 @@ def _masked_mean_squared_error(predictions: torch.Tensor, targets: torch.Tensor,
     if torch.is_nonzero(valid_count <= 0):
         return predictions.new_zeros(())
     return (((predictions - targets) ** 2) * weighted_mask).sum() / valid_count
-
-
-def _masked_huber_loss(errors: torch.Tensor, valid_mask: torch.Tensor, *, delta: float) -> torch.Tensor:
-    if delta <= 0:
-        raise ValueError("delta must be positive.")
-    if errors.shape != valid_mask.shape:
-        raise ValueError("valid_mask must match errors shape.")
-    weighted_mask = valid_mask.to(dtype=errors.dtype)
-    valid_count = weighted_mask.sum()
-    if torch.is_nonzero(valid_count <= 0):
-        return errors.new_zeros(())
-    abs_error = errors.abs()
-    quadratic = torch.clamp(abs_error, max=delta)
-    linear = abs_error - quadratic
-    huber = 0.5 * (quadratic**2) + (delta * linear)
-    return (huber * weighted_mask).sum() / valid_count
 
 
 def _denormalize_if_available(values: torch.Tensor, mean: torch.Tensor | None, std: torch.Tensor | None) -> torch.Tensor:

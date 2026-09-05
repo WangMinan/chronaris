@@ -1,15 +1,11 @@
-# Stage I Artifacts
+# 历史研究产物入口
 
-Stage I 包含历史公开 benchmark、鼎新真实数据弱监督任务证据、论文 support、中期证据和 runtime/demo 产物。
+本目录保留早期公开基准、鼎新弱监督任务、组件诊断和运行演示的报告与兼容入口。文中阶段名称与候选名称属于历史记录，当前研究状态见[状态页](../../../../../STATE.md)。
 
-入口：
+- `reports/`：历史阶段报告。
+- `private-reports/`：鼎新历史模型与任务报告。
+- `assets-stage-i/`：早期模型对比资产。
+- `assets-private/`：鼎新历史候选资产。
+- `assets-runtime-demo/`：早期运行演示资产。
 
-- `reports/`：Stage I Markdown 报告。
-- `private-reports/`：鼎新真实数据 benchmark 与 `chronaris_opt` Markdown 报告。
-- `assets-stage-i/`：Stage I Phase 0/1/2/3、deep comparison 等机器资产。
-- `assets-private/`：鼎新真实数据 benchmark 与 package 机器资产。
-- `assets-support/`：alignment / causal / ablation support 机器资产。
-- `assets-public-mainline/`：public mainline 机器资产。
-- `assets-runtime-demo/`：runtime/demo 机器资产。
-
-引用时必须区分 `historical closure`、`public adapter evidence`、`private proxy evidence` 和 `thesis weak-label evidence`。
+原公开主线与语义支撑资产目录已经迁移或清理，不再保留指向本地忽略目录的空兼容入口。现有公开数据与语义支撑证据由[产物索引](../../../../ARTIFACTS.md)导航。
