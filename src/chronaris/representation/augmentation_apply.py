@@ -90,7 +90,7 @@ def apply_augmentation_realizations(
             )
         if plan.dropped_modality not in {None, "physiology", "vehicle"}:
             raise RepresentationContractError("invalid dropped modality")
-    context_duration_s = _context_duration_s(batch.query_timestamps_s)
+    context_duration_s = batch.context_durations_s.tolist()
     physiology = _augment_stream(
         values=batch.physiology_values,
         timestamps=batch.physiology_timestamps_s,
@@ -217,7 +217,7 @@ def _augment_stream(
                 device=retained_times.device,
             )
             inside = (transformed_times >= 0.0) & (
-                transformed_times < context_duration_s
+                transformed_times < context_duration_s[sample_index]
             )
             retained_indices = retained_indices[inside]
             transformed_times = transformed_times[inside]
@@ -285,15 +285,3 @@ def _stable_time_order(
         )
     )
     return torch.as_tensor(order, dtype=torch.long, device=timestamps.device)
-
-
-def _context_duration_s(query_timestamps_s: torch.Tensor) -> float:
-    if query_timestamps_s.shape[1] <= 1:
-        raise RepresentationContractError("query axis is too short for augmentation")
-    step = query_timestamps_s[:, 1:] - query_timestamps_s[:, :-1]
-    if not torch.allclose(step, step[:, :1], atol=1e-9, rtol=1e-9):
-        raise RepresentationContractError("augmentation requires a regular query grid")
-    duration = query_timestamps_s[:, -1] + step[:, -1]
-    if not torch.allclose(duration, duration[:1], atol=1e-9, rtol=1e-9):
-        raise RepresentationContractError("batch context durations differ")
-    return float(duration[0].item())

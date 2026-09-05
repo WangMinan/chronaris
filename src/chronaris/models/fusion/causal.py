@@ -66,6 +66,7 @@ class CausalMaskedCrossModalFusion(nn.Module):
 
         query_states = _maybe_l2_normalize(physiology_states, enabled=self.config.normalize_states)
         key_states = _maybe_l2_normalize(vehicle_states, enabled=self.config.normalize_states)
+        event_strengths = compute_vehicle_event_strengths(vehicle_states)
         event_scores = compute_vehicle_event_scores(vehicle_states)
         if self.config.use_causal_mask:
             causal_mask = build_causal_attention_mask(
@@ -88,7 +89,12 @@ class CausalMaskedCrossModalFusion(nn.Module):
         raw_scores = torch.matmul(query_states, key_states.transpose(-1, -2))
         raw_scores = raw_scores / self.config.attention_temperature
         if self.config.event_bias_weight:
-            raw_scores = raw_scores + (event_scores.unsqueeze(1) * self.config.event_bias_weight)
+            visible = build_causal_attention_mask(
+                inputs.physiology_offsets_s, inputs.vehicle_offsets_s,
+                epsilon_s=self.config.causal_epsilon_s,
+            ) if self.config.use_causal_mask else causal_mask
+            bias = normalize_visible_event_scores(event_strengths, visible)
+            raw_scores = raw_scores + bias * self.config.event_bias_weight
 
         masked_scores = raw_scores.masked_fill(~causal_mask, torch.finfo(raw_scores.dtype).min)
         attention_weights = torch.softmax(masked_scores, dim=-1)
@@ -132,12 +138,6 @@ def build_causal_attention_mask(
         raise ValueError("lag_window_points must be positive when provided.")
 
     mask = vehicle_offsets_s.unsqueeze(1) <= (physiology_offsets_s.unsqueeze(-1) + epsilon_s)
-    if not bool(mask.all(dim=-1).all()):
-        empty_rows = ~mask.any(dim=-1)
-        if bool(empty_rows.any()):
-            first_vehicle = torch.zeros_like(mask)
-            first_vehicle[:, :, 0] = True
-            mask = torch.where(empty_rows.unsqueeze(-1), first_vehicle, mask)
     if lag_window_points is not None:
         visible_rank = mask.to(dtype=torch.int64).cumsum(dim=-1)
         visible_count = mask.sum(dim=-1)
@@ -147,23 +147,48 @@ def build_causal_attention_mask(
     return mask
 
 
-def compute_vehicle_event_scores(vehicle_states: torch.Tensor) -> torch.Tensor:
-    """Compute event salience from adjacent vehicle reference-state changes."""
+def compute_vehicle_event_strengths(
+    vehicle_states: torch.Tensor, valid_mask: torch.Tensor | None = None,
+) -> torch.Tensor:
+    """Return unnormalized adjacent-state changes, without a future-dependent scale."""
 
     if vehicle_states.ndim != 3:
         raise ValueError("vehicle_states must have shape [B, R, D].")
     batch_size, point_count, _ = vehicle_states.shape
     if point_count == 0:
         raise ValueError("vehicle_states must include at least one reference point.")
+    if valid_mask is not None and (
+        valid_mask.shape != vehicle_states.shape[:2] or valid_mask.dtype != torch.bool
+    ):
+        raise ValueError("event validity must be boolean [B,R]")
 
     event_scores = vehicle_states.new_zeros((batch_size, point_count))
     if point_count > 1:
         deltas = vehicle_states[:, 1:, :] - vehicle_states[:, :-1, :]
         event_scores[:, 1:] = torch.linalg.vector_norm(deltas, dim=-1)
+        if valid_mask is not None:
+            event_scores[:, 1:] = event_scores[:, 1:].masked_fill(
+                ~(valid_mask[:, 1:] & valid_mask[:, :-1]), 0,
+            )
+    return event_scores
 
-    max_scores = event_scores.max(dim=-1, keepdim=True).values
-    safe_max_scores = torch.clamp(max_scores, min=torch.finfo(vehicle_states.dtype).eps)
-    return torch.where(max_scores > 0, event_scores / safe_max_scores, event_scores)
+
+def normalize_visible_event_scores(strengths: torch.Tensor, visible: torch.Tensor) -> torch.Tensor:
+    """Scale every query's visible event history by that history's maximum."""
+    if strengths.ndim != 2 or visible.ndim != 3 or visible.dtype != torch.bool:
+        raise ValueError("event strengths and visibility require [B,R] and boolean [B,Q,R]")
+    if (visible.shape[0], visible.shape[-1]) != strengths.shape:
+        raise ValueError("event visibility does not match strengths")
+    scores = strengths[:, None, :].expand_as(visible).masked_fill(~visible, 0)
+    scale = scores.amax(dim=-1, keepdim=True).clamp_min(torch.finfo(scores.dtype).eps)
+    return scores / scale
+
+
+def compute_vehicle_event_scores(vehicle_states: torch.Tensor) -> torch.Tensor:
+    """Return a causal per-time salience diagnostic; attention uses query-wise scales."""
+    strengths = compute_vehicle_event_strengths(vehicle_states)
+    scale = strengths.cummax(dim=-1).values.clamp_min(torch.finfo(strengths.dtype).eps)
+    return strengths / scale
 
 
 def attention_entropy(attention_weights: torch.Tensor, causal_mask: torch.Tensor) -> torch.Tensor:

@@ -23,6 +23,7 @@ def build_candidate_checkpoint_payload(**values):
     rng_state = capture_rng_state()
     payload = {
         "format": "chronaris.common_pretraining_checkpoint.v2",
+        "implementation_revision": "causal_fusion_v4",
         "training_status": "running",
         "method_name": values["method_name"],
         "protocol_sha256": values["protocol_hash"],
@@ -96,36 +97,12 @@ def candidate_protocol_hash(**payload) -> str:
 
 def candidate_source_code_sha256() -> str:
     chronaris_root = Path(__file__).parents[2]
-    paths = [
-        Path(__file__),
-        Path(__file__).with_name("candidate_screen.py"),
-        Path(__file__).with_name("candidate_mechanisms.py"),
-        Path(__file__).with_name("pretext.py"),
-        Path(__file__).with_name("pretraining_encoders.py"),
-        chronaris_root / "models/fusion/semantic_event.py",
-    ]
-    paths.extend(sorted((chronaris_root / "modeling/fusion_encoders").glob("*.py")))
-    paths.extend(
-        chronaris_root / "models/alignment" / name
-        for name in (
-            "config.py",
-            "decoders.py",
-            "encoders.py",
-            "ode_cells.py",
-            "prototype.py",
-            "torch_batch.py",
-        )
-    )
-    paths.extend(
-        chronaris_root / "representation" / name
-        for name in (
-            "augmentation.py",
-            "augmentation_apply.py",
-            "contracts.py",
-            "normalization.py",
-            "pretext_targets.py",
-        )
-    )
+    paths = {
+        path
+        for directory in ("modeling/training", "modeling/fusion_encoders", "models/alignment",
+                          "models/fusion", "representation", "dataset")
+        for path in (chronaris_root / directory).rglob("*.py")
+    }
     digest = hashlib.sha256()
     for path in sorted(paths):
         digest.update(str(path.relative_to(chronaris_root)).encode())

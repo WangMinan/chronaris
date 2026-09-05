@@ -1,0 +1,95 @@
+{
+  "source_code_sha256": "0b3eae1cde44650761b48d6eb2e9569648c4129fc4d58283c3c05cc34d8eda40",
+  "source_base_commit": "c79aecb2ed912a818492800bc28f2eb47af1677c",
+  "scope": "engineering_diagnosis_not_v4_training_or_task_metrics",
+  "rows": [
+    {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 15.0,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/chronaris/best.pt",
+      "checkpoint_sha256": "19f6f72863099d14620bbcf80d2ce817d0f86b6bb88d6905876a3a15f54e8af1",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 4.172325134277344e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    },
+    {
+      "seed": 29,
+      "device": "cuda",
+      "cutoff_s": 15.0,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_29/chronaris/best.pt",
+      "checkpoint_sha256": "96f06575fe5547c180b12437df8d6d158bb3525b045f4716c2ea5d8d94f6867f",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 4.76837158203125e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    },
+    {
+      "seed": 43,
+      "device": "cuda",
+      "cutoff_s": 15.0,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_43/chronaris/best.pt",
+      "checkpoint_sha256": "ee1ecb171cb34e145a06dd2739e9b6eabff5c35ca49157cf8fcce5e0ebe50d37",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 4.76837158203125e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    },
+    {
+      "seed": 17,
+      "device": "cpu",
+      "cutoff_s": 15.0,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-03_thesis-simulation-pretraining-v3p2/checkpoints/seed_17/chronaris/best.pt",
+      "checkpoint_sha256": "19f6f72863099d14620bbcf80d2ce817d0f86b6bb88d6905876a3a15f54e8af1",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+        "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 0.0
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    }
+  ]
+}

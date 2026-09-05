@@ -67,14 +67,9 @@ def collate_observation_samples(
     if not samples:
         raise RepresentationContractError("cannot collate an empty sample sequence")
     schema_hash = samples[0].schema.schema_sha256
-    duration_s = samples[0].context_duration_s
     for sample in samples:
         if sample.schema.schema_sha256 != schema_hash:
             raise RepresentationContractError("all collated samples must share one schema")
-        if sample.context_duration_s != duration_s:
-            raise RepresentationContractError(
-                "all collated samples must share one context duration"
-            )
     physiology = _pad_stream(
         [sample.physiology_values for sample in samples],
         [sample.physiology_timestamps_s for sample in samples],
@@ -85,14 +80,11 @@ def collate_observation_samples(
         [sample.vehicle_timestamps_s for sample in samples],
         [sample.vehicle_feature_mask for sample in samples],
     )
-    query = np.linspace(
-        0.0,
-        float(duration_s),
-        num=QUERY_POINT_COUNT,
-        endpoint=False,
-        dtype=np.float64,
-    )
-    query_batch = np.broadcast_to(query, (len(samples), QUERY_POINT_COUNT)).copy()
+    query_batch = np.stack([
+        np.linspace(0.0, sample.context_duration_s, num=QUERY_POINT_COUNT,
+                    endpoint=False, dtype=np.float64)
+        for sample in samples
+    ])
     return DualStreamObservationBatch(
         sample_ids=tuple(sample.sample_id for sample in samples),
         group_ids=tuple(sample.group_id for sample in samples),

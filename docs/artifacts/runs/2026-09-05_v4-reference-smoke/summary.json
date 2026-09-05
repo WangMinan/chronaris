@@ -1,0 +1,209 @@
+{
+  "scope": "engineering_smoke_not_candidate_selection_or_task_metrics",
+  "source_code_sha256": "72f5c2eb6b7fac38d5a4473f710f16ac7c2e57b0ecfbd1d696d3e5598d691496",
+  "checkpoint": "artifacts/application_evaluation/2026-09-05_v4-reference-smoke/chronaris/C/best.pt",
+  "updates": 10,
+  "epochs": 10,
+  "calibration": {
+    "format": "chronaris.kinematic_calibration.v4",
+    "fit_sample_hash": "cc54f2f964f9a549bb90c11abcbe273854fd0200be3fb1de0869231529b82edb",
+    "fit_sample_ids": [
+      "g1_state_space__train_profile_000__trajectory_000__seed_100000__clean_asynchronous::context_000.000",
+      "g1_state_space__train_profile_004__trajectory_024__seed_100024__clean_asynchronous::context_000.000",
+      "g1_state_space__train_profile_008__trajectory_048__seed_100048__clean_asynchronous::context_000.000",
+      "g1_state_space__train_profile_012__trajectory_072__seed_100072__clean_asynchronous::context_000.000"
+    ],
+    "feature_names": [
+      "vehicle.speed_mps",
+      "vehicle.altitude_m",
+      "vehicle.vertical_speed_mps",
+      "vehicle.roll_rad",
+      "vehicle.pitch_rad",
+      "vehicle.yaw_rad",
+      "vehicle.roll_rate_rps",
+      "vehicle.pitch_rate_rps",
+      "vehicle.yaw_rate_rps",
+      "vehicle.longitudinal_acc_mps2",
+      "vehicle.lateral_acc_mps2",
+      "vehicle.normal_load_g"
+    ],
+    "center": [
+      250.63446044921875,
+      6003.54638671875,
+      -0.36818230152130127,
+      -0.002206855220720172,
+      -0.008792126551270485,
+      -0.008198349736630917,
+      -0.0010946575785055757,
+      -0.0002595580299384892,
+      0.000168434256920591,
+      0.0021202880889177322,
+      -0.013269645161926746,
+      0.9975101351737976
+    ],
+    "scale": [
+      2.2265167236328125,
+      60.1845703125,
+      1.3640391826629639,
+      0.0776268020272255,
+      0.03590589761734009,
+      0.0663180723786354,
+      0.018057141453027725,
+      0.017931364476680756,
+      0.01937435194849968,
+      0.13691169023513794,
+      0.13078123331069946,
+      0.05662423372268677
+    ],
+    "relations": [
+      {
+        "source": "vehicle.speed_mps",
+        "target": "vehicle.longitudinal_acc_mps2",
+        "component": "vehicle_rigid_body_translation",
+        "unit": "m/s^2",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 1.47909696393749
+      },
+      {
+        "source": "vehicle.altitude_m",
+        "target": "vehicle.vertical_speed_mps",
+        "component": "vehicle_rigid_body_vertical",
+        "unit": "m/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 64.82654954367618
+      },
+      {
+        "source": "vehicle.roll_rad",
+        "target": "vehicle.roll_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.2241940370748048
+      },
+      {
+        "source": "vehicle.pitch_rad",
+        "target": "vehicle.pitch_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.12991319225701814
+      },
+      {
+        "source": "vehicle.yaw_rad",
+        "target": "vehicle.yaw_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.17332758758642763
+      }
+    ],
+    "unavailable_relations": []
+  },
+  "causality": {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 15.0,
+    "checkpoint_path": "artifacts/application_evaluation/2026-09-05_v4-reference-smoke/chronaris/C/best.pt",
+    "checkpoint_sha256": "a788e51bb89911e0618f1c609026858e5f6a7b7ff693f90265a7c1600a68563f",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+    "sample_ids": [
+      "g1_state_space__validation_profile_000__trajectory_000__seed_200000__clean_asynchronous::context_000.000",
+      "g1_state_space__validation_profile_000__trajectory_001__seed_200001__clean_asynchronous::context_000.000",
+      "g1_state_space__validation_profile_000__trajectory_002__seed_200002__clean_asynchronous::context_000.000",
+      "g1_state_space__validation_profile_000__trajectory_003__seed_200003__clean_asynchronous::context_000.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 4.76837158203125e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true
+  },
+  "elapsed_s": 105.34818679187447,
+  "last_validation": {
+    "method_name": "chronaris",
+    "candidate_id": "C",
+    "epoch": 10,
+    "train_losses": {
+      "masked_reconstruction": 0.2692417800426483,
+      "short_horizon_prediction": 0.25306838750839233,
+      "lag_discrimination": 0.7143995761871338
+    },
+    "validation_losses": {
+      "masked_reconstruction": 0.27905353903770447,
+      "short_horizon_prediction": 0.2805577516555786,
+      "lag_discrimination": 0.6994040608406067
+    },
+    "mechanism_validation": {
+      "weighted_total": 0.5639215428382158,
+      "terms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "status": "active",
+          "count": 280,
+          "weight": 0.2,
+          "raw_loss": 0.5183242559432983,
+          "weighted_loss": 0.10366485267877579,
+          "reason": null
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "status": "active",
+          "count": 3,
+          "weight": 0.05,
+          "raw_loss": 0.5702459812164307,
+          "weighted_loss": 0.028512299060821533,
+          "reason": null
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "status": "active",
+          "count": 280,
+          "weight": 0.1,
+          "raw_loss": 0.10328003764152527,
+          "weighted_loss": 0.010328004136681557,
+          "reason": null
+        },
+        {
+          "term_name": "observation_anchor",
+          "status": "active",
+          "count": 13043,
+          "weight": 1.0,
+          "raw_loss": 0.25981390476226807,
+          "weighted_loss": 0.25981390476226807,
+          "reason": null
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "status": "active",
+          "count": 4,
+          "weight": 0.1,
+          "raw_loss": 1.6160247325897217,
+          "weighted_loss": 0.16160248219966888,
+          "reason": null
+        }
+      ],
+      "explicit_time_shift_accuracy": 0.25,
+      "event_pair_positive_similarity": null,
+      "event_pair_negative_similarity": null,
+      "event_pair_recall_at_1": null,
+      "event_pair_count": 0
+    },
+    "public_selection_loss": 0.9484387654811144,
+    "improved": true,
+    "epochs_without_improvement": 0,
+    "mean_gradient_norm_before_clip": 0.9232040643692017
+  }
+}

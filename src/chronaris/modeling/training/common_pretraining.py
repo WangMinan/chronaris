@@ -210,6 +210,7 @@ def load_common_pretraining_checkpoint(
     path: str | Path,
     *,
     device: str | torch.device = "cpu",
+    allow_legacy_implementation: bool = False,
 ):
     payload = _load_checkpoint_payload(path, device=device)
     if payload.get("training_status") != "completed":
@@ -217,6 +218,11 @@ def load_common_pretraining_checkpoint(
     if bool(payload.get("label_used_for_encoder_training")):
         raise RepresentationContractError("pretraining checkpoint used downstream labels")
     method_name = str(payload["method_name"])
+    if method_name == "chronaris" and payload.get("implementation_revision") != "causal_fusion_v4" and not allow_legacy_implementation:
+        raise RepresentationContractError(
+            "legacy Chronaris weights require their frozen source tag; "
+            "set allow_legacy_implementation=True only for an explicit v4 weight-migration diagnostic"
+        )
     physiology_names = tuple(payload["physiology_feature_names"])
     vehicle_names = tuple(payload["vehicle_feature_names"])
     field_labels = tuple(tuple(value) for value in payload["vehicle_field_labels"])
@@ -244,6 +250,8 @@ def load_common_pretraining_checkpoint(
         chronaris_ode_method=chronaris_ode_method,
         chronaris_semantic_event_enabled=chronaris_semantic_event_enabled,
         chronaris_learnable_semantic_queries=chronaris_learnable_semantic_queries,
+        chronaris_physics_calibration=backbone_config.get("physics_calibration"),
+        chronaris_physics_weight=float(backbone_config.get("physics_weight", 0.1)),
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(

@@ -40,6 +40,9 @@ def export_finetuned_application_representations(
         )
     if payload.get("label_used_for_encoder_training") is not True:
         raise RepresentationContractError("fine-tuned checkpoint must declare label use")
+    expected_roles = {key: list(value) for key, value in role_sample_ids.items()}
+    if payload.get("role_sample_ids") != expected_roles:
+        raise RepresentationContractError("fine-tuned export role lineage changed")
     model.load_state_dict(payload["model_state_dict"], strict=True)
     model.eval()
     checkpoint_hash = sha256_file(checkpoint_path)
@@ -50,22 +53,25 @@ def export_finetuned_application_representations(
         for offset in range(0, len(ids), batch_size):
             raw = select_observation_batch(batch, ids[offset : offset + batch_size])
             with torch.inference_mode():
-                sequence = model.encode(raw).detach().cpu()
-            chunks.append((raw, sequence))
-        sequence = torch.cat([value for _raw, value in chunks], dim=0)
-        raw_ids = tuple(value for raw, _value in chunks for value in raw.sample_ids)
+                sequence, valid = model.encode_with_mask(raw)
+                sequence = sequence.masked_fill(~valid.unsqueeze(-1), 0).detach().cpu()
+                valid = valid.detach().cpu()
+            chunks.append((raw, sequence, valid))
+        sequence = torch.cat([value for _raw, value, _mask in chunks], dim=0)
+        valid = torch.cat([mask for _raw, _value, mask in chunks], dim=0)
+        raw_ids = tuple(value for raw, _value, _mask in chunks for value in raw.sample_ids)
         source_hashes = tuple(
-            value for raw, _value in chunks for value in raw.source_sample_hashes
+            value for raw, _value, _mask in chunks for value in raw.source_sample_hashes
         )
         timestamps = torch.cat(
-            [raw.query_timestamps_s for raw, _value in chunks], dim=0
+            [raw.query_timestamps_s for raw, _value, _mask in chunks], dim=0
         )
         output = FusionStreamBatch(
             sample_ids=raw_ids,
             timestamps_s=timestamps,
             sequence_embedding=sequence,
-            valid_mask=torch.ones(sequence.shape[:2], dtype=torch.bool),
-            pooled_embedding=sequence.mean(dim=1),
+            valid_mask=valid,
+            pooled_embedding=sequence.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1),
             method_name=model.method_name,
             fold_id=f"simulation_g1_to_g2_end_to_end__seed_{payload['seed']}",
             checkpoint_sha256=checkpoint_hash,

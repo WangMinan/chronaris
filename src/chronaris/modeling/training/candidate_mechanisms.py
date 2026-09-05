@@ -200,6 +200,7 @@ def evaluate_candidate_mechanisms(
                 ids,
                 epoch=0,
                 global_seed=seed,
+                context_duration_s=normalized.context_durations_s.tolist(),
                 policy=policy,
             )
             augmented = apply_augmentation_realizations(normalized, plans, policy=policy)

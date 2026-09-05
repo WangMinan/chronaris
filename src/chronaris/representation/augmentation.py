@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from dataclasses import asdict, dataclass
+from numbers import Real
 from typing import Mapping, Sequence
 
 import numpy as np
@@ -64,7 +66,7 @@ def build_augmentation_realization(
     """Create one stable realization without accepting a method name."""
 
     resolved = policy or AugmentationPolicy()
-    if not sample_id or epoch < 0 or context_duration_s <= 0:
+    if not sample_id or epoch < 0 or not np.isfinite(context_duration_s) or context_duration_s <= 0:
         raise ValueError("augmentation sample/epoch/context is invalid")
     digest = hashlib.sha256(
         f"{global_seed}\0{epoch}\0{sample_id}".encode("utf-8")
@@ -73,14 +75,14 @@ def build_augmentation_realization(
     generator = np.random.default_rng(seed)
     physiology_duration = float(
         generator.uniform(
-            resolved.block_duration_min_s,
-            resolved.block_duration_max_s,
+            min(resolved.block_duration_min_s, context_duration_s),
+            min(resolved.block_duration_max_s, context_duration_s),
         )
     )
     vehicle_duration = float(
         generator.uniform(
-            resolved.block_duration_min_s,
-            resolved.block_duration_max_s,
+            min(resolved.block_duration_min_s, context_duration_s),
+            min(resolved.block_duration_max_s, context_duration_s),
         )
     )
     modality_draw = float(generator.random())
@@ -92,7 +94,10 @@ def build_augmentation_realization(
         dropped_modality = None
     seeds = generator.integers(0, np.iinfo(np.int32).max, size=4, dtype=np.int64)
     return AugmentationRealization(
-        augmentation_id=hashlib.sha256(digest + b"augmentation.v1").hexdigest(),
+        augmentation_id=hashlib.sha256(digest + json.dumps(
+            {"version": "augmentation.v4", "duration_s": float(context_duration_s),
+             "policy": asdict(resolved)}, sort_keys=True,
+        ).encode()).hexdigest(),
         sample_id=sample_id,
         epoch=int(epoch),
         global_seed=int(global_seed),
@@ -123,18 +128,22 @@ def build_batch_augmentation_realizations(
     *,
     epoch: int,
     global_seed: int,
-    context_duration_s: float = 30.0,
+    context_duration_s: float | Sequence[float] = 30.0,
     policy: AugmentationPolicy | None = None,
 ) -> tuple[AugmentationRealization, ...]:
     if len(set(sample_ids)) != len(sample_ids):
         raise ValueError("augmentation sample IDs must be unique")
+    durations = ((float(context_duration_s),) * len(sample_ids)
+                 if isinstance(context_duration_s, Real) else tuple(context_duration_s))
+    if len(durations) != len(sample_ids):
+        raise ValueError("augmentation durations must match samples")
     return tuple(
         build_augmentation_realization(
             sample_id=sample_id,
             epoch=epoch,
             global_seed=global_seed,
-            context_duration_s=context_duration_s,
+            context_duration_s=duration,
             policy=policy,
         )
-        for sample_id in sample_ids
+        for sample_id, duration in zip(sample_ids, durations, strict=True)
     )

@@ -109,6 +109,17 @@ class DualStreamObservationBatch:
     query_timestamps_s: torch.Tensor
     source_sample_hashes: tuple[str, ...]
 
+    @property
+    def context_durations_s(self) -> torch.Tensor:
+        """Recover each context's exclusive end from its regular reference grid."""
+        step = self.query_timestamps_s[:, 1:] - self.query_timestamps_s[:, :-1]
+        if not torch.allclose(step, step[:, :1], atol=1e-9, rtol=1e-9):
+            raise RepresentationContractError("context duration requires a regular query grid")
+        durations = self.query_timestamps_s[:, -1] + step[:, -1]
+        if not bool((durations > 0).all()):
+            raise RepresentationContractError("context durations must be positive")
+        return durations
+
     def __post_init__(self) -> None:
         batch_size = len(self.sample_ids)
         if batch_size == 0:

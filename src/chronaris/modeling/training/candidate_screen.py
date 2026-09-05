@@ -83,12 +83,16 @@ class CandidateScreenConfig:
     semantic_event_enabled: bool = False
     learnable_semantic_queries: bool = False
     heartbeat_interval_s: float = 60.0
+    physics_calibration: Mapping[str, object] | None = None
+    physics_weight: float = 0.1
 
     def __post_init__(self) -> None:
         if self.max_epochs <= 0 or self.batch_size <= 0 or self.patience <= 0:
             raise ValueError("candidate screen epoch/batch/patience must be positive")
         if self.weight_decay < 0 or self.gradient_clip_norm <= 0:
             raise ValueError("candidate screen optimizer configuration is invalid")
+        if self.physics_weight < 0:
+            raise ValueError("candidate physics weight must be non-negative")
         if self.minimum_delta < 0:
             raise ValueError("candidate screen minimum delta must be non-negative")
         if self.device not in {"cpu", "cuda"}:
@@ -151,6 +155,11 @@ def train_pretext_candidate(
     resume: bool = True,
 ) -> CandidateScreenResult:
     resolved = config or CandidateScreenConfig()
+    if resolved.physics_calibration is not None and (
+        resolved.physics_calibration.get("fit_sample_hash") != normalizer.fit_sample_hash
+        or set(resolved.physics_calibration.get("fit_sample_ids", ())) != set(fold.train_sample_ids)
+    ):
+        raise RepresentationContractError("physics calibration crossed the training fold")
     with _periodic_training_heartbeat(method_name, resolved.heartbeat_interval_s):
         with isolated_training_rng(
             resolved.seed,
@@ -345,6 +354,8 @@ def _train_pretext_candidate(
         chronaris_ode_method=resolved.ode_method,
         chronaris_semantic_event_enabled=resolved.semantic_event_enabled,
         chronaris_learnable_semantic_queries=resolved.learnable_semantic_queries,
+        chronaris_physics_calibration=resolved.physics_calibration,
+        chronaris_physics_weight=resolved.physics_weight,
     ).to(resolved.device)
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,
@@ -445,6 +456,7 @@ def _train_pretext_candidate(
                 sample_ids,
                 epoch=epoch,
                 global_seed=resolved.seed,
+                context_duration_s=normalized.context_durations_s.tolist(),
                 policy=policy,
             )
             augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
@@ -654,16 +666,15 @@ def _train_pretext_candidate(
             augmentation_rows=augmentation_rows,
             selection_weights=PUBLIC_SELECTION_WEIGHTS,
         )
-        atomic_save_candidate(last_path, payload)
         if improved:
             atomic_save_candidate(best_path, payload)
+        atomic_save_candidate(last_path, payload)
         if epochs_without_improvement >= resolved.patience:
             break
     elapsed = elapsed_offset + time.perf_counter() - started
     stopped_early = len(epoch_rows) < resolved.max_epochs
     final_payload = load_candidate_payload(best_path)
-    final_payload.update(
-        {
+    completion = {
             "training_status": "completed",
             "training_elapsed_s": elapsed,
             "completed_epochs": len(epoch_rows),
@@ -675,17 +686,10 @@ def _train_pretext_candidate(
             "training_rows": training_rows,
             "augmentation_rows": augmentation_rows,
         }
-    )
+    final_payload.update(completion)
     atomic_save_candidate(best_path, final_payload)
     last_payload = load_candidate_payload(last_path)
-    last_payload.update(final_payload | {
-        "encoder_state_dict": last_payload["encoder_state_dict"],
-        "head_state_dict": last_payload["head_state_dict"],
-        "explicit_time_shift_head_state_dict": last_payload.get(
-            "explicit_time_shift_head_state_dict"
-        ),
-        "optimizer_state_dict": last_payload["optimizer_state_dict"],
-    })
+    last_payload.update(completion)
     atomic_save_candidate(last_path, last_payload)
     return _result(final_payload, best_path, last_path, status="completed")
 
@@ -701,7 +705,8 @@ def _evaluate_public_losses(
             raw = _load_batch(batch, batch_provider, ids)
             normalized = normalizer.transform(raw)
             plans = build_batch_augmentation_realizations(
-                ids, epoch=0, global_seed=seed, policy=policy
+                ids, epoch=0, global_seed=seed, policy=policy,
+                context_duration_s=normalized.context_durations_s.tolist(),
             )
             augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
             targets = build_common_pretext_targets(normalized, augmented)

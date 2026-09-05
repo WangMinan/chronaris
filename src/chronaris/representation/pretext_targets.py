@@ -190,7 +190,7 @@ def build_lag_discrimination_inputs(
         dtype=batch.vehicle_timestamps_s.dtype,
         device=batch.vehicle_timestamps_s.device,
     )
-    duration_s = _context_duration_s(batch.query_timestamps_s)
+    duration_s = batch.context_durations_s
     shifted = _shift_and_compact_vehicle(batch, shifts, duration_s=duration_s)
     return LagDiscriminationInputs(
         negative_batch=shifted,
@@ -236,7 +236,7 @@ def build_explicit_time_shift_inputs(
     shifted = _shift_and_compact_vehicle(
         batch,
         shifts,
-        duration_s=_context_duration_s(batch.query_timestamps_s),
+        duration_s=batch.context_durations_s,
     )
     return ExplicitTimeShiftInputs(
         shifted_batch=shifted,
@@ -261,7 +261,7 @@ def _shift_and_compact_vehicle(batch, shifts, *, duration_s):
             original_indices,
         )
         shifted_times = original_times + shifts[sample_index]
-        keep = (shifted_times >= 0.0) & (shifted_times < duration_s)
+        keep = (shifted_times >= 0.0) & (shifted_times < duration_s[sample_index])
         kept_indices = original_indices[keep]
         kept_times = shifted_times[keep]
         count = len(kept_indices)
@@ -291,11 +291,3 @@ def _shift_and_compact_vehicle(batch, shifts, *, duration_s):
         vehicle_feature_mask=features,
         vehicle_observation_age_s=ages,
     )
-
-
-def _context_duration_s(query_timestamps_s: torch.Tensor) -> float:
-    step = query_timestamps_s[:, 1] - query_timestamps_s[:, 0]
-    duration = query_timestamps_s[:, -1] + step
-    if not torch.allclose(duration, duration[:1], atol=1e-9, rtol=1e-9):
-        raise RepresentationContractError("lag discrimination context mismatch")
-    return float(duration[0].item())

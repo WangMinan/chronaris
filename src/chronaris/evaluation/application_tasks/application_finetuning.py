@@ -23,6 +23,8 @@ from chronaris.evaluation.application_tasks.application_consumers import (
 from chronaris.modeling.fusion_encoders import NaiveTimeSyncEncoder
 from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training import TrainableFusionEncoder
+from chronaris.modeling.training.rng import isolated_training_rng, capture_rng_state, restore_rng_state
+from chronaris.modeling.training.candidate_checkpoint import candidate_source_code_sha256
 from chronaris.representation import (
     DualStreamObservationBatch,
     TrainOnlyRobustNormalizer,
@@ -32,7 +34,7 @@ from chronaris.representation.contracts import FUSION_OUTPUT_DIM, Representation
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v1"
+FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -114,23 +116,29 @@ class EndToEndApplicationModel(nn.Module):
     def encoder_update_mode(self) -> str:
         return "full_backbone" if self.encoder is not None else "head_only_nonparametric_encoder"
 
-    def encode(self, raw: DualStreamObservationBatch) -> torch.Tensor:
+    def encode_with_mask(self, raw: DualStreamObservationBatch) -> tuple[torch.Tensor, torch.Tensor]:
         device = next(self.parameters()).device
         if self.encoder is not None:
             normalized = move_observation_batch(
                 self.normalizer.transform(raw),
                 device=device,
             )
-            return self.encoder(normalized).sequence_embedding
-        sequence, _available = self.naive_encoder.encode(raw)
-        return sequence.to(device)
+            encoded = self.encoder(normalized)
+            return encoded.sequence_embedding, encoded.modality_available_mask
+        sequence, available = self.naive_encoder.encode(raw)
+        return sequence.to(device), available.to(device)
+
+    def encode(self, raw: DualStreamObservationBatch) -> torch.Tensor:
+        return self.encode_with_mask(raw)[0]
 
     def forward(self, raw: DualStreamObservationBatch) -> Mapping[str, torch.Tensor]:
-        sequence = self.encode(raw)
-        pooled = sequence.mean(dim=1)
+        sequence, valid = self.encode_with_mask(raw)
+        sequence = sequence.masked_fill(~valid.unsqueeze(-1), 0)
+        pooled = sequence.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1)
         return {
             "sequence_embedding": sequence,
             "pooled_embedding": pooled,
+            "valid_mask": valid,
             "workload_logits": self.workload_classifier(pooled),
             "workload_regression_z": self.workload_regressor(pooled).squeeze(-1),
             "maneuver_logits": self.segmentation_head(sequence),
@@ -148,6 +156,24 @@ def train_end_to_end_application_method(
     config: EndToEndFineTuningConfig,
     resume: bool = True,
 ) -> EndToEndFineTuningResult:
+    with isolated_training_rng(config.seed):
+        last_path = Path(output_root) / model.method_name / "last.pt"
+        if not (resume and last_path.is_file()):
+            for head in (model.workload_classifier, model.workload_regressor, model.segmentation_head):
+                for module in head.modules():
+                    if hasattr(module, "reset_parameters"):
+                        module.reset_parameters()
+        return _train_end_to_end_application_method(
+            model=model, batch=batch, targets=targets, role_sample_ids=role_sample_ids,
+            source_checkpoint_path=source_checkpoint_path, output_root=output_root,
+            config=config, resume=resume,
+        )
+
+
+def _train_end_to_end_application_method(
+    *, model, batch, targets, role_sample_ids, source_checkpoint_path,
+    output_root, config, resume,
+):
     """Tune one method on train labels and select epochs on validation labels only."""
     source_path = Path(source_checkpoint_path)
     _validate_inputs(model, batch, targets, role_sample_ids, source_path)
@@ -170,7 +196,9 @@ def train_end_to_end_application_method(
     )
     resume_payload = None
     if resume and last_path.is_file():
-        resume_payload = torch.load(last_path, map_location=config.device, weights_only=True)
+        resume_payload = torch.load(last_path, map_location="cpu", weights_only=True)
+        if resume_payload.get("format") != FINETUNING_FORMAT or "rng_state" not in resume_payload:
+            raise RepresentationContractError("legacy fine-tuning checkpoint is inference-only")
         if (
             resume_payload.get("protocol_sha256") != protocol_hash
             and not _resume_is_device_only_migration(
@@ -184,7 +212,10 @@ def train_end_to_end_application_method(
             raise RepresentationContractError("fine-tuning protocol changed")
         model.load_state_dict(resume_payload["model_state_dict"], strict=True)
         optimizer.load_state_dict(resume_payload["optimizer_state_dict"])
+        restore_rng_state(resume_payload["rng_state"])
         if resume_payload.get("training_status") == "completed":
+            best_payload = torch.load(best_path, map_location="cpu", weights_only=True)
+            model.load_state_dict(best_payload["model_state_dict"], strict=True)
             return _result(resume_payload, best_path, last_path, status="resumed")
     target_index = {sample_id: index for index, sample_id in enumerate(targets.sample_ids)}
     train_ids = tuple(role_sample_ids["train"])
@@ -199,6 +230,7 @@ def train_end_to_end_application_method(
     best_epoch = int(resume_payload.get("best_epoch", 0)) if resume_payload else 0
     stale = int(resume_payload.get("epochs_without_improvement", 0)) if resume_payload else 0
     completed_epochs = int(resume_payload.get("completed_epochs", 0)) if resume_payload else 0
+    step_count = int(resume_payload.get("step_count", 0)) if resume_payload else 0
     elapsed_offset = float(resume_payload.get("training_elapsed_s", 0.0)) if resume_payload else 0.0
     device_history = list(
         resume_payload.get(
@@ -237,6 +269,7 @@ def train_end_to_end_application_method(
                 nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip_norm)
             )
             optimizer.step()
+            step_count += 1
             count = len(sample_ids)
             for key in train_totals:
                 train_totals[key] += float(losses[key].detach()) * count
@@ -288,18 +321,17 @@ def train_end_to_end_application_method(
             best_epoch=best_epoch,
             best_validation_loss=best_loss,
             completed_epochs=completed_epochs,
+            step_count=step_count,
             stale=stale,
             elapsed=elapsed_offset + time.perf_counter() - started,
             training_status="running",
             device_history=device_history,
         )
-        _atomic_save(last_path, payload)
         if improved:
             _atomic_save(best_path, payload)
+        _atomic_save(last_path, payload)
         if stale >= config.patience:
             break
-    best_payload = torch.load(best_path, map_location=config.device, weights_only=True)
-    model.load_state_dict(best_payload["model_state_dict"], strict=True)
     final_payload = _checkpoint_payload(
         model=model,
         optimizer=optimizer,
@@ -314,13 +346,17 @@ def train_end_to_end_application_method(
         best_epoch=best_epoch,
         best_validation_loss=best_loss,
         completed_epochs=completed_epochs,
+        step_count=step_count,
         stale=stale,
         elapsed=elapsed_offset + time.perf_counter() - started,
         training_status="completed",
         device_history=device_history,
     )
-    _atomic_save(best_path, final_payload)
     _atomic_save(last_path, final_payload)
+    best_payload = torch.load(best_path, map_location="cpu", weights_only=True)
+    best_payload.update(training_status="completed", training_elapsed_s=final_payload["training_elapsed_s"])
+    _atomic_save(best_path, best_payload)
+    model.load_state_dict(best_payload["model_state_dict"], strict=True)
     return _result(final_payload, best_path, last_path, status="completed")
 
 
@@ -416,6 +452,8 @@ def _protocol_hash(*, model, config, targets, role_sample_ids, source_checkpoint
         target_hash.update(values.detach().cpu().numpy().tobytes())
     payload = {
         "format": FINETUNING_FORMAT,
+        "implementation_revision": "causal_fusion_v4",
+        "source_code_sha256": _finetuning_source_sha256(),
         "method_name": model.method_name,
         "config": asdict(config),
         "source_checkpoint_sha256": sha256_file(source_checkpoint_path),
@@ -431,6 +469,8 @@ def _checkpoint_payload(**values):
     model = values["model"]
     return {
         "format": FINETUNING_FORMAT,
+        "implementation_revision": "causal_fusion_v4",
+        "source_code_sha256": _finetuning_source_sha256(),
         "training_status": values["training_status"],
         "method_name": model.method_name,
         "seed": values["config"].seed,
@@ -448,6 +488,8 @@ def _checkpoint_payload(**values):
         "regression_train_std": values["regression_std"],
         "model_state_dict": model.state_dict(),
         "optimizer_state_dict": values["optimizer"].state_dict(),
+        "rng_state": capture_rng_state(),
+        "step_count": values["step_count"],
         "epoch_rows": list(values["epoch_rows"]),
         "best_epoch": values["best_epoch"],
         "best_validation_loss": values["best_validation_loss"],
@@ -506,6 +548,7 @@ def _resume_is_device_only_migration(
     return all(
         (
             stored_config == expected_config,
+            payload.get("source_code_sha256") == _finetuning_source_sha256(),
             payload.get("source_checkpoint_sha256") == sha256_file(source_path),
             payload.get("role_sample_ids") == expected_roles,
             payload.get("target_manifest") == dict(targets.manifest),
@@ -513,3 +556,10 @@ def _resume_is_device_only_migration(
             payload.get("label_used_for_encoder_training") is True,
         )
     )
+
+
+def _finetuning_source_sha256():
+    digest = hashlib.sha256(candidate_source_code_sha256().encode())
+    for name in ("application_finetuning.py", "application_finetuning_export.py", "application_consumers.py"):
+        digest.update(Path(__file__).with_name(name).read_bytes())
+    return digest.hexdigest()

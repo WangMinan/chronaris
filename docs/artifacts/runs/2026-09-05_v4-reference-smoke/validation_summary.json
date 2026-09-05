@@ -1,0 +1,10 @@
+{
+  "scope": "foundation_implementation_checks_not_research_metrics",
+  "full_test_passed": 498,
+  "skipped": 8,
+  "junit_sha256": "4b1838cfa33b6e41122374b594005d54a7426f15c53865ed6a28255a84cecb77",
+  "full_test_elapsed_s": 429.64,
+  "followup_source_resume_and_mixed_context_checks": 12,
+  "cuda_smoke_updates": 10,
+  "remaining": "parameterized task heads, update budgets, v4 data and experiments"
+}

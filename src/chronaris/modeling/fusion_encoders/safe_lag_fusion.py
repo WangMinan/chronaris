@@ -209,19 +209,24 @@ class SafeLagAwareFusion(nn.Module):
         # Private bypass + safe gated cross residual.
         physiology_private = self.physiology_private_projection(inputs.physiology_states)
         vehicle_private = self.vehicle_private_projection(inputs.vehicle_states)
+        physiology_private = physiology_private.masked_fill(~inputs.physiology_valid_mask.unsqueeze(-1), 0)
+        vehicle_private = vehicle_private.masked_fill(~inputs.vehicle_valid_mask.unsqueeze(-1), 0)
         if not self.config.use_private_bypass:
             physiology_private = torch.zeros_like(physiology_private)
             vehicle_private = torch.zeros_like(vehicle_private)
-        cross_features = self.cross_projection(attended)
+        cross_available = inputs.physiology_valid_mask & scale_available.any(dim=-1)
+        cross_features = self.cross_projection(attended).masked_fill(~cross_available.unsqueeze(-1), 0)
         cross_gate = torch.sigmoid(self.cross_gate(gate_inputs))
+        cross_gate = cross_gate.masked_fill(~cross_available.unsqueeze(-1), 0)
         gated_cross = cross_gate * cross_features
 
         sequence = torch.cat(
             (physiology_private, vehicle_private, gated_cross), dim=-1
         )
         available = inputs.physiology_valid_mask | inputs.vehicle_valid_mask
-        sequence = torch.nan_to_num(sequence)
-        sequence = sequence * available.unsqueeze(-1).to(sequence.dtype)
+        sequence = sequence.masked_fill(~available.unsqueeze(-1), 0)
+        if not torch.isfinite(sequence).all():
+            raise ValueError("safe-lag fusion produced non-finite valid states")
 
         return SafeLagAwareFusionOutput(
             sequence_embedding=sequence,

@@ -58,6 +58,7 @@ def confirm_selected_pretext_checkpoint(
                 current_ids,
                 epoch=0,
                 global_seed=seed,
+                context_duration_s=normalized.context_durations_s.tolist(),
                 policy=policy,
             )
             augmented = apply_augmentation_realizations(

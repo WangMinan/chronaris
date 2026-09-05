@@ -20,6 +20,9 @@ class ChronarisAuxiliaryLosses:
     alignment_count: int
     physics_component_count: int
     causal_count: int
+    observation_anchor: torch.Tensor | None = None
+    observation_count: int = 0
+    physical_effective_weight: float | None = None
 
 
 def build_chronaris_auxiliary_losses(
@@ -80,11 +83,18 @@ def build_chronaris_auxiliary_losses(
         if raw_physics
         else positive.sequence_embedding.sum() * 0.0
     )
+    effective_physics_weight = weights.physical_consistency
+    if getattr(physics_audit, "calibrated_residual", None) is not None:
+        physical_consistency = physics_audit.calibrated_residual
+        effective_physics_weight *= physics_audit.residual_weight / 0.1
     total = (
         continuous_alignment * weights.continuous_alignment
-        + physical_consistency * weights.physical_consistency
+        + physical_consistency * effective_physics_weight
         + causal_direction * weights.causal_direction
     )
+    anchor = getattr(physics_audit, "observation_anchor", None)
+    if anchor is not None:
+        total = total + anchor
     return ChronarisAuxiliaryLosses(
         total_loss=total,
         continuous_alignment=continuous_alignment,
@@ -93,11 +103,14 @@ def build_chronaris_auxiliary_losses(
         alignment_count=alignment_count,
         physics_component_count=len(raw_physics),
         causal_count=causal_count,
+        observation_anchor=anchor,
+        observation_count=getattr(physics_audit, "observation_count", 0),
+        physical_effective_weight=effective_physics_weight,
     )
 
 
 def chronaris_auxiliary_losses_to_rows(losses, *, weights):
-    return tuple(
+    rows = tuple(
         {
             "term_name": name,
             "weight": float(weight),
@@ -116,7 +129,7 @@ def chronaris_auxiliary_losses_to_rows(losses, *, weights):
             (
                 "chronaris_physical_consistency",
                 losses.physical_consistency,
-                weights.physical_consistency,
+                losses.physical_effective_weight if losses.physical_effective_weight is not None else weights.physical_consistency,
                 losses.physics_component_count,
             ),
             (
@@ -127,6 +140,12 @@ def chronaris_auxiliary_losses_to_rows(losses, *, weights):
             ),
         )
     )
+    if losses.observation_anchor is not None:
+        value = float(losses.observation_anchor.detach().cpu())
+        rows += ({"term_name": "observation_anchor", "weight": 1.0,
+                  "raw_loss": value, "weighted_loss": value, "count": losses.observation_count,
+                  "status": "active" if losses.observation_count else "unavailable"},)
+    return rows
 
 
 def _reference_pair(alignment):
@@ -205,4 +224,3 @@ def lag_aware_alignment_loss(
     return LagAwareAlignmentResult(
         loss=loss, count=int(has_lag.sum().item()), best_lag_index=best_idx
     )
-

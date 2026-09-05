@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import json
+import copy
+from dataclasses import replace
+from unittest.mock import patch
 from pathlib import Path
 
 import torch
@@ -65,6 +68,7 @@ def test_end_to_end_finetuning_declares_labels_and_resumes(tmp_path: Path) -> No
         )
 
     model = build_model()
+    initial_model = copy.deepcopy(model)
     config = EndToEndFineTuningConfig(
         max_epochs=1,
         patience=1,
@@ -120,3 +124,37 @@ def test_end_to_end_finetuning_declares_labels_and_resumes(tmp_path: Path) -> No
     assert {row["role"] for row in metrics} == {"validation", "held_out"}
     assert checkpoint["representation_family"] == "end_to_end_finetuned_v1"
     assert checkpoint["label_used_for_encoder_training"] is True
+
+    # A real interruption must match uninterrupted optimizer/dropout updates,
+    # not merely return a cached "completed" result.
+    import chronaris.evaluation.application_tasks.application_finetuning as module
+    from chronaris.modeling.training.rng import canonical_training_state_sha256
+    longer = replace(config, max_epochs=3, patience=3)
+    kwargs = dict(batch=batch, targets=targets, role_sample_ids=roles,
+                  source_checkpoint_path=source, config=longer)
+    continuous = train_end_to_end_application_method(
+        model=copy.deepcopy(initial_model), output_root=tmp_path / "continuous", **kwargs,
+    )
+    save = module._atomic_save
+    def interrupt(path, payload):
+        save(path, payload)
+        if path.name == "last.pt" and payload["completed_epochs"] == 1:
+            raise RuntimeError("intentional interruption")
+    try:
+        with patch.object(module, "_atomic_save", side_effect=interrupt):
+            train_end_to_end_application_method(
+                model=copy.deepcopy(initial_model), output_root=tmp_path / "interrupted", **kwargs,
+            )
+    except RuntimeError as error:
+        assert str(error) == "intentional interruption"
+    else:
+        raise AssertionError("interruption was not exercised")
+    torch.rand(1000)
+    resumed_training = train_end_to_end_application_method(
+        model=copy.deepcopy(initial_model), output_root=tmp_path / "interrupted", **kwargs,
+    )
+    states = [torch.load(path, map_location="cpu", weights_only=True) for path in (
+        continuous.last_checkpoint_path, resumed_training.last_checkpoint_path,
+    )]
+    assert states[0]["step_count"] == states[1]["step_count"] == 3
+    assert canonical_training_state_sha256(states[0]["model_state_dict"], states[0]["optimizer_state_dict"], states[0]["rng_state"]) == canonical_training_state_sha256(states[1]["model_state_dict"], states[1]["optimizer_state_dict"], states[1]["rng_state"])

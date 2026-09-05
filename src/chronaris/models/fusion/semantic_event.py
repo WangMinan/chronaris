@@ -97,6 +97,8 @@ class SemanticEventTensorInput:
     attention_weights: torch.Tensor
     vehicle_event_scores: torch.Tensor
     vehicle_offsets_s: torch.Tensor
+    physiology_valid_mask: torch.Tensor | None = None
+    vehicle_valid_mask: torch.Tensor | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -146,14 +148,18 @@ class EventTokenExtractor(nn.Module):
             scores = contribution_scores[sample_index]
             if point_count == 0:
                 continue
-            positive_scores = scores[scores > 0]
+            visible = (inputs.vehicle_valid_mask[sample_index]
+                       if inputs.vehicle_valid_mask is not None else torch.ones_like(scores, dtype=torch.bool))
+            positive_scores = scores[visible & (scores > 0)]
             if positive_scores.numel() > 0:
                 threshold = torch.quantile(
                     positive_scores,
                     q=min(self.config.event_score_quantile, 1.0),
                 )
-                active = scores >= threshold
+                active = visible & (scores >= threshold)
             else:
+                if inputs.vehicle_valid_mask is not None:
+                    continue
                 active = torch.zeros_like(scores, dtype=torch.bool)
                 active[int(torch.argmax(inputs.vehicle_event_scores[sample_index]).item())] = True
             segments = _collect_segments(active)
@@ -207,9 +213,11 @@ class SemanticQueryBank(nn.Module):
         event_token_states: torch.Tensor,
         event_token_scores: torch.Tensor,
         event_token_mask: torch.Tensor,
+        physiology_valid_mask: torch.Tensor | None = None,
+        vehicle_valid_mask: torch.Tensor | None = None,
     ) -> tuple[tuple[str, ...], torch.Tensor]:
-        physiology_pool = physiology_states.mean(dim=1)
-        vehicle_pool = vehicle_states.mean(dim=1)
+        physiology_pool = _masked_mean(physiology_states, physiology_valid_mask)
+        vehicle_pool = _masked_mean(vehicle_states, vehicle_valid_mask)
         gap_pool = torch.abs(physiology_pool - vehicle_pool)
         weighted_event = _masked_weighted_pool(
             event_token_states,
@@ -262,6 +270,8 @@ class CausalEventFusion(nn.Module):
             event_token_states=event_token_states,
             event_token_scores=event_token_scores,
             event_token_mask=token_mask,
+            physiology_valid_mask=inputs.physiology_valid_mask,
+            vehicle_valid_mask=inputs.vehicle_valid_mask,
         )
         raw_scores = torch.matmul(query_states, event_token_states.transpose(-1, -2))
         raw_scores = raw_scores / self.config.attention_temperature
@@ -323,6 +333,16 @@ def _validate_semantic_inputs(inputs: SemanticEventTensorInput) -> None:
         raise ValueError("attention_weights batch dimension must match vehicle states.")
     if inputs.attention_weights.shape[-1] != inputs.vehicle_states.shape[1]:
         raise ValueError("attention_weights key dimension must match vehicle point count.")
+    for stream in ("physiology", "vehicle"):
+        mask = getattr(inputs, f"{stream}_valid_mask")
+        if mask is not None and (mask.dtype != torch.bool or mask.shape != getattr(inputs, f"{stream}_states").shape[:2]):
+            raise ValueError("semantic validity must be boolean [B,R]")
+
+
+def _masked_mean(states: torch.Tensor, mask: torch.Tensor | None) -> torch.Tensor:
+    if mask is None:
+        return states.mean(dim=1)
+    return states.masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / mask.sum(dim=1, keepdim=True).clamp_min(1)
 
 
 def _collect_segments(active: torch.Tensor) -> list[tuple[int, int]]:

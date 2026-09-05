@@ -170,6 +170,8 @@ def build_trainable_fusion_encoder(
     chronaris_ode_method: str = "euler",
     chronaris_semantic_event_enabled: bool = False,
     chronaris_learnable_semantic_queries: bool = False,
+    chronaris_physics_calibration: Mapping[str, object] | None = None,
+    chronaris_physics_weight: float = 0.1,
 ) -> TrainableFusionEncoder:
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
@@ -221,6 +223,8 @@ def build_trainable_fusion_encoder(
                 ode_method=chronaris_ode_method,
                 semantic_event_enabled=chronaris_semantic_event_enabled,
                 learnable_semantic_queries=chronaris_learnable_semantic_queries,
+                physics_calibration=chronaris_physics_calibration,
+                physics_weight=chronaris_physics_weight,
                 hidden_dim=candidate.hidden_dim,
                 embedding_dim=candidate.hidden_dim,
                 encoder_hidden_dim=candidate.hidden_dim,

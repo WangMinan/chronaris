@@ -43,6 +43,10 @@ class PhysicsComponentStatus:
 class ChronarisPhysicsAudit:
     components: tuple[PhysicsComponentStatus, ...]
     total_weighted_value: torch.Tensor
+    observation_anchor: torch.Tensor | None = None
+    observation_count: int = 0
+    calibrated_residual: torch.Tensor | None = None
+    residual_weight: float = 0.1
 
     @property
     def active_component_count(self) -> int:
@@ -57,11 +61,14 @@ def build_chronaris_physics_audit(
     enabled: bool,
     weight: float,
     huber_delta: float = 1.0,
+    calibration: Mapping[str, object] | None = None,
 ) -> ChronarisPhysicsAudit:
     """Compute available components while keeping unavailable distinct from zero."""
 
     if weight < 0 or huber_delta <= 0:
         raise ValueError("physics weight/delta configuration is invalid")
+    if calibration is not None:
+        return _calibrated_audit(output, batch, calibration, enabled=enabled, weight=weight, huber_delta=huber_delta)
     labels = field_labels or {}
     mapping = build_rigid_body_state_mapping(
         batch.vehicle.feature_names,
@@ -117,6 +124,28 @@ def build_chronaris_physics_audit(
         else output.vehicle.reconstructions.new_zeros(())
     )
     return ChronarisPhysicsAudit(tuple(components), total)
+
+
+def _calibrated_audit(output, batch, calibration, *, enabled, weight, huber_delta):
+    from chronaris.models.alignment.calibrated_physics import calibrated_kinematic_losses, observation_anchor_loss
+    relations = calibrated_kinematic_losses(output.vehicle.reconstructions, batch.vehicle, calibration, huber_delta=huber_delta)
+    anchor, anchor_count = observation_anchor_loss(output, batch)
+    components = []
+    for name in (*RIGID_COMPONENTS, *PHYSIOLOGY_COMPONENTS):
+        active_rows = [(loss, count) for component, loss, count in relations if component == name and count]
+        count = sum(n for _loss, n in active_rows)
+        value = torch.stack([loss for loss, _n in active_rows]).mean() if count else None
+        active = bool(count and enabled and weight > 0)
+        components.append(PhysicsComponentStatus(
+            name, "active" if active else "disabled" if count else "unavailable",
+            bool(count), active, count, value, value * weight if active else None,
+            None if active else "ablation_no_physics" if count else "no_calibrated_physical_relation",
+        ))
+    active = [loss for _component, loss, count in relations if count]
+    residual = torch.stack(active).mean() if active else anchor * 0
+    effective_weight = weight if enabled else 0.0
+    return ChronarisPhysicsAudit(tuple(components), residual * effective_weight, anchor,
+                                 anchor_count, residual, effective_weight)
 
 
 def build_skipped_chronaris_physics_audit(reference: torch.Tensor) -> ChronarisPhysicsAudit:

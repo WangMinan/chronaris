@@ -10,6 +10,9 @@
 
 ## 当前九月研究证据
 
+- [v4 因果与掩码修复](runs/2026-09-05_v4-causality-repair/report.md)：旧权重在新实现上的三个 CUDA 种子及 CPU 诊断通过历史隔离，检查点不变，属于工程修复证据。
+- [v4 观测锚定冒烟](runs/2026-09-05_v4-reference-smoke/report.md)：显式单位与训练尺度的物理关系、同头观测锚定完成十次 CUDA 更新，训练后历史隔离通过；不包含新应用成绩。
+
 本轮主分支清理的发现与新验证见[清理复核](../review/stage/thesis-mainline/redundancy-and-docs-review-2026-09-05.md)。下列运行记录保持原始日期与源码来源。
 
 - [常规仿真六方法对比](runs/2026-09-03_thesis-simulation-consumers-v3p2p1/report.md)：三随机种子的冻结下游结果。

@@ -36,7 +36,7 @@ from chronaris.models.alignment.prototype import (
     DualStreamODERNNPrototype,
     DualStreamPrototypeOutput,
 )
-from chronaris.models.fusion.causal import compute_vehicle_event_scores
+from chronaris.models.fusion.causal import compute_vehicle_event_strengths, normalize_visible_event_scores
 from chronaris.models.fusion.semantic_event import (
     CausalEventFusion,
     CausalEventFusionConfig,
@@ -92,6 +92,7 @@ class ChronarisContinuousEncoderConfig:
     physics_weight: float = 0.1
     physics_huber_delta: float = 1.0
     dropout: float = 0.1
+    physics_calibration: Mapping[str, object] | None = None
 
     def __post_init__(self) -> None:
         if not self.physiology_feature_names or not self.vehicle_feature_names:
@@ -333,6 +334,8 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             cross_features = fusion.cross_features + self.causal_fusion.cross_projection(
                 semantic_context
             )
+            cross_available = physiology_valid & fusion.scale_available_mask.any(dim=-1)
+            cross_features = cross_features.masked_fill(~cross_available.unsqueeze(-1), 0)
             sequence = torch.cat(
                 (
                     fusion.physiology_private,
@@ -341,9 +344,9 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                 ),
                 dim=-1,
             )
-            sequence = torch.nan_to_num(sequence) * fusion.modality_available_mask.unsqueeze(
-                -1
-            ).to(sequence.dtype)
+            sequence = sequence.masked_fill(~fusion.modality_available_mask.unsqueeze(-1), 0)
+            if not torch.isfinite(sequence).all():
+                raise RepresentationContractError("semantic fusion produced non-finite valid states")
             fusion = replace(
                 fusion,
                 sequence_embedding=sequence,
@@ -357,6 +360,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                 enabled=self.config.physics_enabled,
                 weight=self.config.physics_weight,
                 huber_delta=self.config.physics_huber_delta,
+                calibration=self.config.physics_calibration,
             )
             if compute_diagnostics
             else build_skipped_chronaris_physics_audit(fusion.sequence_embedding)
@@ -406,10 +410,10 @@ def _causal_semantic_sequence(
     expanded_vehicle = (
         vehicle_states[:, None] * vehicle_prefix.unsqueeze(-1).to(vehicle_states.dtype)
     ).reshape(batch_size * point_count, point_count, state_dim)
-    event_scores = compute_vehicle_event_scores(vehicle_states)
-    expanded_scores = (
-        event_scores[:, None] * vehicle_prefix.to(event_scores.dtype)
-    ).reshape(batch_size * point_count, point_count)
+    event_strengths = compute_vehicle_event_strengths(vehicle_states, vehicle_valid)
+    expanded_scores = normalize_visible_event_scores(event_strengths, vehicle_prefix).reshape(
+        batch_size * point_count, point_count,
+    )
     expanded_offsets = query_times[:, None].expand(-1, point_count, -1).reshape(
         batch_size * point_count,
         point_count,
@@ -425,6 +429,8 @@ def _causal_semantic_sequence(
             ),
             vehicle_event_scores=expanded_scores,
             vehicle_offsets_s=expanded_offsets,
+            physiology_valid_mask=physiology_prefix.reshape(batch_size * point_count, point_count),
+            vehicle_valid_mask=vehicle_prefix.reshape(batch_size * point_count, point_count),
         )
     )
     context = sequence_output.query_context_states.reshape(
