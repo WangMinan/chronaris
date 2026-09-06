@@ -19,6 +19,7 @@ from chronaris.representation import (
 )
 from chronaris.representation.contracts import RepresentationContractError
 from chronaris.modeling.training.candidate_validation import _load_batch
+from chronaris.modeling.training.candidate_checkpoint import is_development_snapshot
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
@@ -32,15 +33,19 @@ def export_finetuned_application_representations(
     batch_size: int = 128,
     batch_provider=None,
     export_roles: tuple[str, ...] = ("train", "validation", "held_out"),
+    allow_diagnostic_snapshot: bool = False,
 ) -> Mapping[str, FusionStreamBatch]:
     if (batch is None) == (batch_provider is None):
         raise ValueError("fine-tuned export requires exactly one observation source")
     if not export_roles or len(set(export_roles)) != len(export_roles) or not set(export_roles) <= {"train", "validation", "held_out"}:
         raise ValueError("invalid fine-tuned export roles")
     payload = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    snapshot = allow_diagnostic_snapshot and is_development_snapshot(payload)
+    if snapshot and not set(export_roles) <= {"train", "validation"}:
+        raise RepresentationContractError("diagnostic snapshots cannot export confirmation roles")
     if (
         payload.get("format") != FINETUNING_FORMAT
-        or payload.get("training_status") != "completed"
+        or (payload.get("training_status") != "completed" and not snapshot)
     ):
         raise RepresentationContractError(
             "fine-tuned representation checkpoint is incomplete"

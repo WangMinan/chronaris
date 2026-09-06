@@ -7,6 +7,7 @@ import numpy as np
 
 from chronaris.modeling.training import candidate_screen as screen
 from chronaris.modeling.training import EncoderCandidateConfig
+from chronaris.modeling.training import load_common_pretraining_checkpoint
 from chronaris.modeling.training.pretext import chronaris_auxiliary_weight_schedule
 from chronaris.modeling.training.rng import canonical_training_state_sha256
 from chronaris.representation import FoldLineage, TrainOnlyRobustNormalizer, collate_observation_samples
@@ -30,7 +31,7 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
         held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids)
     config = screen.CandidateScreenConfig(max_updates=5, batch_size=2, effective_batch_size=6,
         validation_interval=3, checkpoint_interval=2, seed=17, device=device, early_stopping=False,
-        cuda_graph_recurrence=method == "chronaris")
+        cuda_graph_recurrence=method == "chronaris", retained_updates=(3,))
     arguments = dict(method_name=method, candidate=EncoderCandidateConfig(
         candidate_id="D", hidden_dim=32, dropout=.2), batch=batch, fold=fold,
         physiology_feature_names=("physiology.a",), vehicle_feature_names=("vehicle.a",),
@@ -66,6 +67,12 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     assert right["data_cursor"]["samples_seen"] == 30
     assert all(int(state["step"]) == 5 for state in right["optimizer_state_dict"]["state"].values())
     assert right["stage_update_counts"] == dict(pretraining=5, head_warmup=0, joint_adaptation=0)
+    snapshot = tmp_path / f"resumed/{method}/D/update_000003.pt"
+    with pytest.raises(RepresentationContractError, match="incomplete"):
+        load_common_pretraining_checkpoint(snapshot)
+    _, _, _, snapshot_payload = load_common_pretraining_checkpoint(snapshot, allow_diagnostic_snapshot=True)
+    assert snapshot_payload["optimizer_updates"] == 3
+    assert snapshot_payload["development_snapshot"]["allowed_export_roles"] == ["train", "validation"]
     heartbeat = json.loads((tmp_path / f"resumed/{method}/D/progress.json").read_text())
     assert heartbeat["optimizer_updates"] == 5 and heartbeat["best_update"] == resumed.best_update
     screen.train_pretext_candidate(output_root=tmp_path / "resumed", **arguments)

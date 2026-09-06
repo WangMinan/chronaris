@@ -14,6 +14,7 @@ from chronaris.modeling.training.candidate_screen import (
     train_pretext_candidate,
 )
 from chronaris.modeling.training.pretext import CommonPretextHeadBundle
+from chronaris.modeling.training.candidate_checkpoint import is_development_snapshot
 from chronaris.modeling.training.pretraining_encoders import (
     ENCODER_SCREEN_CANDIDATES,
     TRAINABLE_FUSION_METHODS,
@@ -211,9 +212,10 @@ def load_common_pretraining_checkpoint(
     *,
     device: str | torch.device = "cpu",
     allow_legacy_implementation: bool = False,
+    allow_diagnostic_snapshot: bool = False,
 ):
     payload = _load_checkpoint_payload(path, device=device)
-    if payload.get("training_status") != "completed":
+    if payload.get("training_status") != "completed" and not (allow_diagnostic_snapshot and is_development_snapshot(payload)):
         raise RepresentationContractError("common pretraining checkpoint is incomplete")
     if bool(payload.get("label_used_for_encoder_training")):
         raise RepresentationContractError("pretraining checkpoint used downstream labels")

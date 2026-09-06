@@ -13,6 +13,7 @@ import torch
 from torch import nn
 from chronaris.modeling.training.candidate_checkpoint import (
     atomic_save_candidate,
+    development_snapshot,
     build_candidate_checkpoint_payload,
     candidate_checkpoint_is_compatible,
     candidate_protocol_hash,
@@ -723,7 +724,8 @@ def _train_pretext_candidate(
             atomic_save_candidate(best_path, payload)
         atomic_save_candidate(last_path, payload)
         if step_count in resolved.retained_updates:
-            atomic_save_candidate(root / f"update_{step_count:06d}.pt", payload)
+            atomic_save_candidate(root / f"update_{step_count:06d}.pt",
+                development_snapshot(payload, stage="pretraining", stage_updates=step_count))
         if (validate and resolved.early_stopping and epochs_without_improvement >= resolved.patience
             and (not update_mode or step_count >= resolved.minimum_updates)):
             break

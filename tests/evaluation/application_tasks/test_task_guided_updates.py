@@ -37,7 +37,7 @@ def test_head_warmup_and_joint_updates_resume_without_confirmation_labels(tmp_pa
     targets = ApplicationTaskTargets(ids, values, {name: torch.ones_like(value, dtype=torch.bool) for name, value in values.items()}, {})
     config = tuning.EndToEndFineTuningConfig(max_updates=3, head_warmup_updates=2,
         batch_size=2, effective_batch_size=4, checkpoint_interval=1,
-        validation_interval=1, early_stopping=False, device=device)
+        validation_interval=1, early_stopping=False, device=device, retained_updates=(1,))
     arguments = dict(batch=batch, targets=targets, role_sample_ids=roles,
         source_checkpoint_path=source.best_checkpoint_path, config=config)
     save = tuning._atomic_save
@@ -70,6 +70,15 @@ def test_head_warmup_and_joint_updates_resume_without_confirmation_labels(tmp_pa
         tuning.train_end_to_end_application_method(model=copy.deepcopy(model), output_root=tmp_path / "resumed", **arguments)
     monkeypatch.setattr(tuning, "pretext_micro_step", original_step)
     resumed = tuning.train_end_to_end_application_method(model=copy.deepcopy(model), output_root=tmp_path / "resumed", **arguments)
+    from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations
+    snapshot = tmp_path / "resumed/physiology_only/joint_update_000001.pt"
+    with pytest.raises(ValueError, match="confirmation roles"):
+        export_finetuned_application_representations(model=model, checkpoint_path=snapshot, batch=batch,
+            role_sample_ids=roles, output_root=tmp_path / "forbidden", allow_diagnostic_snapshot=True)
+    outputs = export_finetuned_application_representations(model=model, checkpoint_path=snapshot, batch=batch,
+        role_sample_ids=roles, output_root=tmp_path / "diagnostic", allow_diagnostic_snapshot=True,
+        export_roles=("train", "validation"))
+    assert set(outputs) == {"train", "validation"}
     left, right = (torch.load(path, map_location="cpu", weights_only=True) for path in (complete.last_checkpoint_path, resumed.last_checkpoint_path))
     for key in ("model_state_dict", "optimizer_state_dict", "rng_state", "data_cursor", "update_rows"):
         assert canonical_training_state_sha256(left[key]) == canonical_training_state_sha256(right[key]), key

@@ -38,3 +38,5 @@
 2026-09-06 原生开发数据与图重放批次完整测试为 **521 passed、8 skipped**，用时 440.06 秒；具体范围见[验证摘要](../../../artifacts/runs/2026-09-06_v4-development-data/validation_summary.json)。
 
 [修复参考交付](../../../artifacts/runs/2026-09-06_v4-real-domain-smoke/report.md)已完成四域实际训练与最终完整测试：**524 passed、8 skipped**。实际新增更新 350 次，包含 CLARE 标签隔离拦截的十次预训练；九个完整开发归一化划分拟合成功，确认模型成绩未打开。
+
+[完整开发学习曲线入口](../../../artifacts/runs/2026-09-06_v4-learning-curves/report.md)已通过真实训练器与三种消费者的端到端测试；普通推理仍拒绝训练中快照，开发快照不允许确认导出。当前开始仿真干净输入诊断，完整八条件诊断包仍待完成。

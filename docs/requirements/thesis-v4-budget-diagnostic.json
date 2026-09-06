@@ -1,0 +1,37 @@
+{
+  "scope": "initial simulation budget diagnostic, fixed before new learning curves",
+  "seed": 17,
+  "methods": [
+    "physiology_only",
+    "vehicle_only",
+    "mult",
+    "contiformer",
+    "chronaris"
+  ],
+  "routes": [
+    "self_supervised",
+    "task_guided"
+  ],
+  "pretraining_updates": 500,
+  "head_warmup_updates": 50,
+  "joint_updates": 500,
+  "early_stopping": false,
+  "consumer_curve_updates": [
+    50,
+    200,
+    500
+  ],
+  "data_extension": {
+    "maximum_training_trajectories": 512,
+    "additional_profiles": 32,
+    "allowed_times": 1,
+    "decision_scope": "simulation development roles only",
+    "trigger": "any method-route validation-loss curve satisfies both improvements",
+    "relative_improvement_200_to_500_at_least": 0.02,
+    "relative_improvement_400_to_500_at_least": 0.01,
+    "nonfinite_results": "correctness failure, never evidence for expanding data",
+    "same_extended_manifest_for_all_methods_and_routes": true
+  },
+  "no_method_ranking_by_absolute_pretraining_loss": true,
+  "confirmation_feedback_allowed": false
+}

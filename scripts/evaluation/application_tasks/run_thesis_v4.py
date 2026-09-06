@@ -13,15 +13,16 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke"))
+    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic"))
     parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"), required=True)
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
     parser.add_argument("--data-root", default="artifacts/application_evaluation/2026-09-06_v4-public-development")
     parser.add_argument("--task-mode", choices=("single", "all"), default="all")
+    parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
-                     "smoke": "2026-09-06_v4-real-domain-smoke"}
+                     "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves"}
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
     if args.stage == "public-data":
         summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root)
@@ -29,10 +30,15 @@ def main():
         from chronaris.evaluation.application_tasks.v4_native_performance import profile_native_recurrence
         summary = profile_native_recurrence(domain=args.domain, registry_path=args.registry,
             data_root=args.data_root, output_root=output_root)
-    else:
+    elif args.stage == "smoke":
         from chronaris.evaluation.application_tasks.v4_smoke_run import run_v4_smoke
         summary = run_v4_smoke(domain=args.domain, registry_path=args.registry,
             data_root=args.data_root, output_root=output_root, task_mode=args.task_mode)
+    else:
+        if args.domain != "simulation":
+            raise ValueError("this diagnostic entry currently covers simulation learning curves")
+        from chronaris.evaluation.application_tasks.v4_diagnostic_run import run_simulation_diagnostic
+        summary = run_simulation_diagnostic(method=args.method, output_root=output_root)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

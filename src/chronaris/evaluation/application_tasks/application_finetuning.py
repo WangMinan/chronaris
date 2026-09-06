@@ -44,6 +44,7 @@ from chronaris.evaluation.application_tasks.application_task_heads import (
 )
 
 FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v3"
+from chronaris.modeling.training.candidate_checkpoint import development_snapshot
 
 
 @dataclass(frozen=True, slots=True)
@@ -470,7 +471,8 @@ def _train_end_to_end_application_method(
             _atomic_save(best_path, payload)
         _atomic_save(last_path, payload)
         if joint_updates in config.retained_updates:
-            _atomic_save(root / f"joint_update_{joint_updates:06d}.pt", payload)
+            _atomic_save(root / f"joint_update_{joint_updates:06d}.pt",
+                development_snapshot(payload, stage="joint_adaptation", stage_updates=joint_updates))
         if (validate and config.early_stopping and stale >= config.patience
             and (not update_mode or joint_updates >= config.minimum_updates)):
             break

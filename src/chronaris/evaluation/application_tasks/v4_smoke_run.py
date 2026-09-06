@@ -1,7 +1,6 @@
 """Real-data engineering closure through the existing two training routes."""
 from dataclasses import asdict, replace
 from pathlib import Path
-import hashlib
 import json
 
 import numpy as np
@@ -11,66 +10,21 @@ from sklearn.metrics import f1_score, root_mean_squared_error
 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
 from chronaris.evaluation.application_tasks.application_finetuning import EndToEndApplicationModel, EndToEndFineTuningConfig, train_end_to_end_application_method
 from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations
-from chronaris.evaluation.application_tasks.application_task_heads import SIMULATION_TASKS, application_targets, select_application_targets
+from chronaris.evaluation.application_tasks.application_task_heads import application_targets
 from chronaris.evaluation.application_tasks.consumer_model_selection import fit_classifier, fit_regressor
 from chronaris.evaluation.application_tasks.v4_correctness import audit_checkpoint_causality
-from chronaris.evaluation.application_tasks.v4_dingxin_data import load_v4_dingxin_development
-from chronaris.evaluation.application_tasks.v4_public_data import load_prepared_public_development
-from chronaris.evaluation.application_tasks.v4_simulation_data import load_v4_simulation_development, simulation_sampling_hierarchy
+from chronaris.evaluation.application_tasks.v4_development_data import load_development_inputs
 from chronaris.modeling.training import CandidateScreenConfig, EncoderCandidateConfig, TrainedFusionAdapter, load_common_pretraining_checkpoint, train_pretext_candidate
 from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
 from chronaris.modeling.training.rng import isolated_training_rng
 from chronaris.models.alignment.calibrated_physics import SIMULATION_RELATIONS, fit_physics_calibration
-from chronaris.representation import TrainOnlyRobustNormalizer, select_observation_batch, write_fusion_stream_batch
+from chronaris.representation import TrainOnlyRobustNormalizer, write_fusion_stream_batch
 from chronaris.representation.oof_export import _concatenate_fusion_batches
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-def _hash_prefix(ids, count):
-    return tuple(sorted(ids, key=lambda value: hashlib.sha256(f"v4-engineering-smoke:{value}".encode()).hexdigest())[:count])
-
-
 def _smoke_inputs(domain, data_root, registry_path):
-    simulation = None
-    if domain in {"cogpilot", "clare"}:
-        data = load_prepared_public_development(domain, output_root=data_root, registry_path=registry_path)
-        registry = json.loads(Path(registry_path).read_text())
-        fold = data.fold(registry["domains"][domain]["folds"]["development"][0])
-        fold = replace(fold, fold_id=fold.fold_id + "__engineering_smoke",
-            train_sample_ids=_hash_prefix(fold.train_sample_ids, 32), validation_sample_ids=_hash_prefix(fold.validation_sample_ids, 8))
-        provider, schema = data.dataset.batch_provider, data.dataset.schema
-        hierarchy, digest = data.sampling_hierarchy(fold), data.prepared_manifest_sha256
-        targets, definitions = data.targets, data.task_definitions
-    elif domain == "dingxin":
-        data = load_v4_dingxin_development()
-        fold = data.folds[0]
-        provider, schema = data.development_provider(fold), data.index.plan.schema
-        hierarchy, digest = data.sampling_by_fold[fold.fold_id], data.data_manifest_sha256
-        targets, definitions = data.targets_by_fold[fold.fold_id], data.definitions_by_fold[fold.fold_id]
-        fold = replace(fold, fold_id=fold.fold_id + "__engineering_smoke")
-    elif domain == "simulation":
-        data, fold = load_v4_simulation_development(simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development",
-            registry_path="docs/requirements/thesis-v4-simulation-manifest.json")
-        fold = replace(fold, fold_id=fold.fold_id + "__engineering_smoke",
-            train_sample_ids=_hash_prefix(fold.train_sample_ids, 32), validation_sample_ids=_hash_prefix(fold.validation_sample_ids, 8))
-        selected = fold.train_sample_ids + fold.validation_sample_ids
-        simulation = replace(data, batch=select_observation_batch(data.batch, selected),
-            role_sample_ids={role: getattr(fold, role + "_sample_ids") for role in ("train", "validation", "held_out")},
-            sample_manifest_rows=tuple(next(row for row in data.sample_manifest_rows if row["sample_id"] == sample) for sample in selected))
-        provider, schema = lambda ids: select_observation_batch(simulation.batch, ids), data.schema
-        hierarchy, digest = simulation_sampling_hierarchy(data, fold), sha256_file("docs/requirements/thesis-v4-simulation-manifest.json")
-        targets, definitions = None, SIMULATION_TASKS
-    else:
-        raise ValueError("unknown v4 smoke domain")
-    allowed = set(fold.train_sample_ids + fold.validation_sample_ids)
-    if targets is not None:
-        ids = fold.train_sample_ids + fold.validation_sample_ids
-        targets = replace(targets, sample_ids=ids, **select_application_targets(targets, ids, "cpu"))
-    def guarded(ids):
-        if not set(ids) <= allowed:
-            raise ValueError("engineering smoke cannot open confirmation observations")
-        return provider(ids)
-    return guarded, schema, fold, hierarchy, digest, targets, definitions, simulation
+    return load_development_inputs(domain, data_root, registry_path, smoke=True)
 
 
 def _export_self_supervised(encoder, normalizer, checkpoint, fold, provider, root):

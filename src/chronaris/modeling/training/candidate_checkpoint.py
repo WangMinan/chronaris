@@ -16,6 +16,30 @@ from chronaris.modeling.training.rng import (
 from chronaris.representation.contracts import RepresentationContractError
 
 
+def development_snapshot(payload, *, stage, stage_updates):
+    snapshot = dict(payload, development_snapshot={"stage": stage, "stage_updates": stage_updates,
+                    "allowed_export_roles": ["train", "validation"]})
+    if not is_development_snapshot(snapshot):
+        raise RepresentationContractError("diagnostic snapshot is not at a complete update boundary")
+    return snapshot
+
+
+def is_development_snapshot(payload):
+    spec, config, cursor = (payload.get(name, {}) for name in ("development_snapshot", "config", "data_cursor"))
+    if not isinstance(spec, dict) or spec.get("allowed_export_roles") != ["train", "validation"]:
+        return False
+    updates, actual, effective = payload.get("optimizer_updates", 0), config.get("batch_size", 0), config.get("effective_batch_size") or config.get("batch_size", 0)
+    stage_updates = spec.get("stage_updates", 0)
+    stages = payload.get("stage_update_counts", {})
+    expected = stages.get(spec.get("stage"), 0)
+    return bool(spec.get("stage") in {"pretraining", "joint_adaptation"} and config.get("max_updates")
+        and updates > 0 and actual > 0 and 0 < stage_updates <= config["max_updates"] and stage_updates == expected
+        and sum(stages.values()) == updates
+        and stage_updates in config.get("retained_updates", ())
+        and cursor.get("samples_seen") == updates * effective
+        and cursor.get("micro_batches_seen", 0) * actual == cursor.get("samples_seen"))
+
+
 def build_candidate_checkpoint_payload(**values):
     encoder = values.pop("encoder")
     heads = values.pop("heads")

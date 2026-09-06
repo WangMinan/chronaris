@@ -45,6 +45,7 @@ class ApplicationConsumerProtocol:
     linear: LinearConsumerConfig = LinearConsumerConfig()
     minirocket: MiniRocketConsumerConfig = MiniRocketConsumerConfig()
     tcn: TCNConsumerConfig = TCNConsumerConfig()
+    label_used_for_encoder_training: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -204,9 +205,9 @@ def run_application_method_consumers(
         },
         "prediction_path": str(prediction_path),
         "prediction_sha256": prediction_hash,
-        "label_used_for_encoder_training": False,
+        "label_used_for_encoder_training": resolved.label_used_for_encoder_training,
         "consumer_fit_role": "train",
-        "evaluation_roles": ["validation", "held_out"],
+        "evaluation_roles": [role for role in ("validation", "held_out") if role in outputs],
         "minirocket_input_channel_count_before_filter": int(
             outputs["train"].sequence_embedding.shape[-1]
         ),
@@ -490,7 +491,7 @@ def _protocol_hash(method_name, outputs, targets, protocol, fold_id):
         "target_manifest": targets.manifest,
         "consumer_config": asdict(protocol),
         "fit_role": "train",
-        "evaluation_roles": ["validation", "held_out"],
+        "evaluation_roles": [role for role in ("validation", "held_out") if role in outputs],
     }
     return hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
