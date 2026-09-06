@@ -78,6 +78,11 @@ def test_custom_task_heads_train_export_and_reject_changed_label_sources(tmp_pat
     exports = export_finetuned_application_representations(model=model, checkpoint_path=result.best_checkpoint_path,
         batch=batch, role_sample_ids=roles, output_root=tmp_path / "representations", batch_size=2)
     assert exports["held_out"].pooled_embedding.shape == (1, 64)
+    development = export_finetuned_application_representations(model=model, checkpoint_path=result.best_checkpoint_path,
+        batch=batch, role_sample_ids=roles, output_root=tmp_path / "development", batch_size=2,
+        export_roles=("train", "validation"))
+    assert set(development) == {"train", "validation"}
+    assert not (tmp_path / "development/physiology_only/held_out").exists()
     with pytest.raises(RepresentationContractError, match="protocol changed"):
         train_end_to_end_application_method(**(args | {"targets": changed}))
 

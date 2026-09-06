@@ -31,9 +31,12 @@ def export_finetuned_application_representations(
     output_root: str | Path,
     batch_size: int = 128,
     batch_provider=None,
+    export_roles: tuple[str, ...] = ("train", "validation", "held_out"),
 ) -> Mapping[str, FusionStreamBatch]:
     if (batch is None) == (batch_provider is None):
         raise ValueError("fine-tuned export requires exactly one observation source")
+    if not export_roles or len(set(export_roles)) != len(export_roles) or not set(export_roles) <= {"train", "validation", "held_out"}:
+        raise ValueError("invalid fine-tuned export roles")
     payload = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     if (
         payload.get("format") != FINETUNING_FORMAT
@@ -56,7 +59,7 @@ def export_finetuned_application_representations(
     model.eval()
     checkpoint_hash = sha256_file(checkpoint_path)
     outputs = {}
-    for role in ("train", "validation", "held_out"):
+    for role in export_roles:
         chunks = []
         ids = tuple(role_sample_ids[role])
         if not ids:
