@@ -372,8 +372,8 @@ def _fit_stream_statistics(
         counts[index] = observed.numel()
         if observed.numel() == 0:
             continue
-        median = torch.quantile(observed, 0.5)
-        iqr = torch.quantile(observed, 0.75) - torch.quantile(observed, 0.25)
+        lower, median, upper = _observed_quartiles(observed)
+        iqr = upper - lower
         center[index] = median
         if bool(torch.isfinite(iqr)) and float(iqr) >= minimum_scale:
             scale[index] = iqr
@@ -422,13 +422,22 @@ def _fit_stream_statistics_from_observed_parts(
             continue
         observed = torch.cat(observed_parts)
         counts[feature_index] = observed.numel()
-        median = torch.quantile(observed, 0.5)
-        iqr = torch.quantile(observed, 0.75) - torch.quantile(observed, 0.25)
+        lower, median, upper = _observed_quartiles(observed)
+        iqr = upper - lower
         center[feature_index] = median
         if bool(torch.isfinite(iqr)) and float(iqr) >= minimum_scale:
             scale[feature_index] = iqr
             active[feature_index] = True
     return StreamRobustStatistics(center, scale, active, counts)
+
+
+def _observed_quartiles(observed: torch.Tensor) -> torch.Tensor:
+    # torch.quantile rejects more than 2**24 values. NumPy partitions the full
+    # CPU array exactly, retaining every native observation without subsampling.
+    if observed.numel() > 2**24:
+        values = np.quantile(observed.detach().cpu().numpy(), (.25, .5, .75))
+        return torch.as_tensor(values, dtype=observed.dtype, device=observed.device)
+    return torch.quantile(observed, observed.new_tensor((.25, .5, .75)))
 
 
 def _transform_stream(

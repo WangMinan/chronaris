@@ -1,0 +1,11 @@
+{
+  "sample_count": 16777218,
+  "pytorch_error": "quantile() input tensor is too large",
+  "exact_numpy_quantiles": [
+    0.0,
+    0.5,
+    1.0
+  ],
+  "numpy_elapsed_s": 0.13289557583630085,
+  "all_samples_preserved": true
+}

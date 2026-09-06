@@ -1,0 +1,116 @@
+{
+  "scope": "development statistics only",
+  "source_code_sha256": "a76dadfa068fc00c08deb0852fd6406aa0f1c583ff23c83e5dfdb6b2e12628bd",
+  "folds": [
+    {
+      "domain": "clare",
+      "fold_id": "v4_clare_development_fold01",
+      "train_samples": 366,
+      "validation_samples": 428,
+      "elapsed_s": 10.728493556380272,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/clare/v4_clare_development_fold01/normalization.json",
+      "sha256": "bda35ebf5dffb58e78e69b2f656542efc695a3848e93adaee85f356e4038461f",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 930283,
+      "largest_vehicle_observation_count": 1789254
+    },
+    {
+      "domain": "clare",
+      "fold_id": "v4_clare_development_fold02",
+      "train_samples": 578,
+      "validation_samples": 216,
+      "elapsed_s": 13.422013859264553,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/clare/v4_clare_development_fold02/normalization.json",
+      "sha256": "664276088190df46daad4af9a5dd42be2464487e0d4136b92f086ea2eba4e399",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 1445573,
+      "largest_vehicle_observation_count": 2491734
+    },
+    {
+      "domain": "clare",
+      "fold_id": "v4_clare_development_fold03",
+      "train_samples": 644,
+      "validation_samples": 150,
+      "elapsed_s": 13.569315042812377,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/clare/v4_clare_development_fold03/normalization.json",
+      "sha256": "4b2a8039bfd1018c3ebb27de38869c2bdb335476a9a2a5259ef1b204617a8764",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 1607856,
+      "largest_vehicle_observation_count": 2754252
+    },
+    {
+      "domain": "cogpilot",
+      "fold_id": "v4_cogpilot_development_fold01",
+      "train_samples": 1459,
+      "validation_samples": 1065,
+      "elapsed_s": 99.8076473469846,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/cogpilot/v4_cogpilot_development_fold01/normalization.json",
+      "sha256": "ccb8786edc41b3f83fda2ef76c0be4eadddd7bc2919c8925034221643eaba12c",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 28471478,
+      "largest_vehicle_observation_count": 148825
+    },
+    {
+      "domain": "cogpilot",
+      "fold_id": "v4_cogpilot_development_fold02",
+      "train_samples": 1814,
+      "validation_samples": 710,
+      "elapsed_s": 106.43587195593864,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/cogpilot/v4_cogpilot_development_fold02/normalization.json",
+      "sha256": "378fb7d66fd1e320f66d2e9675077771c7c890d42f625ca4c174fbfdb3b2031d",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 28611431,
+      "largest_vehicle_observation_count": 176815
+    },
+    {
+      "domain": "cogpilot",
+      "fold_id": "v4_cogpilot_development_fold03",
+      "train_samples": 1775,
+      "validation_samples": 749,
+      "elapsed_s": 96.8844483802095,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/cogpilot/v4_cogpilot_development_fold03/normalization.json",
+      "sha256": "742c672a4e5a1e0d5897c14c5970725ed4ec6f5f3fc64976f560043dc88b5c68",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 28163433,
+      "largest_vehicle_observation_count": 170814
+    },
+    {
+      "domain": "simulation",
+      "fold_id": "v4_simulation_g1_development_g2_confirmation",
+      "train_samples": 1024,
+      "validation_samples": 256,
+      "elapsed_s": 0.9909216878004372,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/simulation/v4_simulation_g1_development_g2_confirmation/normalization.json",
+      "sha256": "d4fa7b338f10dd43622a9d38770bfad41492ede4e98edb7c3199fcd64c9867c6",
+      "physics_relation_count": 5,
+      "largest_physiology_observation_count": 61456,
+      "largest_vehicle_observation_count": 307201
+    },
+    {
+      "domain": "dingxin",
+      "fold_id": "leave_one_sortie_out__fold01",
+      "train_samples": 18,
+      "validation_samples": 6,
+      "elapsed_s": 1.829464111942798,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/dingxin/leave_one_sortie_out__fold01/normalization.json",
+      "sha256": "707b122a41c8a7f8c1212540a97f462c8e183aacaf79888ff911bdf054374b5e",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 2160,
+      "largest_vehicle_observation_count": 26971
+    },
+    {
+      "domain": "dingxin",
+      "fold_id": "leave_one_sortie_out__fold02",
+      "train_samples": 36,
+      "validation_samples": 12,
+      "elapsed_s": 3.6379491831175983,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-development-normalizers-repair/dingxin/leave_one_sortie_out__fold02/normalization.json",
+      "sha256": "fb56ec42dcdda8e8bc1d7a18ea30cd20c628c9aafb9481046e31ff779953cdc6",
+      "physics_relation_count": 0,
+      "largest_physiology_observation_count": 4320,
+      "largest_vehicle_observation_count": 53942
+    }
+  ],
+  "small_stream_statistics_unchanged": true,
+  "confirmation_used_for_fit": false
+}

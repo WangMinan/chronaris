@@ -1,0 +1,81 @@
+{
+  "scope": "v4 real-domain engineering experiment scripts; test-suite optimizers are separate verification cost",
+  "units": [
+    {
+      "domain_and_tasks": "simulation",
+      "status": "completed",
+      "source_pretraining_updates": 10,
+      "initialization_reused": false,
+      "new_pretraining_updates": 10,
+      "head_warmup_updates": 50,
+      "joint_updates": 10,
+      "pretraining_elapsed_s": 77.8157958430238,
+      "guided_elapsed_s": 253.77074504317716,
+      "self_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/simulation/all/self_supervised/chronaris/C/best.pt",
+      "guided_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/simulation/all/task_guided/chronaris/best.pt"
+    },
+    {
+      "domain_and_tasks": "dingxin_single",
+      "status": "completed",
+      "source_pretraining_updates": 10,
+      "initialization_reused": false,
+      "new_pretraining_updates": 10,
+      "head_warmup_updates": 50,
+      "joint_updates": 10,
+      "pretraining_elapsed_s": 79.29481604881585,
+      "guided_elapsed_s": 278.431136473082,
+      "self_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/single/self_supervised/chronaris/C/best.pt",
+      "guided_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/single/task_guided/chronaris/best.pt"
+    },
+    {
+      "domain_and_tasks": "dingxin_all",
+      "status": "completed",
+      "source_pretraining_updates": 10,
+      "initialization_reused": true,
+      "new_pretraining_updates": 0,
+      "head_warmup_updates": 50,
+      "joint_updates": 10,
+      "pretraining_elapsed_s": 0.0,
+      "guided_elapsed_s": 271.75001840339974,
+      "self_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/self_supervised/chronaris/C/best.pt",
+      "guided_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/task_guided/chronaris/best.pt"
+    },
+    {
+      "domain_and_tasks": "clare",
+      "status": "completed",
+      "source_pretraining_updates": 10,
+      "initialization_reused": false,
+      "new_pretraining_updates": 10,
+      "head_warmup_updates": 50,
+      "joint_updates": 10,
+      "pretraining_elapsed_s": 120.69132770877331,
+      "guided_elapsed_s": 304.45508549315855,
+      "self_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/clare/all/self_supervised/chronaris/C/best.pt",
+      "guided_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/clare/all/task_guided/chronaris/best.pt"
+    },
+    {
+      "domain_and_tasks": "cogpilot",
+      "status": "completed",
+      "source_pretraining_updates": 10,
+      "initialization_reused": false,
+      "new_pretraining_updates": 10,
+      "head_warmup_updates": 50,
+      "joint_updates": 10,
+      "pretraining_elapsed_s": 537.0574723202735,
+      "guided_elapsed_s": 981.596125616692,
+      "self_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/self_supervised/chronaris/C/best.pt",
+      "guided_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/task_guided/chronaris/best.pt"
+    },
+    {
+      "domain_and_tasks": "clare_initial_attempt",
+      "status": "failed_before_task_guidance",
+      "new_pretraining_updates": 10,
+      "head_warmup_updates": 0,
+      "joint_updates": 0,
+      "pretraining_elapsed_s": 121.07571628177539,
+      "guided_elapsed_s": 0.0,
+      "self_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/clare/all/self_supervised/chronaris/C/last.pt"
+    }
+  ],
+  "total_new_optimizer_updates": 350
+}

@@ -13,6 +13,22 @@ from chronaris.representation.contracts import RepresentationContractError
 from tests.representation.test_contracts import _sample
 
 
+def test_exact_native_quantiles_beyond_torch_size_limit_keep_boundary_observations():
+    from chronaris.representation.normalization import _fit_stream_statistics, _fit_stream_statistics_from_observed_parts
+    count = 2**24 + 2
+    values = torch.ones(count)
+    values[:count // 2] = 0
+    values[count // 2 - 1:count // 2 + 1] = torch.tensor([.25, .75])
+    # Both central observations matter: decimation can change this median to .25.
+    streamed = _fit_stream_statistics_from_observed_parts([[values[:count // 2], values[count // 2:]]], minimum_scale=1e-6)
+    materialized = _fit_stream_statistics(values.reshape(1, -1, 1), torch.ones((1, count, 1), dtype=torch.bool), minimum_scale=1e-6)
+    for statistics in (streamed, materialized):
+        assert statistics.center.tolist() == [.5]
+        assert statistics.scale.tolist() == [1.]
+        assert statistics.valid_count.tolist() == [count]
+        assert statistics.active_mask.tolist() == [True]
+
+
 def test_robust_normalizer_fits_only_explicit_train_samples():
     batch = collate_observation_samples(
         [_sample("train_a"), _sample("train_b", shift=2.0), _sample("test", shift=1000.0)]

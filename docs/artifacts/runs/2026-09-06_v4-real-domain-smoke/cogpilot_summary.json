@@ -1,0 +1,292 @@
+{
+  "domain": "cogpilot",
+  "task_mode": "all",
+  "scope": "engineering_smoke_not_candidate_or_confirmation_scores",
+  "data_manifest_sha256": "75292fc4721d24287b0e31470a7014cea99e28327eb85217ac06393672e195ae",
+  "fold": {
+    "fold_id": "v4_cogpilot_development_fold01__engineering_smoke",
+    "train_sample_ids": [
+      "sub-cp019::ses-20210625::level-04B_run-009::window0000",
+      "sub-cp004::ses-20210330::level-04B_run-006::event0007",
+      "sub-cp025::ses-20210820::level-04B_run-004::event0006",
+      "sub-cp025::ses-20210820::level-01B_run-007::event0015",
+      "sub-cp008::ses-20210503::level-03B_run-011::window0002",
+      "sub-cp019::ses-20210625::level-02B_run-008::window0009",
+      "sub-cp025::ses-20210820::level-04B_run-004::window0003",
+      "sub-cp025::ses-20210820::level-04B_run-004::event0001",
+      "sub-cp019::ses-20210625::level-03B_run-002::window0011",
+      "sub-cp025::ses-20210820::level-01B_run-007::window0009",
+      "sub-cp004::ses-20210330::level-02B_run-008::event0001",
+      "sub-cp019::ses-20210625::level-02B_run-008::event0005",
+      "sub-cp004::ses-20210330::level-03B_run-011::event0018",
+      "sub-cp019::ses-20210625::level-04B_run-006::event0004",
+      "sub-cp004::ses-20210330::level-03B_run-011::window0009",
+      "sub-cp025::ses-20210820::level-03B_run-005::window0010",
+      "sub-cp008::ses-20210503::level-04B_run-004::window0007",
+      "sub-cp025::ses-20210820::level-02B_run-003::event0007",
+      "sub-cp019::ses-20210625::level-01B_run-001::event0014",
+      "sub-cp004::ses-20210330::level-02B_run-010::event0014",
+      "sub-cp004::ses-20210330::level-02B_run-008::event0011",
+      "sub-cp025::ses-20210820::level-03B_run-005::event0003",
+      "sub-cp019::ses-20210625::level-02B_run-008::event0000",
+      "sub-cp019::ses-20210625::level-01B_run-001::event0010",
+      "sub-cp025::ses-20210820::level-01B_run-007::window0003",
+      "sub-cp025::ses-20210820::level-04B_run-009::event0002",
+      "sub-cp019::ses-20210625::level-03B_run-002::event0004",
+      "sub-cp025::ses-20210820::level-02B_run-008::event0002",
+      "sub-cp008::ses-20210503::level-03B_run-002::window0006",
+      "sub-cp019::ses-20210625::level-04B_run-004::event0004",
+      "sub-cp019::ses-20210625::level-02B_run-003::window0011",
+      "sub-cp019::ses-20210625::level-03B_run-005::event0011"
+    ],
+    "validation_sample_ids": [
+      "sub-cp003::ses-20210206::level-03B_run-005::event0004",
+      "sub-cp003::ses-20210206::level-01B_run-007::event0003",
+      "sub-cp003::ses-20210206::level-04B_run-004::event0013",
+      "sub-cp003::ses-20210206::level-01B_run-012::event0010",
+      "sub-cp022::ses-20210621::level-04B_run-006::event0015",
+      "sub-cp022::ses-20210621::level-03B_run-005::window0000",
+      "sub-cp003::ses-20210206::level-04B_run-004::event0012",
+      "sub-cp011::ses-20210408::level-04B_run-004::window0020"
+    ],
+    "held_out_sample_ids": [],
+    "train_sample_hash": "8aac07fc1339e5b48cec1861ffe5040b30e4f538259b55442c64a975121c777a",
+    "validation_sample_hash": "abe1540d5264a1667a9bbeee83b8775ea620dda5f495112fbb5c4a48ff7a5ed9",
+    "held_out_sample_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "development_only": true
+  },
+  "self_supervised": {
+    "method_name": "chronaris",
+    "candidate_id": "C",
+    "status": "completed",
+    "best_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/self_supervised/chronaris/C/best.pt",
+    "last_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/self_supervised/chronaris/C/last.pt",
+    "protocol_sha256": "471574d4c26e79f9fa585ee77d2c6ea7fab75828b8a58e0a688919c2d86b43bb",
+    "best_epoch": 10,
+    "completed_epochs": 10,
+    "stopped_early": false,
+    "best_validation_losses": {
+      "masked_reconstruction": 0.893151648068582,
+      "short_horizon_prediction": 0.905720729380846,
+      "lag_discrimination": 0.659834793635777
+    },
+    "best_public_selection_loss": 2.1384527426104443,
+    "training_elapsed_s": 537.0574723202735,
+    "parameter_count": 30448,
+    "epoch_rows": [
+      {
+        "method_name": "chronaris",
+        "candidate_id": "C",
+        "epoch": 10,
+        "optimizer_updates": 10,
+        "train_losses": {
+          "masked_reconstruction": 0.4878408004332663,
+          "short_horizon_prediction": 0.5080083619605702,
+          "lag_discrimination": 0.6700805076237383
+        },
+        "validation_losses": {
+          "masked_reconstruction": 0.893151648068582,
+          "short_horizon_prediction": 0.905720729380846,
+          "lag_discrimination": 0.659834793635777
+        },
+        "mechanism_validation": {
+          "weighted_total": 1.3004880378219974,
+          "terms": [
+            {
+              "term_name": "chronaris_continuous_alignment",
+              "status": "active",
+              "count": 435,
+              "weight": 0.2,
+              "raw_loss": 0.795750052764498,
+              "weighted_loss": 0.1591500105528996,
+              "reason": null
+            },
+            {
+              "term_name": "chronaris_physical_consistency",
+              "status": "unavailable",
+              "count": 0,
+              "weight": 0.05,
+              "raw_loss": null,
+              "weighted_loss": null,
+              "reason": null
+            },
+            {
+              "term_name": "chronaris_causal_direction",
+              "status": "active",
+              "count": 435,
+              "weight": 0.1,
+              "raw_loss": 0.1079332376519839,
+              "weighted_loss": 0.010793324065362585,
+              "reason": null
+            },
+            {
+              "term_name": "observation_anchor",
+              "status": "active",
+              "count": 133908,
+              "weight": 1.0,
+              "raw_loss": 0.9223717262330625,
+              "weighted_loss": 0.9223717262330625,
+              "reason": null
+            },
+            {
+              "term_name": "explicit_time_shift",
+              "status": "active",
+              "count": 8,
+              "weight": 0.1,
+              "raw_loss": 2.081729769706726,
+              "weighted_loss": 0.2081729769706726,
+              "reason": null
+            }
+          ],
+          "explicit_time_shift_accuracy": 0.125,
+          "event_pair_positive_similarity": null,
+          "event_pair_negative_similarity": null,
+          "event_pair_recall_at_1": null,
+          "event_pair_count": 0
+        },
+        "public_selection_loss": 2.1384527426104443,
+        "improved": true,
+        "epochs_without_improvement": 0,
+        "mean_gradient_norm_before_clip": 0.7591795325279236
+      }
+    ],
+    "optimizer_updates": 10,
+    "best_update": 10
+  },
+  "task_guided": {
+    "method_name": "chronaris",
+    "status": "completed",
+    "best_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/task_guided/chronaris/best.pt",
+    "last_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/task_guided/chronaris/last.pt",
+    "protocol_sha256": "cbd6e139cbbd44caa888cd71f89502508154a573d2c31b1aed02f01e95bed63c",
+    "best_epoch": 60,
+    "completed_epochs": 60,
+    "stopped_early": false,
+    "training_elapsed_s": 981.596125616692,
+    "encoder_update_mode": "full_backbone",
+    "training_device_history": [
+      "cuda"
+    ],
+    "epoch_rows": [
+      {
+        "epoch": 60,
+        "optimizer_updates": 60,
+        "joint_updates": 10,
+        "train_difficulty_loss": 0.9995644291241964,
+        "train_event_response_loss": 1.231422166514676,
+        "validation_difficulty_loss": 0.8361954092979431,
+        "validation_event_response_loss": 2.729461113611857,
+        "validation_selection_loss": 1.7828282614549,
+        "gradient_norm_before_clip_last_step": 1.41330087184906,
+        "improved": true,
+        "epochs_without_improvement": 0
+      }
+    ],
+    "optimizer_updates": 60,
+    "head_warmup_updates": 50,
+    "joint_updates": 10,
+    "best_update": 60
+  },
+  "initialization_reused": false,
+  "peak_allocated_bytes": {
+    "self_supervised": 937156608,
+    "task_guided": 1461683712
+  },
+  "fixed_consumer_checks": {
+    "self_supervised": [
+      {
+        "task": "difficulty",
+        "field": 0,
+        "status": "completed",
+        "metric": "macro_f1",
+        "value": 0.5,
+        "train_valid_samples": 12,
+        "validation_valid_samples": 2
+      },
+      {
+        "task": "event_response",
+        "field": 0,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 0.3491291105747223,
+        "train_valid_samples": 20,
+        "validation_valid_samples": 6
+      }
+    ],
+    "task_guided": [
+      {
+        "task": "difficulty",
+        "field": 0,
+        "status": "completed",
+        "metric": "macro_f1",
+        "value": 0.5,
+        "train_valid_samples": 12,
+        "validation_valid_samples": 2
+      },
+      {
+        "task": "event_response",
+        "field": 0,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 0.7400104403495789,
+        "train_valid_samples": 20,
+        "validation_valid_samples": 6
+      }
+    ]
+  },
+  "causality": [
+    {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 5.0,
+      "checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/self_supervised/chronaris/C/best.pt",
+      "checkpoint_sha256": "9a5b4354db207903c5b8dd46b4a2752cdb76bf165c243ff312efac9a8cdc28df",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "sub-cp003::ses-20210206::level-03B_run-005::event0004",
+        "sub-cp003::ses-20210206::level-01B_run-007::event0003",
+        "sub-cp003::ses-20210206::level-04B_run-004::event0013",
+        "sub-cp003::ses-20210206::level-01B_run-012::event0010"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 0.0
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    },
+    {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 5.0,
+      "checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke-repair/cogpilot/all/task_guided/chronaris/best.pt",
+      "checkpoint_sha256": "9a91fd074bb9cf87c3202af6aad6bbe13382061ccffa47d61d0ff5be3902bbf9",
+      "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "sub-cp003::ses-20210206::level-03B_run-005::event0004",
+        "sub-cp003::ses-20210206::level-01B_run-007::event0003",
+        "sub-cp003::ses-20210206::level-04B_run-004::event0013",
+        "sub-cp003::ses-20210206::level-01B_run-012::event0010"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 0.0
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    }
+  ],
+  "encoder_backprop_uses_labels": {
+    "self_supervised": false,
+    "task_guided": true
+  },
+  "selection_uses_validation_labels": {
+    "self_supervised": false,
+    "task_guided": true
+  },
+  "passed": true
+}
