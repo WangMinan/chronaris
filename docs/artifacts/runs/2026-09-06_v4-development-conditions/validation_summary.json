@@ -1,0 +1,12 @@
+{
+  "focused_tests": {
+    "passed": 7,
+    "elapsed_s": 2.75,
+    "log": "/tmp/chronaris-v4-development-conditions-tests.log"
+  },
+  "real_conditions": 8,
+  "contexts_per_condition": 256,
+  "stored_raw_scenarios": 192,
+  "confirmation_opened": false,
+  "model_scores_produced": false
+}

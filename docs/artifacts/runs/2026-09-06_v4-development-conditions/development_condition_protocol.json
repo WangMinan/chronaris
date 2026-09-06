@@ -1,0 +1,114 @@
+{
+  "format": "chronaris.v4_development_conditions.v1",
+  "conditions": [
+    "clean_asynchronous",
+    "random_missing_30pct",
+    "contiguous_gap_15s",
+    "contiguous_gap_30s",
+    "physiology_missing",
+    "vehicle_missing",
+    "physiology_clock_offset_plus_1s",
+    "physiology_response_lag_plus_15s"
+  ],
+  "timing_scenarios": [
+    {
+      "scenario_id": "clean_asynchronous",
+      "vehicle_rate_hz": 10.0,
+      "physiology_rate_hz": 2.0,
+      "vehicle_jitter_std_ms": 2.0,
+      "physiology_jitter_std_ms": 5.0,
+      "vehicle_clock_offset_s": 0.0,
+      "physiology_clock_offset_s": 0.0,
+      "vehicle_clock_drift_ppm": 0.0,
+      "physiology_clock_drift_ppm": 0.0,
+      "vehicle_random_missing_rate": 0.0,
+      "physiology_random_missing_rate": 0.0,
+      "vehicle_block_gap_s": 0.0,
+      "physiology_block_gap_s": 0.0,
+      "additional_physiology_lag_s": 0.0,
+      "observation_snr_db": 30.0
+    },
+    {
+      "scenario_id": "physiology_clock_offset_plus_1s",
+      "vehicle_rate_hz": 10.0,
+      "physiology_rate_hz": 2.0,
+      "vehicle_jitter_std_ms": 2.0,
+      "physiology_jitter_std_ms": 5.0,
+      "vehicle_clock_offset_s": 0.0,
+      "physiology_clock_offset_s": 1.0,
+      "vehicle_clock_drift_ppm": 0.0,
+      "physiology_clock_drift_ppm": 0.0,
+      "vehicle_random_missing_rate": 0.0,
+      "physiology_random_missing_rate": 0.0,
+      "vehicle_block_gap_s": 0.0,
+      "physiology_block_gap_s": 0.0,
+      "additional_physiology_lag_s": 0.0,
+      "observation_snr_db": 30.0
+    },
+    {
+      "scenario_id": "physiology_response_lag_plus_15s",
+      "vehicle_rate_hz": 10.0,
+      "physiology_rate_hz": 2.0,
+      "vehicle_jitter_std_ms": 2.0,
+      "physiology_jitter_std_ms": 5.0,
+      "vehicle_clock_offset_s": 0.0,
+      "physiology_clock_offset_s": 0.0,
+      "vehicle_clock_drift_ppm": 0.0,
+      "physiology_clock_drift_ppm": 0.0,
+      "vehicle_random_missing_rate": 0.0,
+      "physiology_random_missing_rate": 0.0,
+      "vehicle_block_gap_s": 0.0,
+      "physiology_block_gap_s": 0.0,
+      "additional_physiology_lag_s": 15.0,
+      "observation_snr_db": 30.0
+    }
+  ],
+  "missingness": {
+    "random_probability_per_native_point": 0.3,
+    "modalities": [
+      "physiology",
+      "vehicle"
+    ],
+    "block_placement": "centered_within_each_30_second_context",
+    "block_intervals_s": [
+      [
+        7.5,
+        22.5
+      ],
+      [
+        0.0,
+        30.0
+      ]
+    ],
+    "whole_modality_missing": [
+      "physiology",
+      "vehicle"
+    ],
+    "retained_values_and_timestamps_unchanged": true,
+    "seed_namespace": "chronaris-v4-development-mask"
+  },
+  "context_duration_s": 30.0,
+  "context_starts_s": [
+    30.0,
+    60.0,
+    90.0,
+    120.0
+  ],
+  "roles": [
+    "validation"
+  ],
+  "confirmation_generation": false,
+  "model_scores_produced": false,
+  "final_35_scenarios": "unchanged_existing_generator_protocol",
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "generation_source_sha256": "13d70ce6009308fecc96dd268215fa548e07f4379e9c98bb84d6d7d005e375fd",
+  "split_spec": {
+    "split_id": "v4_development",
+    "generator_family": "g1_state_space",
+    "profile_count": 8,
+    "trajectories_per_profile": 8,
+    "profile_seed_base": 4101000000,
+    "latent_seed_base": 4111000000,
+    "observation_seed_base": 4121000000
+  }
+}

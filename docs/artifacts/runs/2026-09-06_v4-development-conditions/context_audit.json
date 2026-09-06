@@ -1,0 +1,136 @@
+{
+  "conditions": [
+    {
+      "condition": "clean_asynchronous",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 59,
+        "mean_points": 60.015625,
+        "maximum_points": 61,
+        "no_observation_windows": 0
+      },
+      "vehicle": {
+        "minimum_points": 299,
+        "mean_points": 299.94140625,
+        "maximum_points": 301,
+        "no_observation_windows": 0
+      }
+    },
+    {
+      "condition": "random_missing_30pct",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 28,
+        "mean_points": 42.68359375,
+        "maximum_points": 52,
+        "no_observation_windows": 0
+      },
+      "vehicle": {
+        "minimum_points": 186,
+        "mean_points": 210.26953125,
+        "maximum_points": 233,
+        "no_observation_windows": 0
+      }
+    },
+    {
+      "condition": "contiguous_gap_15s",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 28,
+        "mean_points": 30.0390625,
+        "maximum_points": 32,
+        "no_observation_windows": 0
+      },
+      "vehicle": {
+        "minimum_points": 148,
+        "mean_points": 149.91796875,
+        "maximum_points": 152,
+        "no_observation_windows": 0
+      }
+    },
+    {
+      "condition": "contiguous_gap_30s",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 0,
+        "mean_points": 0.0,
+        "maximum_points": 0,
+        "no_observation_windows": 256
+      },
+      "vehicle": {
+        "minimum_points": 0,
+        "mean_points": 0.0,
+        "maximum_points": 0,
+        "no_observation_windows": 256
+      }
+    },
+    {
+      "condition": "physiology_missing",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 0,
+        "mean_points": 0.0,
+        "maximum_points": 0,
+        "no_observation_windows": 256
+      },
+      "vehicle": {
+        "minimum_points": 299,
+        "mean_points": 299.94140625,
+        "maximum_points": 301,
+        "no_observation_windows": 0
+      }
+    },
+    {
+      "condition": "vehicle_missing",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 59,
+        "mean_points": 60.015625,
+        "maximum_points": 61,
+        "no_observation_windows": 0
+      },
+      "vehicle": {
+        "minimum_points": 0,
+        "mean_points": 0.0,
+        "maximum_points": 0,
+        "no_observation_windows": 256
+      }
+    },
+    {
+      "condition": "physiology_clock_offset_plus_1s",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 59,
+        "mean_points": 59.9921875,
+        "maximum_points": 61,
+        "no_observation_windows": 0
+      },
+      "vehicle": {
+        "minimum_points": 299,
+        "mean_points": 299.94140625,
+        "maximum_points": 301,
+        "no_observation_windows": 0
+      }
+    },
+    {
+      "condition": "physiology_response_lag_plus_15s",
+      "sample_count": 256,
+      "physiology": {
+        "minimum_points": 59,
+        "mean_points": 60.015625,
+        "maximum_points": 61,
+        "no_observation_windows": 0
+      },
+      "vehicle": {
+        "minimum_points": 299,
+        "mean_points": 299.94140625,
+        "maximum_points": 301,
+        "no_observation_windows": 0
+      }
+    }
+  ],
+  "clock_and_response_factors_separate": true,
+  "paired_trajectory_count": 64,
+  "confirmation_opened": false,
+  "model_scores_produced": false
+}

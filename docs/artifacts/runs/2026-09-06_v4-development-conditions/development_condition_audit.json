@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "generation_source_sha256": "13d70ce6009308fecc96dd268215fa548e07f4379e9c98bb84d6d7d005e375fd",
+  "trajectory_count": 64,
+  "stored_observation_count": 192,
+  "condition_count": 8,
+  "contexts_per_condition": 256,
+  "clean_raw_hashes_identical": true,
+  "latent_truth_shared": true,
+  "confirmation_generated": false,
+  "model_scores_produced": false,
+  "elapsed_s": 13.826312289573252,
+  "simulation_manifest_sha256": "7fb709c82951952ce7b1ba829a957fda7f79db4bbcd3da2c11049cb363523b92"
+}

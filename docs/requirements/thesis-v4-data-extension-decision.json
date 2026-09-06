@@ -1,0 +1,30 @@
+{
+  "format": "chronaris.v4_data_extension_decision.v1",
+  "decision": "trigger_satisfied_activation_after_initial_diagnostic_matrix",
+  "trigger_method": "chronaris",
+  "route": "self_supervised",
+  "seed": 17,
+  "initial_training_trajectories": 256,
+  "approved_training_trajectories_after_activation": 512,
+  "additional_profiles": 32,
+  "additional_trajectories_per_profile": 8,
+  "activation_completed": false,
+  "allowed_extension_count": 1,
+  "validation_metric": "public_selection_loss_including_configured_mechanisms",
+  "validation_losses": {
+    "200": 1.0159104745292666,
+    "400": 0.8008762592055747,
+    "500": 0.727661741908352
+  },
+  "relative_improvements": {
+    "200_to_500": 0.2837343839322829,
+    "400_to_500": 0.09141801427582275
+  },
+  "budget_rule_path": "docs/requirements/thesis-v4-budget-diagnostic.json",
+  "training_checkpoint": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/last.pt",
+  "checkpoint_sha256": "6ac3eb7119705e06c8060841e6c3469ac62a11cf66529ba318cbbcee4b2b9c76",
+  "diagnostic_source_commit": "ef8d88eb1458ee54801b8eb77663a43f96894be9",
+  "confirmation_feedback_used": false,
+  "initial_diagnostic_matrix_retains_256_for_every_method_and_route": true,
+  "all_subsequent_candidates_methods_and_routes_share_expanded_manifest": true
+}
