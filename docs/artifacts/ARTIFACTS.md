@@ -10,6 +10,8 @@
 
 ## 当前九月研究证据
 
+- [v4 真实数据双路线冒烟](runs/2026-09-06_v4-real-domain-smoke/report.md)：鼎新未来机动单任务已完成两路冻结消费者与历史隔离；同域多任务和其他数据域串行推进。
+
 - [v4 原生连续状态执行对照](runs/2026-09-06_v4-native-recurrence/report.md)：同参数原生 CogPilot 批次前后向约提速 12.32 倍；输出、梯度和历史隔离通过，失败探查保留。
 
 - [v4 开发数据与分组](runs/2026-09-06_v4-development-data/report.md)：CogPilot 2,524 个、CLARE 794 个原生窗口；新仿真 1,280 个训练与开发上下文，确认观测未打开。

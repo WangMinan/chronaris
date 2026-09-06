@@ -1,0 +1,8 @@
+{
+  "method": "v4_smoke_clare",
+  "status": "failed",
+  "optimizer_updates": 0,
+  "phase": "task_guided",
+  "error_type": "RepresentationContractError",
+  "reason": "fine-tuning targets do not cover allowed development roles"
+}

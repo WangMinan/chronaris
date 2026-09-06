@@ -11,7 +11,7 @@ from sklearn.metrics import f1_score, root_mean_squared_error
 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
 from chronaris.evaluation.application_tasks.application_finetuning import EndToEndApplicationModel, EndToEndFineTuningConfig, train_end_to_end_application_method
 from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations
-from chronaris.evaluation.application_tasks.application_task_heads import SIMULATION_TASKS, application_targets
+from chronaris.evaluation.application_tasks.application_task_heads import SIMULATION_TASKS, application_targets, select_application_targets
 from chronaris.evaluation.application_tasks.consumer_model_selection import fit_classifier, fit_regressor
 from chronaris.evaluation.application_tasks.v4_correctness import audit_checkpoint_causality
 from chronaris.evaluation.application_tasks.v4_dingxin_data import load_v4_dingxin_development
@@ -63,6 +63,9 @@ def _smoke_inputs(domain, data_root, registry_path):
     else:
         raise ValueError("unknown v4 smoke domain")
     allowed = set(fold.train_sample_ids + fold.validation_sample_ids)
+    if targets is not None:
+        ids = fold.train_sample_ids + fold.validation_sample_ids
+        targets = replace(targets, sample_ids=ids, **select_application_targets(targets, ids, "cpu"))
     def guarded(ids):
         if not set(ids) <= allowed:
             raise ValueError("engineering smoke cannot open confirmation observations")
@@ -144,6 +147,7 @@ def run_v4_smoke(*, domain, output_root, task_mode="all",
                 cuda_graph_recurrence=True), chronaris_fusion_kind="safe_lag", chronaris_mechanism_enabled=True,
             chronaris_explicit_shift_enabled=True, chronaris_explicit_shift_weight=.1, chronaris_event_pair_weight=0.)
         self_peak = torch.cuda.max_memory_allocated()
+        progress.update(optimizer_updates=training.optimizer_updates, source_checkpoint=training.best_checkpoint_path)
         if simulation is not None:
             targets = application_targets(build_guarded_application_consumer_targets(simulation,
                 completed_pretraining_checkpoints=(training.best_checkpoint_path,), task_guided_development=True))
@@ -167,6 +171,8 @@ def run_v4_smoke(*, domain, output_root, task_mode="all",
                 batch_size=4, effective_batch_size=effective, weight_decay=1e-4, device="cuda", early_stopping=False,
                 sampling_hierarchy=hierarchy, data_manifest_sha256=digest))
         guided_peak = torch.cuda.max_memory_allocated()
+        progress.update(optimizer_updates=training.optimizer_updates + guided.optimizer_updates,
+            source_checkpoint=training.best_checkpoint_path, checkpoint=guided.best_checkpoint_path)
         guided_outputs = export_finetuned_application_representations(model=model, checkpoint_path=guided.best_checkpoint_path,
             batch=None, batch_provider=provider, role_sample_ids=roles, output_root=root / "task_guided_representations",
             batch_size=4, export_roles=("train", "validation"))
@@ -178,6 +184,7 @@ def run_v4_smoke(*, domain, output_root, task_mode="all",
                      for path in (training.best_checkpoint_path, guided.best_checkpoint_path)]
         result = {"domain": domain, "task_mode": task_mode, "scope": "engineering_smoke_not_candidate_or_confirmation_scores",
             "data_manifest_sha256": digest, "fold": fold.to_dict(), "self_supervised": asdict(training), "task_guided": asdict(guided),
+            "initialization_reused": training.status == "resumed",
             "peak_allocated_bytes": {"self_supervised": self_peak, "task_guided": guided_peak}, "fixed_consumer_checks": consumers,
             "causality": causality, "encoder_backprop_uses_labels": {"self_supervised": False, "task_guided": True},
             "selection_uses_validation_labels": {"self_supervised": False, "task_guided": True},

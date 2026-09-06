@@ -1,4 +1,5 @@
 from dataclasses import replace
+import json
 
 import pytest
 import torch
@@ -65,6 +66,11 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     assert right["data_cursor"]["samples_seen"] == 30
     assert all(int(state["step"]) == 5 for state in right["optimizer_state_dict"]["state"].values())
     assert right["stage_update_counts"] == dict(pretraining=5, head_warmup=0, joint_adaptation=0)
+    heartbeat = json.loads((tmp_path / f"resumed/{method}/D/progress.json").read_text())
+    assert heartbeat["optimizer_updates"] == 5 and heartbeat["best_update"] == resumed.best_update
+    screen.train_pretext_candidate(output_root=tmp_path / "resumed", **arguments)
+    heartbeat = json.loads((tmp_path / f"resumed/{method}/D/progress.json").read_text())
+    assert heartbeat["optimizer_updates"] == 5 and heartbeat["best_update"] == resumed.best_update
     with pytest.raises(RepresentationContractError, match="protocol changed"):
         screen.train_pretext_candidate(output_root=tmp_path / "resumed",
             **(arguments | {"config": replace(config, effective_batch_size=4)}))

@@ -8,7 +8,8 @@ from chronaris.models.alignment.ode_cells import ODERNNCell
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA graph requires CUDA")
-def test_chunk_replay_preserves_outputs_gradients_accumulation_and_resume():
+@pytest.mark.parametrize("point_count", (61, 1027))
+def test_chunk_replay_preserves_outputs_gradients_accumulation_and_resume(point_count):
     torch.manual_seed(17)
     torch.set_num_threads(1)
     eager = ODERNNCell(8, hidden_dim=8, dynamics_hidden_dim=16, ode_method="euler").cuda()
@@ -17,9 +18,9 @@ def test_chunk_replay_preserves_outputs_gradients_accumulation_and_resume():
     optimizer = torch.optim.AdamW(fast.parameters(), lr=3e-4)
     expected_optimizer = torch.optim.AdamW(eager.parameters(), lr=3e-4)
     h = torch.randn(2, 8, device="cuda", requires_grad=True)
-    x = torch.randn(2, 1027, 8, device="cuda", requires_grad=True)
-    dt = torch.full((2, 1027), .005, dtype=torch.float64, device="cuda", requires_grad=True)
-    mask = torch.ones(2, 1027, dtype=torch.bool, device="cuda")
+    x = torch.randn(2, point_count, 8, device="cuda", requires_grad=True)
+    dt = torch.full((2, point_count), .005, dtype=torch.float64, device="cuda", requires_grad=True)
+    mask = torch.ones(2, point_count, dtype=torch.bool, device="cuda")
     mask[0] = False
     mask[1, 200:400] = False
     inputs = h, x, dt

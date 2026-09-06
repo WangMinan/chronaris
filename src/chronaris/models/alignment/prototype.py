@@ -127,7 +127,7 @@ class SingleStreamODERNNPrototype(nn.Module):
         evolved_hidden_steps: list[torch.Tensor] = []
         updated_hidden_steps: list[torch.Tensor] = []
 
-        use_cuda_graph = self.config.cuda_graph_recurrence and stream.values.is_cuda and point_count >= 512
+        use_cuda_graph = self.config.cuda_graph_recurrence and stream.values.is_cuda and point_count >= 32
         if use_cuda_graph:
             if self._cuda_recurrence is None:
                 self._cuda_recurrence = CUDAGraphRecurrence(self.ode_rnn_cell)

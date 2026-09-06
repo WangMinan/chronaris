@@ -190,7 +190,7 @@ def train_pretext_candidate(
             resolved.seed,
             deterministic=resolved.deterministic,
         ):
-            return _train_pretext_candidate(
+            result = _train_pretext_candidate(
                 method_name,
                 candidate=candidate,
                 batch=batch,
@@ -215,6 +215,9 @@ def train_pretext_candidate(
                 resume=resume,
                 progress=progress,
             )
+            progress.update(optimizer_updates=result.optimizer_updates, best_update=result.best_update,
+                checkpoint=result.last_checkpoint_path, training_action=result.status)
+            return result
 
 
 @contextmanager

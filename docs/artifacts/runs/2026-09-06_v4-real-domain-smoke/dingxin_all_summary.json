@@ -1,0 +1,554 @@
+{
+  "domain": "dingxin",
+  "task_mode": "all",
+  "scope": "engineering_smoke_not_candidate_or_confirmation_scores",
+  "data_manifest_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7",
+  "fold": {
+    "fold_id": "leave_one_sortie_out__fold01__engineering_smoke",
+    "train_sample_ids": [
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0006",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0007",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0008",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0009",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0010",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0011",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0012",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0013",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0014",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0015",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0016",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0017",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0018",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0019",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0020",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0021",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0022"
+    ],
+    "validation_sample_ids": [
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0029",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0030",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0031",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0032",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0033",
+      "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0034"
+    ],
+    "held_out_sample_ids": [
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0006",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0007",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0008",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0009",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0010",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0011",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0012",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0013",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0014",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0015",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0016",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0017",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0018",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0019",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0020",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0021",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0022",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0023",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0029",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0030",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0031",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0032",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0033",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0034",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0005",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0006",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0007",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0008",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0009",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0010",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0011",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0012",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0013",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0014",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0015",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0016",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0017",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0018",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0019",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0020",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0021",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0022",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0023",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0024",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0025",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0026",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0027",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0028",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0029",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0030",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0031",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0032",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0033",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0034"
+    ],
+    "train_sample_hash": "334aed44b2202f7f68539e3ac9d190382708a317276493495c89707e52d7c7eb",
+    "validation_sample_hash": "ef3739f1ee86e6911998a24223aec136f59daba492c3ffc90afda98c8c01370f",
+    "held_out_sample_hash": "a80051b3afd408ff91d49cfa2b620d7bb6a8e91911fa45b46c30e6290a03e24c",
+    "development_only": false
+  },
+  "self_supervised": {
+    "method_name": "chronaris",
+    "candidate_id": "C",
+    "status": "resumed",
+    "best_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/self_supervised/chronaris/C/best.pt",
+    "last_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/self_supervised/chronaris/C/last.pt",
+    "protocol_sha256": "8188126156cb9457b9702fc8c18c2d9e7ec1f0d99b5fa953547261dc6626c0e0",
+    "best_epoch": 8,
+    "completed_epochs": 8,
+    "stopped_early": false,
+    "best_validation_losses": {
+      "masked_reconstruction": 1.9069855145760655,
+      "short_horizon_prediction": 2.4732293546183293,
+      "lag_discrimination": 0.6550951302051544
+    },
+    "best_public_selection_loss": 2.396963292935758,
+    "training_elapsed_s": 79.29481604881585,
+    "parameter_count": 124053,
+    "epoch_rows": [
+      {
+        "method_name": "chronaris",
+        "candidate_id": "C",
+        "epoch": 8,
+        "optimizer_updates": 10,
+        "train_losses": {
+          "masked_reconstruction": 0.6208496038908298,
+          "short_horizon_prediction": 1.124823812117468,
+          "lag_discrimination": 0.6579145113627116
+        },
+        "validation_losses": {
+          "masked_reconstruction": 1.9069855145760655,
+          "short_horizon_prediction": 2.4732293546183293,
+          "lag_discrimination": 0.6550951302051544
+        },
+        "mechanism_validation": {
+          "weighted_total": 0.6613894144418544,
+          "terms": [
+            {
+              "term_name": "chronaris_continuous_alignment",
+              "status": "active",
+              "count": 268,
+              "weight": 0.2,
+              "raw_loss": 0.861711569019218,
+              "weighted_loss": 0.1723423129253423,
+              "reason": null
+            },
+            {
+              "term_name": "chronaris_physical_consistency",
+              "status": "unavailable",
+              "count": 0,
+              "weight": 0.05,
+              "raw_loss": null,
+              "weighted_loss": null,
+              "reason": null
+            },
+            {
+              "term_name": "chronaris_causal_direction",
+              "status": "active",
+              "count": 268,
+              "weight": 0.1,
+              "raw_loss": 0.14191072523149093,
+              "weighted_loss": 0.014191072479363031,
+              "reason": null
+            },
+            {
+              "term_name": "observation_anchor",
+              "status": "active",
+              "count": 2592704,
+              "weight": 1.0,
+              "raw_loss": 0.3228388156329704,
+              "weighted_loss": 0.3228388156329704,
+              "reason": null
+            },
+            {
+              "term_name": "explicit_time_shift",
+              "status": "active",
+              "count": 6,
+              "weight": 0.1,
+              "raw_loss": 1.520172119140625,
+              "weighted_loss": 0.15201721340417862,
+              "reason": null
+            }
+          ],
+          "explicit_time_shift_accuracy": 0.16666666666666666,
+          "event_pair_positive_similarity": null,
+          "event_pair_negative_similarity": null,
+          "event_pair_recall_at_1": null,
+          "event_pair_count": 0
+        },
+        "public_selection_loss": 2.396963292935758,
+        "improved": true,
+        "epochs_without_improvement": 0,
+        "mean_gradient_norm_before_clip": 0.4384394884109497
+      }
+    ],
+    "optimizer_updates": 10,
+    "best_update": 10
+  },
+  "task_guided": {
+    "method_name": "chronaris",
+    "status": "completed",
+    "best_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/task_guided/chronaris/best.pt",
+    "last_checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/task_guided/chronaris/last.pt",
+    "protocol_sha256": "35e4e7a1461ed52ba5d510672e59a8b02ed22edc391950fdceb8aba592e3d1d6",
+    "best_epoch": 53,
+    "completed_epochs": 53,
+    "stopped_early": false,
+    "training_elapsed_s": 271.75001840339974,
+    "encoder_update_mode": "full_backbone",
+    "training_device_history": [
+      "cuda"
+    ],
+    "epoch_rows": [
+      {
+        "epoch": 53,
+        "optimizer_updates": 60,
+        "joint_updates": 10,
+        "train_maneuver_regression_loss": 1.0228876546025276,
+        "train_maneuver_classification_loss": 1.093456357717514,
+        "train_physiology_regression_loss": 1.0570949465036392,
+        "validation_maneuver_regression_loss": 0.2063917020956675,
+        "validation_maneuver_classification_loss": 1.1226834058761597,
+        "validation_physiology_regression_loss": 4.274855454762776,
+        "validation_selection_loss": 1.867976854244868,
+        "gradient_norm_before_clip_last_step": 1.545985460281372,
+        "improved": true,
+        "epochs_without_improvement": 0
+      }
+    ],
+    "optimizer_updates": 60,
+    "head_warmup_updates": 50,
+    "joint_updates": 10,
+    "best_update": 60
+  },
+  "peak_allocated_bytes": {
+    "self_supervised": 0,
+    "task_guided": 726763008
+  },
+  "fixed_consumer_checks": {
+    "self_supervised": [
+      {
+        "task": "maneuver_regression",
+        "field": 0,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 2.881807565689087,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "maneuver_classification",
+        "field": 0,
+        "status": "completed",
+        "metric": "macro_f1",
+        "value": 0.4523809523809524,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 0,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 110.75495910644531,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 1,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 249.99859619140625,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 2,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 70.44886779785156,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 3,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 475.63140869140625,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 4,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 130.4073486328125,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 5,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 364.47216796875,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 6,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 97.91105651855469,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 7,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 255.26077270507812,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 8,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 133.5789337158203,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 9,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 1286.6094970703125,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 10,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 2.2429685592651367,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 11,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 1.075744867324829,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      }
+    ],
+    "task_guided": [
+      {
+        "task": "maneuver_regression",
+        "field": 0,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 2.7156217098236084,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "maneuver_classification",
+        "field": 0,
+        "status": "completed",
+        "metric": "macro_f1",
+        "value": 0.24444444444444446,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 0,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 198.93292236328125,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 1,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 262.391357421875,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 2,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 124.55323028564453,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 3,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 262.1500549316406,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 4,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 167.77963256835938,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 5,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 238.7904815673828,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 6,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 190.58163452148438,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 7,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 355.7032165527344,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 8,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 242.63864135742188,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 9,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 513.1263427734375,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 10,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 1.8630417585372925,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      },
+      {
+        "task": "physiology_regression",
+        "field": 11,
+        "status": "completed",
+        "metric": "rmse",
+        "value": 0.39350560307502747,
+        "train_valid_samples": 18,
+        "validation_valid_samples": 6
+      }
+    ]
+  },
+  "causality": [
+    {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 5.0,
+      "checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/self_supervised/chronaris/C/best.pt",
+      "checkpoint_sha256": "6d8bc20310ff0a138761698da7bb6323c55ac7be24aadbd9b461b6254b08a586",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0029",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0030",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0031",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0032"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 4.76837158203125e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    },
+    {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 5.0,
+      "checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-real-domain-smoke/dingxin/all/task_guided/chronaris/best.pt",
+      "checkpoint_sha256": "6d73651c82151f7db80ca60052e2b9ec22acd5561ceb736e628f3230649fd3d7",
+      "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0029",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0030",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0031",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0032"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 5.066394805908203e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    }
+  ],
+  "encoder_backprop_uses_labels": {
+    "self_supervised": false,
+    "task_guided": true
+  },
+  "selection_uses_validation_labels": {
+    "self_supervised": false,
+    "task_guided": true
+  },
+  "passed": true
+}

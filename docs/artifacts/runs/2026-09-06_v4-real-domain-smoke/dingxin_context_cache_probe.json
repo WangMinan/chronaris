@@ -1,0 +1,28 @@
+{
+  "scope": "CPU input preparation equivalence only",
+  "sample_ids": [
+    "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005",
+    "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0006",
+    "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0007",
+    "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0008"
+  ],
+  "timings_s": {
+    "native_reconstruction": [
+      0.3660699357278645,
+      0.3506709369830787,
+      0.3309089131653309,
+      0.3489757967181504,
+      0.3301273682154715
+    ],
+    "cached_contexts": [
+      0.2862205160781741,
+      0.3142149532213807,
+      0.29088275600224733,
+      0.2817908856086433,
+      0.2846507183276117
+    ]
+  },
+  "speedup": 1.2192550048468092,
+  "all_batch_fields_equal": true,
+  "data_manifest_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7"
+}

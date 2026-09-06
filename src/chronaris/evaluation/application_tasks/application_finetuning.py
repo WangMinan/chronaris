@@ -68,6 +68,7 @@ class EndToEndFineTuningConfig:
     sampling_hierarchy: Mapping[str, tuple[str, ...]] | None = None
     retained_updates: tuple[int, ...] = ()
     data_manifest_sha256: str | None = None
+    cache_head_encodings: bool = True
 
     def __post_init__(self) -> None:
         if min(self.learning_rate, self.gradient_clip_norm) <= 0:
@@ -170,8 +171,8 @@ class EndToEndApplicationModel(nn.Module):
     def encode(self, raw: DualStreamObservationBatch) -> torch.Tensor:
         return self.encode_with_mask(raw)[0]
 
-    def forward(self, raw: DualStreamObservationBatch) -> Mapping[str, torch.Tensor]:
-        sequence, valid = self.encode_with_mask(raw)
+    def forward(self, raw: DualStreamObservationBatch, *, encoding=None) -> Mapping[str, torch.Tensor]:
+        sequence, valid = self.encode_with_mask(raw) if encoding is None else encoding
         sequence = sequence.masked_fill(~valid.unsqueeze(-1), 0)
         pooled = sequence.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1)
         predictions = {task.name: self.task_heads[task.name](
@@ -206,11 +207,15 @@ def train_end_to_end_application_method(
                         module.reset_parameters()
         from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
         with _periodic_training_heartbeat(model.method_name, 30., root=last_path.parent) as progress:
-            return _train_end_to_end_application_method(
+            result = _train_end_to_end_application_method(
                 model=model, batch=batch, targets=targets, role_sample_ids=role_sample_ids,
                 source_checkpoint_path=source_checkpoint_path, output_root=output_root,
                 config=config, resume=resume, batch_provider=batch_provider, progress=progress,
             )
+            progress.update(optimizer_updates=result.optimizer_updates, best_update=result.best_update,
+                checkpoint=result.last_checkpoint_path, head_warmup_updates=result.head_warmup_updates,
+                joint_updates=result.joint_updates)
+            return result
 
 
 def _train_end_to_end_application_method(
@@ -315,6 +320,7 @@ def _train_end_to_end_application_method(
     maximum = config.head_warmup_updates + config.max_updates if update_mode else config.max_epochs
     start_iteration = step_count + 1 if update_mode else completed_epochs + 1
     started = time.perf_counter()
+    head_encodings = {}
     for epoch in range(start_iteration, maximum + 1):
         model.train()
         warming_head = update_mode and step_count < config.head_warmup_updates
@@ -338,7 +344,18 @@ def _train_end_to_end_application_method(
         for micro_index, sample_ids in enumerate(active_batches):
             raw = _load_batch(batch, batch_provider, sample_ids)
             selected = select_application_targets(targets, sample_ids, config.device)
-            output = model(raw)
+            encoding = None
+            if warming_head and config.cache_head_encodings:
+                # Exact batches retain the same padding and FP32 kernel shapes
+                # when this ephemeral cache is rebuilt after an interruption.
+                key = (raw.sample_ids, raw.source_sample_hashes)
+                if key not in head_encodings:
+                    with torch.no_grad():
+                        head_encodings[key] = model.encode_with_mask(raw)
+                encoding = head_encodings[key]
+            else:
+                head_encodings.clear()
+            output = model(raw, encoding=encoding)
             losses = application_task_losses(output, selected, model.task_definitions, task_parameters)
             task_contribution = (sum(losses[name] * losses["counts"][name] / count
                 for name, count in effective_counts.items() if count > 0) / active_tasks

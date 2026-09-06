@@ -1,4 +1,5 @@
 import copy
+from dataclasses import replace
 
 import pytest
 import torch
@@ -72,6 +73,11 @@ def test_head_warmup_and_joint_updates_resume_without_confirmation_labels(tmp_pa
     left, right = (torch.load(path, map_location="cpu", weights_only=True) for path in (complete.last_checkpoint_path, resumed.last_checkpoint_path))
     for key in ("model_state_dict", "optimizer_state_dict", "rng_state", "data_cursor", "update_rows"):
         assert canonical_training_state_sha256(left[key]) == canonical_training_state_sha256(right[key]), key
+    uncached = tuning.train_end_to_end_application_method(model=copy.deepcopy(model), output_root=tmp_path / "uncached",
+        **(arguments | {"config": replace(config, cache_head_encodings=False)}))
+    uncached_payload = torch.load(uncached.last_checkpoint_path, map_location="cpu", weights_only=True)
+    for key in ("model_state_dict", "optimizer_state_dict", "rng_state", "data_cursor", "update_rows"):
+        assert canonical_training_state_sha256(left[key]) == canonical_training_state_sha256(uncached_payload[key]), key
     assert right["data_cursor"]["samples_seen"] == 20
     assert right["data_cursor"]["micro_batches_seen"] == 10
     assert len(right["data_cursor"]["sampling_order_sha256"]) == 64
