@@ -1,0 +1,312 @@
+{
+  "scope": "engineering_update_smoke_historical_G1_new_contexts_not_v4_candidate_selection",
+  "checkpoint": "artifacts/application_evaluation/2026-09-05_v4-update-smoke/chronaris/C/last.pt",
+  "source_code_sha256": "298ab9bc1d1e8ddc72ce392428262b0c425a5a82a02f5a91abab2c8f1175c3f5",
+  "source_data_sha256": "6b8f96558bc2d483710a64058b4329e25b01c500998a4ab38c54559283299306",
+  "config": {
+    "max_epochs": 50,
+    "batch_size": 4,
+    "patience": 8,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "seed": 17,
+    "minimum_delta": 0.0,
+    "device": "cuda",
+    "deterministic": true,
+    "max_ode_step_s": null,
+    "ode_method": "euler",
+    "semantic_event_enabled": true,
+    "learnable_semantic_queries": true,
+    "heartbeat_interval_s": 30.0,
+    "physics_calibration": {
+      "format": "chronaris.kinematic_calibration.v4",
+      "fit_sample_hash": "7339226108e3d911e1d931035bb1cd38c597651b176c642052aa91595e4c67a0",
+      "fit_sample_ids": [
+        "g1_state_space__train_profile_000__trajectory_003__seed_100003__clean_asynchronous::context_030.000",
+        "g1_state_space__train_profile_004__trajectory_028__seed_100028__clean_asynchronous::context_030.000",
+        "g1_state_space__train_profile_008__trajectory_050__seed_100050__clean_asynchronous::context_030.000",
+        "g1_state_space__train_profile_012__trajectory_074__seed_100074__clean_asynchronous::context_030.000"
+      ],
+      "feature_names": [
+        "vehicle.speed_mps",
+        "vehicle.altitude_m",
+        "vehicle.vertical_speed_mps",
+        "vehicle.roll_rad",
+        "vehicle.pitch_rad",
+        "vehicle.yaw_rad",
+        "vehicle.roll_rate_rps",
+        "vehicle.pitch_rate_rps",
+        "vehicle.yaw_rate_rps",
+        "vehicle.longitudinal_acc_mps2",
+        "vehicle.lateral_acc_mps2",
+        "vehicle.normal_load_g"
+      ],
+      "center": [
+        249.37254333496094,
+        6015.3359375,
+        -0.5334727764129639,
+        -0.04739060997962952,
+        -0.011825555004179478,
+        -0.03139076754450798,
+        -0.008134065195918083,
+        0.0003226450935471803,
+        -0.007466604001820087,
+        -0.019326187670230865,
+        -0.09376338124275208,
+        1.003157377243042
+      ],
+      "scale": [
+        2.529449462890625,
+        57.28271484375,
+        3.4638724327087402,
+        0.5543822646141052,
+        0.08162862062454224,
+        0.22493642568588257,
+        0.037033870816230774,
+        0.023087799549102783,
+        0.027752172201871872,
+        0.2278055101633072,
+        1.3295553922653198,
+        0.06337058544158936
+      ],
+      "relations": [
+        {
+          "source": "vehicle.speed_mps",
+          "target": "vehicle.longitudinal_acc_mps2",
+          "component": "vehicle_rigid_body_translation",
+          "unit": "m/s^2",
+          "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+          "source_multiplier": 1.0,
+          "target_multiplier": 1.0,
+          "residual_scale": 0.953226184837807
+        },
+        {
+          "source": "vehicle.altitude_m",
+          "target": "vehicle.vertical_speed_mps",
+          "component": "vehicle_rigid_body_vertical",
+          "unit": "m/s",
+          "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+          "source_multiplier": 1.0,
+          "target_multiplier": 1.0,
+          "residual_scale": 31.133599166554127
+        },
+        {
+          "source": "vehicle.roll_rad",
+          "target": "vehicle.roll_rate_rps",
+          "component": "vehicle_rigid_body_rotation",
+          "unit": "rad/s",
+          "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+          "source_multiplier": 1.0,
+          "target_multiplier": 1.0,
+          "residual_scale": 0.20228560777407972
+        },
+        {
+          "source": "vehicle.pitch_rad",
+          "target": "vehicle.pitch_rate_rps",
+          "component": "vehicle_rigid_body_rotation",
+          "unit": "rad/s",
+          "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+          "source_multiplier": 1.0,
+          "target_multiplier": 1.0,
+          "residual_scale": 0.04852286861971071
+        },
+        {
+          "source": "vehicle.yaw_rad",
+          "target": "vehicle.yaw_rate_rps",
+          "component": "vehicle_rigid_body_rotation",
+          "unit": "rad/s",
+          "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+          "source_multiplier": 1.0,
+          "target_multiplier": 1.0,
+          "residual_scale": 0.16962846263976003
+        }
+      ],
+      "unavailable_relations": []
+    },
+    "physics_weight": 0.05,
+    "max_updates": 10,
+    "effective_batch_size": 32,
+    "validation_interval": 10,
+    "validation_updates": [],
+    "minimum_updates": 0,
+    "checkpoint_interval": 5,
+    "early_stopping": false
+  },
+  "fold": {
+    "fold_id": "v4_update_engineering_smoke",
+    "train_sample_ids": [
+      "g1_state_space__train_profile_000__trajectory_003__seed_100003__clean_asynchronous::context_030.000",
+      "g1_state_space__train_profile_004__trajectory_028__seed_100028__clean_asynchronous::context_030.000",
+      "g1_state_space__train_profile_008__trajectory_050__seed_100050__clean_asynchronous::context_030.000",
+      "g1_state_space__train_profile_012__trajectory_074__seed_100074__clean_asynchronous::context_030.000"
+    ],
+    "validation_sample_ids": [
+      "g1_state_space__validation_profile_000__trajectory_004__seed_200004__clean_asynchronous::context_030.000",
+      "g1_state_space__validation_profile_001__trajectory_011__seed_200011__clean_asynchronous::context_030.000",
+      "g1_state_space__validation_profile_002__trajectory_014__seed_200014__clean_asynchronous::context_030.000",
+      "g1_state_space__validation_profile_003__trajectory_021__seed_200021__clean_asynchronous::context_030.000"
+    ],
+    "held_out_sample_ids": [
+      "confirmation_not_generated"
+    ],
+    "train_sample_hash": "7339226108e3d911e1d931035bb1cd38c597651b176c642052aa91595e4c67a0",
+    "validation_sample_hash": "47544400cd0567b1c556533f872433db223f48f2b42e9fc1b5bf1b6e68a3336d",
+    "held_out_sample_hash": "e8300efcff92edd1e9867e96805ebf49d18172bb18dbe0a289109c4914523e28"
+  },
+  "raw_paths": [
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_000/g1_state_space__train_profile_000__trajectory_003__seed_100003/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_004/g1_state_space__train_profile_004__trajectory_028__seed_100028/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_008/g1_state_space__train_profile_008__trajectory_050__seed_100050/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_012/g1_state_space__train_profile_012__trajectory_074__seed_100074/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_000/g1_state_space__validation_profile_000__trajectory_004__seed_200004/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_001/g1_state_space__validation_profile_001__trajectory_011__seed_200011/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_002/g1_state_space__validation_profile_002__trajectory_014__seed_200014/clean_asynchronous/raw_dual_stream.npz",
+    "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_003/g1_state_space__validation_profile_003__trajectory_021__seed_200021/clean_asynchronous/raw_dual_stream.npz"
+  ],
+  "context_start_s": 30.0,
+  "optimizer_updates": 10,
+  "data_cursor": {
+    "samples_seen": 320,
+    "micro_batches_seen": 80,
+    "sampling_order_sha256": "4882b9c2bce9e4c855839d82f04401c9f0ae0bade01eba3ca78eb96b98c7f229"
+  },
+  "elapsed_s": 79.6633145972155,
+  "peak_allocated_bytes": 131700736,
+  "data_wait_s": 0.17417854815721512,
+  "causality": {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 15.0,
+    "checkpoint_path": "artifacts/application_evaluation/2026-09-05_v4-update-smoke/chronaris/C/best.pt",
+    "checkpoint_sha256": "34cd14f6a5e862fc33bb34b143a9cfbef3f8e24d1d25801e49daf504d25f0fa7",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+    "sample_ids": [
+      "g1_state_space__validation_profile_000__trajectory_004__seed_200004__clean_asynchronous::context_030.000",
+      "g1_state_space__validation_profile_001__trajectory_011__seed_200011__clean_asynchronous::context_030.000",
+      "g1_state_space__validation_profile_002__trajectory_014__seed_200014__clean_asynchronous::context_030.000",
+      "g1_state_space__validation_profile_003__trajectory_021__seed_200021__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 4.76837158203125e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true
+  },
+  "validation": {
+    "method_name": "chronaris",
+    "candidate_id": "C",
+    "epoch": 80,
+    "optimizer_updates": 10,
+    "train_losses": {
+      "masked_reconstruction": 0.5560077286588949,
+      "short_horizon_prediction": 0.5346056371927261,
+      "lag_discrimination": 0.7017215341329575
+    },
+    "validation_losses": {
+      "masked_reconstruction": 0.7893431782722473,
+      "short_horizon_prediction": 0.7516500353813171,
+      "lag_discrimination": 0.7135990858078003
+    },
+    "mechanism_validation": {
+      "weighted_total": 1.1649959553033113,
+      "terms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "status": "active",
+          "count": 348,
+          "weight": 0.2,
+          "raw_loss": 0.9071469306945801,
+          "weighted_loss": 0.18142938613891602,
+          "reason": null
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "status": "active",
+          "count": 3,
+          "weight": 0.05,
+          "raw_loss": 1.2969359159469604,
+          "weighted_loss": 0.06484679877758026,
+          "reason": null
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "status": "active",
+          "count": 348,
+          "weight": 0.1,
+          "raw_loss": 0.09027691185474396,
+          "weighted_loss": 0.009027691558003426,
+          "reason": null
+        },
+        {
+          "term_name": "observation_anchor",
+          "status": "active",
+          "count": 12689,
+          "weight": 1.0,
+          "raw_loss": 0.7191567420959473,
+          "weighted_loss": 0.7191567420959473,
+          "reason": null
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "status": "active",
+          "count": 4,
+          "weight": 0.1,
+          "raw_loss": 1.905353307723999,
+          "weighted_loss": 0.19053533673286438,
+          "reason": null
+        }
+      ],
+      "explicit_time_shift_accuracy": 0.0,
+      "event_pair_positive_similarity": null,
+      "event_pair_negative_similarity": null,
+      "event_pair_recall_at_1": null,
+      "event_pair_count": 0
+    },
+    "public_selection_loss": 1.9259798247367144,
+    "improved": true,
+    "epochs_without_improvement": 0,
+    "mean_gradient_norm_before_clip": 0.3885956406593323
+  },
+  "mechanism_weights": [
+    [
+      "chronaris_causal_direction",
+      0.0
+    ],
+    [
+      "chronaris_continuous_alignment",
+      0.0
+    ],
+    [
+      "chronaris_physical_consistency",
+      0.0
+    ],
+    [
+      "explicit_time_shift",
+      0.0
+    ],
+    [
+      "lag_discrimination",
+      0.2
+    ],
+    [
+      "masked_reconstruction",
+      1.0
+    ],
+    [
+      "observation_anchor",
+      1.0
+    ],
+    [
+      "short_horizon_prediction",
+      0.5
+    ]
+  ],
+  "stage_update_counts": {
+    "pretraining": 10,
+    "head_warmup": 0,
+    "joint_adaptation": 0
+  }
+}

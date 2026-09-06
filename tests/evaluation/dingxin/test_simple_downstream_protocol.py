@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+import pytest
+from dataclasses import replace
 
 from chronaris.evaluation.dingxin.simple_downstream_consumers import (
     SimpleConsumerConfig,
@@ -85,6 +87,33 @@ def test_fixed_consumers_fit_once_and_aggregate_shared_vehicle_contexts() -> Non
     assert physiology_summary["view_context_count"] == len(held_out_ids)
     assert physiology_summary["field_count"] == 3
     assert len(per_field) == 3
+
+
+def test_explicit_inner_fitting_excludes_validation_and_preserves_all_views():
+    raw = _synthetic_raw_bundle()
+    fit_ids = {}
+    for number, sortie in enumerate(("sortie_b", "sortie_a"), 1):
+        contexts = raw.contexts[raw.contexts["sortie_id"] == sortie]
+        vehicles = tuple(contexts["vehicle_context_id"].unique())[:18]
+        fit_ids[f"leave_one_sortie_out__fold{number:02d}"] = tuple(
+            contexts.loc[contexts["vehicle_context_id"].isin(vehicles), "context_id"])
+    before = fit_simple_loso_targets(raw, fit_context_ids_by_fold=fit_ids)
+    excluded = raw.contexts[(raw.contexts["sortie_id"] == "sortie_b") &
+        ~raw.contexts["context_id"].isin(fit_ids["leave_one_sortie_out__fold01"])]
+    physiology, maneuver = raw.physiology_statistics.copy(), raw.maneuver_statistics.copy()
+    physiology.loc[physiology["context_id"].isin(excluded["context_id"]), "future_median"] += 100000
+    maneuver.loc[maneuver["vehicle_context_id"].isin(excluded["vehicle_context_id"]), "future_std"] += 100000
+    after = fit_simple_loso_targets(replace(raw, physiology_statistics=physiology, maneuver_statistics=maneuver),
+                                   fit_context_ids_by_fold=fit_ids)
+    pd.testing.assert_frame_equal(before.threshold_rows, after.threshold_rows)
+    assert before.fold_manifest["fit_vehicle_context_count"].tolist() == [18, 18]
+    assert before.fold_manifest["train_vehicle_context_count"].tolist() == [30, 30]
+    with pytest.raises(ValueError, match="shared vehicle views"):
+        fit_simple_loso_targets(raw, fit_context_ids_by_fold=fit_ids | {
+            "leave_one_sortie_out__fold02": fit_ids["leave_one_sortie_out__fold02"][1:]})
+    with pytest.raises(ValueError, match="outer training role"):
+        fit_simple_loso_targets(raw, fit_context_ids_by_fold=fit_ids | {
+            "leave_one_sortie_out__fold01": fit_ids["leave_one_sortie_out__fold02"]})
 
 
 def _synthetic_raw_bundle() -> SimpleRawTargetBundle:

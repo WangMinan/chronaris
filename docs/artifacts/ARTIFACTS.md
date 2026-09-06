@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-09-05
+更新时间：2026-09-06
 
 ## 目录定位
 
@@ -9,6 +9,9 @@
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
 ## 当前九月研究证据
+
+- [v4 更新训练与任务头](runs/2026-09-05_v4-update-smoke/report.md)：十个 CUDA 完整更新、80 个实际批次及中断重放验证，任务头支持多字段有效掩码。
+- [v4 鼎新内部拟合](runs/2026-09-05_v4-dingxin-inner-targets/report.md)：实际两折均形成 18/6/6 航电上下文划分，目标尺度与阈值按显式内部训练部分拟合。
 
 - [v4 性能与时间边界](runs/2026-09-05_v4-performance/report.md)：事件提取输出与梯度对照通过，四窗口 CUDA 前向实测提速约 8.27 倍；未据此推断整轮训练成本。
 

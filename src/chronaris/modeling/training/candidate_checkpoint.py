@@ -95,6 +95,21 @@ def candidate_protocol_hash(**payload) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def candidate_data_sha256(batch, provider, fold, batch_size):
+    """Fingerprint allowed observations without opening confirmation observations."""
+    from chronaris.representation import select_observation_batch
+    rows = []
+    for role, sample_ids in (("train", fold.train_sample_ids), ("validation", fold.validation_sample_ids)):
+        for start in range(0, len(sample_ids), batch_size):
+            ids = sample_ids[start:start + batch_size]
+            loaded = provider(ids) if provider is not None else select_observation_batch(batch, ids)
+            if tuple(loaded.sample_ids) != tuple(ids):
+                raise RepresentationContractError("data fingerprint provider changed sample order")
+            rows.extend((role, sample, group, source) for sample, group, source in zip(
+                loaded.sample_ids, loaded.group_ids, loaded.source_sample_hashes, strict=True))
+    return hashlib.sha256(json.dumps(rows).encode()).hexdigest()
+
+
 def candidate_source_code_sha256() -> str:
     chronaris_root = Path(__file__).parents[2]
     paths = {

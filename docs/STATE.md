@@ -1,12 +1,12 @@
 # Chronaris 当前状态
 
-更新时间：2026-09-05
+更新时间：2026-09-06
 
 ## v4 当前开发
 
-已按用户批准的[开发与实验合同](requirements/thesis-v4-development-plan.md)建立 `codex/thesis-v4-recovery-20260905`，归档评审材料并开始第一批正确性修复。Goal 模式持续推进，阶段节点不再请求确认。基础修复已提交为 `05bd3a18`，完整测试 498 项通过、8 项跳过；旧权重三种子历史隔离及新锚定十更新 CUDA 冒烟通过。事件前向等价优化实测约提速 8.27 倍，更新训练器正在实现。尚无 v4 正式实验成绩；下方数字和门结果均为 v3.2.3 历史基线。
+已按用户批准的[开发与实验合同](requirements/thesis-v4-development-plan.md)建立 `codex/thesis-v4-recovery-20260905`，归档评审材料并开始第一批正确性修复。Goal 模式持续推进，阶段节点不再请求确认。基础修复已提交为 `05bd3a18`，当前完整测试 507 项通过、8 项跳过；旧权重三种子历史隔离及新锚定十更新 CUDA 冒烟通过。事件前向等价优化实测约提速 8.27 倍，更新训练器十次 CUDA 完整更新与 CPU/CUDA 精确恢复已通过，任务头支持多字段掩码；实际鼎新两折内部目标拟合通过。尚无 v4 正式实验成绩；下方数字和门结果均为 v3.2.3 历史基线。
 
-## 当前结论
+## v3.2.3 历史结论
 
 `main` 已通过拉取请求 [#3](https://github.com/WangMinan/chronaris/pull/3) 集成连续对齐与语义融合研究基线。v3.2.3 受控仿真全部完成，六项机制门通过四项；未来信息隔离与安全单流旁路失败，公开数据与鼎新外层评价保持关闭。
 
@@ -25,10 +25,10 @@
 | 时间机制评价 | 144 份训练与验证表示、840 次评价、3,360 条指标记录 |
 | 机制审计 | 显式时移、事件配对、连续演化、物理一致性通过；未来信息隔离与安全旁路失败 |
 
-## 当前执行与验证
+## v3.2.3 历史执行与验证
 
 - 用户授权的 `main` 冗余清理与文档一致性修复已完成：源码和脚本净减少 438 行，修正 24 个命令入口根路径并清理失效文档入口；详见[当前任务](implementation/TASKS.md)和[清理复核](review/stage/thesis-mainline/redundancy-and-docs-review-2026-09-05.md)。
-- 最新完整测试为 `492 passed, 8 skipped`，代码复用的 CPU/CUDA 逐值对照通过；49 份复用证据、六份审计和 27 个检查点哈希不变。合并前验证记录见[集成复核](review/stage/thesis-mainline/main-integration-2026-09-05.md)。
+- 合并基线时的完整测试为 `492 passed, 8 skipped`，代码复用的 CPU/CUDA 逐值对照通过；49 份复用证据、六份审计和 27 个检查点哈希不变。合并前验证记录见[集成复核](review/stage/thesis-mainline/main-integration-2026-09-05.md)。
 - 当前实验合同为[冻结清单 v3.2.3](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)，模型配置为[冻结模型清单](requirements/thesis-frozen-models-v3.2.json)。
 - 冻结实验源码为 `6a2393e4190367e9504377ee2f2914926e610ae8`，证据标签为 `evidence/thesis-v3p2p3-repair-20260904`。清理后的源码不回填为旧实验源码；复现旧结果应使用该标签。
 - 编排完成量见[运行状态](artifacts/runs/2026-09-04_thesis-simulation-v3p2p3/run_state.json)，全部指标与报告由[产物索引](artifacts/ARTIFACTS.md)导航。

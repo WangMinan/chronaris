@@ -76,4 +76,3 @@ def _collect_segments(active: torch.Tensor) -> list[tuple[int, int]]:
     if start_index is not None:
         segments.append((start_index, active.shape[0] - 1))
     return segments
-

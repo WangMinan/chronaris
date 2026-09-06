@@ -1,0 +1,16 @@
+{
+  "full_suite": {
+    "passed": 507,
+    "skipped": 8,
+    "warnings": 319,
+    "elapsed_s": 308.54,
+    "log": "/tmp/chronaris-v4-updates-full-tests.log",
+    "junit": "/tmp/chronaris-v4-updates-full-tests.xml"
+  },
+  "focused_training_heads": {
+    "passed": 21
+  },
+  "focused_dingxin_update_boundaries": {
+    "passed": 11
+  }
+}

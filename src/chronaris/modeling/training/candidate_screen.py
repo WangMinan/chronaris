@@ -2,6 +2,7 @@
 from __future__ import annotations
 from contextlib import contextmanager
 import math
+import json
 import threading
 import time
 from dataclasses import asdict, dataclass
@@ -10,25 +11,23 @@ from typing import Callable, Mapping, Sequence
 
 import torch
 from torch import nn
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
 from chronaris.modeling.training.candidate_checkpoint import (
     atomic_save_candidate,
     build_candidate_checkpoint_payload,
     candidate_checkpoint_is_compatible,
     candidate_protocol_hash,
     candidate_source_code_sha256,
+    candidate_data_sha256,
     load_candidate_payload,
     training_configs_match_ignoring_device,
 )
 from chronaris.modeling.training.candidate_mechanisms import (
-    build_candidate_mechanism_step,
     evaluate_candidate_mechanisms,
     interleaved_group_batch_ids,
     parameter_gradient_norm,
 )
 from chronaris.modeling.training.pretext import (
     CommonPretextHeadBundle,
-    CommonPretextWeights,
     ExplicitTimeShiftHead,
     pretext_loss_terms_to_rows,
 )
@@ -50,21 +49,15 @@ from chronaris.representation import (
     DualStreamObservationBatch,
     FoldLineage,
     TrainOnlyRobustNormalizer,
-    apply_augmentation_realizations,
-    build_batch_augmentation_realizations,
-    build_common_pretext_targets,
-    build_lag_discrimination_inputs,
-    move_common_pretext_targets,
-    select_observation_batch,
 )
 from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError
 
 
-PUBLIC_SELECTION_WEIGHTS = {
-    "masked_reconstruction": 0.50,
-    "short_horizon_prediction": 0.25,
-    "lag_discrimination": 0.25,
-}
+from chronaris.modeling.training.candidate_step import pretext_micro_step
+from chronaris.modeling.training.candidate_validation import (
+    PUBLIC_SELECTION_WEIGHTS, _evaluate_public_losses, _empty_loss_totals,
+    _accumulate_loss_terms, _finalize_loss_totals, _public_selection_loss, _load_batch, _batch_ids,
+)
 _training_configs_match_ignoring_device = training_configs_match_ignoring_device
 
 @dataclass(frozen=True, slots=True)
@@ -82,9 +75,16 @@ class CandidateScreenConfig:
     ode_method: str = "euler"
     semantic_event_enabled: bool = False
     learnable_semantic_queries: bool = False
-    heartbeat_interval_s: float = 60.0
+    heartbeat_interval_s: float = 30.0
     physics_calibration: Mapping[str, object] | None = None
     physics_weight: float = 0.1
+    max_updates: int | None = None
+    effective_batch_size: int | None = None
+    validation_interval: int = 100
+    validation_updates: tuple[int, ...] = ()
+    minimum_updates: int = 500
+    checkpoint_interval: int = 25
+    early_stopping: bool = True
 
     def __post_init__(self) -> None:
         if self.max_epochs <= 0 or self.batch_size <= 0 or self.patience <= 0:
@@ -109,6 +109,17 @@ class CandidateScreenConfig:
             raise ValueError("learnable semantic queries require semantic_event_enabled")
         if not 0 < self.heartbeat_interval_s <= 60:
             raise ValueError("heartbeat_interval_s must be in (0,60]")
+        if self.max_updates is not None and self.max_updates <= 0:
+            raise ValueError("max_updates must be positive")
+        if self.effective_batch_size is not None and (
+            self.max_updates is None or self.effective_batch_size < self.batch_size
+            or self.effective_batch_size % self.batch_size
+        ):
+            raise ValueError("effective batch must be a multiple of actual batch in update mode")
+        if min(self.validation_interval, self.checkpoint_interval) <= 0 or self.minimum_updates < 0:
+            raise ValueError("update validation/checkpoint schedule is invalid")
+        if any(update <= 0 for update in self.validation_updates):
+            raise ValueError("explicit validation updates must be positive")
 
 
 @dataclass(frozen=True, slots=True)
@@ -127,6 +138,8 @@ class CandidateScreenResult:
     training_elapsed_s: float
     parameter_count: int
     epoch_rows: tuple[Mapping[str, object], ...]
+    optimizer_updates: int = 0
+    best_update: int = 0
 
 
 def train_pretext_candidate(
@@ -160,7 +173,10 @@ def train_pretext_candidate(
         or set(resolved.physics_calibration.get("fit_sample_ids", ())) != set(fold.train_sample_ids)
     ):
         raise RepresentationContractError("physics calibration crossed the training fold")
-    with _periodic_training_heartbeat(method_name, resolved.heartbeat_interval_s):
+    root = Path(output_root) / method_name
+    if include_candidate_subdirectory:
+        root /= candidate.candidate_id
+    with _periodic_training_heartbeat(method_name, resolved.heartbeat_interval_s, root=root) as progress:
         with isolated_training_rng(
             resolved.seed,
             deterministic=resolved.deterministic,
@@ -188,29 +204,49 @@ def train_pretext_candidate(
                 chronaris_event_pair_weight=chronaris_event_pair_weight,
                 include_candidate_subdirectory=include_candidate_subdirectory,
                 resume=resume,
+                progress=progress,
             )
 
 
 @contextmanager
-def _periodic_training_heartbeat(method_name: str, interval_s: float):
+def _periodic_training_heartbeat(method_name: str, interval_s: float, *, root=None):
     stopped = threading.Event()
     started = time.perf_counter()
+    progress = {"method": method_name, "status": "running", "optimizer_updates": 0}
 
     def emit_until_stopped() -> None:
         while not stopped.wait(interval_s):
+            snapshot = dict(progress, wall_elapsed_s=time.perf_counter() - started)
+            if root is not None:
+                root.mkdir(parents=True, exist_ok=True)
+                temporary = root / "progress.json.tmp"
+                temporary.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
+                temporary.replace(root / "progress.json")
             print(
                 f"[candidate-heartbeat] method={method_name} status=alive "
-                f"wall_elapsed_s={time.perf_counter() - started:.1f}",
+                f"updates={snapshot['optimizer_updates']} wall_elapsed_s={snapshot['wall_elapsed_s']:.1f}",
                 flush=True,
             )
 
     thread = threading.Thread(target=emit_until_stopped, daemon=True)
     thread.start()
     try:
-        yield
+        yield progress
+    except BaseException as error:
+        progress.update(status="failed", error_type=type(error).__name__, reason=str(error))
+        if root is not None:
+            root.mkdir(parents=True, exist_ok=True)
+            (root / "failure.json").write_text(json.dumps(progress, ensure_ascii=False, indent=2) + "\n")
+        raise
     finally:
         stopped.set()
         thread.join()
+        if progress["status"] == "running":
+            progress["status"] = "completed"
+        progress["wall_elapsed_s"] = time.perf_counter() - started
+        if root is not None:
+            root.mkdir(parents=True, exist_ok=True)
+            (root / "progress.json").write_text(json.dumps(progress, ensure_ascii=False, indent=2) + "\n")
 
 
 def _train_pretext_candidate(
@@ -237,6 +273,7 @@ def _train_pretext_candidate(
     chronaris_event_pair_weight: float = 0.0,
     include_candidate_subdirectory: bool = True,
     resume: bool = True,
+    progress: dict | None = None,
 ) -> CandidateScreenResult:
     """Train one frozen candidate without opening task labels or simulation truth."""
 
@@ -284,7 +321,9 @@ def _train_pretext_candidate(
         else None
     )
     source_code_sha256 = candidate_source_code_sha256()
+    source_data_sha256 = candidate_data_sha256(batch, batch_provider, fold, resolved.batch_size)
     protocol_hash = candidate_protocol_hash(
+        source_data_sha256=source_data_sha256,
         source_code_sha256=source_code_sha256,
         method_name=method_name,
         candidate=asdict(candidate),
@@ -308,6 +347,8 @@ def _train_pretext_candidate(
     resume_payload = None
     if resume and last_path.exists():
         last_payload = load_candidate_payload(last_path)
+        if last_payload.get("source_data_sha256") != source_data_sha256:
+            raise RepresentationContractError("candidate source data changed; refusing resume")
         if last_payload.get("format") != "chronaris.common_pretraining_checkpoint.v2":
             raise RepresentationContractError(
                 "v1 pretraining checkpoints are inference-only and cannot resume"
@@ -339,6 +380,9 @@ def _train_pretext_candidate(
             )
         if last_payload.get("training_status") == "completed":
             payload = load_candidate_payload(best_path)
+            if progress is not None:
+                progress.update(optimizer_updates=last_payload["step_count"],
+                                best_update=last_payload.get("best_update", 0), checkpoint=str(last_path))
             return _result(payload, best_path, last_path, status="resumed")
         resume_payload = last_payload
 
@@ -399,6 +443,7 @@ def _train_pretext_candidate(
         else float("inf")
     )
     best_epoch = int(resume_payload["best_epoch"]) if resume_payload is not None else 0
+    best_update = int(resume_payload.get("best_update", 0)) if resume_payload else 0
     best_losses: dict[str, float] = (
         dict(resume_payload["best_validation_losses"])
         if resume_payload is not None
@@ -411,10 +456,10 @@ def _train_pretext_candidate(
     augmentation_rows = (
         list(resume_payload.get("augmentation_rows", [])) if resume_payload else []
     )
-    epochs_without_improvement = (
-        int(epoch_rows[-1]["epochs_without_improvement"]) if epoch_rows else 0
-    )
+    epochs_without_improvement = int(resume_payload.get("validation_checks_without_improvement",
+        epoch_rows[-1]["epochs_without_improvement"] if epoch_rows else 0)) if resume_payload else 0
     step_count = int(resume_payload["step_count"]) if resume_payload is not None else 0
+    total_data_wait_s = float(resume_payload.get("data_wait_s", 0)) if resume_payload else 0.
     elapsed_offset = (
         float(resume_payload["training_elapsed_s"]) if resume_payload is not None else 0.0
     )
@@ -428,9 +473,14 @@ def _train_pretext_candidate(
     )
     if device_history[-1] != resolved.device:
         device_history.append(resolved.device)
-    start_epoch = (
-        int(resume_payload["completed_epochs"]) + 1 if resume_payload is not None else 1
-    )
+    update_mode = resolved.max_updates is not None
+    start_epoch = (step_count + 1 if update_mode else
+                   int(resume_payload["completed_epochs"]) + 1 if resume_payload else 1)
+    limit = resolved.max_updates if update_mode else resolved.max_epochs
+    accumulation = (resolved.effective_batch_size or resolved.batch_size) // resolved.batch_size
+    data_cursor = dict(resume_payload.get("data_cursor", {})) if resume_payload else {}
+    samples_seen = int(data_cursor.get("samples_seen", 0))
+    micro_batches_seen = int(data_cursor.get("micro_batches_seen", 0))
     train_batches = (
         interleaved_group_batch_ids(
             batch,
@@ -438,105 +488,51 @@ def _train_pretext_candidate(
             fold.train_sample_ids,
             resolved.batch_size,
         )
-        if chronaris_event_pair_weight > 0
+        if chronaris_event_pair_weight > 0 or update_mode
         else _batch_ids(fold.train_sample_ids, resolved.batch_size)
     )
     started = time.perf_counter()
-    for epoch in range(start_epoch, resolved.max_epochs + 1):
+    sampling_order = tuple(value for ids in train_batches for value in ids)
+    if update_mode and len(sampling_order) < resolved.batch_size:
+        raise ValueError("actual batch exceeds distinct training sample count")
+    order_hash = candidate_protocol_hash(sample_ids=sampling_order)
+    if data_cursor and data_cursor["sampling_order_sha256"] != order_hash:
+        raise RepresentationContractError("resume sampling order changed")
+    for epoch in range(start_epoch, limit + 1):
         encoder.train()
         heads.train()
         if shift_head is not None:
             shift_head.train()
         train_totals = _empty_loss_totals()
         gradient_norms = []
-        for sample_ids in train_batches:
-            raw = _load_batch(batch, batch_provider, sample_ids)
-            normalized = normalizer.transform(raw)
-            plans = build_batch_augmentation_realizations(
-                sample_ids,
-                epoch=epoch,
-                global_seed=resolved.seed,
-                context_duration_s=normalized.context_durations_s.tolist(),
-                policy=policy,
-            )
-            augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
-            targets = build_common_pretext_targets(normalized, augmented)
-            lag_inputs = build_lag_discrimination_inputs(
-                augmented.batch,
-                augmented.augmentation_ids,
-            )
-            positive_batch = move_observation_batch(
-                augmented.batch,
-                device=resolved.device,
-            )
-            negative_batch = move_observation_batch(
-                lag_inputs.negative_batch,
-                device=resolved.device,
-            )
-            targets = move_common_pretext_targets(
-                targets,
-                device=resolved.device,
-            )
-            optimizer.zero_grad(set_to_none=True)
-            diagnostics_required = method_name == "chronaris" and (
-                chronaris_lag_aware_weight > 0 or chronaris_mechanism_enabled
-            )
-            positive = encoder(
-                positive_batch,
-                compute_chronaris_diagnostics=diagnostics_required,
-            )
-            negative = encoder(
-                negative_batch,
-                compute_chronaris_diagnostics=chronaris_mechanism_enabled,
-            )
-            output = heads(
-                positive.sequence_embedding,
-                negative.sequence_embedding,
-                targets,
-                weights=CommonPretextWeights(),
-            )
-            mechanism_step = build_candidate_mechanism_step(
-                encoder=encoder,
-                shift_head=shift_head,
-                positive=positive,
-                negative=negative,
-                augmented=augmented,
-                group_ids=raw.group_ids,
-                epoch=epoch,
-                device=resolved.device,
-                mechanism_enabled=chronaris_mechanism_enabled,
-                lag_aware_weight=chronaris_lag_aware_weight,
-                explicit_shift_weight=chronaris_explicit_shift_weight,
-                event_pair_weight=chronaris_event_pair_weight,
+        if update_mode:
+            active_batches = tuple(tuple(sampling_order[(samples_seen + i * resolved.batch_size + j)
+                % len(sampling_order)] for j in range(resolved.batch_size)) for i in range(accumulation))
+        else:
+            active_batches = train_batches
+        optimizer.zero_grad(set_to_none=True)
+        update_rows_start = len(training_rows)
+        for micro_index, sample_ids in enumerate(active_batches):
+            augmentation_epoch = micro_batches_seen + 1 if update_mode else epoch
+            output, mechanism_step, augmented, data_wait_s = pretext_micro_step(
+                encoder=encoder, heads=heads, shift_head=shift_head, batch=batch,
+                batch_provider=batch_provider, sample_ids=sample_ids, normalizer=normalizer,
+                resolved=resolved, policy=policy, method_name=method_name, epoch=augmentation_epoch,
+                chronaris_lag_aware_weight=chronaris_lag_aware_weight,
+                chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+                chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
+                chronaris_event_pair_weight=chronaris_event_pair_weight,
+                optimizer_updates=step_count + 1 if update_mode else None,
             )
             total_loss = output.total_loss + mechanism_step.additional_loss
-            total_loss.backward()
-            gradient_norms.append(
-                float(
-                    nn.utils.clip_grad_norm_(
-                        trainable_parameters,
-                        resolved.gradient_clip_norm,
-                    )
-                )
-            )
-            encoder_gradient_norm = parameter_gradient_norm(encoder.parameters())
-            shift_gradient_norm = (
-                parameter_gradient_norm(shift_head.parameters())
-                if shift_head is not None
-                else None
-            )
-            semantic_residual = getattr(
-                getattr(getattr(encoder, "backbone", None), "semantic_event_fusion", None),
-                "query_bank",
-                None,
-            )
-            semantic_gradient_norm = (
-                parameter_gradient_norm((semantic_residual.query_residual,))
-                if semantic_residual is not None
-                and semantic_residual.query_residual is not None
-                else None
-            )
-            optimizer.step()
+            total_data_wait_s += data_wait_s
+            if not torch.isfinite(total_loss):
+                root.mkdir(parents=True, exist_ok=True)
+                (root / "failure.json").write_text(json.dumps({"reason": "nonfinite_loss",
+                    "optimizer_updates": step_count, "sample_ids": sample_ids,
+                    "micro_batches_seen": micro_batches_seen, "protocol_sha256": protocol_hash}))
+                raise FloatingPointError("non-finite pretraining loss; unit stopped")
+            (total_loss / (accumulation if update_mode else 1)).backward()
             global_step = step_count + 1
             loss_rows = [dict(row) for row in pretext_loss_terms_to_rows(output.terms)]
             loss_rows.extend(dict(row) for row in mechanism_step.rows)
@@ -548,14 +544,10 @@ def _train_pretext_candidate(
                     "step": global_step,
                     "batch_sample_ids": list(sample_ids),
                     "augmentation_ids": list(augmented.augmentation_ids),
-                    "gradient_norm_before_clip": gradient_norms[-1],
-                    "related_parameter_gradient_norm": (
-                        shift_gradient_norm
-                        if row["term_name"] == "explicit_time_shift"
-                        else semantic_gradient_norm
-                        if row["term_name"] == "event_response_pairing"
-                        else encoder_gradient_norm
-                    ),
+                    "gradient_norm_before_clip": None,
+                    "micro_batch_index": micro_batches_seen,
+                    "augmentation_iteration": augmentation_epoch,
+                    "related_parameter_gradient_norm": None,
                     "mechanism_metrics": mechanism_step.metrics_by_term.get(
                         row["term_name"]
                     ),
@@ -574,60 +566,92 @@ def _train_pretext_candidate(
                 for row in augmented.audit_rows
             )
             _accumulate_loss_terms(train_totals, output.terms)
-            step_count += 1
-        train_losses = _finalize_loss_totals(train_totals)
-        validation_losses = _evaluate_public_losses(
-            encoder=encoder,
-            heads=heads,
-            batch=batch,
-            batch_provider=batch_provider,
-            sample_ids=fold.validation_sample_ids,
-            batch_size=resolved.batch_size,
-            normalizer=normalizer,
-            policy=policy,
-            seed=resolved.seed,
-            device=resolved.device,
-        )
-        mechanism_validation = evaluate_candidate_mechanisms(
-            encoder=encoder,
-            shift_head=shift_head,
-            batch=batch,
-            batch_provider=batch_provider,
-            sample_ids=fold.validation_sample_ids,
-            batch_size=resolved.batch_size,
-            normalizer=normalizer,
-            policy=policy,
-            seed=resolved.seed,
-            device=resolved.device,
-            mechanism_enabled=chronaris_mechanism_enabled,
-            lag_aware_weight=chronaris_lag_aware_weight,
-            explicit_shift_weight=chronaris_explicit_shift_weight,
-            event_pair_weight=chronaris_event_pair_weight,
-        )
-        score = _public_selection_loss(validation_losses) + float(
-            mechanism_validation["weighted_total"]
-        )
-        improved = score < best_score - resolved.minimum_delta
-        if improved:
-            best_score = score
-            best_epoch = epoch
-            best_losses = dict(validation_losses)
-            epochs_without_improvement = 0
-        else:
-            epochs_without_improvement += 1
-        row = {
-            "method_name": method_name,
-            "candidate_id": candidate.candidate_id,
-            "epoch": epoch,
-            "train_losses": train_losses,
-            "validation_losses": validation_losses,
-            "mechanism_validation": mechanism_validation,
-            "public_selection_loss": score,
-            "improved": improved,
-            "epochs_without_improvement": epochs_without_improvement,
-            "mean_gradient_norm_before_clip": sum(gradient_norms) / len(gradient_norms),
-        }
-        epoch_rows.append(row)
+            samples_seen += len(sample_ids)
+            micro_batches_seen += 1
+            complete_update = not update_mode or micro_index + 1 == accumulation
+            if complete_update:
+                norm = float(nn.utils.clip_grad_norm_(trainable_parameters,
+                    resolved.gradient_clip_norm, error_if_nonfinite=True))
+                gradient_norms.append(norm)
+                encoder_norm = parameter_gradient_norm(encoder.parameters())
+                shift_norm = parameter_gradient_norm(shift_head.parameters()) if shift_head is not None else None
+                query_bank = getattr(getattr(getattr(encoder, "backbone", None), "semantic_event_fusion", None), "query_bank", None)
+                semantic_norm = parameter_gradient_norm((query_bank.query_residual,)) if query_bank is not None else None
+                for row in training_rows[update_rows_start:]:
+                    row["gradient_norm_before_clip"] = norm
+                    row["related_parameter_gradient_norm"] = (shift_norm if row["term_name"] == "explicit_time_shift"
+                        else semantic_norm if row["term_name"] == "event_response_pairing" else encoder_norm)
+                optimizer.step()
+                step_count += 1
+                if progress is not None:
+                    progress.update(optimizer_updates=step_count, best_update=best_update,
+                        sample_ids=list(sample_ids), samples_seen=samples_seen,
+                        peak_allocated_bytes=torch.cuda.max_memory_allocated() if resolved.device == "cuda" else 0,
+                        checkpoint=str(last_path), device=resolved.device)
+                    progress["data_wait_s"] = total_data_wait_s
+                optimizer.zero_grad(set_to_none=True)
+                update_rows_start = len(training_rows)
+        improved = False
+        validate = (not update_mode or step_count % resolved.validation_interval == 0
+                    or step_count in resolved.validation_updates or step_count == limit)
+        if validate:
+            train_losses = _finalize_loss_totals(train_totals)
+            validation_losses = _evaluate_public_losses(
+                encoder=encoder,
+                heads=heads,
+                batch=batch,
+                batch_provider=batch_provider,
+                sample_ids=fold.validation_sample_ids,
+                batch_size=resolved.batch_size,
+                normalizer=normalizer,
+                policy=policy,
+                seed=resolved.seed,
+                device=resolved.device,
+            )
+            mechanism_validation = evaluate_candidate_mechanisms(
+                encoder=encoder,
+                shift_head=shift_head,
+                batch=batch,
+                batch_provider=batch_provider,
+                sample_ids=fold.validation_sample_ids,
+                batch_size=resolved.batch_size,
+                normalizer=normalizer,
+                policy=policy,
+                seed=resolved.seed,
+                device=resolved.device,
+                mechanism_enabled=chronaris_mechanism_enabled,
+                lag_aware_weight=chronaris_lag_aware_weight,
+                explicit_shift_weight=chronaris_explicit_shift_weight,
+                event_pair_weight=chronaris_event_pair_weight,
+            )
+            score = _public_selection_loss(validation_losses) + float(
+                mechanism_validation["weighted_total"]
+            )
+            improved = score < best_score - resolved.minimum_delta
+            if improved:
+                best_score = score
+                best_epoch = samples_seen // len(sampling_order) if update_mode else epoch
+                best_update = step_count
+                best_losses = dict(validation_losses)
+                epochs_without_improvement = 0
+            else:
+                epochs_without_improvement += 1
+            row = {
+                "method_name": method_name,
+                "candidate_id": candidate.candidate_id,
+                "epoch": samples_seen // len(sampling_order) if update_mode else epoch,
+                "optimizer_updates": step_count,
+                "train_losses": train_losses,
+                "validation_losses": validation_losses,
+                "mechanism_validation": mechanism_validation,
+                "public_selection_loss": score,
+                "improved": improved,
+                "epochs_without_improvement": epochs_without_improvement,
+                "mean_gradient_norm_before_clip": sum(gradient_norms) / len(gradient_norms),
+            }
+            epoch_rows.append(row)
+        if update_mode and not (validate or step_count % resolved.checkpoint_interval == 0):
+            continue
         payload = build_candidate_checkpoint_payload(
             method_name=method_name,
             candidate=candidate,
@@ -645,7 +669,7 @@ def _train_pretext_candidate(
             vehicle_feature_names=vehicle_feature_names,
             vehicle_field_labels=vehicle_field_labels,
             best_epoch=best_epoch,
-            completed_epochs=epoch,
+            completed_epochs=samples_seen // len(sampling_order) if update_mode else epoch,
             best_losses=best_losses,
             best_score=best_score,
             stopped_early=False,
@@ -666,103 +690,47 @@ def _train_pretext_candidate(
             augmentation_rows=augmentation_rows,
             selection_weights=PUBLIC_SELECTION_WEIGHTS,
         )
+        payload.update({
+            "source_data_sha256": source_data_sha256,
+            "data_wait_s": total_data_wait_s,
+            "optimizer_updates": step_count, "total_optimizer_updates": step_count,
+            "best_update": best_update, "validation_checks_without_improvement": epochs_without_improvement,
+            "stage_update_counts": {"pretraining": step_count, "head_warmup": 0, "joint_adaptation": 0},
+            "data_cursor": {"samples_seen": samples_seen, "micro_batches_seen": micro_batches_seen,
+                            "sampling_order_sha256": order_hash},
+            "actual_batch_size": resolved.batch_size,
+            "effective_batch_size": resolved.effective_batch_size or resolved.batch_size,
+            "update_counting": "optimizer.step",
+        })
         if improved:
             atomic_save_candidate(best_path, payload)
         atomic_save_candidate(last_path, payload)
-        if epochs_without_improvement >= resolved.patience:
+        if (validate and resolved.early_stopping and epochs_without_improvement >= resolved.patience
+            and (not update_mode or step_count >= resolved.minimum_updates)):
             break
     elapsed = elapsed_offset + time.perf_counter() - started
-    stopped_early = len(epoch_rows) < resolved.max_epochs
+    stopped_early = (step_count < limit) if update_mode else (epoch < limit)
     final_payload = load_candidate_payload(best_path)
     completion = {
             "training_status": "completed",
             "training_elapsed_s": elapsed,
-            "completed_epochs": len(epoch_rows),
+            "completed_epochs": samples_seen // len(sampling_order) if update_mode else epoch,
+            "total_optimizer_updates": step_count,
             "stopped_early": stopped_early,
             "epoch_rows": epoch_rows,
-            "step_count": step_count,
             "config": asdict(resolved),
             "training_device_history": device_history,
             "training_rows": training_rows,
             "augmentation_rows": augmentation_rows,
         }
+    if not update_mode:
+        completion["step_count"] = step_count
     final_payload.update(completion)
     atomic_save_candidate(best_path, final_payload)
     last_payload = load_candidate_payload(last_path)
     last_payload.update(completion)
     atomic_save_candidate(last_path, last_payload)
     return _result(final_payload, best_path, last_path, status="completed")
-
-
-def _evaluate_public_losses(
-    *, encoder, heads, batch, batch_provider, sample_ids, batch_size, normalizer, policy, seed, device
-) -> Mapping[str, float]:
-    encoder.eval()
-    heads.eval()
-    totals = _empty_loss_totals()
-    with torch.inference_mode():
-        for ids in _batch_ids(sample_ids, batch_size):
-            raw = _load_batch(batch, batch_provider, ids)
-            normalized = normalizer.transform(raw)
-            plans = build_batch_augmentation_realizations(
-                ids, epoch=0, global_seed=seed, policy=policy,
-                context_duration_s=normalized.context_durations_s.tolist(),
-            )
-            augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
-            targets = build_common_pretext_targets(normalized, augmented)
-            lag_inputs = build_lag_discrimination_inputs(
-                augmented.batch, augmented.augmentation_ids
-            )
-            positive_batch = move_observation_batch(augmented.batch, device=device)
-            negative_batch = move_observation_batch(
-                lag_inputs.negative_batch,
-                device=device,
-            )
-            targets = move_common_pretext_targets(targets, device=device)
-            output = heads(
-                encoder(positive_batch).sequence_embedding,
-                encoder(negative_batch).sequence_embedding,
-                targets,
-                weights=CommonPretextWeights(),
-            )
-            _accumulate_loss_terms(totals, output.terms)
-    return _finalize_loss_totals(totals)
-
-
-def _empty_loss_totals() -> dict[str, list[float]]:
-    return {name: [0.0, 0.0] for name in PUBLIC_SELECTION_WEIGHTS}
-
-
-def _accumulate_loss_terms(totals, terms) -> None:
-    for term in terms:
-        if term.raw_loss is not None and term.count > 0:
-            totals[term.term_name][0] += float(term.raw_loss.detach()) * term.count
-            totals[term.term_name][1] += term.count
-
-
-def _finalize_loss_totals(totals) -> Mapping[str, float]:
-    losses = {}
-    for name, (loss_sum, count) in totals.items():
-        if count <= 0:
-            raise RepresentationContractError(f"candidate screen loss unavailable: {name}")
-        losses[name] = loss_sum / count
-    return losses
-
-
-def _public_selection_loss(losses: Mapping[str, float]) -> float:
-    return sum(PUBLIC_SELECTION_WEIGHTS[name] * losses[name] for name in PUBLIC_SELECTION_WEIGHTS)
-
-
-def _load_batch(batch, provider, sample_ids):
-    loaded = provider(sample_ids) if provider is not None else select_observation_batch(batch, sample_ids)
-    if tuple(loaded.sample_ids) != tuple(sample_ids):
-        raise RepresentationContractError("candidate screen batch provider changed sample order")
-    return loaded
-
-
-def _batch_ids(sample_ids, batch_size):
-    values = tuple(sample_ids)
-    return tuple(values[index : index + batch_size] for index in range(0, len(values), batch_size))
 
 
 def _result(payload, best_path, last_path, *, status) -> CandidateScreenResult:
@@ -781,4 +749,6 @@ def _result(payload, best_path, last_path, *, status) -> CandidateScreenResult:
         training_elapsed_s=float(payload["training_elapsed_s"]),
         parameter_count=int(payload["parameter_count"]),
         epoch_rows=tuple(payload["epoch_rows"]),
+        optimizer_updates=int(payload.get("total_optimizer_updates", payload["step_count"])),
+        best_update=int(payload.get("best_update", 0)),
     )

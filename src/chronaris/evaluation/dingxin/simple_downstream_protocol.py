@@ -6,7 +6,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Mapping
+from typing import Mapping, Sequence
 
 import numpy as np
 import pandas as pd
@@ -93,13 +93,18 @@ def fit_simple_loso_targets(
     minimum_maneuver_semantic_count: int = 4,
     physiology_train_valid_ratio: float = 0.80,
     eps: float = 1e-6,
+    fit_context_ids_by_fold: Mapping[str, Sequence[str]] | None = None,
 ) -> SimpleFoldTargetBundle:
-    """Fit target scales on each training sortie and apply them once to its holdout."""
+    """Fit on explicit inner training contexts, or the whole outer training sortie."""
 
     contexts = raw.contexts.copy()
     sorties = tuple(sorted(contexts["sortie_id"].astype(str).unique()))
     if len(sorties) != 2:
         raise ValueError(f"simple Dingxin protocol requires two sorties, got {len(sorties)}")
+    if fit_context_ids_by_fold is not None and set(fit_context_ids_by_fold) != {
+        "leave_one_sortie_out__fold01", "leave_one_sortie_out__fold02"
+    }:
+        raise ValueError("explicit target fitting must identify both LOSO folds")
     fold_rows: list[dict[str, object]] = []
     maneuver_rows: list[dict[str, object]] = []
     physiology_rows: list[dict[str, object]] = []
@@ -122,6 +127,13 @@ def fit_simple_loso_targets(
             for context_id, role in role_by_context.items()
             if role == "held_out"
         )
+        fit_ids = tuple(fit_context_ids_by_fold[fold_id]) if fit_context_ids_by_fold is not None else train_context_ids
+        if not fit_ids or len(set(fit_ids)) != len(fit_ids) or not set(fit_ids) <= set(train_context_ids):
+            raise ValueError("target fitting crossed the allowed outer training role")
+        fit_vehicle_ids = set(contexts.loc[contexts["context_id"].isin(fit_ids), "vehicle_context_id"])
+        complete_views = set(contexts.loc[contexts["vehicle_context_id"].isin(fit_vehicle_ids), "context_id"])
+        if set(fit_ids) != complete_views:
+            raise ValueError("target fitting must keep shared vehicle views together")
         fold_rows.append(
             {
                 "fold_id": fold_id,
@@ -139,7 +151,10 @@ def fit_simple_loso_targets(
                         "vehicle_context_id"
                     ].nunique()
                 ),
-                "fit_sample_hash": stable_sample_hash(train_context_ids),
+                "fit_sample_hash": stable_sample_hash(fit_ids),
+                "fit_context_count": len(fit_ids),
+                "fit_vehicle_context_count": len(fit_vehicle_ids),
+                "fit_scope": "inner_training" if fit_context_ids_by_fold is not None else "outer_training",
             }
         )
         fold_maneuver, maneuver_thresholds = _fit_maneuver_fold(
@@ -147,6 +162,7 @@ def fit_simple_loso_targets(
             contexts=contexts,
             statistics=raw.maneuver_statistics,
             role_by_context=role_by_context,
+            fit_context_ids=fit_ids,
             minimum_semantic_count=minimum_maneuver_semantic_count,
             eps=eps,
         )
@@ -154,6 +170,7 @@ def fit_simple_loso_targets(
             fold_id=fold_id,
             statistics=raw.physiology_statistics,
             role_by_context=role_by_context,
+            fit_context_ids=fit_ids,
             train_valid_ratio=physiology_train_valid_ratio,
             eps=eps,
         )
@@ -415,14 +432,12 @@ def _extract_physiology_statistics(source, contexts, root):
 
 
 def _fit_maneuver_fold(
-    *, fold_id, contexts, statistics, role_by_context, minimum_semantic_count, eps
+    *, fold_id, contexts, statistics, role_by_context, fit_context_ids, minimum_semantic_count, eps
 ):
     vehicle_roles = contexts[["vehicle_context_id", "context_id"]].copy()
     vehicle_roles["split_role"] = vehicle_roles["context_id"].map(role_by_context)
-    role_by_vehicle = vehicle_roles.groupby("vehicle_context_id")["split_role"].first()
-    train_vehicle_ids = tuple(
-        str(value) for value in role_by_vehicle[role_by_vehicle == "train"].index
-    )
+    train_vehicle_ids = tuple(sorted(vehicle_roles.loc[
+        vehicle_roles["context_id"].isin(fit_context_ids), "vehicle_context_id"].astype(str).unique()))
     train = statistics[statistics["vehicle_context_id"].isin(train_vehicle_ids)]
     scalers = {}
     thresholds = []
@@ -517,11 +532,11 @@ def _fit_maneuver_fold(
 
 
 def _fit_physiology_fold(
-    *, fold_id, statistics, role_by_context, train_valid_ratio, eps
+    *, fold_id, statistics, role_by_context, fit_context_ids, train_valid_ratio, eps
 ):
     frame = statistics.copy()
     frame["split_role"] = frame["context_id"].map(role_by_context)
-    train = frame[frame["split_role"] == "train"]
+    train = frame[frame["context_id"].isin(fit_context_ids)]
     train_context_count = train["context_id"].nunique()
     field_contract = {}
     thresholds = []

@@ -34,7 +34,12 @@ from chronaris.representation.contracts import FUSION_OUTPUT_DIM, Representation
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v2"
+from chronaris.evaluation.application_tasks.application_task_heads import (
+    ApplicationTaskDefinition, ApplicationTaskTargets, SIMULATION_TASKS, application_targets,
+    build_application_heads, fit_application_task_parameters, select_application_targets, application_task_losses,
+)
+
+FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v3"
 
 
 @dataclass(frozen=True, slots=True)
@@ -85,6 +90,7 @@ class EndToEndApplicationModel(nn.Module):
         encoder: TrainableFusionEncoder | None,
         normalizer: TrainOnlyRobustNormalizer | None,
         naive_encoder: NaiveTimeSyncEncoder | None,
+        task_definitions: tuple[ApplicationTaskDefinition, ...] = SIMULATION_TASKS,
     ) -> None:
         super().__init__()
         if (encoder is None) == (naive_encoder is None):
@@ -97,20 +103,20 @@ class EndToEndApplicationModel(nn.Module):
         self.encoder = encoder
         self.normalizer = normalizer
         self.naive_encoder = naive_encoder
-        self.workload_classifier = nn.Linear(FUSION_OUTPUT_DIM, 3)
-        self.workload_regressor = nn.Linear(FUSION_OUTPUT_DIM, 1)
-        self.segmentation_head = CausalTCNEmissionModel(
-            TCNConsumerConfig(
-                input_dim=FUSION_OUTPUT_DIM,
-                hidden_channels=64,
-                class_count=5,
-                kernel_size=5,
-                dilations=(1, 2),
-                dropout=0.1,
-                epochs=1,
-                device="cpu",
-            )
-        )
+        self.task_definitions = task_definitions
+        self.task_heads = build_application_heads(task_definitions)
+
+    @property
+    def workload_classifier(self):
+        return self.task_heads["classification"]
+
+    @property
+    def workload_regressor(self):
+        return self.task_heads["regression"]
+
+    @property
+    def segmentation_head(self):
+        return self.task_heads["segmentation"]
 
     @property
     def encoder_update_mode(self) -> str:
@@ -135,14 +141,14 @@ class EndToEndApplicationModel(nn.Module):
         sequence, valid = self.encode_with_mask(raw)
         sequence = sequence.masked_fill(~valid.unsqueeze(-1), 0)
         pooled = sequence.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1)
-        return {
-            "sequence_embedding": sequence,
-            "pooled_embedding": pooled,
-            "valid_mask": valid,
-            "workload_logits": self.workload_classifier(pooled),
-            "workload_regression_z": self.workload_regressor(pooled).squeeze(-1),
-            "maneuver_logits": self.segmentation_head(sequence),
-        }
+        predictions = {task.name: self.task_heads[task.name](
+            sequence if task.kind == "sequence_classification" else pooled) for task in self.task_definitions}
+        output = {"sequence_embedding": sequence, "pooled_embedding": pooled,
+                  "valid_mask": valid, "task_predictions": predictions}
+        if self.task_definitions == SIMULATION_TASKS:
+            output.update(workload_logits=predictions["classification"],
+                workload_regression_z=predictions["regression"].squeeze(-1), maneuver_logits=predictions["segmentation"])
+        return output
 
 
 def train_end_to_end_application_method(
@@ -156,10 +162,11 @@ def train_end_to_end_application_method(
     config: EndToEndFineTuningConfig,
     resume: bool = True,
 ) -> EndToEndFineTuningResult:
+    targets = application_targets(targets)
     with isolated_training_rng(config.seed):
         last_path = Path(output_root) / model.method_name / "last.pt"
         if not (resume and last_path.is_file()):
-            for head in (model.workload_classifier, model.workload_regressor, model.segmentation_head):
+            for head in model.task_heads.values():
                 for module in head.modules():
                     if hasattr(module, "reset_parameters"):
                         module.reset_parameters()
@@ -207,6 +214,7 @@ def _train_end_to_end_application_method(
                 source_path=source_path,
                 role_sample_ids=role_sample_ids,
                 targets=targets,
+                model=model,
             )
         ):
             raise RepresentationContractError("fine-tuning protocol changed")
@@ -220,11 +228,10 @@ def _train_end_to_end_application_method(
     target_index = {sample_id: index for index, sample_id in enumerate(targets.sample_ids)}
     train_ids = tuple(role_sample_ids["train"])
     validation_ids = tuple(role_sample_ids["validation"])
-    train_positions = [target_index[value] for value in train_ids]
-    regression_mean = float(targets.future_workload_mean[train_positions].mean())
-    regression_std = float(targets.future_workload_mean[train_positions].std().clamp_min(1e-6))
-    class_weights = _balanced_weights(targets.workload_class[train_positions], 3).to(config.device)
-    state_weights = _balanced_weights(targets.maneuver_state[train_positions].flatten(), 5).to(config.device)
+    task_parameters = fit_application_task_parameters(targets, model.task_definitions, train_ids)
+    legacy_regression = task_parameters["tasks"].get("regression", {})
+    regression_mean = legacy_regression.get("center", [0.])[0]
+    regression_std = legacy_regression.get("scale", [1.])[0]
     epoch_rows = list(resume_payload.get("epoch_rows", ())) if resume_payload else []
     best_loss = float(resume_payload.get("best_validation_loss", float("inf"))) if resume_payload else float("inf")
     best_epoch = int(resume_payload.get("best_epoch", 0)) if resume_payload else 0
@@ -247,33 +254,28 @@ def _train_end_to_end_application_method(
         model.train()
         generator = torch.Generator().manual_seed(config.seed * 10_000 + epoch)
         permutation = torch.randperm(len(train_ids), generator=generator).tolist()
-        train_totals = {"classification": 0.0, "regression": 0.0, "segmentation": 0.0}
-        train_count = 0
+        train_totals = {task.name: 0. for task in model.task_definitions}
+        train_counts = dict(train_totals)
         for offset in range(0, len(permutation), config.batch_size):
             positions = permutation[offset : offset + config.batch_size]
             sample_ids = tuple(train_ids[index] for index in positions)
             raw = select_observation_batch(batch, sample_ids)
-            selected = _select_targets(targets, sample_ids, target_index, config.device)
+            selected = select_application_targets(targets, sample_ids, config.device)
             optimizer.zero_grad(set_to_none=True)
             output = model(raw)
-            losses = _task_losses(
-                output,
-                selected,
-                regression_mean=regression_mean,
-                regression_std=regression_std,
-                class_weights=class_weights,
-                state_weights=state_weights,
-            )
+            losses = application_task_losses(output, selected, model.task_definitions, task_parameters)
+            if not torch.isfinite(losses["total"]):
+                raise FloatingPointError("non-finite task-guided loss; unit stopped")
             losses["total"].backward()
             gradient_norm = float(
-                nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip_norm)
+                nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip_norm, error_if_nonfinite=True)
             )
             optimizer.step()
             step_count += 1
             count = len(sample_ids)
             for key in train_totals:
-                train_totals[key] += float(losses[key].detach()) * count
-            train_count += count
+                train_totals[key] += float(losses[key].detach()) * losses["counts"][key]
+                train_counts[key] += losses["counts"][key]
         validation_losses = _evaluate_losses(
             model=model,
             batch=batch,
@@ -282,12 +284,9 @@ def _train_end_to_end_application_method(
             target_index=target_index,
             batch_size=config.batch_size,
             device=config.device,
-            regression_mean=regression_mean,
-            regression_std=regression_std,
-            class_weights=class_weights,
-            state_weights=state_weights,
+            task_parameters=task_parameters,
         )
-        selection_loss = sum(validation_losses.values())
+        selection_loss = sum(validation_losses.values()) / len(validation_losses)
         improved = selection_loss < best_loss
         if improved:
             best_loss = selection_loss
@@ -299,7 +298,7 @@ def _train_end_to_end_application_method(
         epoch_rows.append(
             {
                 "epoch": epoch,
-                **{f"train_{key}_loss": value / max(train_count, 1) for key, value in train_totals.items()},
+                **{f"train_{key}_loss": value / max(train_counts[key], 1e-12) for key, value in train_totals.items()},
                 **{f"validation_{key}_loss": value for key, value in validation_losses.items()},
                 "validation_selection_loss": selection_loss,
                 "gradient_norm_before_clip_last_step": gradient_norm,
@@ -315,6 +314,8 @@ def _train_end_to_end_application_method(
             source_path=source_path,
             role_sample_ids=role_sample_ids,
             target_manifest=targets.manifest,
+            task_parameters=task_parameters,
+            target_sha256=_task_target_sha256(targets),
             regression_mean=regression_mean,
             regression_std=regression_std,
             epoch_rows=epoch_rows,
@@ -340,6 +341,8 @@ def _train_end_to_end_application_method(
         source_path=source_path,
         role_sample_ids=role_sample_ids,
         target_manifest=targets.manifest,
+        task_parameters=task_parameters,
+        target_sha256=_task_target_sha256(targets),
         regression_mean=regression_mean,
         regression_std=regression_std,
         epoch_rows=epoch_rows,
@@ -363,65 +366,21 @@ def _train_end_to_end_application_method(
 def _evaluate_losses(**values):
     model = values["model"]
     model.eval()
-    totals = {"classification": 0.0, "regression": 0.0, "segmentation": 0.0}
-    count = 0
+    totals = {task.name: 0. for task in model.task_definitions}
+    counts = dict(totals)
     ids = tuple(values["sample_ids"])
     with torch.inference_mode():
         for offset in range(0, len(ids), values["batch_size"]):
-            sample_ids = ids[offset : offset + values["batch_size"]]
+            sample_ids = ids[offset:offset + values["batch_size"]]
             raw = select_observation_batch(values["batch"], sample_ids)
-            selected = _select_targets(
-                values["targets"], sample_ids, values["target_index"], values["device"]
-            )
-            losses = _task_losses(
-                model(raw),
-                selected,
-                regression_mean=values["regression_mean"],
-                regression_std=values["regression_std"],
-                class_weights=values["class_weights"],
-                state_weights=values["state_weights"],
-            )
+            selected = select_application_targets(values["targets"], sample_ids, values["device"])
+            losses = application_task_losses(model(raw), selected, model.task_definitions, values["task_parameters"])
             for key in totals:
-                totals[key] += float(losses[key]) * len(sample_ids)
-            count += len(sample_ids)
-    return {key: value / max(count, 1) for key, value in totals.items()}
-
-
-def _task_losses(output, selected, *, regression_mean, regression_std, class_weights, state_weights):
-    classification = F.cross_entropy(
-        output["workload_logits"], selected["workload_class"], weight=class_weights
-    )
-    regression_target = (selected["future_workload_mean"] - regression_mean) / regression_std
-    regression = F.mse_loss(output["workload_regression_z"], regression_target)
-    segmentation = F.cross_entropy(
-        output["maneuver_logits"].reshape(-1, 5),
-        selected["maneuver_state"].reshape(-1),
-        weight=state_weights,
-    )
-    return {
-        "classification": classification,
-        "regression": regression,
-        "segmentation": segmentation,
-        "total": classification + regression + segmentation,
-    }
-
-
-def _select_targets(targets, sample_ids, index, device):
-    positions = [index[value] for value in sample_ids]
-    return {
-        "workload_class": targets.workload_class[positions].to(device),
-        "future_workload_mean": targets.future_workload_mean[positions].to(device),
-        "maneuver_state": targets.maneuver_state[positions].to(device),
-    }
-
-
-def _balanced_weights(labels, class_count):
-    counts = torch.bincount(torch.as_tensor(labels).flatten(), minlength=class_count).float()
-    return torch.where(
-        counts > 0,
-        counts.sum() / (class_count * counts.clamp_min(1)),
-        torch.zeros_like(counts),
-    )
+                totals[key] += float(losses[key]) * losses["counts"][key]
+                counts[key] += losses["counts"][key]
+    if not any(counts.values()):
+        raise RepresentationContractError("internal validation has no valid task labels")
+    return {key: value / counts[key] for key, value in totals.items() if counts[key] > 0}
 
 
 def _validate_inputs(model, batch, targets, roles, source_path):
@@ -446,10 +405,18 @@ def _validate_inputs(model, batch, targets, roles, source_path):
         raise ValueError("fine-tuning method is outside the fixed six-method set")
 
 
-def _protocol_hash(*, model, config, targets, role_sample_ids, source_checkpoint_path):
+def _task_target_sha256(targets):
     target_hash = hashlib.sha256()
-    for values in (targets.future_workload_mean, targets.workload_class, targets.maneuver_state):
-        target_hash.update(values.detach().cpu().numpy().tobytes())
+    for name in sorted(targets.values):
+        target_hash.update(name.encode())
+        target_hash.update(targets.values[name].detach().cpu().numpy().tobytes())
+        target_hash.update(targets.valid_masks[name].detach().cpu().numpy().tobytes())
+    if targets.sample_weights is not None:
+        target_hash.update(targets.sample_weights.detach().cpu().numpy().tobytes())
+    return target_hash.hexdigest()
+
+
+def _protocol_hash(*, model, config, targets, role_sample_ids, source_checkpoint_path):
     payload = {
         "format": FINETUNING_FORMAT,
         "implementation_revision": "causal_fusion_v4",
@@ -458,9 +425,10 @@ def _protocol_hash(*, model, config, targets, role_sample_ids, source_checkpoint
         "config": asdict(config),
         "source_checkpoint_sha256": sha256_file(source_checkpoint_path),
         "roles": {key: list(role_sample_ids[key]) for key in ("train", "validation", "held_out")},
-        "target_sha256": target_hash.hexdigest(),
+        "target_sha256": _task_target_sha256(targets),
         "representation_family": "end_to_end_finetuned_v1",
-        "loss_weights": {"classification": 1.0, "regression_z": 1.0, "segmentation": 1.0},
+        "task_definitions": [asdict(task) for task in model.task_definitions],
+        "loss_reduction": "valid_samples_per_task_then_equal_tasks",
     }
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
 
@@ -484,6 +452,11 @@ def _checkpoint_payload(**values):
         "training_device_history": list(values["device_history"]),
         "role_sample_ids": {key: list(values["role_sample_ids"][key]) for key in ("train", "validation", "held_out")},
         "target_manifest": dict(values["target_manifest"]),
+        "task_parameters": values["task_parameters"],
+        "target_sha256": values["target_sha256"],
+        "task_definitions": [asdict(task) for task in model.task_definitions],
+        "encoder_backprop_uses_labels": model.encoder is not None,
+        "selection_uses_validation_labels": True,
         "regression_train_mean": values["regression_mean"],
         "regression_train_std": values["regression_std"],
         "model_state_dict": model.state_dict(),
@@ -536,6 +509,7 @@ def _resume_is_device_only_migration(
     source_path,
     role_sample_ids,
     targets,
+    model,
 ) -> bool:
     stored_config = dict(payload.get("config", {}))
     expected_config = asdict(config)
@@ -552,6 +526,8 @@ def _resume_is_device_only_migration(
             payload.get("source_checkpoint_sha256") == sha256_file(source_path),
             payload.get("role_sample_ids") == expected_roles,
             payload.get("target_manifest") == dict(targets.manifest),
+            payload.get("target_sha256") == _task_target_sha256(targets),
+            payload.get("task_definitions") == [asdict(task) for task in model.task_definitions],
             payload.get("representation_family") == "end_to_end_finetuned_v1",
             payload.get("label_used_for_encoder_training") is True,
         )
@@ -560,6 +536,6 @@ def _resume_is_device_only_migration(
 
 def _finetuning_source_sha256():
     digest = hashlib.sha256(candidate_source_code_sha256().encode())
-    for name in ("application_finetuning.py", "application_finetuning_export.py", "application_consumers.py"):
+    for name in ("application_finetuning.py", "application_finetuning_export.py", "application_consumers.py", "application_task_heads.py"):
         digest.update(Path(__file__).with_name(name).read_bytes())
     return digest.hexdigest()

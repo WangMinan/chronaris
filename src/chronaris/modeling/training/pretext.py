@@ -256,12 +256,18 @@ def event_pair_contrastive_loss_term(
 
 def chronaris_auxiliary_weight_schedule(
     epoch: int,
+    *, optimizer_updates: int | None = None,
 ) -> ChronarisAuxiliaryWeights:
     """Linearly warm mechanism losses from epoch one through epoch five."""
 
     if epoch <= 0:
         raise ValueError("training epoch must be one-based and positive")
-    fraction = min(epoch / 5.0, 1.0)
+    if optimizer_updates is not None and optimizer_updates < 0:
+        raise ValueError("completed optimizer updates must be non-negative")
+    fraction = (
+        min(epoch / 5.0, 1.0) if optimizer_updates is None
+        else min(max((optimizer_updates - 50) / 150.0, 0.0), 1.0)
+    )
     return ChronarisAuxiliaryWeights(
         continuous_alignment=0.2 * fraction,
         physical_consistency=0.1 * fraction,

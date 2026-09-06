@@ -50,14 +50,18 @@ def build_candidate_mechanism_step(
     lag_aware_weight: float,
     explicit_shift_weight: float,
     event_pair_weight: float,
+    optimizer_updates: int | None = None,
 ) -> CandidateMechanismStep:
     zero = positive.sequence_embedding.sum() * 0.0
     additional_loss = zero
     rows: list[Mapping[str, object]] = []
     metrics: dict[str, Mapping[str, object]] = {}
-    warmup_fraction = min(epoch / 5.0, 1.0)
+    warmup_fraction = (
+        min(epoch / 5.0, 1.0) if optimizer_updates is None
+        else min(max((optimizer_updates - 50) / 150.0, 0.0), 1.0)
+    )
     if mechanism_enabled:
-        weights = chronaris_auxiliary_weight_schedule(epoch)
+        weights = chronaris_auxiliary_weight_schedule(epoch, optimizer_updates=optimizer_updates)
         mechanism = build_chronaris_auxiliary_losses(
             positive,
             negative,
@@ -89,7 +93,7 @@ def build_candidate_mechanism_step(
                 "reason": None if result.count else "no_valid_causal_lag",
             }
         )
-    if shift_head is not None:
+    if shift_head is not None and (optimizer_updates is None or warmup_fraction > 0):
         inputs = build_explicit_time_shift_inputs(
             augmented.batch,
             augmented.augmentation_ids,
@@ -121,6 +125,10 @@ def build_candidate_mechanism_step(
             ),
             "shifts_s": [float(value) for value in inputs.shifts_s],
         }
+    elif shift_head is not None:
+        rows.append({"term_name": "explicit_time_shift", "weight": 0., "count": 0,
+                     "status": "scheduled_zero", "raw_loss": None, "weighted_loss": None,
+                     "reason": "mechanisms_disabled_first_50_updates"})
     if event_pair_weight > 0:
         semantic_output = positive.auxiliary.get("semantic_event_output")
         if semantic_output is None:
