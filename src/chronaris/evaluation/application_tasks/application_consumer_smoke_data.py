@@ -97,8 +97,14 @@ def build_guarded_application_consumer_targets(
     completed_pretraining_checkpoints: Sequence[str | Path],
     smoke_only: bool = True,
     workload_thresholds: tuple[float, float] | None = None,
+    task_guided_development: bool = False,
 ) -> ApplicationConsumerSmokeTargets:
-    _require_five_completed_checkpoints(completed_pretraining_checkpoints)
+    if task_guided_development:
+        _require_development_checkpoint(completed_pretraining_checkpoints, data)
+    else:
+        _require_five_completed_checkpoints(completed_pretraining_checkpoints)
+    if tuple(row["sample_id"] for row in data.sample_manifest_rows) != data.batch.sample_ids:
+        raise ValueError("application target manifest changed observation sample order")
     role_by_sample = {
         sample_id: role
         for role, sample_ids in data.role_sample_ids.items()
@@ -176,7 +182,8 @@ def build_guarded_application_consumer_targets(
         "workload_threshold_source": threshold_source,
         "maneuver_state_names": list(MANEUVER_STATE_NAMES),
         "query_point_count": int(maneuver_state.shape[1]),
-        "oracle_opened_after_checkpoint_count": 5,
+        "oracle_opened_after_checkpoint_count": len(completed_pretraining_checkpoints),
+        "task_guided_development": task_guided_development,
         "allowed_oracle_fields": [
             "true_time_s",
             "workload",
@@ -218,3 +225,20 @@ def _require_five_completed_checkpoints(paths) -> None:
         methods.add(str(payload["method_name"]))
     if len(methods) != 5:
         raise ValueError("application target checkpoint methods are incomplete")
+
+
+def _require_development_checkpoint(paths, data):
+    if len(paths) != 1:
+        raise ValueError("task-guided development requires its own completed initialization")
+    payload = torch.load(paths[0], map_location="cpu", weights_only=True)
+    if (payload.get("format") != "chronaris.common_pretraining_checkpoint.v2"
+        or payload.get("training_status") != "completed"
+        or payload.get("label_used_for_encoder_training") is not False
+        or payload.get("config", {}).get("max_updates") is None):
+        raise ValueError("task-guided target checkpoint must be v4 self-supervised initialization")
+    for role in ("train", "validation"):
+        if set(data.role_sample_ids[role]) != set(payload["fold"][f"{role}_sample_ids"]):
+            raise ValueError("task-guided target source data roles changed")
+    allowed = set(data.role_sample_ids["train"]) | set(data.role_sample_ids["validation"])
+    if not set(data.batch.sample_ids) <= allowed:
+        raise ValueError("task-guided development cannot open confirmation targets")

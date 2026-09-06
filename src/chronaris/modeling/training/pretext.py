@@ -46,6 +46,7 @@ class PretextLossTerm:
     raw_loss: torch.Tensor | None
     weighted_loss: torch.Tensor | None
     reason: str | None
+    components: tuple[PretextLossTerm, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,12 +62,24 @@ class CommonPretextLossOutput:
 class CommonPretextHeadBundle(nn.Module):
     """Identical public heads attached after each 64-dimensional encoder."""
 
-    def __init__(self, *, representation_dim: int, target_feature_count: int) -> None:
+    def __init__(self, *, representation_dim: int, target_feature_count: int,
+                 modality_feature_counts: tuple[int, int] | None = None,
+                 input_streams: tuple[str, ...] = ("physiology", "vehicle")) -> None:
         super().__init__()
         if representation_dim <= 0 or target_feature_count <= 0:
             raise ValueError("pretext head dimensions must be positive")
         self.representation_dim = representation_dim
         self.target_feature_count = target_feature_count
+        self.modality_feature_counts = tuple(modality_feature_counts) if modality_feature_counts is not None else None
+        self.input_streams = tuple(input_streams)
+        if (not self.input_streams or len(set(self.input_streams)) != len(self.input_streams)
+            or not set(self.input_streams) <= {"physiology", "vehicle"}):
+            raise ValueError("invalid pretext input modalities")
+        if self.modality_feature_counts is not None and (
+            len(self.modality_feature_counts) != 2 or min(self.modality_feature_counts) <= 0
+            or sum(self.modality_feature_counts) != target_feature_count
+        ):
+            raise ValueError("pretext modality feature counts differ from target schema")
         self.reconstruction_head = nn.Linear(
             representation_dim,
             target_feature_count,
@@ -80,6 +93,13 @@ class CommonPretextHeadBundle(nn.Module):
             nn.Linear(representation_dim, 1),
         )
 
+    @property
+    def cross_stream_enabled(self):
+        return self.modality_feature_counts is None or len(self.input_streams) == 2
+
+    def objective_config(self):
+        return {"modality_feature_counts": self.modality_feature_counts, "input_streams": self.input_streams}
+
     def forward(
         self,
         positive_sequence: torch.Tensor,
@@ -87,6 +107,9 @@ class CommonPretextHeadBundle(nn.Module):
         targets: CommonPretextTargets,
         *,
         weights: CommonPretextWeights | None = None,
+        positive_valid_mask: torch.Tensor | None = None,
+        negative_valid_mask: torch.Tensor | None = None,
+        lag_valid_mask: torch.Tensor | None = None,
     ) -> CommonPretextLossOutput:
         _validate_sequence_pair(
             positive_sequence,
@@ -100,17 +123,24 @@ class CommonPretextHeadBundle(nn.Module):
         resolved_weights = weights or CommonPretextWeights()
         reconstruction = self.reconstruction_head(positive_sequence)
         next_query = self.next_query_head(positive_sequence)
-        positive_logits = self.lag_head(positive_sequence.mean(dim=1)).squeeze(-1)
-        negative_logits = self.lag_head(negative_sequence.mean(dim=1)).squeeze(-1)
+        if self.modality_feature_counts is not None and (positive_valid_mask is None or negative_valid_mask is None):
+            raise ValueError("v4 pretext requires encoder validity masks")
+        if self.cross_stream_enabled:
+            positive_logits = self.lag_head(_pretext_pool(positive_sequence, positive_valid_mask)).squeeze(-1)
+            negative_logits = self.lag_head(_pretext_pool(negative_sequence, negative_valid_mask)).squeeze(-1)
+        else:
+            positive_logits = positive_sequence.new_zeros(positive_sequence.shape[0])
+            negative_logits = torch.zeros_like(positive_logits)
+            lag_valid_mask = torch.zeros_like(positive_logits, dtype=torch.bool)
         terms = (
-            _masked_huber_term(
+            self._reconstruction_term(
                 "masked_reconstruction",
                 reconstruction,
                 targets.reconstruction_target,
                 targets.reconstruction_mask,
                 weight=resolved_weights.masked_reconstruction,
             ),
-            _masked_huber_term(
+            self._reconstruction_term(
                 "short_horizon_prediction",
                 next_query,
                 targets.next_query_target,
@@ -121,6 +151,7 @@ class CommonPretextHeadBundle(nn.Module):
                 positive_logits,
                 negative_logits,
                 weight=resolved_weights.lag_discrimination,
+                valid_mask=lag_valid_mask,
             ),
         )
         active = [term.weighted_loss for term in terms if term.weighted_loss is not None]
@@ -137,6 +168,27 @@ class CommonPretextHeadBundle(nn.Module):
             positive_lag_logits=positive_logits,
             negative_lag_logits=negative_logits,
         )
+
+    def _reconstruction_term(self, name, prediction, target, mask, *, weight):
+        if self.modality_feature_counts is None:
+            return _masked_huber_term(name, prediction, target, mask, weight=weight)
+        first, second = self.modality_feature_counts
+        slices = {"physiology": slice(0, first), "vehicle": slice(first, first + second)}
+        components = tuple(_masked_huber_term(stream, prediction[..., slices[stream]],
+            target[..., slices[stream]], mask[..., slices[stream]], weight=weight) for stream in self.input_streams)
+        active = [term.raw_loss for term in components if term.count]
+        raw = torch.stack(active).mean() if active else None
+        return PretextLossTerm(name, weight, "active" if active else "unavailable",
+            sum(term.count for term in components), raw, raw * weight if raw is not None else None,
+            None if active else "no_observed_input_modality_targets", components)
+
+
+def _pretext_pool(sequence, valid_mask):
+    if valid_mask is None:
+        return sequence.mean(dim=1)
+    if valid_mask.shape != sequence.shape[:2] or valid_mask.dtype != torch.bool:
+        raise ValueError("pretext pool validity mask is invalid")
+    return sequence.masked_fill(~valid_mask[..., None], 0).sum(dim=1) / valid_mask.sum(dim=1, keepdim=True).clamp_min(1)
 
 
 class ExplicitTimeShiftHead(nn.Module):
@@ -297,6 +349,11 @@ def pretext_loss_terms_to_rows(
                     else None
                 ),
                 "reason": term.reason,
+                "modality_losses": {
+                    component.term_name: {"count": component.count,
+                        "raw_loss": float(component.raw_loss.detach()) if component.raw_loss is not None else None}
+                    for component in term.components
+                },
             }
         )
     return tuple(rows)
@@ -323,8 +380,9 @@ def _masked_huber_term(
             weighted_loss=None,
             reason="no_valid_target_positions",
         )
-    element_loss = F.smooth_l1_loss(prediction, target, reduction="none")
-    raw = element_loss[mask].mean()
+    if not torch.isfinite(prediction[mask]).all() or not torch.isfinite(target[mask]).all():
+        raise ValueError("observed pretext prediction/target is non-finite")
+    raw = F.smooth_l1_loss(prediction[mask], target[mask])
     return PretextLossTerm(
         term_name=name,
         weight=float(weight),
@@ -341,7 +399,12 @@ def _lag_discrimination_term(
     negative_logits,
     *,
     weight,
+    valid_mask=None,
 ) -> PretextLossTerm:
+    if valid_mask is not None:
+        if valid_mask.shape != positive_logits.shape or valid_mask.dtype != torch.bool:
+            raise ValueError("lag validity must identify available cross-stream samples")
+        positive_logits, negative_logits = positive_logits[valid_mask], negative_logits[valid_mask]
     logits = torch.cat((positive_logits, negative_logits), dim=0)
     labels = torch.cat(
         (torch.ones_like(positive_logits), torch.zeros_like(negative_logits)),

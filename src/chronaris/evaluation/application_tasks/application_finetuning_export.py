@@ -18,6 +18,7 @@ from chronaris.representation import (
     write_fusion_stream_batch,
 )
 from chronaris.representation.contracts import RepresentationContractError
+from chronaris.modeling.training.candidate_validation import _load_batch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
@@ -29,7 +30,10 @@ def export_finetuned_application_representations(
     role_sample_ids: Mapping[str, Sequence[str]],
     output_root: str | Path,
     batch_size: int = 128,
+    batch_provider=None,
 ) -> Mapping[str, FusionStreamBatch]:
+    if (batch is None) == (batch_provider is None):
+        raise ValueError("fine-tuned export requires exactly one observation source")
     payload = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     if (
         payload.get("format") != FINETUNING_FORMAT
@@ -38,12 +42,17 @@ def export_finetuned_application_representations(
         raise RepresentationContractError(
             "fine-tuned representation checkpoint is incomplete"
         )
-    if payload.get("label_used_for_encoder_training") is not True:
-        raise RepresentationContractError("fine-tuned checkpoint must declare label use")
+    expected_labels = model.encoder is not None
+    if payload.get("label_used_for_encoder_training") is not expected_labels:
+        raise RepresentationContractError("fine-tuned checkpoint label provenance differs from encoder kind")
     expected_roles = {key: list(value) for key, value in role_sample_ids.items()}
     if payload.get("role_sample_ids") != expected_roles:
         raise RepresentationContractError("fine-tuned export role lineage changed")
-    model.load_state_dict(payload["model_state_dict"], strict=True)
+    if model.normalizer is not None and model.normalizer.to_manifest() != payload.get("normalizer"):
+        raise RepresentationContractError("fine-tuned export normalization changed")
+    if model.encoder is not None:
+        model.encoder.load_state_dict({name.removeprefix("encoder."): value
+            for name, value in payload["model_state_dict"].items() if name.startswith("encoder.")}, strict=True)
     model.eval()
     checkpoint_hash = sha256_file(checkpoint_path)
     outputs = {}
@@ -51,7 +60,7 @@ def export_finetuned_application_representations(
         chunks = []
         ids = tuple(role_sample_ids[role])
         for offset in range(0, len(ids), batch_size):
-            raw = select_observation_batch(batch, ids[offset : offset + batch_size])
+            raw = _load_batch(batch, batch_provider, ids[offset : offset + batch_size])
             with torch.inference_mode():
                 sequence, valid = model.encode_with_mask(raw)
                 sequence = sequence.masked_fill(~valid.unsqueeze(-1), 0).detach().cpu()
@@ -73,7 +82,7 @@ def export_finetuned_application_representations(
             valid_mask=valid,
             pooled_embedding=sequence.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1),
             method_name=model.method_name,
-            fold_id=f"simulation_g1_to_g2_end_to_end__seed_{payload['seed']}",
+            fold_id=payload["fold_id"],
             checkpoint_sha256=checkpoint_hash,
             source_sample_hashes=source_hashes,
         )
@@ -81,7 +90,7 @@ def export_finetuned_application_representations(
             output,
             root=Path(output_root) / model.method_name / role,
             export_role=f"end_to_end_{role}",
-            label_used_for_encoder_training=True,
+            label_used_for_encoder_training=expected_labels,
         )
         outputs[role] = output
     return outputs

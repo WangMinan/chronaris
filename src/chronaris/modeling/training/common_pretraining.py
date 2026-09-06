@@ -257,6 +257,7 @@ def load_common_pretraining_checkpoint(
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,
         target_feature_count=len(physiology_names) + len(vehicle_names),
+        **payload.get("pretext_head_config", {}),
     ).to(device)
     heads.load_state_dict(payload["head_state_dict"], strict=True)
     normalizer = TrainOnlyRobustNormalizer.from_manifest(payload["normalizer"])

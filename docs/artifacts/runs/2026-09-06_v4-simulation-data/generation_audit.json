@@ -1,0 +1,22 @@
+{
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "latent_trajectory_count": 320,
+  "roles": {
+    "train": 256,
+    "validation": 64
+  },
+  "clean_only": true,
+  "confirmation_generated": false,
+  "model_metrics_opened": false,
+  "elapsed_s": 46.2071016067639,
+  "split_identity": {
+    "split_sizes": {
+      "v4_train": 256,
+      "v4_development": 64
+    },
+    "pairwise_intersection_sizes": {
+      "v4_development__v4_train": 0
+    },
+    "disjoint": true
+  }
+}

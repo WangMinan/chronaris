@@ -1,11 +1,9 @@
 """Public-pretext validation, independent of optimizer and checkpoint state."""
 import torch
 from typing import Mapping
-from chronaris.modeling.fusion_encoders.single_stream import move_observation_batch
-from chronaris.modeling.training.pretext import CommonPretextWeights
+from chronaris.modeling.training.candidate_step import public_pretext_forward
 from chronaris.representation import (build_batch_augmentation_realizations,
-    apply_augmentation_realizations, build_common_pretext_targets,
-    build_lag_discrimination_inputs, move_common_pretext_targets, select_observation_batch)
+    apply_augmentation_realizations, select_observation_batch)
 from chronaris.representation.contracts import RepresentationContractError
 
 PUBLIC_SELECTION_WEIGHTS = {
@@ -27,24 +25,10 @@ def _evaluate_public_losses(
                 context_duration_s=normalized.context_durations_s.tolist(),
             )
             augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
-            targets = build_common_pretext_targets(normalized, augmented)
-            lag_inputs = build_lag_discrimination_inputs(
-                augmented.batch, augmented.augmentation_ids
-            )
-            positive_batch = move_observation_batch(augmented.batch, device=device)
-            negative_batch = move_observation_batch(
-                lag_inputs.negative_batch,
-                device=device,
-            )
-            targets = move_common_pretext_targets(targets, device=device)
-            output = heads(
-                encoder(positive_batch).sequence_embedding,
-                encoder(negative_batch).sequence_embedding,
-                targets,
-                weights=CommonPretextWeights(),
-            )
+            output, _positive, _negative = public_pretext_forward(
+                encoder=encoder, heads=heads, normalized=normalized, augmented=augmented, device=device)
             _accumulate_loss_terms(totals, output.terms)
-    return _finalize_loss_totals(totals)
+    return _finalize_loss_totals(totals, allow_unavailable=heads.modality_feature_counts is not None)
 
 
 def _empty_loss_totals() -> dict[str, list[float]]:
@@ -53,22 +37,33 @@ def _empty_loss_totals() -> dict[str, list[float]]:
 
 def _accumulate_loss_terms(totals, terms) -> None:
     for term in terms:
-        if term.raw_loss is not None and term.count > 0:
-            totals[term.term_name][0] += float(term.raw_loss.detach()) * term.count
-            totals[term.term_name][1] += term.count
+        components = term.components or (term,)
+        for component in components:
+            key = f"{term.term_name}/{component.term_name}" if term.components else term.term_name
+            entry = totals.setdefault(key, [0., 0.])
+            if component.raw_loss is not None and component.count > 0:
+                entry[0] += float(component.raw_loss.detach()) * component.count
+                entry[1] += component.count
 
 
-def _finalize_loss_totals(totals) -> Mapping[str, float]:
+def _finalize_loss_totals(totals, *, allow_unavailable=False) -> Mapping[str, float]:
     losses = {}
-    for name, (loss_sum, count) in totals.items():
-        if count <= 0:
+    for name in PUBLIC_SELECTION_WEIGHTS:
+        components = [value for key, value in totals.items() if key.startswith(name + "/")]
+        means = [total / count for total, count in (components or [totals[name]]) if count > 0]
+        if means:
+            losses[name] = sum(means) / len(means)
+        elif not allow_unavailable:
             raise RepresentationContractError(f"candidate screen loss unavailable: {name}")
-        losses[name] = loss_sum / count
     return losses
 
 
 def _public_selection_loss(losses: Mapping[str, float]) -> float:
-    return sum(PUBLIC_SELECTION_WEIGHTS[name] * losses[name] for name in PUBLIC_SELECTION_WEIGHTS)
+    if not losses:
+        raise RepresentationContractError("candidate screen has no applicable validation objectives")
+    # Only select updates within the same method/objectives; task metrics rank v4 methods.
+    available_weight = sum(PUBLIC_SELECTION_WEIGHTS[name] for name in losses)
+    return sum(PUBLIC_SELECTION_WEIGHTS[name] * value for name, value in losses.items()) / available_weight
 
 
 def _load_batch(batch, provider, sample_ids):

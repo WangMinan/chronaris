@@ -404,6 +404,8 @@ def _train_pretext_candidate(
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,
         target_feature_count=len(physiology_feature_names) + len(vehicle_feature_names),
+        modality_feature_counts=(len(physiology_feature_names), len(vehicle_feature_names)) if resolved.max_updates is not None else None,
+        input_streams=(method_name.removesuffix("_only"),) if method_name.endswith("_only") else ("physiology", "vehicle"),
     ).to(resolved.device)
     shift_head = (
         ExplicitTimeShiftHead(FUSION_OUTPUT_DIM).to(resolved.device)
@@ -595,7 +597,7 @@ def _train_pretext_candidate(
         validate = (not update_mode or step_count % resolved.validation_interval == 0
                     or step_count in resolved.validation_updates or step_count == limit)
         if validate:
-            train_losses = _finalize_loss_totals(train_totals)
+            train_losses = _finalize_loss_totals(train_totals, allow_unavailable=update_mode)
             validation_losses = _evaluate_public_losses(
                 encoder=encoder,
                 heads=heads,

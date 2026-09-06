@@ -146,5 +146,5 @@ def application_task_losses(output, selected, definitions, parameters):
         losses[task.name] = (per_sample * weights).sum() / weights.sum().clamp_min(1e-12)
         counts[task.name] = float(weights.sum())
     active = [loss for name, loss in losses.items() if counts[name] > 0]
-    total = torch.stack(active).mean() if active else output["sequence_embedding"].sum() * 0
+    total = torch.stack(active).mean() if active else sum(value.sum() * 0 for value in output["task_predictions"].values())
     return losses | {"total": total, "counts": counts}

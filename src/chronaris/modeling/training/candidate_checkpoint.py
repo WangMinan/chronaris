@@ -30,6 +30,7 @@ def build_candidate_checkpoint_payload(**values):
         "source_code_sha256": values["source_code_sha256"],
         "encoder_state_dict": encoder.state_dict(),
         "head_state_dict": heads.state_dict(),
+        "pretext_head_config": heads.objective_config(),
         "optimizer_state_dict": optimizer.state_dict(),
         "normalizer": dict(values["normalizer"].to_manifest()),
         "fold": values["fold"].to_dict(),

@@ -11,14 +11,24 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 
 def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_s=15.0):
     before = sha256_file(checkpoint_path)
+    stored = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    guided = "role_sample_ids" in stored
     encoder, _heads, normalizer, payload = load_common_pretraining_checkpoint(
-        checkpoint_path, device=device, allow_legacy_implementation=True,
+        stored["source_checkpoint_path"] if guided else checkpoint_path,
+        device=device, allow_legacy_implementation=True,
     )
-    allowed = set(payload["fold"]["validation_sample_ids"])
+    if guided:
+        encoder.load_state_dict({name.removeprefix("encoder."): value
+            for name, value in stored["model_state_dict"].items() if name.startswith("encoder.")}, strict=True)
+        if stored.get("normalizer") != normalizer.to_manifest():
+            raise ValueError("guided correctness checkpoint normalization differs from initialization")
+        payload = stored
+    allowed = set(payload["role_sample_ids"]["validation"] if guided else payload["fold"]["validation_sample_ids"])
     if not set(batch.sample_ids) <= allowed:
         raise ValueError("correctness audit requires the checkpoint's internal validation samples")
     adapter = TrainedFusionAdapter(
-        encoder=encoder, normalizer=normalizer, fold_id=payload["fold"]["fold_id"], checkpoint_sha256=before,
+        encoder=encoder, normalizer=normalizer,
+        fold_id=payload["fold_id"] if guided else payload["fold"]["fold_id"], checkpoint_sha256=before,
     )
     baseline = adapter(batch)
     past = baseline.timestamps_s <= cutoff_s

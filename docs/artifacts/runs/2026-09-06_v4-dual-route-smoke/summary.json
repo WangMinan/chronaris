@@ -1,0 +1,236 @@
+{
+  "scope": "engineering_dual_route_closed_loop_historical_G1_not_v4_selection",
+  "self_supervised_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-dual-route-smoke/self_supervised/chronaris/C/best.pt",
+  "task_guided_checkpoint": "artifacts/application_evaluation/2026-09-06_v4-dual-route-smoke/task_guided/chronaris/best.pt",
+  "source_code_sha256": "6a2dfde764cc7cb8024d9d27b614bd7a90abc002a655137eeb63ff30ef87249c",
+  "source_checkpoint_sha256": "3e6e8b141b8faf4880c8cb67b2683aabf237d6099fc07238c7d9d617dcf8cffa",
+  "pretraining_elapsed_s": 94.28176968591288,
+  "guided_elapsed_s": 266.7092707529664,
+  "peak_allocated_bytes": 169902080,
+  "self_supervised_updates": 10,
+  "guided_total_updates": 60,
+  "stage_update_counts": {
+    "pretraining": 0,
+    "head_warmup": 50,
+    "joint_adaptation": 10
+  },
+  "data_cursor": {
+    "samples_seen": 1920,
+    "micro_batches_seen": 480
+  },
+  "best_guided_update": 60,
+  "config": {
+    "learning_rate": 0.0001,
+    "max_epochs": 20,
+    "patience": 5,
+    "batch_size": 4,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "seed": 17,
+    "device": "cuda",
+    "max_updates": 10,
+    "effective_batch_size": 32,
+    "head_warmup_updates": 50,
+    "head_learning_rate": 0.0003,
+    "validation_interval": 5,
+    "minimum_updates": 0,
+    "checkpoint_interval": 25,
+    "early_stopping": false,
+    "self_supervised_weight": 0.2
+  },
+  "target_manifest": {
+    "format": "chronaris.application_consumer_smoke_targets.v1",
+    "sample_count": 8,
+    "context_start_grid_s": [
+      30.0,
+      60.0,
+      90.0,
+      120.0
+    ],
+    "future_workload_window_relative_s": [
+      0.0,
+      5.0
+    ],
+    "workload_thresholds_train_only": [
+      0.9320094585418701,
+      0.9484191536903381
+    ],
+    "workload_threshold_source": "train_only_quantiles",
+    "maneuver_state_names": [
+      "steady",
+      "entry",
+      "sustained",
+      "exit",
+      "recovery"
+    ],
+    "query_point_count": 96,
+    "oracle_opened_after_checkpoint_count": 1,
+    "task_guided_development": true,
+    "allowed_oracle_fields": [
+      "true_time_s",
+      "workload",
+      "maneuver_state"
+    ],
+    "oracle_files": [
+      {
+        "sample_id": "g1_state_space__train_profile_000__trajectory_003__seed_100003__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_000/g1_state_space__train_profile_000__trajectory_003__seed_100003/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "73831f434cf868390e4c25181127e8e0812674cc8a79a4fcdf4c45f9618cee70",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__train_profile_004__trajectory_028__seed_100028__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_004/g1_state_space__train_profile_004__trajectory_028__seed_100028/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "be1d21bc5adc90851bd48c10c151415125d11a90cd8bd648925c943689aeff30",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__train_profile_008__trajectory_050__seed_100050__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_008/g1_state_space__train_profile_008__trajectory_050__seed_100050/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "1a762030d2dbaaa0735a4923e396bb4e58dc0e88396a781c40eb308168a7aa1e",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__train_profile_012__trajectory_074__seed_100074__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/train/train_profile_012/g1_state_space__train_profile_012__trajectory_074__seed_100074/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "1c580ee8d3eb359e637f65bdfcc923488f69aef72b4c07e378032ea9b1ac079b",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__validation_profile_000__trajectory_004__seed_200004__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_000/g1_state_space__validation_profile_000__trajectory_004__seed_200004/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "cf6955a83a4dd7db7159d2946815d8f974c7ce2192d5b7a68a61f3af9e364820",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__validation_profile_001__trajectory_011__seed_200011__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_001/g1_state_space__validation_profile_001__trajectory_011__seed_200011/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "1f6277d622494310a5884bffe408b228b3cbc111ae8ca05306c6b987c5da231e",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__validation_profile_002__trajectory_014__seed_200014__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_002/g1_state_space__validation_profile_002__trajectory_014__seed_200014/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "5a57b82b3e62d757d5fa006bc81b40684fb87d3ea94de9bd5508dda2a65ea25a",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      },
+      {
+        "sample_id": "g1_state_space__validation_profile_003__trajectory_021__seed_200021__clean_asynchronous::context_030.000",
+        "oracle_path": "artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/validation/validation_profile_003/g1_state_space__validation_profile_003__trajectory_021__seed_200021/clean_asynchronous/ground_truth.npz",
+        "oracle_sha256": "e7799538612cc2612a8ea31a9f81098b6aaa91b66eab3bcd6ec1a22e3f853ed9",
+        "allowed_fields_opened": [
+          "true_time_s",
+          "workload",
+          "maneuver_state"
+        ]
+      }
+    ],
+    "smoke_only": true
+  },
+  "causality": {
+    "self_supervised": {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 15.0,
+      "checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-dual-route-smoke/self_supervised/chronaris/C/best.pt",
+      "checkpoint_sha256": "3e6e8b141b8faf4880c8cb67b2683aabf237d6099fc07238c7d9d617dcf8cffa",
+      "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "g1_state_space__validation_profile_000__trajectory_004__seed_200004__clean_asynchronous::context_030.000",
+        "g1_state_space__validation_profile_001__trajectory_011__seed_200011__clean_asynchronous::context_030.000",
+        "g1_state_space__validation_profile_002__trajectory_014__seed_200014__clean_asynchronous::context_030.000",
+        "g1_state_space__validation_profile_003__trajectory_021__seed_200021__clean_asynchronous::context_030.000"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 4.76837158203125e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    },
+    "task_guided": {
+      "seed": 17,
+      "device": "cuda",
+      "cutoff_s": 15.0,
+      "checkpoint_path": "artifacts/application_evaluation/2026-09-06_v4-dual-route-smoke/task_guided/chronaris/best.pt",
+      "checkpoint_sha256": "2650018ec36266eeeed2368d2eb9219e798a584b2d9e48bddde5bd3bbfae2044",
+      "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+      "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+      "sample_ids": [
+        "g1_state_space__validation_profile_000__trajectory_004__seed_200004__clean_asynchronous::context_030.000",
+        "g1_state_space__validation_profile_001__trajectory_011__seed_200011__clean_asynchronous::context_030.000",
+        "g1_state_space__validation_profile_002__trajectory_014__seed_200014__clean_asynchronous::context_030.000",
+        "g1_state_space__validation_profile_003__trajectory_021__seed_200021__clean_asynchronous::context_030.000"
+      ],
+      "historical_max_delta": {
+        "repeat": 0.0,
+        "future_values": 0.0,
+        "future_missing": 4.172325134277344e-07
+      },
+      "checkpoint_unchanged": true,
+      "passed": true
+    }
+  },
+  "validation_rows": [
+    {
+      "epoch": 440,
+      "optimizer_updates": 55,
+      "joint_updates": 5,
+      "train_classification_loss": 1.0366387218236923,
+      "train_regression_loss": 0.9436572343111038,
+      "train_segmentation_loss": 0.35512201488018036,
+      "validation_classification_loss": 1.1931142807006836,
+      "validation_regression_loss": 123.16545867919922,
+      "validation_segmentation_loss": 2.050990581512451,
+      "validation_selection_loss": 42.13652118047079,
+      "gradient_norm_before_clip_last_step": 1.5511445999145508,
+      "improved": true,
+      "epochs_without_improvement": 0
+    },
+    {
+      "epoch": 480,
+      "optimizer_updates": 60,
+      "joint_updates": 10,
+      "train_classification_loss": 1.0265919268131256,
+      "train_regression_loss": 0.9245040714740753,
+      "train_segmentation_loss": 0.3203725963830948,
+      "validation_classification_loss": 1.1933746337890625,
+      "validation_regression_loss": 122.88319396972656,
+      "validation_segmentation_loss": 2.195849895477295,
+      "validation_selection_loss": 42.09080616633097,
+      "gradient_norm_before_clip_last_step": 3.541348457336426,
+      "improved": true,
+      "epochs_without_improvement": 0
+    }
+  ]
+}
