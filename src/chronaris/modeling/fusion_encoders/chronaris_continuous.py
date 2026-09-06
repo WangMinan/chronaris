@@ -93,6 +93,7 @@ class ChronarisContinuousEncoderConfig:
     physics_huber_delta: float = 1.0
     dropout: float = 0.1
     physics_calibration: Mapping[str, object] | None = None
+    cuda_graph_recurrence: bool = False
 
     def __post_init__(self) -> None:
         if not self.physiology_feature_names or not self.vehicle_feature_names:
@@ -175,6 +176,7 @@ class ChronarisContinuousEncoderConfig:
             ode_atol=self.ode_atol,
             max_ode_step_s=self.max_ode_step_s,
             enable_continuous_evolution=self.continuous_evolution_enabled,
+            cuda_graph_recurrence=self.cuda_graph_recurrence,
         )
 
     def effective_mechanisms(self) -> Mapping[str, object]:

@@ -1,0 +1,14 @@
+{
+  "script_warmup_s": 4.484153381083161,
+  "eager": {
+    "forward_s": 0.7313354243524373,
+    "forward_backward_s": 2.590028965380043
+  },
+  "scripted": {
+    "forward_s": 1.433551284018904,
+    "forward_backward_s": 2.655882882885635
+  },
+  "output_max_delta": 1.7881393432617188e-07,
+  "gradient_max_delta": 6.984919309616089e-10,
+  "forward_backward_speedup": 0.97520450998425
+}

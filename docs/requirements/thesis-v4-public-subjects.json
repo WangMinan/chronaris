@@ -1,0 +1,474 @@
+{
+  "format": "chronaris.v4_public_subject_roles.v1",
+  "training_seed_changes_roles": false,
+  "domains": {
+    "cogpilot": {
+      "development_subjects": [
+        "sub-cp003",
+        "sub-cp004",
+        "sub-cp008",
+        "sub-cp011",
+        "sub-cp019",
+        "sub-cp022",
+        "sub-cp025"
+      ],
+      "confirmation_subjects": [
+        "sub-cp005",
+        "sub-cp006",
+        "sub-cp009",
+        "sub-cp012",
+        "sub-cp013",
+        "sub-cp014",
+        "sub-cp015",
+        "sub-cp016",
+        "sub-cp017",
+        "sub-cp018",
+        "sub-cp020",
+        "sub-cp023",
+        "sub-cp024",
+        "sub-cp026",
+        "sub-cp027",
+        "sub-cp028",
+        "sub-cp029",
+        "sub-cp030",
+        "sub-cp031",
+        "sub-cp032",
+        "sub-cp033",
+        "sub-cp035",
+        "sub-cp036",
+        "sub-cp037",
+        "sub-cp038",
+        "sub-cp039",
+        "sub-cp042",
+        "sub-cp043"
+      ],
+      "folds": {
+        "development": [
+          {
+            "fold_id": "v4_cogpilot_development_fold01",
+            "train_subjects": [
+              "sub-cp008",
+              "sub-cp004",
+              "sub-cp025",
+              "sub-cp019"
+            ],
+            "validation_subjects": [
+              "sub-cp003",
+              "sub-cp011",
+              "sub-cp022"
+            ],
+            "held_out_subjects": []
+          },
+          {
+            "fold_id": "v4_cogpilot_development_fold02",
+            "train_subjects": [
+              "sub-cp003",
+              "sub-cp004",
+              "sub-cp011",
+              "sub-cp019",
+              "sub-cp022"
+            ],
+            "validation_subjects": [
+              "sub-cp008",
+              "sub-cp025"
+            ],
+            "held_out_subjects": []
+          },
+          {
+            "fold_id": "v4_cogpilot_development_fold03",
+            "train_subjects": [
+              "sub-cp003",
+              "sub-cp008",
+              "sub-cp011",
+              "sub-cp025",
+              "sub-cp022"
+            ],
+            "validation_subjects": [
+              "sub-cp004",
+              "sub-cp019"
+            ],
+            "held_out_subjects": []
+          }
+        ],
+        "confirmation": [
+          {
+            "fold_id": "v4_cogpilot_confirmation_fold01",
+            "train_subjects": [
+              "sub-cp029",
+              "sub-cp020",
+              "sub-cp031",
+              "sub-cp023",
+              "sub-cp036",
+              "sub-cp009",
+              "sub-cp005",
+              "sub-cp006",
+              "sub-cp035",
+              "sub-cp030",
+              "sub-cp018",
+              "sub-cp033",
+              "sub-cp013",
+              "sub-cp039",
+              "sub-cp027",
+              "sub-cp015",
+              "sub-cp028",
+              "sub-cp024"
+            ],
+            "validation_subjects": [
+              "sub-cp014",
+              "sub-cp012",
+              "sub-cp043",
+              "sub-cp026"
+            ],
+            "held_out_subjects": [
+              "sub-cp016",
+              "sub-cp017",
+              "sub-cp042",
+              "sub-cp038",
+              "sub-cp037",
+              "sub-cp032"
+            ]
+          },
+          {
+            "fold_id": "v4_cogpilot_confirmation_fold02",
+            "train_subjects": [
+              "sub-cp030",
+              "sub-cp039",
+              "sub-cp032",
+              "sub-cp033",
+              "sub-cp038",
+              "sub-cp036",
+              "sub-cp027",
+              "sub-cp031",
+              "sub-cp023",
+              "sub-cp013",
+              "sub-cp037",
+              "sub-cp026",
+              "sub-cp005",
+              "sub-cp015",
+              "sub-cp042",
+              "sub-cp017",
+              "sub-cp029",
+              "sub-cp018"
+            ],
+            "validation_subjects": [
+              "sub-cp020",
+              "sub-cp024",
+              "sub-cp035",
+              "sub-cp016"
+            ],
+            "held_out_subjects": [
+              "sub-cp043",
+              "sub-cp014",
+              "sub-cp006",
+              "sub-cp028",
+              "sub-cp012",
+              "sub-cp009"
+            ]
+          },
+          {
+            "fold_id": "v4_cogpilot_confirmation_fold03",
+            "train_subjects": [
+              "sub-cp005",
+              "sub-cp009",
+              "sub-cp014",
+              "sub-cp016",
+              "sub-cp037",
+              "sub-cp018",
+              "sub-cp012",
+              "sub-cp033",
+              "sub-cp015",
+              "sub-cp043",
+              "sub-cp017",
+              "sub-cp029",
+              "sub-cp028",
+              "sub-cp038",
+              "sub-cp039",
+              "sub-cp035",
+              "sub-cp006",
+              "sub-cp024"
+            ],
+            "validation_subjects": [
+              "sub-cp032",
+              "sub-cp027",
+              "sub-cp020",
+              "sub-cp042"
+            ],
+            "held_out_subjects": [
+              "sub-cp013",
+              "sub-cp031",
+              "sub-cp036",
+              "sub-cp023",
+              "sub-cp030",
+              "sub-cp026"
+            ]
+          },
+          {
+            "fold_id": "v4_cogpilot_confirmation_fold04",
+            "train_subjects": [
+              "sub-cp023",
+              "sub-cp012",
+              "sub-cp042",
+              "sub-cp027",
+              "sub-cp024",
+              "sub-cp013",
+              "sub-cp031",
+              "sub-cp016",
+              "sub-cp043",
+              "sub-cp014",
+              "sub-cp032",
+              "sub-cp005",
+              "sub-cp038",
+              "sub-cp017",
+              "sub-cp037",
+              "sub-cp030",
+              "sub-cp039",
+              "sub-cp006"
+            ],
+            "validation_subjects": [
+              "sub-cp028",
+              "sub-cp033",
+              "sub-cp036",
+              "sub-cp009",
+              "sub-cp026"
+            ],
+            "held_out_subjects": [
+              "sub-cp018",
+              "sub-cp020",
+              "sub-cp015",
+              "sub-cp035",
+              "sub-cp029"
+            ]
+          },
+          {
+            "fold_id": "v4_cogpilot_confirmation_fold05",
+            "train_subjects": [
+              "sub-cp012",
+              "sub-cp026",
+              "sub-cp029",
+              "sub-cp013",
+              "sub-cp037",
+              "sub-cp023",
+              "sub-cp031",
+              "sub-cp009",
+              "sub-cp006",
+              "sub-cp016",
+              "sub-cp030",
+              "sub-cp015",
+              "sub-cp035",
+              "sub-cp028",
+              "sub-cp043",
+              "sub-cp018",
+              "sub-cp032",
+              "sub-cp042"
+            ],
+            "validation_subjects": [
+              "sub-cp014",
+              "sub-cp020",
+              "sub-cp036",
+              "sub-cp038",
+              "sub-cp017"
+            ],
+            "held_out_subjects": [
+              "sub-cp033",
+              "sub-cp024",
+              "sub-cp039",
+              "sub-cp005",
+              "sub-cp027"
+            ]
+          }
+        ]
+      },
+      "evidence_scope": "frozen_grouped_evaluation",
+      "historical_exposure_inventory": "pending"
+    },
+    "clare": {
+      "development_subjects": [
+        "1390",
+        "1624",
+        "1629",
+        "1674"
+      ],
+      "confirmation_subjects": [
+        "1026",
+        "1106",
+        "1175",
+        "1194",
+        "1337",
+        "1419",
+        "1544",
+        "1688",
+        "1717",
+        "1818",
+        "1892",
+        "1929",
+        "1933",
+        "1953",
+        "1981"
+      ],
+      "folds": {
+        "development": [
+          {
+            "fold_id": "v4_clare_development_fold01",
+            "train_subjects": [
+              "1624",
+              "1674"
+            ],
+            "validation_subjects": [
+              "1629",
+              "1390"
+            ],
+            "held_out_subjects": []
+          },
+          {
+            "fold_id": "v4_clare_development_fold02",
+            "train_subjects": [
+              "1629",
+              "1674",
+              "1390"
+            ],
+            "validation_subjects": [
+              "1624"
+            ],
+            "held_out_subjects": []
+          },
+          {
+            "fold_id": "v4_clare_development_fold03",
+            "train_subjects": [
+              "1629",
+              "1624",
+              "1390"
+            ],
+            "validation_subjects": [
+              "1674"
+            ],
+            "held_out_subjects": []
+          }
+        ],
+        "confirmation": [
+          {
+            "fold_id": "v4_clare_confirmation_fold01",
+            "train_subjects": [
+              "1929",
+              "1419",
+              "1981",
+              "1953",
+              "1544",
+              "1717",
+              "1337",
+              "1933",
+              "1892",
+              "1688"
+            ],
+            "validation_subjects": [
+              "1026",
+              "1106"
+            ],
+            "held_out_subjects": [
+              "1194",
+              "1818",
+              "1175"
+            ]
+          },
+          {
+            "fold_id": "v4_clare_confirmation_fold02",
+            "train_subjects": [
+              "1106",
+              "1953",
+              "1818",
+              "1337",
+              "1194",
+              "1544",
+              "1175",
+              "1717",
+              "1419",
+              "1688"
+            ],
+            "validation_subjects": [
+              "1026",
+              "1933"
+            ],
+            "held_out_subjects": [
+              "1981",
+              "1892",
+              "1929"
+            ]
+          },
+          {
+            "fold_id": "v4_clare_confirmation_fold03",
+            "train_subjects": [
+              "1717",
+              "1981",
+              "1892",
+              "1818",
+              "1929",
+              "1106",
+              "1688",
+              "1933",
+              "1419",
+              "1194"
+            ],
+            "validation_subjects": [
+              "1175",
+              "1026"
+            ],
+            "held_out_subjects": [
+              "1544",
+              "1337",
+              "1953"
+            ]
+          },
+          {
+            "fold_id": "v4_clare_confirmation_fold04",
+            "train_subjects": [
+              "1544",
+              "1981",
+              "1194",
+              "1419",
+              "1953",
+              "1337",
+              "1892",
+              "1175",
+              "1929",
+              "1106"
+            ],
+            "validation_subjects": [
+              "1933",
+              "1818"
+            ],
+            "held_out_subjects": [
+              "1026",
+              "1688",
+              "1717"
+            ]
+          },
+          {
+            "fold_id": "v4_clare_confirmation_fold05",
+            "train_subjects": [
+              "1818",
+              "1688",
+              "1953",
+              "1026",
+              "1337",
+              "1892",
+              "1544",
+              "1175",
+              "1981",
+              "1717"
+            ],
+            "validation_subjects": [
+              "1194",
+              "1929"
+            ],
+            "held_out_subjects": [
+              "1106",
+              "1933",
+              "1419"
+            ]
+          }
+        ]
+      },
+      "evidence_scope": "frozen_grouped_evaluation",
+      "historical_exposure_inventory": "pending"
+    }
+  }
+}

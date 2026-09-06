@@ -2,6 +2,7 @@ from dataclasses import replace
 
 import pytest
 import torch
+import numpy as np
 
 from chronaris.modeling.training import candidate_screen as screen
 from chronaris.modeling.training import EncoderCandidateConfig
@@ -12,19 +13,24 @@ from chronaris.representation.contracts import RepresentationContractError
 from tests.modeling.training.test_candidate_screen import _sample
 
 
-@pytest.mark.parametrize("device", ["cpu", "cuda"])
-def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device):
+@pytest.mark.parametrize("device,method", [("cpu", "physiology_only"), ("cuda", "physiology_only"), ("cuda", "chronaris")])
+def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method):
     if device == "cuda" and not torch.cuda.is_available():
         pytest.skip("CUDA unavailable")
     samples = [_sample(f"sample_{i}", i) for i in range(9)]
+    if method == "chronaris":
+        samples = [replace(sample, physiology_values=np.linspace(i, i + 3, 513, dtype=np.float32)[:, None],
+            physiology_timestamps_s=np.linspace(0., 20., 513), physiology_feature_mask=np.ones((513, 1), dtype=bool))
+            for i, sample in enumerate(samples)]
     batch = collate_observation_samples(samples)
     fold = FoldLineage(fold_id="updates", train_sample_ids=batch.sample_ids[:7],
                        validation_sample_ids=batch.sample_ids[7:8], held_out_sample_ids=batch.sample_ids[8:])
     normalizer = TrainOnlyRobustNormalizer().fit(batch, train_sample_ids=fold.train_sample_ids,
         held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids)
     config = screen.CandidateScreenConfig(max_updates=5, batch_size=2, effective_batch_size=6,
-        validation_interval=3, checkpoint_interval=2, seed=17, device=device, early_stopping=False)
-    arguments = dict(method_name="physiology_only", candidate=EncoderCandidateConfig(
+        validation_interval=3, checkpoint_interval=2, seed=17, device=device, early_stopping=False,
+        cuda_graph_recurrence=method == "chronaris")
+    arguments = dict(method_name=method, candidate=EncoderCandidateConfig(
         candidate_id="D", hidden_dim=32, dropout=.2), batch=batch, fold=fold,
         physiology_feature_names=("physiology.a",), vehicle_feature_names=("vehicle.a",),
         vehicle_field_labels=(), normalizer=normalizer, config=config)
@@ -42,7 +48,7 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     monkeypatch.setattr(screen, "pretext_micro_step", interrupt)
     with pytest.raises(RuntimeError, match="simulated process"):
         screen.train_pretext_candidate(output_root=tmp_path / "resumed", **arguments)
-    partial = torch.load(tmp_path / "resumed/physiology_only/D/last.pt", weights_only=True)
+    partial = torch.load(tmp_path / f"resumed/{method}/D/last.pt", weights_only=True)
     assert partial["optimizer_updates"] == partial["step_count"] == 2
     assert partial["data_cursor"]["micro_batches_seen"] == 6
     assert partial["data_cursor"]["samples_seen"] == 12

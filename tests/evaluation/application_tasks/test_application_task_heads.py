@@ -7,6 +7,7 @@ import torch
 from chronaris.evaluation.application_tasks.application_task_heads import (
     ApplicationTaskDefinition, ApplicationTaskTargets, application_task_losses,
     fit_application_task_parameters, select_application_targets,
+    effective_task_counts,
 )
 from chronaris.evaluation.application_tasks.application_finetuning import (
     EndToEndApplicationModel, EndToEndFineTuningConfig, train_end_to_end_application_method,
@@ -79,3 +80,24 @@ def test_custom_task_heads_train_export_and_reject_changed_label_sources(tmp_pat
     assert exports["held_out"].pooled_embedding.shape == (1, 64)
     with pytest.raises(RepresentationContractError, match="protocol changed"):
         train_end_to_end_application_method(**(args | {"targets": changed}))
+
+
+def test_task_reduction_across_accumulation_matches_a_whole_batch():
+    definitions = tuple(ApplicationTaskDefinition(name, "regression", 1) for name in ("a", "b"))
+    targets = ApplicationTaskTargets(("s0", "s1", "s2", "s3"),
+        {"a": torch.tensor([1., 1., 0., 0.]), "b": torch.tensor([0., 2., 4., 6.])},
+        {"a": torch.tensor([True, True, False, False]), "b": torch.tensor([False, True, True, True])}, {})
+    parameters = {"tasks": {name: {"center": [0.], "scale": [1.]} for name in ("a", "b")}}
+    batches = (targets.sample_ids[:2], targets.sample_ids[2:])
+    counts = effective_task_counts(targets, definitions, batches, batch=None, provider=None, method_name="chronaris")
+    parameter = torch.tensor(0., requires_grad=True)
+    total = 0
+    for ids in batches:
+        output = {"task_predictions": {name: parameter.expand(len(ids), 1) for name in ("a", "b")}}
+        losses = application_task_losses(output, select_application_targets(targets, ids, "cpu"), definitions, parameters)
+        total = total + sum(losses[name] * losses["counts"][name] / count for name, count in counts.items()) / 2
+    full = application_task_losses({"task_predictions": {name: parameter.expand(4, 1) for name in ("a", "b")}},
+        select_application_targets(targets, targets.sample_ids, "cpu"), definitions, parameters)["total"]
+    torch.testing.assert_close(total, full)
+    total.backward()
+    assert parameter.grad.item() == pytest.approx(-5.)

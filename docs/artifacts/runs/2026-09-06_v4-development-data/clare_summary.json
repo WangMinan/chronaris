@@ -1,0 +1,65 @@
+{
+  "domain": "clare",
+  "status": "completed",
+  "failures": [],
+  "subject_coverage": {
+    "1390": {
+      "window_count": 212,
+      "physiology_empty_windows": 1,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "workload_classification": 212,
+        "workload_regression": 212
+      }
+    },
+    "1624": {
+      "window_count": 216,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 5,
+      "task_counts": {
+        "workload_classification": 216,
+        "workload_regression": 216
+      }
+    },
+    "1629": {
+      "window_count": 216,
+      "physiology_empty_windows": 7,
+      "vehicle_empty_windows": 38,
+      "task_counts": {
+        "workload_classification": 216,
+        "workload_regression": 216
+      }
+    },
+    "1674": {
+      "window_count": 150,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "workload_classification": 150,
+        "workload_regression": 150
+      }
+    }
+  },
+  "sample_count": 794,
+  "task_counts": {
+    "workload_classification": 794,
+    "workload_regression": 794
+  },
+  "native_point_counts": {
+    "physiology": {
+      "minimum": 0,
+      "median": 2560.0,
+      "maximum": 2560
+    },
+    "vehicle": {
+      "minimum": 0,
+      "median": 6367.5,
+      "maximum": 6400
+    }
+  },
+  "registry_sha256": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+  "sample_manifest_sha256": "473c1da735e5acd875e67b2856abead361699cc865f5eb4a5a266fbd291a09ce",
+  "confirmation_observations_loaded": false,
+  "model_scores_produced": false,
+  "elapsed_s": 41.70828379318118
+}

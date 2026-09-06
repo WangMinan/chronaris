@@ -27,6 +27,7 @@ from chronaris.modeling.training.rng import isolated_training_rng, capture_rng_s
 from chronaris.modeling.training.candidate_checkpoint import candidate_source_code_sha256, candidate_data_sha256
 from chronaris.modeling.training.candidate_step import pretext_micro_step
 from chronaris.modeling.training.candidate_validation import _load_batch
+from chronaris.modeling.training.sample_schedule import training_sample_schedule
 from chronaris.representation import (
     DualStreamObservationBatch,
     TrainOnlyRobustNormalizer,
@@ -39,6 +40,7 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 from chronaris.evaluation.application_tasks.application_task_heads import (
     ApplicationTaskDefinition, ApplicationTaskTargets, SIMULATION_TASKS, application_targets,
     build_application_heads, fit_application_task_parameters, select_application_targets, application_task_losses,
+    effective_task_counts,
 )
 
 FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v3"
@@ -63,6 +65,9 @@ class EndToEndFineTuningConfig:
     checkpoint_interval: int = 25
     early_stopping: bool = True
     self_supervised_weight: float = .2
+    sampling_hierarchy: Mapping[str, tuple[str, ...]] | None = None
+    retained_updates: tuple[int, ...] = ()
+    data_manifest_sha256: str | None = None
 
     def __post_init__(self) -> None:
         if min(self.learning_rate, self.gradient_clip_norm) <= 0:
@@ -82,6 +87,8 @@ class EndToEndFineTuningConfig:
             raise ValueError("invalid task-guided update schedule")
         if min(self.head_warmup_updates, self.minimum_updates, self.self_supervised_weight) < 0:
             raise ValueError("task-guided budgets/weights cannot be negative")
+        if any(update <= 0 for update in self.retained_updates):
+            raise ValueError("retained task-guided updates must be positive")
 
 
 @dataclass(frozen=True, slots=True)
@@ -221,7 +228,8 @@ def _train_end_to_end_application_method(
         from chronaris.representation import FoldLineage
         fold = FoldLineage(fold_id=source_objectives["fold_id"],
             train_sample_ids=tuple(role_sample_ids["train"]), validation_sample_ids=tuple(role_sample_ids["validation"]),
-            held_out_sample_ids=tuple(role_sample_ids["held_out"]))
+            held_out_sample_ids=tuple(role_sample_ids["held_out"]),
+            development_only=source_objectives["development_only"])
         if candidate_data_sha256(batch, batch_provider, fold, config.batch_size) != source_objectives["source_data_sha256"]:
             raise RepresentationContractError("task-guided source observations changed")
     root = Path(output_root) / model.method_name
@@ -301,6 +309,9 @@ def _train_end_to_end_application_method(
     samples_seen, micro_batches_seen = int(cursor.get("samples_seen", 0)), int(cursor.get("micro_batches_seen", 0))
     if update_mode and len(train_ids) < config.batch_size:
         raise ValueError("actual task batch exceeds distinct training contexts")
+    schedule = training_sample_schedule(batch, batch_provider, train_ids, config.batch_size, config.sampling_hierarchy) if update_mode else None
+    if cursor and schedule is not None and cursor.get("sampling_order_sha256") != schedule.sha256:
+        raise RepresentationContractError("task-guided resume sampling order changed")
     maximum = config.head_warmup_updates + config.max_updates if update_mode else config.max_epochs
     start_iteration = step_count + 1 if update_mode else completed_epochs + 1
     started = time.perf_counter()
@@ -312,8 +323,7 @@ def _train_end_to_end_application_method(
                 parameter.requires_grad_(name.startswith("task_heads.") or not warming_head)
             if warming_head and model.encoder is not None:
                 model.encoder.eval()
-            active_batches = tuple(tuple(train_ids[(samples_seen + i * config.batch_size + j) % len(train_ids)]
-                for j in range(config.batch_size)) for i in range(accumulation))
+            active_batches = tuple(schedule.draw(samples_seen + i * config.batch_size, config.batch_size) for i in range(accumulation))
         else:
             generator = torch.Generator().manual_seed(config.seed * 10_000 + epoch)
             permutation = torch.randperm(len(train_ids), generator=generator).tolist()
@@ -321,13 +331,19 @@ def _train_end_to_end_application_method(
                                    for offset in range(0, len(permutation), config.batch_size))
         train_totals = {task.name: 0. for task in model.task_definitions}
         train_counts = dict(train_totals)
+        effective_counts = effective_task_counts(targets, model.task_definitions, active_batches,
+            batch=batch, provider=batch_provider, method_name=model.method_name) if update_mode else None
+        active_tasks = sum(value > 0 for value in effective_counts.values()) if update_mode else 0
         optimizer.zero_grad(set_to_none=True)
         for micro_index, sample_ids in enumerate(active_batches):
             raw = _load_batch(batch, batch_provider, sample_ids)
             selected = select_application_targets(targets, sample_ids, config.device)
             output = model(raw)
             losses = application_task_losses(output, selected, model.task_definitions, task_parameters)
-            total_loss = losses["total"]
+            task_contribution = (sum(losses[name] * losses["counts"][name] / count
+                for name, count in effective_counts.items() if count > 0) / active_tasks
+                if update_mode and active_tasks else losses["total"] / (accumulation if update_mode else 1))
+            total_loss = task_contribution
             public_loss, mechanism_loss, augmentation_ids = None, None, ()
             if update_mode and not warming_head and model.encoder is not None:
                 public, mechanism, augmented, _data_wait = pretext_micro_step(
@@ -337,16 +353,18 @@ def _train_end_to_end_application_method(
                     method_name=model.method_name, epoch=micro_batches_seen + 1,
                     optimizer_updates=200, **source_objectives["mechanism_arguments"],
                 )
-                total_loss = total_loss + config.self_supervised_weight * public.total_loss + mechanism.additional_loss
+                total_loss = total_loss + (config.self_supervised_weight * public.total_loss + mechanism.additional_loss) / accumulation
                 public_loss, mechanism_loss = float(public.total_loss.detach()), float(mechanism.additional_loss.detach())
                 augmentation_ids = augmented.augmentation_ids
             if not torch.isfinite(total_loss):
                 raise FloatingPointError("non-finite task-guided loss; unit stopped")
-            (total_loss / (accumulation if update_mode else 1)).backward()
+            total_loss.backward()
             update_rows.append({"optimizer_update": step_count + 1, "micro_batch_index": micro_batches_seen,
                 "stage": "head_warmup" if warming_head else "joint_adaptation", "sample_ids": list(sample_ids),
                 "augmentation_ids": list(augmentation_ids), "task_loss": float(losses["total"].detach()),
                 "task_valid_counts": losses["counts"],
+                "task_update_contribution": float(task_contribution.detach()),
+                "effective_task_counts": effective_counts,
                 "public_loss": public_loss, "public_weight": config.self_supervised_weight if public_loss is not None else 0.,
                 "mechanism_loss": mechanism_loss, "total_loss": float(total_loss.detach())})
             samples_seen += len(sample_ids)
@@ -402,7 +420,7 @@ def _train_end_to_end_application_method(
                     "epochs_without_improvement": stale,
                 }
             )
-        if update_mode and not (validate or step_count % config.checkpoint_interval == 0):
+        if update_mode and not (validate or step_count % config.checkpoint_interval == 0 or joint_updates in config.retained_updates):
             continue
         payload = _checkpoint_payload(
             model=model,
@@ -429,9 +447,13 @@ def _train_end_to_end_application_method(
             device_history=device_history,
         )
         payload.update(_guided_update_metadata(config, step_count, samples_seen, micro_batches_seen, best_update))
+        if schedule is not None:
+            payload["data_cursor"]["sampling_order_sha256"] = schedule.sha256
         if improved:
             _atomic_save(best_path, payload)
         _atomic_save(last_path, payload)
+        if joint_updates in config.retained_updates:
+            _atomic_save(root / f"joint_update_{joint_updates:06d}.pt", payload)
         if (validate and config.early_stopping and stale >= config.patience
             and (not update_mode or joint_updates >= config.minimum_updates)):
             break
@@ -460,6 +482,8 @@ def _train_end_to_end_application_method(
         device_history=device_history,
     )
     final_payload.update(_guided_update_metadata(config, step_count, samples_seen, micro_batches_seen, best_update))
+    if schedule is not None:
+        final_payload["data_cursor"]["sampling_order_sha256"] = schedule.sha256
     _atomic_save(last_path, final_payload)
     best_payload = torch.load(best_path, map_location="cpu", weights_only=True)
     best_payload.update(training_status="completed", training_elapsed_s=final_payload["training_elapsed_s"])
@@ -490,6 +514,8 @@ def _initialize_guided_objectives(model, source_path, config, roles):
         raise RepresentationContractError("task-guided initialization requires the current v4 objective/source revision")
     if payload["seed"] != config.seed or payload["config"].get("max_updates") is None:
         raise RepresentationContractError("task-guided updates require the same-seed v4 pretraining source")
+    if payload["config"].get("data_manifest_sha256") != config.data_manifest_sha256:
+        raise RepresentationContractError("task-guided prepared data fingerprint changed")
     if model.encoder.config_manifest() != source_encoder.config_manifest():
         raise RepresentationContractError("task-guided source encoder architecture changed")
     if model.normalizer.to_manifest() != normalizer.to_manifest():
@@ -507,6 +533,7 @@ def _initialize_guided_objectives(model, source_path, config, roles):
         "source_data_sha256": payload["source_data_sha256"],
         "source_updates": payload["optimizer_updates"],
         "fold_id": payload["fold"]["fold_id"],
+        "development_only": bool(payload["fold"].get("development_only", False)),
         "mechanism_arguments": {key: payload[key] for key in (
             "chronaris_lag_aware_weight", "chronaris_mechanism_enabled",
             "chronaris_explicit_shift_weight", "chronaris_event_pair_weight")}}

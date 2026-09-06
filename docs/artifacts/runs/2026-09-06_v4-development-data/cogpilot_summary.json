@@ -1,0 +1,92 @@
+{
+  "domain": "cogpilot",
+  "status": "completed",
+  "failures": [],
+  "subject_coverage": {
+    "sub-cp003": {
+      "window_count": 412,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 176,
+        "event_response": 236
+      }
+    },
+    "sub-cp004": {
+      "window_count": 352,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 147,
+        "event_response": 205
+      }
+    },
+    "sub-cp008": {
+      "window_count": 344,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 140,
+        "event_response": 204
+      }
+    },
+    "sub-cp011": {
+      "window_count": 311,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 136,
+        "event_response": 175
+      }
+    },
+    "sub-cp019": {
+      "window_count": 397,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 166,
+        "event_response": 231
+      }
+    },
+    "sub-cp022": {
+      "window_count": 342,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 146,
+        "event_response": 196
+      }
+    },
+    "sub-cp025": {
+      "window_count": 366,
+      "physiology_empty_windows": 0,
+      "vehicle_empty_windows": 0,
+      "task_counts": {
+        "difficulty": 151,
+        "event_response": 215
+      }
+    }
+  },
+  "sample_count": 2524,
+  "task_counts": {
+    "difficulty": 1062,
+    "event_response": 1462
+  },
+  "native_point_counts": {
+    "physiology": {
+      "minimum": 7555,
+      "median": 13751.0,
+      "maximum": 34466
+    },
+    "vehicle": {
+      "minimum": 44,
+      "median": 66.0,
+      "maximum": 179
+    }
+  },
+  "registry_sha256": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+  "sample_manifest_sha256": "f32a389ac47bb0d2e934cbc93d8a5fcaa9057c4e79b4860c1c5302add217f9cc",
+  "confirmation_observations_loaded": false,
+  "model_scores_produced": false,
+  "elapsed_s": 244.26520349318162
+}

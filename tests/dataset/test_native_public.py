@@ -80,6 +80,16 @@ def test_lazy_dataset_reuses_lineage_checked_disk_cache(tmp_path) -> None:
     assert calls == ["sample"]
     assert restored.physiology_values.item() == 1.0
 
+    from chronaris.dataset.native_table_cache import native_file_sha256
+    cache_path = second._cache_path(record)
+    verified = LazyObservedDataset([record], schema=schema, loader=load, cache_root=tmp_path,
+        cache_file_sha256={record.sample_id: native_file_sha256(cache_path)})
+    verified.load_sample(record.sample_id)
+    cache_path.write_bytes(cache_path.read_bytes() + b"changed")
+    import pytest
+    with pytest.raises(ValueError, match="cache bytes changed"):
+        verified.load_sample(record.sample_id)
+
 
 def test_cogpilot_builder_keeps_native_stream_densities(tmp_path) -> None:
     run = tmp_path / "sub-cp001" / "ses-1" / "level-02B_run-001"

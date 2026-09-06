@@ -1,0 +1,11 @@
+{
+  "passed": 521,
+  "skipped": 8,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_s": 439.954,
+  "source_code_sha256": "5d4ce787dceb6002686ed32ef5887662f25ceed264410b49b7f9723c45505d1a",
+  "base_commit": "7d3c969a487979457df003193187c5e9dff60cf4",
+  "command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest -q",
+  "log_sha256": "1371625d74242c6f4f44d43dda8dd790f8aee01c3b488c9ff1d345fbd804a14e"
+}

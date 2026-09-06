@@ -1,0 +1,569 @@
+{
+  "scope": "historical v3.2 checkpoint train and validation lineage, no model scoring",
+  "evidence": [
+    {
+      "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+      "protocol_sha256": "ec520b883c6192949a47b0b6b1c16b6701ace4c1309fb0253029517d8affb239",
+      "source_code_sha256": "2f0ee44f45d8feb0c74945ee021429dada344bc71742dea6b700ec14448212bf",
+      "training_status": "completed",
+      "role_counts": {
+        "train_sample_ids": 17,
+        "validation_sample_ids": 4
+      }
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+      "protocol_sha256": "951875e267c4285ab2b5d6cfc2f6d3ced7074be303380f084bdb2a162bd02e5c",
+      "source_code_sha256": "2f0ee44f45d8feb0c74945ee021429dada344bc71742dea6b700ec14448212bf",
+      "training_status": "completed",
+      "role_counts": {
+        "train_sample_ids": 18,
+        "validation_sample_ids": 4
+      }
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+      "protocol_sha256": "c114737095d75992961aee93899c5f464b2893dbac4e2e7d4d958f0ca1de4496",
+      "source_code_sha256": "2f0ee44f45d8feb0c74945ee021429dada344bc71742dea6b700ec14448212bf",
+      "training_status": "completed",
+      "role_counts": {
+        "train_sample_ids": 19,
+        "validation_sample_ids": 4
+      }
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+      "protocol_sha256": "b85111fa1371c4e7003dfd56a39b7041ca27d5f0a5a44998bd70444c31e6f616",
+      "source_code_sha256": "2f0ee44f45d8feb0c74945ee021429dada344bc71742dea6b700ec14448212bf",
+      "training_status": "completed",
+      "role_counts": {
+        "train_sample_ids": 21,
+        "validation_sample_ids": 4
+      }
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+      "protocol_sha256": "0937d9d4f03ce8fb2e7c8b477caf55de90edcb5cd2d0af0d5a4f5b3cfb4f290e",
+      "source_code_sha256": "2f0ee44f45d8feb0c74945ee021429dada344bc71742dea6b700ec14448212bf",
+      "training_status": "completed",
+      "role_counts": {
+        "train_sample_ids": 21,
+        "validation_sample_ids": 4
+      }
+    },
+    {
+      "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/cogpilot/seed17/base/chronaris/best.pt",
+      "protocol_sha256": "33d4750153ec4dbae6c874b57704ef762ab92dbd7bf718ebd9aa6cf6c28cca6a",
+      "source_code_sha256": "2f0ee44f45d8feb0c74945ee021429dada344bc71742dea6b700ec14448212bf",
+      "training_status": "completed",
+      "role_counts": {
+        "train_sample_ids": 9,
+        "validation_sample_ids": 4
+      }
+    }
+  ],
+  "subjects": {
+    "clare": {
+      "1390": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1624": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1629": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1674": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1026": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+            "roles": {
+              "validation_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+            "roles": {
+              "validation_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "validation_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1106": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1175": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "validation_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1194": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 2
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 2
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 2
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 2
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1337": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+            "roles": {
+              "validation_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1419": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold2/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1544": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold1/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 3
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold3/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 3
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold4/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 3
+            }
+          },
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/clare/fold5/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 3
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1688": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1717": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1818": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1892": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1929": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1933": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1953": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "1981": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      }
+    },
+    "cogpilot": {
+      "sub-cp003": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/cogpilot/seed17/base/chronaris/best.pt",
+            "roles": {
+              "validation_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp004": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/cogpilot/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp008": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp011": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp019": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp022": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp025": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp005": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/cogpilot/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 1
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp006": {
+        "status": "historically_used",
+        "evidence": [
+          {
+            "path": "artifacts/application_evaluation/2026-09-02_candidate-screen-v3p2/cogpilot/seed17/base/chronaris/best.pt",
+            "roles": {
+              "train_sample_ids": 4
+            }
+          }
+        ],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp009": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp012": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp013": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp014": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp015": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp016": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp017": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp018": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp020": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp023": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp024": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp026": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp027": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp028": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp029": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp030": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp031": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp032": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp033": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp035": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp036": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp037": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp038": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp039": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp042": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      },
+      "sub-cp043": {
+        "status": "not_proven_unused",
+        "evidence": [],
+        "eligible_for_undeveloped_subset": false
+      }
+    }
+  }
+}

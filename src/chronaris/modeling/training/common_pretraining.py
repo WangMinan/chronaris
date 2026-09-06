@@ -252,6 +252,7 @@ def load_common_pretraining_checkpoint(
         chronaris_learnable_semantic_queries=chronaris_learnable_semantic_queries,
         chronaris_physics_calibration=backbone_config.get("physics_calibration"),
         chronaris_physics_weight=float(backbone_config.get("physics_weight", 0.1)),
+        chronaris_cuda_graph_recurrence=bool(backbone_config.get("cuda_graph_recurrence", False)),
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(

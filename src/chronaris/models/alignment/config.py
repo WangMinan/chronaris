@@ -26,6 +26,7 @@ class AlignmentPrototypeConfig:
     max_ode_step_s: float | None = None
     use_feature_valid_mask: bool = True
     enable_continuous_evolution: bool = True
+    cuda_graph_recurrence: bool = False
 
     def __post_init__(self) -> None:
         for field_name in (
@@ -47,6 +48,8 @@ class AlignmentPrototypeConfig:
             raise ValueError(
                 f"Unsupported ode_method {self.ode_method!r}. Expected one of {sorted(_ALLOWED_ODE_METHODS)!r}."
             )
+        if self.cuda_graph_recurrence and (self.ode_method != "euler" or self.max_ode_step_s is not None):
+            raise ValueError("CUDA recurrence requires single-step Euler")
         if self.ode_rtol <= 0:
             raise ValueError("ode_rtol must be positive.")
         if self.ode_atol <= 0:

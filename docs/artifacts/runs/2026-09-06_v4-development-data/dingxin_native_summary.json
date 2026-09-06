@@ -1,0 +1,66 @@
+{
+  "folds": [
+    {
+      "fold": "leave_one_sortie_out__fold01",
+      "train": 18,
+      "validation": 6,
+      "embargo": 6,
+      "held_out": 60,
+      "fields": 12,
+      "native_physiology_shape": [
+        4,
+        150,
+        12
+      ],
+      "native_vehicle_shape": [
+        4,
+        1779,
+        965
+      ],
+      "task_shapes": {
+        "maneuver_regression": [
+          24
+        ],
+        "maneuver_classification": [
+          24
+        ],
+        "physiology_regression": [
+          24,
+          12
+        ]
+      }
+    },
+    {
+      "fold": "leave_one_sortie_out__fold02",
+      "train": 36,
+      "validation": 12,
+      "embargo": 12,
+      "held_out": 30,
+      "fields": 11,
+      "native_physiology_shape": [
+        4,
+        150,
+        12
+      ],
+      "native_vehicle_shape": [
+        4,
+        1779,
+        965
+      ],
+      "task_shapes": {
+        "maneuver_regression": [
+          48
+        ],
+        "maneuver_classification": [
+          48
+        ],
+        "physiology_regression": [
+          48,
+          11
+        ]
+      }
+    }
+  ],
+  "manifest_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7",
+  "elapsed_s": 24.063447882886976
+}

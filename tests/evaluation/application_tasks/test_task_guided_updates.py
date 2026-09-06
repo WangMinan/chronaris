@@ -72,7 +72,9 @@ def test_head_warmup_and_joint_updates_resume_without_confirmation_labels(tmp_pa
     left, right = (torch.load(path, map_location="cpu", weights_only=True) for path in (complete.last_checkpoint_path, resumed.last_checkpoint_path))
     for key in ("model_state_dict", "optimizer_state_dict", "rng_state", "data_cursor", "update_rows"):
         assert canonical_training_state_sha256(left[key]) == canonical_training_state_sha256(right[key]), key
-    assert right["data_cursor"] == {"samples_seen": 20, "micro_batches_seen": 10}
+    assert right["data_cursor"]["samples_seen"] == 20
+    assert right["data_cursor"]["micro_batches_seen"] == 10
+    assert len(right["data_cursor"]["sampling_order_sha256"]) == 64
     assert right["encoder_backprop_uses_labels"] is True
     assert right["representation_family"] == "task_guided_v4"
     assert any(not torch.equal(value, right["model_state_dict"]["encoder." + name]) for name, value in source_payload["encoder_state_dict"].items())

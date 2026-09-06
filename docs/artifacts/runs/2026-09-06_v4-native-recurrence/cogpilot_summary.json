@@ -1,0 +1,51 @@
+{
+  "scope": "native_execution_equivalence_no_task_scores",
+  "domain": "cogpilot",
+  "device": "NVIDIA GeForce RTX 4090",
+  "sample_ids": [
+    "sub-cp004::ses-20210330::level-01B_run-001::window0000",
+    "sub-cp008::ses-20210503::level-01B_run-001::window0000",
+    "sub-cp019::ses-20210625::level-01B_run-001::window0000",
+    "sub-cp025::ses-20210820::level-01B_run-001::window0000"
+  ],
+  "data_manifest_sha256": "75292fc4721d24287b0e31470a7014cea99e28327eb85217ac06393672e195ae",
+  "normalizer_fit_ids": [
+    "sub-cp004::ses-20210330::level-01B_run-001::window0000",
+    "sub-cp008::ses-20210503::level-01B_run-001::window0000",
+    "sub-cp019::ses-20210625::level-01B_run-001::window0000",
+    "sub-cp025::ses-20210820::level-01B_run-001::window0000"
+  ],
+  "measurements": {
+    "eager": {
+      "cold_forward_s": 19.94460604991764,
+      "forward_s": [
+        18.087887921370566,
+        17.694584324024618,
+        17.820341180078685
+      ],
+      "forward_median_s": 17.820341180078685,
+      "forward_backward_s": 51.943863913882524,
+      "peak_allocated_bytes": 832330240
+    },
+    "cuda_graph": {
+      "cold_forward_s": 2.8463883260264993,
+      "forward_s": [
+        0.9408600311726332,
+        0.9418838839046657,
+        0.9384727790020406
+      ],
+      "forward_median_s": 0.9408600311726332,
+      "forward_backward_s": 4.216015763115138,
+      "peak_allocated_bytes": 671071744
+    }
+  },
+  "output_max_delta": 0.0,
+  "gradient_max_delta": 6.332993507385254e-07,
+  "historical_max_delta": {
+    "future_values": 0.0,
+    "future_missing": 4.76837158203125e-07
+  },
+  "forward_speedup": 18.940480613113568,
+  "forward_backward_speedup": 12.320604768209439,
+  "passed": true
+}

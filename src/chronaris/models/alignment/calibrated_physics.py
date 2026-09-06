@@ -63,7 +63,7 @@ def fit_physics_calibration(normalizer, provider, *, train_sample_ids: Sequence[
     if batch_size <= 0:
         raise ValueError("physics calibration batch size must be positive")
     parts = {relation: ([], []) for relation in relations}
-    for offset in range(0, len(ids), batch_size):
+    for offset in range(0, len(ids) if parts else 0, batch_size):
         selected = ids[offset:offset + batch_size]
         batch = provider(selected)
         if tuple(batch.sample_ids) != selected:

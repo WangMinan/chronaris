@@ -1,0 +1,27 @@
+{
+  "capture_s": 1.911617134232074,
+  "eager": {
+    "two_forwards_backwards_s": 18.346522342879325
+  },
+  "checkpoint_graph": {
+    "two_forwards_backwards_s": 1.7287728288210928
+  },
+  "output_max_delta": 0.0,
+  "gradient_max_delta": 6.51925802230835e-08,
+  "gradient_deltas": {
+    "ode_func.network.0.weight": 9.778887033462524e-09,
+    "ode_func.network.0.bias": 1.955777406692505e-08,
+    "ode_func.network.1.weight": 3.003515303134918e-08,
+    "ode_func.network.1.bias": 7.566995918750763e-09,
+    "ode_func.network.3.weight": 6.51925802230835e-08,
+    "ode_func.network.3.bias": 5.3551048040390015e-09,
+    "observation_update.weight_ih": 2.468004822731018e-08,
+    "observation_update.weight_hh": 8.498318493366241e-09,
+    "observation_update.bias_ih": 4.470348358154297e-08,
+    "observation_update.bias_hh": 2.0954757928848267e-08,
+    "x": 2.2737367544323206e-13,
+    "dt": 6.821210263296962e-13
+  },
+  "speedup": 10.612454127585071,
+  "peak_allocated_bytes": 295098368
+}

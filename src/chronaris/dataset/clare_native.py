@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Sequence
 
 import numpy as np
 import pandas as pd
@@ -15,6 +16,7 @@ from chronaris.dataset.lazy_observed import (
     source_window_hash,
 )
 from chronaris.representation import ObservationSchema, ObservedDualStreamSample
+from chronaris.dataset.native_table_cache import read_native_table, select_native_subjects
 
 
 CENTRAL_COLUMNS = ("TP9", "AF7", "AF8", "TP10")
@@ -28,7 +30,7 @@ CLARE_SCHEMA = ObservationSchema(
     physiology_feature_roles=tuple("observed" for _ in CENTRAL_NAMES),
     vehicle_feature_roles=tuple("observed" for _ in PERIPH_NAMES),
 )
-_PREPROCESSING_VERSION = "native_physio_integrity_v3.2.2"
+_PREPROCESSING_VERSION = "native_window_contract_v4"
 
 
 @dataclass(frozen=True, slots=True)
@@ -42,15 +44,21 @@ class ClareNativeRecord(NativeSampleRecord):
 def build_clare_native_dataset(
     root: str | Path,
     *,
-    subject_limit: int = 16,
+    subject_limit: int | None = 16,
+    subject_ids: Sequence[str] | None = None,
+    all_legal_windows: bool = False,
     context_duration_s: float = 10.0,
     window_stride: int = 2,
     cache_root: str | Path | None = None,
     max_memory_cache_bytes: int = 512 * 1024**2,
 ) -> LazyObservedDataset[ClareNativeRecord]:
     root = Path(root)
+    if context_duration_s <= 0 or window_stride <= 0:
+        raise ValueError("CLARE window duration/stride must be positive")
+    if all_legal_windows and context_duration_s != 10.:
+        raise ValueError("CLARE label intervals are fixed at ten seconds")
     records: list[ClareNativeRecord] = []
-    for subject in sorted(root.glob("EEG/[0-9]*"))[:subject_limit]:
+    for subject in select_native_subjects(root.glob("EEG/[0-9]*"), subject_limit=subject_limit, subject_ids=subject_ids):
         subject_id = subject.name
         labels_path = root / "Labels" / f"{subject_id}.csv"
         if not labels_path.exists():
@@ -66,24 +74,27 @@ def build_clare_native_dataset(
             recording_start = float(
                 pd.read_csv(eeg_path, usecols=["Timestamp"], nrows=1).iloc[0, 0]
             )
+            recording_end = float(read_native_table(eeg_path, ("Timestamp", *CENTRAL_COLUMNS))["Timestamp"].max()) if all_legal_windows else None
             for window_index, label in enumerate(labels[label_column]):
                 if window_index % window_stride or not np.isfinite(label):
                     continue
                 start = recording_start + window_index * context_duration_s
+                if recording_end is not None and start + context_duration_s > recording_end:
+                    continue
                 sample_id = f"{subject_id}__experiment{experiment}_window{window_index}"
                 source_hash = source_window_hash(
                     (eeg_path, eda_path, ecg_path),
                     sample_id,
                     start,
                     context_duration_s,
-                    int(label),
+                    float(label),
                     _PREPROCESSING_VERSION,
                 )
                 records.append(
                     ClareNativeRecord(
                         sample_id=sample_id,
                         group_id=subject_id,
-                        label=int(label),
+                        label=float(label),
                         context_duration_s=context_duration_s,
                         source_sample_hash=source_hash,
                         eeg_path=eeg_path,
@@ -150,7 +161,7 @@ def _read_window(
     columns: tuple[str, ...],
     record: ClareNativeRecord,
 ) -> tuple[np.ndarray, np.ndarray]:
-    frame = pd.read_csv(path, usecols=("Timestamp", *columns))
+    frame = read_native_table(path, ("Timestamp", *columns))
     timestamps = frame["Timestamp"].to_numpy(np.float64) - record.window_start_s
     keep = (timestamps >= 0.0) & (timestamps < record.context_duration_s)
-    return timestamps[keep], frame.loc[keep, list(columns)].to_numpy(np.float64)
+    return timestamps[keep], frame.loc[keep, list(columns)].to_numpy(np.float64, copy=True)

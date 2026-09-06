@@ -18,6 +18,7 @@ class FoldLineage:
     train_sample_ids: tuple[str, ...]
     validation_sample_ids: tuple[str, ...]
     held_out_sample_ids: tuple[str, ...]
+    development_only: bool = False
 
     def __post_init__(self) -> None:
         if not self.fold_id:
@@ -25,7 +26,11 @@ class FoldLineage:
         train = set(self.train_sample_ids)
         validation = set(self.validation_sample_ids)
         held_out = set(self.held_out_sample_ids)
-        if not train or not held_out:
+        if not isinstance(self.development_only, bool):
+            raise RepresentationContractError("development_only must be boolean")
+        if self.development_only and (held_out or not validation):
+            raise RepresentationContractError("development-only folds require validation and no confirmation samples")
+        if not train or (not held_out and not self.development_only):
             raise RepresentationContractError(
                 "fold train and held-out sample lists must be non-empty"
             )
@@ -67,6 +72,7 @@ class FoldLineage:
             "train_sample_hash": stable_sample_hash(self.train_sample_ids),
             "validation_sample_hash": stable_sample_hash(self.validation_sample_ids),
             "held_out_sample_hash": stable_sample_hash(self.held_out_sample_ids),
+            "development_only": self.development_only,
         }
 
 
@@ -168,6 +174,7 @@ class CheckpointRegistry:
                 train_sample_ids=tuple(fold_payload["train_sample_ids"]),
                 validation_sample_ids=tuple(fold_payload["validation_sample_ids"]),
                 held_out_sample_ids=tuple(fold_payload["held_out_sample_ids"]),
+                development_only=bool(fold_payload.get("development_only", False)),
             )
             record = CheckpointRecord(
                 method_name=str(item["method_name"]),

@@ -7,9 +7,10 @@ from collections import OrderedDict
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Mapping
 
 import numpy as np
+from chronaris.dataset.native_table_cache import native_file_sha256
 
 from chronaris.representation import (
     ObservationSchema,
@@ -41,6 +42,7 @@ class LazyObservedDataset(Generic[RecordT]):
         loader: Callable[[RecordT], ObservedDualStreamSample],
         cache_root: str | Path | None = None,
         max_memory_cache_bytes: int = 512 * 1024**2,
+        cache_file_sha256: Mapping[str, str] | None = None,
     ) -> None:
         if not records or max_memory_cache_bytes < 0:
             raise ValueError("native dataset records must be non-empty and cache size non-negative")
@@ -52,6 +54,9 @@ class LazyObservedDataset(Generic[RecordT]):
             raise ValueError("native dataset sample IDs must be unique")
         self.cache_root = Path(cache_root) if cache_root is not None else None
         self.max_memory_cache_bytes = int(max_memory_cache_bytes)
+        self.cache_file_sha256 = dict(cache_file_sha256) if cache_file_sha256 is not None else None
+        if self.cache_file_sha256 is not None and (self.cache_root is None or set(self.cache_file_sha256) != set(self._by_id)):
+            raise ValueError("verified cache hashes must cover all prepared samples")
         self._memory: OrderedDict[str, ObservedDualStreamSample] = OrderedDict()
         self._memory_bytes = 0
 
@@ -71,6 +76,10 @@ class LazyObservedDataset(Generic[RecordT]):
         record = self._by_id.get(str(sample_id))
         if record is None:
             raise KeyError(f"unknown native sample: {sample_id}")
+        if self.cache_file_sha256 is not None:
+            cache_path = self._cache_path(record)
+            if not cache_path.is_file() or native_file_sha256(cache_path) != self.cache_file_sha256[record.sample_id]:
+                raise ValueError(f"prepared native cache bytes changed: {record.sample_id}")
         cached = self._memory.pop(record.sample_id, None)
         if cached is not None:
             self._memory[record.sample_id] = cached
@@ -188,6 +197,7 @@ def source_window_hash(paths: Sequence[Path], *parts: object) -> str:
         digest.update(str(path.resolve()).encode())
         digest.update(str(stat.st_size).encode())
         digest.update(str(stat.st_mtime_ns).encode())
+        digest.update(native_file_sha256(path).encode())
     for part in parts:
         digest.update(repr(part).encode())
     return digest.hexdigest()

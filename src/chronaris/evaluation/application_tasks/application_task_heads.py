@@ -148,3 +148,26 @@ def application_task_losses(output, selected, definitions, parameters):
     active = [loss for name, loss in losses.items() if counts[name] > 0]
     total = torch.stack(active).mean() if active else sum(value.sum() * 0 for value in output["task_predictions"].values())
     return losses | {"total": total, "counts": counts}
+
+
+def effective_task_counts(targets, definitions, batches, *, batch, provider, method_name):
+    """Count task support across accumulation before scaling each microbatch loss."""
+    from chronaris.modeling.training.candidate_validation import _load_batch
+    totals = {task.name: 0. for task in definitions}
+    for ids in batches:
+        selected = select_application_targets(targets, ids, "cpu")
+        query_valid = None
+        if any(task.kind == "sequence_classification" for task in definitions):
+            raw = _load_batch(batch, provider, ids)
+            query_valid = torch.zeros_like(raw.query_timestamps_s, dtype=torch.bool)
+            streams = (method_name.removesuffix("_only"),) if method_name.endswith("_only") else ("physiology", "vehicle")
+            for stream in streams:
+                visible = getattr(raw, f"{stream}_timestamps_s")[:, None, :] <= raw.query_timestamps_s[:, :, None]
+                query_valid |= (visible & getattr(raw, f"{stream}_point_mask")[:, None, :]).any(dim=-1)
+        for task in definitions:
+            mask = selected["valid_masks"][task.name]
+            if task.kind == "sequence_classification":
+                mask = mask & query_valid
+            support = mask.reshape(len(ids), -1).any(dim=1)
+            totals[task.name] += float((selected["sample_weights"] * support).sum())
+    return totals

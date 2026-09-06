@@ -11,6 +11,7 @@ from chronaris.models.alignment.config import AlignmentPrototypeConfig
 from chronaris.models.alignment.decoders import AlignmentProjectionHead, ObservationDecoder
 from chronaris.models.alignment.encoders import ObservationEncoder
 from chronaris.models.alignment.ode_cells import ODERNNCell
+from chronaris.models.alignment.cuda_recurrence import CUDAGraphRecurrence
 from chronaris.models.alignment.torch_batch import TorchAlignmentBatch, TorchAlignmentStreamBatch
 
 
@@ -101,6 +102,7 @@ class SingleStreamODERNNPrototype(nn.Module):
             projection_dim=self.config.projection_dim,
             activation=self.config.activation,
         )
+        self._cuda_recurrence = None
 
     def forward(
         self,
@@ -125,7 +127,19 @@ class SingleStreamODERNNPrototype(nn.Module):
         evolved_hidden_steps: list[torch.Tensor] = []
         updated_hidden_steps: list[torch.Tensor] = []
 
-        for point_index in range(point_count):
+        use_cuda_graph = self.config.cuda_graph_recurrence and stream.values.is_cuda and point_count >= 512
+        if use_cuda_graph:
+            if self._cuda_recurrence is None:
+                self._cuda_recurrence = CUDAGraphRecurrence(self.ode_rnn_cell)
+            evolved_hidden_tensor, updated_hidden_tensor, hidden_state = self._cuda_recurrence(
+                hidden_state, observation_embeddings,
+                stream.delta_t_s if self.config.enable_continuous_evolution else torch.zeros_like(stream.delta_t_s),
+                stream.mask,
+            )
+            evolved_hidden_tensor = evolved_hidden_tensor * point_mask
+            updated_hidden_tensor = updated_hidden_tensor * point_mask
+
+        for point_index in range(0 if use_cuda_graph else point_count):
             valid_mask = stream.mask[:, point_index]
             valid_mask_float = valid_mask.to(dtype=value_dtype).unsqueeze(-1)
             evolution_delta_t_s = (
@@ -148,7 +162,8 @@ class SingleStreamODERNNPrototype(nn.Module):
         reference_valid_mask: torch.Tensor | None = None
         reference_positive_evolution_count = 0
         reference_maximum_delta_t_s = 0.0
-        updated_hidden_tensor = torch.stack(updated_hidden_steps, dim=1)
+        if not use_cuda_graph:
+            updated_hidden_tensor = torch.stack(updated_hidden_steps, dim=1)
         if reference_offsets_s is not None:
             resolved_reference_offsets = _resolve_reference_offsets_s(
                 reference_offsets_s,
@@ -171,7 +186,8 @@ class SingleStreamODERNNPrototype(nn.Module):
             resolved_reference_offsets = None
 
         if include_observation_diagnostics:
-            evolved_hidden_tensor = torch.stack(evolved_hidden_steps, dim=1)
+            if not use_cuda_graph:
+                evolved_hidden_tensor = torch.stack(evolved_hidden_steps, dim=1)
             reconstruction_tensor = self.decoder(updated_hidden_tensor) * point_mask
             projection_tensor = self.projection_head(updated_hidden_tensor) * point_mask
         else:

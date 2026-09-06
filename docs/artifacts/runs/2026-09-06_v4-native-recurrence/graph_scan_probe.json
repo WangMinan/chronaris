@@ -1,0 +1,13 @@
+{
+  "capture_s": 18.165905482135713,
+  "eager": {
+    "four_forwards_backwards_s": 8.123072056099772
+  },
+  "graphed": {
+    "four_forwards_backwards_s": 0.9097918570041656
+  },
+  "output_max_delta": 0.0,
+  "gradient_max_delta": 2.0489096641540527e-08,
+  "speedup": 8.928495010768797,
+  "peak_allocated_bytes": 140908544
+}

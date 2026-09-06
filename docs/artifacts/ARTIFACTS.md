@@ -10,6 +10,10 @@
 
 ## 当前九月研究证据
 
+- [v4 原生连续状态执行对照](runs/2026-09-06_v4-native-recurrence/report.md)：同参数原生 CogPilot 批次前后向约提速 12.32 倍；输出、梯度和历史隔离通过，失败探查保留。
+
+- [v4 开发数据与分组](runs/2026-09-06_v4-development-data/report.md)：CogPilot 2,524 个、CLARE 794 个原生窗口；新仿真 1,280 个训练与开发上下文，确认观测未打开。
+
 - [v4 双路线工程闭环](runs/2026-09-06_v4-dual-route-smoke/report.md)：十次自监督更新、50 次头预热与十次联合更新，训练后两路线历史隔离通过。
 - [v4 新仿真开发数据](runs/2026-09-06_v4-simulation-data/report.md)：256 条训练与 64 条开发轨迹生成完成；确认参数清单已冻结，确认观测未生成。
 

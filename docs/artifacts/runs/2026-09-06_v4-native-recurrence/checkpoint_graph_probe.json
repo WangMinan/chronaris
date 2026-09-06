@@ -1,0 +1,13 @@
+{
+  "capture_s": 4.3679914637468755,
+  "eager": {
+    "two_forwards_backwards_s": 18.181362580042332
+  },
+  "checkpoint_graph": {
+    "two_forwards_backwards_s": 4.716753172222525
+  },
+  "output_max_delta": 0.0,
+  "gradient_max_delta": 2.6800380027852952,
+  "speedup": 3.854635151806197,
+  "peak_allocated_bytes": 295098368
+}

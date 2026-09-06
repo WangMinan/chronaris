@@ -59,6 +59,8 @@ def export_finetuned_application_representations(
     for role in ("train", "validation", "held_out"):
         chunks = []
         ids = tuple(role_sample_ids[role])
+        if not ids:
+            continue
         for offset in range(0, len(ids), batch_size):
             raw = _load_batch(batch, batch_provider, ids[offset : offset + batch_size])
             with torch.inference_mode():

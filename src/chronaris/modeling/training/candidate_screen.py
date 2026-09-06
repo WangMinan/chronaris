@@ -58,6 +58,7 @@ from chronaris.modeling.training.candidate_validation import (
     PUBLIC_SELECTION_WEIGHTS, _evaluate_public_losses, _empty_loss_totals,
     _accumulate_loss_terms, _finalize_loss_totals, _public_selection_loss, _load_batch, _batch_ids,
 )
+from chronaris.modeling.training.sample_schedule import training_sample_schedule
 _training_configs_match_ignoring_device = training_configs_match_ignoring_device
 
 @dataclass(frozen=True, slots=True)
@@ -85,6 +86,10 @@ class CandidateScreenConfig:
     minimum_updates: int = 500
     checkpoint_interval: int = 25
     early_stopping: bool = True
+    sampling_hierarchy: Mapping[str, tuple[str, ...]] | None = None
+    retained_updates: tuple[int, ...] = ()
+    data_manifest_sha256: str | None = None
+    cuda_graph_recurrence: bool = False
 
     def __post_init__(self) -> None:
         if self.max_epochs <= 0 or self.batch_size <= 0 or self.patience <= 0:
@@ -120,6 +125,10 @@ class CandidateScreenConfig:
             raise ValueError("update validation/checkpoint schedule is invalid")
         if any(update <= 0 for update in self.validation_updates):
             raise ValueError("explicit validation updates must be positive")
+        if any(update <= 0 for update in self.retained_updates):
+            raise ValueError("retained update positions must be positive")
+        if self.data_manifest_sha256 is not None and (len(self.data_manifest_sha256) != 64 or any(c not in "0123456789abcdef" for c in self.data_manifest_sha256)):
+            raise ValueError("data manifest fingerprint must be SHA-256")
 
 
 @dataclass(frozen=True, slots=True)
@@ -400,6 +409,7 @@ def _train_pretext_candidate(
         chronaris_learnable_semantic_queries=resolved.learnable_semantic_queries,
         chronaris_physics_calibration=resolved.physics_calibration,
         chronaris_physics_weight=resolved.physics_weight,
+        chronaris_cuda_graph_recurrence=resolved.cuda_graph_recurrence,
     ).to(resolved.device)
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,
@@ -495,9 +505,11 @@ def _train_pretext_candidate(
     )
     started = time.perf_counter()
     sampling_order = tuple(value for ids in train_batches for value in ids)
+    schedule = training_sample_schedule(batch, batch_provider, fold.train_sample_ids, resolved.batch_size,
+                                        resolved.sampling_hierarchy) if update_mode else None
     if update_mode and len(sampling_order) < resolved.batch_size:
         raise ValueError("actual batch exceeds distinct training sample count")
-    order_hash = candidate_protocol_hash(sample_ids=sampling_order)
+    order_hash = schedule.sha256 if schedule is not None else candidate_protocol_hash(sample_ids=sampling_order)
     if data_cursor and data_cursor["sampling_order_sha256"] != order_hash:
         raise RepresentationContractError("resume sampling order changed")
     for epoch in range(start_epoch, limit + 1):
@@ -508,8 +520,7 @@ def _train_pretext_candidate(
         train_totals = _empty_loss_totals()
         gradient_norms = []
         if update_mode:
-            active_batches = tuple(tuple(sampling_order[(samples_seen + i * resolved.batch_size + j)
-                % len(sampling_order)] for j in range(resolved.batch_size)) for i in range(accumulation))
+            active_batches = tuple(schedule.draw(samples_seen + i * resolved.batch_size, resolved.batch_size) for i in range(accumulation))
         else:
             active_batches = train_batches
         optimizer.zero_grad(set_to_none=True)
@@ -652,7 +663,7 @@ def _train_pretext_candidate(
                 "mean_gradient_norm_before_clip": sum(gradient_norms) / len(gradient_norms),
             }
             epoch_rows.append(row)
-        if update_mode and not (validate or step_count % resolved.checkpoint_interval == 0):
+        if update_mode and not (validate or step_count % resolved.checkpoint_interval == 0 or step_count in resolved.retained_updates):
             continue
         payload = build_candidate_checkpoint_payload(
             method_name=method_name,
@@ -703,10 +714,13 @@ def _train_pretext_candidate(
             "actual_batch_size": resolved.batch_size,
             "effective_batch_size": resolved.effective_batch_size or resolved.batch_size,
             "update_counting": "optimizer.step",
+            "epoch_semantics": "sample_exposure_equivalent" if update_mode else "complete_data_pass",
         })
         if improved:
             atomic_save_candidate(best_path, payload)
         atomic_save_candidate(last_path, payload)
+        if step_count in resolved.retained_updates:
+            atomic_save_candidate(root / f"update_{step_count:06d}.pt", payload)
         if (validate and resolved.early_stopping and epochs_without_improvement >= resolved.patience
             and (not update_mode or step_count >= resolved.minimum_updates)):
             break

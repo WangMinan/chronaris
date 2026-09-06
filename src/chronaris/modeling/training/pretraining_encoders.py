@@ -172,6 +172,7 @@ def build_trainable_fusion_encoder(
     chronaris_learnable_semantic_queries: bool = False,
     chronaris_physics_calibration: Mapping[str, object] | None = None,
     chronaris_physics_weight: float = 0.1,
+    chronaris_cuda_graph_recurrence: bool = False,
 ) -> TrainableFusionEncoder:
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
@@ -225,6 +226,7 @@ def build_trainable_fusion_encoder(
                 learnable_semantic_queries=chronaris_learnable_semantic_queries,
                 physics_calibration=chronaris_physics_calibration,
                 physics_weight=chronaris_physics_weight,
+                cuda_graph_recurrence=chronaris_cuda_graph_recurrence,
                 hidden_dim=candidate.hidden_dim,
                 embedding_dim=candidate.hidden_dim,
                 encoder_hidden_dim=candidate.hidden_dim,

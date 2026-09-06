@@ -1,0 +1,15 @@
+{
+  "torch_version": "2.11.0+cu130",
+  "compile_warmup_s": 38.54175891308114,
+  "eager": {
+    "forward_s": 1.626591966021806,
+    "forward_backward_s": 3.123597959987819
+  },
+  "compiled": {
+    "forward_s": 0.7438683337531984,
+    "forward_backward_s": 1.942679116036743
+  },
+  "output_max_delta": 1.4901161193847656e-07,
+  "gradient_max_delta": 5.820766091346741e-10,
+  "forward_backward_speedup": 1.6078815766343684
+}
