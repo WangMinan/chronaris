@@ -1,0 +1,19 @@
+{
+  "source_commit": "ef8d88eb1458ee54801b8eb77663a43f96894be9",
+  "runtime_worktree": "/home/wangminan/projects/chronaris-runtime-v4-diagnostic-20260906",
+  "methods": [
+    "chronaris",
+    "physiology_only",
+    "vehicle_only",
+    "mult",
+    "contiformer"
+  ],
+  "gpu_serial": true,
+  "seed": 17,
+  "conditions": [
+    "clean_asynchronous"
+  ],
+  "pretraining_updates": 500,
+  "head_warmup_updates": 50,
+  "joint_updates": 500
+}

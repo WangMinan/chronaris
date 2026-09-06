@@ -1,0 +1,18 @@
+{
+  "method": "chronaris",
+  "status": "running",
+  "optimizer_updates": 70,
+  "best_update": 50,
+  "sample_ids": [
+    "g1_state_space__v4_train_profile_028__trajectory_229__seed_4110000229__clean_asynchronous::context_030.000",
+    "g1_state_space__v4_train_profile_029__trajectory_237__seed_4110000237__clean_asynchronous::context_030.000",
+    "g1_state_space__v4_train_profile_030__trajectory_245__seed_4110000245__clean_asynchronous::context_030.000",
+    "g1_state_space__v4_train_profile_031__trajectory_253__seed_4110000253__clean_asynchronous::context_030.000"
+  ],
+  "samples_seen": 2240,
+  "peak_allocated_bytes": 350841344,
+  "checkpoint": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/last.pt",
+  "device": "cuda",
+  "data_wait_s": 1.0088687292300165,
+  "wall_elapsed_s": 255.00631207507104
+}
