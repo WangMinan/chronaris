@@ -18,6 +18,18 @@ def _hash_prefix(ids, count):
     return tuple(sorted(ids, key=lambda value: hashlib.sha256(f"v4-engineering-smoke:{value}".encode()).hexdigest())[:count])
 
 
+def v4_workflow_source_sha256():
+    """Bind orchestration/evidence reuse to data, training, targets and consumer code."""
+    root = Path(__file__).parents[4]
+    paths = sorted((root / "src/chronaris").rglob("*.py"))
+    paths.append(root / "scripts/evaluation/application_tasks/run_thesis_v4.py")
+    digest = hashlib.sha256()
+    for path in paths:
+        digest.update(str(path.relative_to(root)).encode())
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
+
+
 def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fold_index=0):
     if fold_index < 0 or fold_index >= ({"simulation": 1, "dingxin": 2}.get(domain, 3)):
         raise ValueError("invalid development fold index")
@@ -63,7 +75,7 @@ def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fo
         if not set(ids) <= allowed:
             raise ValueError("development cannot open confirmation observations")
         return provider(ids)
-    return guarded, schema, fold, hierarchy, digest, targets, definitions, simulation
+    return guarded, schema, fold, hierarchy, digest, targets, definitions, simulation if domain == "simulation" else data
 
 
 def development_normalization(domain, provider, schema, fold, digest, *,

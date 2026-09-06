@@ -19,6 +19,7 @@ def main():
     parser.add_argument("--output-root")
     parser.add_argument("--data-root", default="artifacts/application_evaluation/2026-09-06_v4-public-development")
     parser.add_argument("--task-mode", choices=("single", "all"), default="all")
+    parser.add_argument("--fold-index", type=int, default=0)
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
@@ -35,10 +36,9 @@ def main():
         summary = run_v4_smoke(domain=args.domain, registry_path=args.registry,
             data_root=args.data_root, output_root=output_root, task_mode=args.task_mode)
     else:
-        if args.domain != "simulation":
-            raise ValueError("this diagnostic entry currently covers simulation learning curves")
-        from chronaris.evaluation.application_tasks.v4_diagnostic_run import run_simulation_diagnostic
-        summary = run_simulation_diagnostic(method=args.method, output_root=output_root)
+        from chronaris.evaluation.application_tasks.v4_diagnostic_run import run_development_diagnostic
+        summary = run_development_diagnostic(domain=args.domain, method=args.method, output_root=output_root,
+            fold_index=args.fold_index, data_root=args.data_root, registry_path=args.registry)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

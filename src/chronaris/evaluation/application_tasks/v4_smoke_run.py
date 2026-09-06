@@ -102,7 +102,7 @@ def run_v4_smoke(*, domain, output_root, task_mode="all",
             chronaris_explicit_shift_enabled=True, chronaris_explicit_shift_weight=.1, chronaris_event_pair_weight=0.)
         self_peak = torch.cuda.max_memory_allocated()
         progress.update(optimizer_updates=training.optimizer_updates, source_checkpoint=training.best_checkpoint_path)
-        if simulation is not None:
+        if domain == "simulation":
             targets = application_targets(build_guarded_application_consumer_targets(simulation,
                 completed_pretraining_checkpoints=(training.best_checkpoint_path,), task_guided_development=True))
         if task_mode == "single":

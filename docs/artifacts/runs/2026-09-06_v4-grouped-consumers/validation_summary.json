@@ -1,0 +1,135 @@
+{
+  "source_code_sha256": "1f64233a50d2680285e3405dd718319c32cb5a6f0b00bd9838a378dc7ca71bae",
+  "full_cpu_regression": {
+    "passed": 518,
+    "skipped": 22,
+    "warnings": 291,
+    "elapsed_s": 118.59,
+    "log": "/tmp/chronaris-v4-native-consumers-full.log",
+    "xml": "/tmp/chronaris-v4-native-consumers-full.xml",
+    "cuda_visible_devices": "",
+    "skip_details": [
+      {
+        "class": "tests.evaluation.application_tasks.test_application_consumers",
+        "name": "test_tcn_can_train_on_gpu_and_returns_portable_cpu_model",
+        "reason": "CUDA unavailable"
+      },
+      {
+        "class": "tests.evaluation.application_tasks.test_task_guided_updates",
+        "name": "test_head_warmup_and_joint_updates_resume_without_confirmation_labels[cuda]",
+        "reason": "CUDA unavailable"
+      },
+      {
+        "class": "tests.evaluation.application_tasks.test_v4_diagnostic_run",
+        "name": "test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_confirmation",
+        "reason": "CUDA diagnostic integration"
+      },
+      {
+        "class": "tests.evaluation.dingxin.test_optimization.StageIPrivateOptimizationTest",
+        "name": "test_private_benchmark_deep_models_support_cuda_runtime",
+        "reason": "CUDA not available"
+      },
+      {
+        "class": "tests.evaluation.public_datasets.test_opt.StageIPublicOptTest",
+        "name": "test_public_opt_torch_uab_runs_on_cuda_with_finite_predictions",
+        "reason": "CUDA not available"
+      },
+      {
+        "class": "tests.evidence.test_case_study.StageICaseStudyPipelineTest",
+        "name": "test_case_study_pipeline_supports_cuda_runtime",
+        "reason": "CUDA not available"
+      },
+      {
+        "class": "tests.modeling.fusion_encoders.test_event_extraction_vectorized",
+        "name": "test_vectorized_events_match_scalar_outputs_and_gradients[cuda]",
+        "reason": "CUDA unavailable"
+      },
+      {
+        "class": "tests.modeling.test_deep_pipeline.StageIPublicSequencePreparationTest",
+        "name": "test_live_nasa_sequence_preserves_benchmark_loft_and_background",
+        "reason": "live NASA sequence test disabled"
+      },
+      {
+        "class": "tests.modeling.test_deep_pipeline.StageIPublicSequencePreparationTest",
+        "name": "test_live_uab_sequence_counts_preserve_window_profile",
+        "reason": "live UAB sequence test disabled"
+      },
+      {
+        "class": "tests.modeling.test_deep_pipeline.StageIPublicSequencePreparationTest",
+        "name": "test_public_deep_baseline_supports_cuda_runtime",
+        "reason": "CUDA not available"
+      },
+      {
+        "class": "tests.modeling.test_deep_pipeline.StageIPrivateBenchmarkPipelineTest",
+        "name": "test_public_fusion_screen_runs_on_cuda_with_synthetic_assets",
+        "reason": "CUDA not available"
+      },
+      {
+        "class": "tests.modeling.test_gpu_runtime.StageIGPURuntimeTest",
+        "name": "test_amp_smoke_forward_backward_on_cuda",
+        "reason": "CUDA not available"
+      },
+      {
+        "class": "tests.modeling.training.test_candidate_updates",
+        "name": "test_update_accumulation_replays_partial_update_and_data_cursor[cuda-physiology_only]",
+        "reason": "CUDA unavailable"
+      },
+      {
+        "class": "tests.modeling.training.test_candidate_updates",
+        "name": "test_update_accumulation_replays_partial_update_and_data_cursor[cuda-chronaris]",
+        "reason": "CUDA unavailable"
+      },
+      {
+        "class": "tests.models.alignment.test_cuda_recurrence",
+        "name": "test_chunk_replay_preserves_outputs_gradients_accumulation_and_resume[61]",
+        "reason": "CUDA graph requires CUDA"
+      },
+      {
+        "class": "tests.models.alignment.test_cuda_recurrence",
+        "name": "test_chunk_replay_preserves_outputs_gradients_accumulation_and_resume[1027]",
+        "reason": "CUDA graph requires CUDA"
+      },
+      {
+        "class": "tests.test_alignment_data.AlignmentBatchingRuntimeDisabledTest",
+        "name": "test_numpy_runtime_disabled",
+        "reason": "numpy runtime tests are disabled on this machine; enable in a suitable environment."
+      },
+      {
+        "class": "tests.test_alignment_data.AlignmentTorchRuntimeDisabledTest",
+        "name": "test_torch_runtime_disabled",
+        "reason": "torch runtime tests are disabled on this machine; enable in a suitable environment."
+      },
+      {
+        "class": "tests.test_alignment_model_losses.AlignmentLossesRuntimeDisabledTest",
+        "name": "test_torch_runtime_disabled",
+        "reason": "torch runtime tests are disabled on this machine; enable in a suitable environment."
+      },
+      {
+        "class": "tests.test_alignment_model_losses.AlignmentPrototypeForwardRuntimeDisabledTest",
+        "name": "test_torch_runtime_disabled",
+        "reason": "torch runtime tests are disabled on this machine; enable in a suitable environment."
+      },
+      {
+        "class": "tests.test_alignment_pipeline.AlignmentPreviewPipelineRuntimeDisabledTest",
+        "name": "test_torch_runtime_disabled",
+        "reason": "torch runtime tests are disabled on this machine; enable in a suitable environment."
+      },
+      {
+        "class": "tests.test_alignment_pipeline.AlignmentExperimentPipelineRuntimeDisabledTest",
+        "name": "test_torch_runtime_disabled",
+        "reason": "torch runtime tests are disabled on this machine; enable in a suitable environment."
+      }
+    ]
+  },
+  "focused_cpu_checks": {
+    "passed": 17,
+    "skipped": 2,
+    "elapsed_s": 4.87,
+    "log": "/tmp/chronaris-v4-native-diagnostic-tests.log"
+  },
+  "new_neural_experiment_updates": 0,
+  "existing_engineering_route_units_evaluated": 6,
+  "consumer_bundles": 10,
+  "task_or_field_models": 44,
+  "confirmation_scores_produced": false
+}

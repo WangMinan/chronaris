@@ -1,0 +1,340 @@
+[
+  {
+    "domain": "dingxin",
+    "route": "self_supervised",
+    "data_manifest_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7",
+    "source_scope": "existing_engineering_subset",
+    "result": {
+      "protocol_sha256": "50b20c3699d2f8ed7a83fa012abaaeabda0174b3a0ce86ac884c812eaac37619",
+      "manifest_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/dingxin/self_supervised/consumer_manifest.json",
+      "components": {
+        "linear": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/dingxin/self_supervised/linear_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/dingxin/self_supervised/linear.joblib",
+          "fit_elapsed_s": 0.012264995835721493,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "maneuver_regression",
+                "metric": "rmse",
+                "value": 3.5846833046468918,
+                "group_count": 1,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "training_scale"
+              },
+              {
+                "task": "maneuver_classification",
+                "metric": "macro_f1",
+                "value": 0.4523809523809524,
+                "group_count": 1,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "physiology_regression",
+                "metric": "rmse",
+                "value": 0.9822313591268309,
+                "group_count": 1,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "training_scale"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "domain": "dingxin",
+    "route": "task_guided",
+    "data_manifest_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7",
+    "source_scope": "existing_engineering_subset",
+    "result": {
+      "protocol_sha256": "2770fb3c3df63867f68309d40ac939ffe4a342a9a15102308643fab71e032fa5",
+      "manifest_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/dingxin/task_guided/consumer_manifest.json",
+      "components": {
+        "linear": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/dingxin/task_guided/linear_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/dingxin/task_guided/linear.joblib",
+          "fit_elapsed_s": 0.011736629996448755,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "maneuver_regression",
+                "metric": "rmse",
+                "value": 3.3779645446467694,
+                "group_count": 1,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "training_scale"
+              },
+              {
+                "task": "maneuver_classification",
+                "metric": "macro_f1",
+                "value": 0.24444444444444446,
+                "group_count": 1,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "physiology_regression",
+                "metric": "rmse",
+                "value": 0.6957806926162872,
+                "group_count": 1,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "training_scale"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "domain": "clare",
+    "route": "self_supervised",
+    "data_manifest_sha256": "f0775c6f8ec78cd73ad1c72e6a41bedf55b67f667bb5788d4adf547b5737c147",
+    "source_scope": "existing_engineering_subset",
+    "result": {
+      "protocol_sha256": "0c7e0c21663f6327c893c5e7410b21f051d980ce8f71df3b0578bf730d7c6631",
+      "manifest_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/self_supervised/consumer_manifest.json",
+      "components": {
+        "linear": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/self_supervised/linear_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/self_supervised/linear.joblib",
+          "fit_elapsed_s": 0.013387340120971203,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.7,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.905912943225915,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        "minirocket": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/self_supervised/minirocket_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/self_supervised/minirocket.joblib",
+          "fit_elapsed_s": 0.5671219010837376,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.3666666666666667,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.3105578482115097,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "domain": "clare",
+    "route": "task_guided",
+    "data_manifest_sha256": "f0775c6f8ec78cd73ad1c72e6a41bedf55b67f667bb5788d4adf547b5737c147",
+    "source_scope": "existing_engineering_subset",
+    "result": {
+      "protocol_sha256": "9b42ab84f8781095ea8a3f226d1e8978d355618f5bdd03fab89a4a65dd1fdc33",
+      "manifest_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/task_guided/consumer_manifest.json",
+      "components": {
+        "linear": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/task_guided/linear_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/task_guided/linear.joblib",
+          "fit_elapsed_s": 0.013465153984725475,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.7,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.94872621492396,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        "minirocket": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/task_guided/minirocket_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/clare/task_guided/minirocket.joblib",
+          "fit_elapsed_s": 0.1432972140610218,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.3666666666666667,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.3401418355632941,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "route": "self_supervised",
+    "data_manifest_sha256": "75292fc4721d24287b0e31470a7014cea99e28327eb85217ac06393672e195ae",
+    "source_scope": "existing_engineering_subset",
+    "result": {
+      "protocol_sha256": "52e95b78141336991fade8d28abef26a6709106787c5415b9c8578da515a2795",
+      "manifest_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/self_supervised/consumer_manifest.json",
+      "components": {
+        "linear": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/self_supervised/linear_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/self_supervised/linear.joblib",
+          "fit_elapsed_s": 0.015328537207096815,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.25,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.12435656073862254,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        "minirocket": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/self_supervised/minirocket_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/self_supervised/minirocket.joblib",
+          "fit_elapsed_s": 0.15988599602133036,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.125,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.08992405238150111,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "route": "task_guided",
+    "data_manifest_sha256": "75292fc4721d24287b0e31470a7014cea99e28327eb85217ac06393672e195ae",
+    "source_scope": "existing_engineering_subset",
+    "result": {
+      "protocol_sha256": "a64e89fe132cd1a3e4c0a0472adbe4bf9b1e9084bff407bcff52f2d4339b3652",
+      "manifest_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/task_guided/consumer_manifest.json",
+      "components": {
+        "linear": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/task_guided/linear_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/task_guided/linear.joblib",
+          "fit_elapsed_s": 0.014204347971826792,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.25,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.13127370867962124,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        "minirocket": {
+          "result_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/task_guided/minirocket_results.json",
+          "model_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-grouped-consumer-check-repair/cogpilot/task_guided/minirocket.joblib",
+          "fit_elapsed_s": 0.16082099080085754,
+          "task_summary": {
+            "validation": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.125,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.09097708361425239,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+]

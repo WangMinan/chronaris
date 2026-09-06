@@ -57,3 +57,48 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     monkeypatch.setattr(run, "run_application_method_consumers", no_retraining)
     resumed = run.run_simulation_diagnostic(method="physiology_only", output_root=tmp_path)
     assert resumed["completed"]
+
+
+def test_native_diagnostic_cpu_contract_runs_shared_training_and_grouped_consumers(tmp_path, monkeypatch):
+    from chronaris.evaluation.application_tasks.application_task_heads import ApplicationTaskDefinition, ApplicationTaskTargets
+    samples = [_sample(f"native_{i}", shift=i / 10) for i in range(9)]
+    batch = collate_observation_samples(samples)
+    fold = FoldLineage("native_diagnostic", batch.sample_ids[:6], batch.sample_ids[6:], (), development_only=True)
+    def provider(ids):
+        assert set(ids) <= set(batch.sample_ids)
+        return select_observation_batch(batch, ids)
+    normalizer = TrainOnlyRobustNormalizer().fit(batch, train_sample_ids=fold.train_sample_ids,
+                                                held_out_sample_ids=fold.validation_sample_ids)
+    definitions = (ApplicationTaskDefinition("classify", "classification", 3), ApplicationTaskDefinition("response", "regression", 1))
+    values = {"classify": torch.arange(9).remainder(3), "response": torch.linspace(0., 1., 9)}
+    masks = {name: torch.ones_like(value, dtype=torch.bool) for name, value in values.items()}
+    masks["response"][2] = False
+    targets = ApplicationTaskTargets(batch.sample_ids, values, masks, {"domain": "clare"})
+    data = SimpleNamespace(sample_manifest=[{"sample_id": sample, "subject_id": "train" if i < 6 else "validation"}
+                                          for i, sample in enumerate(batch.sample_ids)])
+    inputs = (provider, samples[0].schema, fold, {s: (s,) for s in fold.train_sample_ids}, "a" * 64, targets, definitions, data)
+    monkeypatch.setattr(run, "load_development_inputs", lambda *args, **kwargs: inputs)
+    monkeypatch.setattr(run, "development_normalization", lambda *args, **kwargs: (normalizer, None))
+    monkeypatch.setattr(run, "_require_diagnostic_device", lambda seed: None)
+    monkeypatch.setattr(run, "CURVE_UPDATES", (1, 2, 3))
+    pretraining, guidance = run.CandidateScreenConfig, run.EndToEndFineTuningConfig
+    checkpoint_loader, consumer_runner = run.load_common_pretraining_checkpoint, run.run_native_method_consumers
+    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {"effective_batch_size": 4, "device": "cpu"})))
+    monkeypatch.setattr(run, "EndToEndFineTuningConfig", lambda **kwargs: guidance(**(kwargs | {
+        "effective_batch_size": 4, "head_warmup_updates": 2, "validation_interval": 1, "device": "cpu"})))
+    monkeypatch.setattr(run, "load_common_pretraining_checkpoint", lambda path, **kwargs: checkpoint_loader(path, **(kwargs | {"device": "cpu"})))
+    monkeypatch.setattr(run, "run_native_method_consumers", lambda **kwargs: consumer_runner(**kwargs, minirocket_kernels=84))
+    result = run.run_development_diagnostic(domain="clare", method="physiology_only", output_root=tmp_path)
+    assert result["completed"] and len(result["completed_consumers"]) == 6
+    assert result["self_supervised_training"]["optimizer_updates"] == 3
+    assert result["task_guided_training"]["optimizer_updates"] == 5
+    for route, labels in (("self_supervised", False), ("task_guided", True)):
+        root = tmp_path / "clare/physiology_only/fold01/consumers" / route / "3"
+        manifest = json.loads((root / "consumer_manifest.json").read_text())
+        assert manifest["label_used_for_encoder_training"] is labels
+        assert set(manifest["roles"]) == {"train", "validation"}
+        for family in ("linear", "minirocket"):
+            evidence = json.loads((root / f"{family}_results.json").read_text())
+            assert evidence["evaluations"]["validation"]["independent_unit"] == "subject"
+            assert len(evidence["fit_rows"][1]["train_sample_ids"]) == 5
+    assert run.run_development_diagnostic(domain="clare", method="physiology_only", output_root=tmp_path)["completed"]

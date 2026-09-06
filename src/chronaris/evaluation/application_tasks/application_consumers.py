@@ -42,20 +42,15 @@ class MiniRocketFrozenConsumer:
         self.selected_classification_c = None
         self.selected_regression_alpha = None
 
-    def fit(
-        self,
-        sequence,
-        class_target,
-        regression_target,
-        *,
-        validation_sequence=None,
-        validation_class_target=None,
-        validation_regression_target=None,
-    ):
+    def fit_features(self, sequence, *, valid_cases=None):
+        """Fit the train-only transform independently of task label availability."""
         from aeon.transformations.collection.convolution_based import MiniRocket
 
         values = _as_collection(sequence)
-        case_channel_std = values.std(axis=-1)
+        valid = np.ones(len(values), dtype=bool) if valid_cases is None else np.asarray(valid_cases, dtype=bool)
+        if valid.shape != (len(values),) or not valid.any():
+            raise ValueError("MiniRocket needs observed training cases")
+        case_channel_std = values[valid].std(axis=-1)
         self.channel_indices = np.flatnonzero(
             np.all(
                 case_channel_std > self.config.minimum_case_channel_std,
@@ -72,13 +67,30 @@ class MiniRocketFrozenConsumer:
             n_jobs=self.config.n_jobs,
             random_state=self.config.random_state,
         )
-        transformed = self.transformer.fit_transform(values)
+        self.transformer.fit(values[valid])
+        return self.transformer.transform(values)
+
+    def transform_features(self, sequence):
+        if self.transformer is None:
+            raise RuntimeError("MiniRocket features must be fitted before transform")
+        return self.transformer.transform(_as_collection(sequence)[:, self.channel_indices])
+
+    def fit(
+        self,
+        sequence,
+        class_target,
+        regression_target,
+        *,
+        validation_sequence=None,
+        validation_class_target=None,
+        validation_regression_target=None,
+    ):
+        transformed = self.fit_features(sequence)
         validation_transformed = None
         if self.config.tune_on_validation:
             if validation_sequence is None:
                 raise ValueError("MiniRocket tuning requires validation sequence")
-            validation_values = _as_collection(validation_sequence)[:, self.channel_indices]
-            validation_transformed = self.transformer.transform(validation_values)
+            validation_transformed = self.transform_features(validation_sequence)
         self.classifier, self.selected_classification_c = fit_classifier(
             transformed,
             class_target,
@@ -110,8 +122,7 @@ class MiniRocketFrozenConsumer:
     def predict(self, sequence):
         if self.transformer is None or self.classifier is None or self.regressor is None:
             raise RuntimeError("MiniRocket consumer must be fitted before predict")
-        values = _as_collection(sequence)[:, self.channel_indices]
-        transformed = self.transformer.transform(values)
+        transformed = self.transform_features(sequence)
         return {
             "class_prediction": self.classifier.predict(transformed),
             "class_probability": self.classifier.predict_proba(transformed),
