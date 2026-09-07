@@ -1,0 +1,219 @@
+{
+  "encoder_pretraining_optimizer_updates": 2500,
+  "head_and_joint_optimizer_updates": 2750,
+  "downstream_tcn_optimizer_updates": 1197,
+  "tcn_counting_basis": "one optimizer.step per recorded epoch in fit_causal_tcn_emission",
+  "downstream_tcn_runs": [
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised_50_consumers.json"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised_200_consumers.json"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised_500_consumers.json"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided_50_consumers.json"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided_200_consumers.json"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided_500_consumers.json"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised_50_consumers.json"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised_200_consumers.json"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised_500_consumers.json"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided_50_consumers.json"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided_200_consumers.json"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 37,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided_500_consumers.json"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised_50_consumers.json"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised_200_consumers.json"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised_500_consumers.json"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided_50_consumers.json"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided_200_consumers.json"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided_500_consumers.json"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised_50_consumers.json"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised_200_consumers.json"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised_500_consumers.json"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided_50_consumers.json"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided_200_consumers.json"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided_500_consumers.json"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised_50_consumers.json"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised_200_consumers.json"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised_500_consumers.json"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "encoder_stage_updates": 50,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided_50_consumers.json"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "encoder_stage_updates": 200,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided_200_consumers.json"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "encoder_stage_updates": 500,
+      "tcn_optimizer_updates": 40,
+      "source": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided_500_consumers.json"
+    }
+  ],
+  "engineering_tests_excluded": true
+}

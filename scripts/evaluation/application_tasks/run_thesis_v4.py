@@ -13,18 +13,23 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "development-conditions"))
+    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "development-conditions", "development-pressure"))
     parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"), required=True)
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
     parser.add_argument("--data-root", default="artifacts/application_evaluation/2026-09-06_v4-public-development")
     parser.add_argument("--task-mode", choices=("single", "all"), default="all")
     parser.add_argument("--fold-index", type=int, default=0)
+    parser.add_argument("--route", choices=("self_supervised", "task_guided"), default="self_supervised")
+    parser.add_argument("--update", type=int, choices=(50, 200, 500), default=500)
+    parser.add_argument("--diagnostic-root", default="artifacts/application_evaluation/2026-09-06_v4-learning-curves")
+    parser.add_argument("--condition-root", default="artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair")
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
-                     "development-conditions": "2026-09-06_v4-development-conditions-repair"}
+                     "development-conditions": "2026-09-06_v4-development-conditions-repair",
+                     "development-pressure": "2026-09-06_v4-development-pressure"}
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
     if args.stage == "public-data":
         summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root)
@@ -35,6 +40,12 @@ def main():
         summary = generate_development_conditions(output_root=output_root,
             clean_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development",
             registry_path="docs/requirements/thesis-v4-simulation-manifest.json")
+    elif args.stage == "development-pressure":
+        if args.domain != "simulation":
+            raise ValueError("these development pressure conditions require simulation")
+        from chronaris.evaluation.application_tasks.v4_pressure_run import run_development_pressure
+        summary = run_development_pressure(method=args.method, route=args.route, update=args.update,
+            output_root=output_root, diagnostic_root=args.diagnostic_root, condition_root=args.condition_root)
     elif args.stage == "native-profile":
         from chronaris.evaluation.application_tasks.v4_native_performance import profile_native_recurrence
         summary = profile_native_recurrence(domain=args.domain, registry_path=args.registry,

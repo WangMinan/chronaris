@@ -1,0 +1,18 @@
+{
+  "full_cuda_environment_tests": {
+    "passed": 536,
+    "skipped": 8,
+    "warnings": 334,
+    "elapsed_s": 241.78,
+    "log": "/tmp/chronaris-v4-pressure-full-tests.log",
+    "xml": "/tmp/chronaris-v4-pressure-full-tests.xml"
+  },
+  "focused_cpu_tests": {
+    "passed": 11,
+    "skipped": 2,
+    "warnings": 14,
+    "elapsed_s": 8.15,
+    "log": "/tmp/chronaris-v4-pressure-final-tests.log"
+  },
+  "actual_pressure_results_available": false
+}

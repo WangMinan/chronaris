@@ -1,0 +1,1747 @@
+{
+  "status": "completed_initial_clean_diagnostics",
+  "actual_optimizer_updates": 5250,
+  "route_training_units": [
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "optimizer_updates": 500,
+      "best_update": 500,
+      "training_elapsed_s": 2079.5303939897567
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "optimizer_updates": 550,
+      "best_update": 550,
+      "training_elapsed_s": 2737.5159794990905
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "optimizer_updates": 500,
+      "best_update": 500,
+      "training_elapsed_s": 147.4856504877098
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "optimizer_updates": 550,
+      "best_update": 350,
+      "training_elapsed_s": 260.2251917948015
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "optimizer_updates": 500,
+      "best_update": 500,
+      "training_elapsed_s": 146.7359571759589
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "optimizer_updates": 550,
+      "best_update": 550,
+      "training_elapsed_s": 258.3732740068808
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "optimizer_updates": 500,
+      "best_update": 500,
+      "training_elapsed_s": 463.99993696203455
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "optimizer_updates": 550,
+      "best_update": 500,
+      "training_elapsed_s": 688.0950792520307
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "optimizer_updates": 500,
+      "best_update": 500,
+      "training_elapsed_s": 279.1456214771606
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "optimizer_updates": 550,
+      "best_update": 550,
+      "training_elapsed_s": 401.76395159959793
+    }
+  ],
+  "checkpoint_count": 50,
+  "representation_count": 60,
+  "consumer_model_count": 90,
+  "metric_count": 960,
+  "confirmation_opened": false,
+  "checkpoints": [
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "d168c1146f1b1df16bc66db18124cfe56abc2ae8d642b42378e59e0106124d6b",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/last.pt",
+      "sha256": "6ac3eb7119705e06c8060841e6c3469ac62a11cf66529ba318cbbcee4b2b9c76",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/update_000050.pt",
+      "sha256": "8fcd7aeab5d2bcb3dfb9cb0d0a591219e971357aa18a1820bbd29c00afe31d2b",
+      "optimizer_updates": 50
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/update_000200.pt",
+      "sha256": "333d7de363a03c4f0ecddfea322d6f12a730d2cc959c0f1e091e4b74eb6c4b53",
+      "optimizer_updates": 200
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/self_supervised/chronaris/C/update_000500.pt",
+      "sha256": "5e87c2df210220abec591a7733305c87aefff57850a1bcf1c6ae6b9295f75f6c",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "e34ac3d691c29c680c63b0d4330813b88ff50f318e4c077afbfb9a430d45fc7b",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided/chronaris/last.pt",
+      "sha256": "1115e20f861d478ff252e4528099a419fe6b62c516766455b85232886cd3ba3e",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided/chronaris/joint_update_000050.pt",
+      "sha256": "5fda1c6b6b97d784102515a392f14a3345f8973910064d7438c06f0faa715112",
+      "optimizer_updates": 100
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided/chronaris/joint_update_000200.pt",
+      "sha256": "5ee4619550c44ce80f53cb199c07c0ef0afd42ab8f9264eec61404b1dd7910d4",
+      "optimizer_updates": 250
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/task_guided/chronaris/joint_update_000500.pt",
+      "sha256": "f90f0dc61cbf0d26f5bff109170c693732030fe8484f7c2ddc7577b00d696cef",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised/physiology_only/C/best.pt",
+      "sha256": "f2034c03dcc9d6fc09b4d40c469f67c5acb5ddb434e4b6c6827aed9dbeb4bcdf",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised/physiology_only/C/last.pt",
+      "sha256": "f200299bc860142d793b6269f90f7e11a6da4d5f67039ea61be9cc2de87baec8",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised/physiology_only/C/update_000050.pt",
+      "sha256": "98f2f980d12006bc741963e8f329ab2561be1ad5e3e7715054f000ccccc67050",
+      "optimizer_updates": 50
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised/physiology_only/C/update_000200.pt",
+      "sha256": "0d17f1d0d435346dd7a4c7c89057d9975216c0fefdc71672ec4e23e673b3f55a",
+      "optimizer_updates": 200
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/self_supervised/physiology_only/C/update_000500.pt",
+      "sha256": "f8bc6c694607d9846f547c0c158dbbd9be88cb23c0e0586717799d16082786aa",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided/physiology_only/best.pt",
+      "sha256": "3ae2962d29383a505c6aa8e573685168a0e5c6cbeb9b0386559d1ea9db135673",
+      "optimizer_updates": 350
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided/physiology_only/last.pt",
+      "sha256": "153522020a8f6a6ce6c28c477d12c4301c179d548b23f90b43fd8e9b2b8275f7",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided/physiology_only/joint_update_000050.pt",
+      "sha256": "134d5a1ab19c77c362b9a185c9d7a68a637905fe45cdd28d455a02ea7b699ad0",
+      "optimizer_updates": 100
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided/physiology_only/joint_update_000200.pt",
+      "sha256": "7b8d92ac107061d3a97b6b6b7793d9812e0985408d7f9c4e9915c5c4448e0572",
+      "optimizer_updates": 250
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/task_guided/physiology_only/joint_update_000500.pt",
+      "sha256": "9ed1b5875a880e5a6985c5c749dcc228de30f387442cd7ee51bd996e49c27f13",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised/vehicle_only/C/best.pt",
+      "sha256": "685c810866afc4f2922aad1072b550bb24f0bca78e8a2ccff20d03fb8780b340",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised/vehicle_only/C/last.pt",
+      "sha256": "aff686bea8a1ed804771bcaca0289dc0c0967ff82c0989024055e232fdf89439",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised/vehicle_only/C/update_000050.pt",
+      "sha256": "d77eb6c568dcf1d8940f01398b2fdfcc528510494efc32d7c9b9e5cdcbe2e5b2",
+      "optimizer_updates": 50
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised/vehicle_only/C/update_000200.pt",
+      "sha256": "60c17c7202cf858c737b9622d87079bf9c496269847c2ea30b72be5987e99152",
+      "optimizer_updates": 200
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/self_supervised/vehicle_only/C/update_000500.pt",
+      "sha256": "731d5716c0c0b6c0b398cd54763b7194989422e0387c757af823750ea5177ccb",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided/vehicle_only/best.pt",
+      "sha256": "5b9e695b5d6f3a97c8326bdb3b43c0007db1513c4b25146931f5af5310bacdb5",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided/vehicle_only/last.pt",
+      "sha256": "8b42573f154e0eaf4a4a4e64da35fab514e3661890e4ee26fe1185bb4e0d100f",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided/vehicle_only/joint_update_000050.pt",
+      "sha256": "4fb7ab7b83a3875dc0208401ab8c9b9bc6339fe4dd628c09310a17a40677a347",
+      "optimizer_updates": 100
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided/vehicle_only/joint_update_000200.pt",
+      "sha256": "7d696b8d7853ec11932bb41f283c299f00e5502ba17e2c6df97c8dd3ad8fd4c6",
+      "optimizer_updates": 250
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/task_guided/vehicle_only/joint_update_000500.pt",
+      "sha256": "1b958ab636e3d3708a8990e41935e0902af375b337599a4d318e2bc33d6898d0",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised/mult/C/best.pt",
+      "sha256": "0e6190cc85c95d2b2384ad66a4e9a874f18b4f8b651199049e7e5f992205ce46",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised/mult/C/last.pt",
+      "sha256": "4a504bc1c0982049d149f70769322e824d663246ae1af058b396ac20575a5386",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised/mult/C/update_000050.pt",
+      "sha256": "a1de6e0892c66d4d33978609d27411607bba39521383f63c68525c5dbb6c48e7",
+      "optimizer_updates": 50
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised/mult/C/update_000200.pt",
+      "sha256": "bcc24cf7121974596696cbca27f21f78a7412cca2c37b771944a9c16870374cf",
+      "optimizer_updates": 200
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/self_supervised/mult/C/update_000500.pt",
+      "sha256": "6a116c634a342da13e980a30e46067a55aa4875f1925f0478fba43d4b2f1de7b",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided/mult/best.pt",
+      "sha256": "3531633086c98bfe2fdd33203b9da742bce708197973baf1cdf2f7dd581c68cc",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided/mult/last.pt",
+      "sha256": "49f901f5fdbd5101e1670418f8d959605d82418f4f560f482087d45194a94a78",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided/mult/joint_update_000050.pt",
+      "sha256": "a32ed5566c9235844f3f7685f9207aed731dce5254ed8ab8725366f7d2d86c8b",
+      "optimizer_updates": 100
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided/mult/joint_update_000200.pt",
+      "sha256": "c77b7773a237b68061cc76f45c2e0ac27fc3c00ce1836b83e3a78a469d2e6ed0",
+      "optimizer_updates": 250
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/task_guided/mult/joint_update_000500.pt",
+      "sha256": "54c31c7aafc41b689295c7de60a7f1e85c612b3f0cbe8497f74e9dc5a55c2871",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised/contiformer/C/best.pt",
+      "sha256": "f7c634e732cdcc19f1182a4b52fb4fdf9396418c10a5f99df5d6774f8e52bb8d",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised/contiformer/C/last.pt",
+      "sha256": "63be07c7594704436aa000f8213ff66346ccedd4783d8615ae81f1017d50fe28",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised/contiformer/C/update_000050.pt",
+      "sha256": "b2ba9f33959209da0a2cac40f6f970db72aa448cff3c76f146000a72fc61482a",
+      "optimizer_updates": 50
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised/contiformer/C/update_000200.pt",
+      "sha256": "2f183bdcc7cd18b80bbc5589174d91ef00631e67b1645d3e1efe0e8d86e362a5",
+      "optimizer_updates": 200
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/self_supervised/contiformer/C/update_000500.pt",
+      "sha256": "262c7467322b3b429731e8c10544fd862ba5d0723452e54ebcaeaede418b71e3",
+      "optimizer_updates": 500
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "kind": "best_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided/contiformer/best.pt",
+      "sha256": "2ac0c55e4c3d3f15f197c33f7e5954242920ccf838fd1ba3f9a9d38f5a2c6606",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "kind": "last_checkpoint_path",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided/contiformer/last.pt",
+      "sha256": "1c4d981b0abce488468a5edecc0a6997e6aa55de9075bf1a9a60b815d1afe1d8",
+      "optimizer_updates": 550
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "kind": "snapshot_50",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided/contiformer/joint_update_000050.pt",
+      "sha256": "45a5aebcd80be9c5f8722d08b0f0d60c2136719e1629d8fb232fd5831553b589",
+      "optimizer_updates": 100
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "kind": "snapshot_200",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided/contiformer/joint_update_000200.pt",
+      "sha256": "84401848c5994d39284578663df13e30ea86d8f13279e4791a1ed8d4ba6b17ec",
+      "optimizer_updates": 250
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "kind": "snapshot_500",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/task_guided/contiformer/joint_update_000500.pt",
+      "sha256": "6e12b94959f9f2dc4247ff768162da37a2d168703e17ef15b0ac278648e8ade4",
+      "optimizer_updates": 550
+    }
+  ],
+  "representations": [
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/self_supervised/50/train/fusion_stream.npz",
+      "sha256": "971e3c1b1c1aae5a3be1cd9f34a8c4dde475f1a02713009808edd2b71f156770"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/self_supervised/50/validation/fusion_stream.npz",
+      "sha256": "9e5c99b4b41239b0fef4bbc820efc54a8f08b2845e5c79c96adfd5d13702c255"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/self_supervised/200/train/fusion_stream.npz",
+      "sha256": "611b38a38a4563c421210afa024c8a8923153fa4248b5c26ec243e9d431fab79"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/self_supervised/200/validation/fusion_stream.npz",
+      "sha256": "fa44c5bca669fb3ef95820b00c984181f784a3b73b74059e9a498dad0bb5f7f7"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/self_supervised/500/train/fusion_stream.npz",
+      "sha256": "eb2a9165ab7991d40ee7c564b96aaa9b24e1a592157175201b7aca9c46f3118c"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/self_supervised/500/validation/fusion_stream.npz",
+      "sha256": "fd5b64e6e2be7159f4c596ab825ce8cff8f073048844fa11fda67eaea904b731"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/task_guided/50/chronaris/train/fusion_stream.npz",
+      "sha256": "fcdc5eb06c9ee2a7b004c23fec10c8840fe074c93a83523ea5beb36d1a536123"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/task_guided/50/chronaris/validation/fusion_stream.npz",
+      "sha256": "f85ecdd1527362b499443e2e020bb21047b1afb6a92d99605e829533c0324fcd"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/task_guided/200/chronaris/train/fusion_stream.npz",
+      "sha256": "3dbe13dd2e9c796c894e3388f126bfa624e279c852576ef7411263af7f41ddb4"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/task_guided/200/chronaris/validation/fusion_stream.npz",
+      "sha256": "56279dc156d3c03d5ea09102004b33ad55cc2e5534e74c6473b96c87787f6f60"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/task_guided/500/chronaris/train/fusion_stream.npz",
+      "sha256": "c5f3cc9ead3b2f2d35ebf9ed83efa58f50e830ee75bef73244c3d69bb89e316f"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/representations/task_guided/500/chronaris/validation/fusion_stream.npz",
+      "sha256": "3bb40bed105627e014fb63e4b0e9b3b705f742690a2ad1a1cc40843a923d743d"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/self_supervised/50/train/fusion_stream.npz",
+      "sha256": "1d7ab2c8368dbb19cbdcd9f988876e34f2b8f8a18ce63ba0e809a5f194e1ebe2"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/self_supervised/50/validation/fusion_stream.npz",
+      "sha256": "09391f5270991a3e74b26094734de73dcde7439b20da69fe7f871f52399d04ae"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/self_supervised/200/train/fusion_stream.npz",
+      "sha256": "624b121bc5f8b90ed0e8f55566e9d18243b6afcf43b586d91066b207c583c1fa"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/self_supervised/200/validation/fusion_stream.npz",
+      "sha256": "cb0380df1ad94ff0277bf8a06875a992a4fc9a2dad9f07b71107e7f496985f60"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/self_supervised/500/train/fusion_stream.npz",
+      "sha256": "d6c8e0eb75e3eb0c308723f23edfbb3b9823b5fe287e385d34b4e83fc75be91d"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/self_supervised/500/validation/fusion_stream.npz",
+      "sha256": "32ecb880b50df7f7c83e185fb2da364fe9735d64e9737c4af5edafeff05c95c8"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/task_guided/50/physiology_only/train/fusion_stream.npz",
+      "sha256": "24633de5d08f4b33d2d04beae65147e138629cc4c9b908bf5615e23c42d37051"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/task_guided/50/physiology_only/validation/fusion_stream.npz",
+      "sha256": "6c23d71512dc02c27643fbe28adf2f2c1218a60066dcbdb26bf0eeaf9f5d3048"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/task_guided/200/physiology_only/train/fusion_stream.npz",
+      "sha256": "766ede637bca2df4aeb8af3564e58edb93e8c70700119a00dae5fd28317d76c7"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/task_guided/200/physiology_only/validation/fusion_stream.npz",
+      "sha256": "c3babcb65a69f3a264747fa4bbe74c14090dc859bab7201ebbf4cfe45fa14d75"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/task_guided/500/physiology_only/train/fusion_stream.npz",
+      "sha256": "47f7f9c663c650c803ad9221460577941eeef8c392bf1e6691b207c0f17e6901"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/representations/task_guided/500/physiology_only/validation/fusion_stream.npz",
+      "sha256": "0110a7d6e085c43cea84b0bc4f77c9f6f875646ca61ad8f546bf9f62a3a6fb35"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/self_supervised/50/train/fusion_stream.npz",
+      "sha256": "9036090d79a5c41d2084288ff44fba93b3529377411b267fc3b640e45fa03c83"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/self_supervised/50/validation/fusion_stream.npz",
+      "sha256": "76f1e7b631a6999bdad1b8c8c8d6a6156a6962bba2f21dab6add01f10852a500"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/self_supervised/200/train/fusion_stream.npz",
+      "sha256": "f91a2886a356aea6443890b7fc318d0db5ee7a6c2d164d551c6b65e5f0323a47"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/self_supervised/200/validation/fusion_stream.npz",
+      "sha256": "b207dd8eb3d01ec8ed6cb489157903c518f248c4587f40b10fb188191fcc8cb5"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/self_supervised/500/train/fusion_stream.npz",
+      "sha256": "55f19900c967e067ad55cd185be008277fb435e99583ee9899ce1c189c392995"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/self_supervised/500/validation/fusion_stream.npz",
+      "sha256": "0084b31536402b9450283338bca6aa19270782d95e4e914b5414f8c857b31fd1"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/task_guided/50/vehicle_only/train/fusion_stream.npz",
+      "sha256": "d8280f711da87d02d7065eabfe58f5b61a599fe24d54a31b481793a79277d548"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/task_guided/50/vehicle_only/validation/fusion_stream.npz",
+      "sha256": "a2f566c62dcd58fd6b41a726961484aa91709472d8fd727db53feb2859a5c1eb"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/task_guided/200/vehicle_only/train/fusion_stream.npz",
+      "sha256": "21187aa165b4ac9d9d331afb197368d8c429c24c84a4266af1996c9b661014d5"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/task_guided/200/vehicle_only/validation/fusion_stream.npz",
+      "sha256": "aedb72914f386676369138636c677d75267d5b915d071c089e6e178328dc26d8"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/task_guided/500/vehicle_only/train/fusion_stream.npz",
+      "sha256": "27a57f277d1cdaadbb04411e68567536d8cb9521c4619134b68960d757f43fd2"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/representations/task_guided/500/vehicle_only/validation/fusion_stream.npz",
+      "sha256": "2198571a4ecebc50f095d06108326e1b41ec906c90a0b782f3cb65f732cfbb65"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/self_supervised/50/train/fusion_stream.npz",
+      "sha256": "04684857ac2ad5adea8763a8b06f80150357347766feb52158eb307b10bfbc79"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/self_supervised/50/validation/fusion_stream.npz",
+      "sha256": "d8ed722dbdf7108e749a918be4026a5bf1e0426e79a2e1c4c32c0ba1de5b912b"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/self_supervised/200/train/fusion_stream.npz",
+      "sha256": "42b66a17dc1abeeb689390a74ff95d8b418f84f86bbe7cb0660c86dba5b13c77"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/self_supervised/200/validation/fusion_stream.npz",
+      "sha256": "d4f2b556e7ae02fded44c6847cc213d147f3c6588e9baf80be7b7ef23ba9cdf7"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/self_supervised/500/train/fusion_stream.npz",
+      "sha256": "53f4422f41fe243939c52deecd78b9a8fe211674c45a2ae77aac489b81dc496a"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/self_supervised/500/validation/fusion_stream.npz",
+      "sha256": "a5ccfe7365f54a1fa7d6e60031bdda337a3dfd9db94bcdf1abfc271634c442a7"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/task_guided/50/mult/train/fusion_stream.npz",
+      "sha256": "17de9480296815bd55521996c0e544c13aafd3c0b665b0d290ccc1744a918ab0"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/task_guided/50/mult/validation/fusion_stream.npz",
+      "sha256": "c0fea5d13ab64db2cef82d0948fdf77d129d5f014f140ceae97158893a353bcb"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/task_guided/200/mult/train/fusion_stream.npz",
+      "sha256": "81a1d47ba9dd7e89896bc30b872fad57385176e606295e86cbdfe9bd288c537a"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/task_guided/200/mult/validation/fusion_stream.npz",
+      "sha256": "58b7e68505a1f09f65a1c4c7e07e3e91401ca03dcc15e2c2cc99fea8f9c87d04"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/task_guided/500/mult/train/fusion_stream.npz",
+      "sha256": "ad16fe01e46e2eca94aaaa5bcd95a22dfee645a4f6436c945532736ca4436b71"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/representations/task_guided/500/mult/validation/fusion_stream.npz",
+      "sha256": "9992f3c720acc98f2e21477edbf62598f0255f39f3a1dd4484175f209dbe9f02"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/self_supervised/50/train/fusion_stream.npz",
+      "sha256": "014acd3cdc69e909903b8cc83607fd66e9b1e8fe08d0035344fd2bdf0e54329a"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/self_supervised/50/validation/fusion_stream.npz",
+      "sha256": "5464bae895435c53b8712cf2f3e4e42fd78b36cd1dc4a9f2669999c3f9405901"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/self_supervised/200/train/fusion_stream.npz",
+      "sha256": "a8ea1cd4a89256b9292e50f18d47124ae54155c691acb2eab02c4c5b9883d59f"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/self_supervised/200/validation/fusion_stream.npz",
+      "sha256": "a3ef27d21e82799c27d6f42c31b85e4e20d0880b3524dfe8fb104e7713889c91"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/self_supervised/500/train/fusion_stream.npz",
+      "sha256": "fe2197951cac26232a7a6803ea1f49858a4eca8e53a165f130caa5f06a0c1a60"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/self_supervised/500/validation/fusion_stream.npz",
+      "sha256": "8b6c88a296ee8e5dc4f8a1d7f4dbf42f530b33e2a9f88d59992770f10614df4e"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 50,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/task_guided/50/contiformer/train/fusion_stream.npz",
+      "sha256": "ffb2a0e858e5508dc189cec86d36a458b3da4d50e3d7ae7c10253abf1d053cf6"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 50,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/task_guided/50/contiformer/validation/fusion_stream.npz",
+      "sha256": "fb9f9f7b6dfd22d5fb9f32c2b8fc1749bea56be829b8ec99fae307347a170e56"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 200,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/task_guided/200/contiformer/train/fusion_stream.npz",
+      "sha256": "0a4c54c97d4676a15dc3e3817b64155112078a2437bda7b7840f0f7ec65891c7"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 200,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/task_guided/200/contiformer/validation/fusion_stream.npz",
+      "sha256": "2e864bea129fe68217c582cacf61a353c8f3725be5e411195caf4d1fc10f96bb"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 500,
+      "role": "train",
+      "sample_count": 1024,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/task_guided/500/contiformer/train/fusion_stream.npz",
+      "sha256": "819087af48184a320981a6ca9ec38d1e5fed60ea522e22d917d4e03bd6f0d970"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 500,
+      "role": "validation",
+      "sample_count": 256,
+      "path": "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/representations/task_guided/500/contiformer/validation/fusion_stream.npz",
+      "sha256": "3339a53b56e3cc453d403002c8ba171cdff77cd97838d276f233c6edd20a9dac"
+    }
+  ],
+  "consumer_files": [
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/50/chronaris/linear.joblib",
+      "sha256": "178184ad29ee76d38061b77e31659cbd0710595da563b155280c4f625118cf2b"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/50/chronaris/minirocket.joblib",
+      "sha256": "11e09c2fe0ad8d3fc18a461549158bd958899fc62bd074d3fe6bc0d031d77f6b"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/50/chronaris/causal_tcn.pt",
+      "sha256": "51fe9f370658e86a30b908923318362bf137e9e662721aaa9072184e111eb918"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/200/chronaris/linear.joblib",
+      "sha256": "f520553974d2c1420f400d509668bcb22c184c36cf0fe6b2722e612d4f5dddc2"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/200/chronaris/minirocket.joblib",
+      "sha256": "42f732b2e22883b3e87369d0264ff2775d31b66f418699d0b14c4c8d3dc8de37"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/200/chronaris/causal_tcn.pt",
+      "sha256": "d87ffe3cb2712d91d6425ffa294849a71140394a4cfced77779da1f7f8592e9d"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/500/chronaris/linear.joblib",
+      "sha256": "a1d04d9c176a010a37d36a4c80a02b3b37d764a3cc23b776a26ac9c557a82720"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/500/chronaris/minirocket.joblib",
+      "sha256": "8df429ac9780aed66499b4ffd6963722e24b4be7f4d95f650be6c9114759e550"
+    },
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/500/chronaris/causal_tcn.pt",
+      "sha256": "4d66b463691504cdc9b433ac57cbcd4f0fe8ed66063388bcba2171bab88b8ad5"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/50/chronaris/linear.joblib",
+      "sha256": "e7983ed8e603074280e337748b019fbeb4227f654a803a18384b08728ff30c33"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/50/chronaris/minirocket.joblib",
+      "sha256": "73d6e80294ed08c78746d3c21c00f7cc07eb83d255771d2f8938d969a0589ee5"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/50/chronaris/causal_tcn.pt",
+      "sha256": "f927570c8849fed24a2ed9d375c9ecd468ee94deddb20cbb21b3b6f7bbaddc92"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/200/chronaris/linear.joblib",
+      "sha256": "d3d43b41b228eb7d0b029ff66cd41db494d267e55b426455270eeff5246748a3"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/200/chronaris/minirocket.joblib",
+      "sha256": "d71d84a491699aab719c719ad52c786ae697c73648517e3e3ea9b2754aa833e6"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/200/chronaris/causal_tcn.pt",
+      "sha256": "7de2acbaf559be7d5f64b0dcf217afce90b5e9b1c6b1e1779bb1695deed7bb2e"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/500/chronaris/linear.joblib",
+      "sha256": "78e640dfe1d36422b1370ad8ce5bb6f776feedd1b5317c681ac9be51ee359921"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/500/chronaris/minirocket.joblib",
+      "sha256": "adf1606d5d9e2978ff8fa3915acb8caa052c17f7baf501152a9c985fb6953ddc"
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/500/chronaris/causal_tcn.pt",
+      "sha256": "d84372a54106bf1dc267b1ead6a47b3c558e1a2796af6b3493d2c5a8ae56bb07"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/50/physiology_only/linear.joblib",
+      "sha256": "93812c52b62ed919a2eb3a96840147b2020c46ec08b6ede4f6bd63992610edb9"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/50/physiology_only/minirocket.joblib",
+      "sha256": "3ae7508e1d3ba3c0d6f10470fce400d51ab4fc149c89d53fce1aef71224107dd"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/50/physiology_only/causal_tcn.pt",
+      "sha256": "d6b41520075f40806c9fd9a4111c4f49dc1bcfea7cb6cf3f2142287ea46be871"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/200/physiology_only/linear.joblib",
+      "sha256": "36c682333818a48b13536f4f05054e3058d12c9add320234dbf4eaf03ae40a78"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/200/physiology_only/minirocket.joblib",
+      "sha256": "4dfb098776e0e9b6393fad6f59fc1b4addc4d40e906662a2221f92cd82de6615"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/200/physiology_only/causal_tcn.pt",
+      "sha256": "d5ebd78b4d50dfd95916593fca2a79aec34be7cb2af6c319803e0f97f176f77b"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/500/physiology_only/linear.joblib",
+      "sha256": "60d6b087bc1463702e3ca844a13c9d7a346f9f310ca21d982520f983463b6d32"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/500/physiology_only/minirocket.joblib",
+      "sha256": "1d32618ff75cf5ff3ed44c6f766a4115ec927816a3784df097d68f6f8aa77758"
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/500/physiology_only/causal_tcn.pt",
+      "sha256": "df6d39e0d1f457380341a511b1ec86d4446dd3038bc2e1d98729bd46baac6f14"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/50/physiology_only/linear.joblib",
+      "sha256": "2bea190494bd0c0da428400003ae5781ed3b580868957866fb75c430cc7894bd"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/50/physiology_only/minirocket.joblib",
+      "sha256": "487fce8df002dbffc1465af7bcad5763f06f22c745a53515d90d4a20486495a9"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/50/physiology_only/causal_tcn.pt",
+      "sha256": "1795c9c04abc5604692634c3220f45a94066b2e211f105b1b5739dcba8b03c35"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/200/physiology_only/linear.joblib",
+      "sha256": "10b436fd5320fec3d0a42930eaffd28e8d201ea4873338639e6df6cdfdbe63ab"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/200/physiology_only/minirocket.joblib",
+      "sha256": "5bcf146421e8bb14b7ba3c1d9df641c5e6fd8ac75b825666c232ae7bc95a62e8"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/200/physiology_only/causal_tcn.pt",
+      "sha256": "857e279b3e7a18ed52d8b61ac39e21860f717b4a7b941176d147e79c1d86e9b4"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/500/physiology_only/linear.joblib",
+      "sha256": "8fc94c304773ab12f0425ce6c12a19c0e58333992b00a84f15d635b9d57f8f18"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/500/physiology_only/minirocket.joblib",
+      "sha256": "01f3013e6e83786e7833b2c8860120d091c03a24c16e2a6c289db70a90e14e74"
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/500/physiology_only/causal_tcn.pt",
+      "sha256": "2f85e27dc223f5aa2a2373b3e5634ac897e48093fb1d860d269ea2802c56f737"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/50/vehicle_only/linear.joblib",
+      "sha256": "d7ef957027e7aaf55cd2a6b4d00a337f00884bab6eca4b6462ef8dd8393338b0"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/50/vehicle_only/minirocket.joblib",
+      "sha256": "ff49d1d713a8ab840626f223290b1e75cee7fda719a8f55bf78249837489d061"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/50/vehicle_only/causal_tcn.pt",
+      "sha256": "f5f545d71331aa73ce1c27d7b918ab06bdd82cb14f0b21f83c24e53e806d2de2"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/200/vehicle_only/linear.joblib",
+      "sha256": "1f500af708900a813412ef2fe0b301d5857f1b627f044b13a362a5e1ff1f9cfc"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/200/vehicle_only/minirocket.joblib",
+      "sha256": "98d74bc48b93c3734c5e89e331a19741341abd68a41763db005c0da93f7f5a2a"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/200/vehicle_only/causal_tcn.pt",
+      "sha256": "6b6234c60b9e7f9330304eb08544d040e0496bac7f8dc616170879a1f4fee2c3"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/500/vehicle_only/linear.joblib",
+      "sha256": "3059a70970ef5a85bcd4babde998b82fa65e91860b5ff6d3c9cb1c8a0207c512"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/500/vehicle_only/minirocket.joblib",
+      "sha256": "99946623860521c7b888f83665621a1cde540f457122d2b389c86c673c8cde0c"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/500/vehicle_only/causal_tcn.pt",
+      "sha256": "ddfc3f86430af96fc712c1b696f3bf8bebfc7ef5fdcf3da542b6c5323c3ef48b"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/50/vehicle_only/linear.joblib",
+      "sha256": "f8dd2c905804d949abe30b899b052fae51d4cca8180e0ceb191087f8fc6daa2a"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/50/vehicle_only/minirocket.joblib",
+      "sha256": "afed3d2f85316417a6046e33f8262e44ff09c61336b0f0c3cacc0a850c658c1d"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/50/vehicle_only/causal_tcn.pt",
+      "sha256": "d1e1b8bf9837e61fb7a46f6cc5fd6f1c02731f6d3d5d2cd2e3ac2e2f543c9fc6"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/200/vehicle_only/linear.joblib",
+      "sha256": "5fa799c4f990253052538ae1249bfccba098fd0101912ebe67b50b2bdcda019d"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/200/vehicle_only/minirocket.joblib",
+      "sha256": "b9a55f048a9bce5f9b0f959fe81b244aa3669ae4adf474fb9655cb0bf0e64a6f"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/200/vehicle_only/causal_tcn.pt",
+      "sha256": "daa295fdbfc4c3c90ee4329a658bf44688f65e505a55a4e310671ae5a80ef900"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/500/vehicle_only/linear.joblib",
+      "sha256": "9f0d888a9c3db41d086b2f8ed36d06446614004ac033e5802c47e5ab0af86f7d"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/500/vehicle_only/minirocket.joblib",
+      "sha256": "0515c4780b7842c68d77045d4a7ea243955bf1bcff255c3d9ac09d87384015cd"
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/500/vehicle_only/causal_tcn.pt",
+      "sha256": "f32c0e53ce56183b2f686a517b081642a89c98a1f8954b5114e61d121b7a521c"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/50/mult/linear.joblib",
+      "sha256": "ed78ce9cc99848a212e6628510a6088346cd3659115eb2da69644db2cec61dbc"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/50/mult/minirocket.joblib",
+      "sha256": "f507d901f33c4534a0c4630c993b21e2572e543b50239d00e0bfe26e0315b330"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/50/mult/causal_tcn.pt",
+      "sha256": "cf082049dc0dad9c453b658c2a5f4ee9ed131d2aeb236bd786309e3c652b941e"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/200/mult/linear.joblib",
+      "sha256": "b6626ec931ac2dc46d576c0f0e87ec484bb302eafe502528bb708fe01640d981"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/200/mult/minirocket.joblib",
+      "sha256": "0924dbae7f8cd5e15c2ac734dd766e6cf2db542d958378113e0dce8f05a637d5"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/200/mult/causal_tcn.pt",
+      "sha256": "acf6fe98f85b98d61d8902103a5451175a67ead216a8457548dda3db564feac3"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/500/mult/linear.joblib",
+      "sha256": "10af5b7156f4dbc5336707351d0756f633f88ffee4bc76c27341e5112a9e35c1"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/500/mult/minirocket.joblib",
+      "sha256": "2a0ac17c17cc2757af1e16c08ef02373a9193cc83537c72769ea0d91584692f5"
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/500/mult/causal_tcn.pt",
+      "sha256": "8db9b03f7ad656e9d034e037f783e173ec3cd9c77544011bac2bbdc24be26a2c"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/50/mult/linear.joblib",
+      "sha256": "d59ad128188dc7df29c08dcd8bfb24654759a27da0090f10cff5d8f78421771a"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/50/mult/minirocket.joblib",
+      "sha256": "9c17e53c6eea4d83c64b8284eb1a8394b40ac2276438e2b7aae66a0cd1c2a48c"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/50/mult/causal_tcn.pt",
+      "sha256": "578f71d8b71d86a453734ce47cdc4e1629b2e61f499bee6c48e7b236801a1b9e"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/200/mult/linear.joblib",
+      "sha256": "901b56d9f85f56dda83a1a79c03df5cfc28a01370b3213a11c1f95c86543f993"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/200/mult/minirocket.joblib",
+      "sha256": "3c24d5df669f9acec844cd00f2d3cf626f5257b6bf96a9c8f11327097fc891ee"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/200/mult/causal_tcn.pt",
+      "sha256": "eecabaed676477e3ac75cb1f9b3e54f1f091afc99b7f06e4fc557d9d47fdb3b4"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/500/mult/linear.joblib",
+      "sha256": "ef856ec3ef08f8e4580cd6e7699ea4881afdd2a7a6c7cbc8670fbf5d6411633d"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/500/mult/minirocket.joblib",
+      "sha256": "63804fa7312300c56d9cbc5de50853259ee92c37a136f62917a8fd1cbf9eafce"
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/500/mult/causal_tcn.pt",
+      "sha256": "58357bffbee3a2a62492650e9dcb2728ae7fff5ede4b5507dbb1b603ce6c5ce5"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/50/contiformer/linear.joblib",
+      "sha256": "ecdb604c824e0b577208688db15b352e7713adef5f18474897d19153dcf93c2b"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/50/contiformer/minirocket.joblib",
+      "sha256": "1fc0fff01506834b6213a87183bfd6ab0277c302380e0bbcc182c56edf8eaf1d"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/50/contiformer/causal_tcn.pt",
+      "sha256": "504339e90dbf797de0ed380524aa89d64138915d6e553b641a732ac333015220"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/200/contiformer/linear.joblib",
+      "sha256": "3613675035404c83a29d1a21f6f1dfdf606bc7245623332b41bced81345d878f"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/200/contiformer/minirocket.joblib",
+      "sha256": "6eb0cbd0535c08b47d1eb59900785708bf59b6e87cb93ff6a0bc33ece1833f4e"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/200/contiformer/causal_tcn.pt",
+      "sha256": "b0446be901e908d5c55d42551586c57d7204fae0d325464ac3063a940ccb4a42"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/500/contiformer/linear.joblib",
+      "sha256": "05b791cf295530931f7dcf7392574cdd3b00de6c49f866fea00ce5304b82a75a"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/500/contiformer/minirocket.joblib",
+      "sha256": "aa2996730e17f8cdefc002515be872bffe1eddb3ea763e545fbcf877ad2c7b2b"
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/500/contiformer/causal_tcn.pt",
+      "sha256": "6c82e87a3112fd41b6404fcc5429b28513fc92166e231f12474f73ab161c792a"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/50/contiformer/linear.joblib",
+      "sha256": "55eb6967eb837d87b37a8deac7dd60ef4b63422ef38b13485fa827b001d1cfa9"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/50/contiformer/minirocket.joblib",
+      "sha256": "998c57a00db83d2abca534ec0b1130de5e72953eca2461341c236dce5b1e03a6"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 50,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/50/contiformer/causal_tcn.pt",
+      "sha256": "b91e4ab7f60c1d5a637802389462b136f70cbcc48a367a8fe6058b999ff3b341"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/200/contiformer/linear.joblib",
+      "sha256": "e185261166bce62891f4874c694c0108b16cb6dc74b3a6f5f087bbafa6995a9e"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/200/contiformer/minirocket.joblib",
+      "sha256": "6d5c2b30a3f79a7b28721adaf05341f3bf968099c62767871b89a35f9384cda7"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 200,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/200/contiformer/causal_tcn.pt",
+      "sha256": "89c8c0f7221ea76d933d43341c5b711e204b8e530f9df534603fd6146c546ee5"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "linear",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/500/contiformer/linear.joblib",
+      "sha256": "44c2b5bae63d6be8a151e1ae249eafb395f0ba8a73cf0e08c1f9cf2c5af821a7"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "minirocket",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/500/contiformer/minirocket.joblib",
+      "sha256": "088a94d09b6b7a6af6a02ca6753585633f94ee4a6e9b4ba1249bdb016a5ab0dd"
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "update": 500,
+      "consumer": "tcn",
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/500/contiformer/causal_tcn.pt",
+      "sha256": "a65a02551ec88ec8443dad27f6264b3de6cf2a893eca00edeeed2acc683c9b35"
+    }
+  ]
+}

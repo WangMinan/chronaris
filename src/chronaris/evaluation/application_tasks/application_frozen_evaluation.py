@@ -18,6 +18,7 @@ from chronaris.evaluation.application_tasks.application_consumer_smoke_data impo
 from chronaris.representation import FusionStreamBatch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import (
     write_deterministic_npz,
+    sha256_file,
 )
 
 
@@ -43,18 +44,26 @@ def evaluate_frozen_application_consumers(
     fold_id: str,
     evaluation_id: str,
     seed: int,
+    evaluation_role: str = "held_out",
 ) -> ApplicationFrozenEvaluationResult:
     """Apply an already fitted clean-condition consumer set without refitting."""
 
-    loaded, protocol_hash = _load_frozen_components(
-        str(Path(model_root).resolve()), method_name
-    )
+    if evaluation_role not in {"validation", "held_out"} or output.method_name != method_name:
+        raise ValueError("invalid frozen consumer role or method")
+    root = Path(model_root).resolve() / method_name
+    manifest_path = root / "consumer_manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    hashes = tuple(sha256_file(Path(item["path"])) for item in manifest["model_files"].values())
+    if hashes != tuple(item["sha256"] for item in manifest["model_files"].values()):
+        raise ValueError("frozen consumer files changed")
+    loaded, protocol_hash = _load_frozen_components(str(Path(model_root).resolve()), method_name,
+        sha256_file(manifest_path), hashes)
     if set(loaded) != {"linear", "minirocket", "tcn"}:
         raise ValueError("frozen application consumer set is incomplete")
     tcn_model, duration, _training_rows = loaded["tcn"]
     metric_rows, workload_rows, unit_rows, prediction_payload = _evaluate_models(
         method_name=method_name,
-        outputs={"held_out": output},
+        outputs={evaluation_role: output},
         targets=targets,
         fold_id=fold_id,
         linear=loaded["linear"],
@@ -79,7 +88,7 @@ def evaluate_frozen_application_consumers(
 
 
 @lru_cache(maxsize=64)
-def _load_frozen_components(model_root: str, method_name: str):
+def _load_frozen_components(model_root: str, method_name: str, manifest_sha256: str, model_hashes: tuple[str, ...]):
     root = Path(model_root) / method_name
     manifest_path = root / "consumer_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

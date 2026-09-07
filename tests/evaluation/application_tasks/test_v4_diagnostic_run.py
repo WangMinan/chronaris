@@ -1,5 +1,6 @@
 from dataclasses import replace
 from types import SimpleNamespace
+from pathlib import Path
 import json
 
 import pytest
@@ -12,8 +13,10 @@ from chronaris.representation import FoldLineage, TrainOnlyRobustNormalizer, col
 from tests.representation.test_contracts import _sample
 
 
-@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA diagnostic integration")
-def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_confirmation(tmp_path, monkeypatch):
+@pytest.mark.parametrize("device", ["cpu", "cuda"])
+def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_confirmation(tmp_path, monkeypatch, device):
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA diagnostic integration")
     samples = [_sample(f"sample_{i}", shift=i / 10) for i in range(9)]
     batch = collate_observation_samples(samples)
     roles = dict(train=batch.sample_ids[:6], validation=batch.sample_ids[6:], held_out=("sealed",))
@@ -36,11 +39,15 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     monkeypatch.setattr(run, "CURVE_UPDATES", (1, 2, 3))
     pretraining, guidance = run.CandidateScreenConfig, run.EndToEndFineTuningConfig
     rocket, tcn = run.MiniRocketConsumerConfig, run.TCNConsumerConfig
-    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {"effective_batch_size": 4})))
+    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {"effective_batch_size": 4, "device": device})))
     monkeypatch.setattr(run, "EndToEndFineTuningConfig", lambda **kwargs: guidance(**(kwargs | {
-        "effective_batch_size": 4, "head_warmup_updates": 2, "validation_interval": 1})))
+        "effective_batch_size": 4, "head_warmup_updates": 2, "validation_interval": 1, "device": device})))
     monkeypatch.setattr(run, "MiniRocketConsumerConfig", lambda **kwargs: rocket(**kwargs, n_kernels=84))
-    monkeypatch.setattr(run, "TCNConsumerConfig", lambda **kwargs: tcn(**(kwargs | {"epochs": 1, "hidden_channels": 8})))
+    monkeypatch.setattr(run, "TCNConsumerConfig", lambda **kwargs: tcn(**(kwargs | {"epochs": 1, "hidden_channels": 8, "device": device})))
+    if device == "cpu":
+        monkeypatch.setattr(run, "_require_diagnostic_device", lambda seed: None)
+        loader = run.load_common_pretraining_checkpoint
+        monkeypatch.setattr(run, "load_common_pretraining_checkpoint", lambda path, **kwargs: loader(path, **(kwargs | {"device": "cpu"})))
     result = run.run_simulation_diagnostic(method="physiology_only", output_root=tmp_path)
     assert result["completed"] and len(result["completed_consumers"]) == 6
     assert result["self_supervised_training"]["optimizer_updates"] == 3
@@ -57,6 +64,47 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     monkeypatch.setattr(run, "run_application_method_consumers", no_retraining)
     resumed = run.run_simulation_diagnostic(method="physiology_only", output_root=tmp_path)
     assert resumed["completed"]
+    if device == "cpu":
+        _check_pressure_pipeline(tmp_path, monkeypatch, inputs, targets, fold)
+
+
+def _check_pressure_pipeline(root, monkeypatch, inputs, targets, fold):
+    from chronaris.evaluation.application_tasks import v4_pressure_run as pressure
+    from chronaris.evaluation.application_tasks.v4_correctness import remove_future_observations
+    from chronaris.evaluation.application_tasks.application_consumers import LinearFrozenConsumer, MiniRocketFrozenConsumer
+    monkeypatch.setattr(pressure, "_require_diagnostic_device", lambda seed: None)
+    monkeypatch.setattr(pressure, "CURVE_UPDATES", (1, 2, 3))
+    monkeypatch.setattr(pressure, "load_development_inputs", lambda *args, **kwargs: inputs)
+    monkeypatch.setattr(pressure, "build_guarded_application_consumer_targets", lambda *args, **kwargs: targets)
+    loader = pressure._load_development_encoder
+    monkeypatch.setattr(pressure, "_load_development_encoder", lambda path, **kwargs: loader(path, **(kwargs | {"device": "cpu"})))
+    validation = inputs[0](fold.validation_sample_ids)
+    def observations(*, condition, **kwargs):
+        changed = validation if condition == "clean_asynchronous" else remove_future_observations(validation, cutoff_s=-1.)
+        return SimpleNamespace(batch=changed, sample_manifest_rows=[{"sample_id": sample, "profile_id": "validation_profile"}
+                                                                  for sample in changed.sample_ids])
+    monkeypatch.setattr(pressure, "load_development_condition", observations)
+    def no_fit(*args, **kwargs):
+        pytest.fail("pressure evaluation must not refit a consumer")
+    monkeypatch.setattr(LinearFrozenConsumer, "fit", no_fit)
+    monkeypatch.setattr(MiniRocketFrozenConsumer, "fit", no_fit)
+    condition_root = root / "conditions"
+    condition_root.mkdir()
+    (condition_root / "development_condition_audit.json").write_text("{}")
+    for route in ("self_supervised", "task_guided"):
+        kwargs = dict(method="physiology_only", route=route, update=3, output_root=root / "pressure",
+                      diagnostic_root=root, condition_root=condition_root)
+        result = pressure.run_development_pressure(**kwargs)
+        assert result["completed"] and len(result["conditions"]) == 8
+        missing = json.loads(Path(result["conditions"]["contiguous_gap_30s"]["result_path"]).read_text())
+        assert missing["grouped"]["all_windows_retained"] and missing["grouped"]["no_observation_count"] == 3
+        assert all(row["role"] == "validation" for row in missing["evaluation"]["metric_rows"])
+        assert pressure.run_development_pressure(**kwargs)["completed"]
+        if route == "task_guided":
+            path = Path(result["conditions"]["contiguous_gap_30s"]["prediction_path"])
+            path.write_bytes(path.read_bytes() + b"changed")
+            with pytest.raises(ValueError, match="saved pressure result changed"):
+                pressure.run_development_pressure(**kwargs)
 
 
 def test_native_diagnostic_cpu_contract_runs_shared_training_and_grouped_consumers(tmp_path, monkeypatch):

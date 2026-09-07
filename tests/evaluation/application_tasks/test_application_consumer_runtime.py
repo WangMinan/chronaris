@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+import pytest
 
 from chronaris.evaluation.application_tasks.application_consumer_runtime import (
     ApplicationConsumerProtocol,
@@ -157,3 +158,14 @@ def test_method_consumer_runtime_resumes_and_rebuilds_prediction(tmp_path: Path)
     assert all(row["role"] == "held_out" for row in frozen.metric_rows)
     assert Path(frozen.prediction_path).is_file()
     assert frozen.source_model_protocol_sha256 == first.protocol_sha256
+    validation = evaluate_frozen_application_consumers(method_name="chronaris", output=outputs["validation"], targets=targets,
+        model_root=tmp_path, output_root=tmp_path / "development_predictions", fold_id="fold_a",
+        evaluation_id="development_pressure", seed=17, evaluation_role="validation")
+    assert all(row["role"] == "validation" for row in validation.metric_rows)
+    # A populated in-process model cache must not conceal later file corruption.
+    model_path = Path(tcn_recovery.model_manifest["model_files"]["linear"]["path"])
+    model_path.write_bytes(model_path.read_bytes() + b"changed")
+    with pytest.raises(ValueError, match="files changed"):
+        evaluate_frozen_application_consumers(method_name="chronaris", output=outputs["validation"], targets=targets,
+            model_root=tmp_path, output_root=tmp_path / "development_predictions", fold_id="fold_a",
+            evaluation_id="development_pressure", seed=17, evaluation_role="validation")
