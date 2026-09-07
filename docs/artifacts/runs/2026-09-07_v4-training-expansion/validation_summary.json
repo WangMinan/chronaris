@@ -1,0 +1,12 @@
+{
+  "focused_tests": {
+    "passed": 4,
+    "skipped": 1,
+    "elapsed_s": 8.31,
+    "log": "/tmp/chronaris-v4-extension-integration-tests.log"
+  },
+  "initial_raw_and_truth_archives_retained": 320,
+  "initial_observation_tensors_equal": true,
+  "active_training_trajectories": 512,
+  "confirmation_observations_generated": false
+}

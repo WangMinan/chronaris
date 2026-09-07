@@ -1,0 +1,40 @@
+{
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "extension_decision_sha256": "5972a2ed7b1098853645b323d1136e61ae2859b766d7aae4512ee12c1833fe6f",
+  "initial_generation_audit_sha256": "39b0a7f28b5d0feb12da7e9f5c20c575dc94737e4a008b80c7de49f28ef35ebb",
+  "diagnostic_completion_sha256": {
+    "chronaris": "c52c18e64ff8ef675a6d45915496ee33956d18aabce30ab56e94baecaa7fdf27",
+    "physiology_only": "9c997971e1afa77fa1232acfa7cbbe7f930676913ac148bfc221f22bdbca75fb",
+    "vehicle_only": "d8eb8c614cec29417578c470abcc7179b01d991b47170db4c5a53b3b0de24249",
+    "mult": "7c9964c92c0b354d9c1fe3345b452e4207d5252c60020759005d116e4c4d6bce",
+    "contiformer": "de4d66ae030ff28b8aa4450b462939055e974912d7895eeaf35df312c1d16cdf"
+  },
+  "split_specs": [
+    {
+      "split_id": "v4_train",
+      "generator_family": "g1_state_space",
+      "profile_count": 64,
+      "trajectories_per_profile": 8,
+      "profile_seed_base": 4100000000,
+      "latent_seed_base": 4110000000,
+      "observation_seed_base": 4120000000
+    },
+    {
+      "split_id": "v4_development",
+      "generator_family": "g1_state_space",
+      "profile_count": 8,
+      "trajectories_per_profile": 8,
+      "profile_seed_base": 4101000000,
+      "latent_seed_base": 4111000000,
+      "observation_seed_base": 4121000000
+    }
+  ],
+  "context_starts_s": [
+    30.0,
+    60.0,
+    90.0,
+    120.0
+  ],
+  "context_duration_s": 30.0,
+  "generator_source_sha256": "55fd6bab771d5c0e7a7c338a4fd14b4df76e9399fbbd57c3eb3817715642b4bf"
+}

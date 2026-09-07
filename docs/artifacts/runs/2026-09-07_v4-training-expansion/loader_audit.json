@@ -1,0 +1,11 @@
+{
+  "train_context_count": 2048,
+  "validation_context_count": 256,
+  "sealed_confirmation_context_count": 512,
+  "training_profile_count": 64,
+  "initial_observation_tensors_identical": true,
+  "initial_source_hashes_identical": true,
+  "development_and_confirmation_context_ids_unchanged": true,
+  "data_manifest_sha256": "63179d4e7913a537a89094d8e73361d06333a2d99139f6c04aac5c440b6c7d00",
+  "fold_id": "v4_simulation_g1_development_g2_confirmation__training512"
+}

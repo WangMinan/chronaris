@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "development-conditions", "development-pressure"))
+    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "development-conditions", "development-pressure", "expand-training"))
     parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"), required=True)
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
@@ -24,15 +24,23 @@ def main():
     parser.add_argument("--update", type=int, choices=(50, 200, 500), default=500)
     parser.add_argument("--diagnostic-root", default="artifacts/application_evaluation/2026-09-06_v4-learning-curves")
     parser.add_argument("--condition-root", default="artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair")
+    parser.add_argument("--simulation-root", default="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development")
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
-                     "development-pressure": "2026-09-06_v4-development-pressure"}
+                     "development-pressure": "2026-09-06_v4-development-pressure",
+                     "expand-training": "2026-09-07_thesis-v4-simulation-expanded"}
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
     if args.stage == "public-data":
         summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root)
+    elif args.stage == "expand-training":
+        if args.domain != "simulation":
+            raise ValueError("the approved training expansion only applies to simulation")
+        from chronaris.evaluation.application_tasks.v4_simulation_extension import activate_simulation_extension
+        summary = activate_simulation_extension(output_root=output_root, initial_root=args.simulation_root,
+            diagnostic_root=args.diagnostic_root)
     elif args.stage == "development-conditions":
         if args.domain != "simulation":
             raise ValueError("these development conditions require simulation")
@@ -57,7 +65,7 @@ def main():
     else:
         from chronaris.evaluation.application_tasks.v4_diagnostic_run import run_development_diagnostic
         summary = run_development_diagnostic(domain=args.domain, method=args.method, output_root=output_root,
-            fold_index=args.fold_index, data_root=args.data_root, registry_path=args.registry)
+            fold_index=args.fold_index, data_root=args.data_root, registry_path=args.registry, simulation_root=args.simulation_root)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

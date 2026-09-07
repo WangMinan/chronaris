@@ -1,0 +1,28 @@
+{
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "extension_contract_sha256": "b38249d809521adf4ca049b7e5399bfa4022740ab00e2f8e2b1a8f0afd1ea54e",
+  "simulation_manifest_sha256": "d9569c2a3eec2c59743f0651aa94b1b69f0741905ebd6e05a711e4964968fbdc",
+  "roles": {
+    "train": 512,
+    "validation": 64
+  },
+  "initial_subset_preserved": true,
+  "initial_trajectory_hashes_verified": 320,
+  "additional_training_profiles": 32,
+  "additional_training_trajectories": 256,
+  "activation_completed": true,
+  "clean_only": true,
+  "confirmation_generated": false,
+  "model_metrics_opened": false,
+  "elapsed_s": 87.26862251525745,
+  "split_identity": {
+    "split_sizes": {
+      "v4_train": 512,
+      "v4_development": 64
+    },
+    "pairwise_intersection_sizes": {
+      "v4_development__v4_train": 0
+    },
+    "disjoint": true
+  }
+}

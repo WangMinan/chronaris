@@ -1,0 +1,4640 @@
+[
+  {
+    "route": "self_supervised",
+    "condition": "clean_asynchronous",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 3.333322048187256,
+        "median": 3.3596622943878174,
+        "p95": 3.8351576924324036,
+        "p99": 3.9714190840721133,
+        "maximum": 4.090503692626953
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.0056588649749756,
+        "median": 3.033604621887207,
+        "p95": 3.271404767036438,
+        "p99": 3.311212089061737,
+        "maximum": 3.347503662109375
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.609041929244995,
+        "median": 3.660911202430725,
+        "p95": 4.018992781639099,
+        "p99": 4.067890558242798,
+        "maximum": 4.104216575622559
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 0.4916030466556549,
+        "median": 0.499798446893692,
+        "p95": 0.5114140629768371,
+        "p99": 0.5162900346517563,
+        "maximum": 0.5268035531044006
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 2.0227272510528564,
+        "median": 2.0140955448150635,
+        "p95": 2.395107614994049,
+        "p99": 2.526485047340394,
+        "maximum": 2.653460741043091
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.0306169986724854,
+        "median": 2.032885789871216,
+        "p95": 2.390807056427002,
+        "p99": 2.5012811183929444,
+        "maximum": 2.624197006225586
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.001868963241577,
+        "median": 1.9971919059753418,
+        "p95": 2.398553609848023,
+        "p99": 2.548394985198975,
+        "maximum": 2.687068223953247
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 2.6915104389190674,
+        "median": 2.83320951461792,
+        "p95": 2.8332128524780273,
+        "p99": 2.8332130908966064,
+        "maximum": 2.8332133293151855
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.08054711669683456,
+        "median": 0.059090377762913704,
+        "p95": 0.1679486148059368,
+        "p99": 0.5009102046489715,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 15.637032508850098,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.089493989944458,
+        "median": 3.465708017349243,
+        "p95": 3.4657347202301025,
+        "p99": 3.46573543548584,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07080399245023727,
+        "median": 0.03162303380668163,
+        "p95": 0.25015901923179623,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.8902587890625,
+        "median": 3.1566193103790283,
+        "p95": 3.7841832637786865,
+        "p99": 3.8286315202713013,
+        "maximum": 3.828640937805176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09642180055379868,
+        "median": 0.04339035972952843,
+        "p95": 0.3346175253391266,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.2949422001838684,
+        "median": 0.2467184215784073,
+        "p95": 0.6533328145742416,
+        "p99": 0.8195318996906281,
+        "maximum": 0.9010381102561951
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.33441853523254395,
+        "median": 0.3585560917854309,
+        "p95": 0.6105213165283203,
+        "p99": 0.7726906657218935,
+        "maximum": 1.0297132730484009
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15364,
+        "standardized_rmse": 0.15924774428389535,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15364,
+        "standardized_rmse": 0.11666894421986598,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15364,
+        "standardized_rmse": 0.1447518823128524,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15364,
+        "standardized_rmse": 0.16300360599876365,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15364,
+        "standardized_rmse": 0.09867191854983674,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15364,
+        "standardized_rmse": 0.13307857770071402,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15364,
+        "standardized_rmse": 0.08395643228103779,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.60849717402085,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9142424927648387,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.8153351040075528,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 2.108386038142415,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.2337826168860215,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 3.0724030478870064,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2430427477219843,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.346212518145967,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.5027661181586804,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.490142103406103,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 2.2877849920135187,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.8105219887172899,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.020803281370535352
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.018085997667071172
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.011163557145377674
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.584854473825544
+  },
+  {
+    "route": "self_supervised",
+    "condition": "random_missing_30pct",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24065,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24317,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24065,
+        "mean": 3.873992681503296,
+        "median": 3.766784906387329,
+        "p95": 5.280389499664307,
+        "p99": 6.364514236450197,
+        "maximum": 9.990718841552734
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 10927,
+        "mean": 3.2569096088409424,
+        "median": 3.2589199542999268,
+        "p95": 4.014146852493285,
+        "p99": 4.534023056030273,
+        "maximum": 6.194553375244141
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 10927,
+        "mean": 4.110385417938232,
+        "median": 4.061456680297852,
+        "p95": 5.605349111557006,
+        "p99": 6.679215393066406,
+        "maximum": 10.337103843688965
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 10927,
+        "mean": 0.6815211176872253,
+        "median": 0.5031646490097046,
+        "p95": 1.4996837735176087,
+        "p99": 2.0088579845428467,
+        "maximum": 3.9962501525878906
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24317,
+        "mean": 2.023616075515747,
+        "median": 2.007575750350952,
+        "p95": 2.425914764404297,
+        "p99": 2.6001676082611085,
+        "maximum": 3.045262575149536
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 53829,
+        "mean": 2.0270299911499023,
+        "median": 2.0248289108276367,
+        "p95": 2.4087987899780274,
+        "p99": 2.5458035755157473,
+        "maximum": 2.85607647895813
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 53829,
+        "mean": 2.01037859916687,
+        "median": 2.0000977516174316,
+        "p95": 2.4372575759887694,
+        "p99": 2.6306448554992676,
+        "maximum": 3.2781567573547363
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 53829,
+        "mean": 0.1417914628982544,
+        "median": 0.10155025869607925,
+        "p95": 0.30078954100608823,
+        "p99": 0.4033476269245148,
+        "maximum": 0.900943398475647
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 2.7034029960632324,
+        "median": 2.8332066535949707,
+        "p95": 2.833212375640869,
+        "p99": 2.8332128524780273,
+        "maximum": 2.8332133293151855
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 0.07762148976325989,
+        "median": 0.05916951596736908,
+        "p95": 0.16729425787925717,
+        "p99": 0.5006337666511536,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 15.715164184570312,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19965,
+        "mean": 3.089432954788208,
+        "median": 3.465702533721924,
+        "p95": 3.465733766555786,
+        "p99": 3.4657349586486816,
+        "maximum": 3.465735673904419
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19965,
+        "mean": 0.07090897858142853,
+        "median": 0.03168290853500366,
+        "p95": 0.25027595162391664,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19965,
+        "mean": 25.64006996154785,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11773,
+        "mean": 2.890014410018921,
+        "median": 3.135493278503418,
+        "p95": 3.7841804027557373,
+        "p99": 3.82862717628479,
+        "maximum": 3.8286404609680176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11773,
+        "mean": 0.09658239781856537,
+        "median": 0.043562937527894974,
+        "p95": 0.3351015210151672,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11773,
+        "mean": 23.494266510009766,
+        "median": 23.0,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 0.35212263464927673,
+        "median": 0.3110223114490509,
+        "p95": 0.7445279955863949,
+        "p99": 0.8768555665016174,
+        "maximum": 0.9551461338996887
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 0.28432798385620117,
+        "median": 0.3046323359012604,
+        "p95": 0.5204586505889891,
+        "p99": 0.6726869535446173,
+        "maximum": 1.0127570629119873
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 10927,
+        "standardized_rmse": 0.18616945062893853,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 10927,
+        "standardized_rmse": 0.1279991091402314,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 10927,
+        "standardized_rmse": 0.16034280368075127,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 10927,
+        "standardized_rmse": 0.1605894704361667,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 10927,
+        "standardized_rmse": 0.1261455696194644,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 10927,
+        "standardized_rmse": 0.13607431169672876,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 10927,
+        "standardized_rmse": 0.1000418459513698,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 53829,
+        "standardized_rmse": 1.611912405464093,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 53829,
+        "standardized_rmse": 0.9140819746084777,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 53829,
+        "standardized_rmse": 0.8178486832843249,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 53829,
+        "standardized_rmse": 2.102409045118845,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 53829,
+        "standardized_rmse": 3.235078193963991,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 53829,
+        "standardized_rmse": 3.067538608804619,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 53829,
+        "standardized_rmse": 1.2443642298866266,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 53829,
+        "standardized_rmse": 1.345792859512812,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 53829,
+        "standardized_rmse": 1.4989434765655603,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 53829,
+        "standardized_rmse": 1.4921915695270982,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 53829,
+        "standardized_rmse": 2.284091789844785,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 53829,
+        "standardized_rmse": 0.8083191237428627,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 53573,
+        "mean_normalized_huber_residual": 0.02156825777407271
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 53573,
+        "mean_normalized_huber_residual": 0.019028825417283093
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 160719,
+        "mean_normalized_huber_residual": 0.011470760574462014
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 3.9594673607498407
+  },
+  {
+    "route": "self_supervised",
+    "condition": "contiguous_gap_15s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 10.527114868164062,
+        "median": 6.762112140655518,
+        "p95": 26.965710639953613,
+        "p99": 31.303318977355957,
+        "maximum": 35.86516571044922
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 7690,
+        "mean": 4.051339149475098,
+        "median": 3.0940171480178833,
+        "p95": 11.008129405975334,
+        "p99": 17.311117858886718,
+        "maximum": 21.560522079467773
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 7690,
+        "mean": 5.3852667808532715,
+        "median": 3.76320743560791,
+        "p95": 15.638908004760742,
+        "p99": 31.592508468627916,
+        "maximum": 36.258506774902344
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 7690,
+        "mean": 0.9821832776069641,
+        "median": 0.49965453147888184,
+        "p95": 0.5149950176477432,
+        "p99": 15.510713357925415,
+        "maximum": 16.014013290405273
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 9.23047161102295,
+        "median": 2.461273670196533,
+        "p95": 29.155724906921385,
+        "p99": 32.734615859985354,
+        "maximum": 36.376182556152344
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 38379,
+        "mean": 2.0783281326293945,
+        "median": 2.0302751064300537,
+        "p95": 2.4210486888885496,
+        "p99": 4.322763032913213,
+        "maximum": 12.961565017700195
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 38379,
+        "mean": 2.2417190074920654,
+        "median": 1.9959791898727417,
+        "p95": 2.459657168388367,
+        "p99": 6.861330299377448,
+        "maximum": 36.459007263183594
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 38379,
+        "mean": 0.19939284026622772,
+        "median": 0.09997282922267914,
+        "p95": 0.10477909371256829,
+        "p99": 0.10771526247262955,
+        "maximum": 15.208503723144531
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 2.691483497619629,
+        "median": 2.8332042694091797,
+        "p95": 2.8332133293151855,
+        "p99": 2.8332135677337646,
+        "maximum": 2.8332135677337646
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.0807620957493782,
+        "median": 0.05920148268342018,
+        "p95": 0.1679486148059368,
+        "p99": 0.5009102046489715,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 15.637032508850098,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.0894715785980225,
+        "median": 3.465632438659668,
+        "p95": 3.465735912322998,
+        "p99": 3.465735912322998,
+        "maximum": 3.4657363891601562
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07095641642808914,
+        "median": 0.03214745782315731,
+        "p95": 0.25015901923179623,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.8902342319488525,
+        "median": 3.1565704345703125,
+        "p95": 3.784157872200012,
+        "p99": 3.8285824060440063,
+        "maximum": 3.828640937805176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09650607407093048,
+        "median": 0.04354207403957844,
+        "p95": 0.3344902992248535,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.7435745000839233,
+        "median": 0.9907160699367523,
+        "p95": 1.0,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.31479984521865845,
+        "median": 0.2976079732179642,
+        "p95": 0.801488071680069,
+        "p99": 0.9171018540859225,
+        "maximum": 1.09502112865448
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 7690,
+        "standardized_rmse": 0.26531987268567514,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 7690,
+        "standardized_rmse": 0.253263625812542,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 7690,
+        "standardized_rmse": 0.3010396094149606,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 7690,
+        "standardized_rmse": 0.30539622579386894,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 7690,
+        "standardized_rmse": 0.23630180932201283,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 7690,
+        "standardized_rmse": 0.2570876627905759,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 7690,
+        "standardized_rmse": 0.20741753407015048,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 38379,
+        "standardized_rmse": 1.6423740781132787,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 38379,
+        "standardized_rmse": 0.9202784950973111,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 38379,
+        "standardized_rmse": 0.8304348465643557,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 38379,
+        "standardized_rmse": 2.15196143829947,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 38379,
+        "standardized_rmse": 2.9861086009848994,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 38379,
+        "standardized_rmse": 3.09561379798876,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 38379,
+        "standardized_rmse": 1.2081888962266063,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 38379,
+        "standardized_rmse": 1.3336450556269737,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 38379,
+        "standardized_rmse": 1.4660533736907875,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 38379,
+        "standardized_rmse": 1.2622237972880739,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 38379,
+        "standardized_rmse": 2.0280173525376473,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 38379,
+        "standardized_rmse": 0.8235317974565317,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 38123,
+        "mean_normalized_huber_residual": 0.11998793160136291
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 38123,
+        "mean_normalized_huber_residual": 0.12955429486372794
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 114369,
+        "mean_normalized_huber_residual": 0.054315670517240046
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.031347678042948
+  },
+  {
+    "route": "self_supervised",
+    "condition": "contiguous_gap_30s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 0,
+      "physiology_unobserved_windows": 256,
+      "vehicle_valid_queries": 0,
+      "vehicle_unobserved_windows": 256
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      }
+    ],
+    "physical_components": [],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 1.7659748522564769
+  },
+  {
+    "route": "self_supervised",
+    "condition": "physiology_missing",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 0,
+      "physiology_unobserved_windows": 256,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 2.0227272510528564,
+        "median": 2.0140955448150635,
+        "p95": 2.395107614994049,
+        "p99": 2.526485047340394,
+        "maximum": 2.653460741043091
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.0306169986724854,
+        "median": 2.032885789871216,
+        "p95": 2.390807056427002,
+        "p99": 2.5012811183929444,
+        "maximum": 2.624197006225586
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.001868963241577,
+        "median": 1.9971919059753418,
+        "p95": 2.398553609848023,
+        "p99": 2.548394985198975,
+        "maximum": 2.687068223953247
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "physiology_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.60849717402085,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9142424927648387,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.8153351040075528,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 2.108386038142415,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.2337826168860215,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 3.0724030478870064,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2430427477219843,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.346212518145967,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.5027661181586804,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.490142103406103,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 2.2877849920135187,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.8105219887172899,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.020803281370535352
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.018085997667071172
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.011163557145377674
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 2.9892978528514504
+  },
+  {
+    "route": "self_supervised",
+    "condition": "vehicle_missing",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 0,
+      "vehicle_unobserved_windows": 256
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 3.333322048187256,
+        "median": 3.3596622943878174,
+        "p95": 3.8351576924324036,
+        "p99": 3.9714190840721133,
+        "maximum": 4.090503692626953
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.0056588649749756,
+        "median": 3.033604621887207,
+        "p95": 3.271404767036438,
+        "p99": 3.311212089061737,
+        "maximum": 3.347503662109375
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.609041929244995,
+        "median": 3.660911202430725,
+        "p95": 4.018992781639099,
+        "p99": 4.067890558242798,
+        "maximum": 4.104216575622559
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 0.4916030466556549,
+        "median": 0.499798446893692,
+        "p95": 0.5114140629768371,
+        "p99": 0.5162900346517563,
+        "maximum": 0.5268035531044006
+      },
+      "vehicle_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15364,
+        "standardized_rmse": 0.15924774428389535,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15364,
+        "standardized_rmse": 0.11666894421986598,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15364,
+        "standardized_rmse": 0.1447518823128524,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15364,
+        "standardized_rmse": 0.16300360599876365,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15364,
+        "standardized_rmse": 0.09867191854983674,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15364,
+        "standardized_rmse": 0.13307857770071402,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15364,
+        "standardized_rmse": 0.08395643228103779,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      }
+    ],
+    "physical_components": [],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 2.7924114768393338
+  },
+  {
+    "route": "self_supervised",
+    "condition": "physiology_clock_offset_plus_1s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24196,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 3.3318982124328613,
+        "median": 3.3584983348846436,
+        "p95": 3.8326110243797302,
+        "p99": 3.968990135192871,
+        "maximum": 4.093302249908447
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15358,
+        "mean": 3.005873680114746,
+        "median": 3.0335453748703003,
+        "p95": 3.2723302602767945,
+        "p99": 3.3127871680259706,
+        "maximum": 3.346994161605835
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15358,
+        "mean": 3.6095354557037354,
+        "median": 3.661124110221863,
+        "p95": 4.020159983634949,
+        "p99": 4.069397053718567,
+        "maximum": 4.105099678039551
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15358,
+        "mean": 0.49159136414527893,
+        "median": 0.49979734420776367,
+        "p95": 0.5114016711711884,
+        "p99": 0.5162578523159027,
+        "maximum": 0.5241078734397888
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 2.0227272510528564,
+        "median": 2.0140955448150635,
+        "p95": 2.395107614994049,
+        "p99": 2.526485047340394,
+        "maximum": 2.653460741043091
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.0306169986724854,
+        "median": 2.032885789871216,
+        "p95": 2.390807056427002,
+        "p99": 2.5012811183929444,
+        "maximum": 2.624197006225586
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.001868963241577,
+        "median": 1.9971919059753418,
+        "p95": 2.398553609848023,
+        "p99": 2.548394985198975,
+        "maximum": 2.687068223953247
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 2.692622661590576,
+        "median": 2.83320951461792,
+        "p95": 2.8332128524780273,
+        "p99": 2.8332130908966064,
+        "maximum": 2.8332133293151855
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 0.08016850054264069,
+        "median": 0.05909055843949318,
+        "p95": 0.16783970594406128,
+        "p99": 0.5008577555418015,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 15.643081665039062,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.089493989944458,
+        "median": 3.465708017349243,
+        "p95": 3.4657347202301025,
+        "p99": 3.46573543548584,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07080468535423279,
+        "median": 0.031623153015971184,
+        "p95": 0.25015153735876083,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.8902587890625,
+        "median": 3.1566179990768433,
+        "p95": 3.7841835021972656,
+        "p99": 3.8286314010620117,
+        "maximum": 3.828640937805176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09642262756824493,
+        "median": 0.04337320849299431,
+        "p95": 0.33459050953388214,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 0.2948811650276184,
+        "median": 0.24678264558315277,
+        "p95": 0.6516710370779037,
+        "p99": 0.8187998235225674,
+        "maximum": 0.9019496440887451
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 0.3347361385822296,
+        "median": 0.3587455749511719,
+        "p95": 0.6113335341215134,
+        "p99": 0.7726829111576075,
+        "maximum": 1.0283410549163818
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15358,
+        "standardized_rmse": 0.16073731711893538,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15358,
+        "standardized_rmse": 0.11800208636607631,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15358,
+        "standardized_rmse": 0.1451403718237801,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15358,
+        "standardized_rmse": 0.16334646936326952,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15358,
+        "standardized_rmse": 0.09983900031582851,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15358,
+        "standardized_rmse": 0.13389705519996545,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15358,
+        "standardized_rmse": 0.084646984415529,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.60849717402085,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9142424927648387,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.8153351040075528,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 2.108386038142415,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.2337826168860215,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 3.0724030478870064,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2430427477219843,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.346212518145967,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.5027661181586804,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.490142103406103,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 2.2877849920135187,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.8105219887172899,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.020803281370535352
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.018085997667071172
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.011163557145377674
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.0415757382288575
+  },
+  {
+    "route": "self_supervised",
+    "condition": "physiology_response_lag_plus_15s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 3.344672441482544,
+        "median": 3.3705124855041504,
+        "p95": 3.8419222831726074,
+        "p99": 3.9848111867904668,
+        "maximum": 4.142547130584717
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.013655185699463,
+        "median": 3.042897582054138,
+        "p95": 3.283745050430298,
+        "p99": 3.3339238095283505,
+        "maximum": 3.396352767944336
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.621845245361328,
+        "median": 3.672499656677246,
+        "p95": 4.034132742881775,
+        "p99": 4.093747706413269,
+        "maximum": 4.163837432861328
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 0.4916030466556549,
+        "median": 0.499798446893692,
+        "p95": 0.5114140629768371,
+        "p99": 0.5162900346517563,
+        "maximum": 0.5268035531044006
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 2.0227272510528564,
+        "median": 2.0140955448150635,
+        "p95": 2.395107614994049,
+        "p99": 2.526485047340394,
+        "maximum": 2.653460741043091
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.0306169986724854,
+        "median": 2.032885789871216,
+        "p95": 2.390807056427002,
+        "p99": 2.5012811183929444,
+        "maximum": 2.624197006225586
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 2.001868963241577,
+        "median": 1.9971919059753418,
+        "p95": 2.398553609848023,
+        "p99": 2.548394985198975,
+        "maximum": 2.687068223953247
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 2.691509962081909,
+        "median": 2.8332087993621826,
+        "p95": 2.8332128524780273,
+        "p99": 2.8332130908966064,
+        "maximum": 2.8332133293151855
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.08056376129388809,
+        "median": 0.05910874903202057,
+        "p95": 0.16797957196831703,
+        "p99": 0.5010279685258865,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 15.637032508850098,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.0894932746887207,
+        "median": 3.4657070636749268,
+        "p95": 3.4657344818115234,
+        "p99": 3.46573543548584,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07082436978816986,
+        "median": 0.0316263772547245,
+        "p95": 0.2501570269465446,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.8902580738067627,
+        "median": 3.1566163301467896,
+        "p95": 3.7841835021972656,
+        "p99": 3.8286309838294983,
+        "maximum": 3.828640937805176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09643496572971344,
+        "median": 0.043450066819787025,
+        "p95": 0.33459489047527313,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.29545554518699646,
+        "median": 0.2504182755947113,
+        "p95": 0.6404180228710175,
+        "p99": 0.820351377129555,
+        "maximum": 0.8853645920753479
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.33759841322898865,
+        "median": 0.360706627368927,
+        "p95": 0.6238352656364441,
+        "p99": 0.8096464902162558,
+        "maximum": 1.0299321413040161
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15364,
+        "standardized_rmse": 0.18581559667085193,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15364,
+        "standardized_rmse": 0.13665105087502702,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15364,
+        "standardized_rmse": 0.14926686742197737,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15364,
+        "standardized_rmse": 0.16824786272704675,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15364,
+        "standardized_rmse": 0.12182817554313229,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15364,
+        "standardized_rmse": 0.14541999092232977,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15364,
+        "standardized_rmse": 0.09364472677458069,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.60849717402085,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9142424927648387,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.8153351040075528,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 2.108386038142415,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.2337826168860215,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 3.0724030478870064,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2430427477219843,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.346212518145967,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.5027661181586804,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.490142103406103,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 2.2877849920135187,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.8105219887172899,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.020803281370535352
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.018085997667071172
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.011163557145377674
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.106092086061835
+  },
+  {
+    "route": "task_guided",
+    "condition": "clean_asynchronous",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 3.2849156856536865,
+        "median": 3.3524346351623535,
+        "p95": 4.122323036193848,
+        "p99": 4.279960060119629,
+        "maximum": 4.398182392120361
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 2.956627368927002,
+        "median": 3.0738943815231323,
+        "p95": 3.5569376587867736,
+        "p99": 3.5753078150749205,
+        "maximum": 3.5912017822265625
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.565180778503418,
+        "median": 3.7119851112365723,
+        "p95": 4.357764720916748,
+        "p99": 4.383658270835876,
+        "maximum": 4.415521621704102
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 0.4916030466556549,
+        "median": 0.499798446893692,
+        "p95": 0.5114140629768371,
+        "p99": 0.5162900346517563,
+        "maximum": 0.5268035531044006
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 1.981677770614624,
+        "median": 1.9495107531547546,
+        "p95": 2.4021329402923586,
+        "p99": 2.5939370775222783,
+        "maximum": 2.775432825088501
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9910335540771484,
+        "median": 1.970024824142456,
+        "p95": 2.3966844558715823,
+        "p99": 2.568069248199463,
+        "maximum": 2.710629940032959
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9597095251083374,
+        "median": 1.9320119619369507,
+        "p95": 2.408324575424195,
+        "p99": 2.6204851436614995,
+        "maximum": 2.786985397338867
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 2.6915109157562256,
+        "median": 2.833209991455078,
+        "p95": 2.8332128524780273,
+        "p99": 2.8332133293151855,
+        "maximum": 2.8332135677337646
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.08051973581314087,
+        "median": 0.059071678668260574,
+        "p95": 0.1677178479731083,
+        "p99": 0.5007953733205796,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 15.637032508850098,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.0894927978515625,
+        "median": 3.4657065868377686,
+        "p95": 3.4657347202301025,
+        "p99": 3.46573543548584,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.0707869678735733,
+        "median": 0.031623490154743195,
+        "p95": 0.25016818940639496,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.8902573585510254,
+        "median": 3.1566351652145386,
+        "p95": 3.784183979034424,
+        "p99": 3.8286319971084595,
+        "maximum": 3.8286406993865967
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09640015661716461,
+        "median": 0.043471693992614746,
+        "p95": 0.3344418853521347,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.2904014587402344,
+        "median": 0.2428201586008072,
+        "p95": 0.675616905093193,
+        "p99": 0.8626571774482727,
+        "maximum": 0.9276145696640015
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.2403658628463745,
+        "median": 0.24897845089435577,
+        "p95": 0.4746559113264084,
+        "p99": 0.5918840497732164,
+        "maximum": 0.7526973485946655
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15364,
+        "standardized_rmse": 0.11006399195041273,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15364,
+        "standardized_rmse": 0.10692141690649641,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15364,
+        "standardized_rmse": 0.1247210150505309,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15364,
+        "standardized_rmse": 0.13890058242770464,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15364,
+        "standardized_rmse": 0.060089577381242425,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15364,
+        "standardized_rmse": 0.10643614910197889,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15364,
+        "standardized_rmse": 0.07308851679850353,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.5582144427472655,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9263009613168468,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.6810250101388281,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 1.82781858001766,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.121239953520876,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 2.7663719326488545,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.1260134602202039,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2433085133816137,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.402840827275781,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.355630841005966,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.9590618712285615,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.7476491756035818,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.021799273745021292
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.01681740036674724
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.01627367461866001
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.355115736834705
+  },
+  {
+    "route": "task_guided",
+    "condition": "random_missing_30pct",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24065,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24317,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24065,
+        "mean": 3.8318960666656494,
+        "median": 3.7673816680908203,
+        "p95": 5.49205741882324,
+        "p99": 6.677592372894292,
+        "maximum": 10.740351676940918
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 10927,
+        "mean": 3.209970235824585,
+        "median": 3.278724431991577,
+        "p95": 4.253451490402222,
+        "p99": 4.895139818191526,
+        "maximum": 7.134556293487549
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 10927,
+        "mean": 4.074856758117676,
+        "median": 4.1140336990356445,
+        "p95": 5.809565782546995,
+        "p99": 7.050996179580688,
+        "maximum": 11.10834789276123
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 10927,
+        "mean": 0.6815211176872253,
+        "median": 0.5031646490097046,
+        "p95": 1.4996837735176087,
+        "p99": 2.0088579845428467,
+        "maximum": 3.9962501525878906
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24317,
+        "mean": 1.9839640855789185,
+        "median": 1.9445099830627441,
+        "p95": 2.4429296970367433,
+        "p99": 2.676301441192627,
+        "maximum": 3.0890438556671143
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 53829,
+        "mean": 1.98909330368042,
+        "median": 1.964070200920105,
+        "p95": 2.41936297416687,
+        "p99": 2.6174186897277836,
+        "maximum": 2.872373342514038
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 53829,
+        "mean": 1.9701387882232666,
+        "median": 1.9358707666397095,
+        "p95": 2.459128999710083,
+        "p99": 2.705111303329468,
+        "maximum": 3.227909803390503
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 53829,
+        "mean": 0.1417914628982544,
+        "median": 0.10155025869607925,
+        "p95": 0.30078954100608823,
+        "p99": 0.4033476269245148,
+        "maximum": 0.900943398475647
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 2.703404426574707,
+        "median": 2.8332085609436035,
+        "p95": 2.8332126140594482,
+        "p99": 2.8332130908966064,
+        "maximum": 2.8332133293151855
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 0.07757029682397842,
+        "median": 0.059119269251823425,
+        "p95": 0.16721533685922618,
+        "p99": 0.5005993521213532,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 15.715164184570312,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19965,
+        "mean": 3.089433431625366,
+        "median": 3.4657015800476074,
+        "p95": 3.4657340049743652,
+        "p99": 3.4657349586486816,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19965,
+        "mean": 0.07086826860904694,
+        "median": 0.03166797384619713,
+        "p95": 0.25026175379753113,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19965,
+        "mean": 25.64006996154785,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11773,
+        "mean": 2.890014886856079,
+        "median": 3.135493278503418,
+        "p95": 3.784182071685791,
+        "p99": 3.828630037307739,
+        "maximum": 3.8286404609680176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11773,
+        "mean": 0.09653172641992569,
+        "median": 0.043581053614616394,
+        "p95": 0.3348166048526764,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11773,
+        "mean": 23.494266510009766,
+        "median": 23.0,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 0.33209824562072754,
+        "median": 0.28922298550605774,
+        "p95": 0.7342448651790615,
+        "p99": 0.8966977095603943,
+        "maximum": 0.9662325978279114
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24063,
+        "mean": 0.2257462441921234,
+        "median": 0.22474855184555054,
+        "p95": 0.4808281630277632,
+        "p99": 0.5880002307891847,
+        "maximum": 0.8118596076965332
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 10927,
+        "standardized_rmse": 0.1274667696132708,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 10927,
+        "standardized_rmse": 0.11674781159862112,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 10927,
+        "standardized_rmse": 0.1303316450397095,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 10927,
+        "standardized_rmse": 0.14250595974571825,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 10927,
+        "standardized_rmse": 0.08730958252955764,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 10927,
+        "standardized_rmse": 0.10975218603716097,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 10927,
+        "standardized_rmse": 0.08734914301043177,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 53829,
+        "standardized_rmse": 1.5618968174125063,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 53829,
+        "standardized_rmse": 0.9260365471071628,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 53829,
+        "standardized_rmse": 0.6828283537468879,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 53829,
+        "standardized_rmse": 1.8228511437897557,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 53829,
+        "standardized_rmse": 3.123056463372883,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 53829,
+        "standardized_rmse": 2.7618208850831407,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 53829,
+        "standardized_rmse": 1.1293182938113715,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 53829,
+        "standardized_rmse": 1.2439253064117057,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 53829,
+        "standardized_rmse": 1.3999605338561452,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 53829,
+        "standardized_rmse": 1.3574403480736255,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 53829,
+        "standardized_rmse": 1.9577068741263588,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 53829,
+        "standardized_rmse": 0.7442663699494557,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 53573,
+        "mean_normalized_huber_residual": 0.022345411512898716
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 53573,
+        "mean_normalized_huber_residual": 0.017457129345648092
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 160719,
+        "mean_normalized_huber_residual": 0.016467692174421854
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 3.899857907090336
+  },
+  {
+    "route": "task_guided",
+    "condition": "contiguous_gap_15s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 11.099833488464355,
+        "median": 7.84420108795166,
+        "p95": 29.01721715927124,
+        "p99": 34.35882263183594,
+        "maximum": 39.76054000854492
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 7690,
+        "mean": 4.70305061340332,
+        "median": 3.2137022018432617,
+        "p95": 13.929825592041007,
+        "p99": 20.439673824310294,
+        "maximum": 25.371877670288086
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 7690,
+        "mean": 6.04614782333374,
+        "median": 3.934807538986206,
+        "p95": 18.783010196685773,
+        "p99": 34.55318714141842,
+        "maximum": 40.19737243652344
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 7690,
+        "mean": 0.9821832776069641,
+        "median": 0.49965453147888184,
+        "p95": 0.5149950176477432,
+        "p99": 15.510713357925415,
+        "maximum": 16.014013290405273
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 9.40886402130127,
+        "median": 2.4392871856689453,
+        "p95": 29.986546230316158,
+        "p99": 33.68221557617188,
+        "maximum": 36.9539680480957
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 38379,
+        "mean": 2.0053961277008057,
+        "median": 1.9685533046722412,
+        "p95": 2.4003161430358886,
+        "p99": 3.0913375091552804,
+        "maximum": 11.820809364318848
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 38379,
+        "mean": 2.1708667278289795,
+        "median": 1.931078553199768,
+        "p95": 2.4411221981048583,
+        "p99": 4.891600675582889,
+        "maximum": 37.00987243652344
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 38379,
+        "mean": 0.19939284026622772,
+        "median": 0.09997282922267914,
+        "p95": 0.10477909371256829,
+        "p99": 0.10771526247262955,
+        "maximum": 15.208503723144531
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 2.691495418548584,
+        "median": 2.8332061767578125,
+        "p95": 2.8332133293151855,
+        "p99": 2.8332133293151855,
+        "maximum": 2.8332138061523438
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.0806444063782692,
+        "median": 0.059156978502869606,
+        "p95": 0.1677178479731083,
+        "p99": 0.5007953733205796,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 15.637032508850098,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.0894813537597656,
+        "median": 3.4656622409820557,
+        "p95": 3.465735912322998,
+        "p99": 3.465735912322998,
+        "maximum": 3.4657363891601562
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07087206840515137,
+        "median": 0.031915463507175446,
+        "p95": 0.25016818940639496,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.890244960784912,
+        "median": 3.156543016433716,
+        "p95": 3.784173309803009,
+        "p99": 3.828610897064209,
+        "maximum": 3.8286404609680176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09649080038070679,
+        "median": 0.04353460483253002,
+        "p95": 0.33428286761045456,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.7287672162055969,
+        "median": 0.976837158203125,
+        "p95": 0.9999998807907104,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.3285142779350281,
+        "median": 0.3125542849302292,
+        "p95": 0.7567726820707321,
+        "p99": 0.9078052788972855,
+        "maximum": 1.0954904556274414
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 7690,
+        "standardized_rmse": 0.2596488300666843,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 7690,
+        "standardized_rmse": 0.3225481427519248,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 7690,
+        "standardized_rmse": 0.33970211443316445,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 7690,
+        "standardized_rmse": 0.33730787282071084,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 7690,
+        "standardized_rmse": 0.33637753786308944,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 7690,
+        "standardized_rmse": 0.3307990195038089,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 7690,
+        "standardized_rmse": 0.30243201228631966,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 38379,
+        "standardized_rmse": 1.5903232040780073,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 38379,
+        "standardized_rmse": 0.9302173220824399,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 38379,
+        "standardized_rmse": 0.6982953166686825,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 38379,
+        "standardized_rmse": 1.8864267445776712,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 38379,
+        "standardized_rmse": 2.885490591774045,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 38379,
+        "standardized_rmse": 2.80286185377676,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 38379,
+        "standardized_rmse": 1.0776700052935353,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 38379,
+        "standardized_rmse": 1.2211366160875805,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 38379,
+        "standardized_rmse": 1.3656396511317326,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 38379,
+        "standardized_rmse": 1.146829427144098,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 38379,
+        "standardized_rmse": 1.7433059478572965,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 38379,
+        "standardized_rmse": 0.76500674486955,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 38123,
+        "mean_normalized_huber_residual": 0.10484220556260293
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 38123,
+        "mean_normalized_huber_residual": 0.09441300425125898
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 114369,
+        "mean_normalized_huber_residual": 0.06462030045533172
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.0063832378946245
+  },
+  {
+    "route": "task_guided",
+    "condition": "contiguous_gap_30s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 0,
+      "physiology_unobserved_windows": 256,
+      "vehicle_valid_queries": 0,
+      "vehicle_unobserved_windows": 256
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      }
+    ],
+    "physical_components": [],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 1.788239202927798
+  },
+  {
+    "route": "task_guided",
+    "condition": "physiology_missing",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 0,
+      "physiology_unobserved_windows": 256,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 1.981677770614624,
+        "median": 1.9495107531547546,
+        "p95": 2.4021329402923586,
+        "p99": 2.5939370775222783,
+        "maximum": 2.775432825088501
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9910335540771484,
+        "median": 1.970024824142456,
+        "p95": 2.3966844558715823,
+        "p99": 2.568069248199463,
+        "maximum": 2.710629940032959
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9597095251083374,
+        "median": 1.9320119619369507,
+        "p95": 2.408324575424195,
+        "p99": 2.6204851436614995,
+        "maximum": 2.786985397338867
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "physiology_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "physiology_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.5582144427472655,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9263009613168468,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.6810250101388281,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 1.82781858001766,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.121239953520876,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 2.7663719326488545,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.1260134602202039,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2433085133816137,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.402840827275781,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.355630841005966,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.9590618712285615,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.7476491756035818,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.021799273745021292
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.01681740036674724
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.01627367461866001
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 3.059810875914991
+  },
+  {
+    "route": "task_guided",
+    "condition": "vehicle_missing",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 0,
+      "vehicle_unobserved_windows": 256
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 3.2849156856536865,
+        "median": 3.3524346351623535,
+        "p95": 4.122323036193848,
+        "p99": 4.279960060119629,
+        "maximum": 4.398182392120361
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 2.956627368927002,
+        "median": 3.0738943815231323,
+        "p95": 3.5569376587867736,
+        "p99": 3.5753078150749205,
+        "maximum": 3.5912017822265625
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.565180778503418,
+        "median": 3.7119851112365723,
+        "p95": 4.357764720916748,
+        "p99": 4.383658270835876,
+        "maximum": 4.415521621704102
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 0.4916030466556549,
+        "median": 0.499798446893692,
+        "p95": 0.5114140629768371,
+        "p99": 0.5162900346517563,
+        "maximum": 0.5268035531044006
+      },
+      "vehicle_query_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observed_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      },
+      "vehicle_observation_gap_s": {
+        "status": "unavailable_no_valid_values",
+        "count": 0
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15364,
+        "standardized_rmse": 0.11006399195041273,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15364,
+        "standardized_rmse": 0.10692141690649641,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15364,
+        "standardized_rmse": 0.1247210150505309,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15364,
+        "standardized_rmse": 0.13890058242770464,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15364,
+        "standardized_rmse": 0.060089577381242425,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15364,
+        "standardized_rmse": 0.10643614910197889,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15364,
+        "standardized_rmse": 0.07308851679850353,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 0,
+        "standardized_rmse": null,
+        "status": "unavailable_no_observations"
+      }
+    ],
+    "physical_components": [],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 2.7771622841246426
+  },
+  {
+    "route": "task_guided",
+    "condition": "physiology_clock_offset_plus_1s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24196,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 3.2780604362487793,
+        "median": 3.340352416038513,
+        "p95": 4.1164469718933105,
+        "p99": 4.270585989952087,
+        "maximum": 4.398417949676514
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15358,
+        "mean": 2.9520881175994873,
+        "median": 3.060105800628662,
+        "p95": 3.5567664384841917,
+        "p99": 3.575102243423462,
+        "maximum": 3.5912117958068848
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15358,
+        "mean": 3.5605127811431885,
+        "median": 3.694666624069214,
+        "p95": 4.357102966308593,
+        "p99": 4.3829260921478275,
+        "maximum": 4.415538787841797
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15358,
+        "mean": 0.49159136414527893,
+        "median": 0.49979734420776367,
+        "p95": 0.5114016711711884,
+        "p99": 0.5162578523159027,
+        "maximum": 0.5241078734397888
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 1.981677770614624,
+        "median": 1.9495107531547546,
+        "p95": 2.4021329402923586,
+        "p99": 2.5939370775222783,
+        "maximum": 2.775432825088501
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9910335540771484,
+        "median": 1.970024824142456,
+        "p95": 2.3966844558715823,
+        "p99": 2.568069248199463,
+        "maximum": 2.710629940032959
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9597095251083374,
+        "median": 1.9320119619369507,
+        "p95": 2.408324575424195,
+        "p99": 2.6204851436614995,
+        "maximum": 2.786985397338867
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 2.6926231384277344,
+        "median": 2.833209991455078,
+        "p95": 2.8332128524780273,
+        "p99": 2.8332133293151855,
+        "maximum": 2.8332135677337646
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 0.08013986796140671,
+        "median": 0.05907113663852215,
+        "p95": 0.16759028285741806,
+        "p99": 0.50072862803936,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 15.643081665039062,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.0894927978515625,
+        "median": 3.4657068252563477,
+        "p95": 3.4657347202301025,
+        "p99": 3.46573543548584,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07078638672828674,
+        "median": 0.03162265382707119,
+        "p95": 0.2501645043492317,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.890256881713867,
+        "median": 3.1566333770751953,
+        "p95": 3.784183979034424,
+        "p99": 3.828632414340973,
+        "maximum": 3.8286404609680176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.09640049189329147,
+        "median": 0.043464742600917816,
+        "p95": 0.33445440232753754,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 0.2897103726863861,
+        "median": 0.2422177791595459,
+        "p95": 0.6735248118638992,
+        "p99": 0.8622834503650665,
+        "maximum": 0.9299579858779907
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24196,
+        "mean": 0.2407526671886444,
+        "median": 0.24965450912714005,
+        "p95": 0.47465160489082336,
+        "p99": 0.5915722250938411,
+        "maximum": 0.7536059617996216
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15358,
+        "standardized_rmse": 0.11046178197932101,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15358,
+        "standardized_rmse": 0.1072789760561733,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15358,
+        "standardized_rmse": 0.12495174907578901,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15358,
+        "standardized_rmse": 0.1394872403179554,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15358,
+        "standardized_rmse": 0.06023154482819786,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15358,
+        "standardized_rmse": 0.10691830001720537,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15358,
+        "standardized_rmse": 0.07340945602513199,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.5582144427472655,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9263009613168468,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.6810250101388281,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 1.82781858001766,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.121239953520876,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 2.7663719326488545,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.1260134602202039,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2433085133816137,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.402840827275781,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.355630841005966,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.9590618712285615,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.7476491756035818,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.021799273745021292
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.01681740036674724
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.01627367461866001
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 3.964873821940273
+  },
+  {
+    "route": "task_guided",
+    "condition": "physiology_response_lag_plus_15s",
+    "status": "completed",
+    "method": "chronaris",
+    "sample_count": 256,
+    "validity_counts": {
+      "physiology_valid_queries": 24206,
+      "physiology_unobserved_windows": 0,
+      "vehicle_valid_queries": 24320,
+      "vehicle_unobserved_windows": 0
+    },
+    "distributions": {
+      "physiology_query_state_norm": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 3.2128617763519287,
+        "median": 3.1821519136428833,
+        "p95": 4.0870161056518555,
+        "p99": 4.267632794380188,
+        "maximum": 4.396539688110352
+      },
+      "physiology_observed_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 2.8865342140197754,
+        "median": 2.8459110260009766,
+        "p95": 3.555705201625824,
+        "p99": 3.574784114360809,
+        "maximum": 3.592567205429077
+      },
+      "physiology_pre_update_state_norm": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 3.492648124694824,
+        "median": 3.5275784730911255,
+        "p95": 4.355187606811524,
+        "p99": 4.381538319587707,
+        "maximum": 4.409564018249512
+      },
+      "physiology_observation_gap_s": {
+        "status": "completed",
+        "count": 15364,
+        "mean": 0.4916030466556549,
+        "median": 0.499798446893692,
+        "p95": 0.5114140629768371,
+        "p99": 0.5162900346517563,
+        "maximum": 0.5268035531044006
+      },
+      "vehicle_query_state_norm": {
+        "status": "completed",
+        "count": 24320,
+        "mean": 1.981677770614624,
+        "median": 1.9495107531547546,
+        "p95": 2.4021329402923586,
+        "p99": 2.5939370775222783,
+        "maximum": 2.775432825088501
+      },
+      "vehicle_observed_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9910335540771484,
+        "median": 1.970024824142456,
+        "p95": 2.3966844558715823,
+        "p99": 2.568069248199463,
+        "maximum": 2.710629940032959
+      },
+      "vehicle_pre_update_state_norm": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 1.9597095251083374,
+        "median": 1.9320119619369507,
+        "p95": 2.408324575424195,
+        "p99": 2.6204851436614995,
+        "maximum": 2.786985397338867
+      },
+      "vehicle_observation_gap_s": {
+        "status": "completed",
+        "count": 76785,
+        "mean": 0.09966136515140533,
+        "median": 0.09997907280921936,
+        "p95": 0.10461961477994919,
+        "p99": 0.10653897941112518,
+        "maximum": 0.1115327700972557
+      },
+      "attention_scale_0_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 2.6915111541748047,
+        "median": 2.833209991455078,
+        "p95": 2.8332128524780273,
+        "p99": 2.8332133293151855,
+        "maximum": 2.8332135677337646
+      },
+      "attention_scale_0_maximum_weight": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.08051959425210953,
+        "median": 0.05907046981155872,
+        "p95": 0.16771400719881058,
+        "p99": 0.5008652150630951,
+        "maximum": 1.0
+      },
+      "attention_scale_0_valid_key_count": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 15.637032508850098,
+        "median": 17.0,
+        "p95": 17.0,
+        "p99": 17.0,
+        "maximum": 17.0
+      },
+      "attention_scale_1_entropy": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 3.0894932746887207,
+        "median": 3.465707540512085,
+        "p95": 3.4657347202301025,
+        "p99": 3.46573543548584,
+        "maximum": 3.465735912322998
+      },
+      "attention_scale_1_maximum_weight": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 0.07078904658555984,
+        "median": 0.031615473330020905,
+        "p95": 0.2501832515001297,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_1_valid_key_count": {
+        "status": "completed",
+        "count": 19968,
+        "mean": 25.64102554321289,
+        "median": 32.0,
+        "p95": 32.0,
+        "p99": 32.0,
+        "maximum": 32.0
+      },
+      "attention_scale_2_entropy": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 2.8902573585510254,
+        "median": 3.1566476821899414,
+        "p95": 3.784184455871582,
+        "p99": 3.8286328315734863,
+        "maximum": 3.828640937805176
+      },
+      "attention_scale_2_maximum_weight": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 0.0963977724313736,
+        "median": 0.04352226480841637,
+        "p95": 0.3343835771083832,
+        "p99": 1.0,
+        "maximum": 1.0
+      },
+      "attention_scale_2_valid_key_count": {
+        "status": "completed",
+        "count": 11776,
+        "mean": 23.5,
+        "median": 23.5,
+        "p95": 44.0,
+        "p99": 46.0,
+        "maximum": 46.0
+      },
+      "cross_gate": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.27927151322364807,
+        "median": 0.23416289687156677,
+        "p95": 0.6626580208539963,
+        "p99": 0.8558632433414461,
+        "maximum": 0.931624710559845
+      },
+      "scale_gate_entropy": {
+        "status": "completed",
+        "count": 24206,
+        "mean": 0.24408577382564545,
+        "median": 0.25584374368190765,
+        "p95": 0.4745319038629532,
+        "p99": 0.5966526031494142,
+        "maximum": 0.7429822683334351
+      }
+    },
+    "observation_fit": [
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_low_relative",
+        "count": 15364,
+        "standardized_rmse": 0.116877675862021,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_high_relative",
+        "count": 15364,
+        "standardized_rmse": 0.11445374315857966,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.eeg_complexity",
+        "count": 15364,
+        "standardized_rmse": 0.1301217676338865,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.spo2_percent",
+        "count": 15364,
+        "standardized_rmse": 0.14783552995338087,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.heart_rate_bpm",
+        "count": 15364,
+        "standardized_rmse": 0.06594055962611688,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.physiology_variability",
+        "count": 15364,
+        "standardized_rmse": 0.11177122884868865,
+        "status": "completed"
+      },
+      {
+        "stream": "physiology",
+        "field": "physiology.individual_baseline",
+        "count": 15364,
+        "standardized_rmse": 0.07856262602037924,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.speed_mps",
+        "count": 76785,
+        "standardized_rmse": 1.5582144427472655,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.altitude_m",
+        "count": 76785,
+        "standardized_rmse": 0.9263009613168468,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.vertical_speed_mps",
+        "count": 76785,
+        "standardized_rmse": 0.6810250101388281,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rad",
+        "count": 76785,
+        "standardized_rmse": 1.82781858001766,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rad",
+        "count": 76785,
+        "standardized_rmse": 3.121239953520876,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rad",
+        "count": 76785,
+        "standardized_rmse": 2.7663719326488545,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.roll_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.1260134602202039,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.pitch_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.2433085133816137,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.yaw_rate_rps",
+        "count": 76785,
+        "standardized_rmse": 1.402840827275781,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.longitudinal_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.355630841005966,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.lateral_acc_mps2",
+        "count": 76785,
+        "standardized_rmse": 1.9590618712285615,
+        "status": "completed"
+      },
+      {
+        "stream": "vehicle",
+        "field": "vehicle.normal_load_g",
+        "count": 76785,
+        "standardized_rmse": 0.7476491756035818,
+        "status": "completed"
+      }
+    ],
+    "physical_components": [
+      {
+        "component": "vehicle_rigid_body_translation",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.021799273745021292
+      },
+      {
+        "component": "vehicle_rigid_body_vertical",
+        "count": 76529,
+        "mean_normalized_huber_residual": 0.01681740036674724
+      },
+      {
+        "component": "vehicle_rigid_body_rotation",
+        "count": 229587,
+        "mean_normalized_huber_residual": 0.01627367461866001
+      }
+    ],
+    "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+    "label_used": false,
+    "elapsed_s": 4.058848996181041
+  }
+]

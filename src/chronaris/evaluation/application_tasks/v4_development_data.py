@@ -30,7 +30,8 @@ def v4_workflow_source_sha256():
     return digest.hexdigest()
 
 
-def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fold_index=0):
+def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fold_index=0,
+                            simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development"):
     if fold_index < 0 or fold_index >= ({"simulation": 1, "dingxin": 2}.get(domain, 3)):
         raise ValueError("invalid development fold index")
     simulation = None
@@ -53,7 +54,7 @@ def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fo
         if smoke:
             fold = replace(fold, fold_id=fold.fold_id + "__engineering_smoke")
     elif domain == "simulation":
-        data, fold = load_v4_simulation_development(simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development",
+        data, fold = load_v4_simulation_development(simulation_root=simulation_root,
             registry_path="docs/requirements/thesis-v4-simulation-manifest.json")
         if smoke:
             fold = replace(fold, fold_id=fold.fold_id + "__engineering_smoke",
@@ -64,6 +65,8 @@ def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fo
             sample_manifest_rows=tuple(next(row for row in data.sample_manifest_rows if row["sample_id"] == sample) for sample in selected))
         provider, schema = lambda ids: select_observation_batch(simulation.batch, ids), data.schema
         hierarchy, digest = simulation_sampling_hierarchy(data, fold), sha256_file("docs/requirements/thesis-v4-simulation-manifest.json")
+        if "__training512" in fold.fold_id:
+            digest = hashlib.sha256((digest + sha256_file(Path(simulation_root) / "v4_generation_audit.json")).encode()).hexdigest()
         targets, definitions = None, SIMULATION_TASKS
     else:
         raise ValueError("unknown v4 development domain")

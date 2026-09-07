@@ -13,12 +13,19 @@ def load_v4_simulation_development(*, simulation_root, registry_path):
     audit = json.loads((root / "v4_generation_audit.json").read_text())
     if audit["registry_sha256"] != sha256_file(registry_path):
         raise ValueError("simulation parameter/context registry changed")
-    if audit["roles"] != {"train": 256, "validation": 64}:
-        raise ValueError("initial simulation size differs from the approved registry")
+    expanded = audit["roles"] == {"train": 512, "validation": 64}
+    if expanded:
+        contract = root / "extension_contract.json"
+        if (not audit.get("activation_completed") or not audit.get("initial_subset_preserved")
+            or audit["extension_contract_sha256"] != sha256_file(contract)
+            or audit["simulation_manifest_sha256"] != sha256_file(root / "simulation_manifest.json")):
+            raise ValueError("expanded simulation activation/manifest changed")
+    elif audit["roles"] != {"train": 256, "validation": 64}:
+        raise ValueError("simulation size differs from the approved registry")
     generated = json.loads((root / "simulation_manifest.json").read_text())
     observed = {row["trajectory_id"]: row for row in generated["scenario_rows"]}
     planned = [row for row in registry["trajectories"]
-               if row["role"] in {"train", "validation"} and row["activation"] == "initial"]
+               if row["role"] in {"train", "validation"} and (row["activation"] == "initial" or (expanded and row["role"] == "train"))]
     if set(observed) != {row["trajectory_id"] for row in planned}:
         raise ValueError("generated simulation trajectories differ from the approved development set")
     samples, rows = [], []
@@ -46,7 +53,7 @@ def load_v4_simulation_development(*, simulation_root, registry_path):
                 "task_valid_mask": {"classification": True, "regression": True, "segmentation": True},
                 "oracle_opened_for_representation": False})
     roles = {role: tuple(ids) for role, ids in role_ids.items()}
-    fold = FoldLineage(fold_id="v4_simulation_g1_development_g2_confirmation", train_sample_ids=roles["train"],
+    fold = FoldLineage(fold_id="v4_simulation_g1_development_g2_confirmation" + ("__training512" if expanded else ""), train_sample_ids=roles["train"],
         validation_sample_ids=roles["validation"], held_out_sample_ids=roles["held_out"])
     data = ApplicationConsumerSmokeData(collate_observation_samples(samples), samples[0].schema, roles, tuple(rows))
     return data, fold

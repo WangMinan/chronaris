@@ -53,7 +53,8 @@ def run_simulation_diagnostic(*, method, output_root, seed=17):
 
 def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_index=0,
                                data_root="artifacts/application_evaluation/2026-09-06_v4-public-development",
-                               registry_path="docs/requirements/thesis-v4-public-subjects.json"):
+                               registry_path="docs/requirements/thesis-v4-public-subjects.json",
+                               simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development"):
     """Diagnose both routes on complete development folds, leaving confirmation sealed."""
     _require_diagnostic_device(seed)
     torch.set_num_threads(1)
@@ -76,7 +77,7 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
         temporary.replace(state_path)
     with _periodic_training_heartbeat(f"diagnostic_{method}", 30., root=root) as progress:
         provider, schema, fold, hierarchy, digest, targets, definitions, data = load_development_inputs(
-            domain, data_root, registry_path, fold_index=fold_index)
+            domain, data_root, registry_path, fold_index=fold_index, simulation_root=simulation_root)
         if state.get("data_manifest_sha256", digest) != digest:
             raise ValueError("learning-curve data changed")
         state.update(data_manifest_sha256=digest, fold=fold.to_dict())
