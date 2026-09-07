@@ -1,0 +1,37 @@
+{
+  "training_source_code_sha256": "f5b8410384ce4e927da06bf188d86543c5c6a8ca44a1fabc822abe708d3df945",
+  "initial_full_suite": {
+    "passed": 549,
+    "failed": 4,
+    "skipped": 8,
+    "elapsed_s": 232.6,
+    "log": "artifacts/application_evaluation/2026-09-07_v4-candidate-components/failed_full_tests.log"
+  },
+  "capture_repair_checks": {
+    "passed": 13,
+    "elapsed_s": 96.69,
+    "log": "/tmp/chronaris-v4-capture-repair-tests.log"
+  },
+  "repaired_full_suite": {
+    "passed": 554,
+    "skipped": 8,
+    "warnings": 334,
+    "elapsed_s": 212.87,
+    "log": "artifacts/application_evaluation/2026-09-07_v4-candidate-components/repaired_full_tests.log"
+  },
+  "pairing_cpu_resume": {
+    "passed": 1,
+    "elapsed_s": 31.15
+  },
+  "pairing_cuda_resume": {
+    "passed": 1,
+    "elapsed_s": 55.03
+  },
+  "candidate_selection_started": false,
+  "formal_confirmation_started": false,
+  "guided_pairing_inheritance": {
+    "passed": 1,
+    "elapsed_s": 7.84,
+    "log": "/tmp/chronaris-v4-pairing-guided-tests.log"
+  }
+}

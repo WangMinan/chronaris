@@ -3,6 +3,7 @@
 The observation recurrence stays sequential. Backward recomputes each chunk and
 copies its gradients before another replay can overwrite CUDA's static storage.
 """
+import gc
 import torch
 from torch import nn
 from torch.nn import functional as F
@@ -65,12 +66,21 @@ class CUDAGraphRecurrence:
         embeddings = F.pad(embeddings, (0, 0, 0, padding))
         deltas, mask = F.pad(deltas, (0, padding)), F.pad(mask, (0, padding))
         if key not in self.graphs:
-            # Capture also supports an enclosing inference_mode/no_grad context.
-            with torch.inference_mode(False), torch.enable_grad():
-                sample = tuple(value.detach().clone().requires_grad_() for value in
-                               (hidden, embeddings[:, :self.chunk_size], deltas[:, :self.chunk_size]))
-                self.graphs[key] = torch.cuda.make_graphed_callables(
-                    _CellChunk(self.cell), (*sample, mask[:, :self.chunk_size].clone()), num_warmup_iters=1)
+            # Old graph/module cycles may release CUDA resources when Python's
+            # collector runs. Drain them before capture and defer GC until it ends.
+            collector_enabled = gc.isenabled()
+            if collector_enabled:
+                gc.collect()
+                gc.disable()
+            try:
+                with torch.inference_mode(False), torch.enable_grad():
+                    sample = tuple(value.detach().clone().requires_grad_() for value in
+                                   (hidden, embeddings[:, :self.chunk_size], deltas[:, :self.chunk_size]))
+                    self.graphs[key] = torch.cuda.make_graphed_callables(
+                        _CellChunk(self.cell), (*sample, mask[:, :self.chunk_size].clone()), num_warmup_iters=1)
+            finally:
+                if collector_enabled:
+                    gc.enable()
         replay = self.graphs[key]
         evolved_rows, updated_rows = [], []
         for start in range(0, embeddings.shape[1], self.chunk_size):

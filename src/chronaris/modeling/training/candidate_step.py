@@ -47,6 +47,8 @@ def pretext_micro_step(
         lag_aware_weight=chronaris_lag_aware_weight,
         explicit_shift_weight=chronaris_explicit_shift_weight,
         event_pair_weight=chronaris_event_pair_weight,
+        continuous_alignment_weight=resolved.continuous_alignment_weight,
+        independent_pair_weight=resolved.independent_pair_weight,
     )
     return output, mechanism_step, augmented, data_wait_s
 

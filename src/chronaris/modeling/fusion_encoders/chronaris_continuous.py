@@ -26,6 +26,7 @@ from chronaris.modeling.fusion_encoders.multiscale_causal import (
     MultiScaleCausalLagFusion,
 )
 from chronaris.modeling.fusion_encoders.safe_lag_fusion import (
+    ATTENTION_KINDS,
     SafeLagAwareFusion,
     SafeLagAwareFusionConfig,
     SafeLagAwareFusionOutput,
@@ -37,6 +38,7 @@ from chronaris.models.alignment.prototype import (
     DualStreamPrototypeOutput,
 )
 from chronaris.models.fusion.causal import compute_vehicle_event_strengths, normalize_visible_event_scores
+from chronaris.models.fusion.window_pairing import IndependentWindowPairing, WindowPairingOutput
 from chronaris.models.fusion.semantic_event import (
     CausalEventFusion,
     CausalEventFusionConfig,
@@ -94,8 +96,12 @@ class ChronarisContinuousEncoderConfig:
     dropout: float = 0.1
     physics_calibration: Mapping[str, object] | None = None
     cuda_graph_recurrence: bool = False
+    attention_kind: str = "legacy_cosine"
+    independent_pairing_enabled: bool = False
 
     def __post_init__(self) -> None:
+        if self.attention_kind not in ATTENTION_KINDS or (self.attention_kind != "legacy_cosine" and self.fusion_kind != "safe_lag"):
+            raise ValueError("revised lag attention requires safe-lag fusion")
         if not self.physiology_feature_names or not self.vehicle_feature_names:
             raise ValueError("Chronaris feature names must be non-empty")
         if len(set(self.physiology_feature_names)) != len(
@@ -191,6 +197,8 @@ class ChronarisContinuousEncoderConfig:
             "max_ode_step_s": self.max_ode_step_s,
             "semantic_event_enabled": self.semantic_event_enabled,
             "learnable_semantic_queries": self.learnable_semantic_queries,
+            "attention_kind": self.attention_kind,
+            "independent_pairing_enabled": self.independent_pairing_enabled,
         }
 
     def to_checkpoint_dict(self) -> Mapping[str, object]:
@@ -224,6 +232,7 @@ class ChronarisContinuousEncoding:
     semantic_event_output: SemanticEventTensorOutput | None
     aggregated_lag_attention: torch.Tensor
     mechanism_diagnostics: Mapping[str, object]
+    independent_pairing: WindowPairingOutput | None = None
 
 
 class ChronarisContinuousFusionEncoder(nn.Module):
@@ -240,6 +249,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
         if config.fusion_kind == "safe_lag":
             self.causal_fusion = SafeLagAwareFusion(
                 SafeLagAwareFusionConfig(
+                    attention_kind=config.attention_kind,
                     hidden_dim=config.hidden_dim,
                     output_dim=FUSION_OUTPUT_DIM,
                     lag_ranges_s=config.lag_ranges_s,
@@ -274,6 +284,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             else None
         )
         self.output_dropout = nn.Dropout(config.dropout)
+        self.independent_pairing = IndependentWindowPairing(config.hidden_dim) if config.independent_pairing_enabled else None
 
     def forward(
         self,
@@ -381,6 +392,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                     list(semantic_output.query_names) if semantic_output is not None else []
                 ),
             },
+            independent_pairing=self.independent_pairing(alignment, batch.context_durations_s) if self.independent_pairing is not None else None,
         )
 
 

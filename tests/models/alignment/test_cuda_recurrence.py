@@ -1,10 +1,38 @@
 from copy import deepcopy
+import gc
 
 import pytest
 import torch
 
 from chronaris.models.alignment.cuda_recurrence import CUDAGraphRecurrence, _CellChunk
 from chronaris.models.alignment.ode_cells import ODERNNCell
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA graph requires CUDA")
+def test_capture_defers_python_collection_and_restores_it_on_setup_failure(monkeypatch):
+    forward = _CellChunk.forward
+    captured = []
+    def guarded(self, *args):
+        if torch.cuda.is_current_stream_capturing():
+            captured.append(True)
+            assert not gc.isenabled(), "CUDA-resource finalizers must not run inside capture"
+        return forward(self, *args)
+    monkeypatch.setattr(_CellChunk, "forward", guarded)
+    state = gc.isenabled()
+    cell = ODERNNCell(8, hidden_dim=8, dynamics_hidden_dim=16, ode_method="euler").cuda()
+    h = torch.zeros(2, 8, device="cuda")
+    x = torch.ones(2, 32, 8, device="cuda")
+    dt = torch.ones(2, 32, device="cuda")
+    mask = torch.ones(2, 32, dtype=torch.bool, device="cuda")
+    CUDAGraphRecurrence(cell)(h, x, dt, mask)
+    assert captured and gc.isenabled() == state
+    def fail(*args, **kwargs):
+        assert not gc.isenabled()
+        raise RuntimeError("capture setup rejected")
+    monkeypatch.setattr(torch.cuda, "make_graphed_callables", fail)
+    with pytest.raises(RuntimeError, match="capture setup rejected"):
+        CUDAGraphRecurrence(cell)(h, x, dt, mask)
+    assert gc.isenabled() == state
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA graph requires CUDA")

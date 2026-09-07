@@ -16,6 +16,7 @@ from chronaris.modeling.training.chronaris_auxiliary import (
 from chronaris.modeling.training.pretext import (
     chronaris_auxiliary_weight_schedule,
     event_pair_contrastive_loss_term,
+    independent_window_pair_loss_term,
     explicit_time_shift_loss_term,
     pretext_loss_terms_to_rows,
 )
@@ -51,6 +52,8 @@ def build_candidate_mechanism_step(
     explicit_shift_weight: float,
     event_pair_weight: float,
     optimizer_updates: int | None = None,
+    continuous_alignment_weight: float = 0.2,
+    independent_pair_weight: float = 0.0,
 ) -> CandidateMechanismStep:
     zero = positive.sequence_embedding.sum() * 0.0
     additional_loss = zero
@@ -61,7 +64,8 @@ def build_candidate_mechanism_step(
         else min(max((optimizer_updates - 50) / 150.0, 0.0), 1.0)
     )
     if mechanism_enabled:
-        weights = chronaris_auxiliary_weight_schedule(epoch, optimizer_updates=optimizer_updates)
+        weights = chronaris_auxiliary_weight_schedule(epoch, optimizer_updates=optimizer_updates,
+            continuous_alignment_weight=continuous_alignment_weight)
         mechanism = build_chronaris_auxiliary_losses(
             positive,
             negative,
@@ -145,6 +149,20 @@ def build_candidate_mechanism_step(
             additional_loss = additional_loss + term.weighted_loss
         rows.extend(pretext_loss_terms_to_rows((term,)))
         metrics[term.term_name] = pair_metrics
+    if independent_pair_weight > 0:
+        pairing = positive.auxiliary.get("independent_pairing")
+        if pairing is None:
+            raise RepresentationContractError("independent pair loss requires separate modality histories")
+        if warmup_fraction > 0:
+            term, pair_metrics = independent_window_pair_loss_term(pairing, group_ids, weight=independent_pair_weight * warmup_fraction)
+            if term.weighted_loss is not None:
+                additional_loss = additional_loss + term.weighted_loss
+            rows.extend(pretext_loss_terms_to_rows((term,)))
+            metrics[term.term_name] = pair_metrics
+        else:
+            rows.append({"term_name": "independent_window_pairing", "weight": 0., "count": 0,
+                "status": "scheduled_zero", "raw_loss": None, "weighted_loss": None,
+                "reason": "mechanisms_disabled_first_50_updates"})
     return CandidateMechanismStep(
         additional_loss=additional_loss,
         rows=tuple(rows),
@@ -168,6 +186,8 @@ def evaluate_candidate_mechanisms(
     lag_aware_weight,
     explicit_shift_weight,
     event_pair_weight,
+    continuous_alignment_weight=0.2,
+    independent_pair_weight=0.0,
 ) -> Mapping[str, object]:
     if not any(
         (
@@ -175,6 +195,7 @@ def evaluate_candidate_mechanisms(
             lag_aware_weight > 0,
             shift_head is not None,
             event_pair_weight > 0,
+            independent_pair_weight > 0,
         )
     ):
         return {"weighted_total": 0.0, "terms": []}
@@ -188,7 +209,7 @@ def evaluate_candidate_mechanisms(
             sample_ids,
             batch_size,
         )
-        if event_pair_weight > 0
+        if event_pair_weight > 0 or independent_pair_weight > 0
         else _batch_ids(sample_ids, batch_size)
     )
     totals: dict[str, dict[str, object]] = {}
@@ -200,6 +221,7 @@ def evaluate_candidate_mechanisms(
         "recall_at_1": 0.0,
         "valid_pair_count": 0,
     }
+    independent_sums = dict(pair_sums, negative_pair_count=0)
     with torch.inference_mode():
         for ids in batches:
             raw = _load_batch(batch, batch_provider, ids)
@@ -226,7 +248,7 @@ def evaluate_candidate_mechanisms(
                     move_observation_batch(lag_inputs.negative_batch, device=device),
                     compute_chronaris_diagnostics=True,
                 )
-                weights = chronaris_auxiliary_weight_schedule(5)
+                weights = chronaris_auxiliary_weight_schedule(5, continuous_alignment_weight=continuous_alignment_weight)
                 mechanism = build_chronaris_auxiliary_losses(
                     positive,
                     negative,
@@ -294,6 +316,16 @@ def evaluate_candidate_mechanisms(
                     ):
                         pair_sums[name] += float(metrics[name]) * count
                     pair_sums["valid_pair_count"] += count
+            if independent_pair_weight > 0:
+                term, metrics = independent_window_pair_loss_term(positive.auxiliary["independent_pairing"],
+                    raw.group_ids, weight=independent_pair_weight)
+                _accumulate_row(totals, pretext_loss_terms_to_rows((term,))[0])
+                count = metrics["valid_pair_count"]
+                if count:
+                    for name in ("positive_similarity", "negative_similarity", "recall_at_1"):
+                        independent_sums[name] += metrics[name] * count
+                    independent_sums["valid_pair_count"] += count
+                    independent_sums["negative_pair_count"] += metrics["negative_pair_count"]
     terms = _finalize_rows(totals)
     pair_count = int(pair_sums["valid_pair_count"])
     return {
@@ -314,6 +346,10 @@ def evaluate_candidate_mechanisms(
             pair_sums["recall_at_1"] / pair_count if pair_count else None
         ),
         "event_pair_count": pair_count,
+        "independent_pairing": {"valid_pair_count": independent_sums["valid_pair_count"],
+            "negative_pair_count": independent_sums["negative_pair_count"], "actual_batch_size": batch_size,
+            "negative_pool": "actual_forward_batch", **{name: independent_sums[name] / independent_sums["valid_pair_count"]
+                if independent_sums["valid_pair_count"] else None for name in ("positive_similarity", "negative_similarity", "recall_at_1")}},
     }
 
 

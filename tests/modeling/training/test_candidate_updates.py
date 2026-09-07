@@ -15,12 +15,16 @@ from chronaris.representation.contracts import RepresentationContractError
 from tests.modeling.training.test_candidate_screen import _sample
 
 
-@pytest.mark.parametrize("device,method", [("cpu", "physiology_only"), ("cuda", "physiology_only"), ("cuda", "chronaris")])
-def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method):
+@pytest.mark.parametrize("device,method,attention_kind", [
+    ("cpu", "physiology_only", "legacy_cosine"), ("cuda", "physiology_only", "legacy_cosine"),
+    ("cuda", "chronaris", "legacy_cosine"), ("cpu", "chronaris", "cosine_temperature"),
+    ("cpu", "chronaris", "projected_dot_product"), ("cuda", "chronaris", "cosine_temperature"),
+    ("cuda", "chronaris", "projected_dot_product")])
+def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method, attention_kind):
     if device == "cuda" and not torch.cuda.is_available():
         pytest.skip("CUDA unavailable")
     samples = [_sample(f"sample_{i}", i) for i in range(9)]
-    if method == "chronaris":
+    if method == "chronaris" and device == "cuda":
         samples = [replace(sample, physiology_values=np.linspace(i, i + 3, 513, dtype=np.float32)[:, None],
             physiology_timestamps_s=np.linspace(0., 20., 513), physiology_feature_mask=np.ones((513, 1), dtype=bool))
             for i, sample in enumerate(samples)]
@@ -31,11 +35,12 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
         held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids)
     config = screen.CandidateScreenConfig(max_updates=5, batch_size=2, effective_batch_size=6,
         validation_interval=3, checkpoint_interval=2, seed=17, device=device, early_stopping=False,
-        cuda_graph_recurrence=method == "chronaris", retained_updates=(3,))
+        cuda_graph_recurrence=method == "chronaris", retained_updates=(3,), attention_kind=attention_kind)
     arguments = dict(method_name=method, candidate=EncoderCandidateConfig(
         candidate_id="D", hidden_dim=32, dropout=.2), batch=batch, fold=fold,
         physiology_feature_names=("physiology.a",), vehicle_feature_names=("vehicle.a",),
-        vehicle_field_labels=(), normalizer=normalizer, config=config)
+        vehicle_field_labels=(), normalizer=normalizer, config=config,
+        chronaris_fusion_kind="safe_lag" if attention_kind != "legacy_cosine" else "multiscale")
     complete = screen.train_pretext_candidate(output_root=tmp_path / "continuous", **arguments)
     original = screen.pretext_micro_step
     calls = 0
@@ -70,7 +75,9 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     snapshot = tmp_path / f"resumed/{method}/D/update_000003.pt"
     with pytest.raises(RepresentationContractError, match="incomplete"):
         load_common_pretraining_checkpoint(snapshot)
-    _, _, _, snapshot_payload = load_common_pretraining_checkpoint(snapshot, allow_diagnostic_snapshot=True)
+    restored_encoder, _, _, snapshot_payload = load_common_pretraining_checkpoint(snapshot, allow_diagnostic_snapshot=True)
+    if method == "chronaris":
+        assert restored_encoder.backbone.config.attention_kind == attention_kind
     assert snapshot_payload["optimizer_updates"] == 3
     assert snapshot_payload["development_snapshot"]["allowed_export_roles"] == ["train", "validation"]
     heartbeat = json.loads((tmp_path / f"resumed/{method}/D/progress.json").read_text())

@@ -5,6 +5,7 @@ import copy
 from dataclasses import replace
 
 import numpy as np
+import pytest
 import torch
 
 from chronaris.modeling.fusion_encoders import (
@@ -147,7 +148,8 @@ def test_max_ode_step_is_checkpointed_without_changing_default() -> None:
     ) == stepped
 
 
-def test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal() -> None:
+@pytest.mark.parametrize("attention_kind", ["legacy_cosine", "cosine_temperature", "projected_dot_product"])
+def test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal(attention_kind) -> None:
     torch.manual_seed(37)
     batch = collate_observation_samples([_sample("train"), _sample("test")])
     changed = collate_observation_samples([_sample("test", future_scale=1000.0)])
@@ -156,6 +158,7 @@ def test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal
             physiology_feature_names=PHYSIOLOGY_NAMES,
             vehicle_feature_names=VEHICLE_NAMES,
             fusion_kind="safe_lag",
+            attention_kind=attention_kind,
             dropout=0.0,
         )
     )
@@ -164,6 +167,7 @@ def test_learnable_semantic_queries_only_modify_safe_cross_branch_and_are_causal
             physiology_feature_names=PHYSIOLOGY_NAMES,
             vehicle_feature_names=VEHICLE_NAMES,
             fusion_kind="safe_lag",
+            attention_kind=attention_kind,
             semantic_event_enabled=True,
             learnable_semantic_queries=True,
             dropout=0.0,

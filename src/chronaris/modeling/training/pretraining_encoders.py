@@ -126,6 +126,7 @@ class TrainableFusionEncoder(nn.Module):
                 "semantic_event_output": encoded.semantic_event_output,
                 "aggregated_lag_attention": encoded.aggregated_lag_attention,
                 "mechanism_diagnostics": encoded.mechanism_diagnostics,
+                "independent_pairing": encoded.independent_pairing,
             }
         if sequence.shape[-1] != FUSION_OUTPUT_DIM:
             raise ValueError("pretraining encoder violated 64-dimensional contract")
@@ -173,7 +174,13 @@ def build_trainable_fusion_encoder(
     chronaris_physics_calibration: Mapping[str, object] | None = None,
     chronaris_physics_weight: float = 0.1,
     chronaris_cuda_graph_recurrence: bool = False,
+    chronaris_attention_kind: str = "legacy_cosine",
+    chronaris_independent_pairing_enabled: bool = False,
 ) -> TrainableFusionEncoder:
+    if method_name != "chronaris" and chronaris_attention_kind != "legacy_cosine":
+        raise ValueError("revised lag attention is a Chronaris-only candidate")
+    if method_name != "chronaris" and chronaris_independent_pairing_enabled:
+        raise ValueError("independent history pairing requires the Chronaris dual-stream backbone")
     candidate = candidate_config or ENCODER_SCREEN_CANDIDATES[0]
     if method_name == "physiology_only":
         backbone = ContinuousTimeSingleStreamEncoder(
@@ -227,6 +234,8 @@ def build_trainable_fusion_encoder(
                 physics_calibration=chronaris_physics_calibration,
                 physics_weight=chronaris_physics_weight,
                 cuda_graph_recurrence=chronaris_cuda_graph_recurrence,
+                attention_kind=chronaris_attention_kind,
+                independent_pairing_enabled=chronaris_independent_pairing_enabled,
                 hidden_dim=candidate.hidden_dim,
                 embedding_dim=candidate.hidden_dim,
                 encoder_hidden_dim=candidate.hidden_dim,

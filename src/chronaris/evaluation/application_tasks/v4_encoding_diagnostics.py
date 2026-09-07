@@ -58,6 +58,10 @@ def collect_encoding_diagnostics(*, encoder, normalizer, batch, batch_size=4):
                         raise ValueError("valid observation decoder output is non-finite")
                     squared_errors[(stream, name)].extend(residual.square().cpu().tolist())
             fusion = output.auxiliary["fusion_output"]
+            pairing = output.auxiliary.get("independent_pairing")
+            if pairing is not None:
+                for stream in ("physiology", "vehicle"):
+                    append(stream + "_independent_pair_norm", getattr(pairing, stream)[getattr(pairing, stream + "_valid")].norm(dim=-1))
             for index, attention in enumerate(fusion.attention_weights):
                 mask = fusion.lag_masks[index]
                 available = mask.any(dim=-1)
@@ -88,5 +92,10 @@ def collect_encoding_diagnostics(*, encoder, normalizer, batch, batch_size=4):
         "physical_components": [{"component": name, "count": sum(count for _, count in rows),
             "mean_normalized_huber_residual": sum(value * count for value, count in rows) / sum(count for _, count in rows)}
             for name, rows in physical.items()],
-        "event_pairing": "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
+        "attention_kind": encoder.backbone.config.attention_kind,
+        "attention_temperature": float(torch.as_tensor(encoder.backbone.causal_fusion.effective_attention_temperature).detach())
+            if hasattr(encoder.backbone.causal_fusion, "effective_attention_temperature") else None,
+        "independent_pairing_enabled": encoder.backbone.config.independent_pairing_enabled,
+        "event_pairing": "independent_native_history_windows" if encoder.backbone.config.independent_pairing_enabled
+            else "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
         "label_used": False, "elapsed_s": time.perf_counter() - started}

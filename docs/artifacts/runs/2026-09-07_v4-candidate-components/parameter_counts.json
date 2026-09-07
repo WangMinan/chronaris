@@ -1,0 +1,38 @@
+[
+  {
+    "configuration": "reference",
+    "hidden_dim": 32,
+    "encoder_parameters": 31127,
+    "output_dim": 64
+  },
+  {
+    "configuration": "cosine_temperature",
+    "hidden_dim": 32,
+    "encoder_parameters": 31128,
+    "output_dim": 64
+  },
+  {
+    "configuration": "projected_attention",
+    "hidden_dim": 32,
+    "encoder_parameters": 34295,
+    "output_dim": 64
+  },
+  {
+    "configuration": "no_same_time_alignment",
+    "hidden_dim": 32,
+    "encoder_parameters": 31127,
+    "output_dim": 64
+  },
+  {
+    "configuration": "independent_pairing",
+    "hidden_dim": 32,
+    "encoder_parameters": 39383,
+    "output_dim": 64
+  },
+  {
+    "configuration": "capacity64",
+    "hidden_dim": 64,
+    "encoder_parameters": 111319,
+    "output_dim": 64
+  }
+]

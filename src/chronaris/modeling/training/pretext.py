@@ -306,14 +306,56 @@ def event_pair_contrastive_loss_term(
     }
 
 
+def independent_window_pair_loss_term(pairing, group_ids, *, weight):
+    """Symmetric window pairing against all valid other groups in the actual batch."""
+    physiology, vehicle = pairing.physiology, pairing.vehicle
+    size = len(physiology)
+    if physiology.shape != vehicle.shape or physiology.ndim != 2 or physiology.shape[1] != 32 or len(group_ids) != size:
+        raise ValueError("independent pairing vectors/groups have inconsistent dimensions")
+    if not 0 <= weight < float("inf"):
+        raise ValueError("independent pairing weight must be finite and non-negative")
+    valid = pairing.physiology_valid & pairing.vehicle_valid
+    if valid.shape != (size,) or valid.dtype != torch.bool:
+        raise ValueError("independent pairing requires explicit window masks")
+    if not torch.isfinite(physiology[valid]).all() or not torch.isfinite(vehicle[valid]).all():
+        raise ValueError("valid independent pairing vectors must be finite")
+    groups = tuple(str(value) for value in group_ids)
+    if not all(groups):
+        raise ValueError("independent pairing requires nonempty group identifiers")
+    different = torch.tensor([[a != b for b in groups] for a in groups], dtype=torch.bool, device=physiology.device)
+    negatives = different & valid[:, None] & valid[None, :]
+    active = negatives.any(dim=1)
+    count = int(active.sum())
+    metrics = {"valid_pair_count": count, "negative_pair_count": int(negatives.sum()), "actual_batch_size": size,
+               "positive_similarity": None, "negative_similarity": None, "recall_at_1": None}
+    if not count:
+        return PretextLossTerm("independent_window_pairing", float(weight), "unavailable", 0, None, None,
+                               "no_valid_cross_group_negative"), metrics
+    physiology = F.normalize(physiology.masked_fill(~valid[:, None], 0), dim=-1, eps=1e-12)
+    vehicle = F.normalize(vehicle.masked_fill(~valid[:, None], 0), dim=-1, eps=1e-12)
+    similarity = physiology @ vehicle.T
+    allowed = negatives | torch.eye(size, dtype=torch.bool, device=physiology.device)
+    forward = (similarity / .1).masked_fill(~allowed, -torch.inf)[active]
+    reverse = (similarity.T / .1).masked_fill(~allowed, -torch.inf)[active]
+    labels = torch.arange(size, device=physiology.device)[active]
+    loss = (F.cross_entropy(forward, labels) + F.cross_entropy(reverse, labels)) / 2
+    metrics.update(positive_similarity=float(similarity.diag()[active].mean().detach()),
+        negative_similarity=float(similarity[negatives].mean().detach()),
+        recall_at_1=float(((forward.argmax(-1) == labels).float().mean() + (reverse.argmax(-1) == labels).float().mean()).detach() / 2))
+    return PretextLossTerm("independent_window_pairing", float(weight), "active" if weight else "disabled",
+                           count, loss, loss * weight, None), metrics
+
+
 def chronaris_auxiliary_weight_schedule(
     epoch: int,
-    *, optimizer_updates: int | None = None,
+    *, optimizer_updates: int | None = None, continuous_alignment_weight: float = 0.2,
 ) -> ChronarisAuxiliaryWeights:
     """Linearly warm mechanism losses from epoch one through epoch five."""
 
     if epoch <= 0:
         raise ValueError("training epoch must be one-based and positive")
+    if not 0 <= continuous_alignment_weight < float("inf"):
+        raise ValueError("continuous alignment weight must be finite and non-negative")
     if optimizer_updates is not None and optimizer_updates < 0:
         raise ValueError("completed optimizer updates must be non-negative")
     fraction = (
@@ -321,7 +363,7 @@ def chronaris_auxiliary_weight_schedule(
         else min(max((optimizer_updates - 50) / 150.0, 0.0), 1.0)
     )
     return ChronarisAuxiliaryWeights(
-        continuous_alignment=0.2 * fraction,
+        continuous_alignment=continuous_alignment_weight * fraction,
         physical_consistency=0.1 * fraction,
         causal_direction=0.1 * fraction,
     )

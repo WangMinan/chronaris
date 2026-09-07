@@ -38,6 +38,8 @@ from chronaris.modeling.fusion_encoders.multiscale_causal import (
     build_seconds_lag_mask,
 )
 
+ATTENTION_KINDS = ("legacy_cosine", "cosine_temperature", "projected_dot_product")
+
 
 @dataclass(frozen=True, slots=True)
 class SafeLagAwareFusionConfig:
@@ -56,6 +58,7 @@ class SafeLagAwareFusionConfig:
     use_scale_gate: bool = True
     use_private_bypass: bool = True
     attention_temperature: float = 1.0
+    attention_kind: str = "legacy_cosine"
     boundary_epsilon_s: float = 1e-6
     # A large negative bias makes the sigmoid gate start near 0 (safe fallback).
     cross_gate_init_bias: float = -4.0
@@ -82,8 +85,14 @@ class SafeLagAwareFusionConfig:
             if previous_upper is not None and abs(lower - previous_upper) > 1e-9:
                 raise ValueError("lag ranges must be contiguous and ordered")
             previous_upper = upper
-        if self.attention_temperature <= 0:
+        if not math.isfinite(self.attention_temperature) or self.attention_temperature <= 0:
             raise ValueError("attention_temperature must be positive")
+        if self.attention_kind not in ATTENTION_KINDS:
+            raise ValueError("unsupported lag attention kind")
+        if self.attention_kind == "cosine_temperature" and not .05 < self.attention_temperature < 2.:
+            raise ValueError("learnable temperature initialization must be inside (0.05,2)")
+        if self.attention_kind == "projected_dot_product" and self.attention_temperature != 1.:
+            raise ValueError("projected attention uses standard square-root scaling only")
         if self.boundary_epsilon_s < 0:
             raise ValueError("boundary_epsilon_s must be non-negative")
         if not self.use_scale_gate and len(self.lag_ranges_s) != 1:
@@ -149,15 +158,35 @@ class SafeLagAwareFusion(nn.Module):
         self.cross_gate = nn.Linear(gate_input_dim, 1)
         with torch.no_grad():
             self.cross_gate.bias.fill_(self.config.cross_gate_init_bias)
+        if self.config.attention_kind == "cosine_temperature":
+            initial = self.config.attention_temperature
+            self.temperature_logit = nn.Parameter(torch.tensor(math.log((initial - .05) / (2. - initial))))
+        elif self.config.attention_kind == "projected_dot_product":
+            self.query_projection = nn.Linear(hidden, hidden)
+            self.key_projection = nn.Linear(hidden, hidden)
+            self.value_projection = nn.Linear(hidden, hidden)
+
+    @property
+    def effective_attention_temperature(self):
+        if self.config.attention_kind == "cosine_temperature":
+            return .05 + 1.95 * self.temperature_logit.sigmoid()
+        return self.config.attention_temperature
 
     def forward(self, inputs: MultiScaleCausalFusionInput) -> SafeLagAwareFusionOutput:
         _validate_inputs(inputs, hidden_dim=self.config.hidden_dim)
-        query_states = F.normalize(inputs.physiology_states, dim=-1, eps=1e-12)
-        key_states = F.normalize(inputs.vehicle_states, dim=-1, eps=1e-12)
-        scores = torch.matmul(query_states, key_states.transpose(-1, -2))
-        scores = scores / (
-            math.sqrt(self.config.hidden_dim) * self.config.attention_temperature
-        )
+        value_states = inputs.vehicle_states
+        if self.config.attention_kind == "projected_dot_product":
+            query_states = self.query_projection(inputs.physiology_states)
+            key_states = self.key_projection(inputs.vehicle_states)
+            value_states = self.value_projection(inputs.vehicle_states)
+            scale = math.sqrt(self.config.hidden_dim)
+        else:
+            query_states = F.normalize(inputs.physiology_states, dim=-1, eps=1e-12)
+            key_states = F.normalize(inputs.vehicle_states, dim=-1, eps=1e-12)
+            scale = self.effective_attention_temperature
+            if self.config.attention_kind == "legacy_cosine":
+                scale *= math.sqrt(self.config.hidden_dim)
+        scores = torch.matmul(query_states, key_states.transpose(-1, -2)) / scale
 
         lag_masks = tuple(
             build_seconds_lag_mask(
@@ -178,7 +207,7 @@ class SafeLagAwareFusion(nn.Module):
         )
         scale_contexts = torch.stack(
             tuple(
-                torch.matmul(weights, inputs.vehicle_states)
+                torch.matmul(weights, value_states)
                 for weights in attention_weights
             ),
             dim=2,
