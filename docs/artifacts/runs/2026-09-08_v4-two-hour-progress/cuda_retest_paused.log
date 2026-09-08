@@ -1,0 +1,254 @@
+........................................................................ [ 12%]
+..........F............................................................. [ 24%]
+........................................................................ [ 36%]
+........................................................................ [ 48%]
+........................................................................ [ 61%]
+..ss.................................................................... [ 73%]
+........................................................................ [ 85%]
+..................................................s........s...s..sss... [ 97%]
+.............                                                            [100%]
+=================================== FAILURES ===================================
+______ test_fixed_snapshot_plan_matches_committed_feature_export_contract ______
+
+    def test_fixed_snapshot_plan_matches_committed_feature_export_contract() -> None:
+>       plans = build_fixed_snapshot_plan(
+            e_run_manifest_path=(
+                "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json"
+            ),
+            f_run_manifest_path=(
+                "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+            ),
+        )
+
+tests/evaluation/application_tasks/test_snapshot_plan.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/chronaris/evaluation/application_tasks/fixed_data_snapshot_plan.py:31: in build_fixed_snapshot_plan
+    records = load_aligned_private_records(
+src/chronaris/evaluation/dingxin/pipelines/benchmark_data.py:71: in load_aligned_private_records
+    e_run = load_feature_export_feature_run(e_run_manifest_path)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/chronaris/feature_export/bundle.py:85: in load_feature_export_feature_run
+    _load_view(
+src/chronaris/feature_export/bundle.py:141: in _load_view
+    bundle = np.load(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+file = PosixPath('docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz')
+mmap_mode = None, allow_pickle = False, fix_imports = True, encoding = 'ASCII'
+max_header_size = 10000
+
+    @set_module('numpy')
+    def load(file, mmap_mode=None, allow_pickle=False, fix_imports=True,
+             encoding='ASCII', *, max_header_size=format._MAX_HEADER_SIZE):
+        """
+        Load arrays or pickled objects from ``.npy``, ``.npz`` or pickled files.
+    
+        .. warning:: Loading files that contain object arrays uses the ``pickle``
+                     module, which is not secure against erroneous or maliciously
+                     constructed data. Consider passing ``allow_pickle=False`` to
+                     load data that is known not to contain object arrays for the
+                     safer handling of untrusted sources.
+    
+        Parameters
+        ----------
+        file : file-like object, string, or pathlib.Path
+            The file to read. File-like objects must support the
+            ``seek()`` and ``read()`` methods and must always
+            be opened in binary mode.  Pickled files require that the
+            file-like object support the ``readline()`` method as well.
+        mmap_mode : {None, 'r+', 'r', 'w+', 'c'}, optional
+            If not None, then memory-map the file, using the given mode (see
+            `numpy.memmap` for a detailed description of the modes).  A
+            memory-mapped array is kept on disk. However, it can be accessed
+            and sliced like any ndarray.  Memory mapping is especially useful
+            for accessing small fragments of large files without reading the
+            entire file into memory.
+        allow_pickle : bool, optional
+            Allow loading pickled object arrays stored in npy files. Reasons for
+            disallowing pickles include security, as loading pickled data can
+            execute arbitrary code. If pickles are disallowed, loading object
+            arrays will fail. Default: False
+        fix_imports : bool, optional
+            Only useful when loading Python 2 generated pickled files on Python 3,
+            which includes npy/npz files containing object arrays. If `fix_imports`
+            is True, pickle will try to map the old Python 2 names to the new names
+            used in Python 3.
+        encoding : str, optional
+            What encoding to use when reading Python 2 strings. Only useful when
+            loading Python 2 generated pickled files in Python 3, which includes
+            npy/npz files containing object arrays. Values other than 'latin1',
+            'ASCII', and 'bytes' are not allowed, as they can corrupt numerical
+            data. Default: 'ASCII'
+        max_header_size : int, optional
+            Maximum allowed size of the header.  Large headers may not be safe
+            to load securely and thus require explicitly passing a larger value.
+            See :py:func:`ast.literal_eval()` for details.
+            This option is ignored when `allow_pickle` is passed.  In that case
+            the file is by definition trusted and the limit is unnecessary.
+    
+        Returns
+        -------
+        result : array, tuple, dict, etc.
+            Data stored in the file. For ``.npz`` files, the returned instance
+            of NpzFile class must be closed to avoid leaking file descriptors.
+    
+        Raises
+        ------
+        OSError
+            If the input file does not exist or cannot be read.
+        UnpicklingError
+            If ``allow_pickle=True``, but the file cannot be loaded as a pickle.
+        ValueError
+            The file contains an object array, but ``allow_pickle=False`` given.
+        EOFError
+            When calling ``np.load`` multiple times on the same file handle,
+            if all data has already been read
+    
+        See Also
+        --------
+        save, savez, savez_compressed, loadtxt
+        memmap : Create a memory-map to an array stored in a file on disk.
+        lib.format.open_memmap : Create or load a memory-mapped ``.npy`` file.
+    
+        Notes
+        -----
+        - If the file contains pickle data, then whatever object is stored
+          in the pickle is returned.
+        - If the file is a ``.npy`` file, then a single array is returned.
+        - If the file is a ``.npz`` file, then a dictionary-like object is
+          returned, containing ``{filename: array}`` key-value pairs, one for
+          each file in the archive.
+        - If the file is a ``.npz`` file, the returned value supports the
+          context manager protocol in a similar fashion to the open function::
+    
+            with load('foo.npz') as data:
+                a = data['a']
+    
+          The underlying file descriptor is closed when exiting the 'with'
+          block.
+    
+        Examples
+        --------
+        >>> import numpy as np
+    
+        Store data to disk, and load it again:
+    
+        >>> np.save('/tmp/123', np.array([[1, 2, 3], [4, 5, 6]]))
+        >>> np.load('/tmp/123.npy')
+        array([[1, 2, 3],
+               [4, 5, 6]])
+    
+        Store compressed data to disk, and load it again:
+    
+        >>> a=np.array([[1, 2, 3], [4, 5, 6]])
+        >>> b=np.array([1, 2])
+        >>> np.savez('/tmp/123.npz', a=a, b=b)
+        >>> data = np.load('/tmp/123.npz')
+        >>> data['a']
+        array([[1, 2, 3],
+               [4, 5, 6]])
+        >>> data['b']
+        array([1, 2])
+        >>> data.close()
+    
+        Mem-map the stored array, and then access the second row
+        directly from disk:
+    
+        >>> X = np.load('/tmp/123.npy', mmap_mode='r')
+        >>> X[1, :]
+        memmap([4, 5, 6])
+    
+        """
+        if encoding not in ('ASCII', 'latin1', 'bytes'):
+            # The 'encoding' value for pickle also affects what encoding
+            # the serialized binary data of NumPy arrays is loaded
+            # in. Pickle does not pass on the encoding information to
+            # NumPy. The unpickling code in numpy._core.multiarray is
+            # written to assume that unicode data appearing where binary
+            # should be is in 'latin1'. 'bytes' is also safe, as is 'ASCII'.
+            #
+            # Other encoding values can corrupt binary data, and we
+            # purposefully disallow them. For the same reason, the errors=
+            # argument is not exposed, as values other than 'strict'
+            # result can similarly silently corrupt numerical data.
+            raise ValueError("encoding must be 'ASCII', 'latin1', or 'bytes'")
+    
+        pickle_kwargs = dict(encoding=encoding, fix_imports=fix_imports)
+    
+        with contextlib.ExitStack() as stack:
+            if hasattr(file, 'read'):
+                fid = file
+                own_fid = False
+            else:
+>               fid = stack.enter_context(open(os.fspath(file), "rb"))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               FileNotFoundError: [Errno 2] No such file or directory: 'docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz'
+
+../../env/anaconda3/envs/chronaris/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py:451: FileNotFoundError
+=============================== warnings summary ===============================
+tests/evaluation/application_tasks/test_application_finetuning.py: 1 warning
+tests/evaluation/public_datasets/test_opt.py: 9 warnings
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/metrics/_classification.py:534: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+    warnings.warn(
+
+tests/evaluation/application_tasks/test_application_finetuning.py::test_end_to_end_finetuning_declares_labels_and_resumes
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+    warnings.warn("y_pred contains classes not in y_true")
+
+tests/evaluation/application_tasks/test_v4_diagnostic_run.py: 14 warnings
+  /home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/src/chronaris/evaluation/application_tasks/application_metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    correlation = spearmanr(truth, prediction).statistic
+
+tests/evaluation/dingxin/test_component_ablation.py: 18 warnings
+tests/evaluation/dingxin/test_optimization.py: 84 warnings
+tests/evaluation/public_datasets/test_pipeline.py: 108 warnings
+tests/modeling/test_deep_pipeline.py: 24 warnings
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
+    warnings.warn(
+
+tests/evaluation/dingxin/test_component_ablation.py: 4 warnings
+tests/evaluation/dingxin/test_optimization.py: 10 warnings
+tests/evaluation/public_datasets/test_fusion_ablation.py: 4 warnings
+tests/evaluation/public_datasets/test_opt.py: 25 warnings
+tests/evaluation/public_datasets/test_opt_aggregation.py: 17 warnings
+tests/modeling/test_deep_pipeline.py: 4 warnings
+  /home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/src/chronaris/evaluation/task_metrics.py:57: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    spearman = spearmanr(y_true, y_pred)
+
+tests/evaluation/dingxin/test_thirdparty_comparison.py::StageIPrivateThirdPartyComparisonTest::test_private_thirdparty_smoke_writes_real_vehicle_schema_and_outputs
+tests/evaluation/dingxin/test_thirdparty_comparison.py::StageIPrivateThirdPartyComparisonTest::test_private_thirdparty_smoke_writes_real_vehicle_schema_and_outputs
+  /home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/src/chronaris/evaluation/dingxin/pipelines/thirdparty_comparison.py:2078: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+    axis.boxplot(data, labels=[_display_model_label(label) for label in labels], showfliers=False)
+
+tests/evaluation/public_datasets/test_fusion_ablation.py::StageIPublicFusionAblationTest::test_public_ablation_smoke_writes_context_proxy_evidence
+  /home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/src/chronaris/evaluation/public_datasets/pipelines/fusion_ablation.py:1433: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+    axis.boxplot(data, labels=labels, showfliers=False)
+
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_compose_phase3_closure_rebuilds_local_baseline_reports
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_compose_phase3_closure_rebuilds_local_baseline_reports
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_nasa_attention_pipeline_filters_background_and_keeps_subject_loso
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_nasa_attention_pipeline_filters_background_and_keeps_subject_loso
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_phase3_orchestration_writes_summary_and_reports
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_phase3_orchestration_writes_summary_and_reports
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+    warnings.warn(
+
+tests/evaluation/public_datasets/test_stream_role_fusion.py::StreamRoleFusionTest::test_public_variants_run
+  /home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/tests/evaluation/public_datasets/test_stream_role_fusion.py:80: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+    self.assertGreaterEqual(float(output.route_decision.context_gate.mean()), 0.75)
+
+tests/modeling/training/test_candidate_updates.py::test_update_accumulation_replays_partial_update_and_data_cursor[cuda-chronaris-legacy_cosine-False-False]
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/evaluation/application_tasks/test_snapshot_plan.py::test_fixed_snapshot_plan_matches_committed_feature_export_contract
+1 failed, 580 passed, 8 skipped, 334 warnings in 252.19s (0:04:12)
+........................................................................ [ 12%]
+..........F............................................................. [ 24%]
+........................................................................ [ 36%]
+........................................................................ [ 48%]
+........................................................................ [ 61%]
+..ss..........................................

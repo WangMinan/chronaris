@@ -1,0 +1,61 @@
+{
+  "linked_files": [
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz"
+  ],
+  "restarted": [
+    {
+      "root": "2026-09-08_v4-candidate-pressure",
+      "pid": 68180,
+      "replaces_pid": 5419
+    },
+    {
+      "root": "2026-09-08_v4-development-chain",
+      "pid": 68181,
+      "replaces_pid": 46355
+    },
+    {
+      "root": "2026-09-08_v4-confirmation-chain-v2",
+      "pid": 68182,
+      "replaces_pid": 67540
+    }
+  ],
+  "reason": "Missing ignored reference feature bundles in frozen worktrees; no model/source change",
+  "time_unix_s": 1788872431.358434,
+  "additional_reference_files": [
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "processes": [
+    {
+      "pid": 68180,
+      "state": "T",
+      "process_group": 68180
+    },
+    {
+      "pid": 68181,
+      "state": "T",
+      "process_group": 68181
+    },
+    {
+      "pid": 68182,
+      "state": "T",
+      "process_group": 68182
+    },
+    {
+      "pid": 68196,
+      "state": "T",
+      "process_group": 68180
+    }
+  ],
+  "checked_at_utc": "2026-09-08T13:06:50.433690+00:00"
+}

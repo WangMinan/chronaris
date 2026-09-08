@@ -1,0 +1,9 @@
+{
+  "pid": 67540,
+  "worktree": "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908",
+  "commit": "f9a0aada",
+  "script_sha256": "514a5b29ac8fd8070f2a86b35ca8628536ed09bc413e44d405ec87836a5d6828",
+  "launched_at_unix_s": 1788871961.5806587,
+  "replaces_pid": 62401,
+  "scope": "main_tables_core_ablations_simulation_pressure"
+}

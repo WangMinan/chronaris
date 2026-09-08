@@ -1,0 +1,61 @@
+{
+  "stopped_at_unix_s": 1788872652.581797,
+  "process_groups": [
+    {
+      "pid": 85374,
+      "pgid": 85374,
+      "start_ticks": "239060987",
+      "cmdline": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python artifacts/application_evaluation/2026-09-08_v4-single-factor-development/run_cohort.py ",
+      "status": "already_exited"
+    },
+    {
+      "pid": 5419,
+      "pgid": 5419,
+      "start_ticks": "239801529",
+      "cmdline": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-candidate-pressure/run_queue.py ",
+      "status": "already_exited"
+    },
+    {
+      "pid": 46355,
+      "pgid": 46355,
+      "start_ticks": "241079272",
+      "cmdline": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-development-chain/run_chain.py ",
+      "status": "already_exited"
+    },
+    {
+      "pid": 62401,
+      "pgid": 62401,
+      "start_ticks": "241900811",
+      "cmdline": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-confirmation-chain/run_chain.py",
+      "status": "already_exited"
+    },
+    {
+      "pid": 67540,
+      "pgid": 67540,
+      "start_ticks": "242174565",
+      "cmdline": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-confirmation-chain-v2/run_chain.py",
+      "status": "already_exited"
+    },
+    {
+      "pid": 68180,
+      "pgid": 68180,
+      "start_ticks": "242217970",
+      "cmdline": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-candidate-pressure/run_queue.py",
+      "status": "suspended"
+    },
+    {
+      "pid": 68181,
+      "pgid": 68181,
+      "start_ticks": "242217970",
+      "cmdline": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-development-chain/run_chain.py",
+      "status": "suspended"
+    },
+    {
+      "pid": 68182,
+      "pgid": 68182,
+      "start_ticks": "242217971",
+      "cmdline": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-confirmation-chain-v2/run_chain.py",
+      "status": "suspended"
+    }
+  ]
+}

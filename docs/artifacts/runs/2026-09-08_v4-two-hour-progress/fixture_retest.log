@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_fixed_snapshot_plan_matches_committed_feature_export_contract ______
+
+    def test_fixed_snapshot_plan_matches_committed_feature_export_contract() -> None:
+>       plans = build_fixed_snapshot_plan(
+            e_run_manifest_path=(
+                "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/run_manifest.json"
+            ),
+            f_run_manifest_path=(
+                "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/run_manifest.json"
+            ),
+        )
+
+tests/evaluation/application_tasks/test_snapshot_plan.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/chronaris/evaluation/application_tasks/fixed_data_snapshot_plan.py:31: in build_fixed_snapshot_plan
+    records = load_aligned_private_records(
+src/chronaris/evaluation/dingxin/pipelines/benchmark_data.py:94: in load_aligned_private_records
+    for row in read_jsonl(
+src/chronaris/evaluation/dingxin/pipelines/feature_utils.py:61: in read_jsonl
+    for line in path.read_text(encoding="utf-8").splitlines()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../env/anaconda3/envs/chronaris/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/raw_window_summary.jsonl')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/raw_window_summary.jsonl'
+
+../../env/anaconda3/envs/chronaris/lib/python3.11/pathlib.py:1044: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/evaluation/application_tasks/test_snapshot_plan.py::test_fixed_snapshot_plan_matches_committed_feature_export_contract
+1 failed in 2.02s

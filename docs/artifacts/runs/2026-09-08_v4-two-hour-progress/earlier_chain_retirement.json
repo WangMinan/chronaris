@@ -1,0 +1,7 @@
+{
+  "status": "retired_before_training",
+  "pid": 62401,
+  "retired_at_unix_s": 1788871961.57937,
+  "reason": "Complete core ablations before G2 generation; no formal training had started",
+  "last_state_sha256": "9fbf353eb6333141d551b68a955ce57218d9014a4116a3779e58df45f776fc11"
+}
