@@ -37,6 +37,7 @@ def test_review_merges_initialization_and_runs_each_fold_seed_once(tmp_path,monk
         assert unit['pretraining_updates']==1500
         assert unit['joint_updates']==(500 if 'task_guided' in unit['routes'] else 0)
         assert unit['head_warmup_updates']==(50 if 'task_guided' in unit['routes'] else 0)
+        assert unit['prefetch_cpu_consumers']==(unit['domain']=='simulation' and len(unit['routes'])==2)
         assert unit['fold_index'] in (range(1) if unit['domain']=='simulation' else range(3))
         if unit['candidate_name']=='reference':assert unit['routes']==list(module.ROUTES)
         if unit['candidate_name']=='quality_gate':assert unit['routes']==['self_supervised']
@@ -49,6 +50,7 @@ def test_review_merges_initialization_and_runs_each_fold_seed_once(tmp_path,monk
         assert not calls and not root.exists()
     assert module.run_review_cohort(output_root=root,**kwargs)['status']=='completed'
     assert len(calls)==231
+    assert all(c['prefetch_cpu_consumers']==(c['domain']=='simulation' and len(c['routes'])==2) for c in calls)
     assert module.run_review_cohort(output_root=root,**kwargs)['status']=='completed' and len(calls)==231
     assert json.loads((root/'selection_plan.json').read_text())==plan
     results['selection_plan_sha256']='b'*64

@@ -94,7 +94,8 @@ def _run_development_plan_locked(plan,*,output_root,data_root,registry_path):
         state.update(status='running',current_unit=key);save()
         try:
             result=run_candidate_development(**{k:unit[k] for k in ('domain','method','candidate_name','routes','fold_index','seed','phase')},
-                output_root=root,data_root=data_root,registry_path=registry_path)
+                output_root=root,data_root=data_root,registry_path=registry_path,
+                prefetch_cpu_consumers=unit.get('prefetch_cpu_consumers',False))
             if not result['completed']:raise ValueError('public candidate returned incomplete training/evaluation')
             state['completed_units'].append(key)
         except Exception as error:

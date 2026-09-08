@@ -44,6 +44,7 @@ def build_review_plan(*, screen_root, data_root='artifacts/application_evaluatio
                     for seed in (17,29,43):
                         units.append(dict(domain=domain,method=method,candidate_name=candidate,routes=routes,purposes=purposes,
                             fold_index=fold,seed=seed,phase='review',pretraining_updates=1500,
+                            prefetch_cpu_consumers=domain=='simulation' and len(routes)==2,
                             head_warmup_updates=50 if 'task_guided' in routes else 0,
                             joint_updates=500 if 'task_guided' in routes else 0))
     return seal_development_plan(base | dict(status='ready_for_three_seed_review',selected_candidates=selected,units=units,

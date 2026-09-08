@@ -56,6 +56,62 @@ def rank_development_rows(rows, metadata, *, seeds=(17,)):
     return result
 
 
+def read_public_candidate_unit(*, unit_root, saved, unit, route, source_code_sha256, inputs):
+    """Replay a public unit, preserving subjects and recorded optimizer updates."""
+    domain,method,candidate=(unit[k] for k in ('domain','method','candidate_name'))
+    phase,seed=unit.get('phase','screen'),unit.get('seed',17)
+    if phase not in ('screen','review') or seed not in ((17,) if phase=='screen' else (17,29,43)):
+        raise ValueError('unapproved public development phase or seed')
+    reviewing=phase=='review'
+    update=(1500 if reviewing else 300) if route=='self_supervised' else (500 if reviewing else 200)
+    _,_,fold,_,data_hash,targets,definitions,data=inputs
+    pretraining=saved['self_supervised_training']
+    count=pretraining['optimizer_updates']
+    if (saved['method']!=method or saved['domain']!=domain or saved['phase']!=phase
+        or saved['candidate_options']!=json.loads(json.dumps(candidate_options(method,candidate)))
+        or saved['source_code_sha256']!=source_code_sha256 or saved['data_manifest_sha256']!=data_hash
+        or saved['fold']!=fold.to_dict() or saved['seed']!=seed or saved['confirmation_opened']
+        or type(count) is not int or (not 500<=count<=1500 if reviewing else count!=300)):
+        raise ValueError('public candidate training source, roles or update counts changed')
+    if route=='task_guided':
+        guided=saved['task_guided_training'];joint=guided['joint_updates']
+        if (type(joint) is not int or guided['head_warmup_updates']!=50 or guided['optimizer_updates']!=50+joint
+            or (not 200<=joint<=500 if reviewing else joint!=200)):
+            raise ValueError('public candidate supervised update counts changed')
+    checkpoint=Path(saved[route+'_training']['best_checkpoint_path']);checkpoint_hash=sha256_file(checkpoint)
+    representation_root=unit_root/'representations'/route/str(update)
+    if route=='task_guided':representation_root/=method
+    outputs={role:load_fusion_stream_batch(representation_root/role) for role in ('train','validation')}
+    if any(output.checkpoint_sha256!=checkpoint_hash or output.method_name!=method or output.fold_id!=fold.fold_id
+           or output.sample_ids!=getattr(fold,role+'_sample_ids') for role,output in outputs.items()):
+        raise ValueError('public representations do not use the selected checkpoint')
+    result_path=unit_root/f'{route}_{update}_consumers.json'
+    result=json.loads(result_path.read_text())
+    context=native_consumer_context(domain,data,fold)
+    audit=audit_native_consumer_result(result,outputs=outputs,targets=targets,definitions=definitions,context=context,
+                                      label_used_for_encoder_training=route=='task_guided')
+    if audit['source_code_sha256']!=source_code_sha256:raise ValueError('public consumer source differs from training')
+    if any(row['seed']!=seed or row['role']!='validation' for row in audit['metrics']):
+        raise ValueError('public consumer seed or evaluation role differs from training')
+    files=dict(audit['files']);files.update({str(p):sha256_file(p) for p in (unit_root/'run_state.json',checkpoint,result_path)})
+    groups={context['groups'][sample] for sample in fold.validation_sample_ids}
+    records=[];subjects=[]
+    for expected_domain,task,metric,_ in TASKS:
+        if expected_domain!=domain:continue
+        scores=[row for row in audit['metrics'] if row['consumer']=='linear' and row['task']==task]
+        if (len(scores)!=len(groups) or {r['group_id'] for r in scores}!=groups
+            or any(r['status']!='completed' or r['field']!=0 or not np.isfinite(r[metric]) for r in scores)):
+            raise ValueError('public task does not cover the fixed validation subjects')
+        base=dict(method=method,route=route,candidate=candidate,seed=seed,domain=domain,task=task,
+                  metric=metric,role='validation')
+        records.append(base | dict(value=float(np.mean([row[metric] for row in scores]))))
+        subjects.extend(base | dict(subject=row['group_id'],fold_index=unit.get('fold_index',0),value=float(row[metric])) for row in scores)
+    return dict(task_rows=records,subject_rows=subjects,files=files,
+        metadata=dict(encoder_parameters=pretraining['parameter_count'],training_elapsed_s=pretraining['training_elapsed_s']
+            +(saved['task_guided_training']['training_elapsed_s'] if route=='task_guided' else 0.)),
+        training_updates=dict(pretraining=count,supervised=saved['task_guided_training']['optimizer_updates'] if route=='task_guided' else 0))
+
+
 def collect_public_screen_results(*, output_root, data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
                                   registry_path='docs/requirements/thesis-v4-public-subjects.json'):
     root=Path(output_root);plan_path=root/'selection_plan.json'
@@ -90,42 +146,11 @@ def collect_public_screen_results(*, output_root, data_root='artifacts/applicati
                 (failed if key in state['failed_units'] else pending).append(identity)
                 continue
             if domain not in inputs:inputs[domain]=load_development_inputs(domain,data_root,registry_path,fold_index=0)
-            _,_,fold,_,data_hash,targets,definitions,data=inputs[domain]
-            if (saved['method']!=method or saved['domain']!=domain or saved['phase']!='screen'
-                or saved['candidate_options']!=json.loads(json.dumps(candidate_options(method,candidate)))
-                or saved['source_code_sha256']!=plan['source_code_sha256'] or saved['data_manifest_sha256']!=data_hash
-                or saved['fold']!=fold.to_dict() or saved['seed']!=17 or saved['confirmation_opened']
-                or saved['self_supervised_training']['optimizer_updates']!=300
-                or (route=='task_guided' and (saved['task_guided_training']['optimizer_updates']!=250
-                    or saved['task_guided_training']['head_warmup_updates']!=50 or saved['task_guided_training']['joint_updates']!=200))):
-                raise ValueError('public candidate training source, roles or update counts changed')
-            checkpoint=Path(saved[route+'_training']['best_checkpoint_path']);checkpoint_hash=sha256_file(checkpoint)
-            representation_root=unit_root/'representations'/route/str(update)
-            if route=='task_guided':representation_root/=method
-            outputs={role:load_fusion_stream_batch(representation_root/role) for role in ('train','validation')}
-            if any(output.checkpoint_sha256!=checkpoint_hash or output.method_name!=method or output.fold_id!=fold.fold_id
-                   or output.sample_ids!=getattr(fold,role+'_sample_ids') for role,output in outputs.items()):
-                raise ValueError('public representations do not use the selected checkpoint')
-            result_path=unit_root/f'{route}_{update}_consumers.json'
-            result=json.loads(result_path.read_text())
-            context=native_consumer_context(domain,data,fold)
-            audit=audit_native_consumer_result(result,outputs=outputs,targets=targets,definitions=definitions,context=context,
-                                               label_used_for_encoder_training=route=='task_guided')
-            if audit['source_code_sha256']!=plan['source_code_sha256']:raise ValueError('public consumer source differs from training')
-            files.update(audit['files']);files.update({str(p):sha256_file(p) for p in (unit_state_path,checkpoint,result_path)})
-            groups={context['groups'][sample] for sample in fold.validation_sample_ids}
-            for expected_domain,task,metric,_ in TASKS:
-                if expected_domain!=domain:continue
-                scores=[row for row in audit['metrics'] if row['consumer']=='linear' and row['task']==task]
-                if (len(scores)!=len(groups) or {r['group_id'] for r in scores}!=groups
-                    or any(r['status']!='completed' or r['field']!=0 for r in scores)):
-                    raise ValueError('public task does not cover the fixed validation subjects')
-                records.append(dict(method=method,route=route,candidate=candidate,seed=17,domain=domain,task=task,
-                    metric=metric,role='validation',value=float(np.mean([row[metric] for row in scores]))))
+            audited=read_public_candidate_unit(unit_root=unit_root,saved=saved,unit=unit,route=route,
+                source_code_sha256=plan['source_code_sha256'],inputs=inputs[domain])
+            records.extend(audited['task_rows']);files.update(audited['files'])
             entry=metadata.setdefault((method,route,candidate),dict(encoder_parameters=0,training_elapsed_s=0.))
-            entry['encoder_parameters']+=saved['self_supervised_training']['parameter_count']
-            entry['training_elapsed_s']+=saved['self_supervised_training']['training_elapsed_s']
-            if route=='task_guided':entry['training_elapsed_s']+=saved['task_guided_training']['training_elapsed_s']
+            for name,value in audited['metadata'].items():entry[name]+=value
     rankings={}
     if not pending and not failed:
         for (method,route),candidates in route_candidates.items():

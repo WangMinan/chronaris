@@ -93,6 +93,26 @@ def test_public_reader_replays_a_completed_unit_and_waits_for_the_other_domain(t
     assert failed['status']=='blocked_by_public_execution_failure'
     assert failed['failed']==['cogpilot/chronaris/reference/self_supervised']
     assert failed['rankings']=={} and failed['excluded_candidates']=={}
+    # The review uses its actual early-stop count, not its 1,500-update directory label.
+    saved=json.loads((directory/'run_state.json').read_text())
+    saved.update(phase='review',seed=29)
+    saved['self_supervised_training']['optimizer_updates']=700
+    for role,output in outputs.items():
+        write_fusion_stream_batch(output,root=directory/'representations/self_supervised/1500'/role,export_role=role)
+    reviewed=run_native_method_consumers(outputs=outputs,targets=targets,definitions=definitions,context=context,
+        output_root=directory/'review_consumers',label_used_for_encoder_training=False,seed=29,minirocket_kernels=84)
+    (directory/'self_supervised_1500_consumers.json').write_text(json.dumps(reviewed))
+    kwargs=dict(unit_root=directory,saved=saved,unit=dict(domain='clare',method='chronaris',candidate_name='reference',
+        phase='review',seed=29,fold_index=1),route='self_supervised',source_code_sha256=source,
+        inputs=(None,None,fold,None,'a'*64,targets,definitions,data))
+    reviewed=module.read_public_candidate_unit(**kwargs)
+    assert reviewed['training_updates']=={'pretraining':700,'supervised':0}
+    assert all(row['seed']==29 and row['fold_index']==1 for row in reviewed['subject_rows'])
+    saved['self_supervised_training']['optimizer_updates']=499
+    with pytest.raises(ValueError,match='update counts'):module.read_public_candidate_unit(**kwargs)
+    saved['self_supervised_training']['optimizer_updates']=700
+    saved['seed']=43;kwargs['unit']['seed']=43
+    with pytest.raises(ValueError,match='consumer seed'):module.read_public_candidate_unit(**kwargs)
     (directory/'fixture.pt').write_bytes(b'changed')
     with pytest.raises(ValueError,match='selected checkpoint'):
         module.collect_public_screen_results(output_root=tmp_path,registry_path=registry)

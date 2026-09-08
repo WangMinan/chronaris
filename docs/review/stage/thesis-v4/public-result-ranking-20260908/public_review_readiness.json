@@ -1,0 +1,11 @@
+{
+  "scope": "public_three_seed_development_only",
+  "subject_rows": [],
+  "task_rows": [],
+  "units": [],
+  "pending": [],
+  "failed": [],
+  "confirmation_feedback_used": false,
+  "requires_simulation_and_pressure_review": true,
+  "status": "waiting_for_three_seed_review_plan"
+}

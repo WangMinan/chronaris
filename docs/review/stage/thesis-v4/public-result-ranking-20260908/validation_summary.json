@@ -56,5 +56,25 @@
     "readiness_sha256": "8c33e902985f72d8a186da1f90db0713fb771b140d439d29132c1157d9b0393d",
     "gpu_cohort_completed": 6,
     "gpu_cohort_total": 18
+  },
+  "public_three_seed_reader": {
+    "source_code_sha256": "b1c05b5c5e112fd731dba4cc39cb086e6e013ca675398d9bf143f08a6a5e2f90",
+    "focused": {
+      "passed": 10,
+      "elapsed_s": 3.0
+    },
+    "full_cpu": {
+      "passed": 589,
+      "skipped": 30,
+      "elapsed_s": 142.31
+    },
+    "actual_status": "waiting_for_three_seed_review_plan",
+    "verified_actual_units": 0,
+    "readiness_sha256": "ac2c358b96a644a7ccf52798280dbbeb12c8c0dee2d01f899375adbf741834cf",
+    "log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/three_seed_public_cpu_tests.log",
+      "sha256": "49678d61d4792e4e4611291fbf343aa8839994dde2e3bc11586dcf171eba2e59"
+    },
+    "simulation_review_prefetch": "one_cpu_process_for_shared_routes_during_cuda_adaptation"
   }
 }
