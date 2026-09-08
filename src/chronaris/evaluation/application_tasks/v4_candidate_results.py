@@ -120,6 +120,8 @@ def collect_simulation_screen(*, diagnostic_root, pressure_root, route, method="
         raise ValueError("unknown representation route")
     root = Path(diagnostic_root)
     cohort = json.loads((root / "cohort_state.json").read_text())
+    pressure_queue_path = Path(pressure_root) / "queue_state.json"
+    pressure_queue = json.loads(pressure_queue_path.read_text()) if pressure_queue_path.exists() else {}
     names = list(CANDIDATE_CHANGES) if method == "chronaris" else [name for item, name in cohort["units"] if item == method]
     if not names or len(names) != len(set(names)) or "reference" not in names:
         raise ValueError("screen requires a fixed candidate cohort and its repaired reference")
@@ -146,13 +148,28 @@ def collect_simulation_screen(*, diagnostic_root, pressure_root, route, method="
         record["missingness_p95"] = _pressure_p95(pressure_root, state, record, method, name, route, update)
         completed.append(record)
     pressure_pending = [row["candidate"] for row in completed if row["missingness_p95"] is None]
+    pressure_failed = [name for name in pressure_pending
+                       if f"{method}/{name}/{route}" in pressure_queue.get("failed_units", ())]
+    pressure_pending = [name for name in pressure_pending if name not in pressure_failed]
     summary = {"format": "chronaris.v4_simulation_screen_summary.v1", "collector_source_sha256": sha256_file(__file__),
         "cohort_source_code_sha256": cohort["source_code_sha256"],
         "method": method, "route": route, "seed": 17, "primary_metrics": PRIMARY_METRICS,
         "completed": completed, "pending": pending, "failed": failed, "pressure_pending": pressure_pending,
+        "pressure_failed": pressure_failed,
         "data_manifest_sha256": data_hash, "rankings": [], "advance_to_public_development": [],
         "reference_comparator": "reference", "adoption_decision": "requires_three_seed_review",
         "confirmation_feedback_used": False}
+    # Queue failures are execution evidence, not a validated scientific exclusion.
+    # Inspect their logs before deciding whether to repair or reject a candidate.
+    if failed or pressure_failed or cohort.get("status") == "failed" or pressure_queue.get("status") == "failed":
+        summary["failure_evidence"] = {
+            "cohort_state_path": str(root / "cohort_state.json"),
+            "cohort_state_sha256": sha256_file(root / "cohort_state.json"),
+            "pressure_queue_path": str(pressure_queue_path) if pressure_queue else None,
+            "pressure_queue_sha256": sha256_file(pressure_queue_path) if pressure_queue else None,
+            "reference_unavailable": "reference" in failed or "reference" in pressure_failed,
+        }
+        return summary | {"status": "blocked_by_execution_failure"}
     if pending or not any(row["candidate"] == "reference" for row in completed):
         return summary | {"status": "waiting_for_complete_clean_cohort"}
     ranks = np.column_stack([rankdata([row["scores"][i] * (-1 if metric[-1] == "higher" else 1) for row in completed],

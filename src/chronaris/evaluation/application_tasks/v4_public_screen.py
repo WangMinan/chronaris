@@ -21,7 +21,10 @@ def build_public_screen_plan(*, diagnostic_root, pressure_root, registry_path='d
               public_registry_sha256=sha256_file(registry_path),seed=17,fold_index=0,phase='screen',
               simulation_diagnostic_root=str(diagnostic_root),simulation_pressure_root=str(pressure_root),
               confirmation_feedback_used=False,pending=pending,units=[])
-    if pending:return base | dict(status='waiting_for_simulation_and_pressure')
+    if pending:
+        return base | dict(status='blocked_by_simulation_or_pressure_failure'
+                           if any(status.startswith('blocked_') for status in pending.values())
+                           else 'waiting_for_simulation_and_pressure')
     if any(summary['confirmation_feedback_used'] or summary['seed']!=17 for summary in summaries.values()):
         raise ValueError('public screening selection used unapproved evidence')
     if len({s['data_manifest_sha256'] for s in summaries.values()})!=1 or len({s['cohort_source_code_sha256'] for s in summaries.values()})!=1:

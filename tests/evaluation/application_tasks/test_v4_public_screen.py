@@ -32,6 +32,12 @@ def test_public_plan_merges_routes_and_keeps_reference_without_extra_candidate_s
     out=tmp_path/'run'
     assert module.run_public_screen(**kwargs,output_root=out)['status']=='completed'
     assert len(invoked)==28
+
+    monkeypatch.setattr(module,'collect_simulation_screen',lambda **kwargs:_summary(kwargs['method'],kwargs['route']) | {'status':'blocked_by_execution_failure'})
+    blocked=module.run_public_screen(**kwargs,output_root=tmp_path/'blocked')
+    assert blocked['status']=='blocked_by_simulation_or_pressure_failure' and blocked['units']==[]
+    assert len(invoked)==28
+    monkeypatch.setattr(module,'collect_simulation_screen',lambda **kwargs:_summary(kwargs['method'],kwargs['route']))
     assert module.run_public_screen(**kwargs,output_root=out)['status']=='completed'
     assert len(invoked)==28
     assert json.loads((out/'selection_plan.json').read_text())==plan

@@ -87,6 +87,12 @@ def test_public_reader_replays_a_completed_unit_and_waits_for_the_other_domain(t
     audited=module.collect_public_screen_results(output_root=tmp_path,registry_path=registry)
     assert len(audited['public_task_rows'])==2 and audited['rankings']=={}
     assert audited['pending']==['cogpilot/chronaris/reference/self_supervised']
+    (tmp_path/'run_state.json').write_text(json.dumps(dict(plan_sha256=digest,
+        completed_units=['clare/chronaris/reference'],failed_units=['cogpilot/chronaris/reference'])))
+    failed=module.collect_public_screen_results(output_root=tmp_path,registry_path=registry)
+    assert failed['status']=='blocked_by_public_execution_failure'
+    assert failed['failed']==['cogpilot/chronaris/reference/self_supervised']
+    assert failed['rankings']=={} and failed['excluded_candidates']=={}
     (directory/'fixture.pt').write_bytes(b'changed')
     with pytest.raises(ValueError,match='selected checkpoint'):
         module.collect_public_screen_results(output_root=tmp_path,registry_path=registry)

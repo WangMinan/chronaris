@@ -36,5 +36,25 @@
       "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/full_cpu_tests.log",
       "sha256": "f50c142c990e9eb22f93f9d315c25437e1674cc0dc140304a3036e1a948b5f3f"
     }
+  },
+  "failure_state_repair": {
+    "source_code_sha256": "73b5573cf3c470d02733a286bc61492b6f7312e8929161226385d48bec73fc00",
+    "focused": {
+      "passed": 13,
+      "elapsed_s": 2.95
+    },
+    "full_cpu": {
+      "passed": 585,
+      "skipped": 30,
+      "elapsed_s": 133.64
+    },
+    "log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/failure_state_full_cpu_tests.log",
+      "sha256": "6749f43fcddf4efd52549d1654724aa7fc958635a2967e55eda7eac75d2b3506"
+    },
+    "actual_status": "waiting_for_simulation_and_pressure",
+    "readiness_sha256": "8c33e902985f72d8a186da1f90db0713fb771b140d439d29132c1157d9b0393d",
+    "gpu_cohort_completed": 6,
+    "gpu_cohort_total": 18
   }
 }

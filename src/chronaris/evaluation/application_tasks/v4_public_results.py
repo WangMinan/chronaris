@@ -126,23 +126,21 @@ def collect_public_screen_results(*, output_root, data_root='artifacts/applicati
             entry['encoder_parameters']+=saved['self_supervised_training']['parameter_count']
             entry['training_elapsed_s']+=saved['self_supervised_training']['training_elapsed_s']
             if route=='task_guided':entry['training_elapsed_s']+=saved['task_guided_training']['training_elapsed_s']
-    rankings={};excluded={}
-    if not pending:
+    rankings={}
+    if not pending and not failed:
         for (method,route),candidates in route_candidates.items():
-            eligible={candidate for candidate in candidates if all(f'{domain}/{method}/{candidate}/{route}' not in failed for domain in ('cogpilot','clare'))}
-            excluded[f'{method}/{route}']=sorted(candidates-eligible)
-            if 'reference' not in eligible:continue
-            selected=[row for row in records if row['method']==method and row['route']==route and row['candidate'] in eligible]
-            meta={candidate:dict(metadata[(method,route,candidate)]) for candidate in eligible}
+            selected=[row for row in records if row['method']==method and row['route']==route and row['candidate'] in candidates]
+            meta={candidate:dict(metadata[(method,route,candidate)]) for candidate in candidates}
             simulation=plan['simulation_summaries'][f'{method}/{route}']
-            for candidate in eligible:
+            for candidate in candidates:
                 source=next(row for row in simulation['completed'] if row['candidate']==candidate)
                 for (task,_,metric,_),score in zip(PRIMARY_METRICS,source['scores'],strict=True):
                     selected.append(dict(candidate=candidate,seed=17,domain='simulation',task=task,metric=metric,role='validation',value=score))
                 meta[candidate]['encoder_parameters']+=source['encoder_parameters']
                 meta[candidate]['training_elapsed_s']+=source['training_elapsed_s']
             rankings[f'{method}/{route}']=rank_development_rows(selected,meta)
-    return dict(status='waiting_for_public_units' if pending else 'public_scores_verified_not_final_adoption',
-        selection_plan_sha256=digest,pending=pending,failed=failed,excluded_candidates=excluded,rankings=rankings,
+    return dict(status='blocked_by_public_execution_failure' if failed else
+                'waiting_for_public_units' if pending else 'public_scores_verified_not_final_adoption',
+        selection_plan_sha256=digest,pending=pending,failed=failed,excluded_candidates={},rankings=rankings,
         public_task_rows=records,files=files,ranking_scope='task_mean_then_equal_simulation_cogpilot_clare',
         confirmation_feedback_used=False,requires_three_seed_review=True)

@@ -94,3 +94,45 @@ def test_screen_recomputes_scores_and_rejects_roles_or_modified_evidence(tmp_pat
     (unit / "predictions.npz").write_bytes(b"changed")
     with pytest.raises(ValueError, match="evidence changed"):
         results.collect_simulation_screen(**kwargs)
+
+
+@pytest.mark.parametrize("name", ["reference", "capacity64"])
+@pytest.mark.parametrize("stage", ["clean", "pressure"])
+def test_failed_units_are_terminal_and_never_silently_excluded(tmp_path, name, stage):
+    _cohort(tmp_path, ("reference", "capacity64"))
+    for candidate in ("reference", "capacity64"):
+        if stage != "clean" or candidate != name:
+            _candidate(tmp_path, candidate)
+    pressure = tmp_path / "pressure"
+    pressure.mkdir()
+    if stage == "clean":
+        path = tmp_path / "cohort_state.json"
+        state = json.loads(path.read_text())
+        state["failed_units"] = [f"physiology_only/{name}"]
+        path.write_text(json.dumps(state))
+    else:
+        (pressure / "queue_state.json").write_text(json.dumps({
+            "failed_units": [f"physiology_only/{name}/self_supervised"]}))
+    result = results.collect_simulation_screen(diagnostic_root=tmp_path, pressure_root=pressure,
+                                               route="self_supervised", method="physiology_only")
+    assert result["status"] == "blocked_by_execution_failure"
+    assert result["rankings"] == result["advance_to_public_development"] == []
+    assert result["failure_evidence"]["reference_unavailable"] is (name == "reference")
+    assert result["failed" if stage == "clean" else "pressure_failed"] == [name]
+    assert name not in result["pressure_pending"]
+
+
+def test_pressure_queue_failure_is_distinct_from_other_route_failure(tmp_path):
+    _cohort(tmp_path, ("reference",))
+    _candidate(tmp_path, "reference")
+    pressure = tmp_path / "pressure"
+    pressure.mkdir()
+    path = pressure / "queue_state.json"
+    path.write_text(json.dumps({"failed_units": ["physiology_only/reference/task_guided"]}))
+    kwargs = dict(diagnostic_root=tmp_path, pressure_root=pressure,
+                  route="self_supervised", method="physiology_only")
+    assert results.collect_simulation_screen(**kwargs)["status"] == "waiting_for_complete_pressure_cohort"
+    path.write_text(json.dumps({"status": "failed", "error": "CUDA verification failed"}))
+    result = results.collect_simulation_screen(**kwargs)
+    assert result["status"] == "blocked_by_execution_failure"
+    assert result["failure_evidence"]["pressure_queue_sha256"] == sha256_file(path)
