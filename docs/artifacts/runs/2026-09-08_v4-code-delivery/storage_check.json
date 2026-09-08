@@ -1,0 +1,7 @@
+{
+  "root": "/mnt/e/chronaris-v4-results",
+  "bytes_written": 75497472,
+  "write_fsync_s": 0.8292794451117516,
+  "atomic_rename_and_symlink": true,
+  "exclusive_lock": true
+}

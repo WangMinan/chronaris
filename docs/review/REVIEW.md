@@ -18,6 +18,8 @@
 
 ## 当前建议
 
+[v4 单入口代码交付](stage/thesis-v4/code-delivery-20260908/README.md)统一开发选型、正式主表、时间机制及报告，替代历史进程接续脚本；实际启动状态见代码交付报告。
+
 [核心消融合同](../artifacts/runs/2026-09-08_v4-core-ablation-contract/report.md)已复用现有开关和训练器，并限制为预定组件；不适用目标跳过，观测锚定保留，模型文件完整冻结后才生成确认数据。
 
 [正式训练接续与鼎新去重](stage/thesis-v4/confirmation-handoff-20260908/README.md)已复用共享训练和消费者，鼎新按用户授权改为保留单记录的时间块评价；实际开发链已启动，正式确认仍等待冻结。

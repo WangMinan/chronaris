@@ -68,11 +68,15 @@ class ODERNNCell(nn.Module):
         self.ode_rtol = ode_rtol
         self.ode_atol = ode_atol
         self.max_ode_step_s = max_ode_step_s
-        self.ode_func = HiddenStateODEFunc(
-            hidden_dim,
-            dynamics_hidden_dim=dynamics_hidden_dim,
-            activation=activation,
-        )
+        if ode_method == "analytic_decay":
+            # Positive per-channel rates give an exact, bounded inter-observation flow.
+            self.decay_logits = nn.Parameter(torch.zeros(hidden_dim))
+        else:
+            self.ode_func = HiddenStateODEFunc(
+                hidden_dim,
+                dynamics_hidden_dim=dynamics_hidden_dim,
+                activation=activation,
+            )
         self.observation_update = nn.GRUCell(embedding_dim, hidden_dim)
 
     def evolve_hidden_state(
@@ -91,6 +95,9 @@ class ODERNNCell(nn.Module):
             delta_t_s.to(dtype=hidden_state.dtype),
             min=0.0,
         )
+        if self.ode_method == "analytic_decay":
+            rates = torch.nn.functional.softplus(self.decay_logits.float()) + 1e-4
+            return (hidden_state.float() * torch.exp(-clamped_delta_t.float().unsqueeze(-1) * rates)).to(hidden_state.dtype)
         if self.ode_method == "euler":
             if self.max_ode_step_s is not None:
                 return self._evolve_euler_substeps(hidden_state, clamped_delta_t)

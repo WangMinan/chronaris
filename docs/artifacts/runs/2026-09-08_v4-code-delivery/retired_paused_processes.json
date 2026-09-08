@@ -1,0 +1,47 @@
+{
+  "time_unix_s": 1788876875.8165038,
+  "reason": "user resumed code delivery; superseded queues stopped to release CUDA verification lock",
+  "processes": [
+    {
+      "pid": 68180,
+      "status_before": "T",
+      "members": [
+        {
+          "pid": 68180,
+          "command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-candidate-pressure/run_queue.py "
+        },
+        {
+          "pid": 68196,
+          "command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest -q "
+        },
+        {
+          "pid": 68258,
+          "command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python -c from multiprocessing.resource_tracker import main;main(34) "
+        }
+      ],
+      "action": "SIGTERM followed by SIGCONT to deliver pending termination"
+    },
+    {
+      "pid": 68181,
+      "status_before": "T",
+      "members": [
+        {
+          "pid": 68181,
+          "command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-development-chain/run_chain.py "
+        }
+      ],
+      "action": "SIGTERM followed by SIGCONT to deliver pending termination"
+    },
+    {
+      "pid": 68182,
+      "status_before": "T",
+      "members": [
+        {
+          "pid": 68182,
+          "command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-08_v4-confirmation-chain-v2/run_chain.py "
+        }
+      ],
+      "action": "SIGTERM followed by SIGCONT to deliver pending termination"
+    }
+  ]
+}

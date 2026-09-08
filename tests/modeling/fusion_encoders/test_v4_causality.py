@@ -2,6 +2,7 @@ from dataclasses import replace
 
 import torch
 import numpy as np
+import pytest
 from torch.nn import functional as F
 
 from chronaris.models.fusion.causal import (
@@ -14,7 +15,8 @@ from chronaris.modeling.fusion_encoders.multiscale_causal import MultiScaleCausa
 from chronaris.modeling.fusion_encoders.safe_lag_fusion import SafeLagAwareFusion, SafeLagAwareFusionConfig
 
 
-def test_submicrosecond_future_is_not_rounded_into_visible_history():
+@pytest.mark.parametrize('ode_method', ['euler', 'analytic_decay'])
+def test_submicrosecond_future_is_not_rounded_into_visible_history(ode_method):
     from chronaris.modeling.fusion_encoders.chronaris_continuous import ChronarisContinuousEncoderConfig, ChronarisContinuousFusionEncoder
     from chronaris.representation import collate_observation_samples
     from tests.representation.test_contracts import _sample
@@ -32,7 +34,7 @@ def test_submicrosecond_future_is_not_rounded_into_visible_history():
         physiology_feature_names=sample.schema.physiology_feature_names,
         vehicle_feature_names=sample.schema.vehicle_feature_names,
         fusion_kind="safe_lag", hidden_dim=4, embedding_dim=4, encoder_hidden_dim=4,
-        decoder_hidden_dim=4, dynamics_hidden_dim=4, dropout=0,
+        decoder_hidden_dim=4, dynamics_hidden_dim=4, dropout=0, ode_method=ode_method,
     )).eval()
     with torch.inference_mode():
         a, b = encoder(original, compute_diagnostics=False), encoder(changed, compute_diagnostics=False)

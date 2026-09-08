@@ -54,3 +54,19 @@ def test_public_plan_rejects_confirmatory_or_excess_selection(tmp_path,monkeypat
     for changed in ({'confirmation_feedback_used':True},{'advance_to_public_development':['reference','capacity64','quality_gate','multihorizon']}):
         monkeypatch.setattr(module,'collect_simulation_screen',lambda **kwargs:_summary(kwargs['method'],kwargs['route']) | changed)
         with pytest.raises(ValueError):module.build_public_screen_plan(diagnostic_root=tmp_path,pressure_root=tmp_path,registry_path=registry)
+
+
+def test_selected_common_objective_is_also_offered_to_every_baseline(tmp_path,monkeypatch):
+    registry=tmp_path/'registry.json';registry.write_text('{}')
+    def summary(**kwargs):
+        result=_summary(kwargs['method'],kwargs['route'])
+        result['advance_to_public_development']=['reference','multihorizon','missingness_mixture']
+        result['completed']=[{'candidate':name} for name in ('reference','capacity64','multihorizon','missingness_mixture')]
+        return result
+    monkeypatch.setattr(module,'collect_simulation_screen',summary)
+    plan=module.build_public_screen_plan(diagnostic_root=tmp_path,pressure_root=tmp_path,registry_path=registry)
+    for domain in ('cogpilot','clare'):
+        for method in module.METHODS:
+            for name in ('multihorizon','missingness_mixture'):
+                selected=[u for u in plan['units'] if (u['domain'],u['method'],u['candidate_name'])==(domain,method,name)]
+                assert len(selected)==1 and selected[0]['routes']==list(module.ROUTES)

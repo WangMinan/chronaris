@@ -99,14 +99,15 @@ def evaluate_core_ablation(*,freeze_path,freeze_sha256,output_root,ablation,base
             include_pressure=False)
 
 
-def run_core_ablation_cohort(*,freeze_path,freeze_sha256,output_root,stage):
+def run_core_ablation_cohort(*,freeze_path,freeze_sha256,output_root,stage,
+                            confirmation_root='artifacts/application_evaluation/2026-09-08_v4-simulation-confirmation'):
     if stage not in ('train','evaluate'):raise ValueError('unsupported core ablation stage')
     frozen=read_frozen_configuration(freeze_path,freeze_sha256)
-    plan=build_core_ablation_plan(frozen) | dict(freeze_sha256=freeze_sha256,stage=stage)
+    plan=build_core_ablation_plan(frozen) | dict(freeze_sha256=freeze_sha256,stage=stage,confirmation_root=str(confirmation_root))
     def unit_args(unit):
         return [f'core-ablation-{stage}','--domain','simulation','--ablation',unit['ablation'],
                 '--candidate-name',unit['options']['name'].split('__',1)[0],'--seed',str(unit['seed']),
-                '--ablation-parent-root',str(output_root)]
+                '--ablation-parent-root',str(output_root),'--data-root',str(confirmation_root)]
     return run_confirmation_units(plan=plan,freeze_path=freeze_path,freeze_sha256=freeze_sha256,
         output_root=_ablation_root(output_root),backend='neural',queue_prefix='core_'+stage,unit_args=unit_args,
         result_name='training_complete.json' if stage=='train' else 'confirmation_unit.json')

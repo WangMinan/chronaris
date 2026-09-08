@@ -114,7 +114,7 @@ def _train_confirmation_unit(*, domain, fold_index, method, options, routes, see
                 weight_decay=1e-4,device='cuda',early_stopping=True,seed=seed,minimum_updates=500,patience=5,validation_interval=100,
                 retained_updates=(1500,),semantic_event_enabled=chronaris,learnable_semantic_queries=chronaris,
                 physics_calibration=calibration if chronaris else None,physics_weight=options.get('physics_weight',.05),sampling_hierarchy=hierarchy,
-                data_manifest_sha256=digest,cuda_graph_recurrence=chronaris,**options['training']),
+                data_manifest_sha256=digest,cuda_graph_recurrence=chronaris and (not options or options["training"].get("ode_method") != "analytic_decay"),**options['training']),
             augmentation_policy=AugmentationPolicy(missingness_mixture=options['missingness_mixture']),
             chronaris_variant=options.get('variant','full'),
             chronaris_fusion_kind='safe_lag' if chronaris else 'multiscale',chronaris_mechanism_enabled=chronaris,
@@ -137,6 +137,19 @@ def _train_confirmation_unit(*, domain, fold_index, method, options, routes, see
                     weight_decay=1e-4,device='cuda',early_stopping=True,seed=seed,minimum_updates=200,patience=4,
                     validation_interval=50,retained_updates=(500,),sampling_hierarchy=hierarchy,data_manifest_sha256=digest))
             state['task_guided_training']=asdict(guided);save()
+        from chronaris.evaluation.application_tasks.v4_correctness import audit_checkpoint_causality
+        import torch
+        progress['phase']='checkpoint_history_isolation'
+        batch=provider(fold.validation_sample_ids[:4])
+        cutoff=float(batch.query_timestamps_s[:,-1].min())/2
+        for route in routes:
+            checkpoint=state[route+'_training']['best_checkpoint_path']
+            payload=torch.load(checkpoint,map_location='cpu',weights_only=True)
+            audit=audit_checkpoint_causality(checkpoint,batch,device=payload['config']['device'],cutoff_s=cutoff,
+                                             allow_legacy_implementation=False)
+            state.setdefault('checkpoint_correctness',{})[route]=audit;save()
+            if not audit['passed']:
+                raise ValueError('trained checkpoint failed historical information isolation; confirmation remains closed')
         state['completed']=True;state['status']='completed';save()
     return state
 

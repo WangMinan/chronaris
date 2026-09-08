@@ -14,6 +14,7 @@ CANDIDATE_CHANGES = {
     "capacity64": {},
 }
 BASELINE_CANDIDATES = ("reference", "capacity64", "missingness_mixture", "multihorizon")
+CONDITIONAL_CANDIDATES = {"analytic_decay": {"ode_method": "analytic_decay"}}
 
 
 def validate_candidate_training_budget(state, *, phase, route):
@@ -32,14 +33,14 @@ def validate_candidate_training_budget(state, *, phase, route):
 
 
 def candidate_options(method, name):
-    if name not in CANDIDATE_CHANGES:
+    if name not in CANDIDATE_CHANGES and name not in CONDITIONAL_CANDIDATES:
         raise ValueError("candidate outside the approved single-factor cohort")
     if method not in ("chronaris", "physiology_only", "vehicle_only", "mult", "contiformer"):
         raise ValueError("candidate requires a trainable method")
     if method != "chronaris" and name not in BASELINE_CANDIDATES:
         raise ValueError("Chronaris structural candidate cannot be assigned to a baseline")
     return {"name": name, "hidden_dim": 64 if name == "capacity64" else 32,
-            "training": dict(CANDIDATE_CHANGES[name]), "missingness_mixture": name == "missingness_mixture"}
+            "training": dict((CANDIDATE_CHANGES | CONDITIONAL_CANDIDATES)[name]), "missingness_mixture": name == "missingness_mixture"}
 
 
 def run_candidate_development(*, method, candidate_name, output_root, domain="simulation", fold_index=0,

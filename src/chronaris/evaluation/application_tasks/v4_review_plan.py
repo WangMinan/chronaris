@@ -69,6 +69,11 @@ def load_verified_review_plan(output_root, *, data_root, registry_path):
     path=Path(output_root)/'selection_plan.json'
     if not path.exists():return None
     plan=json.loads(path.read_text())
-    expected=build_review_plan(screen_root=plan['screen_root'],data_root=data_root,registry_path=registry_path)
+    if plan['format']=='chronaris.v4_conditional_review_plan.v1':
+        from chronaris.evaluation.application_tasks.v4_conditional_review import build_conditional_review_plan
+        expected=build_conditional_review_plan(parent_root=plan['parent_root'],parent_pressure_root=plan['parent_pressure_root'],
+                                               data_root=data_root,registry_path=registry_path)
+    else:
+        expected=build_review_plan(screen_root=plan['screen_root'],data_root=data_root,registry_path=registry_path)
     if plan!=expected:raise ValueError('frozen review selection, source or screening evidence changed')
     return plan

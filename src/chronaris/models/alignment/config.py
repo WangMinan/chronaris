@@ -6,7 +6,7 @@ import math
 from dataclasses import dataclass
 
 _ALLOWED_ACTIVATIONS = {"gelu", "relu", "tanh"}
-_ALLOWED_ODE_METHODS = {"euler", "midpoint", "rk4", "dopri5"}
+_ALLOWED_ODE_METHODS = {"euler", "midpoint", "rk4", "dopri5", "analytic_decay"}
 
 
 @dataclass(frozen=True, slots=True)

@@ -14,11 +14,11 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("stage", choices=("core-ablation-train", "core-ablation-evaluate", "core-ablation-train-cohort", "core-ablation-evaluate-cohort", "core-ablation-model-freeze", "simulation-confirmation-train", "simulation-confirmation-evaluate", "simulation-confirmation-train-cohort", "simulation-confirmation-evaluate-cohort", "simulation-model-freeze", "simulation-confirmation-data", "dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
-    from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
+    from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES, CONDITIONAL_CANDIDATES
     from chronaris.evaluation.application_tasks.v4_core_ablations import ABLATIONS
     parser.add_argument("--ablation",choices=ABLATIONS)
     parser.add_argument("--ablation-parent-root")
-    parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
+    parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES | CONDITIONAL_CANDIDATES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
     parser.add_argument("--seed", type=int, choices=(17, 29, 43), default=17)
     parser.add_argument("--routes", nargs="+", choices=("self_supervised", "task_guided"), default=("self_supervised", "task_guided"))
@@ -82,13 +82,17 @@ def main():
         from chronaris.evaluation.application_tasks.v4_core_ablations import (
             train_core_ablation,evaluate_core_ablation,seal_core_ablation_models,run_core_ablation_cohort)
         common=dict(freeze_path=args.freeze_path,freeze_sha256=args.freeze_sha256,output_root=args.ablation_parent_root or output_root)
+        confirmation_root=('artifacts/application_evaluation/2026-09-08_v4-simulation-confirmation'
+                           if args.data_root.endswith('2026-09-06_v4-public-development') else args.data_root)
         if args.stage.endswith('-cohort'):
-            result=run_core_ablation_cohort(**common,stage='train' if args.stage=='core-ablation-train-cohort' else 'evaluate')
+            result=run_core_ablation_cohort(**common,stage='train' if args.stage=='core-ablation-train-cohort' else 'evaluate',
+                                          confirmation_root=confirmation_root)
         elif args.stage=='core-ablation-model-freeze':result=seal_core_ablation_models(**common)
         else:
             if not args.ablation:raise ValueError('a fixed core ablation is required')
             operation=train_core_ablation if args.stage=='core-ablation-train' else evaluate_core_ablation
-            result=operation(**common,ablation=args.ablation,base_candidate=args.candidate_name,seed=args.seed)
+            result=operation(**common,ablation=args.ablation,base_candidate=args.candidate_name,seed=args.seed,
+                             **({'confirmation_root':confirmation_root} if args.stage=='core-ablation-evaluate' else {}))
         summary={key:result[key] for key in ('status','completed','evaluation_units','pending') if key in result}
     elif args.stage.startswith('simulation-confirmation-') or args.stage=='simulation-model-freeze':
         if args.domain!='simulation' or not args.freeze_sha256:

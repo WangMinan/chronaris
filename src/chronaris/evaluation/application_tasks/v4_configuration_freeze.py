@@ -125,7 +125,19 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
     pressure_files,instability=_simulation_freeze_evidence(simulation,root,pressure_root,
         {route:adoption['decisions'][f'chronaris/{route}']['recommended_candidate'] for route in ROUTES})
     files.update(pressure_files)
-    if instability:return dict(status='waiting_for_continuous_cell_candidate',instability=instability,configuration_frozen=False)
+    conditional_review=False
+    plan_path=root/'selection_plan.json'
+    if plan_path.exists() and json.loads(plan_path.read_text()).get('format')=='chronaris.v4_conditional_review_plan.v1':
+        from chronaris.evaluation.application_tasks.v4_review_plan import load_verified_review_plan
+        raw_plan=json.loads(plan_path.read_text())
+        plan=load_verified_review_plan(root,data_root=raw_plan['data_root'],registry_path=registry_path)
+        required_routes={row['route'] for row in plan['instability']}
+        if any('analytic_decay' not in adoption['decisions'][f'chronaris/{route}']['assessments'] for route in required_routes):
+            raise ValueError('conditional comparison has no complete adoption result')
+        files.update(plan['trigger_files']);files[str(plan_path)]=sha256_file(plan_path)
+        conditional_review=True
+    if instability and not conditional_review:
+        return dict(status='waiting_for_continuous_cell_candidate',instability=instability,configuration_frozen=False)
     methods={route:{} for route in ROUTES};pending=[]
     for route in ROUTES:
         for method in METHODS:
@@ -133,13 +145,27 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
             if not decision['assessments'][name]['eligible']:raise ValueError('recommended candidate failed its adoption criteria')
             methods[route][method]=candidate_options(method,name)
         chronaris=adoption['decisions'][f'chronaris/{route}']
-        changes=[name for name,value in chronaris['assessments'].items() if name!='reference' and value['eligible']]
+        changes=[name for name,value in chronaris['assessments'].items() if name not in ('reference','analytic_decay') and value['eligible']]
         if len(changes)>1:pending.append(f'{route}:combination_evaluation')
         common=methods[route]['chronaris']['name']
         if common in ('missingness_mixture','multihorizon'):
             for method in METHODS:
                 if method!='chronaris' and common not in adoption['decisions'][f'{method}/{route}']['assessments']:
-                    pending.append(f'{method}/{route}:common_objective_comparison')
+                    # A candidate eliminated by the same first-fold rule had its comparison opportunity.
+                    plan_path=root/'selection_plan.json'
+                    screen_path=(Path(json.loads(plan_path.read_text())['screen_root'])/'results_summary.json'
+                                 if plan_path.exists() else None)
+                    if screen_path is None or not screen_path.exists():
+                        pending.append(f'{method}/{route}:common_objective_comparison')
+                        continue
+                    from chronaris.evaluation.application_tasks.v4_public_results import collect_public_screen_results
+                    screen=collect_public_screen_results(output_root=screen_path.parent,registry_path=registry_path)
+                    if (screen['status']!='public_scores_verified_not_final_adoption'
+                        or common not in {row['candidate'] for row in screen['rankings'][f'{method}/{route}']}):
+                        pending.append(f'{method}/{route}:common_objective_comparison')
+                    else:
+                        files[str(screen_path)]=sha256_file(screen_path)
+                        files.update(screen['files'])
         methods[route]['naive_time_sync']={'name':'reference','nonparametric':True}
     if pending:return dict(status='waiting_for_remaining_development',pending=pending,configuration_frozen=False)
     if not Path(validation_receipt).exists():return dict(status='waiting_for_current_cuda_validation',configuration_frozen=False)
@@ -178,6 +204,14 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
         files[str(path)]=sha256_file(path)
     for filename,digest in files.items():
         if sha256_file(filename)!=digest:raise ValueError('freeze evidence file changed')
+    simulation_registry_path=Path('docs/requirements/thesis-v4-simulation-manifest.json')
+    simulation_registry=json.loads(simulation_registry_path.read_text())
+    held_profiles=sorted({row['profile_id'] for row in simulation_registry['trajectories'] if row['role']=='confirmation'},
+        key=lambda value:hashlib.sha256(('v4-case:'+value).encode()).hexdigest())[:3]
+    cases=[min((sample for row in simulation_registry['trajectories'] if row['role']=='confirmation' and row['profile_id']==profile
+                for sample in row['context_sample_ids']),key=lambda value:hashlib.sha256(('v4-case:'+value).encode()).hexdigest())
+           for profile in held_profiles]
+    files[str(simulation_registry_path)]=sha256_file(simulation_registry_path)
     frozen=dict(format='chronaris.v4_frozen_configuration.v1',status='frozen',configuration_frozen=True,
         source_code_sha256=v4_workflow_source_sha256(),budget=CONFIRMATION_BUDGET,methods=methods,
         public_registry_sha256=sha256_file(registry_path),evidence_files=files,confirmation_feedback_used=False,
@@ -190,6 +224,9 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
         original_total_evaluation_units=468,amended_total_evaluation_units=432,
         core_ablation_scope_required=True,
         combination_status='not_applicable_fewer_than_two_eligible_changes',
+        continuous_cell_comparison='completed' if conditional_review else 'not_triggered',
+        remaining_state_instability=instability,
+        preselected_case_context_ids=cases,
         development_initialization_for_public_confirmation=False)
     frozen=json.loads(json.dumps(frozen));path=Path(output_path);path.parent.mkdir(parents=True,exist_ok=True)
     if path.exists() and json.loads(path.read_text())!=frozen:raise ValueError('existing frozen configuration cannot be overwritten')

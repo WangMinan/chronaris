@@ -63,7 +63,7 @@ class CommonPretrainingConfig:
             not math.isfinite(self.max_ode_step_s) or self.max_ode_step_s <= 0
         ):
             raise ValueError("max_ode_step_s must be finite and positive when set")
-        if self.ode_method not in {"euler", "midpoint", "rk4", "dopri5"}:
+        if self.ode_method not in {"euler", "midpoint", "rk4", "dopri5", "analytic_decay"}:
             raise ValueError("unsupported pretraining Chronaris ODE method")
         if self.learnable_semantic_queries and not self.semantic_event_enabled:
             raise ValueError("learnable semantic queries require semantic_event_enabled")

@@ -63,6 +63,14 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
     from chronaris.evaluation.application_tasks.v4_candidates import candidate_options
     options = candidate_options(method, candidate_name) if candidate_name is not None else None
     routes = tuple(routes)
+    if candidate_name == 'analytic_decay':
+        from chronaris.evaluation.application_tasks.v4_review_plan import load_verified_review_plan
+        plan = load_verified_review_plan(output_root, data_root=data_root, registry_path=registry_path)
+        selected = [] if plan is None else [unit for unit in plan['units'] if
+            (unit['domain'], unit['method'], unit['candidate_name'], unit['fold_index'], unit['seed']) ==
+            (domain, method, candidate_name, fold_index, seed) and tuple(unit['routes']) == routes]
+        if phase != 'review' or plan is None or plan['format'] != 'chronaris.v4_conditional_review_plan.v1' or len(selected) != 1:
+            raise ValueError('analytic decay requires its verified conditional development trigger')
     if (phase not in ("screen", "review") or not routes or len(set(routes)) != len(routes)
         or not set(routes) <= {"self_supervised", "task_guided"}):
         raise ValueError("invalid development phase or representation routes")
@@ -133,7 +141,7 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
                 semantic_event_enabled=chronaris, learnable_semantic_queries=chronaris,
                 physics_calibration=calibration if chronaris else None, physics_weight=.05,
                 validation_interval=100, validation_updates=curve_updates, retained_updates=curve_updates,
-                sampling_hierarchy=hierarchy, data_manifest_sha256=digest, cuda_graph_recurrence=chronaris,
+                sampling_hierarchy=hierarchy, data_manifest_sha256=digest, cuda_graph_recurrence=chronaris and (not options or options["training"].get("ode_method") != "analytic_decay"),
                 **(options["training"] if options else {})),
             augmentation_policy=AugmentationPolicy(missingness_mixture=options["missingness_mixture"] if options else False),
             chronaris_fusion_kind="safe_lag" if chronaris else "multiscale", chronaris_mechanism_enabled=chronaris,

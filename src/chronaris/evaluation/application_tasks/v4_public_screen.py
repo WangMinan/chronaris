@@ -55,7 +55,11 @@ def build_public_screen_plan(*, diagnostic_root, pressure_root, registry_path='d
     units=[]
     for domain in ('cogpilot','clare'):
         for method in METHODS:
-            for candidate in (CANDIDATE_CHANGES if method=='chronaris' else ('reference','capacity64')):
+            baseline_names = ('reference', 'capacity64')
+            if method != 'chronaris':
+                common = {name for names in selected.values() for name in names} & {'missingness_mixture', 'multihorizon'}
+                baseline_names += tuple(sorted(common))
+            for candidate in (CANDIDATE_CHANGES if method=='chronaris' else baseline_names):
                 routes=[route for route in ROUTES if method!='chronaris' or candidate=='reference' or candidate in selected[route]]
                 if not routes:continue
                 if method!='chronaris' and any(candidate not in {row['candidate'] for row in summaries[(method,route)]['completed']} for route in routes):

@@ -9,13 +9,13 @@ from chronaris.modeling.training import TrainedFusionAdapter, load_common_pretra
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_s=15.0):
+def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_s=15.0, allow_legacy_implementation=True):
     before = sha256_file(checkpoint_path)
     stored = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     guided = "role_sample_ids" in stored
     encoder, _heads, normalizer, payload = load_common_pretraining_checkpoint(
         stored["source_checkpoint_path"] if guided else checkpoint_path,
-        device=device, allow_legacy_implementation=True,
+        device=device, allow_legacy_implementation=allow_legacy_implementation,
     )
     if guided:
         encoder.load_state_dict({name.removeprefix("encoder."): value
@@ -49,7 +49,7 @@ def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_
         "seed": payload["seed"], "device": device, "cutoff_s": cutoff_s,
         "checkpoint_path": str(checkpoint_path), "checkpoint_sha256": before,
         "weight_source_format": payload["format"],
-        "scope": "weights_loaded_into_current_implementation_for_diagnosis_only",
+        "scope": "weights_loaded_into_current_implementation_for_diagnosis_only" if allow_legacy_implementation else "current_checkpoint_before_confirmation",
         "sample_ids": list(batch.sample_ids), "historical_max_delta": deltas,
         "checkpoint_unchanged": unchanged, "passed": max(deltas.values()) <= 1e-6,
     }

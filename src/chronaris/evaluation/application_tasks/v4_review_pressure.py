@@ -43,6 +43,7 @@ def build_review_pressure_plan(*, diagnostic_root, condition_root,
     if not base['units']:raise ValueError('review pressure requires the fixed simulation cohort')
     return seal_development_plan(base | dict(status='ready_for_review_pressure',source_code_sha256=v4_workflow_source_sha256(),
         review_selection_plan_sha256=plan['plan_sha256'],diagnostic_root=str(diagnostic_root),condition_root=str(condition_root),
+        inherited_pressure_root=plan.get('parent_pressure_root'),
         condition_audit_sha256=sha256_file(Path(condition_root)/'development_condition_audit.json')))
 
 
@@ -58,6 +59,8 @@ def run_review_pressure_cohort(*, output_root, diagnostic_root, condition_root,
         plan_path=root/'pressure_plan.json'
         if plan_path.exists() and json.loads(plan_path.read_text())!=plan:raise ValueError('frozen review pressure plan changed')
         if not plan_path.exists():plan_path.write_text(json.dumps(plan,indent=2)+'\n')
+        from chronaris.evaluation.application_tasks.v4_conditional_review import inherit_completed_pressure
+        inherit_completed_pressure(plan,output_root=root)
         path=root/'queue_state.json'
         state=json.loads(path.read_text()) if path.exists() else dict(plan_sha256=plan['plan_sha256'],completed_units=[],failed_units=[],errors={})
         if state['plan_sha256']!=plan['plan_sha256']:raise ValueError('review pressure queue source changed')
