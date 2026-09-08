@@ -8,7 +8,7 @@ import numpy as np
 from scipy.stats import rankdata
 from sklearn.metrics import f1_score, root_mean_squared_error
 
-from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES, candidate_options
+from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES, candidate_options, validate_candidate_training_budget
 from chronaris.evaluation.application_tasks.v4_development_conditions import DEVELOPMENT_CONDITIONS
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
@@ -25,14 +25,16 @@ def _check_file(path, expected):
         raise ValueError(f"candidate evidence changed: {path}")
 
 
-def _completed_scores(root, state, route, update, method, candidate):
+def _completed_scores(root, state, route, update, method, candidate, *, phase='screen', seed=17):
     result_path = root / f"{route}_{update}_consumers.json"
     result = json.loads(result_path.read_text())
     manifest = result["model_manifest"]
     training = state[route + "_training"]
-    if (state["self_supervised_training"]["optimizer_updates"] != 300
-        or training["optimizer_updates"] != (300 if route == "self_supervised" else 250)):
-        raise ValueError("initial screen update count differs from the frozen budget")
+    validate_candidate_training_budget(state,phase=phase,route=route)
+    expected_update=(1500 if phase=='review' else 300) if route=='self_supervised' else (500 if phase=='review' else 200)
+    if (seed not in ((17,) if phase=='screen' else (17,29,43)) or state['seed']!=seed
+        or state.get('phase','screen')!=phase or update!=expected_update):
+        raise ValueError('candidate scores differ from the selected phase, seed or budget')
     if (manifest["consumer_fit_role"] != "train" or manifest["evaluation_roles"] != ["validation"]
         or manifest["label_used_for_encoder_training"] is not (route == "task_guided")
         or manifest["fold_id"] != state["fold"]["fold_id"] or manifest["method_name"] != method
@@ -65,7 +67,7 @@ def _completed_scores(root, state, route, update, method, candidate):
                            average="macro", zero_division=0)),
         )
     rows = result["metric_rows"]
-    if any(row["role"] != "validation" or row["seed"] != 17 or row["smoke_only"]
+    if any(row["role"] != "validation" or row["seed"] != seed or row["smoke_only"]
            or row["method"] != method or row["fold"] != state["fold"]["fold_id"] for row in rows):
         raise ValueError("screen rows contain confirmation, other seeds or engineering scores")
     for (task, consumer, metric, direction), value in zip(PRIMARY_METRICS, scores, strict=True):
@@ -85,8 +87,10 @@ def _completed_scores(root, state, route, update, method, candidate):
         "consumer_prediction_sha256": manifest["prediction_sha256"], "result_sha256": sha256_file(result_path)}
 
 
-def _pressure_p95(root, state, record, method, candidate, route, update):
-    path = Path(root) / method / candidate / route / str(update) / "run_state.json"
+def _pressure_p95(root, state, record, method, candidate, route, update, *, phase='screen', seed=17):
+    directory = Path(root) / method / candidate
+    if phase=='review':directory=directory/'review'/f'seed{seed}'
+    path = directory / route / str(update) / "run_state.json"
     if not path.exists():
         return None
     pressure = json.loads(path.read_text())
@@ -94,6 +98,8 @@ def _pressure_p95(root, state, record, method, candidate, route, update):
         return None
     source = pressure["source"]
     if (source["evaluation_role"] != "validation" or source["confirmation_opened"] or source["consumer_refit"]
+        or source['method']!=method or source['route']!=route or source['update']!=update
+        or source.get('phase','screen')!=phase or source.get('seed',17)!=seed
         or source.get("inference_device", "cuda") != "cuda"
         or source["data_manifest_sha256"] != state["data_manifest_sha256"]
         or source["clean_prediction_sha256"] != record["consumer_prediction_sha256"]

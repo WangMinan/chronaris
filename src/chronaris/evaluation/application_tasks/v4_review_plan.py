@@ -1,6 +1,7 @@
 """Fixed three-seed development review, selected from verified first-fold results."""
 import hashlib
 import json
+from pathlib import Path
 
 from chronaris.evaluation.application_tasks.v4_candidates import candidate_options
 from chronaris.evaluation.application_tasks.v4_development_data import v4_workflow_source_sha256
@@ -62,3 +63,12 @@ def run_review_cohort(*, output_root, screen_root,
     plan=build_review_plan(screen_root=screen_root,data_root=data_root,registry_path=registry_path)
     if plan['status']!='ready_for_three_seed_review':return plan
     return run_development_plan(plan,output_root=output_root,data_root=data_root,registry_path=registry_path)
+
+
+def load_verified_review_plan(output_root, *, data_root, registry_path):
+    path=Path(output_root)/'selection_plan.json'
+    if not path.exists():return None
+    plan=json.loads(path.read_text())
+    expected=build_review_plan(screen_root=plan['screen_root'],data_root=data_root,registry_path=registry_path)
+    if plan!=expected:raise ValueError('frozen review selection, source or screening evidence changed')
+    return plan

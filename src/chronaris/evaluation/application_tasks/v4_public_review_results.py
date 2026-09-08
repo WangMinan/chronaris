@@ -7,7 +7,7 @@ import numpy as np
 
 from chronaris.evaluation.application_tasks.v4_development_data import load_development_inputs
 from chronaris.evaluation.application_tasks.v4_public_results import TASKS, read_public_candidate_unit
-from chronaris.evaluation.application_tasks.v4_review_plan import build_review_plan
+from chronaris.evaluation.application_tasks.v4_review_plan import load_verified_review_plan
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
@@ -40,10 +40,8 @@ def collect_public_review_results(*, output_root,
     root=Path(output_root);path=root/'selection_plan.json'
     base=dict(scope='public_three_seed_development_only',subject_rows=[],task_rows=[],units=[],pending=[],failed=[],
               confirmation_feedback_used=False,requires_simulation_and_pressure_review=True)
-    if not path.exists():return base | dict(status='waiting_for_three_seed_review_plan')
-    plan=json.loads(path.read_text())
-    expected=build_review_plan(screen_root=plan['screen_root'],data_root=data_root,registry_path=registry_path)
-    if plan!=expected:raise ValueError('frozen review selection, source or screening evidence changed')
+    plan=load_verified_review_plan(root,data_root=data_root,registry_path=registry_path)
+    if plan is None:return base | dict(status='waiting_for_three_seed_review_plan')
     state_path=root/'run_state.json'
     if not state_path.exists():return base | dict(status='waiting_for_three_seed_review_state')
     state=json.loads(state_path.read_text())

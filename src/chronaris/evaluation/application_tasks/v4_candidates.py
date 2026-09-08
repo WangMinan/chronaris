@@ -16,6 +16,21 @@ CANDIDATE_CHANGES = {
 BASELINE_CANDIDATES = ("reference", "capacity64", "missingness_mixture", "multihorizon")
 
 
+def validate_candidate_training_budget(state, *, phase, route):
+    """Validate recorded optimizer steps, independently of export directory labels."""
+    if phase not in ('screen','review') or route not in ('self_supervised','task_guided'):
+        raise ValueError('unknown candidate phase or route')
+    count=state['self_supervised_training']['optimizer_updates']
+    if type(count) is not int or (not 500<=count<=1500 if phase=='review' else count!=300):
+        raise ValueError('candidate pretraining update counts differ from the frozen budget')
+    if route=='task_guided':
+        guided=state['task_guided_training'];joint=guided['joint_updates']
+        if (type(joint) is not int or type(guided['optimizer_updates']) is not int
+            or guided['head_warmup_updates']!=50 or guided['optimizer_updates']!=50+joint
+            or (not 200<=joint<=500 if phase=='review' else joint!=200)):
+            raise ValueError('candidate supervised update counts differ from the frozen budget')
+
+
 def candidate_options(method, name):
     if name not in CANDIDATE_CHANGES:
         raise ValueError("candidate outside the approved single-factor cohort")

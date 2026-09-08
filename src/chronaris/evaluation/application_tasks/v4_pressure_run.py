@@ -2,6 +2,7 @@
 from dataclasses import asdict
 from pathlib import Path
 import json
+import hashlib
 import time
 import traceback
 
@@ -16,6 +17,7 @@ from chronaris.evaluation.application_tasks.application_metrics import segmentat
 from chronaris.evaluation.application_tasks.v4_development_conditions import DEVELOPMENT_CONDITIONS, load_development_condition
 from chronaris.evaluation.application_tasks.v4_development_data import load_development_inputs, v4_workflow_source_sha256
 from chronaris.evaluation.application_tasks.v4_diagnostic_run import CURVE_UPDATES, _require_diagnostic_device
+from chronaris.evaluation.application_tasks.v4_candidate_results import _completed_scores
 from chronaris.evaluation.application_tasks.v4_encoding_diagnostics import collect_encoding_diagnostics
 from chronaris.evaluation.application_tasks.v4_grouped_consumers import regression_metrics
 from chronaris.modeling.training import TrainedFusionAdapter
@@ -103,21 +105,38 @@ def _verify_clean_predictions(reference_path, actual_path):
 def run_development_pressure(*, method, route, update, output_root,
     diagnostic_root="artifacts/application_evaluation/2026-09-06_v4-learning-curves",
     condition_root="artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair", candidate_name=None,
-    device="cuda"):
+    device="cuda", phase="screen", seed=17):
+    if phase not in ('screen','review') or seed not in ((17,) if phase=='screen' else (17,29,43)):
+        raise ValueError('pressure requires an approved development phase and seed')
+    if phase=='review' and candidate_name is None:
+        raise ValueError('review pressure requires a selected candidate')
     if device == "cuda":
-        _require_diagnostic_device(17)
+        _require_diagnostic_device(seed)
     elif device != "cpu":
         raise ValueError("pressure inference device must be cpu or cuda")
     from chronaris.evaluation.application_tasks.v4_candidates import candidate_options, EXPANDED_SIMULATION_ROOT
     options = candidate_options(method, candidate_name) if candidate_name is not None else None
-    allowed_updates = ((300,) if route == "self_supervised" else (200,)) if options else CURVE_UPDATES
+    allowed_updates = ((1500 if phase=='review' else 300,) if route == "self_supervised" else
+                       (500 if phase=='review' else 200,)) if options else CURVE_UPDATES
     if route not in {"self_supervised", "task_guided"} or update not in allowed_updates:
         raise ValueError("pressure diagnosis requires an approved learning-curve snapshot")
     torch.set_num_threads(1)
     curve = Path(diagnostic_root) / "simulation" / method
     if options:
         curve = curve / candidate_name
+    if phase=='review':curve=curve/'review'/f'seed{seed}'
     training_state = json.loads((curve / "run_state.json").read_text())
+    if training_state.get('phase','screen')!=phase or training_state['seed']!=seed:
+        raise ValueError('pressure phase or seed differs from clean training')
+    if phase=='review':
+        plan=json.loads((Path(diagnostic_root)/'selection_plan.json').read_text())
+        digest=plan.pop('plan_sha256')
+        selected=[unit for unit in plan['units'] if unit['domain']=='simulation' and unit['method']==method
+                  and unit['candidate_name']==candidate_name and unit['seed']==seed and route in unit['routes']]
+        if (hashlib.sha256(json.dumps(plan,sort_keys=True).encode()).hexdigest()!=digest or len(selected)!=1
+            or plan['confirmation_feedback_used'] or plan['source_code_sha256']!=training_state['source_code_sha256']):
+            raise ValueError('pressure unit is not in its frozen review selection')
+        _completed_scores(curve,training_state,route,update,method,candidate_name,phase=phase,seed=seed)
     if json.dumps(training_state.get("candidate_options"), sort_keys=True) != json.dumps(options, sort_keys=True):
         raise ValueError("pressure candidate configuration differs from clean training")
     if f"{route}:{update}" not in training_state["completed_consumers"]:
@@ -141,7 +160,7 @@ def run_development_pressure(*, method, route, update, output_root,
         raise ValueError("clean representation does not match the pressure checkpoint/validation fold")
     source = {"format": "chronaris.v4_development_pressure.v1", "source_code_sha256": v4_workflow_source_sha256(),
         "method": method, "route": route, "update": update, "checkpoint_sha256": sha256_file(checkpoint),
-        "inference_device": device,
+        "inference_device": device, "phase": phase, "seed": seed,
         "data_manifest_sha256": digest, "consumer_protocol_sha256": consumer_manifest["protocol_sha256"],
         "source_diagnostic_code_sha256": training_state["source_code_sha256"],
         "candidate_options": options,
@@ -152,7 +171,9 @@ def run_development_pressure(*, method, route, update, output_root,
         "evaluation_role": "validation", "confirmation_opened": False, "consumer_refit": False}
     root = Path(output_root) / method / route / str(update)
     if options:
-        root = Path(output_root) / method / candidate_name / route / str(update)
+        root = Path(output_root) / method / candidate_name
+        if phase=='review':root=root/'review'/f'seed{seed}'
+        root=root / route / str(update)
     root.mkdir(parents=True, exist_ok=True)
     state_path = root / "run_state.json"
     state = json.loads(state_path.read_text()) if state_path.exists() else {"source": source, "conditions": {}}
@@ -194,11 +215,12 @@ def run_development_pressure(*, method, route, update, output_root,
                         raise ValueError("current execution does not reproduce the clean snapshot representation")
                 result = evaluate_frozen_application_consumers(method_name=method, output=output, targets=targets,
                     model_root=consumer_root, output_root=root / condition / "predictions", fold_id=fold.fold_id,
-                    evaluation_id=condition, seed=17, evaluation_role="validation")
+                    evaluation_id=condition, seed=seed, evaluation_role="validation")
                 if condition == "clean_asynchronous":
                     _verify_clean_predictions(consumer_manifest["prediction_path"], result.prediction_path)
                 diagnostics = collect_encoding_diagnostics(encoder=encoder, normalizer=normalizer, batch=observed.batch)
-                record = {"condition": condition, "route": route, "update": update, "evidence_scope": "development_diagnostic",
+                record = {"condition": condition, "route": route, "update": update, "seed": seed, "phase": phase,
+                    "evidence_scope": "development_diagnostic",
                     "evaluation": asdict(result), "grouped": summarize_pressure_predictions(result, output, observed.sample_manifest_rows),
                     "encoding_diagnostics": diagnostics, "clean_representation_max_delta": clean_delta,
                     "representation_elapsed_s": representation_s, "elapsed_s": time.perf_counter() - started}

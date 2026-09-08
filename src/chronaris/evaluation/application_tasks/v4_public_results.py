@@ -8,7 +8,7 @@ from scipy.stats import rankdata
 
 from chronaris.evaluation.application_tasks.v4_candidate_results import PRIMARY_METRICS, collect_simulation_screen
 from chronaris.evaluation.application_tasks.v4_development_data import load_development_inputs
-from chronaris.evaluation.application_tasks.v4_candidates import candidate_options
+from chronaris.evaluation.application_tasks.v4_candidates import candidate_options, validate_candidate_training_budget
 from chronaris.evaluation.application_tasks.v4_grouped_consumers import native_consumer_context
 from chronaris.evaluation.application_tasks.v4_native_result_audit import audit_native_consumer_result
 from chronaris.representation import load_fusion_stream_batch
@@ -67,17 +67,12 @@ def read_public_candidate_unit(*, unit_root, saved, unit, route, source_code_sha
     _,_,fold,_,data_hash,targets,definitions,data=inputs
     pretraining=saved['self_supervised_training']
     count=pretraining['optimizer_updates']
+    validate_candidate_training_budget(saved,phase=phase,route=route)
     if (saved['method']!=method or saved['domain']!=domain or saved['phase']!=phase
         or saved['candidate_options']!=json.loads(json.dumps(candidate_options(method,candidate)))
         or saved['source_code_sha256']!=source_code_sha256 or saved['data_manifest_sha256']!=data_hash
-        or saved['fold']!=fold.to_dict() or saved['seed']!=seed or saved['confirmation_opened']
-        or type(count) is not int or (not 500<=count<=1500 if reviewing else count!=300)):
+        or saved['fold']!=fold.to_dict() or saved['seed']!=seed or saved['confirmation_opened']):
         raise ValueError('public candidate training source, roles or update counts changed')
-    if route=='task_guided':
-        guided=saved['task_guided_training'];joint=guided['joint_updates']
-        if (type(joint) is not int or guided['head_warmup_updates']!=50 or guided['optimizer_updates']!=50+joint
-            or (not 200<=joint<=500 if reviewing else joint!=200)):
-            raise ValueError('public candidate supervised update counts changed')
     checkpoint=Path(saved[route+'_training']['best_checkpoint_path']);checkpoint_hash=sha256_file(checkpoint)
     representation_root=unit_root/'representations'/route/str(update)
     if route=='task_guided':representation_root/=method

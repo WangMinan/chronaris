@@ -156,6 +156,28 @@ def _check_pressure_pipeline(root, monkeypatch, inputs, targets, fold, *, method
             path.write_bytes(path.read_bytes() + b"changed")
             with pytest.raises(ValueError, match="saved pressure result changed"):
                 pressure.run_development_pressure(**kwargs)
+    if candidate_name:
+        import hashlib
+        review_root=root/'review'
+        plan={'confirmation_feedback_used':False,'units':[]}
+        for seed,route in ((29,'self_supervised'),(43,'task_guided')):
+            saved=json.loads((review_root/'simulation'/method/candidate_name/'review'/f'seed{seed}'/'run_state.json').read_text())
+            plan['source_code_sha256']=saved['source_code_sha256']
+            plan['units'].append(dict(domain='simulation',method=method,candidate_name=candidate_name,seed=seed,routes=[route]))
+        digest=hashlib.sha256(json.dumps(plan,sort_keys=True).encode()).hexdigest()
+        (review_root/'selection_plan.json').write_text(json.dumps(plan | {'plan_sha256':digest}))
+        # This engineering fixture trains three steps; production budget checks are tested separately.
+        checked=[]
+        monkeypatch.setattr(pressure,'_completed_scores',lambda *args,**kwargs:checked.append(kwargs))
+        for seed,route in ((29,'self_supervised'),(43,'task_guided')):
+            result=pressure.run_development_pressure(method=method,route=route,update=1500 if route=='self_supervised' else 500,
+                candidate_name=candidate_name,diagnostic_root=review_root,output_root=root/'review_pressure',
+                condition_root=condition_root,phase='review',seed=seed,device='cpu')
+            assert result['completed'] and result['source']['seed']==seed and result['source']['phase']=='review'
+            for condition in result['conditions'].values():
+                record=json.loads(Path(condition['result_path']).read_text())
+                assert record['seed']==seed and all(row['seed']==seed for row in record['evaluation']['metric_rows'])
+        assert checked==[{'phase':'review','seed':29},{'phase':'review','seed':43}]
 
 
 def test_native_diagnostic_cpu_contract_runs_shared_training_and_grouped_consumers(tmp_path, monkeypatch):

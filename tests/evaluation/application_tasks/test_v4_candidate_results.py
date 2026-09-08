@@ -136,3 +136,32 @@ def test_pressure_queue_failure_is_distinct_from_other_route_failure(tmp_path):
     result = results.collect_simulation_screen(**kwargs)
     assert result["status"] == "blocked_by_execution_failure"
     assert result["failure_evidence"]["pressure_queue_sha256"] == sha256_file(path)
+
+
+def test_review_scores_use_seed_and_actual_early_stop_budget(tmp_path):
+    import shutil
+    unit=_candidate(tmp_path,'reference')
+    state=json.loads((unit/'run_state.json').read_text())
+    state.update(seed=29,phase='review')
+    state['self_supervised_training']['optimizer_updates']=700
+    shutil.copytree(unit/'representations/self_supervised/300',unit/'representations/self_supervised/1500')
+    result=json.loads((unit/'self_supervised_300_consumers.json').read_text())
+    for row in result['metric_rows']:row['seed']=29
+    (unit/'self_supervised_1500_consumers.json').write_text(json.dumps(result))
+    kwargs=dict(root=unit,state=state,route='self_supervised',update=1500,method='physiology_only',
+                candidate='reference',phase='review',seed=29)
+    assert results._completed_scores(**kwargs)['pretraining_updates']==700
+    state['self_supervised_training']['optimizer_updates']=499
+    with pytest.raises(ValueError,match='update counts'):results._completed_scores(**kwargs)
+    state['self_supervised_training']['optimizer_updates']=700
+    with pytest.raises(ValueError,match='phase, seed'):results._completed_scores(**(kwargs | {'seed':43}))
+
+
+def test_supervised_budget_counts_warmup_separately():
+    from chronaris.evaluation.application_tasks.v4_candidates import validate_candidate_training_budget
+    state={'self_supervised_training':{'optimizer_updates':700},
+           'task_guided_training':{'head_warmup_updates':50,'joint_updates':300,'optimizer_updates':350}}
+    validate_candidate_training_budget(state,phase='review',route='task_guided')
+    state['task_guided_training']['optimizer_updates']=300
+    with pytest.raises(ValueError,match='supervised update counts'):
+        validate_candidate_training_budget(state,phase='review',route='task_guided')

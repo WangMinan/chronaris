@@ -1,0 +1,12 @@
+{
+  "scope": "simulation_three_seed_development_only",
+  "completed": [],
+  "task_rows": [],
+  "pending": [],
+  "failed": [],
+  "pressure_pending": [],
+  "pressure_failed": [],
+  "confirmation_feedback_used": false,
+  "final_selection": false,
+  "status": "waiting_for_three_seed_review_plan"
+}

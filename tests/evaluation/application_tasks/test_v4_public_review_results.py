@@ -44,7 +44,7 @@ def test_public_review_reader_preserves_fold_seed_routes_and_shared_update_count
     (tmp_path/'selection_plan.json').write_text(json.dumps(plan))
     state=dict(plan_sha256='a'*64,completed_units=[],failed_units=[])
     (tmp_path/'run_state.json').write_text(json.dumps(state))
-    monkeypatch.setattr(module,'build_review_plan',lambda **kwargs:plan)
+    monkeypatch.setattr(module,'load_verified_review_plan',lambda *args,**kwargs:plan)
     monkeypatch.setattr(module,'load_development_inputs',lambda domain,*args,**kwargs:calls.append((domain,kwargs['fold_index'])) or ())
     def read(**kwargs):
         unit,route=kwargs['unit'],kwargs['route']

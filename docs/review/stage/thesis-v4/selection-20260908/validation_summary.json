@@ -15,5 +15,36 @@
   ],
   "candidate_selection_complete": false,
   "three_seed_review_started": false,
-  "confirmation_model_scores_produced": false
+  "confirmation_model_scores_produced": false,
+  "simulation_three_seed_review": {
+    "source_code_sha256": "ad9d3aedea51014c17f21427e23fc18a7a745cd56452176d13fb477a05322b85",
+    "end_to_end_and_readers": {
+      "passed": 20,
+      "skipped": 1,
+      "elapsed_s": 19.21
+    },
+    "tail_and_dispatch_checks": {
+      "passed": 2,
+      "elapsed_s": 2.05
+    },
+    "full_cpu": {
+      "passed": 593,
+      "skipped": 30,
+      "elapsed_s": 136.03
+    },
+    "actual_status": "waiting_for_three_seed_review_plan",
+    "actual_clean_review_units": 0,
+    "actual_review_pressure_cli_status": "waiting_gpu",
+    "logs": {
+      "focused": {
+        "path": "artifacts/application_evaluation/2026-09-08_v4-simulation-review-reader/focused.log",
+        "sha256": "32d50015cfb8d2f4ed29edd8ae3ed21ad00bf07bc33301a3535e1770b20c1401"
+      },
+      "full_cpu": {
+        "path": "artifacts/application_evaluation/2026-09-08_v4-simulation-review-reader/full_cpu.log",
+        "sha256": "f8f1e569eb38a6102bbb8930970e0968ee3261cb658f25c1dbf04efdd82942a1"
+      }
+    },
+    "readiness_sha256": "a13f5dcf5540f32a7ebf111e5b2f252fa073eb82857102e488ce6e0598a5c46a"
+  }
 }
