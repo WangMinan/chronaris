@@ -53,5 +53,21 @@
       "cogpilot": 2524,
       "clare": 794
     }
-  }
+  },
+  "public_confirmation_preparation_launch": [
+    {
+      "domain": "cogpilot",
+      "pid": 93545,
+      "started_unix_s": 1788841144.032309,
+      "worktree": "/home/wangminan/projects/chronaris-runtime-v4-public-preparation-20260908",
+      "source_commit": "b8b53d81"
+    },
+    {
+      "domain": "clare",
+      "pid": 93546,
+      "started_unix_s": 1788841144.0327182,
+      "worktree": "/home/wangminan/projects/chronaris-runtime-v4-public-preparation-20260908",
+      "source_commit": "b8b53d81"
+    }
+  ]
 }
