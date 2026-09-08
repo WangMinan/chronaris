@@ -1,0 +1,23 @@
+{
+  "worktree": "/home/wangminan/projects/chronaris-runtime-v4-naive-development-20260908",
+  "source_commit": "847c9c4e",
+  "script_sha256": "3e4d63dc9514c68659bd0c7052824b5d9e4f33b522c0e07ab5d8e44e28273e75",
+  "workers": [
+    {
+      "domain": "cogpilot",
+      "pid": 15331
+    },
+    {
+      "domain": "clare",
+      "pid": 15332
+    },
+    {
+      "domain": "dingxin",
+      "pid": 15333
+    }
+  ],
+  "total_units": 24,
+  "launched_unix_s": 1788848042.5411015,
+  "cuda_visible_devices": "",
+  "blas_threads_per_worker": 1
+}
