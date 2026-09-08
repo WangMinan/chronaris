@@ -1,0 +1,11 @@
+{
+  "scope": "three_seed_single_factor_development_decisions",
+  "upstream_statuses": {
+    "public": "waiting_for_three_seed_review_plan",
+    "simulation": "waiting_for_three_seed_review_plan"
+  },
+  "decisions": {},
+  "confirmation_feedback_used": false,
+  "configuration_frozen": false,
+  "status": "waiting_for_complete_three_seed_review"
+}

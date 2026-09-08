@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -37,7 +37,7 @@ def main():
     args = parser.parse_args()
     public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
     review_stage = args.stage in {"candidate-review-plan", "candidate-review-cohort"}
-    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results", "public-review-results"}
+    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results", "public-review-results", "candidate-adoption"}
     if aggregate_stage and args.domain is not None:
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
@@ -54,11 +54,20 @@ def main():
                      "candidate-pressure": "2026-09-08_v4-candidate-pressure"}
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
-    for stage in ("candidate-review-plan", "candidate-review-cohort", "public-review-results", "simulation-review-results"):
+    for stage in ("candidate-review-plan", "candidate-review-cohort", "public-review-results", "simulation-review-results", "candidate-adoption"):
         default_roots[stage] = "2026-09-08_v4-candidate-review"
     default_roots["candidate-review-pressure"] = "2026-09-08_v4-review-pressure"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "simulation-review-results":
+    if args.stage == "candidate-adoption":
+        from chronaris.evaluation.application_tasks.v4_adoption import collect_adoption_decisions
+        result = collect_adoption_decisions(output_root=output_root,
+            pressure_root="artifacts/application_evaluation/2026-09-08_v4-review-pressure",
+            data_root=args.data_root,registry_path=args.registry)
+        root = Path(output_root); root.mkdir(parents=True,exist_ok=True)
+        (root / "adoption_decisions.json").write_text(json.dumps(result,indent=2,allow_nan=False) + "\n")
+        summary = {"status": result["status"], "method_routes": len(result["decisions"]),
+                   "configuration_frozen": result["configuration_frozen"]}
+    elif args.stage == "simulation-review-results":
         if args.domain != "simulation":raise ValueError("simulation review results require --domain simulation")
         from chronaris.evaluation.application_tasks.v4_simulation_review_results import collect_simulation_review_results
         result = collect_simulation_review_results(output_root=output_root,
