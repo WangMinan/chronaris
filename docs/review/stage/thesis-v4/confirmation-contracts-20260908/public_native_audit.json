@@ -1,0 +1,20 @@
+[
+  {
+    "domain": "cogpilot",
+    "fold": "v4_cogpilot_confirmation_fold01",
+    "train_batch_samples": 4,
+    "held_out_rejected": true,
+    "normalizer_cache_hit": true,
+    "train_and_validation_targets": 7050,
+    "held_out_samples": 2123
+  },
+  {
+    "domain": "clare",
+    "fold": "v4_clare_confirmation_fold01",
+    "train_batch_samples": 4,
+    "held_out_rejected": true,
+    "normalizer_cache_hit": true,
+    "train_and_validation_targets": 2534,
+    "held_out_samples": 534
+  }
+]

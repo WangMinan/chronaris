@@ -1,0 +1,160 @@
+{
+  "dingxin_data_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7",
+  "dingxin_folds": [
+    {
+      "fold_id": "leave_one_sortie_out__fold01",
+      "encoder_train_views": 18,
+      "outer_train_views": 30,
+      "held_out_views": 60,
+      "outer_train_vehicle_contexts": 30,
+      "physiology_fields": 12,
+      "outer_targets_rejected_for_encoder": true
+    },
+    {
+      "fold_id": "leave_one_sortie_out__fold02",
+      "encoder_train_views": 36,
+      "outer_train_views": 60,
+      "held_out_views": 30,
+      "outer_train_vehicle_contexts": 30,
+      "physiology_fields": 11,
+      "outer_targets_rejected_for_encoder": true
+    }
+  ],
+  "public_normalization_audits": [
+    {
+      "domain": "cogpilot",
+      "folds": [
+        {
+          "fold_id": "v4_cogpilot_confirmation_fold01",
+          "train_samples": 5601,
+          "validation_samples": 1449,
+          "held_out_samples": 2123,
+          "fit_sample_hash": "a0047ec193f87f6ef801d814e8353968e1f6d0b020803898834a86e71c8d60fb",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/cogpilot/v4_cogpilot_confirmation_fold01/normalization.json",
+          "sha256": "c56701fe8f353f188970b1d8976fc9284f70a9c1d8bb787cac65feaafc83729c",
+          "resumed": false,
+          "elapsed_s": 345.8808256313205,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_cogpilot_confirmation_fold02",
+          "train_samples": 5685,
+          "validation_samples": 1424,
+          "held_out_samples": 2064,
+          "fit_sample_hash": "551bd5869246782d30adff7c88cb38e91273e2e3e69d6c9ce8ea2fa48b7e46cc",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/cogpilot/v4_cogpilot_confirmation_fold02/normalization.json",
+          "sha256": "c000d43ec1b3c8a62217733da621cf6273d5a6c0397d85d433a659f9a0518b4c",
+          "resumed": false,
+          "elapsed_s": 352.9329395336099,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_cogpilot_confirmation_fold03",
+          "train_samples": 5680,
+          "validation_samples": 1439,
+          "held_out_samples": 2054,
+          "fit_sample_hash": "b5ea61604ee6a707033d6a116b51f2edd4ebc450443c7c7198e3524d77e0ca34",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/cogpilot/v4_cogpilot_confirmation_fold03/normalization.json",
+          "sha256": "ca9f748bcd234b024a78fc3cb107999a945a577559fd96d5306215cd16ace4df",
+          "resumed": false,
+          "elapsed_s": 347.09656190499663,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_cogpilot_confirmation_fold04",
+          "train_samples": 5891,
+          "validation_samples": 1491,
+          "held_out_samples": 1791,
+          "fit_sample_hash": "a9109afbf5e978408a48add187522376857393c537e59fd312a92a3a99238947",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/cogpilot/v4_cogpilot_confirmation_fold04/normalization.json",
+          "sha256": "591f70e9be8ee1602ae4137b297a41169fdb52d11aaee38306efa8ae0eeb809c",
+          "resumed": false,
+          "elapsed_s": 365.63200016273186,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_cogpilot_confirmation_fold05",
+          "train_samples": 6360,
+          "validation_samples": 1672,
+          "held_out_samples": 1141,
+          "fit_sample_hash": "63667e7c6a6c1ad0a5a074c92b88659b7c69024c27cd983791dbe844bee3aaa9",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/cogpilot/v4_cogpilot_confirmation_fold05/normalization.json",
+          "sha256": "e0d35739b3ec4590251d37377da3c1701025e74cf6891c504ad79078acc81104",
+          "resumed": false,
+          "elapsed_s": 388.9198943390511,
+          "fit_read_training_only": true
+        }
+      ],
+      "completed": true,
+      "model_scores_produced": false
+    },
+    {
+      "domain": "clare",
+      "folds": [
+        {
+          "fold_id": "v4_clare_confirmation_fold01",
+          "train_samples": 2102,
+          "validation_samples": 432,
+          "held_out_samples": 534,
+          "fit_sample_hash": "54ecb42631aa3c592f1c0a5fda6ec4ed638a8025f7829e9e7a51de5a09fa7c1d",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/clare/v4_clare_confirmation_fold01/normalization.json",
+          "sha256": "baffcbff6195b0fd2d723bbcec28ff6c1dcf8d55971a06ebf623a0c1fa9500a5",
+          "resumed": false,
+          "elapsed_s": 49.803856536280364,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_clare_confirmation_fold02",
+          "train_samples": 1988,
+          "validation_samples": 432,
+          "held_out_samples": 648,
+          "fit_sample_hash": "cd8538aef8c939923078ef09a3b3fe048a80d836e499250ea8fc5b4e050f67a7",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/clare/v4_clare_confirmation_fold02/normalization.json",
+          "sha256": "93427106060679ad0aac9954046dfe347787e9918912613a2039fb2cda3a54ba",
+          "resumed": false,
+          "elapsed_s": 45.36855003610253,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_clare_confirmation_fold03",
+          "train_samples": 2047,
+          "validation_samples": 427,
+          "held_out_samples": 594,
+          "fit_sample_hash": "5cdc78903d281798c3c42d2f2125082acac6b9703f4ea8982674b8a904a88999",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/clare/v4_clare_confirmation_fold03/normalization.json",
+          "sha256": "817ed5c1d7deeaa875979411605f8e49660f43dc6db06bb4df88faa64687050f",
+          "resumed": false,
+          "elapsed_s": 46.83977219602093,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_clare_confirmation_fold04",
+          "train_samples": 1993,
+          "validation_samples": 431,
+          "held_out_samples": 644,
+          "fit_sample_hash": "699a66bb266de9cc8fcd9d254ac9afb2b15188c06cbf9a6cb01d542a3081b0b0",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/clare/v4_clare_confirmation_fold04/normalization.json",
+          "sha256": "e27fa346663a5cf106f0f2fe9ae8ea65bbb060bf553b4fe74adc960682900a76",
+          "resumed": false,
+          "elapsed_s": 44.82222851226106,
+          "fit_read_training_only": true
+        },
+        {
+          "fold_id": "v4_clare_confirmation_fold05",
+          "train_samples": 2096,
+          "validation_samples": 324,
+          "held_out_samples": 648,
+          "fit_sample_hash": "cb8ecfb804bbc2cc01003cea9589f515ee8dd69d6656da81cfddf44a95283bcd",
+          "path": "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers/clare/v4_clare_confirmation_fold05/normalization.json",
+          "sha256": "24b5cca2415e10f675c3dbff73cd5b5abc4859f62f4feead1d330ebcafe8a020",
+          "resumed": false,
+          "elapsed_s": 46.64311639871448,
+          "fit_read_training_only": true
+        }
+      ],
+      "completed": true,
+      "model_scores_produced": false
+    }
+  ],
+  "model_scores_produced": false
+}

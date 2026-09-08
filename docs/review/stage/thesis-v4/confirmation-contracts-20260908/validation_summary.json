@@ -1,0 +1,37 @@
+{
+  "source_code_sha256": "80f7784d33e6c9f0e5475e470b3a23362fe244161f86c1abd600202da26b606e",
+  "focused": {
+    "passed": 18,
+    "skipped": 1,
+    "elapsed_s": 17.77
+  },
+  "full_cpu": {
+    "passed": 557,
+    "skipped": 29,
+    "elapsed_s": 119.47
+  },
+  "cuda_checks_deferred_while_frozen_queue_active": true,
+  "logs": {
+    "final_public_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-confirmation-contracts/final_public_checks.log",
+      "sha256": "52c31ab731abf5c33346393c5454af486167c42dc1dbdfdd1ad540bf66825352"
+    },
+    "contracts_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-confirmation-contracts/contracts_checks.log",
+      "sha256": "304ca4c9cde832b8dfc775c2cd2b824bcef9157ab2ab94934b8c5ee8e2f5781e"
+    },
+    "full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-confirmation-contracts/full_cpu_tests.log",
+      "sha256": "e8c163fe4000e0bd66cc22f6617b7943be3739fcbaff21f0475d41b77067e729"
+    },
+    "focused.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-confirmation-contracts/focused.log",
+      "sha256": "85f3d81cf2122e22eb4e201e561993278e7465d8b957e127bf3e629d5d240720"
+    },
+    "repaired_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-confirmation-contracts/repaired_checks.log",
+      "sha256": "af1664671394ac5dba966ec4efb2d5f7fcaef747c18ec5a3bf2ad3a230200aa5"
+    }
+  },
+  "model_confirmation_scores_produced": false
+}

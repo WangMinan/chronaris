@@ -61,6 +61,37 @@ def _public_inputs():
 
 
 @pytest.mark.parametrize("family", ["linear", "minirocket"])
+def test_public_consumer_fitting_ignores_held_out_values_and_labels(family):
+    outputs, targets, tasks, context = _public_inputs()
+    ids = targets.sample_ids + ("held0", "held1")
+    held = _output(ids[-2:], np.random.default_rng(43).normal(size=(2, QUERY_POINT_COUNT, 64)))
+    outputs = outputs | {"held_out": held}
+    context = context | {"groups": context["groups"] | {"held0": "outer", "held1": "outer"}}
+    targets = replace(targets, sample_ids=ids,
+        values={"classify": torch.cat((targets.values["classify"], torch.tensor([0, 1]))),
+                "fields": torch.cat((targets.values["fields"], torch.tensor([[1., 2.], [3., 4.]])))},
+        valid_masks={"classify": torch.ones(len(ids), dtype=torch.bool),
+                     "fields": torch.cat((targets.valid_masks["fields"], torch.ones(2, 2, dtype=torch.bool)))})
+    first = fit_native_consumers(outputs=outputs, targets=targets, definitions=tasks, context=context,
+                                 family=family, minirocket_kernels=84)
+    changed = replace(targets, values={key: value.clone() for key, value in targets.values.items()})
+    changed.values["classify"][-2:] = torch.tensor([2, 2])
+    changed.values["fields"][-2:] += 10000
+    altered_held = _output(held.sample_ids, held.sequence_embedding.numpy() * 10000)
+    second = fit_native_consumers(outputs=outputs | {"held_out": altered_held}, targets=changed, definitions=tasks,
+                                  context=context, family=family, minirocket_kernels=84)
+    assert first["fit_rows"] == second["fit_rows"]
+    for key in first["models"]:
+        a, b = first["models"][key], second["models"][key]
+        np.testing.assert_array_equal(a[0].scale_, b[0].scale_)
+        for left, right in zip(getattr(a[-1], "estimators_", [a[-1]]), getattr(b[-1], "estimators_", [b[-1]]), strict=True):
+            np.testing.assert_array_equal(left.coef_, right.coef_)
+            np.testing.assert_array_equal(left.intercept_, right.intercept_)
+    evaluated = evaluate_native_consumers(first, output=held, targets=targets)
+    assert evaluated["independent_unit"] == "subject" and evaluated["sample_count"] == 2
+
+
+@pytest.mark.parametrize("family", ["linear", "minirocket"])
 def test_partial_fields_zero_observations_grouped_scores_and_frozen_reuse(family):
     outputs, targets, tasks, context = _public_inputs()
     bundle = fit_native_consumers(outputs=outputs, targets=targets, definitions=tasks, context=context,

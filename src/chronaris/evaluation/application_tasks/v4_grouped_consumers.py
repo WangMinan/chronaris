@@ -17,10 +17,13 @@ from chronaris.evaluation.application_tasks.consumer_model_selection import (
 from chronaris.evaluation.application_tasks.v4_development_data import v4_workflow_source_sha256
 
 
-def native_consumer_context(domain, data, fold):
+def native_consumer_context(domain, data, fold, *, include_held_out=False):
     """Take identity and train-fitted target scales from the authoritative data bundle."""
     ids = fold.train_sample_ids + fold.validation_sample_ids
+    if include_held_out and domain == "dingxin":
+        ids += fold.held_out_sample_ids
     if domain in {"cogpilot", "clare"}:
+        ids += fold.held_out_sample_ids
         groups = {row["sample_id"]: row["subject_id"] for row in data.sample_manifest}
         return {"domain": domain, "groups": {sample: groups[sample] for sample in ids},
                 "regression": {}, "vehicle_groups": {}}
@@ -43,7 +46,10 @@ def native_consumer_context(domain, data, fold):
 
 
 def _validate_inputs(outputs, targets, definitions, context):
-    if "train" not in outputs or "validation" not in outputs or set(outputs) - {"train", "validation", "held_out"}:
+    requires_validation = context["domain"] != "dingxin"
+    if ("train" not in outputs or (requires_validation and "validation" not in outputs)
+        or (not requires_validation and not set(outputs) & {"validation", "held_out"})
+        or set(outputs) - {"train", "validation", "held_out"}):
         raise ValueError("consumer roles require train and validation")
     ids = [sample for output in outputs.values() for sample in output.sample_ids]
     if len(ids) != len(set(ids)) or not set(ids) <= set(targets.sample_ids) or not set(ids) <= set(context["groups"]):

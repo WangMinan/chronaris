@@ -1,4 +1,4 @@
-"""Shared full-development inputs, with an explicit small engineering subset."""
+"""Fixed-role inputs; training providers always exclude outer held-out samples."""
 from dataclasses import replace
 from pathlib import Path
 import hashlib
@@ -31,14 +31,20 @@ def v4_workflow_source_sha256():
 
 
 def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fold_index=0,
-                            simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development"):
-    if fold_index < 0 or fold_index >= ({"simulation": 1, "dingxin": 2}.get(domain, 3)):
+                            simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development",
+                            subject_role="development"):
+    if subject_role not in {"development", "confirmation"}:
+        raise ValueError("invalid fixed subject role")
+    if subject_role == "confirmation" and (domain not in {"cogpilot", "clare"} or smoke):
+        raise ValueError("confirmation subject inputs require a complete public fold")
+    fold_count = {"simulation": 1, "dingxin": 2}.get(domain, 5 if subject_role == "confirmation" else 3)
+    if fold_index < 0 or fold_index >= fold_count:
         raise ValueError("invalid development fold index")
     simulation = None
     if domain in {"cogpilot", "clare"}:
-        data = load_prepared_public_development(domain, output_root=data_root, registry_path=registry_path)
+        data = load_prepared_public_development(domain, output_root=data_root, registry_path=registry_path, role=subject_role)
         registry = json.loads(Path(registry_path).read_text())
-        fold = data.fold(registry["domains"][domain]["folds"]["development"][fold_index])
+        fold = data.fold(registry["domains"][domain]["folds"][subject_role][fold_index])
         if smoke:
             fold = replace(fold, fold_id=fold.fold_id + "__engineering_smoke",
                 train_sample_ids=_hash_prefix(fold.train_sample_ids, 32), validation_sample_ids=_hash_prefix(fold.validation_sample_ids, 8))

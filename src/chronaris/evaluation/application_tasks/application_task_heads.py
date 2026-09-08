@@ -76,6 +76,11 @@ def build_application_heads(definitions):
 
 
 def fit_application_task_parameters(targets, definitions, train_ids):
+    if targets.manifest.get("domain") == "dingxin" and (
+        targets.manifest.get("fit_scope") != "inner_training"
+        or set(targets.manifest.get("fit_sample_ids", ())) != set(train_ids)
+    ):
+        raise RepresentationContractError("Dingxin encoder targets must be fitted on the exact internal training role")
     if set(targets.values) != {task.name for task in definitions}:
         raise RepresentationContractError("task definitions and targets differ")
     index = {value: i for i, value in enumerate(targets.sample_ids)}

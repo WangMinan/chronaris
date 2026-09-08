@@ -142,6 +142,9 @@ def _check_pressure_pipeline(root, monkeypatch, inputs, targets, fold, *, method
         result = pressure.run_development_pressure(**kwargs)
         assert result["completed"] and len(result["conditions"]) == 8
         missing = json.loads(Path(result["conditions"]["contiguous_gap_30s"]["result_path"]).read_text())
+        representation_root = Path(result["conditions"]["contiguous_gap_30s"]["result_path"]).parent / "representation"
+        metadata = json.loads((representation_root / "representation_manifest.json").read_text())
+        assert metadata["label_used_for_encoder_training"] is (route == "task_guided")
         assert missing["grouped"]["all_windows_retained"] and missing["grouped"]["no_observation_count"] == 3
         assert all(row["role"] == "validation" for row in missing["evaluation"]["metric_rows"])
         if candidate_name:

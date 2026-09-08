@@ -23,6 +23,36 @@ from chronaris.modeling.training.candidate_checkpoint import is_development_snap
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
+def load_frozen_application_encoder(checkpoint, *, route, fold, device, allow_diagnostic_snapshot=False):
+    """Load only encoder weights while retaining label and initialization lineage."""
+    from chronaris.modeling.training import load_common_pretraining_checkpoint
+    if route not in {"self_supervised", "task_guided"}:
+        raise ValueError("unknown frozen encoder route")
+    if route == "self_supervised":
+        encoder, _, normalizer, payload = load_common_pretraining_checkpoint(checkpoint, device=device,
+            allow_diagnostic_snapshot=allow_diagnostic_snapshot)
+        if payload["fold"] != fold.to_dict():
+            raise RepresentationContractError("frozen encoder data roles changed")
+        return encoder, normalizer, payload
+    payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
+    snapshot = allow_diagnostic_snapshot and is_development_snapshot(payload)
+    if (payload.get("format") != FINETUNING_FORMAT or payload.get("label_used_for_encoder_training") is not True
+        or (payload.get("training_status") != "completed" and not snapshot)):
+        raise RepresentationContractError("task-guided encoder requires a completed supervised checkpoint")
+    roles = {role: list(getattr(fold, role + "_sample_ids")) for role in ("train", "validation", "held_out")}
+    if payload["role_sample_ids"] != roles or payload["fold_id"] != fold.fold_id:
+        raise RepresentationContractError("task-guided encoder data roles changed")
+    if sha256_file(payload["source_checkpoint_path"]) != payload["source_checkpoint_sha256"]:
+        raise RepresentationContractError("task-guided initialization checkpoint changed")
+    encoder, _, normalizer, source = load_common_pretraining_checkpoint(payload["source_checkpoint_path"], device=device)
+    if (source["fold"] != fold.to_dict() or source["seed"] != payload["seed"]
+        or encoder.method_name != payload["method_name"] or payload["normalizer"] != normalizer.to_manifest()):
+        raise RepresentationContractError("task-guided encoder initialization lineage changed")
+    encoder.load_state_dict({name.removeprefix("encoder."): value for name, value in payload["model_state_dict"].items()
+                             if name.startswith("encoder.")}, strict=True)
+    return encoder, normalizer, payload
+
+
 def export_finetuned_application_representations(
     *,
     model: EndToEndApplicationModel,

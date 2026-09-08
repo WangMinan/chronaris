@@ -1,5 +1,5 @@
 """Native Dingxin observations and targets fitted only on internal training blocks."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 import hashlib
 import json
@@ -71,26 +71,50 @@ def load_v4_dingxin_development(*, snapshot_root="artifacts/application_evaluati
     targets, definitions, sampling = {}, {}, {}
     for fold in folds:
         ids = fold.train_sample_ids + fold.validation_sample_ids
-        maneuver = fitted.maneuver_targets[fitted.maneuver_targets.fold_id == fold.fold_id].set_index("context_id").loc[list(ids)]
-        physiology = fitted.physiology_targets[(fitted.physiology_targets.fold_id == fold.fold_id) & fitted.physiology_targets.selected]
-        fields = tuple(sorted(physiology.field_name.unique()))
-        field_values = physiology.pivot(index="context_id", columns="field_name", values="future_value").loc[list(ids), list(fields)].to_numpy(dtype=np.float32)
-        values = {"maneuver_regression": torch.tensor(maneuver.future_maneuver_score.to_numpy(dtype=np.float32)),
-                  "maneuver_classification": torch.tensor(maneuver.future_maneuver_class.to_numpy(dtype=np.int64)),
-                  "physiology_regression": torch.from_numpy(field_values)}
-        targets[fold.fold_id] = ApplicationTaskTargets(ids, values,
-            {name: torch.isfinite(value) for name, value in values.items()},
-            {"domain": "dingxin", "fit_scope": "inner_training", "fit_sample_ids": list(fold.train_sample_ids),
-             "physiology_field_order": list(fields), "future_duration_s": 5.},
-            torch.tensor(maneuver.sample_weight.to_numpy(dtype=np.float32)))
-        definitions[fold.fold_id] = (ApplicationTaskDefinition("maneuver_regression", "regression", 1),
-            ApplicationTaskDefinition("maneuver_classification", "classification", 3),
-            ApplicationTaskDefinition("physiology_regression", "regression", len(fields)))
-        sampling[fold.fold_id] = {sample: (str(maneuver.loc[sample, "vehicle_context_id"]), str(maneuver.loc[sample, "view_id"]))
-                                 for sample in fold.train_sample_ids}
+        targets[fold.fold_id], definitions[fold.fold_id], sampling[fold.fold_id] = _task_targets(fitted, fold, ids, "inner_training")
     manifest = dict(source_hashes=source.source_hashes, folds=[fold.to_dict() for fold in folds], embargo=embargo,
         schema_sha256=index.plan.schema.schema_sha256, maneuver_history_policy=DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY,
         input_temporal_contract="all_native_points", target_fit="inner_training_only")
     digest = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()
     return V4DingxinData(index, folds, embargo, raw, fitted, targets, definitions, sampling, source.source_hashes,
         dingxin_vehicle_field_labels(index, field_role_manifest_path=root / "field_role_manifest.csv"), digest)
+
+
+def _task_targets(fitted, fold, ids, scope):
+    maneuver = fitted.maneuver_targets[fitted.maneuver_targets.fold_id == fold.fold_id].set_index("context_id").loc[list(ids)]
+    physiology = fitted.physiology_targets[(fitted.physiology_targets.fold_id == fold.fold_id) & fitted.physiology_targets.selected]
+    fields = tuple(sorted(physiology.field_name.unique()))
+    field_values = physiology.pivot(index="context_id", columns="field_name", values="future_value").loc[list(ids), list(fields)].to_numpy(dtype=np.float32)
+    values = {"maneuver_regression": torch.tensor(maneuver.future_maneuver_score.to_numpy(dtype=np.float32)),
+              "maneuver_classification": torch.tensor(maneuver.future_maneuver_class.fillna(-1).to_numpy(dtype=np.int64)),
+              "physiology_regression": torch.from_numpy(field_values)}
+    masks = {name: torch.isfinite(value) for name, value in values.items()}
+    masks["maneuver_classification"] &= masks["maneuver_regression"] & (values["maneuver_classification"] >= 0)
+    targets = ApplicationTaskTargets(ids, values, masks,
+        {"domain": "dingxin", "fit_scope": scope, "fit_sample_ids": list(fold.train_sample_ids),
+         "physiology_field_order": list(fields), "future_duration_s": 5.},
+        torch.tensor(maneuver.sample_weight.to_numpy(dtype=np.float32)))
+    definitions = (ApplicationTaskDefinition("maneuver_regression", "regression", 1),
+        ApplicationTaskDefinition("maneuver_classification", "classification", 3),
+        ApplicationTaskDefinition("physiology_regression", "regression", len(fields)))
+    sampling = {sample: (str(maneuver.loc[sample, "vehicle_context_id"]), str(maneuver.loc[sample, "view_id"]))
+                for sample in fold.train_sample_ids}
+    return targets, definitions, sampling
+
+
+def build_dingxin_outer_consumer_inputs(data, fold_id):
+    """Data-only target contract; actual consumer fitting follows encoder freeze."""
+    from chronaris.evaluation.application_tasks.v4_grouped_consumers import native_consumer_context
+    inner = next(fold for fold in data.folds if fold.fold_id == fold_id)
+    held = set(inner.held_out_sample_ids)
+    train = tuple(str(sample) for sample in data.raw_targets.contexts.context_id if sample not in held)
+    if set(train) != set(inner.train_sample_ids + inner.validation_sample_ids + data.embargo[fold_id]):
+        raise ValueError("Dingxin outer training membership differs from the complete sortie")
+    outer = FoldLineage(fold_id, train, (), inner.held_out_sample_ids)
+    fitted = fit_simple_loso_targets(data.raw_targets)
+    targets, definitions, _ = _task_targets(fitted, outer, train + outer.held_out_sample_ids,
+                                           "outer_training_after_encoder_freeze")
+    context_data = replace(data, fitted_targets=fitted, targets_by_fold={fold_id: targets})
+    return {"fold": outer, "targets": targets, "definitions": definitions,
+            "context": native_consumer_context("dingxin", context_data, outer, include_held_out=True),
+            "encoder_fold": inner, "data_manifest_sha256": data.data_manifest_sha256}

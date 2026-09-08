@@ -20,3 +20,34 @@ def test_dingxin_inner_roles_keep_shared_views_and_entire_target_support_togethe
     changed.loc[changed.target_start_offset_ms == 115000, "target_end_exclusive_ms"] += 1
     with pytest.raises(ValueError, match="18/6/6"):
         dingxin_v4_inner_folds(changed)
+
+
+def test_outer_consumers_refit_complete_sortie_without_reusing_encoder_targets():
+    from chronaris.evaluation.application_tasks.v4_dingxin_data import (
+        V4DingxinData, build_dingxin_outer_consumer_inputs)
+    from chronaris.evaluation.application_tasks.application_task_heads import fit_application_task_parameters
+    from chronaris.evaluation.application_tasks.v4_grouped_consumers import fit_native_consumers, evaluate_native_consumers
+    from chronaris.representation.contracts import RepresentationContractError
+    from tests.evaluation.application_tasks.test_v4_grouped_consumers import _output
+    import numpy as np
+
+    raw = _synthetic_raw_bundle()
+    folds, embargo = dingxin_v4_inner_folds(raw.contexts)
+    data = V4DingxinData(None, folds, embargo, raw, None, {}, {}, {}, {}, (), "a" * 64)
+    for inner in folds:
+        result = build_dingxin_outer_consumer_inputs(data, inner.fold_id)
+        outer, targets = result["fold"], result["targets"]
+        assert not outer.validation_sample_ids
+        assert set(outer.train_sample_ids) == set(inner.train_sample_ids + inner.validation_sample_ids + embargo[inner.fold_id])
+        assert result["encoder_fold"] == inner and data.fitted_targets is None
+        assert targets.manifest["fit_scope"] == "outer_training_after_encoder_freeze"
+        with pytest.raises(RepresentationContractError, match="internal training"):
+            fit_application_task_parameters(targets, result["definitions"], inner.train_sample_ids)
+        rng = np.random.default_rng(17)
+        outputs = {role: _output(ids, rng.normal(size=(len(ids), 64))) for role, ids in
+                   (("train", outer.train_sample_ids), ("held_out", outer.held_out_sample_ids))}
+        bundle = fit_native_consumers(outputs=outputs, targets=targets, definitions=result["definitions"], context=result["context"])
+        assert all(row["selected_parameter"] == 1 for row in bundle["fit_rows"])
+        evaluated = evaluate_native_consumers(bundle, output=outputs["held_out"], targets=targets)
+        assert evaluated["independent_unit"] == "sortie_descriptive_only"
+        assert evaluated["sample_count"] == len(outer.held_out_sample_ids)

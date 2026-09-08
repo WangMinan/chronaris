@@ -31,3 +31,29 @@ def test_engineering_subset_crops_partial_targets_and_rejects_unused_subject_win
     omitted = next(sample for sample in ids if sample not in selected)
     with pytest.raises(ValueError, match="confirmation observations"):
         provider((omitted,))
+
+
+def test_public_confirmation_input_provider_and_training_targets_exclude_outer_holdout(tmp_path, monkeypatch):
+    ids = ("train", "validation", "held")
+    targets = ApplicationTaskTargets(ids, {"response": torch.tensor([1., 2., 1000.])},
+        {"response": torch.ones(3, dtype=torch.bool)}, {"source_role": "fixed_confirmation_subjects"})
+    fold = FoldLineage("public_confirmation", ids[:1], ids[1:2], ids[2:])
+    data = SimpleNamespace(dataset=SimpleNamespace(batch_provider=lambda selected: tuple(selected), schema=None),
+        targets=targets, task_definitions=(), prepared_manifest_sha256="a" * 64,
+        fold=lambda _: fold, sampling_hierarchy=lambda selected: {s: (s,) for s in selected.train_sample_ids})
+    requested_roles = []
+    def load(*args, **kwargs):
+        requested_roles.append(kwargs["role"])
+        return data
+    monkeypatch.setattr(data_module, "load_prepared_public_development", load)
+    registry = tmp_path / "subjects.json"
+    registry.write_text(json.dumps({"domains": {"clare": {"folds": {"confirmation": [{}]}}}}))
+    provider, _, actual_fold, _, _, actual_targets, _, full_data = data_module.load_development_inputs(
+        "clare", tmp_path, registry, subject_role="confirmation")
+    assert requested_roles == ["confirmation"] and actual_fold == fold
+    assert actual_targets.sample_ids == ids[:2] and full_data.targets.sample_ids == ids
+    assert provider(ids[:2]) == ids[:2]
+    with pytest.raises(ValueError, match="confirmation observations"):
+        provider(ids[2:])
+    with pytest.raises(ValueError, match="complete public fold"):
+        data_module.load_development_inputs("clare", tmp_path, registry, subject_role="confirmation", smoke=True)

@@ -10,7 +10,7 @@ import torch
 from sklearn.metrics import f1_score
 
 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
-from chronaris.evaluation.application_tasks.application_finetuning import FINETUNING_FORMAT
+from chronaris.evaluation.application_tasks.application_finetuning_export import load_frozen_application_encoder
 from chronaris.evaluation.application_tasks.application_frozen_evaluation import evaluate_frozen_application_consumers
 from chronaris.evaluation.application_tasks.application_metrics import segmentation_metrics
 from chronaris.evaluation.application_tasks.v4_development_conditions import DEVELOPMENT_CONDITIONS, load_development_condition
@@ -18,8 +18,7 @@ from chronaris.evaluation.application_tasks.v4_development_data import load_deve
 from chronaris.evaluation.application_tasks.v4_diagnostic_run import CURVE_UPDATES, _require_diagnostic_device
 from chronaris.evaluation.application_tasks.v4_encoding_diagnostics import collect_encoding_diagnostics
 from chronaris.evaluation.application_tasks.v4_grouped_consumers import regression_metrics
-from chronaris.modeling.training import TrainedFusionAdapter, load_common_pretraining_checkpoint
-from chronaris.modeling.training.candidate_checkpoint import is_development_snapshot
+from chronaris.modeling.training import TrainedFusionAdapter
 from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
 from chronaris.representation import load_fusion_stream_batch, select_observation_batch, write_fusion_stream_batch
 from chronaris.representation.oof_export import _concatenate_fusion_batches
@@ -27,29 +26,17 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 
 
 def _load_development_encoder(checkpoint, *, route, fold, device):
-    payload = torch.load(checkpoint, map_location="cpu", weights_only=True)
-    if route == "self_supervised":
-        encoder, _, normalizer, source = load_common_pretraining_checkpoint(checkpoint, device=device, allow_diagnostic_snapshot=True)
-        if source["fold"] != fold.to_dict():
-            raise ValueError("pressure encoder development roles changed")
-    else:
-        if (payload.get("format") != FINETUNING_FORMAT or payload.get("label_used_for_encoder_training") is not True
-            or (payload.get("training_status") != "completed" and not is_development_snapshot(payload))):
-            raise ValueError("pressure evaluation requires a completed update or development snapshot")
-        roles = {role: list(getattr(fold, role + "_sample_ids")) for role in ("train", "validation", "held_out")}
-        if payload["role_sample_ids"] != roles:
-            raise ValueError("guided pressure encoder development roles changed")
-        encoder, _, normalizer, source = load_common_pretraining_checkpoint(payload["source_checkpoint_path"], device=device)
-        if payload["normalizer"] != normalizer.to_manifest():
-            raise ValueError("guided pressure normalization differs from initialization")
-        encoder.load_state_dict({name.removeprefix("encoder."): value for name, value in payload["model_state_dict"].items()
-                                 if name.startswith("encoder.")}, strict=True)
+    encoder, normalizer, _ = load_frozen_application_encoder(checkpoint, route=route, fold=fold, device=device,
+                                                           allow_diagnostic_snapshot=True)
     return encoder, normalizer
 
 
-def _paired_representation(encoder, normalizer, checkpoint, fold, batch, root):
+def _paired_representation(encoder, normalizer, checkpoint, fold, batch, root, *, label_used_for_encoder_training=False):
     checkpoint_hash = sha256_file(checkpoint)
     if (root / "representation_manifest.json").exists():
+        metadata = json.loads((root / "representation_manifest.json").read_text())
+        if metadata["label_used_for_encoder_training"] is not label_used_for_encoder_training:
+            raise ValueError("cached pressure representation label provenance changed")
         output = load_fusion_stream_batch(root)
         if (output.sample_ids != batch.sample_ids or output.source_sample_hashes != batch.source_sample_hashes
             or output.checkpoint_sha256 != checkpoint_hash or output.fold_id != fold.fold_id):
@@ -58,7 +45,8 @@ def _paired_representation(encoder, normalizer, checkpoint, fold, batch, root):
     adapter = TrainedFusionAdapter(encoder=encoder, normalizer=normalizer, fold_id=fold.fold_id, checkpoint_sha256=checkpoint_hash)
     output = _concatenate_fusion_batches([adapter(select_observation_batch(batch, batch.sample_ids[i:i + 4]))
                                          for i in range(0, len(batch.sample_ids), 4)])
-    write_fusion_stream_batch(output, root=root, export_role="development_pressure_validation")
+    write_fusion_stream_batch(output, root=root, export_role="development_pressure_validation",
+                             label_used_for_encoder_training=label_used_for_encoder_training)
     return output
 
 
@@ -196,7 +184,8 @@ def run_development_pressure(*, method, route, update, output_root,
                         raise ValueError("saved pressure result changed")
                     continue
                 started = time.perf_counter()
-                output = _paired_representation(encoder, normalizer, checkpoint, fold, observed.batch, root / condition / "representation")
+                output = _paired_representation(encoder, normalizer, checkpoint, fold, observed.batch, root / condition / "representation",
+                                                label_used_for_encoder_training=route == "task_guided")
                 representation_s = time.perf_counter() - started
                 clean_delta = None
                 if condition == "clean_asynchronous":
