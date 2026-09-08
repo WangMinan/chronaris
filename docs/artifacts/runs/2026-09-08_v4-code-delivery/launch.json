@@ -1,0 +1,17 @@
+{
+  "pid": 82623,
+  "process_group": 82623,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908/scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete",
+    "--until",
+    "confirmation"
+  ],
+  "runtime": "/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908",
+  "output_root": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete",
+  "code_commit": "bee5112e76ecd07af268dcead61bd098cf9b8e6b",
+  "launched_unix_s": 1788879965.2037654,
+  "status": "launched_validation_before_training"
+}

@@ -2,13 +2,15 @@
 
 候选比较、公开开发三折与三种子复核已连接为一个可恢复入口。初筛之后的名单由代码按既定指标和阈值选择，完成开发证据后自动冻结配置；无需等待实验结果再补写普通阶段的编排。
 
+冻结提交为 `bee5112e`，完整 CUDA 验证为 **650 项通过、8 项跳过**，用时 320.01 秒。后台总控进程为 **82623**，训练子进程为 **83324**；已核验并另存 **150 次实际更新**的 CUDA 检查点，参数均有限。当前阶段为候选初筛，正式确认将在开发选型与配置冻结后自动接续。来源和状态分别见[验证摘要](validation_summary.json)、[启动记录](launch.json)及[实际训练检查](live_training_check.json)。
+
 ## 运行方式
 
 在包含本次提交的冻结工作树中，使用仓库的 `chronaris` 环境运行。以下命令会先完整验证 CUDA（统一计算设备架构），再执行开发选型、配置冻结、正式主表、压力、核心消融、独立时间机制和最终统计报告。
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_v4_pipeline.py \
-  --root artifacts/application_evaluation/2026-09-08_v4-complete-code-run \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908/scripts/evaluation/application_tasks/run_v4_pipeline.py \
+  --root /mnt/e/chronaris-v4-results/2026-09-08-v4-complete \
   --until confirmation
 ```
 

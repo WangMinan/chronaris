@@ -1,0 +1,21 @@
+{
+  "scope": "engineering_existing_development_windows_only",
+  "sample_ids": [
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_060.000",
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_090.000",
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_120.000"
+  ],
+  "physiology_shape": [
+    4,
+    61,
+    7
+  ],
+  "vehicle_shape": [
+    4,
+    301,
+    12
+  ],
+  "native_points_retained": true,
+  "confirmation_opened": false
+}

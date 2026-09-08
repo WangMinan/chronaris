@@ -1,0 +1,20 @@
+{
+  "code_commit": "bee5112e76ecd07af268dcead61bd098cf9b8e6b",
+  "runtime": "/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908",
+  "output_root": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete",
+  "reference_links": [
+    "docs/artifacts/runs/2026-05-01_deep-real-sortie-prepared/feature_export_case_sequences/sequence_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/feature_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/feature_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/feature_bundle.npz",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01/views/20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_\u56db01_ACT-4_\u4e91_J20_22#01/views/20251005_\u56db01_ACT-4_\u4e91_J20_22#01__pilot_10033/raw_window_summary.jsonl"
+  ]
+}

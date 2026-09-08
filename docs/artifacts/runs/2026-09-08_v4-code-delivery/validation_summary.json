@@ -1,0 +1,41 @@
+{
+  "status": "completed",
+  "code_commit": "bee5112e76ecd07af268dcead61bd098cf9b8e6b",
+  "source_code_sha256": "75254f7454e2d16105052f27ace805edf03b48584fd0030551bf220411b1ce93",
+  "full_cuda_tests": {
+    "passed": 650,
+    "skipped": 8,
+    "warnings": 415,
+    "elapsed_s": 320.01,
+    "receipt_path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/cuda_validation/attempt_1/validation_receipt.json",
+    "receipt_sha256": "40501e8b8944d2ba227f763ba6f010b57c613a5a3f37d572f2d28d0d64648db1",
+    "files": {
+      "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/cuda_validation/attempt_1/pytest.xml": "ba55d9952b9947a37b136d4b3f29f9a627a973ffcc6549b7b09623aac9f27a29",
+      "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/cuda_validation/attempt_1/pytest.log": "f7cf8f3d5ce286d7230dda1df14b0f5153e963bf6665f25ef40c19704b3cddab"
+    }
+  },
+  "earlier_cpu_tests": {
+    "passed": 624,
+    "skipped": 31,
+    "elapsed_s": 187.99
+  },
+  "intermediate_source_changed_validation": {
+    "pytest_passed": 650,
+    "pytest_skipped": 8,
+    "receipt_status": "failed",
+    "reason": "source changed during validation; not reused",
+    "path": "artifacts/application_evaluation/2026-09-08_v4-code-complete-validation/validation_receipt.json"
+  },
+  "static_checks": [
+    "compileall passed",
+    "Ruff F821/F822/F823 passed",
+    "git diff --check passed"
+  ],
+  "visual_check": {
+    "status": "inspected",
+    "scope": "engineering fixture with constant 0.6 values; not research scores",
+    "chinese_labels_readable": true
+  },
+  "real_native_window_check": "artifacts/application_evaluation/2026-09-08_v4-code-delivery-native-check/result.json",
+  "backend_started": true
+}

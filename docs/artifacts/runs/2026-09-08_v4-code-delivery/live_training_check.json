@@ -1,0 +1,47 @@
+{
+  "checked_unix_s": 1788880783.4510605,
+  "pipeline": {
+    "pid": 82623,
+    "status": "running",
+    "current_stage": "initial",
+    "children": {
+      "initial": 83324
+    },
+    "completed": {
+      "cuda_validation": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/stage_results/cuda_validation.1.json",
+        "sha256": "40501e8b8944d2ba227f763ba6f010b57c613a5a3f37d572f2d28d0d64648db1"
+      }
+    }
+  },
+  "training_progress": {
+    "method": "chronaris",
+    "status": "running",
+    "optimizer_updates": 108,
+    "best_update": 100,
+    "sample_ids": [
+      "g1_state_space__v4_train_profile_060__trajectory_485__seed_4110000485__clean_asynchronous::context_090.000",
+      "g1_state_space__v4_train_profile_061__trajectory_493__seed_4110000493__clean_asynchronous::context_090.000",
+      "g1_state_space__v4_train_profile_062__trajectory_501__seed_4110000501__clean_asynchronous::context_090.000",
+      "g1_state_space__v4_train_profile_063__trajectory_509__seed_4110000509__clean_asynchronous::context_090.000"
+    ],
+    "samples_seen": 3456,
+    "peak_allocated_bytes": 350868992,
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/reference/self_supervised/chronaris/C/last.pt",
+    "device": "cuda",
+    "data_wait_s": 1.6230531595647335,
+    "wall_elapsed_s": 383.6479532220401
+  },
+  "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/reference/self_supervised/chronaris/C/last.pt",
+  "checkpoint_sha256": "1dc1da4bf07dfeb7bf7583848cb4e4b4474c4da2188d51754bc50f2563f081c7",
+  "checkpoint_optimizer_updates": 100,
+  "checkpoint_seed": 17,
+  "checkpoint_device": "cuda",
+  "checkpoint_parameters_finite": true,
+  "process_snapshot": "  PID  PPID  PGID STAT     ELAPSED COMMAND\n82623     1 82623 Ssl        12:27 /home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908/scripts/evaluation/application_tasks/run_v4_pipeline.py --root /mnt/e/chronaris-v4-results/2026-09-08-v4-complete --until confirmation\n83324 82623 83324 Rsl        06:42 /home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908/scripts/evaluation/application_tasks/run_v4_pipeline.py --worker initial --config /mnt/e/chronaris-v4-results/2026-09-08-v4-complete/pipeline_config.json --result /mnt/e/chronaris-v4-results/2026-09-08-v4-complete/stage_results/initial.1.json --attempt 1\n",
+  "research_stage": "candidate_development_not_formal_confirmation",
+  "immutable_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/launch_audit/initial_reference_update_000150.pt",
+  "immutable_checkpoint_sha256": "e949eaff5c368dc89e7fdd5266862a6eef1100ec70b0120c382908ba25f5ec4f",
+  "immutable_checkpoint_optimizer_updates": 150,
+  "snapshot_unix_s": 1788880958.327061
+}
