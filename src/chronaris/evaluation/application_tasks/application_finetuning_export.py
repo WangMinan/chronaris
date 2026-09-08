@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -16,6 +17,7 @@ from chronaris.representation import (
     FusionStreamBatch,
     select_observation_batch,
     write_fusion_stream_batch,
+    load_fusion_stream_batch,
 )
 from chronaris.representation.contracts import RepresentationContractError
 from chronaris.modeling.training.candidate_validation import _load_batch
@@ -51,6 +53,41 @@ def load_frozen_application_encoder(checkpoint, *, route, fold, device, allow_di
     encoder.load_state_dict({name.removeprefix("encoder."): value for name, value in payload["model_state_dict"].items()
                              if name.startswith("encoder.")}, strict=True)
     return encoder, normalizer, payload
+
+
+def export_loaded_application_encoder(*, encoder, normalizer, checkpoint, provider, fold, root,
+                                      export_roles, export_prefix, label_used_for_encoder_training=False,
+                                      batch_size=4):
+    """Shared masked export for an already validated frozen encoder and role manifest."""
+    from chronaris.modeling.training import TrainedFusionAdapter
+    from chronaris.representation.oof_export import _concatenate_fusion_batches
+    if batch_size < 1 or not export_roles or len(set(export_roles)) != len(export_roles) or set(export_roles) - {"train", "validation", "held_out"}:
+        raise ValueError("invalid frozen export batch size or roles")
+    adapter = TrainedFusionAdapter(encoder=encoder, normalizer=normalizer, fold_id=fold.fold_id,
+                                  checkpoint_sha256=sha256_file(checkpoint))
+    outputs = {}
+    for role in export_roles:
+        ids = getattr(fold, role + "_sample_ids")
+        if not ids:
+            continue
+        path = Path(root) / role
+        manifest_path = path / "representation_manifest.json"
+        if manifest_path.exists():
+            metadata = json.loads(manifest_path.read_text())
+            output = load_fusion_stream_batch(path)
+            if (output.sample_ids != ids or output.checkpoint_sha256 != adapter.checkpoint_sha256
+                or output.fold_id != fold.fold_id or output.method_name != encoder.method_name
+                or metadata["label_used_for_encoder_training"] is not label_used_for_encoder_training
+                or metadata["export_role"] != f"{export_prefix}_{role}"):
+                raise RepresentationContractError("frozen representation provenance changed")
+        else:
+            output = _concatenate_fusion_batches([adapter(provider(ids[i:i + batch_size])) for i in range(0, len(ids), batch_size)])
+            if output.sample_ids != ids:
+                raise RepresentationContractError("frozen export provider returned other samples")
+            write_fusion_stream_batch(output, root=path, export_role=f"{export_prefix}_{role}",
+                                     label_used_for_encoder_training=label_used_for_encoder_training)
+        outputs[role] = output
+    return outputs
 
 
 def export_finetuned_application_representations(

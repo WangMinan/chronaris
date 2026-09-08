@@ -1,0 +1,41 @@
+{
+  "source_code_sha256": "9bcaeaec8a4f06502ed9e6309ff34832cf61f7e25e504a4d1c2d4534a2ff9b43",
+  "integration": {
+    "passed": 5,
+    "skipped": 1,
+    "elapsed_s": 19.22
+  },
+  "full_cpu": {
+    "passed": 559,
+    "skipped": 29,
+    "elapsed_s": 116.64
+  },
+  "validation_reuse_gpu_case_added_after_full_cpu": true,
+  "formal_confirmation_scores_produced": false,
+  "logs": {
+    "integration_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/integration_checks.log",
+      "sha256": "77ed6f516be74bb4795591c85d264d606eea476381e570bafb62dd1915f6ce74"
+    },
+    "final_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/final_checks.log",
+      "sha256": "530470c5fdf632a1b53da8c4a2da5c20e62f326813f833bce77837f427873deb"
+    },
+    "full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/full_cpu_tests.log",
+      "sha256": "c08ba1d1bcb549adea49eb04282163a07460fd84699e163dea474134d3524379"
+    },
+    "validation_reuse_check.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/validation_reuse_check.log",
+      "sha256": "38bbb26677f79eb9bfa92b337918dff1e5cd475a83d7908c7f3d69cd71c924f9"
+    },
+    "initial_check.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/initial_check.log",
+      "sha256": "43cb248da5d17e7c383a13df2dd3996a2c3563c40a773908ef59929f380201da"
+    },
+    "repaired_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/repaired_checks.log",
+      "sha256": "4fc0849c0498d946a9efb28d68c9e8eb6c25a46893fcb19feb21b478ba394604"
+    }
+  }
+}

@@ -15,14 +15,13 @@ from chronaris.evaluation.application_tasks.application_consumer_smoke_data impo
 from chronaris.evaluation.application_tasks.application_consumer_runtime import ApplicationConsumerProtocol, run_application_method_consumers, prepare_application_cpu_consumers
 from chronaris.evaluation.application_tasks.application_consumers import LinearConsumerConfig, MiniRocketConsumerConfig, TCNConsumerConfig
 from chronaris.evaluation.application_tasks.application_finetuning import EndToEndApplicationModel, EndToEndFineTuningConfig, train_end_to_end_application_method
-from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations
+from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations, export_loaded_application_encoder
 from chronaris.evaluation.application_tasks.v4_development_data import load_development_inputs, development_normalization, v4_workflow_source_sha256
 from chronaris.evaluation.application_tasks.v4_grouped_consumers import native_consumer_context, run_native_method_consumers
-from chronaris.modeling.training import CandidateScreenConfig, EncoderCandidateConfig, TrainedFusionAdapter, load_common_pretraining_checkpoint, train_pretext_candidate
+from chronaris.modeling.training import CandidateScreenConfig, EncoderCandidateConfig, load_common_pretraining_checkpoint, train_pretext_candidate
 from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
 from chronaris.modeling.training.rng import isolated_training_rng
-from chronaris.representation import AugmentationPolicy, load_fusion_stream_batch, write_fusion_stream_batch
-from chronaris.representation.oof_export import _concatenate_fusion_batches
+from chronaris.representation import AugmentationPolicy
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
@@ -44,21 +43,8 @@ def _require_diagnostic_device(seed):
 
 
 def _snapshot_outputs(*, encoder, normalizer, checkpoint, provider, fold, root):
-    adapter = TrainedFusionAdapter(encoder=encoder, normalizer=normalizer, fold_id=fold.fold_id,
-                                  checkpoint_sha256=sha256_file(checkpoint))
-    outputs = {}
-    for role in ("train", "validation"):
-        ids = getattr(fold, role + "_sample_ids")
-        path = root / role
-        if (path / "representation_manifest.json").exists():
-            output = load_fusion_stream_batch(path)
-            if output.sample_ids != ids or output.checkpoint_sha256 != adapter.checkpoint_sha256:
-                raise ValueError("learning-curve representation provenance changed")
-        else:
-            output = _concatenate_fusion_batches([adapter(provider(ids[i:i + 4])) for i in range(0, len(ids), 4)])
-            write_fusion_stream_batch(output, root=path, export_role=f"development_diagnostic_{role}")
-        outputs[role] = output
-    return outputs
+    return export_loaded_application_encoder(encoder=encoder, normalizer=normalizer, checkpoint=checkpoint,
+        provider=provider, fold=fold, root=root, export_roles=("train", "validation"), export_prefix="development_diagnostic")
 
 
 def run_simulation_diagnostic(*, method, output_root, seed=17):

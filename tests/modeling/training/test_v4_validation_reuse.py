@@ -11,7 +11,10 @@ from chronaris.representation import AugmentationPolicy, TrainOnlyRobustNormaliz
 from tests.modeling.training.test_candidate_screen import _sample
 
 
-def test_validation_reuses_forward_without_changing_public_or_mechanism_values():
+@pytest.mark.parametrize("device", ["cpu", "cuda"])
+def test_validation_reuses_forward_without_changing_public_or_mechanism_values(device):
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA validation reuse check")
     torch.set_num_threads(1)
     torch.manual_seed(17)
     batch = collate_observation_samples([_sample(f"sample_{i}", i) for i in range(4)])
@@ -25,19 +28,31 @@ def test_validation_reuses_forward_without_changing_public_or_mechanism_values()
     common = dict(encoder=encoder, batch=batch, batch_provider=None, sample_ids=batch.sample_ids,
         batch_size=2, normalizer=normalizer, policy=AugmentationPolicy(), seed=17, device="cpu")
     mechanism = dict(shift_head=shift, mechanism_enabled=True, lag_aware_weight=0., explicit_shift_weight=.1, event_pair_weight=0.)
+    encoder.to(device)
+    heads.to(device)
+    shift.to(device)
+    common["device"] = device
     calls = []
     hook = encoder.register_forward_hook(lambda *args: calls.append(1))
+    if device == "cuda":
+        torch.cuda.synchronize()
     started = time.perf_counter()
     original_public = _evaluate_public_losses(**common, heads=heads)
     original_mechanism = evaluate_candidate_mechanisms(**common, **mechanism)
+    if device == "cuda":
+        torch.cuda.synchronize()
     separate_s, separate_calls = time.perf_counter() - started, len(calls)
     calls.clear()
+    if device == "cuda":
+        torch.cuda.synchronize()
     started = time.perf_counter()
     combined = evaluate_candidate_mechanisms(**common, **mechanism, public_heads=heads)
+    if device == "cuda":
+        torch.cuda.synchronize()
     combined_s = time.perf_counter() - started
     assert combined.pop("public_losses") == pytest.approx(original_public, abs=1e-7)
     assert combined == original_mechanism
     assert separate_calls == 10 and len(calls) == 6
     print({"separate_forward_calls": separate_calls, "combined_forward_calls": len(calls),
-           "separate_cpu_s": separate_s, "combined_cpu_s": combined_s})
+           "separate_s": separate_s, "combined_s": combined_s})
     hook.remove()
