@@ -26,8 +26,34 @@ def _configuration(root):
     return frozen,dict(freeze_path=path,freeze_sha256=sha256_file(path),output_root=root/'formal')
 
 
+def _write_model_headers(output_root,units,fold,data_hash,freeze_sha256):
+    for unit in units:
+        root=module.simulation_unit_root(output_root,unit);root.mkdir(parents=True)
+        source=dict(freeze_sha256=freeze_sha256,source_code_sha256=module.v4_workflow_source_sha256(),
+                    method=unit['method'],seed=unit['seed'],routes=unit['routes'],fold=fold,data_manifest_sha256=data_hash)
+        if unit['method']=='naive_time_sync':
+            checkpoint=root/'naive.pt';checkpoint.write_text('fixture')
+            state=source | dict(unit=unit,completed=True,checkpoint=str(checkpoint),checkpoint_sha256=sha256_file(checkpoint))
+            (root/'training_complete.json').write_text(json.dumps(state))
+        else:
+            source['candidate_options']=unit['options'] if 'options' in unit else candidate_options(unit['method'],unit['candidate_name'])
+            state=dict(source=source,completed=True)
+            for route in unit['routes']:
+                checkpoint=root/(route+'.pt')
+                payload=dict(training_status='completed',seed=unit['seed'],method_name=unit['method'],
+                    config={'device':'cuda','data_manifest_sha256':data_hash},label_used_for_encoder_training=route=='task_guided')
+                if route=='self_supervised':payload['fold']=fold
+                else:payload.update(fold_id=fold['fold_id'],role_sample_ids={r:fold[r+'_sample_ids'] for r in ('train','validation','held_out')})
+                torch.save(payload,checkpoint)
+                state[route+'_training']=dict(best_checkpoint_path=str(checkpoint),optimizer_updates=500 if route=='self_supervised' else 250,
+                                             joint_updates=200,head_warmup_updates=50)
+            (root/'run_state.json').write_text(json.dumps(state))
+
+
 def test_all_selected_seeds_and_routes_must_finish_before_confirmation_generation(tmp_path,monkeypatch):
     frozen,kwargs=_configuration(tmp_path)
+    frozen['core_ablation_scope_required']=True
+    kwargs['freeze_path'].write_text(json.dumps(frozen));kwargs['freeze_sha256']=sha256_file(kwargs['freeze_path'])
     registry=json.loads(Path(module.SIMULATION_REGISTRY).read_text())
     registry['historical_generation_manifests']=[]  # Engineering fixture has no archived production datasets.
     registry_path=tmp_path/'registry.json';registry_path.write_text(json.dumps(registry))
@@ -40,28 +66,12 @@ def test_all_selected_seeds_and_routes_must_finish_before_confirmation_generatio
     assert len(module.seal_simulation_models(**kwargs)['pending'])==18
     assert not (kwargs['output_root']/'simulation_frozen_models.json').exists()
     fold=FoldLineage('test__training512',('train',),('validation',),('held',)).to_dict()
-    for unit in module.simulation_confirmation_units(frozen):
-        root=module.simulation_unit_root(kwargs['output_root'],unit);root.mkdir(parents=True)
-        source=dict(freeze_sha256=kwargs['freeze_sha256'],source_code_sha256=module.v4_workflow_source_sha256(),
-                    method=unit['method'],seed=unit['seed'],routes=unit['routes'],fold=fold,data_manifest_sha256=data_hash)
-        if unit['method']=='naive_time_sync':
-            checkpoint=root/'naive.pt';checkpoint.write_text('fixture')
-            state=source | dict(unit=unit,completed=True,checkpoint=str(checkpoint),checkpoint_sha256=sha256_file(checkpoint))
-            (root/'training_complete.json').write_text(json.dumps(state))
-        else:
-            source['candidate_options']=candidate_options(unit['method'],unit['candidate_name'])
-            state=dict(source=source,completed=True)
-            for route in unit['routes']:
-                checkpoint=root/(route+'.pt')
-                payload=dict(training_status='completed',seed=unit['seed'],method_name=unit['method'],
-                    config={'device':'cuda','data_manifest_sha256':data_hash},label_used_for_encoder_training=route=='task_guided')
-                if route=='self_supervised':payload['fold']=fold
-                else:payload.update(fold_id=fold['fold_id'],role_sample_ids={r:fold[r+'_sample_ids'] for r in ('train','validation','held_out')})
-                torch.save(payload,checkpoint)
-                state[route+'_training']=dict(best_checkpoint_path=str(checkpoint),optimizer_updates=500 if route=='self_supervised' else 250,
-                                             joint_updates=200,head_warmup_updates=50)
-            (root/'run_state.json').write_text(json.dumps(state))
+    _write_model_headers(kwargs['output_root'],module.simulation_confirmation_units(frozen),fold,data_hash,kwargs['freeze_sha256'])
     monkeypatch.setattr(module,'load_v4_naive_encoder',lambda path,**kw:(None,None,{'seed':int(Path(path).parent.name.removeprefix('seed'))}))
+    assert module.seal_simulation_models(**kwargs)['status']=='waiting_for_core_ablation_models'
+    assert not (kwargs['output_root']/'simulation_frozen_models.json').exists()
+    from chronaris.evaluation.application_tasks.v4_core_ablations import build_core_ablation_plan
+    _write_model_headers(kwargs['output_root']/'core_ablations',build_core_ablation_plan(frozen)['units'],fold,data_hash,kwargs['freeze_sha256'])
     result=module.seal_simulation_models(**kwargs)
     assert result['evaluation_units']==36 and not result['confirmation_generated']
     assert module.seal_simulation_models(**kwargs)==result

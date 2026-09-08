@@ -113,11 +113,13 @@ def _train_confirmation_unit(*, domain, fold_index, method, options, routes, see
             output_root=root/'self_supervised',config=CandidateScreenConfig(max_updates=1500,batch_size=4,effective_batch_size=effective,
                 weight_decay=1e-4,device='cuda',early_stopping=True,seed=seed,minimum_updates=500,patience=5,validation_interval=100,
                 retained_updates=(1500,),semantic_event_enabled=chronaris,learnable_semantic_queries=chronaris,
-                physics_calibration=calibration if chronaris else None,physics_weight=.05,sampling_hierarchy=hierarchy,
+                physics_calibration=calibration if chronaris else None,physics_weight=options.get('physics_weight',.05),sampling_hierarchy=hierarchy,
                 data_manifest_sha256=digest,cuda_graph_recurrence=chronaris,**options['training']),
             augmentation_policy=AugmentationPolicy(missingness_mixture=options['missingness_mixture']),
+            chronaris_variant=options.get('variant','full'),
             chronaris_fusion_kind='safe_lag' if chronaris else 'multiscale',chronaris_mechanism_enabled=chronaris,
-            chronaris_explicit_shift_enabled=chronaris,chronaris_explicit_shift_weight=.1 if chronaris else 0.,chronaris_event_pair_weight=0.)
+            chronaris_explicit_shift_enabled=chronaris and options.get('explicit_shift_enabled',True),
+            chronaris_explicit_shift_weight=.1 if chronaris and options.get('explicit_shift_enabled',True) else 0.,chronaris_event_pair_weight=0.)
         state['self_supervised_training']=asdict(pretraining);save()
         if 'task_guided' in routes:
             if domain == 'simulation':

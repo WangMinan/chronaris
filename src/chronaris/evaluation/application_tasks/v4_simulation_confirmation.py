@@ -71,10 +71,11 @@ def train_simulation_confirmation(*, freeze_path, freeze_sha256, method, candida
         return receipt
 
 
-def seal_simulation_models(*, freeze_path, freeze_sha256, output_root, simulation_root=EXPANDED_SIMULATION_ROOT):
+def seal_simulation_models(*, freeze_path, freeze_sha256, output_root, simulation_root=EXPANDED_SIMULATION_ROOT,
+                           ablation_units=None):
     """Require all selected methods/routes/seeds, not merely a frozen architecture."""
     frozen = read_frozen_configuration(freeze_path, freeze_sha256)
-    units = simulation_confirmation_units(frozen)
+    units = simulation_confirmation_units(frozen) if ablation_units is None else ablation_units
     pending = []; records = []; files = {}
     for unit in units:
         root = simulation_unit_root(output_root, unit)
@@ -97,7 +98,8 @@ def seal_simulation_models(*, freeze_path, freeze_sha256, output_root, simulatio
             checkpoints = {route: state['checkpoint'] for route in unit['routes']}
         else:
             if (source['method'] != unit['method'] or source['seed'] != unit['seed'] or source['routes'] != unit['routes']
-                or source['candidate_options'] != json.loads(json.dumps(candidate_options(unit['method'], unit['candidate_name'])))):
+                or source['candidate_options'] != json.loads(json.dumps(unit['options'] if ablation_units is not None
+                    else candidate_options(unit['method'], unit['candidate_name'])))):
                 raise ValueError('simulation model does not match the selected method, seed or options')
             checkpoints = {}
             for route in unit['routes']:
@@ -130,11 +132,18 @@ def seal_simulation_models(*, freeze_path, freeze_sha256, output_root, simulatio
         raise ValueError('simulation model training inventory differs from the selected data root')
     for path in (audit_path,Path(simulation_root)/'simulation_manifest.json'):
         files[str(path)]=sha256_file(path)
-    result = dict(format='chronaris.v4_simulation_model_freeze.v1', status='frozen', freeze_sha256=freeze_sha256,
+    if ablation_units is None and frozen.get('core_ablation_scope_required',False):
+        from chronaris.evaluation.application_tasks.v4_core_ablations import seal_core_ablation_models
+        core=seal_core_ablation_models(freeze_path=freeze_path,freeze_sha256=freeze_sha256,output_root=output_root,
+                                       simulation_root=simulation_root)
+        if core['status']!='frozen':return dict(status='waiting_for_core_ablation_models',confirmation_generated=False)
+        core_path=Path(output_root)/'core_ablations/ablation_frozen_models.json'
+        files.update(core['files']);files[str(core_path)]=sha256_file(core_path)
+    result = dict(format='chronaris.v4_simulation_model_freeze.v1' if ablation_units is None else 'chronaris.v4_simulation_ablation_model_freeze.v1', status='frozen', freeze_sha256=freeze_sha256,
         source_code_sha256=v4_workflow_source_sha256(), records=records, files=files,
         simulation_registry_sha256=sha256_file(SIMULATION_REGISTRY), simulation_root=str(simulation_root),
         evaluation_units=sum(len(record['routes']) for record in records), confirmation_generated=False)
-    path = Path(output_root)/'simulation_frozen_models.json'
+    path = Path(output_root)/('simulation_frozen_models.json' if ablation_units is None else 'ablation_frozen_models.json')
     if path.exists() and json.loads(path.read_text()) != result:
         raise ValueError('previously frozen simulation models cannot be overwritten')
     if not path.exists():

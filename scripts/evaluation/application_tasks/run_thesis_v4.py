@@ -13,8 +13,11 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("simulation-confirmation-train", "simulation-confirmation-evaluate", "simulation-confirmation-train-cohort", "simulation-confirmation-evaluate-cohort", "simulation-model-freeze", "simulation-confirmation-data", "dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("core-ablation-train", "core-ablation-evaluate", "core-ablation-train-cohort", "core-ablation-evaluate-cohort", "core-ablation-model-freeze", "simulation-confirmation-train", "simulation-confirmation-evaluate", "simulation-confirmation-train-cohort", "simulation-confirmation-evaluate-cohort", "simulation-model-freeze", "simulation-confirmation-data", "dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
+    from chronaris.evaluation.application_tasks.v4_core_ablations import ABLATIONS
+    parser.add_argument("--ablation",choices=ABLATIONS)
+    parser.add_argument("--ablation-parent-root")
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
     parser.add_argument("--seed", type=int, choices=(17, 29, 43), default=17)
@@ -48,7 +51,7 @@ def main():
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
         parser.error("--domain is required for this stage")
-    if args.seed != 17 and args.stage not in {"candidate-review", "candidate-review-pressure", "naive-development", "native-confirmation-unit", "naive-confirmation-unit", "simulation-confirmation-train", "simulation-confirmation-evaluate"}:
+    if args.seed != 17 and args.stage not in {"candidate-review", "candidate-review-pressure", "naive-development", "native-confirmation-unit", "naive-confirmation-unit", "simulation-confirmation-train", "simulation-confirmation-evaluate", "core-ablation-train", "core-ablation-evaluate"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
     default_roots = {"public-screen-results": "2026-09-08_v4-public-screen", "dingxin-content-audit": "2026-09-08_v4-dingxin-content-audit", "fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
@@ -69,9 +72,25 @@ def main():
     default_roots.update({stage:"2026-09-08_v4-confirmation" for stage in ("native-confirmation-plan","native-confirmation-cohort","naive-confirmation-unit")})
     for stage in ('simulation-confirmation-train','simulation-confirmation-evaluate','simulation-confirmation-train-cohort','simulation-confirmation-evaluate-cohort','simulation-model-freeze'):
         default_roots[stage]='2026-09-08_v4-confirmation'
+    for stage in ('core-ablation-train','core-ablation-evaluate','core-ablation-train-cohort','core-ablation-evaluate-cohort','core-ablation-model-freeze'):
+        default_roots[stage]='2026-09-08_v4-confirmation'
     default_roots['simulation-confirmation-data']='2026-09-08_v4-simulation-confirmation'
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage.startswith('simulation-confirmation-') or args.stage=='simulation-model-freeze':
+    if args.stage.startswith('core-ablation-'):
+        if args.domain!='simulation' or not args.freeze_sha256:
+            raise ValueError('core ablations require the simulation domain and frozen configuration hash')
+        from chronaris.evaluation.application_tasks.v4_core_ablations import (
+            train_core_ablation,evaluate_core_ablation,seal_core_ablation_models,run_core_ablation_cohort)
+        common=dict(freeze_path=args.freeze_path,freeze_sha256=args.freeze_sha256,output_root=args.ablation_parent_root or output_root)
+        if args.stage.endswith('-cohort'):
+            result=run_core_ablation_cohort(**common,stage='train' if args.stage=='core-ablation-train-cohort' else 'evaluate')
+        elif args.stage=='core-ablation-model-freeze':result=seal_core_ablation_models(**common)
+        else:
+            if not args.ablation:raise ValueError('a fixed core ablation is required')
+            operation=train_core_ablation if args.stage=='core-ablation-train' else evaluate_core_ablation
+            result=operation(**common,ablation=args.ablation,base_candidate=args.candidate_name,seed=args.seed)
+        summary={key:result[key] for key in ('status','completed','evaluation_units','pending') if key in result}
+    elif args.stage.startswith('simulation-confirmation-') or args.stage=='simulation-model-freeze':
         if args.domain!='simulation' or not args.freeze_sha256:
             raise ValueError('formal simulation requires its domain and frozen configuration hash')
         from chronaris.evaluation.application_tasks.v4_simulation_confirmation import (

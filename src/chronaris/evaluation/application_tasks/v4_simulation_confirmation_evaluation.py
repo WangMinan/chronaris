@@ -39,7 +39,7 @@ def evaluate_simulation_confirmation(*, freeze_path, freeze_sha256, model_freeze
             model_freeze_sha256=model_freeze_sha256,output_root=output_root,confirmation_root=confirmation_root)
 
 
-def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha256, output_root, confirmation_root):
+def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha256, output_root, confirmation_root, include_pressure=True):
     method, seed = unit['method'], unit['seed']
     root = simulation_unit_root(output_root,unit)
     development, fold = load_v4_simulation_development(simulation_root=models['simulation_root'],registry_path=SIMULATION_REGISTRY)
@@ -68,8 +68,9 @@ def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha25
     conditions = ['clean_asynchronous']+[scenario.scenario_id for scenario in locked_stress_observation_scenarios()]+['physiology_missing','vehicle_missing']
     if len(conditions)!=38 or len(set(conditions))!=38:
         raise ValueError('formal pressure scope must have 35 fixed scenarios and two whole-modality checks')
+    if not include_pressure:conditions=['clean_asynchronous']
     path=root/'confirmation_unit.json'
-    source=dict(freeze_sha256=freeze_sha256,model_freeze_sha256=model_freeze_sha256,unit=unit,conditions=conditions,pressure_condition_count=37,clean_replay_count=1)
+    source=dict(freeze_sha256=freeze_sha256,model_freeze_sha256=model_freeze_sha256,unit=unit,conditions=conditions,pressure_condition_count=len(conditions)-1,clean_replay_count=1)
     state=json.loads(path.read_text()) if path.exists() else dict(source=source,freeze_sha256=freeze_sha256,completed=False,routes={})
     if state['source']!=source:
         raise ValueError('simulation evaluation sources changed')

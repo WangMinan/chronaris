@@ -1,0 +1,65 @@
+{
+  "source_code_sha256": "4124480b42840f884ff4a559fbc65cf63bc84a219c769127c3cda54a42bf6f7c",
+  "module_path": "/home/wangminan/projects/chronaris-runtime-v4-confirmation-20260908/src/chronaris/evaluation/application_tasks/v4_development_data.py",
+  "status": "completed",
+  "domains": [
+    {
+      "domain": "clare",
+      "fold": "v4_clare_confirmation_fold01",
+      "data_manifest_sha256": "d5f91022cc41b6372d1ed35d6ba694d4e1dc102c0d6751fba22858dd4e3a2547",
+      "train_contexts": 2102,
+      "validation_contexts": 432,
+      "held_contexts": 534,
+      "physiology_shape": [
+        1,
+        2560,
+        4
+      ],
+      "vehicle_shape": [
+        1,
+        6390,
+        2
+      ],
+      "held_out_rejected": true
+    },
+    {
+      "domain": "cogpilot",
+      "fold": "v4_cogpilot_confirmation_fold01",
+      "data_manifest_sha256": "7e5cfacec3c40292bfa56c644feeecf55df9b5cc2799518804106684e3dbab58",
+      "train_contexts": 5601,
+      "validation_contexts": 1449,
+      "held_contexts": 2123,
+      "physiology_shape": [
+        1,
+        34410,
+        4
+      ],
+      "vehicle_shape": [
+        1,
+        131,
+        8
+      ],
+      "held_out_rejected": true
+    },
+    {
+      "domain": "dingxin",
+      "fold": "single_record_chronological_blocks_v1",
+      "data_manifest_sha256": "a43c50475d027aa6a0c2bafa5a86c7b73045cda193f0f2374a751d5c16c52e99",
+      "train_contexts": 24,
+      "validation_contexts": 6,
+      "held_contexts": 6,
+      "physiology_shape": [
+        1,
+        150,
+        12
+      ],
+      "vehicle_shape": [
+        1,
+        1779,
+        965
+      ],
+      "held_out_rejected": true
+    }
+  ],
+  "model_scores_generated": false
+}

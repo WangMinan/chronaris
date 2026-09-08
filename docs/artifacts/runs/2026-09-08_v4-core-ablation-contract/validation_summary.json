@@ -1,0 +1,15 @@
+{
+  "source_code_sha256": "f0291e4965485522641a1a2433d4492259c946279705579a86ea911a520e0616",
+  "cpu_full": {
+    "passed": 615,
+    "skipped": 30,
+    "elapsed_s": 144.59,
+    "log_sha256": "ef2db9c3dcb33629ff30c2038ebe1c2055aebf3e3d31f7f5b48f5c1499762314"
+  },
+  "subsequent_chain_root_check": {
+    "passed": 1,
+    "log_sha256": "79a039ba779f058de7471c31a5f53436f8835ec1e13585c50136495cfc3a2a00"
+  },
+  "actual_research_ablation_units": 0,
+  "current_cuda_validation": "pending"
+}

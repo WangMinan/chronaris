@@ -103,6 +103,7 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
                                   pressure_root='artifacts/application_evaluation/2026-09-08_v4-review-pressure',
                                   dingxin_audit_path='docs/artifacts/runs/2026-09-08_v4-fixed-native-development/vehicle_content_audit.json',
                                   dingxin_deduplicated_audit_path='artifacts/application_evaluation/2026-09-08_v4-dingxin-deduplicated/data_audit.json',
+                                  simulation_root='artifacts/application_evaluation/2026-09-07_thesis-v4-simulation-expanded',
                                   normalizer_root='artifacts/application_evaluation/2026-09-08_v4-public-confirmation-normalizers',
                                   registry_path='docs/requirements/thesis-v4-public-subjects.json'):
     root=Path(review_root);adoption_path=root/'adoption_decisions.json'
@@ -168,6 +169,13 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
         or not deduplicated['content_audit']['outer_roles_disjoint']):
         raise ValueError('Dingxin retained-record audit differs from the approved split')
     files[str(dingxin_deduplicated_audit_path)]=sha256_file(dingxin_deduplicated_audit_path)
+    for name,digest in original_dingxin.source_hashes.items():
+        directory=('artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot' if name=='snapshot_manifest.json'
+                   else 'docs/artifacts/runs/2026-07-10_fixed-data-audit')
+        files[str(Path(directory)/name)]=digest
+    for name in ('v4_generation_audit.json','simulation_manifest.json'):
+        path=Path(simulation_root)/name
+        files[str(path)]=sha256_file(path)
     for filename,digest in files.items():
         if sha256_file(filename)!=digest:raise ValueError('freeze evidence file changed')
     frozen=dict(format='chronaris.v4_frozen_configuration.v1',status='frozen',configuration_frozen=True,
@@ -180,6 +188,7 @@ def freeze_reviewed_configuration(*, review_root, validation_receipt, output_pat
         native_fold_counts={'cogpilot':5,'clare':5,'dingxin':1},
         domain_evaluation_protocol={'cogpilot':'subject_five_fold','clare':'subject_five_fold','dingxin':PROTOCOL},
         original_total_evaluation_units=468,amended_total_evaluation_units=432,
+        core_ablation_scope_required=True,
         combination_status='not_applicable_fewer_than_two_eligible_changes',
         development_initialization_for_public_confirmation=False)
     frozen=json.loads(json.dumps(frozen));path=Path(output_path);path.parent.mkdir(parents=True,exist_ok=True)

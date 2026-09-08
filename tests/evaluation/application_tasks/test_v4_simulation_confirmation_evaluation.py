@@ -76,6 +76,7 @@ def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation
     monkeypatch.setattr(evaluation,'MiniRocketConsumerConfig',lambda **kw:rocket(**kw,n_kernels=84))
     monkeypatch.setattr(evaluation,'TCNConsumerConfig',lambda **kw:tcn(**(kw|dict(epochs=1,hidden_channels=8,device='cpu'))))
     from chronaris.evaluation.application_tasks.application_consumers import LinearFrozenConsumer,MiniRocketFrozenConsumer
+    original_fits=(LinearFrozenConsumer.fit,MiniRocketFrozenConsumer.fit)
     frozen_evaluate=evaluation.evaluate_frozen_application_consumers
     def no_fit(*args,**kw):pytest.fail('pressure must reuse the clean consumers')
     def evaluate(**kw):
@@ -96,3 +97,9 @@ def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation
     Path(missing['result_path']).write_text('changed')
     with pytest.raises(ValueError,match='saved formal pressure'):
         evaluation._evaluate_simulation_unit(**arguments)
+
+    monkeypatch.setattr(LinearFrozenConsumer,'fit',original_fits[0])
+    monkeypatch.setattr(MiniRocketFrozenConsumer,'fit',original_fits[1])
+    core=evaluation._evaluate_simulation_unit(**(arguments | {'output_root':tmp_path/'core','include_pressure':False}))
+    assert core['completed'] and core['source']['pressure_condition_count']==0
+    assert set(core['routes']['self_supervised']['conditions'])=={'clean_asynchronous'}

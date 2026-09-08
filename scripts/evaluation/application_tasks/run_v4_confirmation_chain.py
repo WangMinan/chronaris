@@ -12,7 +12,8 @@ from chronaris.evaluation.application_tasks.v4_development_data import v4_workfl
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 base=Path('artifacts/application_evaluation')
-root=base/'2026-09-08_v4-confirmation-chain';root.mkdir(parents=True,exist_ok=True)
+root=Path(os.environ.get('CHRONARIS_V4_CONFIRMATION_CHAIN_ROOT',str(base/'2026-09-08_v4-confirmation-chain')))
+root.mkdir(parents=True,exist_ok=True)
 upstream=base/'2026-09-08_v4-development-chain/chain_state.json'
 review=base/'2026-09-08_v4-candidate-review'
 formal=base/'2026-09-08_v4-confirmation'
@@ -97,7 +98,7 @@ try:
                 code=child.poll()
                 if code is None:continue
                 log.close();children.pop(name);state['children'].pop(name);save()
-                queue_path=formal/f'{name}_queue.json'
+                queue_path=(formal/'core_ablations' if name.startswith('core_') else formal)/f'{name}_queue.json'
                 result=json.loads(queue_path.read_text()) if queue_path.exists() else {}
                 if code==0 and result.get('status')=='waiting_gpu':launch(name)
                 elif code or result.get('status')!='completed':failures[name]={'exit_code':code,'status':result.get('status')}
@@ -106,10 +107,15 @@ try:
         return failures
     failures=run_queues({
         'simulation_train_neural':('simulation-confirmation-train-cohort','neural',['--domain','simulation']),
+        'core_train_neural':('core-ablation-train-cohort','neural',['--domain','simulation']),
         'simulation_train_nonparametric':('simulation-confirmation-train-cohort','nonparametric',['--domain','simulation']),
         'native_nonparametric':('native-confirmation-cohort','nonparametric',[])})
     if failures:
         state['failures']=failures;save();raise RuntimeError('formal training or fixed baseline has failed units')
+    if 'core_model_freeze' not in state['completed_steps']:
+        result=run('core-ablation-model-freeze','--domain','simulation','--freeze-sha256',digest)
+        if result['status']!='frozen':raise RuntimeError('not all core ablation models completed')
+        state['completed_steps'].append('core_model_freeze');save()
     model_path=formal/'simulation_frozen_models.json'
     if 'simulation_model_freeze' not in state['completed_steps']:
         result=run('simulation-model-freeze','--domain','simulation','--freeze-sha256',digest)
@@ -123,11 +129,12 @@ try:
         state['completed_steps'].append('simulation_generation');save()
     failures=run_queues({
         'simulation_evaluate_neural':('simulation-confirmation-evaluate-cohort','neural',['--domain','simulation']),
+        'core_evaluate_neural':('core-ablation-evaluate-cohort','neural',['--domain','simulation']),
         'native_neural':('native-confirmation-cohort','neural',[])})
     plan=json.loads((formal/'native_confirmation_plan.json').read_text())
     state.update(status='main_confirmation_completed_with_failures' if failures else 'main_confirmation_completed',
                  failures=failures,blocked_domains=plan['blocked_domains'],current_step=None,
-                 remaining_scope=['core_ablations','combined_statistics_and_paper_evidence']);save()
+                 remaining_scope=['separate_clock_and_response_mechanisms','combined_statistics_and_paper_evidence']);save()
 except BaseException:
     state.update(status='failed',error=traceback.format_exc());save()
     raise

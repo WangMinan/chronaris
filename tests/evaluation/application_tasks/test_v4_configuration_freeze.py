@@ -37,12 +37,14 @@ def _fixture(root,monkeypatch):
             path=normalizers/domain/fold['fold_id']/'normalization.json';path.parent.mkdir(parents=True);path.write_text('{}')
     registry.write_text(json.dumps(roles))
     audit=root/'dingxin_audit.json';audit.write_text(json.dumps({'data_manifest_sha256':'d'*64,'outer_roles_disjoint':False}))
-    monkeypatch.setattr(v4_dingxin_data,'load_v4_dingxin_development',lambda:SimpleNamespace(data_manifest_sha256='d'*64))
+    monkeypatch.setattr(v4_dingxin_data,'load_v4_dingxin_development',lambda:SimpleNamespace(data_manifest_sha256='d'*64,source_hashes={}))
     monkeypatch.setattr(module,'_simulation_freeze_evidence',lambda *args:({},[]))
     from chronaris.evaluation.application_tasks import v4_dingxin_deduplicated
     monkeypatch.setattr(v4_dingxin_deduplicated,'deduplicated_dingxin_data',lambda data:(SimpleNamespace(data_manifest_sha256='e'*64),{'retained':'first'}))
     dedup=root/'deduplicated.json';dedup.write_text(json.dumps({'status':'completed','selection':{'retained':'first'},'content_audit':{'data_manifest_sha256':'e'*64,'outer_roles_disjoint':True}}))
-    return dict(review_root=root,validation_receipt=receipt_path,output_path=root/'frozen.json',registry_path=str(registry),dingxin_audit_path=audit,dingxin_deduplicated_audit_path=dedup,normalizer_root=normalizers)
+    simulation=root/'simulation';simulation.mkdir()
+    for name in ('v4_generation_audit.json','simulation_manifest.json'):(simulation/name).write_text('{}')
+    return dict(simulation_root=simulation,review_root=root,validation_receipt=receipt_path,output_path=root/'frozen.json',registry_path=str(registry),dingxin_audit_path=audit,dingxin_deduplicated_audit_path=dedup,normalizer_root=normalizers)
 
 
 def test_freeze_binds_validation_data_and_decisions_without_overwriting(tmp_path,monkeypatch):

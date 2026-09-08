@@ -8,6 +8,8 @@ import time
 def test_formal_chain_freezes_before_training_and_generation_then_resumes(tmp_path,monkeypatch):
     script=Path(__file__).parents[3]/'scripts/evaluation/application_tasks/run_v4_confirmation_chain.py'
     monkeypatch.chdir(tmp_path)
+    chain_root=tmp_path/'chain'
+    monkeypatch.setenv('CHRONARIS_V4_CONFIRMATION_CHAIN_ROOT',str(chain_root))
     base=tmp_path/'artifacts/application_evaluation';formal=base/'2026-09-08_v4-confirmation'
     upstream=base/'2026-09-08_v4-development-chain/chain_state.json';upstream.parent.mkdir(parents=True)
     upstream.write_text(json.dumps(dict(status='development_complete_ready_for_freeze',
@@ -20,11 +22,15 @@ def test_formal_chain_freezes_before_training_and_generation_then_resumes(tmp_pa
             elif stage=='freeze-configuration':
                 formal.mkdir(parents=True);(formal/'frozen_configuration.json').write_text('{}')
                 reply={'status':'frozen'}
-            elif stage=='simulation-model-freeze':
-                assert len(active)==3  # Both training backends and the public CPU baseline started together.
-                (formal/'simulation_frozen_models.json').write_text('{}');reply={'status':'frozen'}
+            elif stage in ('simulation-model-freeze','core-ablation-model-freeze'):
+                assert len(active)==4  # Both training backends and the public CPU baseline started together.
+                if stage=='core-ablation-model-freeze':
+                    (formal/'core_ablations').mkdir(exist_ok=True)
+                    (formal/'core_ablations/ablation_frozen_models.json').write_text('{}')
+                else:(formal/'simulation_frozen_models.json').write_text('{}')
+                reply={'status':'frozen'}
             elif stage=='simulation-confirmation-data':
-                assert 'simulation-model-freeze' in calls
+                assert 'simulation-model-freeze' in calls and 'core-ablation-model-freeze' in calls
                 assert '--model-freeze-sha256' in command
                 reply={'status':'completed'}
             else:
@@ -35,21 +41,25 @@ def test_formal_chain_freezes_before_training_and_generation_then_resumes(tmp_pa
                 if stage=='native-confirmation-cohort':
                     name='native_'+backend
                     (formal/'native_confirmation_plan.json').write_text(json.dumps({'blocked_domains':[]}))
+                elif stage.startswith('core-ablation-'):
+                    phase='train' if stage=='core-ablation-train-cohort' else 'evaluate'
+                    name='core_'+phase+'_'+backend
+                    (formal/'core_ablations').mkdir(exist_ok=True)
                 else:
                     phase='train' if stage=='simulation-confirmation-train-cohort' else 'evaluate'
                     name='simulation_'+phase+'_'+backend
                     if phase=='evaluate':assert 'simulation-confirmation-data' in calls
-                (formal/f'{name}_queue.json').write_text(json.dumps(reply))
+                ((formal/'core_ablations' if name.startswith('core_') else formal)/f'{name}_queue.json').write_text(json.dumps(reply))
             stdout.write(json.dumps(reply)+'\n');stdout.flush()
         def wait(self,timeout):return 0
         def poll(self):
-            assert len(active)>=3
+            assert len(active)>=4
             return 0
     monkeypatch.setattr(subprocess,'Popen',Child)
     monkeypatch.setattr(time,'sleep',lambda seconds:None)
     runpy.run_path(str(script),run_name='__main__')
-    state=json.loads((base/'2026-09-08_v4-confirmation-chain/chain_state.json').read_text())
+    state=json.loads((chain_root/'chain_state.json').read_text())
     assert state['status']=='main_confirmation_completed' and state['blocked_domains']==[]
-    assert len(calls)==9 and state['remaining_scope']
+    assert len(calls)==12 and state['remaining_scope']
     runpy.run_path(str(script),run_name='__main__')
-    assert len(calls)==9
+    assert len(calls)==12
