@@ -1,0 +1,12 @@
+{
+  "accepted_units": 24,
+  "original_dingxin_units_retained": 6,
+  "actual_projection_fits_including_repair": 30,
+  "accepted_projection_fit_s": 1048.7460939656012,
+  "accepted_consumer_fit_s": 207.54012542171404,
+  "retained_original_dingxin_projection_fit_s": 26.124018124770373,
+  "retained_original_dingxin_consumer_fit_s": 0.06507161166518927,
+  "neural_optimizer_updates": 0,
+  "route_representation_reuse": true,
+  "scope": "fit_times_exclude_loading_and_export"
+}

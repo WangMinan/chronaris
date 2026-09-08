@@ -10,6 +10,8 @@
 
 ## 当前九月研究证据
 
+- [v4 固定基线开发归档](runs/2026-09-08_v4-fixed-native-development/report.md)：24 单元数值重放通过；鼎新另发现跨架次航电内容重复，正式隔离未通过。
+
 - [v4 分组统计复核](runs/2026-09-08_v4-grouped-statistics/report.md)：初始 48 项档案配对统计、每项 2,000 次，公开接口不把折或种子当独立受试者。
 
 - [v4 初始诊断图表](runs/2026-09-08_v4-diagnostic-figures/report.md)：七张中文图及矢量版本，核验 243 个来源，保留梯度尖峰和连续缺失退化。

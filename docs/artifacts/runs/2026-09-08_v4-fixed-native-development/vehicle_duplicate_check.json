@@ -1,0 +1,639 @@
+{
+  "sorties": [
+    "20251002_单01_ACT-8_翼云_J16_12#01",
+    "20251005_四01_ACT-4_云_J20_22#01"
+  ],
+  "comparisons": [
+    {
+      "target_start_ms": 30000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0005"
+      ],
+      "vehicle_shapes": [
+        [
+          1779,
+          965
+        ],
+        [
+          1779,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 35000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0006",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0006"
+      ],
+      "vehicle_shapes": [
+        [
+          1776,
+          965
+        ],
+        [
+          1776,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 40000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0007",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0007"
+      ],
+      "vehicle_shapes": [
+        [
+          1774,
+          965
+        ],
+        [
+          1774,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 45000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0008",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0008"
+      ],
+      "vehicle_shapes": [
+        [
+          1773,
+          965
+        ],
+        [
+          1773,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 50000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0009",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0009"
+      ],
+      "vehicle_shapes": [
+        [
+          1776,
+          965
+        ],
+        [
+          1776,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 55000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0010",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0010"
+      ],
+      "vehicle_shapes": [
+        [
+          1780,
+          965
+        ],
+        [
+          1780,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 60000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0011",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0011"
+      ],
+      "vehicle_shapes": [
+        [
+          1779,
+          965
+        ],
+        [
+          1779,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 65000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0012",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0012"
+      ],
+      "vehicle_shapes": [
+        [
+          1780,
+          965
+        ],
+        [
+          1780,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 70000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0013",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0013"
+      ],
+      "vehicle_shapes": [
+        [
+          1781,
+          965
+        ],
+        [
+          1781,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 75000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0014",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0014"
+      ],
+      "vehicle_shapes": [
+        [
+          1783,
+          965
+        ],
+        [
+          1783,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 80000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0015",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0015"
+      ],
+      "vehicle_shapes": [
+        [
+          1780,
+          965
+        ],
+        [
+          1780,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 85000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0016",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0016"
+      ],
+      "vehicle_shapes": [
+        [
+          1781,
+          965
+        ],
+        [
+          1781,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 90000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0017",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0017"
+      ],
+      "vehicle_shapes": [
+        [
+          1781,
+          965
+        ],
+        [
+          1781,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 95000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0018",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0018"
+      ],
+      "vehicle_shapes": [
+        [
+          1779,
+          965
+        ],
+        [
+          1779,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 100000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0019",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0019"
+      ],
+      "vehicle_shapes": [
+        [
+          1777,
+          965
+        ],
+        [
+          1777,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 105000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0020",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0020"
+      ],
+      "vehicle_shapes": [
+        [
+          1776,
+          965
+        ],
+        [
+          1776,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 110000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0021",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0021"
+      ],
+      "vehicle_shapes": [
+        [
+          1778,
+          965
+        ],
+        [
+          1778,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 115000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0022",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0022"
+      ],
+      "vehicle_shapes": [
+        [
+          1777,
+          965
+        ],
+        [
+          1777,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 120000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0023",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0023"
+      ],
+      "vehicle_shapes": [
+        [
+          1779,
+          965
+        ],
+        [
+          1779,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 125000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0024"
+      ],
+      "vehicle_shapes": [
+        [
+          1775,
+          965
+        ],
+        [
+          1775,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 130000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0025"
+      ],
+      "vehicle_shapes": [
+        [
+          1774,
+          965
+        ],
+        [
+          1774,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 135000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0026"
+      ],
+      "vehicle_shapes": [
+        [
+          1774,
+          965
+        ],
+        [
+          1774,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 140000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0027"
+      ],
+      "vehicle_shapes": [
+        [
+          1772,
+          965
+        ],
+        [
+          1772,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 145000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0028"
+      ],
+      "vehicle_shapes": [
+        [
+          1770,
+          965
+        ],
+        [
+          1770,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 150000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0029",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0029"
+      ],
+      "vehicle_shapes": [
+        [
+          1769,
+          965
+        ],
+        [
+          1769,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 155000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0030",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0030"
+      ],
+      "vehicle_shapes": [
+        [
+          1777,
+          965
+        ],
+        [
+          1777,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 160000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0031",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0031"
+      ],
+      "vehicle_shapes": [
+        [
+          1778,
+          965
+        ],
+        [
+          1778,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 165000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0032",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0032"
+      ],
+      "vehicle_shapes": [
+        [
+          1778,
+          965
+        ],
+        [
+          1778,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 170000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0033",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0033"
+      ],
+      "vehicle_shapes": [
+        [
+          1781,
+          965
+        ],
+        [
+          1781,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    },
+    {
+      "target_start_ms": 175000,
+      "samples": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0034",
+        "20251005_四01_ACT-4_云_J20_22#01__pilot_10033::context_end_0034"
+      ],
+      "vehicle_shapes": [
+        [
+          1782,
+          965
+        ],
+        [
+          1782,
+          965
+        ]
+      ],
+      "values_equal": true,
+      "feature_masks_equal": true,
+      "timestamps_equal": true,
+      "identical_encoder_vehicle_inputs": true
+    }
+  ],
+  "all_vehicle_inputs_identical": true
+}

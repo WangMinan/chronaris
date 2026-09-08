@@ -118,3 +118,32 @@ def build_dingxin_outer_consumer_inputs(data, fold_id):
     return {"fold": outer, "targets": targets, "definitions": definitions,
             "context": native_consumer_context("dingxin", context_data, outer, include_held_out=True),
             "encoder_fold": inner, "data_manifest_sha256": data.data_manifest_sha256}
+
+
+def audit_dingxin_vehicle_reuse(data):
+    """Content identity ignores sortie names and padding, retaining actual vehicle history."""
+    contexts=data.raw_targets.contexts.drop_duplicates('vehicle_context_id')
+    rows=[]
+    for context in contexts.itertuples(index=False):
+        batch=data.index.load_batch((str(context.context_id),))
+        valid=batch.vehicle_point_mask[0]
+        mask=batch.vehicle_feature_mask[0,valid]
+        values=batch.vehicle_values[0,valid].masked_fill(~mask,0)
+        digest=hashlib.sha256(data.data_manifest_sha256.encode())
+        for tensor in (batch.vehicle_timestamps_s[0,valid],values,mask,batch.query_timestamps_s[0]):
+            array=tensor.cpu().numpy();digest.update(str((array.shape,array.dtype)).encode());digest.update(array.tobytes())
+        rows.append(dict(vehicle_context_id=str(context.vehicle_context_id),sortie_id=str(context.sortie_id),
+                         content_sha256=digest.hexdigest(),target_start_offset_ms=int(context.target_start_offset_ms)))
+    signature={row['vehicle_context_id']:row['content_sha256'] for row in rows}
+    by_sample={str(row.context_id):signature[str(row.vehicle_context_id)] for row in data.raw_targets.contexts.itertuples(index=False)}
+    folds=[]
+    for fold in data.folds:
+        held={by_sample[s] for s in fold.held_out_sample_ids}
+        train={by_sample[s] for s in fold.train_sample_ids}
+        validation={by_sample[s] for s in fold.validation_sample_ids}
+        outer={by_sample[s] for s in fold.train_sample_ids+fold.validation_sample_ids+data.embargo[fold.fold_id]}
+        folds.append(dict(fold_id=fold.fold_id,inner_training_held_out_shared_contents=len(train&held),
+            validation_held_out_shared_contents=len(validation&held),outer_training_held_out_shared_contents=len(outer&held)))
+    return dict(format='chronaris.v4_dingxin_vehicle_content_audit.v1',data_manifest_sha256=data.data_manifest_sha256,
+        declared_vehicle_contexts=len(rows),unique_vehicle_contents=len(set(signature.values())),
+        context_rows=rows,folds=folds,outer_roles_disjoint=all(row['outer_training_held_out_shared_contents']==0 for row in folds))

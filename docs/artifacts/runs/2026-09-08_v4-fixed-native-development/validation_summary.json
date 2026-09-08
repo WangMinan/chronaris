@@ -1,0 +1,54 @@
+{
+  "accepted_development_units": 24,
+  "source_files_checked": 276,
+  "all_model_replays_exact": true,
+  "dingxin_repaired_units": 6,
+  "public_subject_counts": {
+    "cogpilot": 7,
+    "clare": 4
+  },
+  "formal_dingxin_status": "blocked_cross_role_vehicle_content_overlap",
+  "vehicle_context_names": 60,
+  "unique_vehicle_contents": 30,
+  "full_cpu": {
+    "passed": 576,
+    "skipped": 30,
+    "elapsed_s": 132.58
+  },
+  "focused": {
+    "passed": 5,
+    "elapsed_s": 7.78
+  },
+  "artifact_hashes": {
+    "fixed_native_development.json": "6bf3bf0b628f32d4a4066a0e9edb496c77fe1309084d95d16dbca280309dcaaa",
+    "vehicle_content_audit.json": "809b1e3c2b4d849342e6bce8a6db18fc8ba7ff42e908a87c9d78b7be5803664c",
+    "vehicle_duplicate_check.json": "9d2a47e9d47d88f93e6a64bd43ddaf2d497023f36589f3ae1a7534f259f39c9f",
+    "compute_ledger.json": "59488dd8dc4ec4af2db944ea2b66cb2c582c52f2f91a832628aedcae811a67fb"
+  },
+  "logs": {
+    "vehicle_content_audit.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-results/vehicle_content_audit.log",
+      "sha256": "a1b4bd78f5a6bf169d14283f6ec93e510af46ff66e42a421240eb94196987054"
+    },
+    "content_cli.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-results/content_cli.log",
+      "sha256": "851bead1ce7436a788adfaacf5739416bfebb1444671f49a180c621b55da1dba"
+    },
+    "content_full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-results/content_full_cpu_tests.log",
+      "sha256": "62491f8cf8070324a6e97eb2bed3788cb1c99caba4eb339aa719cd72c9597473"
+    },
+    "content_audit_repaired_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-results/content_audit_repaired_tests.log",
+      "sha256": "ccf5d237781fcde90bf15bb1bba5131d364854eeefaabebbac139bed0b5c9398"
+    },
+    "content_audit_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-results/content_audit_tests.log",
+      "sha256": "128990df5b65a1469111cbd718f15031677483cb97fec41d5b348a98e9ea76da"
+    },
+    "vehicle_content_audit_repaired.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-native-results/vehicle_content_audit_repaired.log",
+      "sha256": "65c76d45ad2184414ee2aea278f428e4c75b52473da023d2758dc9197188580f"
+    }
+  }
+}

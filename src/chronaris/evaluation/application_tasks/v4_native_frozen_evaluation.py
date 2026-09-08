@@ -32,6 +32,13 @@ def run_native_frozen_evaluation(*, domain, fold_index, checkpoint, checkpoint_s
             _require_diagnostic_device(17)
     _, _, encoder_fold, _, digest, _, _, data = load_development_inputs(domain, data_root, registry_path,
         fold_index=fold_index, subject_role="development" if domain == "dingxin" else "confirmation")
+    if domain == "dingxin" and not engineering_only:
+        from chronaris.evaluation.application_tasks.v4_dingxin_data import audit_dingxin_vehicle_reuse
+        audit = audit_dingxin_vehicle_reuse(data)
+        audit_root = Path(output_root); audit_root.mkdir(parents=True, exist_ok=True)
+        (audit_root / "vehicle_content_audit.json").write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n")
+        if not audit["outer_roles_disjoint"]:
+            raise ValueError("Dingxin outer roles share identical vehicle input contents; formal evaluation is unavailable")
     if nonparametric:
         from chronaris.evaluation.application_tasks.v4_naive_baseline import load_v4_naive_encoder
         encoder, normalizer, payload = load_v4_naive_encoder(checkpoint, fold=encoder_fold, data_manifest_sha256=digest)

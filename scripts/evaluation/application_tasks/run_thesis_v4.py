@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -42,7 +42,7 @@ def main():
         parser.error("--domain is required for this stage")
     if args.seed != 17 and args.stage not in {"candidate-review", "naive-development"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
-    default_roots = {"fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
+    default_roots = {"dingxin-content-audit": "2026-09-08_v4-dingxin-content-audit", "fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
@@ -53,7 +53,15 @@ def main():
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "fixed-native-results":
+    if args.stage == "dingxin-content-audit":
+        if args.domain != "dingxin":
+            raise ValueError("Dingxin content audit requires its fixed data domain")
+        from chronaris.evaluation.application_tasks.v4_dingxin_data import load_v4_dingxin_development, audit_dingxin_vehicle_reuse
+        result = audit_dingxin_vehicle_reuse(load_v4_dingxin_development())
+        root = Path(output_root); root.mkdir(parents=True, exist_ok=True)
+        (root / "vehicle_content_audit.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+        summary = {key: value for key, value in result.items() if key != "context_rows"}
+    elif args.stage == "fixed-native-results":
         from chronaris.evaluation.application_tasks.v4_native_result_audit import collect_fixed_native_development
         result = collect_fixed_native_development(run_root="artifacts/application_evaluation/2026-09-08_v4-naive-development",
             output_root=output_root, data_root=args.data_root, registry_path=args.registry,
