@@ -5,7 +5,7 @@ import subprocess
 import time
 
 
-def test_formal_chain_freezes_before_parallel_native_queues_and_resumes(tmp_path,monkeypatch):
+def test_formal_chain_freezes_before_training_and_generation_then_resumes(tmp_path,monkeypatch):
     script=Path(__file__).parents[3]/'scripts/evaluation/application_tasks/run_v4_confirmation_chain.py'
     monkeypatch.chdir(tmp_path)
     base=tmp_path/'artifacts/application_evaluation';formal=base/'2026-09-08_v4-confirmation'
@@ -20,23 +20,36 @@ def test_formal_chain_freezes_before_parallel_native_queues_and_resumes(tmp_path
             elif stage=='freeze-configuration':
                 formal.mkdir(parents=True);(formal/'frozen_configuration.json').write_text('{}')
                 reply={'status':'frozen'}
+            elif stage=='simulation-model-freeze':
+                assert len(active)==3  # Both training backends and the public CPU baseline started together.
+                (formal/'simulation_frozen_models.json').write_text('{}');reply={'status':'frozen'}
+            elif stage=='simulation-confirmation-data':
+                assert 'simulation-model-freeze' in calls
+                assert '--model-freeze-sha256' in command
+                reply={'status':'completed'}
             else:
                 assert calls[:2]==['configuration-cuda-validation','freeze-configuration']
-                self.backend=command[command.index('--backend')+1]
-                if self.backend=='nonparametric':assert env['CUDA_VISIBLE_DEVICES']==''
-                active.append(self.backend);reply={'status':'completed'}
-                (formal/f'native_{self.backend}_queue.json').write_text(json.dumps(reply))
-                (formal/'native_confirmation_plan.json').write_text(json.dumps({'blocked_domains':[{'domain':'dingxin'}]}))
+                backend=command[command.index('--backend')+1]
+                if backend=='nonparametric':assert env['CUDA_VISIBLE_DEVICES']==''
+                active.append((stage,backend));reply={'status':'completed'}
+                if stage=='native-confirmation-cohort':
+                    name='native_'+backend
+                    (formal/'native_confirmation_plan.json').write_text(json.dumps({'blocked_domains':[]}))
+                else:
+                    phase='train' if stage=='simulation-confirmation-train-cohort' else 'evaluate'
+                    name='simulation_'+phase+'_'+backend
+                    if phase=='evaluate':assert 'simulation-confirmation-data' in calls
+                (formal/f'{name}_queue.json').write_text(json.dumps(reply))
             stdout.write(json.dumps(reply)+'\n');stdout.flush()
         def wait(self,timeout):return 0
         def poll(self):
-            assert set(active)=={'neural','nonparametric'}
+            assert len(active)>=3
             return 0
     monkeypatch.setattr(subprocess,'Popen',Child)
     monkeypatch.setattr(time,'sleep',lambda seconds:None)
     runpy.run_path(str(script),run_name='__main__')
     state=json.loads((base/'2026-09-08_v4-confirmation-chain/chain_state.json').read_text())
-    assert state['status']=='native_confirmation_completed' and state['blocked_domains']==[{'domain':'dingxin'}]
-    assert len(calls)==4
+    assert state['status']=='main_confirmation_completed' and state['blocked_domains']==[]
+    assert len(calls)==9 and state['remaining_scope']
     runpy.run_path(str(script),run_name='__main__')
-    assert len(calls)==4
+    assert len(calls)==9

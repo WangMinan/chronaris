@@ -25,6 +25,10 @@ def _test_suite_sha256():
 
 
 def validate_current_cuda(output_root):
+    receipt_path=Path(output_root)/'validation_receipt.json'
+    if receipt_path.exists():
+        _validation_evidence(receipt_path)
+        return json.loads(receipt_path.read_text())
     with development_gpu_lock() as acquired:
         if not acquired:return {'status':'waiting_gpu'}
         _require_diagnostic_device(17)

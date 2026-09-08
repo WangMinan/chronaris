@@ -1,4 +1,5 @@
 import json
+import pytest
 
 from chronaris.evaluation.application_tasks import v4_native_confirmation_cohort as module
 from chronaris.evaluation.application_tasks.v4_candidates import candidate_options
@@ -46,3 +47,8 @@ def test_native_queue_uses_one_child_per_unit_and_resumes_gpu_wait(tmp_path,monk
     state=module.run_native_confirmation_cohort(**kwargs)
     assert state['status']=='completed' and len(state['completed_units'])==2 and len(calls)==3
     assert module.run_native_confirmation_cohort(**kwargs)['status']=='completed' and len(calls)==3
+
+    receipt=tmp_path/'clare/physiology_only/reference/fold01/seed17/confirmation_unit.json'
+    receipt.write_text('{}')
+    with pytest.raises(ValueError,match='completed unit receipt changed'):
+        module.run_native_confirmation_cohort(**kwargs)

@@ -10,4 +10,4 @@
 
 本批训练、评估、恢复、哈希拦截、CPU/GPU 编排和去重隔离通过完整 CPU 回归：**607 项通过、30 项跳过，136.67 秒**。首次全量检查只有一处旧错误提示断言未同步，修正后完整复验通过，失败日志保留于[验证记录](../../../../artifacts/runs/2026-09-08_v4-dingxin-deduplicated/validation_summary.json)。当前 GPU 被研究初筛占用，尚未对本批运行完整 CUDA 测试。新增代码未产生正式确认成绩。
 
-复现入口为 `scripts/evaluation/application_tasks/run_thesis_v4.py` 的 `dingxin-retained-data`、`configuration-cuda-validation`、`freeze-configuration`、`native-confirmation-cohort` 阶段。两个自动接续脚本仅负责调用这些入口。仿真正式生成与最终压力、消融仍在推进，不能以原生训练入口完成代替完整实验完成。
+复现入口为 `scripts/evaluation/application_tasks/run_thesis_v4.py` 的 `dingxin-retained-data`、`configuration-cuda-validation`、`freeze-configuration`、`native-confirmation-cohort` 阶段。两个自动接续脚本仅负责调用这些入口。仿真主表生成与 35 场景、两种整模态缺失现已接通，见[完整主表入口](../../../../artifacts/runs/2026-09-08_v4-formal-mainline/report.md)；核心消融与论文材料仍在推进，不能以入口完成代替完整实验完成。

@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("simulation-confirmation-train", "simulation-confirmation-evaluate", "simulation-confirmation-train-cohort", "simulation-confirmation-evaluate-cohort", "simulation-model-freeze", "simulation-confirmation-data", "dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -26,6 +26,8 @@ def main():
     parser.add_argument("--dingxin-results-root")
     parser.add_argument("--freeze-path",default="artifacts/application_evaluation/2026-09-08_v4-confirmation/frozen_configuration.json")
     parser.add_argument("--freeze-sha256")
+    parser.add_argument("--model-freeze-path")
+    parser.add_argument("--model-freeze-sha256")
     parser.add_argument("--backend",choices=("neural","nonparametric"),default="neural")
     parser.add_argument("--validation-receipt",default="artifacts/application_evaluation/2026-09-08_v4-configuration-validation/validation_receipt.json")
     parser.add_argument("--screen-root", default="artifacts/application_evaluation/2026-09-08_v4-public-screen")
@@ -37,7 +39,7 @@ def main():
     parser.add_argument("--diagnostic-root", default="artifacts/application_evaluation/2026-09-06_v4-learning-curves")
     parser.add_argument("--condition-root", default="artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair")
     parser.add_argument("--simulation-root", default="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development")
-    parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
+    parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris", "naive_time_sync"), default="chronaris")
     args = parser.parse_args()
     public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
     review_stage = args.stage in {"candidate-review-plan", "candidate-review-cohort"}
@@ -46,7 +48,7 @@ def main():
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
         parser.error("--domain is required for this stage")
-    if args.seed != 17 and args.stage not in {"candidate-review", "candidate-review-pressure", "naive-development", "native-confirmation-unit", "naive-confirmation-unit"}:
+    if args.seed != 17 and args.stage not in {"candidate-review", "candidate-review-pressure", "naive-development", "native-confirmation-unit", "naive-confirmation-unit", "simulation-confirmation-train", "simulation-confirmation-evaluate"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
     default_roots = {"public-screen-results": "2026-09-08_v4-public-screen", "dingxin-content-audit": "2026-09-08_v4-dingxin-content-audit", "fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
@@ -65,8 +67,39 @@ def main():
     default_roots.update({stage:"2026-09-08_v4-review-pressure" for stage in ("review-pressure-plan","review-pressure-cohort")})
     default_roots.update({"configuration-cuda-validation":"2026-09-08_v4-configuration-validation","freeze-configuration":"2026-09-08_v4-confirmation","native-confirmation-unit":"2026-09-08_v4-confirmation"})
     default_roots.update({stage:"2026-09-08_v4-confirmation" for stage in ("native-confirmation-plan","native-confirmation-cohort","naive-confirmation-unit")})
+    for stage in ('simulation-confirmation-train','simulation-confirmation-evaluate','simulation-confirmation-train-cohort','simulation-confirmation-evaluate-cohort','simulation-model-freeze'):
+        default_roots[stage]='2026-09-08_v4-confirmation'
+    default_roots['simulation-confirmation-data']='2026-09-08_v4-simulation-confirmation'
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage in {"native-confirmation-plan","native-confirmation-cohort","naive-confirmation-unit"}:
+    if args.stage.startswith('simulation-confirmation-') or args.stage=='simulation-model-freeze':
+        if args.domain!='simulation' or not args.freeze_sha256:
+            raise ValueError('formal simulation requires its domain and frozen configuration hash')
+        from chronaris.evaluation.application_tasks.v4_simulation_confirmation import (
+            train_simulation_confirmation,seal_simulation_models,run_simulation_confirmation_cohort,EXPANDED_SIMULATION_ROOT)
+        simulation_root=EXPANDED_SIMULATION_ROOT if args.simulation_root.endswith('2026-09-06_thesis-v4-simulation-development') else args.simulation_root
+        common=dict(freeze_path=args.freeze_path,freeze_sha256=args.freeze_sha256,output_root=output_root)
+        if args.stage.endswith('-cohort'):
+            result=run_simulation_confirmation_cohort(**common,backend=args.backend,
+                stage='train' if args.stage=='simulation-confirmation-train-cohort' else 'evaluate')
+        elif args.stage=='simulation-model-freeze':
+            result=seal_simulation_models(**common,simulation_root=simulation_root)
+        elif args.stage=='simulation-confirmation-train':
+            result=train_simulation_confirmation(**common,method=args.method,candidate_name=args.candidate_name,
+                seed=args.seed,simulation_root=simulation_root)
+        else:
+            if not args.model_freeze_path or not args.model_freeze_sha256:
+                raise ValueError('confirmation generation/evaluation requires the frozen model inventory hash')
+            common.update(model_freeze_path=args.model_freeze_path,model_freeze_sha256=args.model_freeze_sha256)
+            if args.stage=='simulation-confirmation-data':
+                from chronaris.evaluation.application_tasks.v4_simulation_confirmation_data import generate_simulation_confirmation
+                result=generate_simulation_confirmation(**common)
+            else:
+                from chronaris.evaluation.application_tasks.v4_simulation_confirmation_evaluation import evaluate_simulation_confirmation
+                data_root='artifacts/application_evaluation/2026-09-08_v4-simulation-confirmation' if args.data_root.endswith('2026-09-06_v4-public-development') else args.data_root
+                result=evaluate_simulation_confirmation(**common,method=args.method,candidate_name=args.candidate_name,
+                    seed=args.seed,confirmation_root=data_root)
+        summary={key:result[key] for key in ('status','completed','evaluation_units','trajectory_count','scenario_count','pending') if key in result}
+    elif args.stage in {"native-confirmation-plan","native-confirmation-cohort","naive-confirmation-unit"}:
         if not args.freeze_sha256:raise ValueError("formal confirmation requires --freeze-sha256")
         from chronaris.evaluation.application_tasks.v4_native_confirmation_cohort import build_native_confirmation_plan, run_native_confirmation_cohort
         data_root = args.data_root

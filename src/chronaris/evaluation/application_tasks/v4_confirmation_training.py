@@ -49,7 +49,7 @@ def run_native_confirmation_training(*, freeze_path, freeze_sha256, domain, fold
     with development_gpu_lock() as acquired:
         if not acquired:return dict(status='waiting_gpu',confirmation_started=False)
         _require_diagnostic_device(seed)
-        training=_train_native_unit(domain=domain,fold_index=fold_index,method=method,options=options,routes=routes,
+        training=_train_confirmation_unit(domain=domain,fold_index=fold_index,method=method,options=options,routes=routes,
             seed=seed,output_root=output_root,data_root=data_root,registry_path=registry_path,freeze_sha256=freeze_sha256,
             normalizer_root=frozen['normalizer_root'])
         if not evaluate:return training
@@ -67,7 +67,12 @@ def run_native_confirmation_training(*, freeze_path, freeze_sha256, domain, fold
         return result
 
 
-def _native_training_inputs(domain,fold_index,data_root,registry_path,root):
+def _confirmation_training_inputs(domain,fold_index,data_root,registry_path,root):
+    if domain == 'simulation':
+        inputs = load_development_inputs(domain,data_root,registry_path,fold_index=fold_index,simulation_root=data_root)
+        if '__training512' not in inputs[2].fold_id:
+            raise ValueError('formal simulation requires the common expanded training inventory')
+        return inputs
     inputs=load_development_inputs(
         domain,data_root,registry_path,fold_index=fold_index,subject_role='confirmation')
     _,_,fold,_,_,_,_,data=inputs
@@ -83,9 +88,9 @@ def _native_training_inputs(domain,fold_index,data_root,registry_path,root):
     return inputs
 
 
-def _train_native_unit(*, domain, fold_index, method, options, routes, seed, output_root, data_root, registry_path, freeze_sha256, normalizer_root):
+def _train_confirmation_unit(*, domain, fold_index, method, options, routes, seed, output_root, data_root, registry_path, freeze_sha256, normalizer_root):
     root=Path(output_root)/domain/method/options['name']/f'fold{fold_index+1:02d}'/f'seed{seed}'
-    provider,schema,fold,hierarchy,digest,targets,definitions,data=_native_training_inputs(domain,fold_index,data_root,registry_path,root)
+    provider,schema,fold,hierarchy,digest,targets,definitions,data=_confirmation_training_inputs(domain,fold_index,data_root,registry_path,root)
     source=dict(format='chronaris.v4_native_confirmation_training.v1',source_code_sha256=v4_workflow_source_sha256(),
         freeze_sha256=freeze_sha256,domain=domain,method=method,candidate_options=options,seed=seed,routes=routes,
         fold=fold.to_dict(),data_manifest_sha256=digest,outer_outcomes_used_for_training=False)
@@ -96,7 +101,7 @@ def _train_native_unit(*, domain, fold_index, method, options, routes, seed, out
     def save():
         temporary=path.with_suffix('.tmp');temporary.write_text(json.dumps(state,indent=2)+'\n');temporary.replace(path)
     normalizer,calibration=development_normalization(domain,provider,schema,fold,digest,
-        **({'cache_root':normalizer_root} if domain!='dingxin' else {}))
+        **({'cache_root':normalizer_root} if domain in ('cogpilot','clare') else {}))
     state['train_only_normalization']=dict(normalizer=normalizer.to_manifest(),physics_calibration=calibration)
     save()
     with _periodic_training_heartbeat(f'confirmation_{domain}_{method}',30,root=root) as progress:
@@ -115,6 +120,10 @@ def _train_native_unit(*, domain, fold_index, method, options, routes, seed, out
             chronaris_explicit_shift_enabled=chronaris,chronaris_explicit_shift_weight=.1 if chronaris else 0.,chronaris_event_pair_weight=0.)
         state['self_supervised_training']=asdict(pretraining);save()
         if 'task_guided' in routes:
+            if domain == 'simulation':
+                from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
+                targets = build_guarded_application_consumer_targets(data,
+                    completed_pretraining_checkpoints=(pretraining.best_checkpoint_path,),task_guided_development=True,smoke_only=False)
             progress['phase']='task_guided'
             encoder,_,normalizer=load_common_pretraining_checkpoint(pretraining.best_checkpoint_path,device='cuda')[:3]
             with isolated_training_rng(seed):
@@ -142,9 +151,9 @@ def run_naive_native_confirmation(*, freeze_path, freeze_sha256, domain, fold_in
     if any(frozen['methods'][route]['naive_time_sync']!={'name':'reference','nonparametric':True} for route in ('self_supervised','task_guided')):
         raise ValueError('nonparametric formal baseline configuration changed')
     root=Path(output_root)/domain/'naive_time_sync/reference'/f'fold{fold_index+1:02d}'/f'seed{seed}'
-    provider,schema,fold,_,digest,_,_,_=_native_training_inputs(domain,fold_index,data_root,registry_path,root)
+    provider,schema,fold,_,digest,_,_,_=_confirmation_training_inputs(domain,fold_index,data_root,registry_path,root)
     normalizer,_=development_normalization(domain,provider,schema,fold,digest,
-        **({'cache_root':frozen['normalizer_root']} if domain!='dingxin' else {}))
+        **({'cache_root':frozen['normalizer_root']} if domain in ('cogpilot','clare') else {}))
     checkpoint,fit=fit_v4_naive_encoder(provider=provider,fold=fold,normalizer=normalizer,data_manifest_sha256=digest,
                                       output_root=root/'checkpoint',seed=seed)
     evaluation_root=root/'evaluation/shared'

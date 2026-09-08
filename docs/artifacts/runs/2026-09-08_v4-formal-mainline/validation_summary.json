@@ -1,0 +1,16 @@
+{
+  "source_code_sha256": "4124480b42840f884ff4a559fbc65cf63bc84a219c769127c3cda54a42bf6f7c",
+  "cpu_full": {
+    "passed": 611,
+    "skipped": 30,
+    "elapsed_s": 150.46,
+    "log_sha256": "d3a3d5cd76f3f316e67631032962f7397e9ec6bbd958d2cc72ae2191a617faa3"
+  },
+  "subsequent_validation_cache_check": {
+    "passed": 3,
+    "log_sha256": "5b7e7b522f3e984e762b5c591d7eb56c3d6589a45d23d3111bf880de8c05a50e"
+  },
+  "cuda_current_source": "pending_gpu_lock",
+  "formal_confirmation_models_trained": 0,
+  "formal_confirmation_observations_generated": false
+}

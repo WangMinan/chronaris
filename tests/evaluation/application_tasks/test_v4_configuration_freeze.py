@@ -53,6 +53,8 @@ def test_freeze_binds_validation_data_and_decisions_without_overwriting(tmp_path
     assert not frozen['development_initialization_for_public_confirmation']
     assert read_frozen_configuration(kwargs['output_path'],sha256_file(kwargs['output_path']))==frozen
     assert module.freeze_reviewed_configuration(**kwargs)==frozen
+    monkeypatch.setattr(module,'development_gpu_lock',lambda:pytest.fail('verified current CUDA validation must not run twice'))
+    assert module.validate_current_cuda(tmp_path)['status']=='completed'
     (tmp_path/'pytest.log').write_text('changed')
     with pytest.raises(ValueError,match='validation evidence changed'):module.freeze_reviewed_configuration(**kwargs)
 

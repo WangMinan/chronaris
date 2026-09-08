@@ -1,0 +1,65 @@
+.....................s.................................................. [ 11%]
+..........................s............................................. [ 22%]
+........s.......s....................................................... [ 33%]
+.......s.......................................s........................ [ 44%]
+.s...................................................................... [ 56%]
+......s...............................................ss.s......ss...... [ 67%]
+.................ss..ss.s.s............................................s [ 78%]
+.....ssss............................................................... [ 89%]
+..............................s........s...s..sss................        [100%]
+=============================== warnings summary ===============================
+tests/evaluation/application_tasks/test_application_finetuning.py: 1 warning
+tests/evaluation/public_datasets/test_opt.py: 9 warnings
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/metrics/_classification.py:534: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+    warnings.warn(
+
+tests/evaluation/application_tasks/test_application_finetuning.py::test_end_to_end_finetuning_declares_labels_and_resumes
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/metrics/_classification.py:2801: UserWarning: y_pred contains classes not in y_true
+    warnings.warn("y_pred contains classes not in y_true")
+
+tests/evaluation/application_tasks/test_v4_diagnostic_run.py: 21 warnings
+tests/evaluation/application_tasks/test_v4_simulation_confirmation_evaluation.py: 74 warnings
+  /home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/application_metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    correlation = spearmanr(truth, prediction).statistic
+
+tests/evaluation/dingxin/test_component_ablation.py: 18 warnings
+tests/evaluation/dingxin/test_optimization.py: 60 warnings
+tests/evaluation/public_datasets/test_pipeline.py: 108 warnings
+tests/modeling/test_deep_pipeline.py: 24 warnings
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:1281: FutureWarning: 'multi_class' was deprecated in version 1.5 and will be removed in 1.8. Use OneVsRestClassifier(LogisticRegression(..)) instead. Leave it to its default value to avoid this warning.
+    warnings.warn(
+
+tests/evaluation/dingxin/test_component_ablation.py: 4 warnings
+tests/evaluation/dingxin/test_optimization.py: 6 warnings
+tests/evaluation/public_datasets/test_fusion_ablation.py: 4 warnings
+tests/evaluation/public_datasets/test_opt.py: 25 warnings
+tests/evaluation/public_datasets/test_opt_aggregation.py: 17 warnings
+tests/modeling/test_deep_pipeline.py: 4 warnings
+  /home/wangminan/projects/chronaris/src/chronaris/evaluation/task_metrics.py:57: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    spearman = spearmanr(y_true, y_pred)
+
+tests/evaluation/dingxin/test_thirdparty_comparison.py::StageIPrivateThirdPartyComparisonTest::test_private_thirdparty_smoke_writes_real_vehicle_schema_and_outputs
+tests/evaluation/dingxin/test_thirdparty_comparison.py::StageIPrivateThirdPartyComparisonTest::test_private_thirdparty_smoke_writes_real_vehicle_schema_and_outputs
+  /home/wangminan/projects/chronaris/src/chronaris/evaluation/dingxin/pipelines/thirdparty_comparison.py:2078: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+    axis.boxplot(data, labels=[_display_model_label(label) for label in labels], showfliers=False)
+
+tests/evaluation/public_datasets/test_fusion_ablation.py::StageIPublicFusionAblationTest::test_public_ablation_smoke_writes_context_proxy_evidence
+  /home/wangminan/projects/chronaris/src/chronaris/evaluation/public_datasets/pipelines/fusion_ablation.py:1433: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+    axis.boxplot(data, labels=labels, showfliers=False)
+
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_compose_phase3_closure_rebuilds_local_baseline_reports
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_compose_phase3_closure_rebuilds_local_baseline_reports
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_nasa_attention_pipeline_filters_background_and_keeps_subject_loso
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_nasa_attention_pipeline_filters_background_and_keeps_subject_loso
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_phase3_orchestration_writes_summary_and_reports
+tests/evaluation/public_datasets/test_pipeline.py::StageISyntheticPipelineTest::test_phase3_orchestration_writes_summary_and_reports
+  /home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+    warnings.warn(
+
+tests/evaluation/public_datasets/test_stream_role_fusion.py::StreamRoleFusionTest::test_public_variants_run
+  /home/wangminan/projects/chronaris/tests/evaluation/public_datasets/test_stream_role_fusion.py:80: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+    self.assertGreaterEqual(float(output.route_decision.context_gate.mean()), 0.75)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+611 passed, 30 skipped, 386 warnings in 150.46s (0:02:30)

@@ -52,8 +52,10 @@ def _paired_representation(encoder, normalizer, checkpoint, fold, batch, root, *
     return output
 
 
-def summarize_pressure_predictions(result, output, sample_manifest):
+def summarize_pressure_predictions(result, output, sample_manifest, *, evaluation_role='validation'):
     """Retain all windows in tail summaries and resample-ready profile metrics."""
+    if evaluation_role not in ('validation', 'held_out'):
+        raise ValueError('pressure summaries require a validation or held-out role')
     group = {row["sample_id"]: row["profile_id"] for row in sample_manifest}
     empty = dict(zip(output.sample_ids, (~output.valid_mask.any(dim=1)).tolist(), strict=True))
     rows, tails = [], []
@@ -75,14 +77,14 @@ def summarize_pressure_predictions(result, output, sample_manifest):
                     "task": "workload_classification"},
                     {"consumer": consumer, "profile_id": scope, "metric": "rmse", "value": metric["rmse"], "task": "workload_regression"}))
     with np.load(result.prediction_path, allow_pickle=False) as archive:
-        ids = tuple(str(value) for value in archive["validation_sample_ids"])
+        ids = tuple(str(value) for value in archive[f"{evaluation_role}_sample_ids"])
         if ids != output.sample_ids:
             raise ValueError("segmentation prediction identities changed")
         profiles = np.array([group[sample] for sample in ids])
         for profile in np.unique(profiles):
             selected = profiles == profile
             for consumer in ("causal_tcn_raw", "causal_tcn_duration"):
-                metrics = segmentation_metrics(archive["validation_state_true"][selected], archive[f"validation_{consumer}_state"][selected])
+                metrics = segmentation_metrics(archive[f"{evaluation_role}_state_true"][selected], archive[f"{evaluation_role}_{consumer}_state"][selected])
                 rows.extend({"consumer": consumer, "profile_id": str(profile), "metric": metric, "value": float(value) if value is not None else None,
                     "task": "maneuver_segmentation"} for metric, (value, _) in metrics.items())
     return {"profile_metrics": rows, "regression_tails": tails, "independent_unit": "parameter_profile",

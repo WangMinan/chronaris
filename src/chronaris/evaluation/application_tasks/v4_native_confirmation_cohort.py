@@ -7,6 +7,7 @@ import sys
 import time
 
 from chronaris.evaluation.application_tasks.v4_confirmation_training import read_frozen_configuration
+from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
 def build_native_confirmation_plan(freeze_path,freeze_sha256):
@@ -34,15 +35,28 @@ def run_native_confirmation_cohort(*, freeze_path, freeze_sha256, output_root, b
                                    registry_path='docs/requirements/thesis-v4-public-subjects.json'):
     if backend not in ('neural','nonparametric'):raise ValueError('unknown confirmation backend')
     plan=build_native_confirmation_plan(freeze_path,freeze_sha256)
+    def unit_args(unit):
+        stage='naive-confirmation-unit' if backend=='nonparametric' else 'native-confirmation-unit'
+        arguments=[stage,'--domain',unit['domain'],'--fold-index',str(unit['fold_index']),'--seed',str(unit['seed']),
+                   '--data-root',str(data_root),'--registry',str(registry_path)]
+        if backend=='neural':arguments+=['--method',unit['method'],'--candidate-name',unit['candidate_name']]
+        return arguments
+    return run_confirmation_units(plan=plan,freeze_path=freeze_path,freeze_sha256=freeze_sha256,
+        output_root=output_root,backend=backend,queue_prefix='native',unit_args=unit_args,result_name='confirmation_unit.json')
+
+
+def run_confirmation_units(*,plan,freeze_path,freeze_sha256,output_root,backend,queue_prefix,unit_args,result_name):
+    """Shared subprocess, heartbeat and resume handling for both native and simulation units."""
     root=Path(output_root);root.mkdir(parents=True,exist_ok=True)
-    plan_path=root/'native_confirmation_plan.json'
-    if plan_path.exists() and json.loads(plan_path.read_text())!=plan:raise ValueError('native confirmation plan changed')
+    plan_path=root/f'{queue_prefix}_confirmation_plan.json'
+    if plan_path.exists() and json.loads(plan_path.read_text())!=plan:raise ValueError('confirmation plan changed')
     if not plan_path.exists():
         temporary=plan_path.with_suffix(f'.{os.getpid()}.tmp');temporary.write_text(json.dumps(plan,indent=2)+'\n');temporary.replace(plan_path)
-    path=root/f'native_{backend}_queue.json'
+    path=root/f'{queue_prefix}_{backend}_queue.json'
     state=json.loads(path.read_text()) if path.exists() else dict(freeze_sha256=freeze_sha256,completed_units=[],failed_units=[],errors={})
-    if state['freeze_sha256']!=freeze_sha256:raise ValueError('native queue belongs to another configuration freeze')
-    state.update(pid=os.getpid(),backend=backend,blocked_domains=plan['blocked_domains'])
+    if state['freeze_sha256']!=freeze_sha256:raise ValueError('queue belongs to another configuration freeze')
+    state.update(pid=os.getpid(),backend=backend,blocked_domains=plan.get('blocked_domains',[]))
+    state.setdefault('completed_receipts',{})
     def save():
         state['updated_at_unix_s']=time.time()
         temporary=path.with_suffix('.tmp');temporary.write_text(json.dumps(state,indent=2)+'\n');temporary.replace(path)
@@ -50,16 +64,17 @@ def run_native_confirmation_cohort(*, freeze_path, freeze_sha256, output_root, b
     for unit in plan['units']:
         if unit['backend']!=backend:continue
         key=f"{unit['domain']}/{unit['method']}/{unit['candidate_name']}/fold{unit['fold_index']+1:02d}/seed{unit['seed']}"
-        if key in state['completed_units'] or key in state['failed_units']:continue
-        stage='naive-confirmation-unit' if backend=='nonparametric' else 'native-confirmation-unit'
-        command=[sys.executable,str(project/'scripts/evaluation/application_tasks/run_thesis_v4.py'),stage,
-            '--freeze-path',str(freeze_path),'--freeze-sha256',freeze_sha256,'--domain',unit['domain'],
-            '--fold-index',str(unit['fold_index']),'--seed',str(unit['seed']),'--output-root',str(root),
-            '--data-root',str(data_root),'--registry',str(registry_path)]
-        if backend=='neural':command+=['--method',unit['method'],'--candidate-name',unit['candidate_name']]
+        if key in state['completed_units']:
+            receipt=root/key/result_name
+            if not receipt.exists() or state['completed_receipts'].get(key)!=sha256_file(receipt):
+                raise ValueError('completed unit receipt changed; refuse silent reuse')
+            continue
+        if key in state['failed_units']:continue
+        command=[sys.executable,str(project/'scripts/evaluation/application_tasks/run_thesis_v4.py'),*unit_args(unit),
+                 '--freeze-path',str(freeze_path),'--freeze-sha256',freeze_sha256,'--output-root',str(root)]
         env=os.environ.copy();env.update(OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',PYTHONPATH=str(project/'src'))
         if backend=='nonparametric':env['CUDA_VISIBLE_DEVICES']=''
-        log_path=root/(key.replace('/','__')+'.log')
+        log_path=root/(queue_prefix+'__'+key.replace('/','__')+'.log')
         with log_path.open('a') as log:
             child=subprocess.Popen(command,cwd=project,env=env,stdout=log,stderr=subprocess.STDOUT)
             state.update(status='running',current_unit=key,current_child_pid=child.pid);save()
@@ -67,7 +82,7 @@ def run_native_confirmation_cohort(*, freeze_path, freeze_sha256, output_root, b
                 try:code=child.wait(timeout=30);break
                 except subprocess.TimeoutExpired:save()
         state['current_child_pid']=None
-        result_path=root/key/'confirmation_unit.json'
+        result_path=root/key/result_name
         output=log_path.read_text();start=output.rfind('\n{')
         reply=json.loads(output[start+1:] if start>=0 else output) if code==0 else None
         if reply and reply.get('status')=='waiting_gpu':
@@ -76,8 +91,9 @@ def run_native_confirmation_cohort(*, freeze_path, freeze_sha256, output_root, b
             state['failed_units'].append(key);state['errors'][key]=f'exit_code={code}; see {log_path}'
         else:
             result=json.loads(result_path.read_text())
-            if not result['completed'] or result['freeze_sha256']!=freeze_sha256:raise ValueError('native unit returned an invalid completion')
+            if not result['completed'] or result['freeze_sha256']!=freeze_sha256:raise ValueError('unit returned an invalid completion')
             state['completed_units'].append(key)
+            state['completed_receipts'][key]=sha256_file(result_path)
         save()
     state.update(status='completed_with_failures' if state['failed_units'] else 'completed',current_unit=None);save()
     return state
