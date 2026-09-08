@@ -14,7 +14,7 @@ v4 修复参考与共享训练接口已通过四域双路线 CUDA 冒烟；最�
 
 公开固定开发组保留 CogPilot 2,524 个、CLARE 794 个原生窗口；鼎新保持每训练架次 18/6/6 个训练、验证和隔离航电上下文。公开受试者选参与汇总、鼎新多视图权重与逐字段消费者已接入共享入口。九候选、公开开发复核、三种子选型、正式确认及论文材料继续按[完整合同](requirements/thesis-v4-development-plan.md)推进，尚无 v4 正式确认结论。
 
-两种注意力、关闭同刻拉近与独立窗口配对已接入共享训练、恢复和导出，见[候选组件复核](artifacts/runs/2026-09-07_v4-candidate-components/report.md)。完整测试发现并修复了多模型连续捕获时的资源回收问题，失败日志已保留。扩大缺失覆盖与实际 0.5/2/5 秒预测也已通过恢复和微调导出，见[公共候选验收](artifacts/runs/2026-09-07_v4-common-candidates/report.md)。单流保真、质量门及固定候选入口现已通过恢复、微调导出和完整测试，见[分支候选验收](artifacts/runs/2026-09-08_v4-branch-candidates/report.md)。固定初筛队列为十个 Chronaris 配置和四种基线各两种容量，候选收益尚待实际训练评价。
+两种注意力、关闭同刻拉近与独立窗口配对已接入共享训练、恢复和导出，见[候选组件复核](artifacts/runs/2026-09-07_v4-candidate-components/report.md)。完整测试发现并修复了多模型连续捕获时的资源回收问题，失败日志已保留。扩大缺失覆盖与实际 0.5/2/5 秒预测也已通过恢复和微调导出，见[公共候选验收](artifacts/runs/2026-09-07_v4-common-candidates/report.md)。单流保真、质量门及固定候选入口现已通过恢复、微调导出和完整测试，见[分支候选验收](artifacts/runs/2026-09-08_v4-branch-candidates/report.md)。固定初筛队列为十个 Chronaris 配置和四种基线各两种容量，候选队列已从冻结提交 `ed2e24e3` 启动，当前进程与单元由 `artifacts/application_evaluation/2026-09-08_v4-single-factor-development/cohort_state.json` 记录；候选收益尚待训练评价。
 
 当前分支为 `codex/thesis-v4-recovery-20260905`，Goal 持续执行，不在阶段节点请求确认。初始 256 条轨迹的诊断与扩展后的候选结果分别归档；下方保留 v3.2.3 历史结果。
 

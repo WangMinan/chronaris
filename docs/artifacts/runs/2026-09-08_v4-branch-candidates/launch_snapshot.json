@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-09-08T11:37:20.138676",
+  "frozen_commit": "ed2e24e3",
+  "worktree": "/home/wangminan/projects/chronaris-runtime-v4-candidates-20260908",
+  "pid": 85374,
+  "current_child_pid": 85384,
+  "current_unit": "chronaris/reference",
+  "status": "running",
+  "planned_units": 18,
+  "completed_units": 0,
+  "failed_units": [],
+  "source_code_sha256": "5226644eb34f4a68527b5c6e7f14f9006663dcb172364d6166cf839c2259279e",
+  "cohort_state_path": "artifacts/application_evaluation/2026-09-08_v4-single-factor-development/cohort_state.json",
+  "log_path": "artifacts/application_evaluation/2026-09-08_v4-single-factor-development/cohort.log",
+  "scope": "development_only",
+  "confirmation_opened": false
+}
