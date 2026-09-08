@@ -1,0 +1,10 @@
+{
+  "pid": 27955,
+  "worktree": "/home/wangminan/projects/chronaris-runtime-v4-dingxin-target-order-20260908",
+  "source_commit": "d23dc66f",
+  "script_sha256": "5c2ca3e17c80c5837bfa1fa14b0cc2601b52fd0e9417c719dec925d0be2b91bd",
+  "started_unix_s": 1788851726.017581,
+  "workers": 2,
+  "units": 6,
+  "old_outputs_preserved": true
+}

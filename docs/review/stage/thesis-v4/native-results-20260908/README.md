@@ -1,6 +1,6 @@
 # 原生结果归档与鼎新确定性修复
 
-原生消费者已增加保存文件哈希和独立重放校验。固定网格基线原 24 个开发单元全部训练完成；归档跨进程检查进一步定位了鼎新目标参数的浮点累加顺序问题，已在计算入口修复，鼎新六个单元将另行重跑，旧文件保留。
+原生消费者已增加保存文件哈希和独立重放校验。固定网格基线原 24 个开发单元全部训练完成；归档跨进程检查进一步定位了鼎新目标参数的浮点累加顺序问题，已在计算入口修复，鼎新六个单元已启动重跑，旧文件保留。
 
 ## 保存与恢复
 
@@ -17,3 +17,7 @@
 公开数据的 18 个基线单元继续保留原冻结来源；鼎新六个单元使用修复后的独立输出目录，不增加候选比较机会。旧检查点、模型、成绩和失败证据保持原样，完成重跑后再生成完整归档。
 
 [验证摘要](validation_summary.json)记录 575 项完整 CPU 测试通过、30 项跳过，以及真实跨进程检查。共享读取入口位于 `v4_native_result_audit.py`；`fixed-native-results` 阶段支持显式 `--dingxin-results-root` 指定重跑来源，来源目录和哈希逐单元记录。
+
+## 冻结重跑
+
+[启动记录](dingxin_repair_launch.json)固定源码 `d23dc66f`、两个 CPU 工作进程和六个原开发单元。新结果位于 `artifacts/application_evaluation/2026-09-08_v4-naive-dingxin-deterministic/`，原公开与鼎新输出目录均保留。完成后用 `fixed-native-results --dingxin-results-root artifacts/application_evaluation/2026-09-08_v4-naive-dingxin-deterministic` 校验公开原结果与鼎新新结果。
