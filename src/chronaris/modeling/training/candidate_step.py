@@ -55,7 +55,8 @@ def pretext_micro_step(
 
 def public_pretext_forward(*, encoder, heads, normalized, augmented, device,
                            positive_diagnostics=False, negative_diagnostics=False):
-    targets = move_common_pretext_targets(build_common_pretext_targets(normalized, augmented), device=device)
+    targets = move_common_pretext_targets(build_common_pretext_targets(
+        normalized, augmented, prediction_horizons_s=heads.prediction_horizons_s), device=device)
     positive_batch = move_observation_batch(augmented.batch, device=device)
     positive = encoder(positive_batch, compute_chronaris_diagnostics=positive_diagnostics)
     if heads.cross_stream_enabled:

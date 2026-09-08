@@ -40,8 +40,11 @@ class CandidateScreenConfig:
     continuous_alignment_weight: float = 0.2
     independent_pairing_enabled: bool = False
     independent_pair_weight: float = 0.0
+    prediction_horizons_s: tuple[float, ...] = ()
 
     def __post_init__(self) -> None:
+        if tuple(self.prediction_horizons_s) not in ((), (.5, 2., 5.)):
+            raise ValueError("unsupported prediction horizons")
         if self.attention_kind not in ATTENTION_KINDS:
             raise ValueError("unsupported candidate attention kind")
         if not math.isfinite(self.continuous_alignment_weight) or self.continuous_alignment_weight < 0:

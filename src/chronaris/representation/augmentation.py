@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from numbers import Real
 from typing import Mapping, Sequence
 
@@ -19,6 +19,7 @@ class AugmentationPolicy:
     modality_dropout_probability: float = 0.05
     timestamp_jitter_sigma_s: float = 0.05
     clock_offset_limit_s: float = 0.25
+    missingness_mixture: bool = False
 
     def __post_init__(self) -> None:
         for name in ("point_dropout_probability", "modality_dropout_probability"):
@@ -50,6 +51,9 @@ class AugmentationRealization:
     vehicle_jitter_seed: int
     physiology_point_dropout_seed: int
     vehicle_point_dropout_seed: int
+    condition: str = "legacy"
+    point_dropout_probability: float | None = None
+    timestamp_jitter_sigma_s: float | None = None
 
     def to_dict(self) -> Mapping[str, object]:
         return asdict(self)
@@ -93,7 +97,7 @@ def build_augmentation_realization(
     else:
         dropped_modality = None
     seeds = generator.integers(0, np.iinfo(np.int32).max, size=4, dtype=np.int64)
-    return AugmentationRealization(
+    realization = AugmentationRealization(
         augmentation_id=hashlib.sha256(digest + json.dumps(
             {"version": "augmentation.v4", "duration_s": float(context_duration_s),
              "policy": asdict(resolved)}, sort_keys=True,
@@ -120,6 +124,24 @@ def build_augmentation_realization(
         vehicle_jitter_seed=int(seeds[1]),
         physiology_point_dropout_seed=int(seeds[2]),
         vehicle_point_dropout_seed=int(seeds[3]),
+    )
+    if not resolved.missingness_mixture:
+        return realization
+    # Missingness-only candidate: timing perturbations remain a separate objective.
+    draw = float(generator.random())
+    condition = ("clean" if draw < .40 else "random" if draw < .65
+                 else "block" if draw < .90 else "physiology_missing" if draw < .95
+                 else "vehicle_missing")
+    durations = (generator.uniform(.1, .8, size=2) * context_duration_s
+                 if condition == "block" else np.zeros(2))
+    starts = generator.uniform(size=2) * (context_duration_s - durations)
+    return replace(
+        realization, condition=condition,
+        point_dropout_probability=float(generator.uniform(.05, .30)) if condition == "random" else 0.,
+        timestamp_jitter_sigma_s=0., physiology_clock_offset_s=0., vehicle_clock_offset_s=0.,
+        physiology_block_start_s=float(starts[0]), physiology_block_duration_s=float(durations[0]),
+        vehicle_block_start_s=float(starts[1]), vehicle_block_duration_s=float(durations[1]),
+        dropped_modality=condition.removesuffix("_missing") if condition.endswith("_missing") else None,
     )
 
 

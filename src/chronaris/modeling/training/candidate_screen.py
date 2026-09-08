@@ -355,6 +355,7 @@ def _train_pretext_candidate(
         target_feature_count=len(physiology_feature_names) + len(vehicle_feature_names),
         modality_feature_counts=(len(physiology_feature_names), len(vehicle_feature_names)) if resolved.max_updates is not None else None,
         input_streams=(method_name.removesuffix("_only"),) if method_name.endswith("_only") else ("physiology", "vehicle"),
+        prediction_horizons_s=resolved.prediction_horizons_s,
     ).to(resolved.device)
     shift_head = (
         ExplicitTimeShiftHead(FUSION_OUTPUT_DIM).to(resolved.device)

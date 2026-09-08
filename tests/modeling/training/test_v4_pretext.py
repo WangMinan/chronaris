@@ -67,3 +67,28 @@ def test_validation_modal_aggregation_and_masked_pool_are_padding_invariant():
     assert all(torch.isfinite(parameter.grad).all() for parameter in heads.parameters())
     with pytest.raises(ValueError, match="non-finite"):
         _forward(heads, sequence, replace(targets, reconstruction_mask=torch.ones_like(mask)))
+
+
+def test_multihorizon_modality_balancing_and_partial_target_gradients():
+    heads = CommonPretextHeadBundle(representation_dim=8, target_feature_count=4,
+        modality_feature_counts=(1, 3), prediction_horizons_s=(.5, 2., 5.))
+    with torch.no_grad():
+        for parameter in heads.parameters():
+            parameter.zero_()
+    values = torch.zeros(2, 3, 4)
+    future = torch.tensor([[1., 3., 3., 3.], [2., 4., 4., 4.], [3., 5., 5., 5.]]).expand(2, 3, -1, -1).clone()
+    mask = torch.ones_like(future, dtype=torch.bool)
+    mask[1, 1:] = False
+    future[~mask] = torch.nan
+    targets = replace(_targets(values), next_query_target=future, next_query_mask=mask,
+        prediction_horizons_s=(.5, 2., 5.))
+    output = _forward(heads, torch.randn(2, 3, 8), targets)
+    assert output.next_query_prediction.shape == (2, 3, 3, 4)
+    assert output.terms[1].raw_loss.item() == pytest.approx(2.5)
+    assert len(output.terms[1].components) == 6
+    output.terms[1].raw_loss.backward()
+    expected = torch.tensor([[-1/6, -1/18, -1/18, -1/18]] * 3).flatten()
+    torch.testing.assert_close(heads.next_query_head.bias.grad, expected)
+    totals = _empty_loss_totals()
+    _accumulate_loss_terms(totals, output.terms)
+    assert _finalize_loss_totals(totals)["short_horizon_prediction"] == pytest.approx(2.5)

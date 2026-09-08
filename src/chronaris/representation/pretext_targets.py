@@ -27,6 +27,7 @@ class CommonPretextTargets:
     next_query_mask: torch.Tensor
     target_feature_count: int
     augmentation_ids: tuple[str, ...]
+    prediction_horizons_s: tuple[float, ...] = ()
 
     def __post_init__(self) -> None:
         if self.reconstruction_target.ndim != 3:
@@ -35,9 +36,13 @@ class CommonPretextTargets:
             )
         if self.reconstruction_mask.shape != self.reconstruction_target.shape:
             raise RepresentationContractError("reconstruction mask shape mismatch")
-        if self.next_query_target.shape != self.reconstruction_target.shape:
+        expected = (self.reconstruction_target.shape[:2] + (len(self.prediction_horizons_s), self.target_feature_count)
+                    if self.prediction_horizons_s else self.reconstruction_target.shape)
+        if self.prediction_horizons_s not in ((), (.5, 2., 5.)):
+            raise RepresentationContractError("unsupported prediction horizons")
+        if self.next_query_target.shape != expected:
             raise RepresentationContractError("next-query target shape mismatch")
-        if self.next_query_mask.shape != self.reconstruction_target.shape:
+        if self.next_query_mask.shape != expected:
             raise RepresentationContractError("next-query mask shape mismatch")
         if self.reconstruction_mask.dtype != torch.bool:
             raise RepresentationContractError("reconstruction mask must be boolean")
@@ -82,6 +87,7 @@ def move_common_pretext_targets(
 def build_common_pretext_targets(
     original_batch: DualStreamObservationBatch,
     augmented: AppliedAugmentationBatch,
+    *, prediction_horizons_s: tuple[float, ...] = (),
 ) -> CommonPretextTargets:
     """Build targets before augmentation and masks from exact source replacement."""
 
@@ -139,6 +145,17 @@ def build_common_pretext_targets(
     next_mask = torch.zeros_like(target_mask)
     next_target[:, :-1] = target[:, 1:]
     next_mask[:, :-1] = target_mask[:, 1:]
+    if prediction_horizons_s:
+        future_targets, future_masks = [], []
+        for horizon in prediction_horizons_s:
+            queries = original_batch.query_timestamps_s + horizon
+            teacher = replace(original_batch, query_timestamps_s=queries)
+            streams = [causal_query_stream(teacher, stream_name=name) for name in ("physiology", "vehicle")]
+            valid = torch.cat([stream.feature_mask for stream in streams], dim=-1)
+            valid &= (queries < original_batch.context_durations_s[:, None])[..., None]
+            future_masks.append(valid)
+            future_targets.append(torch.cat([stream.values for stream in streams], dim=-1).masked_fill(~valid, 0))
+        next_target, next_mask = torch.stack(future_targets, dim=2), torch.stack(future_masks, dim=2)
     return CommonPretextTargets(
         reconstruction_target=target,
         reconstruction_mask=reconstruction_mask,
@@ -146,6 +163,7 @@ def build_common_pretext_targets(
         next_query_mask=next_mask,
         target_feature_count=target.shape[-1],
         augmentation_ids=augmented.augmentation_ids,
+        prediction_horizons_s=prediction_horizons_s,
     )
 
 

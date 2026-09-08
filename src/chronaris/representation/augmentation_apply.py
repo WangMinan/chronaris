@@ -52,6 +52,9 @@ class AugmentationAuditRow:
     block_start_s: float
     block_duration_s: float
     clock_offset_s: float
+    condition: str
+    point_dropout_probability: float
+    timestamp_jitter_sigma_s: float
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -181,6 +184,12 @@ def _augment_stream(
         jitter_seed = int(getattr(plan, f"{stream_name}_jitter_seed"))
         dropout_seed = int(getattr(plan, f"{stream_name}_point_dropout_seed"))
         modality_dropped = plan.dropped_modality == stream_name
+        dropout_probability = (policy.point_dropout_probability if plan.point_dropout_probability is None
+                               else plan.point_dropout_probability)
+        jitter_sigma = (policy.timestamp_jitter_sigma_s if plan.timestamp_jitter_sigma_s is None
+                        else plan.timestamp_jitter_sigma_s)
+        if not 0 <= dropout_probability < 1 or not 0 <= jitter_sigma <= .1:
+            raise RepresentationContractError("invalid realized dropout or jitter")
         keep = torch.ones(
             len(valid_indices),
             dtype=torch.bool,
@@ -196,7 +205,7 @@ def _augment_stream(
             generator = np.random.default_rng(dropout_seed)
             point_drop = torch.as_tensor(
                 generator.random(len(valid_indices))
-                < policy.point_dropout_probability,
+                < dropout_probability,
                 dtype=torch.bool,
                 device=point_mask.device,
             )
@@ -208,7 +217,7 @@ def _augment_stream(
         if len(retained_indices):
             jitter = np.random.default_rng(jitter_seed).normal(
                 0.0,
-                policy.timestamp_jitter_sigma_s,
+                jitter_sigma,
                 size=len(retained_indices),
             )
             transformed_times = retained_times + clock_offset + torch.as_tensor(
@@ -260,6 +269,9 @@ def _augment_stream(
                 block_start_s=block_start,
                 block_duration_s=block_duration,
                 clock_offset_s=clock_offset,
+                condition=plan.condition,
+                point_dropout_probability=dropout_probability,
+                timestamp_jitter_sigma_s=jitter_sigma,
             )
         )
     output_point_mask = output_features.any(dim=-1)

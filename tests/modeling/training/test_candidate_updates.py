@@ -10,17 +10,19 @@ from chronaris.modeling.training import EncoderCandidateConfig
 from chronaris.modeling.training import load_common_pretraining_checkpoint
 from chronaris.modeling.training.pretext import chronaris_auxiliary_weight_schedule
 from chronaris.modeling.training.rng import canonical_training_state_sha256
-from chronaris.representation import FoldLineage, TrainOnlyRobustNormalizer, collate_observation_samples
+from chronaris.representation import AugmentationPolicy, FoldLineage, TrainOnlyRobustNormalizer, collate_observation_samples
 from chronaris.representation.contracts import RepresentationContractError
 from tests.modeling.training.test_candidate_screen import _sample
 
 
-@pytest.mark.parametrize("device,method,attention_kind", [
-    ("cpu", "physiology_only", "legacy_cosine"), ("cuda", "physiology_only", "legacy_cosine"),
-    ("cuda", "chronaris", "legacy_cosine"), ("cpu", "chronaris", "cosine_temperature"),
-    ("cpu", "chronaris", "projected_dot_product"), ("cuda", "chronaris", "cosine_temperature"),
-    ("cuda", "chronaris", "projected_dot_product")])
-def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method, attention_kind):
+@pytest.mark.parametrize("device,method,attention_kind,common_candidate", [
+    ("cpu", "physiology_only", "legacy_cosine", False), ("cuda", "physiology_only", "legacy_cosine", False),
+    ("cuda", "chronaris", "legacy_cosine", False), ("cpu", "chronaris", "cosine_temperature", False),
+    ("cpu", "chronaris", "projected_dot_product", False), ("cuda", "chronaris", "cosine_temperature", False),
+    ("cuda", "chronaris", "projected_dot_product", False),
+    ("cpu", "physiology_only", "legacy_cosine", True), ("cuda", "chronaris", "legacy_cosine", True)])
+def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method, attention_kind, common_candidate):
+    torch.set_num_threads(1)
     if device == "cuda" and not torch.cuda.is_available():
         pytest.skip("CUDA unavailable")
     samples = [_sample(f"sample_{i}", i) for i in range(9)]
@@ -35,11 +37,13 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
         held_out_sample_ids=fold.validation_sample_ids + fold.held_out_sample_ids)
     config = screen.CandidateScreenConfig(max_updates=5, batch_size=2, effective_batch_size=6,
         validation_interval=3, checkpoint_interval=2, seed=17, device=device, early_stopping=False,
-        cuda_graph_recurrence=method == "chronaris", retained_updates=(3,), attention_kind=attention_kind)
+        cuda_graph_recurrence=method == "chronaris", retained_updates=(3,), attention_kind=attention_kind,
+        prediction_horizons_s=(.5, 2., 5.) if common_candidate else ())
     arguments = dict(method_name=method, candidate=EncoderCandidateConfig(
         candidate_id="D", hidden_dim=32, dropout=.2), batch=batch, fold=fold,
         physiology_feature_names=("physiology.a",), vehicle_feature_names=("vehicle.a",),
         vehicle_field_labels=(), normalizer=normalizer, config=config,
+        augmentation_policy=AugmentationPolicy(missingness_mixture=common_candidate),
         chronaris_fusion_kind="safe_lag" if attention_kind != "legacy_cosine" else "multiscale")
     complete = screen.train_pretext_candidate(output_root=tmp_path / "continuous", **arguments)
     original = screen.pretext_micro_step
@@ -70,14 +74,20 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
         assert canonical_training_state_sha256(left[key]) == canonical_training_state_sha256(right[key]), key
     assert right["data_cursor"]["micro_batches_seen"] == 15
     assert right["data_cursor"]["samples_seen"] == 30
-    assert all(int(state["step"]) == 5 for state in right["optimizer_state_dict"]["state"].values())
+    parameter_steps = [int(state["step"]) for state in right["optimizer_state_dict"]["state"].values()]
+    # Clean batches need not update a reconstruction head with no masked targets.
+    assert max(parameter_steps) == 5 and min(parameter_steps) >= 1
+    if not common_candidate:
+        assert min(parameter_steps) == 5
     assert right["stage_update_counts"] == dict(pretraining=5, head_warmup=0, joint_adaptation=0)
     snapshot = tmp_path / f"resumed/{method}/D/update_000003.pt"
     with pytest.raises(RepresentationContractError, match="incomplete"):
         load_common_pretraining_checkpoint(snapshot)
-    restored_encoder, _, _, snapshot_payload = load_common_pretraining_checkpoint(snapshot, allow_diagnostic_snapshot=True)
+    restored_encoder, restored_heads, _, snapshot_payload = load_common_pretraining_checkpoint(snapshot, allow_diagnostic_snapshot=True)
     if method == "chronaris":
         assert restored_encoder.backbone.config.attention_kind == attention_kind
+    assert restored_heads.prediction_horizons_s == config.prediction_horizons_s
+    assert snapshot_payload["augmentation_policy"]["missingness_mixture"] == common_candidate
     assert snapshot_payload["optimizer_updates"] == 3
     assert snapshot_payload["development_snapshot"]["allowed_export_roles"] == ["train", "validation"]
     heartbeat = json.loads((tmp_path / f"resumed/{method}/D/progress.json").read_text())
@@ -88,6 +98,32 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     with pytest.raises(RepresentationContractError, match="protocol changed"):
         screen.train_pretext_candidate(output_root=tmp_path / "resumed",
             **(arguments | {"config": replace(config, effective_batch_size=4)}))
+    if common_candidate and device == "cpu":
+        _check_guided_common_candidate(tmp_path, resumed.last_checkpoint_path, batch, fold)
+
+
+def _check_guided_common_candidate(root, checkpoint, batch, fold):
+    from chronaris.evaluation.application_tasks.application_finetuning import (
+        EndToEndApplicationModel, EndToEndFineTuningConfig, train_end_to_end_application_method)
+    from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations
+    from chronaris.evaluation.application_tasks.application_task_heads import ApplicationTaskDefinition, ApplicationTaskTargets
+    from chronaris.modeling.training.rng import isolated_training_rng
+    encoder, _, normalizer, _ = load_common_pretraining_checkpoint(checkpoint)
+    roles = {role: getattr(fold, role + "_sample_ids") for role in ("train", "validation", "held_out")}
+    targets = ApplicationTaskTargets(batch.sample_ids, {"classify": torch.arange(len(batch.sample_ids)).remainder(3)},
+        {"classify": torch.ones(len(batch.sample_ids), dtype=torch.bool)}, {"domain": "unit_test"})
+    with isolated_training_rng(17):
+        model = EndToEndApplicationModel(method_name="physiology_only", encoder=encoder, normalizer=normalizer,
+            naive_encoder=None, task_definitions=(ApplicationTaskDefinition("classify", "classification", 3),))
+    result = train_end_to_end_application_method(model=model, batch=batch, targets=targets, role_sample_ids=roles,
+        source_checkpoint_path=checkpoint, output_root=root / "guided", config=EndToEndFineTuningConfig(
+            max_updates=2, head_warmup_updates=1, batch_size=2, effective_batch_size=6,
+            validation_interval=1, early_stopping=False))
+    assert result.optimizer_updates == 3
+    assert model.pretext_heads.prediction_horizons_s == (.5, 2., 5.)
+    output = export_finetuned_application_representations(model=model, checkpoint_path=result.last_checkpoint_path,
+        batch=batch, role_sample_ids=roles, output_root=root / "guided_exports", batch_size=2, export_roles=("train", "validation"))
+    assert output["validation"].sequence_embedding.shape[-1] == 64
 
 
 def test_update_schedule_has_zero_then_linear_mechanisms():

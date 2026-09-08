@@ -64,12 +64,16 @@ class CommonPretextHeadBundle(nn.Module):
 
     def __init__(self, *, representation_dim: int, target_feature_count: int,
                  modality_feature_counts: tuple[int, int] | None = None,
-                 input_streams: tuple[str, ...] = ("physiology", "vehicle")) -> None:
+                 input_streams: tuple[str, ...] = ("physiology", "vehicle"),
+                 prediction_horizons_s: tuple[float, ...] = ()) -> None:
         super().__init__()
         if representation_dim <= 0 or target_feature_count <= 0:
             raise ValueError("pretext head dimensions must be positive")
         self.representation_dim = representation_dim
         self.target_feature_count = target_feature_count
+        self.prediction_horizons_s = tuple(prediction_horizons_s)
+        if self.prediction_horizons_s not in ((), (.5, 2., 5.)):
+            raise ValueError("unsupported prediction horizons")
         self.modality_feature_counts = tuple(modality_feature_counts) if modality_feature_counts is not None else None
         self.input_streams = tuple(input_streams)
         if (not self.input_streams or len(set(self.input_streams)) != len(self.input_streams)
@@ -86,7 +90,7 @@ class CommonPretextHeadBundle(nn.Module):
         )
         self.next_query_head = nn.Linear(
             representation_dim,
-            target_feature_count,
+            target_feature_count * max(1, len(self.prediction_horizons_s)),
         )
         self.lag_head = nn.Sequential(
             nn.LayerNorm(representation_dim),
@@ -98,7 +102,8 @@ class CommonPretextHeadBundle(nn.Module):
         return self.modality_feature_counts is None or len(self.input_streams) == 2
 
     def objective_config(self):
-        return {"modality_feature_counts": self.modality_feature_counts, "input_streams": self.input_streams}
+        return {"modality_feature_counts": self.modality_feature_counts, "input_streams": self.input_streams,
+                "prediction_horizons_s": self.prediction_horizons_s}
 
     def forward(
         self,
@@ -123,6 +128,10 @@ class CommonPretextHeadBundle(nn.Module):
         resolved_weights = weights or CommonPretextWeights()
         reconstruction = self.reconstruction_head(positive_sequence)
         next_query = self.next_query_head(positive_sequence)
+        if targets.prediction_horizons_s != self.prediction_horizons_s:
+            raise ValueError("prediction head/target horizons differ")
+        if self.prediction_horizons_s:
+            next_query = next_query.reshape(*positive_sequence.shape[:2], len(self.prediction_horizons_s), self.target_feature_count)
         if self.modality_feature_counts is not None and (positive_valid_mask is None or negative_valid_mask is None):
             raise ValueError("v4 pretext requires encoder validity masks")
         if self.cross_stream_enabled:
@@ -170,12 +179,21 @@ class CommonPretextHeadBundle(nn.Module):
         )
 
     def _reconstruction_term(self, name, prediction, target, mask, *, weight):
-        if self.modality_feature_counts is None:
+        if self.modality_feature_counts is None and prediction.ndim == 3:
             return _masked_huber_term(name, prediction, target, mask, weight=weight)
-        first, second = self.modality_feature_counts
-        slices = {"physiology": slice(0, first), "vehicle": slice(first, first + second)}
-        components = tuple(_masked_huber_term(stream, prediction[..., slices[stream]],
-            target[..., slices[stream]], mask[..., slices[stream]], weight=weight) for stream in self.input_streams)
+        if self.modality_feature_counts is None:
+            slices = {"all": slice(None)}
+        else:
+            first, second = self.modality_feature_counts
+            slices = {"physiology": slice(0, first), "vehicle": slice(first, first + second)}
+            slices = {stream: slices[stream] for stream in self.input_streams}
+        components = []
+        for stream, feature_slice in slices.items():
+            for h in range(prediction.shape[2] if prediction.ndim == 4 else 1):
+                index = (slice(None), slice(None), h, feature_slice) if prediction.ndim == 4 else (..., feature_slice)
+                label = f"{stream}@{self.prediction_horizons_s[h]:g}s" if prediction.ndim == 4 else stream
+                components.append(_masked_huber_term(label, prediction[index], target[index], mask[index], weight=weight))
+        components = tuple(components)
         active = [term.raw_loss for term in components if term.count]
         raw = torch.stack(active).mean() if active else None
         return PretextLossTerm(name, weight, "active" if active else "unavailable",
