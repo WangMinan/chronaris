@@ -1,0 +1,16 @@
+[
+  {
+    "domain": "cogpilot",
+    "pid": 97566,
+    "started_unix_s": 1788843423.9282782,
+    "worktree": "/home/wangminan/projects/chronaris-runtime-v4-public-preparation-20260908",
+    "source_commit": "b8b53d81"
+  },
+  {
+    "domain": "clare",
+    "pid": 97577,
+    "started_unix_s": 1788843423.928878,
+    "worktree": "/home/wangminan/projects/chronaris-runtime-v4-public-preparation-20260908",
+    "source_commit": "b8b53d81"
+  }
+]
