@@ -15,6 +15,7 @@ from chronaris.evaluation.application_tasks.application_consumers import (
 from chronaris.evaluation.application_tasks.consumer_model_selection import (
     classifier_classes, fit_classifier, fit_regressor)
 from chronaris.evaluation.application_tasks.v4_development_data import v4_workflow_source_sha256
+from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
 def native_consumer_context(domain, data, fold, *, include_held_out=False):
@@ -281,23 +282,20 @@ def run_native_method_consumers(*, outputs, targets, definitions, context, outpu
         "roles": {role: {"sample_ids": output.sample_ids, "source_sample_hashes": output.source_sample_hashes,
             "method_name": output.method_name, "fold_id": output.fold_id, "checkpoint_sha256": output.checkpoint_sha256}
             for role, output in outputs.items()}}
-    digest = hashlib.sha256(json.dumps(manifest, sort_keys=True, allow_nan=False).encode())
-    tensors = [tensor for role in sorted(outputs) for tensor in (outputs[role].sequence_embedding,
-        outputs[role].valid_mask, outputs[role].pooled_embedding, outputs[role].timestamps_s)]
-    tensors += [tensor for name in sorted(targets.values) for tensor in (targets.values[name], targets.valid_masks[name])]
-    if targets.sample_weights is not None:
-        tensors.append(targets.sample_weights)
-    digest.update(json.dumps(targets.sample_ids).encode())
-    for tensor in tensors:
-        array = tensor.detach().cpu().numpy()
-        digest.update(str((array.shape, array.dtype)).encode())
-        digest.update(array.tobytes())
-    protocol_hash = digest.hexdigest()
+    protocol_hash = native_consumer_protocol_sha256(manifest, outputs, targets)
     manifest_path = root / "consumer_manifest.json"
+    artifacts = {}
     if manifest_path.exists():
         old = json.loads(manifest_path.read_text())
         if old["protocol_sha256"] != protocol_hash:
             raise ValueError("native consumer source/data/config changed; use a new output root")
+        artifacts = old.get("artifacts", {})
+        if set(artifacts) - {"linear", "minirocket"}:
+            raise ValueError("native consumer artifact inventory changed")
+        for family, hashes in artifacts.items():
+            if (sha256_file(root / f"{family}.joblib") != hashes["model_sha256"]
+                or sha256_file(root / f"{family}_results.json") != hashes["result_sha256"]):
+                raise ValueError("native consumer saved artifact changed; preserve it and inspect the run")
     else:
         manifest_path.write_text(json.dumps(manifest | {"protocol_sha256": protocol_hash}, ensure_ascii=False, indent=2) + "\n")
     results = {}
@@ -323,5 +321,27 @@ def run_native_method_consumers(*, outputs, targets, definitions, context, outpu
         temporary.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
         temporary.replace(result_path)
         results[family] = {"result_path": str(result_path), "model_path": str(model_path),
+            "model_sha256": sha256_file(model_path),
+            "result_sha256": sha256_file(result_path),
             "fit_elapsed_s": fit_elapsed, "task_summary": {role: values["task_summary"] for role, values in result["evaluations"].items()}}
+        artifacts[family] = {key: results[family][key] for key in ("model_sha256", "result_sha256")}
+        temporary = manifest_path.with_suffix(".tmp")
+        temporary.write_text(json.dumps(manifest | {"protocol_sha256": protocol_hash, "artifacts": artifacts}, ensure_ascii=False, indent=2) + "\n")
+        temporary.replace(manifest_path)
     return {"protocol_sha256": protocol_hash, "manifest_path": str(manifest_path), "components": results}
+
+
+def native_consumer_protocol_sha256(manifest, outputs, targets):
+    """Hash the same authoritative role, target and representation tensors for fit and audit."""
+    digest = hashlib.sha256(json.dumps(manifest, sort_keys=True, allow_nan=False).encode())
+    tensors = [tensor for role in sorted(outputs) for tensor in (outputs[role].sequence_embedding,
+        outputs[role].valid_mask, outputs[role].pooled_embedding, outputs[role].timestamps_s)]
+    tensors += [tensor for name in sorted(targets.values) for tensor in (targets.values[name], targets.valid_masks[name])]
+    if targets.sample_weights is not None:
+        tensors.append(targets.sample_weights)
+    digest.update(json.dumps(targets.sample_ids).encode())
+    for tensor in tensors:
+        array = tensor.detach().cpu().numpy()
+        digest.update(str((array.shape, array.dtype)).encode())
+        digest.update(array.tobytes())
+    return digest.hexdigest()

@@ -169,3 +169,34 @@ def test_consumer_artifacts_resume_and_reject_mutated_targets(tmp_path, monkeypa
     changed["classify"] = (changed["classify"] + 1).remainder(3)
     with pytest.raises(ValueError, match="source/data/config changed"):
         run_native_method_consumers(**(kwargs | {"targets": replace(targets, values=changed)}))
+
+
+def test_result_audit_replays_frozen_models_and_rejects_changed_values(tmp_path):
+    import json
+    from chronaris.evaluation.application_tasks.v4_native_result_audit import audit_native_consumer_result
+    outputs,targets,tasks,context=_public_inputs()
+    result=run_native_method_consumers(outputs=outputs,targets=targets,definitions=tasks,context=context,
+        output_root=tmp_path,label_used_for_encoder_training=False,minirocket_kernels=84)
+    kwargs=dict(outputs=outputs,targets=targets,definitions=tasks,context=context,label_used_for_encoder_training=False)
+    audit=audit_native_consumer_result(result,**kwargs)
+    assert audit['model_replay_exact'] and not audit['consumers_refitted']
+    path=tmp_path/'linear_results.json';saved=json.loads(path.read_text());saved['evaluations']['validation']['task_summary'][0]['value']+=.1
+    path.write_text(json.dumps(saved))
+    with pytest.raises(ValueError,match='hash changed'):audit_native_consumer_result(result,**kwargs)
+    # Older native artifacts did not store component hashes; replay still detects corruption.
+    for component in result['components'].values():
+        component.pop('model_sha256');component.pop('result_sha256')
+    metadata_path=tmp_path/'consumer_manifest.json';metadata=json.loads(metadata_path.read_text());metadata.pop('artifacts')
+    metadata_path.write_text(json.dumps(metadata))
+    with pytest.raises(ValueError,match='model replay'):audit_native_consumer_result(result,**kwargs)
+
+
+def test_native_resume_rejects_changed_saved_files_before_rewriting(tmp_path):
+    outputs,targets,tasks,context=_public_inputs()
+    kwargs=dict(outputs=outputs,targets=targets,definitions=tasks,context=context,output_root=tmp_path,
+                label_used_for_encoder_training=False,minirocket_kernels=84)
+    result=run_native_method_consumers(**kwargs)
+    model=tmp_path/'linear.joblib';original=model.read_bytes()
+    model.write_bytes(original+b'changed')
+    with pytest.raises(ValueError,match='saved artifact changed'):run_native_method_consumers(**kwargs)
+    assert model.read_bytes()==original+b'changed'

@@ -608,7 +608,7 @@ def _fit_physiology_fold(
 
 def _maneuver_score_from_frame(frame, scalers, *, prefix, minimum, eps):
     values = []
-    for row in frame.itertuples(index=False):
+    for row in frame.sort_values("semantic_key", kind="stable").itertuples(index=False):
         scaler = scalers.get(str(row.semantic_key))
         std = getattr(row, f"{prefix}_std")
         delta = getattr(row, f"{prefix}_abs_delta")

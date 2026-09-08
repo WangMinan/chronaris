@@ -188,3 +188,12 @@ def _synthetic_raw_bundle() -> SimpleRawTargetBundle:
         physiology_statistics=pd.DataFrame(physiology_rows),
         source_hashes={"synthetic": "hash"},
     )
+
+
+def test_maneuver_targets_are_bitwise_stable_under_semantic_row_permutations():
+    raw = _synthetic_raw_bundle()
+    expected = fit_simple_loso_targets(raw)
+    for seed in (17,29,43):
+        changed = fit_simple_loso_targets(replace(raw,maneuver_statistics=raw.maneuver_statistics.sample(frac=1,random_state=seed)))
+        pd.testing.assert_frame_equal(expected.threshold_rows,changed.threshold_rows,check_exact=True)
+        pd.testing.assert_frame_equal(expected.maneuver_targets,changed.maneuver_targets,check_exact=True)
