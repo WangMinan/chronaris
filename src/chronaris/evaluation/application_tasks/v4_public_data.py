@@ -103,13 +103,7 @@ class V4PublicData:
             development_only=not bool(subject_fold["held_out_subjects"]))
 
 
-def load_v4_public_development(domain, *, registry, cache_root, cogpilot_root=COGPILOT_ROOT, clare_root=CLARE_ROOT):
-    subjects = tuple(registry["domains"][domain]["development_subjects"])
-    return _load_public_subjects(domain, subjects, cache_root=cache_root,
-        cogpilot_root=cogpilot_root, clare_root=clare_root)
-
-
-def _load_public_subjects(domain, subjects, *, cache_root, cogpilot_root, clare_root):
+def _load_public_subjects(domain, subjects, *, cache_root, cogpilot_root, clare_root, role="development"):
     cache_root = Path(cache_root)
     if domain == "cogpilot":
         difficulty = build_cogpilot_difficulty_dataset(cogpilot_root, subject_ids=subjects,
@@ -156,7 +150,7 @@ def _load_public_subjects(domain, subjects, *, cache_root, cogpilot_root, clare_
             "task_valid_mask": {name: bool(mask[index]) for name, mask in masks.items()},
             "source_sample_hash": record.source_sample_hash, "source_paths": [str(path) for path in source_paths]})
     targets = ApplicationTaskTargets(dataset.sample_ids, values, masks,
-        {"domain": domain, "source_role": "fixed_development_subjects", "smoke_only": False})
+        {"domain": domain, "source_role": f"fixed_{role}_subjects", "smoke_only": False})
     for subject in subjects:
         positions = [index for index, record in enumerate(records) if record.group_id == subject]
         if not positions or any(not mask[positions].any() for mask in masks.values()):
@@ -164,16 +158,22 @@ def _load_public_subjects(domain, subjects, *, cache_root, cogpilot_root, clare_
     return V4PublicData(domain, dataset, targets, definitions, tuple(rows))
 
 
-def prepare_public_development(domain, *, registry_path, output_root):
+def prepare_public_development(domain, *, registry_path, output_root, role="development"):
     """Materialize native window caches, audit coverage and save reproducible folds."""
     from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
+    if role not in {"development", "confirmation"}:
+        raise ValueError("invalid fixed public subject role")
     output_root = Path(output_root) / domain
+    prior_summary = output_root / "summary.json"
+    if prior_summary.exists() and json.loads(prior_summary.read_text()).get("subject_role", "development") != role:
+        raise ValueError("cannot overwrite a different prepared public subject role")
     registry = freeze_public_subject_registry(registry_path)
     started = time.perf_counter()
     with _periodic_training_heartbeat(f"data_{domain}", 30., root=output_root) as progress:
         progress["phase"] = "build_native_window_manifest"
-        data = load_v4_public_development(domain, registry=registry, cache_root=output_root / "native_cache")
-        subjects = registry["domains"][domain]["development_subjects"]
+        subjects = registry["domains"][domain][f"{role}_subjects"]
+        data = _load_public_subjects(domain, subjects, cache_root=output_root / "native_cache",
+            cogpilot_root=COGPILOT_ROOT, clare_root=CLARE_ROOT, role=role)
         coverage = {subject: {"window_count": 0, "physiology_empty_windows": 0, "vehicle_empty_windows": 0,
             "task_counts": {task.name: 0 for task in data.task_definitions}} for subject in subjects}
         point_counts = {"physiology": [], "vehicle": []}
@@ -194,21 +194,22 @@ def prepare_public_development(domain, *, registry_path, output_root):
                 progress["processed_samples"] = index + 1
         failures = [subject for subject, row in coverage.items()
             if any(row[f"{stream}_empty_windows"] == row["window_count"] for stream in point_counts)]
-        folds = [data.fold(fold).to_dict() for fold in registry["domains"][domain]["folds"]["development"]]
+        folds = [data.fold(fold).to_dict() for fold in registry["domains"][domain]["folds"][role]]
         for task in data.task_definitions:
             if task.kind == "classification":
                 for fold in folds:
-                    positions = [i for i, sample in enumerate(data.targets.sample_ids) if sample in set(fold["train_sample_ids"])]
+                    train_ids = set(fold["train_sample_ids"])
+                    positions = [i for i, sample in enumerate(data.targets.sample_ids) if sample in train_ids]
                     valid = data.targets.valid_masks[task.name][positions]
                     if len(torch.unique(data.targets.values[task.name][positions][valid])) < 2:
                         failures.append(f"{fold['fold_id']}:{task.name}:fewer_than_two_training_classes")
-        summary = {"domain": domain, "status": "unavailable" if failures else "completed", "failures": failures,
+        summary = {"domain": domain, "subject_role": role, "status": "unavailable" if failures else "completed", "failures": failures,
             "subject_coverage": coverage, "sample_count": len(data.dataset.records),
             "task_counts": {name: int(mask.sum()) for name, mask in data.targets.valid_masks.items()},
             "native_point_counts": {name: {"minimum": min(values), "median": float(np.median(values)), "maximum": max(values)}
                                     for name, values in point_counts.items()},
             "registry_sha256": sha256_file(registry_path), "sample_manifest_sha256": sha256_file(output_root / "sample_manifest.jsonl"),
-            "confirmation_observations_loaded": False, "model_scores_produced": False, "elapsed_s": time.perf_counter() - started}
+            "confirmation_observations_loaded": role == "confirmation", "model_scores_produced": False, "elapsed_s": time.perf_counter() - started}
         (output_root / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
         (output_root / "folds.json").write_text(json.dumps(folds, ensure_ascii=False, indent=2) + "\n")
         torch.save({"sample_ids": data.targets.sample_ids, "values": data.targets.values,
@@ -218,16 +219,23 @@ def prepare_public_development(domain, *, registry_path, output_root):
         return summary
 
 
-def load_prepared_public_development(domain, *, output_root, registry_path):
+def load_prepared_public_development(domain, *, output_root, registry_path, role="development"):
     """Read prepared windows without parsing their source recordings again."""
     root = Path(output_root) / domain
     summary = json.loads((root / "summary.json").read_text())
+    if role not in {"development", "confirmation"} or summary.get("subject_role", "development") != role:
+        raise ValueError("prepared public subject role changed")
     if summary["status"] != "completed" or summary["registry_sha256"] != sha256_file(registry_path):
         raise ValueError("prepared development registry/status changed")
     if summary["sample_manifest_sha256"] != sha256_file(root / "sample_manifest.jsonl"):
         raise ValueError("prepared development sample manifest changed")
     rows = tuple(json.loads(line) for line in (root / "sample_manifest.jsonl").read_text().splitlines())
+    subjects = set(json.loads(Path(registry_path).read_text())["domains"][domain][f"{role}_subjects"])
+    if {row["subject_id"] for row in rows} != subjects:
+        raise ValueError("prepared public subjects crossed or omitted the fixed role")
     targets = ApplicationTaskTargets(**torch.load(root / "task_targets.pt", map_location="cpu", weights_only=True))
+    if targets.manifest.get("source_role") != f"fixed_{role}_subjects":
+        raise ValueError("prepared target source role changed")
     if targets.sample_ids != tuple(row["sample_id"] for row in rows):
         raise ValueError("prepared target sample order changed")
     schema = COGPILOT_SCHEMA if domain == "cogpilot" else CLARE_SCHEMA

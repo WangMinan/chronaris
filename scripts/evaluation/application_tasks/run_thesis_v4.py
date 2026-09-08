@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
+                     "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
                      "development-pressure": "2026-09-06_v4-development-pressure",
@@ -39,8 +40,9 @@ def main():
                      "candidate": "2026-09-08_v4-single-factor-development",
                      "candidate-pressure": "2026-09-08_v4-candidate-pressure"}
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "public-data":
-        summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root)
+    if args.stage in {"public-data", "public-confirmation-data"}:
+        summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root,
+            role="confirmation" if args.stage == "public-confirmation-data" else "development")
     elif args.stage == "candidate":
         from chronaris.evaluation.application_tasks.v4_candidates import run_candidate_development
         summary = run_candidate_development(domain=args.domain, method=args.method, candidate_name=args.candidate_name,

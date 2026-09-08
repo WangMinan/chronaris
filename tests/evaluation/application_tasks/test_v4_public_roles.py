@@ -1,5 +1,7 @@
 from dataclasses import replace
 from pathlib import Path
+import hashlib
+import json
 
 import pytest
 
@@ -43,3 +45,26 @@ def test_development_only_fold_is_explicit_and_registry_preserves_it(tmp_path):
     restored = CheckpointRegistry(registry_path).require("chronaris", "development")
     assert restored.fold == fold
     assert restored.fold.to_dict()["development_only"] is True
+
+
+def test_prepared_public_cache_cannot_cross_subject_roles_or_overwrite_them(tmp_path):
+    from chronaris.evaluation.application_tasks.v4_public_data import load_prepared_public_development, prepare_public_development
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps({"domains": {"clare": {"development_subjects": ["dev"], "confirmation_subjects": ["confirm"]}}}))
+    root = tmp_path / "clare"
+    root.mkdir()
+    manifest = root / "sample_manifest.jsonl"
+    manifest.write_text(json.dumps({"sample_id": "window", "subject_id": "confirm"}) + "\n")
+    summary = {"subject_role": "development", "status": "completed",
+        "registry_sha256": hashlib.sha256(registry.read_bytes()).hexdigest(),
+        "sample_manifest_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest()}
+    path = root / "summary.json"
+    path.write_text(json.dumps(summary))
+    with pytest.raises(ValueError, match="crossed or omitted"):
+        load_prepared_public_development("clare", output_root=tmp_path, registry_path=registry)
+    with pytest.raises(ValueError, match="subject role changed"):
+        load_prepared_public_development("clare", output_root=tmp_path, registry_path=registry, role="confirmation")
+    before = path.read_bytes(), manifest.read_bytes()
+    with pytest.raises(ValueError, match="cannot overwrite"):
+        prepare_public_development("clare", output_root=tmp_path, registry_path=registry, role="confirmation")
+    assert before == (path.read_bytes(), manifest.read_bytes())
