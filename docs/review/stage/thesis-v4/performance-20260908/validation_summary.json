@@ -1,0 +1,41 @@
+{
+  "training_source_code_sha256": "5acf4f9d94ff7f86ff65b9c1e36523ea2d89dfcd613cf43159b41d9fdc70fa82",
+  "full_cpu_suite": {
+    "passed": 550,
+    "skipped": 29,
+    "elapsed_s": 110.86,
+    "log": "artifacts/application_evaluation/2026-09-08_v4-performance-review/full_cpu_tests.log"
+  },
+  "focused_checks": {
+    "passed": 11,
+    "elapsed_s": 22.1,
+    "log": "artifacts/application_evaluation/2026-09-08_v4-performance-review/repair_checks.log"
+  },
+  "cpu_inference_checks": {
+    "passed": 3,
+    "elapsed_s": 14.92,
+    "log": "artifacts/application_evaluation/2026-09-08_v4-performance-review/cpu_inference_checks.log"
+  },
+  "validation_forward_calls": {
+    "before": 10,
+    "after": 6,
+    "mechanism_values_identical": true,
+    "public_loss_absolute_tolerance": 1e-07
+  },
+  "dynamic_thread_benchmarks": {
+    "exit_codes": [
+      139,
+      139
+    ],
+    "adopted": false
+  },
+  "static_thread_benchmarks": {
+    "one_thread_s": 33.460807277821004,
+    "eight_threads_s": 34.56537154689431,
+    "classification_predictions_equal": true,
+    "regression_max_difference": 1.3828277587890625e-05,
+    "eight_threads_adopted": false
+  },
+  "cuda_performance_revision_validated": false,
+  "gpu_training_frozen_commit": "ed2e24e3"
+}

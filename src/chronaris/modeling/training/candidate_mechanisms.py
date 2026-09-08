@@ -188,7 +188,11 @@ def evaluate_candidate_mechanisms(
     event_pair_weight,
     continuous_alignment_weight=0.2,
     independent_pair_weight=0.0,
+    public_heads=None,
 ) -> Mapping[str, object]:
+    from chronaris.modeling.training.candidate_step import public_pretext_forward
+    from chronaris.modeling.training.candidate_validation import (
+        _evaluate_public_losses, _empty_loss_totals, _accumulate_loss_terms, _finalize_loss_totals)
     if not any(
         (
             mechanism_enabled,
@@ -198,8 +202,16 @@ def evaluate_candidate_mechanisms(
             independent_pair_weight > 0,
         )
     ):
-        return {"weighted_total": 0.0, "terms": []}
+        result = {"weighted_total": 0.0, "terms": []}
+        if public_heads is not None:
+            result["public_losses"] = _evaluate_public_losses(encoder=encoder, heads=public_heads,
+                batch=batch, batch_provider=batch_provider, sample_ids=sample_ids, batch_size=batch_size,
+                normalizer=normalizer, policy=policy, seed=seed, device=device)
+        return result
     encoder.eval()
+    public_totals = _empty_loss_totals()
+    if public_heads is not None:
+        public_heads.eval()
     if shift_head is not None:
         shift_head.eval()
     batches = (
@@ -234,20 +246,20 @@ def evaluate_candidate_mechanisms(
                 policy=policy,
             )
             augmented = apply_augmentation_realizations(normalized, plans, policy=policy)
-            positive = encoder(
-                move_observation_batch(augmented.batch, device=device),
-                compute_chronaris_diagnostics=(mechanism_enabled or lag_aware_weight > 0),
-            )
-            negative = None
+            if public_heads is not None:
+                public, positive, negative = public_pretext_forward(encoder=encoder, heads=public_heads,
+                    normalized=normalized, augmented=augmented, device=device,
+                    positive_diagnostics=mechanism_enabled or lag_aware_weight > 0, negative_diagnostics=mechanism_enabled)
+                _accumulate_loss_terms(public_totals, public.terms)
+            else:
+                positive = encoder(move_observation_batch(augmented.batch, device=device),
+                    compute_chronaris_diagnostics=mechanism_enabled or lag_aware_weight > 0)
+                negative = None
+                if mechanism_enabled:
+                    lag_inputs = build_lag_discrimination_inputs(augmented.batch, augmented.augmentation_ids)
+                    negative = encoder(move_observation_batch(lag_inputs.negative_batch, device=device),
+                        compute_chronaris_diagnostics=True)
             if mechanism_enabled:
-                lag_inputs = build_lag_discrimination_inputs(
-                    augmented.batch,
-                    augmented.augmentation_ids,
-                )
-                negative = encoder(
-                    move_observation_batch(lag_inputs.negative_batch, device=device),
-                    compute_chronaris_diagnostics=True,
-                )
                 weights = chronaris_auxiliary_weight_schedule(5, continuous_alignment_weight=continuous_alignment_weight)
                 mechanism = build_chronaris_auxiliary_losses(
                     positive,
@@ -329,6 +341,8 @@ def evaluate_candidate_mechanisms(
     terms = _finalize_rows(totals)
     pair_count = int(pair_sums["valid_pair_count"])
     return {
+        **({"public_losses": _finalize_loss_totals(public_totals,
+            allow_unavailable=public_heads.modality_feature_counts is not None)} if public_heads is not None else {}),
         "weighted_total": sum(
             float(row["weighted_loss"])
             for row in terms

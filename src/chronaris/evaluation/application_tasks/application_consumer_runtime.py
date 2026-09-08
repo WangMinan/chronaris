@@ -62,6 +62,41 @@ class ApplicationMethodConsumerResult:
     component_status: Mapping[str, str]
 
 
+def prepare_application_cpu_consumers(*, method_name, outputs, targets, output_root, fold_id, protocol=None, resume=True):
+    """Fit/resume the two CPU components, usable while the GPU adapts an encoder."""
+    resolved = protocol or ApplicationConsumerProtocol()
+    root = Path(output_root) / method_name
+    root.mkdir(parents=True, exist_ok=True)
+    protocol_hash = _protocol_hash(method_name, outputs, targets, resolved, fold_id)
+    loaded = _load_model_components(root=root, manifest_path=root / "consumer_manifest.json",
+        protocol_sha256=protocol_hash, resume=resume)
+    selected = {role: _select_targets(targets, outputs[role].sample_ids) for role in ("train", "validation")}
+    status, elapsed = {}, {}
+    for name, constructor, attribute, argument in (
+        ("linear", LinearFrozenConsumer, "pooled_embedding", "validation_pooled"),
+        ("minirocket", MiniRocketFrozenConsumer, "sequence_embedding", "validation_sequence")):
+        if name in loaded:
+            status[name], elapsed[name] = "resumed", 0.
+            continue
+        started = time.perf_counter()
+        loaded[name] = constructor(getattr(resolved, name)).fit(
+            getattr(outputs["train"], attribute).detach().cpu().numpy(),
+            selected["train"]["workload_class"], selected["train"]["future_workload_mean"],
+            **{argument: getattr(outputs["validation"], attribute).detach().cpu().numpy()},
+            validation_class_target=selected["validation"]["workload_class"],
+            validation_regression_target=selected["validation"]["future_workload_mean"])
+        elapsed[name], status[name] = time.perf_counter() - started, "completed"
+        _save_joblib_consumer(root / f"{name}.joblib", protocol_hash, loaded[name])
+        paths = {key: root / ("causal_tcn.pt" if key == "tcn" else f"{key}.joblib") for key in loaded}
+        partial = {"format": "chronaris.application_consumer_models.v2", "status": "cpu_prepared",
+            "protocol_sha256": protocol_hash, "model_files": {key: {"path": str(path), "sha256": sha256_file(path)}
+                for key, path in paths.items()}}
+        temporary = root / "consumer_manifest.json.tmp"
+        temporary.write_text(json.dumps(partial, indent=2) + "\n")
+        temporary.replace(root / "consumer_manifest.json")
+    return loaded, status, elapsed, protocol_hash
+
+
 def run_application_method_consumers(
     *,
     method_name: str,
@@ -74,61 +109,15 @@ def run_application_method_consumers(
 ) -> ApplicationMethodConsumerResult:
     resolved = protocol or ApplicationConsumerProtocol()
     root = Path(output_root) / method_name
-    root.mkdir(parents=True, exist_ok=True)
-    protocol_hash = _protocol_hash(method_name, outputs, targets, resolved, fold_id)
     manifest_path = root / "consumer_manifest.json"
-    loaded = _load_model_components(
-        root=root,
-        manifest_path=manifest_path,
-        protocol_sha256=protocol_hash,
-        resume=resume,
-    )
     started = time.perf_counter()
-    train = outputs["train"]
-    train_targets = _select_targets(targets, train.sample_ids)
-    validation = outputs["validation"]
-    validation_targets = _select_targets(targets, validation.sample_ids)
-    paths = {
-        "linear": root / "linear.joblib",
-        "minirocket": root / "minirocket.joblib",
-        "tcn": root / "causal_tcn.pt",
-    }
-    component_status = {}
-    component_elapsed = {}
-    linear = loaded.get("linear")
-    if linear is None:
-        linear_started = time.perf_counter()
-        linear = LinearFrozenConsumer(resolved.linear).fit(
-            train.pooled_embedding.detach().cpu().numpy(),
-            train_targets["workload_class"],
-            train_targets["future_workload_mean"],
-            validation_pooled=validation.pooled_embedding.detach().cpu().numpy(),
-            validation_class_target=validation_targets["workload_class"],
-            validation_regression_target=validation_targets["future_workload_mean"],
-        )
-        component_elapsed["linear"] = time.perf_counter() - linear_started
-        _save_joblib_consumer(paths["linear"], protocol_hash, linear)
-        component_status["linear"] = "completed"
-    else:
-        component_elapsed["linear"] = 0.0
-        component_status["linear"] = "resumed"
-    minirocket = loaded.get("minirocket")
-    if minirocket is None:
-        rocket_started = time.perf_counter()
-        minirocket = MiniRocketFrozenConsumer(resolved.minirocket).fit(
-            train.sequence_embedding.detach().cpu().numpy(),
-            train_targets["workload_class"],
-            train_targets["future_workload_mean"],
-            validation_sequence=validation.sequence_embedding.detach().cpu().numpy(),
-            validation_class_target=validation_targets["workload_class"],
-            validation_regression_target=validation_targets["future_workload_mean"],
-        )
-        component_elapsed["minirocket"] = time.perf_counter() - rocket_started
-        _save_joblib_consumer(paths["minirocket"], protocol_hash, minirocket)
-        component_status["minirocket"] = "completed"
-    else:
-        component_elapsed["minirocket"] = 0.0
-        component_status["minirocket"] = "resumed"
+    loaded, component_status, component_elapsed, protocol_hash = prepare_application_cpu_consumers(
+        method_name=method_name, outputs=outputs, targets=targets, output_root=output_root,
+        fold_id=fold_id, protocol=resolved, resume=resume)
+    train, validation = outputs["train"], outputs["validation"]
+    train_targets, validation_targets = (_select_targets(targets, output.sample_ids) for output in (train, validation))
+    paths = {"linear": root / "linear.joblib", "minirocket": root / "minirocket.joblib", "tcn": root / "causal_tcn.pt"}
+    linear, minirocket = loaded["linear"], loaded["minirocket"]
     tcn_loaded = loaded.get("tcn")
     if tcn_loaded is None:
         tcn_started = time.perf_counter()
@@ -456,13 +445,17 @@ def _load_model_components(*, root, manifest_path, protocol_sha256, resume):
     paths = {name: Path(item["path"]) for name, item in manifest["model_files"].items()}
     result = {}
     for name in ("linear", "minirocket"):
-        item = manifest["model_files"][name]
+        item = manifest["model_files"].get(name)
+        if item is None:
+            continue
         if not paths[name].is_file() or sha256_file(paths[name]) != item["sha256"]:
             continue
         payload = joblib.load(paths[name])
         if payload.get("protocol_sha256") == protocol_sha256:
             result[name] = payload["consumer"]
-    item = manifest["model_files"]["tcn"]
+    item = manifest["model_files"].get("tcn")
+    if item is None:
+        return result
     if not paths["tcn"].is_file() or sha256_file(paths["tcn"]) != item["sha256"]:
         return result
     tcn_payload = torch.load(paths["tcn"], map_location="cpu", weights_only=True)

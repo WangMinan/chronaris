@@ -114,18 +114,29 @@ def _verify_clean_predictions(reference_path, actual_path):
 
 def run_development_pressure(*, method, route, update, output_root,
     diagnostic_root="artifacts/application_evaluation/2026-09-06_v4-learning-curves",
-    condition_root="artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair"):
-    _require_diagnostic_device(17)
-    if route not in {"self_supervised", "task_guided"} or update not in CURVE_UPDATES:
+    condition_root="artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair", candidate_name=None,
+    device="cuda"):
+    if device == "cuda":
+        _require_diagnostic_device(17)
+    elif device != "cpu":
+        raise ValueError("pressure inference device must be cpu or cuda")
+    from chronaris.evaluation.application_tasks.v4_candidates import candidate_options, EXPANDED_SIMULATION_ROOT
+    options = candidate_options(method, candidate_name) if candidate_name is not None else None
+    allowed_updates = ((300,) if route == "self_supervised" else (200,)) if options else CURVE_UPDATES
+    if route not in {"self_supervised", "task_guided"} or update not in allowed_updates:
         raise ValueError("pressure diagnosis requires an approved learning-curve snapshot")
     torch.set_num_threads(1)
     curve = Path(diagnostic_root) / "simulation" / method
+    if options:
+        curve = curve / candidate_name
     training_state = json.loads((curve / "run_state.json").read_text())
+    if json.dumps(training_state.get("candidate_options"), sort_keys=True) != json.dumps(options, sort_keys=True):
+        raise ValueError("pressure candidate configuration differs from clean training")
     if f"{route}:{update}" not in training_state["completed_consumers"]:
         raise ValueError("clean consumer fitting must finish before pressure evaluation")
     training = training_state[route + "_training"]
-    checkpoint = Path(training["last_checkpoint_path"]).with_name(
-        f"update_{update:06d}.pt" if route == "self_supervised" else f"joint_update_{update:06d}.pt")
+    checkpoint = (Path(training["best_checkpoint_path"]) if options else Path(training["last_checkpoint_path"]).with_name(
+        f"update_{update:06d}.pt" if route == "self_supervised" else f"joint_update_{update:06d}.pt"))
     clean_export = curve / "representations" / route / str(update)
     if route == "task_guided":
         clean_export = clean_export / method
@@ -134,23 +145,30 @@ def run_development_pressure(*, method, route, update, output_root,
     consumer_manifest = json.loads((consumer_root / method / "consumer_manifest.json").read_text())
     if sha256_file(consumer_manifest["prediction_path"]) != consumer_manifest["prediction_sha256"]:
         raise ValueError("clean consumer prediction evidence changed")
-    provider, _, fold, _, digest, _, _, data = load_development_inputs("simulation", None, None)
+    data_arguments = {"simulation_root": EXPANDED_SIMULATION_ROOT} if options else {}
+    provider, _, fold, _, digest, _, _, data = load_development_inputs("simulation", None, None, **data_arguments)
+    if options and ("__training512" not in fold.fold_id or digest != training_state["data_manifest_sha256"]):
+        raise ValueError("candidate pressure requires the same expanded training manifest")
     if clean.sample_ids != fold.validation_sample_ids or clean.checkpoint_sha256 != sha256_file(checkpoint):
         raise ValueError("clean representation does not match the pressure checkpoint/validation fold")
     source = {"format": "chronaris.v4_development_pressure.v1", "source_code_sha256": v4_workflow_source_sha256(),
         "method": method, "route": route, "update": update, "checkpoint_sha256": sha256_file(checkpoint),
+        "inference_device": device,
         "data_manifest_sha256": digest, "consumer_protocol_sha256": consumer_manifest["protocol_sha256"],
         "source_diagnostic_code_sha256": training_state["source_code_sha256"],
+        "candidate_options": options,
         "clean_prediction_sha256": sha256_file(consumer_manifest["prediction_path"]),
         "consumer_files": {name: sha256_file(item["path"]) for name, item in consumer_manifest["model_files"].items()},
         "condition_audit_sha256": sha256_file(Path(condition_root) / "development_condition_audit.json"),
         "clean_export_sha256": sha256_file(clean_export / "validation/fusion_stream.npz"),
         "evaluation_role": "validation", "confirmation_opened": False, "consumer_refit": False}
     root = Path(output_root) / method / route / str(update)
+    if options:
+        root = Path(output_root) / method / candidate_name / route / str(update)
     root.mkdir(parents=True, exist_ok=True)
     state_path = root / "run_state.json"
     state = json.loads(state_path.read_text()) if state_path.exists() else {"source": source, "conditions": {}}
-    if state["source"] != source:
+    if json.dumps(state["source"], sort_keys=True) != json.dumps(source, sort_keys=True):
         raise ValueError("pressure sources/data/config changed; use a new run root")
     def save():
         temporary = state_path.with_suffix(".json.tmp")
@@ -160,7 +178,7 @@ def run_development_pressure(*, method, route, update, output_root,
     targets = build_guarded_application_consumer_targets(data,
         completed_pretraining_checkpoints=(training_state["self_supervised_training"]["best_checkpoint_path"],),
         task_guided_development=True, smoke_only=False)
-    encoder, normalizer = _load_development_encoder(checkpoint, route=route, fold=fold, device="cuda")
+    encoder, normalizer = _load_development_encoder(checkpoint, route=route, fold=fold, device=device)
     with _periodic_training_heartbeat(f"pressure_{method}_{route}", 30., root=root) as progress:
         try:
             for condition in DEVELOPMENT_CONDITIONS:

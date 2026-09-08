@@ -2,8 +2,9 @@
 import torch
 from typing import Mapping
 from chronaris.modeling.training.candidate_step import public_pretext_forward
+from chronaris.modeling.training.candidate_mechanisms import _load_batch, _batch_ids
 from chronaris.representation import (build_batch_augmentation_realizations,
-    apply_augmentation_realizations, select_observation_batch)
+    apply_augmentation_realizations)
 from chronaris.representation.contracts import RepresentationContractError
 
 PUBLIC_SELECTION_WEIGHTS = {
@@ -64,15 +65,3 @@ def _public_selection_loss(losses: Mapping[str, float]) -> float:
     # Only select updates within the same method/objectives; task metrics rank v4 methods.
     available_weight = sum(PUBLIC_SELECTION_WEIGHTS[name] for name in losses)
     return sum(PUBLIC_SELECTION_WEIGHTS[name] * value for name, value in losses.items()) / available_weight
-
-
-def _load_batch(batch, provider, sample_ids):
-    loaded = provider(sample_ids) if provider is not None else select_observation_batch(batch, sample_ids)
-    if tuple(loaded.sample_ids) != tuple(sample_ids):
-        raise RepresentationContractError("candidate screen batch provider changed sample order")
-    return loaded
-
-
-def _batch_ids(sample_ids, batch_size):
-    values = tuple(sample_ids)
-    return tuple(values[index : index + batch_size] for index in range(0, len(values), batch_size))

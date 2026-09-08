@@ -3,11 +3,16 @@ from dataclasses import asdict, replace
 from pathlib import Path
 import gc
 import json
+import os
+import time
+from concurrent.futures import ProcessPoolExecutor
+from contextlib import nullcontext
+from multiprocessing import get_context
 
 import torch
 
 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
-from chronaris.evaluation.application_tasks.application_consumer_runtime import ApplicationConsumerProtocol, run_application_method_consumers
+from chronaris.evaluation.application_tasks.application_consumer_runtime import ApplicationConsumerProtocol, run_application_method_consumers, prepare_application_cpu_consumers
 from chronaris.evaluation.application_tasks.application_consumers import LinearConsumerConfig, MiniRocketConsumerConfig, TCNConsumerConfig
 from chronaris.evaluation.application_tasks.application_finetuning import EndToEndApplicationModel, EndToEndFineTuningConfig, train_end_to_end_application_method
 from chronaris.evaluation.application_tasks.application_finetuning_export import export_finetuned_application_representations
@@ -22,6 +27,15 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 
 
 CURVE_UPDATES = (50, 200, 500)
+
+
+def _prepare_cpu_consumer_artifacts(**kwargs):
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
+    torch.set_num_threads(1)
+    started = time.time()
+    _, status, elapsed, protocol_hash = prepare_application_cpu_consumers(**kwargs)
+    return {"pid": os.getpid(), "started_unix_s": started, "finished_unix_s": time.time(),
+            "component_status": status, "component_elapsed_s": elapsed, "protocol_sha256": protocol_hash}
 
 
 def _require_diagnostic_device(seed):
@@ -55,12 +69,14 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
                                data_root="artifacts/application_evaluation/2026-09-06_v4-public-development",
                                registry_path="docs/requirements/thesis-v4-public-subjects.json",
                                simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development",
-                               candidate_name=None):
+                               candidate_name=None, prefetch_cpu_consumers=False):
     """Diagnose both routes on complete development folds, leaving confirmation sealed."""
     _require_diagnostic_device(seed)
     torch.set_num_threads(1)
     from chronaris.evaluation.application_tasks.v4_candidates import candidate_options
     options = candidate_options(method, candidate_name) if candidate_name is not None else None
+    if prefetch_cpu_consumers and (not options or domain != "simulation"):
+        raise ValueError("CPU consumer prefetch applies to simulation candidate units")
     curve_updates = (300,) if options else CURVE_UPDATES
     guided_updates = (200,) if options else CURVE_UPDATES
     root = Path(output_root) / domain / method
@@ -76,7 +92,10 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
         "method": method, "seed": seed, "domain": domain, "fold_index": fold_index,
         "scope": "single_factor_development" if options else "clean_development_learning_curves", "completed_consumers": [],
         "curve_updates": list(curve_updates), "guided_updates": list(guided_updates),
-        "candidate_options": options, "confirmation_opened": False}
+        "candidate_options": options, "confirmation_opened": False,
+        "prefetch_cpu_consumers": prefetch_cpu_consumers, "cpu_prefit_results": {}}
+    if state.get("prefetch_cpu_consumers", False) != prefetch_cpu_consumers:
+        raise ValueError("development execution schedule changed")
     if json.dumps(state.get("candidate_options"), sort_keys=True) != json.dumps(options, sort_keys=True):
         raise ValueError("development candidate configuration changed")
     if state["source_code_sha256"] != source or state["method"] != method or state["seed"] != seed:
@@ -85,7 +104,9 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
         temporary = state_path.with_suffix(".json.tmp")
         temporary.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n")
         temporary.replace(state_path)
-    with _periodic_training_heartbeat(f"diagnostic_{method}", 30., root=root) as progress:
+    with _periodic_training_heartbeat(f"diagnostic_{method}", 30., root=root) as progress, (
+        ProcessPoolExecutor(max_workers=1, mp_context=get_context("spawn")) if prefetch_cpu_consumers
+        else nullcontext(None)) as cpu_pool:
         provider, schema, fold, hierarchy, digest, targets, definitions, data = load_development_inputs(
             domain, data_root, registry_path, fold_index=fold_index, simulation_root=simulation_root)
         if options and domain == "simulation" and "__training512" not in fold.fold_id:
@@ -133,6 +154,7 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
                     protocol=replace(protocol, label_used_for_encoder_training=supervised)))
             return run_native_method_consumers(outputs=outputs, targets=targets, definitions=definitions, context=context,
                 output_root=consumer_root, label_used_for_encoder_training=supervised, seed=seed)
+        pending_consumers = {}
         for update in curve_updates:
             key = f"self_supervised:{update}"
             if key in state["completed_consumers"]:
@@ -143,6 +165,12 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
             encoder, _, normalizer, _ = load_common_pretraining_checkpoint(checkpoint, device="cuda", allow_diagnostic_snapshot=True)
             outputs = _snapshot_outputs(encoder=encoder, normalizer=normalizer, checkpoint=checkpoint, provider=provider,
                 fold=fold, root=root / "representations" / "self_supervised" / str(update))
+            if cpu_pool is not None:
+                pending_consumers[update] = (cpu_pool.submit(_prepare_cpu_consumer_artifacts,
+                    method_name=method, outputs=outputs, targets=targets,
+                    output_root=root / "consumers" / "self_supervised" / str(update), fold_id=fold.fold_id, protocol=protocol), outputs)
+                del encoder
+                continue
             result = evaluate(outputs, "self_supervised", update)
             (root / f"self_supervised_{update}_consumers.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
             state["completed_consumers"].append(key)
@@ -162,6 +190,14 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
                 retained_updates=guided_updates, sampling_hierarchy=hierarchy, data_manifest_sha256=digest))
         state["task_guided_training"] = asdict(guided)
         save()
+        for update, (future, outputs) in pending_consumers.items():
+            key = f"self_supervised:{update}"
+            progress["phase"] = key
+            state.setdefault("cpu_prefit_results", {})[key] = future.result()
+            result = evaluate(outputs, "self_supervised", update)
+            (root / f"self_supervised_{update}_consumers.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
+            state["completed_consumers"].append(key)
+            save()
         for update in guided_updates:
             key = f"task_guided:{update}"
             if key in state["completed_consumers"]:

@@ -55,6 +55,23 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     assert result["self_supervised_training"]["optimizer_updates"] == 3
     assert result["task_guided_training"]["optimizer_updates"] == 5
     assert set(accessed) == set(batch.sample_ids)
+    if candidate_name:
+        parallel = run.run_development_diagnostic(**(arguments | {
+            "output_root": tmp_path / "parallel", "prefetch_cpu_consumers": True}))
+        assert parallel["completed"] and parallel["cpu_prefit_results"]["self_supervised:300"]["pid"] != __import__("os").getpid()
+        from chronaris.modeling.training.rng import canonical_training_state_sha256
+        for route in ("self_supervised", "task_guided"):
+            original = torch.load(result[route + "_training"]["last_checkpoint_path"], weights_only=True)
+            concurrent = torch.load(parallel[route + "_training"]["last_checkpoint_path"], weights_only=True)
+            name = "encoder_state_dict" if route == "self_supervised" else "model_state_dict"
+            assert canonical_training_state_sha256(original[name]) == canonical_training_state_sha256(concurrent[name])
+            update = 300 if route == "self_supervised" else 200
+            expected = json.loads((tmp_path / "simulation" / method / candidate_name / f"{route}_{update}_consumers.json").read_text())
+            actual = json.loads((tmp_path / "parallel/simulation" / method / candidate_name / f"{route}_{update}_consumers.json").read_text())
+            assert expected["metric_rows"] == actual["metric_rows"]
+            if route == "self_supervised":
+                assert actual["component_status"]["linear"] == actual["component_status"]["minirocket"] == "resumed"
+        assert actual["component_status"]["minirocket"] == "completed"  # Guided consumer remains freshly fitted.
     root = tmp_path / "simulation" / method
     if candidate_name:
         root = root / candidate_name
@@ -69,11 +86,11 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     monkeypatch.setattr(run, "run_application_method_consumers", no_retraining)
     resumed = run.run_development_diagnostic(**arguments)
     assert resumed["completed"]
-    if device == "cpu" and not candidate_name:
-        _check_pressure_pipeline(tmp_path, monkeypatch, inputs, targets, fold)
+    if device == "cpu":
+        _check_pressure_pipeline(tmp_path, monkeypatch, inputs, targets, fold, method=method, candidate_name=candidate_name)
 
 
-def _check_pressure_pipeline(root, monkeypatch, inputs, targets, fold):
+def _check_pressure_pipeline(root, monkeypatch, inputs, targets, fold, *, method="physiology_only", candidate_name=None):
     from chronaris.evaluation.application_tasks import v4_pressure_run as pressure
     from chronaris.evaluation.application_tasks.v4_correctness import remove_future_observations
     from chronaris.evaluation.application_tasks.application_consumers import LinearFrozenConsumer, MiniRocketFrozenConsumer
@@ -97,13 +114,17 @@ def _check_pressure_pipeline(root, monkeypatch, inputs, targets, fold):
     condition_root.mkdir()
     (condition_root / "development_condition_audit.json").write_text("{}")
     for route in ("self_supervised", "task_guided"):
-        kwargs = dict(method="physiology_only", route=route, update=3, output_root=root / "pressure",
-                      diagnostic_root=root, condition_root=condition_root)
+        update = (300 if route == "self_supervised" else 200) if candidate_name else 3
+        kwargs = dict(method=method, route=route, update=update, output_root=root / "pressure",
+                      diagnostic_root=root, condition_root=condition_root, candidate_name=candidate_name, device="cpu")
         result = pressure.run_development_pressure(**kwargs)
         assert result["completed"] and len(result["conditions"]) == 8
         missing = json.loads(Path(result["conditions"]["contiguous_gap_30s"]["result_path"]).read_text())
         assert missing["grouped"]["all_windows_retained"] and missing["grouped"]["no_observation_count"] == 3
         assert all(row["role"] == "validation" for row in missing["evaluation"]["metric_rows"])
+        if candidate_name:
+            assert result["source"]["candidate_options"]["name"] == candidate_name
+            assert missing["encoding_diagnostics"]["quality_gate_enabled"]
         assert pressure.run_development_pressure(**kwargs)["completed"]
         if route == "task_guided":
             path = Path(result["conditions"]["contiguous_gap_30s"]["prediction_path"])

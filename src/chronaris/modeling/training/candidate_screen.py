@@ -56,7 +56,7 @@ from chronaris.representation.contracts import FUSION_OUTPUT_DIM, Representation
 from chronaris.modeling.training.candidate_step import pretext_micro_step
 from chronaris.modeling.training.candidate_validation import (
     PUBLIC_SELECTION_WEIGHTS, _evaluate_public_losses, _empty_loss_totals,
-    _accumulate_loss_terms, _finalize_loss_totals, _public_selection_loss, _load_batch, _batch_ids,
+    _accumulate_loss_terms, _finalize_loss_totals, _public_selection_loss, _batch_ids,
 )
 from chronaris.modeling.training.sample_schedule import training_sample_schedule
 _training_configs_match_ignoring_device = training_configs_match_ignoring_device
@@ -558,19 +558,8 @@ def _train_pretext_candidate(
                     or step_count in resolved.validation_updates or step_count == limit)
         if validate:
             train_losses = _finalize_loss_totals(train_totals, allow_unavailable=update_mode)
-            validation_losses = _evaluate_public_losses(
-                encoder=encoder,
-                heads=heads,
-                batch=batch,
-                batch_provider=batch_provider,
-                sample_ids=fold.validation_sample_ids,
-                batch_size=resolved.batch_size,
-                normalizer=normalizer,
-                policy=policy,
-                seed=resolved.seed,
-                device=resolved.device,
-            )
             mechanism_validation = evaluate_candidate_mechanisms(
+                public_heads=heads,
                 independent_pair_weight=resolved.independent_pair_weight,
                 continuous_alignment_weight=resolved.continuous_alignment_weight,
                 encoder=encoder,
@@ -588,6 +577,7 @@ def _train_pretext_candidate(
                 explicit_shift_weight=chronaris_explicit_shift_weight,
                 event_pair_weight=chronaris_event_pair_weight,
             )
+            validation_losses = mechanism_validation.pop("public_losses")
             score = _public_selection_loss(validation_losses) + float(
                 mechanism_validation["weighted_total"]
             )
