@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -37,7 +37,7 @@ def main():
     args = parser.parse_args()
     public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
     review_stage = args.stage in {"candidate-review-plan", "candidate-review-cohort"}
-    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results", "public-review-results", "candidate-adoption"}
+    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results", "public-review-results", "candidate-adoption", "review-pressure-plan", "review-pressure-cohort"}
     if aggregate_stage and args.domain is not None:
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
@@ -57,8 +57,23 @@ def main():
     for stage in ("candidate-review-plan", "candidate-review-cohort", "public-review-results", "simulation-review-results", "candidate-adoption"):
         default_roots[stage] = "2026-09-08_v4-candidate-review"
     default_roots["candidate-review-pressure"] = "2026-09-08_v4-review-pressure"
+    default_roots.update({stage:"2026-09-08_v4-review-pressure" for stage in ("review-pressure-plan","review-pressure-cohort")})
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "candidate-adoption":
+    if args.stage in {"review-pressure-plan","review-pressure-cohort"}:
+        from chronaris.evaluation.application_tasks.v4_review_pressure import build_review_pressure_plan, run_review_pressure_cohort
+        diagnostic_root = args.diagnostic_root
+        if diagnostic_root == "artifacts/application_evaluation/2026-09-06_v4-learning-curves":
+            diagnostic_root = "artifacts/application_evaluation/2026-09-08_v4-candidate-review"
+        kwargs = dict(diagnostic_root=diagnostic_root,condition_root=args.condition_root,
+                      data_root=args.data_root,registry_path=args.registry)
+        if args.stage == "review-pressure-plan":
+            result = build_review_pressure_plan(**kwargs)
+            root = Path(output_root); root.mkdir(parents=True,exist_ok=True)
+            (root / "readiness.json").write_text(json.dumps(result,indent=2) + "\n")
+            summary = {"status":result["status"],"units":len(result["units"])}
+        else:
+            summary = run_review_pressure_cohort(output_root=output_root,**kwargs)
+    elif args.stage == "candidate-adoption":
         from chronaris.evaluation.application_tasks.v4_adoption import collect_adoption_decisions
         result = collect_adoption_decisions(output_root=output_root,
             pressure_root="artifacts/application_evaluation/2026-09-08_v4-review-pressure",
@@ -196,12 +211,9 @@ def main():
             output_root=output_root,diagnostic_root=diagnostic_root,condition_root=args.condition_root,
             device=args.inference_device,phase="review" if reviewing else "screen",seed=args.seed)
         if reviewing:
-            import fcntl
-            from chronaris.evaluation.application_tasks.v4_public_screen import GPU_LOCK_PATH
-            with open(GPU_LOCK_PATH,"a") as lock:
-                try:fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
-                except BlockingIOError:summary={"status":"waiting_gpu", "seed":args.seed}
-                else:summary=run_development_pressure(**kwargs)
+            from chronaris.evaluation.application_tasks.v4_public_screen import development_gpu_lock
+            with development_gpu_lock() as acquired:
+                summary=run_development_pressure(**kwargs) if acquired else {"status":"waiting_gpu", "seed":args.seed}
         else:
             summary=run_development_pressure(**kwargs)
     elif args.stage == "native-profile":

@@ -1,5 +1,6 @@
 """Bounded public first-fold screening from completed simulation-only selections."""
 from pathlib import Path
+from contextlib import contextmanager
 import fcntl
 import hashlib
 import json
@@ -12,6 +13,16 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 ROUTES=('self_supervised','task_guided')
 METHODS=('chronaris','physiology_only','vehicle_only','mult','contiformer')
 GPU_LOCK_PATH='/tmp/chronaris-v4-gpu.lock'
+
+
+@contextmanager
+def development_gpu_lock():
+    with open(GPU_LOCK_PATH,'a') as lock:
+        try:fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            yield False
+            return
+        yield True
 
 
 def seal_development_plan(plan):
@@ -70,9 +81,8 @@ def run_public_screen(*, output_root, diagnostic_root, pressure_root,
 
 def run_development_plan(plan,*,output_root,data_root,registry_path):
     """Execute a freshly verified screen/review plan through the shared trainer."""
-    with open(GPU_LOCK_PATH,'a') as lock:
-        try:fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:return plan | dict(status='waiting_gpu')
+    with development_gpu_lock() as acquired:
+        if not acquired:return plan | dict(status='waiting_gpu')
         return _run_development_plan_locked(plan,output_root=output_root,data_root=data_root,registry_path=registry_path)
 
 

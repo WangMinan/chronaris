@@ -1,0 +1,10 @@
+{
+  "format": "chronaris.v4_review_pressure_queue.v1",
+  "units": [],
+  "pending": [],
+  "failed": [],
+  "scope": "eight_condition_development_only",
+  "confirmation_feedback_used": false,
+  "consumer_refit": false,
+  "status": "waiting_for_three_seed_review_plan"
+}

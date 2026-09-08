@@ -66,5 +66,24 @@
       "sha256": "a692263f889dd06b5702de4bd4308559393da57c4a43d0516cfa4e552ab24d4b"
     },
     "readiness_sha256": "8d788276936fa404e7ef13f316ba3f5fe0ca4a41cfc8e36619389f2feabb2cc5"
+  },
+  "review_pressure_queue": {
+    "source_code_sha256": "e82738fa97687d482f9b0b3d5df66cfd0254ed86886ebea073768a8166884d86",
+    "focused": {
+      "passed": 6,
+      "elapsed_s": 2.57
+    },
+    "full_cpu": {
+      "passed": 599,
+      "skipped": 30,
+      "elapsed_s": 133.32
+    },
+    "actual_status": "waiting_for_three_seed_review_plan",
+    "actual_pressure_units_started": 0,
+    "log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-review-pressure-queue-validation/full_cpu_tests.log",
+      "sha256": "a3551057efb0e5873c8456f07c52289cb17a5dcf0398fb544df3b65bd50739a5"
+    },
+    "readiness_sha256": "9423abcb47c8448e548d06815809fa298d7840fad9d9e7013010cfc58cdb07e6"
   }
 }
