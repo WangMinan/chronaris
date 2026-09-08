@@ -55,5 +55,5 @@ def test_public_confirmation_input_provider_and_training_targets_exclude_outer_h
     assert provider(ids[:2]) == ids[:2]
     with pytest.raises(ValueError, match="confirmation observations"):
         provider(ids[2:])
-    with pytest.raises(ValueError, match="complete public fold"):
+    with pytest.raises(ValueError, match="complete native fold"):
         data_module.load_development_inputs("clare", tmp_path, registry, subject_role="confirmation", smoke=True)

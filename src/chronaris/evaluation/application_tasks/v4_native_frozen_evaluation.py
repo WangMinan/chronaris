@@ -31,7 +31,7 @@ def run_native_frozen_evaluation(*, domain, fold_index, checkpoint, checkpoint_s
         if not nonparametric:
             _require_diagnostic_device(17)
     _, _, encoder_fold, _, digest, _, _, data = load_development_inputs(domain, data_root, registry_path,
-        fold_index=fold_index, subject_role="development" if domain == "dingxin" else "confirmation")
+        fold_index=fold_index, subject_role="development" if domain == "dingxin" and engineering_only else "confirmation")
     if domain == "dingxin" and not engineering_only:
         from chronaris.evaluation.application_tasks.v4_dingxin_data import audit_dingxin_vehicle_reuse
         audit = audit_dingxin_vehicle_reuse(data)

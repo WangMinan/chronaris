@@ -1,0 +1,21 @@
+{
+  "scope": "first_second_per_record_all_vehicle_measurements",
+  "rows": [
+    {
+      "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+      "live_points": 163,
+      "snapshot_points": 163,
+      "live_sha256": "a2c59a95d82d2d10c1351f35ef6bda82fb09385aa67774bbc1cb5a87454ee498",
+      "snapshot_sha256": "a2c59a95d82d2d10c1351f35ef6bda82fb09385aa67774bbc1cb5a87454ee498",
+      "live_matches_snapshot": true
+    },
+    {
+      "sortie_id": "20251005_四01_ACT-4_云_J20_22#01",
+      "live_points": 163,
+      "snapshot_points": 163,
+      "live_sha256": "0d109a5dd34c4cc55f9cbbd5f2a578f380f7d0a8f58453420c10083dd7ed05c8",
+      "snapshot_sha256": "0d109a5dd34c4cc55f9cbbd5f2a578f380f7d0a8f58453420c10083dd7ed05c8",
+      "live_matches_snapshot": true
+    }
+  ]
+}

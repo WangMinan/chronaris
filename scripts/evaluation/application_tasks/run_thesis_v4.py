@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -24,6 +24,10 @@ def main():
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
     parser.add_argument("--dingxin-results-root")
+    parser.add_argument("--freeze-path",default="artifacts/application_evaluation/2026-09-08_v4-confirmation/frozen_configuration.json")
+    parser.add_argument("--freeze-sha256")
+    parser.add_argument("--backend",choices=("neural","nonparametric"),default="neural")
+    parser.add_argument("--validation-receipt",default="artifacts/application_evaluation/2026-09-08_v4-configuration-validation/validation_receipt.json")
     parser.add_argument("--screen-root", default="artifacts/application_evaluation/2026-09-08_v4-public-screen")
     parser.add_argument("--data-root", default="artifacts/application_evaluation/2026-09-06_v4-public-development")
     parser.add_argument("--task-mode", choices=("single", "all"), default="all")
@@ -37,12 +41,12 @@ def main():
     args = parser.parse_args()
     public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
     review_stage = args.stage in {"candidate-review-plan", "candidate-review-cohort"}
-    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results", "public-review-results", "candidate-adoption", "review-pressure-plan", "review-pressure-cohort"}
+    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results", "public-review-results", "candidate-adoption", "review-pressure-plan", "review-pressure-cohort", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-plan", "native-confirmation-cohort"}
     if aggregate_stage and args.domain is not None:
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
         parser.error("--domain is required for this stage")
-    if args.seed != 17 and args.stage not in {"candidate-review", "candidate-review-pressure", "naive-development"}:
+    if args.seed != 17 and args.stage not in {"candidate-review", "candidate-review-pressure", "naive-development", "native-confirmation-unit", "naive-confirmation-unit"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
     default_roots = {"public-screen-results": "2026-09-08_v4-public-screen", "dingxin-content-audit": "2026-09-08_v4-dingxin-content-audit", "fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
@@ -52,14 +56,59 @@ def main():
                      "expand-training": "2026-09-07_thesis-v4-simulation-expanded",
                      "candidate": "2026-09-08_v4-single-factor-development",
                      "candidate-pressure": "2026-09-08_v4-candidate-pressure"}
+    default_roots["dingxin-retained-data"] = "2026-09-08_v4-dingxin-deduplicated"
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     for stage in ("candidate-review-plan", "candidate-review-cohort", "public-review-results", "simulation-review-results", "candidate-adoption"):
         default_roots[stage] = "2026-09-08_v4-candidate-review"
     default_roots["candidate-review-pressure"] = "2026-09-08_v4-review-pressure"
     default_roots.update({stage:"2026-09-08_v4-review-pressure" for stage in ("review-pressure-plan","review-pressure-cohort")})
+    default_roots.update({"configuration-cuda-validation":"2026-09-08_v4-configuration-validation","freeze-configuration":"2026-09-08_v4-confirmation","native-confirmation-unit":"2026-09-08_v4-confirmation"})
+    default_roots.update({stage:"2026-09-08_v4-confirmation" for stage in ("native-confirmation-plan","native-confirmation-cohort","naive-confirmation-unit")})
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage in {"review-pressure-plan","review-pressure-cohort"}:
+    if args.stage in {"native-confirmation-plan","native-confirmation-cohort","naive-confirmation-unit"}:
+        if not args.freeze_sha256:raise ValueError("formal confirmation requires --freeze-sha256")
+        from chronaris.evaluation.application_tasks.v4_native_confirmation_cohort import build_native_confirmation_plan, run_native_confirmation_cohort
+        data_root = args.data_root
+        if data_root == "artifacts/application_evaluation/2026-09-06_v4-public-development":
+            data_root = "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared"
+        if args.stage == "native-confirmation-plan":
+            result = build_native_confirmation_plan(args.freeze_path,args.freeze_sha256)
+            root = Path(output_root); root.mkdir(parents=True,exist_ok=True)
+            (root / "native_readiness.json").write_text(json.dumps(result,indent=2) + "\n")
+            summary = {"units":len(result["units"]),"evaluation_units":result["enabled_evaluation_units"],"blocked_domains":result["blocked_domains"]}
+        elif args.stage == "native-confirmation-cohort":
+            summary = run_native_confirmation_cohort(freeze_path=args.freeze_path,freeze_sha256=args.freeze_sha256,
+                output_root=output_root,backend=args.backend,data_root=data_root,registry_path=args.registry)
+        else:
+            from chronaris.evaluation.application_tasks.v4_confirmation_training import run_naive_native_confirmation
+            result = run_naive_native_confirmation(freeze_path=args.freeze_path,freeze_sha256=args.freeze_sha256,
+                domain=args.domain,fold_index=args.fold_index,seed=args.seed,output_root=output_root,data_root=data_root,registry_path=args.registry)
+            summary = {"status":result["status"],"completed":result["completed"]}
+    elif args.stage == "configuration-cuda-validation":
+        from chronaris.evaluation.application_tasks.v4_configuration_freeze import validate_current_cuda
+        summary = validate_current_cuda(output_root)
+    elif args.stage == "freeze-configuration":
+        from chronaris.evaluation.application_tasks.v4_configuration_freeze import freeze_reviewed_configuration
+        diagnostic_root = args.diagnostic_root
+        if diagnostic_root == "artifacts/application_evaluation/2026-09-06_v4-learning-curves":
+            diagnostic_root = "artifacts/application_evaluation/2026-09-08_v4-candidate-review"
+        result = freeze_reviewed_configuration(review_root=diagnostic_root,validation_receipt=args.validation_receipt,
+            output_path=args.freeze_path,registry_path=args.registry)
+        root = Path(output_root); root.mkdir(parents=True,exist_ok=True)
+        (root / "freeze_readiness.json").write_text(json.dumps(result,indent=2,allow_nan=False) + "\n")
+        summary = {"status":result["status"],"configuration_frozen":result["configuration_frozen"]}
+    elif args.stage == "native-confirmation-unit":
+        from chronaris.evaluation.application_tasks.v4_confirmation_training import run_native_confirmation_training
+        if not args.freeze_sha256:raise ValueError("native confirmation requires --freeze-sha256")
+        data_root = args.data_root
+        if data_root == "artifacts/application_evaluation/2026-09-06_v4-public-development":
+            data_root = "artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared"
+        result = run_native_confirmation_training(freeze_path=args.freeze_path,freeze_sha256=args.freeze_sha256,
+            domain=args.domain,fold_index=args.fold_index,method=args.method,candidate_name=args.candidate_name,
+            seed=args.seed,output_root=output_root,data_root=data_root,registry_path=args.registry,evaluate=True)
+        summary = {"status":result["status"],"completed":result.get("completed",False)}
+    elif args.stage in {"review-pressure-plan","review-pressure-cohort"}:
         from chronaris.evaluation.application_tasks.v4_review_pressure import build_review_pressure_plan, run_review_pressure_cohort
         diagnostic_root = args.diagnostic_root
         if diagnostic_root == "artifacts/application_evaluation/2026-09-06_v4-learning-curves":
@@ -116,6 +165,11 @@ def main():
         (root / "results_summary.json").write_text(json.dumps(result, indent=2) + "\n")
         summary = {"status": result["status"], "pending": result["pending"], "failed": result["failed"],
                    "ranked_method_routes": len(result["rankings"])}
+    elif args.stage == "dingxin-retained-data":
+        if args.domain != "dingxin":raise ValueError("retained-record preparation requires Dingxin")
+        from chronaris.evaluation.application_tasks.v4_dingxin_deduplicated import prepare_deduplicated_dingxin
+        result = prepare_deduplicated_dingxin(output_root)
+        summary = {key:result[key] for key in ("status","encoder_context_counts","consumer_context_counts","inner_fields","outer_fields")}
     elif args.stage == "dingxin-content-audit":
         if args.domain != "dingxin":
             raise ValueError("Dingxin content audit requires its fixed data domain")

@@ -47,6 +47,8 @@ class V4DingxinData:
     source_hashes: dict
     vehicle_field_labels: tuple
     data_manifest_sha256: str
+    outer_folds: tuple[FoldLineage, ...] = ()
+    evaluation_protocol: str = 'leave_one_sortie_out'
 
     def development_provider(self, fold):
         allowed = set(fold.train_sample_ids + fold.validation_sample_ids)
@@ -104,6 +106,9 @@ def _task_targets(fitted, fold, ids, scope):
 
 def build_dingxin_outer_consumer_inputs(data, fold_id):
     """Data-only target contract; actual consumer fitting follows encoder freeze."""
+    if data.outer_folds:
+        from chronaris.evaluation.application_tasks.v4_dingxin_deduplicated import deduplicated_outer_consumer_inputs
+        return deduplicated_outer_consumer_inputs(data, fold_id)
     from chronaris.evaluation.application_tasks.v4_grouped_consumers import native_consumer_context
     inner = next(fold for fold in data.folds if fold.fold_id == fold_id)
     held = set(inner.held_out_sample_ids)
@@ -141,7 +146,9 @@ def audit_dingxin_vehicle_reuse(data):
         held={by_sample[s] for s in fold.held_out_sample_ids}
         train={by_sample[s] for s in fold.train_sample_ids}
         validation={by_sample[s] for s in fold.validation_sample_ids}
-        outer={by_sample[s] for s in fold.train_sample_ids+fold.validation_sample_ids+data.embargo[fold.fold_id]}
+        outer_ids = next((item.train_sample_ids for item in getattr(data, 'outer_folds', ()) if item.fold_id == fold.fold_id),
+                         fold.train_sample_ids+fold.validation_sample_ids+data.embargo[fold.fold_id])
+        outer={by_sample[s] for s in outer_ids}
         folds.append(dict(fold_id=fold.fold_id,inner_training_held_out_shared_contents=len(train&held),
             validation_held_out_shared_contents=len(validation&held),outer_training_held_out_shared_contents=len(outer&held)))
     return dict(format='chronaris.v4_dingxin_vehicle_content_audit.v1',data_manifest_sha256=data.data_manifest_sha256,

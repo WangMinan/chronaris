@@ -38,6 +38,7 @@ def native_consumer_context(domain, data, fold, *, include_held_out=False):
     scales = physiology.drop_duplicates("field_name").set_index("field_name").loc[fields]
     current = physiology.pivot(index="context_id", columns="field_name", values="current_value").loc[list(ids), fields]
     return {"domain": domain, "groups": maneuver.sortie_id.astype(str).to_dict(),
+        "evaluation_protocol": getattr(data, 'evaluation_protocol', 'leave_one_sortie_out'),
         "vehicle_groups": maneuver.vehicle_context_id.astype(str).to_dict(),
         "regression": {
             "maneuver_regression": {"fields": ["maneuver_score"], "scale": [float(maneuver.train_target_iqr.iloc[0])],
@@ -264,7 +265,9 @@ def evaluate_native_consumers(bundle, *, output, targets, context=None):
             "error_units": "training_scale" if task.name in context["regression"] else "native"})
     return {"task_summary": task_summary, "group_metrics": group_rows, "prediction_rows": prediction_rows,
         "vehicle_prediction_rows": aggregate_rows, "family": bundle["family"],
-        "independent_unit": "sortie_descriptive_only" if context["domain"] == "dingxin" else "subject",
+        "independent_unit": ("single_record_time_block_descriptive_only"
+            if context.get('evaluation_protocol') == 'single_record_chronological_blocks_v1' else "sortie_descriptive_only")
+            if context["domain"] == "dingxin" else "subject",
         "no_observation_fraction": float(np.mean(empty)), "sample_count": len(positions)}
 
 

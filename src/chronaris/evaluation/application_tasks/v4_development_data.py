@@ -35,9 +35,9 @@ def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fo
                             subject_role="development"):
     if subject_role not in {"development", "confirmation"}:
         raise ValueError("invalid fixed subject role")
-    if subject_role == "confirmation" and (domain not in {"cogpilot", "clare"} or smoke):
-        raise ValueError("confirmation subject inputs require a complete public fold")
-    fold_count = {"simulation": 1, "dingxin": 2}.get(domain, 5 if subject_role == "confirmation" else 3)
+    if subject_role == "confirmation" and (domain not in {"cogpilot", "clare", "dingxin"} or smoke):
+        raise ValueError("confirmation inputs require a complete native fold")
+    fold_count = {"simulation": 1, "dingxin": 1 if subject_role == "confirmation" else 2}.get(domain, 5 if subject_role == "confirmation" else 3)
     if fold_index < 0 or fold_index >= fold_count:
         raise ValueError("invalid development fold index")
     simulation = None
@@ -53,6 +53,9 @@ def load_development_inputs(domain, data_root, registry_path, *, smoke=False, fo
         targets, definitions = data.targets, data.task_definitions
     elif domain == "dingxin":
         data = load_v4_dingxin_development()
+        if subject_role == "confirmation":
+            from chronaris.evaluation.application_tasks.v4_dingxin_deduplicated import deduplicated_dingxin_data
+            data, _ = deduplicated_dingxin_data(data)
         fold = data.folds[fold_index]
         provider, schema = data.development_provider(fold), data.index.plan.schema
         hierarchy, digest = data.sampling_by_fold[fold.fold_id], data.data_manifest_sha256

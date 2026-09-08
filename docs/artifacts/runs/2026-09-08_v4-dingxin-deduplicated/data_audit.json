@@ -1,0 +1,381 @@
+{
+  "status": "completed",
+  "selection": {
+    "parent_data_manifest_sha256": "7feadff3bf4631ce41c0eea327c8c2923e69c2878b7db5202b33cce54a7514b7",
+    "evaluation_protocol": "single_record_chronological_blocks_v1",
+    "retained_sortie": "20251002_单01_ACT-8_翼云_J16_12#01",
+    "excluded_sorties": [
+      "20251005_四01_ACT-4_云_J20_22#01"
+    ],
+    "selection_rule": "lexical_first_sortie_without_outcomes",
+    "encoder_fold": {
+      "fold_id": "single_record_chronological_blocks_v1",
+      "train_sample_ids": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0006",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0007",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0008",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0009",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0010",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0011",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0012",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0013",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0014",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0015",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0016",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0005",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0006",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0007",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0008",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0009",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0010",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0011",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0012",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0013",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0014",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0015",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0016"
+      ],
+      "validation_sample_ids": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0023",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0023",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0025"
+      ],
+      "held_out_sample_ids": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0032",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0033",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0034",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0032",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0033",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0034"
+      ],
+      "train_sample_hash": "c24c5e3e925854ee28c17aacbcc39638bab9c4a66e3c8ef517ee84203f6e789f",
+      "validation_sample_hash": "1e32b00df9ef49d97861e45ee97288993640513fda95f0089dcd2b026837d024",
+      "held_out_sample_hash": "c47fe6cb75a0d96381112316e5dfee781c7cdc04655369649423bd85a80ff897",
+      "development_only": false
+    },
+    "consumer_fold": {
+      "fold_id": "single_record_chronological_blocks_v1",
+      "train_sample_ids": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0006",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0007",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0008",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0009",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0010",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0011",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0012",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0013",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0014",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0015",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0016",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0017",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0018",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0019",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0020",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0021",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0022",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0023",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0005",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0006",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0007",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0008",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0009",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0010",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0011",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0012",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0013",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0014",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0015",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0016",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0017",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0018",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0019",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0020",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0021",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0022",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0023",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0024",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0025"
+      ],
+      "validation_sample_ids": [],
+      "held_out_sample_ids": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0032",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0033",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0034",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0032",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0033",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0034"
+      ],
+      "train_sample_hash": "bd21a4fcf0704d3f4a47b319ddc96448679f71fc9ed094813dadab7c48f2f2df",
+      "validation_sample_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "held_out_sample_hash": "c47fe6cb75a0d96381112316e5dfee781c7cdc04655369649423bd85a80ff897",
+      "development_only": false
+    },
+    "embargo": [
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0017",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0018",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0019",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0020",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0021",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0022",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0026",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0027",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0028",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0029",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0030",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0031",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0017",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0018",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0019",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0020",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0021",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0022",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0026",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0027",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0028",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0029",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0030",
+      "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035::context_end_0031"
+    ]
+  },
+  "content_audit": {
+    "format": "chronaris.v4_dingxin_vehicle_content_audit.v1",
+    "data_manifest_sha256": "a43c50475d027aa6a0c2bafa5a86c7b73045cda193f0f2374a751d5c16c52e99",
+    "declared_vehicle_contexts": 30,
+    "unique_vehicle_contents": 30,
+    "context_rows": [
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000030000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "09b9400ca94eec5e84fef8d9e24b6c4f7808e357adb9d533930f8ca30809b0d3",
+        "target_start_offset_ms": 30000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000035000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "bb93d76a09383899995d9e2f1b147d803f44fdc67fc0f55378c74c4eb79ea45a",
+        "target_start_offset_ms": 35000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000040000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "66a1f782bff030d7b6c2d1f4bab92d027cfaaf496bc4efebf449bd5b5737f77c",
+        "target_start_offset_ms": 40000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000045000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "87c02f4044214906c4bd92bf2dcd84266358a50474f7cd31658be8cce03d8dfe",
+        "target_start_offset_ms": 45000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000050000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "2f8e440b7618650c2829b285e3976b8e149970f72f33f7db03dcd59f40c2f684",
+        "target_start_offset_ms": 50000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000055000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "57a9f9503048b6d5c3e3688f8e33243589bd2e78bd9903629271280ab4c4369d",
+        "target_start_offset_ms": 55000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000060000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "bf8af727b88c9fa405d6e8d60ce8bfb7574cb2e2ea35d37bb4d6dcb39a94d01d",
+        "target_start_offset_ms": 60000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000065000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "9dfcb0a0d85dfc1728a7d53dde77c5ff55d9387cf341ea4815bc5f3588335c17",
+        "target_start_offset_ms": 65000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000070000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "2d9f8c4712724feaf3d7a485e440e788df35d7c4a962f7b06675b288d9169a9e",
+        "target_start_offset_ms": 70000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000075000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "1dcbd6507ff5a3d9140bfb90374cfee159ee17ec95c0f8c7bf8d451c0e294657",
+        "target_start_offset_ms": 75000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000080000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "8a3ba1ef87b739d8e19b42649a25010f61bd0b02c7e16fda6bc5ee267f72c818",
+        "target_start_offset_ms": 80000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000085000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "22833a0d6e737e764d241750f5027ceac1579a3c7cc663182ea76eb5065881c8",
+        "target_start_offset_ms": 85000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000090000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "9c54b48bd5d9cf34892f287249177323112bc33f95d0dc9e8c0f7b64a84f3cfb",
+        "target_start_offset_ms": 90000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000095000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "d5b5945fccb1911a01bd5e4d7b13fae249a224846de16b5666a3cf6adccbb94d",
+        "target_start_offset_ms": 95000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000100000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "c96bd97fbaa9c34f64ff5814267665ded4d11b1a2326bc72985343740a900041",
+        "target_start_offset_ms": 100000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000105000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "63d8e5ce2fd4abfdba34c83a39c82dd68883eab076e802b66e3de5eed3c72164",
+        "target_start_offset_ms": 105000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000110000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "03da106922ac1342c878dd5ecf91961f1a7c847bfef368efbf23a4d526daa5a8",
+        "target_start_offset_ms": 110000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000115000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "5c70bfe2a38207e7d7d319b1266133e8679a90109279f73b640a436c0d9795dd",
+        "target_start_offset_ms": 115000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000120000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "8907e205507c6d4697beba63782fdf38696a27f2382ee56563ad1f2fa78e41c6",
+        "target_start_offset_ms": 120000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000125000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "d980879e82ae11b06603f301f96a26358f4c1388ff764e92539b8a750fdfed21",
+        "target_start_offset_ms": 125000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000130000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "9e202d8d7d904365f8f4379be92ce971c570b826d37b3604e9d7c768787d7c3e",
+        "target_start_offset_ms": 130000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000135000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "655a69d6788fdd889b70323d3154049d137a64d34814a2c8741f8414f1637ccb",
+        "target_start_offset_ms": 135000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000140000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "3826a4ee66dc02a7021a4438a209ca956fd5f2145cbb7f8722b1e797f1c92e48",
+        "target_start_offset_ms": 140000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000145000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "27b4686de81d2c83feae524dd7046bfd53092cfaa64bb479554bece89b729c11",
+        "target_start_offset_ms": 145000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000150000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "3f194c8f0984aa6cdb45363413fa2955f394f7fc02c9feb07b99dbf408a53648",
+        "target_start_offset_ms": 150000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000155000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "98f2d11046e435d066e67f94440fc4337e86c98c41034f36e31bdc25df15c669",
+        "target_start_offset_ms": 155000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000160000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "e3049bc33bedfbc536f2244b900c3c708341b7c4f497a877f5fd365777d5f656",
+        "target_start_offset_ms": 160000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000165000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "953628e654306291aef4d8b988d0c55e84b2136cac97fef38afd3e28ab7af476",
+        "target_start_offset_ms": 165000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000170000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "c4f682bd78a167ce42d4d2196747bd6f8aa528af9fdc177a737a0beb37c35f3c",
+        "target_start_offset_ms": 170000
+      },
+      {
+        "vehicle_context_id": "20251002_单01_ACT-8_翼云_J16_12#01::target_000175000",
+        "sortie_id": "20251002_单01_ACT-8_翼云_J16_12#01",
+        "content_sha256": "186624a7f571c71fe53763b21f1b34c21f476065049964832f54ba03ab6db725",
+        "target_start_offset_ms": 175000
+      }
+    ],
+    "folds": [
+      {
+        "fold_id": "single_record_chronological_blocks_v1",
+        "inner_training_held_out_shared_contents": 0,
+        "validation_held_out_shared_contents": 0,
+        "outer_training_held_out_shared_contents": 0
+      }
+    ],
+    "outer_roles_disjoint": true
+  },
+  "encoder_context_counts": {
+    "train": 24,
+    "validation": 6,
+    "held_out": 6
+  },
+  "consumer_context_counts": {
+    "train": 42,
+    "held_out": 6
+  },
+  "inner_fields": [
+    "eeg.af3",
+    "eeg.af4",
+    "eeg.f3",
+    "eeg.f4",
+    "eeg.f7",
+    "eeg.f8",
+    "eeg.fp1",
+    "eeg.fp2",
+    "eeg.fpz",
+    "spo2.toi1",
+    "spo2.toi2"
+  ],
+  "outer_fields": [
+    "eeg.af3",
+    "eeg.af4",
+    "eeg.f3",
+    "eeg.f4",
+    "eeg.f7",
+    "eeg.f8",
+    "eeg.fp1",
+    "eeg.fp2",
+    "eeg.fpz",
+    "spo2.toi1",
+    "spo2.toi2"
+  ],
+  "model_scores_generated": false,
+  "source_files_unchanged": true
+}
