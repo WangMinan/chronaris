@@ -1,0 +1,45 @@
+{
+  "focused": {
+    "passed": 9,
+    "elapsed_s": 17.65
+  },
+  "full_cpu": {
+    "passed": 570,
+    "skipped": 30,
+    "elapsed_s": 135.05
+  },
+  "real_comparisons": 48,
+  "scalar_point_values": 96,
+  "point_maximum_delta": 1.1102230246251565e-16,
+  "all_repetitions_retained": true,
+  "source_sha256": {
+    "src/chronaris/evaluation/application_tasks/v4_grouped_statistics.py": "d152c41848bb367d22d10c772da0b18d7f0fb03cf598604a64d8d656cc839c4c",
+    "src/chronaris/evaluation/application_tasks/application_metrics.py": "dcd4dcda8ccc59f6250fffbdb462b339cb7a7a05acc1de8180159faed8d37c25"
+  },
+  "logs": {
+    "initial_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-grouped-statistics/initial_tests.log",
+      "sha256": "c2da5a67808c96a8e21058750543f4ba34efc797fc192ee772ba7e8d421b8ac6"
+    },
+    "final_actual_run.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-grouped-statistics/final_actual_run.log",
+      "sha256": "3b0082b57b72a03fb0191920de368595643a58019d282b761d634b4c40d1b5bb"
+    },
+    "full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-grouped-statistics/full_cpu_tests.log",
+      "sha256": "1675f34ac55265978e25cf9a620c0024cc87a455ce7b79f9889ea6336254dfa5"
+    },
+    "benchmark.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-grouped-statistics/benchmark.log",
+      "sha256": "48b73faee45c1b33c23012a9cb275ce6625ed38e076466cca15c9feba7b6d4f9"
+    },
+    "final_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-grouped-statistics/final_tests.log",
+      "sha256": "b6c35fc619b816406ff3d3fbdd08a173d902b195a2b995c36012e2f418eeca8b"
+    },
+    "actual_run.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-grouped-statistics/actual_run.log",
+      "sha256": "3b0082b57b72a03fb0191920de368595643a58019d282b761d634b4c40d1b5bb"
+    }
+  }
+}

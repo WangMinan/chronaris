@@ -288,7 +288,8 @@ def _mean_edit_score(truth, prediction):
     return float(np.mean(values))
 
 
-def _mean_detection_delay(truth, prediction, *, query_step_s):
+def _detection_delays(truth, prediction, *, query_step_s):
+    """Matched future boundaries, shared by metrics and profile resampling."""
     delays = []
     for true_row, pred_row in zip(truth, prediction, strict=True):
         true_boundaries = np.flatnonzero(true_row[1:] != true_row[:-1]) + 1
@@ -297,6 +298,11 @@ def _mean_detection_delay(truth, prediction, *, query_step_s):
             later = pred_boundaries[pred_boundaries >= boundary]
             if len(later):
                 delays.append((later[0] - boundary) * query_step_s)
+    return delays
+
+
+def _mean_detection_delay(truth, prediction, *, query_step_s):
+    delays = _detection_delays(truth, prediction, query_step_s=query_step_s)
     return float(np.mean(delays)) if delays else None
 
 

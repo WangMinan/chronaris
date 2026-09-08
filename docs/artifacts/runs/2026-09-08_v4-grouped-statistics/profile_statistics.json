@@ -1,0 +1,2366 @@
+{
+  "scope": "retrospective_initial_training256_seed17_development_only",
+  "confirmation_opened": false,
+  "source_files": {
+    "docs/requirements/thesis-v4-simulation-manifest.json": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/500/chronaris/consumer_manifest.json": "a7dac9b92f3ecad70f4a898dccaee6d4cd251b49f4829b370ea1e3935189a948",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/self_supervised/500/chronaris/predictions.npz": "ff376474a77ac165d97e8e5f8cfe8521eda993d2ef46aab34a2b1b0727e81e91",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/500/physiology_only/consumer_manifest.json": "c1a9603c0965a99dd5a9d97a93551b876e99a5b58c4a2cdec2e10565a98326be",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/self_supervised/500/physiology_only/predictions.npz": "3e1d7cdc183142a7bd4f9068e79389910d25ff55d725f97de976686884eb29d2",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/500/vehicle_only/consumer_manifest.json": "53ec6bd63a6a0613919d46c7e10e0aa6f8ca3678137363cfccc05bee77b10818",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/self_supervised/500/vehicle_only/predictions.npz": "b178eb6227ee15948df9bc43545a8c89bb45bdfa571ff9c591436d446958e2d2",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/500/mult/consumer_manifest.json": "05ec70abacbf89e19a8e7ac5949e7f242f026346eeded19790396b862f1d37b6",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/self_supervised/500/mult/predictions.npz": "6e2269df9ba3c68944bb8ee57af0b42a44357323a58c4cca090337747bb7575a",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/500/contiformer/consumer_manifest.json": "0e4703b8decc702d563cede7449c29c939dcbbde43dc50352235e0bdfe541971",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/self_supervised/500/contiformer/predictions.npz": "b10a01209598b6a099c35ddf9399fa61bf90fceb010fc96758a62021cf58db17",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/500/chronaris/consumer_manifest.json": "04a65828c1b532abc51510c683129f2d72ebf45c182e4f3726fb76a5f556d58b",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/chronaris/consumers/task_guided/500/chronaris/predictions.npz": "56d2fe0c29e03428d35483d50697ff00efd29201e31fb931e06d13f38a564a22",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/500/physiology_only/consumer_manifest.json": "acd93c6c1f5511eb47208357f1af7de8fdec38086bb206ae38f8e38533d67b82",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/physiology_only/consumers/task_guided/500/physiology_only/predictions.npz": "f665264ff57e09f23ec7c5a080e4a5a104e7cd250bfc24654631c90b86859168",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/500/vehicle_only/consumer_manifest.json": "666d3613a9fa9bbe756605cf67ca73fc0cb3f5683ffb4b522e7717b0c8126075",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/vehicle_only/consumers/task_guided/500/vehicle_only/predictions.npz": "af84f0a2fd218a8b25f49db2d724b7f41246cb0f7bdeb212e31b64c6bf984db0",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/500/mult/consumer_manifest.json": "571a7056f825b5697674057ac040a2b92780cb1f943956e26bb2acc9289de684",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/mult/consumers/task_guided/500/mult/predictions.npz": "8c1cbd387896a8b731630e126d101d087aebd09a395b7a3f73ed1b0cb40b302c",
+    "artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/500/contiformer/consumer_manifest.json": "5cd6d9c13763679dfccc2070cd4e387f11d45f5c4d39f4689e7695684d338cb0",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-learning-curves/simulation/contiformer/consumers/task_guided/500/contiformer/predictions.npz": "609b3175d0b13b0ae9fb8186ca43ff75c5836e039c8dbcdca0cc5a964809c7ee"
+  },
+  "source_code_sha256": "d152c41848bb367d22d10c772da0b18d7f0fb03cf598604a64d8d656cc839c4c",
+  "comparisons": [
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6056512298936877,
+      "second_value": 0.5419305315678372,
+      "gain_positive_favors_first": 0.06372069832585048,
+      "per_seed_gain": {
+        "17": 0.06372069832585048
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.10031419440427287,
+        0.2648325433188693
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14865053842102527,
+      "second_value": 0.17939378478477416,
+      "gain_positive_favors_first": 0.030743246363748894,
+      "per_seed_gain": {
+        "17": 0.030743246363748894
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.008456127727584105,
+        0.05381026456503596
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6858557884742502,
+      "second_value": 0.3507374653921547,
+      "gain_positive_favors_first": 0.3351183230820955,
+      "per_seed_gain": {
+        "17": 0.3351183230820955
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.286443629619293,
+        0.3815788012457432
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.5914933915910479,
+      "second_value": 0.24484183670190102,
+      "gain_positive_favors_first": 0.34665155488914684,
+      "per_seed_gain": {
+        "17": 0.34665155488914684
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.280399955946831,
+        0.4107220298339325
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.310234427031302,
+      "second_value": 0.13376984662600472,
+      "gain_positive_favors_first": 0.17646458040529728,
+      "per_seed_gain": {
+        "17": 0.17646458040529728
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.12425107702882285,
+        0.23273073660280677
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.6983642578125,
+      "second_value": 5.198304157549234,
+      "gain_positive_favors_first": 2.4999398997367344,
+      "per_seed_gain": {
+        "17": 2.4999398997367344
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        1.5173397996739182,
+        3.364544448104231
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          512
+        ],
+        [
+          457
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6056512298936877,
+      "second_value": 0.5341542733498121,
+      "gain_positive_favors_first": 0.07149695654387556,
+      "per_seed_gain": {
+        "17": 0.07149695654387556
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.004931858411647793,
+        0.15213984211813
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14865053842102527,
+      "second_value": 0.15606224745588734,
+      "gain_positive_favors_first": 0.007411709034862074,
+      "per_seed_gain": {
+        "17": 0.007411709034862074
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.002838733273175076,
+        0.018681574623966357
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6858557884742502,
+      "second_value": 0.7894761107757586,
+      "gain_positive_favors_first": -0.10362032230150842,
+      "per_seed_gain": {
+        "17": -0.10362032230150842
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.11595554646563193,
+        -0.08982719346599367
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.5914933915910479,
+      "second_value": 0.7653286600552225,
+      "gain_positive_favors_first": -0.17383526846417463,
+      "per_seed_gain": {
+        "17": -0.17383526846417463
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.20365536752743782,
+        -0.13881630142860607
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.310234427031302,
+      "second_value": 0.4466588316197691,
+      "gain_positive_favors_first": -0.1364244045884671,
+      "per_seed_gain": {
+        "17": -0.1364244045884671
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.18737896164165702,
+        -0.08416298382606975
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.6983642578125,
+      "second_value": 2.173125,
+      "gain_positive_favors_first": -0.5252392578124998,
+      "per_seed_gain": {
+        "17": -0.5252392578124998
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -1.0918673653852458,
+        -0.01822342011142033
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          512
+        ],
+        [
+          500
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6056512298936877,
+      "second_value": 0.5658399256487008,
+      "gain_positive_favors_first": 0.03981130424498691,
+      "per_seed_gain": {
+        "17": 0.03981130424498691
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.010391424153843865,
+        0.0779240207066446
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14865053842102527,
+      "second_value": 0.14641474819449068,
+      "gain_positive_favors_first": -0.002235790226534584,
+      "per_seed_gain": {
+        "17": -0.002235790226534584
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.013488339859873822,
+        0.010634625110303221
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6858557884742502,
+      "second_value": 0.7595977135272589,
+      "gain_positive_favors_first": -0.0737419250530087,
+      "per_seed_gain": {
+        "17": -0.0737419250530087
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.08556392338028754,
+        -0.06049331028910162
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.5914933915910479,
+      "second_value": 0.6958671753593628,
+      "gain_positive_favors_first": -0.10437378376831496,
+      "per_seed_gain": {
+        "17": -0.10437378376831496
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.14080234327304636,
+        -0.07065235816700656
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.310234427031302,
+      "second_value": 0.4258979301948052,
+      "gain_positive_favors_first": -0.11566350316350321,
+      "per_seed_gain": {
+        "17": -0.11566350316350321
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.16805950126262625,
+        -0.06279846455627708
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.6983642578125,
+      "second_value": 2.4674607072691552,
+      "gain_positive_favors_first": -0.23090355054334477,
+      "per_seed_gain": {
+        "17": -0.23090355054334477
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.6258799939800945,
+        0.13727405024509798
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          512
+        ],
+        [
+          509
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6056512298936877,
+      "second_value": 0.6018324430605132,
+      "gain_positive_favors_first": 0.0038187868331744923,
+      "per_seed_gain": {
+        "17": 0.0038187868331744923
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.05767089133356998,
+        0.07055942527171061
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14865053842102527,
+      "second_value": 0.15092736059921025,
+      "gain_positive_favors_first": 0.0022768221781849785,
+      "per_seed_gain": {
+        "17": 0.0022768221781849785
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.009028135795040504,
+        0.016195742759032548
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6858557884742502,
+      "second_value": 0.7270852342133479,
+      "gain_positive_favors_first": -0.0412294457390977,
+      "per_seed_gain": {
+        "17": -0.0412294457390977
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.051220821154976545,
+        -0.026121320239082105
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.5914933915910479,
+      "second_value": 0.6654131242021868,
+      "gain_positive_favors_first": -0.07391973261113893,
+      "per_seed_gain": {
+        "17": -0.07391973261113893
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.09669374679140308,
+        -0.046157449050515414
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.310234427031302,
+      "second_value": 0.4068621482683983,
+      "gain_positive_favors_first": -0.09662772123709629,
+      "per_seed_gain": {
+        "17": -0.09662772123709629
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.13276530327311575,
+        -0.05930009877275501
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "self_supervised",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.6983642578125,
+      "second_value": 2.29126213592233,
+      "gain_positive_favors_first": -0.40710212189017003,
+      "per_seed_gain": {
+        "17": -0.40710212189017003
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.712990256587352,
+        -0.08185026843746944
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          512
+        ],
+        [
+          515
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6306776956057532,
+      "second_value": 0.5259688121105769,
+      "gain_positive_favors_first": 0.10470888349517626,
+      "per_seed_gain": {
+        "17": 0.10470888349517626
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.018084814436908254,
+        0.23740449973759997
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14682018845680192,
+      "second_value": 0.18200779113964177,
+      "gain_positive_favors_first": 0.03518760268283985,
+      "per_seed_gain": {
+        "17": 0.03518760268283985
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.013415498169365726,
+        0.054899159564457796
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.7213509820813989,
+      "second_value": 0.353876569816898,
+      "gain_positive_favors_first": 0.3674744122645009,
+      "per_seed_gain": {
+        "17": 0.3674744122645009
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.32351065737315293,
+        0.4168949482363541
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6375517928252303,
+      "second_value": 0.2523487395213039,
+      "gain_positive_favors_first": 0.38520305330392646,
+      "per_seed_gain": {
+        "17": 0.38520305330392646
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.3210436590319403,
+        0.4521872153103484
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.345503108003108,
+      "second_value": 0.1579749741169778,
+      "gain_positive_favors_first": 0.1875281338861302,
+      "per_seed_gain": {
+        "17": 0.1875281338861302
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        0.15048784685876823,
+        0.22520978786646864
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "physiology_only",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.937021072796935,
+      "second_value": 4.946563852813853,
+      "gain_positive_favors_first": 2.009542780016918,
+      "per_seed_gain": {
+        "17": 2.009542780016918
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        1.0766275808382137,
+        3.134921857821338
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          522
+        ],
+        [
+          462
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6306776956057532,
+      "second_value": 0.5968824016708086,
+      "gain_positive_favors_first": 0.033795293934944515,
+      "per_seed_gain": {
+        "17": 0.033795293934944515
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.07599532325945378,
+        0.15137427498247577
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14682018845680192,
+      "second_value": 0.1471285425209922,
+      "gain_positive_favors_first": 0.0003083540641902749,
+      "per_seed_gain": {
+        "17": 0.0003083540641902749
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.00831017488566632,
+        0.007757425112895622
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.7213509820813989,
+      "second_value": 0.8056715477676644,
+      "gain_positive_favors_first": -0.08432056568626545,
+      "per_seed_gain": {
+        "17": -0.08432056568626545
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.09524994512448881,
+        -0.07170470647378654
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6375517928252303,
+      "second_value": 0.7907639452561328,
+      "gain_positive_favors_first": -0.15321215243090247,
+      "per_seed_gain": {
+        "17": -0.15321215243090247
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.18041165052395533,
+        -0.11921093988476814
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.345503108003108,
+      "second_value": 0.4597253224206349,
+      "gain_positive_favors_first": -0.11422221441752689,
+      "per_seed_gain": {
+        "17": -0.11422221441752689
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.17342962267766954,
+        -0.05715252900311493
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "vehicle_only",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.937021072796935,
+      "second_value": 2.068600597609562,
+      "gain_positive_favors_first": -0.868420475187373,
+      "per_seed_gain": {
+        "17": -0.868420475187373
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -1.22302930672185,
+        -0.5597470980924351
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          522
+        ],
+        [
+          502
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6306776956057532,
+      "second_value": 0.6195574491478834,
+      "gain_positive_favors_first": 0.011120246457869798,
+      "per_seed_gain": {
+        "17": 0.011120246457869798
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.08121984934450766,
+        0.11866793389374992
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14682018845680192,
+      "second_value": 0.13880972192545069,
+      "gain_positive_favors_first": -0.008010466531351235,
+      "per_seed_gain": {
+        "17": -0.008010466531351235
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.017424155007737852,
+        -0.0010130377873402152
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.7213509820813989,
+      "second_value": 0.8108182952883757,
+      "gain_positive_favors_first": -0.08946731320697676,
+      "per_seed_gain": {
+        "17": -0.08946731320697676
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.10163398931778678,
+        -0.07699722989138415
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6375517928252303,
+      "second_value": 0.7839105339105339,
+      "gain_positive_favors_first": -0.14635874108530356,
+      "per_seed_gain": {
+        "17": -0.14635874108530356
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.17552496656988847,
+        -0.11481636906929885
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.345503108003108,
+      "second_value": 0.4697730654761904,
+      "gain_positive_favors_first": -0.12426995747308239,
+      "per_seed_gain": {
+        "17": -0.12426995747308239
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.1642051091269841,
+        -0.08180045431998556
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "mult",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.937021072796935,
+      "second_value": 2.38574604743083,
+      "gain_positive_favors_first": -0.5512750253661047,
+      "per_seed_gain": {
+        "17": -0.5512750253661047
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.9646787759484607,
+        -0.2282996326305858
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          522
+        ],
+        [
+          506
+        ]
+      ],
+      "true_boundary_count": 632
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6306776956057532,
+      "second_value": 0.6005809986157415,
+      "gain_positive_favors_first": 0.030096696990011607,
+      "per_seed_gain": {
+        "17": 0.030096696990011607
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.017752702650329525,
+        0.08489056759297026
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "rmse",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.14682018845680192,
+      "second_value": 0.14817751718223043,
+      "gain_positive_favors_first": 0.0013573287254285138,
+      "per_seed_gain": {
+        "17": 0.0013573287254285138
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.006471384253480775,
+        0.009980808024110856
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "frame_macro_f1",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.7213509820813989,
+      "second_value": 0.7664701863462292,
+      "gain_positive_favors_first": -0.04511920426483029,
+      "per_seed_gain": {
+        "17": -0.04511920426483029
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.06182397421083896,
+        -0.02449400846921868
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "segmental_f1_iou_0.50",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.6375517928252303,
+      "second_value": 0.7320431725647719,
+      "gain_positive_favors_first": -0.09449137973954158,
+      "per_seed_gain": {
+        "17": -0.09449137973954158
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.1285058895353013,
+        -0.05270790404320961
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "boundary_f1_1s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 0.345503108003108,
+      "second_value": 0.41592684659090906,
+      "gain_positive_favors_first": -0.07042373858780104,
+      "per_seed_gain": {
+        "17": -0.07042373858780104
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.10363615930510461,
+        -0.030521213812229404
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true
+    },
+    {
+      "route": "task_guided",
+      "first_method": "chronaris",
+      "second_method": "contiformer",
+      "metric": "boundary_detection_delay_s",
+      "independent_unit": "parameter_profile",
+      "independent_unit_count": 8,
+      "profile_ids": [
+        "v4_development_profile_000",
+        "v4_development_profile_001",
+        "v4_development_profile_002",
+        "v4_development_profile_003",
+        "v4_development_profile_004",
+        "v4_development_profile_005",
+        "v4_development_profile_006",
+        "v4_development_profile_007"
+      ],
+      "window_count": 256,
+      "windows_per_profile": {
+        "v4_development_profile_000": 32,
+        "v4_development_profile_001": 32,
+        "v4_development_profile_002": 32,
+        "v4_development_profile_003": 32,
+        "v4_development_profile_004": 32,
+        "v4_development_profile_005": 32,
+        "v4_development_profile_006": 32,
+        "v4_development_profile_007": 32
+      },
+      "training_seeds": [
+        17
+      ],
+      "repetitions": 2000,
+      "bootstrap_seed": 17,
+      "first_value": 2.937021072796935,
+      "second_value": 2.310460652591171,
+      "gain_positive_favors_first": -0.626560420205764,
+      "per_seed_gain": {
+        "17": -0.626560420205764
+      },
+      "unavailable_bootstrap_draws": 0,
+      "ci95": [
+        -0.9668281145656197,
+        -0.3296857596768439
+      ],
+      "aggregation": "pool_all_windows_of_sampled_profiles_then_seed_mean",
+      "all_windows_retained": true,
+      "delay_semantics": "conditional_on_a_later_predicted_boundary",
+      "matched_boundary_counts": [
+        [
+          522
+        ],
+        [
+          521
+        ]
+      ],
+      "true_boundary_count": 632
+    }
+  ]
+}

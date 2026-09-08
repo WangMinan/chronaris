@@ -1,0 +1,25 @@
+{
+  "scope": "cpu_bootstrap_only_not_training_speed",
+  "metric": "macro_f1",
+  "windows": 256,
+  "profiles": 8,
+  "repetitions": 2000,
+  "repeats": 3,
+  "sufficient_statistics_s": [
+    0.004863531794399023,
+    0.004198005888611078,
+    0.004342715255916119
+  ],
+  "explicit_window_resampling_s": [
+    2.340591622982174,
+    2.224943835288286,
+    2.2447823332622647
+  ],
+  "median_speedup": 516.9075569032941,
+  "ci_tolerance": 1e-12,
+  "reference": "chronaris",
+  "comparison": "mult",
+  "route": "self_supervised",
+  "encoder_stage_updates": 500,
+  "training_seed": 17
+}

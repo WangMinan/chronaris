@@ -62,3 +62,5 @@
 [初始诊断图表合同](diagnostic-figures-20260908/chart_contract.md)及[七张中文图](../../../artifacts/runs/2026-09-08_v4-diagnostic-figures/report.md)已完成，保留原单种子开发范围。
 
 [固定网格基线与逐查询掩码](naive-baseline-20260908/README.md)记录第六方法的版本修复、双路线来源和实际 CLARE 开发评价。
+
+[分组重采样复核](grouped-statistics-20260908/README.md)记录受试者与参数档案接口、六项指标的一致性及实际开发统计。

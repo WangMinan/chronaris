@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -35,7 +35,7 @@ def main():
     args = parser.parse_args()
     if args.seed != 17 and args.stage not in {"candidate-review", "naive-development"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
-    default_roots = {"naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
+    default_roots = {"diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
@@ -46,7 +46,13 @@ def main():
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "naive-development":
+    if args.stage == "diagnostic-statistics":
+        if args.domain != "simulation":
+            raise ValueError("initial profile statistics require simulation development")
+        from chronaris.evaluation.application_tasks.v4_grouped_statistics import summarize_initial_profile_statistics
+        result = summarize_initial_profile_statistics(output_root=output_root)
+        summary = {"output_root": output_root, "comparison_count": len(result["comparisons"]), "scope": result["scope"]}
+    elif args.stage == "naive-development":
         from chronaris.evaluation.application_tasks.v4_naive_baseline import run_native_naive_development
         summary = run_native_naive_development(domain=args.domain, fold_index=args.fold_index, seed=args.seed,
             output_root=output_root, data_root=args.data_root, registry_path=args.registry)
