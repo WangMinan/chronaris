@@ -1,0 +1,16 @@
+{
+  "domain": "cogpilot",
+  "role": "confirmation",
+  "subjects": 28,
+  "windows": 9173,
+  "task_counts": {
+    "difficulty": 3758,
+    "event_response": 5415
+  },
+  "fold_count": 5,
+  "each_window_assigned_to_one_outer_fold": true,
+  "development_subjects_excluded": true,
+  "model_scores_produced": false,
+  "prepared_manifest_sha256": "7e5cfacec3c40292bfa56c644feeecf55df9b5cc2799518804106684e3dbab58",
+  "elapsed_s": 448.75313544180244
+}

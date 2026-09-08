@@ -39,9 +39,16 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     monkeypatch.setattr(run, "CURVE_UPDATES", (1, 2, 3))
     pretraining, guidance = run.CandidateScreenConfig, run.EndToEndFineTuningConfig
     rocket, tcn = run.MiniRocketConsumerConfig, run.TCNConsumerConfig
-    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {"effective_batch_size": 4, "device": device, "max_updates": 3})))
-    monkeypatch.setattr(run, "EndToEndFineTuningConfig", lambda **kwargs: guidance(**(kwargs | {
-        "max_updates": 3, "effective_batch_size": 4, "head_warmup_updates": 2, "validation_interval": 1, "device": device})))
+    scheduled = []
+    def tiny_pretraining(**kwargs):
+        scheduled.append(("pretraining", kwargs))
+        return pretraining(**(kwargs | {"effective_batch_size": 4, "device": device, "max_updates": 3}))
+    def tiny_guidance(**kwargs):
+        scheduled.append(("guidance", kwargs))
+        return guidance(**(kwargs | {"max_updates": 3, "effective_batch_size": 4,
+            "head_warmup_updates": 2, "validation_interval": 1, "device": device}))
+    monkeypatch.setattr(run, "CandidateScreenConfig", tiny_pretraining)
+    monkeypatch.setattr(run, "EndToEndFineTuningConfig", tiny_guidance)
     monkeypatch.setattr(run, "MiniRocketConsumerConfig", lambda **kwargs: rocket(**kwargs, n_kernels=84))
     monkeypatch.setattr(run, "TCNConsumerConfig", lambda **kwargs: tcn(**(kwargs | {"epochs": 1, "hidden_channels": 8, "device": device})))
     if device == "cpu":
@@ -72,6 +79,21 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
             if route == "self_supervised":
                 assert actual["component_status"]["linear"] == actual["component_status"]["minirocket"] == "resumed"
         assert actual["component_status"]["minirocket"] == "completed"  # Guided consumer remains freshly fitted.
+        for seed, route in ((29, "self_supervised"), (43, "task_guided")):
+            review = run.run_development_diagnostic(**(arguments | {
+                "output_root": tmp_path / "review", "phase": "review", "seed": seed, "routes": (route,)}))
+            assert review["completed"] and len(review["completed_consumers"]) == 1
+            payload = torch.load(review[route + "_training"]["last_checkpoint_path"], weights_only=True)
+            assert payload["config"]["seed"] == seed
+            if route == "self_supervised":
+                assert "task_guided_training" not in review
+                assert review["completed_consumers"] == ["self_supervised:1500"]
+            else:
+                assert review["completed_consumers"] == ["task_guided:500"]
+        pre = next(config for stage, config in scheduled if stage == "pretraining" and config["seed"] == 29)
+        guided = next(config for stage, config in scheduled if stage == "guidance" and config["seed"] == 43)
+        assert (pre["max_updates"], pre["minimum_updates"], pre["patience"], pre["early_stopping"]) == (1500, 500, 5, True)
+        assert (guided["max_updates"], guided["minimum_updates"], guided["patience"], guided["head_warmup_updates"]) == (500, 200, 4, 50)
     root = tmp_path / "simulation" / method
     if candidate_name:
         root = root / candidate_name

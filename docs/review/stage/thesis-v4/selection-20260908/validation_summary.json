@@ -1,0 +1,19 @@
+{
+  "focused_pipeline_checks": {
+    "passed": 6,
+    "elapsed_s": 16.89,
+    "log": "artifacts/application_evaluation/2026-09-08_v4-selection-review/focused.log"
+  },
+  "collector_checks": {
+    "passed": 3,
+    "elapsed_s": 2.09,
+    "log": "artifacts/application_evaluation/2026-09-08_v4-selection-review/collector_checks.log"
+  },
+  "real_reference_routes_collected": [
+    "self_supervised",
+    "task_guided"
+  ],
+  "candidate_selection_complete": false,
+  "three_seed_review_started": false,
+  "confirmation_model_scores_produced": false
+}

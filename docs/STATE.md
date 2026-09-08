@@ -16,7 +16,9 @@ v4 修复参考与共享训练接口已通过四域双路线 CUDA 冒烟；最�
 
 两种注意力、关闭同刻拉近与独立窗口配对已接入共享训练、恢复和导出，见[候选组件复核](artifacts/runs/2026-09-07_v4-candidate-components/report.md)。完整测试发现并修复了多模型连续捕获时的资源回收问题，失败日志已保留。扩大缺失覆盖与实际 0.5/2/5 秒预测也已通过恢复和微调导出，见[公共候选验收](artifacts/runs/2026-09-07_v4-common-candidates/report.md)。单流保真、质量门及固定候选入口现已通过恢复、微调导出和完整测试，见[分支候选验收](artifacts/runs/2026-09-08_v4-branch-candidates/report.md)。固定初筛队列为十个 Chronaris 配置和四种基线各两种容量，候选队列已从冻结提交 `ed2e24e3` 启动，当前进程与单元由 `artifacts/application_evaluation/2026-09-08_v4-single-factor-development/cohort_state.json` 记录；候选收益尚待训练评价。
 
-[冗余与并行性能复核](review/stage/thesis-v4/performance-20260908/README.md)已完成 CPU 回归 550 项通过、29 项跳过；验证正负前向复用，CPU 消费者可提前拟合并恢复，CPU 压力推理因首次跨设备序列差超过 `1e-6` 未采用，队列已停止。CPU 转入公开确认池原生窗口准备：CLARE 已完成 15 人、3,068 窗口及五折角色检查，CogPilot 继续与冻结 GPU 候选队列并行；模型确认成绩仍未生成。
+[冗余与并行性能复核](review/stage/thesis-v4/performance-20260908/README.md)已完成 CPU 回归 550 项通过、29 项跳过；验证正负前向复用，CPU 消费者可提前拟合并恢复，CPU 压力推理因首次跨设备序列差超过 `1e-6` 未采用，队列已停止。CPU 转入公开确认池原生窗口准备：CLARE 已完成 15 人、3,068 窗口，CogPilot 已完成 28 人、9,173 窗口，两域五折角色检查通过；模型确认成绩仍未生成。
+
+[初筛汇总和三种子复核入口](review/stage/thesis-v4/selection-20260908/README.md)已接入预测重算与来源核验，未齐候选或压力不输出初筛名单。复核入口支持三种子与独立路线、1,500/500 更新上限；尚未启动研究复核。
 
 当前分支为 `codex/thesis-v4-recovery-20260905`，Goal 持续执行，不在阶段节点请求确认。初始 256 条轨迹的诊断与扩展后的候选结果分别归档；下方保留 v3.2.3 历史结果。
 

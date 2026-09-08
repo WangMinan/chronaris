@@ -39,8 +39,8 @@ def _prepare_cpu_consumer_artifacts(**kwargs):
 
 
 def _require_diagnostic_device(seed):
-    if seed != 17 or not torch.cuda.is_available() or "4090" not in torch.cuda.get_device_name():
-        raise ValueError("initial learning curves require CUDA and seed 17")
+    if seed not in (17, 29, 43) or not torch.cuda.is_available() or "4090" not in torch.cuda.get_device_name():
+        raise ValueError("v4 experiments require RTX 4090 and an approved seed")
 
 
 def _snapshot_outputs(*, encoder, normalizer, checkpoint, provider, fold, root):
@@ -69,19 +69,31 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
                                data_root="artifacts/application_evaluation/2026-09-06_v4-public-development",
                                registry_path="docs/requirements/thesis-v4-public-subjects.json",
                                simulation_root="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development",
-                               candidate_name=None, prefetch_cpu_consumers=False):
+                               candidate_name=None, prefetch_cpu_consumers=False,
+                               phase="screen", routes=("self_supervised", "task_guided")):
     """Diagnose both routes on complete development folds, leaving confirmation sealed."""
     _require_diagnostic_device(seed)
     torch.set_num_threads(1)
     from chronaris.evaluation.application_tasks.v4_candidates import candidate_options
     options = candidate_options(method, candidate_name) if candidate_name is not None else None
+    routes = tuple(routes)
+    if (phase not in ("screen", "review") or not routes or len(set(routes)) != len(routes)
+        or not set(routes) <= {"self_supervised", "task_guided"}):
+        raise ValueError("invalid development phase or representation routes")
+    if (not options or phase == "screen") and (seed != 17 or routes != ("self_supervised", "task_guided")):
+        raise ValueError("initial diagnostics/screens require seed 17 and both routes")
+    if phase == "review" and options is None:
+        raise ValueError("review requires an explicit fixed candidate")
+    reviewing = phase == "review"
     if prefetch_cpu_consumers and (not options or domain != "simulation"):
         raise ValueError("CPU consumer prefetch applies to simulation candidate units")
-    curve_updates = (300,) if options else CURVE_UPDATES
-    guided_updates = (200,) if options else CURVE_UPDATES
+    curve_updates = ((1500,) if reviewing else (300,)) if options else CURVE_UPDATES
+    guided_updates = ((500,) if reviewing else (200,)) if options else CURVE_UPDATES
     root = Path(output_root) / domain / method
     if options:
         root = root / candidate_name
+    if reviewing:
+        root = root / "review" / f"seed{seed}"
     if domain != "simulation":
         root = root / f"fold{fold_index + 1:02d}"
     root.mkdir(parents=True, exist_ok=True)
@@ -93,7 +105,11 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
         "scope": "single_factor_development" if options else "clean_development_learning_curves", "completed_consumers": [],
         "curve_updates": list(curve_updates), "guided_updates": list(guided_updates),
         "candidate_options": options, "confirmation_opened": False,
+        "phase": phase, "routes": list(routes),
         "prefetch_cpu_consumers": prefetch_cpu_consumers, "cpu_prefit_results": {}}
+    if state.get("phase", "screen") != phase or tuple(state.get("routes", ("self_supervised", "task_guided"))) != routes:
+        raise ValueError("frozen development phase or routes changed")
+    state.update(phase=phase, routes=list(routes))
     if state.get("prefetch_cpu_consumers", False) != prefetch_cpu_consumers:
         raise ValueError("development execution schedule changed")
     if json.dumps(state.get("candidate_options"), sort_keys=True) != json.dumps(options, sort_keys=True):
@@ -123,7 +139,8 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
             batch=None, batch_provider=provider, fold=fold, physiology_feature_names=schema.physiology_feature_names,
             vehicle_feature_names=schema.vehicle_feature_names, vehicle_field_labels=(), normalizer=normalizer,
             output_root=root / "self_supervised", config=CandidateScreenConfig(max_updates=curve_updates[-1], batch_size=4,
-                effective_batch_size=16 if domain == "dingxin" else 32, weight_decay=1e-4, device="cuda", early_stopping=False,
+                effective_batch_size=16 if domain == "dingxin" else 32, weight_decay=1e-4, device="cuda", early_stopping=reviewing,
+                seed=seed, minimum_updates=500, patience=5,
                 semantic_event_enabled=chronaris, learnable_semantic_queries=chronaris,
                 physics_calibration=calibration if chronaris else None, physics_weight=.05,
                 validation_interval=100, validation_updates=curve_updates, retained_updates=curve_updates,
@@ -155,7 +172,7 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
             return run_native_method_consumers(outputs=outputs, targets=targets, definitions=definitions, context=context,
                 output_root=consumer_root, label_used_for_encoder_training=supervised, seed=seed)
         pending_consumers = {}
-        for update in curve_updates:
+        for update in curve_updates if "self_supervised" in routes else ():
             key = f"self_supervised:{update}"
             if key in state["completed_consumers"]:
                 continue
@@ -165,7 +182,7 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
             encoder, _, normalizer, _ = load_common_pretraining_checkpoint(checkpoint, device="cuda", allow_diagnostic_snapshot=True)
             outputs = _snapshot_outputs(encoder=encoder, normalizer=normalizer, checkpoint=checkpoint, provider=provider,
                 fold=fold, root=root / "representations" / "self_supervised" / str(update))
-            if cpu_pool is not None:
+            if cpu_pool is not None and "task_guided" in routes:
                 pending_consumers[update] = (cpu_pool.submit(_prepare_cpu_consumer_artifacts,
                     method_name=method, outputs=outputs, targets=targets,
                     output_root=root / "consumers" / "self_supervised" / str(update), fold_id=fold.fold_id, protocol=protocol), outputs)
@@ -178,6 +195,10 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
             del encoder, outputs, result
             gc.collect()
             torch.cuda.empty_cache()
+        if "task_guided" not in routes:
+            state["completed"] = all(f"self_supervised:{update}" in state["completed_consumers"] for update in curve_updates)
+            save()
+            return state
         progress["phase"] = f"task_guided_{guided_updates[-1]}"
         encoder, _, normalizer, _ = load_common_pretraining_checkpoint(training.best_checkpoint_path, device="cuda")
         with isolated_training_rng(seed):
@@ -186,7 +207,8 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
         guided = train_end_to_end_application_method(model=model, batch=None, batch_provider=provider, targets=targets,
             role_sample_ids=roles, source_checkpoint_path=training.best_checkpoint_path, output_root=root / "task_guided",
             config=EndToEndFineTuningConfig(max_updates=guided_updates[-1], head_warmup_updates=50, batch_size=4,
-                effective_batch_size=16 if domain == "dingxin" else 32, weight_decay=1e-4, device="cuda", early_stopping=False,
+                effective_batch_size=16 if domain == "dingxin" else 32, weight_decay=1e-4, device="cuda", early_stopping=reviewing,
+                seed=seed, minimum_updates=200, patience=4, validation_interval=50,
                 retained_updates=guided_updates, sampling_hierarchy=hierarchy, data_manifest_sha256=digest))
         state["task_guided_training"] = asdict(guided)
         save()
@@ -213,6 +235,8 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
             (root / f"task_guided_{update}_consumers.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
             state["completed_consumers"].append(key)
             save()
-        state["completed"] = len(state["completed_consumers"]) == len(curve_updates) + len(guided_updates)
+        expected = {f"{route}:{update}" for route in routes for update in
+                    (curve_updates if route == "self_supervised" else guided_updates)}
+        state["completed"] = expected <= set(state["completed_consumers"])
         save()
         return state

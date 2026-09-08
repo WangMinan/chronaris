@@ -29,9 +29,10 @@ def candidate_options(method, name):
 
 def run_candidate_development(*, method, candidate_name, output_root, domain="simulation", fold_index=0,
                               data_root="artifacts/application_evaluation/2026-09-06_v4-public-development",
-                              registry_path="docs/requirements/thesis-v4-public-subjects.json", prefetch_cpu_consumers=False):
+                              registry_path="docs/requirements/thesis-v4-public-subjects.json", prefetch_cpu_consumers=False,
+                              phase="screen", seed=17, routes=("self_supervised", "task_guided")):
     from chronaris.evaluation.application_tasks.v4_diagnostic_run import run_development_diagnostic
     return run_development_diagnostic(domain=domain, method=method, output_root=output_root,
         fold_index=fold_index, data_root=data_root, registry_path=registry_path,
         simulation_root=EXPANDED_SIMULATION_ROOT, candidate_name=candidate_name,
-        prefetch_cpu_consumers=prefetch_cpu_consumers)
+        prefetch_cpu_consumers=prefetch_cpu_consumers, phase=phase, seed=seed, routes=routes)

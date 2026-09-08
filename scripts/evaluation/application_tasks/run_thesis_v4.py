@@ -13,10 +13,12 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
+    parser.add_argument("--seed", type=int, choices=(17, 29, 43), default=17)
+    parser.add_argument("--routes", nargs="+", choices=("self_supervised", "task_guided"), default=("self_supervised", "task_guided"))
     parser.add_argument("--inference-device", choices=("cpu", "cuda"), default="cuda")
     parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"), required=True)
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
@@ -31,6 +33,8 @@ def main():
     parser.add_argument("--simulation-root", default="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development")
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
+    if args.seed != 17 and args.stage != "candidate-review":
+        raise ValueError("seeds 29 and 43 are reserved for the candidate-review stage")
     default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
@@ -39,15 +43,30 @@ def main():
                      "expand-training": "2026-09-07_thesis-v4-simulation-expanded",
                      "candidate": "2026-09-08_v4-single-factor-development",
                      "candidate-pressure": "2026-09-08_v4-candidate-pressure"}
+    default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
+    default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
     if args.stage in {"public-data", "public-confirmation-data"}:
         summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root,
             role="confirmation" if args.stage == "public-confirmation-data" else "development")
-    elif args.stage == "candidate":
+    elif args.stage == "candidate-summary":
+        if args.domain != "simulation":
+            raise ValueError("initial candidate summary requires simulation development")
+        from chronaris.evaluation.application_tasks.v4_candidate_results import collect_simulation_screen
+        diagnostic_root = args.diagnostic_root
+        if diagnostic_root == "artifacts/application_evaluation/2026-09-06_v4-learning-curves":
+            diagnostic_root = "artifacts/application_evaluation/2026-09-08_v4-single-factor-development"
+        summary = collect_simulation_screen(diagnostic_root=diagnostic_root,
+            pressure_root="artifacts/application_evaluation/2026-09-08_v4-candidate-pressure", route=args.route, method=args.method)
+        root = Path(output_root) / args.method
+        root.mkdir(parents=True, exist_ok=True)
+        (root / f"{args.route}.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
+    elif args.stage in {"candidate", "candidate-review"}:
         from chronaris.evaluation.application_tasks.v4_candidates import run_candidate_development
         summary = run_candidate_development(domain=args.domain, method=args.method, candidate_name=args.candidate_name,
             output_root=output_root, fold_index=args.fold_index, data_root=args.data_root, registry_path=args.registry,
-            prefetch_cpu_consumers=args.prefetch_cpu_consumers)
+            prefetch_cpu_consumers=args.prefetch_cpu_consumers, seed=args.seed, routes=args.routes,
+            phase="review" if args.stage == "candidate-review" else "screen")
     elif args.stage == "expand-training":
         if args.domain != "simulation":
             raise ValueError("the approved training expansion only applies to simulation")

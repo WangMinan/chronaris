@@ -1,0 +1,12 @@
+{
+  "domain": "clare",
+  "role": "confirmation",
+  "subjects": 15,
+  "windows": 3068,
+  "fold_count": 5,
+  "development_subjects_excluded": true,
+  "model_scores_produced": false,
+  "prepared_manifest_sha256": "d5f91022cc41b6372d1ed35d6ba694d4e1dc102c0d6751fba22858dd4e3a2547",
+  "elapsed_s": 102.02475203434005,
+  "each_window_assigned_to_one_outer_fold": true
+}
