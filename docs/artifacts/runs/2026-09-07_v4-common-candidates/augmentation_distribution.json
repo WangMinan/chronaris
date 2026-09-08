@@ -1,0 +1,30 @@
+{
+  "policy": {
+    "point_dropout_probability": 0.1,
+    "block_duration_min_s": 1.0,
+    "block_duration_max_s": 5.0,
+    "modality_dropout_probability": 0.05,
+    "timestamp_jitter_sigma_s": 0.05,
+    "clock_offset_limit_s": 0.25,
+    "missingness_mixture": true
+  },
+  "seed": 17,
+  "sample_id": "a",
+  "epochs": [
+    0,
+    9999
+  ],
+  "context_durations_s": [
+    10,
+    12,
+    30
+  ],
+  "counts": {
+    "block": 2490,
+    "random": 2496,
+    "clean": 4045,
+    "vehicle_missing": 488,
+    "physiology_missing": 481
+  },
+  "scope": "deterministic_realization_check_not_training_experiment"
+}

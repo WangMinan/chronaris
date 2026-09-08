@@ -1,0 +1,22 @@
+{
+  "training_source_code_sha256": "fa3169e5ea924f8e3776f5a42c95b030371031e2af4235aac79a05979146dce9",
+  "full_suite": {
+    "passed": 559,
+    "skipped": 8,
+    "warnings": 334,
+    "elapsed_s": 251.52,
+    "log": "artifacts/application_evaluation/2026-09-07_v4-common-candidates/full_tests.log"
+  },
+  "initial_focused_check": {
+    "passed": 14,
+    "failed": 1,
+    "reason": "invalid assertion that inactive reconstruction parameters have the global Adam step"
+  },
+  "guided_inheritance_check": {
+    "passed": 1,
+    "elapsed_s": 8.59,
+    "log": "artifacts/application_evaluation/2026-09-07_v4-common-candidates/guided_check.log"
+  },
+  "candidate_selection_started": false,
+  "formal_confirmation_started": false
+}
