@@ -62,6 +62,7 @@ class SafeLagAwareFusionConfig:
     boundary_epsilon_s: float = 1e-6
     # A large negative bias makes the sigmoid gate start near 0 (safe fallback).
     cross_gate_init_bias: float = -4.0
+    quality_gate_enabled: bool = False
 
     def __post_init__(self) -> None:
         if self.hidden_dim <= 0 or self.output_dim <= 0:
@@ -155,7 +156,7 @@ class SafeLagAwareFusion(nn.Module):
         )
 
         # Safe cross gate: scalar per timestep, initialized near 0 (safe fallback).
-        self.cross_gate = nn.Linear(gate_input_dim, 1)
+        self.cross_gate = nn.Linear(gate_input_dim + (6 if self.config.quality_gate_enabled else 0), 1)
         with torch.no_grad():
             self.cross_gate.bias.fill_(self.config.cross_gate_init_bias)
         if self.config.attention_kind == "cosine_temperature":
@@ -172,8 +173,15 @@ class SafeLagAwareFusion(nn.Module):
             return .05 + 1.95 * self.temperature_logit.sigmoid()
         return self.config.attention_temperature
 
-    def forward(self, inputs: MultiScaleCausalFusionInput) -> SafeLagAwareFusionOutput:
+    def forward(self, inputs: MultiScaleCausalFusionInput, *, observation_quality=None) -> SafeLagAwareFusionOutput:
         _validate_inputs(inputs, hidden_dim=self.config.hidden_dim)
+        if self.config.quality_gate_enabled:
+            if (observation_quality is None or observation_quality.shape != (*inputs.physiology_states.shape[:2], 6)
+                or not bool(torch.isfinite(observation_quality).all())
+                or bool(((observation_quality < 0) | (observation_quality > 1)).any())):
+                raise ValueError("quality gate requires six finite history features in [0,1]")
+        elif observation_quality is not None:
+            raise ValueError("observation quality supplied to a disabled gate")
         value_states = inputs.vehicle_states
         if self.config.attention_kind == "projected_dot_product":
             query_states = self.query_projection(inputs.physiology_states)
@@ -245,7 +253,8 @@ class SafeLagAwareFusion(nn.Module):
             vehicle_private = torch.zeros_like(vehicle_private)
         cross_available = inputs.physiology_valid_mask & scale_available.any(dim=-1)
         cross_features = self.cross_projection(attended).masked_fill(~cross_available.unsqueeze(-1), 0)
-        cross_gate = torch.sigmoid(self.cross_gate(gate_inputs))
+        cross_gate_inputs = torch.cat((gate_inputs, observation_quality), dim=-1) if self.config.quality_gate_enabled else gate_inputs
+        cross_gate = torch.sigmoid(self.cross_gate(cross_gate_inputs))
         cross_gate = cross_gate.masked_fill(~cross_available.unsqueeze(-1), 0)
         gated_cross = cross_gate * cross_features
 

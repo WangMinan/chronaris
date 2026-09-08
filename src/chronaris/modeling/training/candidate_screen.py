@@ -109,6 +109,8 @@ def train_pretext_candidate(
     resume: bool = True,
 ) -> CandidateScreenResult:
     resolved = config or CandidateScreenConfig()
+    if resolved.single_stream_fidelity_weight and (method_name != "chronaris" or chronaris_fusion_kind != "safe_lag"):
+        raise ValueError("single-stream fidelity requires Chronaris safe-lag branches")
     if resolved.independent_pair_weight > 0 and chronaris_event_pair_weight > 0:
         raise ValueError("independent pairing must not also enable the shared event-bank pair loss")
     if resolved.physics_calibration is not None and (
@@ -349,6 +351,7 @@ def _train_pretext_candidate(
         chronaris_cuda_graph_recurrence=resolved.cuda_graph_recurrence,
         chronaris_attention_kind=resolved.attention_kind,
         chronaris_independent_pairing_enabled=resolved.independent_pairing_enabled,
+        chronaris_quality_gate_enabled=resolved.quality_gate_enabled,
     ).to(resolved.device)
     heads = CommonPretextHeadBundle(
         representation_dim=FUSION_OUTPUT_DIM,
@@ -356,6 +359,7 @@ def _train_pretext_candidate(
         modality_feature_counts=(len(physiology_feature_names), len(vehicle_feature_names)) if resolved.max_updates is not None else None,
         input_streams=(method_name.removesuffix("_only"),) if method_name.endswith("_only") else ("physiology", "vehicle"),
         prediction_horizons_s=resolved.prediction_horizons_s,
+        single_stream_fidelity_weight=resolved.single_stream_fidelity_weight,
     ).to(resolved.device)
     shift_head = (
         ExplicitTimeShiftHead(FUSION_OUTPUT_DIM).to(resolved.device)
@@ -527,6 +531,7 @@ def _train_pretext_candidate(
                     resolved.gradient_clip_norm, error_if_nonfinite=True))
                 gradient_norms.append(norm)
                 encoder_norm = parameter_gradient_norm(encoder.parameters())
+                fidelity_norm = parameter_gradient_norm(heads.single_stream_heads.parameters()) if heads.single_stream_fidelity_weight else None
                 pairing = getattr(encoder.backbone, "independent_pairing", None)
                 pairing_norm = parameter_gradient_norm(pairing.parameters()) if pairing is not None else None
                 shift_norm = parameter_gradient_norm(shift_head.parameters()) if shift_head is not None else None
@@ -536,6 +541,7 @@ def _train_pretext_candidate(
                     row["gradient_norm_before_clip"] = norm
                     row["related_parameter_gradient_norm"] = (shift_norm if row["term_name"] == "explicit_time_shift"
                         else semantic_norm if row["term_name"] == "event_response_pairing"
+                        else fidelity_norm if row["term_name"] == "single_stream_fidelity"
                         else pairing_norm if row["term_name"] == "independent_window_pairing" else encoder_norm)
                 optimizer.step()
                 step_count += 1

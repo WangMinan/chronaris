@@ -1,0 +1,81 @@
+[
+  {
+    "name": "reference",
+    "hidden_dim": 32,
+    "training": {},
+    "missingness_mixture": false
+  },
+  {
+    "name": "cosine_temperature",
+    "hidden_dim": 32,
+    "training": {
+      "attention_kind": "cosine_temperature"
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "projected_attention",
+    "hidden_dim": 32,
+    "training": {
+      "attention_kind": "projected_dot_product"
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "no_same_time_alignment",
+    "hidden_dim": 32,
+    "training": {
+      "continuous_alignment_weight": 0.0
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "independent_pairing",
+    "hidden_dim": 32,
+    "training": {
+      "independent_pairing_enabled": true,
+      "independent_pair_weight": 0.1
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "single_stream_fidelity",
+    "hidden_dim": 32,
+    "training": {
+      "single_stream_fidelity_weight": 0.2
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "quality_gate",
+    "hidden_dim": 32,
+    "training": {
+      "quality_gate_enabled": true
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "missingness_mixture",
+    "hidden_dim": 32,
+    "training": {},
+    "missingness_mixture": true
+  },
+  {
+    "name": "multihorizon",
+    "hidden_dim": 32,
+    "training": {
+      "prediction_horizons_s": [
+        0.5,
+        2.0,
+        5.0
+      ]
+    },
+    "missingness_mixture": false
+  },
+  {
+    "name": "capacity64",
+    "hidden_dim": 64,
+    "training": {},
+    "missingness_mixture": false
+  }
+]

@@ -58,6 +58,12 @@ def collect_encoding_diagnostics(*, encoder, normalizer, batch, batch_size=4):
                         raise ValueError("valid observation decoder output is non-finite")
                     squared_errors[(stream, name)].extend(residual.square().cpu().tolist())
             fusion = output.auxiliary["fusion_output"]
+            if encoder.backbone.config.quality_gate_enabled:
+                from chronaris.modeling.fusion_encoders.observation_quality import causal_observation_quality
+                quality = causal_observation_quality(normalized)
+                for i, stream in enumerate(("physiology", "vehicle")):
+                    for j, name in enumerate(("field_age_fraction", "field_second_coverage", "current_gap_fraction")):
+                        append(stream + "_" + name, quality[..., i * 3 + j])
             pairing = output.auxiliary.get("independent_pairing")
             if pairing is not None:
                 for stream in ("physiology", "vehicle"):
@@ -96,6 +102,7 @@ def collect_encoding_diagnostics(*, encoder, normalizer, batch, batch_size=4):
         "attention_temperature": float(torch.as_tensor(encoder.backbone.causal_fusion.effective_attention_temperature).detach())
             if hasattr(encoder.backbone.causal_fusion, "effective_attention_temperature") else None,
         "independent_pairing_enabled": encoder.backbone.config.independent_pairing_enabled,
+        "quality_gate_enabled": encoder.backbone.config.quality_gate_enabled,
         "event_pairing": "independent_native_history_windows" if encoder.backbone.config.independent_pairing_enabled
             else "disabled_shared_bank_pairing_not_evidence_of_independent_pairs",
         "label_used": False, "elapsed_s": time.perf_counter() - started}

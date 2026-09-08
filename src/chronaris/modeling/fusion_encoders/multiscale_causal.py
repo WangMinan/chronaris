@@ -146,8 +146,9 @@ class MultiScaleCausalLagFusion(nn.Module):
             dim=-1,
         )
         available = inputs.physiology_valid_mask | inputs.vehicle_valid_mask
-        sequence = torch.nan_to_num(self.output_projection(merged))
-        sequence = sequence * available.unsqueeze(-1).to(sequence.dtype)
+        sequence = self.output_projection(merged).masked_fill(~available.unsqueeze(-1), 0)
+        if not torch.isfinite(sequence).all():
+            raise ValueError("multiscale fusion produced non-finite valid states")
         return MultiScaleCausalFusionOutput(
             sequence_embedding=sequence,
             attended_vehicle_states=attended,

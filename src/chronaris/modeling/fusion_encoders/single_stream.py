@@ -98,8 +98,9 @@ class ContinuousTimeSingleStreamEncoder(nn.Module):
             time_axis=queried.timestamps_s.to(inputs.dtype),
             mask=attention_mask,
         )
-        sequence = torch.nan_to_num(self.contract_projection(encoded))
-        sequence = sequence * queried.modality_mask.unsqueeze(-1).to(sequence.dtype)
+        sequence = self.contract_projection(encoded).masked_fill(~queried.modality_mask.unsqueeze(-1), 0)
+        if not torch.isfinite(sequence).all():
+            raise RepresentationContractError("single-stream encoder produced non-finite valid states")
         return SingleStreamEncoding(
             sequence_embedding=sequence,
             valid_mask=queried.modality_mask,

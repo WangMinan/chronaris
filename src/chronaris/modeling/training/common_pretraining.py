@@ -257,6 +257,7 @@ def load_common_pretraining_checkpoint(
         chronaris_cuda_graph_recurrence=bool(backbone_config.get("cuda_graph_recurrence", False)),
         chronaris_attention_kind=str(backbone_config.get("attention_kind", "legacy_cosine")),
         chronaris_independent_pairing_enabled=bool(backbone_config.get("independent_pairing_enabled", False)),
+        chronaris_quality_gate_enabled=bool(backbone_config.get("quality_gate_enabled", False)),
     ).to(device)
     encoder.load_state_dict(payload["encoder_state_dict"], strict=True)
     heads = CommonPretextHeadBundle(

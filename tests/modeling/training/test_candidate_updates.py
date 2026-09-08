@@ -15,13 +15,14 @@ from chronaris.representation.contracts import RepresentationContractError
 from tests.modeling.training.test_candidate_screen import _sample
 
 
-@pytest.mark.parametrize("device,method,attention_kind,common_candidate", [
-    ("cpu", "physiology_only", "legacy_cosine", False), ("cuda", "physiology_only", "legacy_cosine", False),
-    ("cuda", "chronaris", "legacy_cosine", False), ("cpu", "chronaris", "cosine_temperature", False),
-    ("cpu", "chronaris", "projected_dot_product", False), ("cuda", "chronaris", "cosine_temperature", False),
-    ("cuda", "chronaris", "projected_dot_product", False),
-    ("cpu", "physiology_only", "legacy_cosine", True), ("cuda", "chronaris", "legacy_cosine", True)])
-def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method, attention_kind, common_candidate):
+@pytest.mark.parametrize("device,method,attention_kind,common_candidate,branch_candidates", [
+    ("cpu", "physiology_only", "legacy_cosine", False, False), ("cuda", "physiology_only", "legacy_cosine", False, False),
+    ("cuda", "chronaris", "legacy_cosine", False, False), ("cpu", "chronaris", "cosine_temperature", False, False),
+    ("cpu", "chronaris", "projected_dot_product", False, False), ("cuda", "chronaris", "cosine_temperature", False, False),
+    ("cuda", "chronaris", "projected_dot_product", False, False),
+    ("cpu", "physiology_only", "legacy_cosine", True, False), ("cuda", "chronaris", "legacy_cosine", True, False),
+    ("cpu", "chronaris", "legacy_cosine", False, True), ("cuda", "chronaris", "legacy_cosine", False, True)])
+def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, monkeypatch, device, method, attention_kind, common_candidate, branch_candidates):
     torch.set_num_threads(1)
     if device == "cuda" and not torch.cuda.is_available():
         pytest.skip("CUDA unavailable")
@@ -38,13 +39,14 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     config = screen.CandidateScreenConfig(max_updates=5, batch_size=2, effective_batch_size=6,
         validation_interval=3, checkpoint_interval=2, seed=17, device=device, early_stopping=False,
         cuda_graph_recurrence=method == "chronaris", retained_updates=(3,), attention_kind=attention_kind,
-        prediction_horizons_s=(.5, 2., 5.) if common_candidate else ())
+        prediction_horizons_s=(.5, 2., 5.) if common_candidate else (),
+        single_stream_fidelity_weight=.2 if branch_candidates else 0., quality_gate_enabled=branch_candidates)
     arguments = dict(method_name=method, candidate=EncoderCandidateConfig(
         candidate_id="D", hidden_dim=32, dropout=.2), batch=batch, fold=fold,
         physiology_feature_names=("physiology.a",), vehicle_feature_names=("vehicle.a",),
         vehicle_field_labels=(), normalizer=normalizer, config=config,
         augmentation_policy=AugmentationPolicy(missingness_mixture=common_candidate),
-        chronaris_fusion_kind="safe_lag" if attention_kind != "legacy_cosine" else "multiscale")
+        chronaris_fusion_kind="safe_lag" if attention_kind != "legacy_cosine" or branch_candidates else "multiscale")
     complete = screen.train_pretext_candidate(output_root=tmp_path / "continuous", **arguments)
     original = screen.pretext_micro_step
     calls = 0
@@ -86,6 +88,7 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     restored_encoder, restored_heads, _, snapshot_payload = load_common_pretraining_checkpoint(snapshot, allow_diagnostic_snapshot=True)
     if method == "chronaris":
         assert restored_encoder.backbone.config.attention_kind == attention_kind
+        assert restored_encoder.backbone.config.quality_gate_enabled == branch_candidates
     assert restored_heads.prediction_horizons_s == config.prediction_horizons_s
     assert snapshot_payload["augmentation_policy"]["missingness_mixture"] == common_candidate
     assert snapshot_payload["optimizer_updates"] == 3
@@ -98,7 +101,7 @@ def test_update_accumulation_replays_partial_update_and_data_cursor(tmp_path, mo
     with pytest.raises(RepresentationContractError, match="protocol changed"):
         screen.train_pretext_candidate(output_root=tmp_path / "resumed",
             **(arguments | {"config": replace(config, effective_batch_size=4)}))
-    if common_candidate and device == "cpu":
+    if (common_candidate or branch_candidates) and device == "cpu":
         _check_guided_common_candidate(tmp_path, resumed.last_checkpoint_path, batch, fold)
 
 
@@ -113,14 +116,15 @@ def _check_guided_common_candidate(root, checkpoint, batch, fold):
     targets = ApplicationTaskTargets(batch.sample_ids, {"classify": torch.arange(len(batch.sample_ids)).remainder(3)},
         {"classify": torch.ones(len(batch.sample_ids), dtype=torch.bool)}, {"domain": "unit_test"})
     with isolated_training_rng(17):
-        model = EndToEndApplicationModel(method_name="physiology_only", encoder=encoder, normalizer=normalizer,
+        model = EndToEndApplicationModel(method_name=encoder.method_name, encoder=encoder, normalizer=normalizer,
             naive_encoder=None, task_definitions=(ApplicationTaskDefinition("classify", "classification", 3),))
     result = train_end_to_end_application_method(model=model, batch=batch, targets=targets, role_sample_ids=roles,
         source_checkpoint_path=checkpoint, output_root=root / "guided", config=EndToEndFineTuningConfig(
             max_updates=2, head_warmup_updates=1, batch_size=2, effective_batch_size=6,
             validation_interval=1, early_stopping=False))
     assert result.optimizer_updates == 3
-    assert model.pretext_heads.prediction_horizons_s == (.5, 2., 5.)
+    _, source_heads, _, _ = load_common_pretraining_checkpoint(checkpoint)
+    assert model.pretext_heads.objective_config() == source_heads.objective_config()
     output = export_finetuned_application_representations(model=model, checkpoint_path=result.last_checkpoint_path,
         batch=batch, role_sample_ids=roles, output_root=root / "guided_exports", batch_size=2, export_roles=("train", "validation"))
     assert output["validation"].sequence_embedding.shape[-1] == 64

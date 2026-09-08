@@ -28,6 +28,7 @@ class CommonPretextTargets:
     target_feature_count: int
     augmentation_ids: tuple[str, ...]
     prediction_horizons_s: tuple[float, ...] = ()
+    observation_mask: torch.Tensor | None = None
 
     def __post_init__(self) -> None:
         if self.reconstruction_target.ndim != 3:
@@ -36,6 +37,9 @@ class CommonPretextTargets:
             )
         if self.reconstruction_mask.shape != self.reconstruction_target.shape:
             raise RepresentationContractError("reconstruction mask shape mismatch")
+        if self.observation_mask is not None and (self.observation_mask.shape != self.reconstruction_target.shape
+                or self.observation_mask.dtype != torch.bool):
+            raise RepresentationContractError("observation target mask mismatch")
         expected = (self.reconstruction_target.shape[:2] + (len(self.prediction_horizons_s), self.target_feature_count)
                     if self.prediction_horizons_s else self.reconstruction_target.shape)
         if self.prediction_horizons_s not in ((), (.5, 2., 5.)):
@@ -81,6 +85,7 @@ def move_common_pretext_targets(
         reconstruction_mask=targets.reconstruction_mask.to(device),
         next_query_target=targets.next_query_target.to(device),
         next_query_mask=targets.next_query_mask.to(device),
+        observation_mask=targets.observation_mask.to(device) if targets.observation_mask is not None else None,
     )
 
 
@@ -164,6 +169,7 @@ def build_common_pretext_targets(
         target_feature_count=target.shape[-1],
         augmentation_ids=augmented.augmentation_ids,
         prediction_horizons_s=prediction_horizons_s,
+        observation_mask=target_mask,
     )
 
 

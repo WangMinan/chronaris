@@ -13,7 +13,9 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("public-data", "native-profile", "smoke", "diagnostic", "candidate", "development-conditions", "development-pressure", "expand-training"))
+    from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
+    parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"), required=True)
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
@@ -31,10 +33,15 @@ def main():
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
                      "development-pressure": "2026-09-06_v4-development-pressure",
-                     "expand-training": "2026-09-07_thesis-v4-simulation-expanded"}
+                     "expand-training": "2026-09-07_thesis-v4-simulation-expanded",
+                     "candidate": "2026-09-08_v4-single-factor-development"}
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
     if args.stage == "public-data":
         summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root)
+    elif args.stage == "candidate":
+        from chronaris.evaluation.application_tasks.v4_candidates import run_candidate_development
+        summary = run_candidate_development(domain=args.domain, method=args.method, candidate_name=args.candidate_name,
+            output_root=output_root, fold_index=args.fold_index, data_root=args.data_root, registry_path=args.registry)
     elif args.stage == "expand-training":
         if args.domain != "simulation":
             raise ValueError("the approved training expansion only applies to simulation")

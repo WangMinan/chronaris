@@ -72,7 +72,13 @@ def public_pretext_forward(*, encoder, heads, normalized, augmented, device,
             for stream in ("physiology", "vehicle"):
                 history = getattr(batch, f"{stream}_timestamps_s") <= batch.query_timestamps_s[:, -1, None]
                 lag_valid &= (getattr(batch, f"{stream}_point_mask") & history).any(dim=1)
+    single_stream_inputs = None
+    if heads.single_stream_fidelity_weight:
+        fusion, alignment = positive.auxiliary["fusion_output"], positive.auxiliary["alignment_output"]
+        single_stream_inputs = {stream: (getattr(fusion, f"{stream}_private"), getattr(alignment, stream).reference_valid_mask)
+                                for stream in ("physiology", "vehicle")}
     output = heads(positive.sequence_embedding, negative.sequence_embedding, targets,
         weights=CommonPretextWeights(), positive_valid_mask=positive.modality_available_mask,
-        negative_valid_mask=negative.modality_available_mask, lag_valid_mask=lag_valid)
+        negative_valid_mask=negative.modality_available_mask, lag_valid_mask=lag_valid,
+        single_stream_inputs=single_stream_inputs)
     return output, positive, negative

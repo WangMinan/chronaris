@@ -143,8 +143,9 @@ class CausalMulTFusionEncoder(nn.Module):
         )
         merged = torch.cat((physiology_memory, vehicle_memory), dim=-1).transpose(0, 1)
         available = physiology.modality_mask | vehicle.modality_mask
-        sequence = torch.nan_to_num(self.output_projection(merged))
-        sequence = sequence * available.unsqueeze(-1).to(sequence.dtype)
+        sequence = self.output_projection(merged).masked_fill(~available.unsqueeze(-1), 0)
+        if not torch.isfinite(sequence).all():
+            raise RepresentationContractError("MulT encoder produced non-finite valid states")
         return DeepBaselineEncoding(sequence, available)
 
 
@@ -193,8 +194,9 @@ class CausalContiFormerFusionEncoder(nn.Module):
             ),
             mask=_safe_attention_mask(available),
         )
-        sequence = torch.nan_to_num(self.contract_projection(encoded))
-        sequence = sequence * available.unsqueeze(-1).to(sequence.dtype)
+        sequence = self.contract_projection(encoded).masked_fill(~available.unsqueeze(-1), 0)
+        if not torch.isfinite(sequence).all():
+            raise RepresentationContractError("ContiFormer encoder produced non-finite valid states")
         return DeepBaselineEncoding(sequence, available)
 
 

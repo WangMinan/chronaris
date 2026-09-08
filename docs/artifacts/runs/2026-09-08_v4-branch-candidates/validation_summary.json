@@ -1,0 +1,30 @@
+{
+  "training_source_code_sha256": "2cf2c7a245b02c84d9d638b6c56a9013b19e059c13b754e4fe78121ae5392738",
+  "full_suite": {
+    "passed": 570,
+    "skipped": 8,
+    "warnings": 334,
+    "elapsed_s": 249.04,
+    "log": "artifacts/application_evaluation/2026-09-08_v4-branch-candidates/repaired_full_tests.log"
+  },
+  "interrupted_suite": {
+    "exit_code": 143,
+    "reason": "execution stopped to repair non-finite output handling before candidate freeze",
+    "log": "artifacts/application_evaluation/2026-09-08_v4-branch-candidates/full_tests.log"
+  },
+  "recovery_checks": {
+    "passed": 4,
+    "elapsed_s": 70.2
+  },
+  "orchestration_checks": {
+    "passed": 4,
+    "elapsed_s": 39.79
+  },
+  "nonfinite_injection_checks": {
+    "passed": 5,
+    "elapsed_s": 2.55
+  },
+  "runner_path": "artifacts/application_evaluation/2026-09-08_v4-single-factor-development/run_cohort.py",
+  "runner_sha256": "3caa9b23937eff92738c3ec9a4fc9ebb307d5f1466ec58f58afe7e18a1a664c9",
+  "confirmation_opened": false
+}

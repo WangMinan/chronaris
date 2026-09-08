@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence
+from typing import Mapping, Sequence
+import math
 
 import torch
 from torch import nn
@@ -65,7 +66,8 @@ class CommonPretextHeadBundle(nn.Module):
     def __init__(self, *, representation_dim: int, target_feature_count: int,
                  modality_feature_counts: tuple[int, int] | None = None,
                  input_streams: tuple[str, ...] = ("physiology", "vehicle"),
-                 prediction_horizons_s: tuple[float, ...] = ()) -> None:
+                 prediction_horizons_s: tuple[float, ...] = (),
+                 single_stream_fidelity_weight: float = 0.) -> None:
         super().__init__()
         if representation_dim <= 0 or target_feature_count <= 0:
             raise ValueError("pretext head dimensions must be positive")
@@ -76,6 +78,9 @@ class CommonPretextHeadBundle(nn.Module):
             raise ValueError("unsupported prediction horizons")
         self.modality_feature_counts = tuple(modality_feature_counts) if modality_feature_counts is not None else None
         self.input_streams = tuple(input_streams)
+        if not math.isfinite(single_stream_fidelity_weight) or single_stream_fidelity_weight < 0:
+            raise ValueError("single-stream fidelity weight must be finite and non-negative")
+        self.single_stream_fidelity_weight = single_stream_fidelity_weight
         if (not self.input_streams or len(set(self.input_streams)) != len(self.input_streams)
             or not set(self.input_streams) <= {"physiology", "vehicle"}):
             raise ValueError("invalid pretext input modalities")
@@ -96,6 +101,12 @@ class CommonPretextHeadBundle(nn.Module):
             nn.LayerNorm(representation_dim),
             nn.Linear(representation_dim, 1),
         )
+        self.single_stream_heads = nn.ModuleDict()
+        if single_stream_fidelity_weight:
+            if self.modality_feature_counts is None or len(self.input_streams) != 2:
+                raise ValueError("single-stream fidelity requires the dual-stream feature schema")
+            self.single_stream_heads.update({stream: nn.Linear(24, count) for stream, count in
+                zip(("physiology", "vehicle"), self.modality_feature_counts, strict=True)})
 
     @property
     def cross_stream_enabled(self):
@@ -103,7 +114,8 @@ class CommonPretextHeadBundle(nn.Module):
 
     def objective_config(self):
         return {"modality_feature_counts": self.modality_feature_counts, "input_streams": self.input_streams,
-                "prediction_horizons_s": self.prediction_horizons_s}
+                "prediction_horizons_s": self.prediction_horizons_s,
+                "single_stream_fidelity_weight": self.single_stream_fidelity_weight}
 
     def forward(
         self,
@@ -115,6 +127,7 @@ class CommonPretextHeadBundle(nn.Module):
         positive_valid_mask: torch.Tensor | None = None,
         negative_valid_mask: torch.Tensor | None = None,
         lag_valid_mask: torch.Tensor | None = None,
+        single_stream_inputs: Mapping[str, tuple[torch.Tensor, torch.Tensor]] | None = None,
     ) -> CommonPretextLossOutput:
         _validate_sequence_pair(
             positive_sequence,
@@ -163,6 +176,25 @@ class CommonPretextHeadBundle(nn.Module):
                 valid_mask=lag_valid_mask,
             ),
         )
+        if self.single_stream_fidelity_weight:
+            if single_stream_inputs is None or targets.observation_mask is None:
+                raise ValueError("single-stream fidelity requires private states and observed teacher masks")
+            components, offset = [], 0
+            for stream, count in zip(("physiology", "vehicle"), self.modality_feature_counts, strict=True):
+                states, valid = single_stream_inputs[stream]
+                if states.shape != (*positive_sequence.shape[:2], 24) or valid.shape != states.shape[:2] or valid.dtype != torch.bool:
+                    raise ValueError("single-stream fidelity state/mask shape mismatch")
+                target_slice = slice(offset, offset + count)
+                components.append(_masked_huber_term(stream, self.single_stream_heads[stream](states),
+                    targets.reconstruction_target[..., target_slice],
+                    targets.observation_mask[..., target_slice] & valid[..., None], weight=self.single_stream_fidelity_weight))
+                offset += count
+            active = [term.raw_loss for term in components if term.raw_loss is not None]
+            raw = torch.stack(active).mean() if active else None
+            terms += (PretextLossTerm("single_stream_fidelity", self.single_stream_fidelity_weight,
+                "active" if active else "unavailable", sum(term.count for term in components), raw,
+                raw * self.single_stream_fidelity_weight if raw is not None else None,
+                None if active else "no_valid_single_stream_targets", tuple(components)),)
         active = [term.weighted_loss for term in terms if term.weighted_loss is not None]
         total = (
             torch.stack(active).sum()

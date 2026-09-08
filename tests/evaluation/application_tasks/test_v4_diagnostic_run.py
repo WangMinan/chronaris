@@ -13,14 +13,14 @@ from chronaris.representation import FoldLineage, TrainOnlyRobustNormalizer, col
 from tests.representation.test_contracts import _sample
 
 
-@pytest.mark.parametrize("device", ["cpu", "cuda"])
-def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_confirmation(tmp_path, monkeypatch, device):
+@pytest.mark.parametrize("device,candidate_name", [("cpu", None), ("cuda", None), ("cpu", "quality_gate")])
+def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_confirmation(tmp_path, monkeypatch, device, candidate_name):
     if device == "cuda" and not torch.cuda.is_available():
         pytest.skip("CUDA diagnostic integration")
     samples = [_sample(f"sample_{i}", shift=i / 10) for i in range(9)]
     batch = collate_observation_samples(samples)
     roles = dict(train=batch.sample_ids[:6], validation=batch.sample_ids[6:], held_out=("sealed",))
-    fold = FoldLineage("diagnostic_test", roles["train"], roles["validation"], roles["held_out"])
+    fold = FoldLineage("diagnostic_test__training512" if candidate_name else "diagnostic_test", roles["train"], roles["validation"], roles["held_out"])
     accessed = []
     def provider(ids):
         assert "sealed" not in ids
@@ -39,32 +39,37 @@ def test_learning_curve_runs_real_trainers_exports_and_all_consumers_without_con
     monkeypatch.setattr(run, "CURVE_UPDATES", (1, 2, 3))
     pretraining, guidance = run.CandidateScreenConfig, run.EndToEndFineTuningConfig
     rocket, tcn = run.MiniRocketConsumerConfig, run.TCNConsumerConfig
-    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {"effective_batch_size": 4, "device": device})))
+    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {"effective_batch_size": 4, "device": device, "max_updates": 3})))
     monkeypatch.setattr(run, "EndToEndFineTuningConfig", lambda **kwargs: guidance(**(kwargs | {
-        "effective_batch_size": 4, "head_warmup_updates": 2, "validation_interval": 1, "device": device})))
+        "max_updates": 3, "effective_batch_size": 4, "head_warmup_updates": 2, "validation_interval": 1, "device": device})))
     monkeypatch.setattr(run, "MiniRocketConsumerConfig", lambda **kwargs: rocket(**kwargs, n_kernels=84))
     monkeypatch.setattr(run, "TCNConsumerConfig", lambda **kwargs: tcn(**(kwargs | {"epochs": 1, "hidden_channels": 8, "device": device})))
     if device == "cpu":
         monkeypatch.setattr(run, "_require_diagnostic_device", lambda seed: None)
         loader = run.load_common_pretraining_checkpoint
         monkeypatch.setattr(run, "load_common_pretraining_checkpoint", lambda path, **kwargs: loader(path, **(kwargs | {"device": "cpu"})))
-    result = run.run_simulation_diagnostic(method="physiology_only", output_root=tmp_path)
-    assert result["completed"] and len(result["completed_consumers"]) == 6
+    method = "chronaris" if candidate_name else "physiology_only"
+    arguments = dict(domain="simulation", method=method, output_root=tmp_path, candidate_name=candidate_name)
+    result = run.run_development_diagnostic(**arguments)
+    assert result["completed"] and len(result["completed_consumers"]) == (2 if candidate_name else 6)
     assert result["self_supervised_training"]["optimizer_updates"] == 3
     assert result["task_guided_training"]["optimizer_updates"] == 5
     assert set(accessed) == set(batch.sample_ids)
-    root = tmp_path / "simulation/physiology_only"
+    root = tmp_path / "simulation" / method
+    if candidate_name:
+        root = root / candidate_name
     for route, supervised in (("self_supervised", False), ("task_guided", True)):
-        record = json.loads((root / f"{route}_3_consumers.json").read_text())
+        update = (300 if route == "self_supervised" else 200) if candidate_name else 3
+        record = json.loads((root / f"{route}_{update}_consumers.json").read_text())
         assert record["model_manifest"]["label_used_for_encoder_training"] is supervised
         assert record["model_manifest"]["evaluation_roles"] == ["validation"]
         assert set(record["component_status"]) == {"linear", "minirocket", "causal_tcn"}
     def no_retraining(**kwargs):
         pytest.fail("completed learning curves should not retrain a consumer")
     monkeypatch.setattr(run, "run_application_method_consumers", no_retraining)
-    resumed = run.run_simulation_diagnostic(method="physiology_only", output_root=tmp_path)
+    resumed = run.run_development_diagnostic(**arguments)
     assert resumed["completed"]
-    if device == "cpu":
+    if device == "cpu" and not candidate_name:
         _check_pressure_pipeline(tmp_path, monkeypatch, inputs, targets, fold)
 
 

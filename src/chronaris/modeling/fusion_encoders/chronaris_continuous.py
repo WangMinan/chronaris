@@ -98,8 +98,11 @@ class ChronarisContinuousEncoderConfig:
     cuda_graph_recurrence: bool = False
     attention_kind: str = "legacy_cosine"
     independent_pairing_enabled: bool = False
+    quality_gate_enabled: bool = False
 
     def __post_init__(self) -> None:
+        if self.quality_gate_enabled and self.fusion_kind != "safe_lag":
+            raise ValueError("quality gate requires safe-lag fusion")
         if self.attention_kind not in ATTENTION_KINDS or (self.attention_kind != "legacy_cosine" and self.fusion_kind != "safe_lag"):
             raise ValueError("revised lag attention requires safe-lag fusion")
         if not self.physiology_feature_names or not self.vehicle_feature_names:
@@ -199,6 +202,7 @@ class ChronarisContinuousEncoderConfig:
             "learnable_semantic_queries": self.learnable_semantic_queries,
             "attention_kind": self.attention_kind,
             "independent_pairing_enabled": self.independent_pairing_enabled,
+            "quality_gate_enabled": self.quality_gate_enabled,
         }
 
     def to_checkpoint_dict(self) -> Mapping[str, object]:
@@ -250,6 +254,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             self.causal_fusion = SafeLagAwareFusion(
                 SafeLagAwareFusionConfig(
                     attention_kind=config.attention_kind,
+                    quality_gate_enabled=config.quality_gate_enabled,
                     hidden_dim=config.hidden_dim,
                     output_dim=FUSION_OUTPUT_DIM,
                     lag_ranges_s=config.lag_ranges_s,
@@ -318,6 +323,10 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             raise RepresentationContractError(
                 "continuous backbone did not produce reference-grid states"
             )
+        quality_arguments = {}
+        if self.config.quality_gate_enabled:
+            from chronaris.modeling.fusion_encoders.observation_quality import causal_observation_quality
+            quality_arguments["observation_quality"] = causal_observation_quality(batch)
         fusion = self.causal_fusion(
             MultiScaleCausalFusionInput(
                 physiology_states=physiology_states,
@@ -325,7 +334,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
                 physiology_valid_mask=physiology_valid,
                 vehicle_valid_mask=vehicle_valid,
                 query_timestamps_s=query_times,
-            )
+            ), **quality_arguments
         )
         aggregated_lag_attention = _aggregate_lag_attention(fusion)
         semantic_output = None

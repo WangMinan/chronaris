@@ -41,8 +41,12 @@ class CandidateScreenConfig:
     independent_pairing_enabled: bool = False
     independent_pair_weight: float = 0.0
     prediction_horizons_s: tuple[float, ...] = ()
+    single_stream_fidelity_weight: float = 0.
+    quality_gate_enabled: bool = False
 
     def __post_init__(self) -> None:
+        if not math.isfinite(self.single_stream_fidelity_weight) or self.single_stream_fidelity_weight < 0:
+            raise ValueError("single-stream fidelity weight must be finite and non-negative")
         if tuple(self.prediction_horizons_s) not in ((), (.5, 2., 5.)):
             raise ValueError("unsupported prediction horizons")
         if self.attention_kind not in ATTENTION_KINDS:
