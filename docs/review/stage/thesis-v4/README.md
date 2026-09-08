@@ -58,3 +58,5 @@
 [正式评价输入与冻结目标合同](confirmation-contracts-20260908/README.md)记录公开十折归一化完成、鼎新实际目标重拟合和压力标签来源修复。
 
 [冻结编码器后的原生留出评价](native-frozen-evaluation-20260908/README.md)记录共享导出去重、公开与鼎新消费者重新拟合及双路线集成检查。
+
+[初始诊断图表合同](diagnostic-figures-20260908/chart_contract.md)及[七张中文图](../../../artifacts/runs/2026-09-08_v4-diagnostic-figures/report.md)已完成，保留原单种子开发范围。

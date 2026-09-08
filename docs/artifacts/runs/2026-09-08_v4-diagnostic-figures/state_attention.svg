@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1008pt" height="720pt" viewBox="0 0 1008 720" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-08T13:58:28.730859</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 720 
+L 1008 720 
+L 1008 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 120.96 226.8 
+L 967.68 226.8 
+L 967.68 100.8 
+L 120.96 100.8 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g clip-path="url(#p60197f5a0a)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAACEUAAAE7CAYAAAAxEa1pAAANcElEQVR4nO3csQkCQRRFUVes0SJsx9huzK3AwNREEGPXBsRAkFkv51Tw4j+XmU6X+7wCeON8e4yeACzYbn8cPQFYqOthO43eAAD8J7dKAOAbDhHAJ+vRAwAAAAAAAAAAfkEUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSNqMHAMv1nOfRE4AFm9bT6AkAAAAAACuvGcAnfooAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEkvDjgUGUKACx4AAAAASUVORK5CYII=" id="imagea4017b13b4" transform="scale(1 -1) translate(0 -126)" x="120.96" y="-100.8" width="846.8" height="126"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m10530128cf" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m10530128cf" x="173.88" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="173.88" y="241.504687" transform="rotate(-0 173.88 241.504687)">干净</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m10530128cf" x="279.72" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(259.72 241.767187)">随机缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(270.227031 251.655625)">30%</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m10530128cf" x="385.56" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(365.56 241.767187)">连续缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(373.063906 252.919375)">15 秒</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m10530128cf" x="491.4" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(471.4 241.767187)">连续缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(478.903906 252.919375)">30 秒</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m10530128cf" x="597.24" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="597.24" y="241.7875" transform="rotate(-0 597.24 241.7875)">生理全缺失</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m10530128cf" x="703.08" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="703.08" y="242.021875" transform="rotate(-0 703.08 242.021875)">航电全缺失</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m10530128cf" x="808.92" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(788.92 241.660937)">生理时钟</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(784.924688 252.813125)">偏移 +1 秒</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m10530128cf" x="914.76" y="226.8" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(894.76 241.914062)">生理响应</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(887.76625 253.16)">时延 +15 秒</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9">
+      <defs>
+       <path id="m24b7ebcda8" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m24b7ebcda8" x="120.96" y="132.3" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="113.96" y="136.709453" transform="rotate(-0 113.96 136.709453)">自监督</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m24b7ebcda8" x="120.96" y="195.3" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="113.96" y="199.661328" transform="rotate(-0 113.96 199.661328)">任务引导</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 120.96 226.8 
+L 120.96 100.8 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 120.96 226.8 
+L 967.68 226.8 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="173.88" y="134.897656" transform="rotate(-0 173.88 134.897656)">1.00</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="279.72" y="134.897656" transform="rotate(-0 279.72 134.897656)">1.60</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #ffffff" x="385.56" y="134.897656" transform="rotate(-0 385.56 134.897656)">7.88</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="491.4" y="135.175781" transform="rotate(-0 491.4 135.175781)">不可用</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="597.24" y="135.175781" transform="rotate(-0 597.24 135.175781)">不可用</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="703.08" y="134.897656" transform="rotate(-0 703.08 134.897656)">1.00</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="808.92" y="134.897656" transform="rotate(-0 808.92 134.897656)">1.00</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="914.76" y="134.897656" transform="rotate(-0 914.76 134.897656)">1.00</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="173.88" y="197.897656" transform="rotate(-0 173.88 197.897656)">1.00</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="279.72" y="197.897656" transform="rotate(-0 279.72 197.897656)">1.56</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #ffffff" x="385.56" y="197.897656" transform="rotate(-0 385.56 197.897656)">8.03</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="491.4" y="198.175781" transform="rotate(-0 491.4 198.175781)">不可用</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="597.24" y="198.175781" transform="rotate(-0 597.24 198.175781)">不可用</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="703.08" y="197.897656" transform="rotate(-0 703.08 197.897656)">1.00</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="808.92" y="197.897656" transform="rotate(-0 808.92 197.897656)">1.00</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="914.76" y="197.897656" transform="rotate(-0 914.76 197.897656)">1.00</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 12px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="544.32" y="88.8" transform="rotate(-0 544.32 88.8)">生理查询状态范数第 99 百分位 / 干净参照</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_5">
+    <path d="M 120.96 441 
+L 967.68 441 
+L 967.68 315 
+L 120.96 315 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g clip-path="url(#pa0e622f5fe)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAACEUAAAE7CAYAAAAxEa1pAAANZklEQVR4nO3aMQ0CQRRFURYBWEADLWZwggckoQANWKCimzWwUJCQ3dyco+BVk5/JnR7P19gBLBjD8wB8dr7c1p4AbNT7fp3W3gBsl38I4JvT8eCOABa5IQCAX+3XHgAAAAAAAAAA8A+iCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgaQbwMBQXoIUvxAAAAABJRU5ErkJggg==" id="imagee52db4d644" transform="scale(1 -1) translate(0 -126)" x="120.96" y="-315" width="846.8" height="126"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_9">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m10530128cf" x="173.88" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="173.88" y="455.704687" transform="rotate(-0 173.88 455.704687)">干净</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m10530128cf" x="279.72" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(259.72 455.967187)">随机缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(270.227031 465.855625)">30%</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m10530128cf" x="385.56" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_30">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(365.56 455.967187)">连续缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(373.063906 467.119375)">15 秒</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m10530128cf" x="491.4" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_31">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(471.4 455.967187)">连续缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(478.903906 467.119375)">30 秒</text>
+     </g>
+    </g>
+    <g id="xtick_13">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m10530128cf" x="597.24" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_32">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="597.24" y="455.9875" transform="rotate(-0 597.24 455.9875)">生理全缺失</text>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m10530128cf" x="703.08" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_33">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="703.08" y="456.221875" transform="rotate(-0 703.08 456.221875)">航电全缺失</text>
+     </g>
+    </g>
+    <g id="xtick_15">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m10530128cf" x="808.92" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_34">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(788.92 455.860937)">生理时钟</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(784.924688 467.013125)">偏移 +1 秒</text>
+     </g>
+    </g>
+    <g id="xtick_16">
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m10530128cf" x="914.76" y="441" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_35">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(894.76 456.114062)">生理响应</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(887.76625 467.36)">时延 +15 秒</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_3">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#m24b7ebcda8" x="120.96" y="346.5" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_36">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="113.96" y="350.909453" transform="rotate(-0 113.96 350.909453)">自监督</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m24b7ebcda8" x="120.96" y="409.5" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_37">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="113.96" y="413.861328" transform="rotate(-0 113.96 413.861328)">任务引导</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_6">
+    <path d="M 120.96 441 
+L 120.96 315 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 120.96 441 
+L 967.68 441 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="173.88" y="349.097656" transform="rotate(-0 173.88 349.097656)">1.00</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="279.72" y="349.097656" transform="rotate(-0 279.72 349.097656)">1.03</text>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #ffffff" x="385.56" y="349.097656" transform="rotate(-0 385.56 349.097656)">12.96</text>
+   </g>
+   <g id="text_41">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="491.4" y="349.375781" transform="rotate(-0 491.4 349.375781)">不可用</text>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="597.24" y="349.097656" transform="rotate(-0 597.24 349.097656)">1.00</text>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="703.08" y="349.375781" transform="rotate(-0 703.08 349.375781)">不可用</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="808.92" y="349.097656" transform="rotate(-0 808.92 349.097656)">1.00</text>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="914.76" y="349.097656" transform="rotate(-0 914.76 349.097656)">1.00</text>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="173.88" y="412.097656" transform="rotate(-0 173.88 412.097656)">1.00</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="279.72" y="412.097656" transform="rotate(-0 279.72 412.097656)">1.03</text>
+   </g>
+   <g id="text_48">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #ffffff" x="385.56" y="412.097656" transform="rotate(-0 385.56 412.097656)">12.98</text>
+   </g>
+   <g id="text_49">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="491.4" y="412.375781" transform="rotate(-0 491.4 412.375781)">不可用</text>
+   </g>
+   <g id="text_50">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="597.24" y="412.097656" transform="rotate(-0 597.24 412.097656)">1.00</text>
+   </g>
+   <g id="text_51">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="703.08" y="412.375781" transform="rotate(-0 703.08 412.375781)">不可用</text>
+   </g>
+   <g id="text_52">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="808.92" y="412.097656" transform="rotate(-0 808.92 412.097656)">1.00</text>
+   </g>
+   <g id="text_53">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="914.76" y="412.097656" transform="rotate(-0 914.76 412.097656)">1.00</text>
+   </g>
+   <g id="text_54">
+    <text style="font-size: 12px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="544.32" y="303" transform="rotate(-0 544.32 303)">航电查询状态范数第 99 百分位 / 干净参照</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_8">
+    <path d="M 120.96 655.2 
+L 967.68 655.2 
+L 967.68 529.2 
+L 120.96 529.2 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g clip-path="url(#p236705ae7d)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAACEUAAAE7CAYAAAAxEa1pAAANUUlEQVR4nO3asQ2DQBBFQY7EKan7L46U1NHRAJFlhPU0U8EPV9o39uMzF4ALY4ynJwB/bE4nBHDtvb0cEQAAwE/5ZQAA31qfHgAAAAAAAAAAcAdRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQJIoAAAAAAAAAAJJEEQAAAAAAAABAkigCAAAAAAAAAEgSRQAAAAAAAAAASaIIAAAAAAAAACBJFAEAAAAAAAAAJIkiAAAAAAAAAIAkUQQAAAAAAAAAkCSKAAAAAAAAAACSRBEAAAAAAAAAQJIoAgAAAAAAAABIEkUAAAAAAAAAAEmiCAAAAAAAAAAgSRQBAAAAAAAAACSJIgAAAAAAAACAJFEEAAAAAAAAAJAkigAAAAAAAAAAkkQRAAAAAAAAAECSKAIAAAAAAAAASBJFAAAAAAAAAABJoggAAAAAAAAAIEkUAQAAAAAAAAAkiSIAAAAAAAAAgCRRBAAAAAAAAACQdALjxw1FdlbOngAAAABJRU5ErkJggg==" id="image82b5b855cc" transform="scale(1 -1) translate(0 -126)" x="120.96" y="-529.2" width="846.8" height="126"/>
+   </g>
+   <g id="matplotlib.axis_5">
+    <g id="xtick_17">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#m10530128cf" x="173.88" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_55">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="173.88" y="669.904687" transform="rotate(-0 173.88 669.904687)">干净</text>
+     </g>
+    </g>
+    <g id="xtick_18">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m10530128cf" x="279.72" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_56">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(259.72 670.167187)">随机缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(270.227031 680.055625)">30%</text>
+     </g>
+    </g>
+    <g id="xtick_19">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m10530128cf" x="385.56" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_57">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(365.56 670.167187)">连续缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(373.063906 681.319375)">15 秒</text>
+     </g>
+    </g>
+    <g id="xtick_20">
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#m10530128cf" x="491.4" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_58">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(471.4 670.167187)">连续缺失</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(478.903906 681.319375)">30 秒</text>
+     </g>
+    </g>
+    <g id="xtick_21">
+     <g id="line2d_25">
+      <g>
+       <use xlink:href="#m10530128cf" x="597.24" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_59">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="597.24" y="670.1875" transform="rotate(-0 597.24 670.1875)">生理全缺失</text>
+     </g>
+    </g>
+    <g id="xtick_22">
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#m10530128cf" x="703.08" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_60">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="703.08" y="670.421875" transform="rotate(-0 703.08 670.421875)">航电全缺失</text>
+     </g>
+    </g>
+    <g id="xtick_23">
+     <g id="line2d_27">
+      <g>
+       <use xlink:href="#m10530128cf" x="808.92" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_61">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(788.92 670.060937)">生理时钟</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(784.924688 681.213125)">偏移 +1 秒</text>
+     </g>
+    </g>
+    <g id="xtick_24">
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#m10530128cf" x="914.76" y="655.2" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_62">
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(894.76 670.314062)">生理响应</text>
+      <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(887.76625 681.56)">时延 +15 秒</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_6">
+    <g id="ytick_5">
+     <g id="line2d_29">
+      <g>
+       <use xlink:href="#m24b7ebcda8" x="120.96" y="560.7" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_63">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="113.96" y="565.109453" transform="rotate(-0 113.96 565.109453)">自监督</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#m24b7ebcda8" x="120.96" y="623.7" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_64">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end" x="113.96" y="628.061328" transform="rotate(-0 113.96 628.061328)">任务引导</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_9">
+    <path d="M 120.96 655.2 
+L 120.96 529.2 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 120.96 655.2 
+L 967.68 655.2 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_65">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="173.88" y="563.297656" transform="rotate(-0 173.88 563.297656)">0.08</text>
+   </g>
+   <g id="text_66">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="279.72" y="563.297656" transform="rotate(-0 279.72 563.297656)">0.08</text>
+   </g>
+   <g id="text_67">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="385.56" y="563.297656" transform="rotate(-0 385.56 563.297656)">0.08</text>
+   </g>
+   <g id="text_68">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="491.4" y="563.575781" transform="rotate(-0 491.4 563.575781)">不可用</text>
+   </g>
+   <g id="text_69">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="597.24" y="563.575781" transform="rotate(-0 597.24 563.575781)">不可用</text>
+   </g>
+   <g id="text_70">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="703.08" y="563.575781" transform="rotate(-0 703.08 563.575781)">不可用</text>
+   </g>
+   <g id="text_71">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="808.92" y="563.297656" transform="rotate(-0 808.92 563.297656)">0.08</text>
+   </g>
+   <g id="text_72">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="914.76" y="563.297656" transform="rotate(-0 914.76 563.297656)">0.08</text>
+   </g>
+   <g id="text_73">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="173.88" y="626.297656" transform="rotate(-0 173.88 626.297656)">0.08</text>
+   </g>
+   <g id="text_74">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="279.72" y="626.297656" transform="rotate(-0 279.72 626.297656)">0.08</text>
+   </g>
+   <g id="text_75">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="385.56" y="626.297656" transform="rotate(-0 385.56 626.297656)">0.08</text>
+   </g>
+   <g id="text_76">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="491.4" y="626.575781" transform="rotate(-0 491.4 626.575781)">不可用</text>
+   </g>
+   <g id="text_77">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="597.24" y="626.575781" transform="rotate(-0 597.24 626.575781)">不可用</text>
+   </g>
+   <g id="text_78">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="703.08" y="626.575781" transform="rotate(-0 703.08 626.575781)">不可用</text>
+   </g>
+   <g id="text_79">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="808.92" y="626.297656" transform="rotate(-0 808.92 626.297656)">0.08</text>
+   </g>
+   <g id="text_80">
+    <text style="font-size: 10px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #262626" x="914.76" y="626.297656" transform="rotate(-0 914.76 626.297656)">0.08</text>
+   </g>
+   <g id="text_81">
+    <text style="font-size: 12px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="544.32" y="517.2" transform="rotate(-0 544.32 517.2)">最短历史尺度：平均最大注意力权重</text>
+   </g>
+  </g>
+  <g id="text_82">
+   <text style="font-size: 17px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="504" y="28.626875" transform="rotate(-0 504 28.626875)">Chronaris 查询状态与注意力诊断</text>
+  </g>
+  <g id="text_83">
+   <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="504" y="43.2" transform="rotate(-0 504 43.2)">同一随机种子 17 的两条路线；缺乏有效历史时标为不可用；状态增长尚需第二种子复核</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p60197f5a0a">
+   <rect x="120.96" y="100.8" width="846.72" height="126"/>
+  </clipPath>
+  <clipPath id="pa0e622f5fe">
+   <rect x="120.96" y="315" width="846.72" height="126"/>
+  </clipPath>
+  <clipPath id="p236705ae7d">
+   <rect x="120.96" y="529.2" width="846.72" height="126"/>
+  </clipPath>
+ </defs>
+</svg>

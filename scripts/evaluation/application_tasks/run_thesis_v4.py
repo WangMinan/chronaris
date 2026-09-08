@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -35,7 +35,7 @@ def main():
     args = parser.parse_args()
     if args.seed != 17 and args.stage != "candidate-review":
         raise ValueError("seeds 29 and 43 are reserved for the candidate-review stage")
-    default_roots = {"public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
+    default_roots = {"diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
@@ -46,7 +46,14 @@ def main():
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage in {"public-data", "public-confirmation-data"}:
+    if args.stage == "diagnostic-figures":
+        if args.domain != "simulation":
+            raise ValueError("initial diagnostic figures describe simulation development")
+        from chronaris.evaluation.application_tasks.v4_diagnostic_figures import render_initial_diagnostic_figures
+        result = render_initial_diagnostic_figures(output_root=output_root)
+        summary = {"output_root": output_root, "figure_count": len(result["figures"]),
+                   "verified_source_count": len(result["source_files"]), "scope": result["scope"]}
+    elif args.stage in {"public-data", "public-confirmation-data"}:
         summary = prepare_public_development(args.domain, registry_path=args.registry, output_root=output_root,
             role="confirmation" if args.stage == "public-confirmation-data" else "development")
     elif args.stage == "candidate-summary":

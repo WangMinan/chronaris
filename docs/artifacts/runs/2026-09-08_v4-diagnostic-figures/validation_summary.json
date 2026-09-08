@@ -1,0 +1,35 @@
+{
+  "status": "completed",
+  "source_files_verified": 243,
+  "stage_values_checked": 180,
+  "pressure_units": 80,
+  "figures": 7,
+  "png_and_svg_exports": 14,
+  "visual_qa_all_pngs": true,
+  "scope_rejection_and_missing_statistic_test": "1 passed in 1.97s",
+  "actual_cli_passed": true,
+  "gpu_training_unchanged": true,
+  "repaired_render_issue": "Missing attention distribution under absent streams is explicitly unavailable",
+  "log_files": {
+    "final_render.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-diagnostic-figures/final_render.log",
+      "sha256": "d45443f4eed17a327a4364f638a7abd0a5c2b336a42507597944a798745911e3"
+    },
+    "cli_render.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-diagnostic-figures/cli_render.log",
+      "sha256": "30eef7f8c670db6c9c23cca2f21f1a79bf2eb3bf24e9310db4a9af24b6575d23"
+    },
+    "tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-diagnostic-figures/tests.log",
+      "sha256": "6c1f1852aded9a68ba76536c980c0a3f0382e1f1593893498a827cc83ac8f66f"
+    },
+    "render.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-diagnostic-figures/render.log",
+      "sha256": "28e49f00404f1285466656520ebe7c551525a9d431285d72eed0be6b17c3d892"
+    },
+    "repaired_render.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-diagnostic-figures/repaired_render.log",
+      "sha256": "d45443f4eed17a327a4364f638a7abd0a5c2b336a42507597944a798745911e3"
+    }
+  }
+}
