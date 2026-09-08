@@ -1,0 +1,9 @@
+{
+  "pid": 5419,
+  "worktree": "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908",
+  "source_commit": "87afc941",
+  "script_sha256": "8abc126ce7b52e1bf6733c4501fa569b1b6e9fd236fd739ad058f6ef91bbe106",
+  "launched_unix_s": 1788846403.4523454,
+  "depends_on_cohort_pid": 85374,
+  "requires_gpu_lock": true
+}

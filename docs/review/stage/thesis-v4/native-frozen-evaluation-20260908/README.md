@@ -15,3 +15,9 @@
 源码入口为 `src/chronaris/evaluation/application_tasks/v4_native_frozen_evaluation.py`；原始日志位于 `artifacts/application_evaluation/2026-09-08_v4-native-frozen-evaluation/`。当前 GPU 初筛继续使用独立冻结工作树。
 
 验证前向复用对照另增 CUDA 用例，等待当前 GPU 队列结束后执行；CPU 用例通过，GPU 用例当前跳过。
+
+## 后续 GPU 接续运行
+
+候选压力队列已从冻结提交 `87afc941` 启动，当前等待正在运行的初筛队列释放同一 GPU 锁。[启动记录](pressure_queue_launch.json)固定进程、工作树和编排脚本哈希。接续先运行完整 CUDA 回归（包括新增验证前向复用对照），通过后才逐个评价已完成候选的两条路线和八种条件；失败保留，不重拟合压力消费者。预计最多 36 个候选路线单元，实际数量取决于初筛成功单元。
+
+等待队列 PID 为 `5419`，当前无 GPU 子进程；其 30 秒状态写入 `artifacts/application_evaluation/2026-09-08_v4-candidate-pressure/queue_state.json`。初筛源码与进程保持原样。队列完成后使用已有汇总器重算候选排名；正式配置选择仍只依据开发角色。
