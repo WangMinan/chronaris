@@ -1,0 +1,91 @@
+{
+  "source_code_sha256": "1c762b05a0b8f12e8ad9496980bf3a286e2e7d296e966fbf1a50902f7c6d8fc8",
+  "full_cpu": {
+    "passed": 561,
+    "skipped": 30,
+    "elapsed_s": 119.28
+  },
+  "integration": {
+    "passed": 19,
+    "elapsed_s": 7.81
+  },
+  "real_clare_development": {
+    "run_state_path": "artifacts/application_evaluation/2026-09-08_v4-naive-development/clare/fold01/seed17/run_state.json",
+    "run_state_sha256": "4f885dc8589706749689dae3f8b37786bfedecb6570b874faa1069a1a6df7680",
+    "checkpoint_sha256": "313ff7c2c5b61f954eccc658bef1d1b31c6c146e0ece978b383646e6819f1dbd",
+    "training_windows": 366,
+    "validation_windows": 428,
+    "fit_elapsed_s": 10.197530438192189,
+    "neural_updates": 0,
+    "components": {
+      "linear": {
+        "result_path": "artifacts/application_evaluation/2026-09-08_v4-naive-development/clare/fold01/seed17/consumers/linear_results.json",
+        "model_path": "artifacts/application_evaluation/2026-09-08_v4-naive-development/clare/fold01/seed17/consumers/linear.joblib",
+        "fit_elapsed_s": 0.018782745115458965,
+        "task_summary": {
+          "validation": [
+            {
+              "task": "workload_classification",
+              "metric": "macro_f1",
+              "value": 0.45465040236094334,
+              "group_count": 2,
+              "aggregation": "field_mean_then_group_mean",
+              "error_units": "native"
+            },
+            {
+              "task": "workload_regression",
+              "metric": "rmse",
+              "value": 4.316502694169435,
+              "group_count": 2,
+              "aggregation": "field_mean_then_group_mean",
+              "error_units": "native"
+            }
+          ]
+        }
+      },
+      "minirocket": {
+        "result_path": "artifacts/application_evaluation/2026-09-08_v4-naive-development/clare/fold01/seed17/consumers/minirocket_results.json",
+        "model_path": "artifacts/application_evaluation/2026-09-08_v4-naive-development/clare/fold01/seed17/consumers/minirocket.joblib",
+        "fit_elapsed_s": 2.859039165545255,
+        "task_summary": {
+          "validation": [
+            {
+              "task": "workload_classification",
+              "metric": "macro_f1",
+              "value": 0.38197726257854825,
+              "group_count": 2,
+              "aggregation": "field_mean_then_group_mean",
+              "error_units": "native"
+            },
+            {
+              "task": "workload_regression",
+              "metric": "rmse",
+              "value": 3.3213549415072685,
+              "group_count": 2,
+              "aggregation": "field_mean_then_group_mean",
+              "error_units": "native"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "logs": {
+    "integration_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-naive-baseline/integration_checks.log",
+      "sha256": "cd29f46b7e4ecdb14c376b2bddd5407c805b587c40f31a8d2f776c6fa4ec6536"
+    },
+    "mask_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-naive-baseline/mask_checks.log",
+      "sha256": "facff4d0b0e839bbc0c1fc24e73901b03bbb0bb215ae942a0528e12d3341820a"
+    },
+    "full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-naive-baseline/full_cpu_tests.log",
+      "sha256": "1384b6b8552e2bd5e28fb8096ce4a9ed511711bd836378409a29bb47438b10c2"
+    },
+    "clare_seed17.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-naive-baseline/clare_seed17.log",
+      "sha256": "642b6e04e9a165f9933bf0a9389ea6a712e60a7b5b1522a0a0127f48c6578796"
+    }
+  }
+}

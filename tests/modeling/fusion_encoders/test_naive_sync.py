@@ -138,3 +138,34 @@ def test_naive_sync_batch_provider_matches_materialized_fit():
             checkpoint_sha256="5" * 64,
         )(batch).sequence_embedding,
     )
+
+
+def test_naive_prefix_masks_pooling_and_legacy_checkpoint_semantics(tmp_path):
+    from dataclasses import replace
+    from chronaris.evaluation.application_tasks.application_finetuning import EndToEndApplicationModel
+    batch = collate_observation_samples([_sample('train'), _sample('test', shift=2.)])
+    encoder = NaiveTimeSyncEncoder().fit(batch, train_sample_ids=('train',), held_out_sample_ids=('test',))
+    delayed = replace(batch, physiology_timestamps_s=batch.physiology_timestamps_s + 10.,
+                      vehicle_timestamps_s=batch.vehicle_timestamps_s + 10.)
+    adapter = NaiveTimeSyncFusionAdapter(encoder=encoder, fold_id='f', checkpoint_sha256='a'*64)
+    output = adapter(delayed)
+    sequence, available = encoder.encode(delayed)
+    assert torch.equal(output.valid_mask, available)
+    assert not output.valid_mask[:, :30].any()
+    assert output.sequence_embedding[~available].count_nonzero() == 0
+    expected = sequence.sum(dim=1) / available.sum(dim=1,keepdim=True).clamp_min(1)
+    assert torch.equal(output.pooled_embedding, expected)
+    model = EndToEndApplicationModel(method_name='naive_time_sync',encoder=None,normalizer=None,naive_encoder=encoder)
+    _, training_mask = model.encode_with_mask(delayed)
+    assert torch.equal(training_mask, output.valid_mask)
+    path = save_naive_time_sync_checkpoint(tmp_path/'new.pt',encoder=encoder)
+    payload = torch.load(path,weights_only=True)
+    assert payload['format'] == 'chronaris.naive_time_sync.v2'
+    payload['format'] = 'chronaris.naive_time_sync.v1'
+    payload['config'].pop('validity_policy')
+    torch.save(payload,tmp_path/'legacy.pt')
+    legacy = load_naive_time_sync_checkpoint(tmp_path/'legacy.pt')
+    old = NaiveTimeSyncFusionAdapter(encoder=legacy,fold_id='f',checkpoint_sha256='b'*64)(delayed)
+    assert old.valid_mask.all()
+    assert torch.allclose(old.pooled_embedding,sequence.mean(dim=1),atol=1e-7)
+    assert legacy.to_manifest()['config']['validity_policy'] == 'legacy_window'

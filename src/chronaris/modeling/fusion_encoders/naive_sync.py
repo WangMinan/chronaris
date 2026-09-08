@@ -30,9 +30,12 @@ from chronaris.representation.normalization import (
 class NaiveTimeSyncConfig:
     output_dim: int = FUSION_OUTPUT_DIM
     maximum_age_s: float = 30.0
+    validity_policy: str = "query_history"
+    random_state: int = 17
 
     def __post_init__(self) -> None:
-        if self.output_dim != FUSION_OUTPUT_DIM or self.maximum_age_s <= 0:
+        if (self.output_dim != FUSION_OUTPUT_DIM or self.maximum_age_s <= 0
+            or self.validity_policy not in {"query_history", "legacy_window"}):
             raise ValueError("naive time-sync config is invalid")
 
 
@@ -48,7 +51,7 @@ class NaiveTimeSyncEncoder:
         self.projector = TrainOnlyPCAProjector(
             output_dim=self.config.output_dim,
             solver="randomized",
-            random_state=17,
+            random_state=self.config.random_state,
         )
 
     def fit(
@@ -209,8 +212,12 @@ class NaiveTimeSyncFusionAdapter:
 
     def __call__(self, batch: DualStreamObservationBatch) -> FusionStreamBatch:
         sequence, modality_available = self.encoder.encode(batch)
-        query_valid = modality_available.any(dim=1, keepdim=True).expand_as(modality_available)
-        pooled = sequence.mean(dim=1)
+        query_valid = modality_available
+        if self.encoder.config.validity_policy == "legacy_window":
+            query_valid = modality_available.any(dim=1, keepdim=True).expand_as(modality_available)
+            pooled = sequence.mean(dim=1)
+        else:
+            pooled = sequence.sum(dim=1) / query_valid.sum(dim=1, keepdim=True).clamp_min(1)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s,
@@ -240,7 +247,7 @@ def save_naive_time_sync_checkpoint(
     resolved.parent.mkdir(parents=True, exist_ok=True)
     temporary = resolved.with_name(resolved.name + ".tmp")
     payload = {
-        "format": "chronaris.naive_time_sync.v1",
+        "format": "chronaris.naive_time_sync.v2",
         "config": asdict(encoder.config),
         "normalizer": dict(encoder.normalizer.to_manifest()),
         "pca_state": dict(encoder.projector.state_dict()),
@@ -259,11 +266,18 @@ def load_naive_time_sync_checkpoint(
     path: str | Path,
 ) -> NaiveTimeSyncEncoder:
     payload = torch.load(path, map_location="cpu", weights_only=True)
-    if payload.get("format") != "chronaris.naive_time_sync.v1":
+    if payload.get("format") not in {"chronaris.naive_time_sync.v1", "chronaris.naive_time_sync.v2"}:
         raise RepresentationContractError("unsupported naive time-sync checkpoint format")
     if bool(payload.get("label_used_for_encoder_training")):
         raise RepresentationContractError("naive time-sync checkpoint used downstream labels")
-    encoder = NaiveTimeSyncEncoder(NaiveTimeSyncConfig(**dict(payload["config"])))
+    config = dict(payload["config"])
+    if payload["format"] == "chronaris.naive_time_sync.v1":
+        if "validity_policy" in config:
+            raise RepresentationContractError("legacy naive checkpoint unexpectedly specifies new validity semantics")
+        config["validity_policy"] = "legacy_window"
+    elif "validity_policy" not in config:
+        raise RepresentationContractError("naive checkpoint lacks explicit validity semantics")
+    encoder = NaiveTimeSyncEncoder(NaiveTimeSyncConfig(**config))
     encoder.normalizer = TrainOnlyRobustNormalizer.from_manifest(payload["normalizer"])
     encoder.projector = TrainOnlyPCAProjector.from_state_dict(payload["pca_state"])
     return encoder

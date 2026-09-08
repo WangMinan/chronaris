@@ -105,3 +105,27 @@ def test_completed_native_encoders_export_outer_roles_and_refit_consumers(tmp_pa
     source_path.write_bytes(source_path.read_bytes() + b"changed")
     with pytest.raises(ValueError, match="initialization checkpoint changed"):
         evaluation.run_native_frozen_evaluation(**(kwargs | {"output_root": tmp_path / "changed_initialization"}))
+    from chronaris.evaluation.application_tasks.v4_naive_baseline import fit_v4_naive_encoder
+    from chronaris.representation import load_fusion_stream_batch
+    for seed in (17, 29, 43):
+        before = len(accessed)
+        naive_path, fit = fit_v4_naive_encoder(provider=training_provider, fold=fold, normalizer=normalizer,
+            data_manifest_sha256=digest, output_root=tmp_path / 'naive' / str(seed), seed=seed)
+        assert set(accessed[before:]) == set(fold.train_sample_ids)
+        assert fit['optimizer_updates'] == 0 and fit['seed'] == seed
+        before = len(accessed)
+        assert fit_v4_naive_encoder(provider=training_provider, fold=fold, normalizer=normalizer,
+            data_manifest_sha256=digest, output_root=tmp_path / 'naive' / str(seed), seed=seed) == (naive_path, fit)
+        assert len(accessed) == before
+        exported = []
+        for route in ('self_supervised', 'task_guided'):
+            out = tmp_path / 'naive_outer' / str(seed) / route
+            result = evaluation.run_native_frozen_evaluation(domain=domain, fold_index=0, checkpoint=naive_path,
+                checkpoint_sha256=sha256_file(naive_path), route=route, output_root=out, device='cpu',
+                engineering_only=True, minirocket_kernels=84, method='naive_time_sync')
+            assert result['source']['encoder_optimizer_updates'] == 0
+            assert result['source']['label_used_for_encoder_training'] is False
+            assert result['source']['nonparametric_representation_shared_between_routes']
+            exported.append(load_fusion_stream_batch(out / 'representations/held_out'))
+        assert torch.equal(exported[0].sequence_embedding, exported[1].sequence_embedding)
+        assert torch.equal(exported[0].valid_mask, exported[1].valid_mask)

@@ -63,8 +63,10 @@ def export_loaded_application_encoder(*, encoder, normalizer, checkpoint, provid
     from chronaris.representation.oof_export import _concatenate_fusion_batches
     if batch_size < 1 or not export_roles or len(set(export_roles)) != len(export_roles) or set(export_roles) - {"train", "validation", "held_out"}:
         raise ValueError("invalid frozen export batch size or roles")
-    adapter = TrainedFusionAdapter(encoder=encoder, normalizer=normalizer, fold_id=fold.fold_id,
-                                  checkpoint_sha256=sha256_file(checkpoint))
+    from chronaris.modeling.fusion_encoders import NaiveTimeSyncEncoder, NaiveTimeSyncFusionAdapter
+    adapter = (NaiveTimeSyncFusionAdapter(encoder=encoder, fold_id=fold.fold_id, checkpoint_sha256=sha256_file(checkpoint))
+        if isinstance(encoder, NaiveTimeSyncEncoder) else TrainedFusionAdapter(encoder=encoder, normalizer=normalizer,
+            fold_id=fold.fold_id, checkpoint_sha256=sha256_file(checkpoint)))
     outputs = {}
     for role in export_roles:
         ids = getattr(fold, role + "_sample_ids")
