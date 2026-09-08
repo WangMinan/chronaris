@@ -1,0 +1,40 @@
+{
+  "source_code_sha256": "04dddb1c075389ce04d0b20ead008eeb5d2b3f9b12983a2aed911c851f9407fe",
+  "focused": {
+    "passed": 16,
+    "elapsed_s": 3.12
+  },
+  "full_cpu": {
+    "passed": 580,
+    "skipped": 30,
+    "elapsed_s": 133.24
+  },
+  "actual_status": "waiting_for_public_screen_plan",
+  "ranked_method_routes": 0,
+  "logs": {
+    "fixture_diagnosis.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/fixture_diagnosis.log",
+      "sha256": "87a931af20535d82a87d1b6721a4eafb30a328d5576b89ec797af77d6949a7bb"
+    },
+    "initial_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/initial_tests.log",
+      "sha256": "688996788b6dc9e79cfdfa8c74730c3bac3f9d5b1e6676f403ec0cad636f181b"
+    },
+    "repaired_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/repaired_tests.log",
+      "sha256": "c2e1e5524eaafa134642632d6847ef14f68c453b0c46881d2586f80005b23513"
+    },
+    "actual_read.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/actual_read.log",
+      "sha256": "ba010c801edb36e9732fa834412e766128093054d36ca6b745509cea64ae40e2"
+    },
+    "integration_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/integration_tests.log",
+      "sha256": "e9b44313980605cd8826570b7fefa910671451660a8ea048ae17a82021e6bd29"
+    },
+    "full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-result-ranking/full_cpu_tests.log",
+      "sha256": "f50c142c990e9eb22f93f9d315c25437e1674cc0dc140304a3036e1a948b5f3f"
+    }
+  }
+}

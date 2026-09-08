@@ -334,8 +334,9 @@ def run_native_method_consumers(*, outputs, targets, definitions, context, outpu
 def native_consumer_protocol_sha256(manifest, outputs, targets):
     """Hash the same authoritative role, target and representation tensors for fit and audit."""
     digest = hashlib.sha256(json.dumps(manifest, sort_keys=True, allow_nan=False).encode())
+    # Published timestamps are float64; promotion preserves all original time values.
     tensors = [tensor for role in sorted(outputs) for tensor in (outputs[role].sequence_embedding,
-        outputs[role].valid_mask, outputs[role].pooled_embedding, outputs[role].timestamps_s)]
+        outputs[role].valid_mask, outputs[role].pooled_embedding, outputs[role].timestamps_s.double())]
     tensors += [tensor for name in sorted(targets.values) for tensor in (targets.values[name], targets.valid_masks[name])]
     if targets.sample_weights is not None:
         tensors.append(targets.sample_weights)

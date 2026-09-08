@@ -19,6 +19,7 @@ def build_public_screen_plan(*, diagnostic_root, pressure_root, registry_path='d
              if summary['status']!='development_screen_complete_not_final_adoption'}
     base=dict(format='chronaris.v4_public_first_fold_plan.v1',source_code_sha256=v4_workflow_source_sha256(),
               public_registry_sha256=sha256_file(registry_path),seed=17,fold_index=0,phase='screen',
+              simulation_diagnostic_root=str(diagnostic_root),simulation_pressure_root=str(pressure_root),
               confirmation_feedback_used=False,pending=pending,units=[])
     if pending:return base | dict(status='waiting_for_simulation_and_pressure')
     if any(summary['confirmation_feedback_used'] or summary['seed']!=17 for summary in summaries.values()):

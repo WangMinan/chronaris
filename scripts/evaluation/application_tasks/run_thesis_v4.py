@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -35,14 +35,14 @@ def main():
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
-    aggregate_stage = public_screen_stage or args.stage == "fixed-native-results"
+    aggregate_stage = public_screen_stage or args.stage in {"fixed-native-results", "public-screen-results"}
     if aggregate_stage and args.domain is not None:
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
         parser.error("--domain is required for this stage")
     if args.seed != 17 and args.stage not in {"candidate-review", "naive-development"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
-    default_roots = {"dingxin-content-audit": "2026-09-08_v4-dingxin-content-audit", "fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
+    default_roots = {"public-screen-results": "2026-09-08_v4-public-screen", "dingxin-content-audit": "2026-09-08_v4-dingxin-content-audit", "fixed-native-results": "2026-09-08_v4-native-results", "public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
@@ -53,7 +53,14 @@ def main():
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "dingxin-content-audit":
+    if args.stage == "public-screen-results":
+        from chronaris.evaluation.application_tasks.v4_public_results import collect_public_screen_results
+        result = collect_public_screen_results(output_root=output_root, data_root=args.data_root, registry_path=args.registry)
+        root = Path(output_root); root.mkdir(parents=True, exist_ok=True)
+        (root / "results_summary.json").write_text(json.dumps(result, indent=2) + "\n")
+        summary = {"status": result["status"], "pending": result["pending"], "failed": result["failed"],
+                   "ranked_method_routes": len(result["rankings"])}
+    elif args.stage == "dingxin-content-audit":
         if args.domain != "dingxin":
             raise ValueError("Dingxin content audit requires its fixed data domain")
         from chronaris.evaluation.application_tasks.v4_dingxin_data import load_v4_dingxin_development, audit_dingxin_vehicle_reuse
