@@ -1,0 +1,23 @@
+{
+  "format": "chronaris.v4_public_first_fold_plan.v1",
+  "source_code_sha256": "c669be796159b3e036a7609dae2517d92365a84820bda85b44f53a4409d07e99",
+  "public_registry_sha256": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+  "seed": 17,
+  "fold_index": 0,
+  "phase": "screen",
+  "confirmation_feedback_used": false,
+  "pending": {
+    "chronaris/self_supervised": "waiting_for_complete_clean_cohort",
+    "chronaris/task_guided": "waiting_for_complete_clean_cohort",
+    "physiology_only/self_supervised": "waiting_for_complete_clean_cohort",
+    "physiology_only/task_guided": "waiting_for_complete_clean_cohort",
+    "vehicle_only/self_supervised": "waiting_for_complete_clean_cohort",
+    "vehicle_only/task_guided": "waiting_for_complete_clean_cohort",
+    "mult/self_supervised": "waiting_for_complete_clean_cohort",
+    "mult/task_guided": "waiting_for_complete_clean_cohort",
+    "contiformer/self_supervised": "waiting_for_complete_clean_cohort",
+    "contiformer/task_guided": "waiting_for_complete_clean_cohort"
+  },
+  "units": [],
+  "status": "waiting_for_simulation_and_pressure"
+}

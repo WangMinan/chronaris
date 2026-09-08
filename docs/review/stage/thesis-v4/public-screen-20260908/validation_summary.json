@@ -1,0 +1,37 @@
+{
+  "source_code_sha256": "c669be796159b3e036a7609dae2517d92365a84820bda85b44f53a4409d07e99",
+  "plan_checks": {
+    "passed": 2,
+    "elapsed_s": 2.37
+  },
+  "integration": {
+    "passed": 5,
+    "skipped": 1,
+    "elapsed_s": 17.9
+  },
+  "full_cpu": {
+    "passed": 572,
+    "skipped": 30,
+    "elapsed_s": 138.2
+  },
+  "actual_readiness": "waiting_for_simulation_and_pressure",
+  "actual_public_training_units_started": 0,
+  "logs": {
+    "integration_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/integration_checks.log",
+      "sha256": "5b2b85dc36198dcf9925a1cb49a9f1cd5c9bab7785b34f7665bbfccd58b211aa"
+    },
+    "full_cpu_tests.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/full_cpu_tests.log",
+      "sha256": "f32886c9a7f0c07b48d08f51629572d4f29399a5a15bcfd130f4d65b2859f5d2"
+    },
+    "actual_readiness.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/actual_readiness.log",
+      "sha256": "e9b4be55c46e529c21b1e5c7f4c794f82620c800cab62f1114474687b84c6197"
+    },
+    "plan_checks.log": {
+      "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/plan_checks.log",
+      "sha256": "4ebae0342e485c764b9428f69b6f0535e7506cc353926f4c51e028fd1052d0d3"
+    }
+  }
+}

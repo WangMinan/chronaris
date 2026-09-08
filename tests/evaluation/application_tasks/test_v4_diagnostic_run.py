@@ -201,3 +201,15 @@ def test_native_diagnostic_cpu_contract_runs_shared_training_and_grouped_consume
             assert evidence["evaluations"]["validation"]["independent_unit"] == "subject"
             assert len(evidence["fit_rows"][1]["train_sample_ids"]) == 5
     assert run.run_development_diagnostic(domain="clare", method="physiology_only", output_root=tmp_path)["completed"]
+    monkeypatch.setattr(run, "CandidateScreenConfig", lambda **kwargs: pretraining(**(kwargs | {
+        "max_updates": 2, "effective_batch_size": 4, "device": "cpu"})))
+    monkeypatch.setattr(run, "EndToEndFineTuningConfig", lambda **kwargs: guidance(**(kwargs | {
+        "max_updates": 1, "head_warmup_updates": 1, "effective_batch_size": 4, "device": "cpu"})))
+    for route in ("self_supervised", "task_guided"):
+        screened = run.run_development_diagnostic(domain="clare", method="physiology_only",
+            output_root=tmp_path / "public_screen" / route, candidate_name="reference", routes=(route,))
+        assert screened["completed"] and len(screened["completed_consumers"]) == 1
+        assert screened["self_supervised_training"]["optimizer_updates"] == 2
+        assert ("task_guided_training" in screened) is (route == "task_guided")
+        if route == "task_guided":
+            assert screened["task_guided_training"]["optimizer_updates"] == 2

@@ -13,14 +13,14 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
     parser.add_argument("--seed", type=int, choices=(17, 29, 43), default=17)
     parser.add_argument("--routes", nargs="+", choices=("self_supervised", "task_guided"), default=("self_supervised", "task_guided"))
     parser.add_argument("--inference-device", choices=("cpu", "cuda"), default="cuda")
-    parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"), required=True)
+    parser.add_argument("--domain", choices=("simulation", "cogpilot", "clare", "dingxin"))
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
     parser.add_argument("--data-root", default="artifacts/application_evaluation/2026-09-06_v4-public-development")
@@ -33,9 +33,14 @@ def main():
     parser.add_argument("--simulation-root", default="artifacts/application_evaluation/2026-09-06_thesis-v4-simulation-development")
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
+    public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
+    if public_screen_stage and args.domain is not None:
+        parser.error("public screening covers both fixed public domains; omit --domain")
+    if not public_screen_stage and args.domain is None:
+        parser.error("--domain is required for this stage")
     if args.seed != 17 and args.stage not in {"candidate-review", "naive-development"}:
         raise ValueError("seeds 29 and 43 require an approved seeded development stage")
-    default_roots = {"diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
+    default_roots = {"public-screen-plan": "2026-09-08_v4-public-screen", "public-screen": "2026-09-08_v4-public-screen", "diagnostic-statistics": "2026-09-08_v4-grouped-statistics", "naive-development": "2026-09-08_v4-naive-development", "diagnostic-figures": "2026-09-08_v4-diagnostic-figures", "public-data": "2026-09-06_v4-public-development", "native-profile": "2026-09-06_v4-native-recurrence",
                      "public-confirmation-data": "2026-09-08_v4-public-confirmation-prepared",
                      "smoke": "2026-09-06_v4-real-domain-smoke", "diagnostic": "2026-09-06_v4-learning-curves",
                      "development-conditions": "2026-09-06_v4-development-conditions-repair",
@@ -46,7 +51,21 @@ def main():
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "diagnostic-statistics":
+    if public_screen_stage:
+        from chronaris.evaluation.application_tasks.v4_public_screen import build_public_screen_plan, run_public_screen
+        diagnostic_root = args.diagnostic_root
+        if diagnostic_root == "artifacts/application_evaluation/2026-09-06_v4-learning-curves":
+            diagnostic_root = "artifacts/application_evaluation/2026-09-08_v4-single-factor-development"
+        kwargs = dict(diagnostic_root=diagnostic_root,
+            pressure_root="artifacts/application_evaluation/2026-09-08_v4-candidate-pressure", registry_path=args.registry)
+        if args.stage == "public-screen-plan":
+            plan = build_public_screen_plan(**kwargs)
+            root = Path(output_root); root.mkdir(parents=True, exist_ok=True)
+            (root / "readiness.json").write_text(json.dumps(plan, indent=2) + "\n")
+            summary = {"status": plan["status"], "unit_count": len(plan["units"]), "pending": plan["pending"]}
+        else:
+            summary = run_public_screen(**kwargs, output_root=output_root, data_root=args.data_root)
+    elif args.stage == "diagnostic-statistics":
         if args.domain != "simulation":
             raise ValueError("initial profile statistics require simulation development")
         from chronaris.evaluation.application_tasks.v4_grouped_statistics import summarize_initial_profile_statistics

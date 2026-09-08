@@ -66,8 +66,11 @@ def run_development_diagnostic(*, domain, method, output_root, seed=17, fold_ind
     if (phase not in ("screen", "review") or not routes or len(set(routes)) != len(routes)
         or not set(routes) <= {"self_supervised", "task_guided"}):
         raise ValueError("invalid development phase or representation routes")
-    if (not options or phase == "screen") and (seed != 17 or routes != ("self_supervised", "task_guided")):
-        raise ValueError("initial diagnostics/screens require seed 17 and both routes")
+    initial = not options or phase == "screen"
+    if initial and seed != 17:
+        raise ValueError("initial diagnostics/screens require seed 17")
+    if (not options or (phase == "screen" and domain == "simulation")) and routes != ("self_supervised", "task_guided"):
+        raise ValueError("initial diagnostics and simulation screens require both routes")
     if phase == "review" and options is None:
         raise ValueError("review requires an explicit fixed candidate")
     reviewing = phase == "review"
