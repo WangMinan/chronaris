@@ -13,6 +13,7 @@ def _summary(method,route):
 
 
 def test_public_plan_merges_routes_and_keeps_reference_without_extra_candidate_search(tmp_path,monkeypatch):
+    monkeypatch.setattr(module,'GPU_LOCK_PATH',str(tmp_path/'gpu.lock'))
     registry=tmp_path/'registry.json';registry.write_text('{}')
     monkeypatch.setattr(module,'collect_simulation_screen',lambda **kwargs:_summary(kwargs['method'],kwargs['route']))
     kwargs=dict(diagnostic_root=tmp_path,pressure_root=tmp_path,registry_path=registry)

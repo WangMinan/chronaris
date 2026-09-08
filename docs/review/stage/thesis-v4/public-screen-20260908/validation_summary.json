@@ -33,5 +33,32 @@
       "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/plan_checks.log",
       "sha256": "4ebae0342e485c764b9428f69b6f0535e7506cc353926f4c51e028fd1052d0d3"
     }
+  },
+  "three_seed_review": {
+    "source_code_sha256": "38c0d8683a4a63481297480eb643ab570fb9812ad09d7f3255d6b4bc009d9f1f",
+    "focused": {
+      "passed": 15,
+      "elapsed_s": 3.0
+    },
+    "full_cpu": {
+      "passed": 587,
+      "skipped": 30,
+      "elapsed_s": 134.74
+    },
+    "actual_status": "waiting_for_public_screen_plan",
+    "actual_neural_units_started": 0,
+    "synthetic_executor_calls": 231,
+    "maximum_configurations_per_method_route_including_reference": 2,
+    "logs": {
+      "initial_three_seed_cpu_tests": {
+        "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/initial_three_seed_cpu_tests.log",
+        "sha256": "4ca40d081df3559680e66bcfde7eafe791507cda018dcecf6fec75e35de19f7d"
+      },
+      "three_seed_budget_cpu_tests": {
+        "path": "artifacts/application_evaluation/2026-09-08_v4-public-screen-plan/three_seed_budget_cpu_tests.log",
+        "sha256": "05772f519874f2705d802049a706a0eff949118ce7a50ec0c4e0357200003df8"
+      }
+    },
+    "readiness_sha256": "ac8e24a8a9d094e34dcf9b1ecd244b98a3c644965653d384ea1cdbb29a0f60fe"
   }
 }

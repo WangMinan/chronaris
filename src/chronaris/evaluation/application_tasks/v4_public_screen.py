@@ -1,5 +1,6 @@
 """Bounded public first-fold screening from completed simulation-only selections."""
 from pathlib import Path
+import fcntl
 import hashlib
 import json
 
@@ -10,6 +11,13 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 
 ROUTES=('self_supervised','task_guided')
 METHODS=('chronaris','physiology_only','vehicle_only','mult','contiformer')
+GPU_LOCK_PATH='/tmp/chronaris-v4-gpu.lock'
+
+
+def seal_development_plan(plan):
+    plan=json.loads(json.dumps(plan))
+    plan['plan_sha256']=hashlib.sha256(json.dumps(plan,sort_keys=True).encode()).hexdigest()
+    return plan
 
 
 def build_public_screen_plan(*, diagnostic_root, pressure_root, registry_path='docs/requirements/thesis-v4-public-subjects.json'):
@@ -49,9 +57,7 @@ def build_public_screen_plan(*, diagnostic_root, pressure_root, registry_path='d
     plan=base | dict(status='ready_for_public_development',selected_chronaris_candidates=selected,units=units,
                      simulation_summaries={f'{m}/{r}':s for (m,r),s in summaries.items()},
                      shared_initialization='one_pretraining_per_domain_method_candidate_fold_seed')
-    plan=json.loads(json.dumps(plan))
-    plan['plan_sha256']=hashlib.sha256(json.dumps(plan,sort_keys=True).encode()).hexdigest()
-    return plan
+    return seal_development_plan(plan)
 
 
 def run_public_screen(*, output_root, diagnostic_root, pressure_root,
@@ -59,6 +65,18 @@ def run_public_screen(*, output_root, diagnostic_root, pressure_root,
                       registry_path='docs/requirements/thesis-v4-public-subjects.json'):
     plan=build_public_screen_plan(diagnostic_root=diagnostic_root,pressure_root=pressure_root,registry_path=registry_path)
     if plan['status']!='ready_for_public_development':return plan
+    return run_development_plan(plan,output_root=output_root,data_root=data_root,registry_path=registry_path)
+
+
+def run_development_plan(plan,*,output_root,data_root,registry_path):
+    """Execute a freshly verified screen/review plan through the shared trainer."""
+    with open(GPU_LOCK_PATH,'a') as lock:
+        try:fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:return plan | dict(status='waiting_gpu')
+        return _run_development_plan_locked(plan,output_root=output_root,data_root=data_root,registry_path=registry_path)
+
+
+def _run_development_plan_locked(plan,*,output_root,data_root,registry_path):
     root=Path(output_root);root.mkdir(parents=True,exist_ok=True)
     path=root/'selection_plan.json'
     if path.exists() and json.loads(path.read_text())!=plan:
@@ -71,6 +89,7 @@ def run_public_screen(*, output_root, diagnostic_root, pressure_root,
         temporary=state_path.with_suffix('.tmp');temporary.write_text(json.dumps(state,indent=2)+'\n');temporary.replace(state_path)
     for unit in plan['units']:
         key='/'.join(unit[k] for k in ('domain','method','candidate_name'))
+        if unit['phase']=='review':key+=f"/fold{unit['fold_index']+1:02d}/seed{unit['seed']}"
         if key in state['completed_units'] or key in state['failed_units']:continue
         state.update(status='running',current_unit=key);save()
         try:

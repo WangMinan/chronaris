@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES
     parser.add_argument("--candidate-name", choices=tuple(CANDIDATE_CHANGES), default="reference")
     parser.add_argument("--prefetch-cpu-consumers", action="store_true")
@@ -24,6 +24,7 @@ def main():
     parser.add_argument("--registry", default="docs/requirements/thesis-v4-public-subjects.json")
     parser.add_argument("--output-root")
     parser.add_argument("--dingxin-results-root")
+    parser.add_argument("--screen-root", default="artifacts/application_evaluation/2026-09-08_v4-public-screen")
     parser.add_argument("--data-root", default="artifacts/application_evaluation/2026-09-06_v4-public-development")
     parser.add_argument("--task-mode", choices=("single", "all"), default="all")
     parser.add_argument("--fold-index", type=int, default=0)
@@ -35,7 +36,8 @@ def main():
     parser.add_argument("--method", choices=("physiology_only", "vehicle_only", "mult", "contiformer", "chronaris"), default="chronaris")
     args = parser.parse_args()
     public_screen_stage = args.stage in {"public-screen-plan", "public-screen"}
-    aggregate_stage = public_screen_stage or args.stage in {"fixed-native-results", "public-screen-results"}
+    review_stage = args.stage in {"candidate-review-plan", "candidate-review-cohort"}
+    aggregate_stage = public_screen_stage or review_stage or args.stage in {"fixed-native-results", "public-screen-results"}
     if aggregate_stage and args.domain is not None:
         parser.error("this stage covers its fixed data domains; omit --domain")
     if not aggregate_stage and args.domain is None:
@@ -52,8 +54,20 @@ def main():
                      "candidate-pressure": "2026-09-08_v4-candidate-pressure"}
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
+    for stage in ("candidate-review-plan", "candidate-review-cohort"):
+        default_roots[stage] = "2026-09-08_v4-candidate-review"
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage == "public-screen-results":
+    if review_stage:
+        from chronaris.evaluation.application_tasks.v4_review_plan import build_review_plan, run_review_cohort
+        kwargs = dict(screen_root=args.screen_root,data_root=args.data_root,registry_path=args.registry)
+        if args.stage == "candidate-review-plan":
+            plan = build_review_plan(**kwargs)
+            root = Path(output_root); root.mkdir(parents=True,exist_ok=True)
+            (root / "readiness.json").write_text(json.dumps(plan,indent=2) + "\n")
+            summary = {"status": plan["status"], "unit_count": len(plan["units"])}
+        else:
+            summary = run_review_cohort(output_root=output_root,**kwargs)
+    elif args.stage == "public-screen-results":
         from chronaris.evaluation.application_tasks.v4_public_results import collect_public_screen_results
         result = collect_public_screen_results(output_root=output_root, data_root=args.data_root, registry_path=args.registry)
         root = Path(output_root); root.mkdir(parents=True, exist_ok=True)

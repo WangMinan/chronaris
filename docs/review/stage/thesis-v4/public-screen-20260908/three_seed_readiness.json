@@ -1,0 +1,13 @@
+{
+  "format": "chronaris.v4_three_seed_review_plan.v1",
+  "phase": "review",
+  "source_code_sha256": "38c0d8683a4a63481297480eb643ab570fb9812ad09d7f3255d6b4bc009d9f1f",
+  "public_registry_sha256": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+  "screen_root": "artifacts/application_evaluation/2026-09-08_v4-public-screen",
+  "data_root": "artifacts/application_evaluation/2026-09-06_v4-public-development",
+  "confirmation_feedback_used": false,
+  "units": [],
+  "status": "waiting_for_public_screen_plan",
+  "pending": [],
+  "failed": []
+}
