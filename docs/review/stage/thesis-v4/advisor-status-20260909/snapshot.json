@@ -1,0 +1,1170 @@
+{
+  "checked_at": "2026-09-09T14:23:41.536133+08:00",
+  "branch": "codex/thesis-v4-recovery-20260905",
+  "head_before_report": "7e6f0db82716dfa8d21f410695bcfa51930dfeed",
+  "run_root": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete",
+  "pid_82623_exists": false,
+  "controller": {
+    "completed": {
+      "cuda_validation": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/stage_results/cuda_validation.1.json",
+        "sha256": "40501e8b8944d2ba227f763ba6f010b57c613a5a3f37d572f2d28d0d64648db1"
+      },
+      "initial": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/stage_results/initial.1.json",
+        "sha256": "d7c9fe138eeb056fc725dd3777be341830acc4a0859cb1c1e0956e58b67a28a0"
+      }
+    },
+    "failures": [
+      {
+        "stage": "initial_pressure",
+        "time_unix_s": 1788917181.658003,
+        "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 142, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: initial_pressure failed (exit 1); see its attempt log\n"
+      }
+    ],
+    "attempts": {
+      "cuda_validation": 1,
+      "initial": 1,
+      "initial_pressure": 1
+    },
+    "pid": 82623,
+    "config_sha256": "d92216882608c1c58f4c5ace21912504ce00534839c6d7af0c3ba43522ebd34a",
+    "status": "failed",
+    "until": "confirmation",
+    "children": {},
+    "updated_at_unix_s": 1788917181.6580067,
+    "current_stage": "initial_pressure",
+    "current_log": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/logs/initial_pressure.1.log",
+    "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 142, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: initial_pressure failed (exit 1); see its attempt log\n"
+  },
+  "pressure_queue": {
+    "source_code_sha256": "75254f7454e2d16105052f27ace805edf03b48584fd0030551bf220411b1ce93",
+    "completed_units": [
+      "chronaris/reference/self_supervised",
+      "chronaris/reference/task_guided",
+      "chronaris/cosine_temperature/self_supervised",
+      "chronaris/cosine_temperature/task_guided",
+      "chronaris/projected_attention/self_supervised",
+      "chronaris/projected_attention/task_guided",
+      "chronaris/no_same_time_alignment/self_supervised",
+      "chronaris/no_same_time_alignment/task_guided",
+      "chronaris/independent_pairing/self_supervised"
+    ],
+    "failed_units": [],
+    "status": "running",
+    "current_unit": "chronaris/independent_pairing/task_guided"
+  },
+  "completed_pressure_conditions": 72,
+  "initial_units": [
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "capacity64",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1289.4151568580419
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1200.1769733699039
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "cosine_temperature",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1247.1299328501336
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1203.4967391462997
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "independent_pairing",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1372.796023091767
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1227.7086249929853
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "missingness_mixture",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1282.7018602946773
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1194.597563911695
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "multihorizon",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1347.6249884120189
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1196.8966321512125
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "no_same_time_alignment",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1289.9299039952457
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1199.8457249281928
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "projected_attention",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1298.1228736056946
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1204.3778606969863
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "quality_gate",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1375.8671992500313
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1290.9264629879035
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "reference",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1160.0005662073381
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1099.9116258798167
+      }
+    },
+    {
+      "method": "chronaris",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "single_stream_fidelity",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 1297.454248982016
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 1204.5267844297923
+      }
+    },
+    {
+      "method": "contiformer",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "capacity64",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 186.6415347987786
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 196.78299331013113
+      }
+    },
+    {
+      "method": "contiformer",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "missingness_mixture",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 186.21373206796125
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 197.63670306885615
+      }
+    },
+    {
+      "method": "contiformer",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "multihorizon",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 229.59413113584742
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 221.6132312482223
+      }
+    },
+    {
+      "method": "contiformer",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "reference",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 186.70037900703028
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 203.73058933392167
+      }
+    },
+    {
+      "method": "mult",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "capacity64",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 315.93147208495066
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 328.08128027338535
+      }
+    },
+    {
+      "method": "mult",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "missingness_mixture",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 314.11623189086094
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 326.66955080395564
+      }
+    },
+    {
+      "method": "mult",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "multihorizon",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 351.79505668906495
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 350.161186743062
+      }
+    },
+    {
+      "method": "mult",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "reference",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 314.4522266201675
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 327.5227293227799
+      }
+    },
+    {
+      "method": "physiology_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "capacity64",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 100.55007953429595
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 141.051301503554
+      }
+    },
+    {
+      "method": "physiology_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "missingness_mixture",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 100.63373403716832
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 140.30435644416139
+      }
+    },
+    {
+      "method": "physiology_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "multihorizon",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 135.34157731290907
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 162.70398954255506
+      }
+    },
+    {
+      "method": "physiology_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "reference",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 97.10798248276114
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 142.17069755401462
+      }
+    },
+    {
+      "method": "vehicle_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "capacity64",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 101.25395731627941
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 136.79290126636624
+      }
+    },
+    {
+      "method": "vehicle_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "missingness_mixture",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 101.28700822638348
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 137.56865898286924
+      }
+    },
+    {
+      "method": "vehicle_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "multihorizon",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 136.8780503203161
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 158.4778148252517
+      }
+    },
+    {
+      "method": "vehicle_only",
+      "completed": true,
+      "completed_consumers": [
+        "self_supervised:300",
+        "task_guided:200"
+      ],
+      "confirmation_opened": false,
+      "candidate": "reference",
+      "self_supervised": {
+        "optimizer_updates": 300,
+        "head_warmup_updates": null,
+        "joint_updates": null,
+        "best_update": 300,
+        "training_elapsed_s": 101.5522986841388
+      },
+      "task_guided": {
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 250,
+        "training_elapsed_s": 137.92351857107133
+      }
+    }
+  ],
+  "verified_checkpoints": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/capacity64/self_supervised/chronaris/C/best.pt",
+      "sha256": "22a00103de713232469d576951d98b4298cf39106a5676793d448ea803a50488",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/capacity64/task_guided/chronaris/best.pt",
+      "sha256": "059ce43f50133bc562451b42eda84fdd4e5f6aff7e003971e9d781b60fede088",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/cosine_temperature/self_supervised/chronaris/C/best.pt",
+      "sha256": "67d2fd8748cf407ea80f506cd631134561ddecfce6dbc16b8e563ea67179ae35",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/cosine_temperature/task_guided/chronaris/best.pt",
+      "sha256": "2b6d0df41f70de3a12fc2860b055843f5fc1abea8531ebda63e7999212e234d4",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/independent_pairing/self_supervised/chronaris/C/best.pt",
+      "sha256": "9201372d0546fb383678dc570b0c012846014758e80674b404e28c16b2f5f75b",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/independent_pairing/task_guided/chronaris/best.pt",
+      "sha256": "90021f13d39e0a7b2ed47a0dee20fbd65f807b360e1048308f0725879ec824ab",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/missingness_mixture/self_supervised/chronaris/C/best.pt",
+      "sha256": "43519d47c3b25cd06bcbf2aba82905b35a6b1cece5a3fd38383270cf1ad8c964",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/missingness_mixture/task_guided/chronaris/best.pt",
+      "sha256": "5e1a37f38d2fb998c7d5a6441f51ba51aa07fbf28d58f827580ca1857fdb7fdc",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/multihorizon/self_supervised/chronaris/C/best.pt",
+      "sha256": "07466a784cf4cc796ed398493ee5a2e1e23ea7a138881825fc7b9bf3213bead0",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/multihorizon/task_guided/chronaris/best.pt",
+      "sha256": "fa6dc06c4d05ed49f6c025fb5dfe26e035d743ff1d0c76593d94c521cee63438",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/no_same_time_alignment/self_supervised/chronaris/C/best.pt",
+      "sha256": "05099a10a58cac568f692b462871367347ed3f5bd6206f43a36e88b2dda47eb1",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/no_same_time_alignment/task_guided/chronaris/best.pt",
+      "sha256": "bd712377bb0551d110682be8702260c616987adc376f1ff1771c0fdfa1f9b053",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/projected_attention/self_supervised/chronaris/C/best.pt",
+      "sha256": "ba8093832a03e89e6c2ab347ba76cb102562d9363c11711e5abb4af7775d211c",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/projected_attention/task_guided/chronaris/best.pt",
+      "sha256": "0922f76a3659ec7e6590029475e05cc951626e68142e11b3e101293ad353d1f4",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/quality_gate/self_supervised/chronaris/C/best.pt",
+      "sha256": "25ec74a92dc30b5f86776c59a109c90f6717a6527093f636265f70ea02ccc22b",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/quality_gate/task_guided/chronaris/best.pt",
+      "sha256": "e8227919d3c4184198895f6fd80482573914de19b4a25e3a47eee3448ad395cd",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/reference/self_supervised/chronaris/C/best.pt",
+      "sha256": "4fc374b3b9447405f73688905ae4bd05a350c7d7e8413acbc12bb337087a12a9",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/reference/task_guided/chronaris/best.pt",
+      "sha256": "e59d95f121e87bb3f88bde5678b449ff001aa80cb029533cc674f44d87d28bcf",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/single_stream_fidelity/self_supervised/chronaris/C/best.pt",
+      "sha256": "134f32f0406282b682f54faf48aa14830af688d3dbffb28875b1f5438cae1111",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/single_stream_fidelity/task_guided/chronaris/best.pt",
+      "sha256": "19e7f1b608189fc822a648b6502e1276ef37bb10af71500e4607be609d5e888a",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/capacity64/self_supervised/contiformer/C/best.pt",
+      "sha256": "46bf131fd04fa0166cb6e4926a4c65595b195fd6632e8049e9485c6dd6189bcc",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/capacity64/task_guided/contiformer/best.pt",
+      "sha256": "cff5d584602463ed8fe06272e35b83652df1e6893df5d26b8c59b439046ed933",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/missingness_mixture/self_supervised/contiformer/C/best.pt",
+      "sha256": "32b7a3f2d78291dde269d92ac8ea59ec6c11728fea15a584cd369c7c83879483",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/missingness_mixture/task_guided/contiformer/best.pt",
+      "sha256": "35a698ed5f50f09cdfc6512d76d386373f624f782a27aeb9da761cf716955f5e",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/multihorizon/self_supervised/contiformer/C/best.pt",
+      "sha256": "30e27b3c004e84228f17a3db76c22644d9183cbf58bb8c5229626f5eb63770b2",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/multihorizon/task_guided/contiformer/best.pt",
+      "sha256": "3c2034132664094801221f79ebd693409b5f975b9ef2552b04d1cc50b1d89861",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/reference/self_supervised/contiformer/C/best.pt",
+      "sha256": "f8263811b5bc68d68155236aaf16b30e6445a4356779eb51023ef36ac0f1ae59",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/reference/task_guided/contiformer/best.pt",
+      "sha256": "df193697f4520e422acefbaacf8c5fc94187ab07d055bdc826859462afb13cf8",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/capacity64/self_supervised/mult/C/best.pt",
+      "sha256": "512fa94ff07e342341366a10e48000585d4752bddb02353f8e2bce178b56eceb",
+      "nonfinite_dtype_only_buffers": [
+        "backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "backbone.physiology_memory.embed_positions._float_tensor",
+        "backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/capacity64/task_guided/mult/best.pt",
+      "sha256": "4441bdb8c40079bb79a408a742b75f27f7885b33529526e06488c3e046b144a1",
+      "nonfinite_dtype_only_buffers": [
+        "encoder.backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "encoder.backbone.physiology_memory.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/missingness_mixture/self_supervised/mult/C/best.pt",
+      "sha256": "7534c55ce29f8dfe94ef84020833146aee55d5a268a27b1df7e58c27f0bdc715",
+      "nonfinite_dtype_only_buffers": [
+        "backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "backbone.physiology_memory.embed_positions._float_tensor",
+        "backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/missingness_mixture/task_guided/mult/best.pt",
+      "sha256": "ccb6bc1f3a6c3ce8eda9f1f8e3eead3d7c8f0005a489d6519648a711f864b9f3",
+      "nonfinite_dtype_only_buffers": [
+        "encoder.backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "encoder.backbone.physiology_memory.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/multihorizon/self_supervised/mult/C/best.pt",
+      "sha256": "8c709ddca453c4f27bfbb6589dfdd7ef4474a61a4dbe9b306bc0d1a395f1fc65",
+      "nonfinite_dtype_only_buffers": [
+        "backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "backbone.physiology_memory.embed_positions._float_tensor",
+        "backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/multihorizon/task_guided/mult/best.pt",
+      "sha256": "3fbcb2cd5064558ad8bc8e56e706f1baebd3bc0e47a47ba69a08cc2641b8b73f",
+      "nonfinite_dtype_only_buffers": [
+        "encoder.backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "encoder.backbone.physiology_memory.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/reference/self_supervised/mult/C/best.pt",
+      "sha256": "4bc463b940d9aff457056252fd94ce5d8a526b090ea1caf260a4e4f4bf8582ea",
+      "nonfinite_dtype_only_buffers": [
+        "backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "backbone.physiology_memory.embed_positions._float_tensor",
+        "backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/reference/task_guided/mult/best.pt",
+      "sha256": "63f75210fe093974254edf5d22a81d94177ad8df4c8537b5dfeecb62998d7731",
+      "nonfinite_dtype_only_buffers": [
+        "encoder.backbone.physiology_from_vehicle.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_from_physiology.embed_positions._float_tensor",
+        "encoder.backbone.physiology_memory.embed_positions._float_tensor",
+        "encoder.backbone.vehicle_memory.embed_positions._float_tensor"
+      ],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/capacity64/self_supervised/physiology_only/C/best.pt",
+      "sha256": "1df8d51f795154117eac6552d12053d774b220a8b228a8e94f5a07d43d12004c",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/capacity64/task_guided/physiology_only/best.pt",
+      "sha256": "69eb6e94f555274c9b74b31ebc4cf93976bb27fc14f3ba9387a11e679ebba880",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/missingness_mixture/self_supervised/physiology_only/C/best.pt",
+      "sha256": "81020241fd7ad52602b85854e57ad8ad38ed46e01fae0533c7d7391c4f2a8309",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/missingness_mixture/task_guided/physiology_only/best.pt",
+      "sha256": "c91f6c46a9ccfec6a77c20fc34b079c3572f0217ecada315398b9e00e182357d",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/multihorizon/self_supervised/physiology_only/C/best.pt",
+      "sha256": "b4277186cd5df91738ea73cfbc591f46a3400dc01a1c1911ff90fd5a2019a4ce",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/multihorizon/task_guided/physiology_only/best.pt",
+      "sha256": "03ab19103030f04c3b8a9d80697e54398ff0a8648d3e7a01fc1631991cf0b8eb",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/reference/self_supervised/physiology_only/C/best.pt",
+      "sha256": "80b0d391e281f3416e5ea75bc295eedadb1c69b119a71d1bad6d81f9d477cd11",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/reference/task_guided/physiology_only/best.pt",
+      "sha256": "474add0f5e06abe9e164bfa54fe9381466441768e07fbfb3326607d72f283385",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/capacity64/self_supervised/vehicle_only/C/best.pt",
+      "sha256": "7a5423f9ca0e91ab0919153536da8b9dc030f08ba74ddae6ca610632e4ef46e4",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/capacity64/task_guided/vehicle_only/best.pt",
+      "sha256": "b0de0e611c7b44c92a2baeadd6ecec6b3c28be62d5cddbc9c393893a42ac0340",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/missingness_mixture/self_supervised/vehicle_only/C/best.pt",
+      "sha256": "ac1ec90307bd093d8592a4f199bf4b5c7be636b2108e3b1e6a19679814f69de6",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/missingness_mixture/task_guided/vehicle_only/best.pt",
+      "sha256": "5a1b4b6cdd152c2162cc8cf38b3d0c9fbd4b8138ccde1952e4fb5157e76d9803",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/multihorizon/self_supervised/vehicle_only/C/best.pt",
+      "sha256": "436d98f1e21cf866df57c2421b4d1b51380e217f0c20fb9f2a4830753af8d9e0",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/multihorizon/task_guided/vehicle_only/best.pt",
+      "sha256": "8dcfe2d08dc4a9aa1220b21d100920fb6cf93d8d1873282df0e2233940665fa8",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/reference/self_supervised/vehicle_only/C/best.pt",
+      "sha256": "94ed81db0fb5deaa341438278fe082ff30d53f35a6f09d4e4daefc0fa00ed7b5",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 300
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/reference/task_guided/vehicle_only/best.pt",
+      "sha256": "8e057b48ea0fd3df6676549ad731a23e6585a31e300c6baa51b2fda27f3e7438",
+      "nonfinite_dtype_only_buffers": [],
+      "remaining_model_state_finite": true,
+      "optimizer_updates": 250
+    }
+  ],
+  "verified_consumer_and_prediction_files": 208,
+  "clean_replay_deltas": {
+    "representation": {
+      "pooled_embedding": {
+        "max_abs_delta": 4.76837158203125e-07,
+        "above_1e_minus_6_count": 0,
+        "finite": true
+      },
+      "sample_ids": {
+        "exact_equal": true
+      },
+      "sequence_embedding": {
+        "max_abs_delta": 0.0,
+        "above_1e_minus_6_count": 0,
+        "finite": true
+      },
+      "source_sample_hashes": {
+        "exact_equal": false
+      },
+      "timestamps_s": {
+        "max_abs_delta": 0.0,
+        "above_1e_minus_6_count": 0,
+        "finite": true
+      },
+      "valid_mask": {
+        "exact_equal": true
+      }
+    },
+    "prediction": {
+      "validation_causal_tcn_duration_state": {
+        "exact_equal": true
+      },
+      "validation_causal_tcn_raw_state": {
+        "exact_equal": true
+      },
+      "validation_linear_class": {
+        "exact_equal": true
+      },
+      "validation_linear_regression": {
+        "max_abs_delta": 1.0728836059570312e-06,
+        "above_1e_minus_6_count": 1,
+        "finite": true
+      },
+      "validation_minirocket_class": {
+        "exact_equal": true
+      },
+      "validation_minirocket_regression": {
+        "max_abs_delta": 0.0,
+        "above_1e_minus_6_count": 0,
+        "finite": true
+      },
+      "validation_sample_ids": {
+        "exact_equal": true
+      },
+      "validation_state_true": {
+        "exact_equal": true
+      },
+      "validation_workload_class_true": {
+        "exact_equal": true
+      },
+      "validation_workload_true": {
+        "max_abs_delta": 0.0,
+        "above_1e_minus_6_count": 0,
+        "finite": true
+      }
+    }
+  },
+  "pooling_reproduction": {
+    "cpu_pool_matches_clean": true,
+    "cuda_pool_matches_pressure": true,
+    "saved_clean_pool_exact_prediction_replay": true,
+    "source": "read-only intervention executed in this review before snapshot assembly"
+  },
+  "dtype_buffer_explanation": "third_party/mult/modules/position_embedding.py: uninitialized one-element buffer used only by type_as",
+  "targeted_tests": {
+    "passed": 12,
+    "warnings": 21,
+    "elapsed_s": 97.26
+  },
+  "experiment_modified": false
+}
