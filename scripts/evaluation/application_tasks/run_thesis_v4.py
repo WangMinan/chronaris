@@ -13,7 +13,7 @@ from chronaris.evaluation.application_tasks.v4_public_data import prepare_public
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("core-ablation-train", "core-ablation-evaluate", "core-ablation-train-cohort", "core-ablation-evaluate-cohort", "core-ablation-model-freeze", "simulation-confirmation-train", "simulation-confirmation-evaluate", "simulation-confirmation-train-cohort", "simulation-confirmation-evaluate-cohort", "simulation-model-freeze", "simulation-confirmation-data", "dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
+    parser.add_argument("stage", choices=("common-downstream-contract", "core-ablation-train", "core-ablation-evaluate", "core-ablation-train-cohort", "core-ablation-evaluate-cohort", "core-ablation-model-freeze", "simulation-confirmation-train", "simulation-confirmation-evaluate", "simulation-confirmation-train-cohort", "simulation-confirmation-evaluate-cohort", "simulation-model-freeze", "simulation-confirmation-data", "dingxin-retained-data", "native-confirmation-plan", "native-confirmation-cohort", "naive-confirmation-unit", "configuration-cuda-validation", "freeze-configuration", "native-confirmation-unit", "review-pressure-plan", "review-pressure-cohort", "candidate-adoption", "simulation-review-results", "candidate-review-pressure", "public-review-results", "candidate-review-plan", "candidate-review-cohort", "public-screen-results", "dingxin-content-audit", "fixed-native-results", "public-screen-plan", "public-screen", "diagnostic-statistics", "naive-development", "diagnostic-figures", "public-data", "public-confirmation-data", "native-profile", "smoke", "diagnostic", "candidate", "candidate-review", "candidate-summary", "candidate-pressure", "development-conditions", "development-pressure", "expand-training"))
     from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES, CONDITIONAL_CANDIDATES
     from chronaris.evaluation.application_tasks.v4_core_ablations import ABLATIONS
     parser.add_argument("--ablation",choices=ABLATIONS)
@@ -61,6 +61,7 @@ def main():
                      "expand-training": "2026-09-07_thesis-v4-simulation-expanded",
                      "candidate": "2026-09-08_v4-single-factor-development",
                      "candidate-pressure": "2026-09-08_v4-candidate-pressure"}
+    default_roots["common-downstream-contract"] = "2026-09-10_v4-common-downstream-contract"
     default_roots["dingxin-retained-data"] = "2026-09-08_v4-dingxin-deduplicated"
     default_roots["candidate-summary"] = "2026-09-08_v4-candidate-summary"
     default_roots["candidate-review"] = "2026-09-08_v4-candidate-review"
@@ -76,7 +77,12 @@ def main():
         default_roots[stage]='2026-09-08_v4-confirmation'
     default_roots['simulation-confirmation-data']='2026-09-08_v4-simulation-confirmation'
     output_root = args.output_root or str(Path("artifacts/application_evaluation") / default_roots[args.stage])
-    if args.stage.startswith('core-ablation-'):
+    if args.stage == 'common-downstream-contract':
+        from chronaris.evaluation.application_tasks.common_downstream_smoke import run_common_contract_smoke
+        result = run_common_contract_smoke(domain=args.domain, output_root=output_root,
+            data_root=args.data_root, registry_path=args.registry)
+        summary = {k: result[k] for k in ('status', 'domain', 'contract_sha256', 'sample_counts') if k in result}
+    elif args.stage.startswith('core-ablation-'):
         if args.domain!='simulation' or not args.freeze_sha256:
             raise ValueError('core ablations require the simulation domain and frozen configuration hash')
         from chronaris.evaluation.application_tasks.v4_core_ablations import (

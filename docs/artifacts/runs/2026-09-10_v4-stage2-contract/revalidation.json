@@ -1,0 +1,929 @@
+{
+  "status": "completed",
+  "summaries": [
+    {
+      "status": "completed",
+      "domain": "dingxin",
+      "results": [
+        {
+          "status": "completed",
+          "contract_sha256": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759",
+          "supervision_stratum": "self_supervised:none",
+          "method": "naive_time_sync",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "854b82560376042f07bfe9e405cfad76e9d559d1ea3befb6bda7fe1eacb819ff",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/naive_time_sync/self_supervised/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/naive_time_sync/self_supervised/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/naive_time_sync/self_supervised/evaluation/consumers/linear.joblib",
+                "model_sha256": "4a065355996d01bcde0c4da30380a393c9c443d22957ff9523342d55aca423f2",
+                "result_sha256": "e00663e70057f0110360ea338aef1a2d7bead782d6ec18d9f57bf118109d36ba",
+                "fit_elapsed_s": 0.01131407544016838,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "maneuver_regression",
+                      "metric": "rmse",
+                      "value": 10.631068842017687,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    },
+                    {
+                      "task": "maneuver_classification",
+                      "metric": "macro_f1",
+                      "value": 0.3333333333333333,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "physiology_regression",
+                      "metric": "rmse",
+                      "value": 6.351976572575385,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "1899f771aa021ec68da56a0daa1eef20b69500ab86715005871c60fc9de2fd84",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759",
+          "supervision_stratum": "self_supervised:none",
+          "method": "chronaris",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "6a2c43343c405fbdbdf17ba8b488d9103519d0158e20a237e3b6798db7212c29",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/self_supervised/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/self_supervised/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/self_supervised/evaluation/consumers/linear.joblib",
+                "model_sha256": "69f111c2a58111f96a6b8b9904c293900487ae4f9a6a3a9fc329e4c204998c06",
+                "result_sha256": "44e4ee079d8c8114be77a8b97fc20366981d115994cd1f5ec31a023225f6c672",
+                "fit_elapsed_s": 0.010995425749570131,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "maneuver_regression",
+                      "metric": "rmse",
+                      "value": 1.215497823835234,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    },
+                    {
+                      "task": "maneuver_classification",
+                      "metric": "macro_f1",
+                      "value": 0.3333333333333333,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "physiology_regression",
+                      "metric": "rmse",
+                      "value": 1.5123503422467663,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "dfc3e45f92332cac43c089606231cd69471fff30bf65e4d4016b4aad7ae5f8b2",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759",
+          "supervision_stratum": "self_supervised:none",
+          "method": "chronaris",
+          "representation_kind": "window_end",
+          "scope": "engineering_development",
+          "comparison_key": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "9916207ce7d7ddc23013a078b5f8f521612102eb0c732404f93d260630582a09",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/self_supervised/window_evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/self_supervised/window_evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/self_supervised/window_evaluation/consumers/linear.joblib",
+                "model_sha256": "19356ba27483f052fa184bf0d79c90a8235af81407b7075dde4993ea1f0a3594",
+                "result_sha256": "5bbee49d99507e597058955cb1087eba59d891d05ae3faaa3361019738bfb6b0",
+                "fit_elapsed_s": 0.011404668912291527,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "maneuver_regression",
+                      "metric": "rmse",
+                      "value": 1.215497823835234,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    },
+                    {
+                      "task": "maneuver_classification",
+                      "metric": "macro_f1",
+                      "value": 0.3333333333333333,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "physiology_regression",
+                      "metric": "rmse",
+                      "value": 1.5123503422467663,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "4f5164771c7f3e55ad2491f81a4b6439c0d73b156c233386197e69b95c334b9d",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759",
+          "supervision_stratum": "task_guided:summary_labels",
+          "method": "chronaris",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "12ade4b44a6a8a7f49dcea81fd6e142e0dbd1ca610ebcc62997d4e6b923b0759:task_guided:summary_labels:667f2a74e3e53f0719efc0ddb18f3a41f04f4aec821b12f7abafcdb9058523a6",
+          "consumers": {
+            "protocol_sha256": "00ae90e2e0e94a7928029501bd05694a72f4f1f54831dda7e07757f5c90c62c8",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/task_guided/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/task_guided/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/dingxin/chronaris/task_guided/evaluation/consumers/linear.joblib",
+                "model_sha256": "6d674faccfbda8b1bb79eb4b7206244f837ad0d9be5dee38eee982aa8ef2cab8",
+                "result_sha256": "d329b687241398dee6b1e1d97ce559968b7e882156a13f6ccf981f7b108ee5ed",
+                "fit_elapsed_s": 0.010834163054823875,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "maneuver_regression",
+                      "metric": "rmse",
+                      "value": 1.3016782778620992,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    },
+                    {
+                      "task": "maneuver_classification",
+                      "metric": "macro_f1",
+                      "value": 0.3333333333333333,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "physiology_regression",
+                      "metric": "rmse",
+                      "value": 1.4109378452412296,
+                      "group_count": 1,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "training_scale"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "12c7a583f542ef3a77f1f3f1e1344d6ddf1c01df30e21244b01b82c126de0c0f",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        }
+      ],
+      "encoder_updates_added": 0,
+      "source_training_summary": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/summary.json",
+      "sample_counts": {
+        "train": 24,
+        "validation": 6
+      },
+      "previous_source_code_sha256": "0aed6b02ed4f6a0e7be4f9d06f6284331c9fd5b45e13ae7e162f510916f206d7",
+      "source_code_sha256": "076357fc51bd1b30fd8aeef383c4d972028326ca663c91f767a79d7143f6a9a0"
+    },
+    {
+      "status": "completed",
+      "domain": "cogpilot",
+      "results": [
+        {
+          "status": "completed",
+          "contract_sha256": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba",
+          "supervision_stratum": "self_supervised:none",
+          "method": "naive_time_sync",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "b04db41320c1a20ef72761ee9a638981333b30f65877d8239f357a8f550cb325",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/linear.joblib",
+                "model_sha256": "f5c7781f661a548943381ccfb4381f8e5b4cdb23b627f626e53d4b03c43ff691",
+                "result_sha256": "a166a03de80a8b644dbe4a9401536381560ee7c0fcfd054174e49a2cf2ea4f11",
+                "fit_elapsed_s": 0.019802663940936327,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.3194444444444444,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.12401171275375751,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              },
+              "minirocket": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/minirocket_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/minirocket.joblib",
+                "model_sha256": "6eb5fcc9301429a2aeedf5d14b896b37e5b2afe7db79715f6e31464f45260f89",
+                "result_sha256": "3af7515a45e79a898afe46f7b8c1354e79c987d9b88fb1a4cccb4f23b07a9df7",
+                "fit_elapsed_s": 0.7156704240478575,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.35833333333333334,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.11397497569153338,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "f1f87871b0c0d14e614606cdff39c20810b71324e140f7aa5fc8d32345a16bbe",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba",
+          "supervision_stratum": "self_supervised:none",
+          "method": "chronaris",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "c067daa06b562d628b5fecd21eea844c9d5eb4dc2800f0c998483af19c19f123",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/evaluation/consumers/linear.joblib",
+                "model_sha256": "9e8065d9f5c9621927d1114e2316143be3a8fe184d8c1551dbf5c581ed3fc3bd",
+                "result_sha256": "b08b1daf18582cf1b1ea9247380330ae6f815a6c3280dec451ee79299597cd9e",
+                "fit_elapsed_s": 0.020246418192982674,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.20138888888888887,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.12903747455391504,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              },
+              "minirocket": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/evaluation/consumers/minirocket_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/evaluation/consumers/minirocket.joblib",
+                "model_sha256": "0ac450cd3ad5198996ed69bb2bbee042c1a8937408b3b013e9af8caa3176b8e3",
+                "result_sha256": "d098af8d3ce1e20192c179a4f0a4d636026ca6e3e579d83e9381ea7f3d1d35fa",
+                "fit_elapsed_s": 0.38933788798749447,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.3055555555555555,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.11008596531003893,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "ff1d962afeec368a6959ecd0c05c47b528722a70f167a31496eb3a66b375ead6",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba",
+          "supervision_stratum": "self_supervised:none",
+          "method": "chronaris",
+          "representation_kind": "window_end",
+          "scope": "engineering_development",
+          "comparison_key": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "634040733d833492383fece4a374da846ccb69974c2ca14e4a083acc897df0cb",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/window_evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/window_evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/self_supervised/window_evaluation/consumers/linear.joblib",
+                "model_sha256": "81a817e784899b711d10167a599c1fd862c6a4b376223caf106d64b7e324b7d3",
+                "result_sha256": "40500c63bd4b167cd764f139e511635998224c1ff66558c484a8342658ef580e",
+                "fit_elapsed_s": 0.0207960638217628,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.20138888888888887,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.12903747455391504,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "fb158512875faa23e67dcb53121f37aafd04dcd5f372d0c59d7d7ef64a240b56",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba",
+          "supervision_stratum": "task_guided:summary_labels",
+          "method": "chronaris",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "ed7aea96e8a50331d799a7eb83a180b06bd82ea8db8362a787422b8987fb14ba:task_guided:summary_labels:b4614413901ebdff91209f66de17b28b36cbd685190087a2ce2ffcac9f3b1dc7",
+          "consumers": {
+            "protocol_sha256": "58d165b22686b39e6d9296b6d973f00b0f35b865a9afceaea61a8433ef21ac26",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/task_guided/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/task_guided/evaluation/consumers/linear.joblib",
+                "model_sha256": "167b9c612dd1f9cbc45d5b7c05b206fc383a587f3f719f8c8722ae696f7ed84b",
+                "result_sha256": "21611ea5fbac0f4427bb1d36a52b48488faa0e5bb52cc9acb01edf3895b26606",
+                "fit_elapsed_s": 0.019819064997136593,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.20138888888888887,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.12766473830466338,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              },
+              "minirocket": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/task_guided/evaluation/consumers/minirocket_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/cogpilot/chronaris/task_guided/evaluation/consumers/minirocket.joblib",
+                "model_sha256": "260c34c3a530c79bf6646f5b78192751a3afcc9b9c6a3f5d8ea1b2bf1ffce2c1",
+                "result_sha256": "8e9f7396622188c19d4ed0f3afab0ffd41bffce5133fb4ca0d9614a959dd2cb7",
+                "fit_elapsed_s": 0.38368716835975647,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "difficulty",
+                      "metric": "macro_f1",
+                      "value": 0.3055555555555555,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "event_response",
+                      "metric": "rmse",
+                      "value": 0.11019413406987551,
+                      "group_count": 3,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "f53576bcc478362a4c19ea78f486153e8e3fa5983c1d00c753267b0650ff21be",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        }
+      ],
+      "encoder_updates_added": 0,
+      "source_training_summary": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/summary.json",
+      "sample_counts": {
+        "train": 64,
+        "validation": 32
+      },
+      "previous_source_code_sha256": "0aed6b02ed4f6a0e7be4f9d06f6284331c9fd5b45e13ae7e162f510916f206d7",
+      "source_code_sha256": "076357fc51bd1b30fd8aeef383c4d972028326ca663c91f767a79d7143f6a9a0"
+    },
+    {
+      "status": "completed",
+      "domain": "clare",
+      "results": [
+        {
+          "status": "completed",
+          "contract_sha256": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6",
+          "supervision_stratum": "self_supervised:none",
+          "method": "naive_time_sync",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "21b11a8bfcdef0527149b047fc2c2191378d52e3e657703e2b1324ba30dee616",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/naive_time_sync/self_supervised/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/naive_time_sync/self_supervised/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/naive_time_sync/self_supervised/evaluation/consumers/linear.joblib",
+                "model_sha256": "841b9cf39c4d0f4cdb1248b24b1b345c8e93fca40ac8bbaf0837b9cb46cbcb32",
+                "result_sha256": "eefa3725b3ed62c14217cafe3d43c77c05a8d4fa96e10d743d3ed76543c10dd3",
+                "fit_elapsed_s": 0.012619133107364178,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.5208333333333333,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 12529455627072.748,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              },
+              "minirocket": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/naive_time_sync/self_supervised/evaluation/consumers/minirocket_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/naive_time_sync/self_supervised/evaluation/consumers/minirocket.joblib",
+                "model_sha256": "50ac8e076c9ce512683588be58e98cfed20fc1553dcd2355b79338da64ee5fc0",
+                "result_sha256": "b1c323842bdf75a667a27947dd7c15b104dd09d81e7684676a5d62fa19cf8994",
+                "fit_elapsed_s": 0.1307816980406642,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.4303571428571429,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 2.5464337936216603,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "cd7ebc80390765ca9fad4723c55f6f922d69aa3e2db96def2edb704816399613",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6",
+          "supervision_stratum": "self_supervised:none",
+          "method": "chronaris",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "f6de96d0d01d0b8df543bf987ba25df1a7405dc4d11eec9cfbada0cb62411e4c",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/evaluation/consumers/linear.joblib",
+                "model_sha256": "3f722aeb04872b40adad113b74aa427622d45a9b0c5c3f1ef76b09ebb0839a5c",
+                "result_sha256": "1636a21bc338d6aa26c1f4e59e5f047bf9487af897c20ee1ffaf4f7d0dad0ff7",
+                "fit_elapsed_s": 0.013872826937586069,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.5208333333333333,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 3.286674197865322,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              },
+              "minirocket": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/evaluation/consumers/minirocket_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/evaluation/consumers/minirocket.joblib",
+                "model_sha256": "abea4c6b25a95a12f9ef1c01216818663eb6ac0c46956c044ff3ceb04e71707a",
+                "result_sha256": "f2044964a3844a91941f7d743d614c813c6f883131d1e0df19601d6243617b7e",
+                "fit_elapsed_s": 0.14585246704518795,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.3125,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 2.7948276922818813,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "4a6676be03c646721a9768fd9e7094ee0629e2f21ee53ae1d24e3f805fb2c10b",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6",
+          "supervision_stratum": "self_supervised:none",
+          "method": "chronaris",
+          "representation_kind": "window_end",
+          "scope": "engineering_development",
+          "comparison_key": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "consumers": {
+            "protocol_sha256": "467d1a97d278c3a60e026df7a61ae521e674c2f5faaa14edcb93bfe38aca3a03",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/window_evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/window_evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/self_supervised/window_evaluation/consumers/linear.joblib",
+                "model_sha256": "52e7caef0f5a2de5eda8dfad65c5eb87e89ed0b7b3b48b8af6255669c0d5ff81",
+                "result_sha256": "90b3d6f95da4c637f199b64981c7c1c5ba31a8d476ba8dcfa52811de6cb96c54",
+                "fit_elapsed_s": 0.013255489990115166,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.5208333333333333,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 3.286674197865322,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "1470bf0959eee28b1aedf6e25c5b51ebc5904ac020379e1c55b3fa2764c368db",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        },
+        {
+          "status": "completed",
+          "contract_sha256": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6",
+          "supervision_stratum": "task_guided:summary_labels",
+          "method": "chronaris",
+          "representation_kind": "causal_sequence",
+          "scope": "engineering_development",
+          "comparison_key": "af7e6b8655056525f6caa840c07a8457d7823ee4152d5511020b0eade32dcde6:task_guided:summary_labels:ec8fd6ba5653e4df67bef678f616b986489e12c09ba590bad0f8aaa546af688a",
+          "consumers": {
+            "protocol_sha256": "58f6d9bd1dc464a155a2bcff502e2e0806a7505c4b779528ae7d2c547b5166f6",
+            "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/task_guided/evaluation/consumers/consumer_manifest.json",
+            "components": {
+              "linear": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/task_guided/evaluation/consumers/linear_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/task_guided/evaluation/consumers/linear.joblib",
+                "model_sha256": "172477d4c7cfd1501e3439035e58aaa8456f8c4a43424db52ebc4441c251b68f",
+                "result_sha256": "9936fb2f010c7a68ae1e235a4b0a02e6083acc3c2635411fc1c9eeda410658f5",
+                "fit_elapsed_s": 0.013238991145044565,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.4303571428571429,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 3.345238492884403,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              },
+              "minirocket": {
+                "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/task_guided/evaluation/consumers/minirocket_results.json",
+                "model_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/revalidated/clare/chronaris/task_guided/evaluation/consumers/minirocket.joblib",
+                "model_sha256": "998e523e1968bd8743178c79bc25d583ab25eece1dbebd16e5ef070a221b5960",
+                "result_sha256": "9d0dc8fcc256730c6c954028900aea5572090e171cc30827fc03b090b9e65e8d",
+                "fit_elapsed_s": 0.14222014462575316,
+                "task_summary": {
+                  "validation": [
+                    {
+                      "task": "workload_classification",
+                      "metric": "macro_f1",
+                      "value": 0.3125,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    },
+                    {
+                      "task": "workload_regression",
+                      "metric": "rmse",
+                      "value": 2.816687056622155,
+                      "group_count": 2,
+                      "aggregation": "field_mean_then_group_mean",
+                      "error_units": "native"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "contract_file_sha256": "00206921dd346c1f888af302817ad377d9ca6fe03a4dc65df6515f1fff3c3adb",
+          "confirmation_opened": false,
+          "predictions_and_metrics_identical": true,
+          "resume_identical": true
+        }
+      ],
+      "encoder_updates_added": 0,
+      "source_training_summary": "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/summary.json",
+      "sample_counts": {
+        "train": 32,
+        "validation": 16
+      },
+      "previous_source_code_sha256": "0aed6b02ed4f6a0e7be4f9d06f6284331c9fd5b45e13ae7e162f510916f206d7",
+      "source_code_sha256": "076357fc51bd1b30fd8aeef383c4d972028326ca663c91f767a79d7143f6a9a0"
+    }
+  ],
+  "preserved_files": {
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/evaluation/common_contract.json": "dfe86f1bcc1d7d4e5980e70fdb508ed7b4ce0fd1ffa81c59d339fa7d104f2b50",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/evaluation/result.json": "23791c5d0b0fb27aeac0b1f724efa808fa83c05489d0e9061788e062a353705a",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/evaluation/consumers/consumer_manifest.json": "9bac31ef67ea0912c3f590093010bda5bdbfac6639b5c24c84d1a8fbc9fb3f77",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/evaluation/consumers/linear.joblib": "746743284909142ba62d1c343e4cbd42dc4772fe66ffc46a28616b8c6d4a683c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/evaluation/consumers/linear_results.json": "670d6c192077ffe680de812e68d2c99efe2b0804c4c828fc4f8fd947c8438c14",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/representations/train/fusion_stream.npz": "9bb99fc6d9dd31b1bc4e542587f59b4a63920e045938d05de828581398e9c0cf",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/representations/train/representation_manifest.json": "5da0b3cf7a862ca514d3361ba28f11c849ab013e14c2664ef2ca3627c730c1e3",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/representations/validation/fusion_stream.npz": "10f8a0d58bb5fd201a62b08e187bbc4c926605a2d086c1b6d97c95fc5d5e912e",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/naive_time_sync/self_supervised/representations/validation/representation_manifest.json": "05021d42f4757aa88f208a0108b204b27cfed8c1ee493e16598e850f9d617765",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/chronaris/C/best.pt": "6cd32e69ccb0d676d97c8b7a658d507efc5ae28a78b0866bdd43808900f2184f",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/chronaris/C/last.pt": "a2af8e646de3722e5561dbd2e9ab40a175c851fe631d9b89fac1faf921c41f4c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/chronaris/C/progress.json": "22ba6227ac0f6cc0736f93ab969e8fc22d7e409217e9c4adb0ed531bc3009946",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/evaluation/common_contract.json": "15e2ec3ac366ba3110200af21bbff86739dd1669350d49478f6adf742bf0a0e0",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/evaluation/result.json": "624ccb238d9f27a6d26b823e23bee41b4e8ad4e7a5ce0350ece7b236c3adad6f",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/evaluation/consumers/consumer_manifest.json": "40fa026cefc3d9b07f50bc10b9277afa973c4ee472df3d13ef800b31caae5c8c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/evaluation/consumers/linear.joblib": "a9156c1752408b0137a4097810cb262c726546536a502807f23789518bb20a4e",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/evaluation/consumers/linear_results.json": "dbd2c4683e2cf98553bd466f8f478e6c4027bc6ced327efc78134f5ea4801432",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/representations/train/fusion_stream.npz": "a79daa3c1e757b53914a48df936583507a053144158944bde1d074a253fd9ce9",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/representations/train/representation_manifest.json": "9dd140d274b9b5d8796724e3c241ba1a7e5fafa75472007f53fa1d21150c0594",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/representations/validation/fusion_stream.npz": "770b4a0c1e8501854b422e0de61148b0765bdc9ec5d0a12cee4eb2f74b22de86",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/representations/validation/representation_manifest.json": "6c6853b557fec90713d1a02413d70f37ac54fa651648f7bce8c3a524bf3e9484",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_evaluation/common_contract.json": "83306d232c0244608a4fcfb9d8c27428f8484d69a85a9043c3c138b7d9df7279",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_evaluation/result.json": "3eb0ee8a294dc8d2b3be134ff9c6bd70cb38e36961dd015aa5ce4bed209fe950",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_evaluation/consumers/consumer_manifest.json": "7e5937b0557623a6caf320a3729784f697d3e65a4134d349cdc62cf80cec3984",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_evaluation/consumers/linear.joblib": "5ca0f057c3f2a71e680e91ae05199fc45ac251febba2052f4661cbfe2f86060c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_evaluation/consumers/linear_results.json": "086ec73c36dbcaf7da4627771cca5d2efb9f8093f71f74d3529ba085f2a540fa",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_features/train.npz": "77088b118bcbb753b158bced1a4b69ec301e9921f3505b02c1c136db66671c23",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/self_supervised/window_features/validation.npz": "4aa601af8266c4ab72201d4f581f41f4e577e9910e9df24a6331c9a6182eda16",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/chronaris/best.pt": "3d9dd46a2663d2e182f674d91e92edcfdab7135a8d415ff8e75052a2f04096cb",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/chronaris/last.pt": "393837de48c3de02483afe9b31cce8b0dd277655ddd5e808b55aca7a640e6580",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/chronaris/progress.json": "590573c1daee81135a17dd66b679895db8d093e37265b31e93a88428ef4cd695",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/evaluation/common_contract.json": "4805caabd9ffc7ef6c8c04f6de65050192de5d980d91a87bbbe970272cb13646",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/evaluation/result.json": "74669a15fc0ab8cfa5068a1f65efcee67abac8a96c7e5350e7cac07248de4576",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/evaluation/consumers/consumer_manifest.json": "c6abfa8688f7c656926883fd64e2fd18e1c0984909d94239ae5454499b0d5030",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/evaluation/consumers/linear.joblib": "9b9430ff854721c909b840facdb3c1a5a6b23c01ca2eb3f2798965e5a4c44aef",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/evaluation/consumers/linear_results.json": "c60b5c2816f85a30e9c1ec73790dbe256181b02f2933b6fa331865fd883628c1",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/representations/train/fusion_stream.npz": "39e208a552c9e71eaef442ab654fbc8ebf5cca3d528f8e816c19c526e66fe08c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/representations/train/representation_manifest.json": "c58ee1b3d9b8758a839cba75b8799cc779b03f22f7b91627c8e85c6c88e4a37b",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/representations/validation/fusion_stream.npz": "50745db6e75ab0948003875895de3eebdeafca002af4b446e88ef20e3bed668b",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/dingxin/chronaris/task_guided/representations/validation/representation_manifest.json": "1c439e2bc06a64391af8bc80621dceace32cae672fe0c0b62896df4b924ac5c8",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/common_contract.json": "d043b625191775a021cb2c592c22f3e706899d768f9dc78d7026f8a01e20973c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/result.json": "971a8cd922ff0c01be2edc8a00dd75899ed5b582d7a8ec7c545655c7427134b1",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/consumer_manifest.json": "8039dd92157d035739f433aae6d4f814a96ac9a3b0d0a263a84a2fba61558c3f",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/linear.joblib": "8cb0cbd3b087c10537030a256a5161530aa6c6d09912ca06401685fe3d63b57c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/linear_results.json": "7eef0495af358ad1ef4a2438258e47fbe1fcedd91af466dae108bd51c6231707",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/minirocket.joblib": "e320a740cfe00af7daa26b85e87ab0bfb9897c5dcb44c6a710b97df5d89cc598",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/evaluation/consumers/minirocket_results.json": "00fcc40987a80e56d809b6224fe325e50974b06597fc53420d0bf7100701c627",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/representations/train/fusion_stream.npz": "41ab01cc6f2745752c60ed5feda7955015e294756af4b3f5cc5ac46ef234e228",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/representations/train/representation_manifest.json": "1278cc46c7947eaa54b23d0dd6991c844ea7f33819e8d5b1e3b922d4e95a6ca0",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/representations/validation/fusion_stream.npz": "0a9c54d9e39978fe944a091f191a5996afe23760a3c0a18076b31caf35055f5b",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/naive_time_sync/self_supervised/representations/validation/representation_manifest.json": "732faa76e23bcfd95b344115589aefce4647ad3bf85459132165d8802594bb19",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/chronaris/C/best.pt": "c9de9a1e65301b3d32dae5b753d69611fd9ebf1fe286d192fe504cac1378992f",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/chronaris/C/last.pt": "b21873eb7fad61446c3f26fe3bddb3ed3f30fb1198ee760ee17d9c1619cd86a9",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/chronaris/C/progress.json": "500c399c394c46fab18e80868ec673c4fadad66934cc616baaedac674ff4db9d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/common_contract.json": "0f6bb62fe7e4612bfa73c7655bfadf5e5c50712ce8c10f7493ce0f8b9b355026",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/result.json": "23780351e6cd64c857e5c308f760b3a3c97daa08cbc4dbfd44426a047f15b25d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/consumers/consumer_manifest.json": "9074ab144f689f1e06331001a012d757257caf8cff6f00c6e2eec4a9c2b71139",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/consumers/linear.joblib": "4351603a2947cfc6eb3bd94c0e14853faacf937ad6fbb9b660a22846d614b9b1",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/consumers/linear_results.json": "f32daa6655d4b3c522b8e700fc6e977ce9c63fbfe8e260b4afac455e90686f6a",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/consumers/minirocket.joblib": "ed5ed993c04af775eb2c7000fcc15f93fa38d16ecb6befa065ab8dac2a7ac75c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/evaluation/consumers/minirocket_results.json": "44f21fc2e9e8b97c5b1c106f123a44c4d5511a5da36b0a824e92d1c0df2b222f",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/representations/train/fusion_stream.npz": "b01f73791d8ce7e63b057eabdf055a32df4f2c4d8e149307e25d900da0d54410",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/representations/train/representation_manifest.json": "9feff91d18cce62184215adcce174fdbf412ebcf07c3a88b04ce441a0e3513b1",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/representations/validation/fusion_stream.npz": "9b81eb2c2e51e062f92fae48b21b78c86c10820b63e70eeb0b864dc6d1e37294",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/representations/validation/representation_manifest.json": "754faf8699bc070df1c6e9df2cc378fd74374aa28c009b14cc4e589231af2186",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_evaluation/common_contract.json": "ead5ac4d476c31fd648663198e4a354ccb150e8caea1277b94c8d9d60fca83d7",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_evaluation/result.json": "b13e124182adc0ce326cd78d1a9826f02e0ebe9a6b3bb63dc78b9eb706d87711",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_evaluation/consumers/consumer_manifest.json": "6703d6d981ebedfa880f0b6f335e319f3a3bd8c2cd7274f8ec5b63514653319c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_evaluation/consumers/linear.joblib": "a6d1e26b55991c57bfe07c225df0b98a5f9361c62a1b604037c6802f4283112d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_evaluation/consumers/linear_results.json": "eaac54ae67d890062fc5d2bc8cddda5aa2000e7df4730cfa90f989792338c5c0",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_features/train.npz": "1078b02f73adc5fe57bafbee218681d95aa0917b5cdcddbdde64c93aad942819",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/self_supervised/window_features/validation.npz": "852aae353841d132299471bba8fd8f26ff0979fb8b64c2a393c3106fdf0bc01e",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/chronaris/best.pt": "3b7284b30403f0e4fdd01c685f17295869f369f747a8c7103491a8b66f917d82",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/chronaris/last.pt": "b2aba6bfe3c46e548544cec8d019b9115769a81d7a48dfae4e1eb75148af4c53",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/chronaris/progress.json": "0844cd7555bbbd6676709b7e3be18a0bd9cc56d75f3f9fa814b7a6487115f081",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/common_contract.json": "636dde07598fc5d19bc43ab25559542515c7c7e76a4b1eb97d9fd1295c6dbea4",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/result.json": "99a906ba9ea27a7eb5b0ba1a8dab6c50c234d240984c7c03e30f2c919ab74212",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/consumers/consumer_manifest.json": "a9cdf0c9301266324071f1b2fd27678c65401b6da9dfe08a9b4b0a0701c6547a",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/consumers/linear.joblib": "b80d86748d68518529827223aad2fcca5442f5dcd3644939f51846e616ca34fe",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json": "c543f6d4643896013385af762a6054b4b47695c0234f97812950a76979da8bc3",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/consumers/minirocket.joblib": "e3ee36938263d4297560a2e91d9170c561dcab534f1f132f566c1f5af1ba8ea5",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/evaluation/consumers/minirocket_results.json": "456bf4ee30faf465727a5da64b727c21bbbe9b71ab8eb2672c87103873023035",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/representations/train/fusion_stream.npz": "2cf610f34ea29f2936a6d9f6e1f10c8feed7dd1574db08b9f33c8775a60aa885",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/representations/train/representation_manifest.json": "87667b310af5dce01ca8d213a2067458221be0cd4572a44ff374a033e6a86835",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/representations/validation/fusion_stream.npz": "8c1c2e2c466fab1712ac17fb1b2021921fc43790a82c7a8b5f5f172d3e918afc",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/cogpilot/chronaris/task_guided/representations/validation/representation_manifest.json": "300c66bac15ae1fa0334e57d0a634b35a470ffbbdcad2c8f9eedf3a92ca8ef4d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/common_contract.json": "412c344ace06dfb6d9361df2c03fb78bbb516d742b6fd7631c6c12f7320184c4",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/result.json": "5fee77e3bbfdc2d23f67670040857d1c5db5b0071daf2a0285d03232f37060a9",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/consumers/consumer_manifest.json": "cb0e55e2ac386de38b50e38d1d5f9d12d6df5e4189028418de458f68c8c45bd7",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/consumers/linear.joblib": "11e2eed2a6d7a81cef823d633e04ed9baa826a34c48de8dda31007201e252362",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/consumers/linear_results.json": "b104ba5e28ec531795a445a2e5a363ac94e4b5f04f7b45a5e4b857f7838a1eb1",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/consumers/minirocket.joblib": "771c4bc2ae6444e76f255cfeb6c62c3bd5d615d63be9d3a73a848b76e9475a96",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/evaluation/consumers/minirocket_results.json": "1bc59cf5829448f2274ce92a7ad867dba90716ecc41465f90c84eb1bc4f99e8c",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/representations/train/fusion_stream.npz": "dd11a1cf116ae2fb4b255860dcdfa246140da0d41953679f6f29084a93868855",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/representations/train/representation_manifest.json": "91f3a816b147294fb7aeb6b7747ee5ae3a4a76d94cb75b7dc7e5a6eaa3531b26",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/representations/validation/fusion_stream.npz": "6a10c1dbf7da3727b863d719eb30d0b63b700fe3dc9bab8126992b59a4a33779",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/naive_time_sync/self_supervised/representations/validation/representation_manifest.json": "42e3ab1629f193404ec5bd8b02bfbfe261425d9835a97a5c51b8cfbc343b7655",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/chronaris/C/best.pt": "d8505e40c9833ce744225b31fe0c1220e95423699fb21379e41f1a99c65522ff",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/chronaris/C/last.pt": "6f6c1763f05783cd9c25512baf281a3b134f6e8a23c6bfc74814e70c862b1a95",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/chronaris/C/progress.json": "1ef9d9af97a9422cff4725bb8505de44befa63e9ae6dddab64e7dca3daecc910",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/common_contract.json": "fc73a1cc165807ed1a183cc55d3ab42330b8c3445219c1cf755d2f4a2ba0d7fd",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/result.json": "e584c03c21ff424d83949df613baad0122b7c31ccc7b207933707935a1457765",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/consumers/consumer_manifest.json": "26a4417b8b39de9906c451534e051f0a8f93a51aa5def56e0dd8c8bb741cfabd",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/consumers/linear.joblib": "6032c9552664d7c7a62e67a9231f9b6882c12b24c9826eb9c55f406ad67f97a4",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/consumers/linear_results.json": "96deebe8e48183faee55a7f13a9c893bb14257d0af2922252e3ed6e85352f82b",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/consumers/minirocket.joblib": "2acca7fd8cb14d52bb1bed6b4f92473ec15688dad066e9128ce69d57974f0fc7",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/evaluation/consumers/minirocket_results.json": "772995d1cb7fbec73e04de8a6073192f2ac9c6dbb162486afb305e80e21f60ee",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/representations/train/fusion_stream.npz": "491c6430cba93617e1c39e00d9f56c5f2fc4d5b00dca266c2f72f2d30aabc405",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/representations/train/representation_manifest.json": "105615900ff7297b5611450dc5a3dff48492334f9a43ca8ff7472eaa6d0ebd96",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/representations/validation/fusion_stream.npz": "ba0870f79ff0a1af08861c1f17e786a34f0155a521edac9ec192b5bde077eda2",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/representations/validation/representation_manifest.json": "df310ba9a56ac0232d4bd0a369dc9413dadd50d8ad50ef264c3a511837439982",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_evaluation/common_contract.json": "f6c0c5af7953fcbad891eab7e6a90a11152c69a63593c78089b9ffd124a34a3d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_evaluation/result.json": "dc8562fffe4d371464d2e86d56ea58f72e71d2b0cc13c67cc2f26c3a98d15f19",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_evaluation/consumers/consumer_manifest.json": "a58c92c0238918b830b40f09ad77c5fa5a42dca064d639ed982e7ee3883c06d3",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_evaluation/consumers/linear.joblib": "7a53647de8e914d308c4bd7e36a915e287b5249e390cff5b202dea3de96cc586",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_evaluation/consumers/linear_results.json": "e65d22ed5815c17f042879e9f20276153b9594c1fc9dad37cd7f825424037cdd",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_features/train.npz": "c7d8d42b511eb7af124b7bc911703ba06de20dafbcd8fa4e3300a82b2757e447",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/self_supervised/window_features/validation.npz": "d41536d3a4fd8265a4f2ab66143ad04d9ed8bc2eb709a150c19127ce4447178d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/chronaris/best.pt": "40d9b622946acc92ee2613ae4f14b6ac1d9448d672460e9b50498c91d62eafc6",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/chronaris/last.pt": "a66f55cda50ad7755c5b91364ae0b36865f9d26bdcc6085ea998a53fad54d398",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/chronaris/progress.json": "2024b07b67a9bf54fcfb1a461e435767ef4d45672bbd7998c6b4fd5cb98a50b1",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/common_contract.json": "277bd959ffd50ad271569a00a42c97d7547150bbeaf69ff84426789faf18056b",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/result.json": "8c6fd3cb526c96141d56f4a46d7bf447304b3ef5f11d664d5ec1d3f72ea9a262",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/consumers/consumer_manifest.json": "0508d82f6a721905a34ca6c680c83e0f9d89bb3578cec20d6b26a4cccc0c46ea",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/consumers/linear.joblib": "c866d5a148aabe26622553bbf1d1525ef86a244bf532437d76ab2e946aefda4b",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/consumers/linear_results.json": "08d16cc0e771fceb3836ae63d721a5091307121c69d743f5867b5f0807e29bb3",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/consumers/minirocket.joblib": "867be97ac900f87e659ac21d56dca3b89cb6b98699c7f645b373cfbe84972518",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/evaluation/consumers/minirocket_results.json": "b399454a97420154f7459a2269a3fabd4dcdddda336339739c5a5fe8486d746a",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/representations/train/fusion_stream.npz": "4b7091bf0424bee2782eeb9135033a4db4d0ec0c6af75a9d18ef30c9a8ffa404",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/representations/train/representation_manifest.json": "a6ff5ca1059f0a8f309daef9b2810ddd8f68bd4383c520911351f4684378ff4d",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/representations/validation/fusion_stream.npz": "2255375d5418c8250ea7167e39a6446cb990d7b456ab98c2c9eeaca2b9147bcf",
+    "/mnt/e/chronaris-v4-results/2026-09-10-stage2-contract/attempt1/clare/chronaris/task_guided/representations/validation/representation_manifest.json": "03876c9266d67aaf3e2b0a6e2c947bf993c0d820cf055f4ff0ec656aa99ac870"
+  },
+  "encoder_updates_added": 0,
+  "original_files_unchanged": true
+}

@@ -90,6 +90,8 @@ def fit_native_consumers(*, outputs, targets, definitions, context, family="line
     dingxin = context["domain"] == "dingxin"
     if family not in {"linear", "minirocket"} or (dingxin and family != "linear"):
         raise ValueError("Dingxin has only the approved fixed linear consumers")
+    if family == "minirocket" and any(output.sequence_embedding is None for output in outputs.values()):
+        raise ValueError("MiniROCKET requires real sequence features; window vectors cannot be broadcast")
     config = LinearConsumerConfig(random_state=seed, tune_on_validation=not dingxin)
     transformer = None
     if family == "minirocket":
@@ -190,7 +192,7 @@ def evaluate_native_consumers(bundle, *, output, targets, context=None):
     positions = [index[sample] for sample in output.sample_ids]
     groups = np.array([context["groups"][sample] for sample in output.sample_ids])
     weights = np.ones(len(positions)) if targets.sample_weights is None else targets.sample_weights.numpy()[positions]
-    empty = ~output.valid_mask.any(dim=1).numpy()
+    empty = ~output.valid_mask.reshape(len(output.sample_ids), -1).any(dim=1).numpy()
     group_rows, prediction_rows, aggregate_rows = [], [], []
     for task in bundle["definitions"]:
         value, valid = targets.values[task.name].numpy()[positions], targets.valid_masks[task.name].numpy()[positions]
@@ -272,9 +274,15 @@ def evaluate_native_consumers(bundle, *, output, targets, context=None):
 
 
 def run_native_method_consumers(*, outputs, targets, definitions, context, output_root,
-                                label_used_for_encoder_training, seed=17, minirocket_kernels=10_000):
+                                label_used_for_encoder_training, seed=17, minirocket_kernels=10_000, families=None):
     """Save reusable clean consumers and all predictions; reject stale cached evidence."""
     _validate_inputs(outputs, targets, definitions, context)
+    available = ("linear",) if context["domain"] == "dingxin" else ("linear", "minirocket")
+    families = available if families is None else tuple(families)
+    if not families or len(set(families)) != len(families) or not set(families) <= set(available):
+        raise ValueError("consumer families differ from domain capabilities")
+    if "minirocket" in families and any(output.sequence_embedding is None for output in outputs.values()):
+        raise ValueError("MiniROCKET requires real sequence features; window vectors cannot be broadcast")
     root = Path(output_root)
     root.mkdir(parents=True, exist_ok=True)
     manifest = {"format": "chronaris.v4_native_grouped_consumers.v1", "context": context,
@@ -285,6 +293,8 @@ def run_native_method_consumers(*, outputs, targets, definitions, context, outpu
         "roles": {role: {"sample_ids": output.sample_ids, "source_sample_hashes": output.source_sample_hashes,
             "method_name": output.method_name, "fold_id": output.fold_id, "checkpoint_sha256": output.checkpoint_sha256}
             for role, output in outputs.items()}}
+    if families != available:
+        manifest["consumer_families"] = list(families)
     protocol_hash = native_consumer_protocol_sha256(manifest, outputs, targets)
     manifest_path = root / "consumer_manifest.json"
     artifacts = {}
@@ -302,7 +312,7 @@ def run_native_method_consumers(*, outputs, targets, definitions, context, outpu
     else:
         manifest_path.write_text(json.dumps(manifest | {"protocol_sha256": protocol_hash}, ensure_ascii=False, indent=2) + "\n")
     results = {}
-    for family in ("linear",) if context["domain"] == "dingxin" else ("linear", "minirocket"):
+    for family in families:
         model_path, result_path = root / f"{family}.joblib", root / f"{family}_results.json"
         if model_path.exists():
             payload = joblib.load(model_path)
@@ -345,6 +355,9 @@ def native_consumer_protocol_sha256(manifest, outputs, targets):
         tensors.append(targets.sample_weights)
     digest.update(json.dumps(targets.sample_ids).encode())
     for tensor in tensors:
+        if tensor is None:
+            digest.update(b'no_sequence')
+            continue
         array = tensor.detach().cpu().numpy()
         digest.update(str((array.shape, array.dtype)).encode())
         digest.update(array.tobytes())

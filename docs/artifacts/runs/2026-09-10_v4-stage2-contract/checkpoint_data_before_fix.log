@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________ test_contract_rejects_changes_before_fitting[checkpoint_data] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-wangminan/pytest-255/test_contract_rejects_changes_0')
+mutation = 'checkpoint_data'
+
+    @pytest.mark.parametrize('mutation', ['target', 'observation', 'order', 'cutoff', 'source', 'fit', 'prediction', 'supervision', 'checkpoint', 'checkpoint_pca', 'checkpoint_data', 'policy'])
+    def test_contract_rejects_changes_before_fitting(tmp_path, mutation):
+        kwargs, contract, outputs, declaration = _case(tmp_path)
+        if mutation == 'target':
+            kwargs['targets'].values['workload_regression'][0] += 1
+        elif mutation == 'observation':
+            kwargs['observations']['train'].physiology_values[0, 0, 0] += 1
+        elif mutation == 'order':
+            outputs['validation'] = replace(outputs['validation'], sample_ids=tuple(reversed(outputs['validation'].sample_ids)))
+        elif mutation == 'cutoff':
+            outputs['validation'] = replace(outputs['validation'], timestamps_s=outputs['validation'].timestamps_s+1)
+        elif mutation == 'source':
+            outputs['validation'] = replace(outputs['validation'], source_sample_hashes=('f'*64,)*6)
+        elif mutation == 'fit':
+            declaration['preprocessing_fit_sample_ids'].append(outputs['validation'].sample_ids[0])
+        elif mutation == 'prediction':
+            declaration['feature_origin'] = 'final_predictions'
+        elif mutation == 'supervision':
+            declaration.update(route='task_guided', target_supervision='summary_labels', training_tasks=list(kwargs['targets'].values))
+        elif mutation == 'checkpoint':
+            open(declaration['checkpoint_path'], 'ab').write(b'changed')
+        elif mutation in {'checkpoint_pca', 'checkpoint_data'}:
+            payload = torch.load(declaration['checkpoint_path'], weights_only=True)
+            if mutation == 'checkpoint_pca':
+                payload['pca_state'] = {'fit_sample_ids': list(outputs['validation'].sample_ids)}
+            else:
+                payload['config'] = {'data_manifest_sha256': 'f'*64}
+            torch.save(payload, declaration['checkpoint_path'])
+            digest = sha256_file(declaration['checkpoint_path'])
+            outputs = {r: replace(o, checkpoint_sha256=digest) for r, o in outputs.items()}
+            declaration.update(checkpoint_sha256=digest, evidence_files={declaration['checkpoint_path']: digest})
+        else:
+            contract['policy']['public_parameters']['classification_c'] = [100.]
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE ValueError
+
+tests/evaluation/application_tasks/test_common_downstream_contract.py:108: Failed
+=========================== short test summary info ============================
+FAILED tests/evaluation/application_tasks/test_common_downstream_contract.py::test_contract_rejects_changes_before_fitting[checkpoint_data]
+1 failed, 13 deselected in 2.18s
