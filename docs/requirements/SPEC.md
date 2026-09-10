@@ -1,6 +1,6 @@
 # Chronaris 需求规格入口
 
-更新时间：2026-09-09
+更新时间：2026-09-10
 
 ## 1. 毕业论文目标
 
@@ -15,6 +15,8 @@
 5. 引入非对称因果掩码和语义事件融合。
 6. 输出标准化融合特征、中间态和可解释证据。
 7. 面向空中失能风险分析、认知负荷评估、飞行事件复盘开展对比、消融和案例验证。
+
+当前采用[融合表示下游评价方案](thesis-downstream-representation-plan-20260909.md)：各方法处理相同原始观测，再分别训练相同类型的下游算法，使用相同任务标签比较。真实鼎新压力、精神状态与具体机动动作的独立业务标签当前不可获得；现有生理字段预测、机动强度及公开负荷任务支撑组件与功能验证。潜在特征允许作为重新训练的下游模型输入，不以取得另一组固定算法接口为前提。
 
 ## 2. 原始需求材料
 
@@ -50,9 +52,11 @@
 - 飞机流时间精度：毫秒级。
 - 飞机原始时间只有时分秒，完整日期来自 `flight_batch.fly_date`。
 - 飞机完整时间拼接沿用 `TimeSequenceProcessor` 跨日规则。
-- 当前主线 sortie：
+- 历史采集记录标识（九月去重后不视为两个独立评价架次）：
   - `20251005_四01_ACT-4_云_J20_22#01`
   - `20251002_单01_ACT-8_翼云_J16_12#01`
+
+当前鼎新评价使用保留单记录后的时间块与两个生理视图，划分和有效字段见[新方案](thesis-downstream-representation-plan-20260909.md)及[去重报告](../artifacts/runs/2026-09-08_v4-dingxin-deduplicated/report.md)。
 
 ## 5. 需求补充材料
 
@@ -68,15 +72,15 @@
 
 ## 6. 固定数据下游评估补充规格
 
-毕业论文后续实验默认不依赖新增鼎新一手数据或人工专家评价。当前下游评估、仿真和融合表示按以下规格执行：
+毕业论文后续实验不依赖新增鼎新一手数据或人工专家评价。研究目标和下一步执行以[新方案](thesis-downstream-representation-plan-20260909.md)为准；以下规格提供基础定义和历史来源，仅继承与新方案一致的内容：
 
 - [foundation/fixed-data-evidence-strategy.md](foundation/fixed-data-evidence-strategy.md)：数据来源、证据层级、论文论断与失败边界。
 - [downstream-evaluation-spec.md](downstream-evaluation-spec.md)：真实/仿真任务、标签公式、划分、下游算法、指标与模型选择。
 - [synthetic-benchmark-spec.md](synthetic-benchmark-spec.md)：G1/G2 仿真生成族、观测场景、oracle、压力等级和验收。
 - [model-contracts/application-fusion-stream-contract.md](model-contracts/application-fusion-stream-contract.md)：六方法共同消费的异步双流和 `[B,T,64]` 融合表示合同。
 
-## 7. 当前简化下游评价规格
+## 7. 协议继承与下一阶段
 
-九月当前实现以 [v4 开发与实验合同](thesis-v4-development-plan.md)及其鼎新单记录时间块修订为准。以下保留七月规格沿革，不再将原留一架次安排作为去重后的当前执行口径。
+现有六方法实现来自 [v4 开发与实验合同](thesis-v4-development-plan.md)及其鼎新单记录时间块修订；[七月简化任务](simple-downstream-evaluation-v1.md)保留目标公式沿革，其留一架次、仅无标签训练等旧规则不再覆盖 v4 双路线与去重修订。
 
-2026-07-16 起，鼎新真实数据的当前执行入口切换为 [鼎新简化下游评价协议 v1](simple-downstream-evaluation-v1.md)。该协议保留固定数据与统一表示基础设施，但以留一架次分组确认、未来机动连续预测和未来生理字段预测为主，不再自动续跑旧目标重构门禁。旧规格和产物继续作为历史研究记录，不覆盖新协议。
+后续先修复池化一致性与失败终态，完成已有产物兼容核验，再接入 TimeCMA 语言模型增强时序方法、Chronos-2 预训练时序模型，并尽量纳入 SensorLLM 传感器—语言对齐模型。新增方法须通过共同下游评价的表示与监督核验后进入完整比较；不以原生未来序列预测矩阵替代主任务。具体代码落点、验收、环境和论文节点统一见[新方案](thesis-downstream-representation-plan-20260909.md)。

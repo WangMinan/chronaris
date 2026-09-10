@@ -1,66 +1,37 @@
-# Chronaris Review 入口
+# Chronaris 复核入口
 
-更新时间：2026-09-09
+更新时间：2026-09-10
 
-本目录用于保存 code review 相关产出，包括 review 计划、发现、修复记录和阶段性检查结果。
+本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
-## 组织规则
+## 当前复核
 
-- 父入口：本文档。
-- 阶段目录：[stage/](stage/)。
-- 子目录命名与 [../implementation/TASKS.md](../implementation/TASKS.md) 的阶段一致。
-- 每次 review 应说明：
-  - review 范围
-  - 关键发现
-  - 修复状态
-  - 剩余风险
-  - 已跑测试
+[文档同步与过时入口清理](stage/thesis-v4/document-sync-20260910/README.md)核对两段历史会话、用户最新确认和当前代码，统一共同下游评价主线、标签含义、近期方法接入与论文节点。本轮仅修改文档。
 
-## 当前建议
+[导师要求与后台盘点](stage/thesis-v4/advisor-status-20260909/README.md)记录 26 个新初筛配置、14,300 次更新及进程 82623 的失败终态。池化设备差异已定位，修复、重启与近期方法实跑尚未完成。
 
-[导师要求、后台运行与论文排期盘点](stage/thesis-v4/advisor-status-20260909/README.md)核验新初筛 26/26、14,300 次更新及进程 82623 的失败终态；真实数组复算定位 CPU/GPU 池化差异。近期大模型对照、应用成本和论文节点仍需补齐；本轮保存并推送现有代码，未修改冻结实验或重启。
+## v4 实现证据
 
-[v4 单入口代码交付](stage/thesis-v4/code-delivery-20260908/README.md)统一开发选型、正式主表、时间机制及报告，替代历史进程接续脚本；实际启动状态见代码交付报告。
+下表导航已完成的工程模块及其来源，具体日期状态以对应报告为准；当前后台状态统一读取状态页和实际运行记录。
 
-[核心消融合同](../artifacts/runs/2026-09-08_v4-core-ablation-contract/report.md)已复用现有开关和训练器，并限制为预定组件；不适用目标跳过，观测锚定保留，模型文件完整冻结后才生成确认数据。
+| 范围 | 复核入口 |
+| --- | --- |
+| 当前实现与历史验收索引 | [v4 实施复核](stage/thesis-v4/README.md) |
+| 单入口、恢复和报告 | [代码交付](stage/thesis-v4/code-delivery-20260908/README.md) |
+| 初筛、三种子、采用及压力队列 | [选型与复核](stage/thesis-v4/selection-20260908/README.md) |
+| 公开开发与结果排名 | [公开首折](stage/thesis-v4/public-screen-20260908/README.md)、[结果重放与排名](stage/thesis-v4/public-result-ranking-20260908/README.md) |
+| 正式训练与鼎新去重 | [确认接续](stage/thesis-v4/confirmation-handoff-20260908/README.md)、[鼎新去重结果](../artifacts/runs/2026-09-08_v4-dingxin-deduplicated/report.md) |
+| 输入、目标和冻结后评价 | [确认合同](stage/thesis-v4/confirmation-contracts-20260908/README.md)、[原生留出评价](stage/thesis-v4/native-frozen-evaluation-20260908/README.md) |
+| 核心消融 | [消融合同](../artifacts/runs/2026-09-08_v4-core-ablation-contract/report.md) |
+| 运行性能 | [性能复核](stage/thesis-v4/performance-20260908/README.md) |
 
-[正式训练接续与鼎新去重](stage/thesis-v4/confirmation-handoff-20260908/README.md)已复用共享训练和消费者，鼎新按用户授权改为保留单记录的时间块评价；实际开发链已启动，正式确认仍等待冻结。
+## 历史研究与维护
 
-[复核压力接续队列](stage/thesis-v4/selection-20260908/README.md)已复用八条件评价函数和显卡锁，保留失败并支持中断恢复；真实入口等待复核计划，不额外启动 GPU 任务。
+- [远程研究建议复核](stage/thesis-mainline/remote-pro-review-2026-09-05.md)：旧权重学习规模、注意力、物理解码与负面结果诊断。
+- [v3.2.3 实验与安全门](stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)：旧版本四项机制门通过、两项失败；不以 v4 工程修复改写这些结果。
+- [主分支集成](stage/thesis-mainline/main-integration-2026-09-05.md)与[冗余清理](stage/thesis-mainline/redundancy-and-docs-review-2026-09-05.md)：已完成代码整合、路径与文档清理。
+- [旧论文主线复核](stage/thesis-mainline/README.md)：v3 阶段范围和历史记录。
 
-[跨域单因素采用判断](stage/thesis-v4/selection-20260908/README.md)已接通同一冻结计划下的三种子结果与预定阈值，保留逐项通过和失败记录；当前无完整复核成绩，不输出推荐或冻结配置。
+## 记录要求
 
-[仿真复核与压力读取](stage/thesis-v4/selection-20260908/README.md)已支持三个固定种子，共用初筛预测核验与公开更新预算检查；干净和长缺失结果分别记录，完整采用判据继续接入。
-
-[三种子公开结果读取](stage/thesis-v4/public-result-ranking-20260908/README.md)已共用首折重放检查，按受试者合并开发折，核验消费者种子和实际早停更新；真实入口等待复核计划，最终采用还需仿真与压力证据。
-
-[公开与三种子复核编排](stage/thesis-v4/public-screen-20260908/README.md)已共用队列执行逻辑和显卡锁；前三名完成公开首折后，各路线最多保留两名进入完整开发折与三种子，固定参考继续比较。当前真实入口等待，尚未启动三种子神经训练。
-
-[公开结果读取复核](stage/thesis-v4/public-result-ranking-20260908/README.md)补齐执行失败状态：压力失败不再永久等待，未归因执行错误不再被直接排除后继续排名；运行中的冻结实验保持原样。
-
-[仿真初筛与三种子复核入口](stage/thesis-v4/selection-20260908/README.md)已完成工程核验，完整候选和压力结果尚未齐备；两套公开确认池仅完成数据准备。
-
-[v4 冗余与并行性能复核](stage/thesis-v4/performance-20260908/README.md)已按用户要求实施：共享 CPU 消费者准备、部分恢复及验证前向复用通过 CPU 检查。八线程方案未显示收益且动态切换出现失败，未采用；固定 GPU 训练继续运行。
-
-v4 已按用户批准的完整计划开始实施，最新工程证据和剩余工作见 [v4 实施复核](stage/thesis-v4/README.md)。本轮 Goal 持续推进，阶段节点不再请求确认，效果失败如实归档。
-
-已完成[远程研究建议与本地实现复核](stage/thesis-mainline/remote-pro-review-2026-09-05.md)：核验 15 个检查点的 50 次实际更新，完成三种子注意力与物理解码干预、压力预测分解及公开数据盘点，聚焦测试 26 项通过。核心诊断大部分成立；报告列明首批修复与方案调整，本轮未修改冻结模型或启动新训练。
-
-已完成[仓库冗余与文档一致性复核](stage/thesis-mainline/redundancy-and-docs-review-2026-09-05.md)，并按用户指示直接在 `main` 清理和修复：源码与脚本净减少 438 行，24 个入口根路径修正，完整测试 `492 passed, 8 skipped`；冻结指标、审计和检查点哈希不变。
-
-用户已决定先将当前研究基线合入主分支，再继续改进。合并范围、验证与归档记录见[研究基线合入主分支复核](stage/thesis-mainline/main-integration-2026-09-05.md)；该决定仅更新分支安排，未来信息隔离与安全旁路失败、公开与鼎新外层关闭的状态保持不变。
-
-当前论文主线 review 见[连续对齐与语义融合论文主线复核](stage/thesis-mainline/README.md)。该复核跟踪评价协议、仿真硬门、公开数据输入完整性、外层只开一次和结果汇总边界；生理预处理完整性已按 v3.2.2 修复，公开数据与鼎新外层结果继续等待仿真硬门。
-
-最新[冻结仿真实跑与安全门复核](stage/thesis-mainline/frozen-simulation-review-2026-09-04.md)已完成 v3.2.3 修复、剩余压力/时间机制评价、总审计和恢复重放。四项机制门通过，未来信息隔离与安全旁路失败；未来依赖定位于事件分数的全窗归一化，尚未修复。三随机种子的有利和不利结果均保留，非空模型行为的新修订需先确认，公开与鼎新外层继续关闭。
-
-## 历史建议
-
-历史 review 范围是中期前的证据执行、弱监督任务、组件消融、公开数据校准与运动学字段审计，尤其是：
-
-- 证据执行器：产物清单、证据层、失败保留的部分清单和选择性恢复行为。
-- 论文弱监督多任务筛选：小网格是否有边界，风险、工作负荷与事件复盘任务是否保持弱监督表述。
-- Chronaris 组件消融：分类、回归和检索是否始终写成鼎新弱监督基准，不越界成人工真值。
-- 公开数据适配与迁移边界：UAB/NASA 是否保持公开数据适配和校准证据边界。
-- 刚体旋转字段审计：字段启用或缺失诊断是否可复现，报告是否避免把缺失项写成已验证约束。
-- 所有新增产物是否能从 `docs/artifacts/ARTIFACTS.md` 或 `docs/implementation/TASKS.md` 追溯。
+每次复核说明范围与计划、实际发现、修复状态、剩余工作和验证结果。历史指标、图表和检查点保留来源；当前状态只保留最新可核验事实。新产物从本入口及[产物索引](../artifacts/ARTIFACTS.md)或任务页可达，研究效果与工程检查分别报告。

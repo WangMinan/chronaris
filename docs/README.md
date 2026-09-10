@@ -1,15 +1,16 @@
 # Chronaris 文档入口
 
-更新时间：2026-09-05
+更新时间：2026-09-10
 
-当前研究基线已集成到 `main`。优先读取当前状态、任务和冻结协议；历史报告承担追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，此处只维护导航。
+当前在 `codex/thesis-v4-recovery-20260905` 继续研究开发，已包含 `main` 的整理成果。研究主线为“各方法提取融合特征，再分别训练相同类型的下游算法”。优先读取新方案、当前状态和任务；历史协议承担来源追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，此处只维护导航。
 
 ## 当前入口
 
 - [STATE.md](STATE.md)：当前实验进度、结论和代码来源。
 - [implementation/TASKS.md](implementation/TASKS.md)：当前任务与后续执行顺序。
 - [requirements/SPEC.md](requirements/SPEC.md)：毕业论文目标和仓库能力边界。
-- [requirements/thesis-frozen-paper-evaluation-v3.2.3.md](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)：当前冻结实验合同；此前版本用于追溯。
+- [融合表示下游评价与近期模型接入方案](requirements/thesis-downstream-representation-plan-20260909.md)：已确认目标、任务含义、接入范围、开发验收与论文节点。
+- [v4 开发合同](requirements/thesis-v4-development-plan.md)：已有六方法实现的预算与数据角色来源；执行优先级服从新方案。
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：报告、指标、图表与来源清单。
 - [review/REVIEW.md](review/REVIEW.md)：复核计划、发现、修复和验证。
 
@@ -25,7 +26,7 @@
 | `midterm/` | [六月至七月中期材料](midterm/README.md)，不替代当前状态 |
 | `review/` | 按阶段保存复核与验证结果 |
 
-旧应用任务协议 [downstream-evaluation-spec.md](requirements/downstream-evaluation-spec.md) 和[仿真生成器规格](requirements/synthetic-benchmark-spec.md)是基础或历史合同；当前执行优先服从九月冻结协议及其明确继承项。
+旧应用任务协议 [downstream-evaluation-spec.md](requirements/downstream-evaluation-spec.md)、[七月简化任务](requirements/simple-downstream-evaluation-v1.md)、[仿真生成器规格](requirements/synthetic-benchmark-spec.md)和 [v3.2.3 冻结协议](requirements/thesis-frozen-paper-evaluation-v3.2.3.md)用于核对对应版本的公式、配置与证据，不直接作为新阶段执行队列。
 
 ## 本地与兼容入口
 

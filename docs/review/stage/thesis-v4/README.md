@@ -1,76 +1,39 @@
 # v4 连续对齐与语义融合实施复核
 
-更新时间：2026-09-06。用户已批准[完整开发与实验合同](../../../requirements/thesis-v4-development-plan.md)，Goal 持续执行，不在阶段节点请求确认。
+更新时间：2026-09-10
 
-## 当前实现证据
+当前按[融合表示下游评价与近期模型接入方案](../../../requirements/thesis-downstream-representation-plan-20260909.md)继续现有分支。本轮只同步文档；原后台已失败退出，池化和终态修复尚未执行，近期模型尚未接入。实际进度见[状态页](../../../STATE.md)。
 
-[一次性代码交付复核](code-delivery-20260908/README.md)汇总新的统一入口、条件候选、时间机制、完整统计与恢复合同。
+## 当前事实与待修复项
 
-因果性修复已在已训练权重上通过检查，物理观测锚定已完成 CUDA 十次更新冒烟；这两项是工程正确性证据，不是正式任务成绩。当前分支为 `codex/thesis-v4-recovery-20260905`，按更新计数的自监督预算已接入原训练器，双路线工程冒烟已完成，正式实验仍待后续完成。
+[代码交付](code-delivery-20260908/README.md)完成原六方法的单入口和工程验收；[9 月 9 日盘点](advisor-status-20260909/README.md)确认新初筛 26/26、52 份双路线结果、14,300 次更新，压力仅完成 9/52 个路线单元。任务引导导出与压力路径的池化设备差异引发干净预测重放失败。公开复核、正式确认和新方法评价尚无本轮完整结果。
 
-- [因果与掩码修复](../../../artifacts/runs/2026-09-05_v4-causality-repair/report.md)：三个 CUDA 种子与一个 CPU 复核，历史扰动低于原阈值，旧检查点哈希不变。
-- [观测锚定冒烟](../../../artifacts/runs/2026-09-05_v4-reference-smoke/report.md)：新解码锚定与五条显式物理关系接入训练总损失，十次实际更新后复验历史隔离。
-- 聚焦验证：因果/掩码/原有对齐 36 项通过、2 项环境跳过；物理/候选训练 22 项通过；微调真实中断与连续训练的模型、优化器及随机状态一致。
+[文档同步复核](document-sync-20260910/README.md)记录本次目标、任务解释、导航与历史执行指令清理。原 432 单元范围属于六方法计划，不包含新模型；后续先核验表示接口与监督，再确定完整比较矩阵。
 
-- [性能与严格时间边界](../../../artifacts/runs/2026-09-05_v4-performance/report.md)：同权重 CUDA 前向约提速 8.27 倍，输出与梯度对照通过；极近未来观测严格隔离。
+## 已有实现与证据索引
 
-- [更新训练与任务头](../../../artifacts/runs/2026-09-05_v4-update-smoke/report.md)：十次 CUDA 完整更新、80 个实际批次，累积中断的 CPU/CUDA 精确重放通过。
-- [鼎新内部拟合](../../../artifacts/runs/2026-09-05_v4-dingxin-inner-targets/report.md)：真实快照两折均为 18/6/6 个航电上下文，目标拟合与验证部分隔离。
+下表按职责保留已有报告，说明可以复用的工程基础；测试数字与当时状态回到原报告读取，不将历史启动状态展示为当前运行状态。
 
-## 已发现并同步处理的相邻问题
+| 范围 | 报告与复核 |
+| --- | --- |
+| 历史可见域与有效掩码 | [因果修复](../../../artifacts/runs/2026-09-05_v4-causality-repair/report.md) |
+| 物理观测锚定 | [参考冒烟](../../../artifacts/runs/2026-09-05_v4-reference-smoke/report.md) |
+| 更新计数、任务头与恢复 | [更新闭环](../../../artifacts/runs/2026-09-05_v4-update-smoke/report.md)、[公共双路线](../../../artifacts/runs/2026-09-06_v4-dual-route-smoke/report.md)、[四域实跑](../../../artifacts/runs/2026-09-06_v4-real-domain-smoke/report.md) |
+| 运行性能与连续计算 | [初始性能](../../../artifacts/runs/2026-09-05_v4-performance/report.md)、[原生状态执行](../../../artifacts/runs/2026-09-06_v4-native-recurrence/report.md)、[调度复核](performance-20260908/README.md) |
+| 仿真与公开数据准备 | [初始仿真](../../../artifacts/runs/2026-09-06_v4-simulation-data/report.md)、[开发数据](../../../artifacts/runs/2026-09-06_v4-development-data/report.md)、[扩展至 512 条](../../../artifacts/runs/2026-09-07_v4-training-expansion/report.md) |
+| 鼎新目标与内容隔离 | [原内部拟合](../../../artifacts/runs/2026-09-05_v4-dingxin-inner-targets/report.md)、[重复发现](vehicle-isolation-20260908/README.md)、[单记录修订](../../../artifacts/runs/2026-09-08_v4-dingxin-deduplicated/report.md) |
+| 下游算法与留出评价 | [分组拟合](../../../artifacts/runs/2026-09-06_v4-grouped-consumers/report.md)、[目标合同](confirmation-contracts-20260908/README.md)、[冻结后评价](native-frozen-evaluation-20260908/README.md) |
+| 初始学习诊断与压力 | [学习曲线入口](../../../artifacts/runs/2026-09-06_v4-learning-curves/report.md)、[初始结果](../../../artifacts/runs/2026-09-07_v4-initial-diagnostics/report.md)、[压力输入](../../../artifacts/runs/2026-09-06_v4-development-conditions/report.md)、[八条件实跑](../../../artifacts/runs/2026-09-07_v4-development-pressure/report.md) |
+| 候选模块 | [注意力与配对](../../../artifacts/runs/2026-09-07_v4-candidate-components/report.md)、[增强与预测](../../../artifacts/runs/2026-09-07_v4-common-candidates/report.md)、[保真与质量门](../../../artifacts/runs/2026-09-08_v4-branch-candidates/report.md) |
+| 选型与结果重放 | [选型](selection-20260908/README.md)、[公开首折](public-screen-20260908/README.md)、[排名](public-result-ranking-20260908/README.md)、[原生归档](native-results-20260908/README.md) |
+| 固定网格与分组统计 | [固定网格基线](naive-baseline-20260908/README.md)、[重采样统计](grouped-statistics-20260908/README.md) |
+| 正式训练、消融与报告 | [确认接续](confirmation-handoff-20260908/README.md)、[主表入口](../../../artifacts/runs/2026-09-08_v4-formal-mainline/report.md)、[核心消融](../../../artifacts/runs/2026-09-08_v4-core-ablation-contract/report.md)、[单入口交付](code-delivery-20260908/README.md) |
+| 中文图表 | [渲染合同](diagnostic-figures-20260908/chart_contract.md)、[初始七张图](../../../artifacts/runs/2026-09-08_v4-diagnostic-figures/report.md) |
 
-旧因果注意力在没有历史键时放行第一个未来点，已移除此回退。短窗口不仅影响增强，还影响时移构造，两个入口现均按样本处理真实时长。微调最后检查点曾混用最佳模型参数与最后优化器，公共训练最后检查点曾混入最佳轮次随机状态；两条路径均分别保留完整状态，并先保存最佳状态再推进最后状态。
+## 继承与结果边界
 
-旧 Chronaris 预训练权重在当前实现下只允许显式迁移诊断；正式复现旧数值应使用冻结源码标签，不能静默解释为当前模型。预训练与微调新检查点记录实现修订，训练来源指纹覆盖新增物理、因果和数据组织源码。
+原[开发合同](../../../requirements/thesis-v4-development-plan.md)保留已有训练规则的来源；目标与后续执行以新方案为准。初始 256 条仿真诊断、扩展后的候选结果及最终确认分别归档，不能混为一条学习收益曲线。
 
-## 双路线与新数据推进
+鼎新两折 18/6/6 的旧内部目标记录用于追溯，当前单记录时间块按 12/3/3 及边界隔离执行。原始重复文件和失败结果保留，不恢复跨架次推断。旧 v3 的门失败也不因 v4 工程检查而改变。
 
-[公共目标及双路线更新闭环](../../../artifacts/runs/2026-09-06_v4-dual-route-smoke/report.md)已完成新的实际 CUDA 训练；[新仿真数据](../../../artifacts/runs/2026-09-06_v4-simulation-data/report.md)已生成 256 条训练和 64 条开发轨迹，确认只冻结清单。
-
-[开发数据与分组合同](../../../artifacts/runs/2026-09-06_v4-development-data/report.md)已完成固定公开开发组窗口整理：CogPilot 2,524 个、CLARE 794 个。新仿真 1,280 个训练与开发上下文可由同一清单加载，确认观测未打开。
-
-[原生连续状态等价执行](../../../artifacts/runs/2026-09-06_v4-native-recurrence/report.md)已通过完整 CogPilot 批次的输出、梯度及历史隔离对照；前后向代表性耗时约提速 12.32 倍。共享训练器在启用图重放后，中断与连续执行的权重、优化器、增强及游标记录一致。
-
-## 尚未完成
-
-完整训练诊断、仿真完整序列消费者、九候选与双路线筛选、正式确认及论文产物仍未完成。首次完整测试为 **498 passed、8 skipped**，用时 429.64 秒；随后源码指纹补齐改动另做恢复聚焦验证。v3 原始失败与门判定保持归档状态，不被本轮工程检查改写。
-
-2026-09-06 更新训练器与任务头完整测试为 **507 passed、8 skipped**，用时 308.54 秒，见[验证摘要](../../../artifacts/runs/2026-09-05_v4-update-smoke/validation_summary.json)。
-
-2026-09-06 原生开发数据与图重放批次完整测试为 **521 passed、8 skipped**，用时 440.06 秒；具体范围见[验证摘要](../../../artifacts/runs/2026-09-06_v4-development-data/validation_summary.json)。
-
-[修复参考交付](../../../artifacts/runs/2026-09-06_v4-real-domain-smoke/report.md)已完成四域实际训练与最终完整测试：**524 passed、8 skipped**。实际新增更新 350 次，包含 CLARE 标签隔离拦截的十次预训练；九个完整开发归一化划分拟合成功，确认模型成绩未打开。
-
-[完整开发学习曲线入口](../../../artifacts/runs/2026-09-06_v4-learning-curves/report.md)已通过真实训练器与三种消费者的端到端测试；普通推理仍拒绝训练中快照，开发快照不允许确认导出。当前开始仿真干净输入诊断，完整八条件诊断包仍待完成。
-
-[公开与鼎新分组消费者](../../../artifacts/runs/2026-09-06_v4-grouped-consumers/report.md)已接入相同诊断编排器，六个已有真实数据工程组合完成拟合与导出，部分字段、共享航电权重和长尾记录通过测试。公开全量开发折与鼎新完整内部折入口已具备；500 更新实际运行和全套八条件诊断仍未完成。
-
-[八条件开发数据](../../../artifacts/runs/2026-09-06_v4-development-conditions/report.md)完成 2,048 个窗口的身份、有效掩码与时钟/响应因素隔离检查，压力模型评价尚未开始。Chronaris 首条自监督 500 更新完成并达到一次规模扩展触发条件；初始矩阵保持 256 条统一训练清单，矩阵完成后再统一激活预留的 32 个新参数档案。
-
-[初始五方法双路线矩阵](../../../artifacts/runs/2026-09-07_v4-initial-diagnostics/report.md)已全部结束，50 个检查点、60 份表示和 90 个消费者组件通过角色及哈希核验。新增压力入口复用干净消费者、保留全部窗口并输出参数档案统计和机制诊断；完整 CUDA 环境测试 **536 通过、8 跳过**。正式确认仍未开始。
-
-[八条件实际压力](../../../artifacts/runs/2026-09-07_v4-development-pressure/report.md)完成 80 个单元；Chronaris 的连续缺失退化和航电查询状态约 13 倍增长均保留，后者目前只有一个训练种子。[一次训练扩展](../../../artifacts/runs/2026-09-07_v4-training-expansion/report.md)已激活至 512 条，原有文件及张量逐值不变。后续进入固定九候选及公开开发复核，不额外引入未计划的公开五方法五百更新矩阵。
-
-[候选组件与捕获修复](../../../artifacts/runs/2026-09-07_v4-candidate-components/report.md)接入两种注意力、同刻目标开关和独立原生历史配对。全套检查暴露多模型图捕获失效及后续随机数状态异常；增加捕获期间的垃圾回收隔离后，多模型复核 13 项通过，完整 CUDA 环境测试 554 项通过、8 项跳过。独立配对的微调继承与移除训练头导出另行通过；正式候选训练尚未开始。
-
-[公共增强与预测候选](../../../artifacts/runs/2026-09-07_v4-common-candidates/report.md)已接入固定缺失混合和实际秒数预测。连续训练与恢复状态一致，修正清洁批次中无梯度参数的旧测试假设；微调继承及导出通过，完整测试 559 项通过、8 项跳过。
-
-[单流保真、质量门与固定候选入口](../../../artifacts/runs/2026-09-08_v4-branch-candidates/report.md)完成工程验收。五种编码路径新增有效输出异常拦截；修复后的完整测试为 570 项通过、8 项跳过。候选训练将在独立冻结工作树串行运行，正式确认仍未打开。
-
-[正式评价输入与冻结目标合同](confirmation-contracts-20260908/README.md)记录公开十折归一化完成、鼎新实际目标重拟合和压力标签来源修复。
-
-[冻结编码器后的原生留出评价](native-frozen-evaluation-20260908/README.md)记录共享导出去重、公开与鼎新消费者重新拟合及双路线集成检查。
-
-[初始诊断图表合同](diagnostic-figures-20260908/chart_contract.md)及[七张中文图](../../../artifacts/runs/2026-09-08_v4-diagnostic-figures/report.md)已完成，保留原单种子开发范围。
-
-[固定网格基线与逐查询掩码](naive-baseline-20260908/README.md)记录第六方法的版本修复、双路线来源和实际 CLARE 开发评价。
-
-[分组重采样复核](grouped-statistics-20260908/README.md)记录受试者与参数档案接口、六项指标的一致性及实际开发统计。
-
-[公开首折复核编排](public-screen-20260908/README.md)记录路线独立入选、初始化复用及真实就绪检查。
-
-[原生结果归档与鼎新确定性修复](native-results-20260908/README.md)记录文件恢复保护、模型数值重放和目标字段求和顺序修复。
-
-[鼎新跨架次航电内容隔离](vehicle-isolation-20260908/README.md)记录命名上下文中的重复输入与正式评价拦截；固定基线开发结果仍完整保留。
-
-[公开结果校验与排名](public-result-ranking-20260908/README.md)记录模型重放、完整覆盖和数据域等权汇总，以及表示时间戳指纹一致性修复。
+连续缺失下的误差和状态增长仍是待复核结果。工程模块已实现、测试通过和训练完成各有不同含义；当前尚未建立近期模型共同下游比较或真实鼎新业务任务优势。

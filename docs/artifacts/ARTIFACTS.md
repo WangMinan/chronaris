@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-09-06
+更新时间：2026-09-10
 
 ## 目录定位
 
@@ -8,9 +8,14 @@
 
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
-## 当前九月研究证据
+## 九月研究证据与最新盘点
 
-- [v4 单入口代码交付](runs/2026-09-08_v4-code-delivery/report.md)：自动选型、正式主表、时间机制与分组报告；冻结源码后后台运行，历史结果保留。
+当前执行目标见[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)。以下报告按各自产生日期保存工程与研究证据，历史启动记录不代表当前仍在运行；原始报告、指标和检查点不因导航同步而改写。
+
+- [9 月 10 日文档同步复核](../review/stage/thesis-v4/document-sync-20260910/README.md)：共同下游评价、近期方法和历史入口清理；本轮不含模型修复或新实验。
+- [9 月 9 日后台与导师要求盘点](../review/stage/thesis-v4/advisor-status-20260909/README.md)：新初筛 26/26、14,300 次更新；总控 82623 已失败退出，压力 9/52；池化差异已定位。
+
+- [v4 单入口代码交付](runs/2026-09-08_v4-code-delivery/report.md)：原六方法自动选型、正式主表、时间机制与分组报告；记录 9 月 8 日启动，后续失败见最新盘点。
 
 - [v4 两小时进度与暂停](runs/2026-09-08_v4-two-hour-progress/report.md)：18 个初筛配置完成，累计 9,900 次编码器及任务头更新；615 项 CPU 测试通过，参考文件修复后 CUDA 全量复验按时暂停，正式确认尚未开始。
 
@@ -20,7 +25,7 @@
 
 - [鼎新保留单记录](runs/2026-09-08_v4-dingxin-deduplicated/report.md)：30 个唯一航电时段、两个生理视图、11 个有效字段；完整支撑隔离通过，按用户授权替代重复两架次评价。
 
-- [v4 固定基线开发归档](runs/2026-09-08_v4-fixed-native-development/report.md)：24 单元数值重放通过；鼎新另发现跨架次航电内容重复，正式隔离未通过。
+- [v4 固定基线开发归档](runs/2026-09-08_v4-fixed-native-development/report.md)：24 单元数值重放通过，并发现原两架次航电重复；随后改为上方单记录方案，旧失败保留。
 
 - [v4 分组统计复核](runs/2026-09-08_v4-grouped-statistics/report.md)：初始 48 项档案配对统计、每项 2,000 次，公开接口不把折或种子当独立受试者。
 
@@ -216,10 +221,10 @@
 - 当前状态先看 `docs/STATE.md`。
 - 当前执行队列先看 `docs/implementation/TASKS.md`。
 - 论文需求先看 `docs/requirements/SPEC.md`。
-- 论文图表和实验表优先从 `runs/2026-07-03_thesis-protocol-snapshot/experiment_registry.csv` 与 `result_matrix_long.csv` 反查原始路径和边界。
+- 论文图表和实验表从对应版本的报告与清单反查源码、模型和数据角色；七月协议快照仅用于历史追溯。新计划与工程测试不能充当尚未生成的正式结果。
 - 公开 UAB/NASA 结果必须写成公开数据适配、校准或上下文构造第二输入流证据。
-- 鼎新结果必须写成鼎新真实数据弱监督任务证据，不写成人工专家真值。
-- LLM preprocessing 只写成字段语义归一、规则复核、semantic hints、runtime explanation 和 pending human review packet。
+- 鼎新按实际任务写成生理字段预测、机动强度等组件验证；单记录结果不写成跨架次泛化或真实压力、精神状态业务验收。
+- 大语言模型（LLM）辅助处理写成字段语义归一、规则复核和解释材料；新增 LLM 表示对照单独记录适配与评价，不以辅助材料替代标签或方法成绩。
 - 融合表示流结构评价历史结果单独成表，`evidence_quadrant = fusion_stream_structure`，作为无监督结构诊断，不与已确认的分类、回归和检索指标混算，也不替代主分类与回归任务；历史检索产物保留，但不再承担主叙事。
 
 ## 清理记录
