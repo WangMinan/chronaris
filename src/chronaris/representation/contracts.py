@@ -160,6 +160,14 @@ class DualStreamObservationBatch:
                 )
 
 
+def pool_exported_sequence(sequence: torch.Tensor, valid: torch.Tensor) -> torch.Tensor:
+    """Canonical CPU reduction for frozen exports; training retains its device/gradients."""
+    values = sequence.detach().cpu().contiguous()
+    mask = valid.detach().cpu()
+    pooled = values.masked_fill(~mask.unsqueeze(-1), 0).sum(dim=1) / mask.sum(dim=1, keepdim=True).clamp_min(1)
+    return pooled.to(sequence.device)
+
+
 @dataclass(frozen=True, slots=True)
 class FusionStreamBatch:
     """Task-independent 64-dimensional representation exported by one method."""

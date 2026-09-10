@@ -1,0 +1,31 @@
+{
+  "source_code_sha256": "005f7458bff5a17abcc9ebaa1589c09569b44d62fc9125af562b2312021752fc",
+  "test_suite_sha256": "e905be1d2bf7894bf9e3cb148c655484c71e5f199fc5300e255c4e1c0044e46a",
+  "tests_passed": 654,
+  "tests_skipped": 8,
+  "code_files": {
+    "scripts/evaluation/application_tasks/audit_v4_export_reuse.py": "d9ec584ec1a615c8159b6d91f6e9eca673a2ab26f2989680f93711e1c1d6c462",
+    "src/chronaris/evaluation/application_tasks/application_finetuning_export.py": "2933b8845f9dfa5e0716717aeb547af8aeac56a24ce22a81963435f08ca99789",
+    "src/chronaris/evaluation/application_tasks/v4_export_reuse.py": "3403fc0b60b0c3dd0a8a565a01e421f41335c13ff6180cd57fd89d3bbc8baff9",
+    "src/chronaris/evaluation/application_tasks/v4_pipeline.py": "6e339c90442b48bfde1153d85ff9e1e0fd5f822a3ca8ab04c64368eb976a770a",
+    "src/chronaris/evaluation/application_tasks/v4_pipeline_steps.py": "11d1c8642421664a7acc0246cb7bd5e469d49a25bf4b1b539c3d87a9f4689d15",
+    "src/chronaris/modeling/training/common_pretraining.py": "bfe826a80b2a1507648a74ff45d799e045af9c469e4c67dc716c91153679451d",
+    "src/chronaris/representation/contracts.py": "aae1fdfa556ce1a810ae926f357dcaa3f6ae3e95666ed0d502318ea706d04067",
+    "tests/evaluation/application_tasks/test_export_pooling.py": "96f35a0ae5f34b27469e384e3d59122620d861b587184b4e80e664716a330a1d",
+    "tests/evaluation/application_tasks/test_v4_pipeline.py": "c28350987906a5538af7c77b096f447facd03186b79fe30afd51be911f39a55e"
+  },
+  "artifact_files": {
+    "pytest.log": "7545dc1a4b0ff9f432a4167728873b3febf9df74f9181c5ebb88b7b0a06a1a9d",
+    "reuse_inventory.json": "076b6b09e9a647fcb322946af357a8a86b373bf28102629d8f9b503617ddd903",
+    "replay_verification.json": "11947a8f11e7aba08fc7cc8009e1997e3c78871d8576eb95aec49029ff99a49e",
+    "preservation_check.json": "70c8dc66ac8d121162bdb0e1319a98b93ddbcc5d105bc13f76a47042c06afd5b",
+    "pytest.xml": "575895a74cda131609f48e2b88c2f8b283c34b5ea2ad0cc604f1134762482c6b",
+    "validation_receipt.json": "b581520bfc56eec636881cd688c9503ffebdfa5e86456c27ee3d8ade5a669713",
+    "static_checks.json": "c1f4e7f0b2d32cd2b65dd7e6f51fd4f19422f79871676dbd23a124d4c5015452",
+    "report.md": "09c81af859b825898f25a02dc78fd5d345e3d5a277f9be95e22767b97059dfb6"
+  },
+  "scope": "stage_1_export_failure_and_reuse_only",
+  "baseline_ruff_issues_unchanged": 9,
+  "full_queue_restarted": false,
+  "new_encoder_training_updates": 0
+}

@@ -179,6 +179,9 @@ def main(*, default_until='freeze'):
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
     args = parser.parse_args()
+    def terminate(signum, frame):
+        raise KeyboardInterrupt('pipeline termination requested')
+    signal.signal(signal.SIGTERM, terminate)
     if args.worker:
         config = json.loads(Path(args.config).read_text())
         if config['source_code_sha256'] != v4_workflow_source_sha256():
@@ -190,6 +193,7 @@ def main(*, default_until='freeze'):
             # Preserve the failure history; only the explicit restart may retry failed units.
             queue_paths = {
                 'initial': 'initial/run_state.json', 'public_screen': 'public_screen/run_state.json',
+                'initial_pressure': 'initial_pressure/queue_state.json',
                 'review': 'review/run_state.json', 'conditional_review': 'conditional_review/run_state.json',
                 'review_pressure': 'review_pressure/queue_state.json',
                 'conditional_review_pressure': 'conditional_pressure/queue_state.json',
@@ -234,9 +238,6 @@ def main(*, default_until='freeze'):
             initial_configurations=26, seeds=[17,29,43], public_review_folds=3,
             conditional_candidate_limit=1, executes_training=False), indent=2))
         return
-    def terminate(signum, frame):
-        raise KeyboardInterrupt('pipeline termination requested')
-    signal.signal(signal.SIGTERM, terminate)
     result = execute_pipeline(config, until=args.until, retry_failed=args.retry_failed)
     print(json.dumps(result, indent=2))
     if result['status'] == 'failed':

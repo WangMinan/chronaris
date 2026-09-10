@@ -29,7 +29,7 @@ from chronaris.representation import (
     FusionStreamBatch,
     TrainOnlyRobustNormalizer,
 )
-from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError
+from chronaris.representation.contracts import FUSION_OUTPUT_DIM, RepresentationContractError, pool_exported_sequence
 
 
 @dataclass(frozen=True, slots=True)
@@ -114,9 +114,8 @@ class TrainedFusionAdapter:
             encoded = self.encoder(normalized)
         sequence = encoded.sequence_embedding
         valid = encoded.modality_available_mask.to(device=sequence.device)
-        sequence = sequence.masked_fill(~valid.any(dim=1)[:, None, None], 0)
-        count = valid.sum(dim=1, keepdim=True).clamp_min(1).to(sequence.dtype)
-        pooled = (sequence * valid.unsqueeze(-1).to(sequence.dtype)).sum(dim=1) / count
+        sequence = sequence.masked_fill(~valid.unsqueeze(-1), 0)
+        pooled = pool_exported_sequence(sequence, valid)
         return FusionStreamBatch(
             sample_ids=batch.sample_ids,
             timestamps_s=batch.query_timestamps_s.to(device),

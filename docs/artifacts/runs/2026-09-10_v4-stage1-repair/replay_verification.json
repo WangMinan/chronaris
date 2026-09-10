@@ -1,0 +1,166 @@
+{
+  "source_code_sha256": "005f7458bff5a17abcc9ebaa1589c09569b44d62fc9125af562b2312021752fc",
+  "status": "completed",
+  "device": "cuda",
+  "sample_count": 256,
+  "completed_conditions": 8,
+  "encoder_training_updates": 0,
+  "consumer_refit": false,
+  "clean_arrays": {
+    "sequence_embedding": {
+      "equal": true,
+      "max_abs_delta": 0.0
+    },
+    "pooled_embedding": {
+      "equal": true,
+      "max_abs_delta": 0.0
+    },
+    "timestamps_s": {
+      "equal": true,
+      "max_abs_delta": 0.0
+    },
+    "valid_mask": {
+      "equal": true
+    },
+    "sample_ids": {
+      "equal": true
+    }
+  },
+  "clean_predictions": {
+    "validation_causal_tcn_duration_state": {
+      "equal": true
+    },
+    "validation_causal_tcn_raw_state": {
+      "equal": true
+    },
+    "validation_linear_class": {
+      "equal": true
+    },
+    "validation_linear_regression": {
+      "equal": true,
+      "max_abs_delta": 0.0
+    },
+    "validation_minirocket_class": {
+      "equal": true
+    },
+    "validation_minirocket_regression": {
+      "equal": true,
+      "max_abs_delta": 0.0
+    },
+    "validation_sample_ids": {
+      "equal": true
+    },
+    "validation_state_true": {
+      "equal": true
+    },
+    "validation_workload_class_true": {
+      "equal": true
+    },
+    "validation_workload_true": {
+      "equal": true,
+      "max_abs_delta": 0.0
+    }
+  },
+  "absolute_tolerance": 1e-06,
+  "relative_tolerance": 0,
+  "original_failure_preserved": true,
+  "condition_results": {
+    "clean_asynchronous": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/clean_asynchronous/result.json",
+      "result_sha256": "ca97752b47d88dcf9030986c0dd5b8160e6ea4ff3830f571c38814e30064329c",
+      "representation_sha256": "ad6a72e06491084060da49456374f7aacf39d3bf61127b5f12dbe0775a575c00",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/clean_asynchronous/predictions/chronaris/clean_asynchronous/predictions.npz",
+      "prediction_sha256": "d50d70637a196f4347dd91db68d56948b7551d9be08512e7deacb8ae0d2a4abe"
+    },
+    "random_missing_30pct": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/random_missing_30pct/result.json",
+      "result_sha256": "0626c616e587057f552d9a3122dab13d850450a09972932e1522416004ad4245",
+      "representation_sha256": "8c15cb7d6e8b8b0be62ea0b7e3b23b84d293ce54bad92d7e72e93211b5f861fc",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/random_missing_30pct/predictions/chronaris/random_missing_30pct/predictions.npz",
+      "prediction_sha256": "e47e608a148cb1dd13075973746111175385f1522167f0f307f304f346119e33"
+    },
+    "contiguous_gap_15s": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/contiguous_gap_15s/result.json",
+      "result_sha256": "f56a8fa0981aece5541a086b3cea32217a0c3c227eda368e867d339dd7fb9c39",
+      "representation_sha256": "ed507c0289f4e0e261fa54765548b7913129dc0b7d50e5beba0d88461bb926cc",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/contiguous_gap_15s/predictions/chronaris/contiguous_gap_15s/predictions.npz",
+      "prediction_sha256": "0a37b82a371cefd752ad31145493b07fda4ac7a003225d0c15c972ca522c6924"
+    },
+    "contiguous_gap_30s": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/contiguous_gap_30s/result.json",
+      "result_sha256": "3285d55b5a031cc68a38adba87125d7450dd38b3a6ba382f85d2fa6a666623af",
+      "representation_sha256": "dbce67593e32a3be3f0bc0450738b0521b8b07a4a938e538df750b9e32eb7b47",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/contiguous_gap_30s/predictions/chronaris/contiguous_gap_30s/predictions.npz",
+      "prediction_sha256": "6f5180acd939d94bb4c652e5642e7c300ba9afa1c93cb4a308640c2f4e1d164b"
+    },
+    "physiology_missing": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/physiology_missing/result.json",
+      "result_sha256": "f72302675f343a4322ddc4265cee52ebf9300e34c8417393138abd3f1ed74000",
+      "representation_sha256": "3ac2de6518511d62629503dc10e5d04d4d4de36bd5b58e9e12528ccc1880c8d8",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/physiology_missing/predictions/chronaris/physiology_missing/predictions.npz",
+      "prediction_sha256": "47ecf8ba94aa8cc240bd406851755daf654632f24b322a4319f12fa819d57229"
+    },
+    "vehicle_missing": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/vehicle_missing/result.json",
+      "result_sha256": "bc218eaeb5fbe7f875d54dd3324411e094d70fd5deb301031e9a9d58eb79b52a",
+      "representation_sha256": "4da4c501677e176ea60eea0ffb033705d153e94c750daf2dfb6d26fd70292eb0",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/vehicle_missing/predictions/chronaris/vehicle_missing/predictions.npz",
+      "prediction_sha256": "7631d375997e123b48c470d69c26ad6f365fb4a1d823e5e49efd139cbf57add9"
+    },
+    "physiology_clock_offset_plus_1s": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/physiology_clock_offset_plus_1s/result.json",
+      "result_sha256": "97f25f46c1607f0b319d04af49eb30ca019bb6602b845917a6b4e546c94eb62f",
+      "representation_sha256": "1907b5db32473d6ab5432daf9d870e49dcddf6a4688731bb8d0cacbb405f5958",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/physiology_clock_offset_plus_1s/predictions/chronaris/physiology_clock_offset_plus_1s/predictions.npz",
+      "prediction_sha256": "a4800f397e6e4563224d48de4b9777d0994bde7cc5f2c351ee558b87963600ef"
+    },
+    "physiology_response_lag_plus_15s": {
+      "result_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/physiology_response_lag_plus_15s/result.json",
+      "result_sha256": "27415673a89244d4a43e3c1075e3576fe3405f7713da1b5f6c64797e5ed3a95f",
+      "representation_sha256": "af91f0058d4c70a453c2dd7c6c5506f2fd3efd9808487eb41b5814c12bd2d622",
+      "prediction_path": "/mnt/e/chronaris-v4-results/2026-09-10-stage1-repair/pressure_verified/chronaris/independent_pairing/task_guided/200/physiology_response_lag_plus_15s/predictions/chronaris/physiology_response_lag_plus_15s/predictions.npz",
+      "prediction_sha256": "183b7d10ed798070550a3b303fd3898e3aa768fe13b3f31b96613bb6da124b3d"
+    }
+  },
+  "source": {
+    "format": "chronaris.v4_development_pressure.v1",
+    "source_code_sha256": "005f7458bff5a17abcc9ebaa1589c09569b44d62fc9125af562b2312021752fc",
+    "method": "chronaris",
+    "route": "task_guided",
+    "update": 200,
+    "checkpoint_sha256": "90021f13d39e0a7b2ed47a0dee20fbd65f807b360e1048308f0725879ec824ab",
+    "inference_device": "cuda",
+    "phase": "screen",
+    "seed": 17,
+    "data_manifest_sha256": "63179d4e7913a537a89094d8e73361d06333a2d99139f6c04aac5c440b6c7d00",
+    "consumer_protocol_sha256": "bfdc86ca518283fdea54ef1332149a64ec43db95aaf2f5428ccfac2f8ebc7a2d",
+    "source_diagnostic_code_sha256": "75254f7454e2d16105052f27ace805edf03b48584fd0030551bf220411b1ce93",
+    "candidate_options": {
+      "name": "independent_pairing",
+      "hidden_dim": 32,
+      "training": {
+        "independent_pairing_enabled": true,
+        "independent_pair_weight": 0.1
+      },
+      "missingness_mixture": false
+    },
+    "clean_prediction_sha256": "d50d70637a196f4347dd91db68d56948b7551d9be08512e7deacb8ae0d2a4abe",
+    "consumer_files": {
+      "linear": "822767430d923475037830ebde77ad6a2278a705fd56e22395be41c7b1de10ac",
+      "minirocket": "355cf4300af9729f02d80c324c6e5a51aa875aa79778801101b92fb2121161e0",
+      "tcn": "6e85f8794f90cc194a5502adcc2fe4e2ba84034358579bd28cfbe2e3936c839e"
+    },
+    "condition_audit_sha256": "3ba8f9cd42f8d87e91aae968d3595156db04907b34ba02839994e06dc177ce97",
+    "clean_export_sha256": "01ddbb0a36acc83a5a6a4bc7128ab5bf91b968c7df1ad30c58554e428e5e50e8",
+    "evaluation_role": "validation",
+    "confirmation_opened": false,
+    "consumer_refit": false
+  },
+  "progress": {
+    "method": "pressure_chronaris_task_guided",
+    "status": "completed",
+    "optimizer_updates": 0,
+    "condition": "physiology_response_lag_plus_15s",
+    "wall_elapsed_s": 70.55907783890143
+  }
+}

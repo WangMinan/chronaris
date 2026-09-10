@@ -69,6 +69,51 @@ def test_initial_matrix_covers_baseline_objectives_without_untriggered_decay(tmp
         assert {(method, name) for name in ('reference', 'capacity64', 'multihorizon', 'missingness_mixture')} <= keys
 
 
+@pytest.mark.parametrize('error', [ValueError('replay mismatch'), KeyboardInterrupt('interrupted')])
+def test_initial_pressure_failure_and_explicit_worker_retry(tmp_path, monkeypatch, error):
+    from contextlib import nullcontext
+    from chronaris.evaluation.application_tasks import v4_pipeline_steps as steps, v4_pressure_run as pressure
+    root = tmp_path/'run'
+    config = dict(root=str(root), data_root='unused', registry_path='unused', condition_root='unused',
+        source_code_sha256='a'*64, entry_sha256='b'*64, input_files={})
+    steps.write_result(root/'initial/cohort_state.json', dict(status='completed', failed_units=[],
+        units=[['chronaris', 'reference'], ['chronaris', 'capacity64']]))
+    monkeypatch.setattr(steps, 'v4_workflow_source_sha256', lambda: 'a'*64)
+    monkeypatch.setattr(steps, 'development_gpu_lock', lambda: nullcontext(True))
+    calls = []
+    def run(**kwargs):
+        calls.append((kwargs['candidate_name'], kwargs['route']))
+        if len(calls) == 2:
+            raise error
+        return dict(completed=True)
+    monkeypatch.setattr(pressure, 'run_development_pressure', run)
+    with pytest.raises(type(error)):
+        steps.run_pipeline_step('initial_pressure', config)
+    path = root/'initial_pressure/queue_state.json'
+    failed = json.loads(path.read_text())
+    key = 'chronaris/reference/task_guided'
+    assert failed['status'] == 'failed' and failed['current_unit'] is None
+    assert failed['failed_units'] == [key] and len(failed['failures']) == 1
+    assert steps.run_pipeline_step('initial_pressure', config) == failed and len(calls) == 2
+    config_path = root/'config.json'
+    steps.write_result(config_path, config)
+    monkeypatch.setattr(module, 'v4_workflow_source_sha256', lambda: 'a'*64)
+    monkeypatch.setattr(module, 'sha256_file', lambda path: 'b'*64)
+    handlers = {}
+    monkeypatch.setattr(module.signal, 'signal', lambda signum, handler: handlers.update({signum: handler}))
+    monkeypatch.setattr(module.sys, 'argv', ['pipeline', '--worker', 'initial_pressure', '--config', str(config_path),
+        '--result', str(root/'receipt.json'), '--retry-failed'])
+    module.main()
+    with pytest.raises(KeyboardInterrupt, match='termination requested'):
+        handlers[module.signal.SIGTERM](module.signal.SIGTERM, None)
+    resumed = json.loads(path.read_text())
+    assert resumed['status'] == 'completed' and len(resumed['completed_units']) == 4
+    assert resumed['failed_units'] == [] and resumed['attempts'][key] == 2
+    assert resumed['failures'] == failed['failures']
+    assert resumed['failed_attempts'][0]['units'] == [key]
+    assert calls[:3] == [('reference', 'self_supervised'), ('reference', 'task_guided'), ('reference', 'task_guided')]
+
+
 def test_core_evaluation_forwards_the_new_confirmation_directory(tmp_path, monkeypatch):
     from chronaris.evaluation.application_tasks import v4_core_ablations as core
     monkeypatch.setattr(core, 'read_frozen_configuration', lambda *args: {})

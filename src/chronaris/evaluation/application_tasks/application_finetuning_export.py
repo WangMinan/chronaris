@@ -19,7 +19,7 @@ from chronaris.representation import (
     write_fusion_stream_batch,
     load_fusion_stream_batch,
 )
-from chronaris.representation.contracts import RepresentationContractError
+from chronaris.representation.contracts import RepresentationContractError, pool_exported_sequence
 from chronaris.modeling.training.candidate_validation import _load_batch
 from chronaris.modeling.training.candidate_checkpoint import is_development_snapshot
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
@@ -159,7 +159,7 @@ def export_finetuned_application_representations(
             timestamps_s=timestamps,
             sequence_embedding=sequence,
             valid_mask=valid,
-            pooled_embedding=sequence.sum(dim=1) / valid.sum(dim=1, keepdim=True).clamp_min(1),
+            pooled_embedding=pool_exported_sequence(sequence, valid),
             method_name=model.method_name,
             fold_id=payload["fold_id"],
             checkpoint_sha256=checkpoint_hash,

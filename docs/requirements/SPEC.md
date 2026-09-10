@@ -83,4 +83,4 @@
 
 现有六方法实现来自 [v4 开发与实验合同](thesis-v4-development-plan.md)及其鼎新单记录时间块修订；[七月简化任务](simple-downstream-evaluation-v1.md)保留目标公式沿革，其留一架次、仅无标签训练等旧规则不再覆盖 v4 双路线与去重修订。
 
-后续先修复池化一致性与失败终态，完成已有产物兼容核验，再接入 TimeCMA 语言模型增强时序方法、Chronos-2 预训练时序模型，并尽量纳入 SensorLLM 传感器—语言对齐模型。新增方法须通过共同下游评价的表示与监督核验后进入完整比较；不以原生未来序列预测矩阵替代主任务。具体代码落点、验收、环境和论文节点统一见[新方案](thesis-downstream-representation-plan-20260909.md)。
+[阶段 1](../artifacts/runs/2026-09-10_v4-stage1-repair/report.md)已修复导出池化与失败终态，并明确旧检查点、序列及下游模型的复用范围；后续接入 TimeCMA 语言模型增强时序方法、Chronos-2 预训练时序模型，并尽量纳入 SensorLLM 传感器—语言对齐模型。新增方法须通过共同下游评价的表示与监督核验后进入完整比较；不以原生未来序列预测矩阵替代主任务。具体代码落点、验收、环境和论文节点统一见[新方案](thesis-downstream-representation-plan-20260909.md)。

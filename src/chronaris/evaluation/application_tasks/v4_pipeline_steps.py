@@ -1,5 +1,7 @@
 """Fixed v4 stages, reusing the existing data, trainers and evidence readers."""
 import json
+import time
+import traceback
 from pathlib import Path
 
 from chronaris.evaluation.application_tasks.v4_candidates import CANDIDATE_CHANGES, BASELINE_CANDIDATES
@@ -60,6 +62,8 @@ def run_pipeline_step(stage, config, *, attempt=1):
             source_code_sha256=v4_workflow_source_sha256(), completed_units=[], failed_units=[])
         if state['source_code_sha256'] != v4_workflow_source_sha256():
             raise ValueError('initial pressure source changed')
+        if state.get('failed_units'):
+            return state
         with development_gpu_lock() as acquired:
             if not acquired:
                 return dict(status='waiting_gpu')
@@ -69,12 +73,24 @@ def run_pipeline_step(stage, config, *, attempt=1):
                     if key in state['completed_units']:
                         continue
                     state.update(status='running', current_unit=key)
+                    attempts = state.setdefault('attempts', {})
+                    attempts[key] = attempts.get(key, 0) + 1
                     write_result(path, state)
-                    result = run_development_pressure(method=method, candidate_name=candidate, route=route,
-                        update=300 if route == 'self_supervised' else 200, output_root=pressure,
-                        diagnostic_root=initial, condition_root=config['condition_root'], device='cuda')
-                    if not result['completed']:
-                        raise ValueError(f'incomplete initial pressure: {key}')
+                    try:
+                        result = run_development_pressure(method=method, candidate_name=candidate, route=route,
+                            update=300 if route == 'self_supervised' else 200, output_root=pressure,
+                            diagnostic_root=initial, condition_root=config['condition_root'], device='cuda')
+                        if not result['completed']:
+                            raise ValueError(f'incomplete initial pressure: {key}')
+                    except BaseException:
+                        error = traceback.format_exc()
+                        state['failed_units'].append(key)
+                        state.setdefault('errors', {})[key] = error
+                        state.setdefault('failures', []).append(dict(unit=key, attempt=attempts[key],
+                            time_unix_s=time.time(), error=error))
+                        state.update(status='failed', current_unit=None, current_child_pid=None)
+                        write_result(path, state)
+                        raise
                     state['completed_units'].append(key)
                     write_result(path, state)
         state.update(status='completed', current_unit=None, current_child_pid=None)
