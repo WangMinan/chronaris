@@ -1,0 +1,19 @@
+{
+  "updates": 1,
+  "history": [
+    {
+      "update": 1,
+      "loss": 1.1024218797683716,
+      "gradient_norm": 5.216375827789307,
+      "sample_ids": [
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0005",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0006",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0007",
+        "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0008"
+      ]
+    }
+  ],
+  "seconds": 83.87479828391224,
+  "peak_cuda_bytes": 176477656576,
+  "state_sha256": "c91b5404d223eb8226664359230618621d04571cc12c2d6b9de00fd20cd0a1f2"
+}

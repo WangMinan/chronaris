@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris/scripts/evaluation/application_tasks/replay_recent_model_exports.py", line 22, in <module>
+    main()
+  File "/home/wangminan/projects/chronaris/scripts/evaluation/application_tasks/replay_recent_model_exports.py", line 16, in main
+    result = revalidate_recent_exports(**vars(parser.parse_args()))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/recent_model_smoke.py", line 281, in revalidate_recent_exports
+    raise ValueError('original task declaration exceeds actual training-label coverage')
+ValueError: original task declaration exceeds actual training-label coverage

@@ -1,10 +1,12 @@
 # Chronaris 复核入口
 
-更新时间：2026-09-10
+更新时间：2026-09-11
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
+
+[阶段 3 近期模型接入](stage/thesis-v4/stage3-models-20260911/README.md)核验官方表示、真实开发下游、训练与缓存恢复，以及资源成本；适配合同见[近期模型开发接入](../requirements/recent-model-adapters-v1.md)。
 
 [阶段 2 共同下游合同](stage/thesis-v4/stage2-contract-20260910/README.md)已完成任务、角色、监督和表示能力约束；三域真实开发闭环及完整显卡回归通过。
 
@@ -12,7 +14,7 @@
 
 [文档同步与过时入口清理](stage/thesis-v4/document-sync-20260910/README.md)核对两段历史会话、用户最新确认和当前代码，统一共同下游评价主线、标签含义、近期方法接入与论文节点。该次工作仅修改文档，后续实现见阶段 1。
 
-[导师要求与后台盘点](stage/thesis-v4/advisor-status-20260909/README.md)记录 26 个新初筛配置、14,300 次更新及进程 82623 的失败终态。该次工作定位池化设备差异；修复已由阶段 1 承接，旧队列未重启，近期方法实跑仍待执行。
+[导师要求与后台盘点](stage/thesis-v4/advisor-status-20260909/README.md)记录 26 个新初筛配置、14,300 次更新及进程 82623 的失败终态。该次工作定位池化设备差异；修复已由阶段 1 承接，旧队列未重启，近期方法后续实跑由阶段 3 单独归档。
 
 ## v4 实现证据
 

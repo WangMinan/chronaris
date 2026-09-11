@@ -1,0 +1,170 @@
+{
+  "status": "completed",
+  "domain": "clare",
+  "method": "sensorllm_deepseek",
+  "scope": "engineering_development",
+  "source_code_sha256": "4831e832928675f0d39598314fb4b871c570ca3f4d95334e13023e6faf24efb6",
+  "contract_sha256": "17f9f317082fe3c2494856972f8c9f1cabfa72284e953b596a97795f0b65968f",
+  "sample_counts": {
+    "train": 32,
+    "validation": 16
+  },
+  "channel_names": [
+    "physiology.central.eeg_tp9",
+    "physiology.central.eeg_af7",
+    "physiology.central.eeg_af8",
+    "physiology.central.eeg_tp10",
+    "vehicle.peripheral.eda",
+    "vehicle.peripheral.ecg"
+  ],
+  "load_seconds": 121.11222889693454,
+  "prompt_costs": {},
+  "results": [
+    {
+      "route": "summary_adapted",
+      "training": {
+        "first_update": {
+          "updates": 1,
+          "history": [
+            {
+              "update": 1,
+              "loss": 1.7675299644470215,
+              "gradient_norm": 126.60896301269531,
+              "sample_ids": [
+                "1624__experiment0_window5"
+              ],
+              "parameters_with_gradient": 20980736
+            }
+          ],
+          "seconds": 0.9761611730791628,
+          "peak_cuda_bytes": 16906059264,
+          "state_sha256": "81475bc9324fbdf0863e6a981972d51c5f97889d52dff6e760d2a8dd5592820d"
+        },
+        "primary": {
+          "updates": 2,
+          "history": [
+            {
+              "update": 1,
+              "loss": 1.7675299644470215,
+              "gradient_norm": 126.60896301269531,
+              "sample_ids": [
+                "1624__experiment0_window5"
+              ],
+              "parameters_with_gradient": 20980736
+            },
+            {
+              "update": 2,
+              "loss": 0.545480489730835,
+              "gradient_norm": 84.71501159667969,
+              "sample_ids": [
+                "1624__experiment0_window6"
+              ],
+              "parameters_with_gradient": 20980736
+            }
+          ],
+          "seconds": 1.6057005617767572,
+          "peak_cuda_bytes": 16990667264,
+          "state_sha256": "ea1597b9209a94531ada6151c1e3d9593a84a034a41c81a5387de468b736125c"
+        },
+        "replay": {
+          "updates": 2,
+          "history": [
+            {
+              "update": 1,
+              "loss": 1.7675299644470215,
+              "gradient_norm": 126.60896301269531,
+              "sample_ids": [
+                "1624__experiment0_window5"
+              ],
+              "parameters_with_gradient": 20980736
+            },
+            {
+              "update": 2,
+              "loss": 0.545480489730835,
+              "gradient_norm": 84.71501159667969,
+              "sample_ids": [
+                "1624__experiment0_window6"
+              ],
+              "parameters_with_gradient": 20980736
+            }
+          ],
+          "seconds": 1.0539238131605089,
+          "peak_cuda_bytes": 16990550528,
+          "state_sha256": "ea1597b9209a94531ada6151c1e3d9593a84a034a41c81a5387de468b736125c"
+        },
+        "resume_identical": true
+      },
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "17f9f317082fe3c2494856972f8c9f1cabfa72284e953b596a97795f0b65968f",
+        "supervision_stratum": "task_guided:summary_labels",
+        "method": "sensorllm_deepseek",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "17f9f317082fe3c2494856972f8c9f1cabfa72284e953b596a97795f0b65968f:task_guided:summary_labels:4483f2fb707c2ade2d79bfa42973076e6e1d55a4ad6d3b63311286127cfb0b6e",
+        "consumers": {
+          "protocol_sha256": "7b32949127e450f74b93721263aa272344ce36803672c4f7fbe0922920eab28a",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/consumers/linear.joblib",
+              "model_sha256": "a0a26e37a95744987d17b4a50f95fc0598907f95d702745a2152bd3b17e51da1",
+              "result_sha256": "e2900423032e9488b1cd11e8039930b71ac20d4fba7370c922772f6deadbfa88",
+              "fit_elapsed_s": 0.035044142976403236,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "workload_classification",
+                    "metric": "macro_f1",
+                    "value": 0.5571428571428572,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "workload_regression",
+                    "metric": "rmse",
+                    "value": 3.521666519633527,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "4548390051d5ec03cf52f55f5e3356fe4fb74d7c2c9b6b8bd71647456d32448f",
+        "confirmation_opened": false
+      },
+      "export_cost": {
+        "seconds": 5.2668014438822865,
+        "peak_cuda_bytes": 16677129216,
+        "windows_per_second": 9.11369082572022
+      },
+      "replay_export_cost": {
+        "seconds": 5.2856600298546255,
+        "peak_cuda_bytes": 16677129216,
+        "windows_per_second": 9.081174295903434
+      },
+      "parameters": 8234934272,
+      "feature_dim": 4096,
+      "nonconstant_dimensions": 4096,
+      "representation_reload_identical": true,
+      "downstream_resume_identical": true,
+      "feature_files": {
+        "train": {
+          "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/train_features.npz",
+          "sha256": "a8d06aba96bdf646a34d18ae04828ac989492c730196e45afc0d68d2c3addc6a"
+        },
+        "validation": {
+          "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/validation_features.npz",
+          "sha256": "979776d6e84a5f33b53c683753d8fbd33c3090fa1e78e2ad594414ada7777548"
+        }
+      }
+    }
+  ],
+  "total_seconds": 253.58718430111185,
+  "confirmation_opened": false
+}

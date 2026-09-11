@@ -1,0 +1,28 @@
+{
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/binding.json": "638d64b1d74b0156e15a0f6063384efc2069ab38796fe46e1dfe429612a88f24",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/progress.json": "0634ff4f79429dbe97ad23be4a2d01daa2f0ed5bce5fdba928f8b425d6aa7dda",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary.json": "f9422256be98926c932ead9d8c48799a60723b5ad2967795062a232a019d7fbe",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/declaration.json": "c5601a43f20247c04d7a9f8613447cb1436f25f602d1cad1e688f05b99b14925",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/encoder.pt": "119d02b129e355d9894ed8f834a8de73f0e109e147cc8af400d492253a9ae6a8",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/first_update.json": "d7e19f3aad2ee0ce35ad84c07960ff7c6fa337c72f4cbd8269ccfa3fd921b6b7",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/summary.json": "f03fcfaaa17e8e66b4ddb72ba35b39e95a86f28870b9b230d1076c5a4fd37bcb",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/train_features.npz": "a8d06aba96bdf646a34d18ae04828ac989492c730196e45afc0d68d2c3addc6a",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/validation_features.npz": "979776d6e84a5f33b53c683753d8fbd33c3090fa1e78e2ad594414ada7777548",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/common_contract.json": "4548390051d5ec03cf52f55f5e3356fe4fb74d7c2c9b6b8bd71647456d32448f",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/result.json": "e47db9b4d324f34b4a7b017ccf02075facb4c837f374cc71281bf580b094adad",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/consumers/consumer_manifest.json": "ecebabbe08cde3ab485defe788c82ed5d4d48c86765a92b48787e351ffaa01a3",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/consumers/linear.joblib": "a0a26e37a95744987d17b4a50f95fc0598907f95d702745a2152bd3b17e51da1",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/evaluation/consumers/linear_results.json": "e2900423032e9488b1cd11e8039930b71ac20d4fba7370c922772f6deadbfa88"
+  },
+  "fresh_process_resume": {
+    "method": "recent_model_sensorllm_deepseek",
+    "status": "completed",
+    "optimizer_updates": 0,
+    "phase": "common_downstream",
+    "route": "summary_adapted",
+    "checkpoint_updates": 2,
+    "wall_elapsed_s": 256.6808242877014
+  },
+  "summary_sha256": "f9422256be98926c932ead9d8c48799a60723b5ad2967795062a232a019d7fbe"
+}

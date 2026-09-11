@@ -166,10 +166,6 @@ def validate_representation_declaration(contract, outputs, declaration, *, famil
         raise ValueError('future-trajectory and summary-label supervision cannot be mixed')
     if signal == 'summary_labels' and set(tasks) != {t['name'] for t in payload['task_definitions']}:
         raise ValueError('declared training tasks disagree with the checkpoint')
-    if signal == 'summary_labels' and 'task_supervision_counts' in payload:
-        counts = payload['task_supervision_counts']
-        if set(counts) != set(tasks) or any(type(v) not in (int, float) or not (0 < v < float('inf')) for v in counts.values()):
-            raise ValueError('declared training task received no actual supervision')
     encoder_roles = payload.get('role_sample_ids', payload.get('fold', {}))
     actual_fit = encoder_roles.get('train', encoder_roles.get('train_sample_ids'))
     if actual_fit is not None and list(actual_fit) != declaration['encoder_fit_sample_ids']:

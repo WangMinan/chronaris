@@ -1,0 +1,152 @@
+[
+  {
+    "domain": "clare",
+    "method": "chronos2",
+    "route": "frozen",
+    "encoder_parameters": 119477664,
+    "encoder_parameters_with_gradient": 0,
+    "primary_fit_seconds": 0,
+    "replay_fit_seconds": 0,
+    "fit_peak_cuda_bytes": 0,
+    "export": {
+      "seconds": 2.305678559001535,
+      "peak_cuda_bytes": 514498048,
+      "windows_per_second": 20.818166440679487
+    }
+  },
+  {
+    "domain": "clare",
+    "method": "chronos2",
+    "route": "history_adapted",
+    "encoder_parameters": 119477664,
+    "encoder_parameters_with_gradient": 119477664,
+    "primary_fit_seconds": 17.399874402210116,
+    "replay_fit_seconds": 8.538735559675843,
+    "fit_peak_cuda_bytes": 2459233792,
+    "export": {
+      "seconds": 1.77035279199481,
+      "peak_cuda_bytes": 1027208704,
+      "windows_per_second": 27.113239924294543
+    }
+  },
+  {
+    "domain": "clare",
+    "method": "timecma",
+    "route": "summary_adapted",
+    "encoder_parameters": 11590279,
+    "encoder_parameters_with_gradient": 5796999,
+    "primary_fit_seconds": 2.405936961993575,
+    "replay_fit_seconds": 0.6280081593431532,
+    "fit_peak_cuda_bytes": 208680448,
+    "export": {
+      "seconds": 0.3338424009270966,
+      "peak_cuda_bytes": 138821632,
+      "windows_per_second": 143.78041814551315
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "method": "chronos2",
+    "route": "frozen",
+    "encoder_parameters": 119477664,
+    "encoder_parameters_with_gradient": 0,
+    "primary_fit_seconds": 0,
+    "replay_fit_seconds": 0,
+    "fit_peak_cuda_bytes": 0,
+    "export": {
+      "seconds": 5.217854192014784,
+      "peak_cuda_bytes": 517448192,
+      "windows_per_second": 18.398367694312913
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "method": "chronos2",
+    "route": "history_adapted",
+    "encoder_parameters": 119477664,
+    "encoder_parameters_with_gradient": 119477664,
+    "primary_fit_seconds": 18.273658282589167,
+    "replay_fit_seconds": 8.342348015867174,
+    "fit_peak_cuda_bytes": 2459233792,
+    "export": {
+      "seconds": 2.3167445207946002,
+      "peak_cuda_bytes": 1031010816,
+      "windows_per_second": 41.437456369627576
+    }
+  },
+  {
+    "domain": "dingxin",
+    "method": "chronos2",
+    "route": "frozen",
+    "encoder_parameters": 119477664,
+    "encoder_parameters_with_gradient": 0,
+    "primary_fit_seconds": 0,
+    "replay_fit_seconds": 0,
+    "fit_peak_cuda_bytes": 0,
+    "export": {
+      "seconds": 4.821341592818499,
+      "peak_cuda_bytes": 1571326976,
+      "windows_per_second": 6.222334473185991
+    }
+  },
+  {
+    "domain": "dingxin",
+    "method": "chronos2",
+    "route": "history_adapted",
+    "encoder_parameters": 119477664,
+    "encoder_parameters_with_gradient": 119477664,
+    "primary_fit_seconds": 17.475105130579323,
+    "replay_fit_seconds": 8.228569451253861,
+    "fit_peak_cuda_bytes": 17857672192,
+    "export": {
+      "seconds": 3.763929720968008,
+      "peak_cuda_bytes": 2099925504,
+      "windows_per_second": 7.970393238980189
+    }
+  },
+  {
+    "domain": "dingxin",
+    "method": "timecma",
+    "route": "summary_adapted",
+    "encoder_parameters": 15479134,
+    "encoder_parameters_with_gradient": 9685854,
+    "primary_fit_seconds": 2.219538831617683,
+    "replay_fit_seconds": 1.117847215384245,
+    "fit_peak_cuda_bytes": 661779456,
+    "export": {
+      "seconds": 0.20400503231212497,
+      "peak_cuda_bytes": 204045824,
+      "windows_per_second": 147.0551959429138
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "method": "timecma",
+    "route": "summary_adapted",
+    "encoder_parameters": 11591149,
+    "encoder_parameters_with_gradient": 5797869,
+    "primary_fit_seconds": 1.9943723254837096,
+    "replay_fit_seconds": 0.5192285790108144,
+    "fit_peak_cuda_bytes": 208463360,
+    "export": {
+      "seconds": 0.4476813022047281,
+      "peak_cuda_bytes": 138136064,
+      "windows_per_second": 214.43826116306832
+    }
+  },
+  {
+    "domain": "clare",
+    "method": "sensorllm_deepseek",
+    "route": "summary_adapted",
+    "encoder_parameters": 8234934272,
+    "encoder_parameters_with_gradient": 20980736,
+    "primary_fit_seconds": 2.58186173485592,
+    "replay_fit_seconds": 1.0539238131605089,
+    "fit_peak_cuda_bytes": 16990667264,
+    "export": {
+      "seconds": 5.2668014438822865,
+      "peak_cuda_bytes": 16677129216,
+      "windows_per_second": 9.11369082572022
+    }
+  }
+]

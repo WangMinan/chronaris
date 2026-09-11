@@ -1,0 +1,59 @@
+{
+  "preexisting_issues_unchanged": true,
+  "issues": [
+    {
+      "path": "src/chronaris/evidence/rigid_body_rotation_audit.py",
+      "code": "F821",
+      "message": "Undefined name `Sequence`",
+      "line": 222
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskSweepConfig`",
+      "line": 17
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskSweepConfig`",
+      "line": 119
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskSweepConfig`",
+      "line": 141
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskSweepConfig`",
+      "line": 255
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskSweepConfig`",
+      "line": 290
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskSweepConfig`",
+      "line": 352
+    },
+    {
+      "path": "src/chronaris/evidence/weak_label_sweep_helpers.py",
+      "code": "F821",
+      "message": "Undefined name `StageIMultitaskTrainRunResult`",
+      "line": 462
+    },
+    {
+      "path": "tests/runtime/test_inference.py",
+      "code": "F821",
+      "message": "Undefined name `Sequence`",
+      "line": 350
+    }
+  ]
+}

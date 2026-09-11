@@ -1,0 +1,33 @@
+import json,time
+from pathlib import Path
+import torch
+from chronaris.evaluation.application_tasks.common_downstream_smoke import contract_development_inputs
+from chronaris.evaluation.application_tasks.v4_public_screen import development_gpu_lock
+from chronaris.evaluation.application_tasks.v4_development_data import v4_workflow_source_sha256
+from chronaris.modeling.fusion_encoders.recent_models import historical_channels,timecma_prompt_cache,verify_assets
+from chronaris.modeling.training.rng import isolated_training_rng
+from chronaris.representation import TrainOnlyRobustNormalizer
+root=Path('/mnt/e/chronaris-v4-results/2026-09-11-stage3-models')
+assets=verify_assets(root/'assets.json')
+result={'source_code_sha256':v4_workflow_source_sha256(),'domains':{}}
+with development_gpu_lock() as acquired,isolated_training_rng(17):
+ if not acquired: raise RuntimeError('GPU occupied')
+ torch.set_num_threads(1)
+ for domain in ('dingxin','cogpilot','clare'):
+  print('START',domain,flush=True)
+  provider,schema,fold,_,_,_,_,raw=contract_development_inputs(domain,data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',registry_path='docs/requirements/thesis-v4-public-subjects.json')
+  normalizer=TrainOnlyRobustNormalizer().fit_from_batch_provider(provider,train_sample_ids=fold.train_sample_ids,held_out_sample_ids=fold.validation_sample_ids+fold.held_out_sample_ids)
+  names=tuple('physiology.'+s for s in schema.physiology_feature_names)+tuple('vehicle.'+s for s in schema.vehicle_feature_names)
+  rows={}
+  for role,original in raw.items():
+   values,mask=historical_channels(normalizer.transform(original))
+   args=dict(values=values,mask=mask,times=original.query_timestamps_s,channel_names=names,assets=assets,output_root=root/'cache_profile'/domain/role)
+   encoded,cold=timecma_prompt_cache(**args)
+   repeated,warm=timecma_prompt_cache(**args)
+   old=torch.load(root/'attempt2'/domain/'timecma'/'language_cache'/role/'embeddings.pt',weights_only=True)
+   assert torch.equal(encoded,repeated) and torch.equal(encoded,old)
+   rows[role]={'cold':cold,'warm':warm,'matches_original_vectors':True}
+  result['domains'][domain]=rows
+  (root/'cache_profile'/'costs.json').write_text(json.dumps(result,indent=2))
+  print('END',domain,flush=True)
+assert result['source_code_sha256']==v4_workflow_source_sha256()

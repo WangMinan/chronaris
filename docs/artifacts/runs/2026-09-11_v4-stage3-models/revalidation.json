@@ -1,0 +1,562 @@
+{
+  "status": "completed",
+  "results": [
+    {
+      "domain": "dingxin",
+      "route": "frozen",
+      "method": "chronos2",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/chronos2/frozen/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "2b43780575889d826676df10b7db0519ba08d0f7be2ad23b01f3acded4d9e99b",
+        "supervision_stratum": "self_supervised:none",
+        "method": "chronos2",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "2b43780575889d826676df10b7db0519ba08d0f7be2ad23b01f3acded4d9e99b:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "consumers": {
+          "protocol_sha256": "249c568ae3fafd7a548310025528bc4e397e73266a7c2d7a06177cfea1f119fc",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/chronos2/frozen/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/chronos2/frozen/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/chronos2/frozen/consumers/linear.joblib",
+              "model_sha256": "f857382a628fe1849f52245b733f0ce75e23263f685caf3da3cde1fcd1233cf6",
+              "result_sha256": "aff25043b93733f68e4425a8d2389ae14b2a601df6e68bf02baea173d3e3371f",
+              "fit_elapsed_s": 5.625801293179393,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "maneuver_regression",
+                    "metric": "rmse",
+                    "value": 1.0162475041452546,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "training_scale"
+                  },
+                  {
+                    "task": "maneuver_classification",
+                    "metric": "macro_f1",
+                    "value": 0.16666666666666666,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "physiology_regression",
+                    "metric": "rmse",
+                    "value": 2.396400257404019,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "training_scale"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "5d8ba9c179c91bf5fa1d3aa8c3c502715cfeab7ff09a6d8fbcc3f867e7f30d76",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "dingxin",
+      "route": "history_adapted",
+      "method": "chronos2",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/chronos2/history_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "2b43780575889d826676df10b7db0519ba08d0f7be2ad23b01f3acded4d9e99b",
+        "supervision_stratum": "self_supervised:none",
+        "method": "chronos2",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "2b43780575889d826676df10b7db0519ba08d0f7be2ad23b01f3acded4d9e99b:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "consumers": {
+          "protocol_sha256": "0dc5596625f781eacefdacab6851b81024d1931e86ead19e7f0ab71d6a4abaa2",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/chronos2/history_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/chronos2/history_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/chronos2/history_adapted/consumers/linear.joblib",
+              "model_sha256": "c49c5c616523d2acf144c6a65cf524872cbc799298ef05d27bc3d86e4d559bc4",
+              "result_sha256": "8741932183a0bc8f3611712f437d3b313f107f3f9aea7baa475f4af79fde424c",
+              "fit_elapsed_s": 5.42843383224681,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "maneuver_regression",
+                    "metric": "rmse",
+                    "value": 1.0297353461452237,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "training_scale"
+                  },
+                  {
+                    "task": "maneuver_classification",
+                    "metric": "macro_f1",
+                    "value": 0.16666666666666666,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "physiology_regression",
+                    "metric": "rmse",
+                    "value": 2.4013576248121757,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "training_scale"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "276d78dc2ce41e95f1f35854a30dcf65a889ac323d0d7e7699deccb3d5ddaa85",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "dingxin",
+      "route": "summary_adapted",
+      "method": "timecma",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/timecma/summary_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "2b43780575889d826676df10b7db0519ba08d0f7be2ad23b01f3acded4d9e99b",
+        "supervision_stratum": "task_guided:summary_labels",
+        "method": "timecma",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "2b43780575889d826676df10b7db0519ba08d0f7be2ad23b01f3acded4d9e99b:task_guided:summary_labels:667f2a74e3e53f0719efc0ddb18f3a41f04f4aec821b12f7abafcdb9058523a6",
+        "consumers": {
+          "protocol_sha256": "90670077dbad293f6b7d09cfe771101de2ee4b15cf40ae89c17a4ce8f4a80390",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/timecma/summary_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/timecma/summary_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/dingxin/timecma/summary_adapted/consumers/linear.joblib",
+              "model_sha256": "c216d550e49106bc30f09e7ee6a611d4dbc1b515e0c36006d7a4de75b42be857",
+              "result_sha256": "d13329223362d4ff12a1a463df06ab451089ceda3177082c474077752c459d1d",
+              "fit_elapsed_s": 0.12251368397846818,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "maneuver_regression",
+                    "metric": "rmse",
+                    "value": 1.0666384933580497,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "training_scale"
+                  },
+                  {
+                    "task": "maneuver_classification",
+                    "metric": "macro_f1",
+                    "value": 0.16666666666666666,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "physiology_regression",
+                    "metric": "rmse",
+                    "value": 1.6979658548399454,
+                    "group_count": 1,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "training_scale"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "e6f49d33c49263787fa6a7308a98977f677253c96b7266458d5c44b90220b753",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "cogpilot",
+      "route": "frozen",
+      "method": "chronos2",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/cogpilot/chronos2/frozen/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470",
+        "supervision_stratum": "self_supervised:none",
+        "method": "chronos2",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "consumers": {
+          "protocol_sha256": "27add2c59029e347e53bf956cd6a6b1b43af65faba004a6df094623a6b091a38",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/chronos2/frozen/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/chronos2/frozen/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/chronos2/frozen/consumers/linear.joblib",
+              "model_sha256": "8045794c80cfa5be86c7ded4465fb57edba5e5e1b50ed1d4bb1d02828b8cc91f",
+              "result_sha256": "652f5a6aa774c69178832a37c3230627a1cced14fea7a08bbdbc604cd92ca9a2",
+              "fit_elapsed_s": 0.1828824719414115,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "difficulty",
+                    "metric": "macro_f1",
+                    "value": 0.37222222222222223,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "event_response",
+                    "metric": "rmse",
+                    "value": 0.09759848768111944,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "6c75e6ded4a603999760ea754b74d5cf53780d700895368286a358089d3c1dd6",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "cogpilot",
+      "route": "history_adapted",
+      "method": "chronos2",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/cogpilot/chronos2/history_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470",
+        "supervision_stratum": "self_supervised:none",
+        "method": "chronos2",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "consumers": {
+          "protocol_sha256": "0f04fe8c4c85807de1a3591460440a0ebf3d029817dbf9b63b128166e40273a0",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/chronos2/history_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/chronos2/history_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/chronos2/history_adapted/consumers/linear.joblib",
+              "model_sha256": "3cce774b33b0467dc3d4d7d46c667ec17cb2f7b8e8469ca66a2a4e2efa523422",
+              "result_sha256": "b01c550a5173c3cf6ebcdbbe389f4121de4c681003c8a7f2b81b079c923224ec",
+              "fit_elapsed_s": 0.1839953209273517,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "difficulty",
+                    "metric": "macro_f1",
+                    "value": 0.37222222222222223,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "event_response",
+                    "metric": "rmse",
+                    "value": 0.09782809025825594,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "9bf922b54bd5392d97beaf183e69e791bd74c6323cb2ef57ccaceb2b87e30f54",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "cogpilot",
+      "route": "summary_adapted",
+      "method": "timecma",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470",
+        "supervision_stratum": "task_guided:summary_labels",
+        "method": "timecma",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470:task_guided:summary_labels:b4614413901ebdff91209f66de17b28b36cbd685190087a2ce2ffcac9f3b1dc7",
+        "consumers": {
+          "protocol_sha256": "62e41adc7ee99bc0cb6f2f6a4e95ec8e8beeb3ca09c5b5af035eafd89d1a45a2",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/timecma/summary_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/timecma/summary_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/cogpilot/timecma/summary_adapted/consumers/linear.joblib",
+              "model_sha256": "85499f09136bd5190877f0ac9731bbd1623d2eee1b42a9499d6a7aa5759d71cb",
+              "result_sha256": "cfe94cbf32f14a8a54784ef8e9300f67ca13749438c1769940722234d42b5164",
+              "fit_elapsed_s": 0.022191505879163742,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "difficulty",
+                    "metric": "macro_f1",
+                    "value": 0.21388888888888888,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "event_response",
+                    "metric": "rmse",
+                    "value": 0.11835094631464356,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "136a210f6b100d1a4cb95ac2c1c064561ab9c8693976ae37c7d837c7fe4271c5",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "clare",
+      "route": "frozen",
+      "method": "chronos2",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/chronos2/frozen/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf",
+        "supervision_stratum": "self_supervised:none",
+        "method": "chronos2",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "consumers": {
+          "protocol_sha256": "0f68e80b1a58ee52d2e02cce1209d318ba4255f235cafff86751a530ad2fc098",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/chronos2/frozen/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/chronos2/frozen/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/chronos2/frozen/consumers/linear.joblib",
+              "model_sha256": "a7a7f709bec452a26d8e2eebf8944c7ba182f73d7887500cab4351d6488d0744",
+              "result_sha256": "8d417e809fd9c019f5a1676a496848865bd7de8f9feeaff38b17bf0e97d28ba2",
+              "fit_elapsed_s": 0.03478305507451296,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "workload_classification",
+                    "metric": "macro_f1",
+                    "value": 0.3875,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "workload_regression",
+                    "metric": "rmse",
+                    "value": 1.8122865505478063,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "b1fd508f224c4bd0ce11fb8e8a33bcb34ca6991a3620b2653341e4a644763e7b",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "clare",
+      "route": "history_adapted",
+      "method": "chronos2",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/chronos2/history_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf",
+        "supervision_stratum": "self_supervised:none",
+        "method": "chronos2",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf:self_supervised:none:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "consumers": {
+          "protocol_sha256": "34b4c9167e9a604dccaec8ccfc7d75d99dffaeb30c71dfa51100430f36ec4005",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/chronos2/history_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/chronos2/history_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/chronos2/history_adapted/consumers/linear.joblib",
+              "model_sha256": "78a78c3c4d91eedced6ef9142be0b721263332e33a04b6c8191b3f4b55cbdee5",
+              "result_sha256": "7efe30ae20745a1837e0bdf4a9d4d59838b951c4968128e6a9f700c44eac9173",
+              "fit_elapsed_s": 0.03669416578486562,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "workload_classification",
+                    "metric": "macro_f1",
+                    "value": 0.30000000000000004,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "workload_regression",
+                    "metric": "rmse",
+                    "value": 1.8207294058699917,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "5e4f49d5ae682e9fa6b8d0c6375c1e30c85f7d89ffb3ea1678cbd8c4d620662f",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "clare",
+      "route": "summary_adapted",
+      "method": "timecma",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/timecma/summary_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf",
+        "supervision_stratum": "task_guided:summary_labels",
+        "method": "timecma",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf:task_guided:summary_labels:ec8fd6ba5653e4df67bef678f616b986489e12c09ba590bad0f8aaa546af688a",
+        "consumers": {
+          "protocol_sha256": "1c41aaef5e1ea6caf76f349149486a84f8738808e9f77123cb13a25b40b0aa68",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/timecma/summary_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/timecma/summary_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/timecma/summary_adapted/consumers/linear.joblib",
+              "model_sha256": "9ebb37d6231e25162d555aaa882d7d9c97ac169103c991d3a25b88794400a9e2",
+              "result_sha256": "8467c1001e8f794b8d43d9b3ceb44e3510fec6c4cbacf4df7a5838fbd1f78aa7",
+              "fit_elapsed_s": 0.014455310069024563,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "workload_classification",
+                    "metric": "macro_f1",
+                    "value": 0.35824175824175825,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "workload_regression",
+                    "metric": "rmse",
+                    "value": 1.7605661932123706,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "b561e3092dfddfc31594688dc1c6b3bf47010e2cf75553897f10b6650e6387df",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    },
+    {
+      "domain": "clare",
+      "route": "summary_adapted",
+      "method": "sensorllm_deepseek",
+      "original_summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary_adapted/summary.json",
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf",
+        "supervision_stratum": "task_guided:summary_labels",
+        "method": "sensorllm_deepseek",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "5366224a4c687a1be7ef494169195c24b0ed4ff1a9d8096e674e9bfc8b3dbdbf:task_guided:summary_labels:4483f2fb707c2ade2d79bfa42973076e6e1d55a4ad6d3b63311286127cfb0b6e",
+        "consumers": {
+          "protocol_sha256": "84369b8033f90b8b553adcfe389e81cbb5aed0a0c84b33dadf9ca8cffc7e4e4d",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/sensorllm_deepseek/summary_adapted/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/sensorllm_deepseek/summary_adapted/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/final_evaluation/clare/sensorllm_deepseek/summary_adapted/consumers/linear.joblib",
+              "model_sha256": "0ce6db42d2207d266b3c972ded44d90695e1f9a0bf5c5a2a396234d6cbbc2e39",
+              "result_sha256": "5afa7ea8b4656ab05dfee5b57c38969aca121e0bb509c4c4571b9ec1919810d2",
+              "fit_elapsed_s": 0.033293421380221844,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "workload_classification",
+                    "metric": "macro_f1",
+                    "value": 0.5571428571428572,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "workload_regression",
+                    "metric": "rmse",
+                    "value": 3.521666519633527,
+                    "group_count": 2,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "9f3240d98979b1af5d04b55ba3d9e14266cd9e89fb1e158b90fe03a413d8ab46",
+        "confirmation_opened": false
+      },
+      "predictions_identical": true,
+      "extra_encoder_updates": 0,
+      "resume_identical": true
+    }
+  ],
+  "source_code_sha256": "04fb9e8c3f871c68e8b6128b15d2616e1b88560572ee636b0325e088b4d2ee81",
+  "prior_files_unchanged": 158,
+  "confirmation_opened": false
+}

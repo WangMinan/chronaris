@@ -1,0 +1,160 @@
+"""Window-end adapters for pinned official TimeCMA and Chronos-2 implementations."""
+import importlib
+import importlib.metadata
+import json
+from pathlib import Path
+import sys
+import time
+
+import torch
+from torch import nn
+
+from chronaris.modeling.fusion_encoders.causal_query import causal_query_stream
+from chronaris.modeling.training.rng import canonical_training_state_sha256
+from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+
+
+def verify_assets(path):
+    assets = json.loads(Path(path).read_text())
+    for filename, digest in assets['files'].items():
+        if sha256_file(filename) != digest:
+            raise ValueError(f'recent model source/weight changed: {filename}')
+    for name, version in assets['packages'].items():
+        if importlib.metadata.version(name) != version:
+            raise ValueError(f'recent model dependency changed: {name}')
+    import chronos
+    installed = Path(chronos.__file__).parent
+    source = Path(assets['chronos_code']['path'])/'src'/'chronos'
+    for filename in source.rglob('*.py'):
+        if sha256_file(installed/filename.relative_to(source)) != sha256_file(filename):
+            raise ValueError('installed Chronos code differs from pinned upstream')
+    return assets
+
+
+def historical_channels(raw):
+    """Reuse the existing feature-wise history-only sampler, preserving missingness."""
+    streams = [causal_query_stream(raw, stream_name=s) for s in ('physiology', 'vehicle')]
+    values = torch.cat([s.values for s in streams], -1).float().cpu()
+    mask = torch.cat([s.feature_mask for s in streams], -1).cpu()
+    return values.masked_fill(~mask, 0), mask
+
+
+def history_prompts(values, mask, times, channel_names):
+    if values.shape != mask.shape or len(channel_names) != values.shape[-1]:
+        raise ValueError('prompt channels or masks changed')
+    prompts = []
+    for row in range(len(values)):
+        for channel, name in enumerate(channel_names):
+            series, valid = values[row, :, channel], mask[row, :, channel]
+            numbers = ', '.join(f'{v:.3g}' if m else 'missing' for v, m in zip(series, valid))
+            observed = series[valid]
+            trend = f'{float(observed[-1]-observed[0]):.3g}' if len(observed) else 'unavailable'
+            prompts.append(f'Channel {name}. From {float(times[row, 0]):.3g} to '
+                f'{float(times[row, -1]):.3g} seconds in the observed window, '
+                f'the values were {numbers}. The total observed trend was {trend}')
+    return prompts
+
+
+def timecma_prompt_cache(*, values, mask, times, channel_names, assets, output_root):
+    """Cache the actual final nonpadding GPT-2 token; no generated answers or labels."""
+    from transformers import GPT2Model, GPT2TokenizerFast
+    root = Path(output_root)
+    root.mkdir(parents=True, exist_ok=True)
+    prompts = history_prompts(values, mask, times, channel_names)
+    binding = canonical_training_state_sha256(prompts, assets['gpt2'])
+    path, receipt = root/'embeddings.pt', root/'receipt.json'
+    started = time.perf_counter()
+    if receipt.exists():
+        meta = json.loads(receipt.read_text())
+        if (meta['input_sha256'] != binding or sha256_file(path) != meta['file_sha256']
+            or sha256_file(root/'prompts.json') != meta['prompts_sha256']):
+            raise ValueError('language cache input or contents changed')
+        cached = torch.load(path, weights_only=True)
+        return cached, meta | {'cache_hit': True, 'read_seconds': time.perf_counter()-started}
+    tokenizer = GPT2TokenizerFast.from_pretrained(assets['gpt2']['path'], local_files_only=True)
+    tokenizer.pad_token = tokenizer.eos_token
+    model = GPT2Model.from_pretrained(assets['gpt2']['path'], local_files_only=True).cuda().eval()
+    model.requires_grad_(False)
+    torch.cuda.reset_peak_memory_stats()
+    vectors, token_counts = [], []
+    with torch.inference_mode():
+        for start in range(0, len(prompts), 8):
+            encoded = tokenizer(prompts[start:start+8], return_tensors='pt', padding=True).to('cuda')
+            lengths = encoded.attention_mask.sum(1)
+            if encoded.input_ids.shape[1] > model.config.n_positions:
+                raise ValueError('history prompt exceeds GPT-2 context; refusing silent truncation')
+            hidden = model(**encoded).last_hidden_state
+            vectors.append(hidden[torch.arange(len(lengths), device='cuda'), lengths-1].cpu())
+            token_counts.extend(lengths.cpu().tolist())
+    cached = torch.cat(vectors).reshape(len(values), values.shape[-1], -1).transpose(1, 2).contiguous()
+    torch.cuda.synchronize()
+    meta = dict(input_sha256=binding, seconds=time.perf_counter()-started,
+        parameters=sum(p.numel() for p in model.parameters()), trainable_parameters=0,
+        peak_cuda_bytes=torch.cuda.max_memory_allocated(), token_count_range=[min(token_counts), max(token_counts)],
+        shape=list(cached.shape), prompt_count=len(prompts), cache_hit=False)
+    torch.save(cached, path)
+    meta['file_sha256'] = sha256_file(path)
+    (root/'prompts.json').write_text(json.dumps(prompts, ensure_ascii=False))
+    meta['prompts_sha256'] = sha256_file(root/'prompts.json')
+    receipt.write_text(json.dumps(meta, indent=2))
+    del model
+    torch.cuda.empty_cache()
+    return cached, meta
+
+
+class TimeCMAWindowEncoder(nn.Module):
+    """Official Dual.decoder output, flattened over declared sensor channels."""
+    def __init__(self, assets, channel_count):
+        super().__init__()
+        source = str(Path(assets['timecma']['path']).resolve())
+        sys.path.insert(0, source)
+        module = importlib.import_module('models.TimeCMA')
+        if not Path(module.__file__).resolve().is_relative_to(source):
+            raise ValueError('TimeCMA import resolved outside the pinned source')
+        self.core = module.Dual(device='cuda:0', num_nodes=channel_count, seq_len=96, pred_len=96)
+        # Remove the forecast projection. The upstream decoder remains the extraction point.
+        self.core.c_to_length = nn.Identity()
+        self.feature_dim = channel_count * self.core.channel
+
+    def forward(self, values, mask, prompts):
+        # RevIN normalization and every subsequent layer below are the upstream path.
+        x = self.core.normalize_layers(values.cuda(), 'norm').transpose(1, 2)
+        x = self.core.ts_encoder(self.core.length_to_feature(x)).transpose(1, 2)
+        p = self.core.prompt_encoder(prompts.cuda().transpose(1, 2)).transpose(1, 2)
+        cross = self.core.cross(x, p, p).transpose(1, 2)
+        hidden = self.core.decoder(cross, cross)
+        channel_valid = mask.cuda().any(1)
+        return hidden.masked_fill(~channel_valid[..., None], 0).flatten(1)
+
+
+class Chronos2WindowEncoder(nn.Module):
+    """Official multivariate encoder [REG] states, without forecast output tokens."""
+    def __init__(self, assets, channel_count):
+        super().__init__()
+        from chronos import Chronos2Pipeline
+        self.pipeline = Chronos2Pipeline.from_pretrained(assets['chronos2']['path'], device_map='cuda',
+            torch_dtype=torch.float32, local_files_only=True)
+        self.core = self.pipeline.model
+        if not self.core.chronos_config.use_reg_token:
+            raise ValueError('pinned Chronos-2 must provide its documented REG token')
+        self.feature_dim = self.core.config.d_model * channel_count
+
+    def forward(self, values, mask, prompts=None):
+        channels = values.transpose(1, 2).masked_fill(~mask.transpose(1, 2), torch.nan)
+        # Each window is one multivariate group. No cross-window/subject attention.
+        with torch.no_grad():
+            embeds, _ = self.pipeline.embed(channels, batch_size=channels.shape[1], context_length=96)
+        reg = torch.stack([e[:, -2, :] for e in embeds]).float()
+        return reg.masked_fill(~mask.any(1)[..., None], 0).flatten(1).cuda()
+
+    def history_loss(self, values, mask):
+        """Native quantile objective on a held-out suffix INSIDE training history."""
+        x = values.transpose(1, 2).cuda()
+        valid = mask.transpose(1, 2).cuda()
+        b, c, length = x.shape
+        output = self.core(context=x[..., :-16].reshape(b*c, length-16),
+            context_mask=valid[..., :-16].reshape(b*c, length-16),
+            group_ids=torch.arange(b, device='cuda').repeat_interleave(c),
+            future_target=x[..., -16:].reshape(b*c, 16),
+            future_target_mask=valid[..., -16:].reshape(b*c, 16))
+        return output.loss

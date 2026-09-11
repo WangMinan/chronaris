@@ -1,0 +1,82 @@
+[
+  {
+    "source_summary": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/timecma/summary.json",
+    "domain": "dingxin",
+    "method": "timecma",
+    "training_tasks": [
+      "maneuver_regression",
+      "maneuver_classification",
+      "physiology_regression"
+    ],
+    "valid_target_cells": {
+      "maneuver_regression": 8,
+      "maneuver_classification": 8,
+      "physiology_regression": 88
+    },
+    "all_tasks_observed": true,
+    "actual_sample_visits": 8,
+    "distinct_training_samples": 8
+  },
+  {
+    "source_summary": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary.json",
+    "domain": "cogpilot",
+    "method": "timecma",
+    "training_tasks": [
+      "difficulty",
+      "event_response"
+    ],
+    "valid_target_cells": {
+      "difficulty": 6,
+      "event_response": 2
+    },
+    "all_tasks_observed": true,
+    "actual_sample_visits": 8,
+    "distinct_training_samples": 8
+  },
+  {
+    "source_summary": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/cogpilot/timecma/summary.json",
+    "domain": "cogpilot",
+    "method": "timecma",
+    "training_tasks": [
+      "difficulty",
+      "event_response"
+    ],
+    "valid_target_cells": {
+      "difficulty": 8,
+      "event_response": 0
+    },
+    "all_tasks_observed": false,
+    "actual_sample_visits": 8,
+    "distinct_training_samples": 8
+  },
+  {
+    "source_summary": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/timecma/summary.json",
+    "domain": "clare",
+    "method": "timecma",
+    "training_tasks": [
+      "workload_classification",
+      "workload_regression"
+    ],
+    "valid_target_cells": {
+      "workload_classification": 8,
+      "workload_regression": 8
+    },
+    "all_tasks_observed": true,
+    "actual_sample_visits": 8,
+    "distinct_training_samples": 8
+  },
+  {
+    "source_summary": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/sensor_attempt2/clare/sensorllm_deepseek/summary.json",
+    "domain": "clare",
+    "method": "sensorllm_deepseek",
+    "training_tasks": [
+      "workload_classification"
+    ],
+    "valid_target_cells": {
+      "workload_classification": 2
+    },
+    "all_tasks_observed": true,
+    "actual_sample_visits": 2,
+    "distinct_training_samples": 2
+  }
+]

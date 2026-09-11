@@ -1,0 +1,33 @@
+{
+  "source_code_sha256": "4831e832928675f0d39598314fb4b871c570ca3f4d95334e13023e6faf24efb6",
+  "files": {
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/recent_models.py@f3b7cf278431fd1720865d3535439a6ec4d20815a77ac9a67b3d22527c36e0c3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/src/chronaris/modeling/fusion_encoders/recent_models.py",
+      "sha256": "f3b7cf278431fd1720865d3535439a6ec4d20815a77ac9a67b3d22527c36e0c3"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py@a9cd9e0b3578f7a2094964d5c185b779894220b18c176f4faa0c132057faf145": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py",
+      "sha256": "a9cd9e0b3578f7a2094964d5c185b779894220b18c176f4faa0c132057faf145"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/recent_model_smoke.py@7175e97e674ab053862af50be49dc4ae9c131a80a533bc98c31642d8b13e43a8": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/src/chronaris/evaluation/application_tasks/recent_model_smoke.py",
+      "sha256": "7175e97e674ab053862af50be49dc4ae9c131a80a533bc98c31642d8b13e43a8"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/recent_model_training.py@d88502337ed3fee7a34a962007f97d0fdade695b97c4c38f72ade7b7fa562df3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/src/chronaris/evaluation/application_tasks/recent_model_training.py",
+      "sha256": "d88502337ed3fee7a34a962007f97d0fdade695b97c4c38f72ade7b7fa562df3"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/common_downstream_contract.py@ee0a3331515f295b46c36a36e5d723fc4951874e6c306baac384c1407356acbf": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/src/chronaris/evaluation/application_tasks/common_downstream_contract.py",
+      "sha256": "ee0a3331515f295b46c36a36e5d723fc4951874e6c306baac384c1407356acbf"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/rng.py@de48565e87adbe3d8ea8ad4f5b668fe65ee1b290ddec45b2af724107a6b1c711": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/src/chronaris/modeling/training/rng.py",
+      "sha256": "de48565e87adbe3d8ea8ad4f5b668fe65ee1b290ddec45b2af724107a6b1c711"
+    },
+    "/home/wangminan/projects/chronaris/scripts/evaluation/application_tasks/run_thesis_v4.py@8d3a81d5c6da96ae15c99e83f0eab5899fc70e4da9d140424887fb1626798900": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_sensor/scripts/evaluation/application_tasks/run_thesis_v4.py",
+      "sha256": "8d3a81d5c6da96ae15c99e83f0eab5899fc70e4da9d140424887fb1626798900"
+    }
+  }
+}

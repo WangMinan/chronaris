@@ -1,0 +1,28 @@
+import json,time,importlib.metadata
+from pathlib import Path
+from huggingface_hub import HfApi
+from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+root=Path('/mnt/e/chronaris-v4-results/2026-09-11-stage3-models')
+models={'deepseek_llama':('deepseek-ai/DeepSeek-R1-Distill-Llama-8B','6a6f4aa4197940add57724a7707d069478df56b1'),'chronos_t5_large':('amazon/chronos-t5-large','0e46c9c7e2e9f74b53db0617fdfcfe42a413e54a')}
+infos={k:HfApi().model_info(name,revision=rev,files_metadata=True) for k,(name,rev) in models.items()}
+required=[root/'weights'/k/f.rfilename for k,m in infos.items() for f in m.siblings if f.rfilename.endswith('.safetensors')]
+started=time.monotonic()
+while not all(p.exists() for p in required):
+ if time.monotonic()-started>1200:raise TimeoutError('weights not complete within provisioning window')
+ time.sleep(5)
+a=json.loads((root/'assets.json').read_text())
+for key,m in infos.items():
+ p=root/'weights'/key
+ hashes={}
+ for f in sorted(p.iterdir()):
+  if f.is_file():a['files'][str(f)]=sha256_file(f)
+ for f in m.siblings:
+  if f.rfilename.endswith('.safetensors'):
+   actual=a['files'][str(p/f.rfilename)]
+   assert actual==f.lfs.sha256,(f.rfilename,actual,f.lfs.sha256)
+   hashes[f.rfilename]=actual
+ a[key]={'path':str(p),'source':m.id,'revision':m.sha,'weights_sha256':hashes}
+for f in Path(a['sensorllm']['path']).rglob('*.yaml'):a['files'][str(f)]=sha256_file(f)
+for name in ('tokenizers','safetensors','numpy','scikit-learn','scipy','pandas'):a['packages'][name]=importlib.metadata.version(name)
+(root/'assets_sensor.json').write_text(json.dumps(a,indent=2))
+print('sealed',a['deepseek_llama']['weights_sha256'],flush=True)

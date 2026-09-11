@@ -1,0 +1,16 @@
+[
+  {
+    "model": "meta-llama/Meta-Llama-3-8B",
+    "revision": "8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920",
+    "status": "blocked",
+    "error_type": "GatedRepoError",
+    "error": "401 Client Error. (Request ID: Root=1-6aa39633-3961bff80aacbba54a99650d;17f5f02e-3072-4ad7-b18a-3fa539677366)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Meta-Llama-3-8B/resolve/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/config.json.\nAccess to model meta-llama/Meta-Llama-3-8B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+    "model": "meta-llama/Llama-3.2-3B",
+    "revision": "13afe5124825b4f3751f836b40dafda64c1ed062",
+    "status": "blocked",
+    "error_type": "GatedRepoError",
+    "error": "401 Client Error. (Request ID: Root=1-6aa39634-1136089401788e7c3ad1643f;48056c6f-3838-4a10-90af-01e46bec8559)\n\nCannot access gated repo for url https://huggingface.co/meta-llama/Llama-3.2-3B/resolve/13afe5124825b4f3751f836b40dafda64c1ed062/config.json.\nAccess to model meta-llama/Llama-3.2-3B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  }
+]

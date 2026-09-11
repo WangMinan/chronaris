@@ -1,4 +1,4 @@
-from dataclasses import replace
+from dataclasses import asdict, replace
 import json
 
 import joblib
@@ -70,6 +70,26 @@ def test_shared_contract_fits_independent_models_and_window_only_features(tmp_pa
     with pytest.raises(ValueError, match='scalar linear'):
         run_common_downstream(**kwargs, contract=contract, outputs=windows,
             declaration=declaration | {'kind': 'window_end'}, output_root=tmp_path/'bad_sequence', families=('minirocket',))
+
+
+def test_checkpoint_cannot_claim_a_task_with_zero_effective_supervision(tmp_path):
+    _, contract, outputs, declaration = _case(tmp_path)
+    tasks = [t.name for t in PUBLIC_TASKS['clare']]
+    payload = torch.load(declaration['checkpoint_path'], weights_only=True)
+    payload.update(label_used_for_encoder_training=True, target_supervision='summary_labels',
+        task_definitions=[asdict(t) for t in PUBLIC_TASKS['clare']], task_supervision_counts={t: 1. for t in tasks})
+    declaration.update(route='task_guided', target_supervision='summary_labels', training_tasks=tasks)
+    for count in (1., 0.):
+        payload['task_supervision_counts'][tasks[-1]] = count
+        torch.save(payload, declaration['checkpoint_path'])
+        digest = sha256_file(declaration['checkpoint_path'])
+        declaration.update(checkpoint_sha256=digest, evidence_files={declaration['checkpoint_path']: digest})
+        outputs = {r: replace(o, checkpoint_sha256=digest) for r,o in outputs.items()}
+        if count:
+            assert validate_representation_declaration(contract, outputs, declaration, families=('linear',))=='task_guided:summary_labels'
+        else:
+            with pytest.raises(ValueError, match='no actual supervision'):
+                validate_representation_declaration(contract, outputs, declaration, families=('linear',))
 
 
 @pytest.mark.parametrize('mutation', ['target', 'observation', 'order', 'cutoff', 'source', 'fit', 'prediction', 'supervision', 'checkpoint', 'checkpoint_pca', 'checkpoint_data', 'policy'])

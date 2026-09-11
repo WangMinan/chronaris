@@ -1,0 +1,719 @@
+[
+  {
+    "domain": "clare",
+    "method": "chronos2",
+    "route": "frozen",
+    "feature_dim": 4608,
+    "sample_counts": {
+      "train": 32,
+      "validation": 16
+    },
+    "parameters": 119477664,
+    "export": {
+      "seconds": 2.305678559001535,
+      "peak_cuda_bytes": 514498048,
+      "windows_per_second": 20.818166440679487
+    },
+    "metrics": [
+      {
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.3875,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.8122865505478063,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      }
+    ],
+    "predictions": 32,
+    "training": null,
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/chronos2/summary.json"
+  },
+  {
+    "domain": "clare",
+    "method": "chronos2",
+    "route": "history_adapted",
+    "feature_dim": 4608,
+    "sample_counts": {
+      "train": 32,
+      "validation": 16
+    },
+    "parameters": 119477664,
+    "export": {
+      "seconds": 1.77035279199481,
+      "peak_cuda_bytes": 1027208704,
+      "windows_per_second": 27.113239924294543
+    },
+    "metrics": [
+      {
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.30000000000000004,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.8207294058699917,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      }
+    ],
+    "predictions": 32,
+    "training": {
+      "primary": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 7.614231109619141,
+            "gradient_norm": 386.4429016113281,
+            "sample_ids": [
+              "1624__experiment0_window5"
+            ],
+            "parameters_with_gradient": 119477664
+          },
+          {
+            "update": 2,
+            "loss": 8.547768592834473,
+            "gradient_norm": 73.21417236328125,
+            "sample_ids": [
+              "1624__experiment0_window6"
+            ],
+            "parameters_with_gradient": 119477664
+          }
+        ],
+        "seconds": 8.53212760714814,
+        "peak_cuda_bytes": 2459233792,
+        "state_sha256": "7d9f62f1ace9feac12043cb552bd4dd96b6d9e70ab4158cbf1188ecf44d9a16b"
+      },
+      "replay": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 7.614231109619141,
+            "gradient_norm": 386.4429016113281,
+            "sample_ids": [
+              "1624__experiment0_window5"
+            ],
+            "parameters_with_gradient": 119477664
+          },
+          {
+            "update": 2,
+            "loss": 8.547768592834473,
+            "gradient_norm": 73.21417236328125,
+            "sample_ids": [
+              "1624__experiment0_window6"
+            ],
+            "parameters_with_gradient": 119477664
+          }
+        ],
+        "seconds": 8.538735559675843,
+        "peak_cuda_bytes": 2458971648,
+        "state_sha256": "7d9f62f1ace9feac12043cb552bd4dd96b6d9e70ab4158cbf1188ecf44d9a16b"
+      },
+      "resume_identical": true
+    },
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/chronos2/summary.json"
+  },
+  {
+    "domain": "clare",
+    "method": "timecma",
+    "route": "summary_adapted",
+    "feature_dim": 192,
+    "sample_counts": {
+      "train": 32,
+      "validation": 16
+    },
+    "parameters": 11590279,
+    "export": {
+      "seconds": 0.3338424009270966,
+      "peak_cuda_bytes": 138821632,
+      "windows_per_second": 143.78041814551315
+    },
+    "metrics": [
+      {
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.35824175824175825,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.7605661932123706,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      }
+    ],
+    "predictions": 32,
+    "training": {
+      "primary": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.896033763885498,
+            "gradient_norm": 31.73346519470215,
+            "sample_ids": [
+              "1624__experiment0_window5",
+              "1624__experiment0_window6",
+              "1624__experiment0_window18",
+              "1624__experiment0_window31"
+            ],
+            "parameters_with_gradient": 5796999
+          },
+          {
+            "update": 2,
+            "loss": 0.32822006940841675,
+            "gradient_norm": 10.01051139831543,
+            "sample_ids": [
+              "1624__experiment1_window21",
+              "1624__experiment1_window46",
+              "1624__experiment1_window47",
+              "1624__experiment1_window49"
+            ],
+            "parameters_with_gradient": 5796999
+          }
+        ],
+        "seconds": 0.5535419378429651,
+        "peak_cuda_bytes": 208680448,
+        "state_sha256": "94bd2c661e6a8697b8f91812a40581411d11b222eff49b0ad91162234533dfd6"
+      },
+      "replay": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.896033763885498,
+            "gradient_norm": 31.73346519470215,
+            "sample_ids": [
+              "1624__experiment0_window5",
+              "1624__experiment0_window6",
+              "1624__experiment0_window18",
+              "1624__experiment0_window31"
+            ],
+            "parameters_with_gradient": 5796999
+          },
+          {
+            "update": 2,
+            "loss": 0.32822006940841675,
+            "gradient_norm": 10.01051139831543,
+            "sample_ids": [
+              "1624__experiment1_window21",
+              "1624__experiment1_window46",
+              "1624__experiment1_window47",
+              "1624__experiment1_window49"
+            ],
+            "parameters_with_gradient": 5796999
+          }
+        ],
+        "seconds": 0.6280081593431532,
+        "peak_cuda_bytes": 208680448,
+        "state_sha256": "94bd2c661e6a8697b8f91812a40581411d11b222eff49b0ad91162234533dfd6"
+      },
+      "resume_identical": true
+    },
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/clare/timecma/summary.json"
+  },
+  {
+    "domain": "cogpilot",
+    "method": "chronos2",
+    "route": "frozen",
+    "feature_dim": 9216,
+    "sample_counts": {
+      "train": 64,
+      "validation": 32
+    },
+    "parameters": 119477664,
+    "export": {
+      "seconds": 5.217854192014784,
+      "peak_cuda_bytes": 517448192,
+      "windows_per_second": 18.398367694312913
+    },
+    "metrics": [
+      {
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.37222222222222223,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.09759848768111944,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      }
+    ],
+    "predictions": 64,
+    "training": null,
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/cogpilot/chronos2/summary.json"
+  },
+  {
+    "domain": "cogpilot",
+    "method": "chronos2",
+    "route": "history_adapted",
+    "feature_dim": 9216,
+    "sample_counts": {
+      "train": 64,
+      "validation": 32
+    },
+    "parameters": 119477664,
+    "export": {
+      "seconds": 2.3167445207946002,
+      "peak_cuda_bytes": 1031010816,
+      "windows_per_second": 41.437456369627576
+    },
+    "metrics": [
+      {
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.37222222222222223,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.09782809025825594,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      }
+    ],
+    "predictions": 64,
+    "training": {
+      "primary": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 2.076448917388916,
+            "gradient_norm": 83.28217315673828,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-02B_run-008::window0000"
+            ],
+            "parameters_with_gradient": 119477664
+          },
+          {
+            "update": 2,
+            "loss": 2.4879989624023438,
+            "gradient_norm": 258.93408203125,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-02B_run-008::window0009"
+            ],
+            "parameters_with_gradient": 119477664
+          }
+        ],
+        "seconds": 10.088547816965729,
+        "peak_cuda_bytes": 2459233792,
+        "state_sha256": "26ed948321a6078b05cfd6c4e761295df0a9f74079f6d73411979b2ad8559d7b"
+      },
+      "replay": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 2.076448917388916,
+            "gradient_norm": 83.28217315673828,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-02B_run-008::window0000"
+            ],
+            "parameters_with_gradient": 119477664
+          },
+          {
+            "update": 2,
+            "loss": 2.4879989624023438,
+            "gradient_norm": 258.93408203125,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-02B_run-008::window0009"
+            ],
+            "parameters_with_gradient": 119477664
+          }
+        ],
+        "seconds": 8.342348015867174,
+        "peak_cuda_bytes": 2458971648,
+        "state_sha256": "26ed948321a6078b05cfd6c4e761295df0a9f74079f6d73411979b2ad8559d7b"
+      },
+      "resume_identical": true
+    },
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/cogpilot/chronos2/summary.json"
+  },
+  {
+    "domain": "cogpilot",
+    "method": "timecma",
+    "route": "summary_adapted",
+    "feature_dim": 384,
+    "sample_counts": {
+      "train": 64,
+      "validation": 32
+    },
+    "parameters": 11591149,
+    "export": {
+      "seconds": 0.5161346448585391,
+      "peak_cuda_bytes": 138136064,
+      "windows_per_second": 185.99797738109876
+    },
+    "metrics": [
+      {
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.21388888888888888,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.11872820277453826,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      }
+    ],
+    "predictions": 64,
+    "training": {
+      "primary": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.5732706785202026,
+            "gradient_norm": 19.436100006103516,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-02B_run-008::window0000",
+              "sub-cp004::ses-20210330::level-02B_run-008::window0009",
+              "sub-cp004::ses-20210330::level-02B_run-010::window0003",
+              "sub-cp004::ses-20210330::level-03B_run-005::window0013"
+            ],
+            "parameters_with_gradient": 5797869
+          },
+          {
+            "update": 2,
+            "loss": 2.613562822341919,
+            "gradient_norm": 24.747726440429688,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-03B_run-011::window0009",
+              "sub-cp004::ses-20210330::level-04B_run-004::window0009",
+              "sub-cp008::ses-20210503::level-01B_run-012::window0003",
+              "sub-cp008::ses-20210503::level-01B_run-012::window0010"
+            ],
+            "parameters_with_gradient": 5797869
+          }
+        ],
+        "seconds": 0.5314917908981442,
+        "peak_cuda_bytes": 208454144,
+        "state_sha256": "db1c6c6802a5acbc2c57d01a4d9f220d32ccb95ec567b976f7ed00272443fcdb"
+      },
+      "replay": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.5732706785202026,
+            "gradient_norm": 19.436100006103516,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-02B_run-008::window0000",
+              "sub-cp004::ses-20210330::level-02B_run-008::window0009",
+              "sub-cp004::ses-20210330::level-02B_run-010::window0003",
+              "sub-cp004::ses-20210330::level-03B_run-005::window0013"
+            ],
+            "parameters_with_gradient": 5797869
+          },
+          {
+            "update": 2,
+            "loss": 2.613562822341919,
+            "gradient_norm": 24.747726440429688,
+            "sample_ids": [
+              "sub-cp004::ses-20210330::level-03B_run-011::window0009",
+              "sub-cp004::ses-20210330::level-04B_run-004::window0009",
+              "sub-cp008::ses-20210503::level-01B_run-012::window0003",
+              "sub-cp008::ses-20210503::level-01B_run-012::window0010"
+            ],
+            "parameters_with_gradient": 5797869
+          }
+        ],
+        "seconds": 0.511824413202703,
+        "peak_cuda_bytes": 208454144,
+        "state_sha256": "db1c6c6802a5acbc2c57d01a4d9f220d32ccb95ec567b976f7ed00272443fcdb"
+      },
+      "resume_identical": true
+    },
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/cogpilot/timecma/summary.json"
+  },
+  {
+    "domain": "dingxin",
+    "method": "chronos2",
+    "route": "frozen",
+    "feature_dim": 750336,
+    "sample_counts": {
+      "train": 24,
+      "validation": 6
+    },
+    "parameters": 119477664,
+    "export": {
+      "seconds": 4.821341592818499,
+      "peak_cuda_bytes": 1571326976,
+      "windows_per_second": 6.222334473185991
+    },
+    "metrics": [
+      {
+        "task": "maneuver_regression",
+        "metric": "rmse",
+        "value": 1.0162475041452546,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "training_scale"
+      },
+      {
+        "task": "maneuver_classification",
+        "metric": "macro_f1",
+        "value": 0.16666666666666666,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "physiology_regression",
+        "metric": "rmse",
+        "value": 2.396400257404019,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "training_scale"
+      }
+    ],
+    "predictions": 78,
+    "training": null,
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/chronos2/summary.json"
+  },
+  {
+    "domain": "dingxin",
+    "method": "chronos2",
+    "route": "history_adapted",
+    "feature_dim": 750336,
+    "sample_counts": {
+      "train": 24,
+      "validation": 6
+    },
+    "parameters": 119477664,
+    "export": {
+      "seconds": 3.763929720968008,
+      "peak_cuda_bytes": 2099925504,
+      "windows_per_second": 7.970393238980189
+    },
+    "metrics": [
+      {
+        "task": "maneuver_regression",
+        "metric": "rmse",
+        "value": 1.0297353461452237,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "training_scale"
+      },
+      {
+        "task": "maneuver_classification",
+        "metric": "macro_f1",
+        "value": 0.16666666666666666,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "physiology_regression",
+        "metric": "rmse",
+        "value": 2.4013576248121757,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "training_scale"
+      }
+    ],
+    "predictions": 78,
+    "training": {
+      "primary": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.3793352842330933,
+            "gradient_norm": 12.181106567382812,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0005"
+            ],
+            "parameters_with_gradient": 119477664
+          },
+          {
+            "update": 2,
+            "loss": 0.8511881828308105,
+            "gradient_norm": 9.248462677001953,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0006"
+            ],
+            "parameters_with_gradient": 119477664
+          }
+        ],
+        "seconds": 7.683100922964513,
+        "peak_cuda_bytes": 17857672192,
+        "state_sha256": "23b5e955e3d6016bd1be9164f33b8e39d498bf736dd7379047818ec04f55db64"
+      },
+      "replay": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.3793352842330933,
+            "gradient_norm": 12.181106567382812,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0005"
+            ],
+            "parameters_with_gradient": 119477664
+          },
+          {
+            "update": 2,
+            "loss": 0.8511881828308105,
+            "gradient_norm": 9.248462677001953,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0006"
+            ],
+            "parameters_with_gradient": 119477664
+          }
+        ],
+        "seconds": 8.228569451253861,
+        "peak_cuda_bytes": 17855918080,
+        "state_sha256": "23b5e955e3d6016bd1be9164f33b8e39d498bf736dd7379047818ec04f55db64"
+      },
+      "resume_identical": true
+    },
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/chronos2/summary.json"
+  },
+  {
+    "domain": "dingxin",
+    "method": "timecma",
+    "route": "summary_adapted",
+    "feature_dim": 31264,
+    "sample_counts": {
+      "train": 24,
+      "validation": 6
+    },
+    "parameters": 15479134,
+    "export": {
+      "seconds": 0.20400503231212497,
+      "peak_cuda_bytes": 204045824,
+      "windows_per_second": 147.0551959429138
+    },
+    "metrics": [
+      {
+        "task": "maneuver_regression",
+        "metric": "rmse",
+        "value": 1.0666384933580497,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "training_scale"
+      },
+      {
+        "task": "maneuver_classification",
+        "metric": "macro_f1",
+        "value": 0.16666666666666666,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native"
+      },
+      {
+        "task": "physiology_regression",
+        "metric": "rmse",
+        "value": 1.6979658548399454,
+        "group_count": 1,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "training_scale"
+      }
+    ],
+    "predictions": 78,
+    "training": {
+      "primary": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.5864286422729492,
+            "gradient_norm": 100.01225280761719,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0005",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0006",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0007",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0008"
+            ],
+            "parameters_with_gradient": 9685854
+          },
+          {
+            "update": 2,
+            "loss": 0.8284133672714233,
+            "gradient_norm": 51.12038803100586,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0009",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0010",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0011",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0012"
+            ],
+            "parameters_with_gradient": 9685854
+          }
+        ],
+        "seconds": 0.9005372133105993,
+        "peak_cuda_bytes": 661779456,
+        "state_sha256": "c7cbeaf14a7ce055f34068ee3d20ba935e660bca7faacf6efaaa756ce45bf883"
+      },
+      "replay": {
+        "updates": 2,
+        "history": [
+          {
+            "update": 1,
+            "loss": 1.5864286422729492,
+            "gradient_norm": 100.01225280761719,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0005",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0006",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0007",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0008"
+            ],
+            "parameters_with_gradient": 9685854
+          },
+          {
+            "update": 2,
+            "loss": 0.8284133672714233,
+            "gradient_norm": 51.12038803100586,
+            "sample_ids": [
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0009",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0010",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0011",
+              "20251002_\u535501_ACT-8_\u7ffc\u4e91_J16_12#01__pilot_10033::context_end_0012"
+            ],
+            "parameters_with_gradient": 9685854
+          }
+        ],
+        "seconds": 1.117847215384245,
+        "peak_cuda_bytes": 664082944,
+        "state_sha256": "c7cbeaf14a7ce055f34068ee3d20ba935e660bca7faacf6efaaa756ce45bf883"
+      },
+      "resume_identical": true
+    },
+    "summary_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/attempt2/dingxin/timecma/summary.json"
+  }
+]

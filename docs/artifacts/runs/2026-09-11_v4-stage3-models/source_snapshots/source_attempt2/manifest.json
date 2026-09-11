@@ -1,0 +1,29 @@
+{
+  "source_code_sha256": "834fd66860a0a43b8ad62e1282ad1aecfb80a4de8da9c4fa879f6e572f303480",
+  "files": {
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/recent_models.py": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_attempt2/src/chronaris/modeling/fusion_encoders/recent_models.py",
+      "sha256": "5bdc526839aaf8e22450a53836c8a7039a5fa827e7917a92f42e74c2d8b42197"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_attempt2/src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py",
+      "sha256": "1913e7e7358b3a75afe280fc8f8e20e49bf67580b9ddd7f471c5e8b46178e100"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/recent_model_smoke.py": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_attempt2/src/chronaris/evaluation/application_tasks/recent_model_smoke.py",
+      "sha256": "5bf7352cf486569769c68b96334b251bb0ac1a72ecf079a9902f1ebcdc8208a3"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/recent_model_training.py": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_attempt2/src/chronaris/evaluation/application_tasks/recent_model_training.py",
+      "sha256": "5e530bacd8f0bb00aed6477b8429f8c5907776b034435e0111c67498ed687060"
+    },
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/rng.py": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_attempt2/src/chronaris/modeling/training/rng.py",
+      "sha256": "de48565e87adbe3d8ea8ad4f5b668fe65ee1b290ddec45b2af724107a6b1c711"
+    },
+    "/home/wangminan/projects/chronaris/scripts/evaluation/application_tasks/run_thesis_v4.py": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/source_attempt2/scripts/evaluation/application_tasks/run_thesis_v4.py",
+      "sha256": "8d3a81d5c6da96ae15c99e83f0eab5899fc70e4da9d140424887fb1626798900"
+    }
+  }
+}

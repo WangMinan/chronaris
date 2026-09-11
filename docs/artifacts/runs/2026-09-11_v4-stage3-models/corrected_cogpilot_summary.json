@@ -1,0 +1,298 @@
+{
+  "status": "completed",
+  "domain": "cogpilot",
+  "method": "timecma",
+  "scope": "engineering_development",
+  "source_code_sha256": "04fb9e8c3f871c68e8b6128b15d2616e1b88560572ee636b0325e088b4d2ee81",
+  "contract_sha256": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470",
+  "sample_counts": {
+    "train": 64,
+    "validation": 32
+  },
+  "channel_names": [
+    "physiology.physiology.ppg",
+    "physiology.physiology.eda_conductance_us",
+    "physiology.physiology.resp",
+    "physiology.physiology.ecg",
+    "vehicle.vehicle.indicated_airspeed_kias",
+    "vehicle.vehicle.pitch_deg",
+    "vehicle.vehicle.roll_deg",
+    "vehicle.vehicle.agl_altitude_m",
+    "vehicle.vehicle.climb_rate_mps",
+    "vehicle.vehicle.ils_deflection_gs",
+    "vehicle.vehicle.ils_deflection_h",
+    "vehicle.vehicle.velocity_u_mps"
+  ],
+  "load_seconds": 0.05608632415533066,
+  "prompt_costs": {
+    "train": {
+      "first": {
+        "input_sha256": "7be20637fe750a96f6bcae57fc5261563331aa8d6ec88be9ee7d9c77ac59f684",
+        "seconds": 8.922577125020325,
+        "parameters": 124439808,
+        "trainable_parameters": 0,
+        "peak_cuda_bytes": 1320780288,
+        "token_count_range": [
+          408,
+          683
+        ],
+        "shape": [
+          64,
+          768,
+          12
+        ],
+        "prompt_count": 768,
+        "cache_hit": false,
+        "file_sha256": "177397cc73556d8d74eb5542600f117eb9b595602301f311c5d28b9dd1eca62a",
+        "prompts_sha256": "eacbf72ccd50cb41f11781a474f4c00a3c5aaf6555d86871eb8d03af0aaa3b60"
+      },
+      "warm": {
+        "input_sha256": "7be20637fe750a96f6bcae57fc5261563331aa8d6ec88be9ee7d9c77ac59f684",
+        "seconds": 8.922577125020325,
+        "parameters": 124439808,
+        "trainable_parameters": 0,
+        "peak_cuda_bytes": 1320780288,
+        "token_count_range": [
+          408,
+          683
+        ],
+        "shape": [
+          64,
+          768,
+          12
+        ],
+        "prompt_count": 768,
+        "cache_hit": true,
+        "file_sha256": "177397cc73556d8d74eb5542600f117eb9b595602301f311c5d28b9dd1eca62a",
+        "prompts_sha256": "eacbf72ccd50cb41f11781a474f4c00a3c5aaf6555d86871eb8d03af0aaa3b60",
+        "read_seconds": 0.17883689561858773
+      }
+    },
+    "validation": {
+      "first": {
+        "input_sha256": "fb62c37eda5c62f5df224085923b3ff5dbcd8a5a3763b7b36c210a219db958b0",
+        "seconds": 5.79140437906608,
+        "parameters": 124439808,
+        "trainable_parameters": 0,
+        "peak_cuda_bytes": 1267639808,
+        "token_count_range": [
+          414,
+          630
+        ],
+        "shape": [
+          32,
+          768,
+          12
+        ],
+        "prompt_count": 384,
+        "cache_hit": false,
+        "file_sha256": "01b8dca673b0332ead4f3f9d66810ce54943c3e0a59da6d899163a750741e770",
+        "prompts_sha256": "ccff9ea3879f110d9ec7310cee8516542f6c15a6c612c49b47f73d47e090b903"
+      },
+      "warm": {
+        "input_sha256": "fb62c37eda5c62f5df224085923b3ff5dbcd8a5a3763b7b36c210a219db958b0",
+        "seconds": 5.79140437906608,
+        "parameters": 124439808,
+        "trainable_parameters": 0,
+        "peak_cuda_bytes": 1267639808,
+        "token_count_range": [
+          414,
+          630
+        ],
+        "shape": [
+          32,
+          768,
+          12
+        ],
+        "prompt_count": 384,
+        "cache_hit": true,
+        "file_sha256": "01b8dca673b0332ead4f3f9d66810ce54943c3e0a59da6d899163a750741e770",
+        "prompts_sha256": "ccff9ea3879f110d9ec7310cee8516542f6c15a6c612c49b47f73d47e090b903",
+        "read_seconds": 0.101018943823874
+      }
+    }
+  },
+  "results": [
+    {
+      "route": "summary_adapted",
+      "training": {
+        "first_update": {
+          "updates": 1,
+          "history": [
+            {
+              "update": 1,
+              "loss": 1.6505792140960693,
+              "gradient_norm": 45.72420120239258,
+              "sample_ids": [
+                "sub-cp004::ses-20210330::level-02B_run-008::window0000",
+                "sub-cp004::ses-20210330::level-02B_run-008::event0001",
+                "sub-cp004::ses-20210330::level-02B_run-008::window0009",
+                "sub-cp004::ses-20210330::level-02B_run-010::window0003"
+              ],
+              "task_counts": {
+                "difficulty": 3.0,
+                "event_response": 1.0
+              },
+              "parameters_with_gradient": 5797869
+            }
+          ],
+          "seconds": 1.4770548902451992,
+          "peak_cuda_bytes": 208463360,
+          "state_sha256": "8c6f32dc6e3c81bc6727e48df7c622c0ce7610f4977b9b5bb380731df117568f"
+        },
+        "primary": {
+          "updates": 2,
+          "history": [
+            {
+              "update": 1,
+              "loss": 1.6505792140960693,
+              "gradient_norm": 45.72420120239258,
+              "sample_ids": [
+                "sub-cp004::ses-20210330::level-02B_run-008::window0000",
+                "sub-cp004::ses-20210330::level-02B_run-008::event0001",
+                "sub-cp004::ses-20210330::level-02B_run-008::window0009",
+                "sub-cp004::ses-20210330::level-02B_run-010::window0003"
+              ],
+              "task_counts": {
+                "difficulty": 3.0,
+                "event_response": 1.0
+              },
+              "parameters_with_gradient": 5797869
+            },
+            {
+              "update": 2,
+              "loss": 2.0380749702453613,
+              "gradient_norm": 50.89287185668945,
+              "sample_ids": [
+                "sub-cp004::ses-20210330::level-03B_run-011::window0009",
+                "sub-cp004::ses-20210330::level-03B_run-002::event0007",
+                "sub-cp004::ses-20210330::level-04B_run-004::window0009",
+                "sub-cp008::ses-20210503::level-01B_run-012::window0003"
+              ],
+              "task_counts": {
+                "difficulty": 3.0,
+                "event_response": 1.0
+              },
+              "parameters_with_gradient": 5797869
+            }
+          ],
+          "seconds": 0.5173174352385104,
+          "peak_cuda_bytes": 208463360,
+          "state_sha256": "bb780913a2a646239545d8651aa81d92764fe2eba14db86f7dbab115d8a8b623"
+        },
+        "replay": {
+          "updates": 2,
+          "history": [
+            {
+              "update": 1,
+              "loss": 1.6505792140960693,
+              "gradient_norm": 45.72420120239258,
+              "sample_ids": [
+                "sub-cp004::ses-20210330::level-02B_run-008::window0000",
+                "sub-cp004::ses-20210330::level-02B_run-008::event0001",
+                "sub-cp004::ses-20210330::level-02B_run-008::window0009",
+                "sub-cp004::ses-20210330::level-02B_run-010::window0003"
+              ],
+              "task_counts": {
+                "difficulty": 3.0,
+                "event_response": 1.0
+              },
+              "parameters_with_gradient": 5797869
+            },
+            {
+              "update": 2,
+              "loss": 2.0380749702453613,
+              "gradient_norm": 50.89287185668945,
+              "sample_ids": [
+                "sub-cp004::ses-20210330::level-03B_run-011::window0009",
+                "sub-cp004::ses-20210330::level-03B_run-002::event0007",
+                "sub-cp004::ses-20210330::level-04B_run-004::window0009",
+                "sub-cp008::ses-20210503::level-01B_run-012::window0003"
+              ],
+              "task_counts": {
+                "difficulty": 3.0,
+                "event_response": 1.0
+              },
+              "parameters_with_gradient": 5797869
+            }
+          ],
+          "seconds": 0.5192285790108144,
+          "peak_cuda_bytes": 208463360,
+          "state_sha256": "bb780913a2a646239545d8651aa81d92764fe2eba14db86f7dbab115d8a8b623"
+        },
+        "resume_identical": true
+      },
+      "evaluation": {
+        "status": "completed",
+        "contract_sha256": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470",
+        "supervision_stratum": "task_guided:summary_labels",
+        "method": "timecma",
+        "representation_kind": "window_end",
+        "scope": "engineering_development",
+        "comparison_key": "07c371fabf6c9122f614f91878d85cc8c9b98a882870c6b3df59357f55c3c470:task_guided:summary_labels:b4614413901ebdff91209f66de17b28b36cbd685190087a2ce2ffcac9f3b1dc7",
+        "consumers": {
+          "protocol_sha256": "40a3723ff2ed1c1804b6bbae54baa5ea3d43c7fa01dc80368f14ed886d7366c1",
+          "manifest_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary_adapted/evaluation/consumers/consumer_manifest.json",
+          "components": {
+            "linear": {
+              "result_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary_adapted/evaluation/consumers/linear_results.json",
+              "model_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary_adapted/evaluation/consumers/linear.joblib",
+              "model_sha256": "62d4841fa96305893662767516437adcf7614a608f70321123eccf5491872224",
+              "result_sha256": "00a89511cd96f7978ad011c6578fc7c599be29dd73067930d2302f02684d1359",
+              "fit_elapsed_s": 0.02456951979547739,
+              "task_summary": {
+                "validation": [
+                  {
+                    "task": "difficulty",
+                    "metric": "macro_f1",
+                    "value": 0.21388888888888888,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  },
+                  {
+                    "task": "event_response",
+                    "metric": "rmse",
+                    "value": 0.11835094631464356,
+                    "group_count": 3,
+                    "aggregation": "field_mean_then_group_mean",
+                    "error_units": "native"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "contract_file_sha256": "38b0a037979b03482db02e35a615db1e74ace231f77f9ea64190b8ca7bb12ab0",
+        "confirmation_opened": false
+      },
+      "export_cost": {
+        "seconds": 0.4476813022047281,
+        "peak_cuda_bytes": 138136064,
+        "windows_per_second": 214.43826116306832
+      },
+      "replay_export_cost": {
+        "seconds": 0.35302591882646084,
+        "peak_cuda_bytes": 138136064,
+        "windows_per_second": 271.9347075680053
+      },
+      "parameters": 11591149,
+      "feature_dim": 384,
+      "nonconstant_dimensions": 384,
+      "representation_reload_identical": true,
+      "downstream_resume_identical": true,
+      "feature_files": {
+        "train": {
+          "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary_adapted/train_features.npz",
+          "sha256": "114c0d6f42e5340856656628f02cca7020127fb53ab880c0d93a763c1b098049"
+        },
+        "validation": {
+          "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/task_coverage_fix/cogpilot/timecma/summary_adapted/validation_features.npz",
+          "sha256": "c5860a67271d02f5f53c20c4c21c84de0920c13466ad9859326b2ec53fd299b9"
+        }
+      }
+    }
+  ],
+  "total_seconds": 41.684289656579494,
+  "confirmation_opened": false
+}

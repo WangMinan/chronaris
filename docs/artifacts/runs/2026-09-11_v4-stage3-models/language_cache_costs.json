@@ -1,0 +1,275 @@
+{
+  "source_code_sha256": "a66fd417e34ed50c292536bf0c2ed3ff1c756ffb1bcc465af104a7ee8a6365d2",
+  "domains": {
+    "dingxin": {
+      "train": {
+        "cold": {
+          "input_sha256": "af9451aa99fd9e8653ab4cad5b71580c07ea74c83432bfcec7ff930eff7297a0",
+          "seconds": 75.51930694142357,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1263134720,
+          "token_count_range": [
+            225,
+            638
+          ],
+          "shape": [
+            24,
+            768,
+            977
+          ],
+          "prompt_count": 23448,
+          "cache_hit": false,
+          "file_sha256": "5ca6f8647da547a916364183332ede57c873a529edbcdf2e2a0c845501536806",
+          "prompts_sha256": "c17a0b230eeb31a77af44f1242da304b54c047256b3d6d1b3783d13effd2f430"
+        },
+        "warm": {
+          "input_sha256": "af9451aa99fd9e8653ab4cad5b71580c07ea74c83432bfcec7ff930eff7297a0",
+          "seconds": 75.51930694142357,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1263134720,
+          "token_count_range": [
+            225,
+            638
+          ],
+          "shape": [
+            24,
+            768,
+            977
+          ],
+          "prompt_count": 23448,
+          "cache_hit": true,
+          "file_sha256": "5ca6f8647da547a916364183332ede57c873a529edbcdf2e2a0c845501536806",
+          "prompts_sha256": "c17a0b230eeb31a77af44f1242da304b54c047256b3d6d1b3783d13effd2f430",
+          "read_seconds": 5.335732494946569
+        },
+        "matches_original_vectors": true
+      },
+      "validation": {
+        "cold": {
+          "input_sha256": "145f654124a42cacc66b96fac9acd1af7c2fac13dedc1f27449878881efa45b7",
+          "seconds": 19.86277495417744,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1341995008,
+          "token_count_range": [
+            225,
+            704
+          ],
+          "shape": [
+            6,
+            768,
+            977
+          ],
+          "prompt_count": 5862,
+          "cache_hit": false,
+          "file_sha256": "34508f0ce59041c6bbad5558437a9484f4a5e6e3c0c2860a01be2f3f1b78fc57",
+          "prompts_sha256": "6a281eb1d7b134f7b3748eb069f3d7046aae56644a76fe554fb5c882a319df2a"
+        },
+        "warm": {
+          "input_sha256": "145f654124a42cacc66b96fac9acd1af7c2fac13dedc1f27449878881efa45b7",
+          "seconds": 19.86277495417744,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1341995008,
+          "token_count_range": [
+            225,
+            704
+          ],
+          "shape": [
+            6,
+            768,
+            977
+          ],
+          "prompt_count": 5862,
+          "cache_hit": true,
+          "file_sha256": "34508f0ce59041c6bbad5558437a9484f4a5e6e3c0c2860a01be2f3f1b78fc57",
+          "prompts_sha256": "6a281eb1d7b134f7b3748eb069f3d7046aae56644a76fe554fb5c882a319df2a",
+          "read_seconds": 1.124195841141045
+        },
+        "matches_original_vectors": true
+      }
+    },
+    "cogpilot": {
+      "train": {
+        "cold": {
+          "input_sha256": "7be20637fe750a96f6bcae57fc5261563331aa8d6ec88be9ee7d9c77ac59f684",
+          "seconds": 8.032970959320664,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1321504768,
+          "token_count_range": [
+            408,
+            683
+          ],
+          "shape": [
+            64,
+            768,
+            12
+          ],
+          "prompt_count": 768,
+          "cache_hit": false,
+          "file_sha256": "177397cc73556d8d74eb5542600f117eb9b595602301f311c5d28b9dd1eca62a",
+          "prompts_sha256": "eacbf72ccd50cb41f11781a474f4c00a3c5aaf6555d86871eb8d03af0aaa3b60"
+        },
+        "warm": {
+          "input_sha256": "7be20637fe750a96f6bcae57fc5261563331aa8d6ec88be9ee7d9c77ac59f684",
+          "seconds": 8.032970959320664,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1321504768,
+          "token_count_range": [
+            408,
+            683
+          ],
+          "shape": [
+            64,
+            768,
+            12
+          ],
+          "prompt_count": 768,
+          "cache_hit": true,
+          "file_sha256": "177397cc73556d8d74eb5542600f117eb9b595602301f311c5d28b9dd1eca62a",
+          "prompts_sha256": "eacbf72ccd50cb41f11781a474f4c00a3c5aaf6555d86871eb8d03af0aaa3b60",
+          "read_seconds": 0.2016619760543108
+        },
+        "matches_original_vectors": true
+      },
+      "validation": {
+        "cold": {
+          "input_sha256": "fb62c37eda5c62f5df224085923b3ff5dbcd8a5a3763b7b36c210a219db958b0",
+          "seconds": 5.871053523849696,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1267639808,
+          "token_count_range": [
+            414,
+            630
+          ],
+          "shape": [
+            32,
+            768,
+            12
+          ],
+          "prompt_count": 384,
+          "cache_hit": false,
+          "file_sha256": "01b8dca673b0332ead4f3f9d66810ce54943c3e0a59da6d899163a750741e770",
+          "prompts_sha256": "ccff9ea3879f110d9ec7310cee8516542f6c15a6c612c49b47f73d47e090b903"
+        },
+        "warm": {
+          "input_sha256": "fb62c37eda5c62f5df224085923b3ff5dbcd8a5a3763b7b36c210a219db958b0",
+          "seconds": 5.871053523849696,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1267639808,
+          "token_count_range": [
+            414,
+            630
+          ],
+          "shape": [
+            32,
+            768,
+            12
+          ],
+          "prompt_count": 384,
+          "cache_hit": true,
+          "file_sha256": "01b8dca673b0332ead4f3f9d66810ce54943c3e0a59da6d899163a750741e770",
+          "prompts_sha256": "ccff9ea3879f110d9ec7310cee8516542f6c15a6c612c49b47f73d47e090b903",
+          "read_seconds": 0.11386062111705542
+        },
+        "matches_original_vectors": true
+      }
+    },
+    "clare": {
+      "train": {
+        "cold": {
+          "input_sha256": "b349765d6f902ae3674eac09a9437a765d49abbaf0a0ea442860c503558297f9",
+          "seconds": 4.88915929524228,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1224713216,
+          "token_count_range": [
+            415,
+            597
+          ],
+          "shape": [
+            32,
+            768,
+            6
+          ],
+          "prompt_count": 192,
+          "cache_hit": false,
+          "file_sha256": "8c78bb596714c6ccac6b471c93677c6581e8d4c054aaa475d24fdaf67cb615d3",
+          "prompts_sha256": "e087626a81a6f09ec8948b5247ac1ef8894d17cb93d77bc57dfb5ac3dbf44c2e"
+        },
+        "warm": {
+          "input_sha256": "b349765d6f902ae3674eac09a9437a765d49abbaf0a0ea442860c503558297f9",
+          "seconds": 4.88915929524228,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1224713216,
+          "token_count_range": [
+            415,
+            597
+          ],
+          "shape": [
+            32,
+            768,
+            6
+          ],
+          "prompt_count": 192,
+          "cache_hit": true,
+          "file_sha256": "8c78bb596714c6ccac6b471c93677c6581e8d4c054aaa475d24fdaf67cb615d3",
+          "prompts_sha256": "e087626a81a6f09ec8948b5247ac1ef8894d17cb93d77bc57dfb5ac3dbf44c2e",
+          "read_seconds": 0.0719143389724195
+        },
+        "matches_original_vectors": true
+      },
+      "validation": {
+        "cold": {
+          "input_sha256": "1cca063ed1e9e767d53bbc9940b3c66a4c2922de23dcbc8dd8b9f45983049673",
+          "seconds": 4.436080744024366,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1221739008,
+          "token_count_range": [
+            222,
+            591
+          ],
+          "shape": [
+            16,
+            768,
+            6
+          ],
+          "prompt_count": 96,
+          "cache_hit": false,
+          "file_sha256": "a7daa807152dfa348dc00a78c026a4a745a8402b3503141ce6b18af7cfe1fe4e",
+          "prompts_sha256": "d5deffef04914f405a2fbca90b3025417a46f808b6ea3cee724718629891f84a"
+        },
+        "warm": {
+          "input_sha256": "1cca063ed1e9e767d53bbc9940b3c66a4c2922de23dcbc8dd8b9f45983049673",
+          "seconds": 4.436080744024366,
+          "parameters": 124439808,
+          "trainable_parameters": 0,
+          "peak_cuda_bytes": 1221739008,
+          "token_count_range": [
+            222,
+            591
+          ],
+          "shape": [
+            16,
+            768,
+            6
+          ],
+          "prompt_count": 96,
+          "cache_hit": true,
+          "file_sha256": "a7daa807152dfa348dc00a78c026a4a745a8402b3503141ce6b18af7cfe1fe4e",
+          "prompts_sha256": "d5deffef04914f405a2fbca90b3025417a46f808b6ea3cee724718629891f84a",
+          "read_seconds": 0.04931166488677263
+        },
+        "matches_original_vectors": true
+      }
+    }
+  }
+}
