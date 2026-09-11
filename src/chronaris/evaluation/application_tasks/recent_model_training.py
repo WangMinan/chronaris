@@ -1,4 +1,4 @@
-"""Two-update, resumable adapter diagnostics using existing task losses and RNG state."""
+"""Resumable adapter fitting using existing task losses and RNG state."""
 from pathlib import Path
 import time
 
@@ -47,7 +47,7 @@ def task_covered_positions(targets, definitions, train_ids, update, batch_size):
 
 def short_fit(encoder, *, values, mask, prompts, targets, definitions, train_ids, metadata, root,
               stop_after=2, progress=None):
-    """Engineering budget only. Save optimizer and RNG after each real CUDA update."""
+    """Use the bound budget; retain optimizer and RNG for exact continuation."""
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     summary_labels = metadata['target_supervision'] == 'summary_labels'
@@ -78,6 +78,9 @@ def short_fit(encoder, *, values, mask, prompts, targets, definitions, train_ids
         batch_size = 4 if summary_labels and metadata['method_name']=='timecma' else 1
         positions = (task_covered_positions(targets, definitions, train_ids, update, batch_size) if summary_labels else
             [(update*batch_size+j) % len(train_ids) for j in range(min(batch_size, len(train_ids)))])
+        if metadata.get('full_training_role'):
+            cyclic = [(update*batch_size+j) % len(train_ids) for j in range(min(batch_size, len(train_ids)))]
+            positions = list(dict.fromkeys(cyclic+positions))
         ids = tuple(train_ids[j] for j in positions)
         optimizer.zero_grad(set_to_none=True)
         if summary_labels:
@@ -99,6 +102,8 @@ def short_fit(encoder, *, values, mask, prompts, targets, definitions, train_ids
         history.append(dict(update=update, loss=float(loss.detach()), gradient_norm=float(norm), sample_ids=list(ids),
             task_counts=task_losses['counts'] if summary_labels else {},
             parameters_with_gradient=sum(p.numel() for p in encoder.parameters() if p.grad is not None)))
+        if update % metadata.get('checkpoint_interval', 1) and update != stop_after:
+            continue
         saved = dict(metadata=metadata, encoder=encoder_checkpoint_state(encoder), heads=heads.state_dict(),
             optimizer=optimizer.state_dict(), rng=capture_rng_state(), update=update, history=history,
             task_parameters=params)

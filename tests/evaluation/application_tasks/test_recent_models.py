@@ -1,4 +1,5 @@
 import os
+import shutil
 import json
 from pathlib import Path
 import time
@@ -104,7 +105,7 @@ def test_official_hidden_extraction_and_window_isolation():
 
 @pytest.mark.skipif(not os.environ.get('CHRONARIS_SENSOR_ASSETS') or not os.environ.get('CHRONARIS_SENSOR_RUN')
     or not torch.cuda.is_available(), reason='explicit real SensorLLM run, pinned weights and CUDA required')
-def test_sensorllm_cold_load_restores_real_features_and_zero_observation(record_property):
+def test_sensorllm_cold_load_restores_real_features_and_zero_observation(record_property, tmp_path):
     import numpy as np
     from chronaris.evaluation.application_tasks.common_downstream_smoke import contract_development_inputs
     from chronaris.modeling.fusion_encoders.sensorllm_adapter import SensorLLMWindowEncoder
@@ -140,6 +141,18 @@ def test_sensorllm_cold_load_restores_real_features_and_zero_observation(record_
                 assert torch.equal(actual, encoder(values[:1].masked_fill(~mask[:1], 1e6), mask[:1]).cpu())
                 empty = encoder(values[:1], torch.zeros_like(mask[:1]))
                 assert torch.equal(empty, torch.zeros_like(empty))
+            encoder.configure_training()
+            train_values, train_mask = historical_channels(normalizer.transform(raw['train']))
+            alignment = dict(values=train_values[:2], mask=train_mask[:2], names=saved['channel_names'],
+                train_ids=raw['train'].sample_ids[:2], binding={'scope':'test_only_no_research_evidence'})
+            encoder.align_history(**alignment, root=tmp_path/'alignment', stop_after=1)
+            (tmp_path/'replay').mkdir()
+            shutil.copyfile(tmp_path/'alignment/alignment.pt', tmp_path/'replay/alignment.pt')
+            primary = encoder.align_history(**alignment, root=tmp_path/'alignment', stop_after=2)
+            expected = canonical_training_state_sha256(encoder.checkpoint_state())
+            replay = encoder.align_history(**alignment, root=tmp_path/'replay', stop_after=2)
+            assert primary['updates'] == replay['updates']
+            assert expected == canonical_training_state_sha256(encoder.checkpoint_state())
     finally:
         del encoder
         torch.cuda.empty_cache()

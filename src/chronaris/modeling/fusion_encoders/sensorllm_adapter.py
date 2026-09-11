@@ -8,6 +8,7 @@ import torch
 from torch import nn
 
 from chronaris.modeling.training.candidate_checkpoint import atomic_save_candidate
+from chronaris.modeling.training.rng import capture_rng_state, restore_rng_state
 
 
 class SensorLLMWindowEncoder(nn.Module):
@@ -91,19 +92,25 @@ class SensorLLMWindowEncoder(nn.Module):
             raise ValueError('SensorLLM diagnostic uses single-window batches')
         return hidden[:, -1, :].float() * mask.any().to('cuda')
 
-    def align_history(self, *, values, mask, names, train_ids, root, binding, progress=None):
-        """Two single-channel trend QA updates, derived solely from train history."""
+    def align_history(self, *, values, mask, names, train_ids, root, binding, progress=None, stop_after=2):
+        """Single-channel trend QA from train history; resumable complete-role adaptation."""
         from safetensors import safe_open
         self.channel_names = names
         root = Path(root)
         root.mkdir(parents=True, exist_ok=True)
         checkpoint = root/'alignment.pt'
+        saved = None
         if checkpoint.exists():
             saved = torch.load(checkpoint, weights_only=True)
             if saved['binding'] != binding:
                 raise ValueError('SensorLLM alignment source changed')
             self.load_checkpoint_state(saved['projector'])
-            return saved['receipt']
+            if len(saved['receipt']['updates']) == stop_after:
+                if 'rng' in saved:
+                    restore_rng_state(saved['rng'])
+                return saved['receipt']
+            if len(saved['receipt']['updates']) > stop_after:
+                raise ValueError('alignment budget decreased')
         index = json.loads((Path(self.assets['deepseek_llama']['path'])/'model.safetensors.index.json').read_text())
         with safe_open(str(Path(self.assets['deepseek_llama']['path'])/index['weight_map']['lm_head.weight']), framework='pt') as file:
             lm_weight = file.get_tensor('lm_head.weight').cuda()
@@ -111,8 +118,13 @@ class SensorLLMWindowEncoder(nn.Module):
         self.train()
         started = time.perf_counter()
         torch.cuda.reset_peak_memory_stats()
-        updates = []
-        for row in range(2):
+        updates = [] if saved is None else saved['receipt']['updates']
+        elapsed = 0. if saved is None else saved['receipt']['seconds']
+        if saved is not None:
+            optimizer.load_state_dict(saved['optimizer'])
+            restore_rng_state(saved['rng'])
+        for update in range(len(updates), stop_after):
+            row = update % len(train_ids)
             channel = next((c for c in range(values.shape[-1]) if mask[row, :, c].sum() >= 2), None)
             if channel is None:
                 raise ValueError('alignment sample lacks observed channel support')
@@ -128,14 +140,16 @@ class SensorLLMWindowEncoder(nn.Module):
             optimizer.step()
             if progress is not None:
                 progress['optimizer_updates'] += 1
-                progress['alignment_updates'] = row+1
+                progress['alignment_updates'] = update+1
             updates.append(dict(sample_id=train_ids[row], channel=names[channel], answer=answer,
                 loss=float(loss.detach()), gradient_norm=float(norm), token_count=self.last_token_count))
-        torch.cuda.synchronize()
-        receipt = dict(updates=updates, seconds=time.perf_counter()-started,
-            peak_cuda_bytes=torch.cuda.max_memory_allocated(), supervision='train_history_derived_trend_text',
-            business_or_expert_labels=False, special_token_embeddings='frozen_official_mean_initialization')
-        atomic_save_candidate(checkpoint, dict(binding=binding, projector=self.checkpoint_state(), receipt=receipt))
+            torch.cuda.synchronize()
+            if (update+1) % 25 == 0 or update+1 == stop_after:
+                receipt = dict(updates=updates, seconds=elapsed+time.perf_counter()-started,
+                    peak_cuda_bytes=torch.cuda.max_memory_allocated(), supervision='train_history_derived_trend_text',
+                    business_or_expert_labels=False, special_token_embeddings='frozen_official_mean_initialization')
+                atomic_save_candidate(checkpoint, dict(binding=binding, projector=self.checkpoint_state(), receipt=receipt,
+                    optimizer=optimizer.state_dict(), rng=capture_rng_state()))
         del lm_weight, optimizer
         torch.cuda.empty_cache()
         return receipt

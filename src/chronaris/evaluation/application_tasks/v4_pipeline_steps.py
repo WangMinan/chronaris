@@ -39,6 +39,9 @@ def run_pipeline_step(stage, config, *, attempt=1):
     root = Path(config['root'])
     initial, pressure, public, review = (root/name for name in ('initial', 'initial_pressure', 'public_screen', 'review'))
     common = dict(data_root=config['data_root'], registry_path=config['registry_path'])
+    if stage.startswith('comparison_'):
+        from chronaris.evaluation.application_tasks.development_comparison import run_comparison_step
+        return run_comparison_step(stage, config)
     if stage == 'cuda_validation':
         from chronaris.evaluation.application_tasks.v4_configuration_freeze import validate_current_cuda
         return validate_current_cuda(root/'cuda_validation'/f'attempt_{attempt}')

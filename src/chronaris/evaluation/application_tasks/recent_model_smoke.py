@@ -2,6 +2,7 @@
 from dataclasses import asdict, replace
 from inspect import getfile
 import json
+import math
 from pathlib import Path
 import shutil
 import time
@@ -44,17 +45,19 @@ def _export(encoder, inputs, prompts):
         windows_per_second=sum(len(x) for x in outputs.values())/seconds)
 
 
-def _run(*, domain, method, output_root, assets_path, data_root, registry_path, progress):
+def _run(*, domain, method, output_root, assets_path, data_root, registry_path, progress, full=False):
     root = Path(output_root)/domain/method
     started = time.perf_counter()
     assets = verify_assets(assets_path)
     provider, schema, fold, digest, targets, definitions, context, raw = contract_development_inputs(
-        domain, data_root=data_root, registry_path=registry_path)
+        domain, data_root=data_root, registry_path=registry_path, full=full)
     kwargs = dict(fold=fold, observations=raw, targets=targets, definitions=definitions,
         context=context, data_manifest_sha256=digest)
-    contract = build_common_contract(domain=domain, **kwargs)
+    scope = 'development_comparison' if full else 'engineering_development'
+    contract = build_common_contract(domain=domain, scope=scope, **kwargs)
+    budget = max(200, math.ceil(len(fold.train_sample_ids)/(4 if method=='timecma' else 1))) if full else 2
     binding = dict(contract=contract, assets_sha256=sha256_file(assets_path), method=method,
-        training_budget=2, resume_replay_updates=1, seed=17, cuda_allocator_fraction=.95)
+        training_budget=budget, resume_replay_updates=1, seed=17, cuda_allocator_fraction=.95)
     binding_path = root/'binding.json'
     if binding_path.exists() and json.loads(binding_path.read_text()) != binding:
         raise ValueError('recent model input/source changed; preserve this root and use a new one')
@@ -89,7 +92,7 @@ def _run(*, domain, method, output_root, assets_path, data_root, registry_path, 
     if method == 'sensorllm_deepseek':
         progress.update(phase='sensor_language_alignment')
         alignment = encoder.align_history(values=inputs['train'][0], mask=inputs['train'][1], names=names,
-            train_ids=fold.train_sample_ids, root=root/'alignment', binding=binding, progress=progress)
+            train_ids=fold.train_sample_ids, root=root/'alignment', binding=binding, progress=progress, stop_after=max(200, len(fold.train_sample_ids)) if full else 2)
     routes = ('frozen', 'history_adapted') if method == 'chronos2' else ('summary_adapted',)
     results = []
     for route in routes:
@@ -109,28 +112,32 @@ def _run(*, domain, method, output_root, assets_path, data_root, registry_path, 
             adaptation='summary_label_heads_removed' if signal=='summary_labels' else
                 ('native_quantile_loss_on_last_16_points_inside_train_history' if adapted else 'none'),
             channel_names=list(names), source_code_sha256=contract['source_code_sha256'], alignment=alignment)
+        if full:
+            metadata.update(full_training_role=True, training_budget=budget, checkpoint_interval=25)
         training = None
         if adapted:
             fit_kwargs = dict(values=inputs['train'][0], mask=inputs['train'][1], prompts=prompts['train'],
                 targets=training_targets, definitions=training_definitions, train_ids=fold.train_sample_ids,
                 metadata=metadata, progress=progress)
             anchor = unit/'resume_anchor.pt'
-            if not (unit/'fit'/'training.pt').exists():
-                first = short_fit(encoder, **fit_kwargs, root=unit/'fit', stop_after=1)
+            if not anchor.exists():
+                first = short_fit(encoder, **fit_kwargs, root=unit/'fit', stop_after=budget-1)
                 shutil.copyfile(unit/'fit'/'training.pt', anchor)
                 write_result(unit/'first_update.json', first)
-            primary = short_fit(encoder, **fit_kwargs, root=unit/'fit')
+            primary = short_fit(encoder, **fit_kwargs, root=unit/'fit', stop_after=budget)
             if not anchor.exists():
                 raise ValueError('training resume anchor missing')
             replay_dir = unit/'resume_replay'
             replay_dir.mkdir(exist_ok=True)
             if not (replay_dir/'training.pt').exists():
                 shutil.copyfile(anchor, replay_dir/'training.pt')
-            replay = short_fit(encoder, **fit_kwargs, root=replay_dir)
+            replay = short_fit(encoder, **fit_kwargs, root=replay_dir, stop_after=budget)
             if primary['state_sha256'] != replay['state_sha256'] or primary['history'] != replay['history']:
                 raise ValueError('optimizer/RNG resume changed actual adapter training')
             training = dict(first_update=json.loads((unit/'first_update.json').read_text()),
                 primary=primary, replay=replay, resume_identical=True)
+            if full and {s for h in primary['history'] for s in h['sample_ids']} != set(fold.train_sample_ids):
+                raise ValueError('complete adapter budget did not visit the full training role')
             if signal == 'summary_labels':
                 metadata['task_supervision_counts'] = {t['name']: sum(h['task_counts'][t['name']] for h in primary['history']) for t in tasks}
                 if any(count <= 0 for count in metadata['task_supervision_counts'].values()):
@@ -201,7 +208,7 @@ def _run(*, domain, method, output_root, assets_path, data_root, registry_path, 
         results.append(json.loads(result_path.read_text()))
     if v4_workflow_source_sha256() != contract['source_code_sha256']:
         raise ValueError('source changed during recent model execution')
-    result = dict(status='completed', domain=domain, method=method, scope='engineering_development',
+    result = dict(status='completed', domain=domain, method=method, scope=scope,
         source_code_sha256=contract['source_code_sha256'], contract_sha256=contract['contract_sha256'],
         sample_counts={r: len(b.sample_ids) for r,b in raw.items()}, channel_names=list(names),
         load_seconds=load_seconds, prompt_costs=prompt_costs, results=results,
@@ -213,7 +220,7 @@ def _run(*, domain, method, output_root, assets_path, data_root, registry_path, 
 
 def run_recent_model_smoke(*, domain, method, output_root, assets_path,
                            data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
-                           registry_path='docs/requirements/thesis-v4-public-subjects.json'):
+                           registry_path='docs/requirements/thesis-v4-public-subjects.json', full=False):
     if domain not in {'dingxin','cogpilot','clare'} or method not in {'timecma','chronos2','sensorllm_deepseek'} or not torch.cuda.is_available():
         raise ValueError('recent model smoke requires an approved real development domain, method and CUDA')
     root = Path(output_root)/domain/method
@@ -226,7 +233,7 @@ def run_recent_model_smoke(*, domain, method, output_root, assets_path,
             try:
                 torch.cuda.set_per_process_memory_fraction(.95)
                 return _run(domain=domain, method=method, output_root=output_root, assets_path=assets_path,
-                    data_root=data_root, registry_path=registry_path, progress=progress)
+                    data_root=data_root, registry_path=registry_path, progress=progress, full=full)
             except BaseException as error:
                 write_result(root/f'failure_{time.time_ns()}.json', dict(status='failed', error=repr(error),
                     traceback=traceback.format_exc(), progress=dict(progress)))

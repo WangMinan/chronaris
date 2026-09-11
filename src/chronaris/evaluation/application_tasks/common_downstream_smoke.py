@@ -1,6 +1,8 @@
 """Bounded real-development closure using existing encoders, exports and consumers."""
 from dataclasses import asdict, replace
 import json
+import math
+import time
 from pathlib import Path
 
 import torch
@@ -26,7 +28,7 @@ from chronaris.representation.window_features import WindowFeatureBatch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file, write_deterministic_npz
 
 
-def contract_development_inputs(domain, *, data_root, registry_path):
+def contract_development_inputs(domain, *, data_root, registry_path, full=False):
     if domain == 'dingxin':
         data, _ = deduplicated_dingxin_data(load_v4_dingxin_development())
         fold = data.folds[0]
@@ -34,19 +36,20 @@ def contract_development_inputs(domain, *, data_root, registry_path):
         provider, schema, digest = data.development_provider(fold), data.index.plan.schema, data.data_manifest_sha256
     else:
         provider, schema, fold, _, digest, targets, definitions, data = load_development_inputs(domain, data_root, registry_path)
-        # Fix task availability, not label values or model outcomes, before selecting methods.
-        index = {sample: i for i, sample in enumerate(targets.sample_ids)}
-        roles = {}
-        for role, count in (('train', 32), ('validation', 16)):
-            allowed = getattr(fold, role+'_sample_ids')
-            selected = set()
-            for task in definitions:
-                ids = [s for s in allowed if bool(targets.valid_masks[task.name][index[s]].any())]
-                selected.update(_hash_prefix(ids, count))
-            roles[role+'_sample_ids'] = tuple(s for s in allowed if s in selected)
-        fold = replace(fold, fold_id=fold.fold_id+'__common_contract_smoke', **roles)
-        ids = fold.train_sample_ids + fold.validation_sample_ids
-        targets = replace(targets, sample_ids=ids, **select_application_targets(targets, ids, 'cpu'))
+        if not full:
+            # Fix task availability, not label values or model outcomes, before selecting methods.
+            index = {sample: i for i, sample in enumerate(targets.sample_ids)}
+            roles = {}
+            for role, count in (('train', 32), ('validation', 16)):
+                allowed = getattr(fold, role+'_sample_ids')
+                selected = set()
+                for task in definitions:
+                    ids = [s for s in allowed if bool(targets.valid_masks[task.name][index[s]].any())]
+                    selected.update(_hash_prefix(ids, count))
+                roles[role+'_sample_ids'] = tuple(s for s in allowed if s in selected)
+            fold = replace(fold, fold_id=fold.fold_id+'__common_contract_smoke', **roles)
+            ids = fold.train_sample_ids + fold.validation_sample_ids
+            targets = replace(targets, sample_ids=ids, **select_application_targets(targets, ids, 'cpu'))
     context = native_consumer_context(domain, data, fold)
     observations = {role: provider(getattr(fold, role+'_sample_ids')) for role in ('train', 'validation')}
     def selected_provider(ids):
@@ -60,10 +63,15 @@ def contract_development_inputs(domain, *, data_root, registry_path):
 
 def run_common_contract_smoke(*, domain, output_root,
                             data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
-                            registry_path='docs/requirements/thesis-v4-public-subjects.json'):
+                            registry_path='docs/requirements/thesis-v4-public-subjects.json',
+                            full=False, methods=('naive_time_sync', 'chronaris')):
     if domain not in {'dingxin', 'cogpilot', 'clare'} or not torch.cuda.is_available():
         raise ValueError('contract smoke requires a real native development domain and CUDA')
+    if not methods or not set(methods) <= {'naive_time_sync', 'chronaris', 'physiology_only', 'vehicle_only', 'mult', 'contiformer'}:
+        raise ValueError('unsupported common comparison method')
+    scope = 'development_comparison' if full else 'engineering_development'
     root = Path(output_root)/domain
+    started = time.perf_counter()
     with development_gpu_lock() as acquired:
         if not acquired:
             return dict(status='waiting_gpu')
@@ -71,9 +79,9 @@ def run_common_contract_smoke(*, domain, output_root,
         with _periodic_training_heartbeat('common_contract_'+domain, 30., root=root) as progress:
             progress['phase'] = 'bind_real_development_inputs'
             provider, schema, fold, digest, targets, definitions, context, observations = contract_development_inputs(
-                domain, data_root=data_root, registry_path=registry_path)
+                domain, data_root=data_root, registry_path=registry_path, full=full)
             contract = build_common_contract(domain=domain, fold=fold, observations=observations,
-                targets=targets, definitions=definitions, context=context, data_manifest_sha256=digest)
+                targets=targets, definitions=definitions, context=context, data_manifest_sha256=digest, scope=scope)
             contract_path = root/'data_contract.json'
             if contract_path.exists() and json.loads(contract_path.read_text()) != contract:
                 raise ValueError('contract smoke inputs or source changed; preserve this root')
@@ -82,8 +90,12 @@ def run_common_contract_smoke(*, domain, output_root,
                 train_sample_ids=fold.train_sample_ids, held_out_sample_ids=fold.validation_sample_ids+fold.held_out_sample_ids,
                 batch_size=4)
             results = []
-            for method in ('naive_time_sync', 'chronaris'):
+            for method in methods:
                 progress.update(phase='encoder_fit', method=method)
+                effective_batch = 16 if full else 4
+                pretraining_updates = max(300, math.ceil(len(fold.train_sample_ids)/effective_batch)) if full else 2
+                joint_updates = max(200, math.ceil(len(fold.train_sample_ids)/effective_batch)) if full else 2
+                torch.cuda.reset_peak_memory_stats()
                 if method == 'naive_time_sync':
                     checkpoint, training = fit_v4_naive_encoder(provider=provider, fold=fold, normalizer=normalizer,
                         data_manifest_sha256=digest, output_root=root/method/'checkpoint')
@@ -93,18 +105,31 @@ def run_common_contract_smoke(*, domain, output_root,
                     training = train_pretext_candidate(method, candidate=EncoderCandidateConfig(candidate_id='C', hidden_dim=32),
                         batch=None, batch_provider=provider, fold=fold, physiology_feature_names=schema.physiology_feature_names,
                         vehicle_feature_names=schema.vehicle_feature_names, vehicle_field_labels=(), normalizer=normalizer,
-                        output_root=root/method/'self_supervised', config=CandidateScreenConfig(max_updates=2,
-                            batch_size=4, effective_batch_size=4, device='cuda', validation_interval=2, early_stopping=False,
+                        output_root=root/method/'self_supervised', config=CandidateScreenConfig(max_updates=pretraining_updates,
+                            batch_size=4, effective_batch_size=effective_batch, device='cuda', validation_interval=50 if full else 2, early_stopping=False,
                             data_manifest_sha256=digest), chronaris_fusion_kind='safe_lag')
                     encoder, _, _ = load_frozen_application_encoder(training.best_checkpoint_path,
                         route='self_supervised', fold=fold, device='cuda')
                     routes = [('self_supervised', Path(training.best_checkpoint_path), encoder, asdict(training))]
                 for route, checkpoint, encoder, training in routes:
                     progress.update(phase='export_and_common_consumers', route=route)
+                    task_counts = {}
+                    if full and route == 'task_guided':
+                        payload = torch.load(checkpoint, map_location='cpu', weights_only=True)
+                        task_counts = {t.name: sum(r['task_valid_counts'][t.name] for r in payload['update_rows']
+                            if r['stage']=='joint_adaptation') for t in definitions}
+                        if any(v <= 0 for v in task_counts.values()):
+                            raise ValueError('a declared baseline task received no encoder supervision')
+                    export_started = time.perf_counter()
                     outputs = export_loaded_application_encoder(encoder=encoder, normalizer=normalizer, checkpoint=checkpoint,
                         provider=provider, fold=fold, root=root/method/route/'representations',
                         export_roles=('train', 'validation'), export_prefix='common_contract_smoke',
                         label_used_for_encoder_training=route == 'task_guided')
+                    torch.cuda.synchronize()
+                    export_seconds = time.perf_counter()-export_started
+                    spread = outputs['train'].pooled_embedding.std(0, unbiased=False)
+                    if full and not (spread > 1e-8).any():
+                        raise ValueError('full development representation collapsed')
                     declaration = dict(method=method, checkpoint_path=str(checkpoint.resolve()), checkpoint_sha256=sha256_file(checkpoint),
                         route=route, target_supervision='summary_labels' if route == 'task_guided' else 'none',
                         training_tasks=[t.name for t in definitions] if route == 'task_guided' else [], external_pretraining={'source': 'none'},
@@ -122,20 +147,24 @@ def run_common_contract_smoke(*, domain, output_root,
                     resumed = run_common_downstream(**kwargs, outputs=outputs, declaration=declaration, output_root=run_root, families=families)
                     if first != resumed:
                         raise ValueError('common consumer resume changed predictions or provenance')
-                    results.append(first | {'training': training, 'resume_identical': True})
-                    if method == 'chronaris' and route == 'self_supervised':
-                        window = {r: WindowFeatureBatch(o.sample_ids, observations[r].context_durations_s,
-                            o.pooled_embedding, o.valid_mask.any(1), o.method_name, o.fold_id, o.checkpoint_sha256,
-                            o.source_sample_hashes) for r, o in outputs.items()}
-                        for role, batch in window.items():
-                            write_deterministic_npz(root/method/route/'window_features'/f'{role}.npz',
-                                dict(sample_ids=batch.sample_ids, pooled_embedding=batch.pooled_embedding.numpy(),
-                                    valid_mask=batch.valid_mask.numpy(), timestamps_s=batch.timestamps_s.numpy(),
-                                    source_sample_hashes=batch.source_sample_hashes))
-                        window_result = run_common_downstream(**kwargs, outputs=window, declaration=declaration | {
-                            'kind': 'window_end', 'extraction_location': 'pool_exported_sequence'},
-                            output_root=root/method/route/'window_evaluation')
-                        results.append(window_result | {'derived_from_sequence_export': True})
+                    results.append(first | {'training': training, 'resume_identical': True,
+                        'route': route, 'export_seconds': export_seconds, 'task_supervision_counts': task_counts,
+                        'nonconstant_dimensions': int((spread > 1e-8).sum()),
+                        'peak_cuda_bytes': torch.cuda.max_memory_allocated()})
+                    if method != 'naive_time_sync' and route == 'self_supervised':
+                        if not full:
+                            window = {r: WindowFeatureBatch(o.sample_ids, observations[r].context_durations_s,
+                                o.pooled_embedding, o.valid_mask.any(1), o.method_name, o.fold_id, o.checkpoint_sha256,
+                                o.source_sample_hashes) for r, o in outputs.items()}
+                            for role, batch in window.items():
+                                write_deterministic_npz(root/method/route/'window_features'/f'{role}.npz',
+                                    dict(sample_ids=batch.sample_ids, pooled_embedding=batch.pooled_embedding.numpy(),
+                                        valid_mask=batch.valid_mask.numpy(), timestamps_s=batch.timestamps_s.numpy(),
+                                        source_sample_hashes=batch.source_sample_hashes))
+                            window_result = run_common_downstream(**kwargs, outputs=window, declaration=declaration | {
+                                'kind': 'window_end', 'extraction_location': 'pool_exported_sequence'},
+                                output_root=root/method/route/'window_evaluation')
+                            results.append(window_result | {'derived_from_sequence_export': True})
                         # Extend the existing route list only after freezing/exporting the unsupervised encoder.
                         progress.update(phase='task_guided_fit', route='task_guided')
                         with isolated_training_rng(17):
@@ -144,15 +173,15 @@ def run_common_contract_smoke(*, domain, output_root,
                         guided = train_end_to_end_application_method(model=model, batch=None, batch_provider=provider,
                             targets=targets, role_sample_ids={r: getattr(fold, r+'_sample_ids') for r in ('train', 'validation', 'held_out')},
                             source_checkpoint_path=checkpoint, output_root=root/method/'task_guided',
-                            config=EndToEndFineTuningConfig(max_updates=2, head_warmup_updates=2, batch_size=4,
-                                effective_batch_size=4, device='cuda', validation_interval=2, early_stopping=False,
+                            config=EndToEndFineTuningConfig(max_updates=joint_updates, head_warmup_updates=50 if full else 2, batch_size=4,
+                                effective_batch_size=effective_batch, device='cuda', validation_interval=50 if full else 2, early_stopping=False,
                                 data_manifest_sha256=digest))
                         guided_encoder, _, _ = load_frozen_application_encoder(guided.best_checkpoint_path,
                             route='task_guided', fold=fold, device='cuda')
                         routes.append(('task_guided', Path(guided.best_checkpoint_path), guided_encoder, asdict(guided)))
             if v4_workflow_source_sha256() != contract['source_code_sha256']:
                 raise ValueError('source changed during contract smoke')
-            result = dict(status='completed', domain=domain, scope='engineering_development',
+            result = dict(status='completed', domain=domain, scope=scope, total_seconds=time.perf_counter()-started,
                 contract_sha256=contract['contract_sha256'], source_code_sha256=contract['source_code_sha256'],
                 results=results, sample_counts={r: len(b.sample_ids) for r, b in observations.items()}, confirmation_opened=False)
             return write_result(root/'summary.json', result)

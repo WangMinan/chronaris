@@ -6,6 +6,8 @@
 
 ## 当前复核
 
+[阶段 4 完整开发比较](stage/thesis-v4/stage4-comparison-20260911/README.md)检查完整角色、任务覆盖、恢复、失败停止和成本记录，启动后按用户要求结束会话。
+
 [阶段 3 近期模型接入](stage/thesis-v4/stage3-models-20260911/README.md)核验官方表示、真实开发下游、训练与缓存恢复，以及资源成本；适配合同见[近期模型开发接入](../requirements/recent-model-adapters-v1.md)。
 
 [阶段 2 共同下游合同](stage/thesis-v4/stage2-contract-20260910/README.md)已完成任务、角色、监督和表示能力约束；三域真实开发闭环及完整显卡回归通过。

@@ -37,6 +37,9 @@ CPU_STAGES = {'public_results', 'public_review_results', 'simulation_review_resu
 
 
 def pipeline_groups(until):
+    if until == 'comparison':
+        from chronaris.evaluation.application_tasks.development_comparison import comparison_groups
+        return comparison_groups()
     if until not in ('development', 'freeze', 'confirmation'):
         raise ValueError('unknown pipeline endpoint')
     groups = [[step] for step in DEVELOPMENT]
@@ -171,10 +174,10 @@ def execute_pipeline(config, *, until, retry_failed=False):
 def main(*, default_until='freeze'):
     parser = argparse.ArgumentParser(description='Fixed v4 development, selection and confirmation; resumes one immutable run root.')
     parser.add_argument('--root')
-    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation'), default=default_until)
+    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
     parser.add_argument('--retry-failed', action='store_true')
-    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation') for stage, _ in group], help=argparse.SUPPRESS)
+    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
@@ -232,7 +235,15 @@ def main(*, default_until='freeze'):
         Path(config['condition_root'])/'development_condition_audit.json']
     input_paths += [Path(config[name])/domain/'summary.json' for name in ('data_root', 'confirmation_data_root')
                     for domain in ('cogpilot', 'clare')]
+    if args.until == 'comparison':
+        from chronaris.evaluation.application_tasks.development_comparison import ASSETS, SENSOR_ASSETS
+        input_paths = [Path(config['registry_path']), Path(ASSETS), Path(SENSOR_ASSETS)]
+        input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot', 'clare')]
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
+    if args.plan_only and args.until == 'comparison':
+        print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), seed=17, fold_index=0,
+            model_units=25, representation_routes=43, confirmation_opened=False, executes_training=False), indent=2))
+        return
     if args.plan_only:
         print(json.dumps(dict(config=config, groups=pipeline_groups(args.until),
             initial_configurations=26, seeds=[17,29,43], public_review_folds=3,
