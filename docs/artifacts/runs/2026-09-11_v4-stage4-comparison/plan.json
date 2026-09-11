@@ -1,0 +1,330 @@
+{
+  "format": "chronaris.stage4_comparison.v1",
+  "status": "completed",
+  "source_code_sha256": "669bd885501c840d09c38234c18362b39a5a0b61cbdc74732061a30b92da0992",
+  "seed": 17,
+  "fold_index": 0,
+  "contracts": {
+    "clare": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison/comparison/clare/data_contract.json",
+      "sha256": "14bc330a6130d44092e926d82acf334f663be0bcc7c0ec5e476978945baf5de1",
+      "contract_sha256": "a141cd6488132aa25fad0743cc5a565e04eae5100c11ce00010351eced5c3391"
+    },
+    "cogpilot": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison/comparison/cogpilot/data_contract.json",
+      "sha256": "0069a3327a59b101a8a7333abc07119363d0c0d57fae05321dd4b72ad50643db",
+      "contract_sha256": "f53562ba476ad1c2d196c1edb229eefcaa9681dffe9b338643624fb29324925b"
+    },
+    "dingxin": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison/comparison/dingxin/data_contract.json",
+      "sha256": "fbb9f527edc7c11b51e041773dfe659a97cdfe1ed697b44ab388bdb468af5a0d",
+      "contract_sha256": "16737ebc6b8484dd2efac101811ee881a2eb845c5d76dc1d43ccc4d9adc7be41"
+    }
+  },
+  "sample_counts": {
+    "clare": {
+      "train": 366,
+      "validation": 428
+    },
+    "cogpilot": {
+      "train": 1459,
+      "validation": 1065
+    },
+    "dingxin": {
+      "train": 24,
+      "validation": 6
+    }
+  },
+  "units": [
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "physiology_only",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "vehicle_only",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "naive_time_sync",
+      "budget": {
+        "pretraining_updates": 0,
+        "head_warmup_updates": 0,
+        "joint_updates": 0,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "mult",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "contiformer",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "timecma",
+      "budget": {
+        "adaptation_updates": 200,
+        "history_alignment_updates": 0,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "chronos2",
+      "budget": {
+        "adaptation_updates": 366,
+        "history_alignment_updates": 0,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    },
+    {
+      "domain": "clare",
+      "method": "sensorllm_deepseek",
+      "budget": {
+        "adaptation_updates": 366,
+        "history_alignment_updates": 366,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "physiology_only",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "vehicle_only",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "naive_time_sync",
+      "budget": {
+        "pretraining_updates": 0,
+        "head_warmup_updates": 0,
+        "joint_updates": 0,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "mult",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "contiformer",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "timecma",
+      "budget": {
+        "adaptation_updates": 365,
+        "history_alignment_updates": 0,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronos2",
+      "budget": {
+        "adaptation_updates": 1459,
+        "history_alignment_updates": 0,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "chronaris",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "physiology_only",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "vehicle_only",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "naive_time_sync",
+      "budget": {
+        "pretraining_updates": 0,
+        "head_warmup_updates": 0,
+        "joint_updates": 0,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "mult",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "contiformer",
+      "budget": {
+        "pretraining_updates": 300,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "effective_batch_size": 16,
+        "seed": 17
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "timecma",
+      "budget": {
+        "adaptation_updates": 200,
+        "history_alignment_updates": 0,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    },
+    {
+      "domain": "dingxin",
+      "method": "chronos2",
+      "budget": {
+        "adaptation_updates": 200,
+        "history_alignment_updates": 0,
+        "checkpoint_interval": 25,
+        "replay_updates": 1,
+        "seed": 17,
+        "full_training_role": true
+      }
+    }
+  ],
+  "expected_routes": 43,
+  "confirmation_opened": false,
+  "early_stopping": false,
+  "numerical_policy": "unchanged stage2 consumers; fixed Dingxin C=1/alpha=1; retain solver warnings and fallback",
+  "comparison_policy": "compare matching contract, supervision stratum and actual training task set; disclose external pretraining",
+  "sensor_scope": "CLARE only; DeepSeek Llama 8B variant; history alignment and classification adaptation",
+  "sequence_consumers": "linear plus public MiniROCKET; window-end features linear only",
+  "plan_sha256": "f31edbc8c2b259dd621f58f89491172ef5fc9652b952e9423343ba536b453bf6"
+}
