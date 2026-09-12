@@ -1,0 +1,71 @@
+{
+  "pid": 158641,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery",
+    "--until",
+    "comparison",
+    "--comparison-parent",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison"
+  ],
+  "runtime": "/home/wangminan/projects/chronaris-runtime-stage4-recovery-20260912",
+  "runtime_commit": "475fc7b4d270af51cb3378b42ff408cc5cbb5d8d",
+  "started_at_unix_s": 1789197282.082497,
+  "root": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery",
+  "user_requested_no_continuous_monitoring": true,
+  "controller_live": true,
+  "startup_checked_at_unix_s": 1789197327.107225,
+  "state_snapshot": {
+    "status": "running",
+    "completed": {
+      "cuda_validation": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/cuda_validation/attempt_2/validation_receipt.json",
+        "sha256": "1b1079b073d46047881d59845c98e123d3e14572495dfe7805debb7c4dee0a31"
+      },
+      "comparison_plan": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/plan.json",
+        "sha256": "d4438d248fef8ca40b9b2203b6791d9aec2381a20745ed769b879d6c7b1afd1d"
+      },
+      "comparison_unit__clare__chronaris": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/stage_results/comparison_unit__clare__chronaris.revalidation.json",
+        "sha256": "1459add913af4b7406252bfb47beab708e25fd1e766ba3d9b550c283495dda70"
+      }
+    },
+    "attempts": {
+      "cuda_validation": 2,
+      "comparison_plan": 1,
+      "comparison_unit__clare__chronaris": 1,
+      "comparison_unit__clare__physiology_only": 1
+    },
+    "failures": [],
+    "prelaunch_note": "Full CUDA validation and complete data contracts verified before restart; inherited unit requires actual revalidation.",
+    "pid": 158641,
+    "config_sha256": "d46f173494c0ad1dee31f00915a8a225a305777a7fe75c20419d44202399ce2b",
+    "until": "comparison",
+    "children": {
+      "comparison_unit__clare__physiology_only": 158647
+    },
+    "updated_at_unix_s": 1789197314.090586,
+    "current_stage": "comparison_unit__clare__physiology_only",
+    "current_log": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/logs/comparison_unit__clare__physiology_only.1.log"
+  },
+  "gpu_snapshot": "name, memory.used [MiB], memory.total [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 4090, 1555 MiB, 24564 MiB, 38 %\n",
+  "training_progress": {
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/original/physiology_only/clare/progress.json": {
+      "method": "physiology_only",
+      "status": "running",
+      "optimizer_updates": 0,
+      "phase": "encoder_fit",
+      "wall_elapsed_s": 29.99240914406255
+    }
+  },
+  "checkpoints": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/original/physiology_only/clare/physiology_only/self_supervised/physiology_only/C/last.pt",
+      "bytes": 741347,
+      "mtime": 1789197319.763625
+    }
+  ]
+}
