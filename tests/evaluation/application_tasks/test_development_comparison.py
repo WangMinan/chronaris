@@ -59,3 +59,45 @@ def test_cuda_full_adapter_schedule_preserves_every_window_and_exact_last_step_r
         assert all(sum(h['task_counts'][t.name] for h in primary['history']) > 0 for t in definitions)
         assert all(h['parameters_with_gradient'] > 0 for h in primary['history'])
         assert torch.load(tmp_path/'primary/training.pt', weights_only=True)['update'] == 7
+
+
+def test_dispatch_reuse_rejects_model_or_budget_changes(tmp_path):
+    from chronaris.evaluation.application_tasks.comparison_reuse import verify_dispatch_sources
+    frozen, current = tmp_path/'frozen', tmp_path/'current'
+    for project in (frozen, current):
+        source = project/'src/chronaris/evaluation/application_tasks/common_downstream_smoke.py'
+        source.parent.mkdir(parents=True)
+        source.write_text("train(max_updates=300, chronaris_fusion_kind='safe_lag')")
+        entry = project/'scripts/evaluation/application_tasks/run_thesis_v4.py'
+        entry.parent.mkdir(parents=True);entry.write_text('unchanged')
+    source = current/'src/chronaris/evaluation/application_tasks/common_downstream_smoke.py'
+    source.write_text(source.read_text().replace("'safe_lag')", "'safe_lag' if method == 'chronaris' else 'multiscale')"))
+    assert verify_dispatch_sources(frozen, current)[1] == ['src/chronaris/evaluation/application_tasks/common_downstream_smoke.py']
+    source.write_text(source.read_text().replace('300','301'))
+    with pytest.raises(ValueError, match='exactly'):
+        verify_dispatch_sources(frozen, current)
+    source.write_text(source.read_text().replace('301','300'))
+    model = current/'src/chronaris/modeling/encoder.py';model.parent.mkdir(parents=True);model.write_text('changed')
+    with pytest.raises(ValueError, match='computational source'):
+        verify_dispatch_sources(frozen, current)
+
+
+@pytest.mark.parametrize('method', ['physiology_only', 'vehicle_only', 'mult', 'contiformer'])
+@pytest.mark.skipif(not __import__('os').environ.get('CHRONARIS_STAGE4_BASELINE_CHECK') or not torch.cuda.is_available(),
+    reason='explicit real CLARE baseline entry validation with CUDA required')
+def test_cuda_actual_baseline_entry_trains_exports_and_fits_both_routes(tmp_path, method, record_property, monkeypatch):
+    from contextlib import nullcontext
+    from chronaris.evaluation.application_tasks import common_downstream_smoke as entry
+    # The full-suite validator owns the GPU lock in its parent process.
+    # Keep the actual trainers, exports and consumers; avoid a nested reservation in this test.
+    monkeypatch.setattr(entry, 'development_gpu_lock', lambda: nullcontext(True))
+    result = entry.run_common_contract_smoke(domain='clare', methods=(method,), output_root=tmp_path/method)
+    routes = [r for r in result['results'] if 'training' in r]
+    assert result['status'] == 'completed' and result['confirmation_opened'] is False
+    assert [(r['route'],r['training']['optimizer_updates']) for r in routes] == [('self_supervised',2),('task_guided',4)]
+    for row in routes:
+        assert row['method'] == method and row['resume_identical'] and row['nonconstant_dimensions'] > 0
+        assert set(row['consumers']['components']) == {'linear','minirocket'}
+        checkpoint = torch.load(row['training']['last_checkpoint_path'], map_location='cpu', weights_only=True)
+        assert checkpoint['training_status'] == 'completed'
+    record_property('real_baseline_summary', str(tmp_path/method/'clare/summary.json'))

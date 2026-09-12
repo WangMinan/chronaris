@@ -70,6 +70,9 @@ def _plan(config):
     path = root/'plan.json'
     if path.exists() and json.loads(path.read_text()) != plan:
         raise ValueError('comparison plan changed; use a new root')
+    if config.get('comparison_parent'):
+        from chronaris.evaluation.application_tasks.comparison_reuse import prepare_parent_reuse
+        prepare_parent_reuse(config, plan)
     return write_result(path, plan)
 
 
@@ -115,13 +118,20 @@ def _costs(config, plan):
     if len(rows) != plan['expected_routes']:
         raise ValueError('incomplete development comparison routes')
     # ponytail: extrapolate identical units only; formal folds/budgets are not frozen in stage 4.
+    parent_costs = []
+    if config.get('comparison_parent'):
+        from chronaris.evaluation.application_tasks.comparison_reuse import verify_reuse_inventory
+        inventory = verify_reuse_inventory(config)
+        parent_costs = [Path(p) for p in inventory['files'] if '/comparison/attempt_costs/' in p and p.endswith('.json')]
     unit_costs = []
     for unit in plan['units']:
         directory = root/'comparison/attempt_costs'
         paths = sorted(directory.glob(f"{unit['domain']}__{unit['method']}__*.json"))
+        paths += [p for p in parent_costs if p.name.startswith(f"{unit['domain']}__{unit['method']}__")]
         attempts = [json.loads(p.read_text()) for p in paths]
         unit_costs.append(unit | dict(observed_attempt_seconds=sum(x['seconds'] for x in attempts),
-            attempt_count=len(attempts), formal_unit_count=None, formal_total_seconds=None))
+            attempt_count=len(attempts), attempt_files=[str(p) for p in paths],
+            formal_unit_count=None, formal_total_seconds=None))
     return write_result(root/'comparison/cost_report.json', dict(status='completed', scope='development_comparison',
         rows=rows, unit_costs=unit_costs, source_receipts=sources, plan_sha256=plan['plan_sha256'],
         confirmation_opened=False, remaining_stage4_units=0,
@@ -146,7 +156,13 @@ def run_comparison_step(stage, config):
     root = Path(config['root'])/'comparison'
     started, status = time.perf_counter(), 'failed'
     try:
-        if method in BASELINES:
+        result = None
+        if config.get('comparison_parent'):
+            from chronaris.evaluation.application_tasks.comparison_reuse import revalidate_completed_unit
+            result = revalidate_completed_unit(stage, config, plan)
+        if result is not None:
+            pass
+        elif method in BASELINES:
             result = run_common_contract_smoke(domain=domain, methods=(method,), full=True,
                 output_root=root/'original'/method, **_common(config))
         else:

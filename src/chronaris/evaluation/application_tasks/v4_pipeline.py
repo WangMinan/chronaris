@@ -176,6 +176,7 @@ def main(*, default_until='freeze'):
     parser.add_argument('--root')
     parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
+    parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
     parser.add_argument('--retry-failed', action='store_true')
     parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
@@ -239,6 +240,11 @@ def main(*, default_until='freeze'):
         from chronaris.evaluation.application_tasks.development_comparison import ASSETS, SENSOR_ASSETS
         input_paths = [Path(config['registry_path']), Path(ASSETS), Path(SENSOR_ASSETS)]
         input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot', 'clare')]
+    if args.comparison_parent:
+        if args.until != 'comparison':
+            parser.error('--comparison-parent requires --until comparison')
+        config['comparison_parent'] = str(Path(args.comparison_parent).resolve())
+        input_paths += [Path(config['comparison_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
     if args.plan_only and args.until == 'comparison':
         print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), seed=17, fold_index=0,

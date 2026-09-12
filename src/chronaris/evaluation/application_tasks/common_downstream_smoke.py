@@ -107,7 +107,7 @@ def run_common_contract_smoke(*, domain, output_root,
                         vehicle_feature_names=schema.vehicle_feature_names, vehicle_field_labels=(), normalizer=normalizer,
                         output_root=root/method/'self_supervised', config=CandidateScreenConfig(max_updates=pretraining_updates,
                             batch_size=4, effective_batch_size=effective_batch, device='cuda', validation_interval=50 if full else 2, early_stopping=False,
-                            data_manifest_sha256=digest), chronaris_fusion_kind='safe_lag')
+                            data_manifest_sha256=digest), chronaris_fusion_kind='safe_lag' if method == 'chronaris' else 'multiscale')
                     encoder, _, _ = load_frozen_application_encoder(training.best_checkpoint_path,
                         route='self_supervised', fold=fold, device='cuda')
                     routes = [('self_supervised', Path(training.best_checkpoint_path), encoder, asdict(training))]
