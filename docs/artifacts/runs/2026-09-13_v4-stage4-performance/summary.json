@@ -1,0 +1,374 @@
+{
+  "status": "completed",
+  "scope": "two_update_performance_trial_not_production_migration",
+  "preserved_updates": 200,
+  "preserved_training_seconds": 88363.41033418244,
+  "existing_completed_units": 9,
+  "existing_completed_routes": 15,
+  "unsaved_updates_after_checkpoint": 6,
+  "modes": {
+    "eager": {
+      "compute_seconds": [
+        127.81149996584281,
+        313.71432170504704
+      ],
+      "trial_total_seconds": 617.6450802008621,
+      "peak_allocated_bytes": 1189358592
+    },
+    "graph": {
+      "compute_seconds": [
+        15.089607773348689,
+        23.452397308312356
+      ],
+      "trial_total_seconds": 208.6909558000043,
+      "peak_allocated_bytes": 826841088
+    },
+    "graph_threads8": {
+      "compute_seconds": [
+        14.889613875187933,
+        23.17992510832846
+      ],
+      "trial_total_seconds": 193.48538786312565,
+      "peak_allocated_bytes": 826841088
+    },
+    "graph_resume": {
+      "compute_seconds": [
+        28.296001079957932
+      ],
+      "trial_total_seconds": 200.10830515716225,
+      "peak_allocated_bytes": 826694656
+    }
+  },
+  "comparisons": {
+    "graph": {
+      "passed": true,
+      "exact_required": false,
+      "comparisons": {
+        "201": {
+          "encoder_state_dict": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 1.4901161193847656e-08,
+            "failures": []
+          },
+          "head_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "optimizer_state_dict": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 5.471520125865936e-09,
+            "failures": []
+          },
+          "rng_state": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "data_cursor": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "outputs": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "losses": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "gradients": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 5.448237061500549e-08,
+            "failures": []
+          },
+          "batches": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          }
+        },
+        "202": {
+          "encoder_state_dict": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 2.9802322387695312e-08,
+            "failures": []
+          },
+          "head_state_dict": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 9.313225746154785e-10,
+            "failures": []
+          },
+          "optimizer_state_dict": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 2.468004822731018e-08,
+            "failures": []
+          },
+          "rng_state": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "data_cursor": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "outputs": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 9.5367431640625e-07,
+            "failures": []
+          },
+          "losses": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "gradients": {
+            "bitwise_equal": false,
+            "close": true,
+            "max_abs": 2.403976395726204e-07,
+            "failures": []
+          },
+          "batches": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          }
+        }
+      }
+    },
+    "graph_resume": {
+      "passed": true,
+      "exact_required": true,
+      "comparisons": {
+        "202": {
+          "encoder_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "head_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "optimizer_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "rng_state": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "data_cursor": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "outputs": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "losses": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "gradients": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "batches": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          }
+        }
+      }
+    },
+    "graph_threads8": {
+      "passed": true,
+      "exact_required": false,
+      "comparisons": {
+        "201": {
+          "encoder_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "head_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "optimizer_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "rng_state": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "data_cursor": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "outputs": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "losses": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "gradients": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "batches": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          }
+        },
+        "202": {
+          "encoder_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "head_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "optimizer_state_dict": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "rng_state": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "data_cursor": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "outputs": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "losses": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "gradients": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          },
+          "batches": {
+            "bitwise_equal": true,
+            "close": true,
+            "max_abs": 0.0,
+            "failures": []
+          }
+        }
+      }
+    }
+  },
+  "source_artifacts_sha256": {
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/eager/metadata.json": "e2979fbadb568f4866ee8e652dc5283880e6e147555d2f7477190a5ec5138fe7",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/eager/observations_201.pt": "dca8f99bb809d24b0e74313b375007cf5df8d06135762e14b5a8b49b7a12bb3f",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/eager/observations_202.pt": "a77a9d829f2134749464c6d7aa1bf2cb132978f9abe27dd9596eef0408c4dea8",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/eager/progress.json": "50996297b93db26007f2fe7c067ef48a04b2c80eb5645d1acb45a26dababfaca",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/eager/state_201.pt": "4dc41e679f8259177aa70b922b7b93d0d60bd69ef012ec288be3c816baa7e470",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/eager/state_202.pt": "664d5bf184f357e950c479a7d3bbd9ea97f6c5436089c669f24c677ece58a79a",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/comparison.json": "61289380aa49062c9999e1f4c349dff08b5db92dca458a262bfcdaa62de137ff",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/metadata.json": "49b30557e38a0c20848e8f9d07a534ba123a16ba2d31a64bfac4cc7455e808c0",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/observations_201.pt": "052bd0f7ec1a4ddf51142d9a90520164fe727230fbd773aa9388bee3ed0488de",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/observations_202.pt": "f3c12612df3dd35c12ea2d13134148f9300b05f6b525697dfcffd13bca2e609d",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/progress.json": "25bc30bd11c2f0a18c5378b2892cba08d2a7105b21e9cc9c6dec06af1365f8e4",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/state_201.pt": "a5fd19d7ebe698cc22c2e26291945140ef9dafbcaa3b1fe6e46f8a22f651b015",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph/state_202.pt": "a10fe4168f39252d1bfd11a2be0f304acd24f7b3946dcc442fab81dbcc67f4d7",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/comparison.json": "0ca10f5b7ac787cc4a893f4ff6f54cc7c6c1edcaa116804d15a3e2ecf8775882",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/metadata.json": "2535365e390126c17ecdf84962869fe7e7b0575d7a6e6ac4446cdcbe68245671",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/observations_201.pt": "052bd0f7ec1a4ddf51142d9a90520164fe727230fbd773aa9388bee3ed0488de",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/observations_202.pt": "f3c12612df3dd35c12ea2d13134148f9300b05f6b525697dfcffd13bca2e609d",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/progress.json": "d723f9d7cb81f826d336550c3addc18cfb63198b8bb1df0a7134f009cc984bec",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/state_201.pt": "15e42b4a942f1e94739e283ae077a0b9ec3b09388d8474762d98fd2e3ed4c1e4",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_threads8/state_202.pt": "8fd7eb73ac8d045eef594431e47439037d25fa6ad14a878ba00c23ff181043bf",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_resume/exact_comparison.json": "fa3553f78b615bfce3fe1077c66824ce35963a76bce8ecf850e230f46443ac88",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_resume/metadata.json": "8c45f71d8d36f53f1cf48179a028f939a770bd5934533d7f174cda96f997ba8e",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_resume/observations_202.pt": "f3c12612df3dd35c12ea2d13134148f9300b05f6b525697dfcffd13bca2e609d",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_resume/progress.json": "0bf9a9e15fa96ee3923f303a85e4064f67c21f4312b448d38399e652315242ee",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/graph_resume/state_202.pt": "a10fe4168f39252d1bfd11a2be0f304acd24f7b3946dcc442fab81dbcc67f4d7"
+  },
+  "compute_speedup": 11.455704516031407,
+  "total_trial_speedup": 2.9596159442231538,
+  "threads8_compute_improvement_percent": 1.2258472208272808,
+  "recommendation": "adopt_graph_execution_after_explicit_source_migration; retain_one_cpu_thread_until_repeatable_thread_gain",
+  "production_queue_resumed": false
+}

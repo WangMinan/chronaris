@@ -1,0 +1,15 @@
+{
+  "reason": "user_authorized_performance_trial_after_update_200",
+  "saved_updates": 200,
+  "controller_pid": 158641,
+  "worker_pid": 162998,
+  "checkpoint_copies_sha256": {
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/original/chronaris/cogpilot/chronaris/self_supervised/chronaris/C/last.pt": "67273194919481132758351d1545700676126c6445ca453770bd621f7ea79a60",
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/original/chronaris/cogpilot/chronaris/self_supervised/chronaris/C/best.pt": "be3fbb83b54814758cf96e7cd4541c752af9ca10554be653fff8b9e55fd27779",
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/pipeline_config.json": "d46f173494c0ad1dee31f00915a8a225a305777a7fe75c20419d44202399ce2b",
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/pipeline_state.json": "bdf8d00269347eb1d64fac108f95f32592a751fbea506f3df8f860acc6f8a275"
+  },
+  "stop_requested_at": "2026-09-13T18:26:18+0800",
+  "stopped_at": "2026-09-13T18:26:29+0800",
+  "stopped": true
+}
