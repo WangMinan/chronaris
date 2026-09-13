@@ -64,11 +64,13 @@ def contract_development_inputs(domain, *, data_root, registry_path, full=False)
 def run_common_contract_smoke(*, domain, output_root,
                             data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
                             registry_path='docs/requirements/thesis-v4-public-subjects.json',
-                            full=False, methods=('naive_time_sync', 'chronaris')):
+                            full=False, methods=('naive_time_sync', 'chronaris'), cuda_graph_recurrence=False):
     if domain not in {'dingxin', 'cogpilot', 'clare'} or not torch.cuda.is_available():
         raise ValueError('contract smoke requires a real native development domain and CUDA')
     if not methods or not set(methods) <= {'naive_time_sync', 'chronaris', 'physiology_only', 'vehicle_only', 'mult', 'contiformer'}:
         raise ValueError('unsupported common comparison method')
+    if cuda_graph_recurrence and (domain != 'cogpilot' or methods != ('chronaris',)):
+        raise ValueError('graph execution is validated only for CogPilot Chronaris')
     scope = 'development_comparison' if full else 'engineering_development'
     root = Path(output_root)/domain
     started = time.perf_counter()
@@ -107,7 +109,7 @@ def run_common_contract_smoke(*, domain, output_root,
                         vehicle_feature_names=schema.vehicle_feature_names, vehicle_field_labels=(), normalizer=normalizer,
                         output_root=root/method/'self_supervised', config=CandidateScreenConfig(max_updates=pretraining_updates,
                             batch_size=4, effective_batch_size=effective_batch, device='cuda', validation_interval=50 if full else 2, early_stopping=False,
-                            data_manifest_sha256=digest), chronaris_fusion_kind='safe_lag' if method == 'chronaris' else 'multiscale')
+                            data_manifest_sha256=digest, cuda_graph_recurrence=cuda_graph_recurrence), chronaris_fusion_kind='safe_lag' if method == 'chronaris' else 'multiscale')
                     encoder, _, _ = load_frozen_application_encoder(training.best_checkpoint_path,
                         route='self_supervised', fold=fold, device='cuda')
                     routes = [('self_supervised', Path(training.best_checkpoint_path), encoder, asdict(training))]

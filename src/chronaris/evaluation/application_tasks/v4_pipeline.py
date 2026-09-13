@@ -177,12 +177,17 @@ def main(*, default_until='freeze'):
     parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
+    parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
+    parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
     parser.add_argument('--retry-failed', action='store_true')
     parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if bool(args.execution_parent) != bool(args.execution_evidence) or (args.execution_parent and
+            (args.comparison_parent or args.until != 'comparison')):
+        parser.error('execution migration requires parent and evidence, comparison endpoint, and no comparison-parent')
     def terminate(signum, frame):
         raise KeyboardInterrupt('pipeline termination requested')
     signal.signal(signal.SIGTERM, terminate)
@@ -245,6 +250,11 @@ def main(*, default_until='freeze'):
             parser.error('--comparison-parent requires --until comparison')
         config['comparison_parent'] = str(Path(args.comparison_parent).resolve())
         input_paths += [Path(config['comparison_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
+    if args.execution_parent:
+        config.update(execution_parent=str(Path(args.execution_parent).resolve()),
+                      execution_evidence=str(Path(args.execution_evidence).resolve()))
+        input_paths += [Path(config['execution_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
+        input_paths.append(Path(config['execution_evidence']))
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
     if args.plan_only and args.until == 'comparison':
         print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), seed=17, fold_index=0,

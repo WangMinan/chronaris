@@ -59,6 +59,8 @@ def _plan(config):
         write_result(path, contract)
         contracts[domain] = dict(path=str(path), sha256=sha256_file(path), contract_sha256=contract['contract_sha256'])
         counts[domain] = {role: len(b.sample_ids) for role, b in raw.items()}
+    execution = ({'cuda_graph_units': ['cogpilot/chronaris'], 'cpu_threads': 1}
+                 if config.get('execution_parent') else {})
     plan = seal_development_plan(dict(format='chronaris.stage4_comparison.v1', status='completed',
         source_code_sha256=v4_workflow_source_sha256(), seed=17, fold_index=0, contracts=contracts, sample_counts=counts,
         units=[u | {'budget': comparison_budget(u['method'], counts[u['domain']]['train'])} for u in comparison_units()],
@@ -66,13 +68,16 @@ def _plan(config):
         numerical_policy='unchanged stage2 consumers; fixed Dingxin C=1/alpha=1; retain solver warnings and fallback',
         comparison_policy='compare matching contract, supervision stratum and actual training task set; disclose external pretraining',
         sensor_scope='CLARE only; DeepSeek Llama 8B variant; history alignment and classification adaptation',
-        sequence_consumers='linear plus public MiniROCKET; window-end features linear only'))
+        sequence_consumers='linear plus public MiniROCKET; window-end features linear only', **({'execution': execution} if execution else {})))
     path = root/'plan.json'
     if path.exists() and json.loads(path.read_text()) != plan:
         raise ValueError('comparison plan changed; use a new root')
     if config.get('comparison_parent'):
         from chronaris.evaluation.application_tasks.comparison_reuse import prepare_parent_reuse
         prepare_parent_reuse(config, plan)
+    if config.get('execution_parent'):
+        from chronaris.evaluation.application_tasks.execution_migration import prepare_execution_migration
+        prepare_execution_migration(config, plan)
     return write_result(path, plan)
 
 
@@ -114,7 +119,8 @@ def _costs(config, plan):
                 export_seconds=row.get('export_seconds', row.get('export_cost', {}).get('seconds')),
                 downstream_fit_seconds=sum(v['fit_elapsed_s'] for v in components.values()),
                 peak_cuda_bytes=row.get('peak_cuda_bytes', row.get('export_cost', {}).get('peak_cuda_bytes')),
-                nonconstant_dimensions=row['nonconstant_dimensions'], consumers=components))
+                nonconstant_dimensions=row['nonconstant_dimensions'], consumers=components,
+                execution_inheritance=result.get('execution_inheritance')))
     if len(rows) != plan['expected_routes']:
         raise ValueError('incomplete development comparison routes')
     # ponytail: extrapolate identical units only; formal folds/budgets are not frozen in stage 4.
@@ -123,6 +129,13 @@ def _costs(config, plan):
         from chronaris.evaluation.application_tasks.comparison_reuse import verify_reuse_inventory
         inventory = verify_reuse_inventory(config)
         parent_costs = [Path(p) for p in inventory['files'] if '/comparison/attempt_costs/' in p and p.endswith('.json')]
+    migration = None
+    if config.get('execution_parent'):
+        from chronaris.evaluation.application_tasks.execution_migration import verify_execution_migration
+        migration = verify_execution_migration(config)
+        if any(sha256_file(p) != h for p,h in migration['parent_inventory'].items()):
+            raise ValueError('preserved execution parent evidence changed')
+        parent_costs = [Path(p) for p in migration['parent_attempt_costs']]
     unit_costs = []
     for unit in plan['units']:
         directory = root/'comparison/attempt_costs'
@@ -134,7 +147,7 @@ def _costs(config, plan):
             formal_unit_count=None, formal_total_seconds=None))
     return write_result(root/'comparison/cost_report.json', dict(status='completed', scope='development_comparison',
         rows=rows, unit_costs=unit_costs, source_receipts=sources, plan_sha256=plan['plan_sha256'],
-        confirmation_opened=False, remaining_stage4_units=0,
+        confirmation_opened=False, remaining_stage4_units=0, execution_migration=migration,
         extrapolation='For an unchanged unit, multiply observed attempt seconds by additional unit count; formal matrix awaits stage 5',
         diagnostic_only='single development fold, seed 17; no automatic model adoption'))
 
@@ -160,11 +173,16 @@ def run_comparison_step(stage, config):
         if config.get('comparison_parent'):
             from chronaris.evaluation.application_tasks.comparison_reuse import revalidate_completed_unit
             result = revalidate_completed_unit(stage, config, plan)
+        if config.get('execution_parent'):
+            from chronaris.evaluation.application_tasks.execution_migration import inherited_execution_unit
+            result = inherited_execution_unit(stage, config, plan)
         if result is not None:
             pass
         elif method in BASELINES:
             result = run_common_contract_smoke(domain=domain, methods=(method,), full=True,
-                output_root=root/'original'/method, **_common(config))
+                output_root=root/'original'/method,
+                cuda_graph_recurrence=bool(config.get('execution_parent') and (domain, method) == ('cogpilot', 'chronaris')),
+                **_common(config))
         else:
             result = run_recent_model_smoke(domain=domain, method=method, full=True,
                 assets_path=SENSOR_ASSETS if method=='sensorllm_deepseek' else ASSETS,
