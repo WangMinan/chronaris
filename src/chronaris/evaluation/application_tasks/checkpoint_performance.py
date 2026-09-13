@@ -19,7 +19,7 @@ from chronaris.modeling.training.candidate_step import pretext_micro_step
 from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
 from chronaris.modeling.training.pretext import CommonPretextHeadBundle
 from chronaris.modeling.training.pretraining_encoders import TrainableFusionEncoder
-from chronaris.modeling.training.rng import capture_rng_state, restore_rng_state, isolated_training_rng
+from chronaris.modeling.training.rng import capture_rng_state, restore_rng_state, isolated_training_rng, canonical_training_state_sha256
 from chronaris.modeling.training.sample_schedule import training_sample_schedule
 from chronaris.representation import AugmentationPolicy, TrainOnlyRobustNormalizer
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
@@ -112,6 +112,10 @@ def trial(*, checkpoint, pipeline_config, output_root, graph, threads=1, updates
     root.mkdir(parents=True, exist_ok=False)
     original_hash = sha256_file(checkpoint)
     payload = torch.load(checkpoint, map_location='cpu', weights_only=True)
+    state_hash = canonical_training_state_sha256(*(payload[k] for k in ('encoder_state_dict',
+        'head_state_dict', 'explicit_time_shift_head_state_dict', 'optimizer_state_dict', 'rng_state')))
+    if state_hash != payload['canonical_training_state_sha256']:
+        raise ValueError('preserved checkpoint training state changed')
     if (payload['optimizer_updates'] != 200 or payload['method_name'] != 'chronaris'
         or payload['source_code_sha256'] != candidate_source_code_sha256()
         or payload['chronaris_mechanism_enabled'] or payload['chronaris_lag_aware_weight']
