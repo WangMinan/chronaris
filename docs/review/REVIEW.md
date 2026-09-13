@@ -6,6 +6,8 @@
 
 ## 当前复核
 
+[完整开发比较执行迁移](stage/thesis-v4/stage4-execution-migration-20260913/README.md)确认第 200 次状态保持、九个单元继承、成本来源和第 225 次新检查点。
+
 [完整开发比较性能试验](stage/thesis-v4/stage4-performance-20260913/README.md)检查第 200 次更新的停止与保留、显卡运算图重放的数值等价性及恢复。
 
 [阶段 4 修复与恢复](stage/thesis-v4/stage4-recovery-20260912/README.md)核验基线参数分派、实际入口、旧成果复用与成本继承。

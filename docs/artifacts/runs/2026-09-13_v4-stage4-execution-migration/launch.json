@@ -1,0 +1,21 @@
+{
+  "pid": 376745,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery",
+    "--until",
+    "comparison",
+    "--execution-parent",
+    "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery",
+    "--execution-evidence",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-performance/summary.json"
+  ],
+  "runtime": "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913",
+  "runtime_commit": "2b7db555f72b3567a9761d0cf2931fcb3bb8a976",
+  "started_at": "2026-09-13T20:52:50+0800",
+  "source_code_sha256": "e9f0ebe1df10b445d1e408043e22cd824e808c7e663a92af466958872f361544",
+  "preserved_optimizer_updates": 200,
+  "root": "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery"
+}

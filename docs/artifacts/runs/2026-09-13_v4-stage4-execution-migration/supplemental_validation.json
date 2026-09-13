@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "passed": 2,
+  "source_code_sha256": "e9f0ebe1df10b445d1e408043e22cd824e808c7e663a92af466958872f361544",
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/recent_assets_checks.xml": "15fc0d33512fd0c3e3fcadc88c1801eca07a4c18f3d0983d2ca02a0019b07ea4",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/recent_assets_checks.log": "9d23e51c243da7f8c6fcf61d2b57112842744cf3c7030ae4dbec104136801044"
+  }
+}

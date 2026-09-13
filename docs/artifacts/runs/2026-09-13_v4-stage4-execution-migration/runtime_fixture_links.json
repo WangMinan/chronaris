@@ -1,0 +1,50 @@
+{
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz",
+    "sha256": "382fa406474af980b935b9cfc6ce92237984433d6548e1097045664dec4435fd"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz",
+    "sha256": "e4b03cd03b8551e2cff2f964c053d75e48cf7ea5f4ea16c96eb8280beb26a65c"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz",
+    "sha256": "281eebb4c8901540a4115e48c5001451d0c27720a35a128edac8bc844b380934"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/feature_bundle.npz",
+    "sha256": "c8b0b0f61252f4bd2b4849c950bceb3d97e0aba494af7d9fd4a23d8c50d94bb1"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/feature_bundle.npz",
+    "sha256": "848858758a694eded29b19e093abeed226f6a74d30666885bc5be6e71957dcbe"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/feature_bundle.npz",
+    "sha256": "a4205bf36935fa9e9e8f0dae0730a253c106beabf265cd896d20baf76b247d37"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/raw_window_summary.jsonl": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "sha256": "bf57cc2415d74b41fb9b965f6aa1be9e160b554200de9395281a80b074bc2c83"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/raw_window_summary.jsonl": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "sha256": "bf57cc2415d74b41fb9b965f6aa1be9e160b554200de9395281a80b074bc2c83"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/raw_window_summary.jsonl": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-e-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "sha256": "2a02fbe0cbb43fe340504b8f4faf118a523dba3d32a04583c28474bfef025fd6"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/raw_window_summary.jsonl": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033/raw_window_summary.jsonl",
+    "sha256": "bf57cc2415d74b41fb9b965f6aa1be9e160b554200de9395281a80b074bc2c83"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/raw_window_summary.jsonl": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251002_单01_ACT-8_翼云_J16_12#01/views/20251002_单01_ACT-8_翼云_J16_12#01__pilot_10035/raw_window_summary.jsonl",
+    "sha256": "bf57cc2415d74b41fb9b965f6aa1be9e160b554200de9395281a80b074bc2c83"
+  },
+  "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/raw_window_summary.jsonl": {
+    "source": "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-05-02_feature-export-f-allwindow-clean/sorties/20251005_四01_ACT-4_云_J20_22#01/views/20251005_四01_ACT-4_云_J20_22#01__pilot_10033/raw_window_summary.jsonl",
+    "sha256": "2a02fbe0cbb43fe340504b8f4faf118a523dba3d32a04583c28474bfef025fd6"
+  }
+}

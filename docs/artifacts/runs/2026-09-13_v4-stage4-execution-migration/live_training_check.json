@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-13T21:09:03+0800",
+  "controller_pid": 376745,
+  "controller_ppid": 1,
+  "worker_pid": 376801,
+  "device": "cuda",
+  "status": "running",
+  "completed_models": 9,
+  "preserved_updates": 200,
+  "saved_optimizer_updates": 225,
+  "live_optimizer_updates": 230,
+  "samples_seen": 3600,
+  "cuda_graph_recurrence": true,
+  "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/comparison/original/chronaris/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+  "checkpoint_sha256": "4a4aa12dd0f96cc3a7caf9c740e43503e8169b72f9b4a6fa5455d3c166fba34d",
+  "checkpoint_mtime": "2026-09-13T21:06:26+0800",
+  "training_elapsed_s": 88947.49699221132,
+  "canonical_training_state_sha256": "80aca08f674fbfff1b697f6d413698faca9cea7a2e07f2e630a87dbb135b1501",
+  "gpu": "NVIDIA GeForce RTX 4090, 99 %, 3802 MiB, 117.13 W",
+  "failures": []
+}
