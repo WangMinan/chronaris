@@ -10,6 +10,8 @@
 
 ## 九月研究证据与最新盘点
 
+- [完整开发比较性能试验](runs/2026-09-13_v4-stage4-performance/report.md)：等待第 200 次检查点后保护计算，独立验证执行加速；结果待实跑。
+
 当前执行目标见[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)。以下报告按各自产生日期保存工程与研究证据，历史启动记录不代表当前仍在运行；原始报告、指标和检查点不因导航同步而改写。
 
 - [阶段 4 参数修复与成果复用](runs/2026-09-12_v4-stage4-recovery/report.md)：保留 CLARE/Chronaris 的 550 次更新，核验后继续剩余完整开发比较。
