@@ -1,0 +1,26 @@
+{
+  "status": "completed",
+  "verified_at": "2026-09-14T11:44:39.117305+08:00",
+  "tests": {
+    "tests": 15,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4
+  },
+  "passed": 11,
+  "skipped_reason": "4 explicit CLARE baseline entry smoke cases require CHRONARIS_STAGE4_BASELINE_CHECK; unchanged training was already validated in the frozen production run",
+  "production_validation": "683 passed, 10 skipped; 2 asset tests separately passed; prior frozen implementation, not a full-suite result for this reporting change",
+  "current_source_sha256": "aa33c6f62657578552bf60af9f816be4d3c11cb8cd21308ca8a80842d4d97042",
+  "files_sha256": {
+    "src/chronaris/evaluation/application_tasks/comparison_accounting.py": "edb120a54bfc7c00c830fcb285a21e989f2cda4f2051e7e78c19acbcb0dfdf74",
+    "src/chronaris/evaluation/application_tasks/comparison_closeout.py": "93526b074f3cf6cc8fb21f1a42212450c938895a795924b8f9a5bebf07a7c2d4",
+    "src/chronaris/evaluation/application_tasks/comparison_report.py": "c3d956bbc339e36a6c9d7fb9d0a4b71cf4c4db9c4bf928dc07998c2c8474502f",
+    "src/chronaris/evaluation/application_tasks/development_comparison.py": "231ac07108e4367d36142d162b9e5ccec9a2df38dbe3207cb91390d203fc4126",
+    "scripts/evaluation/application_tasks/close_stage4_comparison.py": "ffca33b0dba07bfb1283787c7c5c5d3e250679851f6fbf8399d57601cb5c7325",
+    "tests/evaluation/application_tasks/test_comparison_accounting.py": "232f09162ced0400b96a94186bac25b254a6447d6d94b8fe72ba5b123dfd6623"
+  },
+  "acceptance_sha256": "51700c03a0eb565fb4f98f6113d9764bae0a7303a380cfcfa6b2dd830c9e39f0",
+  "extra_training_updates": 0,
+  "original_run_rewritten": false,
+  "static_checks": "undefined names/imports, compilation, markdown links and terminology passed"
+}

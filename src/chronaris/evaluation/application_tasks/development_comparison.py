@@ -5,6 +5,7 @@ from pathlib import Path
 import time
 
 from chronaris.evaluation.application_tasks.common_downstream_contract import build_common_contract
+from chronaris.evaluation.application_tasks.comparison_accounting import attempt_accounting
 from chronaris.evaluation.application_tasks.common_downstream_smoke import contract_development_inputs, run_common_contract_smoke
 from chronaris.evaluation.application_tasks.recent_model_smoke import run_recent_model_smoke
 from chronaris.evaluation.application_tasks.v4_configuration_freeze import _validation_evidence
@@ -141,9 +142,7 @@ def _costs(config, plan):
         directory = root/'comparison/attempt_costs'
         paths = sorted(directory.glob(f"{unit['domain']}__{unit['method']}__*.json"))
         paths += [p for p in parent_costs if p.name.startswith(f"{unit['domain']}__{unit['method']}__")]
-        attempts = [json.loads(p.read_text()) for p in paths]
-        unit_costs.append(unit | dict(observed_attempt_seconds=sum(x['seconds'] for x in attempts),
-            attempt_count=len(attempts), attempt_files=[str(p) for p in paths],
+        unit_costs.append(unit | attempt_accounting(unit, paths, migration) | dict(
             formal_unit_count=None, formal_total_seconds=None))
     return write_result(root/'comparison/cost_report.json', dict(status='completed', scope='development_comparison',
         rows=rows, unit_costs=unit_costs, source_receipts=sources, plan_sha256=plan['plan_sha256'],

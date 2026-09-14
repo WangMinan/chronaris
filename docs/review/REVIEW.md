@@ -1,10 +1,12 @@
 # Chronaris 复核入口
 
-更新时间：2026-09-13
+更新时间：2026-09-14
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
+
+[完整开发比较收口](stage/thesis-v4/stage4-closeout-20260914/README.md)已完成结果、学习信号、恢复成本和后续计算预算核验。
 
 [完整开发比较执行迁移](stage/thesis-v4/stage4-execution-migration-20260913/README.md)确认第 200 次状态保持、九个单元继承、成本来源和第 225 次新检查点。
 
