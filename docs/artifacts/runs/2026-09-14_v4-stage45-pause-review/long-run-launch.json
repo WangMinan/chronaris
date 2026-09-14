@@ -1,0 +1,27 @@
+{
+  "pid": 638985,
+  "started_at": "2026-09-14T18:08:43.373583+08:00",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "-u",
+    "/home/wangminan/projects/chronaris-runtime-stage45-recovery-20260914/scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--until",
+    "stage45",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery",
+    "--stage45-parent",
+    "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery",
+    "--stage45-resume-parent",
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45",
+    "--stage45-resume-evidence",
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/recovery_evidence.json",
+    "--stage45-budget-hours",
+    "0"
+  ],
+  "runtime": "/home/wangminan/projects/chronaris-runtime-stage45-recovery-20260914",
+  "git_commit": "5fb1700d60d583d8f6cac178f3c9f0282e3884ce",
+  "saved_updates": 75,
+  "budget_hours": null,
+  "confirmation_opened": false,
+  "validation_verified": true
+}

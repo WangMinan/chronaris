@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-09-14T18:09:07.923592+08:00",
+  "pid": 638985,
+  "stage": "stage45_plan",
+  "children": {
+    "stage45_plan": 638993
+  },
+  "completed_steps": 1,
+  "failures": [],
+  "processes": "    PID    PPID     SID TT       STAT     ELAPSED COMMAND\n 638985       1  638985 ?        Ssl        00:21 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -u /home/wangminan/projects/chronaris-runtime-stage45-recovery-20260914/scripts/evaluation/application_tasks/run_v4_pipeline.py --until stage45 --root /mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery --stage45-parent /mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery --stage45-resume-parent /mnt/e/chronaris-v4-results/2026-09-14-stage45 --stage45-resume-evidence /mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/recovery_evidence.json --stage45-budget-hours 0\n 638993  638985  638993 ?        Dsl        00:16 /home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage45-recovery-20260914/scripts/evaluation/application_tasks/run_v4_pipeline.py --worker stage45_plan --config /mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery/pipeline_config.json --result /mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery/stage_results/stage45_plan.1.json --attempt 1\n",
+  "gpu_sample": "NVIDIA GeForce RTX 4090, 1 %, 988 MiB, 17.35 W",
+  "source_checkpoint_updates": 75,
+  "new_training_update_observed": false,
+  "error_markers": {
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery/controller.log": [],
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery/logs/stage45_plan.1.log": []
+  },
+  "budget_hours": null,
+  "confirmation_opened": false
+}
