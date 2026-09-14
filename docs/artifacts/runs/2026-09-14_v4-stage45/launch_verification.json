@@ -1,0 +1,21 @@
+{
+  "checked_at_unix_s": 1789362547.143421,
+  "status": "running",
+  "stage": "stage45_plan",
+  "pid": 445416,
+  "children": {
+    "stage45_plan": 445422
+  },
+  "failures": [],
+  "completed_stages": [
+    "cuda_validation"
+  ],
+  "processes": "    PID    PPID    PGID STAT                  STARTED     ELAPSED COMMAND\n 445416       1  445416 Ssl  Mon Sep 14 13:07:53 2026       01:13 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -u /home/wangminan/projects/chronaris-runtime-stage45-20260914/scripts/evaluation/application_tasks/run_v4_pipeline.py --until stage45 --root /mnt/e/chronaris-v4-results/2026-09-14-stage45 --stage45-parent /mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery\n 445422  445416  445422 Rsl  Mon Sep 14 13:07:58 2026       01:08 /home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage45-20260914/scripts/evaluation/application_tasks/run_v4_pipeline.py --worker stage45_plan --config /mnt/e/chronaris-v4-results/2026-09-14-stage45/pipeline_config.json --result /mnt/e/chronaris-v4-results/2026-09-14-stage45/stage_results/stage45_plan.1.json --attempt 1\n",
+  "gpu": "1 %, 956 MiB, 22.04 W\n",
+  "reference_checkpoint": "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison/comparison/original/chronaris/clare/chronaris/self_supervised/chronaris/C/best.pt",
+  "reference_checkpoint_exists": true,
+  "error_markers": [],
+  "current_log_tail": "",
+  "new_training_updates_observed": false,
+  "confirmation_opened": false
+}
