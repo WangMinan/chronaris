@@ -1,0 +1,29 @@
+{
+  "status": "completed",
+  "qualification_results": [
+    {
+      "domain": "clare",
+      "recipe": "stage4_reference",
+      "graph_qualified": false,
+      "independent_resume": true,
+      "max_output_difference": 8.046627044677734e-07,
+      "max_step_state_difference": 3.293156623840332e-06,
+      "comparison_path": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an0/comparison.json",
+      "comparison_sha256": "141c15eb7cc9341848133501d1954710def21b9de23399818eb831c366d385e2"
+    },
+    {
+      "domain": "clare",
+      "recipe": "thesis_reference",
+      "graph_qualified": false,
+      "independent_resume": true,
+      "max_output_difference": 0.0008235275745391846,
+      "max_step_state_difference": 5.02169132232666e-06,
+      "comparison_path": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an1/comparison.json",
+      "comparison_sha256": "eed1ce5d194548e08c81a4c400d55d684605cc34c466e9cdb05e9a79a381105f"
+    }
+  ],
+  "numerical_thresholds_unchanged": true,
+  "interpretation": "eligibility failures retained; eager fallback required; independent graph resume passed",
+  "original_pytest_assertion": "Originally asserted eligibility must pass; corrected test separates execution qualification from recording and resume correctness",
+  "remaining_native_qualifications": "CogPilot and Dingxin are scheduled in the bounded background queue"
+}

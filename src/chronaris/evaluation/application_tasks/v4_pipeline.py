@@ -37,6 +37,9 @@ CPU_STAGES = {'public_results', 'public_review_results', 'simulation_review_resu
 
 
 def pipeline_groups(until):
+    if until == 'stage45':
+        from chronaris.evaluation.application_tasks.stage45 import stage45_groups
+        return stage45_groups()
     if until == 'comparison':
         from chronaris.evaluation.application_tasks.development_comparison import comparison_groups
         return comparison_groups()
@@ -86,6 +89,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
                 raise RuntimeError('recorded worker is still live; do not duplicate its work')
         if state.get('status') == 'failed' and not retry_failed:
             return state | dict(resume_hint='inspect failure, then explicitly use --retry-failed for an unchanged-source transient failure')
+        state.setdefault('started_at_unix_s', time.time())
         state.update(pid=os.getpid(), config_sha256=sha256_file(manifest_path), status='running', until=until, children={})
         children = {}
         project = Path(__file__).parents[4]
@@ -120,6 +124,9 @@ def execute_pipeline(config, *, until, retry_failed=False):
         try:
             save()
             for group in pipeline_groups(until):
+                if until == 'stage45' and time.time() >= state['started_at_unix_s'] + 72*3600:
+                    state.update(status='budget_exhausted', confirmation_opened=False); save()
+                    return state
                 for stage, expected in group:
                     if stage in state['completed']:
                         receipt = state['completed'][stage]
@@ -127,6 +134,9 @@ def execute_pipeline(config, *, until, retry_failed=False):
                     else:
                         launch(stage, expected)
                 while children:
+                    if until == 'stage45' and time.time() >= state['started_at_unix_s'] + 72*3600:
+                        state.update(status='budget_exhausted', confirmation_opened=False); save()
+                        return state
                     for stage, (child, log, result_path, expected) in list(children.items()):
                         code = child.poll()
                         if code is None:
@@ -174,13 +184,15 @@ def execute_pipeline(config, *, until, retry_failed=False):
 def main(*, default_until='freeze'):
     parser = argparse.ArgumentParser(description='Fixed v4 development, selection and confirmation; resumes one immutable run root.')
     parser.add_argument('--root')
-    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison'), default=default_until)
+    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
+    parser.add_argument('--stage45-parent', help='Completed stage 4 parent; only for the stage45 endpoint')
+    parser.add_argument('--stage45-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
     parser.add_argument('--retry-failed', action='store_true')
-    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison') for stage, _ in group], help=argparse.SUPPRESS)
+    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
@@ -245,6 +257,16 @@ def main(*, default_until='freeze'):
         from chronaris.evaluation.application_tasks.development_comparison import ASSETS, SENSOR_ASSETS
         input_paths = [Path(config['registry_path']), Path(ASSETS), Path(SENSOR_ASSETS)]
         input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot', 'clare')]
+    if args.until == 'stage45':
+        if not args.stage45_parent or args.comparison_parent or args.execution_parent:
+            parser.error('stage45 requires its completed parent and cannot migrate the old pipeline')
+        config.update(stage45_parent=str(Path(args.stage45_parent).resolve()),
+            stage45_acceptance=str(Path(args.stage45_acceptance).resolve()))
+        input_paths = [Path(config['registry_path']), Path(config['stage45_acceptance']),
+            Path(config['stage45_parent'])/'pipeline_state.json']
+        input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot','clare')]
+    elif args.stage45_parent:
+        parser.error('--stage45-parent requires --until stage45')
     if args.comparison_parent:
         if args.until != 'comparison':
             parser.error('--comparison-parent requires --until comparison')
@@ -256,6 +278,10 @@ def main(*, default_until='freeze'):
         input_paths += [Path(config['execution_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
         input_paths.append(Path(config['execution_evidence']))
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
+    if args.plan_only and args.until == 'stage45':
+        print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), budget_hours=72,
+            confirmation_opened=False, executes_training=False), indent=2))
+        return
     if args.plan_only and args.until == 'comparison':
         print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), seed=17, fold_index=0,
             model_units=25, representation_routes=43, confirmation_opened=False, executes_training=False), indent=2))

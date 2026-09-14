@@ -6,6 +6,8 @@
 
 ## 当前复核
 
+[阶段 4.5 模型与性能优化](stage/thesis-v4/stage45-20260914/README.md)核对远端建议、参考配方、分支诊断及有界队列；本轮先完成代码与验证，再启动后台开发实验。
+
 [完整开发比较收口](stage/thesis-v4/stage4-closeout-20260914/README.md)已完成结果、学习信号、恢复成本和后续计算预算核验。
 
 [完整开发比较执行迁移](stage/thesis-v4/stage4-execution-migration-20260913/README.md)确认第 200 次状态保持、九个单元继承、成本来源和第 225 次新检查点。

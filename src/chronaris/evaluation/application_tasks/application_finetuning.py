@@ -68,6 +68,7 @@ class EndToEndFineTuningConfig:
     self_supervised_weight: float = .2
     sampling_hierarchy: Mapping[str, tuple[str, ...]] | None = None
     retained_updates: tuple[int, ...] = ()
+    record_gradient_groups: bool = False
     data_manifest_sha256: str | None = None
     cache_head_encodings: bool = True
 
@@ -377,6 +378,16 @@ def _train_end_to_end_application_method(
             if not torch.isfinite(total_loss):
                 raise FloatingPointError("non-finite task-guided loss; unit stopped")
             total_loss.backward()
+            diagnostic = {}
+            if config.record_gradient_groups and not warming_head:
+                from chronaris.modeling.training.candidate_mechanisms import parameter_gradient_norm
+                groups = ('encoder.backbone.continuous_backbone.physiology',
+                    'encoder.backbone.continuous_backbone.vehicle', 'encoder.backbone.causal_fusion',
+                    'encoder.backbone.semantic_event_fusion', 'explicit_shift_head', 'task_heads')
+                diagnostic = {'mechanism_terms': [dict(row) for row in mechanism.rows] if mechanism_loss is not None else [],
+                    'gradient_groups': {prefix: parameter_gradient_norm(p for n, p in model.named_parameters()
+                        if n.startswith(prefix)) for prefix in groups},
+                    'gradient_scope': 'accumulated_joint_objective_not_isolated_term'}
             update_rows.append({"optimizer_update": step_count + 1, "micro_batch_index": micro_batches_seen,
                 "stage": "head_warmup" if warming_head else "joint_adaptation", "sample_ids": list(sample_ids),
                 "augmentation_ids": list(augmentation_ids), "task_loss": float(losses["total"].detach()),
@@ -384,7 +395,7 @@ def _train_end_to_end_application_method(
                 "task_update_contribution": float(task_contribution.detach()),
                 "effective_task_counts": effective_counts,
                 "public_loss": public_loss, "public_weight": config.self_supervised_weight if public_loss is not None else 0.,
-                "mechanism_loss": mechanism_loss, "total_loss": float(total_loss.detach())})
+                "mechanism_loss": mechanism_loss, "total_loss": float(total_loss.detach()), **diagnostic})
             samples_seen += len(sample_ids)
             micro_batches_seen += 1
             if not update_mode or micro_index + 1 == accumulation:

@@ -1,0 +1,458 @@
+{
+  "status": "completed",
+  "passed": false,
+  "checks": {
+    "forward_00000.pt": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "forward_00001.pt": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "forward_00002.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 1.430511474609375e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00003.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 1.430511474609375e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00004.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 2.8014183044433594e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00005.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 2.8014183044433594e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00006.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 2.8014183044433594e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00007.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 2.2351741790771484e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00008.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 2.2351741790771484e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00009.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 2.2351741790771484e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00010.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 9.57399606704712e-07,
+      "failures": []
+    },
+    "forward_00011.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 9.57399606704712e-07,
+      "failures": []
+    },
+    "forward_00012.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 9.57399606704712e-07,
+      "failures": []
+    },
+    "forward_00013.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 6.258487701416016e-07,
+      "failures": []
+    },
+    "forward_00014.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 6.258487701416016e-07,
+      "failures": []
+    },
+    "forward_00015.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 6.258487701416016e-07,
+      "failures": []
+    },
+    "forward_00016.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00017.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 4.76837158203125e-07,
+      "failures": []
+    },
+    "forward_00018.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 4.76837158203125e-07,
+      "failures": []
+    },
+    "forward_00019.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 1.5795230865478516e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00020.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00021.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 4.76837158203125e-07,
+      "failures": []
+    },
+    "forward_00022.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 4.76837158203125e-07,
+      "failures": []
+    },
+    "forward_00023.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00024.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00025.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 4.76837158203125e-07,
+      "failures": []
+    },
+    "forward_00026.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00027.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00028.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00029.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00030.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 7.152557373046875e-07,
+      "failures": []
+    },
+    "forward_00031.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 3.3974647521972656e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00032.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 3.3974647521972656e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00033.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 3.3974647521972656e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00034.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 8.344650268554688e-07,
+      "failures": []
+    },
+    "forward_00035.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 3.7923455238342285e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00036.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 0.0008235275745391846,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00037.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 0.0008235275745391846,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00038.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 7.152557373046875e-07,
+      "failures": []
+    },
+    "forward_00039.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 7.152557373046875e-07,
+      "failures": []
+    },
+    "forward_00040.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00041.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00042.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00043.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00044.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00045.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 1.3709068298339844e-06,
+      "failures": [
+        "/sequence"
+      ]
+    },
+    "forward_00046.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 4.76837158203125e-07,
+      "failures": []
+    },
+    "forward_00047.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00048.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00049.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00050.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 7.152557373046875e-07,
+      "failures": []
+    },
+    "forward_00051.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 7.152557373046875e-07,
+      "failures": []
+    },
+    "forward_00052.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "forward_00053.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 5.960464477539062e-07,
+      "failures": []
+    },
+    "step_00000.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 5.0067901611328125e-06,
+      "failures": [
+        "/parameters/10"
+      ]
+    },
+    "step_00001.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 5.02169132232666e-06,
+      "failures": [
+        "/parameters/10"
+      ]
+    },
+    "step_00002.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 5.02169132232666e-06,
+      "failures": [
+        "/parameters/14"
+      ]
+    },
+    "step_00003.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 5.02169132232666e-06,
+      "failures": [
+        "/parameters/14"
+      ]
+    },
+    "step_00004.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 5.02169132232666e-06,
+      "failures": [
+        "/parameters/14"
+      ]
+    },
+    "step_00005.pt": {
+      "bitwise_equal": false,
+      "close": false,
+      "max_abs": 5.02169132232666e-06,
+      "failures": [
+        "/parameters/14"
+      ]
+    }
+  },
+  "independent_resume": {
+    "status": "completed",
+    "passed": true,
+    "checks": {
+      "model_state_dict": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "optimizer_state_dict": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "rng_state": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "data_cursor": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "update_rows": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "epoch_rows": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      }
+    },
+    "confirmation_opened": false
+  },
+  "output_atol": 1e-06,
+  "state_atol": 1e-06,
+  "state_rtol": 1e-05,
+  "interpretation": "short native entry only; full-unit costs require completed screen units",
+  "confirmation_opened": false
+}

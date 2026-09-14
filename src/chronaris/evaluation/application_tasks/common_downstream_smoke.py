@@ -28,14 +28,16 @@ from chronaris.representation.window_features import WindowFeatureBatch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file, write_deterministic_npz
 
 
-def contract_development_inputs(domain, *, data_root, registry_path, full=False):
+def contract_development_inputs(domain, *, data_root, registry_path, full=False, fold_index=0):
     if domain == 'dingxin':
         data, _ = deduplicated_dingxin_data(load_v4_dingxin_development())
+        if fold_index != 0:
+            raise ValueError('Dingxin keeps its single deduplicated development fold')
         fold = data.folds[0]
         targets, definitions = data.targets_by_fold[fold.fold_id], data.definitions_by_fold[fold.fold_id]
         provider, schema, digest = data.development_provider(fold), data.index.plan.schema, data.data_manifest_sha256
     else:
-        provider, schema, fold, _, digest, targets, definitions, data = load_development_inputs(domain, data_root, registry_path)
+        provider, schema, fold, _, digest, targets, definitions, data = load_development_inputs(domain, data_root, registry_path, fold_index=fold_index)
         if not full:
             # Fix task availability, not label values or model outcomes, before selecting methods.
             index = {sample: i for i, sample in enumerate(targets.sample_ids)}
@@ -64,13 +66,18 @@ def contract_development_inputs(domain, *, data_root, registry_path, full=False)
 def run_common_contract_smoke(*, domain, output_root,
                             data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
                             registry_path='docs/requirements/thesis-v4-public-subjects.json',
-                            full=False, methods=('naive_time_sync', 'chronaris'), cuda_graph_recurrence=False):
+                            full=False, methods=('naive_time_sync', 'chronaris'), cuda_graph_recurrence=False,
+                            recipe=None, seed=17, fold_index=0, micro_batch=4, diagnostic_snapshots=False, pretraining_source=None, expected_contract_sha256=None):
     if domain not in {'dingxin', 'cogpilot', 'clare'} or not torch.cuda.is_available():
         raise ValueError('contract smoke requires a real native development domain and CUDA')
     if not methods or not set(methods) <= {'naive_time_sync', 'chronaris', 'physiology_only', 'vehicle_only', 'mult', 'contiformer'}:
         raise ValueError('unsupported common comparison method')
-    if cuda_graph_recurrence and (domain != 'cogpilot' or methods != ('chronaris',)):
+    if cuda_graph_recurrence and (methods != ('chronaris',) or (recipe is None and domain != 'cogpilot')):
         raise ValueError('graph execution is validated only for CogPilot Chronaris')
+    if recipe is None and (seed != 17 or fold_index != 0 or micro_batch != 4 or diagnostic_snapshots):
+        raise ValueError('stage 4 changes require an explicit stage 4.5 recipe')
+    if pretraining_source is not None and (recipe != 'finetuning_lr' or not full or seed != 17 or fold_index != 0):
+        raise ValueError('pretraining reuse is limited to the fixed first-setting fine-tuning candidate')
     scope = 'development_comparison' if full else 'engineering_development'
     root = Path(output_root)/domain
     started = time.perf_counter()
@@ -81,9 +88,11 @@ def run_common_contract_smoke(*, domain, output_root,
         with _periodic_training_heartbeat('common_contract_'+domain, 30., root=root) as progress:
             progress['phase'] = 'bind_real_development_inputs'
             provider, schema, fold, digest, targets, definitions, context, observations = contract_development_inputs(
-                domain, data_root=data_root, registry_path=registry_path, full=full)
+                domain, data_root=data_root, registry_path=registry_path, full=full, fold_index=fold_index)
             contract = build_common_contract(domain=domain, fold=fold, observations=observations,
-                targets=targets, definitions=definitions, context=context, data_manifest_sha256=digest, scope=scope)
+                targets=targets, definitions=definitions, context=context, data_manifest_sha256=digest, scope=scope, seed=seed)
+            if expected_contract_sha256 is not None and contract['contract_sha256'] != expected_contract_sha256:
+                raise ValueError('unit data or targets differ from the frozen development plan')
             contract_path = root/'data_contract.json'
             if contract_path.exists() and json.loads(contract_path.read_text()) != contract:
                 raise ValueError('contract smoke inputs or source changed; preserve this root')
@@ -91,6 +100,25 @@ def run_common_contract_smoke(*, domain, output_root,
             normalizer = TrainOnlyRobustNormalizer().fit_from_batch_provider(provider,
                 train_sample_ids=fold.train_sample_ids, held_out_sample_ids=fold.validation_sample_ids+fold.held_out_sample_ids,
                 batch_size=4)
+            recipe_configs = None
+            if recipe is not None:
+                if len(methods) != 1 or methods[0] == 'naive_time_sync':
+                    raise ValueError('recipe requires exactly one trainable method')
+                from chronaris.evaluation.application_tasks.stage45_recipe import training_recipe
+                from chronaris.models.alignment.calibrated_physics import fit_physics_calibration
+                calibration = (fit_physics_calibration(normalizer, provider, train_sample_ids=fold.train_sample_ids,
+                    vehicle_feature_names=schema.vehicle_feature_names, relations=()) if recipe == 'thesis_reference' else None)
+                recipe_configs = training_recipe(recipe, method=methods[0], full=full, seed=seed, digest=digest,
+                    train_count=len(fold.train_sample_ids), graph=cuda_graph_recurrence,
+                    calibration=calibration, micro_batch=micro_batch)
+                record = recipe_configs[-1] | {'fold_index': fold_index, 'diagnostic_snapshots': diagnostic_snapshots,
+                    'source_code_sha256': contract['source_code_sha256'], 'contract_sha256': contract['contract_sha256'],
+                    'pretraining_source': str(pretraining_source) if pretraining_source else None,
+                    'pretraining_source_sha256': sha256_file(pretraining_source) if pretraining_source else None}
+                path = root/'recipe.json'
+                if path.exists() and json.loads(path.read_text()) != json.loads(json.dumps(record)):
+                    raise ValueError('stage 4.5 recipe changed; use a new root')
+                write_result(path, record)
             results = []
             for method in methods:
                 progress.update(phase='encoder_fit', method=method)
@@ -103,13 +131,29 @@ def run_common_contract_smoke(*, domain, output_root,
                         data_manifest_sha256=digest, output_root=root/method/'checkpoint')
                     encoder, _, _ = load_v4_naive_encoder(checkpoint, fold=fold, data_manifest_sha256=digest)
                     routes = [('self_supervised', checkpoint, encoder, training)]
+                elif pretraining_source is not None:
+                    encoder, source_normalizer, payload = load_frozen_application_encoder(pretraining_source,
+                        route='self_supervised', fold=fold, device='cuda')
+                    from chronaris.modeling.training.candidate_checkpoint import candidate_source_code_sha256
+                    if (payload['source_code_sha256'] != candidate_source_code_sha256()
+                        or payload['candidate_config'] != asdict(recipe_configs[0])
+                        or source_normalizer.to_manifest() != normalizer.to_manifest()
+                        or payload['config']['cuda_graph_recurrence'] != cuda_graph_recurrence
+                        or payload['chronaris_mechanism_enabled'] or payload['chronaris_explicit_shift_enabled']):
+                        raise ValueError('preserved pretraining is not the unchanged stage 4 reference')
+                    checkpoint = Path(pretraining_source)
+                    training = dict(best_checkpoint_path=str(checkpoint), last_checkpoint_path=str(checkpoint),
+                        optimizer_updates=payload['optimizer_updates'], reused=True, new_optimizer_updates=0,
+                        training_elapsed_s=0., historical_training_elapsed_s=payload['training_elapsed_s'])
+                    routes = [('self_supervised', checkpoint, encoder, training)]
                 else:
-                    training = train_pretext_candidate(method, candidate=EncoderCandidateConfig(candidate_id='C', hidden_dim=32),
+                    training = train_pretext_candidate(method, candidate=recipe_configs[0] if recipe_configs else EncoderCandidateConfig(candidate_id='C', hidden_dim=32),
                         batch=None, batch_provider=provider, fold=fold, physiology_feature_names=schema.physiology_feature_names,
                         vehicle_feature_names=schema.vehicle_feature_names, vehicle_field_labels=(), normalizer=normalizer,
-                        output_root=root/method/'self_supervised', config=CandidateScreenConfig(max_updates=pretraining_updates,
+                        output_root=root/method/'self_supervised', config=recipe_configs[1] if recipe_configs else CandidateScreenConfig(max_updates=pretraining_updates,
                             batch_size=4, effective_batch_size=effective_batch, device='cuda', validation_interval=50 if full else 2, early_stopping=False,
-                            data_manifest_sha256=digest, cuda_graph_recurrence=cuda_graph_recurrence), chronaris_fusion_kind='safe_lag' if method == 'chronaris' else 'multiscale')
+                            data_manifest_sha256=digest, cuda_graph_recurrence=cuda_graph_recurrence), **(recipe_configs[3] if recipe_configs else
+                            {'chronaris_fusion_kind': 'safe_lag' if method == 'chronaris' else 'multiscale'}))
                     encoder, _, _ = load_frozen_application_encoder(training.best_checkpoint_path,
                         route='self_supervised', fold=fold, device='cuda')
                     routes = [('self_supervised', Path(training.best_checkpoint_path), encoder, asdict(training))]
@@ -169,18 +213,23 @@ def run_common_contract_smoke(*, domain, output_root,
                             results.append(window_result | {'derived_from_sequence_export': True})
                         # Extend the existing route list only after freezing/exporting the unsupervised encoder.
                         progress.update(phase='task_guided_fit', route='task_guided')
-                        with isolated_training_rng(17):
+                        with isolated_training_rng(seed):
                             model = EndToEndApplicationModel(method_name=method, encoder=encoder, normalizer=normalizer,
                                 naive_encoder=None, task_definitions=definitions)
                         guided = train_end_to_end_application_method(model=model, batch=None, batch_provider=provider,
                             targets=targets, role_sample_ids={r: getattr(fold, r+'_sample_ids') for r in ('train', 'validation', 'held_out')},
                             source_checkpoint_path=checkpoint, output_root=root/method/'task_guided',
-                            config=EndToEndFineTuningConfig(max_updates=joint_updates, head_warmup_updates=50 if full else 2, batch_size=4,
+                            config=recipe_configs[2] if recipe_configs else EndToEndFineTuningConfig(max_updates=joint_updates, head_warmup_updates=50 if full else 2, batch_size=4,
                                 effective_batch_size=effective_batch, device='cuda', validation_interval=50 if full else 2, early_stopping=False,
                                 data_manifest_sha256=digest))
                         guided_encoder, _, _ = load_frozen_application_encoder(guided.best_checkpoint_path,
                             route='task_guided', fold=fold, device='cuda')
                         routes.append(('task_guided', Path(guided.best_checkpoint_path), guided_encoder, asdict(guided)))
+            if diagnostic_snapshots:
+                from chronaris.evaluation.application_tasks.stage45_diagnostics import checkpoint_diagnostics
+                checkpoint_diagnostics(root=root, domain=domain, provider=provider, fold=fold,
+                    contract=contract, targets=targets, definitions=definitions, context=context,
+                    observations=observations, digest=digest, results=results)
             if v4_workflow_source_sha256() != contract['source_code_sha256']:
                 raise ValueError('source changed during contract smoke')
             result = dict(status='completed', domain=domain, scope=scope, total_seconds=time.perf_counter()-started,

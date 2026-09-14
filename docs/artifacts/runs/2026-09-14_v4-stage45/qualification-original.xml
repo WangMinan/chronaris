@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="570.172" timestamp="2026-09-14T12:45:51.248626+08:00" hostname="DESKTOP-8RNE6N6"><testcase classname="tests.evaluation.application_tasks.test_stage45" name="test_cuda_stage45_execution_and_independent_restart[stage4_reference-clare]" time="272.594"><failure message="AssertionError: /mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an0/comparison.json&#10;assert False">tmp_path = PosixPath('/mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an0')
+domain = 'clare', recipe = 'stage4_reference'
+
+    @pytest.mark.parametrize('domain', ['clare', 'cogpilot', 'dingxin'])
+    @pytest.mark.parametrize('recipe', ['stage4_reference', 'thesis_reference'])
+    @pytest.mark.skipif(not __import__('os').environ.get('CHRONARIS_STAGE45_PERFORMANCE_CHECK') or not torch.cuda.is_available(),
+                       reason='explicit real native graph and independent restart validation')
+    def test_cuda_stage45_execution_and_independent_restart(tmp_path, domain, recipe):
+        import os
+        import subprocess
+        import sys
+        from chronaris.evaluation.application_tasks.stage45_performance import compare_execution
+        project = Path(__file__).resolve().parents[3]
+        config = dict(root=str(tmp_path),
+            data_root=str(project/'artifacts/application_evaluation/2026-09-06_v4-public-development'),
+            registry_path=str(project/'docs/requirements/thesis-v4-public-subjects.json'))
+        for mode in ('eager','graph','interrupt','resume'):
+            command = ('import json; from chronaris.evaluation.application_tasks.stage45_performance import performance_entry; '
+                       'performance_entry(**json.loads(__import__("sys").argv[1]))')
+            with (tmp_path/(mode+'.log')).open('w') as log:
+                subprocess.run([sys.executable,'-c',command,json.dumps(dict(config=config,domain=domain,recipe=recipe,mode=mode))],
+                    cwd=project,env=os.environ | {'PYTHONPATH':str(project/'src')},stdout=log,stderr=subprocess.STDOUT,check=True)
+        check = compare_execution(tmp_path/'performance'/domain/recipe)
+        (tmp_path/'comparison.json').write_text(json.dumps(check,indent=2))
+&gt;       assert check['passed'], str(tmp_path/'comparison.json')
+E       AssertionError: /mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an0/comparison.json
+E       assert False
+
+tests/evaluation/application_tasks/test_stage45.py:145: AssertionError</failure></testcase><testcase classname="tests.evaluation.application_tasks.test_stage45" name="test_cuda_stage45_execution_and_independent_restart[thesis_reference-clare]" time="295.549"><failure message="AssertionError: /mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an1/comparison.json&#10;assert False">tmp_path = PosixPath('/mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an1')
+domain = 'clare', recipe = 'thesis_reference'
+
+&gt;   ???
+E   AssertionError: /mnt/e/chronaris-v4-results/2026-09-14-stage45-validation/performance-stable/test_cuda_stage45_execution_an1/comparison.json
+E   assert False
+
+tests/evaluation/application_tasks/test_stage45.py:145: AssertionError</failure></testcase></testsuite></testsuites>

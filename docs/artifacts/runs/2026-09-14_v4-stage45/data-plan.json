@@ -1,0 +1,127 @@
+{
+  "status": "completed",
+  "format": "chronaris.stage45.v1",
+  "source_code_sha256": "940ecb7f7cb5254ce1a5af8093d5c2d0f389fd1ccc2ce0321b8d868d81a585e8",
+  "contracts": {
+    "clare/0/17": "ce2944425576b988c5c96e8632a573cf3e7666e6c38e7743ac41596d2bbce304",
+    "clare/0/29": "6693a9903f52c0e2cbfd01fc4989bbb0eba03b4c951e29f2b525bc926f25ce73",
+    "clare/1/43": "2a15e106749095ab4df6c218115b07cf2cd8defb869b52c9dfe1c9fda6fcf589",
+    "cogpilot/0/17": "4a0e312d1ae1baad19bdd4a37d3adf7176326d87ab3a59f8d406932819cd4760",
+    "cogpilot/0/29": "1ac080b1651170afc6b04f0481a69f5b299857f3ce11ff258ab64dcc4347d77b",
+    "cogpilot/1/43": "aa3aaa9d82052d049174e60e60689892be5a8bb14a0c117adf79dcc7d3551292",
+    "dingxin/0/17": "9192e81b8e7a8257f0f40a1f4d5da1d6339ba1526f75df1251fe18c5ee543882"
+  },
+  "screen_units": [
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "recipe": "thesis_reference"
+    },
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "recipe": "cosine_temperature"
+    },
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "recipe": "pretraining_lr"
+    },
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "recipe": "finetuning_lr"
+    },
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "recipe": "single_stream_fidelity"
+    },
+    {
+      "domain": "clare",
+      "method": "contiformer",
+      "recipe": "pretraining_lr"
+    },
+    {
+      "domain": "clare",
+      "method": "contiformer",
+      "recipe": "finetuning_lr"
+    },
+    {
+      "domain": "clare",
+      "method": "physiology_only",
+      "recipe": "pretraining_lr"
+    },
+    {
+      "domain": "clare",
+      "method": "physiology_only",
+      "recipe": "finetuning_lr"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "recipe": "thesis_reference"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "recipe": "cosine_temperature"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "recipe": "pretraining_lr"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "recipe": "finetuning_lr"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "recipe": "single_stream_fidelity"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "vehicle_only",
+      "recipe": "pretraining_lr"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "vehicle_only",
+      "recipe": "finetuning_lr"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "mult",
+      "recipe": "pretraining_lr"
+    },
+    {
+      "domain": "cogpilot",
+      "method": "mult",
+      "recipe": "finetuning_lr"
+    }
+  ],
+  "seed": 17,
+  "fold_index": 0,
+  "review_settings": [
+    [
+      0,
+      29
+    ],
+    [
+      1,
+      43
+    ]
+  ],
+  "finalist_limit": 2,
+  "budget_hours": 72,
+  "model_adoption_automatic": false,
+  "confirmation_opened": false,
+  "selection": "at least two meaningful domain-route gains; all other public tasks within fixed guardrails",
+  "fidelity_trigger": "public projection F1 loss >=0.02 or RMSE increase >=5 percent",
+  "references": "read-only stage4 checkpoints/results; changed recipes train from scratch in new roots",
+  "source_acceptance_sha256": "51700c03a0eb565fb4f98f6113d9764bae0a7303a380cfcfa6b2dd830c9e39f0",
+  "plan_sha256": "292c317cb220ac81b039e43d13ba9698e49afd4acdf942b342b243defb4194d7"
+}
