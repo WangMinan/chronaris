@@ -111,7 +111,7 @@ def _restore(payload, graph):
     return encoder, heads, shift, parameters, optimizer
 
 
-def trial(*, checkpoint, pipeline_config, output_root, graph, threads=1, updates=2, resume_state=None, domain=None, profile=False, torch_profile=False):
+def trial(*, checkpoint, pipeline_config, output_root, graph, threads=1, updates=2, resume_state=None, domain=None, profile=False):
     if updates not in (1, 2) or threads not in (1, 4, 8):
         raise ValueError('performance trials require 1-2 updates and 1/4/8 CPU threads')
     root = Path(output_root)
@@ -186,10 +186,6 @@ def trial(*, checkpoint, pipeline_config, output_root, graph, threads=1, updates
                     batches.append(ids)
                     torch.cuda.synchronize()
                     started = time.perf_counter()
-                    profiler = None
-                    if torch_profile and update == start_update+1 and micro == 0:
-                        profiler = torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU, torch.profiler.ProfilerActivity.CUDA])
-                        profiler.start()
                     if profile and update == start_update+1 and micro == 0:
                         torch.cuda.cudart().cudaProfilerStart()
                     output, mechanism, augmented, data_wait = pretext_micro_step(encoder=encoder, heads=heads, shift_head=shift,
@@ -207,14 +203,6 @@ def trial(*, checkpoint, pipeline_config, output_root, graph, threads=1, updates
                     torch.cuda.synchronize()
                     if profile and update == start_update+1 and micro == 0:
                         torch.cuda.cudart().cudaProfilerStop()
-                    if profiler is not None:
-                        profiler.stop()
-                        profiler.export_chrome_trace(str(root/'trace.json'))
-                        records = [dict(name=e.key, count=e.count, cpu_us=e.cpu_time_total,
-                            self_cpu_us=e.self_cpu_time_total, device_us=e.device_time_total,
-                            self_device_us=e.self_device_time_total) for e in profiler.key_averages()]
-                        (root/'operator_profile.json').write_text(json.dumps(records, indent=2))
-                        del profiler
                     timings.append(dict(data_load_s=data_wait, forward_until_loss_sync_s=forward_done-started,
                         forward_backward_s=time.perf_counter()-started))
                     losses.append(loss.detach().cpu())

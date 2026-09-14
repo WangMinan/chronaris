@@ -1,4 +1,4 @@
-"""Run or compare bounded update-200 execution trials in separate directories."""
+"""Run or compare bounded preserved-checkpoint execution trials in separate directories."""
 import argparse
 import json
 from pathlib import Path
@@ -14,6 +14,9 @@ def main():
     parser.add_argument('--checkpoint')
     parser.add_argument('--pipeline-config')
     parser.add_argument('--output-root', required=True)
+    parser.add_argument('--domain', choices=('clare','cogpilot','dingxin'))
+    parser.add_argument('--torch-profile', action='store_true', help='Profile one microbatch with PyTorch CPU/CUDA tracing')
+    parser.add_argument('--profile', action='store_true', help='Capture the first microbatch using Nsight CUDA profiler API range')
     parser.add_argument('--graph', action='store_true')
     parser.add_argument('--threads', type=int, default=1)
     parser.add_argument('--updates', type=int, default=2)
@@ -33,7 +36,7 @@ def main():
             parser.error('trials require --checkpoint and --pipeline-config')
         print(json.dumps(trial(checkpoint=args.checkpoint, pipeline_config=args.pipeline_config,
             output_root=args.output_root, graph=args.graph, threads=args.threads,
-            updates=args.updates, resume_state=args.resume_state), indent=2))
+            updates=args.updates, resume_state=args.resume_state, domain=args.domain, profile=args.profile, torch_profile=args.torch_profile), indent=2))
 
 
 if __name__ == '__main__':

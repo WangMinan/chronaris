@@ -1,0 +1,6 @@
+WARNING: Device-side CUDA Event completion trace is currently enabled.
+         This may increase runtime overhead and the likelihood of false
+         dependencies across CUDA Streams. If you wish to avoid this, please
+         disable the feature with --cuda-event-trace=false.
+/dvs/p4/build/sw/devtools/Agora/Rel/CUDA12.9/QuadD/Common/AgentAPI/Src/SessionImpl.cpp(18): rpc Configure(.Agent.ConfigureRequest) returns (.Agent.EmptyMessage);
+ is canceled because the timeout period is expired (30 sec).

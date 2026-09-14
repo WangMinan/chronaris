@@ -86,6 +86,8 @@ def make_plan(config):
             return {k:v for k,v in c.items() if k not in ('source_code_sha256', 'contract_sha256')}
         if data_only(contract) != data_only(old):
             raise ValueError('stage 4.5 altered the common data, task or consumer contract')
+        from chronaris.evaluation.application_tasks.stage45_resume import verify_parent_contract
+        verify_parent_contract(config, contract)
         contracts[f'{domain}/0/17'] = contract['contract_sha256']
         if domain in DOMAINS:
             for fold_index, seed in REVIEW_SETTINGS:
@@ -94,15 +96,21 @@ def make_plan(config):
                 reviewed = build_common_contract(domain=domain, fold=fold, data_manifest_sha256=digest,
                     targets=targets, definitions=definitions, context=context, observations=observations,
                     scope='development_comparison', seed=seed)
+                verify_parent_contract(config, reviewed)
                 contracts[f'{domain}/{fold_index}/{seed}'] = reviewed['contract_sha256']
     plan = seal_development_plan(dict(status='completed', format='chronaris.stage45.v1',
         source_code_sha256=v4_workflow_source_sha256(), contracts=contracts, screen_units=screen_units(),
         seed=17, fold_index=0, review_settings=REVIEW_SETTINGS, finalist_limit=2,
-        budget_hours=72, model_adoption_automatic=False, confirmation_opened=False,
+        budget_hours=config.get('stage45_budget_hours',72), model_adoption_automatic=False, confirmation_opened=False,
         selection='at least two meaningful domain-route gains; all other public tasks within fixed guardrails',
         fidelity_trigger='public projection F1 loss >=0.02 or RMSE increase >=5 percent',
         references='read-only stage4 checkpoints/results; changed recipes train from scratch in new roots',
         source_acceptance_sha256=sha256_file(config['stage45_acceptance'])))
+    if config.get('stage45_resume_parent'):
+        from chronaris.evaluation.application_tasks.stage45_resume import prepare_resume
+        recovery = prepare_resume(config)
+        plan = seal_development_plan({k:v for k,v in plan.items() if k != 'plan_sha256'} |
+            {'recovery_evidence_sha256': recovery['evidence_sha256']})
     return write_result(Path(config['root'])/'stage45_plan.json', plan)
 
 
@@ -168,6 +176,12 @@ def _run_unit(config, unit, root):
         graph = check['passed']
     else:
         graph = False
+    fine_graph = None
+    if (config.get('stage45_resume_parent') and (domain,method,recipe,unit.get('fold_index',0),unit.get('seed',17))
+        == ('clare','chronaris','thesis_reference',0,17)):
+        from chronaris.evaluation.application_tasks.stage45_resume import read_evidence
+        graph = read_evidence(config)['resume_pretraining_graph']
+        fine_graph = False if graph else None
     pretraining_source = None
     if recipe == 'finetuning_lr' and unit.get('seed',17) == 17 and unit.get('fold_index',0) == 0:
         parent = parent_result(config, domain, method)
@@ -180,7 +194,7 @@ def _run_unit(config, unit, root):
     result = run_common_contract_smoke(domain=domain, methods=(method,), recipe=recipe,
         seed=unit.get('seed',17), fold_index=unit.get('fold_index',0), full=True, output_root=root,
         cuda_graph_recurrence=graph, diagnostic_snapshots=method == 'chronaris', pretraining_source=pretraining_source,
-        expected_contract_sha256=expected,
+        expected_contract_sha256=expected, finetuning_graph_recurrence=fine_graph,
         data_root=config['data_root'], registry_path=config['registry_path'])
     return result | dict(unit=unit, attempt_seconds=time.perf_counter()-started, graph_execution=graph)
 
@@ -193,6 +207,10 @@ def run_stage45(stage, config):
     if (seal_development_plan({k:v for k,v in plan.items() if k != 'plan_sha256'}) != plan
         or plan['source_code_sha256'] != v4_workflow_source_sha256()):
         raise ValueError('stage 4.5 source changed')
+    from chronaris.evaluation.application_tasks.stage45_resume import inherited_step
+    inherited = inherited_step(stage, config)
+    if inherited is not None:
+        return inherited
     parts = stage.split('__')
     if parts[0] == 'stage45_probes':
         domain = parts[1]
@@ -266,6 +284,9 @@ def run_stage45(stage, config):
             verification[recipe] = settings
         return write_result(root/'stage45_report.json', dict(status='completed', selection=selection,
             development_verification=verification, review_results=records,
+            screen_results=[_read(p) for p in sorted((root/'screen').glob('*.json'))],
+            worker_attempt_costs=[_read(p) for p in sorted((root/'attempt_costs').glob('*.json'))],
+            recovery=_read(root/'recovery.json') if (root/'recovery.json').exists() else None,
             confirmation_opened=False, configuration_frozen=False,
             next_action='manual research review before stage 5; preserve all improvements and regressions'))
     raise ValueError('unknown stage 4.5 step')

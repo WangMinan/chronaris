@@ -1,0 +1,45 @@
+{
+  "status": "completed",
+  "parent_root": "/mnt/e/chronaris-v4-results/2026-09-14-stage45",
+  "source_code_sha256": "29f37011363aa34503913adf3f98eac7f6b3f480274060467420354e0dfd9438",
+  "reviewed_source_changes": [
+    "src/chronaris/evaluation/application_tasks/checkpoint_performance.py",
+    "src/chronaris/evaluation/application_tasks/common_downstream_smoke.py",
+    "src/chronaris/evaluation/application_tasks/stage45.py",
+    "src/chronaris/evaluation/application_tasks/stage45_diagnostics.py",
+    "src/chronaris/evaluation/application_tasks/stage45_resume.py",
+    "src/chronaris/evaluation/application_tasks/v4_pipeline.py"
+  ],
+  "evidence_sha256": "277030fb0143eeb2c1b2987b0d9c5135d3d512fe43fcc0149ff1844c9f171bcc",
+  "checkpoint_rows": [
+    {
+      "source": "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "source_sha256": "66b6d0cf0cab62f849d0ebfc8f08ce302454913a79152e7601abc37246391cc2",
+      "target": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/entry_validation/units/screen/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "initial_target_sha256": "ea6c07b98cecccf6227474c3a7ff58ac5749f9b22805b88ae2288e1d6e65ba30",
+      "preserved_updates": 50,
+      "state_sha256": "3b828f2203aafdd384476d8c3df79d87834b7f62ffa4dca1549cfa2c2802c094"
+    },
+    {
+      "source": "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "source_sha256": "aa8c377da9331913dd6a9125feeeed1f1058c842d76abbe961aac2fdb39752ce",
+      "target": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/entry_validation/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "initial_target_sha256": "31c29ee822ecd84b0dc9f0e5d12297aa98267faace13a09be8bd238492ffd682",
+      "preserved_updates": 75,
+      "state_sha256": "6798170011e61ffb02f6f8f461b9b7b154ec57af4cfa9a62b1a2d96d879560d7"
+    },
+    {
+      "source": "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/update_000050.pt",
+      "source_sha256": "7309a3095463cb92f4f3b09d8b40266aaf00dae8e316a79f05cf4588b4c589f6",
+      "target": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/entry_validation/units/screen/0/clare/chronaris/self_supervised/chronaris/C/update_000050.pt",
+      "initial_target_sha256": "8934775c4cdc743e44a08dd8a7a7f8afe0515c6c2b97254595f881c97528c2f1",
+      "preserved_updates": 50,
+      "state_sha256": "3b828f2203aafdd384476d8c3df79d87834b7f62ffa4dca1549cfa2c2802c094"
+    }
+  ],
+  "completed_parent_steps": 34,
+  "inherited_diagnostic_steps": 32,
+  "historical_training_seconds_lower_bound": 6268.346560162958,
+  "uncheckpointed_updates_not_reused": 15,
+  "confirmation_opened": false
+}

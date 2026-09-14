@@ -1,0 +1,114 @@
+{
+  "status": "completed",
+  "scope": "one ordinary CLARE microbatch at update 76; profiler overhead excluded from speedup evidence",
+  "top_cpu": [
+    {
+      "name": "cudaLaunchKernel",
+      "count": 1230383,
+      "cpu_us": 14254129.313999664,
+      "self_cpu_us": 14154422.574999664,
+      "device_us": 765.0439999971277,
+      "self_device_us": 0.0
+    },
+    {
+      "name": "aten::mm",
+      "count": 157376,
+      "cpu_us": 8747910.80700101,
+      "self_cpu_us": 5894062.960001336,
+      "device_us": 2157738.4650004148,
+      "self_device_us": 2157730.0870004147
+    },
+    {
+      "name": "aten::addmm",
+      "count": 31529,
+      "cpu_us": 3501496.9970001453,
+      "self_cpu_us": 2956986.140000172,
+      "device_us": 217006.3050001128,
+      "self_device_us": 216858.9750001133
+    },
+    {
+      "name": "aten::empty",
+      "count": 333489,
+      "cpu_us": 5201469.311000463,
+      "self_cpu_us": 1220671.0680017697,
+      "device_us": 1060092.2179992718,
+      "self_device_us": 0.0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 477127,
+      "cpu_us": 5820045.86899923,
+      "self_cpu_us": 1131823.8749995842,
+      "device_us": 1592326.6719995989,
+      "self_device_us": 1592251.893999597
+    },
+    {
+      "name": "Buffer Flush",
+      "count": 905,
+      "cpu_us": 1023590.762999949,
+      "self_cpu_us": 1023353.4629999497,
+      "device_us": 382.82200000062585,
+      "self_device_us": 382.82200000062585
+    },
+    {
+      "name": "aten::add_",
+      "count": 236105,
+      "cpu_us": 3517541.7260005344,
+      "self_cpu_us": 877083.8870001268,
+      "device_us": 1122635.6899982113,
+      "self_device_us": 1122635.6899982113
+    },
+    {
+      "name": "aten::mul",
+      "count": 74342,
+      "cpu_us": 1517523.0860001948,
+      "self_cpu_us": 653392.2140002509,
+      "device_us": 418894.18599952915,
+      "self_device_us": 418851.95399952884
+    },
+    {
+      "name": "aten::t",
+      "count": 314993,
+      "cpu_us": 1193035.2509988202,
+      "self_cpu_us": 642660.0199985022,
+      "device_us": 0,
+      "self_device_us": 0
+    },
+    {
+      "name": "cudaLaunchKernelExC",
+      "count": 63010,
+      "cpu_us": 632746.5610008831,
+      "self_cpu_us": 628513.3500008797,
+      "device_us": 5.90500000026077,
+      "self_device_us": 0.0
+    }
+  ],
+  "launches": [
+    {
+      "name": "cudaLaunchKernel",
+      "count": 1230383,
+      "cpu_us": 14254129.313999664,
+      "self_cpu_us": 14154422.574999664,
+      "device_us": 765.0439999971277,
+      "self_device_us": 0.0
+    },
+    {
+      "name": "cudaStreamSynchronize",
+      "count": 416,
+      "cpu_us": 22013.483999990523,
+      "self_cpu_us": 22013.483999990523,
+      "device_us": 0,
+      "self_device_us": 0
+    },
+    {
+      "name": "cudaLaunchKernelExC",
+      "count": 63010,
+      "cpu_us": 632746.5610008831,
+      "self_cpu_us": 628513.3500008797,
+      "device_us": 5.90500000026077,
+      "self_device_us": 0.0
+    }
+  ],
+  "trace_path": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/torch_profile/trace.json",
+  "nsight_status": "Configure RPC timeout before workload; torch profiler fallback completed"
+}

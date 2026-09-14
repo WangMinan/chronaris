@@ -1,0 +1,130 @@
+{
+  "passed": true,
+  "exact_required": false,
+  "comparisons": {
+    "76": {
+      "encoder_state_dict": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 1.4901161193847656e-08,
+        "failures": []
+      },
+      "head_state_dict": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "optimizer_state_dict": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 1.257285475730896e-08,
+        "failures": []
+      },
+      "rng_state": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "data_cursor": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "explicit_time_shift_head_state_dict": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "outputs": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "losses": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "gradients": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 1.2479722499847412e-07,
+        "failures": []
+      },
+      "batches": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      }
+    },
+    "77": {
+      "encoder_state_dict": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 2.9802322387695312e-08,
+        "failures": []
+      },
+      "head_state_dict": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 3.725290298461914e-09,
+        "failures": []
+      },
+      "optimizer_state_dict": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 1.3969838619232178e-08,
+        "failures": []
+      },
+      "rng_state": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "data_cursor": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "explicit_time_shift_head_state_dict": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 3.725290298461914e-09,
+        "failures": []
+      },
+      "outputs": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 5.960464477539062e-07,
+        "failures": []
+      },
+      "losses": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 5.960464477539063e-08,
+        "failures": []
+      },
+      "gradients": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 8.568167686462402e-08,
+        "failures": []
+      },
+      "batches": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      }
+    }
+  }
+}

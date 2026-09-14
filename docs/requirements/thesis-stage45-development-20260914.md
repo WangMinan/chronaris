@@ -56,15 +56,20 @@
 
 全部首轮及新增开发设置的数据合同在计划阶段固定，单元训练前再次比对；源码、目标或角色变化均拒绝继续。
 
-新增队列墙钟上限为 72 小时，包含准备、验证和诊断，是执行上限，不是完成时间承诺。到限时停止工作进程，保留最近合法检查点；未完成项保持未完成，后续扩展预算需人工判断。后台运行目录与旧阶段 4 完全分离；不依赖新增鼎新一手数据、专家标签或额外算力。
+2026 年 9 月 14 日暂停复核时，用户取消原 72 小时硬上限。恢复队列以 `--stage45-budget-hours 0` 执行完整有限矩阵后停止；延长时间不扩大候选搜索、不放宽判据，也不承诺模型必然获胜。后台运行目录与旧阶段 4 完全分离；不依赖新增鼎新一手数据、专家标签或额外算力。
+
+暂停恢复仅迁移 CLARE 论文机制参考配置第 75 次预训练状态：普通执行与图执行继续两次更新通过原容差，独立恢复逐值一致；该资格不外推到冷启动或新优化器的任务引导微调，后者显式使用普通执行。已完成的 32 个诊断步骤复用原始证据，新的来源核验与计划另行执行；旧失败资格保持失败。详见[暂停复核](../review/stage/thesis-v4/stage45-pause-review-20260914/README.md)。
 
 运行命令如下，启动前需冻结已验证源码；运行中不修改该源码副本。
 
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/evaluation/application_tasks/run_v4_pipeline.py \
   --until stage45 \
-  --root /mnt/e/chronaris-v4-results/2026-09-14-stage45 \
-  --stage45-parent /mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery
+  --root /mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery \
+  --stage45-parent /mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery \
+  --stage45-resume-parent /mnt/e/chronaris-v4-results/2026-09-14-stage45 \
+  --stage45-resume-evidence /mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/recovery_evidence.json \
+  --stage45-budget-hours 0
 ```
 
 状态由 `pipeline_state.json`、逐步日志和训练 `progress.json` 给出。启动后只做一次进程、阶段、检查点、显卡及错误核验，然后结束本次会话，等待用户手动唤醒。论文与阶段 5 的正式方法冻结仍由后续研究判断决定。

@@ -1,0 +1,17 @@
+{
+  "pid": 635589,
+  "started_at": "2026-09-14T17:58:13.057219+08:00",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "-u",
+    "-c",
+    "from chronaris.evaluation.application_tasks.v4_configuration_freeze import validate_current_cuda; import json,sys; result=validate_current_cuda(sys.argv[1]); print(json.dumps(result,indent=2),flush=True); sys.exit(0 if result['status']=='completed' else 1)",
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery/cuda_validation/attempt_1"
+  ],
+  "cwd": "/home/wangminan/projects/chronaris",
+  "source_code_sha256": "29f37011363aa34503913adf3f98eac7f6b3f480274060467420354e0dfd9438",
+  "test_suite_sha256": "8855ce4f65e16f5dec59a43f211f4c8f098eeaf964107d52e7d40f0c8f9ad422",
+  "output_root": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-recovery/cuda_validation/attempt_1",
+  "scope": "complete CUDA pytest suite only; no experiment continuation",
+  "detached": true
+}

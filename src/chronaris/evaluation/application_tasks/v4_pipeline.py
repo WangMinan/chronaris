@@ -2,6 +2,7 @@
 import argparse
 import fcntl
 import json
+import math
 import os
 from pathlib import Path
 import signal
@@ -62,6 +63,15 @@ def _verify_receipt(path, expected_digest, expected_status, optional):
         raise ValueError('pipeline receipt is not a successful completion')
 
 
+def stage45_budget_expired(config, state):
+    hours = config.get('stage45_budget_hours', 72)
+    if hours is None:
+        return False
+    if not isinstance(hours, (int, float)) or not math.isfinite(hours) or hours <= 0:
+        raise ValueError('stage 4.5 budget must be positive hours or explicit unlimited')
+    return time.time() >= state['started_at_unix_s'] + hours*3600
+
+
 def execute_pipeline(config, *, until, retry_failed=False):
     """Subprocesses release CUDA resources between stages; existing trainers own GPU locks."""
     root = Path(config['root']); root.mkdir(parents=True, exist_ok=True)
@@ -115,7 +125,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
                 command.append('--retry-failed')
             log = log_path.open('w')
             child = subprocess.Popen(command, cwd=project, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
-            children[stage] = (child, log, result_path, expected)
+            children[stage] = (child, log, result_path, expected, time.perf_counter())
             state['children'][stage] = child.pid
             state['current_stage'] = stage
             state['current_log'] = str(log_path)
@@ -124,7 +134,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
         try:
             save()
             for group in pipeline_groups(until):
-                if until == 'stage45' and time.time() >= state['started_at_unix_s'] + 72*3600:
+                if until == 'stage45' and stage45_budget_expired(config, state):
                     state.update(status='budget_exhausted', confirmation_opened=False); save()
                     return state
                 for stage, expected in group:
@@ -134,13 +144,15 @@ def execute_pipeline(config, *, until, retry_failed=False):
                     else:
                         launch(stage, expected)
                 while children:
-                    if until == 'stage45' and time.time() >= state['started_at_unix_s'] + 72*3600:
+                    if until == 'stage45' and stage45_budget_expired(config, state):
                         state.update(status='budget_exhausted', confirmation_opened=False); save()
                         return state
-                    for stage, (child, log, result_path, expected) in list(children.items()):
+                    for stage, (child, log, result_path, expected, started) in list(children.items()):
                         code = child.poll()
                         if code is None:
                             continue
+                        write_result(root/'attempt_costs'/f"{stage}.{state['attempts'][stage]}.json",
+                            dict(stage=stage, pid=child.pid, exit_code=code, status='exited', seconds=time.perf_counter()-started))
                         log.close(); children.pop(stage); state['children'].pop(stage)
                         result = json.loads(result_path.read_text()) if result_path.exists() else {}
                         if code == 0 and result.get('status') == 'waiting_gpu':
@@ -168,7 +180,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
             state['failures'].append(dict(stage=state.get('current_stage'), time_unix_s=time.time(), error=state['error']))
             raise
         finally:
-            for child, log, _, _ in children.values():
+            for stage, (child, log, _, _, started) in children.items():
                 try:
                     os.killpg(child.pid, signal.SIGTERM)
                     child.wait(timeout=10)
@@ -177,6 +189,8 @@ def execute_pipeline(config, *, until, retry_failed=False):
                 except subprocess.TimeoutExpired:
                     os.killpg(child.pid, signal.SIGKILL)
                     child.wait()
+                write_result(root/'attempt_costs'/f"{stage}.{state['attempts'][stage]}.json",
+                    dict(stage=stage, pid=child.pid, exit_code=child.returncode, status='interrupted', seconds=time.perf_counter()-started))
                 log.close()
             state['children'] = {}; save()
 
@@ -186,6 +200,9 @@ def main(*, default_until='freeze'):
     parser.add_argument('--root')
     parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
+    parser.add_argument('--stage45-budget-hours', type=float, default=72, help='0 removes the stage 4.5 wall-clock limit')
+    parser.add_argument('--stage45-resume-parent', help='Stopped stage 4.5 root to preserve and resume in a new root')
+    parser.add_argument('--stage45-resume-evidence', help='Verified pause/recovery evidence manifest')
     parser.add_argument('--stage45-parent', help='Completed stage 4 parent; only for the stage45 endpoint')
     parser.add_argument('--stage45-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
@@ -257,7 +274,12 @@ def main(*, default_until='freeze'):
         from chronaris.evaluation.application_tasks.development_comparison import ASSETS, SENSOR_ASSETS
         input_paths = [Path(config['registry_path']), Path(ASSETS), Path(SENSOR_ASSETS)]
         input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot', 'clare')]
+    if bool(args.stage45_resume_parent) != bool(args.stage45_resume_evidence) or (args.stage45_resume_parent and args.until != 'stage45'):
+        parser.error('stage 4.5 recovery requires parent and evidence together')
     if args.until == 'stage45':
+        if not math.isfinite(args.stage45_budget_hours) or args.stage45_budget_hours < 0:
+            parser.error('stage45 budget must be nonnegative; zero means unlimited')
+        config['stage45_budget_hours'] = args.stage45_budget_hours or None
         if not args.stage45_parent or args.comparison_parent or args.execution_parent:
             parser.error('stage45 requires its completed parent and cannot migrate the old pipeline')
         config.update(stage45_parent=str(Path(args.stage45_parent).resolve()),
@@ -265,6 +287,10 @@ def main(*, default_until='freeze'):
         input_paths = [Path(config['registry_path']), Path(config['stage45_acceptance']),
             Path(config['stage45_parent'])/'pipeline_state.json']
         input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot','clare')]
+        if args.stage45_resume_parent:
+            config.update(stage45_resume_parent=str(Path(args.stage45_resume_parent).resolve()),
+                stage45_resume_evidence=str(Path(args.stage45_resume_evidence).resolve()))
+            input_paths += [Path(config['stage45_resume_evidence']), Path(config['stage45_resume_parent'])/'pipeline_state.json']
     elif args.stage45_parent:
         parser.error('--stage45-parent requires --until stage45')
     if args.comparison_parent:
@@ -279,7 +305,7 @@ def main(*, default_until='freeze'):
         input_paths.append(Path(config['execution_evidence']))
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
     if args.plan_only and args.until == 'stage45':
-        print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), budget_hours=72,
+        print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), budget_hours=config['stage45_budget_hours'],
             confirmation_opened=False, executes_training=False), indent=2))
         return
     if args.plan_only and args.until == 'comparison':

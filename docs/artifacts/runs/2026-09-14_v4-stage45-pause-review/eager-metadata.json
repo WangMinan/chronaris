@@ -1,0 +1,97 @@
+{
+  "parent_sha256": "aa8c377da9331913dd6a9125feeeed1f1058c842d76abbe961aac2fdb39752ce",
+  "source_code_sha256": "18942eb82ad18877297606e1eb56b592357a0e47f98cf2f256656abaabb8b416",
+  "domain": "clare",
+  "graph": false,
+  "threads": 1,
+  "actual_batch": 4,
+  "effective_batch": 16,
+  "torch_version": "2.11.0+cu130",
+  "device": "NVIDIA GeForce RTX 4090",
+  "deterministic": true,
+  "training_role_shapes": {
+    "train": {
+      "physiology": [
+        366,
+        2560,
+        4
+      ],
+      "vehicle": [
+        366,
+        6400,
+        2
+      ]
+    },
+    "validation": {
+      "physiology": [
+        428,
+        2560,
+        4
+      ],
+      "vehicle": [
+        428,
+        6400,
+        2
+      ]
+    }
+  },
+  "resume_state": null,
+  "measurements": [
+    {
+      "update": 76,
+      "micro_timings": [
+        {
+          "data_load_s": 0.00297240586951375,
+          "forward_until_loss_sync_s": 10.340404394082725,
+          "forward_backward_s": 23.472743506077677
+        },
+        {
+          "data_load_s": 0.0596178681589663,
+          "forward_until_loss_sync_s": 9.6816743821837,
+          "forward_backward_s": 22.848194274120033
+        },
+        {
+          "data_load_s": 0.06751338206231594,
+          "forward_until_loss_sync_s": 9.6580501338467,
+          "forward_backward_s": 23.60825882991776
+        },
+        {
+          "data_load_s": 0.07881798595190048,
+          "forward_until_loss_sync_s": 8.474719760939479,
+          "forward_backward_s": 20.50264690630138
+        }
+      ],
+      "optimizer_s": 0.04261015076190233,
+      "peak_cuda_bytes": 397517312,
+      "gradient_norm": 0.38488176465034485
+    },
+    {
+      "update": 77,
+      "micro_timings": [
+        {
+          "data_load_s": 0.026576668955385685,
+          "forward_until_loss_sync_s": 7.902499540708959,
+          "forward_backward_s": 19.232659709639847
+        },
+        {
+          "data_load_s": 0.05530364811420441,
+          "forward_until_loss_sync_s": 10.347002933267504,
+          "forward_backward_s": 24.978816139046103
+        },
+        {
+          "data_load_s": 0.07730732299387455,
+          "forward_until_loss_sync_s": 10.91916535468772,
+          "forward_backward_s": 26.341248431708664
+        },
+        {
+          "data_load_s": 0.08951757522299886,
+          "forward_until_loss_sync_s": 9.672978502698243,
+          "forward_backward_s": 23.484009680803865
+        }
+      ],
+      "optimizer_s": 0.03150831675156951,
+      "peak_cuda_bytes": 424330240,
+      "gradient_norm": 0.4135577082633972
+    }
+  ]
+}

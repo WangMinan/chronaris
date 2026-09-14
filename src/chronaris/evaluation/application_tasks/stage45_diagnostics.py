@@ -30,8 +30,9 @@ def branch_features(output):
     return result
 
 
-def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions, context, output_root, seed=17):
-    encoder, normalizer, _ = load_frozen_application_encoder(checkpoint, route=route, fold=fold, device='cuda')
+def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions, context, output_root, seed=17, allow_diagnostic_snapshot=False):
+    encoder, normalizer, payload = load_frozen_application_encoder(checkpoint, route=route, fold=fold, device='cuda',
+        allow_diagnostic_snapshot=allow_diagnostic_snapshot)
     encoder.eval()
     collected, gates = {}, []
     for role in ('train', 'validation'):
@@ -63,7 +64,8 @@ def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions
             families=('linear',))
     gate_values = torch.cat(gates) if gates else torch.empty(0)
     result = dict(status='completed', route=route, checkpoint=str(checkpoint), checkpoint_sha256=sha256_file(checkpoint),
-        branches=results, gate_count=len(gate_values),
+        branches=results, gate_count=len(gate_values), source_training_status=payload['training_status'],
+        source_optimizer_updates=payload.get('optimizer_updates'),
         gate_quantiles=gate_values.quantile(torch.tensor([0., .1, .5, .9, 1.])).tolist() if gates else [],
         diagnostic_only=True, dimensions={k: v['train'].pooled_embedding.shape[1] for k,v in collected.items()},
         confirmation_opened=False)

@@ -1,0 +1,31 @@
+{
+  "status": "completed",
+  "resumed_update": 75,
+  "executed_updates": [
+    76,
+    77
+  ],
+  "exact_trial_state_checks": {
+    "encoder_state_dict": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "head_state_dict": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "explicit_time_shift_head_state_dict": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    }
+  },
+  "original_budget": 300,
+  "diagnostic_stop": true,
+  "confirmation_opened": false
+}

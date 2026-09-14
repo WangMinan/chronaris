@@ -1,0 +1,52 @@
+{
+  "time": "2026-09-14T17:12:11.202523+08:00",
+  "reason": "user requested immediate pause at latest saved checkpoint, without waiting for update 100",
+  "parent_pid": 445416,
+  "worker_pid": 453545,
+  "stopped": true,
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/best.pt": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/units/screen/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "66b6d0cf0cab62f849d0ebfc8f08ce302454913a79152e7601abc37246391cc2",
+      "original_mtime_ns": 1789372792139950100
+    },
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "sha256": "aa8c377da9331913dd6a9125feeeed1f1058c842d76abbe961aac2fdb39752ce",
+      "original_mtime_ns": 1789375428622104600
+    },
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/update_000050.pt": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/units/screen/0/clare/chronaris/self_supervised/chronaris/C/update_000050.pt",
+      "sha256": "7309a3095463cb92f4f3b09d8b40266aaf00dae8e316a79f05cf4588b4c589f6",
+      "original_mtime_ns": 1789372792307380000
+    },
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/pipeline_state.json": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/pipeline_state.json",
+      "sha256": "5c44b436d6720a1af992e7d11468ea8f8302f443e399b7d7c1574bba1e0207d7",
+      "original_mtime_ns": 1789377071648533900
+    },
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/pipeline_config.json": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/pipeline_config.json",
+      "sha256": "c7ac67bec60be1859313bddc01857351d6621bcb763b59826a4386b8abaf65d3",
+      "original_mtime_ns": 1789362467345776800
+    },
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/stage45_plan.json": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/stage45_plan.json",
+      "sha256": "1ffb3d9c0a4e1f1005f951b890933ba9f7eba6b81bb9ffc70b9096b79832586e",
+      "original_mtime_ns": 1789362931883779600
+    },
+    "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/progress.json": {
+      "copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/units/screen/0/clare/chronaris/self_supervised/chronaris/C/progress.json",
+      "sha256": "66dd0cc3b8315b91c78a752cac9234b1904280445d3867c5a6d7e8510d1f80eb",
+      "original_mtime_ns": 1789377082245394400
+    }
+  },
+  "latest_in_memory_updates": 90,
+  "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-14-stage45/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt",
+  "checkpoint_copy": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/preserved/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt",
+  "old_root": "/mnt/e/chronaris-v4-results/2026-09-14-stage45",
+  "confirmation_opened": false,
+  "copy_note": "NTFS refused timestamp preservation; copied file bytes and recorded original mtimes explicitly",
+  "saved_updates": 75,
+  "uncheckpointed_updates_not_reused": 15
+}

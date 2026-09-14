@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-09-14T17:59:04.714791+08:00",
+  "controller_pid": 635589,
+  "controller_ppid": 1,
+  "session_id": 635589,
+  "pytest_pid": 635594,
+  "status": "running",
+  "heartbeat_observed": true,
+  "pytest_progress": "20 percent line completed; more tests in progress",
+  "error_markers_observed": false,
+  "completion_claimed": false,
+  "gpu_sample": {
+    "name": "NVIDIA GeForce RTX 4090",
+    "utilization_percent": 0,
+    "memory_mib": 1572
+  },
+  "next_action": "manual wakeup to inspect final validation receipt; no automatic experiment continuation"
+}

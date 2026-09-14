@@ -67,7 +67,8 @@ def run_common_contract_smoke(*, domain, output_root,
                             data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
                             registry_path='docs/requirements/thesis-v4-public-subjects.json',
                             full=False, methods=('naive_time_sync', 'chronaris'), cuda_graph_recurrence=False,
-                            recipe=None, seed=17, fold_index=0, micro_batch=4, diagnostic_snapshots=False, pretraining_source=None, expected_contract_sha256=None):
+                            recipe=None, seed=17, fold_index=0, micro_batch=4, diagnostic_snapshots=False, pretraining_source=None, expected_contract_sha256=None,
+                            finetuning_graph_recurrence=None):
     if domain not in {'dingxin', 'cogpilot', 'clare'} or not torch.cuda.is_available():
         raise ValueError('contract smoke requires a real native development domain and CUDA')
     if not methods or not set(methods) <= {'naive_time_sync', 'chronaris', 'physiology_only', 'vehicle_only', 'mult', 'contiformer'}:
@@ -114,6 +115,7 @@ def run_common_contract_smoke(*, domain, output_root,
                 record = recipe_configs[-1] | {'fold_index': fold_index, 'diagnostic_snapshots': diagnostic_snapshots,
                     'source_code_sha256': contract['source_code_sha256'], 'contract_sha256': contract['contract_sha256'],
                     'pretraining_source': str(pretraining_source) if pretraining_source else None,
+                    'finetuning_graph_recurrence': finetuning_graph_recurrence,
                     'pretraining_source_sha256': sha256_file(pretraining_source) if pretraining_source else None}
                 path = root/'recipe.json'
                 if path.exists() and json.loads(path.read_text()) != json.loads(json.dumps(record)):
@@ -213,6 +215,25 @@ def run_common_contract_smoke(*, domain, output_root,
                             results.append(window_result | {'derived_from_sequence_export': True})
                         # Extend the existing route list only after freezing/exporting the unsupervised encoder.
                         progress.update(phase='task_guided_fit', route='task_guided')
+                        if finetuning_graph_recurrence is not None:
+                            if method != 'chronaris' or finetuning_graph_recurrence is not False:
+                                raise ValueError('only explicit ordinary fine-tuning fallback is supported')
+                            from chronaris.evaluation.application_tasks.stage45_resume import execution_checkpoint
+                            from chronaris.modeling.training.candidate_checkpoint import atomic_save_candidate
+                            payload = torch.load(checkpoint, map_location='cpu', weights_only=True)
+                            derived = execution_checkpoint(payload, parent_path=checkpoint, graph=False,
+                                evidence_sha256=sha256_file(root/'recipe.json'))
+                            destination = root/method/'task_guided_initialization/best.pt'
+                            if destination.exists():
+                                saved = torch.load(destination, map_location='cpu', weights_only=True)
+                                if (saved['protocol_sha256'] != derived['protocol_sha256'] or
+                                    saved['canonical_training_state_sha256'] != derived['canonical_training_state_sha256']):
+                                    raise ValueError('fine-tuning execution lineage changed')
+                            else:
+                                atomic_save_candidate(destination, derived)
+                            checkpoint = destination
+                            encoder, _, _ = load_frozen_application_encoder(checkpoint,
+                                route='self_supervised', fold=fold, device='cuda')
                         with isolated_training_rng(seed):
                             model = EndToEndApplicationModel(method_name=method, encoder=encoder, normalizer=normalizer,
                                 naive_encoder=None, task_definitions=definitions)

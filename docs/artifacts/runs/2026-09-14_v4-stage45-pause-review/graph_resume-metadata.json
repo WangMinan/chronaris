@@ -1,0 +1,69 @@
+{
+  "parent_sha256": "aa8c377da9331913dd6a9125feeeed1f1058c842d76abbe961aac2fdb39752ce",
+  "source_code_sha256": "18942eb82ad18877297606e1eb56b592357a0e47f98cf2f256656abaabb8b416",
+  "domain": "clare",
+  "graph": true,
+  "threads": 1,
+  "actual_batch": 4,
+  "effective_batch": 16,
+  "torch_version": "2.11.0+cu130",
+  "device": "NVIDIA GeForce RTX 4090",
+  "deterministic": true,
+  "training_role_shapes": {
+    "train": {
+      "physiology": [
+        366,
+        2560,
+        4
+      ],
+      "vehicle": [
+        366,
+        6400,
+        2
+      ]
+    },
+    "validation": {
+      "physiology": [
+        428,
+        2560,
+        4
+      ],
+      "vehicle": [
+        428,
+        6400,
+        2
+      ]
+    }
+  },
+  "resume_state": "/mnt/e/chronaris-v4-results/2026-09-14-stage45-pause-review/graph/state_76.pt",
+  "measurements": [
+    {
+      "update": 77,
+      "micro_timings": [
+        {
+          "data_load_s": 0.0027223173528909683,
+          "forward_until_loss_sync_s": 4.934906714130193,
+          "forward_backward_s": 6.379438368137926
+        },
+        {
+          "data_load_s": 0.004758316092193127,
+          "forward_until_loss_sync_s": 0.5229420769028366,
+          "forward_backward_s": 1.9963358459062874
+        },
+        {
+          "data_load_s": 0.0041074929758906364,
+          "forward_until_loss_sync_s": 0.5460446109063923,
+          "forward_backward_s": 2.103554387111217
+        },
+        {
+          "data_load_s": 0.004017152823507786,
+          "forward_until_loss_sync_s": 0.5034132841974497,
+          "forward_backward_s": 1.9269298180006444
+        }
+      ],
+      "optimizer_s": 0.04402243625372648,
+      "peak_cuda_bytes": 463801856,
+      "gradient_norm": 0.4135577976703644
+    }
+  ]
+}
