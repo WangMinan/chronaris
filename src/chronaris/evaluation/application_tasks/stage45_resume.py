@@ -68,6 +68,22 @@ def read_evidence(config):
     for name, digest in evidence['bindings'].items():
         if sha256_file(name) != digest:
             raise ValueError(f'recovery evidence changed: {name}')
+    if evidence.get('format') == 'chronaris.stage45_execution_recovery.v2':
+        from chronaris.evaluation.application_tasks.execution_equivalence import POLICY
+        if evidence.get('execution_policy') != POLICY or evidence.get('workflow_source_sha256') != v4_workflow_source_sha256():
+            raise ValueError('execution policy or qualified workflow source changed')
+        required = {f'{d}/{r}' for d in ('clare','cogpilot','dingxin') for r in ('stage4_reference','thesis_reference')}
+        if set(evidence.get('qualification_checks', {})) != required:
+            raise ValueError('whole stage qualification is incomplete')
+        for check in evidence['qualification_checks'].values():
+            value = json.loads(Path(check).read_text())
+            if (not value['passed'] or value.get('execution_policy') != POLICY
+                or value.get('workflow_source_sha256') != v4_workflow_source_sha256()
+                or not value['independent_resume']['passed'] or not value['consumer_impact']['passed']):
+                raise ValueError('whole stage qualification or fixed consumer impact failed')
+        extended = json.loads(Path(evidence['extended_comparison_path']).read_text())
+        if not extended['passed'] or extended['execution_policy'] != POLICY or extended['last_update'] < evidence['saved_updates']+6:
+            raise ValueError('extended checkpoint continuation is unqualified')
     if evidence['resume_pretraining_graph']:
         for key in ('graph_comparison_path', 'graph_resume_comparison_path'):
             if not json.loads(Path(evidence[key]).read_text())['passed']:
@@ -77,7 +93,7 @@ def read_evidence(config):
     return evidence
 
 
-def verify_execution_sources(parent):
+def verify_execution_sources(parent, reviewed_changes=None):
     config = json.loads((parent/'pipeline_config.json').read_text())
     frozen = Path(config['registry_path']).parents[2]
     current = Path(__file__).parents[4]
@@ -89,9 +105,17 @@ def verify_execution_sources(parent):
     for name in old.keys() | new.keys():
         if name in old and name in new and old[name].read_bytes() == new[name].read_bytes():
             continue
-        if name.parent != Path('src/chronaris/evaluation/application_tasks') or name.name not in allowed:
+        if reviewed_changes is not None:
+            expected = reviewed_changes.get(str(name))
+            actual = {'old': sha256_file(old[name]) if name in old else None,
+                      'new': sha256_file(new[name]) if name in new else None}
+            if expected != actual:
+                raise ValueError(f'unreviewed computational change: {name}')
+        elif name.parent != Path('src/chronaris/evaluation/application_tasks') or name.name not in allowed:
             raise ValueError(f'unreviewed computational change: {name}')
         changes.append(str(name))
+    if reviewed_changes is not None and set(changes) != set(reviewed_changes):
+        raise ValueError('reviewed source change inventory differs')
     entry = Path('scripts/evaluation/application_tasks/run_thesis_v4.py')
     if (frozen/entry).read_bytes() != (current/entry).read_bytes():
         raise ValueError('training entry changed')
@@ -113,9 +137,9 @@ def verify_parent_contract(config, contract):
         raise ValueError('recovery changed a frozen development data/target/role contract')
 
 
-def execution_checkpoint(payload, *, parent_path, graph, evidence_sha256):
+def execution_checkpoint(payload, *, parent_path, graph, evidence_sha256, reviewed_source_sha256=None):
     """Change only the recorded execution choice; keep every training tensor and cursor."""
-    if payload['source_code_sha256'] != candidate_source_code_sha256():
+    if payload['source_code_sha256'] != (reviewed_source_sha256 or candidate_source_code_sha256()):
         raise ValueError('execution checkpoint requires unchanged computational source')
     before = canonical_training_state_sha256(*(payload[k] for k in STATE_KEYS))
     if before != payload['canonical_training_state_sha256']:
@@ -130,12 +154,18 @@ def execution_checkpoint(payload, *, parent_path, graph, evidence_sha256):
     if candidate_protocol_hash(**protocol) != payload['protocol_sha256']:
         raise ValueError('preserved protocol does not reproduce')
     result = deepcopy(payload)
+    result['source_code_sha256'] = candidate_source_code_sha256()
     result['config']['cuda_graph_recurrence'] = graph
-    result['encoder_manifest']['backbone_config']['cuda_graph_recurrence'] = graph
-    result['protocol_sha256'] = candidate_protocol_hash(**(protocol | {'config':result['config']}))
+    if payload['method_name'] == 'chronaris':
+        result['encoder_manifest']['backbone_config']['cuda_graph_recurrence'] = graph
+    elif graph:
+        raise ValueError('graph migration requires Chronaris')
+    result['protocol_sha256'] = candidate_protocol_hash(**(protocol | {'config':result['config'],
+        'source_code_sha256':result['source_code_sha256']}))
     result.setdefault('execution_history', []).append(dict(parent_path=str(parent_path),
         parent_sha256=sha256_file(parent_path), evidence_sha256=evidence_sha256,
         from_graph=payload['config']['cuda_graph_recurrence'], to_graph=graph,
+        from_source_sha256=payload['source_code_sha256'], to_source_sha256=result['source_code_sha256'],
         preserved_updates=payload['optimizer_updates'], canonical_training_state_sha256=before))
     if canonical_training_state_sha256(*(result[k] for k in STATE_KEYS)) != before:
         raise ValueError('execution migration changed training state')
@@ -147,9 +177,15 @@ def prepare_resume(config):
     parent, root = Path(config['stage45_resume_parent']).resolve(), Path(config['root']).resolve()
     if root == parent or root in parent.parents or parent in root.parents:
         raise ValueError('recovery needs a separate run root')
-    source_changes = verify_execution_sources(parent)
+    revised = evidence.get('format') == 'chronaris.stage45_execution_recovery.v2'
+    source_changes = verify_execution_sources(parent, evidence.get('reviewed_source_changes') if revised else None)
     old = json.loads((parent/'pipeline_state.json').read_text())
-    if old.get('children') or old['current_stage'] != 'stage45_screen__0':
+    index, domain = (evidence['unit_index'], evidence['domain']) if revised else (0, 'clare')
+    from chronaris.evaluation.application_tasks.stage45 import screen_units
+    if (not isinstance(index, int) or not 0 <= index < len(screen_units())
+        or screen_units()[index]['domain'] != domain):
+        raise ValueError('recovery unit differs from fixed matrix')
+    if old.get('children') or old['current_stage'] != f'stage45_screen__{index}':
         raise ValueError('recovery parent is not stopped at the preserved unit')
     for pid in (old['pid'], evidence['worker_pid']):
         path = Path(f'/proc/{pid}/cmdline')
@@ -159,13 +195,13 @@ def prepare_resume(config):
     for name, item in inventory['files'].items():
         if sha256_file(name) != item['sha256']:
             raise ValueError(f'parent artifact changed: {name}')
-    if evidence['resume_pretraining_graph']:
+    if evidence['resume_pretraining_graph'] and not revised:
         from chronaris.evaluation.application_tasks.checkpoint_performance import compare_trials
         trials = {k:Path(v) for k,v in evidence['trial_roots'].items()}
         if (not compare_trials(trials['eager'],trials['graph'])['passed']
             or not compare_trials(trials['graph'],trials['graph_resume'],exact=True)['passed']):
             raise ValueError('checkpoint numerical evidence no longer reproduces')
-    relative = Path('units/screen/0/clare/chronaris/self_supervised/chronaris/C')
+    relative = Path(f'units/screen/{index}/{domain}/chronaris/self_supervised/chronaris/C')
     checkpoint_rows = []
     for source in sorted((parent/relative).glob('*.pt')):
         original = torch.load(source, map_location='cpu', weights_only=True)
@@ -173,7 +209,8 @@ def prepare_resume(config):
             raise ValueError('saved pretraining budget or fold changed')
         target = root/relative/source.name
         payload = (execution_checkpoint(original, parent_path=source, graph=True,
-            evidence_sha256=sha256_file(config['stage45_resume_evidence']))
+            evidence_sha256=sha256_file(config['stage45_resume_evidence']),
+            reviewed_source_sha256=evidence.get('parent_candidate_source_sha256') if revised else None)
             if evidence['resume_pretraining_graph'] else original)
         if target.exists():
             saved = torch.load(target, map_location='cpu', weights_only=True)
@@ -193,7 +230,16 @@ def prepare_resume(config):
         if target.exists() and sha256_file(target) != sha256_file(source):
             raise ValueError('inherited diagnostic result changed')
         shutil.copyfile(source,target)
+    if revised:
+        for stage in old['completed']:
+            if stage.startswith('stage45_screen__'):
+                source = parent/'screen'/f'{int(stage.split("__")[1])}.json'
+                target = root/source.relative_to(parent); target.parent.mkdir(parents=True, exist_ok=True)
+                if target.exists() and sha256_file(target) != sha256_file(source):
+                    raise ValueError('inherited completed unit changed')
+                shutil.copyfile(source, target)
     record = dict(status='completed', parent_root=str(parent), source_code_sha256=v4_workflow_source_sha256(),
+        **({'execution_policy':evidence['execution_policy']} if revised else {}),
         reviewed_source_changes=source_changes,
         evidence_sha256=sha256_file(config['stage45_resume_evidence']), checkpoint_rows=checkpoint_rows,
         completed_parent_steps=len(old['completed']), inherited_diagnostic_steps=sum(
@@ -204,16 +250,19 @@ def prepare_resume(config):
 
 
 def inherited_step(stage, config):
-    if not config.get('stage45_resume_parent') or not stage.startswith(('stage45_probes__','stage45_perf__')):
+    if not config.get('stage45_resume_parent') or not stage.startswith(('stage45_probes__','stage45_perf__','stage45_screen__')):
         return None
-    read_evidence(config)
+    evidence = read_evidence(config)
     parent = Path(config['stage45_resume_parent'])
     state = json.loads((parent/'pipeline_state.json').read_text())
     receipt = state['completed'].get(stage)
+    if stage.startswith('stage45_screen__') and (evidence.get('format') != 'chronaris.stage45_execution_recovery.v2' or receipt is None):
+        return None
     if receipt is None or sha256_file(receipt['path']) != receipt['sha256']:
         raise ValueError('completed parent diagnostic receipt is missing or changed')
     result = json.loads(Path(receipt['path']).read_text())
     if result['status'] != 'completed':
         raise ValueError('cannot inherit unfinished diagnostic')
     return result | dict(inherited_evidence=dict(parent_path=receipt['path'], parent_sha256=receipt['sha256'],
-        interpretation='historical execution qualification preserved; no new training or qualification claim'))
+        interpretation=('completed research unit reused without retraining' if stage.startswith('stage45_screen__') else
+                        'historical execution qualification preserved; no new training or qualification claim')))

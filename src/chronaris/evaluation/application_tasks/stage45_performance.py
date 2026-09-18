@@ -94,7 +94,9 @@ def performance_entry(config, domain, recipe, mode):
     return write_result(root.parent/'resume_check.json', result)
 
 
-def compare_execution(root):
+def compare_execution(root, *, revised=False):
+    if revised:
+        from chronaris.evaluation.application_tasks.execution_equivalence import POLICY, compare_runtime
     root = Path(root)
     left, right = root/'eager/trace', root/'graph/trace'
     paths = sorted(p.name for p in left.glob('*.pt'))
@@ -103,9 +105,65 @@ def compare_execution(root):
     checks = {}
     for name in paths:
         a, b = [torch.load(p/name, map_location='cpu', weights_only=True) for p in (left, right)]
-        checks[name] = compare_values(a, b, rtol=0. if name.startswith('forward') else 1e-5)
+        if revised:
+            checks[name] = compare_runtime(a, b, representation=name.startswith('forward'))
+        else:
+            checks[name] = compare_values(a, b, rtol=0. if name.startswith('forward') else 1e-5)
     resume = json.loads((root/'resume_check.json').read_text())
-    return dict(status='completed', passed=all(c['close'] for c in checks.values()) and resume['passed'],
-        checks=checks, independent_resume=resume, output_atol=1e-6, state_atol=1e-6, state_rtol=1e-5,
+    impact = fixed_consumer_impact(root) if revised else None
+    return dict(status='completed', passed=all(c['close'] for c in checks.values()) and resume['passed']
+                and (impact is None or impact['passed']),
+        checks=checks, independent_resume=resume,
+        **({'execution_policy': POLICY, 'consumer_impact': impact} if revised else dict(output_atol=1e-6, state_atol=1e-6, state_rtol=1e-5)),
         interpretation='short native entry only; full-unit costs require completed screen units',
         confirmation_opened=False)
+
+
+def fixed_consumer_impact(root):
+    """Apply the SAME fitted consumers to both exports; never refit to hide drift."""
+    import joblib
+    import numpy as np
+    from chronaris.representation import load_fusion_stream_batch
+    from chronaris.evaluation.application_tasks.execution_equivalence import POLICY
+    root = Path(root)
+    paths = list((root/'eager').glob('*/summary.json'))
+    if len(paths) != 1:
+        raise ValueError('fixed consumer comparison requires one complete native entry')
+    left = json.loads(paths[0].read_text())
+    right = json.loads((root/'graph'/paths[0].parent.name/'summary.json').read_text())
+    routes = lambda d: {r['route']: r for r in d['results'] if 'training' in r}
+    a, b = routes(left), routes(right)
+    if set(a) != {'self_supervised', 'task_guided'} or a.keys() != b.keys():
+        raise ValueError('execution comparison lacks both routes')
+    checks = {}
+    for route, row in a.items():
+        outputs = [load_fusion_stream_batch(root/m/left['domain']/row['method']/route/'representations/validation')
+                   for m in ('eager','graph')]
+        if (outputs[0].sample_ids != outputs[1].sample_ids
+            or not torch.equal(outputs[0].valid_mask, outputs[1].valid_mask)):
+            raise ValueError('execution export roles or masks changed')
+        selected = [r[route]['training'] for r in (a,b)]
+        checks[f'{route}/selection'] = dict(passed=all(selected[0].get(k) == selected[1].get(k)
+            for k in ('best_update','best_epoch')), values=[{k:t.get(k) for k in ('best_update','best_epoch')} for t in selected])
+        for family, component in row['consumers']['components'].items():
+            bundle = joblib.load(component['model_path'])['consumer']
+            transformer = bundle['transformer']
+            x = [(o.pooled_embedding.numpy() if transformer is None else
+                  transformer.transform_features(o.sequence_embedding.numpy())) for o in outputs]
+            kinds = {t.name:t.kind for t in bundle['definitions']}
+            for (task, field), model in bundle['models'].items():
+                p, q = [model.predict(v).astype(np.float64) for v in x]
+                if not np.isfinite(p).all() or not np.isfinite(q).all():
+                    raise ValueError('nonfinite fixed consumer prediction')
+                if kinds[task] == 'classification':
+                    changed = int(np.count_nonzero(p != q))
+                    check = dict(passed=changed == POLICY['classification_changes'], changed_predictions=changed)
+                else:
+                    scale = max(float(np.sqrt(np.mean(p**2))), 1e-3)
+                    rms = float(np.sqrt(np.mean((p-q)**2)))
+                    check = dict(passed=rms <= POLICY['prediction_atol'] + POLICY['prediction_relative_rms']*scale,
+                                 relative_rms=rms/scale, rms=rms, scale=scale,
+                                 max_abs=float(np.max(np.abs(p-q))))
+                checks[f'{route}/{family}/{task}/{field}'] = check
+    return dict(passed=all(c['passed'] for c in checks.values()), checks=checks,
+                interpretation='fixed eager consumers on identical development validation windows')

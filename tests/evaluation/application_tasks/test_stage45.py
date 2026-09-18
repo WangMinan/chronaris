@@ -162,3 +162,20 @@ def test_rejected_graph_qualification_uses_eager_training(tmp_path, monkeypatch)
         dict(domain='clare',method='chronaris',recipe='cosine_temperature'),tmp_path/'unit')
     assert result['graph_execution'] is False
     assert calls[0]['cuda_graph_recurrence'] is False and calls[0]['expected_contract_sha256']=='a'*64
+
+
+def test_whole_stage_qualification_reaches_finetuning_and_new_review_settings(tmp_path, monkeypatch):
+    from chronaris.evaluation.application_tasks import stage45, stage45_resume
+    check = tmp_path/'qualified.json'; check.write_text(json.dumps({'passed':True}))
+    evidence = dict(format='chronaris.stage45_execution_recovery.v2',
+        qualification_checks={f'{d}/{r}':str(check) for d in ('clare','cogpilot','dingxin')
+                              for r in ('stage4_reference','thesis_reference')})
+    monkeypatch.setattr(stage45_resume,'read_evidence',lambda _:evidence)
+    (tmp_path/'stage45_plan.json').write_text(json.dumps({'contracts':{f'{d}/1/43':'fixed' for d in ('clare','cogpilot')}}))
+    calls = []
+    monkeypatch.setattr(stage45,'run_common_contract_smoke',lambda **kw:calls.append(kw) or {'status':'completed'})
+    config = dict(root=str(tmp_path),stage45_resume_evidence='proof',stage45_resume_parent='old',data_root='data',registry_path='registry')
+    for domain,recipe in [('clare','single_stream_fidelity'),('cogpilot','thesis_reference')]:
+        stage45._run_unit(config,dict(domain=domain,method='chronaris',recipe=recipe,fold_index=1,seed=43),tmp_path/'unit')
+    assert all(c['cuda_graph_recurrence'] and c['finetuning_graph_recurrence'] for c in calls)
+    assert all(c['seed']==43 and c['fold_index']==1 and c['expected_contract_sha256']=='fixed' for c in calls)

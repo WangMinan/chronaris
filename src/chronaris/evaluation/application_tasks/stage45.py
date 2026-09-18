@@ -170,14 +170,20 @@ def select_candidates(config):
 
 def _run_unit(config, unit, root):
     domain, method, recipe = (unit[k] for k in ('domain', 'method', 'recipe'))
+    evidence = None
+    if config.get('stage45_resume_evidence'):
+        from chronaris.evaluation.application_tasks.stage45_resume import read_evidence
+        evidence = read_evidence(config)
+    accelerated = evidence is not None and evidence.get('format') == 'chronaris.stage45_execution_recovery.v2'
     if method == 'chronaris':
         execution = 'thesis_reference' if recipe == 'thesis_reference' else 'stage4_reference'
-        check = _read(Path(config['root'])/'performance'/domain/execution/'check.json')
+        check = _read(evidence['qualification_checks'][f'{domain}/{execution}'] if accelerated else
+                      Path(config['root'])/'performance'/domain/execution/'check.json')
         graph = check['passed']
     else:
         graph = False
-    fine_graph = None
-    if (config.get('stage45_resume_parent') and (domain,method,recipe,unit.get('fold_index',0),unit.get('seed',17))
+    fine_graph = True if accelerated and method == 'chronaris' else None
+    if (not accelerated and config.get('stage45_resume_parent') and (domain,method,recipe,unit.get('fold_index',0),unit.get('seed',17))
         == ('clare','chronaris','thesis_reference',0,17)):
         from chronaris.evaluation.application_tasks.stage45_resume import read_evidence
         graph = read_evidence(config)['resume_pretraining_graph']
@@ -187,6 +193,9 @@ def _run_unit(config, unit, root):
         parent = parent_result(config, domain, method)
         pretraining_source = next(r['training']['best_checkpoint_path'] for r in parent['results'] if r['route']=='self_supervised')
         import torch
+        if accelerated:
+            from chronaris.evaluation.application_tasks.stage45_acceleration import migrated_reference
+            pretraining_source = migrated_reference(config, pretraining_source, graph=method == 'chronaris')
         graph = bool(torch.load(pretraining_source, map_location='cpu', weights_only=True)['config']['cuda_graph_recurrence'])
     expected = _read(Path(config['root'])/'stage45_plan.json')['contracts'][
         f"{domain}/{unit.get('fold_index',0)}/{unit.get('seed',17)}"]

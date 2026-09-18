@@ -82,6 +82,7 @@ def run_common_contract_smoke(*, domain, output_root,
     scope = 'development_comparison' if full else 'engineering_development'
     root = Path(output_root)/domain
     started = time.perf_counter()
+    phase_seconds = {}
     with development_gpu_lock() as acquired:
         if not acquired:
             return dict(status='waiting_gpu')
@@ -121,9 +122,11 @@ def run_common_contract_smoke(*, domain, output_root,
                 if path.exists() and json.loads(path.read_text()) != json.loads(json.dumps(record)):
                     raise ValueError('stage 4.5 recipe changed; use a new root')
                 write_result(path, record)
+            phase_seconds['inputs_and_contract'] = time.perf_counter()-started
             results = []
             for method in methods:
                 progress.update(phase='encoder_fit', method=method)
+                fit_started = time.perf_counter()
                 effective_batch = 16 if full else 4
                 pretraining_updates = max(300, math.ceil(len(fold.train_sample_ids)/effective_batch)) if full else 2
                 joint_updates = max(200, math.ceil(len(fold.train_sample_ids)/effective_batch)) if full else 2
@@ -159,6 +162,7 @@ def run_common_contract_smoke(*, domain, output_root,
                     encoder, _, _ = load_frozen_application_encoder(training.best_checkpoint_path,
                         route='self_supervised', fold=fold, device='cuda')
                     routes = [('self_supervised', Path(training.best_checkpoint_path), encoder, asdict(training))]
+                phase_seconds[f'{method}/pretraining'] = time.perf_counter()-fit_started
                 for route, checkpoint, encoder, training in routes:
                     progress.update(phase='export_and_common_consumers', route=route)
                     task_counts = {}
@@ -175,6 +179,7 @@ def run_common_contract_smoke(*, domain, output_root,
                         label_used_for_encoder_training=route == 'task_guided')
                     torch.cuda.synchronize()
                     export_seconds = time.perf_counter()-export_started
+                    phase_seconds[f'{method}/{route}/export'] = export_seconds
                     spread = outputs['train'].pooled_embedding.std(0, unbiased=False)
                     if full and not (spread > 1e-8).any():
                         raise ValueError('full development representation collapsed')
@@ -191,10 +196,12 @@ def run_common_contract_smoke(*, domain, output_root,
                         observations=observations, fold=fold, data_manifest_sha256=digest)
                     run_root = root/method/route/'evaluation'
                     families = ('linear',) if domain == 'dingxin' else ('linear', 'minirocket')
+                    consumer_started = time.perf_counter()
                     first = run_common_downstream(**kwargs, outputs=outputs, declaration=declaration, output_root=run_root, families=families)
                     resumed = run_common_downstream(**kwargs, outputs=outputs, declaration=declaration, output_root=run_root, families=families)
                     if first != resumed:
                         raise ValueError('common consumer resume changed predictions or provenance')
+                    phase_seconds[f'{method}/{route}/consumers'] = time.perf_counter()-consumer_started
                     results.append(first | {'training': training, 'resume_identical': True,
                         'route': route, 'export_seconds': export_seconds, 'task_supervision_counts': task_counts,
                         'nonconstant_dimensions': int((spread > 1e-8).sum()),
@@ -215,13 +222,14 @@ def run_common_contract_smoke(*, domain, output_root,
                             results.append(window_result | {'derived_from_sequence_export': True})
                         # Extend the existing route list only after freezing/exporting the unsupervised encoder.
                         progress.update(phase='task_guided_fit', route='task_guided')
+                        fine_started = time.perf_counter()
                         if finetuning_graph_recurrence is not None:
-                            if method != 'chronaris' or finetuning_graph_recurrence is not False:
-                                raise ValueError('only explicit ordinary fine-tuning fallback is supported')
+                            if method != 'chronaris' or not isinstance(finetuning_graph_recurrence, bool):
+                                raise ValueError('explicit fine-tuning execution requires Chronaris')
                             from chronaris.evaluation.application_tasks.stage45_resume import execution_checkpoint
                             from chronaris.modeling.training.candidate_checkpoint import atomic_save_candidate
                             payload = torch.load(checkpoint, map_location='cpu', weights_only=True)
-                            derived = execution_checkpoint(payload, parent_path=checkpoint, graph=False,
+                            derived = execution_checkpoint(payload, parent_path=checkpoint, graph=finetuning_graph_recurrence,
                                 evidence_sha256=sha256_file(root/'recipe.json'))
                             destination = root/method/'task_guided_initialization/best.pt'
                             if destination.exists():
@@ -245,15 +253,19 @@ def run_common_contract_smoke(*, domain, output_root,
                                 data_manifest_sha256=digest))
                         guided_encoder, _, _ = load_frozen_application_encoder(guided.best_checkpoint_path,
                             route='task_guided', fold=fold, device='cuda')
+                        phase_seconds[f'{method}/fine_tuning'] = time.perf_counter()-fine_started
                         routes.append(('task_guided', Path(guided.best_checkpoint_path), guided_encoder, asdict(guided)))
             if diagnostic_snapshots:
+                diagnostic_started = time.perf_counter()
                 from chronaris.evaluation.application_tasks.stage45_diagnostics import checkpoint_diagnostics
                 checkpoint_diagnostics(root=root, domain=domain, provider=provider, fold=fold,
                     contract=contract, targets=targets, definitions=definitions, context=context,
                     observations=observations, digest=digest, results=results)
+                phase_seconds['checkpoint_diagnostics'] = time.perf_counter()-diagnostic_started
             if v4_workflow_source_sha256() != contract['source_code_sha256']:
                 raise ValueError('source changed during contract smoke')
             result = dict(status='completed', domain=domain, scope=scope, total_seconds=time.perf_counter()-started,
                 contract_sha256=contract['contract_sha256'], source_code_sha256=contract['source_code_sha256'],
-                results=results, sample_counts={r: len(b.sample_ids) for r, b in observations.items()}, confirmation_opened=False)
+                results=results, phase_seconds=phase_seconds,
+                sample_counts={r: len(b.sample_ids) for r, b in observations.items()}, confirmation_opened=False)
             return write_result(root/'summary.json', result)

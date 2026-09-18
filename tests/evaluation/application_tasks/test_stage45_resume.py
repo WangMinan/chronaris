@@ -39,6 +39,28 @@ def test_explicit_unlimited_budget_survives_old_deadline():
         with pytest.raises(ValueError):stage45_budget_expired({'stage45_budget_hours':value},state)
 
 
+def test_reviewed_source_migration_requires_matching_old_revision_and_preserves_state(tmp_path):
+    from chronaris.modeling.training.candidate_checkpoint import candidate_protocol_hash
+    payload = _payload()
+    payload['source_code_sha256'] = 'reviewed_old_source'
+    protocol = {k:payload[k] for k in ('source_data_sha256','source_code_sha256','method_name','config',
+        'augmentation_policy','fold','normalizer','physiology_feature_names','vehicle_feature_names',
+        'vehicle_field_labels','transfer_source','chronaris_fusion_kind','chronaris_variant',
+        'chronaris_lag_aware_weight','chronaris_mechanism_enabled','chronaris_explicit_shift_enabled',
+        'chronaris_explicit_shift_weight','chronaris_event_pair_weight')}
+    payload['protocol_sha256'] = candidate_protocol_hash(**protocol, candidate=payload['candidate_config'],
+                                                        data_access_mode='lazy_batch_provider')
+    path = tmp_path/'old.pt'; torch.save(payload,path)
+    with pytest.raises(ValueError, match='unchanged'):
+        execution_checkpoint(payload,parent_path=path,graph=True,evidence_sha256='proof')
+    migrated = execution_checkpoint(payload,parent_path=path,graph=True,evidence_sha256='proof',
+                                    reviewed_source_sha256='reviewed_old_source')
+    assert migrated['source_code_sha256'] == candidate_source_code_sha256()
+    assert migrated['canonical_training_state_sha256'] == payload['canonical_training_state_sha256']
+    assert migrated['data_cursor'] == payload['data_cursor']
+    assert migrated['training_elapsed_s'] == payload['training_elapsed_s']
+
+
 def test_inherited_qualification_keeps_failure_and_rejects_tampering(tmp_path):
     parent=tmp_path/'parent';parent.mkdir()
     result=parent/'result.json';result.write_text(json.dumps({'status':'completed','passed':False}))

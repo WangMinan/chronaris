@@ -321,6 +321,12 @@ def _train_end_to_end_application_method(
         raise RepresentationContractError("task-guided resume sampling order changed")
     maximum = config.head_warmup_updates + config.max_updates if update_mode else config.max_epochs
     start_iteration = step_count + 1 if update_mode else completed_epochs + 1
+    validation_elapsed_s = float(resume_payload.get("validation_elapsed_s", 0.)) if resume_payload else 0.
+    pending_validation = resume_payload.get("pending_validation") if resume_payload else None
+    if pending_validation:
+        if not update_mode:
+            raise RepresentationContractError("pending validation requires update-based training")
+        start_iteration = step_count
     started = time.perf_counter()
     head_encodings = {}
     for epoch in range(start_iteration, maximum + 1):
@@ -342,6 +348,11 @@ def _train_end_to_end_application_method(
         effective_counts = effective_task_counts(targets, model.task_definitions, active_batches,
             batch=batch, provider=batch_provider, method_name=model.method_name) if update_mode else None
         active_tasks = sum(value > 0 for value in effective_counts.values()) if update_mode else 0
+        if pending_validation:
+            active_batches = ()
+            train_totals, train_counts = pending_validation["train_totals"], pending_validation["train_counts"]
+            gradient_norm = pending_validation["gradient_norm"]
+        progress.update(phase="training", optimizer_updates=step_count)
         optimizer.zero_grad(set_to_none=True)
         for micro_index, sample_ids in enumerate(active_batches):
             raw = _load_batch(batch, batch_provider, sample_ids)
@@ -412,10 +423,47 @@ def _train_end_to_end_application_method(
                 train_counts[key] += losses["counts"][key]
         completed_epochs = samples_seen // len(train_ids) if update_mode else epoch
         joint_updates = max(0, step_count - config.head_warmup_updates) if update_mode else step_count
+        def checkpoint_payload():
+            payload = _checkpoint_payload(
+                model=model,
+                optimizer=optimizer,
+                config=config,
+                protocol_hash=protocol_hash,
+                source_path=source_path,
+                role_sample_ids=role_sample_ids,
+                target_manifest=targets.manifest,
+                task_parameters=task_parameters,
+                target_sha256=_task_target_sha256(targets),
+                update_rows=update_rows,
+                source_fold_id=source_objectives["fold_id"] if source_objectives else None,
+                regression_mean=regression_mean,
+                regression_std=regression_std,
+                epoch_rows=epoch_rows,
+                best_epoch=best_epoch,
+                best_validation_loss=best_loss,
+                completed_epochs=completed_epochs,
+                step_count=step_count,
+                stale=stale,
+                elapsed=elapsed_offset + time.perf_counter() - started,
+                training_status="running",
+                device_history=device_history,
+            )
+            payload.update(_guided_update_metadata(config, step_count, samples_seen, micro_batches_seen, best_update))
+            if schedule is not None:
+                payload["data_cursor"]["sampling_order_sha256"] = schedule.sha256
+            payload["validation_elapsed_s"] = validation_elapsed_s
+            return payload
+
         improved = False
         validate = (not update_mode or (not warming_head and
             (joint_updates % config.validation_interval == 0 or joint_updates == config.max_updates)))
         if validate:
+            if update_mode:
+                saved = checkpoint_payload()
+                saved["pending_validation"] = dict(train_totals=train_totals, train_counts=train_counts, gradient_norm=gradient_norm)
+                _atomic_save(last_path, saved)
+            progress.update(phase="validation", optimizer_updates=step_count)
+            validation_started = time.perf_counter()
             validation_losses = _evaluate_losses(
                 model=model,
                 batch=batch,
@@ -427,6 +475,7 @@ def _train_end_to_end_application_method(
                 device=config.device,
                 task_parameters=task_parameters,
             )
+            validation_elapsed_s += time.perf_counter()-validation_started
             selection_loss = sum(validation_losses.values()) / len(validation_losses)
             improved = selection_loss < best_loss
             if improved:
@@ -449,35 +498,10 @@ def _train_end_to_end_application_method(
                     "epochs_without_improvement": stale,
                 }
             )
+        pending_validation = None
         if update_mode and not (validate or step_count % config.checkpoint_interval == 0 or joint_updates in config.retained_updates):
             continue
-        payload = _checkpoint_payload(
-            model=model,
-            optimizer=optimizer,
-            config=config,
-            protocol_hash=protocol_hash,
-            source_path=source_path,
-            role_sample_ids=role_sample_ids,
-            target_manifest=targets.manifest,
-            task_parameters=task_parameters,
-            target_sha256=_task_target_sha256(targets),
-            update_rows=update_rows,
-            source_fold_id=source_objectives["fold_id"] if source_objectives else None,
-            regression_mean=regression_mean,
-            regression_std=regression_std,
-            epoch_rows=epoch_rows,
-            best_epoch=best_epoch,
-            best_validation_loss=best_loss,
-            completed_epochs=completed_epochs,
-            step_count=step_count,
-            stale=stale,
-            elapsed=elapsed_offset + time.perf_counter() - started,
-            training_status="running",
-            device_history=device_history,
-        )
-        payload.update(_guided_update_metadata(config, step_count, samples_seen, micro_batches_seen, best_update))
-        if schedule is not None:
-            payload["data_cursor"]["sampling_order_sha256"] = schedule.sha256
+        payload = checkpoint_payload()
         if improved:
             _atomic_save(best_path, payload)
         _atomic_save(last_path, payload)
@@ -511,6 +535,7 @@ def _train_end_to_end_application_method(
         training_status="completed",
         device_history=device_history,
     )
+    final_payload["validation_elapsed_s"] = validation_elapsed_s
     final_payload.update(_guided_update_metadata(config, step_count, samples_seen, micro_batches_seen, best_update))
     if schedule is not None:
         final_payload["data_cursor"]["sampling_order_sha256"] = schedule.sha256

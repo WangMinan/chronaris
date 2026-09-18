@@ -432,6 +432,12 @@ def _train_pretext_candidate(
     update_mode = resolved.max_updates is not None
     start_epoch = (step_count + 1 if update_mode else
                    int(resume_payload["completed_epochs"]) + 1 if resume_payload else 1)
+    validation_elapsed_s = float(resume_payload.get("validation_elapsed_s", 0.)) if resume_payload else 0.
+    pending_validation = resume_payload.get("pending_validation") if resume_payload else None
+    if pending_validation:
+        if not update_mode:
+            raise RepresentationContractError("pending validation requires update-based training")
+        start_epoch = step_count
     limit = resolved.max_updates if update_mode else resolved.max_epochs
     accumulation = (resolved.effective_batch_size or resolved.batch_size) // resolved.batch_size
     data_cursor = dict(resume_payload.get("data_cursor", {})) if resume_payload else {}
@@ -469,6 +475,12 @@ def _train_pretext_candidate(
             active_batches = train_batches
         optimizer.zero_grad(set_to_none=True)
         update_rows_start = len(training_rows)
+        if pending_validation:
+            active_batches = ()
+            train_totals = pending_validation["train_totals"]
+            gradient_norms = pending_validation["gradient_norms"]
+        if progress is not None:
+            progress.update(phase="training", optimizer_updates=step_count)
         for micro_index, sample_ids in enumerate(active_batches):
             augmentation_epoch = micro_batches_seen + 1 if update_mode else epoch
             output, mechanism_step, augmented, data_wait_s = pretext_micro_step(
@@ -553,10 +565,72 @@ def _train_pretext_candidate(
                     progress["data_wait_s"] = total_data_wait_s
                 optimizer.zero_grad(set_to_none=True)
                 update_rows_start = len(training_rows)
+        def checkpoint_payload():
+            payload = build_candidate_checkpoint_payload(
+                method_name=method_name,
+                candidate=candidate,
+                config=resolved,
+                policy=policy,
+                fold=fold,
+                normalizer=normalizer,
+                encoder=encoder,
+                heads=heads,
+                explicit_time_shift_head=shift_head,
+                optimizer=optimizer,
+                protocol_hash=protocol_hash,
+                source_code_sha256=source_code_sha256,
+                physiology_feature_names=physiology_feature_names,
+                vehicle_feature_names=vehicle_feature_names,
+                vehicle_field_labels=vehicle_field_labels,
+                best_epoch=best_epoch,
+                completed_epochs=samples_seen // len(sampling_order) if update_mode else epoch,
+                best_losses=best_losses,
+                best_score=best_score,
+                stopped_early=False,
+                step_count=step_count,
+                epoch_rows=epoch_rows,
+                elapsed=elapsed_offset + time.perf_counter() - started,
+                transfer_source=transfer_source,
+                transfer_initialization=transfer_initialization,
+                device_history=device_history,
+                chronaris_fusion_kind=chronaris_fusion_kind,
+                chronaris_variant=chronaris_variant,
+                chronaris_lag_aware_weight=chronaris_lag_aware_weight,
+                chronaris_mechanism_enabled=chronaris_mechanism_enabled,
+                chronaris_explicit_shift_enabled=(shift_head is not None),
+                chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
+                chronaris_event_pair_weight=chronaris_event_pair_weight,
+                training_rows=training_rows,
+                augmentation_rows=augmentation_rows,
+                selection_weights=PUBLIC_SELECTION_WEIGHTS,
+            )
+            payload.update({
+                "source_data_sha256": source_data_sha256,
+                "data_wait_s": total_data_wait_s,
+                "optimizer_updates": step_count, "total_optimizer_updates": step_count,
+                "best_update": best_update, "validation_checks_without_improvement": epochs_without_improvement,
+                "stage_update_counts": {"pretraining": step_count, "head_warmup": 0, "joint_adaptation": 0},
+                "data_cursor": {"samples_seen": samples_seen, "micro_batches_seen": micro_batches_seen,
+                                "sampling_order_sha256": order_hash},
+                "actual_batch_size": resolved.batch_size,
+                "effective_batch_size": resolved.effective_batch_size or resolved.batch_size,
+                "update_counting": "optimizer.step",
+                "epoch_semantics": "sample_exposure_equivalent" if update_mode else "complete_data_pass",
+            })
+            payload["validation_elapsed_s"] = validation_elapsed_s
+            return payload
+
         improved = False
         validate = (not update_mode or step_count % resolved.validation_interval == 0
                     or step_count in resolved.validation_updates or step_count == limit)
         if validate:
+            if update_mode:
+                saved = checkpoint_payload()
+                saved["pending_validation"] = dict(train_totals=train_totals, gradient_norms=gradient_norms)
+                atomic_save_candidate(last_path, saved)
+            if progress is not None:
+                progress.update(phase="validation", optimizer_updates=step_count)
+            validation_started = time.perf_counter()
             train_losses = _finalize_loss_totals(train_totals, allow_unavailable=update_mode)
             mechanism_validation = evaluate_candidate_mechanisms(
                 public_heads=heads,
@@ -577,6 +651,7 @@ def _train_pretext_candidate(
                 explicit_shift_weight=chronaris_explicit_shift_weight,
                 event_pair_weight=chronaris_event_pair_weight,
             )
+            validation_elapsed_s += time.perf_counter()-validation_started
             validation_losses = mechanism_validation.pop("public_losses")
             score = _public_selection_loss(validation_losses) + float(
                 mechanism_validation["weighted_total"]
@@ -604,59 +679,10 @@ def _train_pretext_candidate(
                 "mean_gradient_norm_before_clip": sum(gradient_norms) / len(gradient_norms),
             }
             epoch_rows.append(row)
+            pending_validation = None
         if update_mode and not (validate or step_count % resolved.checkpoint_interval == 0 or step_count in resolved.retained_updates):
             continue
-        payload = build_candidate_checkpoint_payload(
-            method_name=method_name,
-            candidate=candidate,
-            config=resolved,
-            policy=policy,
-            fold=fold,
-            normalizer=normalizer,
-            encoder=encoder,
-            heads=heads,
-            explicit_time_shift_head=shift_head,
-            optimizer=optimizer,
-            protocol_hash=protocol_hash,
-            source_code_sha256=source_code_sha256,
-            physiology_feature_names=physiology_feature_names,
-            vehicle_feature_names=vehicle_feature_names,
-            vehicle_field_labels=vehicle_field_labels,
-            best_epoch=best_epoch,
-            completed_epochs=samples_seen // len(sampling_order) if update_mode else epoch,
-            best_losses=best_losses,
-            best_score=best_score,
-            stopped_early=False,
-            step_count=step_count,
-            epoch_rows=epoch_rows,
-            elapsed=elapsed_offset + time.perf_counter() - started,
-            transfer_source=transfer_source,
-            transfer_initialization=transfer_initialization,
-            device_history=device_history,
-            chronaris_fusion_kind=chronaris_fusion_kind,
-            chronaris_variant=chronaris_variant,
-            chronaris_lag_aware_weight=chronaris_lag_aware_weight,
-            chronaris_mechanism_enabled=chronaris_mechanism_enabled,
-            chronaris_explicit_shift_enabled=(shift_head is not None),
-            chronaris_explicit_shift_weight=chronaris_explicit_shift_weight,
-            chronaris_event_pair_weight=chronaris_event_pair_weight,
-            training_rows=training_rows,
-            augmentation_rows=augmentation_rows,
-            selection_weights=PUBLIC_SELECTION_WEIGHTS,
-        )
-        payload.update({
-            "source_data_sha256": source_data_sha256,
-            "data_wait_s": total_data_wait_s,
-            "optimizer_updates": step_count, "total_optimizer_updates": step_count,
-            "best_update": best_update, "validation_checks_without_improvement": epochs_without_improvement,
-            "stage_update_counts": {"pretraining": step_count, "head_warmup": 0, "joint_adaptation": 0},
-            "data_cursor": {"samples_seen": samples_seen, "micro_batches_seen": micro_batches_seen,
-                            "sampling_order_sha256": order_hash},
-            "actual_batch_size": resolved.batch_size,
-            "effective_batch_size": resolved.effective_batch_size or resolved.batch_size,
-            "update_counting": "optimizer.step",
-            "epoch_semantics": "sample_exposure_equivalent" if update_mode else "complete_data_pass",
-        })
+        payload = checkpoint_payload()
         if improved:
             atomic_save_candidate(best_path, payload)
         atomic_save_candidate(last_path, payload)

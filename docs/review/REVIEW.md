@@ -1,10 +1,12 @@
 # Chronaris 复核入口
 
-更新时间：2026-09-14
+更新时间：2026-09-18
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
+
+[阶段 4.5 运行负载与优化决策](stage/thesis-v4/stage45-runtime-assessment-20260918/README.md)：用户授权暂停并保留第 75 次状态；同状态两次更新核心计算约加速 12.54 倍，但输出超出原容差，当前不迁移，生产保持停止。
 
 [阶段 4.5 暂停复核与恢复](stage/thesis-v4/stage45-pause-review-20260914/README.md)：保留第 75 次状态，进行能力和执行性能复核，取消 72 小时硬上限后恢复。
 
