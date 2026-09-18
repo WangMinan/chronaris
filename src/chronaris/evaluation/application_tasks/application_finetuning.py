@@ -13,6 +13,8 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+from chronaris.models.alignment.cuda_recurrence import ordinary_recurrence
+
 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import (
     ApplicationConsumerSmokeTargets,
 )
@@ -354,73 +356,79 @@ def _train_end_to_end_application_method(
             gradient_norm = pending_validation["gradient_norm"]
         progress.update(phase="training", optimizer_updates=step_count)
         optimizer.zero_grad(set_to_none=True)
-        for micro_index, sample_ids in enumerate(active_batches):
-            raw = _load_batch(batch, batch_provider, sample_ids)
-            selected = select_application_targets(targets, sample_ids, config.device)
-            encoding = None
-            if warming_head and config.cache_head_encodings:
-                # Exact batches retain the same padding and FP32 kernel shapes
-                # when this ephemeral cache is rebuilt after an interruption.
-                key = (raw.sample_ids, raw.source_sample_hashes)
-                if key not in head_encodings:
-                    with torch.no_grad():
-                        head_encodings[key] = model.encode_with_mask(raw)
-                encoding = head_encodings[key]
-            else:
-                head_encodings.clear()
-            output = model(raw, encoding=encoding)
-            losses = application_task_losses(output, selected, model.task_definitions, task_parameters)
-            task_contribution = (sum(losses[name] * losses["counts"][name] / count
-                for name, count in effective_counts.items() if count > 0) / active_tasks
-                if update_mode and active_tasks else losses["total"] / (accumulation if update_mode else 1))
-            total_loss = task_contribution
-            public_loss, mechanism_loss, augmentation_ids = None, None, ()
+        with ordinary_recurrence(model, update_mode and step_count == config.head_warmup_updates):
+            for micro_index, sample_ids in enumerate(active_batches):
+                raw = _load_batch(batch, batch_provider, sample_ids)
+                selected = select_application_targets(targets, sample_ids, config.device)
+                encoding = None
+                if warming_head and config.cache_head_encodings:
+                    # Exact batches retain the same padding and FP32 kernel shapes
+                    # when this ephemeral cache is rebuilt after an interruption.
+                    key = (raw.sample_ids, raw.source_sample_hashes)
+                    if key not in head_encodings:
+                        with torch.no_grad():
+                            head_encodings[key] = model.encode_with_mask(raw)
+                    encoding = head_encodings[key]
+                else:
+                    head_encodings.clear()
+                output = model(raw, encoding=encoding)
+                losses = application_task_losses(output, selected, model.task_definitions, task_parameters)
+                task_contribution = (sum(losses[name] * losses["counts"][name] / count
+                    for name, count in effective_counts.items() if count > 0) / active_tasks
+                    if update_mode and active_tasks else losses["total"] / (accumulation if update_mode else 1))
+                total_loss = task_contribution
+                public_loss, mechanism_loss, augmentation_ids = None, None, ()
+                if update_mode and not warming_head and model.encoder is not None:
+                    public, mechanism, augmented, _data_wait = pretext_micro_step(
+                        encoder=model.encoder, heads=model.pretext_heads, shift_head=model.explicit_shift_head,
+                        batch=raw, batch_provider=None, sample_ids=sample_ids, normalizer=model.normalizer,
+                        resolved=source_objectives["config"], policy=source_objectives["policy"],
+                        method_name=model.method_name, epoch=micro_batches_seen + 1,
+                        optimizer_updates=200, **source_objectives["mechanism_arguments"],
+                    )
+                    total_loss = total_loss + (config.self_supervised_weight * public.total_loss + mechanism.additional_loss) / accumulation
+                    public_loss, mechanism_loss = float(public.total_loss.detach()), float(mechanism.additional_loss.detach())
+                    augmentation_ids = augmented.augmentation_ids
+                if not torch.isfinite(total_loss):
+                    raise FloatingPointError("non-finite task-guided loss; unit stopped")
+                total_loss.backward()
+                diagnostic = {}
+                if config.record_gradient_groups and not warming_head:
+                    from chronaris.modeling.training.candidate_mechanisms import parameter_gradient_norm
+                    groups = ('encoder.backbone.continuous_backbone.physiology',
+                        'encoder.backbone.continuous_backbone.vehicle', 'encoder.backbone.causal_fusion',
+                        'encoder.backbone.semantic_event_fusion', 'explicit_shift_head', 'task_heads')
+                    diagnostic = {'mechanism_terms': [dict(row) for row in mechanism.rows] if mechanism_loss is not None else [],
+                        'gradient_groups': {prefix: parameter_gradient_norm(p for n, p in model.named_parameters()
+                            if n.startswith(prefix)) for prefix in groups},
+                        'gradient_scope': 'accumulated_joint_objective_not_isolated_term'}
+                update_rows.append({"optimizer_update": step_count + 1, "micro_batch_index": micro_batches_seen,
+                    "stage": "head_warmup" if warming_head else "joint_adaptation", "sample_ids": list(sample_ids),
+                    "augmentation_ids": list(augmentation_ids), "task_loss": float(losses["total"].detach()),
+                    "task_valid_counts": losses["counts"],
+                    "task_update_contribution": float(task_contribution.detach()),
+                    "effective_task_counts": effective_counts,
+                    "public_loss": public_loss, "public_weight": config.self_supervised_weight if public_loss is not None else 0.,
+                    "mechanism_loss": mechanism_loss, "total_loss": float(total_loss.detach()), **diagnostic})
+                samples_seen += len(sample_ids)
+                micro_batches_seen += 1
+                if not update_mode or micro_index + 1 == accumulation:
+                    gradient_norm = float(nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip_norm, error_if_nonfinite=True))
+                    optimizer.step()
+                    step_count += 1
+                    optimizer.zero_grad(set_to_none=True)
+                    progress.update(optimizer_updates=step_count, stage="head_warmup" if warming_head else "joint_adaptation",
+                        checkpoint=str(last_path), best_update=best_update, samples_seen=samples_seen,
+                        peak_allocated_bytes=torch.cuda.max_memory_allocated() if config.device == "cuda" else 0)
+                count = len(sample_ids)
+                for key in train_totals:
+                    train_totals[key] += float(losses[key].detach()) * losses["counts"][key]
+                    train_counts[key] += losses["counts"][key]
+        if active_batches:
+            # Release the ordinary backward graph before capturing validation graphs.
+            del output, losses, total_loss, task_contribution
             if update_mode and not warming_head and model.encoder is not None:
-                public, mechanism, augmented, _data_wait = pretext_micro_step(
-                    encoder=model.encoder, heads=model.pretext_heads, shift_head=model.explicit_shift_head,
-                    batch=raw, batch_provider=None, sample_ids=sample_ids, normalizer=model.normalizer,
-                    resolved=source_objectives["config"], policy=source_objectives["policy"],
-                    method_name=model.method_name, epoch=micro_batches_seen + 1,
-                    optimizer_updates=200, **source_objectives["mechanism_arguments"],
-                )
-                total_loss = total_loss + (config.self_supervised_weight * public.total_loss + mechanism.additional_loss) / accumulation
-                public_loss, mechanism_loss = float(public.total_loss.detach()), float(mechanism.additional_loss.detach())
-                augmentation_ids = augmented.augmentation_ids
-            if not torch.isfinite(total_loss):
-                raise FloatingPointError("non-finite task-guided loss; unit stopped")
-            total_loss.backward()
-            diagnostic = {}
-            if config.record_gradient_groups and not warming_head:
-                from chronaris.modeling.training.candidate_mechanisms import parameter_gradient_norm
-                groups = ('encoder.backbone.continuous_backbone.physiology',
-                    'encoder.backbone.continuous_backbone.vehicle', 'encoder.backbone.causal_fusion',
-                    'encoder.backbone.semantic_event_fusion', 'explicit_shift_head', 'task_heads')
-                diagnostic = {'mechanism_terms': [dict(row) for row in mechanism.rows] if mechanism_loss is not None else [],
-                    'gradient_groups': {prefix: parameter_gradient_norm(p for n, p in model.named_parameters()
-                        if n.startswith(prefix)) for prefix in groups},
-                    'gradient_scope': 'accumulated_joint_objective_not_isolated_term'}
-            update_rows.append({"optimizer_update": step_count + 1, "micro_batch_index": micro_batches_seen,
-                "stage": "head_warmup" if warming_head else "joint_adaptation", "sample_ids": list(sample_ids),
-                "augmentation_ids": list(augmentation_ids), "task_loss": float(losses["total"].detach()),
-                "task_valid_counts": losses["counts"],
-                "task_update_contribution": float(task_contribution.detach()),
-                "effective_task_counts": effective_counts,
-                "public_loss": public_loss, "public_weight": config.self_supervised_weight if public_loss is not None else 0.,
-                "mechanism_loss": mechanism_loss, "total_loss": float(total_loss.detach()), **diagnostic})
-            samples_seen += len(sample_ids)
-            micro_batches_seen += 1
-            if not update_mode or micro_index + 1 == accumulation:
-                gradient_norm = float(nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip_norm, error_if_nonfinite=True))
-                optimizer.step()
-                step_count += 1
-                optimizer.zero_grad(set_to_none=True)
-                progress.update(optimizer_updates=step_count, stage="head_warmup" if warming_head else "joint_adaptation",
-                    checkpoint=str(last_path), best_update=best_update, samples_seen=samples_seen,
-                    peak_allocated_bytes=torch.cuda.max_memory_allocated() if config.device == "cuda" else 0)
-            count = len(sample_ids)
-            for key in train_totals:
-                train_totals[key] += float(losses[key].detach()) * losses["counts"][key]
-                train_counts[key] += losses["counts"][key]
+                del public, mechanism
         completed_epochs = samples_seen // len(train_ids) if update_mode else epoch
         joint_updates = max(0, step_count - config.head_warmup_updates) if update_mode else step_count
         def checkpoint_payload():

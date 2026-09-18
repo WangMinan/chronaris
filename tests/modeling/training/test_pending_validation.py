@@ -78,3 +78,18 @@ def test_pending_validation_resumes_both_trainers_without_duplicate_updates(tmp_
     restored = fine.train_end_to_end_application_method(model=model(), output_root=tmp_path/'fine_resume', **kwargs)
     equal_checkpoints(reference.last_checkpoint_path, restored.last_checkpoint_path,
         ('model_state_dict','optimizer_state_dict','rng_state','data_cursor','epoch_rows','update_rows'))
+
+
+def test_first_joint_ordinary_execution_restores_configuration_on_failure():
+    from chronaris.models.alignment.config import AlignmentPrototypeConfig
+    from chronaris.models.alignment.prototype import SingleStreamODERNNPrototype
+    from chronaris.models.alignment.cuda_recurrence import ordinary_recurrence
+    model = SingleStreamODERNNPrototype(1, config=AlignmentPrototypeConfig(ode_method='euler', cuda_graph_recurrence=True))
+    original = model.config
+    with ordinary_recurrence(model, False):
+        assert model.config is original
+    with pytest.raises(RuntimeError, match='interrupt'):
+        with ordinary_recurrence(model, True):
+            assert not model.config.cuda_graph_recurrence
+            raise RuntimeError('interrupt')
+    assert model.config is original

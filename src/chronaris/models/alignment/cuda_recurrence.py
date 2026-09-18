@@ -4,6 +4,8 @@ The observation recurrence stays sequential. Backward recomputes each chunk and
 copies its gradients before another replay can overwrite CUDA's static storage.
 """
 import gc
+from contextlib import contextmanager
+from dataclasses import replace
 import torch
 from torch import nn
 from torch.nn import functional as F
@@ -93,3 +95,18 @@ class CUDAGraphRecurrence:
             evolved_rows.append(evolved)
             updated_rows.append(updated)
         return torch.cat(evolved_rows, 1)[:, :point_count], torch.cat(updated_rows, 1)[:, :point_count], hidden
+
+
+@contextmanager
+def ordinary_recurrence(model, enabled):
+    """Keep Adam's first joint update insensitive to chunk gradient reduction order."""
+    from chronaris.models.alignment.prototype import SingleStreamODERNNPrototype
+    streams = [(m, m.config) for m in model.modules()
+               if enabled and isinstance(m, SingleStreamODERNNPrototype) and m.config.cuda_graph_recurrence]
+    try:
+        for module, config in streams:
+            module.config = replace(config, cuda_graph_recurrence=False)
+        yield
+    finally:
+        for module, config in streams:
+            module.config = config
