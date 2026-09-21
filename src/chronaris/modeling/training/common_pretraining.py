@@ -255,6 +255,7 @@ def load_common_pretraining_checkpoint(
         chronaris_physics_weight=float(backbone_config.get("physics_weight", 0.1)),
         chronaris_cuda_graph_recurrence=bool(backbone_config.get("cuda_graph_recurrence", False)),
         chronaris_attention_kind=str(backbone_config.get("attention_kind", "legacy_cosine")),
+        chronaris_private_projection_kind=str(backbone_config.get("private_projection_kind", "layernorm_linear")),
         chronaris_independent_pairing_enabled=bool(backbone_config.get("independent_pairing_enabled", False)),
         chronaris_quality_gate_enabled=bool(backbone_config.get("quality_gate_enabled", False)),
     ).to(device)

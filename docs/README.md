@@ -6,6 +6,8 @@
 
 ## 当前入口
 
+- [阶段 4.5-B 执行协议](requirements/thesis-stage45b-development-20260921.md)：已授权的表示保留与选模一致性验证；[当前交接](artifacts/runs/2026-09-21_v4-stage45b/report.md)。
+
 - [阶段 4.5 完整结果](artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：18/18 首轮完成、零入围，阶段 5 继续关闭；下一轮先看[GPT PRO 复核任务](artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
 
 - [STATE.md](STATE.md)：当前实验进度、结论和代码来源。

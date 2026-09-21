@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Mapping, Sequence
 
 import torch
@@ -35,6 +35,7 @@ class CandidateMechanismStep:
     additional_loss: torch.Tensor
     rows: tuple[Mapping[str, object], ...]
     metrics_by_term: Mapping[str, Mapping[str, object]]
+    weighted_terms: Mapping[str, torch.Tensor] = field(default_factory=dict)
 
 
 def build_candidate_mechanism_step(
@@ -59,6 +60,7 @@ def build_candidate_mechanism_step(
     additional_loss = zero
     rows: list[Mapping[str, object]] = []
     metrics: dict[str, Mapping[str, object]] = {}
+    weighted_terms = {}
     warmup_fraction = (
         min(epoch / 5.0, 1.0) if optimizer_updates is None
         else min(max((optimizer_updates - 50) / 150.0, 0.0), 1.0)
@@ -73,6 +75,11 @@ def build_candidate_mechanism_step(
         )
         additional_loss = additional_loss + mechanism.total_loss
         rows.extend(chronaris_auxiliary_losses_to_rows(mechanism, weights=weights))
+        for row in rows:
+            attr = row["term_name"].removeprefix("chronaris_")
+            value = getattr(mechanism, attr, None)
+            if value is not None and row["count"] > 0:
+                weighted_terms[row["term_name"]] = value * row["weight"]
     if lag_aware_weight > 0:
         alignment = positive.auxiliary.get("alignment_output")
         if alignment is None:
@@ -86,6 +93,7 @@ def build_candidate_mechanism_step(
         )
         weight = lag_aware_weight * warmup_fraction
         additional_loss = additional_loss + weight * result.loss
+        weighted_terms["lag_aware_alignment"] = weight * result.loss
         rows.append(
             {
                 "term_name": "lag_aware_alignment",
@@ -115,6 +123,7 @@ def build_candidate_mechanism_step(
             weight=explicit_shift_weight * warmup_fraction,
         )
         additional_loss = additional_loss + term.weighted_loss
+        weighted_terms[term.term_name] = term.weighted_loss
         rows.extend(pretext_loss_terms_to_rows((term,)))
         metrics[term.term_name] = {
             "accuracy": float(
@@ -167,6 +176,7 @@ def build_candidate_mechanism_step(
         additional_loss=additional_loss,
         rows=tuple(rows),
         metrics_by_term=metrics,
+        weighted_terms=weighted_terms,
     )
 
 

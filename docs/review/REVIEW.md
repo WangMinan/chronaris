@@ -6,6 +6,8 @@
 
 ## 当前复核
 
+[阶段 4.5-B 复核](stage/thesis-v4/stage45b-20260921/README.md)：训练内分组选模、归一化诊断、条件结构候选及独立恢复；按新协议启动有界实验。
+
 [阶段 4.5 结果收口与下一轮复核](../artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：核验全部来源、五种候选和八个对照尝试、补充下游与梯度记录；18/18 完成、零入围，22 个后续槽位按规则跳过。计划与结果均见报告；远端问题见[GPT PRO 复核任务](../artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
 
 [阶段 4.5 运行负载与优化决策](stage/thesis-v4/stage45-runtime-assessment-20260918/README.md)：全流程执行修订及首次联合更新稳定性修复已验收，完整显卡回归 697 通过、22 跳过；恢复队列现已完成，原失败保留。见[最新恢复报告](../artifacts/runs/2026-09-19_v4-stage45-accelerated/report.md)。

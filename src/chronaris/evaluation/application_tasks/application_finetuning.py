@@ -49,71 +49,8 @@ FINETUNING_FORMAT = "chronaris.application_end_to_end_finetuning.v3"
 from chronaris.modeling.training.candidate_checkpoint import development_snapshot
 
 
-@dataclass(frozen=True, slots=True)
-class EndToEndFineTuningConfig:
-    learning_rate: float = 1e-4
-    max_epochs: int = 20
-    patience: int = 5
-    batch_size: int = 128
-    weight_decay: float = 1e-5
-    gradient_clip_norm: float = 1.0
-    seed: int = 17
-    device: str = "cpu"
-    max_updates: int | None = None
-    effective_batch_size: int | None = None
-    head_warmup_updates: int = 50
-    head_learning_rate: float = 3e-4
-    validation_interval: int = 50
-    minimum_updates: int = 200
-    checkpoint_interval: int = 25
-    early_stopping: bool = True
-    self_supervised_weight: float = .2
-    sampling_hierarchy: Mapping[str, tuple[str, ...]] | None = None
-    retained_updates: tuple[int, ...] = ()
-    record_gradient_groups: bool = False
-    data_manifest_sha256: str | None = None
-    cache_head_encodings: bool = True
-
-    def __post_init__(self) -> None:
-        if min(self.learning_rate, self.gradient_clip_norm) <= 0:
-            raise ValueError("fine-tuning learning rate and gradient clip must be positive")
-        if min(self.max_epochs, self.patience, self.batch_size) <= 0:
-            raise ValueError("fine-tuning epochs, patience, and batch size must be positive")
-        if self.weight_decay < 0 or self.device not in {"cpu", "cuda"}:
-            raise ValueError("fine-tuning optimizer or device configuration is invalid")
-        if self.device == "cuda" and not torch.cuda.is_available():
-            raise ValueError("fine-tuning requested unavailable CUDA device")
-        if self.max_updates is not None and self.max_updates <= 0:
-            raise ValueError("fine-tuning max_updates must be positive")
-        if self.effective_batch_size is not None and (self.max_updates is None
-            or self.effective_batch_size < self.batch_size or self.effective_batch_size % self.batch_size):
-            raise ValueError("fine-tuning effective batch must be a multiple of actual batch")
-        if min(self.validation_interval, self.checkpoint_interval, self.head_learning_rate) <= 0:
-            raise ValueError("invalid task-guided update schedule")
-        if min(self.head_warmup_updates, self.minimum_updates, self.self_supervised_weight) < 0:
-            raise ValueError("task-guided budgets/weights cannot be negative")
-        if any(update <= 0 for update in self.retained_updates):
-            raise ValueError("retained task-guided updates must be positive")
-
-
-@dataclass(frozen=True, slots=True)
-class EndToEndFineTuningResult:
-    method_name: str
-    status: str
-    best_checkpoint_path: str
-    last_checkpoint_path: str
-    protocol_sha256: str
-    best_epoch: int
-    completed_epochs: int
-    stopped_early: bool
-    training_elapsed_s: float
-    encoder_update_mode: str
-    training_device_history: tuple[str, ...]
-    epoch_rows: tuple[Mapping[str, object], ...]
-    optimizer_updates: int = 0
-    head_warmup_updates: int = 0
-    joint_updates: int = 0
-    best_update: int = 0
+from chronaris.evaluation.application_tasks.application_finetuning_config import (
+    EndToEndFineTuningConfig, EndToEndFineTuningResult)
 
 
 class EndToEndApplicationModel(nn.Module):
@@ -200,7 +137,10 @@ def train_end_to_end_application_method(
     config: EndToEndFineTuningConfig,
     batch_provider=None,
     resume: bool = True,
+    checkpoint_selector=None,
 ) -> EndToEndFineTuningResult:
+    if config.checkpoint_selection != getattr(checkpoint_selector, "manifest", None):
+        raise ValueError("checkpoint selector must match the frozen selection contract")
     targets = application_targets(targets)
     with isolated_training_rng(config.seed):
         last_path = Path(output_root) / model.method_name / "last.pt"
@@ -214,7 +154,7 @@ def train_end_to_end_application_method(
             result = _train_end_to_end_application_method(
                 model=model, batch=batch, targets=targets, role_sample_ids=role_sample_ids,
                 source_checkpoint_path=source_checkpoint_path, output_root=output_root,
-                config=config, resume=resume, batch_provider=batch_provider, progress=progress,
+                config=config, resume=resume, batch_provider=batch_provider, progress=progress, checkpoint_selector=checkpoint_selector,
             )
             progress.update(optimizer_updates=result.optimizer_updates, best_update=result.best_update,
                 checkpoint=result.last_checkpoint_path, head_warmup_updates=result.head_warmup_updates,
@@ -224,7 +164,7 @@ def train_end_to_end_application_method(
 
 def _train_end_to_end_application_method(
     *, model, batch, targets, role_sample_ids, source_checkpoint_path,
-    output_root, config, resume, batch_provider, progress,
+    output_root, config, resume, batch_provider, progress, checkpoint_selector=None,
 ):
     """Tune one method on train labels and select epochs on validation labels only."""
     source_path = Path(source_checkpoint_path)
@@ -485,6 +425,10 @@ def _train_end_to_end_application_method(
             )
             validation_elapsed_s += time.perf_counter()-validation_started
             selection_loss = sum(validation_losses.values()) / len(validation_losses)
+            original_score = selection_loss
+            selection = checkpoint_selector(model.encoder, model.normalizer, step_count) if checkpoint_selector else None
+            if selection is not None:
+                selection_loss = selection["score"]
             improved = selection_loss < best_loss
             if improved:
                 best_loss = selection_loss
@@ -501,6 +445,7 @@ def _train_end_to_end_application_method(
                     **{f"train_{key}_loss": value / max(train_counts[key], 1e-12) for key, value in train_totals.items()},
                     **{f"validation_{key}_loss": value for key, value in validation_losses.items()},
                     "validation_selection_loss": selection_loss,
+                    **({"original_selection_loss": original_score, "checkpoint_selection": selection} if selection else {}),
                     "gradient_norm_before_clip_last_step": gradient_norm,
                     "improved": improved,
                     "epochs_without_improvement": stale,
@@ -510,6 +455,8 @@ def _train_end_to_end_application_method(
         if update_mode and not (validate or step_count % config.checkpoint_interval == 0 or joint_updates in config.retained_updates):
             continue
         payload = checkpoint_payload()
+        if checkpoint_selector and validate and original_score < min((r.get("original_selection_loss", float("inf")) for r in epoch_rows[:-1]), default=float("inf")):
+            _atomic_save(root / "original_selector.pt", payload | {"best_update": step_count, "best_validation_loss": original_score})
         if improved:
             _atomic_save(best_path, payload)
         _atomic_save(last_path, payload)
@@ -553,6 +500,10 @@ def _train_end_to_end_application_method(
     best_payload.update(total_optimizer_updates=step_count,
         total_stage_update_counts=final_payload["stage_update_counts"], stopped_early=final_payload["stopped_early"])
     _atomic_save(best_path, best_payload)
+    if checkpoint_selector:
+        control = torch.load(root / "original_selector.pt", map_location="cpu", weights_only=True)
+        control.update(training_status="completed", total_optimizer_updates=step_count)
+        _atomic_save(root / "original_selector.pt", control)
     model.load_state_dict(best_payload["model_state_dict"], strict=True)
     return _result(final_payload, best_path, last_path, status="completed")
 
@@ -788,6 +739,6 @@ def _resume_is_device_only_migration(
 
 def _finetuning_source_sha256():
     digest = hashlib.sha256(candidate_source_code_sha256().encode())
-    for name in ("application_finetuning.py", "application_finetuning_export.py", "application_consumers.py", "application_task_heads.py"):
+    for name in ("application_finetuning.py", "application_finetuning_config.py", "checkpoint_selection.py", "application_finetuning_export.py", "application_consumers.py", "application_task_heads.py"):
         digest.update(Path(__file__).with_name(name).read_bytes())
     return digest.hexdigest()

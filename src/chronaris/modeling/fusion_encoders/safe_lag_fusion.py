@@ -59,12 +59,15 @@ class SafeLagAwareFusionConfig:
     use_private_bypass: bool = True
     attention_temperature: float = 1.0
     attention_kind: str = "legacy_cosine"
+    private_projection_kind: str = "layernorm_linear"
     boundary_epsilon_s: float = 1e-6
     # A large negative bias makes the sigmoid gate start near 0 (safe fallback).
     cross_gate_init_bias: float = -4.0
     quality_gate_enabled: bool = False
 
     def __post_init__(self) -> None:
+        if self.private_projection_kind not in {"layernorm_linear", "linear"}:
+            raise ValueError("unsupported private projection kind")
         if self.hidden_dim <= 0 or self.output_dim <= 0:
             raise ValueError("fusion hidden/output dimensions must be positive")
         if self.physiology_private_dim <= 0 or self.vehicle_private_dim <= 0:
@@ -141,11 +144,11 @@ class SafeLagAwareFusion(nn.Module):
 
         # Private single-stream projections — the bypass that preserves strong signals.
         self.physiology_private_projection = nn.Sequential(
-            nn.LayerNorm(hidden),
+            nn.LayerNorm(hidden) if self.config.private_projection_kind == "layernorm_linear" else nn.Identity(),
             nn.Linear(hidden, self.config.physiology_private_dim),
         )
         self.vehicle_private_projection = nn.Sequential(
-            nn.LayerNorm(hidden),
+            nn.LayerNorm(hidden) if self.config.private_projection_kind == "layernorm_linear" else nn.Identity(),
             nn.Linear(hidden, self.config.vehicle_private_dim),
         )
 

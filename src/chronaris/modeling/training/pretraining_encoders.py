@@ -175,9 +175,12 @@ def build_trainable_fusion_encoder(
     chronaris_physics_weight: float = 0.1,
     chronaris_cuda_graph_recurrence: bool = False,
     chronaris_attention_kind: str = "legacy_cosine",
+    chronaris_private_projection_kind: str = "layernorm_linear",
     chronaris_independent_pairing_enabled: bool = False,
     chronaris_quality_gate_enabled: bool = False,
 ) -> TrainableFusionEncoder:
+    if method_name != "chronaris" and chronaris_private_projection_kind != "layernorm_linear":
+        raise ValueError("private projection requires Chronaris")
     if method_name != "chronaris" and chronaris_attention_kind != "legacy_cosine":
         raise ValueError("revised lag attention is a Chronaris-only candidate")
     if method_name != "chronaris" and chronaris_independent_pairing_enabled:
@@ -238,6 +241,7 @@ def build_trainable_fusion_encoder(
                 physics_weight=chronaris_physics_weight,
                 cuda_graph_recurrence=chronaris_cuda_graph_recurrence,
                 attention_kind=chronaris_attention_kind,
+                private_projection_kind=chronaris_private_projection_kind,
                 independent_pairing_enabled=chronaris_independent_pairing_enabled,
                 quality_gate_enabled=chronaris_quality_gate_enabled,
                 hidden_dim=candidate.hidden_dim,

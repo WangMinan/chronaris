@@ -118,7 +118,8 @@ def validate_representation_declaration(contract, outputs, declaration, *, famil
     required = {'method', 'checkpoint_path', 'checkpoint_sha256', 'route', 'target_supervision', 'training_tasks',
         'external_pretraining', 'kind', 'feature_origin', 'extraction_location', 'feature_dim',
         'encoder_frozen', 'task_heads_removed', 'encoder_fit_sample_ids', 'preprocessing_fit_sample_ids', 'evidence_files'}
-    if set(declaration) != required:
+    selection_fields = {'checkpoint_selection_supervision', 'checkpoint_selection_contract'}
+    if set(declaration) not in (required, required | selection_fields):
         raise ValueError('representation declaration fields are incomplete or unknown')
     if declaration['encoder_frozen'] is not True or declaration['task_heads_removed'] is not True:
         raise ValueError('downstream evaluation requires a frozen encoder with training heads removed')
@@ -170,6 +171,16 @@ def validate_representation_declaration(contract, outputs, declaration, *, famil
         counts = payload['task_supervision_counts']
         if set(counts) != set(tasks) or any(type(v) not in (int, float) or not (0 < v < float('inf')) for v in counts.values()):
             raise ValueError('declared training task received no actual supervision')
+    selection_contract = payload.get('config', {}).get('checkpoint_selection')
+    if selection_contract is not None:
+        if (declaration.get('checkpoint_selection_contract') != selection_contract
+            or declaration.get('checkpoint_selection_supervision') != payload.get('checkpoint_selection_supervision', 'summary_labels')):
+            raise ValueError('checkpoint selection supervision or contract changed')
+        selection_ids = set(selection_contract['fold']['validation_sample_ids'])
+        if selection_ids & (train | set(contract['roles']['validation'])):
+            raise ValueError('checkpoint selection crossed encoder fitting or development evaluation')
+    elif set(declaration) & selection_fields:
+        raise ValueError('undeclared checkpoint selection metadata')
     encoder_roles = payload.get('role_sample_ids', payload.get('fold', {}))
     actual_fit = encoder_roles.get('train', encoder_roles.get('train_sample_ids'))
     if actual_fit is not None and list(actual_fit) != declaration['encoder_fit_sample_ids']:

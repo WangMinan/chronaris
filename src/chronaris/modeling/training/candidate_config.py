@@ -37,6 +37,8 @@ class CandidateScreenConfig:
     data_manifest_sha256: str | None = None
     cuda_graph_recurrence: bool = False
     attention_kind: str = "legacy_cosine"
+    private_projection_kind: str = "layernorm_linear"
+    checkpoint_selection: Mapping[str, object] | None = None
     continuous_alignment_weight: float = 0.2
     independent_pairing_enabled: bool = False
     independent_pair_weight: float = 0.0
@@ -45,6 +47,8 @@ class CandidateScreenConfig:
     quality_gate_enabled: bool = False
 
     def __post_init__(self) -> None:
+        if self.private_projection_kind not in {"layernorm_linear", "linear"}:
+            raise ValueError("unsupported private projection kind")
         if not math.isfinite(self.single_stream_fidelity_weight) or self.single_stream_fidelity_weight < 0:
             raise ValueError("single-stream fidelity weight must be finite and non-negative")
         if tuple(self.prediction_horizons_s) not in ((), (.5, 2., 5.)):

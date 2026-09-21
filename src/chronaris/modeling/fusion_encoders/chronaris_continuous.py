@@ -97,10 +97,13 @@ class ChronarisContinuousEncoderConfig:
     physics_calibration: Mapping[str, object] | None = None
     cuda_graph_recurrence: bool = False
     attention_kind: str = "legacy_cosine"
+    private_projection_kind: str = "layernorm_linear"
     independent_pairing_enabled: bool = False
     quality_gate_enabled: bool = False
 
     def __post_init__(self) -> None:
+        if self.private_projection_kind not in {"layernorm_linear", "linear"} or (self.private_projection_kind == "linear" and self.fusion_kind != "safe_lag"):
+            raise ValueError("linear private projection requires safe-lag fusion")
         if self.quality_gate_enabled and self.fusion_kind != "safe_lag":
             raise ValueError("quality gate requires safe-lag fusion")
         if self.attention_kind not in ATTENTION_KINDS or (self.attention_kind != "legacy_cosine" and self.fusion_kind != "safe_lag"):
@@ -254,6 +257,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
             self.causal_fusion = SafeLagAwareFusion(
                 SafeLagAwareFusionConfig(
                     attention_kind=config.attention_kind,
+                    private_projection_kind=config.private_projection_kind,
                     quality_gate_enabled=config.quality_gate_enabled,
                     hidden_dim=config.hidden_dim,
                     output_dim=FUSION_OUTPUT_DIM,

@@ -107,8 +107,11 @@ def train_pretext_candidate(
     chronaris_event_pair_weight: float = 0.0,
     include_candidate_subdirectory: bool = True,
     resume: bool = True,
+    checkpoint_selector=None,
 ) -> CandidateScreenResult:
     resolved = config or CandidateScreenConfig()
+    if resolved.checkpoint_selection != getattr(checkpoint_selector, "manifest", None):
+        raise ValueError("checkpoint selector must match the frozen selection contract")
     if resolved.single_stream_fidelity_weight and (method_name != "chronaris" or chronaris_fusion_kind != "safe_lag"):
         raise ValueError("single-stream fidelity requires Chronaris safe-lag branches")
     if resolved.independent_pair_weight > 0 and chronaris_event_pair_weight > 0:
@@ -150,6 +153,7 @@ def train_pretext_candidate(
                 include_candidate_subdirectory=include_candidate_subdirectory,
                 resume=resume,
                 progress=progress,
+                checkpoint_selector=checkpoint_selector,
             )
             progress.update(optimizer_updates=result.optimizer_updates, best_update=result.best_update,
                 checkpoint=result.last_checkpoint_path, training_action=result.status)
@@ -221,6 +225,7 @@ def _train_pretext_candidate(
     chronaris_event_pair_weight: float = 0.0,
     include_candidate_subdirectory: bool = True,
     resume: bool = True,
+    checkpoint_selector=None,
     progress: dict | None = None,
 ) -> CandidateScreenResult:
     """Train one frozen candidate without opening task labels or simulation truth."""
@@ -350,6 +355,7 @@ def _train_pretext_candidate(
         chronaris_physics_weight=resolved.physics_weight,
         chronaris_cuda_graph_recurrence=resolved.cuda_graph_recurrence,
         chronaris_attention_kind=resolved.attention_kind,
+        chronaris_private_projection_kind=resolved.private_projection_kind,
         chronaris_independent_pairing_enabled=resolved.independent_pairing_enabled,
         chronaris_quality_gate_enabled=resolved.quality_gate_enabled,
     ).to(resolved.device)
@@ -656,6 +662,10 @@ def _train_pretext_candidate(
             score = _public_selection_loss(validation_losses) + float(
                 mechanism_validation["weighted_total"]
             )
+            original_score = score
+            selection = checkpoint_selector(encoder, normalizer, step_count) if checkpoint_selector else None
+            if selection is not None:
+                score = selection["score"]
             improved = score < best_score - resolved.minimum_delta
             if improved:
                 best_score = score
@@ -674,6 +684,7 @@ def _train_pretext_candidate(
                 "validation_losses": validation_losses,
                 "mechanism_validation": mechanism_validation,
                 "public_selection_loss": score,
+                **({"original_selection_loss": original_score, "checkpoint_selection": selection} if selection else {}),
                 "improved": improved,
                 "epochs_without_improvement": epochs_without_improvement,
                 "mean_gradient_norm_before_clip": sum(gradient_norms) / len(gradient_norms),
@@ -683,6 +694,10 @@ def _train_pretext_candidate(
         if update_mode and not (validate or step_count % resolved.checkpoint_interval == 0 or step_count in resolved.retained_updates):
             continue
         payload = checkpoint_payload()
+        if checkpoint_selector and validate and original_score < min((r.get("original_selection_loss", float("inf")) for r in epoch_rows[:-1]), default=float("inf")):
+            atomic_save_candidate(root / "original_selector.pt", payload | {"best_update": step_count,
+                "best_public_selection_loss": original_score, "checkpoint_selection_supervision": "none",
+                "selection_uses_public_pretext_only": True, "early_stopping_uses_public_pretext_only": True})
         if improved:
             atomic_save_candidate(best_path, payload)
         atomic_save_candidate(last_path, payload)
@@ -714,6 +729,10 @@ def _train_pretext_candidate(
     last_payload = load_candidate_payload(last_path)
     last_payload.update(completion)
     atomic_save_candidate(last_path, last_payload)
+    if checkpoint_selector:
+        control = load_candidate_payload(root / "original_selector.pt")
+        control.update(completion)
+        atomic_save_candidate(root / "original_selector.pt", control)
     return _result(final_payload, best_path, last_path, status="completed")
 
 

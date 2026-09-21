@@ -81,7 +81,8 @@ def build_candidate_checkpoint_payload(**values):
         "augmentation_rows": list(values["augmentation_rows"]),
         "label_used_for_encoder_training": False,
         "simulation_oracle_opened": False,
-        "selection_uses_public_pretext_only": True,
+        "selection_uses_public_pretext_only": values["config"].checkpoint_selection is None,
+        "checkpoint_selection_supervision": "summary_labels" if values["config"].checkpoint_selection else "none",
         "selection_weights": dict(values["selection_weights"]),
         "transfer_source": values.get("transfer_source"),
         "transfer_initialization": values.get("transfer_initialization"),
@@ -97,7 +98,7 @@ def build_candidate_checkpoint_payload(**values):
         ],
         "chronaris_explicit_shift_weight": values["chronaris_explicit_shift_weight"],
         "chronaris_event_pair_weight": values["chronaris_event_pair_weight"],
-        "early_stopping_uses_public_pretext_only": True,
+        "early_stopping_uses_public_pretext_only": values["config"].checkpoint_selection is None,
         "rng_state": rng_state,
     }
     shift_head = values.get("explicit_time_shift_head")

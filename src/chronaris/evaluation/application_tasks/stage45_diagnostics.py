@@ -17,20 +17,31 @@ from chronaris.representation.window_features import WindowFeatureBatch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-def branch_features(output):
+def branch_features(output, encoder=None):
     alignment, fusion = output.auxiliary['alignment_output'], output.auxiliary['fusion_output']
     result = {}
     for stream in ('physiology', 'vehicle'):
         state = getattr(alignment, stream)
         result[stream+'_before_projection'] = (state.reference_hidden_states, state.reference_valid_mask)
         result[stream+'_after_projection'] = (getattr(fusion, stream+'_private'), state.reference_valid_mask)
+    if encoder is not None:
+        for stream in ('physiology', 'vehicle'):
+            state = getattr(alignment, stream)
+            projection = getattr(encoder.backbone.causal_fusion, stream+'_private_projection')
+            result[stream+'_after_normalization'] = (projection[0](state.reference_hidden_states), state.reference_valid_mask)
+        # Intersection gives every layer exactly the same observed query positions.
+        common = alignment.physiology.reference_valid_mask & alignment.vehicle.reference_valid_mask
+        result.update({name+'_common_mask': (sequence, common) for name, (sequence, _) in list(result.items())})
     result['branches_concatenated'] = (torch.cat((fusion.physiology_private, fusion.vehicle_private), -1),
                                        output.modality_available_mask)
     result['full'] = (output.sequence_embedding, output.modality_available_mask)
+    if encoder is not None:
+        for name in ('branches_concatenated', 'full'):
+            result[name+'_common_mask'] = (result[name][0], common)
     return result
 
 
-def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions, context, output_root, seed=17, allow_diagnostic_snapshot=False):
+def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions, context, output_root, seed=17, allow_diagnostic_snapshot=False, extended=False):
     encoder, normalizer, payload = load_frozen_application_encoder(checkpoint, route=route, fold=fold, device='cuda',
         allow_diagnostic_snapshot=allow_diagnostic_snapshot)
     encoder.eval()
@@ -42,7 +53,7 @@ def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions
             raw = provider(ids[offset:offset+4])
             with torch.inference_mode():
                 output = encoder(move_observation_batch(normalizer.transform(raw), device='cuda'))
-                for name, (sequence, valid) in branch_features(output).items():
+                for name, (sequence, valid) in branch_features(output, encoder if extended else None).items():
                     # The same CPU pooling as the main exported representation.
                     values = pool_exported_sequence(sequence.cpu(), valid.cpu())
                     pieces.setdefault(name, []).append((values, valid.any(1).cpu()))
@@ -69,6 +80,9 @@ def run_branch_probes(*, checkpoint, route, provider, fold, targets, definitions
         gate_quantiles=gate_values.quantile(torch.tensor([0., .1, .5, .9, 1.])).tolist() if gates else [],
         diagnostic_only=True, dimensions={k: v['train'].pooled_embedding.shape[1] for k,v in collected.items()},
         confirmation_opened=False)
+    if extended:
+        from chronaris.evaluation.application_tasks.stage45b_diagnostics import feature_statistics
+        result["feature_statistics"] = {name: feature_statistics(outputs, context) for name, outputs in collected.items()}
     del encoder, output, collected
     gc.collect(); torch.cuda.empty_cache()
     return write_result(Path(output_root)/'summary.json', result)
@@ -88,11 +102,13 @@ def checkpoint_diagnostics(*, root, domain, provider, fold, contract, targets, d
         for row in rows:
             for term in [row] if 'term_name' in row else row.get('mechanism_terms', []):
                 name = term['term_name']
-                item = terms.setdefault(name, dict(effective_count=0, weighted_loss_sum=0., max_related_gradient=0.))
+                item = terms.setdefault(name, dict(effective_count=0, weighted_loss_sum=0., max_related_gradient=None))
                 if term.get('weight', 0) > 0:
                     item['effective_count'] += term.get('count', 0)
                     item['weighted_loss_sum'] += term.get('weighted_loss') or 0.
-                item['max_related_gradient'] = max(item['max_related_gradient'], term.get('related_parameter_gradient_norm') or 0.)
+                gradient = term.get('related_parameter_gradient_norm')
+                if gradient is not None:
+                    item['max_related_gradient'] = max(item['max_related_gradient'] or 0., gradient)
         record = dict(route=route, best_update=payload.get('best_update'), terms=terms,
             best_checkpoint=str(training['best_checkpoint_path']), last_checkpoint=str(last),
             gradient_scope='related_parameters_under_combined_objective', snapshots=[])
