@@ -1,12 +1,12 @@
 # Chronaris 文档入口
 
-更新时间：2026-09-14
+更新时间：2026-09-21
 
 当前在 `codex/thesis-v4-recovery-20260905` 继续研究开发，已包含 `main` 的整理成果。研究主线为“各方法提取融合特征，再分别训练相同类型的下游算法”。优先读取新方案、当前状态和任务；历史协议承担来源追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，此处只维护导航。
 
 ## 当前入口
 
-- [阶段 4.5 模型与性能优化](requirements/thesis-stage45-development-20260914.md)：当前先完成有界优化，阶段 5 暂缓。
+- [阶段 4.5 完整结果](artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：18/18 首轮完成、零入围，阶段 5 继续关闭；下一轮先看[GPT PRO 复核任务](artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
 
 - [STATE.md](STATE.md)：当前实验进度、结论和代码来源。
 - [implementation/TASKS.md](implementation/TASKS.md)：当前任务与后续执行顺序。

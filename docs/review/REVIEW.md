@@ -1,12 +1,14 @@
 # Chronaris 复核入口
 
-更新时间：2026-09-19
+更新时间：2026-09-21
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
 
-[阶段 4.5 运行负载与优化决策](stage/thesis-v4/stage45-runtime-assessment-20260918/README.md)：全流程执行修订及首次联合更新稳定性修复已验收，完整显卡回归 697 通过、22 跳过；已在新目录启动恢复队列，原失败保留。见[最新恢复报告](../artifacts/runs/2026-09-19_v4-stage45-accelerated/report.md)。
+[阶段 4.5 结果收口与下一轮复核](../artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：核验全部来源、五种候选和八个对照尝试、补充下游与梯度记录；18/18 完成、零入围，22 个后续槽位按规则跳过。计划与结果均见报告；远端问题见[GPT PRO 复核任务](../artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
+
+[阶段 4.5 运行负载与优化决策](stage/thesis-v4/stage45-runtime-assessment-20260918/README.md)：全流程执行修订及首次联合更新稳定性修复已验收，完整显卡回归 697 通过、22 跳过；恢复队列现已完成，原失败保留。见[最新恢复报告](../artifacts/runs/2026-09-19_v4-stage45-accelerated/report.md)。
 
 [阶段 4.5 暂停复核与恢复](stage/thesis-v4/stage45-pause-review-20260914/README.md)：保留第 75 次状态，进行能力和执行性能复核，取消 72 小时硬上限后恢复。
 
