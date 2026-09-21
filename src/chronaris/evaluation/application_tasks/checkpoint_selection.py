@@ -109,15 +109,15 @@ class GroupedCheckpointSelector:
                         hashes.extend(raw.source_sample_hashes)
                     outputs[role] = WindowFeatureBatch(ids, torch.cat(durations), torch.cat(values), torch.cat(validities),
                         encoder.method_name, self.fold.fold_id, fingerprint, tuple(hashes))
-            result = run_native_method_consumers(outputs=outputs, targets=self.targets, definitions=self.definitions,
-                context=self.context | {'checkpoint_selection': self.manifest}, output_root=self.root/f'update_{update:06d}',
-                label_used_for_encoder_training=self.root.name == 'task_guided', seed=self.seed, families=('linear',))
-            rows = result['components']['linear']['task_summary']['validation']
-            losses = [1-r['value'] if r['metric'] == 'macro_f1' else r['value']/self.scales[r['task']] for r in rows]
-            score = sum(losses)/len(losses)
-            if not torch.isfinite(torch.tensor(score)):
-                raise ValueError('nonfinite checkpoint selection score')
-            return dict(score=score, metrics=rows, consumer=result, manifest=self.manifest, elapsed_s=time.perf_counter()-started)
+                result = run_native_method_consumers(outputs=outputs, targets=self.targets, definitions=self.definitions,
+                    context=self.context | {'checkpoint_selection': self.manifest}, output_root=self.root/f'update_{update:06d}',
+                    label_used_for_encoder_training=self.root.name == 'task_guided', seed=self.seed, families=('linear',))
+                rows = result['components']['linear']['task_summary']['validation']
+                losses = [1-r['value'] if r['metric'] == 'macro_f1' else r['value']/self.scales[r['task']] for r in rows]
+                score = sum(losses)/len(losses)
+                if not torch.isfinite(torch.tensor(score)):
+                    raise ValueError('nonfinite checkpoint selection score')
+                return dict(score=score, metrics=rows, consumer=result, manifest=self.manifest, elapsed_s=time.perf_counter()-started)
         finally:
             for module, training in states.items():
                 module.training = training

@@ -71,5 +71,3 @@ class EndToEndFineTuningResult:
     head_warmup_updates: int = 0
     joint_updates: int = 0
     best_update: int = 0
-
-

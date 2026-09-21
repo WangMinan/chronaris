@@ -58,6 +58,14 @@ def short_run(root, interrupt=False):
     from chronaris.evaluation.application_tasks import common_downstream_smoke as entry
     from chronaris.modeling.training import candidate_screen
     from chronaris.evaluation.application_tasks import application_finetuning
+    from chronaris.evaluation.application_tasks import stage45_recipe
+    recipe_builder = stage45_recipe.training_recipe
+    original_select = GroupedCheckpointSelector.__call__
+    def recipe(*args, **kwargs):
+        candidate, pre, guided, arguments, record = recipe_builder(*args, **kwargs)
+        return candidate, replace(pre, validation_interval=1), replace(guided, validation_interval=1), arguments, record
+    def tied_selection(self, *args):
+        return original_select(self, *args) | {'score': 0.}
     original = candidate_screen.atomic_save_candidate
     guided_save = application_finetuning._atomic_save
     def save(path, payload):
@@ -68,7 +76,7 @@ def short_run(root, interrupt=False):
         guided_save(path, payload)
         if interrupt == 'guided' and payload.get('pending_validation'):
             raise RuntimeError('test interruption before selection')
-    with patch.object(application_finetuning, '_atomic_save', save_guided), patch.object(entry, 'contract_development_inputs', short_inputs), patch.object(entry, 'development_gpu_lock', lambda: nullcontext(True)), patch.object(candidate_screen, 'atomic_save_candidate', save):
+    with patch.object(stage45_recipe, 'training_recipe', recipe), patch.object(GroupedCheckpointSelector, '__call__', tied_selection), patch.object(application_finetuning, '_atomic_save', save_guided), patch.object(entry, 'contract_development_inputs', short_inputs), patch.object(entry, 'development_gpu_lock', lambda: nullcontext(True)), patch.object(candidate_screen, 'atomic_save_candidate', save):
         return entry.run_common_contract_smoke(domain='clare', output_root=root, methods=('chronaris',), recipe='stage4_reference',
             cuda_graph_recurrence=True, selection_inner_index=0, private_projection_kind='linear')
 
@@ -91,6 +99,13 @@ def test_grouped_entry_and_independent_process_resume(tmp_path, interruption_sta
         for name, tensor in states[0][key].items():
             assert torch.equal(tensor, states[1][key][name]), name
         assert states[0]['config']['checkpoint_selection']['selection_supervision'] == 'summary_labels'
+        assert states[0]['best_update'] == (1 if route == 'self_supervised' else 3)
+        assert states[1]['best_update'] == states[0]['best_update']
+        last = [torch.load(r['training']['last_checkpoint_path'], weights_only=True, map_location='cpu') for r in records]
+        for name, tensor in last[0][key].items():
+            assert torch.equal(tensor, last[1][key][name]), name
+        from chronaris.evaluation.application_tasks.checkpoint_performance import compare_values
+        assert compare_values(last[0]['optimizer_state_dict'], last[1]['optimizer_state_dict'], atol=0., rtol=0.)['bitwise_equal']
         assert records[0]['consumers']['components']['linear']['task_summary'] == records[1]['consumers']['components']['linear']['task_summary']
 
 
