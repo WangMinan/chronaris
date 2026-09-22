@@ -74,7 +74,7 @@ def isolated_gradients(losses, parameters):
     return dict(terms=records, cosines=cosines, scope='isolated_weighted_loss_gradients_on_shared_continuous_backbone')
 
 
-def checkpoint_gradients(*, checkpoint, route, provider, fold, targets, definitions, output_root):
+def checkpoint_gradients(*, checkpoint, route, provider, fold, targets, definitions, output_root, sample_batches=None):
     with isolated_training_rng(17):
         encoder, normalizer, payload = load_frozen_application_encoder(checkpoint, route=route, fold=fold,
             device='cuda', allow_diagnostic_snapshot=True)
@@ -119,9 +119,10 @@ def checkpoint_gradients(*, checkpoint, route, provider, fold, targets, definiti
         policy = AugmentationPolicy(**source['augmentation_policy'])
         updates = payload.get('optimizer_updates', 300) if route == 'self_supervised' else 200
         rows = []
-        # Two fixed batches test repeatability without any optimizer updates.
-        for offset in (0, 4):
-            ids = fold.train_sample_ids[offset:offset+4]
+        batches = sample_batches or [fold.train_sample_ids[offset:offset+4] for offset in (0, 4)]
+        if any(not ids or not set(ids) <= set(fold.train_sample_ids) for ids in batches):
+            raise ValueError("gradient diagnostics require nonempty training-only batches")
+        for ids in batches:
             with ordinary_recurrence(model, True):
                 model.eval()
                 output = model(provider(ids))
@@ -134,10 +135,10 @@ def checkpoint_gradients(*, checkpoint, route, provider, fold, targets, definiti
                     chronaris_mechanism_enabled=source.get('chronaris_mechanism_enabled', False),
                     chronaris_explicit_shift_weight=source.get('chronaris_explicit_shift_weight', 0.),
                     chronaris_event_pair_weight=source.get('chronaris_event_pair_weight', 0.))
-                losses = {t.name: tasks[t.name]/len(definitions) for t in definitions}
-                losses['public'] = public.total_loss * (.2 if route == 'task_guided' else 1.)
+                losses = {t.name: tasks[t.name]/len(definitions) if tasks['counts'][t.name] > 0 else None for t in definitions}
+                losses['public'] = public.total_loss * (payload['config']['self_supervised_weight'] if route == 'task_guided' else 1.)
                 losses.update(mechanism.weighted_terms)
-                rows.append(dict(sample_ids=ids, schedule_update=updates, mechanisms=list(mechanism.rows),
+                rows.append(dict(sample_ids=ids, task_valid_counts=tasks["counts"], schedule_update=updates, mechanisms=list(mechanism.rows),
                     **isolated_gradients(losses, encoder.backbone.continuous_backbone.parameters())))
         return write_result(Path(output_root['path'])/'gradients.json', dict(status='completed', checkpoint=str(checkpoint),
             checkpoint_sha256=sha256_file(checkpoint), route=route, batches=rows, optimizer_steps=0,

@@ -38,6 +38,9 @@ CPU_STAGES = {'public_results', 'public_review_results', 'simulation_review_resu
 
 
 def pipeline_groups(until):
+    if until == 'stage45c':
+        from chronaris.evaluation.application_tasks.stage45c import groups
+        return groups()
     if until == 'stage45b':
         from chronaris.evaluation.application_tasks.stage45b import groups
         return groups()
@@ -137,7 +140,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
         try:
             save()
             for group in pipeline_groups(until):
-                if until in ('stage45', 'stage45b') and stage45_budget_expired(config, state):
+                if until in ('stage45', 'stage45b', 'stage45c') and stage45_budget_expired(config, state):
                     state.update(status='budget_exhausted', confirmation_opened=False); save()
                     return state
                 for stage, expected in group:
@@ -147,7 +150,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
                     else:
                         launch(stage, expected)
                 while children:
-                    if until in ('stage45', 'stage45b') and stage45_budget_expired(config, state):
+                    if until in ('stage45', 'stage45b', 'stage45c') and stage45_budget_expired(config, state):
                         state.update(status='budget_exhausted', confirmation_opened=False); save()
                         return state
                     for stage, (child, log, result_path, expected, started) in list(children.items()):
@@ -201,7 +204,7 @@ def execute_pipeline(config, *, until, retry_failed=False):
 def main(*, default_until='freeze'):
     parser = argparse.ArgumentParser(description='Fixed v4 development, selection and confirmation; resumes one immutable run root.')
     parser.add_argument('--root')
-    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45', 'stage45b'), default=default_until)
+    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45', 'stage45b', 'stage45c'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
     parser.add_argument('--stage45-budget-hours', type=float, default=72, help='0 removes the stage 4.5 wall-clock limit')
     parser.add_argument('--stage45-resume-parent', help='Stopped stage 4.5 root to preserve and resume in a new root')
@@ -212,7 +215,7 @@ def main(*, default_until='freeze'):
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
     parser.add_argument('--retry-failed', action='store_true')
-    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45')+pipeline_groups('stage45b') for stage, _ in group], help=argparse.SUPPRESS)
+    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45')+pipeline_groups('stage45b')+pipeline_groups('stage45c') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
@@ -304,8 +307,19 @@ def main(*, default_until='freeze'):
         input_paths = [Path(config['stage45b_validation']), Path(config['registry_path']), project/'docs/requirements/thesis-stage45b-development-20260921.md',
             project/'docs/artifacts/runs/2026-09-21_v4-stage45-closeout/evidence.json']
         input_paths += [Path(config['data_root'])/d/'summary.json' for d in ('cogpilot','clare')]
+    elif args.until == 'stage45c':
+        if not args.stage45_parent or args.comparison_parent or args.execution_parent:
+            parser.error('stage45c requires its completed stage45b parent')
+        if not math.isfinite(args.stage45_budget_hours) or not 0 < args.stage45_budget_hours <= 24:
+            parser.error('stage45c requires a positive budget no greater than 24 hours')
+        config.update(stage45c_parent=str(Path(args.stage45_parent).resolve()),
+            stage45c_validation=str(Path(args.stage45_acceptance).resolve()), stage45_budget_hours=args.stage45_budget_hours)
+        input_paths = [Path(config['registry_path']), Path(config['stage45c_validation']),
+            Path(config['stage45c_parent'])/'pipeline_state.json',
+            project/'docs/requirements/thesis-stage45c-development-20260922.md']
+        input_paths += [Path(config['data_root'])/d/'summary.json' for d in ('cogpilot','clare')]
     elif args.stage45_parent:
-        parser.error('--stage45-parent requires --until stage45')
+        parser.error('--stage45-parent requires --until stage45 or stage45c')
     if args.comparison_parent:
         if args.until != 'comparison':
             parser.error('--comparison-parent requires --until comparison')
@@ -317,7 +331,7 @@ def main(*, default_until='freeze'):
         input_paths += [Path(config['execution_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
         input_paths.append(Path(config['execution_evidence']))
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
-    if args.plan_only and args.until in ('stage45', 'stage45b'):
+    if args.plan_only and args.until in ('stage45', 'stage45b', 'stage45c'):
         print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), budget_hours=config['stage45_budget_hours'],
             confirmation_opened=False, executes_training=False), indent=2))
         return

@@ -6,7 +6,9 @@
 
 ## 当前复核
 
-[阶段 4.5-B 复核](stage/thesis-v4/stage45b-20260921/README.md)：训练内分组选模、归一化诊断、条件结构候选及独立恢复；按新协议启动有界实验。
+[阶段 4.5-C 复核](stage/thesis-v4/stage45c-20260922/README.md)：任务有效梯度复测、单因素目标消融、预训练原样复用与角色拒绝检查。
+
+[阶段 4.5-B 复核](stage/thesis-v4/stage45b-20260921/README.md)：训练内分组选模、归一化诊断、条件结构候选及独立恢复；十二次首轮已完成，无候选通过原研究门。
 
 [阶段 4.5 结果收口与下一轮复核](../artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：核验全部来源、五种候选和八个对照尝试、补充下游与梯度记录；18/18 完成、零入围，22 个后续槽位按规则跳过。计划与结果均见报告；远端问题见[GPT PRO 复核任务](../artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
 
