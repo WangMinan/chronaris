@@ -1,0 +1,2597 @@
+{
+  "parent": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b",
+  "parent_status": "stage45b_completed",
+  "completed_training_units": 12,
+  "selection": {
+    "status": "completed",
+    "finalists": [],
+    "comparisons": {
+      "mechanisms": {
+        "eligible": false,
+        "safe": false,
+        "meaningful_domain_routes": 0,
+        "rows": [
+          {
+            "domain": "clare",
+            "route": "self_supervised",
+            "task": "workload_classification",
+            "metric": "macro_f1",
+            "value": 0.39798643951117046,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.404309210701589,
+            "improvement": -0.006322771190418519,
+            "meaningful": false
+          },
+          {
+            "domain": "clare",
+            "route": "self_supervised",
+            "task": "workload_regression",
+            "metric": "rmse",
+            "value": 2.746095747091158,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 2.442343757808157,
+            "improvement": -0.12436905669478666,
+            "meaningful": false
+          },
+          {
+            "domain": "clare",
+            "route": "task_guided",
+            "task": "workload_classification",
+            "metric": "macro_f1",
+            "value": 0.38293697952342864,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.40039943626549873,
+            "improvement": -0.017462456742070087,
+            "meaningful": false
+          },
+          {
+            "domain": "clare",
+            "route": "task_guided",
+            "task": "workload_regression",
+            "metric": "rmse",
+            "value": 2.8794580061916903,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 2.304402275823359,
+            "improvement": -0.2495465901945723,
+            "meaningful": false
+          },
+          {
+            "domain": "cogpilot",
+            "route": "self_supervised",
+            "task": "difficulty",
+            "metric": "macro_f1",
+            "value": 0.22342460075959605,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.23405719160269944,
+            "improvement": -0.01063259084310339,
+            "meaningful": false
+          },
+          {
+            "domain": "cogpilot",
+            "route": "self_supervised",
+            "task": "event_response",
+            "metric": "rmse",
+            "value": 0.3183270004439854,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.3102863484009229,
+            "improvement": -0.025913650679446277,
+            "meaningful": false
+          },
+          {
+            "domain": "cogpilot",
+            "route": "task_guided",
+            "task": "difficulty",
+            "metric": "macro_f1",
+            "value": 0.21235699680527276,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.23466788107989175,
+            "improvement": -0.022310884274618997,
+            "meaningful": false
+          },
+          {
+            "domain": "cogpilot",
+            "route": "task_guided",
+            "task": "event_response",
+            "metric": "rmse",
+            "value": 0.31912581274587354,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.31035720313412013,
+            "improvement": -0.02825328209947837,
+            "meaningful": false
+          }
+        ],
+        "score": -0.06060141033981183
+      },
+      "linear_projection": {
+        "eligible": false,
+        "safe": false,
+        "meaningful_domain_routes": 3,
+        "rows": [
+          {
+            "domain": "clare",
+            "route": "self_supervised",
+            "task": "workload_classification",
+            "metric": "macro_f1",
+            "value": 0.4095790703468155,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.404309210701589,
+            "improvement": 0.005269859645226527,
+            "meaningful": false
+          },
+          {
+            "domain": "clare",
+            "route": "self_supervised",
+            "task": "workload_regression",
+            "metric": "rmse",
+            "value": 3.036666214023139,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 2.442343757808157,
+            "improvement": -0.2433410343302155,
+            "meaningful": false
+          },
+          {
+            "domain": "clare",
+            "route": "task_guided",
+            "task": "workload_classification",
+            "metric": "macro_f1",
+            "value": 0.4401115317832489,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.40039943626549873,
+            "improvement": 0.03971209551775018,
+            "meaningful": true
+          },
+          {
+            "domain": "clare",
+            "route": "task_guided",
+            "task": "workload_regression",
+            "metric": "rmse",
+            "value": 2.8245838838298223,
+            "group_count": 2,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 2,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 2.304402275823359,
+            "improvement": -0.22573385448536906,
+            "meaningful": false
+          },
+          {
+            "domain": "cogpilot",
+            "route": "self_supervised",
+            "task": "difficulty",
+            "metric": "macro_f1",
+            "value": 0.2642919660308091,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.23405719160269944,
+            "improvement": 0.03023477442810968,
+            "meaningful": true
+          },
+          {
+            "domain": "cogpilot",
+            "route": "self_supervised",
+            "task": "event_response",
+            "metric": "rmse",
+            "value": 0.30841071205982956,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.3102863484009229,
+            "improvement": 0.006044856149036286,
+            "meaningful": false
+          },
+          {
+            "domain": "cogpilot",
+            "route": "task_guided",
+            "task": "difficulty",
+            "metric": "macro_f1",
+            "value": 0.3228176888528868,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.23466788107989175,
+            "improvement": 0.08814980777299505,
+            "meaningful": true
+          },
+          {
+            "domain": "cogpilot",
+            "route": "task_guided",
+            "task": "event_response",
+            "metric": "rmse",
+            "value": 0.30944564854176193,
+            "group_count": 3,
+            "aggregation": "field_mean_then_group_mean",
+            "error_units": "native",
+            "inner_training_replicas": 1,
+            "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused",
+            "reference": 0.31035720313412013,
+            "improvement": 0.002937114341645465,
+            "meaningful": false
+          }
+        ],
+        "score": -0.03709079762010267
+      }
+    },
+    "strong_reference_rows": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.3195712596750831,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.6828025710363186,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.31860657092371797,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.6092007284512662,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.4590813356485852,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3067948834183685,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.464957463335314,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.30651431246036737,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      }
+    ],
+    "confirmation_opened": false
+  },
+  "variants": {
+    "reference": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.404309210701589,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.442343757808157,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.40039943626549873,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.304402275823359,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.23405719160269944,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3102863484009229,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.23466788107989175,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.31035720313412013,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      }
+    ],
+    "mechanisms": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.39798643951117046,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.746095747091158,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.38293697952342864,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.8794580061916903,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.22342460075959605,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3183270004439854,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.21235699680527276,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.31912581274587354,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      }
+    ],
+    "linear_projection": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.4095790703468155,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 3.036666214023139,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.4401115317832489,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.8245838838298223,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.2642919660308091,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.30841071205982956,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.3228176888528868,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.30944564854176193,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      }
+    ],
+    "baseline": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.3195712596750831,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.6828025710363186,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.31860657092371797,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.6092007284512662,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.4590813356485852,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3067948834183685,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.464957463335314,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.30651431246036737,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1,
+        "aggregation_note": "equal reciprocal training splits; development evaluation subjects are reused"
+      }
+    ]
+  },
+  "sources": {
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_plan.1.json": "c317734d12f1101ed07dc1b99b3784231b19257297d1be61bbda69cf1352ad83",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_diagnostics__clare.1.json": "26c5a78f72f9f1232634584f63861974aabf8e5c55646fdb976a6986bdd2020e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_diagnostics__cogpilot.1.json": "f573d1ceb19e80a2943d384c1a647fc324bb30c9ef64ad717f062c254ee5f84f",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__0.1.json": "58abc11f5179c429eec58577526f9d533f7db5cc607d877893bb4aae09f79cd4",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__1.1.json": "4d22d618fe0f028aa0eb86995132d2505af79029c8c3252291c74426075068b4",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__2.1.json": "a738db6708195fa6f7d6c71eab4ce44cb40884c4056716af39f7862c769f200c",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__3.1.json": "cfe844cd0ff2edb9f2c7d9500f3988cb78bd85cd84b07d39cf0a05af4890638b",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__4.1.json": "f7cda950c821b2b8d34c7e2fedf7835c2bdf995f5ebdd510f876e0363d7c7826",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__5.1.json": "07799f5656fa285df5a2d8c192dd8861bd4b97d8fe59e10ef3538dfbef6f3e28",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__6.1.json": "737a7e0e057fe4c6816dff44a417193b10edb2c2a2c7d05a0903019b8c0234e8",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__7.1.json": "3c23ab30460c1ea1e53e399d9955f1c294d88de89fd1688fe152471b2e41d312",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__8.1.json": "9e9f83951449075479623e58fa6302b516900bad94a6465c24fdb0d18a66b874",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__9.1.json": "c6e2d82c6a34bf2a62247664c54c6ef916506f6bd0718c34418f8491e286ed2e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__10.1.json": "30b181f586ee04edc4a1b63250a55fe770de6e7303c8a286b7db76e3d6ceb7e5",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__11.1.json": "5c47a4a073a103c9f9b23d7902b1b0dc9389e3287dd006798d82b65e4acef40f",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_select.1.json": "8d51d2a5bbdf8022025e348fb4b7f3b470f1b8bfcddc0b7049e9a0ac78c56268",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__0.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__1.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__2.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__3.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__4.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__5.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__6.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__7.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__8.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_report.1.json": "f79487e28062340ff3c8b14f726d71e3384323ca14413407ffcb8f45606fe391"
+  },
+  "units": [
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "reference",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.4145743989603639,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.9030899743604626,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.40675485008818346,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.7914052199525679,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 3802.0153456800617,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "8ec5d7c94c46ab3df0ec0fe82df43b84af614cf9c82bbac99d320202f489140a",
+            "best_epoch": 5,
+            "completed_epochs": 32,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.272594318089634,
+              "short_horizon_prediction": 4.309978789226589,
+              "lag_discrimination": 0.6300147286395437
+            },
+            "best_public_selection_loss": 1.0636082085124658,
+            "training_elapsed_s": 1881.1580129000358,
+            "parameter_count": 29770,
+            "optimizer_updates": 300,
+            "best_update": 50
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.42755199119213416,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.1246340157065142,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "27c1e3a62d3782fb88d3bf54ef7f7d75d6080ae4abaa971e08089e91b6a6c8de",
+            "best_epoch": 10,
+            "completed_epochs": 26,
+            "stopped_early": false,
+            "training_elapsed_s": 1761.43339496525,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.424443156072549,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.7239576355458623,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "reference",
+        "inner_index": 1,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.394044022442814,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.9815975412558515,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.394044022442814,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.81739933169415,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 3679.584990728181,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "06aedd56c295ab05d9e87d3b445f19b0d59939562f023921ad46365e6831f68d",
+            "best_epoch": 22,
+            "completed_epochs": 22,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.720606257971466,
+              "short_horizon_prediction": 4.697881946831024,
+              "lag_discrimination": 0.40370136543885987
+            },
+            "best_public_selection_loss": 0.7337386902909007,
+            "training_elapsed_s": 1801.609887511935,
+            "parameter_count": 29770,
+            "optimizer_updates": 300,
+            "best_update": 300
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.394044022442814,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.9815975412558515,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "da97d314b4f2732c3ca4d25111788ba2f03391ca191cdd7491cacff44a593e53",
+            "best_epoch": 7,
+            "completed_epochs": 18,
+            "stopped_early": false,
+            "training_elapsed_s": 1720.7645843410864,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.3935024377952086,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.395088979208468,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "mechanisms",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.3708696433560056,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.170558113664345,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.37182993660404323,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.1624542790264965,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 5010.546659634914,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/2/clare/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/2/clare/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "77b175b506abf4543efa6934e195f6e99ccf08e1fe10bf94f0234dfdac197e93",
+            "best_epoch": 16,
+            "completed_epochs": 32,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.055918037849741,
+              "short_horizon_prediction": 4.08000316938805,
+              "lag_discrimination": 0.6959868773971636
+            },
+            "best_public_selection_loss": 1.0280082052071529,
+            "training_elapsed_s": 2623.2057813368738,
+            "parameter_count": 29866,
+            "optimizer_updates": 300,
+            "best_update": 150
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.3315043994552063,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.025210891860706,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/2/clare/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/2/clare/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "b243468be278a12d4d2d7bdfa3820549026695d08c827ecadb68e0dbdef127c2",
+            "best_epoch": 10,
+            "completed_epochs": 26,
+            "stopped_early": false,
+            "training_elapsed_s": 2224.7342331819236,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.36615660456910265,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.3833062537287333,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "mechanisms",
+        "inner_index": 1,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.42510323566633534,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 3.3216333805179707,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.394044022442814,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 3.5964617333568847,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 4829.481743300799,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/3/clare/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/3/clare/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "32775dde2788f340bff57067d5105e538924a3b6644f117d9aec5a44928d635c",
+            "best_epoch": 7,
+            "completed_epochs": 22,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 5.0535288511317855,
+              "short_horizon_prediction": 5.04746686613516,
+              "lag_discrimination": 0.7847358442064541
+            },
+            "best_public_selection_loss": 0.892435014963333,
+            "training_elapsed_s": 2501.861979037989,
+            "parameter_count": 29866,
+            "optimizer_updates": 300,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.394044022442814,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 3.479811638502481,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/3/clare/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/3/clare/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "ac8be15af558ac27526804c3228a586b870655830e1c65b3940c16229496a869",
+            "best_epoch": 7,
+            "completed_epochs": 18,
+            "stopped_early": false,
+            "training_elapsed_s": 2168.165826390963,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.394044022442814,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 3.9971671407271985,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "linear_projection",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.425114118250817,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.374003897139506,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.44067220151725073,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.0892586411490437,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 3722.8826153110713,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/4/clare/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/4/clare/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "3701f4cceefadf75857863d474dd4844f16a7baa34c4adbab40f01363857841c",
+            "best_epoch": 26,
+            "completed_epochs": 32,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.060024543682766,
+              "short_horizon_prediction": 4.063034682052007,
+              "lag_discrimination": 0.48067729159728767
+            },
+            "best_public_selection_loss": 1.2406611665181715,
+            "training_elapsed_s": 1839.651749449782,
+            "parameter_count": 29642,
+            "optimizer_updates": 300,
+            "best_update": 250
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.4344446275242123,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.289077349102713,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/4/clare/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/4/clare/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "33b8d59f10a18ccd652f1a70a1458b05f0a7bf4fa337bc6381ea8bfc9c06a3d5",
+            "best_epoch": 26,
+            "completed_epochs": 26,
+            "stopped_early": false,
+            "training_elapsed_s": 1726.7038295618258,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 250
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.44067220151725073,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 2.0892586411490437,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "linear_projection",
+        "inner_index": 1,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.394044022442814,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 3.6993285309067723,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.4395508620492471,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 3.5599091265106004,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 3607.487226412166,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/5/clare/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/5/clare/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "6e84b930d2564fa80b6410904eefc64c5a5dc676eeede55b72d89fdbc9d8b799",
+            "best_epoch": 18,
+            "completed_epochs": 22,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.820246899157832,
+              "short_horizon_prediction": 4.815268340014047,
+              "lag_discrimination": 0.24700249809382566
+            },
+            "best_public_selection_loss": 0.7206297814798271,
+            "training_elapsed_s": 1764.096996536944,
+            "parameter_count": 29642,
+            "optimizer_updates": 300,
+            "best_update": 250
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.4433017812328157,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 4.194211787217287,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/5/clare/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/5/clare/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "256b0d2e7e8d23afe0ff2d1c693488aa98940da960cecfecb00b226c35758393",
+            "best_epoch": 14,
+            "completed_epochs": 18,
+            "stopped_early": false,
+            "training_elapsed_s": 1688.902837916743,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 200
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.4476848633819228,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 3.7481717342900893,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "contiformer",
+        "variant": "baseline",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.25438839389617285,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.589656606968045,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.2524590163934426,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.5720018543994718,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 313.7230962892063,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "contiformer",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/self_supervised/contiformer/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/self_supervised/contiformer/C/last.pt",
+            "protocol_sha256": "11dbf469ac190655d4e551bdc9f225f21ae51d7d3259731d96309275b4b2d777",
+            "best_epoch": 26,
+            "completed_epochs": 32,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.041504851741406,
+              "short_horizon_prediction": 4.099851861575635,
+              "lag_discrimination": 0.772660625349615
+            },
+            "best_public_selection_loss": 1.0238366660705152,
+            "training_elapsed_s": 140.84082036325708,
+            "parameter_count": 30496,
+            "optimizer_updates": 300,
+            "best_update": 250
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.2524590163934426,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.9206288420635462,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "contiformer",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/task_guided/contiformer/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/task_guided/contiformer/last.pt",
+            "protocol_sha256": "5818387cc97bf18f212ec0984b52a9d547d5c9c214d4d977453cb34182d6cd96",
+            "best_epoch": 10,
+            "completed_epochs": 26,
+            "stopped_early": false,
+            "training_elapsed_s": 121.17048579733819,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.2524590163934426,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.7408971595809404,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "clare",
+        "method": "contiformer",
+        "variant": "baseline",
+        "inner_index": 1,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.38475412545399335,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.7759485351045923,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.38475412545399335,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.6463996025030605,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 304.93413288285956,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "contiformer",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/self_supervised/contiformer/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/self_supervised/contiformer/C/last.pt",
+            "protocol_sha256": "9b3d4e5f59c6f75c883340e7217a6062536bfbf2e35315ca55f2b77351a6f34d",
+            "best_epoch": 3,
+            "completed_epochs": 22,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 4.913773654764846,
+              "short_horizon_prediction": 5.047905961233467,
+              "lag_discrimination": 0.5124295985520776
+            },
+            "best_public_selection_loss": 0.6238707115642199,
+            "training_elapsed_s": 131.9429142861627,
+            "parameter_count": 30496,
+            "optimizer_updates": 300,
+            "best_update": 50
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.3760155236302851,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.8898756126323204,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "contiformer",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/task_guided/contiformer/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/task_guided/contiformer/last.pt",
+            "protocol_sha256": "d654586654a64445e08bd2c6b2d5fe789a3305dab20978ae9ef741ce29ab5f92",
+            "best_epoch": 11,
+            "completed_epochs": 18,
+            "stopped_early": false,
+            "training_elapsed_s": 117.04364534607157,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 150
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "workload_classification",
+                "metric": "macro_f1",
+                "value": 0.38383507250246557,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "workload_regression",
+                "metric": "rmse",
+                "value": 1.582911670584951,
+                "group_count": 2,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "cogpilot",
+        "method": "chronaris",
+        "variant": "reference",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.23405719160269944,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3102863484009229,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.23466788107989175,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.31035720313412013,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 16073.62679315731,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "16eab1bf5b7c51ddf0382d067b4719d5d8dce7b04bfb2b13a68f16450dac9eca",
+            "best_epoch": 5,
+            "completed_epochs": 6,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 0.9326696734081339,
+              "short_horizon_prediction": 0.9482494854070481,
+              "lag_discrimination": 0.5356731354371796
+            },
+            "best_public_selection_loss": 2.617203467461283,
+            "training_elapsed_s": 8639.269162975252,
+            "parameter_count": 30352,
+            "optimizer_updates": 300,
+            "best_update": 250
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.25324012853446987,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.31008178037876655,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "930ccb9f77f664c1fde1d2bed3363d211ad2e306e8c759b542ab35d2c4938847",
+            "best_epoch": 2,
+            "completed_epochs": 5,
+            "stopped_early": false,
+            "training_elapsed_s": 6499.287584833335,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.21595406040392376,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.31044754173439343,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "cogpilot",
+        "method": "chronaris",
+        "variant": "mechanisms",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.22342460075959605,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3183270004439854,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.21235699680527276,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.31912581274587354,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 22169.689678117167,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/9/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/9/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "447a805c07390963f3ba7bbd318e1f6f9694db149ffe472d39bf20d9b0190125",
+            "best_epoch": 1,
+            "completed_epochs": 6,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 1.1568874438447958,
+              "short_horizon_prediction": 1.2623519765298468,
+              "lag_discrimination": 0.6137333100177167
+            },
+            "best_public_selection_loss": 2.6057782829216003,
+            "training_elapsed_s": 12120.50427936716,
+            "parameter_count": 30448,
+            "optimizer_updates": 300,
+            "best_update": 50
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.21266900292541957,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.31064055571285637,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/9/cogpilot/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/9/cogpilot/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "0eb50340bd22fd47bea5d63c9230d480c6745dbbae458b233b297b1f53c44717",
+            "best_epoch": 3,
+            "completed_epochs": 5,
+            "stopped_early": false,
+            "training_elapsed_s": 8966.761866319925,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 150
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.2026781774534833,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.32023109218710194,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "cogpilot",
+        "method": "chronaris",
+        "variant": "linear_projection",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.2642919660308091,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.30841071205982956,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.3228176888528868,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.30944564854176193,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 17579.792918280233,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "chronaris",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/10/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/10/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+            "protocol_sha256": "3ee0022e641fdb85ef64a95635d55fe0c63a18a8cf234603538d7fd682b64c50",
+            "best_epoch": 6,
+            "completed_epochs": 6,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 0.9629360353036324,
+              "short_horizon_prediction": 0.9717607716011204,
+              "lag_discrimination": 0.43305743705956734
+            },
+            "best_public_selection_loss": 2.579060995026974,
+            "training_elapsed_s": 9484.445168787148,
+            "parameter_count": 30224,
+            "optimizer_updates": 300,
+            "best_update": 300
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.2642919660308091,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.30841071205982956,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "chronaris",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/10/cogpilot/chronaris/task_guided/chronaris/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/10/cogpilot/chronaris/task_guided/chronaris/last.pt",
+            "protocol_sha256": "7a8b4def11b825a3d592763ff8f2bb45df4659e3032ffbd6aae7057f219223c9",
+            "best_epoch": 5,
+            "completed_epochs": 5,
+            "stopped_early": false,
+            "training_elapsed_s": 6874.930310899857,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 250
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.3228176888528868,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.30944564854176193,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unit": {
+        "domain": "cogpilot",
+        "method": "vehicle_only",
+        "variant": "baseline",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "metrics": [
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.4590813356485852,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3067948834183685,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.464957463335314,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.30651431246036737,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ],
+      "total_seconds": 758.8760573831387,
+      "routes": [
+        {
+          "route": "self_supervised",
+          "training": {
+            "method_name": "vehicle_only",
+            "candidate_id": "C",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/self_supervised/vehicle_only/C/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/self_supervised/vehicle_only/C/last.pt",
+            "protocol_sha256": "62f1b1a10f6065531082aa667c85a8f974ef0fdccf66e34d971efe9014258497",
+            "best_epoch": 6,
+            "completed_epochs": 6,
+            "stopped_early": false,
+            "best_validation_losses": {
+              "masked_reconstruction": 0.07675015644714725,
+              "short_horizon_prediction": 0.06671108856242018
+            },
+            "best_public_selection_loss": 2.4218651065363614,
+            "training_elapsed_s": 240.56501315068454,
+            "parameter_count": 30688,
+            "optimizer_updates": 300,
+            "best_update": 300
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.4590813356485852,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.3067948834183685,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        },
+        {
+          "route": "task_guided",
+          "training": {
+            "method_name": "vehicle_only",
+            "status": "completed",
+            "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/task_guided/vehicle_only/best.pt",
+            "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/task_guided/vehicle_only/last.pt",
+            "protocol_sha256": "6117c57a0e54f3da93e489bc05d19b6454ece95debfc2c217f86b746fe92fa41",
+            "best_epoch": 2,
+            "completed_epochs": 5,
+            "stopped_early": false,
+            "training_elapsed_s": 188.32951994799078,
+            "encoder_update_mode": "full_backbone",
+            "training_device_history": [
+              "cuda"
+            ],
+            "optimizer_updates": 250,
+            "head_warmup_updates": 50,
+            "joint_updates": 200,
+            "best_update": 100
+          },
+          "original_selector": {
+            "linear": [
+              {
+                "task": "difficulty",
+                "metric": "macro_f1",
+                "value": 0.46127948686970816,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              },
+              {
+                "task": "event_response",
+                "metric": "rmse",
+                "value": 0.3068052411650055,
+                "group_count": 3,
+                "aggregation": "field_mean_then_group_mean",
+                "error_units": "native"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "real_short": {
+    "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-real-check-frozen/screen/0.json",
+    "status": "completed",
+    "total_seconds": 259.42488916032016,
+    "new_pretraining_updates": 0,
+    "engineering_only": true,
+    "training": {
+      "method_name": "chronaris",
+      "status": "completed",
+      "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-real-check-frozen/units/0/clare/chronaris/task_guided/chronaris/best.pt",
+      "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-real-check-frozen/units/0/clare/chronaris/task_guided/chronaris/last.pt",
+      "protocol_sha256": "4137d3442ff2c43158c45b02393898384eda415c7a0850a8208487de61794af8",
+      "best_epoch": 0,
+      "completed_epochs": 0,
+      "stopped_early": false,
+      "training_elapsed_s": 153.9268516912125,
+      "encoder_update_mode": "full_backbone",
+      "training_device_history": [
+        "cuda"
+      ],
+      "optimizer_updates": 4,
+      "head_warmup_updates": 2,
+      "joint_updates": 2,
+      "best_update": 3
+    }
+  },
+  "frozen_source_commit": "c3b8f50d",
+  "gradient_evidence": {
+    "path": "gradients.json",
+    "sha256": "ba61c323617a2f072f1a6c90222de23e484125765e61e704aadb982cf4895664",
+    "optimizer_updates": 0,
+    "batch_counts": {
+      "clare": 4,
+      "cogpilot": 8
+    }
+  },
+  "validation": {
+    "format": "chronaris.v4_cuda_validation.v1",
+    "status": "completed",
+    "source_code_sha256": "83683bc258fbe65338b207610be34e953cb228980db3cb91df6216f99e037f03",
+    "test_suite_sha256": "460d182d435f744922f74ed4b219a1ca4bd4814c6f88909037f81d0b4a62ca75",
+    "device": "cuda",
+    "exit_code": 0,
+    "command": [
+      "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "--junitxml=/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/pytest.xml"
+    ],
+    "files": {
+      "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/pytest.xml": "ecd80ad4a6e8a1c5bb181738fb3213e4d55884b68bd2f0a51642a6cd503c4dd4",
+      "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/pytest.log": "e183932b41f1c9087ced399225b8de08b06b50cd36ce1dfb11760d267d8a5346"
+    }
+  },
+  "launch": {
+    "pid": 1453273,
+    "started_at": "2026-09-22T15:06:00.853072+08:00",
+    "runtime": "/home/wangminan/projects/chronaris-runtime-stage45c-20260922",
+    "root": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c",
+    "command": [
+      "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+      "/home/wangminan/projects/chronaris-runtime-stage45c-20260922/scripts/evaluation/application_tasks/run_v4_pipeline.py",
+      "--root",
+      "/mnt/e/chronaris-v4-results/2026-09-22-stage45c",
+      "--until",
+      "stage45c",
+      "--stage45-parent",
+      "/mnt/e/chronaris-v4-results/2026-09-21-stage45b",
+      "--stage45-budget-hours",
+      "24",
+      "--stage45-acceptance",
+      "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/validation_receipt.json"
+    ],
+    "source_commit": "c3b8f50d9b24aa2235b9e3e6b8d3cf86f74c310a"
+  },
+  "launch_verification": {
+    "checked_at": "2026-09-22T15:07:39.653229+08:00",
+    "pipeline_state": {
+      "completed": {
+        "stage45c_plan": {
+          "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_plan.1.json",
+          "sha256": "579e1a2a881f09d439e06a21bea40cd003f41e1d0c369205eaa7a2193915f67e"
+        }
+      },
+      "failures": [],
+      "attempts": {
+        "stage45c_plan": 1,
+        "stage45c_screen__0": 1
+      },
+      "started_at_unix_s": 1790060763.4857116,
+      "pid": 1453273,
+      "config_sha256": "b978c16b0c1eb2fef77d8a45322575c90be9bc6fe1e0f437ba7965856034a910",
+      "status": "running",
+      "until": "stage45c",
+      "children": {
+        "stage45c_screen__0": 1453302
+      },
+      "updated_at_unix_s": 1790060828.4640646,
+      "current_stage": "stage45c_screen__0",
+      "current_log": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/logs/stage45c_screen__0.1.log"
+    },
+    "progress": {
+      "method": "chronaris",
+      "status": "running",
+      "optimizer_updates": 50,
+      "phase": "training",
+      "stage": "head_warmup",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/0/clare/chronaris/task_guided/chronaris/last.pt",
+      "best_update": 0,
+      "samples_seen": 800,
+      "peak_allocated_bytes": 364840960,
+      "wall_elapsed_s": 57.12371230684221
+    },
+    "checkpoint": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/0/clare/chronaris/task_guided/chronaris/last.pt",
+      "optimizer_updates": 50,
+      "stage_update_counts": {
+        "pretraining": 0,
+        "head_warmup": 50,
+        "joint_adaptation": 0
+      },
+      "public_weight": 0.0
+    },
+    "processes": "    PID                  STARTED     ELAPSED %CPU   RSS COMMAND\n1453273 Tue Sep 22 15:06:05 2026       01:34  2.0 677260 /home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage45c-20260922/scripts/evaluation/application_tasks/run_v4_pipeline.py --root /mnt/e/chronaris-v4-results/2026-09-22-stage45c --until stage45c --stage45-parent /mnt/e/chronaris-v4-results/2026-09-21-stage45b --stage45-budget-hours 24 --stage45-acceptance /mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/validation_receipt.json\n1453302 Tue Sep 22 15:06:11 2026       01:28 94.5 3345584 /home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage45c-20260922/scripts/evaluation/application_tasks/run_v4_pipeline.py --worker stage45c_screen__0 --config /mnt/e/chronaris-v4-results/2026-09-22-stage45c/pipeline_config.json --result /mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__0.1.json --attempt 1\n",
+    "gpu": "36 %, 2896 MiB",
+    "parent_sources_unchanged": true
+  }
+}

@@ -1,0 +1,472 @@
+{
+  "status": "completed",
+  "source_code_sha256": "83683bc258fbe65338b207610be34e953cb228980db3cb91df6216f99e037f03",
+  "records": [
+    {
+      "unit": 0,
+      "domain": "clare",
+      "result": {
+        "status": "completed",
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/task_guided/chronaris/best.pt",
+        "checkpoint_sha256": "b8ec9fab83cf71a7461e153025a6be951c14a0fa5cdcdd9d02d525f46418291b",
+        "route": "task_guided",
+        "batches": [
+          {
+            "sample_ids": [
+              "1674__experiment1_window18",
+              "1674__experiment0_window30",
+              "1674__experiment2_window41",
+              "1674__experiment2_window51"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 0.5759980082511902,
+                "loss": 0.14925527572631836
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.19597111642360687,
+                "loss": 0.2900707423686981
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.07640670239925385,
+                "loss": 0.08373333513736725
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": 0.35534265637397766,
+              "workload_classification / public": 0.20871122181415558,
+              "workload_regression / public": 0.28237953782081604
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "1674__experiment1_window51",
+              "1674__experiment2_window40",
+              "1674__experiment1_window10",
+              "1674__experiment1_window41"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 0.5238655805587769,
+                "loss": 0.1335570216178894
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.552992582321167,
+                "loss": 0.017039190977811813
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.05781333148479462,
+                "loss": 0.08626066893339157
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": 0.1461191624403,
+              "workload_classification / public": -0.26217734813690186,
+              "workload_regression / public": -0.11512059718370438
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          }
+        ],
+        "optimizer_steps": 0,
+        "task_readout": "trained_task_heads",
+        "confirmation_opened": false
+      }
+    },
+    {
+      "unit": 1,
+      "domain": "clare",
+      "result": {
+        "status": "completed",
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/task_guided/chronaris/best.pt",
+        "checkpoint_sha256": "2a8433935958965eecc8a273032dc707a2a4333b496345ec517883475292e0a2",
+        "route": "task_guided",
+        "batches": [
+          {
+            "sample_ids": [
+              "1624__experiment2_window12",
+              "1624__experiment1_window43",
+              "1624__experiment1_window0",
+              "1624__experiment2_window9"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 1.198875069618225,
+                "loss": 0.7038704752922058
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.7837164998054504,
+                "loss": 1.0427800416946411
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.06893392652273178,
+                "loss": 0.08990859985351562
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": 0.2805732786655426,
+              "workload_classification / public": -0.05117999017238617,
+              "workload_regression / public": -0.18255001306533813
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "1624__experiment2_window49",
+              "1624__experiment0_window16",
+              "1624__experiment1_window11",
+              "1624__experiment1_window12"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 1.1278111934661865,
+                "loss": 0.668361246585846
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.804171621799469,
+                "loss": 0.5282180309295654
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.04298275709152222,
+                "loss": 0.06871878355741501
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": 0.08484506607055664,
+              "workload_classification / public": 0.06381590664386749,
+              "workload_regression / public": 0.02745174989104271
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          }
+        ],
+        "optimizer_steps": 0,
+        "task_readout": "trained_task_heads",
+        "confirmation_opened": false
+      }
+    },
+    {
+      "unit": 8,
+      "domain": "cogpilot",
+      "result": {
+        "status": "completed",
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/task_guided/chronaris/best.pt",
+        "checkpoint_sha256": "7354db85773430fbc5dc29c41de0d0783b0c13b1ae17e6c52e8cfcfe2bf2ae58",
+        "route": "task_guided",
+        "batches": [
+          {
+            "sample_ids": [
+              "sub-cp019::ses-20210625::level-03B_run-002::window0010",
+              "sub-cp019::ses-20210625::level-01B_run-007::window0010",
+              "sub-cp019::ses-20210625::level-04B_run-004::window0004",
+              "sub-cp019::ses-20210625::level-03B_run-011::window0010"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 0.5501821637153625,
+                "loss": 0.6679773330688477
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.06688106805086136,
+                "loss": 0.0610172338783741
+              }
+            },
+            "cosines": {
+              "difficulty / public": 0.07319270074367523
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp019::ses-20210625::level-04B_run-006::window0000",
+              "sub-cp019::ses-20210625::level-03B_run-011::window0001",
+              "sub-cp019::ses-20210625::level-01B_run-012::window0011",
+              "sub-cp019::ses-20210625::level-03B_run-002::window0013"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 0.6374046802520752,
+                "loss": 0.6701887249946594
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.08703121542930603,
+                "loss": 0.08006203919649124
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.29860636591911316
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp019::ses-20210625::level-03B_run-011::event0008",
+              "sub-cp019::ses-20210625::level-02B_run-003::event0005",
+              "sub-cp019::ses-20210625::level-01B_run-001::event0014",
+              "sub-cp019::ses-20210625::level-04B_run-006::event0016"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.5711605548858643,
+                "loss": 0.26375138759613037
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.14849314093589783,
+                "loss": 0.057169198989868164
+              }
+            },
+            "cosines": {
+              "event_response / public": 0.08294303715229034
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp019::ses-20210625::level-03B_run-011::event0018",
+              "sub-cp019::ses-20210625::level-03B_run-011::event0015",
+              "sub-cp019::ses-20210625::level-02B_run-008::event0012",
+              "sub-cp019::ses-20210625::level-02B_run-003::event0015"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 1.052144169807434,
+                "loss": 0.3709069490432739
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.06926574558019638,
+                "loss": 0.03447134047746658
+              }
+            },
+            "cosines": {
+              "event_response / public": 0.1792832314968109
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp025::ses-20210820::level-01B_run-012::window0004",
+              "sub-cp025::ses-20210820::level-02B_run-008::window0010",
+              "sub-cp025::ses-20210820::level-01B_run-001::window0008",
+              "sub-cp025::ses-20210820::level-02B_run-008::window0002"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 0.8277108073234558,
+                "loss": 0.7020789384841919
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.04625380039215088,
+                "loss": 0.050865866243839264
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.11771965771913528
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp025::ses-20210820::level-04B_run-009::window0007",
+              "sub-cp025::ses-20210820::level-02B_run-008::window0000",
+              "sub-cp025::ses-20210820::level-04B_run-006::window0011",
+              "sub-cp025::ses-20210820::level-04B_run-006::window0002"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 0.9400073289871216,
+                "loss": 0.6975544691085815
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.06728878617286682,
+                "loss": 0.05306113511323929
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.11223515123128891
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp025::ses-20210820::level-01B_run-007::event0005",
+              "sub-cp025::ses-20210820::level-03B_run-002::event0002",
+              "sub-cp025::ses-20210820::level-01B_run-001::event0006",
+              "sub-cp025::ses-20210820::level-02B_run-010::event0003"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.025769177824258804,
+                "loss": 0.00014145599561743438
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.06248572841286659,
+                "loss": 0.03348488733172417
+              }
+            },
+            "cosines": {
+              "event_response / public": -0.37797224521636963
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp025::ses-20210820::level-04B_run-004::event0008",
+              "sub-cp025::ses-20210820::level-01B_run-012::event0011",
+              "sub-cp025::ses-20210820::level-03B_run-002::event0017",
+              "sub-cp025::ses-20210820::level-01B_run-012::event0004"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.22486242651939392,
+                "loss": 0.008636082522571087
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.10424278676509857,
+                "loss": 0.054848283529281616
+              }
+            },
+            "cosines": {
+              "event_response / public": -0.2763833701610565
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          }
+        ],
+        "optimizer_steps": 0,
+        "task_readout": "trained_task_heads",
+        "confirmation_opened": false
+      }
+    }
+  ],
+  "optimizer_updates": 0
+}
