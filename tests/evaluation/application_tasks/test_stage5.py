@@ -62,3 +62,16 @@ def test_new_unit_passes_exact_fold_seed_and_requires_execution_qualification(tm
     with pytest.raises(ValueError, match='qualification changed'):
         stage5.run_stage5(f'stage5_unit__{index}', config)
     assert len(calls) == 1
+
+
+def test_plan_uses_the_successful_validation_attempt_after_gpu_wait(tmp_path, monkeypatch):
+    receipt = tmp_path/'cuda_validation.2.json'
+    stage5.write_result(receipt, {'status': 'completed'})
+    stage5.write_result(tmp_path/'pipeline_state.json', {'completed': {'cuda_validation': {
+        'path': str(receipt), 'sha256': sha256_file(receipt)}}})
+    def validation(path):
+        assert path == str(receipt)
+        raise RuntimeError('successful receipt reached')
+    monkeypatch.setattr(stage5, '_validation_evidence', validation)
+    with pytest.raises(RuntimeError, match='successful receipt reached'):
+        stage5.plan({'root': str(tmp_path)})

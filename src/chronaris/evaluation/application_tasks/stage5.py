@@ -49,7 +49,9 @@ def data_contract(contract):
 
 def plan(config):
     root = Path(config['root'])
-    validation = _validation_evidence(root/'cuda_validation/attempt_1/validation_receipt.json')
+    receipt = read(root/'pipeline_state.json')['completed']['cuda_validation']
+    verify_files({receipt['path']: receipt['sha256']})
+    validation = _validation_evidence(receipt['path'])
     acceptance = read(config['stage5_acceptance'])
     if acceptance['status'] != 'completed' or acceptance['model_units'] != 25 or acceptance['confirmation_opened']:
         raise ValueError('stage 5 requires the completed development comparison')
