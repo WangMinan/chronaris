@@ -6,7 +6,7 @@
 
 ## 当前入口
 
-- [阶段 4.5-C 单因素协议](requirements/thesis-stage45c-development-20260922.md)：公共自监督项消融，六次新增微调；[本轮交接](artifacts/runs/2026-09-22_v4-stage45c/report.md)。
+- [阶段 4.5-C 单因素协议](requirements/thesis-stage45c-development-20260922.md)：公共自监督项消融已完成，六次微调无足够改善；[本轮交接](artifacts/runs/2026-09-22_v4-stage45c/report.md)。
 - [阶段 4.5-B 执行协议](requirements/thesis-stage45b-development-20260921.md)：表示保留与选模一致性验证已完成，十二次首轮完成、零入围；[当前交接](artifacts/runs/2026-09-21_v4-stage45b/report.md)。
 
 - [阶段 4.5 完整结果](artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：18/18 首轮完成、零入围，阶段 5 继续关闭；原复核问题见[GPT PRO 复核任务](artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。

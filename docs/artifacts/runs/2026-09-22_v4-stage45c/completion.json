@@ -1,0 +1,869 @@
+{
+  "state": {
+    "completed": {
+      "stage45c_plan": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_plan.1.json",
+        "sha256": "579e1a2a881f09d439e06a21bea40cd003f41e1d0c369205eaa7a2193915f67e"
+      },
+      "stage45c_screen__0": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__0.1.json",
+        "sha256": "0399949c36cf6c6633dc244793a1869ea4af198c3a9ae428bc083014e0447c19"
+      },
+      "stage45c_screen__1": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__1.1.json",
+        "sha256": "b616f8b6b0d61ff20e46ec2eb92913566e77e0bbb55820da0a612120014d622f"
+      },
+      "stage45c_screen__2": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__2.1.json",
+        "sha256": "25c8699433490cc303ef6f14761994fd938c132b1b889c8e821162859c5b8465"
+      },
+      "stage45c_screen__3": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__3.1.json",
+        "sha256": "98709607e05abdd49f4eaae32f35d3f638247e1c10c6a2c4491cb8ed31be7a08"
+      },
+      "stage45c_screen__4": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__4.1.json",
+        "sha256": "ae1bb77e22c16bc41d57a577a1b8c863dfe953111350671b9cd4d36fd5cd26ad"
+      },
+      "stage45c_screen__5": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_screen__5.1.json",
+        "sha256": "854c7d462c9c4c17ff182edad317c5bbb30e186c94f063228b505e68454ca13a"
+      },
+      "stage45c_report": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/stage_results/stage45c_report.1.json",
+        "sha256": "56bd9ae6736f2e4dcd5ea2c1cdd8f21d9c6db57bf6e68eb0da6c5a270852fb7f"
+      }
+    },
+    "failures": [],
+    "attempts": {
+      "stage45c_plan": 1,
+      "stage45c_screen__0": 1,
+      "stage45c_screen__1": 1,
+      "stage45c_screen__2": 1,
+      "stage45c_screen__3": 1,
+      "stage45c_screen__4": 1,
+      "stage45c_screen__5": 1,
+      "stage45c_report": 1
+    },
+    "started_at_unix_s": 1790060763.4857116,
+    "pid": 1453273,
+    "config_sha256": "b978c16b0c1eb2fef77d8a45322575c90be9bc6fe1e0f437ba7965856034a910",
+    "status": "stage45c_completed",
+    "until": "stage45c",
+    "children": {},
+    "updated_at_unix_s": 1790076862.7614794,
+    "current_stage": null,
+    "current_log": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/logs/stage45c_report.1.log"
+  },
+  "report": {
+    "status": "completed",
+    "candidate": {
+      "eligible": false,
+      "safe": true,
+      "meaningful_domain_routes": 0,
+      "rows": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.404309210701589,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 0.404309210701589,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.442343757808157,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 2.442343757808157,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.40039943626549873,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 0.40039943626549873,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.315875787770139,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 2.304402275823359,
+          "improvement": -0.004978953573841911,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.23405719160269944,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.23405719160269944,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3102863484009229,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.3102863484009229,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.23656515384195517,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.23466788107989175,
+          "improvement": 0.0018972727620634178,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3103876598655437,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.31035720313412013,
+          "improvement": -9.813444352500843e-05,
+          "meaningful": false
+        }
+      ],
+      "score": -0.0003974769069129377
+    },
+    "candidate_rows": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.404309210701589,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.442343757808157,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.40039943626549873,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 2.315875787770139,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.23405719160269944,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3102863484009229,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.23656515384195517,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3103876598655437,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      }
+    ],
+    "strong_reference_rows": [
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.3195712596750831,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "clare",
+        "route": "self_supervised",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.6828025710363186,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_classification",
+        "metric": "macro_f1",
+        "value": 0.31799896730452126,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "clare",
+        "route": "task_guided",
+        "task": "workload_regression",
+        "metric": "rmse",
+        "value": 1.6203721826395474,
+        "group_count": 2,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 2
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.4590813356485852,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      },
+      {
+        "domain": "cogpilot",
+        "route": "self_supervised",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.3067948834183685,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "difficulty",
+        "metric": "macro_f1",
+        "value": 0.4617276165667268,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      },
+      {
+        "domain": "cogpilot",
+        "route": "task_guided",
+        "task": "event_response",
+        "metric": "rmse",
+        "value": 0.30657728349747393,
+        "group_count": 3,
+        "aggregation": "field_mean_then_group_mean",
+        "error_units": "native",
+        "inner_training_replicas": 1
+      }
+    ],
+    "strong_reference_change": {
+      "eligible": false,
+      "safe": true,
+      "meaningful_domain_routes": 0,
+      "rows": [
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.3195712596750831,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 0.3195712596750831,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "clare",
+          "route": "self_supervised",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.6828025710363186,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 1.6828025710363186,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.31799896730452126,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 0.31860657092371797,
+          "improvement": -0.000607603619196706,
+          "meaningful": false
+        },
+        {
+          "domain": "clare",
+          "route": "task_guided",
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.6203721826395474,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 2,
+          "reference": 1.6092007284512662,
+          "improvement": -0.006942237839422884,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.4590813356485852,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.4590813356485852,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "self_supervised",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3067948834183685,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.3067948834183685,
+          "improvement": 0.0,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.4617276165667268,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.464957463335314,
+          "improvement": -0.00322984676858723,
+          "meaningful": false
+        },
+        {
+          "domain": "cogpilot",
+          "route": "task_guided",
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.30657728349747393,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native",
+          "inner_training_replicas": 1,
+          "reference": 0.30651431246036737,
+          "improvement": -0.00020544240365514757,
+          "meaningful": false
+        }
+      ],
+      "score": -0.001373141328857746
+    },
+    "parent_unchanged": true,
+    "confirmation_opened": false,
+    "model_adoption_automatic": false
+  },
+  "units": [
+    {
+      "index": 0,
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "reference",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "training": {
+        "method_name": "chronaris",
+        "status": "completed",
+        "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/0/clare/chronaris/task_guided/chronaris/best.pt",
+        "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/0/clare/chronaris/task_guided/chronaris/last.pt",
+        "protocol_sha256": "9b107f27734961f8e7b8db7b752d4a491685b213b7f6809c3321630bd984b16b",
+        "best_epoch": 10,
+        "completed_epochs": 26,
+        "stopped_early": false,
+        "training_elapsed_s": 2209.8274053530768,
+        "encoder_update_mode": "full_backbone",
+        "training_device_history": [
+          "cuda"
+        ],
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 100
+      },
+      "total_seconds": 2297.2332367333584,
+      "source_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/screen/0.json",
+      "source_sha256": "0399949c36cf6c6633dc244793a1869ea4af198c3a9ae428bc083014e0447c19",
+      "original_selector": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.42914377289377287,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.7133768762669734,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "unit": {
+        "domain": "clare",
+        "method": "chronaris",
+        "variant": "reference",
+        "inner_index": 1,
+        "seed": 17
+      },
+      "training": {
+        "method_name": "chronaris",
+        "status": "completed",
+        "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/1/clare/chronaris/task_guided/chronaris/best.pt",
+        "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/1/clare/chronaris/task_guided/chronaris/last.pt",
+        "protocol_sha256": "879fb5afb5263e2f140d44004343ead5e4083c349287c35d01aee008312ececa",
+        "best_epoch": 7,
+        "completed_epochs": 18,
+        "stopped_early": false,
+        "training_elapsed_s": 2162.464660928119,
+        "encoder_update_mode": "full_backbone",
+        "training_device_history": [
+          "cuda"
+        ],
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 100
+      },
+      "total_seconds": 2249.469265250955,
+      "source_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/screen/1.json",
+      "source_sha256": "b616f8b6b0d61ff20e46ec2eb92913566e77e0bbb55820da0a612120014d622f",
+      "original_selector": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.40092792976959835,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 2.400499678878087,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "unit": {
+        "domain": "cogpilot",
+        "method": "chronaris",
+        "variant": "reference",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "training": {
+        "method_name": "chronaris",
+        "status": "completed",
+        "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/2/cogpilot/chronaris/task_guided/chronaris/best.pt",
+        "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/2/cogpilot/chronaris/task_guided/chronaris/last.pt",
+        "protocol_sha256": "20d62fd7dca34f4c5aef07a51bfcf9fee2f77d43b6c0e1a0362f05b0a4518618",
+        "best_epoch": 2,
+        "completed_epochs": 5,
+        "stopped_early": false,
+        "training_elapsed_s": 9109.451656213962,
+        "encoder_update_mode": "full_backbone",
+        "training_device_history": [
+          "cuda"
+        ],
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 100
+      },
+      "total_seconds": 9802.673306051176,
+      "source_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/screen/2.json",
+      "source_sha256": "25c8699433490cc303ef6f14761994fd938c132b1b889c8e821162859c5b8465",
+      "original_selector": [
+        {
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.22002789872455186,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3105449755977621,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "unit": {
+        "domain": "clare",
+        "method": "contiformer",
+        "variant": "baseline",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "training": {
+        "method_name": "contiformer",
+        "status": "completed",
+        "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/3/clare/contiformer/task_guided/contiformer/best.pt",
+        "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/3/clare/contiformer/task_guided/contiformer/last.pt",
+        "protocol_sha256": "37bed3d101ac927c812ca4e99ff7085dc4889ba32b6258a05b0bf0453488ea35",
+        "best_epoch": 10,
+        "completed_epochs": 26,
+        "stopped_early": false,
+        "training_elapsed_s": 126.68002057215199,
+        "encoder_update_mode": "full_backbone",
+        "training_device_history": [
+          "cuda"
+        ],
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 100
+      },
+      "total_seconds": 171.69379406888038,
+      "source_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/screen/3.json",
+      "source_sha256": "98709607e05abdd49f4eaae32f35d3f638247e1c10c6a2c4491cb8ed31be7a08",
+      "original_selector": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.2524590163934426,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.7560946654547762,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "unit": {
+        "domain": "clare",
+        "method": "contiformer",
+        "variant": "baseline",
+        "inner_index": 1,
+        "seed": 17
+      },
+      "training": {
+        "method_name": "contiformer",
+        "status": "completed",
+        "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/4/clare/contiformer/task_guided/contiformer/best.pt",
+        "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/4/clare/contiformer/task_guided/contiformer/last.pt",
+        "protocol_sha256": "edb4ed58b599bc893befd09cb909876d913be5c320e73ccbe68661f9c1158558",
+        "best_epoch": 11,
+        "completed_epochs": 18,
+        "stopped_early": false,
+        "training_elapsed_s": 116.89322131033987,
+        "encoder_update_mode": "full_backbone",
+        "training_device_history": [
+          "cuda"
+        ],
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 150
+      },
+      "total_seconds": 153.6038937983103,
+      "source_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/screen/4.json",
+      "source_sha256": "ae1bb77e22c16bc41d57a577a1b8c863dfe953111350671b9cd4d36fd5cd26ad",
+      "original_selector": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "value": 0.38383507250246557,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "value": 1.575057465470425,
+          "group_count": 2,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "unit": {
+        "domain": "cogpilot",
+        "method": "vehicle_only",
+        "variant": "baseline",
+        "inner_index": 0,
+        "seed": 17
+      },
+      "training": {
+        "method_name": "vehicle_only",
+        "status": "completed",
+        "best_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/5/cogpilot/vehicle_only/task_guided/vehicle_only/best.pt",
+        "last_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/units/5/cogpilot/vehicle_only/task_guided/vehicle_only/last.pt",
+        "protocol_sha256": "ca8dace3da409b9775d562d070946ad57103b9fa9d6542e6dbcafa26a146d005",
+        "best_epoch": 2,
+        "completed_epochs": 5,
+        "stopped_early": false,
+        "training_elapsed_s": 183.54555646888912,
+        "encoder_update_mode": "full_backbone",
+        "training_device_history": [
+          "cuda"
+        ],
+        "optimizer_updates": 250,
+        "head_warmup_updates": 50,
+        "joint_updates": 200,
+        "best_update": 100
+      },
+      "total_seconds": 416.63523594569415,
+      "source_path": "/mnt/e/chronaris-v4-results/2026-09-22-stage45c/screen/5.json",
+      "source_sha256": "854c7d462c9c4c17ff182edad317c5bbb30e186c94f063228b505e68454ca13a",
+      "original_selector": [
+        {
+          "task": "difficulty",
+          "metric": "macro_f1",
+          "value": 0.4614551739952703,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        },
+        {
+          "task": "event_response",
+          "metric": "rmse",
+          "value": 0.3068357537285665,
+          "group_count": 3,
+          "aggregation": "field_mean_then_group_mean",
+          "error_units": "native"
+        }
+      ]
+    }
+  ],
+  "source_inventory": {
+    "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/pytest.xml": "ecd80ad4a6e8a1c5bb181738fb3213e4d55884b68bd2f0a51642a6cd503c4dd4",
+    "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/pytest.log": "e183932b41f1c9087ced399225b8de08b06b50cd36ce1dfb11760d267d8a5346",
+    "/mnt/e/chronaris-v4-results/2026-09-22-stage45c-validation/cuda/validation_receipt.json": "774f1359a26ebf415f2e3ff9eb06192681cdcce19b73e587ce8b2ef1b6c8f024",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_plan.1.json": "c317734d12f1101ed07dc1b99b3784231b19257297d1be61bbda69cf1352ad83",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_diagnostics__clare.1.json": "26c5a78f72f9f1232634584f63861974aabf8e5c55646fdb976a6986bdd2020e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_diagnostics__cogpilot.1.json": "f573d1ceb19e80a2943d384c1a647fc324bb30c9ef64ad717f062c254ee5f84f",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__0.1.json": "58abc11f5179c429eec58577526f9d533f7db5cc607d877893bb4aae09f79cd4",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__1.1.json": "4d22d618fe0f028aa0eb86995132d2505af79029c8c3252291c74426075068b4",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__2.1.json": "a738db6708195fa6f7d6c71eab4ce44cb40884c4056716af39f7862c769f200c",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__3.1.json": "cfe844cd0ff2edb9f2c7d9500f3988cb78bd85cd84b07d39cf0a05af4890638b",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__4.1.json": "f7cda950c821b2b8d34c7e2fedf7835c2bdf995f5ebdd510f876e0363d7c7826",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__5.1.json": "07799f5656fa285df5a2d8c192dd8861bd4b97d8fe59e10ef3538dfbef6f3e28",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__6.1.json": "737a7e0e057fe4c6816dff44a417193b10edb2c2a2c7d05a0903019b8c0234e8",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__7.1.json": "3c23ab30460c1ea1e53e399d9955f1c294d88de89fd1688fe152471b2e41d312",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__8.1.json": "9e9f83951449075479623e58fa6302b516900bad94a6465c24fdb0d18a66b874",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__9.1.json": "c6e2d82c6a34bf2a62247664c54c6ef916506f6bd0718c34418f8491e286ed2e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__10.1.json": "30b181f586ee04edc4a1b63250a55fe770de6e7303c8a286b7db76e3d6ceb7e5",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_screen__11.1.json": "5c47a4a073a103c9f9b23d7902b1b0dc9389e3287dd006798d82b65e4acef40f",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_select.1.json": "8d51d2a5bbdf8022025e348fb4b7f3b470f1b8bfcddc0b7049e9a0ac78c56268",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__0.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__1.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__2.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__3.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__4.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__5.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__6.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__7.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_review__8.1.json": "25dcbabccdddab8ad28f66113a501bb62c65df530fb8b4decf45c4ee4380887e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/stage_results/stage45b_report.1.json": "f79487e28062340ff3c8b14f726d71e3384323ca14413407ffcb8f45606fe391",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/screen/0.json": "58abc11f5179c429eec58577526f9d533f7db5cc607d877893bb4aae09f79cd4",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/self_supervised/chronaris/C/best.pt": "ed905970025039d1b6fc53cb0b09fafbef79a4716d2b4e701f83d832c7f0336d",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/data_contract.json": "f9978c63e5a2c32fde831e119ff1b7d4f057591ad902bd370f883fffbbd04a90",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/recipe.json": "0821c890e3cad4f2a9480276842e1e45940b2530fb80467a844ec4b1a6e82769",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/task_guided/evaluation/common_contract.json": "a967677ea40f44a133863e4d2af7acaf369607e45de800c350e3b4a51ae95f7d",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/self_supervised/chronaris/C/last.pt": "e7db8fe987fd03954536942f83abe0b43e98739cd567ded6cb288f402905ef56",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/task_guided/chronaris/best.pt": "b8ec9fab83cf71a7461e153025a6be951c14a0fa5cdcdd9d02d525f46418291b",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/0/clare/chronaris/task_guided/chronaris/last.pt": "2bf008255ec09950b29bb102bbc637472f684c7ff39b0e33c7798cc3505cac87",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/screen/1.json": "4d22d618fe0f028aa0eb86995132d2505af79029c8c3252291c74426075068b4",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/self_supervised/chronaris/C/best.pt": "776467cf8f1d063fac7ae67ef0b8389b0718844d50c1146578a7f93fb0354844",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/data_contract.json": "b77f7a24b440a11b4f5065c3acb6ae611ce2d089737878ba0dc55f2af93d47e1",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/recipe.json": "2db072e39325bdaa623471a830f31d61fa408277f46d5ca78cfb0472ffb1bb05",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/task_guided/evaluation/common_contract.json": "58fd9d2530f869c502169614aa735bcb72e70162135c5e655917dd66a5854ff9",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/self_supervised/chronaris/C/last.pt": "c050f6fbc6b5ea113e09f8b7651d15c3b4bf25d5437ebd65838822e3049b2798",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/task_guided/chronaris/best.pt": "2a8433935958965eecc8a273032dc707a2a4333b496345ec517883475292e0a2",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/1/clare/chronaris/task_guided/chronaris/last.pt": "e4bee8c90078d4c4c0bbf67189311eb41cd8ab9962107ae53de3361d4bb56693",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/screen/8.json": "9e9f83951449075479623e58fa6302b516900bad94a6465c24fdb0d18a66b874",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/self_supervised/chronaris/C/best.pt": "bf39563ad8c757a80d11b28aa042dee475010b4da608931c9c8596298e3cfeaa",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/data_contract.json": "1474c7bfb0d5806dc1bde24716e9885582305e9241f1763a09bb13d5e765abdb",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/recipe.json": "36945cd30d0d696b31d61b06dfc9482a03862ba9901fc73e89d3e1608de605af",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/task_guided/evaluation/common_contract.json": "51a5c4e4c0cbc7b8a0f7aed0a9ce55987d1159dce07521099de620ef499e093d",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/self_supervised/chronaris/C/last.pt": "ac58ac949087c5f1ffeaf1788b4a89f0da7e4c3fad1d0aa031251d7f2793ecf8",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/task_guided/chronaris/best.pt": "7354db85773430fbc5dc29c41de0d0783b0c13b1ae17e6c52e8cfcfe2bf2ae58",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/8/cogpilot/chronaris/task_guided/chronaris/last.pt": "9dc30b242cf90a45377beb4d1f41f8d0d7e9dcfb32fb6443fc22643deb59b227",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/screen/6.json": "737a7e0e057fe4c6816dff44a417193b10edb2c2a2c7d05a0903019b8c0234e8",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/self_supervised/contiformer/C/best.pt": "761a32193759fb2aa884d1efc93379e00092a5c2ab47c99afa2145d6557a7656",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/data_contract.json": "f9978c63e5a2c32fde831e119ff1b7d4f057591ad902bd370f883fffbbd04a90",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/recipe.json": "971e1af74d8dc50e73cf9f49cb331655ca3240c0ce045827d6cbeeaa6dd59f29",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/task_guided/evaluation/common_contract.json": "33e8163f5b1cf8f87513547d91b09dde0d6c2a5c075ae5373475f6311c64bfb8",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/self_supervised/contiformer/C/last.pt": "42d308c1f41ed1264f2b5fb890672549b23a2459d04909f4d631e84fe61b4212",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/task_guided/contiformer/best.pt": "d94ceeaafa7c0fb042eddb48655d58b2e11080ae1efc1d7a01dcbbb03d9fb492",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/6/clare/contiformer/task_guided/contiformer/last.pt": "8abeb7a77b5a2b6024b25f90242461c28755df174adb694cfd7f1cf1e0fe052a",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/screen/7.json": "3c23ab30460c1ea1e53e399d9955f1c294d88de89fd1688fe152471b2e41d312",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/self_supervised/contiformer/C/best.pt": "32bb204f3bbb64cb3287bdb48607910c9e8918ce77462af176ca1d9bfe0d10ee",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/data_contract.json": "b77f7a24b440a11b4f5065c3acb6ae611ce2d089737878ba0dc55f2af93d47e1",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/recipe.json": "03f60da9048a1845714ba03abbcf86e640a50b43062b12119104e686ae6396f7",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/task_guided/evaluation/common_contract.json": "1d812e87a1c5d641bac7ac7b99b7d9d45c0a8dfda2727bf81f6d17e4cd7e7ede",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/self_supervised/contiformer/C/last.pt": "cd5d7e74c7779754047646c26841cf58a99fec61f5259444518901a2ac318d3c",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/task_guided/contiformer/best.pt": "ac21d150ae5f4bbff0bbd603363b80f95564b2dd7338169929accf722123c77d",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/7/clare/contiformer/task_guided/contiformer/last.pt": "e74a1b0f2bbf2d32b591c9ccda824541704f18ad39eee8b37a755f94d9a30039",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/screen/11.json": "5c47a4a073a103c9f9b23d7902b1b0dc9389e3287dd006798d82b65e4acef40f",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/self_supervised/vehicle_only/C/best.pt": "c27ee645ef82bb0e3bf6913ad78d9297278735e1be454e7c380dd8e8e73fb08e",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/data_contract.json": "1474c7bfb0d5806dc1bde24716e9885582305e9241f1763a09bb13d5e765abdb",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/recipe.json": "a9f59488b4a6ff562b62d0e1ad7c15a62ac61b2d6452e3996e159e6182914848",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/task_guided/evaluation/common_contract.json": "6f808d99abb0c7ad7ff281128ad39468823df2b1245b98d5cbc265a8f167b149",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/self_supervised/vehicle_only/C/last.pt": "7ebd739954dac05494064471971d59a432e98a81a62650fc9ea404063ed94f25",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/task_guided/vehicle_only/best.pt": "d6bf10d3ab815f992364572446a79e8df7516ed9f3d02e40ed8eaec80173cfae",
+    "/mnt/e/chronaris-v4-results/2026-09-21-stage45b/units/screen/11/cogpilot/vehicle_only/task_guided/vehicle_only/last.pt": "d5ce9d99df5c8fb1c5dcdc9df8d267a187bd328cf3af45d0832c0c1121fc5d5d"
+  },
+  "elapsed_hours": 4.472021046611998,
+  "finished_at": "2026-09-22T19:34:22.761479+08:00",
+  "verified_completed_receipts": 8,
+  "verified_source_files": 77
+}
