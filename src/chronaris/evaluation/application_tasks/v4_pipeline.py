@@ -38,6 +38,9 @@ CPU_STAGES = {'public_results', 'public_review_results', 'simulation_review_resu
 
 
 def pipeline_groups(until):
+    if until == 'stage5':
+        from chronaris.evaluation.application_tasks.stage5 import groups
+        return groups()
     if until == 'stage45c':
         from chronaris.evaluation.application_tasks.stage45c import groups
         return groups()
@@ -204,18 +207,19 @@ def execute_pipeline(config, *, until, retry_failed=False):
 def main(*, default_until='freeze'):
     parser = argparse.ArgumentParser(description='Fixed v4 development, selection and confirmation; resumes one immutable run root.')
     parser.add_argument('--root')
-    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45', 'stage45b', 'stage45c'), default=default_until)
+    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45', 'stage45b', 'stage45c', 'stage5'), default=default_until)
     parser.add_argument('--plan-only', action='store_true')
     parser.add_argument('--stage45-budget-hours', type=float, default=72, help='0 removes the stage 4.5 wall-clock limit')
     parser.add_argument('--stage45-resume-parent', help='Stopped stage 4.5 root to preserve and resume in a new root')
     parser.add_argument('--stage45-resume-evidence', help='Verified pause/recovery evidence manifest')
     parser.add_argument('--stage45-parent', help='Completed stage 4 parent; only for the stage45 endpoint')
     parser.add_argument('--stage45-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
+    parser.add_argument('--stage5-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
     parser.add_argument('--retry-failed', action='store_true')
-    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45')+pipeline_groups('stage45b')+pipeline_groups('stage45c') for stage, _ in group], help=argparse.SUPPRESS)
+    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45')+pipeline_groups('stage45b')+pipeline_groups('stage45c')+pipeline_groups('stage5') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
@@ -282,7 +286,14 @@ def main(*, default_until='freeze'):
         input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot', 'clare')]
     if bool(args.stage45_resume_parent) != bool(args.stage45_resume_evidence) or (args.stage45_resume_parent and args.until != 'stage45'):
         parser.error('stage 4.5 recovery requires parent and evidence together')
-    if args.until == 'stage45':
+    if args.until == 'stage5':
+        if args.stage45_parent or args.comparison_parent or args.execution_parent:
+            parser.error('stage5 inherits result evidence, never migrates an old training queue')
+        config['stage5_acceptance'] = str(Path(args.stage5_acceptance).resolve())
+        input_paths = [Path(config['registry_path']), Path(config['stage5_acceptance']),
+            project/'docs/requirements/thesis-stage5-execution-20260923.md']
+        input_paths += [Path(config['data_root'])/d/'summary.json' for d in ('cogpilot', 'clare')]
+    elif args.until == 'stage45':
         if not math.isfinite(args.stage45_budget_hours) or args.stage45_budget_hours < 0:
             parser.error('stage45 budget must be nonnegative; zero means unlimited')
         config['stage45_budget_hours'] = args.stage45_budget_hours or None
@@ -331,6 +342,11 @@ def main(*, default_until='freeze'):
         input_paths += [Path(config['execution_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
         input_paths.append(Path(config['execution_evidence']))
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
+    if args.plan_only and args.until == 'stage5':
+        from chronaris.evaluation.application_tasks.stage5 import units
+        print(json.dumps(dict(config=config, groups=pipeline_groups('stage5'), units=units(),
+            model_units=36, inherited_units=4, new_units=32, confirmation_opened=False, executes_training=False), indent=2))
+        return
     if args.plan_only and args.until in ('stage45', 'stage45b', 'stage45c'):
         print(json.dumps(dict(config=config, groups=pipeline_groups(args.until), budget_hours=config['stage45_budget_hours'],
             confirmation_opened=False, executes_training=False), indent=2))

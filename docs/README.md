@@ -1,15 +1,17 @@
 # Chronaris 文档入口
 
-更新时间：2026-09-21
+更新时间：2026-09-23
 
 当前在 `codex/thesis-v4-recovery-20260905` 继续研究开发，已包含 `main` 的整理成果。研究主线为“各方法提取融合特征，再分别训练相同类型的下游算法”。优先读取新方案、当前状态和任务；历史协议承担来源追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，此处只维护导航。
 
 ## 当前入口
 
+- [阶段 5 执行协议](requirements/thesis-stage5-execution-20260923.md)：固定参考跨划分、跨种子复核已开始实施；[本轮产物](artifacts/runs/2026-09-23_v4-stage5/report.md)。
+
 - [阶段 4.5-C 单因素协议](requirements/thesis-stage45c-development-20260922.md)：公共自监督项消融已完成，六次微调无足够改善；[本轮交接](artifacts/runs/2026-09-22_v4-stage45c/report.md)。
 - [阶段 4.5-B 执行协议](requirements/thesis-stage45b-development-20260921.md)：表示保留与选模一致性验证已完成，十二次首轮完成、零入围；[当前交接](artifacts/runs/2026-09-21_v4-stage45b/report.md)。
 
-- [阶段 4.5 完整结果](artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：18/18 首轮完成、零入围，阶段 5 继续关闭；原复核问题见[GPT PRO 复核任务](artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
+- [阶段 4.5 完整结果](artifacts/runs/2026-09-21_v4-stage45-closeout/report.md)：18/18 首轮完成、零入围，原采用结论保留；原复核问题见[GPT PRO 复核任务](artifacts/runs/2026-09-21_v4-stage45-closeout/pro-review.md)。
 
 - [STATE.md](STATE.md)：当前实验进度、结论和代码来源。
 - [implementation/TASKS.md](implementation/TASKS.md)：当前任务与后续执行顺序。
