@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "frozen_commit": "dd16e6885c26b03d2e54bbe5052132564e3ebdd4",
+  "tests": 727,
+  "passed": 705,
+  "skipped": 22,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 400.559,
+  "receipt_sha256": "c74f0fc9f22ebfd0836965581ed53535f4ace1b91fbc38e798befe855b733ef6"
+}

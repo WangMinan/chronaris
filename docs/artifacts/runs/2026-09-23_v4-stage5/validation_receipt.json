@@ -1,0 +1,19 @@
+{
+  "format": "chronaris.v4_cuda_validation.v1",
+  "status": "completed",
+  "source_code_sha256": "6701e30dee9d136284f488abac257a327354f0d35d2e4adbf4b2cbfc1cc380a1",
+  "test_suite_sha256": "ecd92c5a604162b615e7c67af97f8cdccb3fd83a4c038a4db6d3d613cc3ad19b",
+  "device": "cuda",
+  "exit_code": 0,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--junitxml=/mnt/e/chronaris-v4-results/2026-09-23-stage5/cuda_validation/attempt_1/pytest.xml"
+  ],
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-09-23-stage5/cuda_validation/attempt_1/pytest.xml": "a37aedca368d79c836ac91ca202891228cd6a4631f68f53f01439c17572fdfbb",
+    "/mnt/e/chronaris-v4-results/2026-09-23-stage5/cuda_validation/attempt_1/pytest.log": "bc10ce32a8f1388f1b74e34fd53b4d002cc62cc8830f7df03493068ea1929dbf"
+  }
+}

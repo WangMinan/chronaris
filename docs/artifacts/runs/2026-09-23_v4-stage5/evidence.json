@@ -1,0 +1,20 @@
+{
+  "status": "launch_verified",
+  "files": {
+    "cogpilot_execution_check.json": "d11b35356944937a6b007a4de528733f24761706195695ed53f46b5feccba0b2",
+    "stage5_plan.json": "77a4b3984c695d5f2d1d10c6fe9e72492b33ab28f4f54b1ae122f469f5fb78a7",
+    "real_entry_checks.json": "1a194e0bc2f5c0a4e19fc66cc773cde24c8fc4b19f362f2aad78305583154a6d",
+    "launch.json": "b2dc063288d699c9f4df604b907104a2e37f7b07678914971fba3aaa318050fd",
+    "validation_receipt.json": "c74f0fc9f22ebfd0836965581ed53535f4ace1b91fbc38e798befe855b733ef6",
+    "historical_configuration_audit.json": "66cd4a26c0755159f87cb6af053b1dc7517d8de7516956d823a237ff77f1dcd3",
+    "fixture_copy.json": "3cc6b753cba76825958a3220571b175df69235674f0316543c5aed89a617efca",
+    "data_preflight.json": "afe75da66c866f8c841465af6729bab5226a9c7d3614cb834ccf0b187b944b49",
+    "clare_execution_check.json": "1f69515008c02b03c09062162ed9e28986af232b5afc805220fd268405984c01",
+    "validation.json": "bec43ab98eaf7c2055a4fb24933d2c2142cc83b01545bf4f99f513a48e3be325",
+    "launch_verification.json": "3ea6c28604af5e64eda39c9edc7401142d27de80a363008bb640b228265bbbc4",
+    "execution_checks.json": "9db29fc1db56cdfd8ff889df21f0e8ded0b45b2828ce461aaaac4c82cc9923d0"
+  },
+  "scope": "stage5 first-batch launch, not completed research",
+  "source_commit": "dd16e6885c26b03d2e54bbe5052132564e3ebdd4",
+  "confirmation_opened": false
+}

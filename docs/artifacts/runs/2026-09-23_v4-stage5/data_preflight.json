@@ -1,0 +1,98 @@
+[
+  {
+    "domain": "clare",
+    "fold_index": 0,
+    "train": 366,
+    "validation": 428,
+    "valid_labels": {
+      "train": {
+        "workload_classification": 366,
+        "workload_regression": 366
+      },
+      "validation": {
+        "workload_classification": 428,
+        "workload_regression": 428
+      }
+    }
+  },
+  {
+    "domain": "clare",
+    "fold_index": 1,
+    "train": 578,
+    "validation": 216,
+    "valid_labels": {
+      "train": {
+        "workload_classification": 578,
+        "workload_regression": 578
+      },
+      "validation": {
+        "workload_classification": 216,
+        "workload_regression": 216
+      }
+    }
+  },
+  {
+    "domain": "clare",
+    "fold_index": 2,
+    "train": 644,
+    "validation": 150,
+    "valid_labels": {
+      "train": {
+        "workload_classification": 644,
+        "workload_regression": 644
+      },
+      "validation": {
+        "workload_classification": 150,
+        "workload_regression": 150
+      }
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "fold_index": 0,
+    "train": 1459,
+    "validation": 1065,
+    "valid_labels": {
+      "train": {
+        "difficulty": 604,
+        "event_response": 855
+      },
+      "validation": {
+        "difficulty": 458,
+        "event_response": 607
+      }
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "fold_index": 1,
+    "train": 1814,
+    "validation": 710,
+    "valid_labels": {
+      "train": {
+        "difficulty": 771,
+        "event_response": 1043
+      },
+      "validation": {
+        "difficulty": 291,
+        "event_response": 419
+      }
+    }
+  },
+  {
+    "domain": "cogpilot",
+    "fold_index": 2,
+    "train": 1775,
+    "validation": 749,
+    "valid_labels": {
+      "train": {
+        "difficulty": 749,
+        "event_response": 1026
+      },
+      "validation": {
+        "difficulty": 313,
+        "event_response": 436
+      }
+    }
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-09-23T13:04:59.435068+08:00",
+  "status": "running",
+  "controller_pid": 1540752,
+  "children": {
+    "stage5_unit__4": 1545375
+  },
+  "current_stage": "stage5_unit__4",
+  "historical_completed_units": 4,
+  "new_completed_units": 0,
+  "total_units": 36,
+  "failures": [],
+  "progress": {
+    "method": "chronaris",
+    "status": "running",
+    "optimizer_updates": 30,
+    "phase": "training",
+    "best_update": 0,
+    "sample_ids": [
+      "1624__experiment0_window29",
+      "1674__experiment1_window50",
+      "1624__experiment0_window3",
+      "1674__experiment1_window51"
+    ],
+    "samples_seen": 480,
+    "peak_allocated_bytes": 371918848,
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/training/4/clare/chronaris/self_supervised/chronaris/C/last.pt",
+    "device": "cuda",
+    "data_wait_s": 0.41815199702978134,
+    "wall_elapsed_s": 169.26168279210106
+  },
+  "checkpoint": {
+    "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/training/4/clare/chronaris/self_supervised/chronaris/C/last.pt",
+    "optimizer_updates": 25,
+    "mtime": "2026-09-23T13:04:07.561907+08:00"
+  },
+  "process_commands": {
+    "1540752": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage5-20260923/scripts/evaluation/application_tasks/run_v4_pipeline.py --until stage5 --root /mnt/e/chronaris-v4-results/2026-09-23-stage5 ",
+    "1545375": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage5-20260923/scripts/evaluation/application_tasks/run_v4_pipeline.py --worker stage5_unit__4 --config /mnt/e/chronaris-v4-results/2026-09-23-stage5/pipeline_config.json --result /mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__4.1.json --attempt 1 "
+  },
+  "gpu": "NVIDIA GeForce RTX 4090, 85 %, 3230 MiB",
+  "pipeline_config_sha256": "7818564ce255ebea151c7a33628e11c401ff952b2b9bb0216b8560a11458ca4d",
+  "source_commit": "dd16e6885c26b03d2e54bbe5052132564e3ebdd4",
+  "confirmation_opened": false
+}

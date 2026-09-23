@@ -1,0 +1,94 @@
+{
+  "status": "completed",
+  "checks": [
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison/comparison/original/chronaris/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "28dae8e1e297d19cb8eccc8edbf9a38be9fde2b4b5ce11dd10be045249c9eb24",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 300,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-11-stage4-comparison/comparison/original/chronaris/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "fe369726ff81550ee964d52eb1d83fe926dab01a9641343dbfd266618cc2ffb8",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 200,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "clare",
+      "method": "contiformer",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/original/contiformer/clare/contiformer/self_supervised/contiformer/C/best.pt",
+      "sha256": "b77371c907236a0ef3261d2d91069e87d915f054387eb6ec82deb87d163ff2a6",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 300,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "clare",
+      "method": "contiformer",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-12-stage4-comparison-recovery/comparison/original/contiformer/clare/contiformer/task_guided/contiformer/best.pt",
+      "sha256": "739325fcf39d097acc355a1e62b4fe1f1dbb3373be1d621c943eaee16a3fa9f5",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 200,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/comparison/original/chronaris/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "da045268fafa5de55a3a081590e448e814e7cd5cbce3e7762dde5e307558fee5",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 300,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "cogpilot",
+      "method": "chronaris",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/comparison/original/chronaris/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "918cd8f522de7991755cbd372867963bf1a48aa0a126a0ca2ef674b41502db98",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 200,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "cogpilot",
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/comparison/original/vehicle_only/cogpilot/vehicle_only/self_supervised/vehicle_only/C/best.pt",
+      "sha256": "e1d96d4dd6b24a5178a5e4000c022712f9d879d26f86aa00ca00e0d56b5c6675",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 300,
+      "effective_batch_size": 16
+    },
+    {
+      "domain": "cogpilot",
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-13-stage4-graph-recovery/comparison/original/vehicle_only/cogpilot/vehicle_only/task_guided/vehicle_only/best.pt",
+      "sha256": "9d5a2b26f83e39b4dd59771a9756e7d04eef84a0b59aba2960eb11b349703c72",
+      "matched_stage4_reference": true,
+      "seed": 17,
+      "max_updates": 200,
+      "effective_batch_size": 16
+    }
+  ],
+  "historical_files_modified": false
+}

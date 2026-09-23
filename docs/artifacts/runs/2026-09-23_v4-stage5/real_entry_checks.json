@@ -1,0 +1,34 @@
+{
+  "status": "completed",
+  "checks": [
+    {
+      "domain": "clare",
+      "method": "chronaris",
+      "seed": 29,
+      "fold_index": 1,
+      "status": "completed",
+      "contract_sha256": "832a6dcaa247cee40896a059939b98d4847b996c69e2b894c94cc8c86fe449f4",
+      "source_code_sha256": "8ae11c0cef1216129a1c651b26ddeb62eea0133b0e47ee0ec79b3617ffa09293",
+      "seconds": 79.73062312696129,
+      "updates": {
+        "self_supervised": 2,
+        "task_guided": 4
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "method": "vehicle_only",
+      "seed": 29,
+      "fold_index": 1,
+      "status": "completed",
+      "contract_sha256": "a33ab2f945cb06e0ccfc4bc47ba9da9cf6f68cd90e6e0377f080a8fed98054e6",
+      "source_code_sha256": "8ae11c0cef1216129a1c651b26ddeb62eea0133b0e47ee0ec79b3617ffa09293",
+      "seconds": 15.386180168017745,
+      "updates": {
+        "self_supervised": 2,
+        "task_guided": 4
+      }
+    }
+  ],
+  "confirmation_opened": false
+}
