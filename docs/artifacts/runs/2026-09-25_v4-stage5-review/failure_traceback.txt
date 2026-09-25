@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/scripts/evaluation/application_tasks/run_v4_pipeline.py", line 9, in <module>
+    main()
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_pipeline.py", line 264, in main
+    result = run_pipeline_step(args.worker, config, attempt=args.attempt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_pipeline_steps.py", line 44, in run_pipeline_step
+    return run_stage5(stage, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/stage5.py", line 210, in run_stage5
+    result = run_common_contract_smoke(domain=unit['domain'], methods=(unit['method'],),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/common_downstream_smoke.py", line 235, in run_common_contract_smoke
+    first = run_common_downstream(**kwargs, outputs=outputs, declaration=declaration, output_root=run_root, families=families)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/common_downstream_contract.py", line 228, in run_common_downstream
+    results = run_native_method_consumers(outputs=outputs, targets=targets, definitions=definitions,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_grouped_consumers.py", line 324, in run_native_method_consumers
+    bundle = fit_native_consumers(outputs=outputs, targets=targets, definitions=definitions, context=context,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_grouped_consumers.py", line 100, in fit_native_consumers
+    x = {"train": transformer.fit_features(train.sequence_embedding.numpy(), valid_cases=train.valid_mask.any(dim=1).numpy()),
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/application_consumers.py", line 61, in fit_features
+    raise ValueError(
+ValueError: MiniRocket train-only variance filter removed every channel

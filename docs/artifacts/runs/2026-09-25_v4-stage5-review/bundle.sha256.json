@@ -1,0 +1,12 @@
+{
+  "failed_unit.json": "d673a5ec90344565512e9e2a060062b983f73650d2f8aa4b5c2b733d11ea2745",
+  "failure_traceback.txt": "25e24a748b1d4802a499dccd134f3877ca605b5714dc0699c96fb1301da14ce1",
+  "pipeline_state_snapshot.json": "aa0e67bc11982e5f02fa4e3bb12549cadb613a0e6e9ed92162a44a7080314762",
+  "pro-review.md": "6f567ae0181c5803eae56cde25ec879cbb9dd268895c71949e17a4d59e30b8f5",
+  "report.md": "5a43671156d4454ab33a218812d5199c5f146c24b86cec57cd4b615d10354bb2",
+  "source_inventory.json": "cec0e4333fb0d8a5230dcf60ca82a825273cb040e4fc7b4f4b3ce29355c1ec9b",
+  "stage5_results.json": "bd392168d8d83dd5ce65c0161df2f598d249a6bc300d78ff1eb1f87794763aec",
+  "variance_diagnosis.json": "a820e99c6f86006a01aa9a8741eb242efea67be42d7d15b1b92207f952a47534",
+  "verification.json": "3f400289f52efa107d2a7378d9984734e677fd5c16954e969072bc2e42d59d0c",
+  "verify.py": "e8de0499cb223b751aa47a44096c6de90d996073f009e1b892609e305709ace4"
+}

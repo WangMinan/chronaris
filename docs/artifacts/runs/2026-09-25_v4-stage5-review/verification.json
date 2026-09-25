@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "checks": [
+    "portable_stdlib_recalculation",
+    "sha256_tamper_rejection",
+    "resealed_inconsistent_metric_rejection",
+    "document_links",
+    "independent_reader_review"
+  ],
+  "production_code_changed": false,
+  "experiment_restarted": false,
+  "full_cuda_tests_rerun": false
+}

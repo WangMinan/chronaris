@@ -1,0 +1,47 @@
+{
+  "unit": {
+    "domain": "clare",
+    "method": "chronaris",
+    "fold_index": 1,
+    "seed": 17,
+    "inherited": false
+  },
+  "status": "incomplete",
+  "pretraining_checkpoints": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/training/12/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "8011be7ccb8c3e40d23f2f714ad8d68ef1cc086fd0b2c523d7d8771808ee06dc",
+      "optimizer_updates": 300,
+      "best_update": 300,
+      "mtime": "2026-09-24T02:03:00.567200+08:00"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/training/12/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "sha256": "0524654efd01614578e3cb9a6dc8f549bd5df2ffaee0c57a8379a25e3da62caa",
+      "optimizer_updates": 300,
+      "best_update": 300,
+      "mtime": "2026-09-24T02:03:01.164335+08:00"
+    }
+  ],
+  "completed_primary_linear": [
+    {
+      "task": "workload_classification",
+      "metric": "macro_f1",
+      "value": 0.4517766497461929,
+      "group_count": 1,
+      "aggregation": "field_mean_then_group_mean",
+      "error_units": "native"
+    },
+    {
+      "task": "workload_regression",
+      "metric": "rmse",
+      "value": 2.327264016565778,
+      "group_count": 1,
+      "aggregation": "field_mean_then_group_mean",
+      "error_units": "native"
+    }
+  ],
+  "not_counted_in_completed_units": true,
+  "task_guided_started": false,
+  "error": "MiniRocket train-only variance filter removed every channel"
+}

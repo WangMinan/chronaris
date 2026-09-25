@@ -1,0 +1,144 @@
+{
+  "completed": {
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/cuda_validation.1.json",
+      "sha256": "c74f0fc9f22ebfd0836965581ed53535f4ace1b91fbc38e798befe855b733ef6"
+    },
+    "stage5_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_plan.1.json",
+      "sha256": "77a4b3984c695d5f2d1d10c6fe9e72492b33ab28f4f54b1ae122f469f5fb78a7"
+    },
+    "stage5_execution__clare__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__clare__eager.1.json",
+      "sha256": "236dd9db80fbc0d73e464724c9ef9ef7ea5a6300c8ccb4d213a71cf979021174"
+    },
+    "stage5_execution__clare__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__clare__graph.1.json",
+      "sha256": "296037a71adc6fbcc4b18cc5be87f433a3a86afb430ab2fc5a93c34053315697"
+    },
+    "stage5_execution__clare__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__clare__interrupt.1.json",
+      "sha256": "cc169b298444a5aa082b673f90293f4397cb0e183f94badfd881f83dfbd2ef3d"
+    },
+    "stage5_execution__clare__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__clare__resume.1.json",
+      "sha256": "80da0b245b586ff9e545dc91060b704f5eba69761589cc13368a22d793260826"
+    },
+    "stage5_execution__clare__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__clare__check.1.json",
+      "sha256": "1f69515008c02b03c09062162ed9e28986af232b5afc805220fd268405984c01"
+    },
+    "stage5_execution__cogpilot__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__cogpilot__eager.1.json",
+      "sha256": "6563dee4e4d331a5bcac253f9d4b0232a13b1db94a03478f08cfb0a496d6c780"
+    },
+    "stage5_execution__cogpilot__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__cogpilot__graph.1.json",
+      "sha256": "b25a6b26acd5f7359f610a84abbe78e9e0137d6baf1f1879a341a9b6edba58c8"
+    },
+    "stage5_execution__cogpilot__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__cogpilot__interrupt.1.json",
+      "sha256": "cc169b298444a5aa082b673f90293f4397cb0e183f94badfd881f83dfbd2ef3d"
+    },
+    "stage5_execution__cogpilot__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__cogpilot__resume.1.json",
+      "sha256": "80da0b245b586ff9e545dc91060b704f5eba69761589cc13368a22d793260826"
+    },
+    "stage5_execution__cogpilot__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_execution__cogpilot__check.1.json",
+      "sha256": "d11b35356944937a6b007a4de528733f24761706195695ed53f46b5feccba0b2"
+    },
+    "stage5_unit__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__0.1.json",
+      "sha256": "6e89db91a2480bd9d534552e05f42ee646138d89e49581db442fdce725d52f4e"
+    },
+    "stage5_unit__1": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__1.1.json",
+      "sha256": "d6d810ba0d5c2aacce776331d0c49546833cd6a84d32f054d083bf447238a57e"
+    },
+    "stage5_unit__2": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__2.1.json",
+      "sha256": "0da21904e913a5e69708e2a2ca2b19f7436af4a9c5c731d8ce2193673f080fa7"
+    },
+    "stage5_unit__3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__3.1.json",
+      "sha256": "e83b88b8a3ff48b4daea106888801982ae6c1114fe59d4246b0c80d53514b38e"
+    },
+    "stage5_unit__4": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__4.1.json",
+      "sha256": "f28d9501e69430ac35bdc3ed386728fec1058d2c9e2496e2a6ecfe5794e746d3"
+    },
+    "stage5_unit__5": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__5.1.json",
+      "sha256": "a62689f4bd9130f849c3ed0731bf43d896e63830bef808645814bdd4c1c7ec01"
+    },
+    "stage5_unit__6": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__6.1.json",
+      "sha256": "0c2fa16f026d33b34218164108c5d1ccb0c3e42c125919d3210f3bbbe80504bd"
+    },
+    "stage5_unit__7": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__7.1.json",
+      "sha256": "294266a09bbc701d2e3c7dc23fcc9ddba6b214ee01f346fb6385c6c04963a362"
+    },
+    "stage5_unit__8": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__8.1.json",
+      "sha256": "ea7f95d7aa028491ea681a45334c91338c5f9397ccfc999d87f40a54f8152466"
+    },
+    "stage5_unit__9": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__9.1.json",
+      "sha256": "638efedec429da359190690a1a7e3b9c2e4f30a121f7118ce4165387fd5cc379"
+    },
+    "stage5_unit__10": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__10.1.json",
+      "sha256": "f6d98ec85b54956d52aa2cd461aa417a6a8a527ce2aade2daee6447c5025bd26"
+    },
+    "stage5_unit__11": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/stage_results/stage5_unit__11.1.json",
+      "sha256": "2f4d840c37a4b8aa1f0bd0dab01d6758e1cd33651010a808ac0b59e58dec5a39"
+    }
+  },
+  "failures": [
+    {
+      "stage": "stage5_unit__12",
+      "time_unix_s": 1790186628.092767,
+      "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 176, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: stage5_unit__12 failed (exit 1); see its attempt log\n"
+    }
+  ],
+  "attempts": {
+    "cuda_validation": 1,
+    "stage5_plan": 1,
+    "stage5_execution__clare__eager": 1,
+    "stage5_execution__clare__graph": 1,
+    "stage5_execution__clare__interrupt": 1,
+    "stage5_execution__clare__resume": 1,
+    "stage5_execution__clare__check": 1,
+    "stage5_execution__cogpilot__eager": 1,
+    "stage5_execution__cogpilot__graph": 1,
+    "stage5_execution__cogpilot__interrupt": 1,
+    "stage5_execution__cogpilot__resume": 1,
+    "stage5_execution__cogpilot__check": 1,
+    "stage5_unit__0": 1,
+    "stage5_unit__1": 1,
+    "stage5_unit__2": 1,
+    "stage5_unit__3": 1,
+    "stage5_unit__4": 1,
+    "stage5_unit__5": 1,
+    "stage5_unit__6": 1,
+    "stage5_unit__7": 1,
+    "stage5_unit__8": 1,
+    "stage5_unit__9": 1,
+    "stage5_unit__10": 1,
+    "stage5_unit__11": 1,
+    "stage5_unit__12": 1
+  },
+  "started_at_unix_s": 1790136713.6746266,
+  "pid": 1540752,
+  "config_sha256": "7818564ce255ebea151c7a33628e11c401ff952b2b9bb0216b8560a11458ca4d",
+  "status": "failed",
+  "until": "stage5",
+  "children": {},
+  "updated_at_unix_s": 1790186628.0929203,
+  "current_stage": "stage5_unit__12",
+  "current_log": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/logs/stage5_unit__12.1.log",
+  "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 176, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: stage5_unit__12 failed (exit 1); see its attempt log\n"
+}
