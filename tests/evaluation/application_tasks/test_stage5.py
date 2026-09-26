@@ -75,3 +75,53 @@ def test_plan_uses_the_successful_validation_attempt_after_gpu_wait(tmp_path, mo
     monkeypatch.setattr(stage5, '_validation_evidence', validation)
     with pytest.raises(RuntimeError, match='successful receipt reached'):
         stage5.plan({'root': str(tmp_path)})
+
+
+def test_recovery_only_allows_the_declared_supplementary_policy_revision():
+    from copy import deepcopy
+    from chronaris.evaluation.application_tasks.common_downstream_contract import downstream_policy
+    from chronaris.evaluation.application_tasks.stage5_recovery import same_training_contract
+    after = dict(policy=downstream_policy(), source_code_sha256='new', contract_sha256='new',
+                 target_sha256='targets', roles={'train': ['a'], 'validation': ['b']})
+    before = deepcopy(after)
+    before.update(source_code_sha256='old', contract_sha256='old')
+    before['policy'].pop('minirocket_input_policy')
+    before['policy']['format'] = 'chronaris.common_downstream_policy.v1'
+    assert same_training_contract(before, after)
+    changed = deepcopy(after); changed['target_sha256'] = 'other'
+    assert not same_training_contract(before, changed)
+    changed = deepcopy(after); changed['roles']['train'] = ['b']
+    assert not same_training_contract(before, changed)
+    changed = deepcopy(after); changed['policy']['public_parameters']['classification_c'] = [100.]
+    assert not same_training_contract(before, changed)
+    changed = deepcopy(after); changed['policy']['minirocket_input_policy'] = 'drop_bad_windows'
+    with pytest.raises(ValueError, match='unreviewed'):
+        same_training_contract(before, changed)
+
+
+def test_recovery_inventory_rejects_mutated_parent_evidence(tmp_path, monkeypatch):
+    from chronaris.evaluation.application_tasks import stage5_recovery as recovery
+    parent = tmp_path/'checkpoint.pt'; parent.write_bytes(b'preserved')
+    inventory = tmp_path/'inventory.json'
+    stage5.write_result(inventory, dict(source_code_sha256='current', files={str(parent): sha256_file(parent)}))
+    frozen = {'recovery': {'path': str(inventory), 'sha256': sha256_file(inventory)}}
+    monkeypatch.setattr(recovery, 'v4_workflow_source_sha256', lambda: 'current')
+    assert recovery.recovery_inventory({}, frozen)['files']
+    parent.write_bytes(b'changed')
+    with pytest.raises(ValueError, match='source changed'):
+        recovery.recovery_inventory({}, frozen)
+
+
+def test_representation_reuse_follows_and_verifies_explicit_parent_receipt(tmp_path):
+    from chronaris.evaluation.application_tasks.stage5_recovery import representation_root
+    original = tmp_path/'original/representations/train/representation_manifest.json'
+    original.parent.mkdir(parents=True); original.write_text('{}')
+    parent = tmp_path/'parent.json'
+    row = dict(route='self_supervised', consumers={'manifest_path': str(tmp_path/'original/evaluation/consumers/consumer_manifest.json')})
+    stage5.write_result(parent, {'results': [row]})
+    child_row = dict(route='self_supervised', consumers={'manifest_path': str(tmp_path/'child/evaluation/consumers/consumer_manifest.json')})
+    child = dict(results=[child_row], reuse={'parent_receipt': {'path': str(parent), 'sha256': sha256_file(parent)}})
+    assert representation_root(child, 'self_supervised') == original.parents[1]
+    parent.write_text('{}')
+    with pytest.raises(ValueError, match='source changed'):
+        representation_root(child, 'self_supervised')

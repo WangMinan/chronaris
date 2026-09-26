@@ -215,6 +215,7 @@ def main(*, default_until='freeze'):
     parser.add_argument('--stage45-parent', help='Completed stage 4 parent; only for the stage45 endpoint')
     parser.add_argument('--stage45-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
     parser.add_argument('--stage5-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
+    parser.add_argument('--stage5-parent', help='Preserved 12-unit halt for the stage 5 consumer repair')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
@@ -286,6 +287,8 @@ def main(*, default_until='freeze'):
         input_paths += [Path(config['data_root'])/domain/'summary.json' for domain in ('cogpilot', 'clare')]
     if bool(args.stage45_resume_parent) != bool(args.stage45_resume_evidence) or (args.stage45_resume_parent and args.until != 'stage45'):
         parser.error('stage 4.5 recovery requires parent and evidence together')
+    if args.stage5_parent and args.until != 'stage5':
+        parser.error('--stage5-parent requires --until stage5')
     if args.until == 'stage5':
         if args.stage45_parent or args.comparison_parent or args.execution_parent:
             parser.error('stage5 inherits result evidence, never migrates an old training queue')
@@ -293,6 +296,10 @@ def main(*, default_until='freeze'):
         input_paths = [Path(config['registry_path']), Path(config['stage5_acceptance']),
             project/'docs/requirements/thesis-stage5-execution-20260923.md']
         input_paths += [Path(config['data_root'])/d/'summary.json' for d in ('cogpilot', 'clare')]
+        if args.stage5_parent:
+            config['stage5_parent'] = str(Path(args.stage5_parent).resolve())
+            input_paths += [Path(config['stage5_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
+            input_paths.append(project/'docs/requirements/thesis-stage5-recovery-20260926.md')
     elif args.until == 'stage45':
         if not math.isfinite(args.stage45_budget_hours) or args.stage45_budget_hours < 0:
             parser.error('stage45 budget must be nonnegative; zero means unlimited')

@@ -51,17 +51,11 @@ class MiniRocketFrozenConsumer:
         if valid.shape != (len(values),) or not valid.any():
             raise ValueError("MiniRocket needs observed training cases")
         case_channel_std = values[valid].std(axis=-1)
-        self.channel_indices = np.flatnonzero(
-            np.all(
-                case_channel_std > self.config.minimum_case_channel_std,
-                axis=0,
-            )
-        )
-        if len(self.channel_indices) == 0:
-            raise ValueError(
-                "MiniRocket train-only variance filter removed every channel"
-            )
-        values = values[:, self.channel_indices]
+        # Missing modalities legitimately produce constant blocks in some windows.
+        # Keep every finite channel; local constancy is diagnostic, not a veto.
+        self.constant_case_counts = (case_channel_std <= self.config.minimum_case_channel_std).sum(axis=0)
+        self.input_channel_count = values.shape[1]
+        self.channel_indices = np.arange(self.input_channel_count)
         self.transformer = MiniRocket(
             n_kernels=self.config.n_kernels,
             n_jobs=self.config.n_jobs,
@@ -73,7 +67,10 @@ class MiniRocketFrozenConsumer:
     def transform_features(self, sequence):
         if self.transformer is None:
             raise RuntimeError("MiniRocket features must be fitted before transform")
-        return self.transformer.transform(_as_collection(sequence)[:, self.channel_indices])
+        values = _as_collection(sequence)
+        if hasattr(self, "input_channel_count") and values.shape[1] != self.input_channel_count:
+            raise ValueError("MiniRocket input channel count changed")
+        return self.transformer.transform(values[:, self.channel_indices])
 
     def fit(
         self,
@@ -645,6 +642,6 @@ def _decode_one(logits, parameters):
 
 def _as_collection(sequence):
     values = np.asarray(sequence, dtype=np.float32)
-    if values.ndim != 3:
-        raise ValueError("MiniRocket sequence must have shape [N,T,D]")
+    if values.ndim != 3 or any(size == 0 for size in values.shape) or not np.isfinite(values).all():
+        raise ValueError("MiniRocket sequence must be finite and nonempty with shape [N,T,D]")
     return np.ascontiguousarray(values.transpose(0, 2, 1))

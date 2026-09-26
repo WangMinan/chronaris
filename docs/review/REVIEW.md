@@ -1,10 +1,14 @@
 # Chronaris 复核入口
 
-更新时间：2026-09-25
+更新时间：2026-09-26
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
+
+[阶段 5 补充评价修复与恢复](stage/thesis-v4/stage5-recovery-20260926/README.md)：源记录与模型重放、统一消费者协议、显式继承、冻结源码验证及后台启动。
+
+[阶段 5 综合评估与接续建议](stage/thesis-v4/stage5-integrated-assessment-20260925/README.md)：核对两个会话，实测固定库可处理失败表示，匹配准备输入与缺失分支，确认正式入口配置差异；恢复与协议修订尚未实施。
 
 [9 月 25 日阶段 5 停机与全分支复核](stage/thesis-v4/stage5-status-review-20260925/README.md)：来源与分组结果核验、失败诊断、文档读者检查与远端交付；本轮不修改或重启实验。
 

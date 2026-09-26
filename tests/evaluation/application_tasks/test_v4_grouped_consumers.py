@@ -200,3 +200,21 @@ def test_native_resume_rejects_changed_saved_files_before_rewriting(tmp_path):
     model.write_bytes(original+b'changed')
     with pytest.raises(ValueError,match='saved artifact changed'):run_native_method_consumers(**kwargs)
     assert model.read_bytes()==original+b'changed'
+
+
+def test_supplement_failure_preserves_primary_receipt_without_completing_unit(tmp_path, monkeypatch):
+    import json
+    from chronaris.evaluation.application_tasks import v4_grouped_consumers as consumers
+    outputs, targets, tasks, context = _public_inputs()
+    original = consumers.fit_native_consumers
+    def fail_supplement(**kwargs):
+        if kwargs['family'] == 'minirocket':
+            raise RuntimeError('supplement failed')
+        return original(**kwargs)
+    monkeypatch.setattr(consumers, 'fit_native_consumers', fail_supplement)
+    with pytest.raises(RuntimeError, match='supplement failed'):
+        consumers.run_native_method_consumers(outputs=outputs, targets=targets, definitions=tasks,
+            context=context, output_root=tmp_path, label_used_for_encoder_training=False)
+    status = json.loads((tmp_path/'consumer_status.json').read_text())
+    assert status['components'] == {'linear': 'completed', 'minirocket': 'pending'}
+    assert not status['complete'] and (tmp_path/'linear_results.json').is_file()

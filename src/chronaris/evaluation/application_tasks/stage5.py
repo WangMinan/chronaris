@@ -43,10 +43,6 @@ def verify_files(files):
             raise ValueError(f'stage 5 evidence changed: {p}')
 
 
-def data_contract(contract):
-    return {k: v for k, v in contract.items() if k not in ('source_code_sha256', 'contract_sha256')}
-
-
 def plan(config):
     root = Path(config['root'])
     receipt = read(root/'pipeline_state.json')['completed']['cuda_validation']
@@ -88,7 +84,8 @@ def plan(config):
                     for row in previous['results']:
                         record_path = Path(row['consumers']['manifest_path']).parent.parent/'common_contract.json'
                         record = read(record_path)
-                        if data_contract(record['contract']) != data_contract(contract):
+                        from chronaris.evaluation.application_tasks.stage5_recovery import same_training_contract
+                        if not same_training_contract(record['contract'], contract):
                             raise ValueError('historical input, task or downstream policy differs')
                         declaration = record['declaration']
                         files.update(declaration['evidence_files'])
@@ -100,7 +97,11 @@ def plan(config):
                     verify_files(files)
                     historical[domain+'/'+method] = dict(receipt=receipt, files=files,
                         original_source_code_sha256=previous['source_code_sha256'], new_encoder_updates=0)
-    frozen = seal_development_plan(dict(status='completed', format='chronaris.stage5_stability.v1',
+    recovery = {}
+    if config.get('stage5_parent'):
+        from chronaris.evaluation.application_tasks.stage5_recovery import prepare_recovery
+        recovery['recovery'] = prepare_recovery(config, contracts, budgets)
+    frozen = seal_development_plan(dict(status='completed', format='chronaris.stage5_stability.v2', **recovery,
         source_code_sha256=v4_workflow_source_sha256(), validation_files=validation,
         acceptance_sha256=sha256_file(config['stage5_acceptance']), contracts=contracts, budgets=budgets,
         units=units(), historical=historical, model_units=36, inherited_units=4, new_units=32,
@@ -132,7 +133,7 @@ def verified_plan(config):
 def progress_report(root, frozen, *, complete=False):
     root = Path(root)
     rows, costs, sources = [], defaultdict(list), {}
-    inherited = 0
+    inherited = revalidated = newly_trained = 0
     for index, unit in enumerate(frozen['units']):
         path = root/'units'/f'{index}.json'
         if not path.exists():
@@ -143,7 +144,9 @@ def progress_report(root, frozen, *, complete=False):
         verify_files(result['evidence_files'])
         sources[str(path)] = sha256_file(path)
         inherited += int(unit['inherited'])
-        if not unit['inherited']:
+        revalidated += int(result.get('reused_training', False))
+        newly_trained += int(not unit['inherited'] and not result.get('reused_training'))
+        if not unit['inherited'] and not result.get('reused_training'):
             costs[unit['domain']+'/'+unit['method']].append(result['total_seconds'])
         for row in metric_rows(result):
             rows.append(row | {k: unit[k] for k in ('method', 'fold_index', 'seed', 'inherited')})
@@ -164,7 +167,8 @@ def progress_report(root, frozen, *, complete=False):
                for k, v in grouped.items()]
     return write_result(root/('stage5_report.json' if complete else 'progress_summary.json'),
         dict(status='completed' if complete else 'running', completed_units=len(sources), inherited_units=inherited,
-             new_completed_units=len(sources)-inherited, total_units=36, rows=rows, descriptive_summary=summary,
+             new_completed_units=newly_trained, revalidated_units=revalidated,
+             total_units=36, rows=rows, descriptive_summary=summary,
              measured_new_unit_seconds=dict(costs), source_receipts=sources,
              plan_sha256=frozen['plan_sha256'], confirmation_opened=False, candidate_search=False,
              formal_evaluation_ready=False, next_step='complete all-method formal integration and model freeze'))
@@ -187,6 +191,9 @@ def run_stage5(stage, config):
             return result
         return performance_entry(config, domain, 'stage4_reference', mode)
     if stage == 'stage5_report':
+        if 'recovery' in frozen:
+            from chronaris.evaluation.application_tasks.stage5_recovery import recovery_inventory
+            recovery_inventory(config, frozen)
         for source in frozen['historical'].values():
             verify_files(source['files'])
         return progress_report(root, frozen, complete=True)
@@ -195,11 +202,29 @@ def run_stage5(stage, config):
     index = int(stage.split('__')[1])
     unit = frozen['units'][index]
     key = f"{unit['domain']}/{unit['fold_index']}/{unit['seed']}"
-    if unit['inherited']:
+    inventory = None
+    if 'recovery' in frozen:
+        from chronaris.evaluation.application_tasks.stage5_recovery import recovery_inventory
+        inventory = recovery_inventory(config, frozen)
+    prior = None
+    if inventory and stage in inventory['completed']:
+        prior = read(inventory['completed'][stage]['path'])
+        files = inventory['files']
+    elif unit['inherited']:
         source = frozen['historical'][unit['domain']+'/'+unit['method']]
         verify_files(source['files'])
-        result = read(source['receipt']['path'])
+        prior = read(source['receipt']['path'])
         files = source['files']
+    if prior is not None:
+        from chronaris.evaluation.application_tasks.stage5_recovery import revalidate_completed
+        result = revalidate_completed(config, frozen, unit, prior, files, index)
+        if result['status'] == 'waiting_gpu':
+            return result
+        files = dict(files)
+        for row in result['results']:
+            for component in row['consumers']['components'].values():
+                for kind in ('model', 'result'):
+                    files[component[kind+'_path']] = component[kind+'_sha256']
     else:
         check = root/'performance'/unit['domain']/'stage4_reference/check.json'
         state = read(root/'pipeline_state.json')
@@ -207,13 +232,25 @@ def run_stage5(stage, config):
         verify_files({receipt['path']: receipt['sha256']})
         if read(receipt['path']) != read(check) or not read(check)['passed']:
             raise ValueError('graph qualification changed')
-        result = run_common_contract_smoke(domain=unit['domain'], methods=(unit['method'],),
+        reuse = {}
+        if inventory and index == 12:
+            reuse = dict(pretraining_source=inventory['partial_checkpoint'],
+                pretraining_source_sha256=inventory['partial_checkpoint_sha256'])
+        result = run_common_contract_smoke(domain=unit['domain'], methods=(unit['method'],), **reuse,
             output_root=root/'training'/str(index), full=True, recipe='stage4_reference',
             fold_index=unit['fold_index'], seed=unit['seed'], cuda_graph_recurrence=unit['method'] == 'chronaris',
             expected_contract_sha256=frozen['contracts'][key]['contract_sha256'],
             data_root=config['data_root'], registry_path=config['registry_path'])
         if result['status'] == 'waiting_gpu':
             return result
+        if reuse:
+            from chronaris.evaluation.application_tasks.stage5_recovery import read as read_recovery
+            original = Path(inventory['partial_checkpoint']).parents[2]/'evaluation/consumers/linear_results.json'
+            before = read_recovery(original)
+            after = read_recovery(result['results'][0]['consumers']['components']['linear']['result_path'])
+            if any(before[k] != after[k] for k in ('fit_rows', 'evaluations')):
+                raise ValueError('partial unit primary results changed')
+            result['preserved_pretraining_updates'] = 300
         files = {str(check): sha256_file(check)}
         for row in result['results']:
             for checkpoint in ('best_checkpoint_path', 'last_checkpoint_path'):

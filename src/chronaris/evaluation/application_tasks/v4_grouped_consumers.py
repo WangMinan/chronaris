@@ -341,6 +341,12 @@ def run_native_method_consumers(*, outputs, targets, definitions, context, outpu
         temporary = manifest_path.with_suffix(".tmp")
         temporary.write_text(json.dumps(manifest | {"protocol_sha256": protocol_hash, "artifacts": artifacts}, ensure_ascii=False, indent=2) + "\n")
         temporary.replace(manifest_path)
+        status_path = root/'consumer_status.json'
+        temporary = status_path.with_suffix('.tmp')
+        temporary.write_text(json.dumps(dict(protocol_sha256=protocol_hash,
+            components={name: 'completed' if name in artifacts else 'pending' for name in families},
+            complete=set(families) <= set(artifacts)), indent=2) + '\n')
+        temporary.replace(status_path)
     return {"protocol_sha256": protocol_hash, "manifest_path": str(manifest_path), "components": results}
 
 

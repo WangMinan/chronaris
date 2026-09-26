@@ -1,0 +1,33 @@
+{
+  "status": "completed",
+  "independent_process_consumers_identical": true,
+  "extra_encoder_updates": 0,
+  "representation_replay": [
+    {
+      "route": "self_supervised",
+      "role": "train",
+      "windows": 4,
+      "bitwise_identical": true
+    },
+    {
+      "route": "self_supervised",
+      "role": "validation",
+      "windows": 4,
+      "bitwise_identical": true
+    },
+    {
+      "route": "task_guided",
+      "role": "train",
+      "windows": 4,
+      "bitwise_identical": true
+    },
+    {
+      "route": "task_guided",
+      "role": "validation",
+      "windows": 4,
+      "bitwise_identical": true
+    }
+  ],
+  "source_code_sha256": "1ab6fa2a991d93d69935088e1026c4e20e8a1ce90b617d150f00aad27fa40ac3",
+  "source_receipt": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-reuse-preflight/revalidation.json"
+}

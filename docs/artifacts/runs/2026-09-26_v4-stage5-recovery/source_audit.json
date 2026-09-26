@@ -1,0 +1,765 @@
+{
+  "status": "completed",
+  "source_files": {
+    "/home/wangminan/dataset/chronaris/clare/EEG/1390/eeg_data_exp_2.csv": "7755dafc9b6ba355cecf56fc4df5d67eedc801d951a1d518b36b679011aa0466",
+    "/home/wangminan/dataset/chronaris/clare/EDA/1390/eda_data_experiment_2.csv": "2af5c4d47114599ed0d94d73d7fc1feec0376003f0443f0d94c7412891e1d34f",
+    "/home/wangminan/dataset/chronaris/clare/ECG/1390/ecg_data_experiment_2.csv": "25ebdc43e4aabf4aca5fcc8959f03ecdb97ec35c05110eda5f1d2c2e5cf3c8f9",
+    "/home/wangminan/dataset/chronaris/clare/EEG/1629/eeg_data_exp_0.csv": "6990f100122ec09a149e10bdde399a6c7bf0f5f1633e0a47a0a5c8704c0479a1",
+    "/home/wangminan/dataset/chronaris/clare/EDA/1629/eda_data_experiment_0.csv": "61926de73f51b36416f0f81d9f3b182413f954b37f240ab79ae78b2b08148ebd",
+    "/home/wangminan/dataset/chronaris/clare/ECG/1629/ecg_data_experiment_0.csv": "5a973f06ecb762c3d71344404e8368f4ddc5bd54ef35ef207d6bae3946ccfbcc",
+    "/home/wangminan/dataset/chronaris/clare/EEG/1629/eeg_data_exp_2.csv": "efbdcffdaf08e023bbd09c9881273fed1dbec86450a29536a87355401d52ff00",
+    "/home/wangminan/dataset/chronaris/clare/EDA/1629/eda_data_experiment_2.csv": "a2717b2ca0f3df9e500945cba333d86d0b5c867d9b3e3e8d5395f0608df3eed8",
+    "/home/wangminan/dataset/chronaris/clare/ECG/1629/ecg_data_experiment_2.csv": "53c9f98a7e0f8255ccc2f991d8745853422f505af88e69bbcc085592f1c8c0c9",
+    "/home/wangminan/dataset/chronaris/clare/EEG/1629/eeg_data_exp_3.csv": "052423b7fd84dadd6d7860d87085ccdb4f7fe6708aa4842e87e679a07294c7ce",
+    "/home/wangminan/dataset/chronaris/clare/EDA/1629/eda_data_experiment_3.csv": "e7b037e14ae5e60b30cfd4ac3659af4b9858d86c20fd48e9e9dfe5d2c2d0cb98",
+    "/home/wangminan/dataset/chronaris/clare/ECG/1629/ecg_data_experiment_3.csv": "8b1698b1d997861b784daf8db098736ba245a9aa988ea5174278a46dae391a44"
+  },
+  "rows": [
+    {
+      "sample_id": "1390__experiment2_window13",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 9470,
+          "finite_rows": 1280
+        },
+        {
+          "rows_in_window": 9470,
+          "finite_rows": 5120
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment0_window0",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window14",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 9637,
+          "finite_rows": 1280
+        },
+        {
+          "rows_in_window": 9637,
+          "finite_rows": 4786
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window18",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window19",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window20",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window21",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window22",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window23",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window24",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window25",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window26",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window27",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window28",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window29",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 272
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window30",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window31",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 1944
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window32",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window33",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window34",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window35",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window36",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 654
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window37",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window38",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window39",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window40",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window41",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window42",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window43",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window44",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window45",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window46",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window47",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window48",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window49",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window50",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window51",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window52",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment2_window53",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment3_window0",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 2560
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 0,
+          "finite_rows": 0
+        }
+      ],
+      "prepared_matches_native_reload": true
+    },
+    {
+      "sample_id": "1629__experiment3_window40",
+      "source_counts": [
+        {
+          "rows_in_window": 2560,
+          "finite_rows": 0
+        },
+        {
+          "rows_in_window": 9232,
+          "finite_rows": 1280
+        },
+        {
+          "rows_in_window": 9232,
+          "finite_rows": 4457
+        }
+      ],
+      "prepared_matches_native_reload": true
+    }
+  ],
+  "source_windows_checked": 41,
+  "encoder_replay_windows": 60,
+  "encoder_replay_bitwise_identical": true,
+  "representation_sha256": "3db759c8aeee09ec16d1aea49b05272ac74326e5e8feb900c1ba9348577d54fb",
+  "checkpoint_sha256": "8011be7ccb8c3e40d23f2f714ad8d68ef1cc086fd0b2c523d7d8771808ee06dc",
+  "source_unchanged": true,
+  "raw_records_reparsed": true,
+  "optimizer_updates_added": 0
+}

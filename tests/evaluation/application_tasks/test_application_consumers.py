@@ -67,11 +67,19 @@ def test_minirocket_uses_channel_first_transform_and_fixed_consumers() -> None:
     assert prediction["transformed_feature_count"] > 0
 
 
-def test_minirocket_train_only_variance_filter_removes_constant_channels() -> None:
+@pytest.mark.parametrize('condition', ['healthy', 'constant_channel', 'missing_blocks', 'all_constant'])
+def test_minirocket_keeps_finite_constant_channels_and_reloads(condition, tmp_path) -> None:
     pytest.importorskip("aeon")
+    import joblib
     rng = np.random.default_rng(29)
     sequence = rng.normal(size=(12, 32, 4)).astype(np.float32)
-    sequence[:, :, 3] = 2.0
+    if condition == 'constant_channel':
+        sequence[:, :, 3] = 2.0
+    elif condition == 'missing_blocks':
+        sequence[0, :, :2] = 0.
+        sequence[1, :, 2:] = 0.
+    elif condition == 'all_constant':
+        sequence[:] = 0.
     class_target = np.asarray([index % 3 for index in range(12)])
     regression_target = np.linspace(0.0, 1.0, 12)
     consumer = MiniRocketFrozenConsumer(
@@ -79,8 +87,18 @@ def test_minirocket_train_only_variance_filter_removes_constant_channels() -> No
     ).fit(sequence[:9], class_target[:9], regression_target[:9])
     prediction = consumer.predict(sequence[9:])
 
-    assert prediction["input_channel_count"] == 3
-    assert consumer.channel_indices.tolist() == [0, 1, 2]
+    assert prediction["input_channel_count"] == 4
+    assert consumer.channel_indices.tolist() == [0, 1, 2, 3]
+    path = tmp_path/'consumer.joblib'
+    joblib.dump(consumer, path)
+    restored = joblib.load(path)
+    assert np.array_equal(restored.transform_features(sequence), consumer.transform_features(sequence))
+    assert np.isfinite(consumer.transform_features(sequence)).all()
+    sequence[0, 0, 0] = np.nan
+    with pytest.raises(ValueError, match='finite'):
+        restored.transform_features(sequence)
+    with pytest.raises(ValueError, match='finite'):
+        MiniRocketFrozenConsumer().fit_features(sequence)
 
 
 def test_causal_tcn_future_perturbation_does_not_change_past_logits() -> None:

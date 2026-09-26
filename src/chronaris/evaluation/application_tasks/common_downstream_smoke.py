@@ -79,7 +79,8 @@ def run_common_contract_smoke(*, domain, output_root,
                             registry_path='docs/requirements/thesis-v4-public-subjects.json',
                             full=False, methods=('naive_time_sync', 'chronaris'), cuda_graph_recurrence=False,
                             recipe=None, seed=17, fold_index=0, micro_batch=4, diagnostic_snapshots=False, pretraining_source=None, expected_contract_sha256=None,
-                            finetuning_graph_recurrence=None, selection_inner_index=None, private_projection_kind="layernorm_linear"):
+                            finetuning_graph_recurrence=None, selection_inner_index=None, private_projection_kind="layernorm_linear",
+                            pretraining_source_sha256=None):
     if domain not in {'dingxin', 'cogpilot', 'clare'} or not torch.cuda.is_available():
         raise ValueError('contract smoke requires a real native development domain and CUDA')
     if not methods or not set(methods) <= {'naive_time_sync', 'chronaris', 'physiology_only', 'vehicle_only', 'mult', 'contiformer'}:
@@ -88,7 +89,12 @@ def run_common_contract_smoke(*, domain, output_root,
         raise ValueError('graph execution is validated only for CogPilot Chronaris')
     if recipe is None and (seed != 17 or fold_index != 0 or micro_batch != 4 or diagnostic_snapshots):
         raise ValueError('stage 4 changes require an explicit stage 4.5 recipe')
-    if pretraining_source is not None and (recipe != 'finetuning_lr' or not full or seed != 17 or fold_index != 0):
+    stage5_reuse = pretraining_source is not None and recipe == 'stage4_reference'
+    if stage5_reuse:
+        if (not full or diagnostic_snapshots or selection_inner_index is not None
+            or sha256_file(pretraining_source) != pretraining_source_sha256):
+            raise ValueError('stage 5 pretraining reuse requires the verified selected checkpoint')
+    elif pretraining_source is not None and (recipe != 'finetuning_lr' or not full or seed != 17 or fold_index != 0):
         raise ValueError('pretraining reuse is limited to the fixed first-setting fine-tuning candidate')
     if selection_inner_index is not None and (recipe not in {"stage4_reference", "thesis_reference"} or pretraining_source or diagnostic_snapshots):
         raise ValueError("grouped selection requires a fresh reference recipe without legacy snapshot evaluation")
@@ -173,6 +179,9 @@ def run_common_contract_smoke(*, domain, output_root,
                     encoder, source_normalizer, payload = load_frozen_application_encoder(pretraining_source,
                         route='self_supervised', fold=fold, device='cuda')
                     from chronaris.modeling.training.candidate_checkpoint import candidate_source_code_sha256
+                    if stage5_reuse:
+                        from chronaris.evaluation.application_tasks.stage5_recovery import validate_partial_pretraining
+                        validate_partial_pretraining(payload, recipe_configs, method)
                     if (payload['source_code_sha256'] != candidate_source_code_sha256()
                         or payload['candidate_config'] != asdict(recipe_configs[0])
                         or source_normalizer.to_manifest() != normalizer.to_manifest()
