@@ -28,6 +28,32 @@
       "bitwise_identical": true
     }
   ],
-  "source_code_sha256": "1ab6fa2a991d93d69935088e1026c4e20e8a1ce90b617d150f00aad27fa40ac3",
-  "source_receipt": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-reuse-preflight/revalidation.json"
+  "source_code_sha256": "6f5205696cacb64ffa08528cef41b86290ed21a1719e0cc06c2ff8a9a9b77e3e",
+  "source_receipt": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-reuse-preflight-scaled/revalidation.json",
+  "replayed_components": [
+    {
+      "route": "self_supervised",
+      "family": "linear",
+      "model_sha256": "97a6f9bcf30112e059d77de327bd322589b8cee8501b9d368359383ab46bccf0",
+      "result_sha256": "820d39daaf6702bb19cf801f535ea0c36310290f6104dfb6552c5540d8ef1aa4"
+    },
+    {
+      "route": "self_supervised",
+      "family": "minirocket",
+      "model_sha256": "23070b4ef26acdabfd9cd7af34fc9575367b844abb33d927f9ee6cd1f433c139",
+      "result_sha256": "0b72630094bd16fc88131524b828a82ad2b1c55fdb26b6bff681aff0cc10caee"
+    },
+    {
+      "route": "task_guided",
+      "family": "linear",
+      "model_sha256": "e592579800bdd611a8f3e07f771cbf4cf45bcaf30cb78031f75d56d32a9ef3d1",
+      "result_sha256": "a2893886d27a16d2bb92482d3762bc297cd68fa3fb984040e6b85e16c9ce1ac7"
+    },
+    {
+      "route": "task_guided",
+      "family": "minirocket",
+      "model_sha256": "792035c4d3034ca58cb0634451907788aed3a418924823b033521a8584b637c6",
+      "result_sha256": "95175b92065a3dcd45b206837c8b184f64bd989d9b2541b78c8955d667d3e5e8"
+    }
+  ]
 }

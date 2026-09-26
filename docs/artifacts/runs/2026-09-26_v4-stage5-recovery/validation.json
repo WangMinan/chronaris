@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "passed": 713,
+  "skipped": 22,
+  "source_code_sha256": "6f5205696cacb64ffa08528cef41b86290ed21a1719e0cc06c2ff8a9a9b77e3e",
+  "source_commit": "63753427db9a0e4847fca2dd8c0f8280b46cd3d9",
+  "receipt": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/cuda_validation/attempt_1/validation_receipt.json"
+}

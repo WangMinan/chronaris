@@ -1,0 +1,36 @@
+{
+  "parent_root": "/mnt/e/chronaris-v4-results/2026-09-23-stage5",
+  "parent_source_code_sha256": "6701e30dee9d136284f488abac257a327354f0d35d2e4adbf4b2cbfc1cc380a1",
+  "source_code_sha256": "6f5205696cacb64ffa08528cef41b86290ed21a1719e0cc06c2ff8a9a9b77e3e",
+  "reviewed_source_changes": [
+    "src/chronaris/evaluation/application_tasks/application_consumers.py",
+    "src/chronaris/evaluation/application_tasks/common_downstream_contract.py",
+    "src/chronaris/evaluation/application_tasks/common_downstream_smoke.py",
+    "src/chronaris/evaluation/application_tasks/stage5.py",
+    "src/chronaris/evaluation/application_tasks/stage5_recovery.py",
+    "src/chronaris/evaluation/application_tasks/v4_grouped_consumers.py",
+    "src/chronaris/evaluation/application_tasks/v4_pipeline.py"
+  ],
+  "partial_checkpoint": "/mnt/e/chronaris-v4-results/2026-09-23-stage5/training/12/clare/chronaris/self_supervised/chronaris/C/best.pt",
+  "partial_checkpoint_sha256": "8011be7ccb8c3e40d23f2f714ad8d68ef1cc086fd0b2c523d7d8771808ee06dc",
+  "parent_failures": [
+    {
+      "stage": "stage5_unit__12",
+      "time_unix_s": 1790186628.092767,
+      "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-20260923/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 176, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: stage5_unit__12 failed (exit 1); see its attempt log\n"
+    }
+  ],
+  "encoder_training_changed": false,
+  "primary_policy_changed": false,
+  "supplementary_policy": "all_finite_channels_train_only_binary_scale_v2",
+  "confirmation_opened": false,
+  "status": "completed",
+  "verified_source_files": 1481,
+  "preserved_complete_units": 12,
+  "contract_count": 18,
+  "plan_sha256": "06c2b2d6eb22c8945c51bb3ea358752638711535cbca31b560558c00d2692f89",
+  "inventory_path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/recovery_inventory.json",
+  "inventory_sha256": "75f910ee06b2fd00f3918a8796cf033df36796689cf3fa76947896b643676f41",
+  "remaining_pretraining_updates": 6900,
+  "remaining_guided_updates": 6000
+}

@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-09-26T20:51:28.696370+08:00",
+  "controller_pid": 1820467,
+  "controller_command": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python /home/wangminan/projects/chronaris-runtime-stage5-recovery-scaled-20260926/scripts/evaluation/application_tasks/run_v4_pipeline.py --until stage5 --root /mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled --stage5-parent /mnt/e/chronaris-v4-results/2026-09-23-stage5 ",
+  "pipeline_status": "running",
+  "current_stage": "stage5_execution__clare__graph",
+  "children": {
+    "stage5_execution__clare__graph": 1822372
+  },
+  "completed_receipts": 3,
+  "failures": [],
+  "qualification_progress": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/performance/clare/stage4_reference/eager/clare/progress.json",
+      "status": "completed",
+      "phase": "export_and_common_consumers",
+      "optimizer_updates": 0,
+      "wall_elapsed_s": 189.77351418696344
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/performance/clare/stage4_reference/eager/clare/chronaris/self_supervised/chronaris/C/progress.json",
+      "status": "completed",
+      "phase": "validation",
+      "optimizer_updates": 2,
+      "wall_elapsed_s": 53.38381372904405
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/performance/clare/stage4_reference/eager/clare/chronaris/task_guided/chronaris/progress.json",
+      "status": "completed",
+      "phase": "validation",
+      "optimizer_updates": 4,
+      "wall_elapsed_s": 80.99441194022074
+    }
+  ],
+  "qualification_checkpoints": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/performance/clare/stage4_reference/eager/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "bytes": 424443,
+      "mtime": "2026-09-26T20:48:35.791718+08:00"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/performance/clare/stage4_reference/eager/clare/chronaris/task_guided/chronaris/last.pt",
+      "bytes": 428379,
+      "mtime": "2026-09-26T20:50:34.397554+08:00"
+    }
+  ],
+  "original_files_unchanged": 1481,
+  "research_training_resumed": false,
+  "original_complete_research_units": 12,
+  "confirmation_opened": false,
+  "scope": "qualification short runs progressing; fixed research recovery queued after qualification"
+}
