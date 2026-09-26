@@ -1,12 +1,13 @@
 {
   "source_sha256": "3db759c8aeee09ec16d1aea49b05272ac74326e5e8feb900c1ba9348577d54fb",
-  "model_sha256": "c227e6ee8b02af0676decdb653169e37e9258d33f6768f2916046b845d3e55c2",
+  "model_sha256": "f23a1fb81db9c7ea1aba89eadbf21936935b44f71d352abd7f04a7b014587dfd",
   "features_sha256": "035225fd113633da86836b866d93e0c72634670f8ad15983cac6cac101d890d5",
   "shape": [
     578,
     9996
   ],
   "finite": true,
+  "scale_exponent": 11,
   "channels": [
     0,
     1,
@@ -140,5 +141,6 @@
     36
   ],
   "independent_process_resume_identical": true,
+  "binary_scale_matches_unscaled_features": true,
   "status": "completed"
 }

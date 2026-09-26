@@ -56,6 +56,12 @@ class MiniRocketFrozenConsumer:
         self.constant_case_counts = (case_channel_std <= self.config.minimum_case_channel_std).sum(axis=0)
         self.input_channel_count = values.shape[1]
         self.channel_indices = np.arange(self.input_channel_count)
+        # aeon 1.5 accepts exact constants but rejects tiny nonzero variation.
+        # One train-fitted binary scale preserves relative amplitudes and zeros.
+        positive_std = values[valid].astype(np.float64).std(axis=-1)
+        positive_std = positive_std[positive_std > 0]
+        self.input_scale_exponent = max(0, int(np.ceil(-np.log2(positive_std.min())))) if positive_std.size else 0
+        values = self._scale_input(values)
         self.transformer = MiniRocket(
             n_kernels=self.config.n_kernels,
             n_jobs=self.config.n_jobs,
@@ -70,7 +76,11 @@ class MiniRocketFrozenConsumer:
         values = _as_collection(sequence)
         if hasattr(self, "input_channel_count") and values.shape[1] != self.input_channel_count:
             raise ValueError("MiniRocket input channel count changed")
-        return self.transformer.transform(values[:, self.channel_indices])
+        return self.transformer.transform(self._scale_input(values)[:, self.channel_indices])
+
+    def _scale_input(self, values):
+        with np.errstate(over='raise', invalid='raise'):
+            return np.ldexp(values, getattr(self, 'input_scale_exponent', 0))
 
     def fit(
         self,

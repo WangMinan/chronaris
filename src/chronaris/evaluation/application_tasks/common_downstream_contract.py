@@ -44,7 +44,7 @@ def downstream_policy():
         dingxin_parameters=dict(classification_c=[1.], regression_alpha=[1.], selection='fixed',
             shared_vehicle_view_weight_sum=1, persistence_reference=True),
         supplementary_consumers=dict(public='minirocket_10000_kernels', dingxin=None),
-        minirocket_input_policy='all_finite_channels; local_constancy_diagnostic_only; observed_train_cases_fit',
+        minirocket_input_policy='all_finite_channels; train_only_binary_scale; local_constancy_diagnostic_only; observed_train_cases_fit',
         primary_metrics=dict(classification='macro_f1_over_declared_classes', regression='rmse_field_mean_then_group_mean'),
         fitting='independent_weights_per_representation; all_transforms_fit_on_training_role_only',
         grouping=dict(public='subject', dingxin='single_record_time_block_descriptive_only', simulation='parameter_profile'),

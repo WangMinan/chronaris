@@ -35,7 +35,7 @@ def same_training_contract(before, after):
         value = {k: v for k, v in value.items() if k not in ('contract_sha256', 'source_code_sha256')}
         policy = dict(value['policy'])
         if policy['format'] == 'chronaris.common_downstream_policy.v2':
-            if policy.pop('minirocket_input_policy') != 'all_finite_channels; local_constancy_diagnostic_only; observed_train_cases_fit':
+            if policy.pop('minirocket_input_policy') != 'all_finite_channels; train_only_binary_scale; local_constancy_diagnostic_only; observed_train_cases_fit':
                 raise ValueError('unreviewed MiniROCKET input policy')
             policy['format'] = 'chronaris.common_downstream_policy.v1'
         return value | {'policy': policy}
@@ -127,7 +127,7 @@ def prepare_recovery(config, contracts, budgets):
         source_code_sha256=v4_workflow_source_sha256(), reviewed_source_changes=changed,
         files=files, completed=completed, partial_checkpoint=str(partial), partial_checkpoint_sha256=sha256_file(partial),
         parent_failures=state['failures'], encoder_training_changed=False, primary_policy_changed=False,
-        supplementary_policy='all_finite_channels_v2', confirmation_opened=False)
+        supplementary_policy='all_finite_channels_train_only_binary_scale_v2', confirmation_opened=False)
     path = root/'recovery_inventory.json'
     if path.exists() and read(path) != inventory:
         raise ValueError('recovery inventory changed')

@@ -67,7 +67,7 @@ def test_minirocket_uses_channel_first_transform_and_fixed_consumers() -> None:
     assert prediction["transformed_feature_count"] > 0
 
 
-@pytest.mark.parametrize('condition', ['healthy', 'constant_channel', 'missing_blocks', 'all_constant'])
+@pytest.mark.parametrize('condition', ['healthy', 'constant_channel', 'missing_blocks', 'near_constant', 'all_constant'])
 def test_minirocket_keeps_finite_constant_channels_and_reloads(condition, tmp_path) -> None:
     pytest.importorskip("aeon")
     import joblib
@@ -78,6 +78,8 @@ def test_minirocket_keeps_finite_constant_channels_and_reloads(condition, tmp_pa
     elif condition == 'missing_blocks':
         sequence[0, :, :2] = 0.
         sequence[1, :, 2:] = 0.
+    elif condition == 'near_constant':
+        sequence[:, :, 3] *= 1e-10
     elif condition == 'all_constant':
         sequence[:] = 0.
     class_target = np.asarray([index % 3 for index in range(12)])
@@ -89,6 +91,10 @@ def test_minirocket_keeps_finite_constant_channels_and_reloads(condition, tmp_pa
 
     assert prediction["input_channel_count"] == 4
     assert consumer.channel_indices.tolist() == [0, 1, 2, 3]
+    if condition == 'healthy':
+        from aeon.transformations.collection.convolution_based import MiniRocket
+        native = MiniRocket(n_kernels=84, n_jobs=1, random_state=17).fit(sequence[:9].transpose(0, 2, 1))
+        assert np.array_equal(native.transform(sequence.transpose(0, 2, 1)), consumer.transform_features(sequence))
     path = tmp_path/'consumer.joblib'
     joblib.dump(consumer, path)
     restored = joblib.load(path)
