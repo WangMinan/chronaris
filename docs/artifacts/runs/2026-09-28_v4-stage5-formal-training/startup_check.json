@@ -1,0 +1,85 @@
+{
+  "checked_at": "2026-09-28T11:09:56.509844+08:00",
+  "controller_pid": 1974015,
+  "status": "running",
+  "current_stage": "stage5_formal_execution__clare__graph",
+  "children": {
+    "stage5_formal_execution__clare__graph": 1975562
+  },
+  "completed": [
+    "cuda_validation",
+    "stage5_formal_plan",
+    "stage5_formal_execution__clare__eager"
+  ],
+  "formal_training_units_completed": 0,
+  "failures": [],
+  "gpu": "NVIDIA GeForce RTX 4090, 0 %, 1001 MiB, 24564 MiB",
+  "checkpoint_files": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "bytes": 424443,
+      "mtime": "2026-09-28T11:07:25.800099+08:00"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/task_guided/chronaris/last.pt",
+      "bytes": 428379,
+      "mtime": "2026-09-28T11:09:24.120377+08:00"
+    }
+  ],
+  "progress": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/progress.json",
+      "mtime": "2026-09-28T11:09:53.089849+08:00",
+      "progress": {
+        "method": "chronaris",
+        "status": "completed",
+        "optimizer_updates": 0,
+        "phase": "export_and_common_consumers",
+        "route": "task_guided",
+        "wall_elapsed_s": 206.26055364962667
+      }
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/self_supervised/chronaris/C/progress.json",
+      "mtime": "2026-09-28T11:07:25.953249+08:00",
+      "progress": {
+        "method": "chronaris",
+        "status": "completed",
+        "optimizer_updates": 2,
+        "phase": "validation",
+        "best_update": 2,
+        "sample_ids": [
+          "1624__experiment0_window5",
+          "1674__experiment1_window32",
+          "1624__experiment0_window6",
+          "1674__experiment1_window41"
+        ],
+        "samples_seen": 8,
+        "peak_allocated_bytes": 259664384,
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/self_supervised/chronaris/C/last.pt",
+        "device": "cuda",
+        "data_wait_s": 0.007651484105736017,
+        "training_action": "completed",
+        "wall_elapsed_s": 58.117422656621784
+      }
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/task_guided/chronaris/progress.json",
+      "mtime": "2026-09-28T11:09:24.226784+08:00",
+      "progress": {
+        "method": "chronaris",
+        "status": "completed",
+        "optimizer_updates": 4,
+        "phase": "validation",
+        "stage": "joint_adaptation",
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/task_guided/chronaris/last.pt",
+        "best_update": 4,
+        "samples_seen": 16,
+        "peak_allocated_bytes": 374873600,
+        "head_warmup_updates": 2,
+        "joint_updates": 2,
+        "wall_elapsed_s": 88.3522658450529
+      }
+    }
+  ]
+}

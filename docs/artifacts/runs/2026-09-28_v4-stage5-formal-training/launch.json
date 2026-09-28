@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-09-28T10:56:55.058281+08:00",
+  "pid": 1974015,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--until",
+    "stage5_formal_train",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training",
+    "--stage5-stability-root",
+    "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled"
+  ],
+  "source_commit": "0b8f0d14fd4da624fbc49bf7d96f683ce7780ddf",
+  "runtime": "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928",
+  "root": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training",
+  "fixture_files": 12,
+  "stop_after": "main model freeze; no outer evaluation"
+}

@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-09-28T11:09:57.639618+08:00",
+  "checkpoints": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/self_supervised/chronaris/C/last.pt",
+      "sha256": "119ee8c485a84fceac7a1dbf0cc6aa26b28d37c27164d22ff68214fc51212f36",
+      "step_count": 2,
+      "optimizer_updates": 2,
+      "training_status": "completed"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/performance/clare/stage4_reference/eager/clare/chronaris/task_guided/chronaris/last.pt",
+      "sha256": "7c78ce95513d98867aafb409a024f6903a52fbc305171843b9fb3211354be989",
+      "step_count": 4,
+      "optimizer_updates": 4,
+      "training_status": "completed"
+    }
+  ]
+}

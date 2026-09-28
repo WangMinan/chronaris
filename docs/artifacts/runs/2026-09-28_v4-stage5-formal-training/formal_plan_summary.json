@@ -1,0 +1,228 @@
+{
+  "status": "completed",
+  "format": "chronaris.stage5_formal_training.v1",
+  "source_code_sha256": "7a0d75880017b31da575f880b4b80673e9eaed6ccef2c1340649e021b3441c27",
+  "plan_sha256": "e6238c456373fbd8b83897d589ab0090b922290d45c626a2815aca8ff47c3df9",
+  "model_units": 279,
+  "representation_routes": 477,
+  "counts": {
+    "clare/0": {
+      "train": 2102,
+      "validation": 432,
+      "held_out": 534
+    },
+    "clare/1": {
+      "train": 1988,
+      "validation": 432,
+      "held_out": 648
+    },
+    "clare/2": {
+      "train": 2047,
+      "validation": 427,
+      "held_out": 594
+    },
+    "clare/3": {
+      "train": 1993,
+      "validation": 431,
+      "held_out": 644
+    },
+    "clare/4": {
+      "train": 2096,
+      "validation": 324,
+      "held_out": 648
+    },
+    "cogpilot/0": {
+      "train": 5601,
+      "validation": 1449,
+      "held_out": 2123
+    },
+    "cogpilot/1": {
+      "train": 5685,
+      "validation": 1424,
+      "held_out": 2064
+    },
+    "cogpilot/2": {
+      "train": 5680,
+      "validation": 1439,
+      "held_out": 2054
+    },
+    "cogpilot/3": {
+      "train": 5891,
+      "validation": 1491,
+      "held_out": 1791
+    },
+    "cogpilot/4": {
+      "train": 6360,
+      "validation": 1672,
+      "held_out": 1141
+    },
+    "dingxin/0": {
+      "train": 24,
+      "validation": 6,
+      "held_out": 6
+    }
+  },
+  "seed_policy": [
+    17,
+    29,
+    43
+  ],
+  "selected_configuration": "stage4_reference",
+  "candidate_search": false,
+  "confirmation_opened": false,
+  "outer_evaluation_implemented": false,
+  "stop_after": "freeze_main_models_without_outer_evaluation",
+  "budget_policy": "unchanged reference and existing adapter budgets, at least one full training-role pass",
+  "methods": {
+    "chronaris": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "physiology_only": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "vehicle_only": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "mult": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "contiformer": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "naive_time_sync": {
+      "routes": [
+        "self_supervised"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "timecma": {
+      "routes": [
+        "summary_adapted"
+      ],
+      "kind": "window_end",
+      "external": true
+    },
+    "chronos2": {
+      "routes": [
+        "frozen",
+        "history_adapted"
+      ],
+      "kind": "window_end",
+      "external": true
+    },
+    "sensorllm_deepseek": {
+      "routes": [
+        "summary_adapted"
+      ],
+      "kind": "window_end",
+      "external": true
+    }
+  },
+  "consumer_policy": {
+    "format": "chronaris.common_downstream_policy.v2",
+    "tasks": {
+      "dingxin": {
+        "maneuver_classification": "\u9f0e\u65b0\u672a\u6765\u673a\u52a8\u5f3a\u5ea6\u5206\u7c7b\uff1a\u8bad\u7ec3\u89d2\u8272\u62df\u5408\u4f4e\u3001\u4e2d\u3001\u9ad8\u9608\u503c\uff1b\u771f\u5b9e\u6570\u636e\u7ec4\u4ef6\u9a8c\u8bc1",
+        "maneuver_regression": "\u9f0e\u65b0\u672a\u6765\u673a\u52a8\u5f3a\u5ea6\u56de\u5f52\uff1a\u73b0\u6709\u8fd0\u52a8\u5b66\u5206\u6570\uff1b\u771f\u5b9e\u6570\u636e\u7ec4\u4ef6\u9a8c\u8bc1",
+        "physiology_regression": "\u9f0e\u65b0\u672a\u6765\u751f\u7406\u5b57\u6bb5\u56de\u5f52\uff1a\u5386\u53f2\u7a97\u53e3\u4e4b\u540e5\u79d2\u7684\u6709\u6548\u5b57\u6bb5\u4e2d\u4f4d\u6570\uff1b\u771f\u5b9e\u6570\u636e\u7ec4\u4ef6\u9a8c\u8bc1"
+      },
+      "cogpilot": {
+        "difficulty": "CogPilot\u865a\u62df\u98de\u884c\u96be\u5ea6\u5206\u7c7b\uff1a\u539f\u6709\u56db\u7c7b\u6807\u7b7e",
+        "event_response": "CogPilot\u79bb\u7ebf\u4e8b\u4ef6\u6761\u4ef6\u54cd\u5e94\uff1a\u4e8b\u4ef6\u540e8\u79d2\u4e0e\u4e8b\u4ef6\u524d2\u79d2\u76ae\u80a4\u7535\u5bfc\u4e2d\u4f4d\u6570\u4e4b\u5dee"
+      },
+      "clare": {
+        "workload_classification": "CLARE\u8ba4\u77e5\u8d1f\u8377\u5206\u7c7b\uff1a\u539f10\u79d2\u533a\u95f4\u8bc4\u5206\uff0c\u5206\u7c7b\u9608\u503c7",
+        "workload_regression": "CLARE\u8ba4\u77e5\u8d1f\u8377\u56de\u5f52\uff1a\u539f10\u79d2\u6807\u7b7e\u533a\u95f4\u8bc4\u5206"
+      },
+      "simulation": {
+        "scope": "\u4eff\u771f\u4ec5\u627f\u62c5\u65f6\u95f4\u673a\u5236\u3001\u5df2\u77e5\u6270\u52a8\u53ca\u9c81\u68d2\u6027\u9a8c\u8bc1\uff0c\u6cbf\u7528\u65e2\u6709\u51bb\u7ed3\u4eff\u771f\u5165\u53e3"
+      }
+    },
+    "primary_consumers": {
+      "classification": "logistic_regression",
+      "regression": "fieldwise_ridge"
+    },
+    "public_parameters": {
+      "classification_c": [
+        0.1,
+        1.0,
+        10.0
+      ],
+      "regression_alpha": [
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "selection": "validation_subject_mean"
+    },
+    "dingxin_parameters": {
+      "classification_c": [
+        1.0
+      ],
+      "regression_alpha": [
+        1.0
+      ],
+      "selection": "fixed",
+      "shared_vehicle_view_weight_sum": 1,
+      "persistence_reference": true
+    },
+    "supplementary_consumers": {
+      "public": "minirocket_10000_kernels",
+      "dingxin": null
+    },
+    "minirocket_input_policy": "all_finite_channels; train_only_binary_scale; local_constancy_diagnostic_only; observed_train_cases_fit",
+    "primary_metrics": {
+      "classification": "macro_f1_over_declared_classes",
+      "regression": "rmse_field_mean_then_group_mean"
+    },
+    "fitting": "independent_weights_per_representation; all_transforms_fit_on_training_role_only",
+    "grouping": {
+      "public": "subject",
+      "dingxin": "single_record_time_block_descriptive_only",
+      "simulation": "parameter_profile"
+    },
+    "representation_kinds": [
+      "causal_sequence",
+      "window_end"
+    ],
+    "feature_origin": "hidden_state_not_final_task_predictions",
+    "supervision_strata": [
+      "self_supervised:none",
+      "task_guided:summary_labels",
+      "task_guided:future_trajectory"
+    ],
+    "preserve_all_windows": true,
+    "confirmation_opened": false
+  },
+  "data_role": "confirmation_train_and_inner_validation_only",
+  "canonical_plan_path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/formal_plan.json",
+  "canonical_plan_file_sha256": "4432026b49aaea1b86c4c36dcbc601710e5377632c9c40af69078917d99acdd5",
+  "matrix_csv": "matrix.csv"
+}

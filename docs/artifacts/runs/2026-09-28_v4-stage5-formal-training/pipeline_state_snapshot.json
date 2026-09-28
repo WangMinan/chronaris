@@ -1,0 +1,34 @@
+{
+  "completed": {
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/stage_results/cuda_validation.1.json",
+      "sha256": "dbe25326a020dfe2e5ebfa0250feb35f2813f1a78e729d3dd99aae804d92ae2b"
+    },
+    "stage5_formal_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/stage_results/stage5_formal_plan.1.json",
+      "sha256": "4432026b49aaea1b86c4c36dcbc601710e5377632c9c40af69078917d99acdd5"
+    },
+    "stage5_formal_execution__clare__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/stage_results/stage5_formal_execution__clare__eager.1.json",
+      "sha256": "c24c47f480c0ae6ff96fb5b858764eba55a0a6baa41cfc50b5535a4a7623a09e"
+    }
+  },
+  "failures": [],
+  "attempts": {
+    "cuda_validation": 1,
+    "stage5_formal_plan": 1,
+    "stage5_formal_execution__clare__eager": 1,
+    "stage5_formal_execution__clare__graph": 1
+  },
+  "started_at_unix_s": 1790564217.2310996,
+  "pid": 1974015,
+  "config_sha256": "29b4cc9a637be3a6e4f550f0f02cdcb4e6b52ccac7ef5981fa6c86fc95dc7985",
+  "status": "running",
+  "until": "stage5_formal_train",
+  "children": {
+    "stage5_formal_execution__clare__graph": 1975562
+  },
+  "updated_at_unix_s": 1790564994.7569118,
+  "current_stage": "stage5_formal_execution__clare__graph",
+  "current_log": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/logs/stage5_formal_execution__clare__graph.1.log"
+}
