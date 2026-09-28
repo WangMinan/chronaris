@@ -75,8 +75,12 @@ def build_common_contract(*, domain, fold, observations, targets, definitions, c
     """Freeze real inputs and targets before any method is evaluated; never opens confirmation."""
     if domain not in {'dingxin', 'cogpilot', 'clare'} or context['domain'] != domain or seed not in (17, 29, 43):
         raise ValueError('common scalar contract requires an approved native development domain and seed')
-    if scope not in {'engineering_development', 'development_comparison'}:
+    if scope not in {'engineering_development', 'development_comparison', 'confirmation_training'}:
         raise ValueError('confirmation requires its later configuration freeze')
+    if scope == 'confirmation_training' and (
+        context.get('cohort_role') != 'confirmation' or not fold.held_out_sample_ids
+        or (domain in PUBLIC_TASKS and targets.manifest.get('source_role') != 'fixed_confirmation_subjects')):
+        raise ValueError('formal training contract requires the sealed confirmation cohort')
     if set(observations) != {'train', 'validation'}:
         raise ValueError('common development contract requires exactly train and validation')
     if {t.name for t in definitions} != set(TASK_MEANINGS[domain]):

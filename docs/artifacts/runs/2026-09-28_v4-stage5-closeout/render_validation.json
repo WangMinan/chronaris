@@ -1,0 +1,18 @@
+{
+  "status": "completed",
+  "isolated_directory": "/tmp/chronaris-stage5-plot-final-h4vgyy5f",
+  "imports": [
+    "argparse",
+    "csv",
+    "json",
+    "matplotlib",
+    "pathlib"
+  ],
+  "png_byte_identical": true,
+  "png_sha256": {
+    "minirocket_comparison.png": "f56a54377798566ce8a6a9f9da6e6049d8c44f3dab8f0c2185a31a8ee7a32e6e",
+    "linear_comparison.png": "3b89914fcb86093ae808f4e72e91533a87dc72fc3302e9d3397b577ed723a010"
+  },
+  "portable_data_verification": true,
+  "visual_review": "both final PNGs checked for Chinese text, legend placement and labels"
+}

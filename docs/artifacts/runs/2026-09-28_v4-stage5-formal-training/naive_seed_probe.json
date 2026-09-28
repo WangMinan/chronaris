@@ -1,0 +1,9 @@
+{
+  "status": "completed",
+  "seed": 29,
+  "fold_index": 1,
+  "fit_manifest": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-probes/naive/clare/naive_time_sync/checkpoint/fit_manifest.json",
+  "source_code_sha256": "7a0d75880017b31da575f880b4b80673e9eaed6ccef2c1340649e021b3441c27",
+  "scope": "engineering_development",
+  "resume_identical": true
+}

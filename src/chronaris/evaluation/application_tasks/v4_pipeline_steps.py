@@ -39,6 +39,9 @@ def run_pipeline_step(stage, config, *, attempt=1):
     root = Path(config['root'])
     initial, pressure, public, review = (root/name for name in ('initial', 'initial_pressure', 'public_screen', 'review'))
     common = dict(data_root=config['data_root'], registry_path=config['registry_path'])
+    if stage.startswith('stage5_formal_'):
+        from chronaris.evaluation.application_tasks.stage5_formal import run_stage5_formal
+        return run_stage5_formal(stage,config)
     if stage.startswith('stage5_'):
         from chronaris.evaluation.application_tasks.stage5 import run_stage5
         return run_stage5(stage, config)

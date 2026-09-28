@@ -1,0 +1,43 @@
+{
+  "status": "completed",
+  "rows": [
+    {
+      "domain": "clare",
+      "counts": {
+        "train": 2102,
+        "validation": 432,
+        "held_out": 534
+      },
+      "contract_sha256": "3dac1b78f3d9ec5c66d9fc6d0bb9916892aff52de4eb65b6ca876239d8221f89",
+      "data_manifest_sha256": "d5f91022cc41b6372d1ed35d6ba694d4e1dc102c0d6751fba22858dd4e3a2547",
+      "actual_recipe_matches_plan": true,
+      "outer_provider_rejected": true
+    },
+    {
+      "domain": "cogpilot",
+      "counts": {
+        "train": 5601,
+        "validation": 1449,
+        "held_out": 2123
+      },
+      "contract_sha256": "592f19187aecde86a8da839604a36919bf3154abce90656e643d40ffb055ce0c",
+      "data_manifest_sha256": "7e5cfacec3c40292bfa56c644feeecf55df9b5cc2799518804106684e3dbab58",
+      "actual_recipe_matches_plan": true,
+      "outer_provider_rejected": true
+    },
+    {
+      "domain": "dingxin",
+      "counts": {
+        "train": 24,
+        "validation": 6,
+        "held_out": 6
+      },
+      "contract_sha256": "41aba03de998c134115f47501495c6cc00621519cd9e09b97276b6f24a146265",
+      "data_manifest_sha256": "a43c50475d027aa6a0c2bafa5a86c7b73045cda193f0f2374a751d5c16c52e99",
+      "actual_recipe_matches_plan": true,
+      "outer_provider_rejected": true
+    }
+  ],
+  "outer_observations_loaded": false,
+  "outer_metrics_computed": false
+}

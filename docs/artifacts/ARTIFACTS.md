@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-09-26
+更新时间：2026-09-28
 
 
 [阶段 4.5-C 单因素尝试](runs/2026-09-22_v4-stage45c/report.md)：公共自监督项消融六次微调全部完成、未通过采用门，含完整配对结果与来源核验。
@@ -14,6 +14,9 @@
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
 ## 九月研究证据与最新盘点
+
+- [阶段 5 固定复核收口](runs/2026-09-28_v4-stage5-closeout/report.md)：36/36 完成、72 条表示路线、完整指标与成本；[独立绘图说明](runs/2026-09-28_v4-stage5-closeout/README.md)。
+- [阶段 5 正式训练交接](runs/2026-09-28_v4-stage5-formal-training/report.md)：完整方法矩阵、输入与训练验证、冻结源码和启动证据。
 
 - [阶段 5 修复与恢复](runs/2026-09-26_v4-stage5-recovery/report.md)：统一补充评价、来源继承和新目录恢复；原失败与原结果保留。
 

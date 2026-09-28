@@ -1,14 +1,16 @@
 # Chronaris 文档入口
 
-更新时间：2026-09-25
+更新时间：2026-09-28
 
 当前在 `codex/thesis-v4-recovery-20260905` 继续研究开发，已包含 `main` 的整理成果。研究主线为“各方法提取融合特征，再分别训练相同类型的下游算法”。优先读取新方案、当前状态和任务；历史协议承担来源追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，此处只维护导航。
 
 ## 当前入口
 
-- [截至阶段 5 的分支实验总览](artifacts/runs/2026-09-25_v4-stage5-review/report.md)：首折三种子完成，第二折下游失败停止；[给远端 GPT PRO 的复核任务](artifacts/runs/2026-09-25_v4-stage5-review/pro-review.md)。
+- [阶段 5 完整复核与独立绘图包](artifacts/runs/2026-09-28_v4-stage5-closeout/report.md)：36/36 完成，含完整数据、纯绘图脚本与可编辑矢量图；[正式训练协议](requirements/thesis-stage5-formal-training-20260928.md)固定下一批 279 个主模型单元。
 
-- [阶段 5 执行协议](requirements/thesis-stage5-execution-20260923.md)：固定参考复核已完成 12/36，当前失败停止；[本轮产物](artifacts/runs/2026-09-23_v4-stage5/report.md)。
+- [截至阶段 5 的分支实验总览](artifacts/runs/2026-09-25_v4-stage5-review/report.md)：历史首折三种子完成、第二折失败现场；[给远端 GPT PRO 的复核任务](artifacts/runs/2026-09-25_v4-stage5-review/pro-review.md)。
+
+- [阶段 5 执行协议](requirements/thesis-stage5-execution-20260923.md)：历史启动协议，原失败已另开目录恢复并完成 36/36；[本轮产物](artifacts/runs/2026-09-23_v4-stage5/report.md)。
 
 - [阶段 4.5-C 单因素协议](requirements/thesis-stage45c-development-20260922.md)：公共自监督项消融已完成，六次微调无足够改善；[本轮交接](artifacts/runs/2026-09-22_v4-stage45c/report.md)。
 - [阶段 4.5-B 执行协议](requirements/thesis-stage45b-development-20260921.md)：表示保留与选模一致性验证已完成，十二次首轮完成、零入围；[当前交接](artifacts/runs/2026-09-21_v4-stage45b/report.md)。

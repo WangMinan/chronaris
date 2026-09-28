@@ -1,0 +1,50 @@
+{
+  "fonts": [
+    "WenQuanYi Zen Hei",
+    "Noto Sans CJK SC",
+    "Microsoft YaHei",
+    "DejaVu Sans"
+  ],
+  "font_size": 11,
+  "figure_size": [
+    12.5,
+    8.5
+  ],
+  "dpi": 240,
+  "colors": {
+    "chronaris": "#276875",
+    "reference": "#bd7857"
+  },
+  "methods": {
+    "chronaris": "Chronaris 连续融合",
+    "contiformer": "ContiFormer 连续时间变换器",
+    "vehicle_only": "第二输入流单流"
+  },
+  "routes": {
+    "self_supervised": "自监督表示",
+    "task_guided": "任务引导表示"
+  },
+  "domains": {
+    "clare": "CLARE 生理负荷数据",
+    "cogpilot": "CogPilot 虚拟飞行数据"
+  },
+  "consumers": {
+    "linear": "共同线性下游",
+    "minirocket": "MiniROCKET 时序卷积特征补充"
+  },
+  "tasks": {
+    "workload_classification": "负荷分类",
+    "workload_regression": "负荷评分回归",
+    "difficulty": "飞行难度分类",
+    "event_response": "离线事件条件响应"
+  },
+  "metrics": {
+    "macro_f1": "宏平均 F1（越高越好）",
+    "rmse": "均方根误差（原生单位，越低越好）"
+  },
+  "footnote": "开发复核 · 三折 × 三种子；小点为各设置，横线为均值，误差线为设置间标准差（不是置信区间）。",
+  "task_axis_labels": {
+    "workload_regression": "均方根误差（评分点，越低越好）",
+    "event_response": "均方根误差（微西门子，越低越好）"
+  }
+}

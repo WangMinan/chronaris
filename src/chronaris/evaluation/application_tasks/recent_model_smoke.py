@@ -45,19 +45,24 @@ def _export(encoder, inputs, prompts):
         windows_per_second=sum(len(x) for x in outputs.values())/seconds)
 
 
-def _run(*, domain, method, output_root, assets_path, data_root, registry_path, progress, full=False):
+def _run(*, domain, method, output_root, assets_path, data_root, registry_path, progress, full=False,
+         fold_index=0, seed=17, subject_role='development', expected_budget=None):
     root = Path(output_root)/domain/method
     started = time.perf_counter()
     assets = verify_assets(assets_path)
     provider, schema, fold, digest, targets, definitions, context, raw = contract_development_inputs(
-        domain, data_root=data_root, registry_path=registry_path, full=full)
+        domain, data_root=data_root, registry_path=registry_path, full=full, fold_index=fold_index, subject_role=subject_role)
     kwargs = dict(fold=fold, observations=raw, targets=targets, definitions=definitions,
         context=context, data_manifest_sha256=digest)
-    scope = 'development_comparison' if full else 'engineering_development'
-    contract = build_common_contract(domain=domain, scope=scope, **kwargs)
+    scope = 'confirmation_training' if subject_role == 'confirmation' else 'development_comparison' if full else 'engineering_development'
+    contract = build_common_contract(domain=domain, scope=scope, seed=seed, **kwargs)
     budget = max(200, math.ceil(len(fold.train_sample_ids)/(4 if method=='timecma' else 1))) if full else 2
+    if expected_budget is not None and (
+        expected_budget['adaptation_updates'] != budget or expected_budget['seed'] != seed
+        or expected_budget['history_alignment_updates'] != (max(200,len(fold.train_sample_ids)) if method=='sensorllm_deepseek' else 0)):
+        raise ValueError('actual adapter budget differs from the frozen formal recipe')
     binding = dict(contract=contract, assets_sha256=sha256_file(assets_path), method=method,
-        training_budget=budget, resume_replay_updates=1, seed=17, cuda_allocator_fraction=.95)
+        training_budget=budget, resume_replay_updates=1, seed=seed, cuda_allocator_fraction=.95)
     binding_path = root/'binding.json'
     if binding_path.exists() and json.loads(binding_path.read_text()) != binding:
         raise ValueError('recent model input/source changed; preserve this root and use a new one')
@@ -111,7 +116,7 @@ def _run(*, domain, method, output_root, assets_path, data_root, registry_path, 
             contract_sha256=contract['contract_sha256'], assets_sha256=binding['assets_sha256'],
             adaptation='summary_label_heads_removed' if signal=='summary_labels' else
                 ('native_quantile_loss_on_last_16_points_inside_train_history' if adapted else 'none'),
-            channel_names=list(names), source_code_sha256=contract['source_code_sha256'], alignment=alignment)
+            channel_names=list(names), source_code_sha256=contract['source_code_sha256'], alignment=alignment, seed=seed)
         if full:
             metadata.update(full_training_role=True, training_budget=budget, checkpoint_interval=25)
         training = None
@@ -220,7 +225,10 @@ def _run(*, domain, method, output_root, assets_path, data_root, registry_path, 
 
 def run_recent_model_smoke(*, domain, method, output_root, assets_path,
                            data_root='artifacts/application_evaluation/2026-09-06_v4-public-development',
-                           registry_path='docs/requirements/thesis-v4-public-subjects.json', full=False):
+                           registry_path='docs/requirements/thesis-v4-public-subjects.json', full=False,
+                           fold_index=0, seed=17, subject_role='development', expected_budget=None):
+    if seed not in (17, 29, 43) or (method == 'sensorllm_deepseek' and domain != 'clare'):
+        raise ValueError('recent model seed or domain is outside the fixed matrix')
     if domain not in {'dingxin','cogpilot','clare'} or method not in {'timecma','chronos2','sensorllm_deepseek'} or not torch.cuda.is_available():
         raise ValueError('recent model smoke requires an approved real development domain, method and CUDA')
     root = Path(output_root)/domain/method
@@ -229,11 +237,12 @@ def run_recent_model_smoke(*, domain, method, output_root, assets_path,
             return dict(status='waiting_gpu')
         torch.set_num_threads(1)
         previous_memory_fraction = torch.cuda.get_per_process_memory_fraction()
-        with _periodic_training_heartbeat('recent_model_'+method, 30., root=root) as progress, isolated_training_rng(17):
+        with _periodic_training_heartbeat('recent_model_'+method, 30., root=root) as progress, isolated_training_rng(seed):
             try:
                 torch.cuda.set_per_process_memory_fraction(.95)
                 return _run(domain=domain, method=method, output_root=output_root, assets_path=assets_path,
-                    data_root=data_root, registry_path=registry_path, progress=progress, full=full)
+                    data_root=data_root, registry_path=registry_path, progress=progress, full=full,
+                    fold_index=fold_index, seed=seed, subject_role=subject_role, expected_budget=expected_budget)
             except BaseException as error:
                 write_result(root/f'failure_{time.time_ns()}.json', dict(status='failed', error=repr(error),
                     traceback=traceback.format_exc(), progress=dict(progress)))

@@ -28,8 +28,11 @@ from chronaris.representation.window_features import WindowFeatureBatch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file, write_deterministic_npz
 
 
-def contract_development_inputs(domain, *, data_root, registry_path, full=False, fold_index=0, grouped_smoke=False):
-    if domain == 'dingxin':
+def contract_development_inputs(domain, *, data_root, registry_path, full=False, fold_index=0, grouped_smoke=False,
+                                subject_role='development'):
+    if subject_role not in ('development', 'confirmation') or (subject_role == 'confirmation' and not full):
+        raise ValueError('formal training requires complete fixed confirmation folds')
+    if domain == 'dingxin' and subject_role == 'development':
         data, _ = deduplicated_dingxin_data(load_v4_dingxin_development())
         if fold_index != 0:
             raise ValueError('Dingxin keeps its single deduplicated development fold')
@@ -37,7 +40,8 @@ def contract_development_inputs(domain, *, data_root, registry_path, full=False,
         targets, definitions = data.targets_by_fold[fold.fold_id], data.definitions_by_fold[fold.fold_id]
         provider, schema, digest = data.development_provider(fold), data.index.plan.schema, data.data_manifest_sha256
     else:
-        provider, schema, fold, _, digest, targets, definitions, data = load_development_inputs(domain, data_root, registry_path, fold_index=fold_index)
+        provider, schema, fold, _, digest, targets, definitions, data = load_development_inputs(
+            domain, data_root, registry_path, fold_index=fold_index, subject_role=subject_role)
         if not full:
             # Fix task availability, not label values or model outcomes, before selecting methods.
             index = {sample: i for i, sample in enumerate(targets.sample_ids)}
@@ -64,6 +68,10 @@ def contract_development_inputs(domain, *, data_root, registry_path, full=False,
             ids = fold.train_sample_ids + fold.validation_sample_ids
             targets = replace(targets, sample_ids=ids, **select_application_targets(targets, ids, 'cpu'))
     context = native_consumer_context(domain, data, fold)
+    if subject_role == 'confirmation':
+        if not fold.held_out_sample_ids:
+            raise ValueError('formal training needs a sealed outer role')
+        context['cohort_role'] = 'confirmation'
     observations = {role: provider(getattr(fold, role+'_sample_ids')) for role in ('train', 'validation')}
     def selected_provider(ids):
         selected = tuple(ids)
@@ -80,14 +88,14 @@ def run_common_contract_smoke(*, domain, output_root,
                             full=False, methods=('naive_time_sync', 'chronaris'), cuda_graph_recurrence=False,
                             recipe=None, seed=17, fold_index=0, micro_batch=4, diagnostic_snapshots=False, pretraining_source=None, expected_contract_sha256=None,
                             finetuning_graph_recurrence=None, selection_inner_index=None, private_projection_kind="layernorm_linear",
-                            pretraining_source_sha256=None):
+                            pretraining_source_sha256=None, subject_role='development', expected_recipe=None):
     if domain not in {'dingxin', 'cogpilot', 'clare'} or not torch.cuda.is_available():
         raise ValueError('contract smoke requires a real native development domain and CUDA')
     if not methods or not set(methods) <= {'naive_time_sync', 'chronaris', 'physiology_only', 'vehicle_only', 'mult', 'contiformer'}:
         raise ValueError('unsupported common comparison method')
     if cuda_graph_recurrence and (methods != ('chronaris',) or (recipe is None and domain != 'cogpilot')):
         raise ValueError('graph execution is validated only for CogPilot Chronaris')
-    if recipe is None and (seed != 17 or fold_index != 0 or micro_batch != 4 or diagnostic_snapshots):
+    if recipe is None and methods != ('naive_time_sync',) and (seed != 17 or fold_index != 0 or micro_batch != 4 or diagnostic_snapshots):
         raise ValueError('stage 4 changes require an explicit stage 4.5 recipe')
     stage5_reuse = pretraining_source is not None and recipe == 'stage4_reference'
     if stage5_reuse:
@@ -100,7 +108,10 @@ def run_common_contract_smoke(*, domain, output_root,
         raise ValueError("grouped selection requires a fresh reference recipe without legacy snapshot evaluation")
     if private_projection_kind != "layernorm_linear" and (selection_inner_index is None or methods != ("chronaris",) or recipe != "stage4_reference"):
         raise ValueError("linear projection is a single-factor grouped-selection experiment")
-    scope = 'development_comparison' if full else 'engineering_development'
+    if subject_role == 'confirmation' and (recipe not in ('stage4_reference', None)
+        or (recipe is None and methods != ('naive_time_sync',)) or pretraining_source or selection_inner_index is not None):
+        raise ValueError('formal training requires the fixed reference without development reuse or reselection')
+    scope = 'confirmation_training' if subject_role == 'confirmation' else 'development_comparison' if full else 'engineering_development'
     root = Path(output_root)/domain
     started = time.perf_counter()
     phase_seconds = {}
@@ -112,7 +123,7 @@ def run_common_contract_smoke(*, domain, output_root,
             progress['phase'] = 'bind_real_development_inputs'
             provider, schema, fold, digest, targets, definitions, context, observations = contract_development_inputs(
                 domain, data_root=data_root, registry_path=registry_path, full=full, fold_index=fold_index,
-                grouped_smoke=selection_inner_index is not None and not full)
+                grouped_smoke=selection_inner_index is not None and not full, subject_role=subject_role)
             training_fold, training_targets, selection_support = fold, targets, None
             if selection_inner_index is not None:
                 from chronaris.evaluation.application_tasks.checkpoint_selection import (selection_split, subset_targets, GroupedCheckpointSelector)
@@ -147,6 +158,11 @@ def run_common_contract_smoke(*, domain, output_root,
                 recipe_configs = training_recipe(recipe, method=methods[0], full=full, seed=seed, digest=digest,
                     train_count=len(fold.train_sample_ids), graph=cuda_graph_recurrence,
                     calibration=calibration, micro_batch=micro_batch)
+                if expected_recipe is not None:
+                    actual = dict(candidate=asdict(recipe_configs[0]),pretraining=asdict(recipe_configs[1]),
+                        finetuning=asdict(recipe_configs[2]),mechanisms=recipe_configs[3])
+                    if json.loads(json.dumps(actual)) != expected_recipe:
+                        raise ValueError('actual training parameters differ from the frozen formal recipe')
                 if selector is not None:
                     candidate, pre, guided, arguments, recipe_record = recipe_configs
                     pre = replace(pre, checkpoint_selection=selector.manifest, private_projection_kind=private_projection_kind)
@@ -172,7 +188,7 @@ def run_common_contract_smoke(*, domain, output_root,
                 torch.cuda.reset_peak_memory_stats()
                 if method == 'naive_time_sync':
                     checkpoint, training = fit_v4_naive_encoder(provider=provider, fold=fold, normalizer=normalizer,
-                        data_manifest_sha256=digest, output_root=root/method/'checkpoint')
+                        data_manifest_sha256=digest, output_root=root/method/'checkpoint', seed=seed)
                     encoder, _, _ = load_v4_naive_encoder(checkpoint, fold=fold, data_manifest_sha256=digest)
                     routes = [('self_supervised', checkpoint, encoder, training)]
                 elif pretraining_source is not None:

@@ -1,0 +1,261 @@
+{
+  "completed": {
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/cuda_validation.1.json",
+      "sha256": "0659de3421375a2cf9a1f5664622b8df82577da003424bbbda8944947a09345d"
+    },
+    "stage5_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_plan.1.json",
+      "sha256": "4e532944ecb89e7599759361ba24470f52eda89af7a48c2333a99cd5c3ea0f02"
+    },
+    "stage5_execution__clare__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__clare__eager.1.json",
+      "sha256": "909c282924e6c30e2811fc6ef1b292ca81662d237ea28712545edb20fafacbb7"
+    },
+    "stage5_execution__clare__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__clare__graph.1.json",
+      "sha256": "1b8445fc47fb3ef0f828753892527623e282658e7ddcb6a4a623a71c5a1aa37c"
+    },
+    "stage5_execution__clare__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__clare__interrupt.1.json",
+      "sha256": "cc169b298444a5aa082b673f90293f4397cb0e183f94badfd881f83dfbd2ef3d"
+    },
+    "stage5_execution__clare__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__clare__resume.1.json",
+      "sha256": "80da0b245b586ff9e545dc91060b704f5eba69761589cc13368a22d793260826"
+    },
+    "stage5_execution__clare__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__clare__check.1.json",
+      "sha256": "1f69515008c02b03c09062162ed9e28986af232b5afc805220fd268405984c01"
+    },
+    "stage5_execution__cogpilot__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__cogpilot__eager.1.json",
+      "sha256": "b5498ceea24d5869556c03123a55820d5e06ff3fdd2bb157cdcac90a02d3324a"
+    },
+    "stage5_execution__cogpilot__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__cogpilot__graph.1.json",
+      "sha256": "f84a00991b895553061f2f5b67f2bf102550eb8214777c27f26a08eeace9653a"
+    },
+    "stage5_execution__cogpilot__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__cogpilot__interrupt.1.json",
+      "sha256": "cc169b298444a5aa082b673f90293f4397cb0e183f94badfd881f83dfbd2ef3d"
+    },
+    "stage5_execution__cogpilot__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__cogpilot__resume.1.json",
+      "sha256": "80da0b245b586ff9e545dc91060b704f5eba69761589cc13368a22d793260826"
+    },
+    "stage5_execution__cogpilot__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_execution__cogpilot__check.1.json",
+      "sha256": "d11b35356944937a6b007a4de528733f24761706195695ed53f46b5feccba0b2"
+    },
+    "stage5_unit__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__0.1.json",
+      "sha256": "fac3005cdbb9e15fbcb5e828916e95aece05a346bdb621c36686ac39dd14a4f8"
+    },
+    "stage5_unit__1": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__1.1.json",
+      "sha256": "ea767db6163d4f779604175ad82f03a0c102756b01d6c58e73c6ffe2496409f6"
+    },
+    "stage5_unit__2": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__2.1.json",
+      "sha256": "026942837a4443fc70d71a724aecc7fb5c4eba715ce10621e48409e1006caa18"
+    },
+    "stage5_unit__3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__3.1.json",
+      "sha256": "a743fabe1a07dd9b674dc8a742e1ae09a289050a93dd1915430369282d851681"
+    },
+    "stage5_unit__4": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__4.1.json",
+      "sha256": "cd5c4ef37c933832df660cd3aef9d546b8f4e92e1556ce7a0ad11e8cc5ecb771"
+    },
+    "stage5_unit__5": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__5.1.json",
+      "sha256": "29b276d557754b7fdf9778a624035188af133e0eb4a7b2ed0bc9a857e589af68"
+    },
+    "stage5_unit__6": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__6.1.json",
+      "sha256": "8c7ad7029bae3858e9043066cccfc4fce356151bc30464af651eb983be92ad4b"
+    },
+    "stage5_unit__7": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__7.1.json",
+      "sha256": "089c61b825d363f2844ba60aa9571a312206a1c5f38b55929b0158d8b70b4007"
+    },
+    "stage5_unit__8": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__8.1.json",
+      "sha256": "35f9c024a2fc1a5a65f8cadb95a0d1709003059e62548000bfcbc4b1bfacb644"
+    },
+    "stage5_unit__9": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__9.1.json",
+      "sha256": "cbfd3c95d32ac78aea1afc4580931032451f46fea1ac500adf5b8e2d96f6bc27"
+    },
+    "stage5_unit__10": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__10.1.json",
+      "sha256": "96df121107a1b9bd7c4c0a8ab28ca2d8f2580f5a88a1cfe796b5c00f98f2cb66"
+    },
+    "stage5_unit__11": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__11.1.json",
+      "sha256": "49e0a8f1faa26fb1c99bc2414a42c31dac66f63765e8f88e07edf7b52a89e40a"
+    },
+    "stage5_unit__12": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__12.1.json",
+      "sha256": "3a71377ed87d661547cfb695fc4346cceaa8698d801ffe8f506562219c5595db"
+    },
+    "stage5_unit__13": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__13.1.json",
+      "sha256": "1d7cbdddc7bb4139685303c0861457c5c6555a02d17d517d6afac437a6cdeffd"
+    },
+    "stage5_unit__14": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__14.1.json",
+      "sha256": "3c298a1b720d2a3756cf6fa3e4e493a6c8ef833db3e793aaae92f4cfc96a04e7"
+    },
+    "stage5_unit__15": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__15.1.json",
+      "sha256": "1f68f092d4b44e08b03dd35f82905fc9adbe480bc659c7ff9e9b6d51a9f70034"
+    },
+    "stage5_unit__16": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__16.1.json",
+      "sha256": "de284417a2579f280ac4491b764f47ed33d20ce3bd3df7fd0f7165ba150c9bdf"
+    },
+    "stage5_unit__17": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__17.1.json",
+      "sha256": "0b2ac4c823432b40d4bfdbdcf15d4456769b33c45e5275822ba6da9e9c71fcdd"
+    },
+    "stage5_unit__18": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__18.1.json",
+      "sha256": "a9d123c6ca5c149b355179e05416bec75c89aa8ade1548b81258d39c5defd099"
+    },
+    "stage5_unit__19": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__19.1.json",
+      "sha256": "ab12e4f7a99bc4b89e8f1a89051b3a78d263e474b726808cc74a6cc4eca772b5"
+    },
+    "stage5_unit__20": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__20.1.json",
+      "sha256": "6f9aec2c45e042db087b08de85a9d889f7299f3da8b4cae3833561af1b7c34e4"
+    },
+    "stage5_unit__21": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__21.1.json",
+      "sha256": "42a02dd73296584bd9ea8d5135f4c5bff965d69ebd00f54577849eb8bfac6716"
+    },
+    "stage5_unit__22": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__22.1.json",
+      "sha256": "31c1dc8e5041d072ce3b6947fc78fddf0962c04bfc06bcced0d8d36a01944d3a"
+    },
+    "stage5_unit__23": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__23.1.json",
+      "sha256": "77e87fda93cd42c00fba75d7a4001dc913d2af051e12561c005fa7731b5a3e5c"
+    },
+    "stage5_unit__24": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__24.1.json",
+      "sha256": "821d37ac8abafc9c7d8932accb370eac1068784b929d4ccb91fb0868b8f73a01"
+    },
+    "stage5_unit__25": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__25.1.json",
+      "sha256": "faa7e066edbfa64d98864fb0d82410ef3ddde377623a2b3c0ec1d814c94064a0"
+    },
+    "stage5_unit__26": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__26.1.json",
+      "sha256": "e9ede0984d618d04a5864ffc14926d0c97f06693a7cf011a69962cb5e3158be0"
+    },
+    "stage5_unit__27": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__27.1.json",
+      "sha256": "30f4adf6da5bccf37d900126f58c068275b6229c2e9f06a5ad11ecd0fd59650c"
+    },
+    "stage5_unit__28": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__28.1.json",
+      "sha256": "acfef025569d78544154e114b50c7f66e7817ffe6a13528a2c91cc650d6ad0ac"
+    },
+    "stage5_unit__29": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__29.1.json",
+      "sha256": "d83c3564d6c812f076bc94af1582964d3dc91696b289f9ba9ba0793e2113b016"
+    },
+    "stage5_unit__30": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__30.1.json",
+      "sha256": "924a8c16c8c4d5edc825757e800103fdb9a5604440df2a8d20411da7f69a573c"
+    },
+    "stage5_unit__31": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__31.1.json",
+      "sha256": "c5ae6c3075a36e3682d7e0122207b4e3568b60e889d22b73e1220c05490dec00"
+    },
+    "stage5_unit__32": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__32.1.json",
+      "sha256": "2e4361197947ed1ed754ba312b81423f91cc86eefd8970aac9e0eef58e573293"
+    },
+    "stage5_unit__33": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__33.1.json",
+      "sha256": "8ad9e6a90b2cf89da06bd1f2066f6660d16e1bfbbe4d185ff47bf970bbb01e4e"
+    },
+    "stage5_unit__34": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__34.1.json",
+      "sha256": "1ee2ecd3656cbf33bd81046c893983cee0eab9bfcb0d9293e83da6f84ae7ebe4"
+    },
+    "stage5_unit__35": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_unit__35.1.json",
+      "sha256": "8b8939e30a83e01995f4e27e01ffe0b9eb62f1d4a751ca47f46375de542fefd1"
+    },
+    "stage5_report": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage_results/stage5_report.1.json",
+      "sha256": "e957f8c04c9243a45d45663c52912487696334ee6a94364d4451aac6b9b8a708"
+    }
+  },
+  "failures": [],
+  "attempts": {
+    "cuda_validation": 1,
+    "stage5_plan": 1,
+    "stage5_execution__clare__eager": 1,
+    "stage5_execution__clare__graph": 1,
+    "stage5_execution__clare__interrupt": 1,
+    "stage5_execution__clare__resume": 1,
+    "stage5_execution__clare__check": 1,
+    "stage5_execution__cogpilot__eager": 1,
+    "stage5_execution__cogpilot__graph": 1,
+    "stage5_execution__cogpilot__interrupt": 1,
+    "stage5_execution__cogpilot__resume": 1,
+    "stage5_execution__cogpilot__check": 1,
+    "stage5_unit__0": 1,
+    "stage5_unit__1": 1,
+    "stage5_unit__2": 1,
+    "stage5_unit__3": 1,
+    "stage5_unit__4": 1,
+    "stage5_unit__5": 1,
+    "stage5_unit__6": 1,
+    "stage5_unit__7": 1,
+    "stage5_unit__8": 1,
+    "stage5_unit__9": 1,
+    "stage5_unit__10": 1,
+    "stage5_unit__11": 1,
+    "stage5_unit__12": 1,
+    "stage5_unit__13": 1,
+    "stage5_unit__14": 1,
+    "stage5_unit__15": 1,
+    "stage5_unit__16": 1,
+    "stage5_unit__17": 1,
+    "stage5_unit__18": 1,
+    "stage5_unit__19": 1,
+    "stage5_unit__20": 1,
+    "stage5_unit__21": 1,
+    "stage5_unit__22": 1,
+    "stage5_unit__23": 1,
+    "stage5_unit__24": 1,
+    "stage5_unit__25": 1,
+    "stage5_unit__26": 1,
+    "stage5_unit__27": 1,
+    "stage5_unit__28": 1,
+    "stage5_unit__29": 1,
+    "stage5_unit__30": 1,
+    "stage5_unit__31": 1,
+    "stage5_unit__32": 1,
+    "stage5_unit__33": 1,
+    "stage5_unit__34": 1,
+    "stage5_unit__35": 1,
+    "stage5_report": 1
+  },
+  "started_at_unix_s": 1790425717.8652608,
+  "pid": 1820467,
+  "config_sha256": "88be085245a641a34e22375fd7be2b93d2d64ff3da56e2deeef7b27ba1a07a7b",
+  "status": "stage5_completed",
+  "until": "stage5",
+  "children": {},
+  "updated_at_unix_s": 1790560340.9275017,
+  "current_stage": null,
+  "current_log": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/logs/stage5_report.1.log"
+}
