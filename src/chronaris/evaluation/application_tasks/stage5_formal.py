@@ -130,6 +130,9 @@ def run_stage5_formal(stage,config):
     if stage=='stage5_formal_plan':return plan(config)
     root=Path(config['root']);frozen=verified_plan(config)
     if stage.startswith('stage5_formal_execution__'):
+        if frozen.get('recovery'):
+            from chronaris.evaluation.application_tasks.stage5_formal_recovery import reuse_execution
+            return reuse_execution(frozen, stage)
         from chronaris.evaluation.application_tasks.stage45_performance import performance_entry,compare_execution
         _,domain,mode=stage.split('__')
         if mode=='check':

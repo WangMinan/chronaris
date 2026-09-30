@@ -1,0 +1,65 @@
+{
+  "status": "completed",
+  "mode": "replay",
+  "source_code_sha256": "667d070de27c1999f43f5d79ab750b93ca6460654e1ac1da4d8ca01c5d2a3bc1",
+  "updates": [
+    {
+      "sample_id": "1419__experiment3_window53",
+      "channel": "physiology.central.eeg_tp9",
+      "answer": "falling",
+      "loss": 9.56088638305664,
+      "gradient_norm": 1020.0,
+      "token_count": 139
+    },
+    {
+      "sample_id": "1544__experiment0_window1",
+      "channel": "physiology.central.eeg_tp9",
+      "answer": "rising",
+      "loss": 6.64484167098999,
+      "gradient_norm": 224.0,
+      "token_count": 139
+    },
+    {
+      "sample_id": "1419__experiment3_window53",
+      "channel": "physiology.central.eeg_tp9",
+      "answer": "falling",
+      "loss": 15.295171737670898,
+      "gradient_norm": 100.0,
+      "token_count": 139
+    },
+    {
+      "sample_id": "1544__experiment0_window1",
+      "channel": "physiology.central.eeg_tp9",
+      "answer": "rising",
+      "loss": 16.7624568939209,
+      "gradient_norm": 33.25,
+      "token_count": 139
+    }
+  ],
+  "support": {
+    "policy": "train_observed_trends_v2",
+    "eligible_sample_ids": [
+      "1419__experiment3_window53",
+      "1544__experiment0_window1"
+    ],
+    "excluded": [
+      {
+        "sample_id": "1544__experiment0_window0",
+        "max_channel_points": 0,
+        "reason": "fewer_than_two_observed_points_per_channel"
+      },
+      {
+        "sample_id": "1933__experiment0_window0",
+        "max_channel_points": 0,
+        "reason": "fewer_than_two_observed_points_per_channel"
+      }
+    ],
+    "other_training_and_evaluation_roles_unchanged": true
+  },
+  "state_sha256": "9f94702b6417dc93b480ee59b6c48288f39fb219abfff036133055d097c878b2",
+  "zero_observation_classification_backward_finite": true,
+  "zero_observation_features_zero": true,
+  "observed_features_sha256": "ae676bbbcf637f557600d6f2ebbe368161791463f8df83f03bead9c8028d32ea",
+  "pid": 2136671,
+  "independent_process_resume_identical": true
+}

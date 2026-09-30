@@ -67,13 +67,14 @@ def test_formal_recovery_preserves_original_source_and_rejects_tampering(tmp_pat
     unit = {'method': 'chronaris'}
     old.write_text(json.dumps(dict(unit=unit, source_code_sha256='old-source', plan_sha256='old-plan', total_seconds=123.)))
     inventory = tmp_path/'inventory.json'
-    inventory.write_text(json.dumps(dict(source_code_sha256='new-source', files={str(old):sha256_file(old)}, completed={'stage5_formal_unit__0':{'path':str(old),'sha256':sha256_file(old)}})))
+    inventory.write_text(json.dumps(dict(source_code_sha256='new-source', parent_source_code_sha256='old-source', execution={'qualification':{'path':str(old),'sha256':sha256_file(old)}}, files={str(old):sha256_file(old)}, completed={'stage5_formal_unit__0':{'path':str(old),'sha256':sha256_file(old)}})))
     frozen = dict(recovery={'path':str(inventory),'sha256':sha256_file(inventory)}, units=[unit], plan_sha256='new-plan')
     monkeypatch.setattr(recovery,'v4_workflow_source_sha256',lambda:'new-source')
     result = recovery.reuse_completed({'root':str(tmp_path/'new')}, frozen, 0)
     assert result['source_code_sha256']=='old-source' and result['reuse']['extra_encoder_updates']==0
     assert result['historical_total_seconds']==123. and result['total_seconds']==0.
     assert recovery.reuse_completed({'root':str(tmp_path/'new')},frozen,8) is None
+    assert recovery.reuse_execution(frozen, 'qualification')['reuse']['source_code_sha256']=='old-source'
     old.write_text('{}')
     with pytest.raises(ValueError, match='source changed'):
         recovery.reuse_completed({'root':str(tmp_path/'new')},frozen,0)

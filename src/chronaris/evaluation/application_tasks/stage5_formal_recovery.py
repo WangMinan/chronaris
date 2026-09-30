@@ -32,6 +32,14 @@ def prepare_recovery(config, configured):
         raise ValueError('parent frozen workflow changed')
     state, plan = read(parent/'pipeline_state.json'), read(parent/'formal_plan.json')
     completed = {k: v for k, v in state['completed'].items() if k.startswith('stage5_formal_unit__')}
+    execution = {k: v for k, v in state['completed'].items() if k.startswith('stage5_formal_execution__')}
+    expected_execution = {f'stage5_formal_execution__{d}__{m}' for d in ('clare','cogpilot')
+        for m in ('eager','graph','interrupt','resume','check')}
+    if set(execution) != expected_execution or any(not read(execution[f'stage5_formal_execution__{d}__check']['path'])['passed'] for d in ('clare','cogpilot')):
+        raise ValueError('parent execution qualification incomplete')
+    for domain in ('clare','cogpilot'):
+        if sha256_file(Path(previous['data_root'])/domain/'summary.json') != sha256_file(Path(config['data_root'])/domain/'summary.json'):
+            raise ValueError('execution qualification inputs changed')
     if (state['status'] != 'failed' or state['children'] or state['current_stage'] != 'stage5_formal_unit__8'
         or set(completed) != {f'stage5_formal_unit__{i}' for i in range(8)}):
         raise ValueError('recovery requires the preserved eight-unit SensorLLM halt')
@@ -60,7 +68,7 @@ def prepare_recovery(config, configured):
     partial = parent/'training/8/clare/sensorllm_deepseek/alignment/alignment.pt'
     files[str(partial)] = sha256_file(partial)
     verify(files)
-    inventory = dict(status='completed', parent_root=str(parent), files=files, completed=completed,
+    inventory = dict(status='completed', parent_root=str(parent), files=files, completed=completed, execution=execution,
         reviewed_source_changes=changed, source_code_sha256=v4_workflow_source_sha256(),
         parent_source_code_sha256=previous['source_code_sha256'], parent_failures=state['failures'],
         partial_checkpoint_preserved=str(partial), failed_sensor_unit_restarts=True,
@@ -71,14 +79,26 @@ def prepare_recovery(config, configured):
     return dict(path=str(path), sha256=sha256_file(path))
 
 
-def reuse_completed(config, frozen, index):
-    receipt = frozen.get('recovery')
-    if receipt is None or index >= 8: return None
+def verified_inventory(frozen):
+    receipt = frozen['recovery']
     verify({receipt['path']: receipt['sha256']})
     inventory = read(receipt['path'])
     if inventory['source_code_sha256'] != v4_workflow_source_sha256():
         raise ValueError('formal recovery source changed')
     verify(inventory['files'])
+    return inventory
+
+
+def reuse_execution(frozen, stage):
+    inventory = verified_inventory(frozen)
+    source = inventory['execution'][stage]
+    return read(source['path']) | dict(reuse=dict(parent_receipt=source,
+        source_code_sha256=inventory['parent_source_code_sha256'], new_training_updates=0))
+
+
+def reuse_completed(config, frozen, index):
+    if frozen.get('recovery') is None or index >= 8: return None
+    inventory = verified_inventory(frozen)
     source = inventory['completed'][f'stage5_formal_unit__{index}']
     prior = read(source['path'])
     if prior['unit'] != frozen['units'][index] or prior['unit']['method'] == 'sensorllm_deepseek':

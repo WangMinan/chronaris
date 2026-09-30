@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "probe_source_commit": "24088f95",
+  "sensor_adapter_path": "src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py",
+  "sensor_adapter_sha256": "163bcd4c57f061ae40d21d7605093786c93a626699f3423796d8e57d797c3f7d",
+  "adapter_unchanged_since_real_probe": true,
+  "post_probe_changes": "qualification receipt inheritance only; model and consumer computations unchanged"
+}
