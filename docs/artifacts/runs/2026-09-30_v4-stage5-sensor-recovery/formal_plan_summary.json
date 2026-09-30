@@ -1,0 +1,15 @@
+{
+  "plan_sha256": "98e9ff86794a72eaa03a7e730af51226bd8b4d04a80ea4186480f2d423d30914",
+  "model_units": 279,
+  "representation_routes": 477,
+  "sensor_alignment_policy": "train_observed_trends_v2; fixed update budget; all windows retained outside alignment",
+  "confirmation_opened": false,
+  "source_code_sha256": "427889409f7e703a0ac559b5116b1ded9ee3b20108ca5fc7a057d2845b0e9866",
+  "recovery": {
+    "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/recovery_inventory.json",
+    "sha256": "3dcfe5fff0e5b69d33b835116d514a4d5f39ed7f2b981d322c91df1d01be6457"
+  },
+  "verified_parent_files": 612,
+  "execution_steps_inherited": 10,
+  "model_units_inherited": 8
+}

@@ -1,0 +1,119 @@
+{
+  "completed": {
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/cuda_validation.1.json",
+      "sha256": "3a503ee68a83b3ee96dc1bde2612beb121c0bd1f07455456aad2a4e7e17d4eb4"
+    },
+    "stage5_formal_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_plan.1.json",
+      "sha256": "37ae116b47c050d76315ed984be73f59449f5210fdf2cc0b8067a8a9b67e61d7"
+    },
+    "stage5_formal_execution__clare__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__eager.1.json",
+      "sha256": "1a067b2c53bd31ce70a2f2758526a522a577d5e4aac42824a20099ddd6173ef6"
+    },
+    "stage5_formal_execution__clare__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__graph.1.json",
+      "sha256": "7eb8d4b7d8177d43311a85239eaca85177f2c930d42f61c3b400a266acc8c262"
+    },
+    "stage5_formal_execution__clare__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__interrupt.1.json",
+      "sha256": "3abfdf2e3e2f8bea930cf16e76ff2fd87b57bd15db83576aed00f911bafbb973"
+    },
+    "stage5_formal_execution__clare__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__resume.1.json",
+      "sha256": "679ee7902b7299be8b7bbc2a06c21ad54a645a76666cbe1c67107cf65d3b37a3"
+    },
+    "stage5_formal_execution__clare__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__check.1.json",
+      "sha256": "9b0d3b635c253919f206ca5dc897a1fac4126e99c3f4a0a7c54b1518e7b4995b"
+    },
+    "stage5_formal_execution__cogpilot__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__eager.1.json",
+      "sha256": "07b9bf0a2bc611e7745f8bd700fe67ebcf0a802c07a7d0c3b6a778466c28ae0b"
+    },
+    "stage5_formal_execution__cogpilot__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__graph.1.json",
+      "sha256": "eb378dd894e95c9942d428c89b7ce10de627c5dfa51b4e5c57db9dfef64d229e"
+    },
+    "stage5_formal_execution__cogpilot__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__interrupt.1.json",
+      "sha256": "1c6b8569dd75192df3939d3ba38da4aae02b92536eec6cf47a059beeee5547b4"
+    },
+    "stage5_formal_execution__cogpilot__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__resume.1.json",
+      "sha256": "09fb7d80802591a39f4bb2f088221f8deaf9b1e6ac5981ab0c104ef05f798bfc"
+    },
+    "stage5_formal_execution__cogpilot__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__check.1.json",
+      "sha256": "62d9d9faab2d0e794549555598f5302a1f1fb124312d8a83963e7d5fa566bf4e"
+    },
+    "stage5_formal_unit__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__0.1.json",
+      "sha256": "b90494bf5f3f2d700479efe2b0ab0be3cbf2ba0ee80f5d0420c5cd34010cd88f"
+    },
+    "stage5_formal_unit__1": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__1.1.json",
+      "sha256": "27d4a6b79a8835fc553fa7f4849dbdbcdfe62bbc4c902f97a928561c66d65fbc"
+    },
+    "stage5_formal_unit__2": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__2.1.json",
+      "sha256": "15fb375f48ccde4833997518d1c5746e7c62c541f48061f9ac7f044d127a5094"
+    },
+    "stage5_formal_unit__3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__3.1.json",
+      "sha256": "b1780461e46c76f935443b41731dcc85d00ec3abdee7dea827dbd911a2f1caca"
+    },
+    "stage5_formal_unit__4": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__4.1.json",
+      "sha256": "e35f0a45a86b006bf51b9e4d42e6c8b141d421f1bb460dd1ae8616145538db6f"
+    },
+    "stage5_formal_unit__5": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__5.1.json",
+      "sha256": "03690ac818f1aa1b96cf562344b9b3893c3ed187b5bc1ff0190bdac38cb07f80"
+    },
+    "stage5_formal_unit__6": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__6.1.json",
+      "sha256": "8d3cebe319419ffa00fa5208f04d11272d307d54381555de9d4e8d39b9f4966d"
+    },
+    "stage5_formal_unit__7": {
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__7.1.json",
+      "sha256": "fb788f5bb3c8ea6037b563e24c24685ec57843222da1ecffd288f26ba3ea9ce2"
+    }
+  },
+  "failures": [],
+  "attempts": {
+    "cuda_validation": 1,
+    "stage5_formal_plan": 1,
+    "stage5_formal_execution__clare__eager": 1,
+    "stage5_formal_execution__clare__graph": 1,
+    "stage5_formal_execution__clare__interrupt": 1,
+    "stage5_formal_execution__clare__resume": 1,
+    "stage5_formal_execution__clare__check": 1,
+    "stage5_formal_execution__cogpilot__eager": 1,
+    "stage5_formal_execution__cogpilot__graph": 1,
+    "stage5_formal_execution__cogpilot__interrupt": 1,
+    "stage5_formal_execution__cogpilot__resume": 1,
+    "stage5_formal_execution__cogpilot__check": 1,
+    "stage5_formal_unit__0": 1,
+    "stage5_formal_unit__1": 1,
+    "stage5_formal_unit__2": 1,
+    "stage5_formal_unit__3": 1,
+    "stage5_formal_unit__4": 1,
+    "stage5_formal_unit__5": 1,
+    "stage5_formal_unit__6": 1,
+    "stage5_formal_unit__7": 1,
+    "stage5_formal_unit__8": 1
+  },
+  "started_at_unix_s": 1790737095.957354,
+  "pid": 2138460,
+  "config_sha256": "c1b97a17441c015bdc75b06ab0e7ff929025d348c86aa1f1ff3b4cda34368aea",
+  "status": "running",
+  "until": "stage5_formal_train",
+  "children": {
+    "stage5_formal_unit__8": 2139787
+  },
+  "updated_at_unix_s": 1790738428.1028314,
+  "current_stage": "stage5_formal_unit__8",
+  "current_log": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/logs/stage5_formal_unit__8.1.log"
+}

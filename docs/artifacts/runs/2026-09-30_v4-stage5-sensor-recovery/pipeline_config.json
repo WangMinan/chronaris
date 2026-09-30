@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.v4_pipeline.v1",
+  "root": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery",
+  "source_code_sha256": "427889409f7e703a0ac559b5116b1ded9ee3b20108ca5fc7a057d2845b0e9866",
+  "entry_sha256": "9b40bb795e26f23f331b6a946ce5b47e99ee477ddd74f2819257be31b7b9a252",
+  "registry_path": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/docs/requirements/thesis-v4-public-subjects.json",
+  "data_root": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-06_v4-public-development",
+  "confirmation_data_root": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared",
+  "condition_root": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair",
+  "stage5_stability_root": "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled",
+  "stage5_formal_parent": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training",
+  "input_files": {
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/docs/requirements/thesis-v4-public-subjects.json": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/assets.json": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/assets_sensor.json": "2d4561e37a9ef00169798beb15b63670009e6a23939ed28991f91b74660043e0",
+    "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/pipeline_state.json": "999cd2e6cf5a5fcaae3c1473d87ed4956c6eb5126a8602733cf44a94ae42a56a",
+    "/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled/stage5_report.json": "e957f8c04c9243a45d45663c52912487696334ee6a94364d4451aac6b9b8a708",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/docs/requirements/thesis-stage5-formal-training-20260928.md": "8969a5c126a77654587344bcbb7d50cc39d4d107a21a1ab896d86da806e32994",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-06_v4-public-development/clare/summary.json": "50d9df4102afdeab9c3882fd4281c2be86a7f23d5612aaffbdfef1d26adab077",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-06_v4-public-development/cogpilot/summary.json": "c786733e142711f2ee6f30516f19dbdcdad31fef4108b5e342276dda76b8d425",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared/clare/summary.json": "d648dc63029e76560fdc83d64b78970bcf02535146baa709cc2e46e25bde12d5",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared/cogpilot/summary.json": "cd993f4883aad9270689acb97951c57d6eb49ea5295ee18aa41b9bd71548a71e",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/pipeline_state.json": "2356c9e6f81475d41aae451761d11080a1d5e260f08f2373004923ed76fd05b6",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/pipeline_config.json": "29b4cc9a637be3a6e4f550f0f02cdcb4e6b52ccac7ef5981fa6c86fc95dc7985",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/docs/requirements/thesis-stage5-sensor-recovery-20260930.md": "5916acbbad15b2bb067971518b1d809dd2de3a6e4447696bb8d96dc26f4246d3"
+  }
+}

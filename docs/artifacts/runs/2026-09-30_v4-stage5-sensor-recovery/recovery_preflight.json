@@ -1,10 +1,10 @@
 {
   "status": "completed",
   "inventory": {
-    "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-probes/recovery_preflight/recovery_inventory.json",
-    "sha256": "c81ebcce4e36269966bff9c69a0fd35b5cea35b8216a96af9784c7437596be33"
+    "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-probes/recovery_preflight_qualified/recovery_inventory.json",
+    "sha256": "3dcfe5fff0e5b69d33b835116d514a4d5f39ed7f2b981d322c91df1d01be6457"
   },
-  "source_code_sha256": "667d070de27c1999f43f5d79ab750b93ca6460654e1ac1da4d8ca01c5d2a3bc1",
+  "source_code_sha256": "427889409f7e703a0ac559b5116b1ded9ee3b20108ca5fc7a057d2845b0e9866",
   "parent_source_code_sha256": "7a0d75880017b31da575f880b4b80673e9eaed6ccef2c1340649e021b3441c27",
   "verified_files": 612,
   "reviewed_source_changes": [
@@ -13,6 +13,7 @@
     "src/chronaris/evaluation/application_tasks/v4_pipeline.py",
     "src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py"
   ],
+  "inherited_execution_steps": 10,
   "inherited_units": 8,
   "inherited_routes": 14,
   "extra_encoder_updates": 0

@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "checks": {
+    "projector": true,
+    "optimizer": true,
+    "rng": true,
+    "binding": true
+  },
+  "updates_identical": true,
+  "support_identical": true,
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-probes/primary/alignment.pt": "064a741ef10c1635b5f64c2311d6cd9018003ab6177df728971f8fc9aa01ca01",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-probes/resume/alignment.pt": "7dd965a9f7c5cfe8aa3390c0a47372432f34166a8067ad3e7cf37c0f219781c8"
+  }
+}

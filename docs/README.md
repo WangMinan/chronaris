@@ -6,7 +6,7 @@
 
 ## 当前入口
 
-- [阶段 5 缺失观测修复与恢复](artifacts/runs/2026-09-30_v4-stage5-sensor-recovery/report.md)：原正式队列 8/279 完成，第九个单元因无趋势观测停止；新目录修复与恢复。
+- [阶段 5 缺失观测修复与恢复](artifacts/runs/2026-09-30_v4-stage5-sensor-recovery/report.md)：原八个单元保留，缺失趋势监督修复与完整回归通过，新队列已越过第九个单元原失败位置。
 
 - [阶段 5 完整复核与独立绘图包](artifacts/runs/2026-09-28_v4-stage5-closeout/report.md)：36/36 完成，含完整数据、纯绘图脚本与可编辑矢量图；[正式训练协议](requirements/thesis-stage5-formal-training-20260928.md)固定下一批 279 个主模型单元。
 

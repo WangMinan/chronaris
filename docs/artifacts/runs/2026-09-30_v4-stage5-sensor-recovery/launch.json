@@ -1,0 +1,19 @@
+{
+  "started_at": "2026-09-30T10:57:52.410372+08:00",
+  "pid": 2138460,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--until",
+    "stage5_formal_train",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery",
+    "--stage5-formal-parent",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training"
+  ],
+  "source_commit": "008f7065e8043be4d8b52f615bcf8b3dcdb76bef",
+  "runtime": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930",
+  "root": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery",
+  "repair_probe_source_sha256": "667d070de27c1999f43f5d79ab750b93ca6460654e1ac1da4d8ca01c5d2a3bc1",
+  "stop_after": "main model freeze; no outer evaluation"
+}

@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-09-30T11:20:35.409495+08:00",
+  "controller_pid": 2138460,
+  "status": "running",
+  "current_stage": "stage5_formal_unit__8",
+  "children": {
+    "stage5_formal_unit__8": 2139787
+  },
+  "completed_model_units": 8,
+  "inherited_model_units": 8,
+  "inherited_routes": 14,
+  "failures": [],
+  "alignment_updates": 775,
+  "alignment_budget": 2102,
+  "eligible_alignment_windows": 2100,
+  "excluded_from_alignment_only": [
+    {
+      "sample_id": "1544__experiment0_window0",
+      "max_channel_points": 0,
+      "reason": "fewer_than_two_observed_points_per_channel"
+    },
+    {
+      "sample_id": "1933__experiment0_window0",
+      "max_channel_points": 0,
+      "reason": "fewer_than_two_observed_points_per_channel"
+    }
+  ],
+  "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/8/clare/sensorllm_deepseek/alignment/alignment.pt",
+  "checkpoint_sha256": "b57322a90429696d071099719200307e79c785b503859b3130c476e18174a1bd",
+  "checkpoint_mtime": "2026-09-30T11:20:32.487029+08:00",
+  "gpu": "NVIDIA GeForce RTX 4090, 45 %, 23197 MiB, 24564 MiB",
+  "confirmation_opened": false,
+  "progress": {
+    "method": "recent_model_sensorllm_deepseek",
+    "status": "running",
+    "optimizer_updates": 725,
+    "phase": "sensor_language_alignment",
+    "alignment_updates": 725,
+    "wall_elapsed_s": 456.6492425459437
+  }
+}
