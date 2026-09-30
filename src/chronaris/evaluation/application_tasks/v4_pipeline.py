@@ -220,6 +220,7 @@ def main(*, default_until='freeze'):
     parser.add_argument('--stage5-acceptance', default='docs/artifacts/runs/2026-09-14_v4-stage4-closeout/acceptance.json')
     parser.add_argument('--stage5-parent', help='Preserved 12-unit halt for the stage 5 consumer repair')
     parser.add_argument('--stage5-stability-root', default='/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled')
+    parser.add_argument('--stage5-formal-parent', help='Preserved eight-unit SensorLLM halt to inherit in a new formal root')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
@@ -293,6 +294,8 @@ def main(*, default_until='freeze'):
         parser.error('stage 4.5 recovery requires parent and evidence together')
     if args.stage5_parent and args.until != 'stage5':
         parser.error('--stage5-parent requires --until stage5')
+    if args.stage5_formal_parent and args.until != 'stage5_formal_train':
+        parser.error('--stage5-formal-parent requires --until stage5_formal_train')
     if args.until == 'stage5_formal_train':
         if any((args.stage5_parent,args.stage45_parent,args.comparison_parent,args.execution_parent)):
             parser.error('formal training uses fresh model units, not development queue migration')
@@ -303,6 +306,10 @@ def main(*, default_until='freeze'):
             Path(config['stage5_stability_root'])/'stage5_report.json',
             project/'docs/requirements/thesis-stage5-formal-training-20260928.md']
         input_paths += [Path(config[name])/d/'summary.json' for name in ('data_root','confirmation_data_root') for d in ('clare','cogpilot')]
+        if args.stage5_formal_parent:
+            config['stage5_formal_parent'] = str(Path(args.stage5_formal_parent).resolve())
+            input_paths += [Path(config['stage5_formal_parent'])/name for name in ('pipeline_state.json','pipeline_config.json')]
+            input_paths.append(project/'docs/requirements/thesis-stage5-sensor-recovery-20260930.md')
     elif args.until == 'stage5':
         if args.stage45_parent or args.comparison_parent or args.execution_parent:
             parser.error('stage5 inherits result evidence, never migrates an old training queue')

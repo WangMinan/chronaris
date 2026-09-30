@@ -1,10 +1,12 @@
 # Chronaris 文档入口
 
-更新时间：2026-09-28
+更新时间：2026-09-30
 
 当前在 `codex/thesis-v4-recovery-20260905` 继续研究开发，已包含 `main` 的整理成果。研究主线为“各方法提取融合特征，再分别训练相同类型的下游算法”。优先读取新方案、当前状态和任务；历史协议承担来源追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，此处只维护导航。
 
 ## 当前入口
+
+- [阶段 5 缺失观测修复与恢复](artifacts/runs/2026-09-30_v4-stage5-sensor-recovery/report.md)：原正式队列 8/279 完成，第九个单元因无趋势观测停止；新目录修复与恢复。
 
 - [阶段 5 完整复核与独立绘图包](artifacts/runs/2026-09-28_v4-stage5-closeout/report.md)：36/36 完成，含完整数据、纯绘图脚本与可编辑矢量图；[正式训练协议](requirements/thesis-stage5-formal-training-20260928.md)固定下一批 279 个主模型单元。
 

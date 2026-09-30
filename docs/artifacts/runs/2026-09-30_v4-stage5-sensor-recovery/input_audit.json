@@ -1,0 +1,25 @@
+{
+  "domain": "clare",
+  "fold_index": 0,
+  "seed": 17,
+  "train_count": 2102,
+  "validation_count": 432,
+  "failure_sample": "1544__experiment0_window0",
+  "unsupported": [
+    {
+      "role": "train",
+      "index": 432,
+      "sample_id": "1544__experiment0_window0",
+      "max_channel_points": 0,
+      "total_grid_points": 0
+    },
+    {
+      "role": "train",
+      "index": 1454,
+      "sample_id": "1933__experiment0_window0",
+      "max_channel_points": 0,
+      "total_grid_points": 0
+    }
+  ],
+  "outer_observations_loaded": false
+}

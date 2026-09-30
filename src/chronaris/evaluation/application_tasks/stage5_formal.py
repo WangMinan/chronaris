@@ -101,6 +101,10 @@ def plan(config):
     from chronaris.modeling.fusion_encoders.recent_models import verify_assets
     for path in (ASSETS,SENSOR_ASSETS):verify_assets(path);evidence[path]=sha256_file(path)
     configured=matrix(config)
+    if config.get('stage5_formal_parent'):
+        from chronaris.evaluation.application_tasks.stage5_formal_recovery import prepare_recovery
+        configured['recovery'] = prepare_recovery(config, configured)
+    configured['sensor_alignment_policy'] = 'train_observed_trends_v2; fixed update budget; all windows retained outside alignment'
     if (configured['model_units'],configured['representation_routes'])!=(279,477):
         raise ValueError('formal method coverage changed')
     frozen=seal_development_plan(dict(status='completed',format='chronaris.stage5_formal_training.v1',
@@ -145,6 +149,9 @@ def run_stage5_formal(stage,config):
             confirmation_opened=False,core_models_frozen=False,
             next_step='freeze core mechanism models and validate outer evaluation before opening held-out outcomes'))
     index=int(stage.split('__')[1]);unit=frozen['units'][index]
+    from chronaris.evaluation.application_tasks.stage5_formal_recovery import reuse_completed
+    reused = reuse_completed(config, frozen, index)
+    if reused is not None: return reused
     domain,method,fold,seed=(unit[k] for k in ('domain','method','fold_index','seed'))
     for domain_check in ('clare','cogpilot'):
         state=read(root/'pipeline_state.json');receipt=state['completed'][f'stage5_formal_execution__{domain_check}__check']

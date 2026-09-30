@@ -1,0 +1,56 @@
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=29.3
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=58.5
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=87.8
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=117.0
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=146.3
+`torch_dtype` is deprecated! Use `dtype` instead!
+You are using a model of type llama to instantiate a model of type sensorllmstage2. This is not supported for all configurations of models and can yield errors.
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=175.5
+current dir: /home/wangminan/projects/chronaris-stage3-upstream/SensorLLM/sensorllm/model
+The hidden size of LLM is 4096.
+chronos-t5-large output dim: 1024.
+Use 2 projection hidden layers.
+Each layer with [2048, 3072] hidden units.
+TS projector output dim: 4096.
+current dir: /home/wangminan/projects/chronaris-stage3-upstream/SensorLLM/sensorllm/model
+The hidden size of LLM is 4096.
+chronos-t5-large output dim: 1024.
+Use 2 projection hidden layers.
+Each layer with [2048, 3072] hidden units.
+TS projector output dim: 4096.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=204.8
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=234.1
+Loading checkpoint shards:  50%|█████     | 1/2 [00:52<00:52, 52.64s/it][candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=263.3
+Loading checkpoint shards: 100%|██████████| 2/2 [01:30<00:00, 44.17s/it]Loading checkpoint shards: 100%|██████████| 2/2 [01:30<00:00, 45.44s/it]
+Some weights of SensorLLMStage2LlamaForSequenceClassification were not initialized from the model checkpoint at /mnt/e/chronaris-v4-results/2026-09-11-stage3-models/weights/deepseek_llama and are newly initialized: ['model.ts_proj.0.bias', 'model.ts_proj.0.weight', 'model.ts_proj.2.bias', 'model.ts_proj.2.weight', 'model.ts_proj.4.bias', 'model.ts_proj.4.weight', 'score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+Calculate the average of the input embedding as the initialization value of the new token...
+Setting all input embeddings trainable.
+Loading start_end_tokens dict for chronaris dataset ...
+`torch_dtype` is deprecated! Use `dtype` instead!
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=0 wall_elapsed_s=292.8
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=91 wall_elapsed_s=322.0
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=226 wall_elapsed_s=351.4
+[candidate-heartbeat] method=recent_model_sensorllm_deepseek status=alive updates=363 wall_elapsed_s=380.7
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/scripts/evaluation/application_tasks/run_v4_pipeline.py", line 9, in <module>
+    main()
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/src/chronaris/evaluation/application_tasks/v4_pipeline.py", line 269, in main
+    result = run_pipeline_step(args.worker, config, attempt=args.attempt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/src/chronaris/evaluation/application_tasks/v4_pipeline_steps.py", line 44, in run_pipeline_step
+    return run_stage5_formal(stage,config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/src/chronaris/evaluation/application_tasks/stage5_formal.py", line 159, in run_stage5_formal
+    result=run_recent_model_smoke(method=method,assets_path=SENSOR_ASSETS if method=='sensorllm_deepseek' else ASSETS,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/src/chronaris/evaluation/application_tasks/recent_model_smoke.py", line 243, in run_recent_model_smoke
+    return _run(domain=domain, method=method, output_root=output_root, assets_path=assets_path,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/src/chronaris/evaluation/application_tasks/recent_model_smoke.py", line 99, in _run
+    alignment = encoder.align_history(values=inputs['train'][0], mask=inputs['train'][1], names=names,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928/src/chronaris/modeling/fusion_encoders/sensorllm_adapter.py", line 130, in align_history
+    raise ValueError('alignment sample lacks observed channel support')
+ValueError: alignment sample lacks observed channel support

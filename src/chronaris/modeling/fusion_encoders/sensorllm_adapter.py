@@ -11,6 +11,24 @@ from chronaris.modeling.training.candidate_checkpoint import atomic_save_candida
 from chronaris.modeling.training.rng import capture_rng_state, restore_rng_state
 
 
+def alignment_support(values, mask, names, train_ids):
+    """Trend supervision exists only with two observed points in one channel."""
+    if (values.ndim != 3 or values.shape != mask.shape or mask.dtype != torch.bool
+        or len(train_ids) != len(values) or len(set(train_ids)) != len(train_ids)
+        or len(names) != values.shape[-1] or not torch.isfinite(values[mask]).all()):
+        raise ValueError('invalid SensorLLM alignment inputs')
+    counts = mask.sum(1)
+    channels = [next((c for c, count in enumerate(row) if count >= 2), None) for row in counts.tolist()]
+    eligible = [i for i, channel in enumerate(channels) if channel is not None]
+    if not eligible:
+        raise ValueError('no training window supports observed trend alignment')
+    support = dict(policy='train_observed_trends_v2', eligible_sample_ids=[train_ids[i] for i in eligible],
+        excluded=[dict(sample_id=train_ids[i], max_channel_points=int(counts[i].max()),
+            reason='fewer_than_two_observed_points_per_channel') for i, c in enumerate(channels) if c is None],
+        other_training_and_evaluation_roles_unchanged=True)
+    return eligible, channels, support
+
+
 class SensorLLMWindowEncoder(nn.Module):
     """Reuse official multichannel token insertion; train only its alignment MLP."""
     def __init__(self, assets, channel_count):
@@ -96,6 +114,7 @@ class SensorLLMWindowEncoder(nn.Module):
         """Single-channel trend QA from train history; resumable complete-role adaptation."""
         from safetensors import safe_open
         self.channel_names = names
+        eligible, channels, support = alignment_support(values, mask, names, train_ids)
         root = Path(root)
         root.mkdir(parents=True, exist_ok=True)
         checkpoint = root/'alignment.pt'
@@ -104,6 +123,8 @@ class SensorLLMWindowEncoder(nn.Module):
             saved = torch.load(checkpoint, weights_only=True)
             if saved['binding'] != binding:
                 raise ValueError('SensorLLM alignment source changed')
+            if saved['receipt'].get('support') != support:
+                raise ValueError('SensorLLM alignment eligibility changed; use a new root')
             self.load_checkpoint_state(saved['projector'])
             if len(saved['receipt']['updates']) == stop_after:
                 if 'rng' in saved:
@@ -124,10 +145,8 @@ class SensorLLMWindowEncoder(nn.Module):
             optimizer.load_state_dict(saved['optimizer'])
             restore_rng_state(saved['rng'])
         for update in range(len(updates), stop_after):
-            row = update % len(train_ids)
-            channel = next((c for c in range(values.shape[-1]) if mask[row, :, c].sum() >= 2), None)
-            if channel is None:
-                raise ValueError('alignment sample lacks observed channel support')
+            row = eligible[update % len(eligible)]
+            channel = channels[row]
             observed = values[row, :, channel][mask[row, :, channel]]
             answer = 'rising' if observed[-1] > observed[0] else 'falling' if observed[-1] < observed[0] else 'unchanged'
             optimizer.zero_grad(set_to_none=True)
@@ -145,7 +164,7 @@ class SensorLLMWindowEncoder(nn.Module):
                 loss=float(loss.detach()), gradient_norm=float(norm), token_count=self.last_token_count))
             torch.cuda.synchronize()
             if (update+1) % 25 == 0 or update+1 == stop_after:
-                receipt = dict(updates=updates, seconds=elapsed+time.perf_counter()-started,
+                receipt = dict(updates=updates, support=support, seconds=elapsed+time.perf_counter()-started,
                     peak_cuda_bytes=torch.cuda.max_memory_allocated(), supervision='train_history_derived_trend_text',
                     business_or_expert_labels=False, special_token_embeddings='frozen_official_mean_initialization')
                 atomic_save_candidate(checkpoint, dict(binding=binding, projector=self.checkpoint_state(), receipt=receipt,

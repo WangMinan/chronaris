@@ -1,4 +1,5 @@
 from dataclasses import replace
+import json
 
 import pytest
 
@@ -57,3 +58,22 @@ def test_formal_dispatch_uses_planned_fold_seed_cohort_and_recipe(tmp_path,monke
     else:
         assert calls[0]['expected_recipe']==unit['recipe']
         assert calls[0]['recipe']==(None if method=='naive_time_sync' else 'stage4_reference')
+
+
+def test_formal_recovery_preserves_original_source_and_rejects_tampering(tmp_path, monkeypatch):
+    from chronaris.evaluation.application_tasks import stage5_formal_recovery as recovery
+    from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+    old = tmp_path/'old.json'
+    unit = {'method': 'chronaris'}
+    old.write_text(json.dumps(dict(unit=unit, source_code_sha256='old-source', plan_sha256='old-plan', total_seconds=123.)))
+    inventory = tmp_path/'inventory.json'
+    inventory.write_text(json.dumps(dict(source_code_sha256='new-source', files={str(old):sha256_file(old)}, completed={'stage5_formal_unit__0':{'path':str(old),'sha256':sha256_file(old)}})))
+    frozen = dict(recovery={'path':str(inventory),'sha256':sha256_file(inventory)}, units=[unit], plan_sha256='new-plan')
+    monkeypatch.setattr(recovery,'v4_workflow_source_sha256',lambda:'new-source')
+    result = recovery.reuse_completed({'root':str(tmp_path/'new')}, frozen, 0)
+    assert result['source_code_sha256']=='old-source' and result['reuse']['extra_encoder_updates']==0
+    assert result['historical_total_seconds']==123. and result['total_seconds']==0.
+    assert recovery.reuse_completed({'root':str(tmp_path/'new')},frozen,8) is None
+    old.write_text('{}')
+    with pytest.raises(ValueError, match='source changed'):
+        recovery.reuse_completed({'root':str(tmp_path/'new')},frozen,0)
