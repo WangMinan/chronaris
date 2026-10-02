@@ -191,16 +191,14 @@ def _observation_age(
     timestamps: NDArray[np.float64],
     feature_mask: NDArray[np.bool_],
 ) -> NDArray[np.float32]:
-    age = np.full(feature_mask.shape, np.inf, dtype=np.float32)
-    last_seen = np.full(feature_mask.shape[1], -np.inf, dtype=np.float64)
-    for row, time_s in enumerate(timestamps):
-        observed = feature_mask[row]
-        last_seen[observed] = time_s
-        available = np.isfinite(last_seen)
-        age[row, available] = np.maximum(time_s - last_seen[available], 0.0).astype(
-            np.float32
-        )
-    return age
+    if not len(timestamps):
+        return np.full(feature_mask.shape, np.inf, dtype=np.float32)
+    indices = np.maximum.accumulate(
+        np.where(feature_mask, np.arange(len(timestamps))[:, None], -1), axis=0,
+    )
+    last_seen = timestamps[indices.clip(min=0)]
+    age = np.maximum(timestamps[:, None] - last_seen, 0.0).astype(np.float32)
+    return np.where((indices >= 0) & np.isfinite(last_seen), age, np.float32(np.inf))
 
 
 def _validate_sample_stream(

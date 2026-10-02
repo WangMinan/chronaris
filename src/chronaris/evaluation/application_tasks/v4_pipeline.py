@@ -221,6 +221,7 @@ def main(*, default_until='freeze'):
     parser.add_argument('--stage5-parent', help='Preserved 12-unit halt for the stage 5 consumer repair')
     parser.add_argument('--stage5-stability-root', default='/mnt/e/chronaris-v4-results/2026-09-26-stage5-recovery-scaled')
     parser.add_argument('--stage5-formal-parent', help='Preserved eight-unit SensorLLM halt to inherit in a new formal root')
+    parser.add_argument('--stage5-performance-evidence', help='Validated execution revision and safe formal queue stop receipt')
     parser.add_argument('--comparison-parent', help='Preserved stage-4 run to verify and reuse in a new comparison root')
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
@@ -296,6 +297,8 @@ def main(*, default_until='freeze'):
         parser.error('--stage5-parent requires --until stage5')
     if args.stage5_formal_parent and args.until != 'stage5_formal_train':
         parser.error('--stage5-formal-parent requires --until stage5_formal_train')
+    if args.stage5_performance_evidence and (not args.stage5_formal_parent or args.until != 'stage5_formal_train'):
+        parser.error('formal performance recovery requires a formal parent and training endpoint')
     if args.until == 'stage5_formal_train':
         if any((args.stage5_parent,args.stage45_parent,args.comparison_parent,args.execution_parent)):
             parser.error('formal training uses fresh model units, not development queue migration')
@@ -309,7 +312,12 @@ def main(*, default_until='freeze'):
         if args.stage5_formal_parent:
             config['stage5_formal_parent'] = str(Path(args.stage5_formal_parent).resolve())
             input_paths += [Path(config['stage5_formal_parent'])/name for name in ('pipeline_state.json','pipeline_config.json')]
-            input_paths.append(project/'docs/requirements/thesis-stage5-sensor-recovery-20260930.md')
+            if args.stage5_performance_evidence:
+                config['stage5_performance_evidence'] = str(Path(args.stage5_performance_evidence).resolve())
+                input_paths.append(Path(config['stage5_performance_evidence']))
+                input_paths.append(project/'docs/requirements/thesis-stage5-performance-20261002.md')
+            else:
+                input_paths.append(project/'docs/requirements/thesis-stage5-sensor-recovery-20260930.md')
     elif args.until == 'stage5':
         if args.stage45_parent or args.comparison_parent or args.execution_parent:
             parser.error('stage5 inherits result evidence, never migrates an old training queue')

@@ -10,6 +10,9 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 
 
 def prepare_recovery(config, configured):
+    if config.get('stage5_performance_evidence'):
+        from chronaris.evaluation.application_tasks.stage5_performance_recovery import prepare_performance_recovery
+        return prepare_performance_recovery(config, configured)
     parent, root = Path(config['stage5_formal_parent']).resolve(), Path(config['root']).resolve()
     if parent == root or parent in root.parents or root in parent.parents:
         raise ValueError('formal recovery needs a separate root')
@@ -79,13 +82,16 @@ def prepare_recovery(config, configured):
     return dict(path=str(path), sha256=sha256_file(path))
 
 
-def verified_inventory(frozen):
+def verified_inventory(frozen, *, index=None):
     receipt = frozen['recovery']
     verify({receipt['path']: receipt['sha256']})
     inventory = read(receipt['path'])
     if inventory['source_code_sha256'] != v4_workflow_source_sha256():
         raise ValueError('formal recovery source changed')
-    verify(inventory['files'])
+    if index is not None and 'unit_files' in inventory:
+        verify({p:inventory['files'][p] for p in inventory['unit_files'].get(str(index), [])})
+    else:
+        verify(inventory['files'])
     return inventory
 
 
@@ -97,14 +103,16 @@ def reuse_execution(frozen, stage):
 
 
 def reuse_completed(config, frozen, index):
-    if frozen.get('recovery') is None or index >= 8: return None
-    inventory = verified_inventory(frozen)
-    source = inventory['completed'][f'stage5_formal_unit__{index}']
+    if frozen.get('recovery') is None: return None
+    inventory = verified_inventory(frozen, index=index)
+    source = inventory['completed'].get(f'stage5_formal_unit__{index}')
+    if source is None: return None
     prior = read(source['path'])
-    if prior['unit'] != frozen['units'][index] or prior['unit']['method'] == 'sensorllm_deepseek':
+    if prior['unit'] != frozen['units'][index] or (inventory.get('failed_sensor_unit_restarts', True)
+            and prior['unit']['method'] == 'sensorllm_deepseek'):
         raise ValueError('cannot inherit changed SensorLLM or another matrix unit')
     return write_result(Path(config['root'])/'units'/f'{index}.json', prior | dict(
         plan_sha256=frozen['plan_sha256'], parent_plan_sha256=prior['plan_sha256'],
         reuse=dict(parent_receipt=source, source_code_sha256=prior['source_code_sha256'],
             verification_source_code_sha256=v4_workflow_source_sha256(), extra_encoder_updates=0),
-        historical_total_seconds=prior['total_seconds'], total_seconds=0.))
+        historical_total_seconds=prior.get('historical_total_seconds', prior['total_seconds']), total_seconds=0.))

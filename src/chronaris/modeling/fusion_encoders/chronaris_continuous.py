@@ -300,6 +300,7 @@ class ChronarisContinuousFusionEncoder(nn.Module):
         batch: DualStreamObservationBatch,
         *,
         compute_diagnostics: bool = True,
+        physiology_encoding=None,
     ) -> ChronarisContinuousEncoding:
         alignment_batch = build_alignment_batch_from_observations(
             batch,
@@ -309,11 +310,22 @@ class ChronarisContinuousFusionEncoder(nn.Module):
         query_times = batch.query_timestamps_s.to(
             device=batch.physiology_values.device,
         )
-        alignment = self.continuous_backbone(
-            alignment_batch,
-            reference_offsets_s=query_times,
-            include_observation_diagnostics=compute_diagnostics,
-        )
+        if physiology_encoding is None:
+            alignment = self.continuous_backbone(
+                alignment_batch,
+                reference_offsets_s=query_times,
+                include_observation_diagnostics=compute_diagnostics,
+            )
+        else:
+            # Internal vehicle-shift objective only: caller retains physiology
+            # inputs, parameters and query grid within this one autograd graph.
+            alignment = DualStreamPrototypeOutput(
+                sample_ids=batch.sample_ids, physiology=physiology_encoding,
+                vehicle=self.continuous_backbone.vehicle_stream(
+                    alignment_batch.vehicle, reference_offsets_s=query_times,
+                    include_observation_diagnostics=compute_diagnostics,
+                ),
+            )
         physiology_states = alignment.physiology.reference_hidden_states
         vehicle_states = alignment.vehicle.reference_hidden_states
         physiology_valid = alignment.physiology.reference_valid_mask

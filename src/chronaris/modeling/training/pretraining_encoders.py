@@ -89,11 +89,15 @@ class TrainableFusionEncoder(nn.Module):
         batch: DualStreamObservationBatch,
         *,
         compute_chronaris_diagnostics: bool = False,
+        physiology_encoding=None,
     ) -> PretrainingEncoderOutput:
+        if physiology_encoding is not None and self.method_name != 'chronaris':
+            raise ValueError('physiology reuse requires the deterministic Chronaris stream')
         encoded = (
             self.backbone(
                 batch,
                 compute_diagnostics=compute_chronaris_diagnostics,
+                physiology_encoding=physiology_encoding,
             )
             if self.method_name == "chronaris"
             else self.backbone(batch)

@@ -32,6 +32,7 @@ def pretext_micro_step(
         encoder=encoder, heads=heads, normalized=normalized, augmented=augmented, device=resolved.device,
         positive_diagnostics=method_name == "chronaris" and (chronaris_lag_aware_weight > 0 or chronaris_mechanism_enabled),
         negative_diagnostics=chronaris_mechanism_enabled,
+        reuse_physiology=optimizer_updates is None or optimizer_updates > 1,
     )
     mechanism_step = build_candidate_mechanism_step(
         encoder=encoder,
@@ -54,7 +55,7 @@ def pretext_micro_step(
 
 
 def public_pretext_forward(*, encoder, heads, normalized, augmented, device,
-                           positive_diagnostics=False, negative_diagnostics=False):
+                           positive_diagnostics=False, negative_diagnostics=False, reuse_physiology=True):
     targets = move_common_pretext_targets(build_common_pretext_targets(
         normalized, augmented, prediction_horizons_s=heads.prediction_horizons_s), device=device)
     positive_batch = move_observation_batch(augmented.batch, device=device)
@@ -62,7 +63,15 @@ def public_pretext_forward(*, encoder, heads, normalized, augmented, device,
     if heads.cross_stream_enabled:
         lag_inputs = build_lag_discrimination_inputs(augmented.batch, augmented.augmentation_ids)
         negative_batch = move_observation_batch(lag_inputs.negative_batch, device=device)
-        negative = encoder(negative_batch, compute_chronaris_diagnostics=negative_diagnostics)
+        reuse = {}
+        if (reuse_physiology and encoder.method_name == 'chronaris'
+            and encoder.backbone.continuous_backbone.physiology_stream.config.cuda_graph_recurrence
+            and (positive_diagnostics or not negative_diagnostics)):
+            # The negative changes only vehicle time. Share the deterministic
+            # physiology graph; fusion/dropout still execute twice in RNG order.
+            # The first optimizer update retains its original reduction order.
+            reuse['physiology_encoding'] = positive.auxiliary['alignment_output'].physiology
+        negative = encoder(negative_batch, compute_chronaris_diagnostics=negative_diagnostics, **reuse)
     else:
         negative_batch, negative = positive_batch, positive
     lag_valid = None
