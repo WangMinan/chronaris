@@ -1,0 +1,1351 @@
+{
+  "status": "completed",
+  "passed": true,
+  "checks": {
+    "forward_00000.pt": {
+      "close": true,
+      "bitwise_equal": true,
+      "max_abs": 0.0,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "scale": 0.5266915046150147,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00001.pt": {
+      "close": true,
+      "bitwise_equal": true,
+      "max_abs": 0.0,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "scale": 0.48970845438784827,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00002.pt": {
+      "close": true,
+      "bitwise_equal": true,
+      "max_abs": 0.0,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "scale": 0.4907916890738172,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00003.pt": {
+      "close": true,
+      "bitwise_equal": true,
+      "max_abs": 0.0,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 0.0,
+          "max_abs": 0.0,
+          "scale": 0.4731003088849226,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00004.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.0050949059416397e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4400616440145597,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00005.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.032565169202221e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4283487325752146,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00006.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.248879915614946e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4690943406427957,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00007.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.752726826355643e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4420792349662794,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00008.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 7.681051352787832e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4126675772500556,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00009.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 7.738581676682595e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.40959595223282,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00010.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.208211638245078e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4915237505496819,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00011.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.459481006488372e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4784716541294962,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00012.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.522756708206663e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.43322487374615826,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00013.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.1082030812303135e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.372256886606024,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00014.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.05951454197992e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4449820884233907,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00015.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.1815596208258243e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.39901417686731916,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00016.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.364418029785156e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.1228850813749786e-07,
+          "max_abs": 5.364418029785156e-07,
+          "scale": 0.4576241920742188,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00017.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.364418029785156e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.2628689872727022e-07,
+          "max_abs": 5.364418029785156e-07,
+          "scale": 0.40689343194561434,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00018.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.84189198144333e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.49921860023850334,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00019.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.0270562521269763e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4783696617526108,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00020.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.639143664711652e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.40329416399998697,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00021.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.967720325952997e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.44317014770102375,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00022.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.596452168769981e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4817460035524224,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00023.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.540763642068709e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4863387070340205,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00024.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.431614648919357e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4871367538913351,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00025.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 7.960524597193715e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.5180565468388281,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00026.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.478440758225567e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4881942240033209,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00027.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.874250064024167e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4790625054344665,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00028.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 2.980232238769531e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.470777407845967e-08,
+          "max_abs": 2.980232238769531e-07,
+          "scale": 0.4119109583645287,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00029.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.383851468590476e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4087772454247938,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00030.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.317869279624079e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4846129943363492,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00031.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.463879480469462e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.48941355246005924,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00032.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.172325134277344e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.212264899100299e-08,
+          "max_abs": 4.172325134277344e-07,
+          "scale": 0.514062243633351,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00033.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.545311999049755e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4898830634790452,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00034.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.345120534004057e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4874981749294577,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00035.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.503110684252934e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4840370712978102,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00036.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.285419624024491e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4698144932799343,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00037.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.095778853747825e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5014271448229244,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00038.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.172325134277344e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.562926240929385e-08,
+          "max_abs": 4.172325134277344e-07,
+          "scale": 0.4865040871564075,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00039.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.609600357109926e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4903927329250687,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00040.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.636000263175764e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4694968939199494,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00041.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.179619167685912e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.470150012542295,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00042.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.748389199799021e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4753316839136616,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00043.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.960464477539062e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 7.993382215950185e-08,
+          "max_abs": 5.960464477539062e-07,
+          "scale": 0.5143020429342701,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00044.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.467730498111114e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.48079940541372695,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00045.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 3.5762786865234375e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.862196903334315e-08,
+          "max_abs": 3.5762786865234375e-07,
+          "scale": 0.4585655158628837,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00046.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 8.874356748253825e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.48736750561066755,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00047.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.516515455904886e-08,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.48085274856431626,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00048.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.960464477539062e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 9.933201217594973e-08,
+          "max_abs": 5.960464477539062e-07,
+          "scale": 0.46675035657457037,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00049.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.279289037844917e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.49213753910912234,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00050.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.960464477539062e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.372367978201687e-07,
+          "max_abs": 5.960464477539062e-07,
+          "scale": 0.48948188156910494,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00051.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4492206884365682e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.46240596916792626,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00052.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4658420901581884e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.47119352300802403,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00053.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.323524969786022e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5017152228443955,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00054.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3363908165529928e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4866872933972927,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00055.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3462831302453826e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4892709265631422,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00056.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4570008967319708e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.47165111978354096,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00057.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.066394805908203e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4450559300348328e-07,
+          "max_abs": 5.066394805908203e-07,
+          "scale": 0.472342786788183,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00058.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3642565533032136e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.476336168794527,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00059.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3049627579057531e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5143648608703952,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00060.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.559318368023354e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4049945921860039,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00061.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4437971684992623e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4440527658560519,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00062.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.377150975702855e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4822908105464349,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00063.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3520165125845736e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4862420882523305,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00064.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.362857646300293e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4875029942970443,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00065.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3074974621885485e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5172657392832424,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00066.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3763061435500667e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4891924746734305,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00067.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.379462529161325e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4781984816622638,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00068.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.552288910798744e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.41403929288841146,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00069.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.559111209913906e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.410516734622144,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00070.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3837303680467359e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.48554923965555574,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00071.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3568936433275977e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4899783604859674,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00072.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.330225426259874e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5134622229743491,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00073.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4405895730629506e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4903194077896296,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00074.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3497626253842536e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.48794836193831315,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00075.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.395712148913307e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.48334003673439646,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00076.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4658420901581884e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.47119352300802403,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00077.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.323524969786022e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5017152228443955,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00078.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3363908165529928e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4866872933972927,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00079.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3462831302453826e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.4892709265631422,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00080.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4570008967319708e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.47165111978354096,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00081.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 5.066394805908203e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.4450559300348328e-07,
+          "max_abs": 5.066394805908203e-07,
+          "scale": 0.472342786788183,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00082.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3642565533032136e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.476336168794527,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "forward_00083.pt": {
+      "close": true,
+      "bitwise_equal": false,
+      "max_abs": 4.76837158203125e-07,
+      "failures": [],
+      "tensors": {
+        "/sequence": {
+          "relative_rms": 1.3049627579057531e-07,
+          "max_abs": 4.76837158203125e-07,
+          "scale": 0.5143648608703952,
+          "outlier_fraction": 0.0
+        }
+      }
+    },
+    "step_00000.pt": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "step_00001.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 1.4901161193847656e-08,
+      "failures": []
+    },
+    "step_00002.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 2.2351741790771484e-08,
+      "failures": []
+    },
+    "step_00003.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 2.9802322387695312e-08,
+      "failures": []
+    },
+    "step_00004.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 1.862645149230957e-08,
+      "failures": []
+    },
+    "step_00005.pt": {
+      "bitwise_equal": false,
+      "close": true,
+      "max_abs": 2.2351741790771484e-08,
+      "failures": []
+    }
+  },
+  "independent_resume": {
+    "status": "completed",
+    "passed": true,
+    "checks": {
+      "model_state_dict": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "optimizer_state_dict": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "rng_state": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "data_cursor": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "update_rows": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "epoch_rows": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      }
+    },
+    "confirmation_opened": false
+  },
+  "execution_policy": {
+    "version": "stage45_execution_v2",
+    "state_atol": 1e-05,
+    "state_rtol": 0.0001,
+    "representation_relative_rms": 0.0001,
+    "representation_scaled_max": 0.01,
+    "representation_scale_floor": 0.001,
+    "prediction_relative_rms": 0.0001,
+    "prediction_atol": 1e-05,
+    "classification_changes": 0,
+    "resume_exact": true
+  },
+  "consumer_impact": {
+    "passed": true,
+    "checks": {
+      "self_supervised/selection": {
+        "passed": true,
+        "values": [
+          {
+            "best_update": 2,
+            "best_epoch": 0
+          },
+          {
+            "best_update": 2,
+            "best_epoch": 0
+          }
+        ]
+      },
+      "self_supervised/linear/difficulty/0": {
+        "passed": true,
+        "changed_predictions": 0
+      },
+      "self_supervised/linear/event_response/0": {
+        "passed": true,
+        "relative_rms": 1.2060475991286987e-07,
+        "rms": 6.601888164299459e-09,
+        "scale": 0.05473986407393,
+        "max_abs": 1.4901161193847656e-08
+      },
+      "self_supervised/minirocket/difficulty/0": {
+        "passed": true,
+        "changed_predictions": 0
+      },
+      "self_supervised/minirocket/event_response/0": {
+        "passed": true,
+        "relative_rms": 2.8106564877504786e-05,
+        "rms": 1.2989035450608405e-06,
+        "scale": 0.0462135287866652,
+        "max_abs": 7.033348083496094e-06
+      },
+      "task_guided/selection": {
+        "passed": true,
+        "values": [
+          {
+            "best_update": 4,
+            "best_epoch": 0
+          },
+          {
+            "best_update": 4,
+            "best_epoch": 0
+          }
+        ]
+      },
+      "task_guided/linear/difficulty/0": {
+        "passed": true,
+        "changed_predictions": 0
+      },
+      "task_guided/linear/event_response/0": {
+        "passed": true,
+        "relative_rms": 9.719323267878102e-08,
+        "rms": 5.079764926170797e-09,
+        "scale": 0.052264594829962874,
+        "max_abs": 1.4901161193847656e-08
+      },
+      "task_guided/minirocket/difficulty/0": {
+        "passed": true,
+        "changed_predictions": 0
+      },
+      "task_guided/minirocket/event_response/0": {
+        "passed": true,
+        "relative_rms": 0.000206745200603201,
+        "rms": 9.491204816152083e-06,
+        "scale": 0.04590773951927536,
+        "max_abs": 4.89354133605957e-05
+      }
+    },
+    "interpretation": "fixed eager consumers on identical development validation windows"
+  },
+  "interpretation": "short native entry only; full-unit costs require completed screen units",
+  "confirmation_opened": false
+}

@@ -1,0 +1,22 @@
+{
+  "pid": 2313517,
+  "started_at_unix_s": 1790915915.5287223,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--until",
+    "stage5_formal_train",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery",
+    "--stage5-formal-parent",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery",
+    "--stage5-performance-evidence",
+    "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance/execution_evidence.json"
+  ],
+  "runtime": "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery",
+  "source_commit": "a80289e88c27a214ed333aa06abe90ba5a546089",
+  "source_code_sha256": "361107d7d0e11468e0e4ff861df7e80662bb91efd1bc48913c4919cb9328157f",
+  "inherited_units": 140,
+  "stop_after": "main models; outer evaluation closed"
+}

@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/self_supervised/chronaris/C/update_000200.pt",
+  "checkpoint_sha256": "9ade8355f451d4b28d377c3752efa2e180b022e0ba971caf1b1f84cc2d3b4fee",
+  "canonical_training_state_sha256": "5c75374110146b5d8dea3849b62a2e722ccb68dbb2d106e60ddb6d9fe4cb1dba",
+  "optimizer_updates": 200
+}

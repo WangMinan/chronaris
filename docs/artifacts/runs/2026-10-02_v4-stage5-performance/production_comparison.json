@@ -1,0 +1,187 @@
+{
+  "passed": true,
+  "checks": {
+    "201": {
+      "state": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 1.4901161193847656e-08,
+        "failures": []
+      },
+      "outputs": {
+        "close": true,
+        "bitwise_equal": true,
+        "max_abs": 0.0,
+        "failures": [],
+        "tensors": {
+          "/0": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 0.7895548701040908,
+            "outlier_fraction": 0.0
+          },
+          "/1": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 0.6642463236294036,
+            "outlier_fraction": 0.0
+          },
+          "/2": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 1.0542122380133698,
+            "outlier_fraction": 0.0
+          },
+          "/3": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 1.032048091799821,
+            "outlier_fraction": 0.0
+          },
+          "/4": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 0.7678781564427237,
+            "outlier_fraction": 0.0
+          },
+          "/5": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 0.7423805858897413,
+            "outlier_fraction": 0.0
+          },
+          "/6": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 0.6666463872559026,
+            "outlier_fraction": 0.0
+          },
+          "/7": {
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "scale": 0.5992158033955564,
+            "outlier_fraction": 0.0
+          }
+        }
+      },
+      "losses": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "gradients": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 3.958120942115784e-09,
+        "failures": []
+      },
+      "ids": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "parent_sha256": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      }
+    },
+    "202": {
+      "state": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 1.4901161193847656e-08,
+        "failures": []
+      },
+      "outputs": {
+        "close": true,
+        "bitwise_equal": false,
+        "max_abs": 1.430511474609375e-06,
+        "failures": [],
+        "tensors": {
+          "/0": {
+            "relative_rms": 6.835266214833025e-08,
+            "max_abs": 1.1920928955078125e-06,
+            "scale": 1.022494865891666,
+            "outlier_fraction": 0.0
+          },
+          "/1": {
+            "relative_rms": 6.91424828848595e-08,
+            "max_abs": 9.5367431640625e-07,
+            "scale": 0.9684562416116661,
+            "outlier_fraction": 0.0
+          },
+          "/2": {
+            "relative_rms": 6.292250064133164e-08,
+            "max_abs": 7.152557373046875e-07,
+            "scale": 0.8567174183818647,
+            "outlier_fraction": 0.0
+          },
+          "/3": {
+            "relative_rms": 7.612409964479992e-08,
+            "max_abs": 7.152557373046875e-07,
+            "scale": 0.704179068782603,
+            "outlier_fraction": 0.0
+          },
+          "/4": {
+            "relative_rms": 6.637383357753341e-08,
+            "max_abs": 1.430511474609375e-06,
+            "scale": 1.0375347735825262,
+            "outlier_fraction": 0.0
+          },
+          "/5": {
+            "relative_rms": 7.278518002685979e-08,
+            "max_abs": 1.430511474609375e-06,
+            "scale": 0.9154835589252507,
+            "outlier_fraction": 0.0
+          },
+          "/6": {
+            "relative_rms": 6.624140352208167e-08,
+            "max_abs": 7.152557373046875e-07,
+            "scale": 0.7193133706307305,
+            "outlier_fraction": 0.0
+          },
+          "/7": {
+            "relative_rms": 7.182526099506356e-08,
+            "max_abs": 7.152557373046875e-07,
+            "scale": 0.649090390346797,
+            "outlier_fraction": 0.0
+          }
+        }
+      },
+      "losses": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "gradients": {
+        "bitwise_equal": false,
+        "close": true,
+        "max_abs": 7.916241884231567e-09,
+        "failures": []
+      },
+      "ids": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      },
+      "parent_sha256": {
+        "bitwise_equal": true,
+        "close": true,
+        "max_abs": 0.0,
+        "failures": []
+      }
+    },
+    "resume": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    }
+  }
+}

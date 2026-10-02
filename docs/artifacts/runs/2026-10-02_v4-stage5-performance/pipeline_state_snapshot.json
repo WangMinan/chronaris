@@ -1,0 +1,784 @@
+{
+  "completed": {
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/cuda_validation.1.json",
+      "sha256": "3e41cc63c96357f56a4b313a0b017086cffade68059d6b2987ccebda8d51fb64"
+    },
+    "stage5_formal_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_plan.1.json",
+      "sha256": "0f20e0309e3614308c5bbea4b7a35f8b0e5f6392ec04f23ff4dedf63f9e1916f"
+    },
+    "stage5_formal_execution__clare__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__clare__eager.1.json",
+      "sha256": "39a06e23a03b0bef495bb14f7f2499081ad06c8864a72e0c2ba4cbe495dc41b5"
+    },
+    "stage5_formal_execution__clare__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__clare__graph.1.json",
+      "sha256": "d688730bdd59f4616dbadb5ce66269df0f1c096da118ef65e0e69c1811a61738"
+    },
+    "stage5_formal_execution__clare__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__clare__interrupt.1.json",
+      "sha256": "cc169b298444a5aa082b673f90293f4397cb0e183f94badfd881f83dfbd2ef3d"
+    },
+    "stage5_formal_execution__clare__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__clare__resume.1.json",
+      "sha256": "80da0b245b586ff9e545dc91060b704f5eba69761589cc13368a22d793260826"
+    },
+    "stage5_formal_execution__clare__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__clare__check.1.json",
+      "sha256": "a60d8f3af20fc2734263abbdb5a7aece53a6922b93be0edef8d424f4c2256134"
+    },
+    "stage5_formal_execution__cogpilot__eager": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__cogpilot__eager.1.json",
+      "sha256": "b2a6bf87e1f8a26d6e4e4463424ceab01a0e7199495f1bae072425ef2a6827c9"
+    },
+    "stage5_formal_execution__cogpilot__graph": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__cogpilot__graph.1.json",
+      "sha256": "ab8efda4524ad099edd1d58bfe94d27a67bd9d183128d65d0f50ea38cb4e74df"
+    },
+    "stage5_formal_execution__cogpilot__interrupt": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__cogpilot__interrupt.1.json",
+      "sha256": "cc169b298444a5aa082b673f90293f4397cb0e183f94badfd881f83dfbd2ef3d"
+    },
+    "stage5_formal_execution__cogpilot__resume": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__cogpilot__resume.1.json",
+      "sha256": "80da0b245b586ff9e545dc91060b704f5eba69761589cc13368a22d793260826"
+    },
+    "stage5_formal_execution__cogpilot__check": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_execution__cogpilot__check.1.json",
+      "sha256": "8d65219614e6d7aa69665f9e5383ca267a4ba5a0d46435da8cd54b5e3f44a9b6"
+    },
+    "stage5_formal_unit__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__0.1.json",
+      "sha256": "56a92216a1448d871b1d0bb6d101488c133d5be08e51b5e920f56cc67c1ba417"
+    },
+    "stage5_formal_unit__1": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__1.1.json",
+      "sha256": "4de8724c355979f71453fb36ecbeddd51f379235da7b2eadc11aa31abc62caec"
+    },
+    "stage5_formal_unit__2": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__2.1.json",
+      "sha256": "bdba7d4170f04191c90bb15d54c6c602dfb157f5a46fc315cd086f3467e48612"
+    },
+    "stage5_formal_unit__3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__3.1.json",
+      "sha256": "21ea06c1fc5f896a55dbfb7432182ebf4a8160f10bb2243053a20354000b34ea"
+    },
+    "stage5_formal_unit__4": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__4.1.json",
+      "sha256": "79a7f506ca0f8860121de3623f0ae43a445ced573316e0374ac056cfe286bb5f"
+    },
+    "stage5_formal_unit__5": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__5.1.json",
+      "sha256": "b5f0e14d7ba719c7b9edfeae2ded12971fcd0cc636ee68e5edee3c55e804c45b"
+    },
+    "stage5_formal_unit__6": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__6.1.json",
+      "sha256": "8f31969848383efc779de21132a59ff8bce57b6a654d3a509bbc340d33d3b08f"
+    },
+    "stage5_formal_unit__7": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__7.1.json",
+      "sha256": "373daee6b514e27b6309b938a6874be2a05614f2444da602de5ac25724fe137f"
+    },
+    "stage5_formal_unit__8": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__8.1.json",
+      "sha256": "4deaa76c6ea9086a2fd937c49ec282c3c1afe61fda3cc72fcdac45501a3e7572"
+    },
+    "stage5_formal_unit__9": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__9.1.json",
+      "sha256": "7802ec825debef54d483690f274bc45ddd457dc12abbe466a77e64a9d2263237"
+    },
+    "stage5_formal_unit__10": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__10.1.json",
+      "sha256": "57929b72f5a4c0b11852b1d711fed31fb170348e960af74dc170ada7ae8009c6"
+    },
+    "stage5_formal_unit__11": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__11.1.json",
+      "sha256": "4ae8c6bcdc962aa77438850e2282d634547056466cd2da47bf3b3b4a70291b04"
+    },
+    "stage5_formal_unit__12": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__12.1.json",
+      "sha256": "ddfac1023130d43ac02a87aeb46a8013ca0dbaca76934e1e1c899f1153229e94"
+    },
+    "stage5_formal_unit__13": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__13.1.json",
+      "sha256": "389b67f004b82da14e2844449cd360ad8fcf4ab0058e8ba009f98e4ed57e9adf"
+    },
+    "stage5_formal_unit__14": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__14.1.json",
+      "sha256": "c6e16ec8d1d52428581af20f5d31116f523c4dc82899dd7f26d4af43137f9a54"
+    },
+    "stage5_formal_unit__15": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__15.1.json",
+      "sha256": "2f9adae641527b8d2f87bc0ee001a5c8ae2af79928aba1e49e28623e2ec2e607"
+    },
+    "stage5_formal_unit__16": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__16.1.json",
+      "sha256": "96cd6e48889a3ee5976fa35257338cc1c036a9f229d0517e40b47283a857c2d9"
+    },
+    "stage5_formal_unit__17": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__17.1.json",
+      "sha256": "bdbbff27260eaf943cbb988c90a3d9976843882cdcf88db95677977ac608ff37"
+    },
+    "stage5_formal_unit__18": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__18.1.json",
+      "sha256": "6989a33242261bc72b3adea84c2f8f8a8c5b5ffc5e8c2f1cf2bdf5525ddf34b0"
+    },
+    "stage5_formal_unit__19": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__19.1.json",
+      "sha256": "82869d7f1a0e3e6c78faac969dedc2a28228fa6e6b450b369b91bfb63f986529"
+    },
+    "stage5_formal_unit__20": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__20.1.json",
+      "sha256": "7c4868c2f43602c93d16c4d7d56e85d40d54db50f15ed4dff7fc7212fe8b9f7c"
+    },
+    "stage5_formal_unit__21": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__21.1.json",
+      "sha256": "7fbcea9e35ce37cf3860ad17f66a03d96366a335587309b561104854422b52e4"
+    },
+    "stage5_formal_unit__22": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__22.1.json",
+      "sha256": "2b7fa6178fd8603716d2afd96317824b8dc9ede2718c584a7d75d91993b0c778"
+    },
+    "stage5_formal_unit__23": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__23.1.json",
+      "sha256": "9e05b26950484f640c789e5f4f1e1a84700029ba462c3b4938a52c7601e1a91b"
+    },
+    "stage5_formal_unit__24": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__24.1.json",
+      "sha256": "a8066e63434a1b6dd9c6078f6a8b5e20c427bd56279ad891c8f0aac0e868120f"
+    },
+    "stage5_formal_unit__25": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__25.1.json",
+      "sha256": "79d578fb454e500a12cdc6ba5c2ef9269ca0da6af0ebf7bc6b021f9577e54c53"
+    },
+    "stage5_formal_unit__26": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__26.1.json",
+      "sha256": "214fe8fee4814c2776db15bc393eb934edcff0e4f7f5015f3f0b98ec223566db"
+    },
+    "stage5_formal_unit__27": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__27.1.json",
+      "sha256": "06693eb96d415fb16b3684a628ab47c5d47d2a9cc70c6a9c4f1d5bc839320fad"
+    },
+    "stage5_formal_unit__28": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__28.1.json",
+      "sha256": "de6e0a221765525f940d097ff6976de1e2d51b653dfeec4bdd8be406c04b54de"
+    },
+    "stage5_formal_unit__29": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__29.1.json",
+      "sha256": "7e40cb8f1e44c6190e55ce42887a861f93a007134f5ddad3b5f79f5f8580ece5"
+    },
+    "stage5_formal_unit__30": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__30.1.json",
+      "sha256": "a8186f2e00f8488c4f6dc824c4d4b3809029901972684ec2572f4a68b4177326"
+    },
+    "stage5_formal_unit__31": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__31.1.json",
+      "sha256": "e69320c15e15dbdcc515b18eccbdda01b08858bb1f1616f5dfbbccd2013d697d"
+    },
+    "stage5_formal_unit__32": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__32.1.json",
+      "sha256": "40463b4bcaebec970df7ca405205de79d7e377d609eac8337fd0a8609929eab9"
+    },
+    "stage5_formal_unit__33": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__33.1.json",
+      "sha256": "5c20783cd74e6b9ab614ea99d4d82731dcd1d3dd2b81526493876528dbc33ddc"
+    },
+    "stage5_formal_unit__34": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__34.1.json",
+      "sha256": "d24144b8dca67a547341f26133e0f5595ec9a1d90c28c85fb58a12b085c53f24"
+    },
+    "stage5_formal_unit__35": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__35.1.json",
+      "sha256": "fe3d5dfdcb01199c5465747aee9838668b53fb3e645d799957de5e86be7a2a36"
+    },
+    "stage5_formal_unit__36": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__36.1.json",
+      "sha256": "b90b4a26b0c008713ea5a42c4d28e890717bc9adb1f929c224019abb9df47d55"
+    },
+    "stage5_formal_unit__37": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__37.1.json",
+      "sha256": "43d0db8ad0bb5fddebe767b6f7cb43db28e34f803787a0607d78f9f5bf2add54"
+    },
+    "stage5_formal_unit__38": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__38.1.json",
+      "sha256": "8b822bcc1b1488f748bedfb02eb7bb95bd1e42832c49e495a69196f36eeab4b4"
+    },
+    "stage5_formal_unit__39": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__39.1.json",
+      "sha256": "6c68487d2174beefa83f9ed768ce4c130c1db78cff57d41c1f213d1832dffcf0"
+    },
+    "stage5_formal_unit__40": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__40.1.json",
+      "sha256": "717684a2a1dd3e861536c5f324ad79b703d6a53e56130eb6d6d0a579c9e0a312"
+    },
+    "stage5_formal_unit__41": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__41.1.json",
+      "sha256": "037608d6dea33738da6160da0b4c8ad926414950cc1b641f8d3699fa2b0433d0"
+    },
+    "stage5_formal_unit__42": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__42.1.json",
+      "sha256": "f3c586afefff9b1bdd0725758eb76c4827cf7af5980e11f35270645e9adc106d"
+    },
+    "stage5_formal_unit__43": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__43.1.json",
+      "sha256": "6f07bdefad138f8b4f946c5616ca36b48b12e88a860ae6939f94811b15b2215e"
+    },
+    "stage5_formal_unit__44": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__44.1.json",
+      "sha256": "4221e99019659d10d272c82369e2ae578a9f0c45b6ac97b0d1573d13f338e6a6"
+    },
+    "stage5_formal_unit__45": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__45.1.json",
+      "sha256": "491ca9a96426bb4eb49d12f4cfe0908316a2e7c416cb92edfa540d62bf6cdc88"
+    },
+    "stage5_formal_unit__46": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__46.1.json",
+      "sha256": "84a11a6287b215cf0897acc208f77fc3dae56959cfd6a3044324dc610ffa3046"
+    },
+    "stage5_formal_unit__47": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__47.1.json",
+      "sha256": "7083578559954ce1863f034b9b002c92f24896eaed3c654390b323ac4a971a78"
+    },
+    "stage5_formal_unit__48": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__48.1.json",
+      "sha256": "046284840e099d83c68b536b5f274fff238e181609ad10604ec7eda696034661"
+    },
+    "stage5_formal_unit__49": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__49.1.json",
+      "sha256": "9e9dbf92640267ece2573913aa6aecbdf2781409a8e3f535c11cafa0e908d42a"
+    },
+    "stage5_formal_unit__50": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__50.1.json",
+      "sha256": "dcda22d01c4d78869fac0bed95f08cc973d5da2cd918d7f7f24bc37bb9c9b130"
+    },
+    "stage5_formal_unit__51": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__51.1.json",
+      "sha256": "db8febb8a3b4488836ecdfa73504af9c8808fca18375e346edfc6f1725577226"
+    },
+    "stage5_formal_unit__52": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__52.1.json",
+      "sha256": "9c29d18005a21cfd86dd10c08f6e1cb3fd8accb2e81a304a7d4d3927cc07b77a"
+    },
+    "stage5_formal_unit__53": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__53.1.json",
+      "sha256": "b2f0b401eb69617d887de6cbf7f97b33fa16f702d4edfe236a3ab12b9ed48015"
+    },
+    "stage5_formal_unit__54": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__54.1.json",
+      "sha256": "eae7425c6b5c5e0ed9254a3c359676e460fbc33e014ab8423a6970e1dd6ee894"
+    },
+    "stage5_formal_unit__55": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__55.1.json",
+      "sha256": "046552128641f1597efec83bb15a342ef8f88341e540cbb3469b50eb9ad5779b"
+    },
+    "stage5_formal_unit__56": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__56.1.json",
+      "sha256": "edec669738bf403e77f00e9546d62b303e9b2274744de65893b92904534bc39b"
+    },
+    "stage5_formal_unit__57": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__57.1.json",
+      "sha256": "675f599e40883203791c4dc4b24d27577fe16039560cc543033e43cd98fc4d42"
+    },
+    "stage5_formal_unit__58": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__58.1.json",
+      "sha256": "7d8c61437340503887bc081e47e3859ce8cdd028aeed3ce6a81fd0ff31a0de46"
+    },
+    "stage5_formal_unit__59": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__59.1.json",
+      "sha256": "ef0cd842e88f1182c23118b36ce2bdcb7773d5a6458600e7fc69836aa56e9d77"
+    },
+    "stage5_formal_unit__60": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__60.1.json",
+      "sha256": "6b1de29d5b2a343a44fabbe2a23a2f4a4b461fbb806d8c9f8875f58c1f88c7a2"
+    },
+    "stage5_formal_unit__61": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__61.1.json",
+      "sha256": "c64e33a803a2c2ffe6a3c8a07693293dedd2f4c67f54cb9695662cb7283a7f8d"
+    },
+    "stage5_formal_unit__62": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__62.1.json",
+      "sha256": "258987a6310b5c4acfb90a5e4d5c4d64d045c12c1a4b61139749f416f33608ae"
+    },
+    "stage5_formal_unit__63": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__63.1.json",
+      "sha256": "059eeaa28cf47dde1d7fe64c70977a841fef2fff857242ab39bcea3abf5f98b0"
+    },
+    "stage5_formal_unit__64": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__64.1.json",
+      "sha256": "1dc59ddd95ba8cac59e5e1fae83de97764339f49cf44dcbfde85dee82553a1dd"
+    },
+    "stage5_formal_unit__65": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__65.1.json",
+      "sha256": "bec2fe67d0d42f45d89285a119c5cab495bbd103275de437c8fc359c6776f265"
+    },
+    "stage5_formal_unit__66": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__66.1.json",
+      "sha256": "87470f862bcc776f13e1d803418c64cffa1a9861cc4fcdf2731ecdd13b51bfca"
+    },
+    "stage5_formal_unit__67": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__67.1.json",
+      "sha256": "e33324ba13ea90060b0272b9eea552809773191d7e6d41e7b9a10013406f9bba"
+    },
+    "stage5_formal_unit__68": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__68.1.json",
+      "sha256": "638a70e4ca7f085090113e6e587409e5db7bb6b9d0e64c300cc6f0084044ac61"
+    },
+    "stage5_formal_unit__69": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__69.1.json",
+      "sha256": "f648d320812994af3d0338e29f3df1c01e26deeac20413640e9d088405c48c70"
+    },
+    "stage5_formal_unit__70": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__70.1.json",
+      "sha256": "c26b09c2ee152f080d85caab6505d2f247c80bf0ae4b29cc2c50404786ec8ca0"
+    },
+    "stage5_formal_unit__71": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__71.1.json",
+      "sha256": "cdbcaaa41a69d4f7a721c06e67fbf24a7f01cc555ec397fb0a4d76dfede072c1"
+    },
+    "stage5_formal_unit__72": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__72.1.json",
+      "sha256": "6c3eec8623c6912d62e2d035f9640690c0143fbcf516470465c63a06a4ace5ce"
+    },
+    "stage5_formal_unit__73": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__73.1.json",
+      "sha256": "2eb588f76d04c1508d531901408adc55394d85fc363a43b13a7f9af786242188"
+    },
+    "stage5_formal_unit__74": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__74.1.json",
+      "sha256": "749cf84010848364cda93295d86379cb59a36855813ee33d5e054561b2a61acf"
+    },
+    "stage5_formal_unit__75": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__75.1.json",
+      "sha256": "5743868c1bd646ea64656f8db0a366bd16a4518402386035e56ce6c29ad4110a"
+    },
+    "stage5_formal_unit__76": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__76.1.json",
+      "sha256": "02e9edb1345cc39f1b28ee004426c55d513fe11ae6207bc9770e25adf5cd186b"
+    },
+    "stage5_formal_unit__77": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__77.1.json",
+      "sha256": "e0d81c596664d50a4562b888fe5878b94c4640c5511bc2ed253fe49901daf3a5"
+    },
+    "stage5_formal_unit__78": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__78.1.json",
+      "sha256": "387579ea4f848d9e0607e70baa61243527a836cb7194e155bd2570c6a7b48d1f"
+    },
+    "stage5_formal_unit__79": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__79.1.json",
+      "sha256": "c0c2dee4ba83370e6c778d86da6acf94c6cbefaafc77134da1d5e0a253360dda"
+    },
+    "stage5_formal_unit__80": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__80.1.json",
+      "sha256": "7a4047d766da5b82cf155d5bb668925405231199aa3ac9ef5b39fd30f5882059"
+    },
+    "stage5_formal_unit__81": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__81.1.json",
+      "sha256": "cf8226eed552f08c6176eae5db613070314e3b2391b2b35bdaee4dfcd968663d"
+    },
+    "stage5_formal_unit__82": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__82.1.json",
+      "sha256": "06ebd7dafa52fa39e600e117714af81a459b588d83c20e203fa79cd39b10d6bf"
+    },
+    "stage5_formal_unit__83": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__83.1.json",
+      "sha256": "31a3a140ddf58f80b9e265b0461fa1aca133d10bb4ab54ac592cee3af6dd6ffa"
+    },
+    "stage5_formal_unit__84": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__84.1.json",
+      "sha256": "a63194e0768b084c558e3e6f3955721a49859f2cefe339cda938f0240955bef3"
+    },
+    "stage5_formal_unit__85": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__85.1.json",
+      "sha256": "ba0b8337d58007667343dd92c24646355da9ecd6aefb6bce5512c2fa15f4758c"
+    },
+    "stage5_formal_unit__86": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__86.1.json",
+      "sha256": "4c73c40b14a53a15f1eef814aef0ae93375116358e1d329b069e661e1edb5554"
+    },
+    "stage5_formal_unit__87": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__87.1.json",
+      "sha256": "f630bd6fa773a64521fa70b441629eac91a334fcacae0d090a83dc728269608a"
+    },
+    "stage5_formal_unit__88": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__88.1.json",
+      "sha256": "cad9a77aea674f34d2d86130e01f7a64c68db3ad78d1b71568e55a64bdb6d619"
+    },
+    "stage5_formal_unit__89": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__89.1.json",
+      "sha256": "ae71b09692e013774c6883a9b3238da0ede2eda7a19691906863c4dcee3a4588"
+    },
+    "stage5_formal_unit__90": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__90.1.json",
+      "sha256": "cf89a3c4d78bb4eed7824f77bb06fc0e9dbf8d69f96905615cd4e018c204c70b"
+    },
+    "stage5_formal_unit__91": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__91.1.json",
+      "sha256": "b57b3d3e503714ea0300a32ed53f778c7956c4d5f852414ae7d9eabe4841acce"
+    },
+    "stage5_formal_unit__92": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__92.1.json",
+      "sha256": "aee83b6b3df03883bbe88071b55ea66b3abd557b56315d1e5728947e3ef8b22f"
+    },
+    "stage5_formal_unit__93": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__93.1.json",
+      "sha256": "488159b7b0c7cb355fbd67cc2aad944814a59b835d5220086c4471b7b69d4958"
+    },
+    "stage5_formal_unit__94": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__94.1.json",
+      "sha256": "18f90e1df002328864f7f67e75933112f85e00be25ef693feff6375d57726221"
+    },
+    "stage5_formal_unit__95": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__95.1.json",
+      "sha256": "7aaa42492fadd0a4e5962fc434b3a46626a110cee1c7ee11e914fcf0b7781e6e"
+    },
+    "stage5_formal_unit__96": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__96.1.json",
+      "sha256": "844dcb9322d85dcec9cc406e7d87c1efe6a73af42a190f38ef21bad0c3b04084"
+    },
+    "stage5_formal_unit__97": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__97.1.json",
+      "sha256": "ee071d4cce3237266df957f51592ccd82d1cc9e0c31fc27e795f341fd0483be8"
+    },
+    "stage5_formal_unit__98": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__98.1.json",
+      "sha256": "b3be2b894d68f289f63dd7e641aff9c79b41a8d734479658ac78f5d2cd5d5f37"
+    },
+    "stage5_formal_unit__99": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__99.1.json",
+      "sha256": "f6151ebecbc1b9d6e752b8c1204802ef5db4d6e2282eccbdb76f56c8f6364f92"
+    },
+    "stage5_formal_unit__100": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__100.1.json",
+      "sha256": "d30c050a181e3e2c0545701894b377d056b0dc5ffbaed6ff00d95c3bc34bf2b6"
+    },
+    "stage5_formal_unit__101": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__101.1.json",
+      "sha256": "c5dcbb75110c4330f2a2771029f0a893a1e0566021a567197d0286fdc47e49e3"
+    },
+    "stage5_formal_unit__102": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__102.1.json",
+      "sha256": "c862c8d743f686baf19edec9408029fbed2aa9c3affc077bf21591b3c65d7f00"
+    },
+    "stage5_formal_unit__103": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__103.1.json",
+      "sha256": "fc66db1bd77700450b2f98d24d3f68b1f997bbe1900774de7cfdfdb06ea5ff9f"
+    },
+    "stage5_formal_unit__104": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__104.1.json",
+      "sha256": "3719eb4a4c67794505070df0f631dfd5f7e02b02a4325eda542708142a195679"
+    },
+    "stage5_formal_unit__105": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__105.1.json",
+      "sha256": "9c2bf0f552ab22ebd5c64e59acad3d9e75aa12185bf008df8606ec4f66f52822"
+    },
+    "stage5_formal_unit__106": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__106.1.json",
+      "sha256": "2d3f3af398f77437b53f321af3642a48c8b7bfb0f57302226dfea9e0c5ad075b"
+    },
+    "stage5_formal_unit__107": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__107.1.json",
+      "sha256": "a1a14546aff8b0c069169a302790d54ba01a295593dc8630c180c5909e95ff65"
+    },
+    "stage5_formal_unit__108": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__108.1.json",
+      "sha256": "bbf461e0e637b99a32a11519a7930f20b5259b57021a1fcc1cfb9a3333fd8515"
+    },
+    "stage5_formal_unit__109": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__109.1.json",
+      "sha256": "cab5078f78401ca70a33f9758a4019e470db38475031baf4e60a5c4f390ca7a0"
+    },
+    "stage5_formal_unit__110": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__110.1.json",
+      "sha256": "a268f1d16861488aaf77295da9cff02d1e3988cf5015b6430f759d11e722c4a5"
+    },
+    "stage5_formal_unit__111": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__111.1.json",
+      "sha256": "0b344238ee9c2f6389540a06a417d714280071910ce98d0b3fa674cefbb131f2"
+    },
+    "stage5_formal_unit__112": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__112.1.json",
+      "sha256": "22a9404481e2bd37cfae49d854a626d9ede1533fdce75619b84b5a1a40c435b6"
+    },
+    "stage5_formal_unit__113": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__113.1.json",
+      "sha256": "f4303b90418e7cd41bb4cd4a739c7d2ceb9ba850bed4dd1a62331a2b259c5486"
+    },
+    "stage5_formal_unit__114": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__114.1.json",
+      "sha256": "f3563fd4a0636404b944aa2a72e82fdb1f78e0417444a2f624f2aa648e03d380"
+    },
+    "stage5_formal_unit__115": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__115.1.json",
+      "sha256": "34789b5ee7f33c26e4e76a5dffc56723893d8e1a4664d27f10230a5ea0817bff"
+    },
+    "stage5_formal_unit__116": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__116.1.json",
+      "sha256": "6bf1f440ae1689762782def4d2023d2c0df29ff33c5637f58cb919c5681180d0"
+    },
+    "stage5_formal_unit__117": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__117.1.json",
+      "sha256": "6e40dcd553dbfb540d4f9f099a5648afba1cee1c80b5b298cc9a6f7697f243bb"
+    },
+    "stage5_formal_unit__118": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__118.1.json",
+      "sha256": "4176fe99b50678da17a8a7df53b191ebc0abdf7d437949b9595b0aa81a71fc05"
+    },
+    "stage5_formal_unit__119": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__119.1.json",
+      "sha256": "8cb2afae1bafc326e11b3a139e0c319b438aa4d26f824322ea83a9ee80120505"
+    },
+    "stage5_formal_unit__120": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__120.1.json",
+      "sha256": "a30f44728017c4d55765f67f300e48de5c6d09104871a96168544ee071a64a22"
+    },
+    "stage5_formal_unit__121": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__121.1.json",
+      "sha256": "c1de9ae5c9289079d8718da18c71bcb7f464b3a04eedf371fc4aaa1fcd22e327"
+    },
+    "stage5_formal_unit__122": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__122.1.json",
+      "sha256": "23103d307f4b1817715714e96bf02c4377488adc8f301bc9bdf66c45ef0c9602"
+    },
+    "stage5_formal_unit__123": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__123.1.json",
+      "sha256": "9749faab8c584381259d00803500cc37daf2571a1778b11455adc3087a48bfe2"
+    },
+    "stage5_formal_unit__124": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__124.1.json",
+      "sha256": "c668480a7e6cfc9caeea94260707f7cf7da71be9cb87bab1d1c9500c53a73e28"
+    },
+    "stage5_formal_unit__125": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__125.1.json",
+      "sha256": "d6714357acbde311dae963544143642d5da107f6158aa82291459f7281cb9b15"
+    },
+    "stage5_formal_unit__126": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__126.1.json",
+      "sha256": "7e21a8f858c9f658ca040d2172c52b6effa9f1fbd81e9a721469cb2b5a4dcf3a"
+    },
+    "stage5_formal_unit__127": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__127.1.json",
+      "sha256": "f59f46c36ba8b9bcf2e63997b96c3f9c537bec408f4adbef48db48d6cbd4ee19"
+    },
+    "stage5_formal_unit__128": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__128.1.json",
+      "sha256": "02980869e530b152b49beffe6902fc9c3ce4a62ad2bcf793ad312aa5338c5d62"
+    },
+    "stage5_formal_unit__129": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__129.1.json",
+      "sha256": "3ae603cad6fe73363c1f277eae1619cad96d5dea124eac6cee425b9a806fb071"
+    },
+    "stage5_formal_unit__130": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__130.1.json",
+      "sha256": "e6587a35ac5c5fbefc8f200094be2665c3dd001f878685b1007cdb734c5d255a"
+    },
+    "stage5_formal_unit__131": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__131.1.json",
+      "sha256": "ecc02f98fd817f046f63ebccd7885386ac131e706dbe13b979d79bbca7e3d733"
+    },
+    "stage5_formal_unit__132": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__132.1.json",
+      "sha256": "6e91a22b71d8a7bc79a6cb6bdde9ce9206a2f3b28ce2cb14f1282705e87b1607"
+    },
+    "stage5_formal_unit__133": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__133.1.json",
+      "sha256": "a488710451ec8f578f69614319067e95597d31d9d88148e5a8613d69928e0369"
+    },
+    "stage5_formal_unit__134": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__134.1.json",
+      "sha256": "cf660c4faa2d19619cddc4e31eeb8f4d3848bf9e5f0f760180726ad44f0c5ce6"
+    },
+    "stage5_formal_unit__135": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__135.1.json",
+      "sha256": "9e55d93b370bbf741c1388a78a4901884506748f9d06ece260970df0489fd63e"
+    },
+    "stage5_formal_unit__136": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__136.1.json",
+      "sha256": "9b2ff5db20b315b9dcb42a1524bf76eec362eef59da48124fffbcd911e4394e3"
+    },
+    "stage5_formal_unit__137": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__137.1.json",
+      "sha256": "4954a908e809fe500641cfe94d0b9a6211a2aefd81c5a14224c7bf1cbd82ef79"
+    },
+    "stage5_formal_unit__138": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__138.1.json",
+      "sha256": "94bc8703aa30c1c6e69c33e989a46d9671bf3b25600641fdf2634333a12ef899"
+    },
+    "stage5_formal_unit__139": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__139.1.json",
+      "sha256": "0363a6cb5b32479672bc71666799c3f2afa9d9144be63a7531743fc0bce0b676"
+    },
+    "stage5_formal_unit__140": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/stage_results/stage5_formal_unit__140.1.json",
+      "sha256": "ca53a15387f1e5eeeb4d1019ec9a96839616d5475ef7122383bc581d5ab1dbb0"
+    }
+  },
+  "failures": [],
+  "attempts": {
+    "cuda_validation": 1,
+    "stage5_formal_plan": 1,
+    "stage5_formal_execution__clare__eager": 1,
+    "stage5_formal_execution__clare__graph": 1,
+    "stage5_formal_execution__clare__interrupt": 1,
+    "stage5_formal_execution__clare__resume": 1,
+    "stage5_formal_execution__clare__check": 1,
+    "stage5_formal_execution__cogpilot__eager": 1,
+    "stage5_formal_execution__cogpilot__graph": 1,
+    "stage5_formal_execution__cogpilot__interrupt": 1,
+    "stage5_formal_execution__cogpilot__resume": 1,
+    "stage5_formal_execution__cogpilot__check": 1,
+    "stage5_formal_unit__0": 1,
+    "stage5_formal_unit__1": 1,
+    "stage5_formal_unit__2": 1,
+    "stage5_formal_unit__3": 1,
+    "stage5_formal_unit__4": 1,
+    "stage5_formal_unit__5": 1,
+    "stage5_formal_unit__6": 1,
+    "stage5_formal_unit__7": 1,
+    "stage5_formal_unit__8": 1,
+    "stage5_formal_unit__9": 1,
+    "stage5_formal_unit__10": 1,
+    "stage5_formal_unit__11": 1,
+    "stage5_formal_unit__12": 1,
+    "stage5_formal_unit__13": 1,
+    "stage5_formal_unit__14": 1,
+    "stage5_formal_unit__15": 1,
+    "stage5_formal_unit__16": 1,
+    "stage5_formal_unit__17": 1,
+    "stage5_formal_unit__18": 1,
+    "stage5_formal_unit__19": 1,
+    "stage5_formal_unit__20": 1,
+    "stage5_formal_unit__21": 1,
+    "stage5_formal_unit__22": 1,
+    "stage5_formal_unit__23": 1,
+    "stage5_formal_unit__24": 1,
+    "stage5_formal_unit__25": 1,
+    "stage5_formal_unit__26": 1,
+    "stage5_formal_unit__27": 1,
+    "stage5_formal_unit__28": 1,
+    "stage5_formal_unit__29": 1,
+    "stage5_formal_unit__30": 1,
+    "stage5_formal_unit__31": 1,
+    "stage5_formal_unit__32": 1,
+    "stage5_formal_unit__33": 1,
+    "stage5_formal_unit__34": 1,
+    "stage5_formal_unit__35": 1,
+    "stage5_formal_unit__36": 1,
+    "stage5_formal_unit__37": 1,
+    "stage5_formal_unit__38": 1,
+    "stage5_formal_unit__39": 1,
+    "stage5_formal_unit__40": 1,
+    "stage5_formal_unit__41": 1,
+    "stage5_formal_unit__42": 1,
+    "stage5_formal_unit__43": 1,
+    "stage5_formal_unit__44": 1,
+    "stage5_formal_unit__45": 1,
+    "stage5_formal_unit__46": 1,
+    "stage5_formal_unit__47": 1,
+    "stage5_formal_unit__48": 1,
+    "stage5_formal_unit__49": 1,
+    "stage5_formal_unit__50": 1,
+    "stage5_formal_unit__51": 1,
+    "stage5_formal_unit__52": 1,
+    "stage5_formal_unit__53": 1,
+    "stage5_formal_unit__54": 1,
+    "stage5_formal_unit__55": 1,
+    "stage5_formal_unit__56": 1,
+    "stage5_formal_unit__57": 1,
+    "stage5_formal_unit__58": 1,
+    "stage5_formal_unit__59": 1,
+    "stage5_formal_unit__60": 1,
+    "stage5_formal_unit__61": 1,
+    "stage5_formal_unit__62": 1,
+    "stage5_formal_unit__63": 1,
+    "stage5_formal_unit__64": 1,
+    "stage5_formal_unit__65": 1,
+    "stage5_formal_unit__66": 1,
+    "stage5_formal_unit__67": 1,
+    "stage5_formal_unit__68": 1,
+    "stage5_formal_unit__69": 1,
+    "stage5_formal_unit__70": 1,
+    "stage5_formal_unit__71": 1,
+    "stage5_formal_unit__72": 1,
+    "stage5_formal_unit__73": 1,
+    "stage5_formal_unit__74": 1,
+    "stage5_formal_unit__75": 1,
+    "stage5_formal_unit__76": 1,
+    "stage5_formal_unit__77": 1,
+    "stage5_formal_unit__78": 1,
+    "stage5_formal_unit__79": 1,
+    "stage5_formal_unit__80": 1,
+    "stage5_formal_unit__81": 1,
+    "stage5_formal_unit__82": 1,
+    "stage5_formal_unit__83": 1,
+    "stage5_formal_unit__84": 1,
+    "stage5_formal_unit__85": 1,
+    "stage5_formal_unit__86": 1,
+    "stage5_formal_unit__87": 1,
+    "stage5_formal_unit__88": 1,
+    "stage5_formal_unit__89": 1,
+    "stage5_formal_unit__90": 1,
+    "stage5_formal_unit__91": 1,
+    "stage5_formal_unit__92": 1,
+    "stage5_formal_unit__93": 1,
+    "stage5_formal_unit__94": 1,
+    "stage5_formal_unit__95": 1,
+    "stage5_formal_unit__96": 1,
+    "stage5_formal_unit__97": 1,
+    "stage5_formal_unit__98": 1,
+    "stage5_formal_unit__99": 1,
+    "stage5_formal_unit__100": 1,
+    "stage5_formal_unit__101": 1,
+    "stage5_formal_unit__102": 1,
+    "stage5_formal_unit__103": 1,
+    "stage5_formal_unit__104": 1,
+    "stage5_formal_unit__105": 1,
+    "stage5_formal_unit__106": 1,
+    "stage5_formal_unit__107": 1,
+    "stage5_formal_unit__108": 1,
+    "stage5_formal_unit__109": 1,
+    "stage5_formal_unit__110": 1,
+    "stage5_formal_unit__111": 1,
+    "stage5_formal_unit__112": 1,
+    "stage5_formal_unit__113": 1,
+    "stage5_formal_unit__114": 1,
+    "stage5_formal_unit__115": 1,
+    "stage5_formal_unit__116": 1,
+    "stage5_formal_unit__117": 1,
+    "stage5_formal_unit__118": 1,
+    "stage5_formal_unit__119": 1,
+    "stage5_formal_unit__120": 1,
+    "stage5_formal_unit__121": 1,
+    "stage5_formal_unit__122": 1,
+    "stage5_formal_unit__123": 1,
+    "stage5_formal_unit__124": 1,
+    "stage5_formal_unit__125": 1,
+    "stage5_formal_unit__126": 1,
+    "stage5_formal_unit__127": 1,
+    "stage5_formal_unit__128": 1,
+    "stage5_formal_unit__129": 1,
+    "stage5_formal_unit__130": 1,
+    "stage5_formal_unit__131": 1,
+    "stage5_formal_unit__132": 1,
+    "stage5_formal_unit__133": 1,
+    "stage5_formal_unit__134": 1,
+    "stage5_formal_unit__135": 1,
+    "stage5_formal_unit__136": 1,
+    "stage5_formal_unit__137": 1,
+    "stage5_formal_unit__138": 1,
+    "stage5_formal_unit__139": 1,
+    "stage5_formal_unit__140": 1,
+    "stage5_formal_unit__141": 1
+  },
+  "started_at_unix_s": 1790915917.473217,
+  "pid": 2313517,
+  "config_sha256": "5a3f566fb70b5200c4dc47e31731d510c30332fc0d8312a45aab6e9155405941",
+  "status": "running",
+  "until": "stage5_formal_train",
+  "children": {
+    "stage5_formal_unit__141": 2317576
+  },
+  "updated_at_unix_s": 1790919000.2421582,
+  "current_stage": "stage5_formal_unit__141",
+  "current_log": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/logs/stage5_formal_unit__141.1.log"
+}

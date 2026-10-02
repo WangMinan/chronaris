@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "source_code_sha256": "427889409f7e703a0ac559b5116b1ded9ee3b20108ca5fc7a057d2845b0e9866",
+  "parent_checkpoint": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/self_supervised/chronaris/C/update_000200.pt",
+  "parent_sha256": "9ade8355f451d4b28d377c3752efa2e180b022e0ba971caf1b1f84cc2d3b4fee",
+  "seconds": [
+    29.685865484178066,
+    26.828335346654058
+  ],
+  "actual_batch": 4,
+  "effective_batch": 16,
+  "dtype": "float32",
+  "confirmation_opened": false
+}

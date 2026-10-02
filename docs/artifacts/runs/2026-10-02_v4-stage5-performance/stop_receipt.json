@@ -1,0 +1,959 @@
+{
+  "reason": "user authorized performance pause",
+  "parent_root": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery",
+  "controller_pid": 2138460,
+  "children": {
+    "stage5_formal_unit__140": 2302426
+  },
+  "completed_units": 140,
+  "active_unit": 140,
+  "active_optimizer_updates": 0,
+  "progress": {
+    "method": "common_contract_cogpilot",
+    "status": "running",
+    "optimizer_updates": 0,
+    "phase": "bind_real_development_inputs",
+    "wall_elapsed_s": 360.0490651493892
+  },
+  "completed_receipts": {
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/cuda_validation.1.json": "3a503ee68a83b3ee96dc1bde2612beb121c0bd1f07455456aad2a4e7e17d4eb4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_plan.1.json": "37ae116b47c050d76315ed984be73f59449f5210fdf2cc0b8067a8a9b67e61d7",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__eager.1.json": "1a067b2c53bd31ce70a2f2758526a522a577d5e4aac42824a20099ddd6173ef6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__graph.1.json": "7eb8d4b7d8177d43311a85239eaca85177f2c930d42f61c3b400a266acc8c262",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__interrupt.1.json": "3abfdf2e3e2f8bea930cf16e76ff2fd87b57bd15db83576aed00f911bafbb973",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__resume.1.json": "679ee7902b7299be8b7bbc2a06c21ad54a645a76666cbe1c67107cf65d3b37a3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__check.1.json": "9b0d3b635c253919f206ca5dc897a1fac4126e99c3f4a0a7c54b1518e7b4995b",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__eager.1.json": "07b9bf0a2bc611e7745f8bd700fe67ebcf0a802c07a7d0c3b6a778466c28ae0b",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__graph.1.json": "eb378dd894e95c9942d428c89b7ce10de627c5dfa51b4e5c57db9dfef64d229e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__interrupt.1.json": "1c6b8569dd75192df3939d3ba38da4aae02b92536eec6cf47a059beeee5547b4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__resume.1.json": "09fb7d80802591a39f4bb2f088221f8deaf9b1e6ac5981ab0c104ef05f798bfc",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__check.1.json": "62d9d9faab2d0e794549555598f5302a1f1fb124312d8a83963e7d5fa566bf4e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__0.1.json": "b90494bf5f3f2d700479efe2b0ab0be3cbf2ba0ee80f5d0420c5cd34010cd88f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__1.1.json": "27d4a6b79a8835fc553fa7f4849dbdbcdfe62bbc4c902f97a928561c66d65fbc",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__2.1.json": "15fb375f48ccde4833997518d1c5746e7c62c541f48061f9ac7f044d127a5094",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__3.1.json": "b1780461e46c76f935443b41731dcc85d00ec3abdee7dea827dbd911a2f1caca",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__4.1.json": "e35f0a45a86b006bf51b9e4d42e6c8b141d421f1bb460dd1ae8616145538db6f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__5.1.json": "03690ac818f1aa1b96cf562344b9b3893c3ed187b5bc1ff0190bdac38cb07f80",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__6.1.json": "8d3cebe319419ffa00fa5208f04d11272d307d54381555de9d4e8d39b9f4966d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__7.1.json": "fb788f5bb3c8ea6037b563e24c24685ec57843222da1ecffd288f26ba3ea9ce2",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__8.1.json": "376f46edf2ca6b4990912b3b486d1c5771b66740dfae0571430de9ec8529a91e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__9.1.json": "e85ff1604055bb3b8a7ad4779ec384503b91a7da0affb889d98f3373f4c645d0",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__10.1.json": "40afa89812293d8f264edab963fa4b301064bc8da6ae3a926ddec50d948aaad2",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__11.1.json": "b76e2609d8a5a26e24e5cf5966cba372635d69b594fefcd489b095571c0a202f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__12.1.json": "6915ba2665b7c4be868c547b1a4396c2b12b694955128dda3711f03485f6182f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__13.1.json": "2735768341f303d1d4751c5d36bd504d06777925a7d1f65857084a1c05213316",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__14.1.json": "aeb3960507437df63317642abc1a97258db73d5e1aa85c17b5421e88fda4e64c",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__15.1.json": "70142e7f70a2d283b2f3eb8c6eeae18e1053cabfa8ff9178ffd4fa938c80c31a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__16.1.json": "79182b6d99f71c4371ddf09fe801ba7bed2b5f9bb546de66505208c2426693c1",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__17.1.json": "b18525ed23e1c27c6fa90d3a72f2d85ed8dd3818034b2309006f00dc86592133",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__18.1.json": "934ef526f2865b27f6a5d97a3a1c85a11983f870475acab8e44d005b2cbddcb4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__19.1.json": "8969cad6eccc6d3d59fd13084b991a5d70f86d37bb6f7b587c258610e2c36c7f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__20.1.json": "6000d7fd0a603340f7d5b74f73c94923407b6c90043ac54e9a0ae3d05d3b6bb6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__21.1.json": "4e98ea3a536e41131f941624a866a1525ed011096f8817ed886b968265b59d8e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__22.1.json": "ada8fbe7cbe641919f506bafc83b52144f3d1d9b35c5e3622bcba0309ec4b116",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__23.1.json": "5013a46ff309a7f201840c20512b60c025f04a968c5efda661ab267b6111bfc3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__24.1.json": "7cc848814f3154ea65a65ad2820ac81208a3b8951629089f549bd9a980095af4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__25.1.json": "0fe7f44234d2791af25040cad18c3afc63d61467c1086d65ad1b1dca0074c90e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__26.1.json": "d7acc88a5116dd80d9975d26476afee41bcf3ffc5becd79317eeaa331d2d5127",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__27.1.json": "f66961e0c14365d933c3fea10a811a83da81839dee5bfda8994cb1bb9e96f8fc",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__28.1.json": "43020e11ee9341b801a76450cc9a5ed0467f3e0b5dda958be54b1c1ffb1bebad",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__29.1.json": "468fcedf74ba04bde8b02ed67fc92e4db647fea64cff9d57158e5f5a8395a83f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__30.1.json": "4502d1f2f13b0c1679adb5d7b4c8ce7d0b3f5662924f48a29b428bb7660a2955",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__31.1.json": "306d4338ef2d0259dcf1ff1f7af0448a1daedefa55547d342f31e52d431f3fbd",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__32.1.json": "7911fe6109a258aa2c63541371e7b5743bc9429ca2ec7c2b9a26743d1ca108f5",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__33.1.json": "d90b4eea014226ec21b09c0a44fb5c65c4e4e488feed6bcaeede61978400fba3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__34.1.json": "32db7b4cbced56e2d6bdc326dd89b1c58b673a036bc7ffe85351fb7aaacbe04d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__35.1.json": "7f767eaa142b47f74ddbc9580906ec8f6c18266a1a224ec1f0ad003801b04cb0",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__36.1.json": "47943734d2b9fac281ed54bab8b7e15b14f8837143a954697505495235f0379c",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__37.1.json": "f0eef14762f3b859aa4b766f0ec4ee7569030a2f0320227723bff1759742b7e5",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__38.1.json": "d23395ecb166242a5e7647e3c585da8dbee169ba25a6f530176fcecfbbc0dbdc",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__39.1.json": "5a09df296cec77a30c1bb099beaa85187dc5fa015f9ec97ea2dc5ac0fd2b37d5",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__40.1.json": "ca8240c06a25ba7c1a1eece522d8392b831be2517eb69eea52b65c639dc4f75d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__41.1.json": "d1d5c20756ae0020540f4781ff16998e5720f3acbda1784bd9ae47b16f80b499",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__42.1.json": "a8d14699b63af26a53771afca4913c3019ac6128df99166fb8db12b12885ea8a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__43.1.json": "ccf9f7fbeeb73b7353416f242c21bc195b8de6d54795a426c218496c4e8e0e1e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__44.1.json": "1e87985ed2b8e51778a00e82a83a4d87a12d073af9f2e4bb23092afaae475cc7",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__45.1.json": "dd239c8bc1ade45a02343f705a44478e6938b523340bc04360df8f0badf2029d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__46.1.json": "10856e9511555ff685dfb43773cead74bba180dbb868dd4d6dcb1ffad1c4c149",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__47.1.json": "a60cf521178eb6efa95554db208bf0d0734645729c2ad1a32551f669f528a8bd",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__48.1.json": "b683927e8be98f37353863b9127099f4990aab5dc332a56baf7303111135c167",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__49.1.json": "9b030d42c711538d073ffceba98183b5f114d09277f2681207e361a7b1e70141",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__50.1.json": "995cb1f59dfb2c0575824bce0ca13eb8b0fdabeebe26a2d6d1525ca1614f4466",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__51.1.json": "9174f90b674cffb0c6b20a1dc90c92af7d2263868447ea79feaba4dbbf1518a3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__52.1.json": "fa2ce5944a9ae8f645f80279d3d0b5d603992adbc63292653c54032da18db6a7",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__53.1.json": "8785d9d7faf2e660d5d2b91d6df13d8aec07c596f92c8826f06f673e0b8ae6ce",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__54.1.json": "3f716afb32833bc95c33132aa6c3c68a3c21eebacdf57eab9b5b36a74af1c190",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__55.1.json": "f3eb0bffb23e0c2b326c3d6251c8348ebb6236a9a507a5046afeec1a6b5f4bde",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__56.1.json": "e13920992af7f535e2b840956fab883cf39d4dd61caf4b7fbc62563dd9f841f7",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__57.1.json": "9aff4638370f4cfc757184407d090b0fcabb8eff11d45f8a1b3ed94552764306",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__58.1.json": "2372b3ff4df3b539d9cd17ff78c3cf31762b16911fbc76a47d59aed923dc28de",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__59.1.json": "48c56219ad7a9794b36ee44e91e79be818c4b23d2f84b0596a5fc9a2a2a36aed",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__60.1.json": "90c9534f34f083642cd211ae62ad1470cd3458adec8403564c4434be9654c058",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__61.1.json": "31b4dd087756326b06a183e833c0b7479e8e916823920460cf1a16631e773e2d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__62.1.json": "b306074cccb30a7de79ff4403e82413f34cf44bc6ee6f5bec7a299d5219529e3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__63.1.json": "8c4f0acfeeeb83efd0a5537a6b3b665b577f41f1f75d7635561f2ed99ed0d6dd",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__64.1.json": "04084edb20745dab11bc64df057348262be019bd4f980ba0ac4230631e00a653",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__65.1.json": "728d278523b786818544764494533d5d86333e5f6a28c2a4cf189af468f82f4a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__66.1.json": "ea83fc8a4427b7e444d3c86dce3fd362ca47c4c3e9f48fdc505d8d53ea809f1b",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__67.1.json": "205f047df082eab2f57fc8750d6b68c6c5f47410d5c74e1e4948c7f7acc52eff",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__68.1.json": "d2dcc9054aeb902bc0f7cc80d70749575ff5bc8e7a572579d2225b6e2ecbc352",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__69.1.json": "4af84198c8d95ec1976ed61c57aef86445d472bb976f9a6f46e1e7d145f5ac06",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__70.1.json": "dddfe8f0f705798cbe11ba1341c949ad211f4b563d7e2ee0351ba36b1ec62c52",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__71.1.json": "fe4507510100d0adb08de8d9819cd5dd5154aa6d655483d49cf0ddd279bf9947",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__72.1.json": "3deeb238a7e646c999509221b798663a5343fcd926bde7ad1ba5cdc08b415f89",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__73.1.json": "de9377fd16b45081c6fc0646bf59df76a8cf5e3eac51735b335cb809638cf1a2",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__74.1.json": "7370618a36b35af79fc005e1755b6fdadaa4ebe3c18495a5cf151124b728f94e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__75.1.json": "d633908fea28c8b0f911e149d48824583824d6aa6194ce0246f2036e17be70e6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__76.1.json": "bc3db27655b7c5fe026c735d3661d80e63c61817e238ce7399e32c3f5ffe3839",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__77.1.json": "03bf1bf37eaaa4e52894b5fb36f93a4f41091599d85f4415e69d203a1947936a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__78.1.json": "bc19ac6e0ab3509cc75c4750658d2c7aa99f5bce7b629aa81eb607442752126e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__79.1.json": "4ce6e34924ace0e992354fe0d4debab2a1fc168968432bf145b20b1650b071c0",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__80.1.json": "c220ac4da66688f0ac3e8843dec59bfc037720a6e4a90ce531cd55df52b3d0b2",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__81.1.json": "492b910da0a889790ee6ac3ca40c9a7575c0214fb8f3bf6b98f165999ccc1cb6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__82.1.json": "384ce02345ab4853fe4202601ced52da2c9f3c210ddeac270f395f2f9f792653",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__83.1.json": "f42a7bda73b863d1a452ed99f4b34e03a6e84d9e78821dff3977626022a9e755",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__84.1.json": "8e38f2789028dd261fad4a3298592d9ebeb401d70526c12201cffa805615bf4d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__85.1.json": "efdb5f41c06f0d9460958f3ab9786ca53c383ec22a146f97cf1b1a2524b5ca3c",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__86.1.json": "4ec6545314f70301944a98d258277b8e6f4cec3adf45cf862a9f4b73c4ca40b3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__87.1.json": "5313156992e600fd0af6b40f3b82e93d04bf161c49549f208332fd5dcb4ef468",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__88.1.json": "9a29dcb3a9c66dce6369e769d8f6726580aacfb3852eb3406b48b5bb61ee1ae8",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__89.1.json": "ba54f8d0e45a2fa5254f52a577ea3ab19a2469afac4d6eb128dc56739808f354",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__90.1.json": "19ee629f4d1c7fecd3bac61c0cf8fe9821973f3671977fb4faa642741e39c7d6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__91.1.json": "3c18c84341f8282baeb2a208687dde4a7f5d6a9294ea9762497d6163c31d5b07",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__92.1.json": "840aaca31a7f9336cbabc4ea1f3b07fc90f2680c690cf59bfc94b5d6b9c56436",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__93.1.json": "3b96336a19cec320e654e7d7117cfacceb8dacd332c8aa1712af3da87f3c2828",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__94.1.json": "f71cec58cc46cab73ee7c3d732dcf1c4f6f0675c86359246ccb7e02b4b0907d0",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__95.1.json": "8d28d9efb1547bb1286c632a418eae6e0a3297ca4708d9ad39d896e70e65e9b4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__96.1.json": "4ecb6636cf59a2a0b7e700610fe2a7188da99b3fafb49f6ed1c42e0cd03b432d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__97.1.json": "4c8519ae6e848ffb5e866fa3268f327c1996d0964f38e3730f5f084706c4f198",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__98.1.json": "c442c92fb4df8ec5ddf00f934548823860140fbca9965dbcbcff13b53e3724b4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__99.1.json": "ba77244b50d3cf850fb32fc9d672ad7e832c4ee6d532ebfee6a70377795fa386",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__100.1.json": "76c671c354e85bf3e06d51678fd1e4371f3716b770b71c2b1523acde9ee46b33",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__101.1.json": "aaf4a63190d3ad690265df3ed7d74d9aa03b5f8cd1506885e46d9b6d3479b3c6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__102.1.json": "42f4819bc7a13eb9db0d603f3490437b2dbfcdf31ed60c277f3ff237d23f8839",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__103.1.json": "4cf91b45efc3cfd947977a2e3f39d1aa37a162e849252beaf823ef3d38eeb40a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__104.1.json": "62fb1757aec455ac526b93e43d786f96785785733a22a95b344350e1ba94e59c",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__105.1.json": "a94f39812d9cdd133feba0997f722101e9c4c36df0152ed98ed495636eda5d0c",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__106.1.json": "7e3d2963afac9c20f758ee8254e1147bf91c8bf607df6cf72f4d0b4b2b555ff8",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__107.1.json": "d69bd323a4fb52d6e38cfbcaaa6f70764a5fe2deeaf9f909cff1375128498178",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__108.1.json": "27b6648a75432a97192f5edff15fd79ec4abcda6ef9e0e0321c2ca5a2570a63d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__109.1.json": "5face86d5642222281fc9e2ce047e99e02e74e9a0fc49e171a134a652d1a2800",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__110.1.json": "9fe4ac88f5b4672f1832bf371264f0193bfa7002f4f8ce65d1693a3ae4b8b34a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__111.1.json": "5737328f4158d39172a104d92308624e24ff25ca26323e564af6969f2e5f9ec5",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__112.1.json": "e212969637daa1db3ddd7578148953eb54db277d0958b13bbfb180ebe79e1b8b",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__113.1.json": "7567ffa71cf511c43ff6ea92e158356d2985da9589b66875f69e321be16644fd",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__114.1.json": "1ca6d4725d52f00c523888d1246326de115c57020b49817b32ce677675210568",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__115.1.json": "7e624d7f83d49584e2cf80b773f8df253b3b9781b57b2aba37d72745c7af0c95",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__116.1.json": "d16266cc4e9b64d371054e1e685ac38d0d9acfe90fc4172658fd8dd9414cc294",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__117.1.json": "0a2f04a1c122f0c338fef73425f8d476bd7b4b4e1bbc1d883602c5fbaf082636",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__118.1.json": "e1e2cd5c67e1b4cef33dbdd7fd2e97e8722523507b03a70d7e74882bc97d7ff9",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__119.1.json": "9e0f502fcbaf66ef9c2560a1199be34578435cb4473fe826a8c648b56f30333f",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__120.1.json": "e1cf0808daeaad60f9e8993bd577eb63d71593bc166f676f8f08d9c53a21e90a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__121.1.json": "35af998876dc5bc6fbb0e5c7287407adc95cfe1e49295bfa2aef67d15e9e67d5",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__122.1.json": "a2f76e4ca74e86997af3b6bf40c841f17f5c255a919fb6df006385a6d2dcf847",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__123.1.json": "fc79d1b8995f15a3bdec77b4bfe55549554e7e71068f83354a3c07dd9241c3cd",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__124.1.json": "0bf423aef864f149ce8ebada2d3439affd916ba25c7862a62ab0f50b14b18663",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__125.1.json": "c5473faa8c83f49329a51fd67880023f8f088104f706587c47d194159d9c15fa",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__126.1.json": "60815768b3407b75f16cfc9ee98c13f54fc1e2aef477c2e00f8d2b7c7b324a41",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__127.1.json": "b644b2b2f3fbf55e90a83f5be6eed583072907448d510b0d830b1500659b8d65",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__128.1.json": "92ebb40a743683f04343a31d04cdf9178cdd19098571a63fec188efc859445da",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__129.1.json": "8265554e1183c7d3d7a32e3b94c6d56e67c3e969930ceea3653e53ee99b3e1f4",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__130.1.json": "f33646326524e0d636f419e7aec714633bafea50536c6ebec99c36a0fe0070ff",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__131.1.json": "fe43efdd6b339102c94cb1a38536182bc360549c47a8ab4a12bd7c78efe15679",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__132.1.json": "e0e55d9b03b24fa918d982dcdcfd3449934e3c4bf55703d04ba303837ccaa488",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__133.1.json": "ac3fe301955192cf88140d3c798820d91e2d19d8ee8e015e6e7f21205e21d19a",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__134.1.json": "8d18df55b7838935e9178704991a10f36d5db497c522e5176adb92206c070921",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__135.1.json": "e1103134c87061f5105beb25c6d4d4b769a68014cc9ab0faf748d4afce95a18e",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__136.1.json": "c5e3a2affacdad5dafa29938f41c267acc512ef5235c4533d40138b7b1baaaa2",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__137.1.json": "a97b3e872d5c783ee548ebb17a9d77850e361ca19633a5d06e35502c98fe82cb",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__138.1.json": "3064ccee6176be5ee98986bf32a90f4eda9c47c97e4c1ed9c943e0b6f2b113d3",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__139.1.json": "b9efb401e7f97d4037979c27fb3876539d089679d412c310330f7d1612d54865"
+  },
+  "requested_at": 1790914189.079403,
+  "stopped": true,
+  "finished_at": 1790914193.083294,
+  "parent_state": {
+    "completed": {
+      "cuda_validation": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/cuda_validation.1.json",
+        "sha256": "3a503ee68a83b3ee96dc1bde2612beb121c0bd1f07455456aad2a4e7e17d4eb4"
+      },
+      "stage5_formal_plan": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_plan.1.json",
+        "sha256": "37ae116b47c050d76315ed984be73f59449f5210fdf2cc0b8067a8a9b67e61d7"
+      },
+      "stage5_formal_execution__clare__eager": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__eager.1.json",
+        "sha256": "1a067b2c53bd31ce70a2f2758526a522a577d5e4aac42824a20099ddd6173ef6"
+      },
+      "stage5_formal_execution__clare__graph": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__graph.1.json",
+        "sha256": "7eb8d4b7d8177d43311a85239eaca85177f2c930d42f61c3b400a266acc8c262"
+      },
+      "stage5_formal_execution__clare__interrupt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__interrupt.1.json",
+        "sha256": "3abfdf2e3e2f8bea930cf16e76ff2fd87b57bd15db83576aed00f911bafbb973"
+      },
+      "stage5_formal_execution__clare__resume": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__resume.1.json",
+        "sha256": "679ee7902b7299be8b7bbc2a06c21ad54a645a76666cbe1c67107cf65d3b37a3"
+      },
+      "stage5_formal_execution__clare__check": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__clare__check.1.json",
+        "sha256": "9b0d3b635c253919f206ca5dc897a1fac4126e99c3f4a0a7c54b1518e7b4995b"
+      },
+      "stage5_formal_execution__cogpilot__eager": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__eager.1.json",
+        "sha256": "07b9bf0a2bc611e7745f8bd700fe67ebcf0a802c07a7d0c3b6a778466c28ae0b"
+      },
+      "stage5_formal_execution__cogpilot__graph": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__graph.1.json",
+        "sha256": "eb378dd894e95c9942d428c89b7ce10de627c5dfa51b4e5c57db9dfef64d229e"
+      },
+      "stage5_formal_execution__cogpilot__interrupt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__interrupt.1.json",
+        "sha256": "1c6b8569dd75192df3939d3ba38da4aae02b92536eec6cf47a059beeee5547b4"
+      },
+      "stage5_formal_execution__cogpilot__resume": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__resume.1.json",
+        "sha256": "09fb7d80802591a39f4bb2f088221f8deaf9b1e6ac5981ab0c104ef05f798bfc"
+      },
+      "stage5_formal_execution__cogpilot__check": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_execution__cogpilot__check.1.json",
+        "sha256": "62d9d9faab2d0e794549555598f5302a1f1fb124312d8a83963e7d5fa566bf4e"
+      },
+      "stage5_formal_unit__0": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__0.1.json",
+        "sha256": "b90494bf5f3f2d700479efe2b0ab0be3cbf2ba0ee80f5d0420c5cd34010cd88f"
+      },
+      "stage5_formal_unit__1": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__1.1.json",
+        "sha256": "27d4a6b79a8835fc553fa7f4849dbdbcdfe62bbc4c902f97a928561c66d65fbc"
+      },
+      "stage5_formal_unit__2": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__2.1.json",
+        "sha256": "15fb375f48ccde4833997518d1c5746e7c62c541f48061f9ac7f044d127a5094"
+      },
+      "stage5_formal_unit__3": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__3.1.json",
+        "sha256": "b1780461e46c76f935443b41731dcc85d00ec3abdee7dea827dbd911a2f1caca"
+      },
+      "stage5_formal_unit__4": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__4.1.json",
+        "sha256": "e35f0a45a86b006bf51b9e4d42e6c8b141d421f1bb460dd1ae8616145538db6f"
+      },
+      "stage5_formal_unit__5": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__5.1.json",
+        "sha256": "03690ac818f1aa1b96cf562344b9b3893c3ed187b5bc1ff0190bdac38cb07f80"
+      },
+      "stage5_formal_unit__6": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__6.1.json",
+        "sha256": "8d3cebe319419ffa00fa5208f04d11272d307d54381555de9d4e8d39b9f4966d"
+      },
+      "stage5_formal_unit__7": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__7.1.json",
+        "sha256": "fb788f5bb3c8ea6037b563e24c24685ec57843222da1ecffd288f26ba3ea9ce2"
+      },
+      "stage5_formal_unit__8": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__8.1.json",
+        "sha256": "376f46edf2ca6b4990912b3b486d1c5771b66740dfae0571430de9ec8529a91e"
+      },
+      "stage5_formal_unit__9": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__9.1.json",
+        "sha256": "e85ff1604055bb3b8a7ad4779ec384503b91a7da0affb889d98f3373f4c645d0"
+      },
+      "stage5_formal_unit__10": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__10.1.json",
+        "sha256": "40afa89812293d8f264edab963fa4b301064bc8da6ae3a926ddec50d948aaad2"
+      },
+      "stage5_formal_unit__11": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__11.1.json",
+        "sha256": "b76e2609d8a5a26e24e5cf5966cba372635d69b594fefcd489b095571c0a202f"
+      },
+      "stage5_formal_unit__12": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__12.1.json",
+        "sha256": "6915ba2665b7c4be868c547b1a4396c2b12b694955128dda3711f03485f6182f"
+      },
+      "stage5_formal_unit__13": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__13.1.json",
+        "sha256": "2735768341f303d1d4751c5d36bd504d06777925a7d1f65857084a1c05213316"
+      },
+      "stage5_formal_unit__14": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__14.1.json",
+        "sha256": "aeb3960507437df63317642abc1a97258db73d5e1aa85c17b5421e88fda4e64c"
+      },
+      "stage5_formal_unit__15": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__15.1.json",
+        "sha256": "70142e7f70a2d283b2f3eb8c6eeae18e1053cabfa8ff9178ffd4fa938c80c31a"
+      },
+      "stage5_formal_unit__16": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__16.1.json",
+        "sha256": "79182b6d99f71c4371ddf09fe801ba7bed2b5f9bb546de66505208c2426693c1"
+      },
+      "stage5_formal_unit__17": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__17.1.json",
+        "sha256": "b18525ed23e1c27c6fa90d3a72f2d85ed8dd3818034b2309006f00dc86592133"
+      },
+      "stage5_formal_unit__18": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__18.1.json",
+        "sha256": "934ef526f2865b27f6a5d97a3a1c85a11983f870475acab8e44d005b2cbddcb4"
+      },
+      "stage5_formal_unit__19": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__19.1.json",
+        "sha256": "8969cad6eccc6d3d59fd13084b991a5d70f86d37bb6f7b587c258610e2c36c7f"
+      },
+      "stage5_formal_unit__20": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__20.1.json",
+        "sha256": "6000d7fd0a603340f7d5b74f73c94923407b6c90043ac54e9a0ae3d05d3b6bb6"
+      },
+      "stage5_formal_unit__21": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__21.1.json",
+        "sha256": "4e98ea3a536e41131f941624a866a1525ed011096f8817ed886b968265b59d8e"
+      },
+      "stage5_formal_unit__22": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__22.1.json",
+        "sha256": "ada8fbe7cbe641919f506bafc83b52144f3d1d9b35c5e3622bcba0309ec4b116"
+      },
+      "stage5_formal_unit__23": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__23.1.json",
+        "sha256": "5013a46ff309a7f201840c20512b60c025f04a968c5efda661ab267b6111bfc3"
+      },
+      "stage5_formal_unit__24": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__24.1.json",
+        "sha256": "7cc848814f3154ea65a65ad2820ac81208a3b8951629089f549bd9a980095af4"
+      },
+      "stage5_formal_unit__25": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__25.1.json",
+        "sha256": "0fe7f44234d2791af25040cad18c3afc63d61467c1086d65ad1b1dca0074c90e"
+      },
+      "stage5_formal_unit__26": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__26.1.json",
+        "sha256": "d7acc88a5116dd80d9975d26476afee41bcf3ffc5becd79317eeaa331d2d5127"
+      },
+      "stage5_formal_unit__27": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__27.1.json",
+        "sha256": "f66961e0c14365d933c3fea10a811a83da81839dee5bfda8994cb1bb9e96f8fc"
+      },
+      "stage5_formal_unit__28": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__28.1.json",
+        "sha256": "43020e11ee9341b801a76450cc9a5ed0467f3e0b5dda958be54b1c1ffb1bebad"
+      },
+      "stage5_formal_unit__29": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__29.1.json",
+        "sha256": "468fcedf74ba04bde8b02ed67fc92e4db647fea64cff9d57158e5f5a8395a83f"
+      },
+      "stage5_formal_unit__30": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__30.1.json",
+        "sha256": "4502d1f2f13b0c1679adb5d7b4c8ce7d0b3f5662924f48a29b428bb7660a2955"
+      },
+      "stage5_formal_unit__31": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__31.1.json",
+        "sha256": "306d4338ef2d0259dcf1ff1f7af0448a1daedefa55547d342f31e52d431f3fbd"
+      },
+      "stage5_formal_unit__32": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__32.1.json",
+        "sha256": "7911fe6109a258aa2c63541371e7b5743bc9429ca2ec7c2b9a26743d1ca108f5"
+      },
+      "stage5_formal_unit__33": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__33.1.json",
+        "sha256": "d90b4eea014226ec21b09c0a44fb5c65c4e4e488feed6bcaeede61978400fba3"
+      },
+      "stage5_formal_unit__34": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__34.1.json",
+        "sha256": "32db7b4cbced56e2d6bdc326dd89b1c58b673a036bc7ffe85351fb7aaacbe04d"
+      },
+      "stage5_formal_unit__35": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__35.1.json",
+        "sha256": "7f767eaa142b47f74ddbc9580906ec8f6c18266a1a224ec1f0ad003801b04cb0"
+      },
+      "stage5_formal_unit__36": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__36.1.json",
+        "sha256": "47943734d2b9fac281ed54bab8b7e15b14f8837143a954697505495235f0379c"
+      },
+      "stage5_formal_unit__37": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__37.1.json",
+        "sha256": "f0eef14762f3b859aa4b766f0ec4ee7569030a2f0320227723bff1759742b7e5"
+      },
+      "stage5_formal_unit__38": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__38.1.json",
+        "sha256": "d23395ecb166242a5e7647e3c585da8dbee169ba25a6f530176fcecfbbc0dbdc"
+      },
+      "stage5_formal_unit__39": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__39.1.json",
+        "sha256": "5a09df296cec77a30c1bb099beaa85187dc5fa015f9ec97ea2dc5ac0fd2b37d5"
+      },
+      "stage5_formal_unit__40": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__40.1.json",
+        "sha256": "ca8240c06a25ba7c1a1eece522d8392b831be2517eb69eea52b65c639dc4f75d"
+      },
+      "stage5_formal_unit__41": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__41.1.json",
+        "sha256": "d1d5c20756ae0020540f4781ff16998e5720f3acbda1784bd9ae47b16f80b499"
+      },
+      "stage5_formal_unit__42": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__42.1.json",
+        "sha256": "a8d14699b63af26a53771afca4913c3019ac6128df99166fb8db12b12885ea8a"
+      },
+      "stage5_formal_unit__43": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__43.1.json",
+        "sha256": "ccf9f7fbeeb73b7353416f242c21bc195b8de6d54795a426c218496c4e8e0e1e"
+      },
+      "stage5_formal_unit__44": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__44.1.json",
+        "sha256": "1e87985ed2b8e51778a00e82a83a4d87a12d073af9f2e4bb23092afaae475cc7"
+      },
+      "stage5_formal_unit__45": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__45.1.json",
+        "sha256": "dd239c8bc1ade45a02343f705a44478e6938b523340bc04360df8f0badf2029d"
+      },
+      "stage5_formal_unit__46": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__46.1.json",
+        "sha256": "10856e9511555ff685dfb43773cead74bba180dbb868dd4d6dcb1ffad1c4c149"
+      },
+      "stage5_formal_unit__47": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__47.1.json",
+        "sha256": "a60cf521178eb6efa95554db208bf0d0734645729c2ad1a32551f669f528a8bd"
+      },
+      "stage5_formal_unit__48": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__48.1.json",
+        "sha256": "b683927e8be98f37353863b9127099f4990aab5dc332a56baf7303111135c167"
+      },
+      "stage5_formal_unit__49": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__49.1.json",
+        "sha256": "9b030d42c711538d073ffceba98183b5f114d09277f2681207e361a7b1e70141"
+      },
+      "stage5_formal_unit__50": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__50.1.json",
+        "sha256": "995cb1f59dfb2c0575824bce0ca13eb8b0fdabeebe26a2d6d1525ca1614f4466"
+      },
+      "stage5_formal_unit__51": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__51.1.json",
+        "sha256": "9174f90b674cffb0c6b20a1dc90c92af7d2263868447ea79feaba4dbbf1518a3"
+      },
+      "stage5_formal_unit__52": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__52.1.json",
+        "sha256": "fa2ce5944a9ae8f645f80279d3d0b5d603992adbc63292653c54032da18db6a7"
+      },
+      "stage5_formal_unit__53": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__53.1.json",
+        "sha256": "8785d9d7faf2e660d5d2b91d6df13d8aec07c596f92c8826f06f673e0b8ae6ce"
+      },
+      "stage5_formal_unit__54": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__54.1.json",
+        "sha256": "3f716afb32833bc95c33132aa6c3c68a3c21eebacdf57eab9b5b36a74af1c190"
+      },
+      "stage5_formal_unit__55": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__55.1.json",
+        "sha256": "f3eb0bffb23e0c2b326c3d6251c8348ebb6236a9a507a5046afeec1a6b5f4bde"
+      },
+      "stage5_formal_unit__56": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__56.1.json",
+        "sha256": "e13920992af7f535e2b840956fab883cf39d4dd61caf4b7fbc62563dd9f841f7"
+      },
+      "stage5_formal_unit__57": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__57.1.json",
+        "sha256": "9aff4638370f4cfc757184407d090b0fcabb8eff11d45f8a1b3ed94552764306"
+      },
+      "stage5_formal_unit__58": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__58.1.json",
+        "sha256": "2372b3ff4df3b539d9cd17ff78c3cf31762b16911fbc76a47d59aed923dc28de"
+      },
+      "stage5_formal_unit__59": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__59.1.json",
+        "sha256": "48c56219ad7a9794b36ee44e91e79be818c4b23d2f84b0596a5fc9a2a2a36aed"
+      },
+      "stage5_formal_unit__60": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__60.1.json",
+        "sha256": "90c9534f34f083642cd211ae62ad1470cd3458adec8403564c4434be9654c058"
+      },
+      "stage5_formal_unit__61": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__61.1.json",
+        "sha256": "31b4dd087756326b06a183e833c0b7479e8e916823920460cf1a16631e773e2d"
+      },
+      "stage5_formal_unit__62": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__62.1.json",
+        "sha256": "b306074cccb30a7de79ff4403e82413f34cf44bc6ee6f5bec7a299d5219529e3"
+      },
+      "stage5_formal_unit__63": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__63.1.json",
+        "sha256": "8c4f0acfeeeb83efd0a5537a6b3b665b577f41f1f75d7635561f2ed99ed0d6dd"
+      },
+      "stage5_formal_unit__64": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__64.1.json",
+        "sha256": "04084edb20745dab11bc64df057348262be019bd4f980ba0ac4230631e00a653"
+      },
+      "stage5_formal_unit__65": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__65.1.json",
+        "sha256": "728d278523b786818544764494533d5d86333e5f6a28c2a4cf189af468f82f4a"
+      },
+      "stage5_formal_unit__66": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__66.1.json",
+        "sha256": "ea83fc8a4427b7e444d3c86dce3fd362ca47c4c3e9f48fdc505d8d53ea809f1b"
+      },
+      "stage5_formal_unit__67": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__67.1.json",
+        "sha256": "205f047df082eab2f57fc8750d6b68c6c5f47410d5c74e1e4948c7f7acc52eff"
+      },
+      "stage5_formal_unit__68": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__68.1.json",
+        "sha256": "d2dcc9054aeb902bc0f7cc80d70749575ff5bc8e7a572579d2225b6e2ecbc352"
+      },
+      "stage5_formal_unit__69": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__69.1.json",
+        "sha256": "4af84198c8d95ec1976ed61c57aef86445d472bb976f9a6f46e1e7d145f5ac06"
+      },
+      "stage5_formal_unit__70": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__70.1.json",
+        "sha256": "dddfe8f0f705798cbe11ba1341c949ad211f4b563d7e2ee0351ba36b1ec62c52"
+      },
+      "stage5_formal_unit__71": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__71.1.json",
+        "sha256": "fe4507510100d0adb08de8d9819cd5dd5154aa6d655483d49cf0ddd279bf9947"
+      },
+      "stage5_formal_unit__72": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__72.1.json",
+        "sha256": "3deeb238a7e646c999509221b798663a5343fcd926bde7ad1ba5cdc08b415f89"
+      },
+      "stage5_formal_unit__73": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__73.1.json",
+        "sha256": "de9377fd16b45081c6fc0646bf59df76a8cf5e3eac51735b335cb809638cf1a2"
+      },
+      "stage5_formal_unit__74": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__74.1.json",
+        "sha256": "7370618a36b35af79fc005e1755b6fdadaa4ebe3c18495a5cf151124b728f94e"
+      },
+      "stage5_formal_unit__75": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__75.1.json",
+        "sha256": "d633908fea28c8b0f911e149d48824583824d6aa6194ce0246f2036e17be70e6"
+      },
+      "stage5_formal_unit__76": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__76.1.json",
+        "sha256": "bc3db27655b7c5fe026c735d3661d80e63c61817e238ce7399e32c3f5ffe3839"
+      },
+      "stage5_formal_unit__77": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__77.1.json",
+        "sha256": "03bf1bf37eaaa4e52894b5fb36f93a4f41091599d85f4415e69d203a1947936a"
+      },
+      "stage5_formal_unit__78": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__78.1.json",
+        "sha256": "bc19ac6e0ab3509cc75c4750658d2c7aa99f5bce7b629aa81eb607442752126e"
+      },
+      "stage5_formal_unit__79": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__79.1.json",
+        "sha256": "4ce6e34924ace0e992354fe0d4debab2a1fc168968432bf145b20b1650b071c0"
+      },
+      "stage5_formal_unit__80": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__80.1.json",
+        "sha256": "c220ac4da66688f0ac3e8843dec59bfc037720a6e4a90ce531cd55df52b3d0b2"
+      },
+      "stage5_formal_unit__81": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__81.1.json",
+        "sha256": "492b910da0a889790ee6ac3ca40c9a7575c0214fb8f3bf6b98f165999ccc1cb6"
+      },
+      "stage5_formal_unit__82": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__82.1.json",
+        "sha256": "384ce02345ab4853fe4202601ced52da2c9f3c210ddeac270f395f2f9f792653"
+      },
+      "stage5_formal_unit__83": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__83.1.json",
+        "sha256": "f42a7bda73b863d1a452ed99f4b34e03a6e84d9e78821dff3977626022a9e755"
+      },
+      "stage5_formal_unit__84": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__84.1.json",
+        "sha256": "8e38f2789028dd261fad4a3298592d9ebeb401d70526c12201cffa805615bf4d"
+      },
+      "stage5_formal_unit__85": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__85.1.json",
+        "sha256": "efdb5f41c06f0d9460958f3ab9786ca53c383ec22a146f97cf1b1a2524b5ca3c"
+      },
+      "stage5_formal_unit__86": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__86.1.json",
+        "sha256": "4ec6545314f70301944a98d258277b8e6f4cec3adf45cf862a9f4b73c4ca40b3"
+      },
+      "stage5_formal_unit__87": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__87.1.json",
+        "sha256": "5313156992e600fd0af6b40f3b82e93d04bf161c49549f208332fd5dcb4ef468"
+      },
+      "stage5_formal_unit__88": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__88.1.json",
+        "sha256": "9a29dcb3a9c66dce6369e769d8f6726580aacfb3852eb3406b48b5bb61ee1ae8"
+      },
+      "stage5_formal_unit__89": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__89.1.json",
+        "sha256": "ba54f8d0e45a2fa5254f52a577ea3ab19a2469afac4d6eb128dc56739808f354"
+      },
+      "stage5_formal_unit__90": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__90.1.json",
+        "sha256": "19ee629f4d1c7fecd3bac61c0cf8fe9821973f3671977fb4faa642741e39c7d6"
+      },
+      "stage5_formal_unit__91": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__91.1.json",
+        "sha256": "3c18c84341f8282baeb2a208687dde4a7f5d6a9294ea9762497d6163c31d5b07"
+      },
+      "stage5_formal_unit__92": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__92.1.json",
+        "sha256": "840aaca31a7f9336cbabc4ea1f3b07fc90f2680c690cf59bfc94b5d6b9c56436"
+      },
+      "stage5_formal_unit__93": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__93.1.json",
+        "sha256": "3b96336a19cec320e654e7d7117cfacceb8dacd332c8aa1712af3da87f3c2828"
+      },
+      "stage5_formal_unit__94": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__94.1.json",
+        "sha256": "f71cec58cc46cab73ee7c3d732dcf1c4f6f0675c86359246ccb7e02b4b0907d0"
+      },
+      "stage5_formal_unit__95": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__95.1.json",
+        "sha256": "8d28d9efb1547bb1286c632a418eae6e0a3297ca4708d9ad39d896e70e65e9b4"
+      },
+      "stage5_formal_unit__96": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__96.1.json",
+        "sha256": "4ecb6636cf59a2a0b7e700610fe2a7188da99b3fafb49f6ed1c42e0cd03b432d"
+      },
+      "stage5_formal_unit__97": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__97.1.json",
+        "sha256": "4c8519ae6e848ffb5e866fa3268f327c1996d0964f38e3730f5f084706c4f198"
+      },
+      "stage5_formal_unit__98": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__98.1.json",
+        "sha256": "c442c92fb4df8ec5ddf00f934548823860140fbca9965dbcbcff13b53e3724b4"
+      },
+      "stage5_formal_unit__99": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__99.1.json",
+        "sha256": "ba77244b50d3cf850fb32fc9d672ad7e832c4ee6d532ebfee6a70377795fa386"
+      },
+      "stage5_formal_unit__100": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__100.1.json",
+        "sha256": "76c671c354e85bf3e06d51678fd1e4371f3716b770b71c2b1523acde9ee46b33"
+      },
+      "stage5_formal_unit__101": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__101.1.json",
+        "sha256": "aaf4a63190d3ad690265df3ed7d74d9aa03b5f8cd1506885e46d9b6d3479b3c6"
+      },
+      "stage5_formal_unit__102": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__102.1.json",
+        "sha256": "42f4819bc7a13eb9db0d603f3490437b2dbfcdf31ed60c277f3ff237d23f8839"
+      },
+      "stage5_formal_unit__103": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__103.1.json",
+        "sha256": "4cf91b45efc3cfd947977a2e3f39d1aa37a162e849252beaf823ef3d38eeb40a"
+      },
+      "stage5_formal_unit__104": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__104.1.json",
+        "sha256": "62fb1757aec455ac526b93e43d786f96785785733a22a95b344350e1ba94e59c"
+      },
+      "stage5_formal_unit__105": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__105.1.json",
+        "sha256": "a94f39812d9cdd133feba0997f722101e9c4c36df0152ed98ed495636eda5d0c"
+      },
+      "stage5_formal_unit__106": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__106.1.json",
+        "sha256": "7e3d2963afac9c20f758ee8254e1147bf91c8bf607df6cf72f4d0b4b2b555ff8"
+      },
+      "stage5_formal_unit__107": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__107.1.json",
+        "sha256": "d69bd323a4fb52d6e38cfbcaaa6f70764a5fe2deeaf9f909cff1375128498178"
+      },
+      "stage5_formal_unit__108": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__108.1.json",
+        "sha256": "27b6648a75432a97192f5edff15fd79ec4abcda6ef9e0e0321c2ca5a2570a63d"
+      },
+      "stage5_formal_unit__109": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__109.1.json",
+        "sha256": "5face86d5642222281fc9e2ce047e99e02e74e9a0fc49e171a134a652d1a2800"
+      },
+      "stage5_formal_unit__110": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__110.1.json",
+        "sha256": "9fe4ac88f5b4672f1832bf371264f0193bfa7002f4f8ce65d1693a3ae4b8b34a"
+      },
+      "stage5_formal_unit__111": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__111.1.json",
+        "sha256": "5737328f4158d39172a104d92308624e24ff25ca26323e564af6969f2e5f9ec5"
+      },
+      "stage5_formal_unit__112": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__112.1.json",
+        "sha256": "e212969637daa1db3ddd7578148953eb54db277d0958b13bbfb180ebe79e1b8b"
+      },
+      "stage5_formal_unit__113": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__113.1.json",
+        "sha256": "7567ffa71cf511c43ff6ea92e158356d2985da9589b66875f69e321be16644fd"
+      },
+      "stage5_formal_unit__114": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__114.1.json",
+        "sha256": "1ca6d4725d52f00c523888d1246326de115c57020b49817b32ce677675210568"
+      },
+      "stage5_formal_unit__115": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__115.1.json",
+        "sha256": "7e624d7f83d49584e2cf80b773f8df253b3b9781b57b2aba37d72745c7af0c95"
+      },
+      "stage5_formal_unit__116": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__116.1.json",
+        "sha256": "d16266cc4e9b64d371054e1e685ac38d0d9acfe90fc4172658fd8dd9414cc294"
+      },
+      "stage5_formal_unit__117": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__117.1.json",
+        "sha256": "0a2f04a1c122f0c338fef73425f8d476bd7b4b4e1bbc1d883602c5fbaf082636"
+      },
+      "stage5_formal_unit__118": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__118.1.json",
+        "sha256": "e1e2cd5c67e1b4cef33dbdd7fd2e97e8722523507b03a70d7e74882bc97d7ff9"
+      },
+      "stage5_formal_unit__119": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__119.1.json",
+        "sha256": "9e0f502fcbaf66ef9c2560a1199be34578435cb4473fe826a8c648b56f30333f"
+      },
+      "stage5_formal_unit__120": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__120.1.json",
+        "sha256": "e1cf0808daeaad60f9e8993bd577eb63d71593bc166f676f8f08d9c53a21e90a"
+      },
+      "stage5_formal_unit__121": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__121.1.json",
+        "sha256": "35af998876dc5bc6fbb0e5c7287407adc95cfe1e49295bfa2aef67d15e9e67d5"
+      },
+      "stage5_formal_unit__122": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__122.1.json",
+        "sha256": "a2f76e4ca74e86997af3b6bf40c841f17f5c255a919fb6df006385a6d2dcf847"
+      },
+      "stage5_formal_unit__123": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__123.1.json",
+        "sha256": "fc79d1b8995f15a3bdec77b4bfe55549554e7e71068f83354a3c07dd9241c3cd"
+      },
+      "stage5_formal_unit__124": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__124.1.json",
+        "sha256": "0bf423aef864f149ce8ebada2d3439affd916ba25c7862a62ab0f50b14b18663"
+      },
+      "stage5_formal_unit__125": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__125.1.json",
+        "sha256": "c5473faa8c83f49329a51fd67880023f8f088104f706587c47d194159d9c15fa"
+      },
+      "stage5_formal_unit__126": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__126.1.json",
+        "sha256": "60815768b3407b75f16cfc9ee98c13f54fc1e2aef477c2e00f8d2b7c7b324a41"
+      },
+      "stage5_formal_unit__127": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__127.1.json",
+        "sha256": "b644b2b2f3fbf55e90a83f5be6eed583072907448d510b0d830b1500659b8d65"
+      },
+      "stage5_formal_unit__128": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__128.1.json",
+        "sha256": "92ebb40a743683f04343a31d04cdf9178cdd19098571a63fec188efc859445da"
+      },
+      "stage5_formal_unit__129": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__129.1.json",
+        "sha256": "8265554e1183c7d3d7a32e3b94c6d56e67c3e969930ceea3653e53ee99b3e1f4"
+      },
+      "stage5_formal_unit__130": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__130.1.json",
+        "sha256": "f33646326524e0d636f419e7aec714633bafea50536c6ebec99c36a0fe0070ff"
+      },
+      "stage5_formal_unit__131": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__131.1.json",
+        "sha256": "fe43efdd6b339102c94cb1a38536182bc360549c47a8ab4a12bd7c78efe15679"
+      },
+      "stage5_formal_unit__132": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__132.1.json",
+        "sha256": "e0e55d9b03b24fa918d982dcdcfd3449934e3c4bf55703d04ba303837ccaa488"
+      },
+      "stage5_formal_unit__133": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__133.1.json",
+        "sha256": "ac3fe301955192cf88140d3c798820d91e2d19d8ee8e015e6e7f21205e21d19a"
+      },
+      "stage5_formal_unit__134": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__134.1.json",
+        "sha256": "8d18df55b7838935e9178704991a10f36d5db497c522e5176adb92206c070921"
+      },
+      "stage5_formal_unit__135": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__135.1.json",
+        "sha256": "e1103134c87061f5105beb25c6d4d4b769a68014cc9ab0faf748d4afce95a18e"
+      },
+      "stage5_formal_unit__136": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__136.1.json",
+        "sha256": "c5e3a2affacdad5dafa29938f41c267acc512ef5235c4533d40138b7b1baaaa2"
+      },
+      "stage5_formal_unit__137": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__137.1.json",
+        "sha256": "a97b3e872d5c783ee548ebb17a9d77850e361ca19633a5d06e35502c98fe82cb"
+      },
+      "stage5_formal_unit__138": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__138.1.json",
+        "sha256": "3064ccee6176be5ee98986bf32a90f4eda9c47c97e4c1ed9c943e0b6f2b113d3"
+      },
+      "stage5_formal_unit__139": {
+        "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/stage_results/stage5_formal_unit__139.1.json",
+        "sha256": "b9efb401e7f97d4037979c27fb3876539d089679d412c310330f7d1612d54865"
+      }
+    },
+    "failures": [
+      {
+        "stage": "stage5_formal_unit__140",
+        "time_unix_s": 1790914189.0958717,
+        "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 184, in execute_pipeline\n    time.sleep(1)\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 237, in terminate\n    raise KeyboardInterrupt('pipeline termination requested')\nKeyboardInterrupt: pipeline termination requested\n"
+      }
+    ],
+    "attempts": {
+      "cuda_validation": 1,
+      "stage5_formal_plan": 1,
+      "stage5_formal_execution__clare__eager": 1,
+      "stage5_formal_execution__clare__graph": 1,
+      "stage5_formal_execution__clare__interrupt": 1,
+      "stage5_formal_execution__clare__resume": 1,
+      "stage5_formal_execution__clare__check": 1,
+      "stage5_formal_execution__cogpilot__eager": 1,
+      "stage5_formal_execution__cogpilot__graph": 1,
+      "stage5_formal_execution__cogpilot__interrupt": 1,
+      "stage5_formal_execution__cogpilot__resume": 1,
+      "stage5_formal_execution__cogpilot__check": 1,
+      "stage5_formal_unit__0": 1,
+      "stage5_formal_unit__1": 1,
+      "stage5_formal_unit__2": 1,
+      "stage5_formal_unit__3": 1,
+      "stage5_formal_unit__4": 1,
+      "stage5_formal_unit__5": 1,
+      "stage5_formal_unit__6": 1,
+      "stage5_formal_unit__7": 1,
+      "stage5_formal_unit__8": 1,
+      "stage5_formal_unit__9": 1,
+      "stage5_formal_unit__10": 1,
+      "stage5_formal_unit__11": 1,
+      "stage5_formal_unit__12": 1,
+      "stage5_formal_unit__13": 1,
+      "stage5_formal_unit__14": 1,
+      "stage5_formal_unit__15": 1,
+      "stage5_formal_unit__16": 1,
+      "stage5_formal_unit__17": 1,
+      "stage5_formal_unit__18": 1,
+      "stage5_formal_unit__19": 1,
+      "stage5_formal_unit__20": 1,
+      "stage5_formal_unit__21": 1,
+      "stage5_formal_unit__22": 1,
+      "stage5_formal_unit__23": 1,
+      "stage5_formal_unit__24": 1,
+      "stage5_formal_unit__25": 1,
+      "stage5_formal_unit__26": 1,
+      "stage5_formal_unit__27": 1,
+      "stage5_formal_unit__28": 1,
+      "stage5_formal_unit__29": 1,
+      "stage5_formal_unit__30": 1,
+      "stage5_formal_unit__31": 1,
+      "stage5_formal_unit__32": 1,
+      "stage5_formal_unit__33": 1,
+      "stage5_formal_unit__34": 1,
+      "stage5_formal_unit__35": 1,
+      "stage5_formal_unit__36": 1,
+      "stage5_formal_unit__37": 1,
+      "stage5_formal_unit__38": 1,
+      "stage5_formal_unit__39": 1,
+      "stage5_formal_unit__40": 1,
+      "stage5_formal_unit__41": 1,
+      "stage5_formal_unit__42": 1,
+      "stage5_formal_unit__43": 1,
+      "stage5_formal_unit__44": 1,
+      "stage5_formal_unit__45": 1,
+      "stage5_formal_unit__46": 1,
+      "stage5_formal_unit__47": 1,
+      "stage5_formal_unit__48": 1,
+      "stage5_formal_unit__49": 1,
+      "stage5_formal_unit__50": 1,
+      "stage5_formal_unit__51": 1,
+      "stage5_formal_unit__52": 1,
+      "stage5_formal_unit__53": 1,
+      "stage5_formal_unit__54": 1,
+      "stage5_formal_unit__55": 1,
+      "stage5_formal_unit__56": 1,
+      "stage5_formal_unit__57": 1,
+      "stage5_formal_unit__58": 1,
+      "stage5_formal_unit__59": 1,
+      "stage5_formal_unit__60": 1,
+      "stage5_formal_unit__61": 1,
+      "stage5_formal_unit__62": 1,
+      "stage5_formal_unit__63": 1,
+      "stage5_formal_unit__64": 1,
+      "stage5_formal_unit__65": 1,
+      "stage5_formal_unit__66": 1,
+      "stage5_formal_unit__67": 1,
+      "stage5_formal_unit__68": 1,
+      "stage5_formal_unit__69": 1,
+      "stage5_formal_unit__70": 1,
+      "stage5_formal_unit__71": 1,
+      "stage5_formal_unit__72": 1,
+      "stage5_formal_unit__73": 1,
+      "stage5_formal_unit__74": 1,
+      "stage5_formal_unit__75": 1,
+      "stage5_formal_unit__76": 1,
+      "stage5_formal_unit__77": 1,
+      "stage5_formal_unit__78": 1,
+      "stage5_formal_unit__79": 1,
+      "stage5_formal_unit__80": 1,
+      "stage5_formal_unit__81": 1,
+      "stage5_formal_unit__82": 1,
+      "stage5_formal_unit__83": 1,
+      "stage5_formal_unit__84": 1,
+      "stage5_formal_unit__85": 1,
+      "stage5_formal_unit__86": 1,
+      "stage5_formal_unit__87": 1,
+      "stage5_formal_unit__88": 1,
+      "stage5_formal_unit__89": 1,
+      "stage5_formal_unit__90": 1,
+      "stage5_formal_unit__91": 1,
+      "stage5_formal_unit__92": 1,
+      "stage5_formal_unit__93": 1,
+      "stage5_formal_unit__94": 1,
+      "stage5_formal_unit__95": 1,
+      "stage5_formal_unit__96": 1,
+      "stage5_formal_unit__97": 1,
+      "stage5_formal_unit__98": 1,
+      "stage5_formal_unit__99": 1,
+      "stage5_formal_unit__100": 1,
+      "stage5_formal_unit__101": 1,
+      "stage5_formal_unit__102": 1,
+      "stage5_formal_unit__103": 1,
+      "stage5_formal_unit__104": 1,
+      "stage5_formal_unit__105": 1,
+      "stage5_formal_unit__106": 1,
+      "stage5_formal_unit__107": 1,
+      "stage5_formal_unit__108": 1,
+      "stage5_formal_unit__109": 1,
+      "stage5_formal_unit__110": 1,
+      "stage5_formal_unit__111": 1,
+      "stage5_formal_unit__112": 1,
+      "stage5_formal_unit__113": 1,
+      "stage5_formal_unit__114": 1,
+      "stage5_formal_unit__115": 1,
+      "stage5_formal_unit__116": 1,
+      "stage5_formal_unit__117": 1,
+      "stage5_formal_unit__118": 1,
+      "stage5_formal_unit__119": 1,
+      "stage5_formal_unit__120": 1,
+      "stage5_formal_unit__121": 1,
+      "stage5_formal_unit__122": 1,
+      "stage5_formal_unit__123": 1,
+      "stage5_formal_unit__124": 1,
+      "stage5_formal_unit__125": 1,
+      "stage5_formal_unit__126": 1,
+      "stage5_formal_unit__127": 1,
+      "stage5_formal_unit__128": 1,
+      "stage5_formal_unit__129": 1,
+      "stage5_formal_unit__130": 1,
+      "stage5_formal_unit__131": 1,
+      "stage5_formal_unit__132": 1,
+      "stage5_formal_unit__133": 1,
+      "stage5_formal_unit__134": 1,
+      "stage5_formal_unit__135": 1,
+      "stage5_formal_unit__136": 1,
+      "stage5_formal_unit__137": 1,
+      "stage5_formal_unit__138": 1,
+      "stage5_formal_unit__139": 1,
+      "stage5_formal_unit__140": 1
+    },
+    "started_at_unix_s": 1790737095.957354,
+    "pid": 2138460,
+    "config_sha256": "c1b97a17441c015bdc75b06ab0e7ff929025d348c86aa1f1ff3b4cda34368aea",
+    "status": "failed",
+    "until": "stage5_formal_train",
+    "children": {},
+    "updated_at_unix_s": 1790914190.2202015,
+    "current_stage": "stage5_formal_unit__140",
+    "current_log": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/logs/stage5_formal_unit__140.1.log",
+    "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 184, in execute_pipeline\n    time.sleep(1)\n  File \"/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 237, in terminate\n    raise KeyboardInterrupt('pipeline termination requested')\nKeyboardInterrupt: pipeline termination requested\n"
+  }
+}

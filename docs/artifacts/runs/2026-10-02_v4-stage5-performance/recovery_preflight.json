@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "inventory": {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/recovery_inventory.json",
+    "sha256": "d74f9fbb9a9246e126a7daa30f7944e29b1ee322c0ef2688fb93d29875ed277b"
+  },
+  "inherited_units": 140,
+  "verified_files": 2928,
+  "inherited_routes": 235,
+  "source_code_sha256": "361107d7d0e11468e0e4ff861df7e80662bb91efd1bc48913c4919cb9328157f"
+}

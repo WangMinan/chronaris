@@ -1,0 +1,23 @@
+{
+  "old": [
+    0.09368136618286371,
+    0.09147785790264606,
+    0.09008328150957823,
+    0.09113137237727642,
+    0.08992390986531973
+  ],
+  "new": [
+    0.0029462063685059547,
+    0.0018002130091190338,
+    0.0010203560814261436,
+    0.001016148366034031,
+    0.0011270307004451752
+  ],
+  "sample_id": "sub-cp023::ses-20210628::level-02B_run-010::window0012",
+  "batch_row": 11,
+  "observed_points": 34453,
+  "padded_points": 0,
+  "bitwise_equal": true,
+  "speedup": 80.85970714132249,
+  "context": "unpadded actual sample; original benchmark used padded batch row 0 with 13769 observed and 34453 padded-length points"
+}
