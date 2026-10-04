@@ -1,0 +1,37 @@
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=29.9
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=59.8
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=89.6
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=119.5
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=149.4
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=179.3
+[candidate-heartbeat] method=chronaris status=alive updates=0 wall_elapsed_s=29.9
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=209.2
+/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[candidate-heartbeat] method=chronaris status=alive updates=0 wall_elapsed_s=59.7
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=239.0
+[candidate-heartbeat] method=chronaris status=alive updates=3 wall_elapsed_s=89.6
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=268.9
+[candidate-heartbeat] method=chronaris status=alive updates=5 wall_elapsed_s=119.5
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=298.8
+[candidate-heartbeat] method=chronaris status=alive updates=9 wall_elapsed_s=149.4
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=328.7
+[candidate-heartbeat] method=chronaris status=alive updates=13 wall_elapsed_s=179.3
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=358.6
+[candidate-heartbeat] method=chronaris status=alive updates=16 wall_elapsed_s=209.2
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=388.4
+[candidate-heartbeat] method=chronaris status=alive updates=18 wall_elapsed_s=239.1
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=418.3
+[candidate-heartbeat] method=chronaris status=alive updates=20 wall_elapsed_s=268.9
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=448.2
+[candidate-heartbeat] method=chronaris status=alive updates=21 wall_elapsed_s=298.8
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=478.1
+[candidate-heartbeat] method=chronaris status=alive updates=23 wall_elapsed_s=328.7
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=507.9
+[candidate-heartbeat] method=chronaris status=alive updates=24 wall_elapsed_s=358.6
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=537.8
+[candidate-heartbeat] method=chronaris status=alive updates=25 wall_elapsed_s=388.5
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=567.7
+[candidate-heartbeat] method=chronaris status=alive updates=27 wall_elapsed_s=418.4
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=597.6
+[candidate-heartbeat] method=chronaris status=alive updates=28 wall_elapsed_s=448.3

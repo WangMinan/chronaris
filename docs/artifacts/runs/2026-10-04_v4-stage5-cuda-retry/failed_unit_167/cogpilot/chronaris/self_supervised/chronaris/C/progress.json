@@ -1,0 +1,21 @@
+{
+  "method": "chronaris",
+  "status": "failed",
+  "optimizer_updates": 4,
+  "phase": "training",
+  "best_update": 0,
+  "sample_ids": [
+    "sub-cp026::ses-20210716::level-01B_run-001::event0003",
+    "sub-cp027::ses-20210722::level-01B_run-001::event0003",
+    "sub-cp029::ses-20220119::level-01B_run-001::event0003",
+    "sub-cp030::ses-20211025::level-01B_run-001::event0003"
+  ],
+  "samples_seen": 64,
+  "peak_allocated_bytes": 497190400,
+  "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/167/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+  "device": "cuda",
+  "data_wait_s": 0.11748128104954958,
+  "error_type": "AcceleratorError",
+  "reason": "CUDA error: unspecified launch failure\nSearch for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n",
+  "wall_elapsed_s": 85.2256992412731
+}

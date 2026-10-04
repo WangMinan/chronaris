@@ -1,0 +1,62 @@
+{
+  "status": "completed",
+  "passed": true,
+  "checked_at": "2026-10-04T13:43:54.170963+08:00",
+  "controller_pid": 2464764,
+  "children": {
+    "stage5_formal_unit__167": 2464772
+  },
+  "controller_status": "running",
+  "stage": "stage5_formal_unit__167",
+  "attempt": 2,
+  "completed_units": 167,
+  "planned_units": 279,
+  "completed_routes": 281,
+  "planned_routes": 477,
+  "completed_receipts_unchanged": true,
+  "pipeline_configuration_unchanged": true,
+  "historical_failures": 1,
+  "new_failures": 0,
+  "progress": {
+    "method": "chronaris",
+    "status": "running",
+    "optimizer_updates": 28,
+    "phase": "training",
+    "best_update": 0,
+    "sample_ids": [
+      "sub-cp033::ses-20211215::level-02B_run-008::window0004",
+      "sub-cp036::ses-20211218::level-01B_run-001::window0007",
+      "sub-cp037::ses-20210113::level-01B_run-001::window0005",
+      "sub-cp038::ses-20220112::level-01B_run-001::window0006"
+    ],
+    "samples_seen": 448,
+    "peak_allocated_bytes": 690790400,
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/167/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+    "device": "cuda",
+    "data_wait_s": 1.011358181014657,
+    "wall_elapsed_s": 448.2570247929543
+  },
+  "progress_age_s": 0.09561610221862793,
+  "checkpoint_snapshot": "/mnt/e/chronaris-v4-results/2026-10-04-stage5-cuda-retry/retry_first_checkpoint.pt",
+  "checkpoint_sha256": "1a4af24438dbcdfbcea67d8b388fb09435e7cb0909f07489f66414fc937535a2",
+  "checkpoint_bytes": 1315067,
+  "checkpoint_updates": 25,
+  "checkpoint_training_source_sha256": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+  "checkpoint_canonical_state_sha256": "1eca2c1617f29278e91231f0128286977f4b4e4037d6c16a5f1f362bca8d82c6",
+  "checkpoint_canonical_state_verified": true,
+  "checkpoint_seed": 29,
+  "checkpoint_data_cursor": {
+    "samples_seen": 400,
+    "micro_batches_seen": 100,
+    "sampling_order_sha256": "77a935baabf4667e7756d82950c4d1233abc215ff71787c345ce954e8400c8c0"
+  },
+  "actual_batch_size": 4,
+  "effective_batch_size": 16,
+  "pretraining_budget": 356,
+  "cuda_graph_recurrence": true,
+  "training_device_history": [
+    "cuda"
+  ],
+  "confirmation_opened": false,
+  "torch_version": "2.11.0+cu130"
+}

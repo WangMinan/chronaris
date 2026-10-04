@@ -1,0 +1,118 @@
+[
+  {
+    "TimeCreated": "/Date(1791014445972)/",
+    "Id": 153,
+    "RecordId": 438166,
+    "ProviderName": "nvlddmkm",
+    "Properties": [
+      {
+        "Value": "\\Device\\000000d0"
+      },
+      {
+        "Value": "Error occurred on GPUID: c200"
+      },
+      {
+        "Value": [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          48,
+          0,
+          0,
+          0,
+          0,
+          0,
+          153,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "TimeCreated": "/Date(1791014445967)/",
+    "Id": 13,
+    "RecordId": 438165,
+    "ProviderName": "nvlddmkm",
+    "Properties": [
+      {
+        "Value": "\\Device\\000000d0"
+      },
+      {
+        "Value": "Graphics FECS Exception: Logging error 0x2"
+      },
+      {
+        "Value": [
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          48,
+          0,
+          0,
+          0,
+          0,
+          0,
+          13,
+          0,
+          170,
+          192,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]

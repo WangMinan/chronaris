@@ -1,0 +1,99 @@
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=26.7
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=53.3
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=82.3
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=107.2
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=133.9
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=162.6
+[candidate-heartbeat] method=chronaris status=alive updates=0 wall_elapsed_s=26.7
+/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=192.4
+[candidate-heartbeat] method=chronaris status=alive updates=0 wall_elapsed_s=54.3
+[candidate-heartbeat] method=common_contract_cogpilot status=alive updates=0 wall_elapsed_s=220.2
+[candidate-heartbeat] method=chronaris status=alive updates=4 wall_elapsed_s=84.0
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/rng.py", line 80, in isolated_training_rng
+    yield
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/candidate_screen.py", line 132, in train_pretext_candidate
+    result = _train_pretext_candidate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/candidate_screen.py", line 492, in _train_pretext_candidate
+    output, mechanism_step, augmented, data_wait_s = pretext_micro_step(
+                                                     ^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/candidate_step.py", line 31, in pretext_micro_step
+    output, positive, negative = public_pretext_forward(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/candidate_step.py", line 74, in public_pretext_forward
+    negative = encoder(negative_batch, compute_chronaris_diagnostics=negative_diagnostics, **reuse)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/pretraining_encoders.py", line 97, in forward
+    self.backbone(
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/fusion_encoders/chronaris_continuous.py", line 305, in forward
+    alignment_batch = build_alignment_batch_from_observations(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/fusion_encoders/alignment_bridge.py", line 31, in build_alignment_batch_from_observations
+    physiology=_build_stream(
+               ^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/fusion_encoders/alignment_bridge.py", line 63, in _build_stream
+    _coalesce_simultaneous_observations(
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/fusion_encoders/alignment_bridge.py", line 102, in _coalesce_simultaneous_observations
+    indices = torch.nonzero(point_mask[sample_index], as_tuple=False).flatten()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: unspecified launch failure
+Search for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/scripts/evaluation/application_tasks/run_v4_pipeline.py", line 9, in <module>
+    main()
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/evaluation/application_tasks/v4_pipeline.py", line 271, in main
+    result = run_pipeline_step(args.worker, config, attempt=args.attempt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/evaluation/application_tasks/v4_pipeline_steps.py", line 44, in run_pipeline_step
+    return run_stage5_formal(stage,config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/evaluation/application_tasks/stage5_formal.py", line 166, in run_stage5_formal
+    result=run_common_contract_smoke(methods=(method,),recipe=None if method=='naive_time_sync' else 'stage4_reference',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/evaluation/application_tasks/common_downstream_smoke.py", line 213, in run_common_contract_smoke
+    training = train_pretext_candidate(method, candidate=recipe_configs[0] if recipe_configs else EncoderCandidateConfig(candidate_id='C', hidden_dim=32),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/candidate_screen.py", line 128, in train_pretext_candidate
+    with isolated_training_rng(
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/rng.py", line 82, in isolated_training_rng
+    restore_rng_state(outer_state)
+  File "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002/src/chronaris/modeling/training/rng.py", line 52, in restore_rng_state
+    torch.cuda.set_rng_state_all(list(cuda_states))
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/cuda/random.py", line 86, in set_rng_state_all
+    set_rng_state(state, i)
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/cuda/random.py", line 76, in set_rng_state
+    _lazy_call(cb)
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/cuda/__init__.py", line 409, in _lazy_call
+    callable()
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/cuda/random.py", line 74, in cb
+    default_generator.set_state(new_state)
+torch.AcceleratorError: CUDA error: unspecified launch failure
+Search for `cudaErrorLaunchFailure' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

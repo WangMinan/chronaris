@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-04T13:45:10.700963+08:00",
+  "since": "2026-10-04 13:33:16",
+  "query_succeeded": true,
+  "event_count": 0,
+  "events": [],
+  "error_ids": [
+    "NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand"
+  ]
+}

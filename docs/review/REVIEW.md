@@ -1,10 +1,12 @@
 # Chronaris 复核入口
 
-更新时间：2026-10-02
+更新时间：2026-10-04
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
+
+[阶段 5 显卡异常恢复](stage/thesis-v4/stage5-cuda-retry-20261004/README.md)：同秒宿主机显卡事件、原始失败保留、来源核验与同源码重试检查。
 
 [阶段 5 执行性能优化与恢复](stage/thesis-v4/stage5-performance-20261002/README.md)：共享未变化生理递推、逐值输入整理、执行资格及 140 个完成单元保留。
 

@@ -1,0 +1,27 @@
+{
+  "format": "chronaris.stage5_cuda_retry_evidence.v1",
+  "files": {
+    "before_pipeline_config.json": "5a3f566fb70b5200c4dc47e31731d510c30332fc0d8312a45aab6e9155405941",
+    "before_pipeline_state.json": "ccccc51ef2ee2b82bc2f1570d73e10427d835eb4e9ed5b52c6cdb19225579a87",
+    "failed_attempt.log": "9b1f76cc16792eb94e52992833bca72a92a09ee42c6c98d09d8ecb33d52a7adb",
+    "failed_attempt_cost.json": "44283dcfd5c2b496247c33fa5b368a41619befbbd4af4d6632bb62434e4c7d05",
+    "failed_data_contract_preserved.json": "5fe47aeebeaec9b676548c338918e6d042013734b39426d7a1adfecd0850818b",
+    "failed_unit_167/cogpilot/chronaris/self_supervised/chronaris/C/failure.json": "b896331f6480ad6578cad4a45b4da3b2d53aa5fec431006ddc6167608df2c47d",
+    "failed_unit_167/cogpilot/chronaris/self_supervised/chronaris/C/progress.json": "62dcd7c73b8a8331812e8d00d032a872d09e1c60e6bab9e055b9a70bcd50a4b1",
+    "failed_unit_167/cogpilot/failure.json": "44806dcd2e01f979cb331b6ba5d2ed147aaa756a8d079ee47f853af5bff055df",
+    "failed_unit_167/cogpilot/progress.json": "c19dc58512efe3fb00bff1b9d7f8e346fdbcd7fd9c7db0f4867a98a076dc0f07",
+    "failed_unit_167/cogpilot/recipe.json": "2c170e0f8d53380f87ca9c2cb83ddb9b4dab1d5c796cc2760e0b0fe60e9f618a",
+    "gpu_snapshot.txt": "2b08e96c28fa2eff34958923d33dcc1862a6551d6586cfe052994308329acd9a",
+    "host_driver_events.json": "e7d6c975058eba6b00d843a5f878be5755cdc8efcc75ee6b281f597ced23a14e",
+    "host_driver_events_after_retry.json": "520d70ce8c933ec13e40974bf389acfd8584aab0a59bb11404f48660236f1a58",
+    "launch.json": "e0b3b61829d2aad7ead4d46b88d26f0919c9021d3516273a227f1f995d726daa",
+    "pipeline_state_snapshot.json": "4edd4c738b6acd128dd1dfea246a4f26fd5843105d38b6210b54e7ec8518960d",
+    "pytest.log": "1aa9bc9f923ffaf1d9e675098b89c0fc9b3a5330834baa523ff10b90a9e8c3f5",
+    "pytest.xml": "0f3bfb3064baa3f4f1741b424ec3cbd1585a712c29b9ef7b22a65a88b4c4c554",
+    "recovery_preflight.json": "db624dd5a912e06441de6d3a9505db1a847efa103548be8253900ffb2213b900",
+    "report.md": "f4438de16280b6c8b92e6bef8069f7065e708c4451a2d3de9a72d3755425b7c8",
+    "retry_attempt_snapshot.log": "dc977f3cdfb87ce727764a0fa73782e2b857978fc4431905a6221afb1c668621",
+    "startup_check.json": "601141ed5b6ce2078bd09e0671e898506c36e98577ad7aa0ab0a972681fde85d",
+    "startup_progress.jsonl": "154cf22dbce5d32dadfdb5efd989c0c8926096cf8d071c5eec28f808f730d3f9"
+  }
+}
