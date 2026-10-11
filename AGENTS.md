@@ -112,6 +112,8 @@
 
 ## 7. 执行规则
 
+- 后续开发默认直接在 `main` 分支进行，并提交、推送到 `origin/main`；除非用户额外明确要求分支隔离，不自动创建开发分支或切换到历史分支。
+- 长实验所需的冻结源码副本可以使用固定提交的分离头指针工作区，不作为日常开发分支；保留既有冻结工作区、模型和实验来源，不随 `main` 的更新改写。
 - 开始任何阶段工作前，先读 [docs/STATE.md](docs/STATE.md) 和 [docs/implementation/TASKS.md](docs/implementation/TASKS.md)。
 - 需要判断论文目标或 Word 原始材料时，先读 [docs/requirements/SPEC.md](docs/requirements/SPEC.md)；解析 `.docx` 必须使用 `$docx` skill 或文档插件。
 - 需要引用报告、图、CSV、checkpoint、manifest 时，先读 [docs/artifacts/ARTIFACTS.md](docs/artifacts/ARTIFACTS.md)。
