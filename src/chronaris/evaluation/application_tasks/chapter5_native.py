@@ -125,7 +125,9 @@ def _encode(spec, row, declaration, contract, raw, fold, output_root, role):
     else:
         from chronaris.modeling.fusion_encoders.sensorllm_adapter import SensorLLMWindowEncoder
         factory = SensorLLMWindowEncoder
-    encoder = factory(assets, len(saved['channel_names']))
+    from chronaris.modeling.training.rng import isolated_training_rng
+    with isolated_training_rng(spec['seed']):
+        encoder = factory(assets, len(saved['channel_names']))
     if spec['method']=='sensorllm_deepseek':
         # Alignment sets this transient attribute; standalone inference must restore it without training.
         encoder.channel_names=tuple(saved['channel_names'])
