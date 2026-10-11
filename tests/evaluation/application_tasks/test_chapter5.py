@@ -88,3 +88,32 @@ def test_legacy_naive_source_exception_retains_all_other_checks(tmp_path,monkeyp
     with pytest.raises(ValueError):module.load_v4_naive_encoder(checkpoint,fold=fold,data_manifest_sha256='data')
     assert module.load_v4_naive_encoder(checkpoint,fold=fold,data_manifest_sha256='data',expected_training_source_sha256='old')[0] is encoder
     with pytest.raises(ValueError):module.load_v4_naive_encoder(checkpoint,fold=fold,data_manifest_sha256='other',expected_training_source_sha256='old')
+
+
+def test_standalone_sensor_reload_restores_channel_metadata_without_alignment(tmp_path,monkeypatch):
+    import torch
+    from types import SimpleNamespace
+    from chronaris.evaluation.application_tasks import chapter5_native as module, recent_model_smoke
+    from chronaris.modeling.fusion_encoders import recent_models,sensorllm_adapter
+    saved=dict(assets_sha256='a'*64,seed=17,config={'data_manifest_sha256':'data'},
+        normalizer={},channel_names=['physiology.x'],encoder={'projector':'saved'})
+    monkeypatch.setattr(module.torch,'load',lambda *a,**kw:saved)
+    monkeypatch.setattr(module,'sha',lambda path:'a'*64)
+    monkeypatch.setattr(recent_models,'verify_assets',lambda path:{})
+    monkeypatch.setattr(module.TrainOnlyRobustNormalizer,'from_manifest',lambda value:SimpleNamespace(
+        fit_sample_ids=('train',),transform=lambda raw:raw))
+    monkeypatch.setattr(recent_models,'historical_channels',lambda raw:(torch.ones(1,2,1),torch.ones(1,2,1,dtype=torch.bool)))
+    class Encoder:
+        def __init__(self,assets,count):assert count==1
+        def load_checkpoint_state(self,state):assert state==saved['encoder']
+        def align_history(self,**kwargs):raise AssertionError('inference cannot repeat alignment training')
+    monkeypatch.setattr(sensorllm_adapter,'SensorLLMWindowEncoder',Encoder)
+    def export(encoder,inputs,prompts):
+        assert encoder.channel_names==('physiology.x',)
+        return {'validation':torch.tensor([[1.,2.]])},{}
+    monkeypatch.setattr(recent_model_smoke,'_export',export)
+    raw=SimpleNamespace(sample_ids=('v',),context_durations_s=torch.tensor([1.]),source_sample_hashes=('b'*64,))
+    output=module._encode({'method':'sensorllm_deepseek','seed':17},{'route':'summary_adapted'},
+        {'kind':'window_end','checkpoint_path':'unused'}, {'data_manifest_sha256':'data'}, raw,
+        SimpleNamespace(fold_id='fold',train_sample_ids=('train',)),tmp_path,'validation')
+    assert output.pooled_embedding.tolist()==[[1.,2.]]

@@ -126,6 +126,9 @@ def _encode(spec, row, declaration, contract, raw, fold, output_root, role):
         from chronaris.modeling.fusion_encoders.sensorllm_adapter import SensorLLMWindowEncoder
         factory = SensorLLMWindowEncoder
     encoder = factory(assets, len(saved['channel_names']))
+    if spec['method']=='sensorllm_deepseek':
+        # Alignment sets this transient attribute; standalone inference must restore it without training.
+        encoder.channel_names=tuple(saved['channel_names'])
     load_encoder_checkpoint(encoder, saved['encoder'])
     features, _ = _export(encoder, {role:(values, mask)}, {role:prompts})
     return WindowFeatureBatch(raw.sample_ids, raw.context_durations_s, features[role], mask.any((1,2)),
