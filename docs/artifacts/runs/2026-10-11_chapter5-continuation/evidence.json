@@ -1,0 +1,20 @@
+{
+  "files": {
+    "pre_reload_chapter5_plan.json": "24bcca954690162fe2e4ce4b36751099abab13fe31d444a10237544d637d6063",
+    "pre_reload_pytest.xml": "cd8bf56b5e5545e2542b5d9042e32d35118aee22047e64433e1b4d603bb1c7a1",
+    "main_asset_audit.json": "74c58b75a0b62e6d399729aebb248ee8101a95984ce5eb000f07e14b04889d22",
+    "launch.json": "67afc8e1a339cbd89a5bea0154d5a8d7a803eee104e8484ed9bbf8ecd2d287f6",
+    "pytest.xml": "75ad17cf47f4cf278b2e9c50d8ff1cdf8116f9e2e794d453303c04f29fb74528",
+    "validation_receipt.json": "8f16dd5aa524d3c17268a5297d6ffa920a0abe057da2dda08225cad157823519",
+    "chapter5_plan.json": "54f82ebe3552a6e49c261236bca34aa491a27f6bbe9e11e13295546c19ac11fc",
+    "core_engineering_validation.json": "9201c0a88bd14d9c08ad0d1488ca863eec428685760592c4b8d18c8393362ac9",
+    "replay_validation.json": "cda9d9951b57a62252535d5b7aba59c6c6a065ca2ffd7ed40bea235776c74338",
+    "pre_reload_validation_receipt.json": "c8796a8154d1f571bd9216a737d22afcfdfb1c08bac3afc9ff8798db7cb3755b",
+    "pipeline_state_snapshot.json": "59d9bef2ef5dbc92578d7dc9c1332ec9b7850a3187882939b1290313b155d960",
+    "preserved_failure_state.json": "057b824b8e3a62c2e5bae003c29673363d2a5e262cad19f050de32dc10fc8f52",
+    "runtime_estimate.json": "862dfe2ac3fe08303e61197d899b1edb38cdc0b94f809a9174b17c50f4c4cab0",
+    "initial_validation_receipt.json": "e982ce53f7da4a7a5ffe8437719f339d874bef227500a4461fe2bda05a27ee9b",
+    "test_fixture_inventory.json": "b7155f1f97ecf9073372cbbce0a4ae829031b6996a8bb13e26081777a1a12bdf",
+    "startup_check.json": "4c4ba90295fde62b2d0309c14f8a1470972126b3126afd5ccff1002f6b6e6a36"
+  }
+}

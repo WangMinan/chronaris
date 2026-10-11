@@ -6,6 +6,9 @@
 
 ## 当前入口
 
+- [第五章详细数据与独立绘图包](artifacts/runs/2026-10-11_chapter5-main-materials/README.md)：主模型内部验证的全部预测、分组指标、训练曲线与成本，可在论文侧独立修改重绘。
+- [第五章核心队列接续](artifacts/runs/2026-10-11_chapter5-continuation/report.md)：完整显卡验证通过，原模型复用与 36 单元核心矩阵；后台停止于核心模型冻结。
+
 - [第五章开发机交付计划](implementation/chapter5-developer-delivery-plan-20261011.md)：遵循已定目录，交付详细实验数据、可在论文侧独立修改运行的绘图包，不编写论文正文。
 - [主模型训练完成快照](artifacts/runs/2026-10-11_stage5-main-training-status/report.md)：279 个单元、477 条路线完成；核心机制和外层评价待接续。
 

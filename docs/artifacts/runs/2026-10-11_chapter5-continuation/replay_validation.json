@@ -1,0 +1,564 @@
+{
+  "status": "completed",
+  "model_units": 11,
+  "representation_routes": 19,
+  "consumer_groups": 32,
+  "prediction_rows": 344,
+  "max_absolute_difference": 3.3306690738754696e-16,
+  "records": [
+    {
+      "stage": "chapter5_replay__8",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__8.1.json",
+        "sha256": "d172d65da893c079031990a44b8285e319c495bb6131579161faad1d9ed3e75b"
+      },
+      "results": [
+        {
+          "route": "summary_adapted",
+          "samples": 4,
+          "seconds": 336.28110786993057,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/8/summary_adapted/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__0",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__0.1.json",
+        "sha256": "320536aeff303c6cd8d4c90af0ecb73e7debaa8d2ac484abb36606cbbba086cf"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 8.77786732558161,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/0/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/0/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 4.811879638582468,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/0/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/0/task_guided/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__1",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__1.1.json",
+        "sha256": "8ac018a3b544528e6c2a9cfb8d586ac91570708724a96469aba37f85a3a91b9f"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 2.0928239189088345,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/1/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/1/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 0.923412375152111,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/1/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/1/task_guided/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__2",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__2.1.json",
+        "sha256": "4c85116dadf2e72fdb52d492522c2ddb913f837c2989252b9d0e4e7e221eadfa"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 2.0440497249364853,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/2/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/2/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 0.9289195658639073,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/2/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/2/task_guided/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__3",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__3.1.json",
+        "sha256": "58d59558fdd36723564b041c94026dd46c1999e876d123bc629b82bb928d261e"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 2.3363999240100384,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/3/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/3/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 1.3042741529643536,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/3/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/3/task_guided/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__4",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__4.1.json",
+        "sha256": "091b1943b38e522e412999d7eef1b7c546e389623c14d7881f12819060e8c5a8"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 2.0835544196888804,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/4/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/4/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 0.9895346704870462,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/4/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/4/task_guided/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__5",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__5.1.json",
+        "sha256": "c7ea723f3e5262dff59d05a4def0f701dc8c1e9a5e46d221ecff725c4662560c"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 0.696389121003449,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/5/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/5/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__6",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__6.1.json",
+        "sha256": "a6ad1cc77b557b3f52bedceb2eacbb6c7c4164cb6ba35ae3552c7b21b56a953d"
+      },
+      "results": [
+        {
+          "route": "summary_adapted",
+          "samples": 4,
+          "seconds": 12.722026731818914,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/6/summary_adapted/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__7",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__7.1.json",
+        "sha256": "b1c995820607d3932ff8c8149a308bdfe89353067ecc72f0964df05b85de6437"
+      },
+      "results": [
+        {
+          "route": "frozen",
+          "samples": 4,
+          "seconds": 16.42520994693041,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/7/frozen/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "history_adapted",
+          "samples": 4,
+          "seconds": 14.181813293136656,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/7/history_adapted/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__135",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__135.1.json",
+        "sha256": "b933a24df573ff18aac2e9f5fb527d0446a52205e2d56deef5f29c45818b5972"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 8.49965117033571,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/135/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 3.3306690738754696e-16,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/135/self_supervised/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 6.716347454115748,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/135/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 2.220446049250313e-16,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            },
+            "minirocket": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/135/task_guided/minirocket_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 8,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "stage": "chapter5_replay__255",
+      "receipt": {
+        "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__255.1.json",
+        "sha256": "ab8eaee1f5eb378516f637446453a9db3a8801d5774f5461863a2fecb927e42b"
+      },
+      "results": [
+        {
+          "route": "self_supervised",
+          "samples": 4,
+          "seconds": 3.3024814147502184,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/255/self_supervised/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 52,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        },
+        {
+          "route": "task_guided",
+          "samples": 4,
+          "seconds": 2.4318195395171642,
+          "components": {
+            "linear": {
+              "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/replay/255/task_guided/linear_validation.json",
+              "replay": {
+                "passed": true,
+                "rows": 52,
+                "max_absolute_difference": 0.0,
+                "atol": 1e-05,
+                "rtol": 1e-05
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "confirmation_opened": false,
+  "downstream_refitted": false
+}

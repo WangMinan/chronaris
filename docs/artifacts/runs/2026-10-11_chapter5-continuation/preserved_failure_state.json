@@ -1,0 +1,79 @@
+{
+  "completed": {
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/cuda_validation.2.json",
+      "sha256": "c8796a8154d1f571bd9216a737d22afcfdfb1c08bac3afc9ff8798db7cb3755b"
+    },
+    "chapter5_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_plan.1.json",
+      "sha256": "24bcca954690162fe2e4ce4b36751099abab13fe31d444a10237544d637d6063"
+    },
+    "chapter5_replay__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__0.1.json",
+      "sha256": "693153778304a06f5da167b73bf967003a81ee9207f943c73569a19dd640cd53"
+    },
+    "chapter5_replay__1": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__1.1.json",
+      "sha256": "a535bb82e8d4a3a492ac529fbeea9be5dd572c414c7f51b3e085e58c1a3481d8"
+    },
+    "chapter5_replay__2": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__2.1.json",
+      "sha256": "901b849acd265eee237525c2915cc2ac4db041df3bd54313e0f88c15d19cad1e"
+    },
+    "chapter5_replay__3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__3.1.json",
+      "sha256": "a159b153dc8eb2a0c5f92d419cd0dd8f9f48aa99eabc1c0b4b513833db353dea"
+    },
+    "chapter5_replay__4": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__4.1.json",
+      "sha256": "7fbff95dae599b664dc367f9226c0625ca6787f55e3e4c7f1b9e446a3dc83d12"
+    },
+    "chapter5_replay__5": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__5.1.json",
+      "sha256": "03abf3f7cbaad0745e9dad5176ed6ebd2c25ea078f4741812e2c647be94c7b28"
+    },
+    "chapter5_replay__6": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__6.1.json",
+      "sha256": "912fd7cb545bf596ed3bbc68077b51ad020bcefc7f1103c0ff31534c0ea6b861"
+    },
+    "chapter5_replay__7": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/stage_results/chapter5_replay__7.1.json",
+      "sha256": "aff273195738689ce2901d63cb4a1f1b84a975c01fb97c5612f9ffb712cc30ac"
+    }
+  },
+  "failures": [
+    {
+      "stage": "cuda_validation",
+      "time_unix_s": 1791693304.4029117,
+      "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-chapter5-20261011/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 183, in execute_pipeline\n    _verify_receipt(result_path, digest, expected, stage.startswith('conditional_'))\n  File \"/home/wangminan/projects/chronaris-runtime-chapter5-20261011/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 78, in _verify_receipt\n    raise ValueError('pipeline receipt is not a successful completion')\nValueError: pipeline receipt is not a successful completion\n"
+    },
+    {
+      "stage": "chapter5_replay__8",
+      "time_unix_s": 1791694969.0704858,
+      "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-chapter5-20261011/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 182, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: chapter5_replay__8 failed (exit 1); see its attempt log\n"
+    }
+  ],
+  "attempts": {
+    "cuda_validation": 2,
+    "chapter5_plan": 1,
+    "chapter5_replay__0": 1,
+    "chapter5_replay__1": 1,
+    "chapter5_replay__2": 1,
+    "chapter5_replay__3": 1,
+    "chapter5_replay__4": 1,
+    "chapter5_replay__5": 1,
+    "chapter5_replay__6": 1,
+    "chapter5_replay__7": 1,
+    "chapter5_replay__8": 1
+  },
+  "started_at_unix_s": 1791692699.4678767,
+  "pid": 3037517,
+  "config_sha256": "4cec7e115eccadc1740748a98d4fbf1e9eac1802ec8010894015cd193ef026a5",
+  "status": "failed",
+  "until": "chapter5_core",
+  "children": {},
+  "updated_at_unix_s": 1791694969.0704904,
+  "current_stage": "chapter5_replay__8",
+  "current_log": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core/logs/chapter5_replay__8.1.log",
+  "error": "Traceback (most recent call last):\n  File \"/home/wangminan/projects/chronaris-runtime-chapter5-20261011/src/chronaris/evaluation/application_tasks/v4_pipeline.py\", line 182, in execute_pipeline\n    raise RuntimeError(f'{stage} failed (exit {code}); see its attempt log')\nRuntimeError: chapter5_replay__8 failed (exit 1); see its attempt log\n"
+}

@@ -53,6 +53,8 @@ python plot.py --data-dir revisions/2026-10-18/data --style style.json --output-
 
 自监督、任务引导、外部冻结与适配路线分别出图，线性与 MiniROCKET 时序卷积特征补充分别出图。近期模型只有窗口末端表示的路线不提供虚构时序补充结果。训练成本来自完成收据，失败与未完整计时的尝试另附原始记录，不声称所有历史消耗都能精确复原。
 
+同属任务标签适配的模型仍有监督差异：TimeCMA 语言增强时序模型适配分类与回归任务，SensorLLM 传感器语言模型的蒸馏骨干变体只进行分类适配；后者的回归结果来自其冻结表示上的独立线性下游。训练曲线与方法比较应保留这一差异，不把两个模型解释为相同标签覆盖。
+
 ## 开发机再导出
 
 本段只供开发机重新生成数据，论文侧重绘无需执行。使用项目环境执行 `scripts/evaluation/application_tasks/run_chapter5_materials.py audit` 核验已完成训练根，再用同入口的 `export --audit <核验文件>` 导出到新版本目录。原训练根为 `/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery`，不得在原运行根修改冻结结果。

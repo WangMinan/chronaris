@@ -1,0 +1,18 @@
+{
+  "pid": 3045556,
+  "runtime": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload",
+  "source_commit": "8b198dc61210f853fecd72726423c00934c14661",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "scripts/evaluation/application_tasks/run_v4_pipeline.py",
+    "--until",
+    "chapter5_core",
+    "--chapter5-main-root",
+    "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload"
+  ],
+  "preserved_previous_root": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-core",
+  "reason": "restore frozen channel metadata and seeded initialization; unchanged model weights and core matrix"
+}

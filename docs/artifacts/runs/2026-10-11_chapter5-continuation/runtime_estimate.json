@@ -1,0 +1,85 @@
+{
+  "status": "historical_extrapolation_not_current_unit_measurement",
+  "rows": [
+    {
+      "method": "chronaris",
+      "units": 21,
+      "source": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/chronaris/reference/run_state.json",
+      "source_sha256": "20f68526fe589402ffc1f4f4ac0a4a2b9bd2df3223b941d06629ed06927dad9d",
+      "historical_pretraining_updates": 300,
+      "historical_pretraining_seconds": 1160.0005662073381,
+      "historical_guided_updates": 250,
+      "historical_guided_seconds": 1099.9116258798167,
+      "lower_unit_seconds": 3033.2459028920466,
+      "upper_unit_seconds": 8219.808407972287
+    },
+    {
+      "method": "physiology_only",
+      "units": 3,
+      "source": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/physiology_only/reference/run_state.json",
+      "source_sha256": "3003e2676415695497cdb543398eda8390679dd6e5022c7db4fbaa4269079f9b",
+      "historical_pretraining_updates": 300,
+      "historical_pretraining_seconds": 97.10798248276114,
+      "historical_guided_updates": 250,
+      "historical_guided_seconds": 142.17069755401462,
+      "lower_unit_seconds": 304.01733502528316,
+      "upper_unit_seconds": 798.3154470326378
+    },
+    {
+      "method": "vehicle_only",
+      "units": 3,
+      "source": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/vehicle_only/reference/run_state.json",
+      "source_sha256": "216f65a1e499da8b3876f35f20c77c2e087c43949daf7b320b6efc10bd55b4c0",
+      "historical_pretraining_updates": 300,
+      "historical_pretraining_seconds": 101.5522986841388,
+      "historical_guided_updates": 250,
+      "historical_guided_seconds": 137.92351857107133,
+      "lower_unit_seconds": 307.17734971130267,
+      "upper_unit_seconds": 811.1932342770509
+    },
+    {
+      "method": "mult",
+      "units": 3,
+      "source": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/mult/reference/run_state.json",
+      "source_sha256": "84f1a91cff93167e2b89c8a3414bb5dd819198d07ba89246f554fa6646b4562d",
+      "historical_pretraining_updates": 300,
+      "historical_pretraining_seconds": 314.4522266201675,
+      "historical_guided_updates": 250,
+      "historical_guided_seconds": 327.5227293227799,
+      "lower_unit_seconds": 851.6097736897258,
+      "upper_unit_seconds": 2292.8111376109537
+    },
+    {
+      "method": "contiformer",
+      "units": 3,
+      "source": "/mnt/e/chronaris-v4-results/2026-09-08-v4-complete/initial/simulation/contiformer/reference/run_state.json",
+      "source_sha256": "2a33059ede61977330bf1c4e1b6a5776761c13ae273c67718083026481767e23",
+      "historical_pretraining_updates": 300,
+      "historical_pretraining_seconds": 186.70037900703028,
+      "historical_guided_updates": 250,
+      "historical_guided_seconds": 203.73058933392167,
+      "lower_unit_seconds": 514.8978876789722,
+      "upper_unit_seconds": 1381.709191569779
+    }
+  ],
+  "raw_training_hours": [
+    19.34201972195801,
+    52.35223988858036
+  ],
+  "reserve_fraction": 0.3,
+  "additional_queue_io_and_naive_reserve_hours": 2.0,
+  "planned_core_hours": [
+    27.144625638545413,
+    70.05791185515447
+  ],
+  "excluded": [
+    "outer_prediction",
+    "simulation_confirmation_and_pressure_evaluation",
+    "future_material_export"
+  ],
+  "assumptions": [
+    "all Chronaris ablations and sensitivity use full reference runtime as a planning approximation",
+    "full early-stop budget interval; actual stop cannot be predicted",
+    "September source timings may differ from the current frozen execution"
+  ]
+}

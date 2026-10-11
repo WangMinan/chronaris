@@ -1,0 +1,114 @@
+{
+  "completed": {
+    "chapter5_assets": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_assets.1.json",
+      "sha256": "74c58b75a0b62e6d399729aebb248ee8101a95984ce5eb000f07e14b04889d22"
+    },
+    "cuda_validation": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/cuda_validation.1.json",
+      "sha256": "8f16dd5aa524d3c17268a5297d6ffa920a0abe057da2dda08225cad157823519"
+    },
+    "chapter5_plan": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_plan.1.json",
+      "sha256": "54f82ebe3552a6e49c261236bca34aa491a27f6bbe9e11e13295546c19ac11fc"
+    },
+    "chapter5_replay__8": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__8.1.json",
+      "sha256": "d172d65da893c079031990a44b8285e319c495bb6131579161faad1d9ed3e75b"
+    },
+    "chapter5_replay__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__0.1.json",
+      "sha256": "320536aeff303c6cd8d4c90af0ecb73e7debaa8d2ac484abb36606cbbba086cf"
+    },
+    "chapter5_replay__1": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__1.1.json",
+      "sha256": "8ac018a3b544528e6c2a9cfb8d586ac91570708724a96469aba37f85a3a91b9f"
+    },
+    "chapter5_replay__2": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__2.1.json",
+      "sha256": "4c85116dadf2e72fdb52d492522c2ddb913f837c2989252b9d0e4e7e221eadfa"
+    },
+    "chapter5_replay__3": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__3.1.json",
+      "sha256": "58d59558fdd36723564b041c94026dd46c1999e876d123bc629b82bb928d261e"
+    },
+    "chapter5_replay__4": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__4.1.json",
+      "sha256": "091b1943b38e522e412999d7eef1b7c546e389623c14d7881f12819060e8c5a8"
+    },
+    "chapter5_replay__5": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__5.1.json",
+      "sha256": "c7ea723f3e5262dff59d05a4def0f701dc8c1e9a5e46d221ecff725c4662560c"
+    },
+    "chapter5_replay__6": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__6.1.json",
+      "sha256": "a6ad1cc77b557b3f52bedceb2eacbb6c7c4164cb6ba35ae3552c7b21b56a953d"
+    },
+    "chapter5_replay__7": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__7.1.json",
+      "sha256": "b1c995820607d3932ff8c8149a308bdfe89353067ecc72f0964df05b85de6437"
+    },
+    "chapter5_replay__135": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__135.1.json",
+      "sha256": "b933a24df573ff18aac2e9f5fb527d0446a52205e2d56deef5f29c45818b5972"
+    },
+    "chapter5_replay__255": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_replay__255.1.json",
+      "sha256": "ab8eaee1f5eb378516f637446453a9db3a8801d5774f5461863a2fecb927e42b"
+    },
+    "chapter5_smoke__0": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_smoke__0.1.json",
+      "sha256": "828cc7301f00aa0fe7b77ca76aee90c9c150ba3426c508e31c23b858b9b8714b"
+    },
+    "chapter5_smoke__18": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_smoke__18.1.json",
+      "sha256": "d63346f94e7012571771e0d144e3ab11768d7246ed484f8759a4c3ab8a47942f"
+    },
+    "chapter5_smoke__21": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_smoke__21.1.json",
+      "sha256": "2db4535d2571c9aecc655f44367575637928b4b3947107e59c6cc366574e07b0"
+    },
+    "chapter5_smoke__24": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_smoke__24.1.json",
+      "sha256": "dcc260b7ba6d0065a1b49bfd46913ba9f23a5df7262874c57188d93a4e4b9cc0"
+    },
+    "chapter5_smoke__27": {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/chapter5_smoke__27.1.json",
+      "sha256": "5a247b64351d0e6b848b094f3b410a5e65db9ea96f73410b485c2f52b339b533"
+    }
+  },
+  "failures": [],
+  "attempts": {
+    "cuda_validation": 1,
+    "chapter5_assets": 1,
+    "chapter5_plan": 1,
+    "chapter5_replay__8": 1,
+    "chapter5_replay__0": 1,
+    "chapter5_replay__1": 1,
+    "chapter5_replay__2": 1,
+    "chapter5_replay__3": 1,
+    "chapter5_replay__4": 1,
+    "chapter5_replay__5": 1,
+    "chapter5_replay__6": 1,
+    "chapter5_replay__7": 1,
+    "chapter5_replay__135": 1,
+    "chapter5_replay__255": 1,
+    "chapter5_smoke__0": 1,
+    "chapter5_smoke__18": 1,
+    "chapter5_smoke__21": 1,
+    "chapter5_smoke__24": 1,
+    "chapter5_smoke__27": 1,
+    "chapter5_core__0": 1
+  },
+  "started_at_unix_s": 1791695539.429978,
+  "pid": 3045556,
+  "config_sha256": "f4a0c3ab4d7be5067dc3687b390198f05c4a1cc9e9a8b864b78bd59d39089a1e",
+  "status": "running",
+  "until": "chapter5_core",
+  "children": {
+    "chapter5_core__0": 3049029
+  },
+  "updated_at_unix_s": 1791697385.7355347,
+  "current_stage": "chapter5_core__0",
+  "current_log": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/logs/chapter5_core__0.1.log"
+}

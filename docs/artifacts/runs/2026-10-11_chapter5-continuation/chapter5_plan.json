@@ -1,0 +1,682 @@
+{
+  "status": "completed",
+  "format": "chronaris.chapter5_core_plan.v1",
+  "source_code_sha256": "d89dfcc5bf0c444aea09b6defc058e535b63b9ff723102a3535f570de8625b4b",
+  "main_root": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery",
+  "main_models_sha256": "48c71a198549624078091c7ce858adad2f845f65f4d837a47bd5bf209bda8397",
+  "asset_audit_sha256": "74c58b75a0b62e6d399729aebb248ee8101a95984ce5eb000f07e14b04889d22",
+  "validation_files": {
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/cuda_validation/attempt_1/pytest.xml": "75ad17cf47f4cf278b2e9c50d8ff1cdf8116f9e2e794d453303c04f29fb74528",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/cuda_validation/attempt_1/pytest.log": "d9af6922c97308163373f7544c7eaf830058c387eb1a385f7d45bcfb27b7bd45",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/stage_results/cuda_validation.1.json": "8f16dd5aa524d3c17268a5297d6ffa920a0abe057da2dda08225cad157823519"
+  },
+  "units": [
+    {
+      "index": 0,
+      "method": "chronaris",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 1,
+      "method": "chronaris",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 2,
+      "method": "chronaris",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 3,
+      "method": "physiology_only",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 4,
+      "method": "physiology_only",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 5,
+      "method": "physiology_only",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 6,
+      "method": "vehicle_only",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 7,
+      "method": "vehicle_only",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 8,
+      "method": "vehicle_only",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 9,
+      "method": "mult",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 10,
+      "method": "mult",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 11,
+      "method": "mult",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 12,
+      "method": "contiformer",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 13,
+      "method": "contiformer",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 14,
+      "method": "contiformer",
+      "options": {
+        "name": "reference",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 15,
+      "method": "naive_time_sync",
+      "options": {
+        "name": "reference",
+        "nonparametric": true
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 16,
+      "method": "naive_time_sync",
+      "options": {
+        "name": "reference",
+        "nonparametric": true
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 17,
+      "method": "naive_time_sync",
+      "options": {
+        "name": "reference",
+        "nonparametric": true
+      },
+      "purpose": "main_reference",
+      "routes": [
+        "self_supervised"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 18,
+      "method": "chronaris",
+      "options": {
+        "name": "no_continuous_evolution",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_continuous_evolution"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 19,
+      "method": "chronaris",
+      "options": {
+        "name": "no_continuous_evolution",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_continuous_evolution"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 20,
+      "method": "chronaris",
+      "options": {
+        "name": "no_continuous_evolution",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_continuous_evolution"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 21,
+      "method": "chronaris",
+      "options": {
+        "name": "no_physics_residual",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.0
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 22,
+      "method": "chronaris",
+      "options": {
+        "name": "no_physics_residual",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.0
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 23,
+      "method": "chronaris",
+      "options": {
+        "name": "no_physics_residual",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.0
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 24,
+      "method": "chronaris",
+      "options": {
+        "name": "no_explicit_shift",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "explicit_shift_enabled": false
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 25,
+      "method": "chronaris",
+      "options": {
+        "name": "no_explicit_shift",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "explicit_shift_enabled": false
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 26,
+      "method": "chronaris",
+      "options": {
+        "name": "no_explicit_shift",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "explicit_shift_enabled": false
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 27,
+      "method": "chronaris",
+      "options": {
+        "name": "no_single_stream_bypass",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_single_stream_bypass"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 28,
+      "method": "chronaris",
+      "options": {
+        "name": "no_single_stream_bypass",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_single_stream_bypass"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 29,
+      "method": "chronaris",
+      "options": {
+        "name": "no_single_stream_bypass",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_single_stream_bypass"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 30,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0025",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.025
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 31,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0025",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.025
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 32,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0025",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.025
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 33,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0100",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.1
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 34,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0100",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.1
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 35,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0100",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.1
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    }
+  ],
+  "model_units": 36,
+  "representation_routes": 69,
+  "training_budget": {
+    "pretraining_max_updates": 1500,
+    "head_warmup_updates": 50,
+    "joint_max_updates": 500,
+    "batch_size": 4,
+    "effective_batch_size": 32,
+    "dingxin_effective_batch_size": 16,
+    "pretraining_minimum_updates": 500,
+    "pretraining_patience": 5,
+    "pretraining_validation_interval": 100,
+    "joint_minimum_updates": 200,
+    "joint_patience": 4,
+    "joint_validation_interval": 50
+  },
+  "simulation_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-07_thesis-v4-simulation-expanded",
+  "replay_units": [
+    8,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    135,
+    255
+  ],
+  "replay_samples_per_route": 4,
+  "replay_atol": 1e-05,
+  "replay_rtol": 1e-05,
+  "engineering_updates": {
+    "pretraining": 2,
+    "head_warmup": 2,
+    "joint": 2
+  },
+  "physics_sensitivity_weights": [
+    0.0,
+    0.025,
+    0.05,
+    0.1
+  ],
+  "sensitivity_role": "development_validation_only_no_outer_selection",
+  "not_applicable": [
+    {
+      "component": "independent_pair_loss",
+      "reason": "not_enabled_in_the_fixed_reference"
+    },
+    {
+      "component": "quality_gate",
+      "reason": "not_enabled_in_the_fixed_reference"
+    },
+    {
+      "component": "expanded_missingness",
+      "reason": "not_enabled_in_the_fixed_reference"
+    }
+  ],
+  "supervision": "self_supervised_and_summary_task_guided_separate",
+  "mechanism_scope": "separate_simulation_configuration_not_public_main_model",
+  "observation_anchor_retained": true,
+  "confirmation_opened": false,
+  "stop_after": "core_model_freeze",
+  "downstream_policy": "native_main_consumers_reused_without_refitting",
+  "input_files": {
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/docs/requirements/thesis-v4-public-subjects.json": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/docs/requirements/thesis-v4-simulation-manifest.json": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-09-07_thesis-v4-simulation-expanded/v4_generation_audit.json": "62b3ace7b1cee988f17052554d2705f6923998823565c47a3448ac28818e6a18",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-09-06_v4-development-conditions-repair/development_condition_audit.json": "3ba8f9cd42f8d87e91aae968d3595156db04907b34ba02839994e06dc177ce97",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-09-06_v4-public-development/cogpilot/summary.json": "c786733e142711f2ee6f30516f19dbdcdad31fef4108b5e342276dda76b8d425",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-09-06_v4-public-development/clare/summary.json": "50d9df4102afdeab9c3882fd4281c2be86a7f23d5612aaffbdfef1d26adab077",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared/cogpilot/summary.json": "cd993f4883aad9270689acb97951c57d6eb49ea5295ee18aa41b9bd71548a71e",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared/clare/summary.json": "d648dc63029e76560fdc83d64b78970bcf02535146baa709cc2e46e25bde12d5",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/assets.json": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+    "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/assets_sensor.json": "2d4561e37a9ef00169798beb15b63670009e6a23939ed28991f91b74660043e0",
+    "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/pipeline_state.json": "1b273dc495dda461c04da0971668124121e49f27c92ddf497155c5fb99ec52e4",
+    "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/formal_plan.json": "0f20e0309e3614308c5bbea4b7a35f8b0e5f6392ec04f23ff4dedf63f9e1916f",
+    "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/main_models.json": "48c71a198549624078091c7ce858adad2f845f65f4d837a47bd5bf209bda8397",
+    "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/docs/requirements/chapter5-core-execution-20261011.md": "71d96c80736b1399fc3be93de92579542c4670da4743e8ab259efb21c88c9481"
+  },
+  "plan_sha256": "5059bb9890b303e04a07be9369453cbb8944e03582f700baee250e6b0bf1a370"
+}
