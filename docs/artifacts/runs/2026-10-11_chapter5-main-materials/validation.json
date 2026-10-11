@@ -7,7 +7,7 @@
   "prediction_rows": 1443702,
   "group_metric_rows": 5406,
   "training_curve_rows": 181899,
-  "figures": 22,
+  "figures": 25,
   "formats": [
     "png",
     "svg"
@@ -24,10 +24,19 @@
   "original_data_tamper_rejected": true,
   "inspected_pngs": [
     "validation_clare_linear_self_supervised.png",
-    "validation_dingxin_linear_task_guided.png"
+    "validation_dingxin_linear_task_guided.png",
+    "training_unit_0.png"
   ],
   "chinese_font": "WenQuanYi Zen Hei",
   "font_note": "Matplotlib used installed weight 500; no missing Chinese glyphs observed",
   "tested_platform": "Linux/WSL",
-  "other_operating_systems_tested": false
+  "other_operating_systems_tested": false,
+  "metric_and_cost_figures": 22,
+  "training_curve_examples": [
+    0,
+    135,
+    255
+  ],
+  "training_plot_independent_verified": true,
+  "additional_tracked_training_script_copied": true
 }

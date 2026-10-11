@@ -2,7 +2,7 @@
 
 本包提供已完成主模型训练的内部验证数据、训练记录及成本，服务于论文侧本地素材整理。数据覆盖 279 个单元、477 条表示路线，全部方法与种子保留；这是内部验证材料，正式留出结果需在后续核心模型冻结和外层评价后另行导出。本包不包含论文正文或排版表格。
 
-实际交付含 807 组下游结果、1,443,702 条逐窗口/字段预测、5,406 条分组指标、181,899 条训练历史记录，以及 22 组位图与矢量图。完整字段说明见 [data_dictionary.md](data_dictionary.md)，独立重绘检查见 [validation.json](validation.json)。
+实际交付含 807 组下游结果、1,443,702 条逐窗口/字段预测、5,406 条分组指标、181,899 条训练历史记录，以及 22 组指标/成本图和三个单元的训练曲线示例，均提供位图与矢量图。完整字段说明见 [data_dictionary.md](data_dictionary.md)，独立重绘检查见 [validation.json](validation.json)。
 
 ## 本地运行
 
@@ -12,9 +12,14 @@
 python -m pip install -r requirements.txt
 python verify.py
 python plot.py
+python plot_training.py --unit 0
+python plot_training.py --unit 135
+python plot_training.py --unit 255
 ```
 
 默认读取脚本旁的 `data/` 与 `style.json`，生成 `figures/` 下的高清 PNG 位图和 SVG 可编辑矢量图。默认分辨率为每英寸 320 点，SVG 保留文字；本地系统需安装样式文件所列的一种中文字体，或改为本地可用字体。脚本从其他工作目录调用也可运行。
+
+训练曲线通过 `--unit` 选择冻结矩阵单元，可在 `data/training.csv` 查找方法、划分和种子。示例为三个数据域首个连续融合单元。脚本读取已记录的验证选择损失或适配训练损失，逐点绘制，不重新计算损失；零训练更新或没有训练历史的路线不生成虚构曲线。曲线输入固定为 `data/training_curves.csv`，使用同一 `style.json`，输出为 `figures/training_unit_<单元索引>.png` 和同名 SVG。
 
 ## 修改数据与图片
 

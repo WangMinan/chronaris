@@ -1,0 +1,7 @@
+{
+  "figure": "training_unit_135",
+  "input": "data/training_curves.csv",
+  "script": "plot_training.py",
+  "style": "style.json",
+  "unit_index": 135
+}
