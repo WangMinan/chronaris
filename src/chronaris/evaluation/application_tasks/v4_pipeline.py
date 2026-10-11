@@ -32,7 +32,7 @@ CONFIRMATION = [
     [('mechanism_data', 'completed'), ('simulation_generation', 'completed')], [('simulation_evaluate', 'completed')],
     [('core_evaluate', 'completed')], [('native_neural', 'completed')], [('mechanisms', 'completed')], [('report', 'completed')],
 ]
-CPU_STAGES = {'public_results', 'public_review_results', 'simulation_review_results', 'adoption', 'conditional_plan',
+CPU_STAGES = {'chapter5_assets', 'public_results', 'public_review_results', 'simulation_review_results', 'adoption', 'conditional_plan',
     'conditional_public_review_results', 'conditional_simulation_review_results', 'conditional_adoption',
     'freeze', 'native_nonparametric', 'simulation_train_nonparametric', 'simulation_generation', 'mechanism_data', 'report'}
 

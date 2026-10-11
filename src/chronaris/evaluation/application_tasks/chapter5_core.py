@@ -8,7 +8,7 @@ from chronaris.evaluation.application_tasks.v4_candidates import candidate_optio
 from chronaris.evaluation.application_tasks.v4_confirmation_training import _train_confirmation_unit, CONFIRMATION_BUDGET
 from chronaris.evaluation.application_tasks.v4_development_data import v4_workflow_source_sha256
 
-REPLAY_UNITS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 135, 255)
+REPLAY_UNITS = (8, 0, 1, 2, 3, 4, 5, 6, 7, 135, 255)
 SEEDS = (17, 29, 43)
 
 
@@ -36,11 +36,12 @@ def core_units():
 
 
 def groups():
-    stages=['cuda_validation','chapter5_plan']
+    stages=['chapter5_plan']
     stages += [f'chapter5_replay__{i}' for i in REPLAY_UNITS]
     stages += [f'chapter5_smoke__{i}' for i in (0,18,21,24,27)]
     stages += [f'chapter5_core__{i}' for i in range(len(core_units()))]
-    return [[(stage,'completed')] for stage in stages+['chapter5_core_models']]
+    return [[('cuda_validation','completed'),('chapter5_assets','completed')]] + [
+        [(stage,'completed')] for stage in stages+['chapter5_core_models']]
 
 
 def plan(config):
@@ -49,7 +50,13 @@ def plan(config):
     root = Path(config['root'])
     state = read(root/'pipeline_state.json')
     validation = _validation_evidence(state['completed']['cuda_validation']['path'])
-    audit_main_models(config['chapter5_main_root'], root/'main_asset_audit.json')
+    receipt=state['completed']['chapter5_assets'];verify({receipt['path']:receipt['sha256']})
+    audit=read(root/'main_asset_audit.json')
+    if (audit!=read(receipt['path']) or audit['status']!='completed'
+        or audit['run_root']!=str(Path(config['chapter5_main_root']).resolve())
+        or audit['source_files'][str(Path(config['chapter5_main_root'])/'main_models.json')]
+            !=sha(Path(config['chapter5_main_root'])/'main_models.json')):
+        raise ValueError('asset audit differs from its committed parent inventory')
     units=core_units()
     result=seal_development_plan(dict(status='completed',format='chronaris.chapter5_core_plan.v1',
         source_code_sha256=v4_workflow_source_sha256(), main_root=config['chapter5_main_root'],
@@ -122,6 +129,8 @@ def _train(unit, plan, root, *, smoke=False):
 
 def run_step(stage,config):
     root=Path(config['root'])
+    if stage=='chapter5_assets':
+        return audit_main_models(config['chapter5_main_root'],root/'main_asset_audit.json')
     if stage=='chapter5_plan':return plan(config)
     frozen=verified_plan(config)
     if stage.startswith('chapter5_replay__'):
