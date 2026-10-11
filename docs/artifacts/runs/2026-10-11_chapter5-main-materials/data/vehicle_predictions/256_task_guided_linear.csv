@@ -1,0 +1,7 @@
+domain,method,fold_index,seed,unit_index,route,data_role,consumer,vehicle_context_id,group_id,task,target,prediction,probability
+dingxin,physiology_only,0,17,256,task_guided,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000120000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_regression,5.328412055969238,4.453267574310303,
+dingxin,physiology_only,0,17,256,task_guided,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000125000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_regression,4.063276767730713,4.756800651550293,
+dingxin,physiology_only,0,17,256,task_guided,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000130000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_regression,2.4356069564819336,5.046526908874512,
+dingxin,physiology_only,0,17,256,task_guided,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000120000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_classification,2.0,2.0,"[8.04848217134468e-06, 0.006166680488192973, 0.9938252710296358]"
+dingxin,physiology_only,0,17,256,task_guided,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000125000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_classification,2.0,2.0,"[4.4277236595636965e-06, 0.00599400519065286, 0.9940015670856877]"
+dingxin,physiology_only,0,17,256,task_guided,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000130000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_classification,2.0,2.0,"[3.2528304410507858e-06, 0.005730528364794976, 0.994266218804764]"

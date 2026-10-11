@@ -1,0 +1,134 @@
+[
+  {
+    "figure": "validation_clare_linear_frozen",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_clare_linear_history_adapted",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_clare_linear_self_supervised",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_clare_linear_summary_adapted",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_clare_linear_task_guided",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_clare_minirocket_self_supervised",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_clare_minirocket_task_guided",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_linear_frozen",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_linear_history_adapted",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_linear_self_supervised",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_linear_summary_adapted",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_linear_task_guided",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_minirocket_self_supervised",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_cogpilot_minirocket_task_guided",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_dingxin_linear_frozen",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_dingxin_linear_history_adapted",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_dingxin_linear_self_supervised",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_dingxin_linear_summary_adapted",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "validation_dingxin_linear_task_guided",
+    "input": "data/summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "cost_clare",
+    "input": "data/cost_summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "cost_cogpilot",
+    "input": "data/cost_summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "cost_dingxin",
+    "input": "data/cost_summary.csv",
+    "script": "plot.py",
+    "style": "style.json"
+  }
+]

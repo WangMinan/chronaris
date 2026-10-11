@@ -1,0 +1,7 @@
+domain,method,fold_index,seed,unit_index,route,data_role,consumer,vehicle_context_id,group_id,task,target,prediction,probability
+dingxin,chronos2,0,17,262,history_adapted,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000120000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_regression,5.328412055969238,3.5585994720458984,
+dingxin,chronos2,0,17,262,history_adapted,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000125000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_regression,4.063276767730713,3.3864495754241943,
+dingxin,chronos2,0,17,262,history_adapted,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000130000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_regression,2.4356069564819336,5.283415794372559,
+dingxin,chronos2,0,17,262,history_adapted,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000120000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_classification,2.0,0.0,"[0.5898245230747222, 9.827817505831783e-25, 0.41017547692527784]"
+dingxin,chronos2,0,17,262,history_adapted,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000125000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_classification,2.0,2.0,"[0.34789248679840773, 5.727163960797846e-24, 0.6521075132015922]"
+dingxin,chronos2,0,17,262,history_adapted,inner_validation,linear,20251002_单01_ACT-8_翼云_J16_12#01::target_000130000,20251002_单01_ACT-8_翼云_J16_12#01,maneuver_classification,2.0,2.0,"[1.2836669022382148e-06, 2.4414055674231278e-26, 0.9999987163330977]"

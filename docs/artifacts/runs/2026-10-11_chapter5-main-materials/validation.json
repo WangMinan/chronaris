@@ -1,0 +1,33 @@
+{
+  "status": "completed",
+  "data_files": 857,
+  "model_units": 279,
+  "representation_routes": 477,
+  "consumer_groups": 807,
+  "prediction_rows": 1443702,
+  "group_metric_rows": 5406,
+  "training_curve_rows": 181899,
+  "figures": 22,
+  "formats": [
+    "png",
+    "svg"
+  ],
+  "png_dpi": 320,
+  "independent_environment": "/tmp/chronaris chapter5 isolated env",
+  "independent_package": "/tmp/chronaris chapter5 independent redraw",
+  "python": "3.11.15",
+  "matplotlib": "3.11.2",
+  "repository_package_importable": false,
+  "copied_git_tracked_files": 908,
+  "run_from_other_directory": true,
+  "explicit_revision_and_style_verified": true,
+  "original_data_tamper_rejected": true,
+  "inspected_pngs": [
+    "validation_clare_linear_self_supervised.png",
+    "validation_dingxin_linear_task_guided.png"
+  ],
+  "chinese_font": "WenQuanYi Zen Hei",
+  "font_note": "Matplotlib used installed weight 500; no missing Chinese glyphs observed",
+  "tested_platform": "Linux/WSL",
+  "other_operating_systems_tested": false
+}

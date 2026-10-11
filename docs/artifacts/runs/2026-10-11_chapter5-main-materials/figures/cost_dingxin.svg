@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="612pt" height="432pt" viewBox="0 0 612 432" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-11T12:25:33.483310</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 432 
+L 612 432 
+L 612 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 157.12 357.5275 
+L 600.12 357.5275 
+L 600.12 28.455 
+L 157.12 28.455 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 157.12 357.5275 
+L 157.12 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m75338fc931" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m75338fc931" x="157.12" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="157.12" y="372.069375" transform="rotate(-0 157.12 372.069375)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 226.822905 357.5275 
+L 226.822905 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m75338fc931" x="226.822905" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="226.822905" y="372.069375" transform="rotate(-0 226.822905 372.069375)">1</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 296.525809 357.5275 
+L 296.525809 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m75338fc931" x="296.525809" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="296.525809" y="372.069375" transform="rotate(-0 296.525809 372.069375)">2</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 366.228714 357.5275 
+L 366.228714 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m75338fc931" x="366.228714" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="366.228714" y="372.069375" transform="rotate(-0 366.228714 372.069375)">3</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 435.931618 357.5275 
+L 435.931618 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m75338fc931" x="435.931618" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="435.931618" y="372.069375" transform="rotate(-0 435.931618 372.069375)">4</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 505.634523 357.5275 
+L 505.634523 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m75338fc931" x="505.634523" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="505.634523" y="372.069375" transform="rotate(-0 505.634523 372.069375)">5</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 575.337427 357.5275 
+L 575.337427 28.455 
+" clip-path="url(#p29102a6b67)" style="fill: none; stroke: #e2e5e9; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m75338fc931" x="575.337427" y="357.5275" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="575.337427" y="372.069375" transform="rotate(-0 575.337427 372.069375)">6</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="378.62" y="387.253281" transform="rotate(-0 378.62 387.253281)">每个已完成训练单元的记录成本（小时）</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_15">
+      <defs>
+       <path id="m5b79b19bfb" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="55.221663" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="59.614788" transform="rotate(-0 150.12 59.614788)">Chronaris 连续融合</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="94.584402" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="99.010183" transform="rotate(-0 150.12 99.010183)">生理单流</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="133.947141" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="138.538782" transform="rotate(-0 150.12 138.538782)">第二输入流单流</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="173.30988" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="177.826755" transform="rotate(-0 150.12 177.826755)">MulT 跨模态变换器</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="212.67262" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="217.189495" transform="rotate(-0 150.12 217.189495)">ContiFormer 连续时间变换器</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="252.035359" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="256.573718" transform="rotate(-0 150.12 256.573718)">朴素时间同步</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="291.398098" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="295.865989" transform="rotate(-0 150.12 295.865989)">TimeCMA 语言增强时序模型</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m5b79b19bfb" x="157.12" y="330.760837" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 11px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: end" x="150.12" y="335.288025" transform="rotate(-0 150.12 335.288025)">Chronos-2 预训练时序模型</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 157.12 43.412841 
+L 579.024762 43.412841 
+L 579.024762 67.030484 
+L 157.12 67.030484 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 157.12 82.77558 
+L 203.308016 82.77558 
+L 203.308016 106.393224 
+L 157.12 106.393224 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 157.12 122.138319 
+L 205.598906 122.138319 
+L 205.598906 145.755963 
+L 157.12 145.755963 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 157.12 161.501059 
+L 219.624401 161.501059 
+L 219.624401 185.118702 
+L 157.12 185.118702 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 157.12 200.863798 
+L 214.865542 200.863798 
+L 214.865542 224.481441 
+L 157.12 224.481441 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 157.12 240.226537 
+L 157.979843 240.226537 
+L 157.979843 263.844181 
+L 157.12 263.844181 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 157.12 279.589276 
+L 162.101687 279.589276 
+L 162.101687 303.20692 
+L 157.12 303.20692 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 157.12 318.952016 
+L 168.746362 318.952016 
+L 168.746362 342.569659 
+L 157.12 342.569659 
+z
+" clip-path="url(#p29102a6b67)" style="fill: #b28b47"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 157.12 357.5275 
+L 157.12 28.455 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 157.12 357.5275 
+L 600.12 357.5275 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 13.2px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle" x="378.62" y="22.455" transform="rotate(-0 378.62 22.455)">鼎新实测数据 · 训练与下游累计成本</text>
+   </g>
+  </g>
+  <g id="text_18">
+   <text style="font-size: 9px; font-family: 'WenQuanYi Zen Hei', 'Noto Sans CJK SC', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #555555" x="306" y="421.2" transform="rotate(-0 306 421.2)">继承成本按完成收据记录；失败尝试另附明细，未在此重复相加。</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p29102a6b67">
+   <rect x="157.12" y="28.455" width="443" height="329.0725"/>
+  </clipPath>
+ </defs>
+</svg>
