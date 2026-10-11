@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-10-04
+更新时间：2026-10-11
 
 
 [阶段 4.5-C 单因素尝试](runs/2026-09-22_v4-stage45c/report.md)：公共自监督项消融六次微调全部完成、未通过采用门，含完整配对结果与来源核验。
@@ -14,6 +14,8 @@
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
 ## 研究证据与最新盘点
+
+- [主模型训练完成与第五章交接](runs/2026-10-11_stage5-main-training-status/report.md)：279/279 个单元、477/477 条路线冻结，280 份收据散列核验；[后续开发机计划](../implementation/chapter5-developer-delivery-plan-20261011.md)规定实验、详细数据和本地绘图包交付，尚未完成外层评价。
 
 - [阶段 5 显卡异常诊断与恢复](runs/2026-10-04_v4-stage5-cuda-retry/report.md)：保留 167 个完整单元与原失败现场，核验宿主机驱动事件，执行同源码显式重试。
 

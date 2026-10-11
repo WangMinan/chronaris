@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-11T10:56:54.310811+08:00",
+  "run_root": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery",
+  "source_files": {
+    "pipeline_state.json": "1b273dc495dda461c04da0971668124121e49f27c92ddf497155c5fb99ec52e4",
+    "formal_plan.json": "0f20e0309e3614308c5bbea4b7a35f8b0e5f6392ec04f23ff4dedf63f9e1916f",
+    "main_models.json": "48c71a198549624078091c7ce858adad2f845f65f4d837a47bd5bf209bda8397"
+  },
+  "repository_head_at_check": "15118b367a5e9b9d806df82c3e8635d037f659da",
+  "pipeline_status": "stage5_formal_train_completed",
+  "completed_at": "2026-10-11T08:21:59.205547+08:00",
+  "controller_pid": 2464764,
+  "controller_pid_present": false,
+  "historical_failure_count": 1,
+  "domains": {
+    "clare": 135,
+    "cogpilot": 120,
+    "dingxin": 24
+  },
+  "model_units": 279,
+  "representation_routes": 477,
+  "consumer_file_count": 1614,
+  "receipt_hashes_checked": 280,
+  "receipt_hash_mismatches": [],
+  "missing_files": {
+    "model_files": [],
+    "consumer_files": []
+  },
+  "main_models_frozen": true,
+  "core_models_frozen": false,
+  "confirmation_opened": false,
+  "outer_evaluation_implemented": false,
+  "model_and_consumer_hashes_rechecked": false,
+  "checkpoint_load_and_prediction_replay_performed": false
+}
