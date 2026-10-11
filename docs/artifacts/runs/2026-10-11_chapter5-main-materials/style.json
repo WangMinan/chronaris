@@ -1,0 +1,26 @@
+{
+  "fonts": ["WenQuanYi Zen Hei", "Noto Sans CJK SC", "Microsoft YaHei", "SimHei", "DejaVu Sans"],
+  "font_size": 11,
+  "panel_width": 6.5,
+  "panel_height": 6,
+  "dpi": 320,
+  "colors": {"model": "#31688e", "reference": "#b28b47"},
+  "domains": {"clare": "CLARE 生理负荷数据", "cogpilot": "CogPilot 虚拟飞行数据", "dingxin": "鼎新实测数据"},
+  "methods": {
+    "chronaris": "Chronaris 连续融合",
+    "physiology_only": "生理单流",
+    "vehicle_only": "第二输入流单流",
+    "mult": "MulT 跨模态变换器",
+    "contiformer": "ContiFormer 连续时间变换器",
+    "naive_time_sync": "朴素时间同步",
+    "timecma": "TimeCMA 语言增强时序模型",
+    "chronos2": "Chronos-2 预训练时序模型",
+    "sensorllm_deepseek": "SensorLLM 传感器语言模型（蒸馏骨干）"
+  },
+  "routes": {"self_supervised": "自监督表示", "task_guided": "任务引导表示", "summary_adapted": "任务标签适配表示", "frozen": "外部预训练冻结表示", "history_adapted": "历史观测适配表示"},
+  "consumers": {"linear": "共同线性下游", "minirocket": "MiniROCKET 时序卷积特征补充"},
+  "tasks": {"workload_classification": "认知负荷分类", "workload_regression": "认知负荷评分回归", "difficulty": "飞行难度分类", "event_response": "离线事件条件响应回归", "maneuver_classification": "未来机动强度分类", "maneuver_regression": "未来机动强度回归", "physiology_regression": "未来生理字段回归"},
+  "units": {"workload_regression": "评分点", "event_response": "微西门子"},
+  "validation_note": "内部验证结果；点为设置均值，误差线为设置间描述性标准差；不表示独立留出成绩或置信区间。",
+  "cost_note": "继承成本按完成收据记录；失败尝试另附明细，未在此重复相加。"
+}

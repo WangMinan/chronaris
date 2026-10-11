@@ -38,6 +38,9 @@ CPU_STAGES = {'public_results', 'public_review_results', 'simulation_review_resu
 
 
 def pipeline_groups(until):
+    if until == 'chapter5_core':
+        from chronaris.evaluation.application_tasks.chapter5_core import groups
+        return groups()
     if until == 'stage5_formal_train':
         from chronaris.evaluation.application_tasks.stage5_formal import groups
         return groups()
@@ -210,7 +213,8 @@ def execute_pipeline(config, *, until, retry_failed=False):
 def main(*, default_until='freeze'):
     parser = argparse.ArgumentParser(description='Fixed v4 development, selection and confirmation; resumes one immutable run root.')
     parser.add_argument('--root')
-    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45', 'stage45b', 'stage45c', 'stage5', 'stage5_formal_train'), default=default_until)
+    parser.add_argument('--until', choices=('development', 'freeze', 'confirmation', 'comparison', 'stage45', 'stage45b', 'stage45c', 'stage5', 'stage5_formal_train', 'chapter5_core'), default=default_until)
+    parser.add_argument('--chapter5-main-root', help='Completed 279-unit main-model root for chapter 5 continuation')
     parser.add_argument('--plan-only', action='store_true')
     parser.add_argument('--stage45-budget-hours', type=float, default=72, help='0 removes the stage 4.5 wall-clock limit')
     parser.add_argument('--stage45-resume-parent', help='Stopped stage 4.5 root to preserve and resume in a new root')
@@ -226,7 +230,7 @@ def main(*, default_until='freeze'):
     parser.add_argument('--execution-parent', help='Stopped stage-4 run for validated CUDA graph migration')
     parser.add_argument('--execution-evidence', help='Completed checkpoint performance trial summary')
     parser.add_argument('--retry-failed', action='store_true')
-    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45')+pipeline_groups('stage45b')+pipeline_groups('stage45c')+pipeline_groups('stage5')+pipeline_groups('stage5_formal_train') for stage, _ in group], help=argparse.SUPPRESS)
+    parser.add_argument('--worker', choices=[stage for group in pipeline_groups('confirmation')+pipeline_groups('comparison')+pipeline_groups('stage45')+pipeline_groups('stage45b')+pipeline_groups('stage45c')+pipeline_groups('stage5')+pipeline_groups('stage5_formal_train')+pipeline_groups('chapter5_core') for stage, _ in group], help=argparse.SUPPRESS)
     parser.add_argument('--config', help=argparse.SUPPRESS)
     parser.add_argument('--result', help=argparse.SUPPRESS)
     parser.add_argument('--attempt', type=int, default=1, help=argparse.SUPPRESS)
@@ -299,7 +303,17 @@ def main(*, default_until='freeze'):
         parser.error('--stage5-formal-parent requires --until stage5_formal_train')
     if args.stage5_performance_evidence and (not args.stage5_formal_parent or args.until != 'stage5_formal_train'):
         parser.error('formal performance recovery requires a formal parent and training endpoint')
-    if args.until == 'stage5_formal_train':
+    if args.chapter5_main_root and args.until != 'chapter5_core':
+        parser.error('--chapter5-main-root requires --until chapter5_core')
+    if args.until == 'chapter5_core':
+        if not args.chapter5_main_root or any((args.stage5_parent,args.stage45_parent,args.comparison_parent,args.execution_parent)):
+            parser.error('chapter5_core requires only its completed main-model parent')
+        from chronaris.evaluation.application_tasks.development_comparison import ASSETS,SENSOR_ASSETS
+        config['chapter5_main_root']=str(Path(args.chapter5_main_root).resolve())
+        input_paths += [Path(ASSETS),Path(SENSOR_ASSETS)]
+        input_paths += [Path(config['chapter5_main_root'])/name for name in ('pipeline_state.json','formal_plan.json','main_models.json')]
+        input_paths.append(project/'docs/requirements/chapter5-core-execution-20261011.md')
+    elif args.until == 'stage5_formal_train':
         if any((args.stage5_parent,args.stage45_parent,args.comparison_parent,args.execution_parent)):
             parser.error('formal training uses fresh model units, not development queue migration')
         from chronaris.evaluation.application_tasks.development_comparison import ASSETS,SENSOR_ASSETS
@@ -378,6 +392,13 @@ def main(*, default_until='freeze'):
         input_paths += [Path(config['execution_parent'])/name for name in ('pipeline_state.json', 'pipeline_config.json')]
         input_paths.append(Path(config['execution_evidence']))
     config['input_files'] = {str(path): sha256_file(path) for path in input_paths}
+    if args.plan_only and args.until == 'chapter5_core':
+        from chronaris.evaluation.application_tasks.chapter5_core import core_units
+        units=core_units()
+        print(json.dumps(dict(config=config,groups=pipeline_groups('chapter5_core'),units=units,
+            model_units=len(units),representation_routes=sum(len(u['routes']) for u in units),
+            confirmation_opened=False,executes_training=False),indent=2))
+        return
     if args.plan_only and args.until == 'stage5_formal_train':
         from chronaris.evaluation.application_tasks.stage5_formal import matrix
         print(json.dumps(dict(config=config,matrix=matrix(config),executes_training=False),indent=2))

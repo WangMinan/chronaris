@@ -37,6 +37,9 @@ def active_review(root):
 
 def run_pipeline_step(stage, config, *, attempt=1):
     root = Path(config['root'])
+    if stage.startswith('chapter5_'):
+        from chronaris.evaluation.application_tasks.chapter5_core import run_step
+        return run_step(stage, config)
     initial, pressure, public, review = (root/name for name in ('initial', 'initial_pressure', 'public_screen', 'review'))
     common = dict(data_root=config['data_root'], registry_path=config['registry_path'])
     if stage.startswith('stage5_formal_'):

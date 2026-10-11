@@ -1,5 +1,5 @@
 """Native outer-fold training using the existing pretext and adaptation trainers."""
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import json
 from pathlib import Path
 
@@ -88,12 +88,22 @@ def _confirmation_training_inputs(domain,fold_index,data_root,registry_path,root
     return inputs
 
 
-def _train_confirmation_unit(*, domain, fold_index, method, options, routes, seed, output_root, data_root, registry_path, freeze_sha256, normalizer_root):
+def _train_confirmation_unit(*, domain, fold_index, method, options, routes, seed, output_root, data_root, registry_path, freeze_sha256, normalizer_root,
+                             engineering_smoke=False):
     root=Path(output_root)/domain/method/options['name']/f'fold{fold_index+1:02d}'/f'seed{seed}'
     provider,schema,fold,hierarchy,digest,targets,definitions,data=_confirmation_training_inputs(domain,fold_index,data_root,registry_path,root)
+    if engineering_smoke:
+        if domain != 'simulation':
+            raise ValueError('core engineering validation is limited to simulation development inputs')
+        from chronaris.evaluation.application_tasks.v4_development_data import _hash_prefix
+        fold=replace(fold,fold_id=fold.fold_id+'__chapter5_engineering',
+            train_sample_ids=_hash_prefix(fold.train_sample_ids,32),validation_sample_ids=_hash_prefix(fold.validation_sample_ids,8))
+        hierarchy={sample:hierarchy[sample] for sample in fold.train_sample_ids}
     source=dict(format='chronaris.v4_native_confirmation_training.v1',source_code_sha256=v4_workflow_source_sha256(),
         freeze_sha256=freeze_sha256,domain=domain,method=method,candidate_options=options,seed=seed,routes=routes,
         fold=fold.to_dict(),data_manifest_sha256=digest,outer_outcomes_used_for_training=False)
+    if engineering_smoke:
+        source['engineering_smoke']=True
     source=json.loads(json.dumps(source))
     root.mkdir(parents=True,exist_ok=True);path=root/'run_state.json'
     state=json.loads(path.read_text()) if path.exists() else dict(source=source,completed=False)
@@ -105,13 +115,13 @@ def _train_confirmation_unit(*, domain, fold_index, method, options, routes, see
     state['train_only_normalization']=dict(normalizer=normalizer.to_manifest(),physics_calibration=calibration)
     save()
     with _periodic_training_heartbeat(f'confirmation_{domain}_{method}',30,root=root) as progress:
-        chronaris=method=='chronaris';effective=16 if domain=='dingxin' else 32
+        chronaris=method=='chronaris';effective=4 if engineering_smoke else 16 if domain=='dingxin' else 32
         progress['phase']='pretraining'
         pretraining=train_pretext_candidate(method,candidate=EncoderCandidateConfig(candidate_id='C',hidden_dim=options['hidden_dim'],learning_rate=3e-4),
             batch=None,batch_provider=provider,fold=fold,physiology_feature_names=schema.physiology_feature_names,
             vehicle_feature_names=schema.vehicle_feature_names,vehicle_field_labels=(),normalizer=normalizer,
-            output_root=root/'self_supervised',config=CandidateScreenConfig(max_updates=1500,batch_size=4,effective_batch_size=effective,
-                weight_decay=1e-4,device='cuda',early_stopping=True,seed=seed,minimum_updates=500,patience=5,validation_interval=100,
+            output_root=root/'self_supervised',config=CandidateScreenConfig(max_updates=2 if engineering_smoke else 1500,batch_size=4,effective_batch_size=effective,
+                weight_decay=1e-4,device='cuda',early_stopping=not engineering_smoke,seed=seed,minimum_updates=0 if engineering_smoke else 500,patience=5,validation_interval=2 if engineering_smoke else 100,
                 retained_updates=(1500,),semantic_event_enabled=chronaris,learnable_semantic_queries=chronaris,
                 physics_calibration=calibration if chronaris else None,physics_weight=options.get('physics_weight',.05),sampling_hierarchy=hierarchy,
                 data_manifest_sha256=digest,cuda_graph_recurrence=chronaris and (not options or options["training"].get("ode_method") != "analytic_decay"),**options['training']),
@@ -124,6 +134,12 @@ def _train_confirmation_unit(*, domain, fold_index, method, options, routes, see
         if 'task_guided' in routes:
             if domain == 'simulation':
                 from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
+                if engineering_smoke:
+                    from chronaris.representation import select_observation_batch
+                    ids=fold.train_sample_ids+fold.validation_sample_ids
+                    data=replace(data,batch=select_observation_batch(data.batch,ids),
+                        role_sample_ids={r:getattr(fold,r+'_sample_ids') for r in ('train','validation','held_out')},
+                        sample_manifest_rows=tuple(next(row for row in data.sample_manifest_rows if row['sample_id']==sample) for sample in ids))
                 targets = build_guarded_application_consumer_targets(data,
                     completed_pretraining_checkpoints=(pretraining.best_checkpoint_path,),task_guided_development=True,smoke_only=False)
             progress['phase']='task_guided'
@@ -133,9 +149,9 @@ def _train_confirmation_unit(*, domain, fold_index, method, options, routes, see
             guided=train_end_to_end_application_method(model=model,batch=None,batch_provider=provider,targets=targets,
                 role_sample_ids={role:getattr(fold,role+'_sample_ids') for role in ('train','validation','held_out')},
                 source_checkpoint_path=pretraining.best_checkpoint_path,output_root=root/'task_guided',
-                config=EndToEndFineTuningConfig(max_updates=500,head_warmup_updates=50,batch_size=4,effective_batch_size=effective,
-                    weight_decay=1e-4,device='cuda',early_stopping=True,seed=seed,minimum_updates=200,patience=4,
-                    validation_interval=50,retained_updates=(500,),sampling_hierarchy=hierarchy,data_manifest_sha256=digest))
+                config=EndToEndFineTuningConfig(max_updates=2 if engineering_smoke else 500,head_warmup_updates=2 if engineering_smoke else 50,batch_size=4,effective_batch_size=effective,
+                    weight_decay=1e-4,device='cuda',early_stopping=not engineering_smoke,seed=seed,minimum_updates=0 if engineering_smoke else 200,patience=4,
+                    validation_interval=2 if engineering_smoke else 50,retained_updates=(500,),sampling_hierarchy=hierarchy,data_manifest_sha256=digest))
             state['task_guided_training']=asdict(guided);save()
         from chronaris.evaluation.application_tasks.v4_correctness import audit_checkpoint_causality
         import torch

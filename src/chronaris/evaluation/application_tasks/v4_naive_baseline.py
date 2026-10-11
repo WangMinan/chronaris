@@ -9,13 +9,13 @@ from chronaris.evaluation.application_tasks.v4_development_data import v4_workfl
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-def load_v4_naive_encoder(checkpoint, *, fold, data_manifest_sha256):
+def load_v4_naive_encoder(checkpoint, *, fold, data_manifest_sha256, expected_training_source_sha256=None):
     checkpoint = Path(checkpoint)
     payload = json.loads((checkpoint.parent / 'fit_manifest.json').read_text())
     if (payload['format'] != 'chronaris.v4_naive_fit.v1' or payload['training_status'] != 'completed'
         or payload['checkpoint_sha256'] != sha256_file(checkpoint) or payload['fold'] != fold.to_dict()
         or payload['config']['data_manifest_sha256'] != data_manifest_sha256
-        or payload['source_code_sha256'] != v4_workflow_source_sha256()
+        or payload['source_code_sha256'] != (expected_training_source_sha256 or v4_workflow_source_sha256())
         or payload['label_used_for_encoder_training'] is not False or payload['optimizer_updates'] != 0):
         raise ValueError('fixed synchronization checkpoint source/data/roles changed')
     encoder = load_naive_time_sync_checkpoint(checkpoint)
