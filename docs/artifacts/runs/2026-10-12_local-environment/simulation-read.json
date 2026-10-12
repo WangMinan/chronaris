@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "source": "artifacts/application_evaluation/2026-09-07_thesis-v4-simulation-expanded/v4_development/v4_development_profile_007/g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056/clean_asynchronous/raw_dual_stream.npz",
+  "physiology_shape": [
+    60,
+    7
+  ],
+  "vehicle_shape": [
+    300,
+    12
+  ],
+  "training_updates": 0
+}

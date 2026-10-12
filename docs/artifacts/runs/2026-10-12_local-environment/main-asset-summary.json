@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "format": "chronaris.chapter5_asset_audit.v1",
+  "run_root": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery",
+  "model_units": 279,
+  "routes": 477,
+  "model_files": 477,
+  "consumer_files": 1614,
+  "confirmation_opened": false,
+  "checkpoint_replay_completed": false,
+  "verified_source_files": 2986
+}

@@ -1,0 +1,175 @@
+{
+  "training_updates": 0,
+  "strict_atol": 1e-05,
+  "strict_rtol": 1e-05,
+  "results": [
+    {
+      "domain": "clare",
+      "route": "self_supervised",
+      "family": "linear",
+      "samples": 4,
+      "comparison": {
+        "passed": true,
+        "rows": 8,
+        "max_absolute_difference": 1.9073486328125e-06,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "strict_replay_passed": true,
+      "max_absolute_difference_by_output": {
+        "workload_classification/prediction": 0,
+        "workload_classification/probability": 3.2682735295885834e-08,
+        "workload_regression/prediction": 1.9073486328125e-06
+      }
+    },
+    {
+      "domain": "clare",
+      "route": "self_supervised",
+      "family": "minirocket",
+      "samples": 4,
+      "strict_replay_passed": false,
+      "error": "frozen replay prediction differs: ('1026__experiment0_window1', 'workload_classification', 0)/probability",
+      "max_absolute_difference_by_output": {
+        "workload_classification/prediction": 0,
+        "workload_classification/probability": 0.00044499324677982344,
+        "workload_regression/prediction": 0.0009918212890625
+      }
+    },
+    {
+      "domain": "clare",
+      "route": "task_guided",
+      "family": "linear",
+      "samples": 4,
+      "comparison": {
+        "passed": true,
+        "rows": 8,
+        "max_absolute_difference": 3.814697265625e-06,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "strict_replay_passed": true,
+      "max_absolute_difference_by_output": {
+        "workload_classification/prediction": 0,
+        "workload_classification/probability": 4.204656434136922e-08,
+        "workload_regression/prediction": 3.814697265625e-06
+      }
+    },
+    {
+      "domain": "clare",
+      "route": "task_guided",
+      "family": "minirocket",
+      "samples": 4,
+      "strict_replay_passed": false,
+      "error": "frozen replay prediction differs: ('1026__experiment0_window1', 'workload_classification', 0)/probability",
+      "max_absolute_difference_by_output": {
+        "workload_classification/prediction": 0,
+        "workload_classification/probability": 4.659867949552421e-05,
+        "workload_regression/prediction": 0.0008697509765625
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "route": "self_supervised",
+      "family": "linear",
+      "samples": 4,
+      "comparison": {
+        "passed": true,
+        "rows": 8,
+        "max_absolute_difference": 5.024140493636864e-07,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "strict_replay_passed": true,
+      "max_absolute_difference_by_output": {
+        "difficulty/prediction": 0,
+        "difficulty/probability": 5.024140493636864e-07,
+        "event_response/prediction": 1.6763806343078613e-08
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "route": "self_supervised",
+      "family": "minirocket",
+      "samples": 4,
+      "strict_replay_passed": false,
+      "error": "frozen replay prediction differs: ('sub-cp012::ses-20210723::level-01B_run-001::window0002', 'difficulty', 0)/probability",
+      "max_absolute_difference_by_output": {
+        "difficulty/prediction": 0,
+        "difficulty/probability": 2.7403618095288122e-05,
+        "event_response/prediction": 0.00064849853515625
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "route": "task_guided",
+      "family": "linear",
+      "samples": 4,
+      "comparison": {
+        "passed": true,
+        "rows": 8,
+        "max_absolute_difference": 1.3173590426851511e-07,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "strict_replay_passed": true,
+      "max_absolute_difference_by_output": {
+        "difficulty/prediction": 0,
+        "difficulty/probability": 1.3173590426851511e-07,
+        "event_response/prediction": 2.7939677238464355e-08
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "route": "task_guided",
+      "family": "minirocket",
+      "samples": 4,
+      "strict_replay_passed": false,
+      "error": "frozen replay prediction differs: ('sub-cp012::ses-20210723::level-01B_run-001::window0001', 'event_response', 0)/prediction",
+      "max_absolute_difference_by_output": {
+        "difficulty/prediction": 0,
+        "difficulty/probability": 1.0761673377990277e-06,
+        "event_response/prediction": 0.000640869140625
+      }
+    },
+    {
+      "domain": "dingxin",
+      "route": "self_supervised",
+      "family": "linear",
+      "samples": 4,
+      "comparison": {
+        "passed": true,
+        "rows": 52,
+        "max_absolute_difference": 0.00048828125,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "strict_replay_passed": true,
+      "max_absolute_difference_by_output": {
+        "maneuver_regression/prediction": 4.76837158203125e-07,
+        "maneuver_classification/prediction": 0,
+        "maneuver_classification/probability": 2.34382679253518e-10,
+        "physiology_regression/prediction": 0.00048828125
+      }
+    },
+    {
+      "domain": "dingxin",
+      "route": "task_guided",
+      "family": "linear",
+      "samples": 4,
+      "comparison": {
+        "passed": true,
+        "rows": 52,
+        "max_absolute_difference": 0.000244140625,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      },
+      "strict_replay_passed": true,
+      "max_absolute_difference_by_output": {
+        "maneuver_regression/prediction": 0,
+        "maneuver_classification/prediction": 0,
+        "maneuver_classification/probability": 1.1813982600354656e-09,
+        "physiology_regression/prediction": 0.000244140625
+      }
+    }
+  ]
+}

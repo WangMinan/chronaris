@@ -1,0 +1,23 @@
+{
+  "domain": "clare",
+  "route": "self_supervised",
+  "samples": 4,
+  "sequence_max_absolute_difference": 4.76837158203125e-07,
+  "pooled_max_absolute_difference": 2.384185791015625e-07,
+  "fixed_representation_downstream": {
+    "linear": {
+      "passed": true,
+      "rows": 8,
+      "max_absolute_difference": 0.0,
+      "atol": 1e-05,
+      "rtol": 1e-05
+    },
+    "minirocket": {
+      "passed": true,
+      "rows": 8,
+      "max_absolute_difference": 0.0,
+      "atol": 1e-05,
+      "rtol": 1e-05
+    }
+  }
+}

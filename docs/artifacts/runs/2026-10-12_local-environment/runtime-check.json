@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "python": "3.11.15",
+  "modules": {
+    "numpy": {
+      "version": "2.2.6",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/numpy/__init__.py"
+    },
+    "scipy": {
+      "version": "1.15.3",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/scipy/__init__.py"
+    },
+    "pandas": {
+      "version": "2.3.3",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/pandas/__init__.py"
+    },
+    "pyarrow": {
+      "version": "24.0.0",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/pyarrow/__init__.py"
+    },
+    "sklearn": {
+      "version": "1.7.2",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/sklearn/__init__.py"
+    },
+    "numba": {
+      "version": "0.61.2",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/numba/__init__.py"
+    },
+    "aeon": {
+      "version": "1.5.0",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/aeon/__init__.py"
+    },
+    "matplotlib": {
+      "version": "3.10.9",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/matplotlib/__init__.py"
+    },
+    "torch": {
+      "version": "2.11.0+cu130",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/__init__.py"
+    },
+    "torchdiffeq": {
+      "version": "0.2.5",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torchdiffeq/__init__.py"
+    },
+    "transformers": {
+      "version": "4.57.6",
+      "path": "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/transformers/__init__.py"
+    },
+    "chronos": {
+      "version": "2.3.3.dev0",
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/chronos-forecasting/src/chronos/__init__.py"
+    },
+    "chronaris": {
+      "version": "package",
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/__init__.py"
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+  "cuda": "13.0",
+  "compute_capability": [
+    8,
+    9
+  ],
+  "peak_gpu_allocated_bytes": 59047936,
+  "checks": [
+    "imports",
+    "cuda_matmul_vs_cpu",
+    "torch_compile_forward",
+    "cuda_ode_solver"
+  ],
+  "training_updates": 0
+}
