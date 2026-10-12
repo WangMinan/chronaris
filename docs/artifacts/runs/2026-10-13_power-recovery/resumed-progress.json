@@ -1,0 +1,24 @@
+{
+  "sampled_at": "2026-10-13T07:40:44.900579+08:00",
+  "supervisor_pid": 3117,
+  "worker_pid": 3123,
+  "progress": {
+    "method": "chronaris",
+    "status": "running",
+    "optimizer_updates": 302,
+    "phase": "training",
+    "best_update": 300,
+    "sample_ids": [
+      "sub-cp015::ses-20210504::level-03B_run-011::window0009",
+      "sub-cp018::ses-20210709::level-03B_run-011::window0007",
+      "sub-cp020::ses-20210604::level-04B_run-004::event0008",
+      "sub-cp023::ses-20210628::level-03B_run-011::window0009"
+    ],
+    "samples_seen": 4832,
+    "peak_allocated_bytes": 847904768,
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+    "device": "cuda",
+    "data_wait_s": 24.360896048988366,
+    "wall_elapsed_s": 91.13180515699992
+  }
+}
