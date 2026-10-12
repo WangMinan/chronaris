@@ -1,0 +1,19 @@
+{
+  "replay_pid": 18250,
+  "controller_pid": 18251,
+  "execution_environment": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMBA_NUM_THREADS": "1",
+    "OMP_WAIT_POLICY": "PASSIVE"
+  },
+  "previous_progress": {
+    "completed_units": 30,
+    "total_units": 180,
+    "last_index": 41,
+    "strict_failures": 50,
+    "class_flips": 8
+  },
+  "started_unix_s": 1791802707.6154962
+}

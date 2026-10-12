@@ -1,0 +1,17 @@
+{
+  "sampled_at": "2026-10-12T18:59:36.450454+08:00",
+  "replay": {
+    "completed_units": 36,
+    "total_units": 180,
+    "last_index": 50,
+    "strict_failures": 60,
+    "class_flips": 8
+  },
+  "controller": {
+    "status": "running",
+    "phase": "waiting_full_replay",
+    "pid": 18251,
+    "commands": [],
+    "confirmation_opened": false
+  }
+}

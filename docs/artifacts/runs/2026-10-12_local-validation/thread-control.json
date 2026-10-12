@@ -1,0 +1,27 @@
+{
+  "numba_threads": 1,
+  "results": [
+    {
+      "route": "self_supervised",
+      "comparison": {
+        "passed": true,
+        "rows": 864,
+        "max_absolute_difference": 0.0,
+        "atol": 0,
+        "rtol": 0
+      },
+      "seconds": 0.9423792362213135
+    },
+    {
+      "route": "task_guided",
+      "comparison": {
+        "passed": true,
+        "rows": 864,
+        "max_absolute_difference": 0.0,
+        "atol": 0,
+        "rtol": 0
+      },
+      "seconds": 0.3652956485748291
+    }
+  ]
+}

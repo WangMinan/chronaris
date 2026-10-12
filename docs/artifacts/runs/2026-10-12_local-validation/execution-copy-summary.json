@@ -1,0 +1,25 @@
+{
+  "status": "prepared",
+  "legacy_workspace": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011",
+  "workspace": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012",
+  "core_root": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume",
+  "legacy_commit": "8b198dc61210f853fecd72726423c00934c14661",
+  "legacy_source_sha256": "d89dfcc5bf0c444aea09b6defc058e535b63b9ff723102a3535f570de8625b4b",
+  "source_code_sha256": "326a84137c15fc42cfe3e950e379307d852f00526e67c4dbbc347b7d50b5f679",
+  "preserved_counts": {
+    "pretraining": 1500,
+    "head_warmup": 50,
+    "joint": 75,
+    "remaining_joint": 425
+  },
+  "cursor": {
+    "samples_seen": 4000,
+    "micro_batches_seen": 1000,
+    "sampling_order_sha256": "caa05f4767d5e48703ed0ae02a744fa70b398c65cdf2f159021248c974eca0a2"
+  },
+  "driver_workspace": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "verified_files": 1055,
+  "receipt": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/execution_copy.json",
+  "receipt_sha256": "21e0d999964260854ac083285a23603f9a390e3a6e72c97d49f2aade8170c370"
+}
