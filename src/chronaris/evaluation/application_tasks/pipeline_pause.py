@@ -28,6 +28,24 @@ def paused_state(before, stopped, receipt_path):
     return result
 
 
+def mark_paused_progress(root, output, receipt_path):
+    changed = []
+    for path in Path(root).rglob('progress.json'):
+        value = json.loads(path.read_text())
+        if (value.get('status') != 'failed' or value.get('error_type') != 'KeyboardInterrupt'
+            or value.get('reason') != 'pipeline termination requested'):
+            continue
+        backup = Path(output)/'raw_progress'/path.relative_to(root)
+        backup.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, backup)
+        value.update(status='paused_by_user', reason='user_requested_performance_qualification',
+                     pause_receipt=str(receipt_path))
+        value.pop('error_type', None)
+        write_result(path, value)
+        changed.append(dict(path=str(path), raw_backup=str(backup), raw_sha256=sha256_file(backup)))
+    return changed
+
+
 def pause_pipeline(*, root, checkpoint, output_root, wait_seconds=600):
     root, checkpoint, output = Path(root).resolve(), Path(checkpoint).resolve(), Path(output_root).resolve()
     if root not in checkpoint.parents or root in output.parents or output == root:
@@ -84,6 +102,8 @@ def pause_pipeline(*, root, checkpoint, output_root, wait_seconds=600):
         interrupted_updates_after_checkpoint='not_observed; waited for a fresh checkpoint before signalling',
         completed_receipts=before['completed'], raw_state=str(output/'raw_state_after_termination.json'),
         stopped_at_unix_s=time.time(), confirmation_opened=False)
+    write_result(receipt_path, receipt)
+    receipt['paused_progress_files'] = mark_paused_progress(checkpoint.parents[2], output, receipt_path)
     write_result(receipt_path, receipt)
     write_result(state_path, updated)
     return receipt
