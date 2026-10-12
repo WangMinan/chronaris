@@ -26,7 +26,7 @@
 | torchdiffeq 常微分方程库 / aeon 时序学习库 | 0.2.5 / 1.5.0 |
 | transformers 预训练模型库 | 4.57.6 |
 
-环境目录为 `/home/wangminan/env/anaconda3/envs/chronaris`，已配置交互式 `conda activate chronaris`，不自动进入基础环境。`PYTHONNOUSERSITE=1` 防止用户目录依赖覆盖；编辑器本地配置指向同一解释器。精确依赖和重建命令见[环境配置](../../../../configs/environments/README.md)。旧 YAML 环境模板不用于本机更新。
+环境目录为 `/home/wangminan/env/anaconda3/envs/chronaris`，已配置交互式 `conda activate chronaris`，不自动进入基础环境。`PYTHONNOUSERSITE=1` 防止用户目录依赖覆盖；编辑器本地配置指向同一解释器。精确依赖和重建命令见[环境配置](../../../../configs/environments/README.md)。旧 YAML 环境模板不用于本机更新。Git 已接入 Windows 的现有凭证管理器，`main` 推送实测通过。
 
 Ubuntu 软件源已由阿里云切回官方 `archive.ubuntu.com`，原配置备份为 `/etc/apt/sources.list.chronaris-20261012.bak`。编译工具、Zstandard 压缩工具和 Noto 中文字体已安装。原有 MySQL 软件源的过期密钥已按[官方软件源](https://repo.mysql.com/)更新并备份，最后一次 `apt-get update` 无签名错误；没有安装或迁移数据库服务。
 
