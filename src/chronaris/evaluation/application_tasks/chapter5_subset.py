@@ -48,7 +48,7 @@ def _bind_native(files, receipt, record):
         for name, digest in read(path)['declaration']['evidence_files'].items(): bind(files, name, digest)
 
 
-def prepare_subset(*, main_root, core_root, legacy_workspace, pause_receipt, output_root):
+def prepare_subset(*, main_root, core_root, legacy_workspace, pause_receipt, output_root, legacy_compatibility=None):
     """CPU-only metadata/checkpoint audit; never reads held-out observations or scores."""
     import torch
     from chronaris.representation import TrainOnlyRobustNormalizer
@@ -59,6 +59,10 @@ def prepare_subset(*, main_root, core_root, legacy_workspace, pause_receipt, out
     if root in (main, core) or main in root.parents or core in root.parents:
         raise ValueError('subset requires an independent output root')
     files = {}
+    if legacy_compatibility:
+        from chronaris.evaluation.application_tasks.device_resume import qualified_execution
+        _, compatibility_files = qualified_execution(legacy_compatibility, legacy_workspace=legacy, core_root=core)
+        files.update(compatibility_files)
     formal, models, state = (read(main/n) for n in ('formal_plan.json', 'main_models.json', 'pipeline_state.json'))
     if not models['main_models_frozen'] or models['confirmation_opened'] or models['plan_sha256'] != formal['plan_sha256']:
         raise ValueError('parent main models are not frozen and unopened')
@@ -137,6 +141,7 @@ def prepare_subset(*, main_root, core_root, legacy_workspace, pause_receipt, out
     result = seal_development_plan(dict(format='chronaris.chapter5_subset.v1', status='prepared',
         source_code_sha256=current_source, root=str(root), main_root=str(main), core_root=str(core),
         legacy_workspace=str(legacy), legacy_source_sha256=source, input_files=files,
+        **({'legacy_compatibility': str(Path(legacy_compatibility).resolve())} if legacy_compatibility else {}),
         registry_path=str(Path('docs/requirements/thesis-v4-public-subjects.json').resolve()),
         data_root=str(Path('artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared').resolve()),
         simulation_root=core_plan['simulation_root'], units=units, model_units=18, public_units=15,
@@ -187,12 +192,24 @@ def train_subset_unit(root, index):
                 for kind in ('model', 'result'): bind(files, component[kind+'_path'], component[kind+'_sha256'])
         result['files'] = files
     elif 'legacy_index' in unit:
-        legacy = Path(plan['legacy_workspace'])
-        raw = root/'legacy_receipts'/f'{index}.json'; raw.parent.mkdir(parents=True, exist_ok=True)
-        subprocess.run([sys.executable, str(legacy/'scripts/evaluation/application_tasks/run_v4_pipeline.py'),
-            '--worker', f"chapter5_core__{unit['legacy_index']}", '--config', str(Path(plan['core_root'])/'pipeline_config.json'),
-            '--result', str(raw)], cwd=legacy, check=True)
-        result = read(raw)
+        if plan.get('legacy_compatibility'):
+            from chronaris.evaluation.application_tasks.device_resume import qualified_execution
+            execution, bindings = qualified_execution(plan['legacy_compatibility'],
+                legacy_workspace=plan['legacy_workspace'], core_root=plan['core_root'])
+            runner = Path(__file__).parents[4]/'scripts/evaluation/application_tasks/run_device_resume.py'
+            subprocess.run([sys.executable, str(runner), '--workspace', execution['workspace'],
+                '--receipt', plan['legacy_compatibility'], '--mode', 'resumed', '--index', str(unit['legacy_index'])],
+                cwd=execution['workspace'], check=True)
+            result = read(Path(execution['root'])/'resumed'/f"unit_{unit['legacy_index']}_completed.json")
+            if result['status'] != 'waiting_gpu':
+                result['files'].update(bindings)
+        else:
+            legacy = Path(plan['legacy_workspace'])
+            raw = root/'legacy_receipts'/f'{index}.json'; raw.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run([sys.executable, str(legacy/'scripts/evaluation/application_tasks/run_v4_pipeline.py'),
+                '--worker', f"chapter5_core__{unit['legacy_index']}", '--config', str(Path(plan['core_root'])/'pipeline_config.json'),
+                '--result', str(raw)], cwd=legacy, check=True)
+            result = read(raw)
         if result['status'] == 'waiting_gpu': return result
         if result['unit'] != read(Path(plan['core_root'])/'chapter5_plan.json')['units'][unit['legacy_index']]:
             raise ValueError('legacy worker returned another unit')

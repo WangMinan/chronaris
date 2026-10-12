@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--main-root')
     parser.add_argument('--core-root')
     parser.add_argument('--legacy-workspace')
+    parser.add_argument('--legacy-compatibility')
     parser.add_argument('--pause-receipt')
     parser.add_argument('--unit', type=int)
     parser.add_argument('--reference', action='store_true')
@@ -25,7 +26,8 @@ def main():
         if not all((args.main_root, args.core_root, args.legacy_workspace, args.pause_receipt)):
             parser.error('prepare requires main/core roots, legacy workspace and pause receipt')
         result = subset.prepare_subset(main_root=args.main_root, core_root=args.core_root,
-            legacy_workspace=args.legacy_workspace, pause_receipt=args.pause_receipt, output_root=args.root)
+            legacy_workspace=args.legacy_workspace, pause_receipt=args.pause_receipt, output_root=args.root,
+            legacy_compatibility=args.legacy_compatibility)
     elif args.action == 'dry-run': result = subset.verified_subset(args.root)
     elif args.action == 'freeze': result = subset.freeze_subset(args.root)
     elif args.action == 'generate-simulation':
