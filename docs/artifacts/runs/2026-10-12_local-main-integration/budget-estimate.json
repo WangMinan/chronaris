@@ -1,0 +1,311 @@
+{
+  "group_hours": {
+    "clare_batched": 8.11176376868842,
+    "clare_no_event": 12.301440754176006,
+    "cogpilot_batched": 37.85756752861133,
+    "sim_no_continuous": 3.852212966944459,
+    "sim_no_physics": 5.656578114167082,
+    "sim_no_event": 5.549602965278609
+  },
+  "base_compute_hours": 73.3291660978659,
+  "rows": [
+    {
+      "case": "clare_batched",
+      "fold": 0,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 160.76549654999326,
+        "joint": 1912.5027192999823,
+        "initial_transition": 122.24796106399981,
+        "validation": 362.23417571396794,
+        "export": 416.6391647232506,
+        "consumer_allowance": 900
+      },
+      "hours": 1.6312987847919613
+    },
+    {
+      "case": "clare_batched",
+      "fold": 1,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 160.76549654999326,
+        "joint": 1912.5027192999823,
+        "initial_transition": 122.24796106399981,
+        "validation": 362.23417571396794,
+        "export": 397.89533489750056,
+        "consumer_allowance": 900
+      },
+      "hours": 1.6260921653959197
+    },
+    {
+      "case": "clare_batched",
+      "fold": 2,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 160.76549654999326,
+        "joint": 1912.5027192999823,
+        "initial_transition": 122.24796106399981,
+        "validation": 358.0416505320933,
+        "export": 406.7739911307506,
+        "consumer_allowance": 900
+      },
+      "hours": 1.6273938684657463
+    },
+    {
+      "case": "clare_batched",
+      "fold": 3,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 160.76549654999326,
+        "joint": 1912.5027192999823,
+        "initial_transition": 122.24796106399981,
+        "validation": 361.395670677593,
+        "export": 398.55301313700056,
+        "consumer_allowance": 900
+      },
+      "hours": 1.6260419357301212
+    },
+    {
+      "case": "clare_batched",
+      "fold": 4,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 160.76549654999326,
+        "joint": 1912.5027192999823,
+        "initial_transition": 122.24796106399981,
+        "validation": 271.67563178547596,
+        "export": 397.89533489750056,
+        "consumer_allowance": 900
+      },
+      "hours": 1.6009370143046722
+    },
+    {
+      "case": "clare_no_event",
+      "fold": 0,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 152.96299459998863,
+        "joint": 4242.562168100039,
+        "initial_transition": 124.35299391499984,
+        "validation": 659.1074084999891,
+        "export": 840.969076039174,
+        "consumer_allowance": 900
+      },
+      "hours": 2.4772890969594603
+    },
+    {
+      "case": "clare_no_event",
+      "fold": 1,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 152.96299459998863,
+        "joint": 4242.562168100039,
+        "initial_transition": 124.35299391499984,
+        "validation": 659.1074084999891,
+        "export": 803.1354238416736,
+        "consumer_allowance": 900
+      },
+      "hours": 2.4667797491268217
+    },
+    {
+      "case": "clare_no_event",
+      "fold": 2,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 152.96299459998863,
+        "joint": 4242.562168100039,
+        "initial_transition": 124.35299391499984,
+        "validation": 651.4788505312392,
+        "export": 821.0566275141738,
+        "consumer_allowance": 900
+      },
+      "hours": 2.4696388173778634
+    },
+    {
+      "case": "clare_no_event",
+      "fold": 3,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 152.96299459998863,
+        "joint": 4242.562168100039,
+        "initial_transition": 124.35299391499984,
+        "validation": 657.5816969062391,
+        "export": 804.462920410007,
+        "consumer_allowance": 900
+      },
+      "hours": 2.466724689397539
+    },
+    {
+      "case": "clare_no_event",
+      "fold": 4,
+      "pre_updates": 300,
+      "joint_updates": 200,
+      "phase_seconds": {
+        "pretraining": 1998.2861078998667,
+        "head_warmup": 152.96299459998863,
+        "joint": 4242.562168100039,
+        "initial_transition": 124.35299391499984,
+        "validation": 494.33055637499183,
+        "export": 803.1354238416736,
+        "consumer_allowance": 900
+      },
+      "hours": 2.4210084013143227
+    },
+    {
+      "case": "cogpilot_batched",
+      "fold": 0,
+      "pre_updates": 351,
+      "joint_updates": 351,
+      "phase_seconds": {
+        "pretraining": 8790.810281135793,
+        "head_warmup": 268.6949575999961,
+        "joint": 10752.919758126092,
+        "initial_transition": 487.1078799629995,
+        "validation": 3477.090036222995,
+        "export": 1581.6730211046834,
+        "consumer_allowance": 900
+      },
+      "hours": 7.293971092820154
+    },
+    {
+      "case": "cogpilot_batched",
+      "fold": 1,
+      "pre_updates": 356,
+      "joint_updates": 356,
+      "phase_seconds": {
+        "pretraining": 8916.03549881579,
+        "head_warmup": 268.6949575999961,
+        "joint": 10906.095253256093,
+        "initial_transition": 487.1078799629995,
+        "validation": 3417.098834769872,
+        "export": 1594.9097173096727,
+        "consumer_allowance": 900
+      },
+      "hours": 7.358317261587341
+    },
+    {
+      "case": "cogpilot_batched",
+      "fold": 2,
+      "pre_updates": 355,
+      "joint_updates": 355,
+      "phase_seconds": {
+        "pretraining": 8890.99045527979,
+        "head_warmup": 268.6949575999961,
+        "joint": 10875.460154230093,
+        "initial_transition": 487.1078799629995,
+        "validation": 3453.0935556417458,
+        "export": 1597.153225141027,
+        "consumer_allowance": 900
+      },
+      "hours": 7.353472285515459
+    },
+    {
+      "case": "cogpilot_batched",
+      "fold": 3,
+      "pre_updates": 369,
+      "joint_updates": 369,
+      "phase_seconds": {
+        "pretraining": 9241.621064783783,
+        "head_warmup": 268.6949575999961,
+        "joint": 11304.351540594096,
+        "initial_transition": 487.1078799629995,
+        "validation": 3577.8752546642413,
+        "export": 1656.1574811056414,
+        "consumer_allowance": 900
+      },
+      "hours": 7.621057827419655
+    },
+    {
+      "case": "cogpilot_batched",
+      "fold": 4,
+      "pre_updates": 398,
+      "joint_updates": 398,
+      "phase_seconds": {
+        "pretraining": 9967.927327327765,
+        "head_warmup": 268.6949575999961,
+        "joint": 12192.769412348105,
+        "initial_transition": 487.1078799629995,
+        "validation": 4012.21155318485,
+        "export": 1801.9854901436618,
+        "consumer_allowance": 900
+      },
+      "hours": 8.230749061268716
+    },
+    {
+      "case": "sim_no_continuous",
+      "pre_updates": 0,
+      "joint_updates": 425,
+      "phase_seconds": {
+        "pretraining": 0.0,
+        "head_warmup": 0.0,
+        "joint": 12067.966681000053,
+        "validation_and_export_allowance": 1800
+      },
+      "hours": 3.852212966944459
+    },
+    {
+      "case": "sim_no_physics",
+      "pre_updates": 1500,
+      "joint_updates": 500,
+      "phase_seconds": {
+        "pretraining": 4568.295603002298,
+        "head_warmup": 858.0880879999313,
+        "joint": 13137.297519999265,
+        "validation_and_export_allowance": 1800
+      },
+      "hours": 5.656578114167082
+    },
+    {
+      "case": "sim_no_event",
+      "pre_updates": 1500,
+      "joint_updates": 500,
+      "phase_seconds": {
+        "pretraining": 4568.295603002298,
+        "head_warmup": 767.7962359999583,
+        "joint": 12842.478836000737,
+        "validation_and_export_allowance": 1800
+      },
+      "hours": 5.549602965278609
+    }
+  ],
+  "planning_compute_hours": [
+    58.66333287829272,
+    109.99374914679885
+  ],
+  "integration_evaluation_and_export_allowance_hours": [
+    24,
+    48
+  ],
+  "total_calendar_days": [
+    3.44430553659553,
+    6.583072881116618
+  ],
+  "assumptions": [
+    "One GPU, continuous availability, the agreed seed-17 15+3 subset only.",
+    "Development batches extrapolated to fixed formal-fold window counts; no full-fold timing claim.",
+    "Public no-event pretraining conservatively uses the complete-method mature rate.",
+    "Simulation complete-method mature pretraining proxies the two new ablations; effective-32 joint cost scales measured effective-4 cost by eight.",
+    "Paused simulation can resume only after source/configuration/replay qualification; otherwise add retraining cost.",
+    "15 minutes per public unit for consumer fitting is a planning allowance, not a measurement.",
+    "The 0.8 to 1.5 multipliers are scheduling scenarios, not statistical confidence bounds.",
+    "24 to 48 hours covers integration, validation, evaluation and deliverable work; full external-model evaluation and missing-weight transfer are not measured."
+  ]
+}

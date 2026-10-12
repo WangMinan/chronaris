@@ -1,0 +1,18 @@
+{
+  "format": "chronaris.chapter5_subset.v1",
+  "status": "prepared",
+  "source_code_sha256": "50449ccca892a8f517225324009e5066318d65baab7746af005c04dc3a65b194",
+  "model_units": 18,
+  "public_units": 15,
+  "resume_counts": {
+    "pretraining": 1500,
+    "warmup": 50,
+    "joint": 75,
+    "joint_remaining": 425
+  },
+  "confirmation_opened": false,
+  "plan_sha256": "2b88facd36cf3d1668521acf9864b9593f72279adfe934955327af17b763261f",
+  "input_files": 963,
+  "native_references": 85,
+  "simulation_references": 6
+}

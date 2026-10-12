@@ -26,6 +26,7 @@ from chronaris.modeling.training.rng import isolated_training_rng
 from chronaris.representation import TrainOnlyRobustNormalizer, select_observation_batch
 from chronaris.representation.window_features import WindowFeatureBatch
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file, write_deterministic_npz
+from chronaris.evaluation.application_tasks.stage45_recipe import THESIS_RECIPES
 
 
 def contract_development_inputs(domain, *, data_root, registry_path, full=False, fold_index=0, grouped_smoke=False,
@@ -108,7 +109,9 @@ def run_common_contract_smoke(*, domain, output_root,
         raise ValueError("grouped selection requires a fresh reference recipe without legacy snapshot evaluation")
     if private_projection_kind != "layernorm_linear" and (selection_inner_index is None or methods != ("chronaris",) or recipe != "stage4_reference"):
         raise ValueError("linear projection is a single-factor grouped-selection experiment")
-    if subject_role == 'confirmation' and (recipe not in ('stage4_reference', None)
+    if subject_role == 'confirmation' and recipe in THESIS_RECIPES and (expected_recipe is None or expected_contract_sha256 is None):
+        raise ValueError('formal thesis training requires a frozen recipe and data contract')
+    if subject_role == 'confirmation' and (recipe not in ('stage4_reference', None, *THESIS_RECIPES)
         or (recipe is None and methods != ('naive_time_sync',)) or pretraining_source or selection_inner_index is not None):
         raise ValueError('formal training requires the fixed reference without development reuse or reselection')
     scope = 'confirmation_training' if subject_role == 'confirmation' else 'development_comparison' if full else 'engineering_development'
@@ -154,7 +157,7 @@ def run_common_contract_smoke(*, domain, output_root,
                 from chronaris.evaluation.application_tasks.stage45_recipe import training_recipe
                 from chronaris.models.alignment.calibrated_physics import fit_physics_calibration
                 calibration = (fit_physics_calibration(normalizer, provider, train_sample_ids=fold.train_sample_ids,
-                    vehicle_feature_names=schema.vehicle_feature_names, relations=()) if recipe == 'thesis_reference' else None)
+                    vehicle_feature_names=schema.vehicle_feature_names, relations=()) if recipe in THESIS_RECIPES else None)
                 recipe_configs = training_recipe(recipe, method=methods[0], full=full, seed=seed, digest=digest,
                     train_count=len(fold.train_sample_ids), graph=cuda_graph_recurrence,
                     calibration=calibration, micro_batch=micro_batch)

@@ -1,0 +1,569 @@
+{
+  "cases": {
+    "clare": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/clare.json",
+      "wall_seconds": 21.089075331999993,
+      "peak_allocated_gib": 0.43409061431884766,
+      "peak_reserved_gib": 0.775390625,
+      "optimizer_seconds": [
+        10.671411286999955,
+        6.666195150000021
+      ],
+      "active_pretraining_updates": [
+        10.635859320999316,
+        6.660953692999556
+      ],
+      "old_machine_same_updates": [
+        14.389529970474541,
+        9.292796313762665
+      ],
+      "validation_seconds_per_four": [
+        0.35858388599990576,
+        0.332778646999941,
+        0.42879760999994687,
+        0.4524594529998467
+      ],
+      "same_parent_checkpoint": true
+    },
+    "cogpilot": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/cogpilot.json",
+      "wall_seconds": 54.03659219699966,
+      "peak_allocated_gib": 0.780510425567627,
+      "peak_reserved_gib": 1.181640625,
+      "optimizer_seconds": [
+        17.469711817999723,
+        25.05048251700009
+      ],
+      "active_pretraining_updates": [
+        17.4406744060002,
+        25.04504353599941
+      ],
+      "old_machine_same_updates": [
+        24.121831752359867,
+        34.69674949441105
+      ],
+      "validation_seconds_per_four": [
+        0.820464253999944,
+        0.8244311540001945,
+        0.8387142739998126,
+        0.8071246679996875
+      ],
+      "same_parent_checkpoint": true
+    },
+    "clare_batched": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/clare_batched.json",
+      "wall_seconds": 169.9741810800001,
+      "peak_allocated_gib": 0.8778009414672852,
+      "peak_reserved_gib": 1.544921875,
+      "optimizer_seconds": [
+        8.182887937000032,
+        4.286235422000118,
+        4.358008871000038,
+        3.215309930999865,
+        1.112112014000104,
+        114.06507312699978,
+        9.055119536999882,
+        10.069907655999941
+      ],
+      "pretraining_update_seconds": [
+        8.182887937000032,
+        4.286235422000118,
+        4.358008871000038
+      ],
+      "warmup_update_seconds": [
+        3.215309930999865,
+        1.112112014000104
+      ],
+      "joint_update_seconds": [
+        114.06507312699978,
+        9.055119536999882,
+        10.069907655999941
+      ],
+      "effective_batch": 16,
+      "phase_seconds": {
+        "inputs_and_contract": 0.16205253899988747,
+        "chronaris/pretraining": 21.197280733000298,
+        "chronaris/self_supervised/export": 3.5597101990001647,
+        "chronaris/self_supervised/consumers": 0.5204551510000783,
+        "chronaris/fine_tuning": 139.80414226799985,
+        "chronaris/task_guided/export": 4.332428674999846,
+        "chronaris/task_guided/consumers": 0.3045937189999677
+      },
+      "sample_counts": {
+        "train": 32,
+        "validation": 16
+      },
+      "training": {
+        "self_supervised": {
+          "validation_seconds": 3.4246908119998807,
+          "validation_checks": 2,
+          "total_training_seconds": 20.399483585000326,
+          "updates": 3,
+          "counts": {
+            "train": 32,
+            "validation": 16
+          },
+          "batch": 4,
+          "effective_batch": 16
+        },
+        "task_guided": {
+          "validation_seconds": 1.5710040729995853,
+          "validation_checks": 2,
+          "total_training_seconds": 139.52149875000032,
+          "updates": 5,
+          "counts": {
+            "train": 32,
+            "validation": 16
+          },
+          "batch": 4,
+          "effective_batch": 16
+        }
+      }
+    },
+    "cogpilot_batched": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-cogpilot-retry-20261012/cogpilot_batched.json",
+      "wall_seconds": 626.857446132,
+      "peak_allocated_gib": 2.3612756729125977,
+      "peak_reserved_gib": 3.0859375,
+      "optimizer_seconds": [
+        29.33490998399975,
+        12.729261640000004,
+        10.756119824000052,
+        5.373899151999922,
+        3.1919834459999947,
+        457.77296997899975,
+        30.379514836000453,
+        30.89068321600007
+      ],
+      "pretraining_update_seconds": [
+        29.33490998399975,
+        12.729261640000004,
+        10.756119824000052
+      ],
+      "warmup_update_seconds": [
+        5.373899151999922,
+        3.1919834459999947
+      ],
+      "joint_update_seconds": [
+        457.77296997899975,
+        30.379514836000453,
+        30.89068321600007
+      ],
+      "effective_batch": 16,
+      "phase_seconds": {
+        "inputs_and_contract": 0.9051492570001756,
+        "chronaris/pretraining": 67.52028717099984,
+        "chronaris/self_supervised/export": 10.857329135999862,
+        "chronaris/self_supervised/consumers": 0.8930161310004223,
+        "chronaris/fine_tuning": 535.1770744340001,
+        "chronaris/task_guided/export": 10.680346045000078,
+        "chronaris/task_guided/consumers": 0.6413924399994357
+      },
+      "sample_counts": {
+        "train": 64,
+        "validation": 32
+      },
+      "training": {
+        "self_supervised": {
+          "validation_seconds": 13.4754625139999,
+          "validation_checks": 2,
+          "total_training_seconds": 66.52259521899987,
+          "updates": 3,
+          "counts": {
+            "train": 64,
+            "validation": 32
+          },
+          "batch": 4,
+          "effective_batch": 16
+        },
+        "task_guided": {
+          "validation_seconds": 5.721721950999381,
+          "validation_checks": 2,
+          "total_training_seconds": 534.231331723,
+          "updates": 5,
+          "counts": {
+            "train": 64,
+            "validation": 32
+          },
+          "batch": 4,
+          "effective_batch": 16
+        }
+      }
+    },
+    "clare_no_event": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/clare_no_event.json",
+      "wall_seconds": 208.9540449850001,
+      "peak_allocated_gib": 0.8497824668884277,
+      "peak_reserved_gib": 1.513671875,
+      "optimizer_seconds": [
+        8.116842630000065,
+        4.23352299599992,
+        4.264931603999685,
+        3.0592598919997727,
+        0.9903931120002198,
+        116.23615128499978,
+        20.2708437350002,
+        22.154777946000195
+      ],
+      "pretraining_update_seconds": [
+        8.116842630000065,
+        4.23352299599992,
+        4.264931603999685
+      ],
+      "warmup_update_seconds": [
+        3.0592598919997727,
+        0.9903931120002198
+      ],
+      "joint_update_seconds": [
+        116.23615128499978,
+        20.2708437350002,
+        22.154777946000195
+      ],
+      "effective_batch": 16,
+      "phase_seconds": {
+        "inputs_and_contract": 0.17339731099991695,
+        "chronaris/pretraining": 20.909884992000116,
+        "chronaris/self_supervised/export": 3.3332104060000347,
+        "chronaris/self_supervised/consumers": 0.5557411600002524,
+        "chronaris/fine_tuning": 170.59434950900004,
+        "chronaris/task_guided/export": 12.596748414000103,
+        "chronaris/task_guided/consumers": 0.6953157839998312
+      },
+      "sample_counts": {
+        "train": 32,
+        "validation": 16
+      },
+      "training": {
+        "self_supervised": {
+          "validation_seconds": 3.3768117179997716,
+          "validation_checks": 2,
+          "total_training_seconds": 20.123099968000133,
+          "updates": 3,
+          "counts": {
+            "train": 32,
+            "validation": 16
+          },
+          "batch": 4,
+          "effective_batch": 16
+        },
+        "task_guided": {
+          "validation_seconds": 7.140475173000141,
+          "validation_checks": 2,
+          "total_training_seconds": 170.2848125380001,
+          "updates": 5,
+          "counts": {
+            "train": 32,
+            "validation": 16
+          },
+          "batch": 4,
+          "effective_batch": 16
+        }
+      }
+    },
+    "sim_no_continuous": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/sim_no_continuous.json",
+      "wall_seconds": 22.136457769000117,
+      "peak_allocated_gib": 0.6042609214782715,
+      "peak_reserved_gib": 1.5234375,
+      "optimizer_seconds": [
+        3.8433994570000323,
+        0.24974332900001173,
+        2.252941087999716,
+        0.051830237999638484,
+        1.4706312019998222,
+        3.5494019650000155
+      ],
+      "pretraining_update_seconds": [
+        3.8433994570000323,
+        0.24974332900001173
+      ],
+      "warmup_update_seconds": [
+        2.252941087999716,
+        0.051830237999638484
+      ],
+      "joint_update_seconds": [
+        1.4706312019998222,
+        3.5494019650000155
+      ],
+      "effective_batch": 4,
+      "phase_seconds": {},
+      "sample_counts": null,
+      "training": {
+        "self_supervised": {
+          "validation_seconds": 0.30859060000011596,
+          "validation_checks": 1,
+          "total_training_seconds": 4.47221276900018,
+          "updates": 2,
+          "counts": {
+            "train": 32,
+            "validation": 8
+          },
+          "batch": 4,
+          "effective_batch": 4
+        },
+        "task_guided": {
+          "validation_seconds": 0.10358165399975405,
+          "validation_checks": 1,
+          "total_training_seconds": 7.513432505999845,
+          "updates": 4,
+          "counts": {
+            "train": 32,
+            "validation": 8
+          },
+          "batch": 4,
+          "effective_batch": 4
+        }
+      }
+    },
+    "sim_no_physics": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/sim_no_physics.json",
+      "wall_seconds": 22.435872326999743,
+      "peak_allocated_gib": 0.6042609214782715,
+      "peak_reserved_gib": 1.5234375,
+      "optimizer_seconds": [
+        4.202859355999863,
+        0.26921439099987765,
+        2.1452202199998283,
+        0.05361773600043307,
+        1.3696760650000215,
+        3.2843243799998163
+      ],
+      "pretraining_update_seconds": [
+        4.202859355999863,
+        0.26921439099987765
+      ],
+      "warmup_update_seconds": [
+        2.1452202199998283,
+        0.05361773600043307
+      ],
+      "joint_update_seconds": [
+        1.3696760650000215,
+        3.2843243799998163
+      ],
+      "effective_batch": 4,
+      "phase_seconds": {},
+      "sample_counts": null,
+      "training": {
+        "self_supervised": {
+          "validation_seconds": 0.35861520300022676,
+          "validation_checks": 1,
+          "total_training_seconds": 4.918002889000036,
+          "updates": 2,
+          "counts": {
+            "train": 32,
+            "validation": 8
+          },
+          "batch": 4,
+          "effective_batch": 4
+        },
+        "task_guided": {
+          "validation_seconds": 0.09583788800000548,
+          "validation_checks": 1,
+          "total_training_seconds": 7.017914412000209,
+          "updates": 4,
+          "counts": {
+            "train": 32,
+            "validation": 8
+          },
+          "batch": 4,
+          "effective_batch": 4
+        }
+      }
+    },
+    "sim_no_event": {
+      "status": "completed",
+      "evidence_file": "/home/wangminan/chronaris-migration-20261012/local-budget-extra-20261012/sim_no_event.json",
+      "wall_seconds": 19.42667268499963,
+      "peak_allocated_gib": 0.591519832611084,
+      "peak_reserved_gib": 1.501953125,
+      "optimizer_seconds": [
+        3.3598375659998965,
+        0.24404425400007312,
+        1.9194905899998957,
+        0.051571594000051846,
+        1.3036751949998688,
+        3.2106197090001842
+      ],
+      "pretraining_update_seconds": [
+        3.3598375659998965,
+        0.24404425400007312
+      ],
+      "warmup_update_seconds": [
+        1.9194905899998957,
+        0.051571594000051846
+      ],
+      "joint_update_seconds": [
+        1.3036751949998688,
+        3.2106197090001842
+      ],
+      "effective_batch": 4,
+      "phase_seconds": {},
+      "sample_counts": null,
+      "training": {
+        "self_supervised": {
+          "validation_seconds": 0.26088742599995385,
+          "validation_checks": 1,
+          "total_training_seconds": 3.921597095999914,
+          "updates": 2,
+          "counts": {
+            "train": 32,
+            "validation": 8
+          },
+          "batch": 4,
+          "effective_batch": 4
+        },
+        "task_guided": {
+          "validation_seconds": 0.09238485600008062,
+          "validation_checks": 1,
+          "total_training_seconds": 6.642753250000169,
+          "updates": 4,
+          "counts": {
+            "train": 32,
+            "validation": 8
+          },
+          "batch": 4,
+          "effective_batch": 4
+        }
+      }
+    }
+  },
+  "formal_counts": {
+    "clare/0": {
+      "train": 2102,
+      "validation": 432,
+      "held_out": 534
+    },
+    "clare/1": {
+      "train": 1988,
+      "validation": 432,
+      "held_out": 648
+    },
+    "clare/2": {
+      "train": 2047,
+      "validation": 427,
+      "held_out": 594
+    },
+    "clare/3": {
+      "train": 1993,
+      "validation": 431,
+      "held_out": 644
+    },
+    "clare/4": {
+      "train": 2096,
+      "validation": 324,
+      "held_out": 648
+    },
+    "cogpilot/0": {
+      "train": 5601,
+      "validation": 1449,
+      "held_out": 2123
+    },
+    "cogpilot/1": {
+      "train": 5685,
+      "validation": 1424,
+      "held_out": 2064
+    },
+    "cogpilot/2": {
+      "train": 5680,
+      "validation": 1439,
+      "held_out": 2054
+    },
+    "cogpilot/3": {
+      "train": 5891,
+      "validation": 1491,
+      "held_out": 1791
+    },
+    "cogpilot/4": {
+      "train": 6360,
+      "validation": 1672,
+      "held_out": 1141
+    }
+  },
+  "simulation_mature": {
+    "status": "completed",
+    "actual_batch": 4,
+    "effective_batch": 32,
+    "parent_checkpoint": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/self_supervised/chronaris/C/last.pt",
+    "parent_sha256": "9b7a30d7bffc465cfb6ed98411ecacba5c2f77f53e7c5616f53cb0b06641078b",
+    "measurements": [
+      [
+        {
+          "forward_seconds": 3.2877424449998216,
+          "backward_seconds": 0.3128814820001935
+        },
+        {
+          "forward_seconds": 0.14077992500006076,
+          "backward_seconds": 0.23649364100037928
+        },
+        {
+          "forward_seconds": 0.1357561920003718,
+          "backward_seconds": 0.2360178700000688
+        },
+        {
+          "forward_seconds": 0.13748873100030323,
+          "backward_seconds": 0.24545116199988115
+        },
+        {
+          "forward_seconds": 0.131130937999842,
+          "backward_seconds": 0.24374537899984716
+        },
+        {
+          "forward_seconds": 0.13705647000006138,
+          "backward_seconds": 0.235807145999388
+        },
+        {
+          "forward_seconds": 0.2427185879996614,
+          "backward_seconds": 0.2371028590005153
+        },
+        {
+          "forward_seconds": 0.15159257699997397,
+          "backward_seconds": 0.2512404909994075
+        }
+      ],
+      [
+        {
+          "forward_seconds": 0.15498587599995517,
+          "backward_seconds": 0.24803004699970188
+        },
+        {
+          "forward_seconds": 0.14342549100001634,
+          "backward_seconds": 0.24374726999940322
+        },
+        {
+          "forward_seconds": 0.13029643099980603,
+          "backward_seconds": 0.23822497599940107
+        },
+        {
+          "forward_seconds": 0.12694417200054886,
+          "backward_seconds": 0.24711292700067133
+        },
+        {
+          "forward_seconds": 0.134422447000361,
+          "backward_seconds": 0.23486368600060814
+        },
+        {
+          "forward_seconds": 0.1245269040000494,
+          "backward_seconds": 0.2336270340001647
+        },
+        {
+          "forward_seconds": 0.1434123390008608,
+          "backward_seconds": 0.23337380700013455
+        },
+        {
+          "forward_seconds": 0.15507267999964824,
+          "backward_seconds": 0.25346431500020117
+        }
+      ]
+    ],
+    "peak_allocated_gib": 0.3161807060241699,
+    "peak_reserved_gib": 0.64453125,
+    "confirmation_opened": false
+  }
+}

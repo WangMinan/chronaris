@@ -81,7 +81,8 @@ def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha25
         for route in (('self_supervised',) if method=='naive_time_sync' else unit['routes']):
             checkpoint=unit['checkpoints'][route];supervised=route=='task_guided'
             if method=='naive_time_sync':
-                encoder,normalizer,_=load_v4_naive_encoder(checkpoint,fold=fold,data_manifest_sha256=unit['data_manifest_sha256'])
+                encoder,normalizer,_=load_v4_naive_encoder(checkpoint,fold=fold,data_manifest_sha256=unit['data_manifest_sha256'],
+                    expected_training_source_sha256=unit.get('training_source_sha256'))
             else:
                 encoder,normalizer,_=load_frozen_application_encoder(checkpoint,route=route,fold=fold,device='cuda')
             destination=root/'evaluation'/route

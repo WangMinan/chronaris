@@ -36,6 +36,11 @@ def read_simulation_model_freeze(path, expected_sha256, *, freeze_path, freeze_s
 
 def generate_simulation_confirmation(*, freeze_path, freeze_sha256, model_freeze_path, model_freeze_sha256, output_root):
     read_simulation_model_freeze(model_freeze_path, model_freeze_sha256, freeze_path=freeze_path, freeze_sha256=freeze_sha256)
+    return _generate_frozen_simulation(freeze_sha256=freeze_sha256, model_freeze_sha256=model_freeze_sha256, output_root=output_root)
+
+
+def _generate_frozen_simulation(*, freeze_sha256, model_freeze_sha256, output_root):
+    """Shared generator; callers verify their own complete predeclared model inventory."""
     registry = json.loads(Path(SIMULATION_REGISTRY).read_text())
     if registry['seed_collision_audit']['collisions'] or not registry['confirmation_generation_requires_frozen_models']:
         raise ValueError('simulation confirmation seed isolation or model-freeze contract changed')

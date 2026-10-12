@@ -38,8 +38,8 @@ def _prepare_cpu_consumer_artifacts(**kwargs):
 
 
 def _require_diagnostic_device(seed):
-    if seed not in (17, 29, 43) or not torch.cuda.is_available() or "4090" not in torch.cuda.get_device_name():
-        raise ValueError("v4 experiments require RTX 4090 and an approved seed")
+    if seed not in (17, 29, 43) or not torch.cuda.is_available() or torch.cuda.get_device_name() not in ("NVIDIA GeForce RTX 4090", "NVIDIA GeForce RTX 4070 SUPER"):
+        raise ValueError("v4 experiments require RTX 4090 or RTX 4070 SUPER and an approved seed")
 
 
 def _snapshot_outputs(*, encoder, normalizer, checkpoint, provider, fold, root):

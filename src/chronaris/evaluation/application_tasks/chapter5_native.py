@@ -47,11 +47,11 @@ def unit_record(main_root, index):
     return unit
 
 
-def _inputs(spec, contract, role, sample_limit):
+def _inputs(spec, contract, role, sample_limit, *, data_root=None, registry_path=None):
     project = Path(__file__).parents[4]
-    data_root = project/'artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared'
+    data_root = data_root or project/'artifacts/application_evaluation/2026-09-08_v4-public-confirmation-prepared'
     provider, schema, fold, _, digest, targets, _, data = load_development_inputs(
-        spec['domain'], data_root, project/'docs/requirements/thesis-v4-public-subjects.json',
+        spec['domain'], data_root, registry_path or project/'docs/requirements/thesis-v4-public-subjects.json',
         fold_index=spec['fold_index'], subject_role='confirmation')
     if digest != contract['data_manifest_sha256'] or fold.to_dict() != contract['fold']:
         raise ValueError('evaluation data or roles differ from the frozen training contract')
@@ -144,6 +144,14 @@ def evaluate_main_unit(*, main_root, index, output_root, role='validation', samp
         require_outer_freeze(gate_path, main_root)
         if sample_limit:
             raise ValueError('formal outer evaluation must retain every window')
+    unit = unit_record(main_root, index)
+    binding = dict(source_code_sha256=v4_workflow_source_sha256(), main_models_sha256=sha(Path(main_root)/'main_models.json'),
+        index=index, role=role, sample_limit=sample_limit)
+    return _evaluate_native_record(unit, binding, output_root, role=role, sample_limit=sample_limit)
+
+
+def _evaluate_native_record(unit, binding, output_root, *, role, sample_limit, data_root=None, registry_path=None):
+    """Shared prediction body; callers must verify their complete freeze before held-out access."""
     from chronaris.evaluation.application_tasks.v4_public_screen import development_gpu_lock
     from chronaris.modeling.training.candidate_screen import _periodic_training_heartbeat
     with development_gpu_lock() as acquired:
@@ -151,9 +159,6 @@ def evaluate_main_unit(*, main_root, index, output_root, role='validation', samp
             return dict(status='waiting_gpu')
         torch.set_num_threads(1)
         root = Path(output_root)
-        unit = unit_record(main_root, index)
-        binding = dict(source_code_sha256=v4_workflow_source_sha256(), main_models_sha256=sha(Path(main_root)/'main_models.json'),
-            index=index, role=role, sample_limit=sample_limit)
         result_path = root/'result.json'
         if result_path.exists():
             old = read(result_path)
@@ -170,7 +175,8 @@ def evaluate_main_unit(*, main_root, index, output_root, role='validation', samp
                 record = read(contract_path)
                 contract, declaration = record['contract'], record['declaration']
                 verify(declaration['evidence_files'])
-                schema, fold, targets, context, raw = _inputs(unit['unit'], contract, role, sample_limit)
+                schema, fold, targets, context, raw = _inputs(unit['unit'], contract, role, sample_limit,
+                    data_root=data_root, registry_path=registry_path)
                 progress.update(route=row['route'], phase='encoder_reload_and_export')
                 started = time.perf_counter()
                 output = _encode(unit['unit'], row, declaration, contract, raw, fold, root/row['route']/'representation', role)

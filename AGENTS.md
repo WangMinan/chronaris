@@ -100,11 +100,13 @@
 
 ## 6. 环境约定
 
-后续编码、测试、阶段脚本实跑默认使用服务器/WSL 的 `chronaris` conda 环境：
+后续编码、测试、阶段脚本实跑默认使用本机 Ubuntu-2204 / WSL2（SSH 别名 `chronaris-wsl`）的 `chronaris` conda 环境：
 
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python
 ```
+
+主开发仓为 `/home/wangminan/projects/chronaris`；Windows 的 `D:\code\chronaris` 为独立证据检出，通过 Git 同步。当前首批入口、测时预算及跨设备恢复条件见 `docs/artifacts/runs/2026-10-12_local-main-integration/README.md`；历史冻结工作区保持原提交。
 
 不要因为 shell 停在 `base` 就直接运行 `python`。如需 MySQL 密码、InfluxDB token、连接串、LLM API KEY 或 sudo 信息，可参考已被 `.gitignore` 纳管的 `docs/SECRETS.md`，但不要把其中内容写入其他文件。
 

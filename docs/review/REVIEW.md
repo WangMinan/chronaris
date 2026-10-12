@@ -6,6 +6,8 @@
 
 ## 当前复核
 
+[本机主分支整合](../artifacts/runs/2026-10-12_local-main-integration/README.md)：核对调用链、旧协议兼容、机制配置与冻结门；57项定向回归和真实资产准备通过，历史恢复的设备条件单独保留。
+
 [论文方法对应与语义执行优化](stage/thesis-v4/thesis-alignment-20261012/README.md)：实际组件、原队列预算、12 时段决定、语义分段归约的 CPU 输出与梯度资格；显卡与独立恢复验证待执行。
 
 [第五章数据与核心实验接续](stage/thesis-v4/chapter5-continuation-20261011/README.md)：冻结主模型复用、核心矩阵、外层门、详细数据和论文侧独立绘图验收。

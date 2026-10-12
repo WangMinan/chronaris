@@ -1,0 +1,10 @@
+{
+  "source_sha256": "50449ccca892a8f517225324009e5066318d65baab7746af005c04dc3a65b194",
+  "python": "3.11.15",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "kernel": "6.18.54.1-microsoft-standard-WSL2",
+  "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+  "device_total_bytes": 12878086144,
+  "tf32": false
+}
