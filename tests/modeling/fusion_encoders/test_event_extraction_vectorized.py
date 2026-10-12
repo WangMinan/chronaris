@@ -46,3 +46,25 @@ def test_vectorized_events_match_scalar_outputs_and_gradients(device):
     expected, actual = reference_extract(tied, config), EventTokenExtractor(config).extract(tied)
     for left, right in zip(expected, actual, strict=True):
         torch.testing.assert_close(left, right, atol=1e-6, rtol=1e-6)
+
+
+@pytest.mark.parametrize("device", ["cpu", "cuda"])
+def test_separated_tied_events_preserve_order_and_empty_history(device):
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA unavailable")
+    states = torch.arange(18, dtype=torch.float32, device=device).reshape(2, 9, 1)
+    valid = torch.tensor([[False] * 9, [True] * 9], device=device)
+    inputs = SemanticEventTensorInput(
+        physiology_states=states, vehicle_states=states,
+        attention_weights=torch.ones(2, 1, 9, device=device),
+        vehicle_event_scores=torch.tensor([[1., 0., 1., 0., 1., 0., 1., 0., 1.]] * 2, device=device),
+        vehicle_offsets_s=torch.arange(9, dtype=torch.float64, device=device).expand(2, -1),
+        physiology_valid_mask=valid, vehicle_valid_mask=valid,
+    )
+    config = CausalEventFusionConfig(state_dim=1, event_top_k=4)
+    actual = EventTokenExtractor(config).extract(inputs)
+    expected = reference_extract(inputs, config)
+    for left, right in zip(expected, actual, strict=True):
+        torch.testing.assert_close(left, right, atol=0, rtol=0)
+    assert not actual[-1][0].any()
+    assert actual[2][1].tolist() == [0., 2., 4., 6.]

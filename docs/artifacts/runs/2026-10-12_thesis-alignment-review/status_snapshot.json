@@ -1,0 +1,751 @@
+{
+  "captured_at": "2026-10-12T12:52:11.288924+08:00",
+  "run_id": "2026-10-11-chapter5-reload",
+  "status": "running",
+  "current_stage": "chapter5_core__18",
+  "pid": 3045556,
+  "children": {
+    "chapter5_core__18": 3164654
+  },
+  "failure_count": 0,
+  "plan_sha256": "5059bb9890b303e04a07be9369453cbb8944e03582f700baee250e6b0bf1a370",
+  "source_code_sha256": "d89dfcc5bf0c444aea09b6defc058e535b63b9ff723102a3535f570de8625b4b",
+  "confirmation_opened": false,
+  "planned_units": 36,
+  "verified_completed_units": 18,
+  "completed": [
+    {
+      "index": 0,
+      "method": "chronaris",
+      "configuration": "reference",
+      "seed": 17,
+      "total_seconds": 36169.70597027894,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 12420.535279513337,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 23509.4749316955,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__0.1.json",
+      "receipt_sha256": "f9be0ba36b5affc0609ccff055b40f8d40f494c13e827b35c6ddd614b56b8de3"
+    },
+    {
+      "index": 1,
+      "method": "chronaris",
+      "configuration": "reference",
+      "seed": 29,
+      "total_seconds": 12359.6507569151,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 9679.279527268372,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 2589.415658039972,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__1.1.json",
+      "receipt_sha256": "bbe10ec3efa91ab812c4fff1bb614e00a1ae308485d9a71fda2a5017a906b033"
+    },
+    {
+      "index": 2,
+      "method": "chronaris",
+      "configuration": "reference",
+      "seed": 43,
+      "total_seconds": 8222.057396568358,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 5580.443441511132,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 2551.4659288534895,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__2.1.json",
+      "receipt_sha256": "a51c74b8c258dcfd5ab8715d3482371ffb728f791a4cffe6cd0c1263ce5d3608"
+    },
+    {
+      "index": 3,
+      "method": "physiology_only",
+      "configuration": "reference",
+      "seed": 17,
+      "total_seconds": 765.4206010354683,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 484.74515893962234,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 223.91860348079354,
+          "optimizer_updates": 450,
+          "head_warmup_updates": 50,
+          "joint_updates": 400,
+          "stopped_early": true
+        }
+      },
+      "receipt": "chapter5_core__3.1.json",
+      "receipt_sha256": "552783ea6cf1ae65b7767a92fc8f3431df7fc359285401b72071877ad75878a7"
+    },
+    {
+      "index": 4,
+      "method": "physiology_only",
+      "configuration": "reference",
+      "seed": 29,
+      "total_seconds": 765.9043771475554,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 486.16525164153427,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 224.28441234491765,
+          "optimizer_updates": 450,
+          "head_warmup_updates": 50,
+          "joint_updates": 400,
+          "stopped_early": true
+        }
+      },
+      "receipt": "chapter5_core__4.1.json",
+      "receipt_sha256": "645aa3937eb6a65ebaf68d4300f9aa84f19eeea14d85b295965cae02ec045bb4"
+    },
+    {
+      "index": 5,
+      "method": "physiology_only",
+      "configuration": "reference",
+      "seed": 43,
+      "total_seconds": 764.0553330052644,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 483.964713126421,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 223.2379045439884,
+          "optimizer_updates": 450,
+          "head_warmup_updates": 50,
+          "joint_updates": 400,
+          "stopped_early": true
+        }
+      },
+      "receipt": "chapter5_core__5.1.json",
+      "receipt_sha256": "92971205be952df0c4ef4cd915ebe5286a1b793e9204c5d3ffa5ae40cdd97d97"
+    },
+    {
+      "index": 6,
+      "method": "vehicle_only",
+      "configuration": "reference",
+      "seed": 17,
+      "total_seconds": 824.2652498073876,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 489.3938976591453,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 277.82276566233486,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__6.1.json",
+      "receipt_sha256": "708e10779e3441d96f54039e4f1e1855254201d639e84633fb42fd4d9ce887d7"
+    },
+    {
+      "index": 7,
+      "method": "vehicle_only",
+      "configuration": "reference",
+      "seed": 29,
+      "total_seconds": 818.3928291816264,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 484.4863483766094,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 276.7889010440558,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__7.1.json",
+      "receipt_sha256": "cd994dd6728cb431caf9f3fda438280f937dec4558765b8b6315c58bc0ba3c77"
+    },
+    {
+      "index": 8,
+      "method": "vehicle_only",
+      "configuration": "reference",
+      "seed": 43,
+      "total_seconds": 819.0381924379617,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 485.531809033826,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 276.72662931866944,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__8.1.json",
+      "receipt_sha256": "6b22a56fc3dc7266c61d995bfbf5aec6159d926584299d362999e0101e394e18"
+    },
+    {
+      "index": 9,
+      "method": "mult",
+      "configuration": "reference",
+      "seed": 17,
+      "total_seconds": 2250.233893956989,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 1469.7777897166088,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 720.9384412234649,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__9.1.json",
+      "receipt_sha256": "8d3f7ba6790f518af8d5b1f9e1cc80892494ff3f43d7b1ab126c22d9e8937db9"
+    },
+    {
+      "index": 10,
+      "method": "mult",
+      "configuration": "reference",
+      "seed": 29,
+      "total_seconds": 2235.007225434296,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 1460.3414847692475,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 714.7670598272234,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__10.1.json",
+      "receipt_sha256": "7feb3f370d9dd18a73afb18511ba550106e9f4f2140af6e976fc44f5bec4e4b7"
+    },
+    {
+      "index": 11,
+      "method": "mult",
+      "configuration": "reference",
+      "seed": 43,
+      "total_seconds": 2244.1567380428314,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 1465.2309537762776,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 718.3910982822999,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__11.1.json",
+      "receipt_sha256": "c8e8eafd941645f3b15d948680d1af0ca19c674b0c2ba70951d41520bcf7a6c1"
+    },
+    {
+      "index": 12,
+      "method": "contiformer",
+      "configuration": "reference",
+      "seed": 17,
+      "total_seconds": 1362.702795477584,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 881.9329925337806,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 422.2585551571101,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__12.1.json",
+      "receipt_sha256": "9d3316496047b61d33b7d6858a0c4763b894333db60cd32677f7f7ad5f28ca25"
+    },
+    {
+      "index": 13,
+      "method": "contiformer",
+      "configuration": "reference",
+      "seed": 29,
+      "total_seconds": 1349.440041685477,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 872.931932755746,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 417.6014809999615,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__13.1.json",
+      "receipt_sha256": "dd65edd16d48234e3637b3bfa030b12c0f60612c5bcb5282fa7b20dbbd3f3cda"
+    },
+    {
+      "index": 14,
+      "method": "contiformer",
+      "configuration": "reference",
+      "seed": 43,
+      "total_seconds": 1381.148735661991,
+      "phases": {
+        "self_supervised_training": {
+          "training_elapsed_s": 888.39635839127,
+          "optimizer_updates": 1500,
+          "stopped_early": false
+        },
+        "task_guided_training": {
+          "training_elapsed_s": 434.3833862245083,
+          "optimizer_updates": 550,
+          "head_warmup_updates": 50,
+          "joint_updates": 500,
+          "stopped_early": false
+        }
+      },
+      "receipt": "chapter5_core__14.1.json",
+      "receipt_sha256": "515eba9fa8463b9301dcfd4839de030aa9bd8628c129e96d65283d9569ee2881"
+    },
+    {
+      "index": 15,
+      "method": "naive_time_sync",
+      "configuration": "reference",
+      "seed": 17,
+      "total_seconds": 9.84274972975254,
+      "phases": {
+        "self_supervised_training": {},
+        "task_guided_training": {}
+      },
+      "receipt": "chapter5_core__15.1.json",
+      "receipt_sha256": "2c3b9b9e762a37d140c21da8cc16d161e6786e1fc19e623b847b9a7b7710d140"
+    },
+    {
+      "index": 16,
+      "method": "naive_time_sync",
+      "configuration": "reference",
+      "seed": 29,
+      "total_seconds": 9.788793297484517,
+      "phases": {
+        "self_supervised_training": {},
+        "task_guided_training": {}
+      },
+      "receipt": "chapter5_core__16.1.json",
+      "receipt_sha256": "3a94cfdfac2094a96b266293de5046092758e370de7999961e994359cc029f30"
+    },
+    {
+      "index": 17,
+      "method": "naive_time_sync",
+      "configuration": "reference",
+      "seed": 43,
+      "total_seconds": 9.822864247485995,
+      "phases": {
+        "self_supervised_training": {},
+        "task_guided_training": {}
+      },
+      "receipt": "chapter5_core__17.1.json",
+      "receipt_sha256": "a4ab4ef0a094854c4138f952533f005469958b80aca2f80d56c30e24913b6080"
+    }
+  ],
+  "remaining": [
+    {
+      "index": 18,
+      "method": "chronaris",
+      "options": {
+        "name": "no_continuous_evolution",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_continuous_evolution"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 19,
+      "method": "chronaris",
+      "options": {
+        "name": "no_continuous_evolution",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_continuous_evolution"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 20,
+      "method": "chronaris",
+      "options": {
+        "name": "no_continuous_evolution",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_continuous_evolution"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 21,
+      "method": "chronaris",
+      "options": {
+        "name": "no_physics_residual",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.0
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 22,
+      "method": "chronaris",
+      "options": {
+        "name": "no_physics_residual",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.0
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 23,
+      "method": "chronaris",
+      "options": {
+        "name": "no_physics_residual",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.0
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 24,
+      "method": "chronaris",
+      "options": {
+        "name": "no_explicit_shift",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "explicit_shift_enabled": false
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 25,
+      "method": "chronaris",
+      "options": {
+        "name": "no_explicit_shift",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "explicit_shift_enabled": false
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 26,
+      "method": "chronaris",
+      "options": {
+        "name": "no_explicit_shift",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "explicit_shift_enabled": false
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 27,
+      "method": "chronaris",
+      "options": {
+        "name": "no_single_stream_bypass",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_single_stream_bypass"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 28,
+      "method": "chronaris",
+      "options": {
+        "name": "no_single_stream_bypass",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_single_stream_bypass"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 29,
+      "method": "chronaris",
+      "options": {
+        "name": "no_single_stream_bypass",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "variant": "no_single_stream_bypass"
+      },
+      "purpose": "ablation",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 30,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0025",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.025
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 31,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0025",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.025
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 32,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0025",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.025
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    },
+    {
+      "index": 33,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0100",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.1
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 17
+    },
+    {
+      "index": 34,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0100",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.1
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 29
+    },
+    {
+      "index": 35,
+      "method": "chronaris",
+      "options": {
+        "name": "physics_weight_0100",
+        "hidden_dim": 32,
+        "training": {},
+        "missingness_mixture": false,
+        "physics_weight": 0.1
+      },
+      "purpose": "sensitivity",
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "seed": 43
+    }
+  ],
+  "active_progress": [
+    {
+      "path": "core_training/simulation/chronaris/no_continuous_evolution/fold01/seed17/progress.json",
+      "mtime_age_seconds": 6.759034872055054,
+      "phase": "task_guided",
+      "optimizer_updates": 0,
+      "wall_elapsed_s": 6336.625019670464
+    },
+    {
+      "path": "core_training/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/progress.json",
+      "mtime_age_seconds": 107.18358182907104,
+      "phase": "validation",
+      "optimizer_updates": 1500,
+      "wall_elapsed_s": 6246.216856901534,
+      "data_wait_s": 28.983804347924888,
+      "device": "cuda",
+      "best_update": 1500
+    },
+    {
+      "path": "core_training/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/progress.json",
+      "mtime_age_seconds": 1.5680103302001953,
+      "phase": "training",
+      "optimizer_updates": 52,
+      "wall_elapsed_s": 80.10248345136642,
+      "best_update": 0
+    }
+  ],
+  "remaining_reference_budget_hours": {
+    "recent_two_seed_scenario": 51.454270383708646,
+    "all_three_seed_scenario": 94.58569020627067,
+    "all_three_with_30_percent_reserve": 122.96139726815187,
+    "active_unit_already_spent_not_deducted": true,
+    "excluded": [
+      "performance_qualification",
+      "new_public_models",
+      "new_semantic_ablations",
+      "outer_evaluation",
+      "stress_and_mechanism_evaluation",
+      "material_export"
+    ]
+  }
+}

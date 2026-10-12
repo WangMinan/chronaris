@@ -1,0 +1,137 @@
+{
+  "source_plan_sha256": "c555cfbb1488109bae0207b1b558ddadd44a3954c6abdfc00cb215bec12d3496",
+  "public_fold_window_counts": {
+    "clare/0": {
+      "train": 2102,
+      "validation": 432,
+      "held_out": 534
+    },
+    "clare/1": {
+      "train": 1988,
+      "validation": 432,
+      "held_out": 648
+    },
+    "clare/2": {
+      "train": 2047,
+      "validation": 427,
+      "held_out": 594
+    },
+    "clare/3": {
+      "train": 1993,
+      "validation": 431,
+      "held_out": 644
+    },
+    "clare/4": {
+      "train": 2096,
+      "validation": 324,
+      "held_out": 648
+    },
+    "cogpilot/0": {
+      "train": 5601,
+      "validation": 1449,
+      "held_out": 2123
+    },
+    "cogpilot/1": {
+      "train": 5685,
+      "validation": 1424,
+      "held_out": 2064
+    },
+    "cogpilot/2": {
+      "train": 5680,
+      "validation": 1439,
+      "held_out": 2054
+    },
+    "cogpilot/3": {
+      "train": 5891,
+      "validation": 1491,
+      "held_out": 1791
+    },
+    "cogpilot/4": {
+      "train": 6360,
+      "validation": 1672,
+      "held_out": 1141
+    }
+  },
+  "real_observation_view_counts": {
+    "train": 24,
+    "validation": 6,
+    "held_out": 6
+  },
+  "seed_policy": [
+    17,
+    29,
+    43
+  ],
+  "methods": {
+    "chronaris": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "physiology_only": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "vehicle_only": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "mult": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "contiformer": {
+      "routes": [
+        "self_supervised",
+        "task_guided"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "naive_time_sync": {
+      "routes": [
+        "self_supervised"
+      ],
+      "kind": "causal_sequence",
+      "external": false
+    },
+    "timecma": {
+      "routes": [
+        "summary_adapted"
+      ],
+      "kind": "window_end",
+      "external": true
+    },
+    "chronos2": {
+      "routes": [
+        "frozen",
+        "history_adapted"
+      ],
+      "kind": "window_end",
+      "external": true
+    },
+    "sensorllm_deepseek": {
+      "routes": [
+        "summary_adapted"
+      ],
+      "kind": "window_end",
+      "external": true
+    }
+  },
+  "final_outcomes_opened": false
+}

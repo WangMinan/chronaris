@@ -159,8 +159,9 @@ class EventTokenExtractor(nn.Module):
             starts = active & ~F.pad(active[:, :-1], (1, 0), value=False)
             segment_ids = starts.long().cumsum(-1) - 1
             segment_count = starts.sum(-1)
-            membership = (segment_ids[:, None, :] == torch.arange(point_count, device=scores.device)[None, :, None]) & active[:, None, :]
-            maxima = scores[:, None, :].expand_as(membership).masked_fill(~membership, -torch.inf).amax(-1)
+            maxima = torch.full_like(scores, -torch.inf).scatter_reduce_(
+                1, segment_ids.clamp_min(0), scores.masked_fill(~active, -torch.inf),
+                reduce="amax", include_self=True)
             selected = maxima.argsort(dim=-1, descending=True, stable=True)[:, :top_k]
             selected = F.pad(selected, (0, max(top_k - point_count, 0)))
             token_mask = torch.arange(top_k, device=scores.device)[None] < segment_count[:, None]

@@ -1,0 +1,22 @@
+{
+  "cpu_tests": {
+    "passed": 24,
+    "skipped_cuda": 2,
+    "failed_final": 0,
+    "files": [
+      "tests/modeling/fusion_encoders/test_event_extraction_vectorized.py",
+      "tests/modeling/fusion_encoders/test_semantic_event.py",
+      "tests/modeling/fusion_encoders/test_chronaris_continuous.py",
+      "tests/modeling/fusion_encoders/test_causal_query.py",
+      "tests/modeling/fusion_encoders/test_v4_causality.py"
+    ]
+  },
+  "gpu_qualification_completed": false,
+  "formal_training_migrated": false,
+  "original_queue_interrupted": false,
+  "outer_results_opened": false,
+  "source_sha256": {
+    "src/chronaris/models/fusion/semantic_event.py": "192a6ce78b0ab9a1626c6df71d26beb81e5a8f985997a8dd0bc49a8c37cf3399",
+    "tests/modeling/fusion_encoders/test_event_extraction_vectorized.py": "16abc551a4374527d2a97cc451ada828f1c21f5209ffd8f862936d884941acd5"
+  }
+}
