@@ -1,0 +1,36 @@
+{
+  "manifest_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/power-recovery-20261013/manifest.json",
+  "created_at": "2026-10-13T07:36:53.859993+08:00",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1",
+  "phase": "full_fold_10",
+  "old_pids": [
+    18251,
+    25135
+  ],
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/scripts/evaluation/application_tasks/run_chapter5_subset.py",
+    "train",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset",
+    "--unit",
+    "10"
+  ],
+  "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/last.pt",
+  "checkpoint_sha256": "16580c64a0b270f03b49a9068405d9ca7f6c6348583f7d3d7a74d53c05baa52d",
+  "checkpoint_updates": 300,
+  "last_observed_updates": 301,
+  "data_cursor": {
+    "samples_seen": 4800,
+    "micro_batches_seen": 1200,
+    "sampling_order_sha256": "0c0513fea1bd636dce84064a523c0d19a8d5ae1d6c000e005869a2989ce09daa"
+  },
+  "elapsed_before_outage_lower_bound_s": 8100.1454550359995,
+  "completed_units": [
+    0
+  ],
+  "replay_completed_units": 180,
+  "resume_qualification_passed": true,
+  "confirmation_opened": false,
+  "preserved_files": 8
+}

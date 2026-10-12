@@ -1,0 +1,18 @@
+{
+  "pid": 3117,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/scripts/evaluation/application_tasks/resume_local_validation.py",
+    "--manifest",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/power-recovery-20261013/manifest.json"
+  ],
+  "supervisor_commit": "2ae4a70b",
+  "training_commit": "4c391e87",
+  "env": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMBA_NUM_THREADS": "1",
+    "OMP_WAIT_POLICY": "PASSIVE"
+  }
+}
