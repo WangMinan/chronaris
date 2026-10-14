@@ -1,8 +1,10 @@
-# 第六章离线演示验收记录
+# 融合特征工作台验收记录
 
 日期：2026-10-13，北京时间。工作区：`chronaris-demo`；分支：`feat/chapter6-demo`。状态：工程自验通过，待用户验收与合并。
 
-**独立界面已完成真实离线案例的融合特征生成闭环。** 三个鼎新内部验证窗口经已完成的冻结编码器生成 `3 × 96 × 64` 的序列表示；通过本机 HTTP（超文本传输协议）服务下载后，既有下游读取接口能够完整回读。实现、输入合同和启动命令见[交付说明](../../../implementation/chapter6-demo.md)。
+**2026-10-14 完成系统命名统一与运行截图刷新。** 服务包、命令行入口、测试、文档、产物和图片均采用融合特征工作台的职责命名；26 项定向测试与浏览器操作回归通过，历史运行可继续读取。下表保留首次验收结果，本次真实回归另见 [acceptance-20261014.json](acceptance-20261014.json)。
+
+**独立界面已完成真实离线案例的融合特征生成闭环。** 三个鼎新内部验证窗口经已完成的冻结编码器生成 `3 × 96 × 64` 的序列表示；通过本机 HTTP（超文本传输协议）服务下载后，既有下游读取接口能够完整回读。实现、输入合同和启动命令见[交付说明](../../../implementation/fusion-workbench.md)。
 
 **本轮只使用中央处理器（CPU）与独立产物目录。** 入口隐藏显卡、限制数值计算为单线程，显式导入当前工作区源码；共享输入只读，案例内保存模型与观测副本，源码及产物写入当前分支。没有修改共享 conda 环境、主仓或冻结工作区，没有启动训练、更新数据库、读取外层任务目标或执行合并。
 
@@ -21,16 +23,16 @@
 | 浏览器交互 | 改选窗口推理、进度、播放、参考时刻滑块、完整包下载、刷新后历史读取通过 |
 | 页面可读性 | 桌面三视图与移动回放已抽查，中文字体正常，移动布局无横向溢出 |
 
-详细机器记录见 [acceptance.json](acceptance.json) 与 [browser-check.json](browser-check.json)。首次有界实跑还验证了服务结果与直接逐窗口结果完全一致；正式可重跑入口为 `scripts/runtime/verify_chapter6_demo.py`。
+详细机器记录见 [acceptance.json](acceptance.json) 与 [browser-check.json](browser-check.json)。首次有界实跑还验证了服务结果与直接逐窗口结果完全一致；正式可重跑入口为 `scripts/runtime/verify_fusion_workbench.py`。
 
 **检查点配置与论文解释保持一致。** 本例使用现有主模型的自监督冻结检查点，完整性散列为 `207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2`，实现版本为 `causal_fusion_v4`。该模型未启用事件语义模块，界面按实际状态展示；当前证据支撑连续融合特征生成、应用接口和窗口回放。具备同一合同的新冻结检查点可再执行同一验收。
 
-**界面截图记录实际操作，支撑功能展示。** 下列图片分别展示输入选择、双流与融合表示回放、导出来源和移动布局；它们是应用截图，不承担第五章方法效果的统计论证。截图中的曲线来自该次保存结果，前端绘制代码位于 `src/chronaris/serving/chapter6/static/app.js`，样式位于同目录的 `style.css`，浏览器操作脚本为 `tests/runtime/chapter6_browser.mjs`。
+**界面截图记录实际操作，支撑功能展示。** 下列图片分别展示输入选择、双流与融合表示回放、导出来源和移动布局；它们是应用截图，不承担第五章方法效果的统计论证。截图中的曲线来自该次保存结果，前端绘制代码位于 `src/chronaris/serving/fusion_workbench/static/app.js`，样式位于同目录的 `style.css`，浏览器操作脚本为 `tests/runtime/fusion_workbench_browser.mjs`。
 
-- [数据与任务](01-data-task.png)：选择窗口及观察已完成状态。
-- [融合结果与回放](02-fusion-replay.png)：显示脑电、航电观测与融合表示，滑块选择窗口内参考时刻。
-- [特征导出与追溯](03-feature-export.png)：下载完整包，并核对来源与标准读取接口。
-- [移动回放](04-mobile-replay.png)：检查窄屏布局、中文标签及交互控件。
+- [数据与任务](data-and-tasks.png)：选择窗口及观察已完成状态。
+- [融合结果与回放](fusion-replay.png)：显示脑电、航电观测与融合表示，滑块选择窗口内参考时刻。
+- [特征导出与追溯](feature-export.png)：下载完整包，并核对来源与标准读取接口。
+- [移动回放](mobile-replay.png)：检查窄屏布局、中文标签及交互控件。
 
 **离线快照把显示数据与渲染资源一并交付。** [preview-data.json](preview-data.json) 保存本次截图所用的完整显示数据、中文标签及表示数值；[preview.html](preview.html) 内嵌这些数据、样式和绘制代码，复制到仓库外即可用浏览器查看三个页面和回放。它只展示保存结果，推理与下载入口隐藏；实际操作使用本机服务。
 
@@ -38,8 +40,8 @@
 
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
-  docs/artifacts/runs/2026-10-13_chapter6-demo/render_preview.py \
-  --bundle artifacts/chapter6-demo/my-preview-package
+  docs/artifacts/runs/2026-10-13_fusion-workbench/render_preview.py \
+  --bundle artifacts/fusion-workbench/my-preview-package
 ```
 
 独立包中的 `ui/style.css` 集中定义配色、字体和布局；`ui/app.js` 定义曲线与热力图渲染；`preview-data.json` 为明确指定的显示输入，窗口时间单位为秒，航电角度单位为毫弧度，脑电沿用来源原始标度。数据源为已验收运行的 `result.json`，原文件保持不变；修改展示数据时另存版本，并通过 `--data` 指定。已经完成独立 HTML 生成、浏览器打开和参考时刻滑块检查。
@@ -48,7 +50,7 @@
 
 | 图片 | 输入 | 渲染与捕获 |
 | --- | --- | --- |
-| 数据与任务 | 保存任务记录与案例摘要 | 原界面源码、`chapter6_browser.mjs` |
+| 数据与任务 | 保存任务记录与案例摘要 | 原界面源码、`fusion_workbench_browser.mjs` |
 | 融合结果与回放、移动回放 | `preview-data.json` 中双流曲线及表示 | `ui/app.js` 的曲线与热力图函数、浏览器捕获 |
 | 特征导出与追溯 | 同一输入中的特征、模型与运行记录 | 原界面源码、浏览器捕获 |
 

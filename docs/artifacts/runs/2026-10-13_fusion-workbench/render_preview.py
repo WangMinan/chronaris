@@ -15,7 +15,7 @@ def main():
     args = parser.parse_args()
     ui = args.ui_root
     if not ui.exists():
-        ui = here.parents[3] / "src/chronaris/serving/chapter6/static"
+        ui = here.parents[3] / "src/chronaris/serving/fusion_workbench/static"
     data = json.loads(args.data.read_text(encoding="utf-8"))
     payload = json.dumps(data, ensure_ascii=False).replace("<", "\\u003c")
     shim = """

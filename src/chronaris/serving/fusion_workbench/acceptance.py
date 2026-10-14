@@ -12,8 +12,8 @@ import zipfile
 import torch
 
 from chronaris.representation import load_fusion_stream_batch
-from chronaris.serving.chapter6.cases import Case, write_json
-from chronaris.serving.chapter6.inference import run_case
+from chronaris.serving.fusion_workbench.cases import Case, write_json
+from chronaris.serving.fusion_workbench.inference import run_case
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 

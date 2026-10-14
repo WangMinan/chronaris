@@ -25,7 +25,7 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-"chronaris.serving.chapter6" = ["static/*.html", "static/*.css", "static/*.js"]
+"chronaris.serving.fusion_workbench" = ["static/*.html", "static/*.css", "static/*.js"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

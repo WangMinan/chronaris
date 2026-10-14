@@ -6,7 +6,7 @@ import torch
 
 from chronaris.evaluation.application_tasks.dingxin_context_data import build_dingxin_lazy_context_index, dingxin_vehicle_field_labels
 from chronaris.representation import DINGXIN_INCLUDE_MANEUVER_HISTORY_POLICY
-from chronaris.serving.chapter6.cases import ARRAYS, Case, write_json
+from chronaris.serving.fusion_workbench.cases import ARRAYS, Case, write_json
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import write_deterministic_npz, sha256_file
 
 

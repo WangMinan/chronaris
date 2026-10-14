@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Run the bounded CPU/HTTP acceptance against the running local service."""
-from chapter6_demo import PROJECT
+from run_fusion_workbench import PROJECT
 
 
 def main():
     import argparse
     from pathlib import Path
     import torch
-    from chronaris.serving.chapter6.acceptance import verify_demo
+    from chronaris.serving.fusion_workbench.acceptance import verify_demo
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8766)
-    parser.add_argument("--data-root", type=Path, default=PROJECT / "artifacts/chapter6-demo")
+    parser.add_argument("--data-root", type=Path, default=PROJECT / "artifacts/fusion-workbench")
     args = parser.parse_args()
     if not args.data_root.resolve().is_relative_to(PROJECT):
         parser.error("验收产物必须位于本 worktree")

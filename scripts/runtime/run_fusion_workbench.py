@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Launch the isolated chapter-six demo without changing editable installs."""
+"""Launch the isolated fusion workbench without changing editable installs."""
 import os
 from pathlib import Path
 import sys
@@ -15,10 +15,10 @@ sys.path.insert(0, str(PROJECT / "src"))
 def main():
     import argparse
     import torch
-    from chronaris.serving.chapter6.server import DemoStore, make_server
-    parser = argparse.ArgumentParser(description="第六章离线融合演示（仅本机 CPU）")
+    from chronaris.serving.fusion_workbench.server import DemoStore, make_server
+    parser = argparse.ArgumentParser(description="融合特征工作台（仅本机 CPU）")
     parser.add_argument("--port", type=int, default=8766)
-    parser.add_argument("--data-root", type=Path, default=PROJECT / "artifacts/chapter6-demo")
+    parser.add_argument("--data-root", type=Path, default=PROJECT / "artifacts/fusion-workbench")
     args = parser.parse_args()
     root = args.data_root.resolve()
     if not root.is_relative_to(PROJECT) or root == PROJECT:
@@ -28,7 +28,7 @@ def main():
     store = DemoStore(root / "cases", root / "runs")
     try:
         server = make_server(store, args.port)
-        print(f"Chronaris 第六章演示：http://127.0.0.1:{server.server_port}（{len(store.cases)} 个案例）", flush=True)
+        print(f"Chronaris 融合特征工作台：http://127.0.0.1:{server.server_port}（{len(store.cases)} 个案例）", flush=True)
         try:
             server.serve_forever()
         finally:

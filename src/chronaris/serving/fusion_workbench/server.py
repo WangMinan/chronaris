@@ -10,8 +10,8 @@ import threading
 from urllib.parse import urlsplit
 import uuid
 
-from chronaris.serving.chapter6.cases import Case, read_json, write_json
-from chronaris.serving.chapter6.inference import run_case
+from chronaris.serving.fusion_workbench.cases import Case, read_json, write_json
+from chronaris.serving.fusion_workbench.inference import run_case
 
 STATIC = Path(__file__).with_name("static")
 DOWNLOADS = {"features.csv": "text/csv; charset=utf-8", "features.zip": "application/zip",

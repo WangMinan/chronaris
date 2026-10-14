@@ -1,12 +1,12 @@
-# 第六章独立演示界面
+# Chronaris 融合特征工作台
 
-日期：2026-10-13。工作区：`/home/wangminan/projects/chronaris-demo`；分支：`feat/chapter6-demo`。当前已完成工程自验，待用户验收后安排合并。
+更新时间：2026-10-14。工作区：`/home/wangminan/projects/chronaris-demo`；分支：`feat/chapter6-demo`。当前已完成工程自验，待用户验收后安排合并。
 
 ## 应用关系与交付范围
 
-**独立演示界面已贯通离线观测、冻结模型、融合表示、历史回放和特征下载。** Zorathos 接入整合工程提供项目背景和数据基础，Chronaris 连续对齐与融合工程负责特征生成；本界面为第六章单独实现。原平台前端由分包方开发，不纳入本次实现。范围依据[背景会话](thread://01a13478-7a66-7cf3-94e9-177f9154d828?hostId=remote-control%3Aenv_e_6acc8bf506d08321a12d3ecdb4d6905c)以及宿主机论文目录中的第六章确认。
+**独立演示界面已贯通离线观测、冻结模型、融合表示、历史回放和特征下载。** Zorathos 接入整合工程提供项目背景和数据基础，Chronaris 连续对齐与融合工程负责特征生成；本界面提供独立的融合特征工作台，支撑论文系统实现部分。原平台前端由分包方开发，不纳入本次实现。范围依据[背景会话](thread://01a13478-7a66-7cf3-94e9-177f9154d828?hostId=remote-control%3Aenv_e_6acc8bf506d08321a12d3ecdb4d6905c)以及宿主机论文目录中的第六章确认。
 
-**本次改动集中在应用入口，不改变训练与实验算法。** 可复用服务位于 `src/chronaris/serving/chapter6`，命令行文件仅编排；网页使用本地 HTML（超文本标记语言）、CSS（样式表）和 JavaScript（浏览器脚本），无在线资源或运行时前端依赖。既有旧版推理入口保持兼容，新增入口直接复用当前模型的加载、归一化、推理和标准表示导出函数。
+**本次改动集中在应用入口，不改变训练与实验算法。** 可复用服务位于 `src/chronaris/serving/fusion_workbench`，命令行文件仅编排；网页使用本地 HTML（超文本标记语言）、CSS（样式表）和 JavaScript（浏览器脚本），无在线资源或运行时前端依赖。既有旧版推理入口保持兼容，新增入口直接复用当前模型的加载、归一化、推理和标准表示导出函数。
 
 下表说明功能与论文目录的对应关系，支撑第六章围绕实际使用过程展开。
 
@@ -17,6 +17,10 @@
 | 特征导出与追溯 | 序列特征预览、完整包下载、模型与输入散列、耗时、下游读取示例 | 6.3.4、6.4.2 |
 | 测试与复现 | 异常请求、完整性校验、历史恢复、批量与逐窗口一致性、浏览器交互 | 6.5.1、6.5.2 |
 
+## 命名规范
+
+**文件按系统职责命名。** 服务包为 `chronaris.serving.fusion_workbench`；启动、案例准备和验收入口分别为 `run_fusion_workbench.py`、`prepare_fusion_case.py`、`verify_fusion_workbench.py`。文档和产物目录统一使用 `fusion-workbench`，截图按“数据与任务、融合回放、特征导出、移动回放”命名。2026-10-14 已迁移本工作区的案例和历史运行目录，并完成新入口、下载与浏览器回归。已有实验记录中的来源散列保持原值。
+
 ## 启动与首次准备
 
 **现有工作区已准备好一个约 6.4 MiB 的独立鼎新案例包。** 它包含三个内部验证窗口、模型副本和字段说明；无需数据库、网络或训练显卡即可运行。命令显式选择既有解释器，入口将当前工作区 `src` 放在模块搜索首位，隐藏显卡并限制数值计算为单线程。
@@ -24,7 +28,7 @@
 在本工作区根目录执行：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/chapter6_demo.py
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/run_fusion_workbench.py
 ```
 
 浏览器访问 <http://127.0.0.1:8766>。默认只监听本机回环地址；若端口已占用，可使用 `--port 8767`。界面操作顺序为选择案例与起止窗口、生成融合特征、打开结果、切换窗口或播放、下载完整特征包。启动时可直接打开历史记录。
@@ -32,12 +36,12 @@
 **新检出需要从已有冻结资产生成案例包，原始观测和模型不进入 Git。** 以下准备命令只读共享输入，写入当前工作区；已有目标目录会被拒绝，避免覆盖既有案例。
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/prepare_chapter6_case.py \
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/prepare_fusion_case.py \
   --checkpoint /home/wangminan/chronaris-data/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/255/dingxin/chronaris/self_supervised/chronaris/C/best.pt \
   --snapshot-root /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot
 ```
 
-产物均位于 `artifacts/chapter6-demo/`：`cases/` 为独立输入包，`runs/` 为按唯一标识保存的任务与输出，`acceptance/` 为有界验收记录，`screenshots/` 为浏览器截图。页面和服务通过本工作区源码启动，无需安装或切换共享环境中的可编辑包。
+产物均位于 `artifacts/fusion-workbench/`：`cases/` 为独立输入包，`runs/` 为按唯一标识保存的任务与输出，`acceptance/` 为有界验收记录，`screenshots/` 为浏览器截图。页面和服务通过本工作区源码启动，无需安装或切换共享环境中的可编辑包。
 
 ## 当前模型与输入合同
 
@@ -49,7 +53,7 @@
 
 **案例包可搬移，并保留输入与模型的完整性校验。** 每个子目录包含 `case.json`、相对路径模型和窗口 NumPy 数组归档（NPZ）。服务只发现启动时存在的案例包，不开放任意文件上传或路径读取。新增包后重启即可列入案例选择。
 
-以下字段定义支撑其他合规观测片段的接入；可参照 `tests/runtime/test_chapter6_demo.py` 中的独立案例构造。
+以下字段定义支撑其他合规观测片段的接入；可参照 `tests/runtime/test_fusion_workbench.py` 中的独立案例构造。
 
 | 文件或字段 | 内容与约束 |
 | --- | --- |
@@ -88,10 +92,10 @@ pooled = features.pooled_embedding      # 窗口 × 64
 
 ## 验收与交接
 
-**工程自验已覆盖真实运行、表示一致性、下载回读和页面交互。** 结果与截图见[验收记录](../artifacts/runs/2026-10-13_chapter6-demo/README.md)。复现有界真实验收前先启动本地服务，再执行：
+**工程自验已覆盖真实运行、表示一致性、下载回读和页面交互。** 结果与截图见[验收记录](../artifacts/runs/2026-10-13_fusion-workbench/README.md)。复现有界真实验收前先启动本地服务，再执行：
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/verify_chapter6_demo.py
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/verify_fusion_workbench.py
 ```
 
 常规测试仅使用构造数据，不读取共享模型或执行训练：
@@ -100,17 +104,17 @@ pooled = features.pooled_embedding      # 窗口 × 64
 CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
 PYTHONDONTWRITEBYTECODE=1 \
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest \
-  tests/runtime/test_chapter6_demo.py \
+  tests/runtime/test_fusion_workbench.py \
   tests/representation/test_contracts.py tests/representation/test_oof_export.py -q
 ```
 
-**浏览器测试工具与依赖也保留在工作区内。** 本机通过 `tests/runtime/chapter6_browser.mjs` 验证桌面和移动布局；Playwright（浏览器自动化工具）不属于应用运行依赖。浏览器、缺失动态库及中文字体仅下载或复制到忽略目录，未改系统或共享 conda 环境。本机复现命令为：
+**浏览器测试工具与依赖也保留在工作区内。** 本机通过 `tests/runtime/fusion_workbench_browser.mjs` 验证桌面和移动布局；Playwright（浏览器自动化工具）不属于应用运行依赖。浏览器、缺失动态库及中文字体仅下载或复制到忽略目录，未改系统或共享 conda 环境。本机复现命令为：
 
 ```bash
-LD_LIBRARY_PATH="$PWD/artifacts/chapter6-demo/browser/libs/extracted/usr/lib/x86_64-linux-gnu" \
-FONTCONFIG_FILE="$PWD/artifacts/chapter6-demo/browser/fonts.conf" \
-PLAYWRIGHT_BROWSERS_PATH="$PWD/artifacts/chapter6-demo/browser/browsers" \
-node tests/runtime/chapter6_browser.mjs
+LD_LIBRARY_PATH="$PWD/artifacts/fusion-workbench/browser/libs/extracted/usr/lib/x86_64-linux-gnu" \
+FONTCONFIG_FILE="$PWD/artifacts/fusion-workbench/browser/fonts.conf" \
+PLAYWRIGHT_BROWSERS_PATH="$PWD/artifacts/fusion-workbench/browser/browsers" \
+node tests/runtime/fusion_workbench_browser.mjs
 ```
 
 新机器可在独立目录安装 Playwright 并下载 Chromium 浏览器，再运行同一脚本；应用本身无需这些测试依赖。截图由自动化脚本操作实际界面后生成，不作为新的算法实验图。

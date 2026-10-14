@@ -12,7 +12,7 @@ import torch
 from chronaris.modeling.training import load_common_pretraining_checkpoint, TrainedFusionAdapter
 from chronaris.representation import collate_observation_samples, write_fusion_stream_batch, load_fusion_stream_batch
 from chronaris.representation.oof_export import _concatenate_fusion_batches
-from chronaris.serving.chapter6.cases import preview_stream, write_json
+from chronaris.serving.fusion_workbench.cases import preview_stream, write_json
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
@@ -60,7 +60,7 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1):
         progress("inference", len(windows))
     output = _concatenate_fusion_batches(chunks)
     progress("exporting", len(windows))
-    write_fusion_stream_batch(output, root=root, export_role="chapter6_offline_demo")
+    write_fusion_stream_batch(output, root=root, export_role="fusion_workbench_offline")
     restored = load_fusion_stream_batch(root)
     if not torch.equal(output.sequence_embedding, restored.sequence_embedding):
         raise ValueError("下游读取复核失败")

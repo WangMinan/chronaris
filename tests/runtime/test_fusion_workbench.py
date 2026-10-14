@@ -11,9 +11,9 @@ import pytest
 import torch
 
 from chronaris.representation import FusionStreamBatch, load_fusion_stream_batch
-from chronaris.serving.chapter6 import inference
-from chronaris.serving.chapter6.cases import Case, write_json, preview_stream
-from chronaris.serving.chapter6.server import DemoStore, make_server
+from chronaris.serving.fusion_workbench import inference
+from chronaris.serving.fusion_workbench.cases import Case, write_json, preview_stream
+from chronaris.serving.fusion_workbench.server import DemoStore, make_server
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file, write_deterministic_npz
 
 
@@ -143,7 +143,7 @@ def test_single_job_and_restart_recovery(case, monkeypatch, tmp_path):
     def pending(*args):
         started.set(); release.wait(5)
         raise ValueError("测试失败必须保留")
-    monkeypatch.setattr("chronaris.serving.chapter6.server.run_case", pending)
+    monkeypatch.setattr("chronaris.serving.fusion_workbench.server.run_case", pending)
     store = DemoStore(case.root.parent, tmp_path / "runs")
     try:
         job = store.submit({"case_id":"test-case","start":0,"stop":1})

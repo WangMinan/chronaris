@@ -19084,8 +19084,8 @@
       ]
     }
   ],
-  "elapsed_s": 0.8812481570057571,
-  "model_load_s": 0.3682138820004184,
+  "elapsed_s": 1.375022458996682,
+  "model_load_s": 0.3782518619991606,
   "device": "cpu",
   "batch_size": 1,
   "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
@@ -19119,18 +19119,18 @@
   ],
   "case_manifest_sha256": "26b922ba0b4c846d540c4a64901548f82c17d56eb1f4266e17218579fc485f8e",
   "source_files_sha256": {
-    "inference.py": "4914e8be8c0907fdf119167d1f5d450ed89664e98457b6744fc40170c0c6650d",
+    "inference.py": "53c1cdac87b9a8ffe62dfb4d52c47978a50ac419fa2439b3fed59068579531bf",
     "common_pretraining.py": "466baeba5b8d5057f917d58fd240da28da09c357783ab6f5fb50b7f635724d55",
     "oof_export.py": "86db08f51364205b8b639d65c5189f0d319eb113662623e5ebb5ad0adbe55d28"
   },
   "preview_job": {
-    "id": "0e7ccd44ab15433788a8bff2e5ccbd37",
+    "id": "9e2789c86ba74ec690ecb5f87209f1f4",
     "case_id": "dingxin-validation",
     "title": "鼎新 · 人机双流离线案例",
     "status": "completed",
     "done": 2,
     "total": 2,
-    "created_at": "2026-10-13T09:43:02.587790+00:00",
-    "elapsed_s": 0.8812481570057571
+    "created_at": "2026-10-14T07:27:42.736673+00:00",
+    "elapsed_s": 1.375022458996682
   }
 }
