@@ -148,7 +148,7 @@ def test_single_job_and_restart_recovery(case, monkeypatch, tmp_path):
     try:
         job = store.submit({"case_id":"test-case","start":0,"stop":1})
         assert started.wait(2)
-        with pytest.raises(RuntimeError, match="已有演示服务"):
+        with pytest.raises(RuntimeError, match="已有服务"):
             DemoStore(case.root.parent, tmp_path / "runs")
         with pytest.raises(RuntimeError, match="已有推理任务"):
             store.submit({"case_id":"test-case","start":0,"stop":1})

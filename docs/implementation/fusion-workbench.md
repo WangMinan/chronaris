@@ -1,39 +1,32 @@
-# Chronaris 融合特征工作台
+# 航空人机时序融合系统
 
-更新时间：2026-10-14。工作区：`/home/wangminan/projects/chronaris-demo`；分支：`feat/chapter6-demo`。当前已完成工程自验，待用户验收后安排合并。
+更新时间：2026-10-14。开发位置为当前独立工作区，分支 `feat/chapter6-demo`；共享实验环境与冻结资产保持原状。
 
-## 应用关系与交付范围
+**融合系统已贯通数据接入、任务处理、结果分析和特征交付。** 使用者可以从归档记录选择时段，或导入具有相同字段合同的观测文件；选择已登记模型后执行处理，在统一时间游标下查看双流与融合特征，并生成下游可读取的序列及汇总文件。首次复核意见与本轮修复见[独立验收](../review/stage/fusion-workbench-20261014/README.md)和[修复验收](../review/stage/fusion-workbench-20261014/repair.md)。
 
-**独立演示界面已贯通离线观测、冻结模型、融合表示、历史回放和特征下载。** Zorathos 接入整合工程提供项目背景和数据基础，Chronaris 连续对齐与融合工程负责特征生成；本界面提供独立的融合特征工作台，支撑论文系统实现部分。原平台前端由分包方开发，不纳入本次实现。范围依据[背景会话](thread://01a13478-7a66-7cf3-94e9-177f9154d828?hostId=remote-control%3Aenv_e_6acc8bf506d08321a12d3ecdb4d6905c)以及宿主机论文目录中的第六章确认。
+## 启动与操作
 
-**本次改动集中在应用入口，不改变训练与实验算法。** 可复用服务位于 `src/chronaris/serving/fusion_workbench`，命令行文件仅编排；网页使用本地 HTML（超文本标记语言）、CSS（样式表）和 JavaScript（浏览器脚本），无在线资源或运行时前端依赖。既有旧版推理入口保持兼容，新增入口直接复用当前模型的加载、归一化、推理和标准表示导出函数。
-
-下表说明功能与论文目录的对应关系，支撑第六章围绕实际使用过程展开。
-
-| 页面或模块 | 已实现行为 | 目录对应 |
-| --- | --- | --- |
-| 数据与任务 | 案例、窗口起止、字段数、冻结模型、运行状态 | 6.3.1、6.3.3 |
-| 融合结果与回放 | 双流观测、字段观测率、融合表示、窗口播放与参考时刻选择 | 6.3.3、6.5.3 |
-| 特征导出与追溯 | 序列特征预览、完整包下载、模型与输入散列、耗时、下游读取示例 | 6.3.4、6.4.2 |
-| 测试与复现 | 异常请求、完整性校验、历史恢复、批量与逐窗口一致性、浏览器交互 | 6.5.1、6.5.2 |
-
-## 命名规范
-
-**文件按系统职责命名。** 服务包为 `chronaris.serving.fusion_workbench`；启动、案例准备和验收入口分别为 `run_fusion_workbench.py`、`prepare_fusion_case.py`、`verify_fusion_workbench.py`。文档和产物目录统一使用 `fusion-workbench`，截图按“数据与任务、融合回放、特征导出、移动回放”命名。2026-10-14 已迁移本工作区的案例和历史运行目录，并完成新入口、下载与浏览器回归。已有实验记录中的来源散列保持原值。
-
-## 启动与首次准备
-
-**现有工作区已准备好一个约 6.4 MiB 的独立鼎新案例包。** 它包含三个内部验证窗口、模型副本和字段说明；无需数据库、网络或训练显卡即可运行。命令显式选择既有解释器，入口将当前工作区 `src` 放在模块搜索首位，隐藏显卡并限制数值计算为单线程。
-
-在本工作区根目录执行：
+当前环境使用既有解释器，服务入口显式加载本工作区源码，隐藏训练显卡并限制数值计算线程。无需改变共享环境的可编辑安装。
 
 ```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/run_fusion_workbench.py
+PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
+  scripts/runtime/run_fusion_workbench.py
 ```
 
-浏览器访问 <http://127.0.0.1:8766>。默认只监听本机回环地址；若端口已占用，可使用 `--port 8767`。界面操作顺序为选择案例与起止窗口、生成融合特征、打开结果、切换窗口或播放、下载完整特征包。启动时可直接打开历史记录。
+打开 <http://127.0.0.1:8766>。可以通过 `--port` 更改端口，通过 `--data-root` 指定本工作区内的独立数据目录。
 
-**新检出需要从已有冻结资产生成案例包，原始观测和模型不进入 Git。** 以下准备命令只读共享输入，写入当前工作区；已有目标目录会被拒绝，避免覆盖既有案例。
+1. 在“数据与任务”选择观测记录、起止窗口和模型，点击“开始处理”。主要操作在常见笔记本首屏内可见。
+2. “接入数据”提供归档时段接入与标准观测文件导入。新增记录立即进入选择列表。
+3. 勾选“处理新增窗口”后，服务仅处理当前记录中与当前模型、实现版本对应且尚未完成的窗口；没有新增窗口时明确提示。
+4. 已完成任务进入“结果分析”。时间游标联动生理观测、航电观测和融合特征；点击热力图或使用方向键选择特征维度，色阶在同一任务内固定。
+5. “特征交付”下载完整特征包；“生成汇总特征”实际调用标准表示读取接口，生成逐窗口汇总表与交付记录。
+6. “模型与字段”展示模型的真实训练来源与配置，以及既有语言模型的字段解释、规则复核记录。人工确认或标记待修订后，复核状态独立持久化。
+
+## 数据接入与模型登记
+
+**归档入口复用现有样本构建逻辑。** 当前部署从已准备记录中的来源路径发现归档快照，读取 `docs/artifacts/runs/2026-07-10_fixed-data-audit` 的字段和窗口清单，再通过既有延迟加载器构建样本。可选范围来自对应模型的训练、内部验证观测标识，不读取外层任务目标；当前两份记录各有 15 个可用窗口。时间范围内的完整窗口写入本工作区独立观测包。
+
+首次部署可用以下命令准备字段与模型参考记录。共享资产只读，目标目录必须尚不存在。
 
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/prepare_fusion_case.py \
@@ -41,82 +34,100 @@
   --snapshot-root /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot
 ```
 
-产物均位于 `artifacts/fusion-workbench/`：`cases/` 为独立输入包，`runs/` 为按唯一标识保存的任务与输出，`acceptance/` 为有界验收记录，`screenshots/` 为浏览器截图。页面和服务通过本工作区源码启动，无需安装或切换共享环境中的可编辑包。
+**文件导入允许接入新的兼容观测。** 在接入对话框下载“输入格式”，填入实际观测值并保留字段顺序；模板中的全假掩码是待填写占位，服务会拒绝没有有效观测的窗口。导入前校验字段、角色、数值维度、掩码类型、时间和样本标识；文件上限为 32 MiB，单份记录最多 512 个窗口，较长记录按时段分组。
 
-## 当前模型与输入合同
+以下输入合同用于准备数据，而非重新计算实验指标。
 
-**演示案例使用已完成的当前连续融合编码器及其原有归一化参数。** 冻结检查点的实现版本为 `causal_fusion_v4`，种子为 17，字段合同为 12 个生理字段与 965 个航电字段。本包选择该模型内部验证集合的前三个相邻窗口，覆盖相对时间 90—130 秒；每窗口输入长度为 30 秒。仅读取观测，不加载任务目标、不重新拟合归一化、不计算实验排名。
-
-**当前检查点展示连续融合特征生成能力，事件语义模块的状态按检查点如实呈现。** 该检查点未启用事件语义模块，页面因此展示原始双流与融合表示；后续具有同一检查点合同的新冻结编码器可由现有加载器读取自身配置。当前应用入口接受完成的自监督 Chronaris 检查点，任务引导检查点和业务预测头接入另行验收。
-
-**窗口级增量处理具有明确的处理单位。** 服务按窗口逐个执行，保留每个窗口原始异步时间和缺失掩码；窗口之间不持有连续潜态。历史回放读取完成记录，不触发重复计算。每次请求最多八个连续窗口；一个产物目录同时只允许一个服务进程和一个推理任务。退出时未完成的任务在下次启动后标记失败，可重新提交。
-
-**案例包可搬移，并保留输入与模型的完整性校验。** 每个子目录包含 `case.json`、相对路径模型和窗口 NumPy 数组归档（NPZ）。服务只发现启动时存在的案例包，不开放任意文件上传或路径读取。新增包后重启即可列入案例选择。
-
-以下字段定义支撑其他合规观测片段的接入；可参照 `tests/runtime/test_fusion_workbench.py` 中的独立案例构造。
-
-| 文件或字段 | 内容与约束 |
+| 字段 | 含义 |
 | --- | --- |
-| `format`、`id` | `chronaris.demo_case.v1`；案例标识为小写字母、数字及连字符，目录内唯一 |
-| `title`、`description`、`source_label`、`model_label` | 面向读者的案例、数据与模型说明 |
-| `schema` | 既有 `ObservationSchema` 字段顺序、来源类型和字段角色；与模型严格匹配 |
-| `checkpoint`、`checkpoint_sha256` | 包内相对路径与 SHA-256（完整性散列）；检查点必须完成，加载拒绝历史不兼容版本 |
-| `windows` | 1—32 个窗口，每项包含包内文件名、文件散列、样本及分组标识、观测来源散列、起点秒数和时长秒数 |
-| 窗口数组 | 双流各自的 `values`、`timestamps_s`、`feature_mask`；沿用既有数值、时序和维度校验 |
-| `field_labels` | 可选中文显示标签；优先展示至多三个有效字段，无标签时显示字段序号 |
+| `format` | 固定为 `chronaris.observations.v1` |
+| `title` | 面向读者的记录名称 |
+| `schema` | 从所选模型输入格式取得的完整字段合同，名称、顺序和角色严格匹配 |
+| `field_labels` | 字段标识到中文显示标签的映射，可为空 |
+| `windows` | 按实际观测填写的窗口列表 |
+| `sample_id` | 稳定且唯一的窗口标识；追加时用于判定重复 |
+| `start_s`、`duration_s` | 记录内起点与窗口时长，单位为秒 |
+| `physiology_values`、`vehicle_values` | 各流的二维观测矩阵，列顺序与合同一致 |
+| `physiology_timestamps_s`、`vehicle_timestamps_s` | 各流在窗口内的实际采样时刻，单位为秒 |
+| `physiology_feature_mask`、`vehicle_feature_mask` | 与观测矩阵同形的布尔有效标记 |
 
-## 接口与下游读取
+选择“追加到当前导入记录”可加入新增窗口。已有标识与内容完全相同则去重，同一标识内容改变则拒绝；合法新增内容发布后，任务可继续按增量方式处理。每次提交保存输入快照，后续追加和重新排序不改变已提交任务的选择。
 
-**下载包沿用仓库既有标准表示合同。** 每个窗口输出 96 个参考时刻、64 维序列表示、有效掩码及按有效时刻平均的汇总表示。写出后立即通过 `load_fusion_stream_batch` 回读校验；来源清单保留样本顺序、模型和输入散列。网页曲线至多保留 240 个实际观测点用于预览，模型输入和下载的融合表示保持完整。
+**模型选择来自真实权重登记。** 现有模型经过训练完成状态、实现版本和字段兼容性校验；新增模型由维护者使用以下入口登记，复制到本工作区的模型目录，原权重保持不变。页面点击“刷新模型”即可更新列表。
 
-下表列出本机 HTTP（超文本传输协议）接口，便于复核页面行为与后续调用。
+```bash
+/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/register_fusion_model.py \
+  --checkpoint /已有训练产物/best.pt \
+  --schema-record dingxin-validation
+```
 
-| 方法与路径 | 行为 |
-| --- | --- |
-| `GET /api/cases` | 案例摘要与可选窗口 |
-| `POST /api/runs` | 请求体为 `{"case_id":"dingxin-validation","start":0,"stop":3}`，索引从零开始，结束索引不包含在内 |
-| `GET /api/runs` | 历史任务列表 |
-| `GET /api/runs/{id}` | 状态、完成窗口数、错误或耗时 |
-| `GET /api/runs/{id}/result` | 仅完成任务可读的曲线与表示 |
-| `GET /api/runs/{id}/download/{name}` | 固定允许的完整包、CSV（逗号分隔值）、NPZ 或 JSON（结构化文本）清单 |
+当前加载合同支持已完成训练的自监督编码器。页面展示权重实际保存的事件语义配置；现有三个兼容实测检查点均未启用该模块，完整事件语义配置的应用验收需要相应已训练权重。服务不会在推理时临时打开未训练模块。
 
-**完整下载包可由现有下游程序直接读取。** 解压后目录内的 `fusion_stream.npz` 与 `representation_manifest.json` 必须放在一起；`features.csv` 每行包含样本标识、窗口内参考时刻（秒）、有效标记及 64 个特征值；`result.json` 另存本次计算、可视化预览、检查点配置与源码散列。
+## 任务恢复与交付
+
+**任务选择、模型和实现指纹共同确定计算身份。** 每次任务保存原始参数、窗口选择、模型散列和输入清单。逐块结果先持久化，再更新进度；失败或服务退出后，可以按原参数创建关联重试任务。恢复只复用输入、模型和实现指纹一致的已完成片段，原失败记录保留。
+
+当前运行方式为单服务进程、单推理任务。每份记录最多 512 个窗口，模型按小块加载观测并推理；最后按标准表示合同合并、校验和导出。该容量上界是资源保护条件，本轮实际长任务验收覆盖 15 个窗口，不将其表述为最大容量性能验证。
+
+增量去重以已完成任务记录作为持久依据，按窗口内容、模型及实现版本匹配，支持重启和追加数据。它表示窗口任务的增量处理；模型仍按已训练合同分别处理窗口上下文。
+
+下载包保留 `fusion_stream.npz`、`representation_manifest.json`、`features.csv`、`result.json`。前两者必须放在同一目录，按既有接口读取：
 
 ```python
 from chronaris.representation import load_fusion_stream_batch
 features = load_fusion_stream_batch("解压目录")
-sequence = features.sequence_embedding  # 窗口 × 96 × 64
-valid = features.valid_mask             # 窗口 × 96
-pooled = features.pooled_embedding      # 窗口 × 64
+sequence = features.sequence_embedding
+valid = features.valid_mask
+pooled = features.pooled_embedding
 ```
 
-## 验收与交接
+“生成汇总特征”以该接口读取已完成输出，生成 `pooled_features.csv` 与 `delivery.json`。交付回执记录窗口数、有效时刻数和表示维数；它证明标准特征消费接口已执行，具体业务任务预测由对应任务模型完成。
 
-**工程自验已覆盖真实运行、表示一致性、下载回读和页面交互。** 结果与截图见[验收记录](../artifacts/runs/2026-10-13_fusion-workbench/README.md)。复现有界真实验收前先启动本地服务，再执行：
+字段复核读取已有 `llm_preprocessing` 结构化结果，通过现有解析器整理字段和规则。人工结论独立保存在 `field-reviews.json`，按字段合同与解释来源绑定，不改变模型输入、标签或既有语言模型记录。本轮接通保存结果的复核流程，没有新增在线模型调用。
 
-```bash
-/home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/verify_fusion_workbench.py
-```
+## 接口与目录
 
-常规测试仅使用构造数据，不读取共享模型或执行训练：
+下表列出页面使用的接口，便于与下游程序衔接。
+
+| 方法与路径 | 功能 |
+| --- | --- |
+| `GET /api/cases`、`GET /api/models` | 观测记录与兼容模型 |
+| `GET /api/sources` | 已授权观测范围内的归档记录 |
+| `POST /api/sources/prepare` | 按 `source_id`、`start_s`、`stop_s`、`model_id` 接入时段 |
+| `POST /api/cases/import` | 导入标准观测；可带 `record_id` 追加 |
+| `POST /api/runs` | `case_id`、`start`、`stop`，可带 `model_id`、`incremental`；结束索引不包含在内 |
+| `GET /api/runs`、`GET /api/runs/{id}` | 任务历史与进度 |
+| `POST /api/runs/{id}/retry` | 原参数恢复，复用合格片段 |
+| `GET /api/runs/{id}/result` | 已完成结果及展示数据 |
+| `POST /api/runs/{id}/deliver`、`GET /api/runs/{id}/delivery` | 执行汇总特征消费并读取回执 |
+| `GET /api/runs/{id}/download/{name}` | 白名单中的特征包、表示、清单、汇总特征及回执 |
+| `GET /api/fields/{case_id}`、`POST /api/fields/{case_id}` | 字段及规则复核；提交 `ids` 和 `decision` |
+
+所有接口只监听本机回环地址，提交请求需要同源结构化数据。用户文件不能提供模型读取路径；数据标识和模型登记路径独立校验。
+
+产物均在 `artifacts/fusion-workbench/`：`cases/` 保存独立观测包，`models/` 保存登记权重，`runs/` 保存任务、片段和输出，`acceptance/` 保存数值验证，截图保存在验收子目录。数据库服务和上游采集系统仍通过已有工程接口配置，本工作台当前接入归档快照与观测文件。
+
+## 复现验证
+
+定向测试覆盖导入、重复与冲突、任务范围、重试、服务重启、增量去重、模型登记、字段复核和标准表示。
 
 ```bash
 CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
-PYTHONDONTWRITEBYTECODE=1 \
+PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest \
-  tests/runtime/test_fusion_workbench.py \
+  tests/runtime/test_fusion_workbench.py tests/runtime/test_fusion_workbench_workflow.py \
   tests/representation/test_contracts.py tests/representation/test_oof_export.py -q
 ```
 
-**浏览器测试工具与依赖也保留在工作区内。** 本机通过 `tests/runtime/fusion_workbench_browser.mjs` 验证桌面和移动布局；Playwright（浏览器自动化工具）不属于应用运行依赖。浏览器、缺失动态库及中文字体仅下载或复制到忽略目录，未改系统或共享 conda 环境。本机复现命令为：
+启动服务后运行真实推理一致性与浏览器回归。浏览器检查使用工作区已有的 Playwright 浏览器自动化工具，不属于系统运行依赖。
 
 ```bash
+PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/verify_fusion_workbench.py
+
 LD_LIBRARY_PATH="$PWD/artifacts/fusion-workbench/browser/libs/extracted/usr/lib/x86_64-linux-gnu" \
 FONTCONFIG_FILE="$PWD/artifacts/fusion-workbench/browser/fonts.conf" \
 PLAYWRIGHT_BROWSERS_PATH="$PWD/artifacts/fusion-workbench/browser/browsers" \
 node tests/runtime/fusion_workbench_browser.mjs
 ```
 
-新机器可在独立目录安装 Playwright 并下载 Chromium 浏览器，再运行同一脚本；应用本身无需这些测试依赖。截图由自动化脚本操作实际界面后生成，不作为新的算法实验图。
-
-**用户验收聚焦实际使用闭环。** 打开默认案例，改选窗口 02—03，运行并观察结果；播放两个窗口、拖动参考时刻、下载完整包并刷新页面打开历史。确认界面、案例与论文口径后再合并 `feat/chapter6-demo`。持续在线接收、跨窗口状态恢复、业务风险判定及大语言模型在线调用属于后续扩展；第六章训练和辅助解释部分仍引用既有工程实现与证据。
+浏览器回归会用真实观测创建接入记录和推理任务，全部写在本工作区；测试包含归档接入、文件导入追加、增量处理、断连恢复及结果身份切换。此检查不启动训练或读取外层任务目标。

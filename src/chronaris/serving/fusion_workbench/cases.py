@@ -7,6 +7,9 @@ import numpy as np
 from chronaris.representation.collation import ObservedDualStreamSample
 from chronaris.representation.contracts import ObservationSchema
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+from chronaris.serving.fusion_workbench.presentation import display_text
+
+MAX_WINDOWS = 512
 
 STREAMS = ("physiology", "vehicle")
 ARRAYS = tuple(f"{s}_{f}" for s in STREAMS for f in ("values", "timestamps_s", "feature_mask"))
@@ -35,8 +38,8 @@ class Case:
         self.root = Path(path).resolve().parent
         self.manifest = read_json(path)
         m = self.manifest
-        if m.get("format") != "chronaris.demo_case.v1" or not 1 <= len(m["windows"]) <= 32:
-            raise ValueError("案例格式或窗口数量不合法（1—32）")
+        if m.get("format") not in ("chronaris.demo_case.v1", "chronaris.observations.v1") or not 1 <= len(m["windows"]) <= MAX_WINDOWS:
+            raise ValueError("观测记录格式或窗口数量不合法（1—512）")
         self.schema = ObservationSchema(**{
             k: tuple(v) if isinstance(v, list) else v for k, v in m["schema"].items()
         })
@@ -66,9 +69,9 @@ class Case:
 
     def summary(self):
         m = self.manifest
-        return {"id": m["id"], "title": m["title"], "description": m["description"],
-                "model_label": m["model_label"], "checkpoint_sha256": m["checkpoint_sha256"],
-                "source_label": m["source_label"], "field_counts": [len(self.schema.physiology_feature_names),
+        return {"id": m["id"], "title": display_text(m["title"]), "description": display_text(m["description"]),
+                "model_label": display_text(m["model_label"]), "checkpoint_sha256": m["checkpoint_sha256"],
+                "source_label": display_text(m["source_label"]), "appendable": m.get("origin") == "uploaded", "field_counts": [len(self.schema.physiology_feature_names),
                 len(self.schema.vehicle_feature_names)], "windows": [
                     {"label": f"窗口 {i + 1:02}", "start_s": w["start_s"], "duration_s": w["duration_s"]}
                     for i, w in enumerate(m["windows"])]}
@@ -88,7 +91,7 @@ def preview_stream(sample, stream, labels):
         # shortcut: preview is capped at 240 observed points; downloads retain the complete representation.
         if len(indices) > 240:
             indices = indices[np.linspace(0, len(indices) - 1, 240, dtype=int)]
-        traces.append({"label": labels.get(names[c], f"观测字段 {c + 1}"),
+        traces.append({"label": display_text(labels.get(names[c], f"观测字段 {c + 1}")),
                        "points": [[float(times[i]), float(values[i, c])] for i in indices]})
     return {"observed_points": int(mask.any(axis=1).sum()), "coverage": float(mask.mean()) if mask.size else 0.,
             "traces": traces}

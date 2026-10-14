@@ -20,12 +20,17 @@ def main():
     payload = json.dumps(data, ensure_ascii=False).replace("<", "\\u003c")
     shim = """
 const snapshot = SNAPSHOT;
+for (const key of ['title','description','model_label','source_label']) {
+  snapshot.case[key] = String(snapshot.case[key] || '').replaceAll('鼎新','实测数据集').replaceAll('Chronaris','融合系统').replaceAll('离线案例','观测记录').replaceAll('内部验证片段','观测片段');
+}
 const snapshotJob = snapshot.preview_job;
 window.fetch = async (path, options={}) => {
   let value, status=200;
-  if(options.method==='POST'){value={error:'离线快照仅用于已保存结果的展示，请在本机服务中执行推理。'};status=405;}
+  if(options.method==='POST'){value={error:'请在融合系统中提交处理任务。'};status=405;}
   else if(path==='/api/cases')value=[snapshot.case];
-  else if(path==='/api/runs')value=[snapshotJob];
+  else if(path==='/api/runs')value=[{...snapshotJob,title:snapshot.case.title}];
+  else if(path==='/api/models'||path==='/api/sources'||path.startsWith('/api/fields/'))value=[];
+  else if(path.endsWith('/delivery'))value={status:'pending'};
   else if(path.endsWith('/result'))value=snapshot;
   else value=snapshotJob;
   return new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json'}});
@@ -33,10 +38,11 @@ window.fetch = async (path, options={}) => {
 """.replace("SNAPSHOT", payload)
     page = (ui / "index.html").read_text()
     page = page.replace('<link rel="stylesheet" href="/style.css">', '<style>' + (ui / 'style.css').read_text() +
-        '\n#run,.download-links,#download-zip{display:none}</style>')
+        '\n#run,#deliver,#add-data,.download-links,#download-zip,[data-tab=data],[data-tab=models]{display:none}</style>')
     page = page.replace('<script src="/app.js" defer></script>', '')
-    script = (ui / "app.js").read_text()
-    script += "\nopenResult(snapshotJob.id,false).then(()=>{setProgress(snapshotJob);tab('results');message('离线展示快照 · 输入与表示均来自已保存结果');});"
+    page = page.replace('<script src="/charts.js" defer></script>', '')
+    script = (ui / 'charts.js').read_text() + '\n' + (ui / "app.js").read_text()
+    script += "\nopenResult(snapshotJob.id,false).then(()=>{setProgress(snapshotJob);tab('results');});"
     page = page.replace('</body>', '<script>' + shim + script + '</script></body>')
     args.output.write_text(page, encoding="utf-8")
     if args.bundle:

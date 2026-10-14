@@ -1,18 +1,97 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chronaris · 融合特征工作台</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
-<body><aside class="sidebar"><a class="brand" href="/" aria-label="Chronaris 首页"><span class="brand-icon">C</span><span>Chronaris<small>航空人机时序融合</small></span></a><div class="nav-caption">融合特征工作台</div><nav aria-label="主要功能"><button class="nav active" data-tab="data"><span>01</span> 数据与任务</button><button class="nav" data-tab="results"><span>02</span> 融合结果与回放</button><button class="nav" data-tab="exports"><span>03</span> 特征导出与追溯</button></nav><div class="sidebar-note"><span class="dot"></span> 本地离线演示<p>依托 Zorathos 接入整合工程<br>展示标准化融合特征生成流程</p><small>融合特征工作台 · 离线运行</small></div></aside>
-<main><header><div><span class="eyebrow">CHRONARIS / FUSION WORKSPACE</span><h1 id="page-title">数据与任务</h1></div><div class="environment"><span class="dot"></span> CPU 单任务运行 <span class="tag">离线案例</span></div></header>
-<div id="message" role="status" aria-live="polite" hidden></div>
-<section id="data" class="view"><div class="intro"><div><span class="eyebrow">从异步观测到统一表示</span><h2>让人机双流，在同一时间轴上可读。</h2><p>选择离线案例与观测窗口，加载冻结模型，生成可回放、可下载的融合特征。</p></div><div class="intro-symbol" aria-hidden="true">∿<span>∿</span></div></div>
-<ol class="pipeline"><li><b>01</b>异步观测<span>保留原始时间与缺失掩码</span></li><li><b>02</b>连续对齐<span>冻结参数与训练期归一化</span></li><li><b>03</b>因果融合<span>在统一参考时刻生成表示</span></li><li><b>04</b>标准化导出<span>序列特征与来源记录</span></li></ol>
-<div class="data-grid"><article class="panel"><div class="panel-heading"><h2>离线案例</h2><span class="tag">真实观测</span></div><label for="case">选择案例</label><select id="case"></select><p id="case-description" class="muted"></p><div class="stats"><div><strong id="phys-count">—</strong><span>生理字段</span></div><div><strong id="vehicle-count">—</strong><span>航电字段</span></div><div><strong id="window-count">—</strong><span>可选窗口</span></div></div><div class="two-col"><div><label for="start">起始窗口</label><select id="start"></select></div><div><label for="stop">结束窗口（含）</label><select id="stop"></select></div></div><p id="range-label" class="muted"></p><label>冻结模型</label><div class="model-row"><span class="model-icon">◎</span><div><b id="model-label">等待加载</b><small>复用训练期参数 · 本次仅执行推理</small></div></div><button id="run" class="primary">生成融合特征 <span>→</span></button></article>
-<article class="panel"><div class="panel-heading"><h2>运行状态</h2><span id="status-badge" class="tag">准备就绪</span></div><div class="run-visual"><span id="progress-number">0</span><small>%</small></div><progress id="progress" max="100" value="0" aria-label="推理进度"></progress><p id="progress-text">选择案例后，即可开始一次离线推理。</p><ul class="facts"><li><span>处理单位</span><b>独立观测窗口</b></li><li><span>每窗口参考时刻</span><b>96 点</b></li><li><span>每时刻融合表示</span><b>64 维</b></li><li><span>特征格式</span><b>NPZ / CSV + JSON</b></li></ul><button id="open-results" class="secondary" disabled>查看本次结果 →</button></article></div>
-<article class="panel history"><div class="panel-heading"><h2>历史运行</h2><button id="refresh" class="text-button">刷新记录 ↻</button></div><p class="muted">已完成记录可直接回放，保留各次运行的模型来源与特征文件。</p><div id="history"></div></article></section>
-<section id="results" class="view" hidden><div class="panel-heading"><div><span class="eyebrow">离线窗口回放</span><h2 id="result-title">尚未选择结果</h2></div><span class="tag">已保存结果</span></div><p class="result-empty muted">请先运行一个案例，或在“数据与任务”中打开历史记录。</p><div class="result-content" hidden><div class="panel replay-controls"><button id="play" class="secondary">▶ 播放</button><label for="window-slider">观测窗口</label><input type="range" id="window-slider" min="0" max="0" value="0"><strong id="window-label"></strong></div><div class="two-col"><article class="panel"><div class="panel-heading"><h2>生理观测</h2><span id="phys-coverage" class="tag"></span></div><p class="muted">独立纵轴展示各字段原始观测值；横轴为窗口内时间（秒）。</p><div id="phys-traces" class="traces"></div></article><article class="panel"><div class="panel-heading"><h2>航电观测</h2><span id="vehicle-coverage" class="tag"></span></div><p class="muted">保留异步采样位置，选取最多三个有效观测字段。</p><div id="vehicle-traces" class="traces"></div></article></div><article class="panel fusion"><div class="panel-heading"><div><h2>融合表示时序</h2><p class="muted">颜色表示各维潜在特征值，无效时刻留空；特征维度不等同于业务状态。</p></div><div class="heat-legend">负值 <span></span> 正值</div></div><canvas id="heatmap" width="1100" height="210" role="img" aria-label="96 个参考时刻与 64 维融合特征热力图"></canvas><div class="axis"><span>0 秒</span><span>窗口内时间 →</span><span id="end-time">30 秒</span></div><div class="two-col query"><label for="query">参考时刻 <input type="range" id="query" min="0" max="95" value="0"></label><p id="query-value"></p></div></article></div></section>
-<section id="exports" class="view" hidden><div class="panel-heading"><div><span class="eyebrow">标准化交付</span><h2>特征与来源，一起保存。</h2></div></div><p class="result-empty muted">请先运行一个案例，或打开一条已完成的历史记录。</p><div class="result-content" hidden><div class="data-grid"><article class="panel"><h2>下载融合特征</h2><p class="muted">完整包包含序列表示、有效掩码、汇总表示、数据清单和本次运行记录，可由现有下游读取接口直接加载。</p><a id="download-zip" class="primary" download>下载完整特征包 <span>↓ ZIP</span></a><div class="download-links"><a id="download-csv" download>序列特征 CSV ↓</a><a id="download-npz" download>标准表示 NPZ ↓</a><a id="download-manifest" download>来源清单 JSON ↓</a></div><p class="muted">CSV：每行对应一个窗口内参考时刻，含有效标记及 64 维特征。NPZ：NumPy 数组归档，需与来源清单放在同一目录。</p><h3>特征预览 · 前 6 维</h3><div id="feature-table" class="table-wrap"></div></article><article class="panel"><h2>本次运行追溯</h2><dl id="provenance"></dl><p class="muted">当前展示支持融合管线的功能验证。下游业务判断需由相应任务模型给出。</p></article></div><article class="panel"><h2>下游读取示例</h2><p class="muted">解压完整包后，沿用 Chronaris 标准融合表示读取接口。有效掩码用于筛选可用参考时刻。</p><pre><code>from chronaris.representation import load_fusion_stream_batch
-
-features = load_fusion_stream_batch("解压目录")
-sequence = features.sequence_embedding  # 窗口 × 96 × 64
-valid = features.valid_mask             # 窗口 × 96
-pooled = features.pooled_embedding      # 窗口 × 64</code></pre></article></div></section>
-<footer><span>Chronaris · 标准化融合特征生成管线</span><span>数据接入背景：Zorathos ｜ 窗口级推理与历史回放</span></footer></main></body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>航空人机时序融合系统</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/charts.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">∿</span><span>航空人机<br>时序融合系统</span></a>
+    <nav aria-label="主要功能">
+      <button class="nav active" data-tab="data" aria-current="page">数据与任务</button>
+      <button class="nav" data-tab="models">模型与字段</button>
+      <button class="nav" data-tab="results">结果分析</button>
+      <button class="nav" data-tab="exports">特征交付</button>
+    </nav>
+    <div class="connection"><span id="connection-dot" class="dot"></span><span id="connection">正在连接</span></div>
+  </aside>
+  <main>
+    <header><h1 id="page-title">数据与任务</h1><span id="record-total" class="muted"></span></header>
+    <div id="message" role="status" aria-live="polite" hidden></div>
+    <section id="data" class="view">
+      <div class="data-grid">
+        <article class="panel">
+          <div class="panel-heading"><h2>新建处理任务</h2><button id="add-data" class="secondary">接入数据</button></div>
+          <label for="case">观测记录</label><select id="case"></select>
+          <div class="two-col">
+            <div><label for="start">起始窗口</label><select id="start"></select></div>
+            <div><label for="stop">结束窗口</label><select id="stop"></select></div>
+          </div>
+          <p id="range-label" class="field-hint" aria-live="polite"></p>
+          <label for="model">处理模型</label><select id="model"></select>
+          <div class="task-actions"><label class="check"><input id="incremental" type="checkbox">处理新增窗口</label><button id="run" class="primary" disabled>开始处理 →</button></div>
+        </article>
+        <article class="panel task-status">
+          <div class="panel-heading"><h2>当前任务</h2><span id="status-badge" class="tag">待创建</span></div>
+          <p id="task-name">选择观测记录，开始处理。</p>
+          <div class="progress-label"><span id="progress-text">等待任务</span><strong id="progress-number">0%</strong></div>
+          <progress id="progress" max="100" value="0" aria-label="任务进度"></progress>
+          <ol id="pipeline" class="pipeline"><li>校验输入</li><li>生成特征</li><li>封装结果</li></ol>
+          <button id="open-results" class="secondary" disabled>查看本次结果 →</button>
+          <button id="retry-current" class="secondary" hidden>按原参数重试</button>
+        </article>
+      </div>
+      <article class="panel history">
+        <div class="panel-heading"><h2>处理记录</h2><button id="refresh" class="text-button">刷新</button></div>
+        <div id="history" class="table-wrap"></div>
+      </article>
+    </section>
+    <section id="models" class="view" hidden>
+      <article class="panel"><div class="panel-heading"><h2>可用模型</h2><button id="refresh-models" class="text-button">刷新模型</button></div><div id="model-list" class="model-list"></div></article>
+      <article class="panel">
+        <div class="panel-heading"><h2>字段解释与规则复核</h2><span id="field-count" class="tag"></span></div>
+        <div class="toolbar"><label for="field-search" class="sr-only">检索字段</label><input id="field-search" type="search" placeholder="检索字段或规则"><select id="field-filter" aria-label="复核状态"><option value="all">全部条目</option><option value="pending">待复核</option><option value="approved">已确认</option><option value="needs_revision">待修订</option></select><button id="approve-fields" class="secondary">确认选中项</button><button id="revise-fields" class="text-button">标记待修订</button></div>
+        <div id="field-table" class="table-wrap"></div><div class="pagination"><button id="fields-prev" class="text-button">上一页</button><span id="fields-page"></span><button id="fields-next" class="text-button">下一页</button></div>
+      </article>
+    </section>
+    <section id="results" class="view" hidden>
+      <div class="panel empty result-empty">选择一条已完成的处理记录，查看结果。</div>
+      <div class="result-content" hidden>
+        <div class="panel-heading"><div><h2 id="result-title"></h2><p id="result-identity" class="field-hint"></p></div><button id="to-export" class="primary">交付特征 →</button></div>
+        <div class="panel replay-controls"><button id="play" class="secondary">播放</button><label for="window-slider">窗口</label><input id="window-slider" type="range" min="0" max="0" value="0"><strong id="window-label"></strong></div>
+        <div class="two-col"><article class="panel"><div class="panel-heading"><h2>生理观测</h2><span id="phys-coverage" class="tag"></span></div><div id="phys-traces" class="traces"></div></article><article class="panel"><div class="panel-heading"><h2>航电观测</h2><span id="vehicle-coverage" class="tag"></span></div><div id="vehicle-traces" class="traces"></div></article></div>
+        <article class="panel fusion">
+          <div class="panel-heading"><h2>融合特征</h2><div class="heat-legend"><span id="scale-min"></span><span class="gradient"></span><span id="scale-max"></span></div></div>
+          <div class="heat-layout"><div class="heat-y"><span>维度 1</span><span id="last-dimension">64</span></div><canvas id="heatmap" width="1100" height="240" tabindex="0" role="img" aria-label="融合特征热力图，可用方向键选择时刻和维度"></canvas></div>
+          <div class="axis"><span>0 秒</span><span>窗口内时间</span><span id="end-time"></span></div>
+          <div class="query"><label for="query">参考时刻</label><input id="query" type="range" min="0" max="95" value="0"><label for="dimension">特征维度</label><input id="dimension" type="number" min="1" max="64" value="1"></div>
+          <output id="query-value" aria-live="polite"></output>
+        </article>
+      </div>
+    </section>
+    <section id="exports" class="view" hidden>
+      <div class="panel empty result-empty">选择一条已完成的处理记录，交付特征。</div>
+      <div class="result-content" hidden>
+        <div class="data-grid"><article class="panel"><h2>特征文件</h2><p id="export-summary"></p><a id="download-zip" class="primary" download>下载完整特征包 ↓</a><div class="download-links"><a id="download-csv" download>序列特征表</a><a id="download-npz" download>标准表示文件</a><a id="download-manifest" download>来源清单</a></div><h3>特征预览</h3><p id="feature-position" class="field-hint"></p><div id="feature-table" class="table-wrap"></div></article>
+        <article class="panel"><h2>下游交付</h2><p>生成各窗口的汇总特征，供下游任务读取。</p><button id="deliver" class="primary">生成汇总特征</button><p id="delivery-status" role="status"></p><a id="download-pooled" class="secondary" download hidden>下载汇总特征表 ↓</a><details><summary>来源详情</summary><dl id="provenance"></dl></details></article></div>
+      </div>
+    </section>
+  </main>
+  <dialog id="data-dialog">
+    <form method="dialog" class="panel-heading"><h2>接入观测数据</h2><button aria-label="关闭" class="text-button">✕</button></form>
+    <div id="dialog-message" role="status" hidden></div>
+    <label for="source">归档记录</label><select id="source"></select>
+    <div class="two-col"><div><label for="source-start">起始时间（秒）</label><input id="source-start" type="number" min="0"></div><div><label for="source-stop">结束时间（秒）</label><input id="source-stop" type="number" min="0"></div></div>
+    <button id="prepare-source" class="primary">接入所选时段</button>
+    <hr><h3>导入观测文件</h3>
+    <label for="import-model">字段与模型</label><select id="import-model"></select>
+    <label for="import-file">标准观测文件（JSON）</label><input id="import-file" type="file" accept=".json,application/json">
+    <label class="check"><input id="append-record" type="checkbox">追加到当前导入记录</label>
+    <div class="toolbar"><button id="import-record" class="primary">校验并导入</button><button id="import-template" class="text-button">下载输入格式</button></div>
+  </dialog>
+</body>
+</html>

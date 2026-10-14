@@ -54,9 +54,9 @@ def prepare_dingxin_case(*, checkpoint, snapshot_root, audit_root, destination):
             "group_id": sample.group_id, "source_sample_hash": sample.source_sample_hash,
             "start_s": float(context["start_offset_ms"]) / 1000, "duration_s": sample.context_duration_s})
     write_json(destination / "case.json", {"format": "chronaris.demo_case.v1", "id": "dingxin-validation",
-        "title": "鼎新 · 人机双流离线案例", "source_label": "鼎新实测 · 内部验证片段",
+        "title": "实测数据集 · 人机观测记录", "source_label": "航空人机实测数据集",
         "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
-        "model_label": "Chronaris 连续融合 · 冻结自监督模型", "checkpoint": "encoder.pt",
+        "model_label": "连续对齐与因果融合 · 自监督模型", "checkpoint": "encoder.pt",
         "checkpoint_sha256": before, "schema": index.plan.schema.to_dict(), "windows": windows,
         "field_labels": field_labels, "source": {"checkpoint": str(checkpoint), "snapshot": str(Path(snapshot_root).resolve()),
             "selection": "first_three_internal_validation_windows", "seed": payload["seed"],

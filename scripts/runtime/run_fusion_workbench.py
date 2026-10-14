@@ -25,10 +25,12 @@ def main():
         parser.error("产物目录必须位于本 worktree 内")
     torch.set_num_threads(1)
     torch.set_num_interop_threads(1)
-    store = DemoStore(root / "cases", root / "runs")
+    store = DemoStore(root / "cases", root / "runs",
+        audit_root=PROJECT / "docs/artifacts/runs/2026-07-10_fixed-data-audit",
+        context_path=PROJECT / "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/llm_preprocessing_context.json")
     try:
         server = make_server(store, args.port)
-        print(f"Chronaris 融合特征工作台：http://127.0.0.1:{server.server_port}（{len(store.cases)} 个案例）", flush=True)
+        print(f"航空人机时序融合系统：http://127.0.0.1:{server.server_port}（{len(store.cases)} 份观测记录）", flush=True)
         try:
             server.serve_forever()
         finally:
