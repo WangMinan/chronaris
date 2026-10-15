@@ -1,0 +1,1202 @@
+[
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_002__seed_4111000002__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_004__seed_4111000004__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_006__seed_4111000006__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_002__seed_4111000002__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_004__seed_4111000004__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_006__seed_4111000006__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_002__seed_4111000002__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_004__seed_4111000004__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_006__seed_4111000006__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.6689300537109375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_002__seed_4111000002__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_004__seed_4111000004__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_006__seed_4111000006__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_002__seed_4111000002__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_004__seed_4111000004__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_006__seed_4111000006__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_002__seed_4111000002__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_004__seed_4111000004__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_000__trajectory_006__seed_4111000006__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_001__trajectory_008__seed_4111000008__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_010__seed_4111000010__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_012__seed_4111000012__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_014__seed_4111000014__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_001__trajectory_008__seed_4111000008__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_010__seed_4111000010__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_012__seed_4111000012__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_014__seed_4111000014__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_001__trajectory_008__seed_4111000008__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_010__seed_4111000010__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_012__seed_4111000012__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_014__seed_4111000014__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_001__trajectory_008__seed_4111000008__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_010__seed_4111000010__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_012__seed_4111000012__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_014__seed_4111000014__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_001__trajectory_008__seed_4111000008__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_010__seed_4111000010__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_012__seed_4111000012__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_014__seed_4111000014__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_001__trajectory_008__seed_4111000008__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_010__seed_4111000010__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_012__seed_4111000012__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_001__trajectory_014__seed_4111000014__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_002__trajectory_016__seed_4111000016__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_018__seed_4111000018__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_020__seed_4111000020__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_022__seed_4111000022__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 8.344650268554688e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_002__trajectory_016__seed_4111000016__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_018__seed_4111000018__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_020__seed_4111000020__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_022__seed_4111000022__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_002__trajectory_016__seed_4111000016__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_018__seed_4111000018__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_020__seed_4111000020__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_022__seed_4111000022__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_002__trajectory_016__seed_4111000016__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_018__seed_4111000018__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_020__seed_4111000020__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_022__seed_4111000022__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_002__trajectory_016__seed_4111000016__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_018__seed_4111000018__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_020__seed_4111000020__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_022__seed_4111000022__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_002__trajectory_016__seed_4111000016__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_018__seed_4111000018__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_020__seed_4111000020__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_002__trajectory_022__seed_4111000022__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_003__trajectory_024__seed_4111000024__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_026__seed_4111000026__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_028__seed_4111000028__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_030__seed_4111000030__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_003__trajectory_024__seed_4111000024__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_026__seed_4111000026__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_028__seed_4111000028__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_030__seed_4111000030__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_003__trajectory_024__seed_4111000024__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_026__seed_4111000026__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_028__seed_4111000028__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_030__seed_4111000030__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_003__trajectory_024__seed_4111000024__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_026__seed_4111000026__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_028__seed_4111000028__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_030__seed_4111000030__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 5.960464477539062e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_003__trajectory_024__seed_4111000024__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_026__seed_4111000026__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_028__seed_4111000028__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_030__seed_4111000030__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_003__trajectory_024__seed_4111000024__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_026__seed_4111000026__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_028__seed_4111000028__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_003__trajectory_030__seed_4111000030__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_004__trajectory_032__seed_4111000032__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_034__seed_4111000034__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_036__seed_4111000036__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_038__seed_4111000038__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 5.662441253662109e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_004__trajectory_032__seed_4111000032__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_034__seed_4111000034__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_036__seed_4111000036__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_038__seed_4111000038__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_004__trajectory_032__seed_4111000032__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_034__seed_4111000034__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_036__seed_4111000036__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_038__seed_4111000038__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_004__trajectory_032__seed_4111000032__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_034__seed_4111000034__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_036__seed_4111000036__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_038__seed_4111000038__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 6.556510925292969e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_004__trajectory_032__seed_4111000032__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_034__seed_4111000034__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_036__seed_4111000036__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_038__seed_4111000038__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_004__trajectory_032__seed_4111000032__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_034__seed_4111000034__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_036__seed_4111000036__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_004__trajectory_038__seed_4111000038__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_005__trajectory_040__seed_4111000040__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_042__seed_4111000042__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_044__seed_4111000044__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_046__seed_4111000046__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_005__trajectory_040__seed_4111000040__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_042__seed_4111000042__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_044__seed_4111000044__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_046__seed_4111000046__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_005__trajectory_040__seed_4111000040__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_042__seed_4111000042__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_044__seed_4111000044__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_046__seed_4111000046__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_005__trajectory_040__seed_4111000040__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_042__seed_4111000042__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_044__seed_4111000044__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_046__seed_4111000046__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_005__trajectory_040__seed_4111000040__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_042__seed_4111000042__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_044__seed_4111000044__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_046__seed_4111000046__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_005__trajectory_040__seed_4111000040__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_042__seed_4111000042__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_044__seed_4111000044__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_005__trajectory_046__seed_4111000046__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.6689300537109375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_006__trajectory_048__seed_4111000048__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_050__seed_4111000050__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_052__seed_4111000052__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_054__seed_4111000054__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 5.736947059631348e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_006__trajectory_048__seed_4111000048__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_050__seed_4111000050__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_052__seed_4111000052__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_054__seed_4111000054__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_006__trajectory_048__seed_4111000048__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_050__seed_4111000050__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_052__seed_4111000052__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_054__seed_4111000054__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_006__trajectory_048__seed_4111000048__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_050__seed_4111000050__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_052__seed_4111000052__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_054__seed_4111000054__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 4.917383193969727e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_006__trajectory_048__seed_4111000048__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_050__seed_4111000050__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_052__seed_4111000052__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_054__seed_4111000054__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_006__trajectory_048__seed_4111000048__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_050__seed_4111000050__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_052__seed_4111000052__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_006__trajectory_054__seed_4111000054__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.430511474609375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_058__seed_4111000058__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_060__seed_4111000060__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_062__seed_4111000062__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_058__seed_4111000058__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_060__seed_4111000060__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_062__seed_4111000062__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 9.5367431640625e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "checkpoint_sha256": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "weight_source_format": "chronaris.common_pretraining_checkpoint.v2",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_058__seed_4111000058__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_060__seed_4111000060__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_062__seed_4111000062__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "self_supervised",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 7.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_058__seed_4111000058__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_060__seed_4111000060__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_062__seed_4111000062__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 7.152557373046875e-07
+    },
+    "checkpoint_unchanged": true,
+    "passed": true,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 14.84375,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_058__seed_4111000058__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_060__seed_4111000060__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_062__seed_4111000062__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.1920928955078125e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  },
+  {
+    "seed": 17,
+    "device": "cuda",
+    "cutoff_s": 22.5,
+    "checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt",
+    "checkpoint_sha256": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "weight_source_format": "chronaris.application_end_to_end_finetuning.v3",
+    "scope": "current_checkpoint_before_confirmation",
+    "sample_ids": [
+      "g1_state_space__v4_development_profile_007__trajectory_056__seed_4111000056__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_058__seed_4111000058__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_060__seed_4111000060__clean_asynchronous::context_030.000",
+      "g1_state_space__v4_development_profile_007__trajectory_062__seed_4111000062__clean_asynchronous::context_030.000"
+    ],
+    "historical_max_delta": {
+      "repeat": 0.0,
+      "future_values": 0.0,
+      "future_missing": 1.6689300537109375e-06
+    },
+    "checkpoint_unchanged": true,
+    "passed": false,
+    "route": "task_guided",
+    "revised_atol": 1e-05,
+    "revised_passed": true
+  }
+]

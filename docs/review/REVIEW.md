@@ -1,10 +1,12 @@
 # Chronaris 复核入口
 
-更新时间：2026-10-12
+更新时间：2026-10-15
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
+
+[历史信息隔离的数值容差](stage/thesis-v4/causality-tolerance-20261015/README.md)：逐层定位GPU单精度形状相关舍入，双精度与反例对照、48组扩展核验及29项回归通过；审计策略独立绑定，冻结训练源码与旧失败保留。
 
 [本机跨设备验证入口](stage/thesis-v4/local-validation-20261012/README.md)：来源可追溯的设备兼容副本、独立恢复、完整内部重放及首批门；36项定向回归通过，研究稳定性和工期等待实跑。
 

@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-更新时间：2026-10-13
+更新时间：2026-10-15
 
 
 [阶段 4.5-C 单因素尝试](runs/2026-09-22_v4-stage45c/report.md)：公共自监督项消融六次微调全部完成、未通过采用门，含完整配对结果与来源核验。
@@ -14,6 +14,8 @@
 历史阶段编号报告、旧资产目录和兼容入口已经移入 `docs/artifacts/archive/`。清理和迁移记录放在 `docs/artifacts/cleanup/` 与 `docs/maintenance/`。
 
 ## 研究证据与最新盘点
+
+- [历史信息隔离数值容差资格](runs/2026-10-15_causality-tolerance/README.md)：矩阵形状与精度对照、反例、48组内部核验和29项回归；绝对容差调整为1e-5，保留原判定并接续最后两项仿真。
 
 - [本机断电恢复](runs/2026-10-13_power-recovery/README.md)：已完成产物重新核验，CogPilot预训练300次检查点接续，原日志与计算投入保留。
 

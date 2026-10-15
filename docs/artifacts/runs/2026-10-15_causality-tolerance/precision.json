@@ -1,0 +1,616 @@
+[
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": true,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": true,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": true,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 1.0728836059570312e-06,
+      "physiology": 2.086162567138672e-07,
+      "vehicle": 1.1920928955078125e-07,
+      "fusion": 1.0728836059570312e-06,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 2.384185791015625e-07,
+      "embedding_vehicle": 3.5762786865234375e-07
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 1.0728836059570312e-06,
+      "physiology": 2.086162567138672e-07,
+      "vehicle": 1.1920928955078125e-07,
+      "fusion": 1.0728836059570312e-06,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 2.384185791015625e-07,
+      "embedding_vehicle": 3.5762786865234375e-07
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "negative_control": "causal_mask_disabled",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "delta": 2.279744478280655
+  },
+  {
+    "route": "self_supervised",
+    "device": "cpu",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cpu",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "self_supervised",
+    "device": "cpu",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": true,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": true,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": true,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 7.152557373046875e-07,
+      "physiology": 1.7881393432617188e-07,
+      "vehicle": 1.7881393432617188e-07,
+      "fusion": 7.152557373046875e-07,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 2.384185791015625e-07,
+      "embedding_vehicle": 2.980232238769531e-07
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cpu",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float32",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 7.152557373046875e-07,
+      "physiology": 1.7881393432617188e-07,
+      "vehicle": 1.7881393432617188e-07,
+      "fusion": 7.152557373046875e-07,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 2.384185791015625e-07,
+      "embedding_vehicle": 2.980232238769531e-07
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "negative_control": "causal_mask_disabled",
+    "device": "cuda",
+    "dtype": "torch.float64",
+    "delta": 2.6055702024883787
+  },
+  {
+    "route": "task_guided",
+    "device": "cpu",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "repeat",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cpu",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_values",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  },
+  {
+    "route": "task_guided",
+    "device": "cpu",
+    "dtype": "torch.float64",
+    "graph": false,
+    "alteration": "future_missing",
+    "deltas": {
+      "sequence": 0.0,
+      "physiology": 0.0,
+      "vehicle": 0.0,
+      "fusion": 0.0,
+      "input_physiology": 0.0,
+      "mask_physiology": 0.0,
+      "input_vehicle": 0.0,
+      "mask_vehicle": 0.0,
+      "embedding_physiology": 0.0,
+      "embedding_vehicle": 0.0
+    },
+    "mask_equal": true
+  }
+]

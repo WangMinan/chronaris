@@ -1,0 +1,40 @@
+{
+  "format": "chronaris.causality_audit_policy.v1",
+  "historical_atol": 1e-05,
+  "original_atol": 1e-06,
+  "auditor_path": "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015/src/chronaris/evaluation/application_tasks/v4_correctness.py",
+  "original_auditor_sha256": [
+    "0ae070bd3c98ada53e96d797c62b4a93bfcc1ad506c0d28d9035ef2f6b8376ad"
+  ],
+  "precision_path": "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/precision.json",
+  "sweep_path": "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/sweep.json",
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/precision.json": "33362b0ccdc3b16e08ae4e5fb654bedce3b80a4e6c9c6bd8110eb202e818a903",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/linear-shape.json": "fb279ee3305a8be50af9285a4a8712e74659da62a803a6da981f9825392e33d8",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/sweep.json": "d2c7ecc1954bb541be5ea690bf3561177a924d64bdecc4236d5b00b108938802",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/probe.py": "80d485a5f98b9280e6910c3f69a531b5468f4ea9cfb34600741fc69472d251a7",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/linear_shape_probe.py": "331d7420297694276afd94230ad77b23a49c6f76bfa38c9b55cb413493b027a6",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/sweep.py": "105c53feb2720dca0dfaa7d14e9734e2ec06ac5b7fd28178546449bf893c60e6",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/tests.log": "cb9c4f27bf6366ca70d43e92c496c42f92b640d1dd904ac62865490a80a52630",
+    "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015/src/chronaris/evaluation/application_tasks/v4_correctness.py": "178b69c82495428e1a75b4b61fda4b7acb45e0a3050323db7e3d4450033cbfba",
+    "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015/src/chronaris/evaluation/application_tasks/causality_recovery.py": "e4bf496bf5e022081c487b5a41a20f353c0a30dc4eb7dea573496e026b2e3c8b",
+    "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015/scripts/evaluation/application_tasks/resume_causality_validation.py": "f6524d378d53947c399e2e9d58689d2bc479d4a9517aacd0ded68cf9a3fd5b1f",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/application_tasks/v4_correctness.py": "0ae070bd3c98ada53e96d797c62b4a93bfcc1ad506c0d28d9035ef2f6b8376ad",
+    "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/evaluation/application_tasks/v4_correctness.py": "0ae070bd3c98ada53e96d797c62b4a93bfcc1ad506c0d28d9035ef2f6b8376ad",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/preserved_failure/workflow-thread1/validation_state.json": "877067b83feb3b3929aa238ba76858a3dfc9c4a812a06a904108f88fade66d02",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/preserved_failure/workflow-thread1/logs/subset_unit_15.log": "7744ad4afa4201afd826d0cb429a00f2b7eb302b76307a0f9499991f24b0c142",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/preserved_failure/workflow-thread1/commands/subset_unit_15.json": "897842faf7cad93c7418c0d9038a509c1e92e83024d95965c8f19093278c10e1",
+    "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/preserved_failure/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/run_state.json": "7b5e2967467da54e8bec0eeced28d6919bfe20bf2aca36ee36aba2b797abd706",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/best.pt": "7c0f1e9437fbfec576e9e9137250ca751f1b996c7e4d72a4c77c43b6d45ec0e6",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/best.pt": "230d7d3cecc93c0ef684be5ebea72aaf35159bfe2c86f973a33666a737cebd08",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/task_guided/chronaris/last.pt": "e82f7cbbff66747f5495bb9f493c1dc261a9d7e1da3aa99e9e65a7f1118bd9e7",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_continuous_evolution/fold01/seed17/self_supervised/chronaris/C/last.pt": "6f0a7903c180b004e933b5572d2e13a623cef763cb7fae2cc1f75491cb64d2a4"
+  },
+  "legacy_driver_module": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/application_tasks/device_resume.py",
+  "execution_receipt": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/execution_copy.json",
+  "training_workspace": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "subset_root": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset",
+  "recovery_root": "/mnt/e/chronaris-v4-results/2026-10-15-causality-diagnosis/continuation",
+  "frozen_training_source_preserved": true,
+  "confirmation_opened": false
+}

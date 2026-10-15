@@ -1,0 +1,72 @@
+[
+  {
+    "stream": "physiology",
+    "shapes": [
+      [
+        244,
+        14
+      ],
+      [
+        120,
+        14
+      ]
+    ],
+    "layers": [
+      {
+        "index": 0,
+        "type": "Linear",
+        "historical_max_delta": 0.0
+      },
+      {
+        "index": 1,
+        "type": "LayerNorm",
+        "historical_max_delta": 0.0
+      },
+      {
+        "index": 2,
+        "type": "GELU",
+        "historical_max_delta": 0.0
+      },
+      {
+        "index": 3,
+        "type": "Linear",
+        "historical_max_delta": 2.384185791015625e-07
+      }
+    ]
+  },
+  {
+    "stream": "vehicle",
+    "shapes": [
+      [
+        1204,
+        24
+      ],
+      [
+        596,
+        24
+      ]
+    ],
+    "layers": [
+      {
+        "index": 0,
+        "type": "Linear",
+        "historical_max_delta": 7.152557373046875e-07
+      },
+      {
+        "index": 1,
+        "type": "LayerNorm",
+        "historical_max_delta": 7.152557373046875e-07
+      },
+      {
+        "index": 2,
+        "type": "GELU",
+        "historical_max_delta": 7.152557373046875e-07
+      },
+      {
+        "index": 3,
+        "type": "Linear",
+        "historical_max_delta": 3.5762786865234375e-07
+      }
+    ]
+  }
+]
