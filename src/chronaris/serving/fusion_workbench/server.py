@@ -19,7 +19,11 @@ from chronaris.serving.fusion_workbench.http import make_server
 
 
 class DemoStore:
-    def __init__(self, cases_root, runs_root, *, audit_root=None, context_path=None):
+    def __init__(self, cases_root, runs_root, *, audit_root=None, context_path=None, device="cpu"):
+        from chronaris.serving.fusion_workbench.device import execution_identity
+        self.execution = execution_identity(device)
+        self.device = self.execution["device"]
+        self._gpu_context = None
         self.root = Path(runs_root).resolve()
         self.root.mkdir(parents=True, exist_ok=True)
         self._lock_file = (self.root / '.server.lock').open('a')
@@ -29,6 +33,13 @@ class DemoStore:
             self._lock_file.close()
             raise RuntimeError('此产物目录已有服务运行') from None
         try:
+            if self.device != 'cpu':
+                from chronaris.evaluation.application_tasks.v4_public_screen import development_gpu_lock
+                self._gpu_context = development_gpu_lock()
+                if not self._gpu_context.__enter__():
+                    self._gpu_context.__exit__(None, None, None)
+                    self._gpu_context = None
+                    raise RuntimeError('GPU正由其他实验使用，请稍后再启动GPU服务')
             self.catalog = Catalog(cases_root, audit_root)
             self.cases = self.catalog.refresh()
             self.reviews = FieldReviews(self.root.parent / 'field-reviews.json', context_path)
@@ -38,6 +49,8 @@ class DemoStore:
                     job.update(status='failed',error='服务已中断，可按原参数继续处理。')
                     write_json(path,job)
         except Exception:
+            if self._gpu_context:
+                self._gpu_context.__exit__(None, None, None)
             self._lock_file.close()
             raise
         self.lock = threading.RLock()
@@ -46,6 +59,9 @@ class DemoStore:
 
     def close(self):
         self.executor.shutdown(wait=True)
+        if self._gpu_context:
+            self._gpu_context.__exit__(None, None, None)
+            self._gpu_context = None
         self._lock_file.close()
 
     def job_root(self, job_id):
@@ -94,7 +110,7 @@ class DemoStore:
                 completed = {key for j in self.history() if j['status']=='completed' and j.get('case_id')==payload['case_id']
                              and j.get('implementation_digest')==revision
                              for key in j.get('window_keys',[])}
-                indices = [i for i in indices if window_key(case,i) not in completed]
+                indices = [i for i in indices if window_key(case,i,device=self.device) not in completed]
                 if not indices:
                     raise ValueError('所选范围已处理完成，没有新增窗口')
             request = dict(payload,model_id=digest,incremental=payload.get('incremental',False))
@@ -124,9 +140,9 @@ class DemoStore:
         write_json(root / 'input.json',case.manifest)
         windows = case.manifest['windows']
         job = {'id':job_id, 'case_id':request['case_id'],'title':case.summary()['title'], 'request':request,
-            'implementation_digest':implementation_digest(), 'selected_indices':indices, 'window_keys':[window_key(case,i) for i in indices], 'retry_of':retry_of,
+            'implementation_digest':implementation_digest(), 'selected_indices':indices, 'window_keys':[window_key(case,i,device=self.device) for i in indices], 'retry_of':retry_of,
             'range_s':[windows[indices[0]]['start_s'],windows[indices[-1]]['start_s']+windows[indices[-1]]['duration_s']],
-            'status':'queued','done':0,'total':len(indices),'created_at':datetime.now(timezone.utc).isoformat()}
+            'device':self.device, 'execution':self.execution, 'status':'queued','done':0,'total':len(indices),'created_at':datetime.now(timezone.utc).isoformat()}
         write_json(root / 'job.json',job)
         self.active = job_id
         self.executor.submit(self._run,case,indices,root,job)
@@ -138,7 +154,7 @@ class DemoStore:
             write_json(root / 'job.json',job)
         try:
             options = {'resume_root': self.job_root(job['retry_of'])} if job.get('retry_of') else {}
-            result = run_case(case,indices,root,progress,**options)
+            result = run_case(case,indices,root,progress,device=self.device,**options)
             job.update(status='completed',done=len(indices),elapsed_s=result['elapsed_s'],reused_windows=result.get('reused_windows',0))
         except Exception as exc:
             job.update(status='failed',error=display_text(exc))

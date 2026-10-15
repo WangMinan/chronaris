@@ -8,6 +8,7 @@ const require=createRequire(resolve('artifacts/fusion-workbench/browser/package.
 const {chromium}=require('playwright');
 const output=resolve(process.env.DEMO_SCREENSHOTS || 'artifacts/fusion-workbench/screenshots');
 const base=process.env.WORKBENCH_URL || 'http://127.0.0.1:8766';
+const caseId=process.env.WORKBENCH_CASE_ID || 'dingxin-validation';
 const dataRoot=resolve(process.env.WORKBENCH_DATA_ROOT || 'artifacts/fusion-workbench');
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--disable-gpu']});
@@ -41,7 +42,7 @@ try {
   const pageStarted=performance.now();
   await page.goto(base);await page.locator('#run:not([disabled])').waitFor();
   const initialReadyMs=performance.now()-pageStarted;
-  await page.locator('#case').selectOption('dingxin-validation');
+  await page.locator('#case').selectOption(caseId);
   const button=await page.locator('#run').boundingBox();assert(button.y+button.height<768);
   assert(!/Chronaris|Zorathos|鼎新|离线|演示/.test(await page.locator('body').innerText()));
   checks.push('primary action visible at 1366x768','reader-facing names');
@@ -75,8 +76,13 @@ try {
   assert.match(await page.locator('#delivery-status').textContent(),/3 个窗口/);
   await capture('feature-export.png');checks.push('complete package download','real pooled-feature consumer');
   await page.locator('[data-tab=models]').click();await page.locator('#field-table input').first().waitFor();
-  await page.locator('#field-search').fill('脑电');assert.match(await page.locator('#field-table').textContent(),/语言模型解释记录/);
-  await capture('models-and-fields.png');checks.push('existing language-model annotations visible');
+  if(caseId==='dingxin-validation') {
+    await page.locator('#field-search').fill('脑电');assert.match(await page.locator('#field-table').textContent(),/语言模型解释记录/);
+  } else {
+    assert.match(await page.locator('#field-table').textContent(),/输入字段定义/);
+    assert.match(await page.locator('#model-list').textContent(),/训练期运动学约束：5 种/);
+  }
+  await capture('models-and-fields.png');checks.push(caseId==='dingxin-validation'?'existing language-model annotations visible':'native simulation fields and five trained physical relations visible');
   await page.reload();await page.locator('#open-results:not([disabled])').waitFor();
   await page.locator('#open-results').click();await page.waitForFunction(id=>viewedRunId===id,newId);
   checks.push('current job restored after reload');
@@ -86,6 +92,7 @@ try {
   assert(fontHeight>=11);checks.push('mobile axes readable and no horizontal overflow');
   await page.setViewportSize({width:1366,height:768});await page.locator('[data-tab=data]').click();
   await capture('data-and-tasks.png');
+  await page.locator('#case').selectOption('dingxin-validation');
   // Archive ingestion uses actual permitted source observations, including more than eight windows.
   await page.locator('#add-data').click();await page.locator('#source option').first().waitFor({state:'attached'});
   await page.locator('#prepare-source:not([disabled])').click();

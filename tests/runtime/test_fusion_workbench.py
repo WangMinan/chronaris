@@ -86,7 +86,7 @@ def test_export_batch_and_window_readback(case, fake_adapter, tmp_path):
     assert incremental["downstream_readback"]
     timings = json.loads((tmp_path / 'one/timings.json').read_text())
     assert all(value >= 0 for value in timings.values())
-    assert timings['pipeline_total_s'] >= sum(v for k, v in timings.items() if k != 'pipeline_total_s')
+    assert timings['pipeline_total_s'] >= sum(v for k, v in timings.items() if k.endswith('_s') and k != 'pipeline_total_s')
     assert len((tmp_path / "one/features.csv").read_text().splitlines()) == 193
     with zipfile.ZipFile(tmp_path / "one/features.zip") as archive:
         archive.extractall(tmp_path / "unpacked")
@@ -143,7 +143,7 @@ def test_http_history_download_and_security(case, fake_adapter, tmp_path):
 
 def test_single_job_and_restart_recovery(case, monkeypatch, tmp_path):
     started, release = threading.Event(), threading.Event()
-    def pending(*args):
+    def pending(*args, **kwargs):
         started.set(); release.wait(5)
         raise ValueError("测试失败必须保留")
     monkeypatch.setattr("chronaris.serving.fusion_workbench.server.run_case", pending)
@@ -165,3 +165,27 @@ def test_single_job_and_restart_recovery(case, monkeypatch, tmp_path):
     reopened = DemoStore(case.root.parent, tmp_path / "runs")
     assert reopened.history()[0]["status"] == "failed"
     reopened.close()
+
+
+def test_profiled_adapter_matches_standard_masked_export(case):
+    from types import SimpleNamespace
+    from chronaris.modeling.training import TrainedFusionAdapter
+    from chronaris.representation import collate_observation_samples
+    from chronaris.serving.fusion_workbench.device import DeviceFusionAdapter
+    class Encoder(torch.nn.Module):
+        method_name = 'chronaris'
+        def __init__(self):
+            super().__init__(); self.scale = torch.nn.Parameter(torch.tensor(2.))
+        def forward(self, batch):
+            sequence = torch.arange(96*64, dtype=torch.float32).reshape(1,96,64)*self.scale
+            valid = torch.ones(1,96,dtype=torch.bool);valid[:,0]=False
+            return SimpleNamespace(sequence_embedding=sequence,modality_available_mask=valid)
+    options=dict(encoder=Encoder(),normalizer=SimpleNamespace(transform=lambda b:b),
+                 fold_id='test',checkpoint_sha256='a'*64)
+    batch=collate_observation_samples([case.sample(0)])
+    standard=TrainedFusionAdapter(**options)(batch)
+    adapter=DeviceFusionAdapter(**options);actual=adapter(batch)
+    torch.testing.assert_close(actual.sequence_embedding,standard.sequence_embedding,atol=0,rtol=0)
+    torch.testing.assert_close(actual.pooled_embedding,standard.pooled_embedding,atol=0,rtol=0)
+    assert torch.equal(actual.valid_mask,standard.valid_mask)
+    assert adapter.last_execution['input_tensor_devices']==['cpu']

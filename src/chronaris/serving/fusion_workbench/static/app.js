@@ -3,11 +3,11 @@ const $ = id => document.getElementById(id);
 const labels = {queued:'等待运行',loading:'校验模型',inference:'生成特征',exporting:'封装结果',completed:'已完成',failed:'处理失败'};
 const reviewLabels = {pending:'待复核',approved:'已确认',needs_revision:'待修订'};
 const number = (n,digits=2) => Number(n).toLocaleString('zh-CN',{maximumFractionDigits:digits});
-let cases=[], models=[], sources=[], fields=[], jobs=[], result=null;
+let runtime={}, cases=[], models=[], sources=[], fields=[], jobs=[], result=null;
 let activeJobId=null, viewedRunId=null, activeJob=null, serviceReady=false;
 let pollTimer=null, playTimer=null, resultRequest=0, fieldRequest=0, fieldPage=0, scale=1, submitting=false;
 function message(text='') { $('message').textContent=text; $('message').hidden=!text; }
-function connected(ok) { $('connection').textContent=ok?'服务已连接':'连接中断'; $('connection-dot').classList.toggle('error',!ok); }
+function connected(ok) { $('connection').textContent=ok?'服务已连接 · '+(runtime.device?.startsWith('cuda')?'GPU':'CPU'):'连接中断'; $('connection-dot').classList.toggle('error',!ok); }
 async function api(path, payload) {
   const response=await fetch(path,payload===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   const data=await response.json();
@@ -52,6 +52,7 @@ function configureCase() {
 }
 async function refreshCatalog(selectId) {
   const previous=selectId || $('case').value;
+  runtime=await api('/api/runtime');
   cases=await api('/api/cases'); models=await api('/api/models');
   $('case').replaceChildren(...cases.map(c=>new Option(c.title,c.id)));
   if(cases.some(c=>c.id===previous)) $('case').value=previous;
@@ -66,7 +67,7 @@ function setProgress(job) {
   $('progress').value=percent; $('progress-number').textContent=percent+'%';
   $('status-badge').textContent=labels[job.status]||job.status;
   $('task-name').textContent=`${job.title}${job.range_s?' · '+job.range_s.map(n=>number(n)).join('—')+' 秒':''}`;
-  $('progress-text').textContent=job.status==='failed'?job.error:`${job.done} / ${job.total} 个窗口${job.elapsed_s?' · '+number(job.elapsed_s)+' 秒':''}`;
+  $('progress-text').textContent=job.status==='failed'?job.error:`${job.device?.startsWith('cuda')?'GPU':'CPU'} · ${job.done} / ${job.total} 个窗口${job.elapsed_s?' · '+number(job.elapsed_s)+' 秒':''}`;
   $('open-results').disabled=job.status!=='completed';
   $('retry-current').hidden=!(job.status==='failed' && job.request);
   const step={queued:0,loading:0,inference:1,exporting:2,completed:3,failed:0}[job.status];
@@ -108,7 +109,7 @@ async function history() {
   jobs.forEach(job=>{
     const row=table.insertRow(); cell(row,job.title);
     cell(row,job.range_s?job.range_s.map(x=>number(x)).join('—')+' 秒':'历史记录');
-    cell(row,new Date(job.created_at).toLocaleString('zh-CN',{hour12:false})); cell(row,labels[job.status]);cell(row,`${job.done}/${job.total}`);
+    cell(row,new Date(job.created_at).toLocaleString('zh-CN',{hour12:false})); cell(row,`${labels[job.status]} · ${job.device?.startsWith('cuda')?'GPU':'CPU'}`);cell(row,`${job.done}/${job.total}`);
     const action=cell(row,'');
     if(job.status==='completed') action.append(button('查看结果',()=>openResult(job.id)));
     else if(job.status==='failed') { action.append(button('失败原因',()=>message(job.error)));if(job.retryable) action.append(button('重试',()=>retry(job.id))); }
@@ -126,7 +127,7 @@ async function openResult(id,switchTab=true) {
     document.querySelectorAll('.result-content').forEach(el=>el.hidden=false);
     $('result-title').textContent=result.case.title;
     const job=jobs.find(j=>j.id===id);
-    $('result-identity').textContent=`${job?new Date(job.created_at).toLocaleString('zh-CN',{hour12:false}):'处理记录'} · ${result.windows.length} 个窗口`;
+    $('result-identity').textContent=`${job?new Date(job.created_at).toLocaleString('zh-CN',{hour12:false}):'处理记录'} · ${result.windows.length} 个窗口 · ${result.device?.startsWith('cuda')?'GPU':'CPU'}`;
     $('window-slider').max=result.windows.length-1;$('window-slider').value=0;
     $('query').max=result.windows[0].times.length-1;$('query').value=0;
     $('dimension').max=result.output_dim;$('dimension').value=1;
@@ -170,7 +171,7 @@ function renderExport() {
   const base=`/api/runs/${viewedRunId}/download/`;
   [['zip','features.zip'],['csv','features.csv'],['npz','fusion_stream.npz'],['manifest','representation_manifest.json'],['pooled','pooled_features.csv']].forEach(([id,file])=>$('download-'+id).href=base+file);
   $('export-summary').textContent=`${result.windows.length} 个窗口 · ${result.query_points} 个参考时刻 · ${result.output_dim} 维特征`;
-  const entries=[['数据来源',result.case.source_label],['模型版本',result.checkpoint_sha256.slice(0,12)],['事件语义聚合',result.model.semantic_event_enabled?'已启用':'基础因果融合配置'],['处理耗时',number(result.elapsed_s)+' 秒'],['标准表示回读',result.downstream_readback?'已通过':'待校验'],['模型完整性散列',result.checkpoint_sha256],['任务标识',viewedRunId]];
+  const entries=[['运行设备',result.device?.startsWith('cuda')?'GPU（图形处理器）':'CPU（中央处理器）'],['数据来源',result.case.source_label],['模型版本',result.checkpoint_sha256.slice(0,12)],['事件语义聚合',result.model.semantic_event_enabled?'已启用':'基础因果融合配置'],['处理耗时',number(result.elapsed_s)+' 秒'],['标准表示回读',result.downstream_readback?'已通过':'待校验'],['模型完整性散列',result.checkpoint_sha256],['任务标识',viewedRunId]];
   $('provenance').replaceChildren();entries.forEach(([label,value])=>{const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value;$('provenance').append(dt,dd);});
   $('download-pooled').hidden=true;$('delivery-status').textContent='';renderFeatureTable();
 }
@@ -187,7 +188,7 @@ function stopPlayback() { clearInterval(playTimer);playTimer=null;$('play').text
 function renderModels() {
   $('model-list').replaceChildren();
   models.forEach(m=>{const card=document.createElement('article');card.className='model-card';const title=document.createElement('b');title.textContent=m.label;card.append(title);
-    [`${m.training_status} · ${m.training_kind}`,`训练窗口 ${m.training_windows} · 验证窗口 ${m.validation_windows}`,m.semantic_event_enabled?'事件语义聚合已启用':'连续对齐与因果融合配置'].forEach(t=>{const p=document.createElement('p');p.textContent=t;card.append(p);});$('model-list').append(card);});
+    [`${m.training_status} · ${m.training_kind}`,`训练窗口 ${m.training_windows} · 验证窗口 ${m.validation_windows}`,m.semantic_event_enabled?'事件语义聚合已启用':'连续对齐与因果融合配置',`训练期运动学约束：${m.physics_relation_count || 0} 种`].forEach(t=>{const p=document.createElement('p');p.textContent=t;card.append(p);});$('model-list').append(card);});
 }
 async function loadFields() {
   const id=$('case').value, token=++fieldRequest;if(!id)return;

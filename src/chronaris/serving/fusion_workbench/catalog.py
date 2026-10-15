@@ -81,6 +81,7 @@ class Catalog:
             config = p.get('encoder_manifest', {}).get('backbone_config', {})
             semantic = bool(config.get('semantic_event_enabled'))
             models.append({'id': digest, 'label': ('连续对齐与事件语义融合' if semantic else '连续对齐与因果融合') + ' · ' + digest[:8],
+                'physics_relation_count': len((config.get('physics_calibration') or {}).get('relations', [])),
                 'semantic_event_enabled': semantic, 'training_status': '训练完成', 'training_kind': '自监督学习',
                 'seed': p.get('seed'), 'training_windows': len(p.get('fold', {}).get('train_sample_ids', [])),
                 'validation_windows': len(p.get('fold', {}).get('validation_sample_ids', [])),

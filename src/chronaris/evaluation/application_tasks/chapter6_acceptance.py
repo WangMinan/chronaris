@@ -25,15 +25,16 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 
 
 class AcceptanceService:
-    def __init__(self, project, root):
+    def __init__(self, project, root, device="cpu"):
         self.project, self.root = Path(project), Path(root)
         self.process = None
+        self.device = device
 
     def start(self):
         started = time.perf_counter()
         self.log = (self.root / 'service.log').open('a')
         self.process = subprocess.Popen([sys.executable, 'scripts/runtime/run_fusion_workbench.py',
-            '--data-root', str(self.root), '--port', '0'], cwd=self.project, env=os.environ,
+            '--data-root', str(self.root), '--port', '0', '--device', self.device], cwd=self.project, env=os.environ,
             stdout=subprocess.PIPE, stderr=self.log, text=True)
         line = self.process.stdout.readline()
         match = re.search(r'127\.0\.0\.1:(\d+)', line)

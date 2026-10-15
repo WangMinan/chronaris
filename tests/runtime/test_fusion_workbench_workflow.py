@@ -235,3 +235,45 @@ def test_http_import_fields_and_boundary_errors(case,tmp_path,monkeypatch):
             assert e.value.code==400
     finally:
         server.shutdown();server.server_close();store.close()
+
+
+def test_device_change_invalidates_incremental_and_resume(case, fake_adapter, tmp_path, monkeypatch):
+    from chronaris.serving.fusion_workbench import device
+    from chronaris.serving.fusion_workbench.cases import write_json
+    monkeypatch.setattr(device.torch.cuda, 'is_available', lambda: True)
+    monkeypatch.setattr(device.torch.cuda, 'get_device_name', lambda i: 'test GPU')
+    cpu = inference.window_key(case, 0, device='cpu')
+    gpu = inference.window_key(case, 0, device='cuda')
+    assert cpu != gpu
+    store = DemoStore(case.root.parent, tmp_path/'runs')
+    try:
+        job = wait(store, store.submit({'case_id':'test-case','start':0,'stop':2,'incremental':True}))
+        assert job['device'] == 'cpu'
+        # A previous GPU result cannot satisfy a CPU incremental request.
+        job['window_keys'] = [inference.window_key(case, i, device='cuda') for i in (0, 1)]
+        write_json(store.job_root(job['id'])/'job.json', job)
+        repeat = wait(store, store.submit({'case_id':'test-case','start':0,'stop':2,'incremental':True}))
+        assert repeat['total'] == 2 and repeat['reused_windows'] == 0
+    finally:
+        store.close()
+
+
+def test_requested_unavailable_gpu_fails_without_cpu_fallback(case, tmp_path, monkeypatch):
+    import torch
+    monkeypatch.setattr(torch.cuda, 'is_available', lambda: False)
+    with pytest.raises(RuntimeError, match='未回退'):
+        DemoStore(case.root.parent, tmp_path/'runs', device='cuda')
+
+
+def test_out_of_memory_preserves_failed_job(case, tmp_path, monkeypatch):
+    import torch
+    def failed(*args, **kwargs):
+        raise torch.cuda.OutOfMemoryError('GPU显存不足')
+    monkeypatch.setattr(inference, 'load_adapter', failed)
+    store = DemoStore(case.root.parent, tmp_path/'runs')
+    try:
+        job = wait(store, store.submit({'case_id':'test-case','start':0,'stop':1}))
+        assert job['status'] == 'failed' and '显存不足' in job['error']
+        assert job['request']['model_id'] == case.manifest['checkpoint_sha256']
+    finally:
+        store.close()

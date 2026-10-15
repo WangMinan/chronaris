@@ -7,7 +7,6 @@ import sys
 PROJECT = Path(__file__).resolve().parents[2]
 for key in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
     os.environ[key] = "1"
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(PROJECT / "src"))
 
@@ -16,7 +15,8 @@ def main():
     import argparse
     import torch
     from chronaris.serving.fusion_workbench.server import DemoStore, make_server
-    parser = argparse.ArgumentParser(description="融合特征工作台（仅本机 CPU）")
+    parser = argparse.ArgumentParser(description="融合特征工作台（本机CPU/GPU）")
+    parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--port", type=int, default=8766)
     parser.add_argument("--data-root", type=Path, default=PROJECT / "artifacts/fusion-workbench")
     args = parser.parse_args()
@@ -25,7 +25,7 @@ def main():
         parser.error("产物目录必须位于本 worktree 内")
     torch.set_num_threads(1)
     torch.set_num_interop_threads(1)
-    store = DemoStore(root / "cases", root / "runs",
+    store = DemoStore(root / "cases", root / "runs", device=args.device,
         audit_root=PROJECT / "docs/artifacts/runs/2026-07-10_fixed-data-audit",
         context_path=PROJECT / "docs/artifacts/runs/2026-06-14_llm-preprocessing-context/llm_preprocessing_context.json")
     try:

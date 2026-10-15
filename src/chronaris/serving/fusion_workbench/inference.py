@@ -10,30 +10,32 @@ import zipfile
 
 import torch
 
-from chronaris.modeling.training import load_common_pretraining_checkpoint, TrainedFusionAdapter
+from chronaris.modeling.training import load_common_pretraining_checkpoint
+from chronaris.serving.fusion_workbench.device import DeviceFusionAdapter, execution_identity
 from chronaris.representation import collate_observation_samples, write_fusion_stream_batch, load_fusion_stream_batch
 from chronaris.representation.oof_export import _concatenate_fusion_batches
 from chronaris.serving.fusion_workbench.cases import MAX_WINDOWS, preview_stream, read_json, write_json
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
 
 
-def load_adapter(case):
+def load_adapter(case, *, device="cpu"):
     if sha256_file(case.checkpoint) != case.manifest["checkpoint_sha256"]:
         raise ValueError("冻结模型校验失败")
-    encoder, _, normalizer, payload = load_common_pretraining_checkpoint(case.checkpoint, device="cpu")
+    encoder, _, normalizer, payload = load_common_pretraining_checkpoint(case.checkpoint, device=device)
     if payload["method_name"] != "chronaris":
         raise ValueError("请选择兼容的融合模型")
     for stream in ("physiology", "vehicle"):
         if tuple(payload[stream + "_feature_names"]) != getattr(case.schema, stream + "_feature_names"):
             raise ValueError("输入字段及顺序必须与冻结模型一致")
-    return TrainedFusionAdapter(encoder=encoder, normalizer=normalizer,
+    encoder.requires_grad_(False)
+    return DeviceFusionAdapter(encoder=encoder, normalizer=normalizer,
         fold_id=payload["fold"]["fold_id"], checkpoint_sha256=case.manifest["checkpoint_sha256"]), payload
 
 
 def implementation_digest():
     package = Path(__file__).resolve().parents[2]
     digest = hashlib.sha256(torch.__version__.encode())
-    paths = [Path(__file__)]
+    paths = [Path(__file__), Path(__file__).with_name("device.py")]
     for name in ('modeling', 'models', 'representation'):
         paths.extend((package / name).rglob('*.py'))
     for path in sorted(paths):
@@ -42,13 +44,13 @@ def implementation_digest():
     return digest.hexdigest()
 
 
-def window_key(case, i):
+def window_key(case, i, *, device="cpu"):
     w = case.manifest['windows'][i]
     return hashlib.sha256(json.dumps({'window': w, 'schema': case.schema.schema_sha256,
-        'model': case.manifest['checkpoint_sha256']}, sort_keys=True).encode()).hexdigest()
+        'model': case.manifest['checkpoint_sha256'], 'execution': execution_identity(device)}, sort_keys=True).encode()).hexdigest()
 
 
-def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, resume_root=None):
+def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, resume_root=None, device="cpu"):
     """Window-wise inference; independent contexts retain no cross-window latent state."""
     if not indices or len(indices) > MAX_WINDOWS or indices != sorted(set(indices)):
         raise ValueError("请选择按顺序排列的 1—512 个窗口")
@@ -56,15 +58,21 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
         raise ValueError("窗口索引超出案例范围")
     if batch_size not in (1, 2, 4, 8):
         raise ValueError("不支持的批大小")
+    execution = execution_identity(device)
+    device = execution["device"]
+    if device != "cpu":
+        torch.cuda.reset_peak_memory_stats(device)
     started = time.perf_counter()
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     progress("loading", 0)
-    adapter, payload = load_adapter(case)
+    adapter, payload = load_adapter(case) if device == "cpu" else load_adapter(case, device=device)
+    if device != "cpu":
+        torch.cuda.synchronize(device)
     loaded_s = time.perf_counter() - started
     timings = {'model_load_s': loaded_s, 'input_read_s': 0., 'inference_s': 0.,
                'chunk_write_s': 0., 'cache_read_s': 0.}
-    chunks, windows = [], []
+    chunks, windows, execution_batches = [], [], []
     reused = 0
     implementation = implementation_digest()
     for start in range(0, len(indices), batch_size):
@@ -72,7 +80,7 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
         phase_started = time.perf_counter()
         samples = [case.sample(i) for i in selected]
         timings['input_read_s'] += time.perf_counter() - phase_started
-        cache_key = hashlib.sha256((implementation + ''.join(window_key(case, i) for i in selected)).encode()).hexdigest()
+        cache_key = hashlib.sha256((implementation + ''.join(window_key(case, i, device=device) for i in selected)).encode()).hexdigest()
         cache = root / 'chunks' / cache_key
         prior = Path(resume_root) / 'chunks' / cache_key if resume_root else cache
         if (prior / 'preview.json').exists():
@@ -91,6 +99,8 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
         chunk = adapter(collate_observation_samples(samples))
         timings['inference_s'] += time.perf_counter() - phase_started
         chunks.append(chunk)
+        if hasattr(adapter, 'last_execution'):
+            execution_batches.append(dict(adapter.last_execution))
         for row, (i, sample) in enumerate(zip(selected, samples)):
             w = case.manifest["windows"][i]
             windows.append({"label": f"窗口 {i + 1:02}", "start_s": w["start_s"],
@@ -123,7 +133,7 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
     config = payload.get("encoder_manifest", {}).get("backbone_config", {})
     timings['standard_export_readback_csv_s'] = time.perf_counter() - phase_started
     result = {"case": case.summary(), "windows": windows, "elapsed_s": time.perf_counter() - started,
-        "implementation_digest": implementation, "model_load_s": loaded_s, "reused_windows": reused, "device": "cpu", "batch_size": batch_size,
+        "implementation_digest": implementation, "model_load_s": loaded_s, "reused_windows": reused, "device": device, "execution": execution, "execution_batches": execution_batches, "batch_size": batch_size,
         "checkpoint_sha256": output.checkpoint_sha256, "source_sample_hashes": list(output.source_sample_hashes),
         "input_archives": [{"file": case.manifest["windows"][i]["file"],
                             "sha256": case.manifest["windows"][i]["sha256"]} for i in indices],
@@ -140,6 +150,8 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
         for name in ("fusion_stream.npz", "representation_manifest.json", "features.csv", "result.json"):
             archive.write(root / name, name)
     timings['result_json_zip_s'] = time.perf_counter() - phase_started
+    timings['gpu_peak_allocated_mib'] = torch.cuda.max_memory_allocated(device)/2**20 if device != 'cpu' else 0.
+    timings['gpu_peak_reserved_mib'] = torch.cuda.max_memory_reserved(device)/2**20 if device != 'cpu' else 0.
     timings['pipeline_total_s'] = time.perf_counter() - started
     write_json(root / 'timings.json', timings)
     return result

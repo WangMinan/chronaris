@@ -36,6 +36,8 @@ def make_server(store, port=8766):
                 return self.json({'error':'访问地址不合法'},403)
             path = urlsplit(self.path).path
             try:
+                if path=='/api/runtime':
+                    return self.json(store.execution)
                 if path=='/api/cases':
                     return self.json(store.records())
                 if path=='/api/models':

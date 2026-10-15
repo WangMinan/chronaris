@@ -54,7 +54,7 @@ def verify_demo(data_root, *, port=8766):
             reference.sequence_embedding[i // 96, i % 96], atol=0, rtol=0)
     source = case.manifest["source"]["checkpoint"]
     assert sha256_file(source) == case.manifest["checkpoint_sha256"]
-    report = {"status":"passed", "http_run_id":job["id"], "device":"cpu", "threads":torch.get_num_threads(),
+    report = {"status":"passed", "http_run_id":job["id"], "device":status.get("device", "cpu"), "comparison_device":"cpu", "threads":torch.get_num_threads(),
         "shape":list(reference.sequence_embedding.shape), "http_incremental_s":status["elapsed_s"],
         "direct_batch_s":batch["elapsed_s"],
         "batch_max_absolute_difference":float((reference.sequence_embedding-other.sequence_embedding).abs().max()),
