@@ -1,0 +1,84 @@
+{
+  "commit": "62351021da28ee7dea9ed6de570e6fafccc0fe98",
+  "device": "cpu",
+  "threads": 1,
+  "scope": "isolated service, existing actual observations; two small-load repetitions, no capacity claim",
+  "registered_models": [
+    {
+      "id": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+      "semantic_event_enabled": false,
+      "compatible_cases": [
+        "dingxin-validation",
+        "record-1d6bf47bbabb41538b26c93cd4826ae1",
+        "record-30ca987b55db4626930732c16e1c7cc8",
+        "record-3149c8cb7eb240b6891de489474b5a91",
+        "record-6285d942d2d04a9882f9ead1f2d3e9a4",
+        "record-8a199d1b1b9f413da2f2c4676b8b8e4e",
+        "record-a9a57a3a573b4dd490515bed57f2b6e3",
+        "record-e087c2b0a7d745a98501762c846220e2",
+        "record-e4794e591c0d40f1bca9a76e7732232f",
+        "record-ffbc8eb0eb40415894a4c3a7570258e8"
+      ]
+    }
+  ],
+  "acceptance": {
+    "status": "passed",
+    "http_run_id": "9f41bd7ba9834effadf2558695ff9060",
+    "device": "cpu",
+    "threads": 1,
+    "shape": [
+      3,
+      96,
+      64
+    ],
+    "http_incremental_s": 1.0689582499908283,
+    "direct_batch_s": 1.0243014809966553,
+    "batch_max_absolute_difference": 5.960464477539062e-07,
+    "tolerance": {
+      "atol": 1e-05,
+      "rtol": 1e-05
+    },
+    "csv_values_match_npz": true,
+    "download_readback": true,
+    "peak_verifier_rss_mib": 823.18359375,
+    "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+    "shared_checkpoint_unchanged": true
+  },
+  "measurements": [
+    {
+      "repeat": 1,
+      "windows": 15,
+      "run_id": "fb67760a2bd344919c5cec5f66cd3244",
+      "pipeline_elapsed_s": 3.376054360996932,
+      "model_load_s": 0.3068714870023541,
+      "http_result_and_delivery_s": 3.7226870830054395,
+      "windows_per_s": 4.443056419142071,
+      "model": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "attention_kind": "legacy_cosine"
+      }
+    },
+    {
+      "repeat": 2,
+      "windows": 15,
+      "run_id": "ebba02192f974d08be53f4ef7c3cd385",
+      "pipeline_elapsed_s": 3.1993834610038903,
+      "model_load_s": 0.3043629419989884,
+      "http_result_and_delivery_s": 3.6049903179809917,
+      "windows_per_s": 4.688403307333894,
+      "model": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "attention_kind": "legacy_cosine"
+      }
+    }
+  ],
+  "service_memory_mib": {
+    "VmRSS": 861.94140625,
+    "VmHWM": 870.44921875
+  },
+  "run_root": "/home/wangminan/projects/chronaris-demo/artifacts/chapter6-review-b299c72477a74206aeff7168a8d3682f"
+}

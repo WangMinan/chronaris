@@ -1,0 +1,9 @@
+{
+  "run_id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+  "status": "completed",
+  "consumer": "标准表示读取与汇总特征接口",
+  "windows": 3,
+  "valid_points": 288,
+  "output_dim": 64,
+  "created_at": "2026-10-15T07:24:32.898446+00:00"
+}

@@ -48,7 +48,7 @@ def verify_application_mechanisms(case):
         label_used_for_encoder_training=payload['label_used_for_encoder_training'],
         config=config, normalizer_sha256=payload['normalizer']['transform_sha256'],
         source_code_sha256=payload['source_code_sha256'], transfer_initialization=payload['transfer_initialization'],
-        semantic_query_max_abs=float(query.abs().max()), semantic_output_difference=difference,
+        semantic_query_max_abs=float(query.detach().abs().max()), semantic_output_difference=difference,
         active_terminal_events=int(semantic.event_token_mask.sum()),
         event_times_s=semantic.event_token_center_offsets_s.tolist(),
         event_valid=semantic.event_token_mask.tolist(),

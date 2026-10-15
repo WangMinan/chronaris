@@ -1,8 +1,10 @@
 # 航空人机时序融合系统
 
-更新时间：2026-10-14。开发位置为当前独立工作区，分支 `feat/chapter6-demo`；共享实验环境与冻结资产保持原状。
+更新时间：2026-10-15。开发位置为当前独立工作区，分支 `feat/chapter6-demo`；共享实验环境与冻结资产保持原状。
 
 **融合系统已贯通数据接入、任务处理、结果分析和特征交付。** 使用者可以从归档记录选择时段，或导入具有相同字段合同的观测文件；选择已登记模型后执行处理，在统一时间游标下查看双流与融合特征，并生成下游可读取的序列及汇总文件。首次复核意见与本轮修复见[独立验收](../review/stage/fusion-workbench-20261014/README.md)和[修复验收](../review/stage/fusion-workbench-20261014/repair.md)。
+
+最终验收采用下列独立资产目录；旧 `artifacts/fusion-workbench` 仍保留原任务与基础模型。新检出先按写作包中的资产登记恢复模型和案例。
 
 ## 启动与操作
 
@@ -10,7 +12,7 @@
 
 ```bash
 PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
-  scripts/runtime/run_fusion_workbench.py
+  scripts/runtime/run_fusion_workbench.py --data-root artifacts/chapter6-final/service
 ```
 
 打开 <http://127.0.0.1:8766>。可以通过 `--port` 更改端口，通过 `--data-root` 指定本工作区内的独立数据目录。
@@ -26,11 +28,11 @@ PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
 
 **归档入口复用现有样本构建逻辑。** 当前部署从已准备记录中的来源路径发现归档快照，读取 `docs/artifacts/runs/2026-07-10_fixed-data-audit` 的字段和窗口清单，再通过既有延迟加载器构建样本。可选范围来自对应模型的训练、内部验证观测标识，不读取外层任务目标；当前两份记录各有 15 个可用窗口。时间范围内的完整窗口写入本工作区独立观测包。
 
-首次部署可用以下命令准备字段与模型参考记录。共享资产只读，目标目录必须尚不存在。
+首次部署优先恢复写作包登记的资产。以下命令另建一份独立案例，目标目录必须尚不存在；使用该案例时将服务的 `--data-root` 改为 `artifacts/fusion-workbench-extra`。共享源资产只读。
 
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/prepare_fusion_case.py \
-  --checkpoint /home/wangminan/chronaris-data/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/255/dingxin/chronaris/self_supervised/chronaris/C/best.pt \
+  --checkpoint artifacts/chapter6-final/training/chronaris/C/best.pt \
   --snapshot-root /home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-10_dingxin-input-snapshot
 ```
 
@@ -58,10 +60,10 @@ PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python \
 ```bash
 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/register_fusion_model.py \
   --checkpoint /已有训练产物/best.pt \
-  --schema-record dingxin-validation
+  --schema-record dingxin-validation --data-root artifacts/chapter6-final/service
 ```
 
-当前加载合同支持已完成训练的自监督编码器。页面展示权重实际保存的事件语义配置；现有三个兼容实测检查点均未启用该模块，完整事件语义配置的应用验收需要相应已训练权重。服务不会在推理时临时打开未训练模块。
+当前加载合同支持已完成训练的自监督编码器。最终独立目录登记实测语义应用模型与旧基础模型；语义模型已完成300次补充更新并通过真实应用验收，页面如实展示保存配置。完整来源、性能、案例及运行资产恢复见[第六章写作交接包](../artifacts/runs/2026-10-15_chapter6-ready/README.md)。旧三个实测候选的原配置保留，运动学残差按字段适用条件记录。
 
 ## 任务恢复与交付
 
@@ -122,8 +124,10 @@ PYTHONNOUSERSITE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src \
 启动服务后运行真实推理一致性与浏览器回归。浏览器检查使用工作区已有的 Playwright 浏览器自动化工具，不属于系统运行依赖。
 
 ```bash
-PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/verify_fusion_workbench.py
+PYTHONNOUSERSITE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/verify_fusion_workbench.py --data-root artifacts/chapter6-final/service
 
+WORKBENCH_DATA_ROOT="$PWD/artifacts/chapter6-final/service" \
+DEMO_SCREENSHOTS="$PWD/artifacts/chapter6-final/recheck-screenshots" \
 LD_LIBRARY_PATH="$PWD/artifacts/fusion-workbench/browser/libs/extracted/usr/lib/x86_64-linux-gnu" \
 FONTCONFIG_FILE="$PWD/artifacts/fusion-workbench/browser/fonts.conf" \
 PLAYWRIGHT_BROWSERS_PATH="$PWD/artifacts/fusion-workbench/browser/browsers" \

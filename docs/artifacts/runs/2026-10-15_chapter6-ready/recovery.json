@@ -1,0 +1,120 @@
+{
+  "status": "passed",
+  "interrupted": {
+    "id": "dede8e3be40e40839bc5953e6ed8e431",
+    "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+    "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+    "request": {
+      "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+      "start": 0,
+      "stop": 15,
+      "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+      "incremental": false
+    },
+    "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+    "selected_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "window_keys": [
+      "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+      "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+      "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+      "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+      "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+      "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+      "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+      "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+      "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+      "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+      "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+      "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+      "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+      "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+      "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+    ],
+    "retry_of": null,
+    "range_s": [
+      0.0,
+      130.0
+    ],
+    "status": "failed",
+    "done": 1,
+    "total": 15,
+    "created_at": "2026-10-15T07:24:22.098295+00:00",
+    "error": "服务已中断，可按原参数继续处理。"
+  },
+  "recovered": {
+    "id": "a43c22b0b9cb4b6fb0b9561afe20c613",
+    "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+    "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+    "request": {
+      "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+      "start": 0,
+      "stop": 15,
+      "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+      "incremental": false
+    },
+    "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+    "selected_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "window_keys": [
+      "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+      "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+      "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+      "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+      "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+      "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+      "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+      "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+      "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+      "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+      "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+      "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+      "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+      "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+      "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+    ],
+    "retry_of": "dede8e3be40e40839bc5953e6ed8e431",
+    "range_s": [
+      0.0,
+      130.0
+    ],
+    "status": "completed",
+    "done": 15,
+    "total": 15,
+    "created_at": "2026-10-15T07:24:23.858283+00:00",
+    "elapsed_s": 3.307039420993533,
+    "reused_windows": 1
+  },
+  "completed_before_kill": 1,
+  "original_preserved": true
+}

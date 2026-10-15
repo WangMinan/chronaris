@@ -1,0 +1,1017 @@
+{
+  "roots": [
+    "/mnt/e/chronaris-v4-results",
+    "/home/wangminan/projects/chronaris/artifacts"
+  ],
+  "scope": "all observed-dataset chronaris best checkpoints plus latest public subset best checkpoints; supervised files retain separate roles",
+  "rows": [
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/255/dingxin/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+      "bytes": 6257787,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.1
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        12,
+        965
+      ],
+      "normalizer_sha256": "ad71a52d53e73ffef76e29178cf95fa218ab8d9b43174f582779e788427c5b29"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/255/dingxin/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "a889aa7e16f8f55b4219cd5bb741165327be426cf8c6c4db5d07ae7552359796",
+      "bytes": 3265035,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "9a22c7916fe77a05038d2e4969710bef342366fb571db2f466a3c7be263183df",
+      "source_checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/255/dingxin/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ad71a52d53e73ffef76e29178cf95fa218ab8d9b43174f582779e788427c5b29"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/263/dingxin/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "97d75e5a701869f779e2f59a97c0eba34b6a41eaa3fbc477076c2975fc0dffc7",
+      "bytes": 6257723,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.1
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        12,
+        965
+      ],
+      "normalizer_sha256": "ad71a52d53e73ffef76e29178cf95fa218ab8d9b43174f582779e788427c5b29"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/263/dingxin/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "27793e458c861ac33a36bf7c385ec69db609df14472c76258a48a514ac5ee2d6",
+      "bytes": 3391371,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 250,
+      "training_source_code_sha256": "9a22c7916fe77a05038d2e4969710bef342366fb571db2f466a3c7be263183df",
+      "source_checkpoint_sha256": "97d75e5a701869f779e2f59a97c0eba34b6a41eaa3fbc477076c2975fc0dffc7",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/263/dingxin/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ad71a52d53e73ffef76e29178cf95fa218ab8d9b43174f582779e788427c5b29"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/271/dingxin/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "e730cfd28de85fff035fb92744c517d1487348f9d86d2dcb88f2ba99b1348b10",
+      "bytes": 6257915,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.1
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        12,
+        965
+      ],
+      "normalizer_sha256": "ad71a52d53e73ffef76e29178cf95fa218ab8d9b43174f582779e788427c5b29"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/271/dingxin/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "df0b4bc964003ece08853a3bfbe5a62e81b6daec86a8d6a68f0ca254cdd145cd",
+      "bytes": 3264971,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "9a22c7916fe77a05038d2e4969710bef342366fb571db2f466a3c7be263183df",
+      "source_checkpoint_sha256": "e730cfd28de85fff035fb92744c517d1487348f9d86d2dcb88f2ba99b1348b10",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/271/dingxin/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ad71a52d53e73ffef76e29178cf95fa218ab8d9b43174f582779e788427c5b29"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "d213b4016e579ea160a5b2751489376046101ac028d4f453d5b74b03b4984560",
+      "bytes": 5523779,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "d518a8593bdb9c339260145d0c7756aa103cad7f4f368167f7e1d08a65f1a868"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "d16760d3f4d61c5543661fb9d5f88017aff38cbb74bfa628d1c019537f7e46f7",
+      "bytes": 1308003,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "d213b4016e579ea160a5b2751489376046101ac028d4f453d5b74b03b4984560",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "d518a8593bdb9c339260145d0c7756aa103cad7f4f368167f7e1d08a65f1a868"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "42ecdef6f17d2fbe58158cc25e4e9960cf66ed63ed2946cccf34c1edffd43ead",
+      "bytes": 5521355,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "d518a8593bdb9c339260145d0c7756aa103cad7f4f368167f7e1d08a65f1a868"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "ac261c80c930deaed475e2fd773d51d369b9b49690c95b22d078d14c92d0f258",
+      "bytes": 1305387,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "42ecdef6f17d2fbe58158cc25e4e9960cf66ed63ed2946cccf34c1edffd43ead",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "d518a8593bdb9c339260145d0c7756aa103cad7f4f368167f7e1d08a65f1a868"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "50d1dd4a036e671d29eb00eee20088f643728b383f6c7ffb57213437451ceb5c",
+      "bytes": 7404163,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 351,
+      "selected_update": 351,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        8
+      ],
+      "normalizer_sha256": "c50e55c2a09a7f7d1efb76e9fee3207b705a431c851d27ed3cc353c42429ceef"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "fed4a8ead610ee7596b8b70b242fd51ddd46d6329c79be9b642a2efebc63e5ac",
+      "bytes": 2461539,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 401,
+      "selected_update": 350,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "50d1dd4a036e671d29eb00eee20088f643728b383f6c7ffb57213437451ceb5c",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "c50e55c2a09a7f7d1efb76e9fee3207b705a431c851d27ed3cc353c42429ceef"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/11/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "ef2a269eb083696e4ddfc2f2875d20eb2bf4e2a54f5877e24050a995e04a4145",
+      "bytes": 7233603,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 356,
+      "selected_update": 356,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        8
+      ],
+      "normalizer_sha256": "b8807d292e8bbab1d53e0a73e4643dc67df0c2d1dd01bb17b5a1de365cbe53ea"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/11/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "50f9ff6b2915ec76915785d0273f9350fb435c8e244b88e1f13b0c48b86f1531",
+      "bytes": 2090659,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 406,
+      "selected_update": 250,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "ef2a269eb083696e4ddfc2f2875d20eb2bf4e2a54f5877e24050a995e04a4145",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/11/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "b8807d292e8bbab1d53e0a73e4643dc67df0c2d1dd01bb17b5a1de365cbe53ea"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/12/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "f48ad0ce39d773d9744652eb1ab2aede8bd4a066cf600f9227fb0b5099967ed0",
+      "bytes": 7216451,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 355,
+      "selected_update": 355,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        8
+      ],
+      "normalizer_sha256": "9043d1c9145908c987da2d9c1a49772d0ad4503c1cabe1c1b74326d5fce220b1"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/12/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "e4cf5d26aca9cb2b86b210e1fb0b65fe3500297c947be313f27124bd372ed1c1",
+      "bytes": 2462179,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 405,
+      "selected_update": 350,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "f48ad0ce39d773d9744652eb1ab2aede8bd4a066cf600f9227fb0b5099967ed0",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/12/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "9043d1c9145908c987da2d9c1a49772d0ad4503c1cabe1c1b74326d5fce220b1"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/13/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "f7f3b55ad4967a83516b4d29a23346cf6cdb180b39f52a437843b38f792ae27a",
+      "bytes": 7459267,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 369,
+      "selected_update": 369,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        8
+      ],
+      "normalizer_sha256": "365fdf376019b146a4c22387973e85405218713f9d610122e6bff9f3e4ee8e6e"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/13/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "120b744ab9ccb97e8c104e4fcab56b49159e3c2eaa51443aed3d3e20c2267e7f",
+      "bytes": 2046307,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 419,
+      "selected_update": 250,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "f7f3b55ad4967a83516b4d29a23346cf6cdb180b39f52a437843b38f792ae27a",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/13/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "365fdf376019b146a4c22387973e85405218713f9d610122e6bff9f3e4ee8e6e"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/14/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "53ff9a9982662361b6e925da3f36c29b1a6a71ea3e880eca30815b105d508d3e",
+      "bytes": 7962883,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 398,
+      "selected_update": 398,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        8
+      ],
+      "normalizer_sha256": "ce576dd8bfadd1449caf36ff647b7010d775dadd80732e7f95cd11092642c486"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/14/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "a7a67984f263f80c1d8109672ff8d4a7af9d15adee66cf8dcf1fa57a075e7bc8",
+      "bytes": 2879267,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 448,
+      "selected_update": 448,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "53ff9a9982662361b6e925da3f36c29b1a6a71ea3e880eca30815b105d508d3e",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/14/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ce576dd8bfadd1449caf36ff647b7010d775dadd80732e7f95cd11092642c486"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/2/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "e36be05c234239bd22bbbcf56958db59c26e0ef96ed2fbc5f869c87ed11bffb6",
+      "bytes": 5517891,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "ab3ec30c8f1b77681b65a4e8edd70affc294890a972b4792da833f697e4a4761"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/2/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "977e7f8d2979abfffb3f16429c19565da10d4884cf1a531186979beb2eb1e528",
+      "bytes": 1306851,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "e36be05c234239bd22bbbcf56958db59c26e0ef96ed2fbc5f869c87ed11bffb6",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/2/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ab3ec30c8f1b77681b65a4e8edd70affc294890a972b4792da833f697e4a4761"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/3/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "082c716037f4db391555011a4061505665857507073672390cd188db607f24eb",
+      "bytes": 5515403,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "ab3ec30c8f1b77681b65a4e8edd70affc294890a972b4792da833f697e4a4761"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/3/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "1669b16a801ab83f9e113dc91c8618e122ce435ae228205217a3c990e10fb488",
+      "bytes": 1304235,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "082c716037f4db391555011a4061505665857507073672390cd188db607f24eb",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/3/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ab3ec30c8f1b77681b65a4e8edd70affc294890a972b4792da833f697e4a4761"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/4/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "8028edefbac28ca46f6c44478b1936c458c8b6be2ffe8286e3b5336c7c345556",
+      "bytes": 5521091,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "7a4a272411038c622629ecdcbce29eea714839453e30b602728901f568955c83"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/4/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "83fc703c024e05a60718e714fb962f600cf5d5c620bb8334a3bc54369a200fd5",
+      "bytes": 1307427,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "8028edefbac28ca46f6c44478b1936c458c8b6be2ffe8286e3b5336c7c345556",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/4/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "7a4a272411038c622629ecdcbce29eea714839453e30b602728901f568955c83"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/5/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "2b697d5bfbdf3497e66dbde7f57d1addc3880ee3cdef097e5bb850e967bf0183",
+      "bytes": 5518603,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "7a4a272411038c622629ecdcbce29eea714839453e30b602728901f568955c83"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/5/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "b30b311dfbb77b403f6b978a815fbc1d9637315595304d5fc103cc2922b620fb",
+      "bytes": 1304875,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "2b697d5bfbdf3497e66dbde7f57d1addc3880ee3cdef097e5bb850e967bf0183",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/5/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "7a4a272411038c622629ecdcbce29eea714839453e30b602728901f568955c83"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/6/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "b356f5f09ab832c1799c2569f5ac2bf7586a98cf3ae77679975dec2ef0b46bf1",
+      "bytes": 5518595,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "ea00c7ef58e2ee0c6e7467e13f90dbda0ac5fa14ca4c5fa6dd4f84a4074f18e7"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/6/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "8d0862ce0a19b2a8eab36f6577dd53b32d0fb8e2a1581f877356a8ef5eb7499e",
+      "bytes": 1098659,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 150,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "b356f5f09ab832c1799c2569f5ac2bf7586a98cf3ae77679975dec2ef0b46bf1",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/6/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ea00c7ef58e2ee0c6e7467e13f90dbda0ac5fa14ca4c5fa6dd4f84a4074f18e7"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/7/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "ec0b21c7a41b3977c78bc600fa15643c28bdd88188e6c324819ccd9e2958f3ca",
+      "bytes": 5516107,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "ea00c7ef58e2ee0c6e7467e13f90dbda0ac5fa14ca4c5fa6dd4f84a4074f18e7"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/7/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "1757e18c18e21373f4848a32cacc4fa70bb2afbce377f9dbc7c6689af374cb86",
+      "bytes": 1096107,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 150,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "ec0b21c7a41b3977c78bc600fa15643c28bdd88188e6c324819ccd9e2958f3ca",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/7/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "ea00c7ef58e2ee0c6e7467e13f90dbda0ac5fa14ca4c5fa6dd4f84a4074f18e7"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/8/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "670657667f97b40e539acb3c446aae03d80f2253b4cc0095692c4f0841891d54",
+      "bytes": 5523203,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": true,
+        "learnable_semantic_queries": true,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "df6afcf56a6392510dba5cec361957c14e7aff907ab0f260463ee8b1ef56f841"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/8/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "f501e7309e7110f10f0ba2088106830f19857de6eef835f70f61f4b3c61bf446",
+      "bytes": 1307875,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "670657667f97b40e539acb3c446aae03d80f2253b4cc0095692c4f0841891d54",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/8/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "df6afcf56a6392510dba5cec361957c14e7aff907ab0f260463ee8b1ef56f841"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/9/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sha256": "b35190b1c1d43a642ea3c575512075385095939883f8dfc2b62b40d3b25a5496",
+      "bytes": 5520779,
+      "format": "chronaris.common_pretraining_checkpoint.v2",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": false,
+      "optimizer_updates": 300,
+      "selected_update": 300,
+      "training_source_code_sha256": "210d466d640d40c2c7e58c38e920052bd68b2dfe30c96ce4701fc69b89582c20",
+      "source_checkpoint_sha256": null,
+      "source_checkpoint_path": null,
+      "config": {
+        "variant": "full",
+        "fusion_kind": "safe_lag",
+        "semantic_event_enabled": false,
+        "learnable_semantic_queries": false,
+        "attention_kind": "legacy_cosine",
+        "physics_weight": 0.05
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        4,
+        2
+      ],
+      "normalizer_sha256": "df6afcf56a6392510dba5cec361957c14e7aff907ab0f260463ee8b1ef56f841"
+    },
+    {
+      "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/9/clare/chronaris/task_guided/chronaris/best.pt",
+      "sha256": "d9bb9d688144f6ecc153c6635df8bd407a8955a70843fc1dc3601431f5994659",
+      "bytes": 1305323,
+      "format": "chronaris.application_end_to_end_finetuning.v3",
+      "training_status": "completed",
+      "method_name": "chronaris",
+      "label_used_for_encoder_training": true,
+      "optimizer_updates": 250,
+      "selected_update": 200,
+      "training_source_code_sha256": "e328dd9fdc13624de890612eb29e24dbb8c59f763da690d9b4835679b3213654",
+      "source_checkpoint_sha256": "b35190b1c1d43a642ea3c575512075385095939883f8dfc2b62b40d3b25a5496",
+      "source_checkpoint_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/9/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "config": {
+        "variant": null,
+        "fusion_kind": null,
+        "semantic_event_enabled": null,
+        "learnable_semantic_queries": null,
+        "attention_kind": null,
+        "physics_weight": null
+      },
+      "physics_relation_count": 0,
+      "field_counts": [
+        0,
+        0
+      ],
+      "normalizer_sha256": "df6afcf56a6392510dba5cec361957c14e7aff907ab0f260463ee8b1ef56f841"
+    }
+  ]
+}
