@@ -56,7 +56,7 @@ def prepare_dingxin_case(*, checkpoint, snapshot_root, audit_root, destination):
     write_json(destination / "case.json", {"format": "chronaris.demo_case.v1", "id": "dingxin-validation",
         "title": "实测数据集 · 人机观测记录", "source_label": "航空人机实测数据集",
         "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
-        "model_label": ("连续对齐与事件语义融合" if payload.get('config', {}).get('semantic_event_enabled')
+        "model_label": ("连续对齐与事件语义融合" if payload.get('encoder_manifest', {}).get('backbone_config', {}).get('semantic_event_enabled')
                         else "连续对齐与因果融合") + " · 自监督模型", "checkpoint": "encoder.pt",
         "checkpoint_sha256": before, "schema": index.plan.schema.to_dict(), "windows": windows,
         "field_labels": field_labels, "source": {"checkpoint": str(checkpoint), "snapshot": str(Path(snapshot_root).resolve()),

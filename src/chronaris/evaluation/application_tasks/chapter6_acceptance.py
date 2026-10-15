@@ -105,6 +105,18 @@ def run_application_acceptance(*, project, root, evidence):
     case = Case(root / 'cases/dingxin-validation/case.json')
     inputs = read_json(root / 'acceptance-input.json')
     digest = inputs['checkpoint_sha256']
+    validity = []
+    for i, window in enumerate(case.manifest['windows']):
+        sample = case.sample(i)
+        streams = {}
+        for stream in ('physiology', 'vehicle'):
+            values = getattr(sample, stream + '_values')
+            mask = getattr(sample, stream + '_feature_mask')
+            streams[stream] = dict(shape=list(values.shape), valid_values=int(mask.sum()),
+                observed_points=int(mask.any(axis=1).sum()), coverage=float(mask.mean()))
+        validity.append(dict(window=i + 1, start_s=window['start_s'], duration_s=window['duration_s'],
+            archive_sha256=window['sha256'], streams=streams))
+    write_json(evidence / 'input-validity.json', validity)
     write_json(evidence / 'mechanisms.json', verify_application_mechanisms(case))
     measurements = []
     service = AcceptanceService(project, root)
