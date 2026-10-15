@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "native_units": 108,
+  "extra_training_units": 4,
+  "bound_files": 1291,
+  "replay_units": 28,
+  "confirmation_opened": false,
+  "source_code_sha256": "8f3066e41b457029566ba065fc4d23dd6ad398c425a1c0586dc42f54c0df4907",
+  "preflight_plan": "/mnt/e/chronaris-v4-results/2026-10-15-chapter5-draft/preflight/delivery_plan.json",
+  "tests_passed": 38,
+  "engineering_gpu_status": "waiting_for_chapter6_service",
+  "synthetic_plot_redraw": true,
+  "synthetic_png_review": "Chinese glyphs readable after font discovery repair; real figures pending",
+  "memory_of_old_runs_not_used_as_current_results": true
+}

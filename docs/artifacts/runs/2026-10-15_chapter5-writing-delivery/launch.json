@@ -1,0 +1,32 @@
+{
+  "launch": {
+    "pid": 96284,
+    "command": [
+      "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+      "/home/wangminan/projects/chronaris-runtime-chapter5-writing-20261015/scripts/evaluation/application_tasks/run_chapter5_delivery.py",
+      "run",
+      "--root",
+      "/mnt/e/chronaris-v4-results/2026-10-15-chapter5-draft",
+      "--workspace",
+      "/home/wangminan/projects/chronaris-runtime-local-validation-20261012"
+    ],
+    "started_at": 1792076898.3660967,
+    "supervisor_commit": "d97c5c52",
+    "training_workspace": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+    "wait_for_gpu_owner": true
+  },
+  "startup_snapshot": {
+    "status": "running",
+    "pid": 96284,
+    "phase": "assets",
+    "completed": [],
+    "total": 163,
+    "plan_sha256": "bcabbfcfd09a30f1ad725e94fc7a81dfcd19c3a803ed1c8207173ded90752c83",
+    "started_at": 1792076906.6918802,
+    "child_pid": 96287
+  },
+  "observed_at": 1792076951.8926213,
+  "gpu_priority": "chapter6_first",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-15-chapter5-draft",
+  "continuous_monitoring": false
+}
