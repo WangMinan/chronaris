@@ -57,6 +57,14 @@ def run_final_mechanisms(*, formal_root, timing_root, confirmation_root, output_
     frozen_path, model_path = formal/'frozen_configuration.json', formal/'simulation_frozen_models.json'
     models = read_simulation_model_freeze(model_path, sha256_file(model_path),
         freeze_path=frozen_path, freeze_sha256=sha256_file(frozen_path))
+    return evaluate_frozen_mechanisms(models=models, model_path=model_path, timing_root=timing_root,
+        confirmation_root=confirmation_root, simulation_evaluation_root=formal, output_root=root)
+
+
+def evaluate_frozen_mechanisms(*, models, model_path, timing_root, confirmation_root,
+                               simulation_evaluation_root, output_root):
+    """Caller verifies the model inventory; retain every declared route, including shared baselines."""
+    formal, root = Path(simulation_evaluation_root), Path(output_root)
     development, fold = load_v4_simulation_development(simulation_root=models['simulation_root'], registry_path=SIMULATION_REGISTRY)
     source = dict(model_freeze_sha256=sha256_file(model_path), timing_audit_sha256=sha256_file(Path(timing_root)/'timing_audit.json'),
         confirmation_audit_sha256=sha256_file(Path(confirmation_root)/'confirmation_generation_audit.json'),
@@ -83,7 +91,8 @@ def run_final_mechanisms(*, formal_root, timing_root, confirmation_root, output_
                     progress.update(current_unit=key, phase='export_train_validation')
                     checkpoint = unit['checkpoints'][route]
                     if method == 'naive_time_sync':
-                        encoder, normalizer, _ = load_v4_naive_encoder(checkpoint, fold=fold, data_manifest_sha256=unit['data_manifest_sha256'])
+                        encoder, normalizer, _ = load_v4_naive_encoder(checkpoint, fold=fold, data_manifest_sha256=unit['data_manifest_sha256'],
+                            expected_training_source_sha256=unit.get('training_source_sha256'))
                     else:
                         encoder, normalizer, _ = load_frozen_application_encoder(checkpoint, route=route, fold=fold, device='cuda')
                     location = root/key; files = {str(model_path): sha256_file(model_path)}
@@ -138,7 +147,8 @@ def run_final_mechanisms(*, formal_root, timing_root, confirmation_root, output_
                     state['completed_units'].append(key); write_result(path, state)
                     del encoder, arrays, chunks
                     torch.cuda.empty_cache()
-    if len(state['records']) != 36:
-        raise ValueError('time mechanisms require six methods, three seeds and both routes')
+    expected = sum(2 if u['method']=='naive_time_sync' else len(u['routes']) for u in models['records'])
+    if len(state['records']) != expected:
+        raise ValueError('time mechanism results differ from the declared method/seed/route inventory')
     state['status'] = 'completed'
     return write_result(path, state)

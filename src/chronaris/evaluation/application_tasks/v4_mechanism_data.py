@@ -24,7 +24,12 @@ def generate_mechanism_data(*, formal_root, output_root):
     formal, root = Path(formal_root), Path(output_root).resolve()
     freeze, models = formal/'frozen_configuration.json', formal/'simulation_frozen_models.json'
     read_simulation_model_freeze(models, sha256_file(models), freeze_path=freeze, freeze_sha256=sha256_file(freeze))
-    clean_root = Path(EXPANDED_SIMULATION_ROOT)
+    return generate_frozen_timing_data(model_path=models, clean_root=EXPANDED_SIMULATION_ROOT, output_root=root)
+
+
+def generate_frozen_timing_data(*, model_path, clean_root, output_root):
+    """Shared generator; caller must verify its complete declared model freeze."""
+    models, clean_root, root = Path(model_path), Path(clean_root), Path(output_root).resolve()
     if root==clean_root.resolve() or ((root/'simulation_manifest.json').exists() and not (root/'timing_protocol.json').exists()):
         raise ValueError('timing observations require a separate, dedicated output directory')
     clean = json.loads((clean_root/'simulation_manifest.json').read_text())

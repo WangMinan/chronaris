@@ -12,7 +12,8 @@ from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_f
 HISTORICAL_ATOL = 1e-5
 
 
-def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_s=15.0, allow_legacy_implementation=True):
+def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_s=15.0, allow_legacy_implementation=True,
+                               include_query_deltas=False):
     before = sha256_file(checkpoint_path)
     stored = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
     guided = "role_sample_ids" in stored
@@ -40,12 +41,18 @@ def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_
         "future_values": perturb_future_observations(batch, cutoff_s=cutoff_s),
         "future_missing": remove_future_observations(batch, cutoff_s=cutoff_s),
     }
-    deltas = {}
+    deltas, query_rows = {}, []
     for name, changed in alterations.items():
         output = adapter(changed)
         if not torch.equal(baseline.valid_mask[past], output.valid_mask[past]):
             raise AssertionError("future information changed historical availability")
         deltas[name] = float((baseline.sequence_embedding[past] - output.sequence_embedding[past]).abs().max())
+        if include_query_deltas:
+            query_delta = (baseline.sequence_embedding-output.sequence_embedding).abs().amax(dim=-1)
+            for i, sample in enumerate(batch.sample_ids):
+                for j in past[i].nonzero().flatten().tolist():
+                    query_rows.append(dict(sample_id=sample, perturbation=name, cutoff_s=cutoff_s,
+                        query_time_s=float(baseline.timestamps_s[i,j]), max_delta=float(query_delta[i,j])))
     unchanged = sha256_file(checkpoint_path) == before
     assert unchanged
     return {
@@ -58,6 +65,7 @@ def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_
         "checkpoint_unchanged": unchanged, "historical_atol": HISTORICAL_ATOL,
         "legacy_1e6_passed": all(math.isfinite(v) and v <= 1e-6 for v in deltas.values()),
         "passed": all(math.isfinite(v) and v <= HISTORICAL_ATOL for v in deltas.values()),
+        **({"query_deltas": query_rows} if include_query_deltas else {}),
     }
 
 

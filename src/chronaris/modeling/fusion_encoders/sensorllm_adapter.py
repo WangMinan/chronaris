@@ -31,7 +31,7 @@ def alignment_support(values, mask, names, train_ids):
 
 class SensorLLMWindowEncoder(nn.Module):
     """Reuse official multichannel token insertion; train only its alignment MLP."""
-    def __init__(self, assets, channel_count):
+    def __init__(self, assets, channel_count, *, inference_offload=False):
         super().__init__()
         from transformers import AutoModel, AutoTokenizer
         source = str(Path(assets['sensorllm']['path']).resolve())
@@ -42,10 +42,11 @@ class SensorLLMWindowEncoder(nn.Module):
         # Transformers 4.57's generic classification parent also resolves the base model.
         AutoModel.register(SensorLLMStage2Config, SensorLLMStage2LlamaModel, exist_ok=True)
         self.assets = assets
+        self.inference_offload = inference_offload
         self.tokenizer = AutoTokenizer.from_pretrained(assets['deepseek_llama']['path'], local_files_only=True)
         model = SensorLLMStage2LlamaForSequenceClassification.from_pretrained(
             assets['deepseek_llama']['path'], num_labels=2, torch_dtype=torch.bfloat16,
-            device_map='cuda', local_files_only=True, attn_implementation='sdpa')
+            device_map='cpu' if inference_offload else 'cuda', local_files_only=True, attn_implementation='sdpa')
         self.core = model.get_model()
         self.feature_dim = model.config.hidden_size
         dataset = dict(channel_num=channel_count)
@@ -53,11 +54,16 @@ class SensorLLMWindowEncoder(nn.Module):
             dataset[f'default_channel_{c}_start_token'] = f'<channel_{c}_start>'
             dataset[f'default_channel_{c}_end_token'] = f'<channel_{c}_end>'
         self.core.ts_backbone_config['chronaris'] = dataset
+        if inference_offload:
+            # Preserve the original CUDA boundary-token initialization arithmetic.
+            model.get_input_embeddings().to('cuda')
         model.initialize_tokenizer_ts_backbone_config(self.tokenizer, 'cuda', fix_llm=False, dataset='chronaris')
+        if inference_offload:
+            model.get_input_embeddings().to('cpu')
         self.core.load_start_end_tokens('chronaris')
         # ponytail: freeze mean boundary embeddings for this 24 GB diagnostic;
         # add trainable boundary rows after a separate memory-budget check.
-        pipeline = ChronosPipeline.from_pretrained(assets['chronos_t5_large']['path'], device_map='cuda',
+        pipeline = ChronosPipeline.from_pretrained(assets['chronos_t5_large']['path'], device_map='cpu' if inference_offload else 'cuda',
             tc='StanNormalizeUniformBins', torch_dtype=torch.bfloat16, local_files_only=True)
         self.ts_tokenizer = pipeline.tokenizer
         self.core.pt_encoder_backbone = pipeline.model
@@ -75,6 +81,12 @@ class SensorLLMWindowEncoder(nn.Module):
 
     def load_checkpoint_state(self, state):
         self.core.ts_proj.load_state_dict(state)
+        if self.inference_offload:
+            from accelerate import dispatch_model
+            # Inference only: eight resident layers, remaining weights staged from RAM; no quantization.
+            mapping={'': 'cuda', **{f'layers.{i}': 'cpu' for i in range(8, len(self.core.layers))}}
+            self.core=dispatch_model(self.core,device_map=mapping,main_device='cuda',offload_buffers=True)
+            self.requires_grad_(False)
 
     def _input(self, values, mask, names, *, selected_channel=None, answer=None):
         indices = list(range(values.shape[-1])) if selected_channel is None else [selected_channel]

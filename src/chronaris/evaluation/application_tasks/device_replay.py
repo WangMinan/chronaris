@@ -79,6 +79,12 @@ def replay_unit(main_root, index, root):
     binding = dict(main_models_sha256=sha(Path(main_root)/'main_models.json'), index=index,
                    source_code_sha256=v4_workflow_source_sha256(), role='validation', sample_limit=0,
                    device=torch.cuda.get_device_name())
+    return replay_record(unit, binding, root)
+
+
+def replay_record(unit, binding, root, *, data_root=None, registry_path=None):
+    """Audit all frozen consumer families without changing their strict tolerance."""
+    spec, index = unit['unit'], binding['index']
     root = Path(root)
     result_path = root/'result.json'
     if result_path.exists():
@@ -91,13 +97,12 @@ def replay_unit(main_root, index, root):
     started = time.perf_counter()
     for row in unit['results']:
         evaluation = row.get('evaluation', row)
-        if 'minirocket' not in evaluation['consumers']['components']:
-            continue
         contract_path = Path(evaluation['consumers']['manifest_path']).parents[1]/'common_contract.json'
         verify({str(contract_path): evaluation['contract_file_sha256']})
         record = read(contract_path)
         verify(record['declaration']['evidence_files'])
-        _, fold, targets, context, raw = _inputs(spec, record['contract'], 'validation', 0)
+        _, fold, targets, context, raw = _inputs(spec, record['contract'], 'validation', 0,
+            data_root=data_root, registry_path=registry_path)
         output = _encode(spec, row, record['declaration'], record['contract'], raw, fold,
                          root/row['route']/'representation', 'validation')
         for family, component in evaluation['consumers']['components'].items():
