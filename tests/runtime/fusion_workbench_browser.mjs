@@ -7,6 +7,8 @@ import assert from 'node:assert/strict';
 const require=createRequire(resolve('artifacts/fusion-workbench/browser/package.json'));
 const {chromium}=require('playwright');
 const output=resolve(process.env.DEMO_SCREENSHOTS || 'artifacts/fusion-workbench/screenshots');
+const base=process.env.WORKBENCH_URL || 'http://127.0.0.1:8766';
+const dataRoot=resolve(process.env.WORKBENCH_DATA_ROOT || 'artifacts/fusion-workbench');
 await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--disable-gpu']});
 const context=await browser.newContext({viewport:{width:1366,height:768},timezoneId:'Asia/Shanghai'});
@@ -36,7 +38,9 @@ async function runAndComplete() {
   await complete();
 }
 try {
-  await page.goto('http://127.0.0.1:8766');await page.locator('#run:not([disabled])').waitFor();
+  const pageStarted=performance.now();
+  await page.goto(base);await page.locator('#run:not([disabled])').waitFor();
+  const initialReadyMs=performance.now()-pageStarted;
   await page.locator('#case').selectOption('dingxin-validation');
   const button=await page.locator('#run').boundingBox();assert(button.y+button.height<768);
   assert(!/Chronaris|Zorathos|鼎新|离线|演示/.test(await page.locator('body').innerText()));
@@ -49,8 +53,10 @@ try {
   await page.waitForFunction(id=>jobs[0]?.id===id,newId);
   await page.locator('#history button').nth(1).click();
   await page.waitForFunction(id=>viewedRunId && viewedRunId!==id,newId);
-  await page.locator('[data-tab=data]').click();await page.locator('#open-results').click();
+  await page.locator('[data-tab=data]').click();
+  const resultStarted=performance.now();await page.locator('#open-results').click();
   await page.waitForFunction(id=>viewedRunId===id,newId);
+  const resultSwitchMs=performance.now()-resultStarted;
   checks.push('latest result remains bound after viewing older history');
   const colorScale=await page.locator('#scale-max').textContent();
   await page.locator('#window-slider').fill('1');assert.equal(await page.locator('#scale-max').textContent(),colorScale);
@@ -91,7 +97,7 @@ try {
   const firstJob=await page.evaluate(()=>activeJobId);
   await page.locator('#stop').selectOption('14');await runAndComplete();
   const secondJob=await page.evaluate(()=>activeJobId);
-  const saved=await (await page.request.get(`http://127.0.0.1:8766/api/runs/${secondJob}`)).json();
+  const saved=await (await page.request.get(`${base}/api/runs/${secondJob}`)).json();
   assert.equal(saved.total,5);assert.deepEqual(saved.selected_indices,[10,11,12,13,14]);
   checks.push('real archive ingestion','ten-window task','incremental task consumes five remaining windows');
   // Export observed input values for a browser upload; no synthetic readings or training.
@@ -99,13 +105,13 @@ try {
   execFileSync('/home/wangminan/env/anaconda3/envs/chronaris/bin/python',['-c',`
 import json,sys
 from chronaris.serving.fusion_workbench.cases import Case,ARRAYS
-case=Case('artifacts/fusion-workbench/cases/dingxin-validation/case.json')
+case=Case(sys.argv[2]+'/cases/dingxin-validation/case.json')
 windows=[]
 for i,w in enumerate(case.manifest['windows']):
  s=case.sample(i)
  windows.append({'sample_id':s.sample_id,'start_s':w['start_s'],'duration_s':s.context_duration_s,**{k:getattr(s,k).tolist() for k in ARRAYS}})
 with open(sys.argv[1],'w') as f:json.dump({'format':'chronaris.observations.v1','title':'实测数据集 · 观测片段','schema':case.schema.to_dict(),'field_labels':case.manifest.get('field_labels',{}),'windows':windows},f,ensure_ascii=False)
-`,inputFile],{env:{...process.env,PYTHONPATH:resolve('src'),PYTHONNOUSERSITE:'1',CUDA_VISIBLE_DEVICES:''}});
+`,inputFile,dataRoot],{env:{...process.env,PYTHONPATH:resolve('src'),PYTHONNOUSERSITE:'1',CUDA_VISIBLE_DEVICES:''}});
   const input=JSON.parse(await readFile(inputFile,'utf8'));
   const firstInput=resolve(output,'first-observation.json');await writeFile(firstInput,JSON.stringify({...input,windows:input.windows.slice(0,1)}));
   await page.locator('#add-data').click();await page.locator('#import-file').setInputFiles(firstInput);await page.locator('#import-record').click();
@@ -121,7 +127,7 @@ with open(sys.argv[1],'w') as f:json.dump({'format':'chronaris.observations.v1',
   assert.equal(await page.locator('#stop').inputValue(),'2');
   await runAndComplete();
   const appendedJob=await page.evaluate(()=>activeJobId);
-  const appended=await (await page.request.get(`http://127.0.0.1:8766/api/runs/${appendedJob}`)).json();
+  const appended=await (await page.request.get(`${base}/api/runs/${appendedJob}`)).json();
   assert.equal(appended.total,2);checks.push('JSON observation import','append deduplicates existing input','incremental processing after append');
   // Drop a status read once; UI retries and reaches the real terminal state.
   let dropped=false;
@@ -132,7 +138,7 @@ with open(sys.argv[1],'w') as f:json.dump({'format':'chronaris.observations.v1',
   await page.locator('#incremental').uncheck();await page.locator('#start').selectOption('2');await runAndComplete();
   assert(dropped);await page.unroute('**/api/runs/*');checks.push('transient status disconnect recovers');
   assert.deepEqual(errors,[]);
-  await writeFile(resolve(output,'browser-check.json'),JSON.stringify({status:'passed',checks,errors,archiveId,firstJob,secondJob,primaryButtonY:button.y,mobileAxisHeight:fontHeight},null,2));
+  await writeFile(resolve(output,'browser-check.json'),JSON.stringify({status:'passed',checks,errors,archiveId,firstJob,secondJob,caseRunId:newId,initialReadyMs,resultSwitchMs,primaryButtonY:button.y,mobileAxisHeight:fontHeight},null,2));
   await writeFile(resolve(output,'ui-evidence.json'),JSON.stringify(screens,null,2));
   console.log('Browser acceptance passed:',output);
 } finally {await browser.close();}

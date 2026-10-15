@@ -84,6 +84,9 @@ def test_export_batch_and_window_readback(case, fake_adapter, tmp_path):
     a, b = [load_fusion_stream_batch(tmp_path / name) for name in ("one", "batch")]
     torch.testing.assert_close(a.sequence_embedding, b.sequence_embedding, atol=0, rtol=0)
     assert incremental["downstream_readback"]
+    timings = json.loads((tmp_path / 'one/timings.json').read_text())
+    assert all(value >= 0 for value in timings.values())
+    assert timings['pipeline_total_s'] >= sum(v for k, v in timings.items() if k != 'pipeline_total_s')
     assert len((tmp_path / "one/features.csv").read_text().splitlines()) == 193
     with zipfile.ZipFile(tmp_path / "one/features.zip") as archive:
         archive.extractall(tmp_path / "unpacked")

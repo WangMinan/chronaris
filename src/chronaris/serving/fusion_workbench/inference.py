@@ -62,16 +62,21 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
     progress("loading", 0)
     adapter, payload = load_adapter(case)
     loaded_s = time.perf_counter() - started
+    timings = {'model_load_s': loaded_s, 'input_read_s': 0., 'inference_s': 0.,
+               'chunk_write_s': 0., 'cache_read_s': 0.}
     chunks, windows = [], []
     reused = 0
     implementation = implementation_digest()
     for start in range(0, len(indices), batch_size):
         selected = indices[start:start + batch_size]
+        phase_started = time.perf_counter()
         samples = [case.sample(i) for i in selected]
+        timings['input_read_s'] += time.perf_counter() - phase_started
         cache_key = hashlib.sha256((implementation + ''.join(window_key(case, i) for i in selected)).encode()).hexdigest()
         cache = root / 'chunks' / cache_key
         prior = Path(resume_root) / 'chunks' / cache_key if resume_root else cache
         if (prior / 'preview.json').exists():
+            phase_started = time.perf_counter()
             chunk = load_fusion_stream_batch(prior)
             saved = read_json(prior / 'preview.json')
             if saved['key'] != cache_key or tuple(s.sample_id for s in samples) != chunk.sample_ids:
@@ -79,9 +84,12 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
             if prior != cache:
                 shutil.copytree(prior, cache)
             chunks.append(chunk); windows.extend(saved['windows']); reused += len(selected)
+            timings['cache_read_s'] += time.perf_counter() - phase_started
             progress('inference', len(windows))
             continue
+        phase_started = time.perf_counter()
         chunk = adapter(collate_observation_samples(samples))
+        timings['inference_s'] += time.perf_counter() - phase_started
         chunks.append(chunk)
         for row, (i, sample) in enumerate(zip(selected, samples)):
             w = case.manifest["windows"][i]
@@ -91,9 +99,12 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
                 "vehicle": preview_stream(sample, "vehicle", case.manifest.get("field_labels", {})),
                 "times": chunk.timestamps_s[row].tolist(), "valid": chunk.valid_mask[row].tolist(),
                 "embedding": chunk.sequence_embedding[row].tolist(), "pooled": chunk.pooled_embedding[row].tolist()})
+        phase_started = time.perf_counter()
         write_fusion_stream_batch(chunk, root=cache, export_role="fusion_workbench_chunk")
         write_json(cache / 'preview.json', {'key': cache_key, 'windows': windows[-len(selected):]})
+        timings['chunk_write_s'] += time.perf_counter() - phase_started
         progress("inference", len(windows))
+    phase_started = time.perf_counter()
     output = _concatenate_fusion_batches(chunks)
     progress("exporting", len(windows))
     write_fusion_stream_batch(output, root=root, export_role="fusion_workbench")
@@ -110,6 +121,7 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
             for j, t in enumerate(output.timestamps_s[i]):
                 writer.writerow([sample_id, float(t), bool(output.valid_mask[i, j]), *output.sequence_embedding[i, j].tolist()])
     config = payload.get("encoder_manifest", {}).get("backbone_config", {})
+    timings['standard_export_readback_csv_s'] = time.perf_counter() - phase_started
     result = {"case": case.summary(), "windows": windows, "elapsed_s": time.perf_counter() - started,
         "implementation_digest": implementation, "model_load_s": loaded_s, "reused_windows": reused, "device": "cpu", "batch_size": batch_size,
         "checkpoint_sha256": output.checkpoint_sha256, "source_sample_hashes": list(output.source_sample_hashes),
@@ -122,8 +134,12 @@ def run_case(case, indices, root, progress=lambda *args: None, *, batch_size=1, 
         ensure_ascii=False).encode()).hexdigest()
     result["source_files_sha256"] = {Path(p).name: sha256_file(p) for p in
         (__file__, inspect.getfile(load_common_pretraining_checkpoint), inspect.getfile(write_fusion_stream_batch))}
+    phase_started = time.perf_counter()
     write_json(root / "result.json", result)
     with zipfile.ZipFile(root / "features.zip", "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for name in ("fusion_stream.npz", "representation_manifest.json", "features.csv", "result.json"):
             archive.write(root / name, name)
+    timings['result_json_zip_s'] = time.perf_counter() - phase_started
+    timings['pipeline_total_s'] = time.perf_counter() - started
+    write_json(root / 'timings.json', timings)
     return result

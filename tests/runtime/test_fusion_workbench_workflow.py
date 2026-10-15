@@ -117,6 +117,34 @@ def test_input_mutation_rejects_retry_cache(case,fake_adapter,tmp_path):
         inference.run_case(case,[0],tmp_path/'second',resume_root=tmp_path/'first')
 
 
+def test_incremental_recomputes_after_model_or_implementation_change(case,fake_adapter,tmp_path,monkeypatch):
+    from chronaris.serving.fusion_workbench import server
+    from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+    store = DemoStore(case.root.parent, tmp_path/'runs')
+    try:
+        request = {'case_id':'test-case','start':0,'stop':2,'incremental':True}
+        assert wait(store, store.submit(request))['status'] == 'completed'
+        other = tmp_path/'different.pt'; other.write_bytes(b'different weights')
+        digest = sha256_file(other)
+        store.catalog.models[digest] = (other, case.schema)
+        changed = wait(store, store.submit(dict(request, model_id=digest)))
+        assert changed['total'] == 2 and changed['reused_windows'] == 0
+        monkeypatch.setattr(server, 'implementation_digest', lambda: 'new implementation')
+        changed = wait(store, store.submit(request))
+        assert changed['total'] == 2 and changed['reused_windows'] == 0
+    finally:
+        store.close()
+
+
+@pytest.mark.parametrize('times', [[1., 0.], [0., 31.], [0., float('nan')]])
+def test_import_rejects_invalid_observation_times(case, times):
+    catalog = Catalog(case.root.parent); catalog.refresh()
+    p = payload(case, 1)
+    p['windows'][0]['physiology_timestamps_s'] = times
+    with pytest.raises(ValueError):
+        catalog.import_record(p)
+
+
 def test_empty_observations_rejected(case):
     catalog=Catalog(case.root.parent);catalog.refresh()
     p=payload(case,1)
