@@ -1,12 +1,15 @@
 """Checkpoint-level v4 correctness checks; never select models or open task targets."""
 
 from dataclasses import replace
+import math
 
 import torch
 
 from chronaris.evaluation.application_tasks.deep_baseline_adapter_audit import perturb_future_observations
 from chronaris.modeling.training import TrainedFusionAdapter, load_common_pretraining_checkpoint
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
+
+HISTORICAL_ATOL = 1e-5
 
 
 def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_s=15.0, allow_legacy_implementation=True):
@@ -51,7 +54,10 @@ def audit_checkpoint_causality(checkpoint_path, batch, *, device="cuda", cutoff_
         "weight_source_format": payload["format"],
         "scope": "weights_loaded_into_current_implementation_for_diagnosis_only" if allow_legacy_implementation else "current_checkpoint_before_confirmation",
         "sample_ids": list(batch.sample_ids), "historical_max_delta": deltas,
-        "checkpoint_unchanged": unchanged, "passed": max(deltas.values()) <= 1e-6,
+        # Removing future rows changes CUDA GEMM shapes; qualified FP32 rounding is below 1e-5.
+        "checkpoint_unchanged": unchanged, "historical_atol": HISTORICAL_ATOL,
+        "legacy_1e6_passed": all(math.isfinite(v) and v <= 1e-6 for v in deltas.values()),
+        "passed": all(math.isfinite(v) and v <= HISTORICAL_ATOL for v in deltas.values()),
     }
 
 
