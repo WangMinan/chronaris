@@ -1,0 +1,192 @@
+[
+  {
+    "name": "embed_tokens",
+    "identical": true,
+    "max_abs": 0.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.layer_norm",
+    "identical": true,
+    "max_abs": 0.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.SelfAttention.q",
+    "identical": false,
+    "max_abs": 0.015625,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.SelfAttention.k",
+    "identical": false,
+    "max_abs": 0.015625,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.SelfAttention.v",
+    "identical": false,
+    "max_abs": 0.0078125,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.SelfAttention.relative_attention_bias",
+    "identical": true,
+    "max_abs": 0.0,
+    "shape": [
+      97,
+      97,
+      16
+    ]
+  },
+  {
+    "name": "block.0.layer.0.SelfAttention.o",
+    "identical": false,
+    "max_abs": 0.5,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.SelfAttention",
+    "identical": false,
+    "max_abs": 0.5,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0.dropout",
+    "identical": false,
+    "max_abs": 0.5,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.0",
+    "identical": false,
+    "max_abs": 1.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.1.layer_norm",
+    "identical": false,
+    "max_abs": 0.00146484375,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.1.DenseReluDense.wi",
+    "identical": false,
+    "max_abs": 0.0078125,
+    "shape": [
+      6,
+      97,
+      4096
+    ]
+  },
+  {
+    "name": "block.0.layer.1.DenseReluDense.act",
+    "identical": false,
+    "max_abs": 0.0078125,
+    "shape": [
+      6,
+      97,
+      4096
+    ]
+  },
+  {
+    "name": "block.0.layer.1.DenseReluDense.dropout",
+    "identical": false,
+    "max_abs": 0.0078125,
+    "shape": [
+      6,
+      97,
+      4096
+    ]
+  },
+  {
+    "name": "block.0.layer.1.DenseReluDense.wo",
+    "identical": false,
+    "max_abs": 1.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.1.DenseReluDense",
+    "identical": false,
+    "max_abs": 1.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.1.dropout",
+    "identical": false,
+    "max_abs": 1.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "block.0.layer.1",
+    "identical": false,
+    "max_abs": 2.0,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  },
+  {
+    "name": "result",
+    "identical": false,
+    "max_abs": 0.00146484375,
+    "shape": [
+      6,
+      97,
+      1024
+    ]
+  }
+]

@@ -76,6 +76,12 @@ def export(root,plan,models):
             contract=source(Path(evaluation['consumers']['manifest_path']).parents[1]/'common_contract.json')
             training.append(meta|dict(route=row['route'],declaration=contract['declaration'],contract=contract['contract']))
             costs.append(meta|dict(route=row['route'],seconds=row['seconds'],scope='frozen_export_and_downstream_inference'))
+            reference=root/'native'/spec['key']/row['route']/'representation/reference_executor/receipt.json'
+            if reference.exists():
+                execution=source(reference);verify(execution['files'])
+                write(data/'reference_execution'/f"{spec['key']}_{row['route']}.json",execution)
+                costs[-1].update(encoder_device=execution['device'],includes_remote_transfer=True,
+                    encoder_seconds=execution['cost']['seconds'],encoder_peak_cuda_bytes=execution['cost']['peak_cuda_bytes'])
             for family,component in row['components'].items():
                 record=source(component['path']);key=meta|dict(route=row['route'],consumer=family)
                 metrics.extend(key|m for m in record['task_summary']);groups.extend(key|m for m in record['group_metrics'])

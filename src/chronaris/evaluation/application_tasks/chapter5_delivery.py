@@ -57,7 +57,7 @@ def prepare(root, subset_root, policy_path, launcher, plot_root):
                     receipt=str(subset_root/'units'/f'{i}.json')) for i in range(15)]
     assets = [str(Path('/mnt/e/chronaris-v4-results/2026-09-11-stage3-models')/n) for n in ('assets.json','assets_sensor.json')]
     replay = [r['key'] for r in native if r['origin']=='new' or (r['unit']['fold_index']==0 and
-              r['unit']['method'] in ('timecma','chronos2','sensorllm_deepseek')) or r['unit']['domain']=='dingxin']
+              r['unit']['method'] in ('timecma','chronos2')) or r['unit']['domain']=='dingxin' or r['unit']['method']=='sensorllm_deepseek']
     result = seal_development_plan(dict(format='chronaris.chapter5_draft_delivery.v1',root=str(root),
         subset_root=str(subset_root), policy_path=str(policy_path), main_root=subset['main_root'],
         source_code_sha256=v4_workflow_source_sha256(), input_files=files, assets=assets,
@@ -66,7 +66,7 @@ def prepare(root, subset_root, policy_path, launcher, plot_root):
         plot_root=str(Path(plot_root).resolve()), seed_policy=[17], public_folds=5,
         sensitivity_weights=[0.,.025,.05,.1], sensitivity_role='validation',
         sensitivity_changes_reference=False, pressure_conditions=38,
-        sensorllm_inference='original_bfloat16_CUDA_compute_eight_resident_layers_remaining_weights_CPU_offload',
+        sensorllm_inference='qualified_original_RTX4090_frozen_encoder_remote_features_local_frozen_consumers',
         confirmation_opened=False, legacy_full_matrix_complete=False,
         statistics='subject-first then equal fold means; fold population SD, not seed uncertainty',
         completion='all declared results plus independently redrawable materials; failures stop queue'))
@@ -166,12 +166,8 @@ def native_record(plan, key):
     result=unit_record(plan['main_root'],row['index']) if row['origin']=='reference' else read(row['receipt'])
     if result['unit']!=row['unit']:raise ValueError('native receipt identity changed')
     if row['unit']['method']=='sensorllm_deepseek':
-        from chronaris.modeling.fusion_encoders import sensorllm_adapter
-        path=Path(__file__).parents[2]/'modeling/fusion_encoders/sensorllm_adapter.py'
-        spec=importlib.util.spec_from_file_location('delivery_sensorllm',path)
-        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-        sensorllm_adapter.SensorLLMWindowEncoder=lambda assets,channels: module.SensorLLMWindowEncoder(
-            assets,channels,inference_offload=True)
+        from chronaris.evaluation.application_tasks import chapter5_native
+        chapter5_native._encode=helper('chapter5_delivery_sensor').encode_remote
     return row,result
 
 
@@ -210,6 +206,8 @@ def worker(root, stage):
             if not acquired:return dict(status='waiting_gpu')
             result=helper('device_replay').replay_record(unit,dict(index=row['index'],plan_sha256=plan['plan_sha256'],
                 role='validation',sample_limit=0),root/'replay'/row['key'],data_root=plan['data_root'],registry_path=plan['registry_path'])
+            if row['unit']['method']=='sensorllm_deepseek':
+                result=helper('chapter5_delivery_sensor').bind_evidence(result,root/'replay'/row['key'])
             if row['unit']['method'] in ('timecma','chronos2','sensorllm_deepseek') and any(
                 not r['strict']['passed'] or r['class_flips'] for r in result['rows']):
                 raise ValueError('recent-model frozen inference qualification failed; inspect retained internal replay')
@@ -234,8 +232,11 @@ def worker(root, stage):
             clean_root=plan['simulation_root'],output_root=root/'timing_data')
     if stage.startswith('native:'):
         row,unit=native_record(plan,stage.split(':')[1])
-        return _evaluate_native_record(unit,binding|dict(key=row['key']),root/'native'/row['key'],
+        result=_evaluate_native_record(unit,binding|dict(key=row['key']),root/'native'/row['key'],
             role='held_out',sample_limit=0,data_root=plan['data_root'],registry_path=plan['registry_path'])
+        if row['unit']['method']=='sensorllm_deepseek' and result['status']=='completed':
+            result=helper('chapter5_delivery_sensor').bind_evidence(result,root/'native'/row['key'])
+        return result
     if stage.startswith('simulation:'):
         from chronaris.evaluation.application_tasks.v4_simulation_confirmation_evaluation import _evaluate_simulation_unit
         with development_gpu_lock() as acquired:

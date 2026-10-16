@@ -1,0 +1,403 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.11.0+cu130",
+  "offload": false,
+  "checkpoint_sha256": "9b937cf42172e585629479269ef53bfa4cf0786a12566745cffd9710e0a5f6f8",
+  "sample_ids": [
+    "1026__experiment0_window0",
+    "1026__experiment0_window1",
+    "1026__experiment0_window2",
+    "1026__experiment0_window3"
+  ],
+  "max_delta": 0.0,
+  "records": {
+    "input_values": {
+      "shape": [
+        4,
+        96,
+        6
+      ],
+      "dtype": "torch.float32",
+      "sha256": "2dd8a4f4825eed4b7ef75c0d2f921a40788f041507c6e8aa39350be86ce2e8ee"
+    },
+    "input_mask": {
+      "shape": [
+        4,
+        96,
+        6
+      ],
+      "dtype": "torch.bool",
+      "sha256": "adeb61a1cb7008ea95de0e84a2c65234e79de9b04bd4cac3d0e95686328495a9"
+    },
+    "rope": {
+      "shape": [
+        64
+      ],
+      "dtype": "torch.float32",
+      "sha256": "4ae228093081627907bb1abceaa696354a9d187a0202a20492a1105c1ade70e3"
+    },
+    "ts_ids": {
+      "shape": [
+        6,
+        97
+      ],
+      "dtype": "torch.int64",
+      "sha256": "f1e8b18172555532870a638015212fb0c948b67ae24d1a01c6d6fb7558a1eae5"
+    },
+    "ts_mask": {
+      "shape": [
+        6,
+        97
+      ],
+      "dtype": "torch.bool",
+      "sha256": "0a232cc91e0061d61210d7b8edbe248d9c0c134bbaf61dddb5654d026cf5eddd"
+    },
+    "centers": {
+      "shape": [
+        4093
+      ],
+      "dtype": "torch.float32",
+      "sha256": "57bd34603d93d0fbafa7b32b95e6c167bc0eb3b2306943dd379a3dc66f22cbc2"
+    },
+    "embed_tokens": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "20a45771dc02fd80b43c8b2d7f77b2df1ca29021bbe3fe4134031f55df3760a7"
+    },
+    "pt_encoder_backbone.model.encoder": {
+      "shape": [
+        6,
+        97,
+        1024
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "974139ac64824948f53ee7b1f913356ca5c7d577cefb47fbe38639249ff396d2"
+    },
+    "ts_proj": {
+      "shape": [
+        6,
+        97,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "06db7782aaf7d02fc0df2a1c4f7654e03bf0474b5416df12fb7c8387105aaf5c"
+    },
+    "layers.0": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "a71b4c36cf3234635a3a1f39d3a713e614c15f4823f8dbacf3366d86fe4eca48"
+    },
+    "layers.1": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "51667eb32d2fc47ee01f26bc2d25b51ec1d81a4709a0f2739880f82f873cd3e1"
+    },
+    "layers.2": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "afebca831c5d28fd6c875935f87fc5caab34ff7be14873b57447e42510d9ca31"
+    },
+    "layers.3": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "419e6ea813cdde6f1e4bf65da5b76e92b33f2677e0816a650aeef51449cea096"
+    },
+    "layers.4": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "610aa3e64d8e9348a870cdbc434289b6a3abff8450c4543e7167c62456cbf0ee"
+    },
+    "layers.5": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "ca6e56f73a24ddc9c3b20da7abf0940c4f0ea37453c4940cc0fb987e164fcea8"
+    },
+    "layers.6": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "8516efe7178dd213ae1f1bd6f326d2bd3e23330163c2dc778eb958f45a26662d"
+    },
+    "layers.7": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "f61247df97602358cfa229d794377665dbf4e9f5f43099e3dd5ff8723611c1e3"
+    },
+    "layers.8": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "980061984d1e3e8c61feaa41423985f95925319774a8de400718a8e904ccca87"
+    },
+    "layers.9": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "091d7068cdf91605875ffc392929b41a5e5fc94e2139541180e647c65dfe9824"
+    },
+    "layers.10": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "3b133fde3a1f5afad421ff6956fa25c685c99c51f8c60d06e50db9be4f09ef51"
+    },
+    "layers.11": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "1b397f8a59d51b6925a6147d7e5ed77d4d3706099c48105c0fdd33562671e689"
+    },
+    "layers.12": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "d6ac5bb6c1c3aa6963548eb31026ca1eaa3998029ebd3df0c7f0f8a32294579f"
+    },
+    "layers.13": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "b42e97c6499cc44771e78e8c526534d754e74c0d2ec8245c94b91a12b20db2b4"
+    },
+    "layers.14": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "97f565dddc7758ff007fca64a1265218e595ae1b0c0a07ca4f5d8ad42cefbeb4"
+    },
+    "layers.15": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "ad5e50bf3f01fa40dbdf8dd6e12f9b4ca3c4d443e9b58292663281c2993ac608"
+    },
+    "layers.16": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "826fdfe48f50294d79134eec952f1b46ee3ddf1d67bdbd726797f15463e388d6"
+    },
+    "layers.17": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "6d0b4b8ef611ddf5e8e912aa1ef9d6bf42fadee54634501ba3173883a961639e"
+    },
+    "layers.18": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "a8b2a661e94c0b78893d14aedd9a6cc0448e063293af6ec8bc765e25153ca840"
+    },
+    "layers.19": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "a0a7fd7b8c74bd55a76cb25f8c77dd7a8a4cca5797a6c8aa120fa851e6e1444c"
+    },
+    "layers.20": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "0e99ed5b4e7cd2e88ae41e2daa2a5cfaca77bfd0ff96dd338af5e5211cae145c"
+    },
+    "layers.21": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "8b9d1595442cfbf2ceacf6f76c537aeaadfe27d5adbfe87562abf2a2df92f2be"
+    },
+    "layers.22": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "98bd232b4e3a6fb89f06524dcb0135dce08009caf466deb148800909d8c0a368"
+    },
+    "layers.23": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "89ddacb735d7ec9738202cf74a1d779fe358387ce570e033b63a4ce595f25b4a"
+    },
+    "layers.24": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "e0d5369134a0c31a1a8e47f47d1d624a8e150d13d5344e7545ec2c2e2f5f99b1"
+    },
+    "layers.25": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "668fd0ed17a2f4c52c5701b8731c688961a1d426793368627508e2e6e328b9de"
+    },
+    "layers.26": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "8ac6469ead973623592d1cc08fc9a05210abc61b4484a9a174408a32caf575e9"
+    },
+    "layers.27": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "0ea5e0000fa257956f49614fb9378b0e04f59a77efd89a31bce4b79ff06c1b29"
+    },
+    "layers.28": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "996f50e5ba2f3c0341ea51804269e0794b43a6ba5cafe0b2dec75fa659efdf4d"
+    },
+    "layers.29": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "797b0b53621c6e3f6a606423d367f64ef2f5b22bfe77b94f5e29e08e5ae887ea"
+    },
+    "layers.30": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "d50872955cbb93eadf8bd7edbafcd9635b33474d47ff4fc27c5c28482e776c2c"
+    },
+    "layers.31": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "c0bc09ec0f3f3ca498c2947ebf5866ff5b84c37598bcc845190db5192510fa46"
+    },
+    "norm": {
+      "shape": [
+        1,
+        715,
+        4096
+      ],
+      "dtype": "torch.bfloat16",
+      "sha256": "408ad060fc1530c30b174e35532f858d654b2d785eb2bef0057413c10cc926de"
+    },
+    "actual": {
+      "shape": [
+        1,
+        4096
+      ],
+      "dtype": "torch.float32",
+      "sha256": "f25e9ed2907fa43bc438232a2d2e6234900116b715ce6870701988762340653f"
+    },
+    "expected": {
+      "shape": [
+        1,
+        4096
+      ],
+      "dtype": "torch.float32",
+      "sha256": "f25e9ed2907fa43bc438232a2d2e6234900116b715ce6870701988762340653f"
+    }
+  }
+}
