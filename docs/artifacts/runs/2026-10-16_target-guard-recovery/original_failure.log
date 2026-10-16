@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 36, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 30, in main
+    result=module.worker(args.root,args.stage)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016/src/chronaris/evaluation/application_tasks/chapter5_delivery.py", line 217, in worker
+    return helper('chapter5_delivery_diagnostics').sensitivity(root,plan)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016/src/chronaris/evaluation/application_tasks/chapter5_delivery_diagnostics.py", line 32, in sensitivity
+    targets=build_guarded_application_consumer_targets(data,completed_pretraining_checkpoints=[c['self_supervised'] for _,c in selected],smoke_only=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/application_tasks/application_consumer_smoke_data.py", line 105, in build_guarded_application_consumer_targets
+    _require_five_completed_checkpoints(completed_pretraining_checkpoints)
+  File "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/application_tasks/application_consumer_smoke_data.py", line 209, in _require_five_completed_checkpoints
+    raise ValueError("application targets require five completed checkpoints")
+ValueError: application targets require five completed checkpoints

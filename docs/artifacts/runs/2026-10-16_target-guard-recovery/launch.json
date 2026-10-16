@@ -1,0 +1,23 @@
+{
+  "pid": 29035,
+  "launched_at": "2026-10-16T23:40:49.988473+08:00",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-target-guard-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py",
+    "run",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+    "--workspace",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012"
+  ],
+  "cwd": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "runtime_commit": "c75253f1",
+  "result_root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+  "preserved_stages": 41,
+  "total_stages": 167,
+  "qualification": "2304 development targets and eight frozen route loads passed; original target and replay guards retained",
+  "monitoring": "single startup process check only",
+  "startup_state": null,
+  "detached_session_id": 29035,
+  "proc_start_ticks": "4815136"
+}

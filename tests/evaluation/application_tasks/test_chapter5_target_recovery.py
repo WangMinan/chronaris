@@ -96,3 +96,26 @@ def test_execution_revision_preserves_receipts_binds_source_and_rejects_complete
     with pytest.raises(ValueError,match='source changed'):delivery.execution_binding(tmp_path,plan)
     checkpoint.write_bytes(b'frozen weights');write(tmp_path/'delivery_models.json',{})
     with pytest.raises(ValueError,match='stopped pre-sensitivity'):delivery.revise(tmp_path)
+
+
+def test_resume_skips_verified_training_and_runs_only_pending_sensitivity(tmp_path,monkeypatch):
+    import signal
+    from chronaris.evaluation.application_tasks import v4_public_screen
+    plan={'plan_sha256':'fixed'}
+    monkeypatch.setattr(delivery,'plan_at',lambda root:plan)
+    monkeypatch.setattr(delivery,'steps',lambda plan:['train:24','sensitivity'])
+    monkeypatch.setattr(delivery,'execution_binding',lambda *a:{})
+    monkeypatch.setattr(signal,'signal',lambda *a:None)
+    monkeypatch.setattr(v4_public_screen,'GPU_LOCK_PATH',str(tmp_path/'gpu.lock'))
+    output=tmp_path/'training.json';write(output,{'status':'completed'})
+    receipt=tmp_path/'steps/train_24.json'
+    write(receipt,dict(plan_sha256='fixed',exit_code=0,files={str(output):sha(output)}))
+    original=receipt.read_bytes();called=[]
+    def spawn(args,**kw):
+        stage=args[args.index('--stage')+1];called.append(stage)
+        write(args[args.index('--result')+1],dict(status='completed',files={}))
+        return SimpleNamespace(pid=987,wait=lambda:0)
+    monkeypatch.setattr(delivery.subprocess,'Popen',spawn)
+    result=delivery.run(tmp_path,'launcher.py',tmp_path)
+    assert called==['sensitivity'] and result['completed']==['train:24','sensitivity']
+    assert receipt.read_bytes()==original

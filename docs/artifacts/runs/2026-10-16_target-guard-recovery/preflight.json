@@ -1,0 +1,74 @@
+{
+  "status": "completed",
+  "diagnostics_sha256": "a182f832a684aa935fe181d627e8c7ca9e391ed93140a7d1b3fc8f0bc933cf7e",
+  "source_path": "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/chapter5_delivery_diagnostics.py",
+  "target_samples": 2304,
+  "roles": {
+    "train": 2048,
+    "validation": 256,
+    "held_out": 512
+  },
+  "reference_checkpoints": {
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/self_supervised/chronaris/C/best.pt": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/physiology_only/reference/fold01/seed17/self_supervised/physiology_only/C/best.pt": "4e0d3fdbe183ec6e9c5191f990023aa15f09acd611f0fcee1b1d866fcd389bba",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/vehicle_only/reference/fold01/seed17/self_supervised/vehicle_only/C/best.pt": "08c734a08b13532787adb5068558f610d7c382d3edb4a2d18679c30cfbef9f61",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/mult/reference/fold01/seed17/self_supervised/mult/C/best.pt": "7f13e03ccdc01ec70e58ed181b9d5f8558de664147a01cad665c87f6d054605d",
+    "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/contiformer/reference/fold01/seed17/self_supervised/contiformer/C/best.pt": "67b1767ac83839a5fb1f4ba415e3f78fcd35dac5e29651941e8bca6e0b4c8831"
+  },
+  "sensitivity_checkpoints": [
+    {
+      "weight": 0.0,
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_physics_residual/fold01/seed17/self_supervised/chronaris/C/best.pt",
+      "sha256": "3299cf97950cd6b56f304c1782493e9a6d02a703c110089fc48f4d92208a001d"
+    },
+    {
+      "weight": 0.0,
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/resumed/simulation/chronaris/no_physics_residual/fold01/seed17/task_guided/chronaris/best.pt",
+      "sha256": "f95589f06551061a9dba03fb8a9565fb5626f9fcb7dc2d0956b2d66d03a994b6"
+    },
+    {
+      "weight": 0.05,
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/self_supervised/chronaris/C/best.pt",
+      "sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e"
+    },
+    {
+      "weight": 0.05,
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/task_guided/chronaris/best.pt",
+      "sha256": "4f0d68bcabb5150b362d2c1d3d74bf3bb0bf54023de3fcb486dc016fd511c8dd"
+    },
+    {
+      "weight": 0.025,
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/extra_training/simulation/chronaris/physics_weight_0025/fold01/seed17/self_supervised/chronaris/C/best.pt",
+      "sha256": "16c7ba6f845f1ec90c6c7839183eb3f6878aaee4ce872598c69a13233763973e"
+    },
+    {
+      "weight": 0.025,
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/extra_training/simulation/chronaris/physics_weight_0025/fold01/seed17/task_guided/chronaris/best.pt",
+      "sha256": "16ae17cbc21e70a3e6ecd02539b2e8fd1adb30c6e21b18505f90ceff2dbace03"
+    },
+    {
+      "weight": 0.1,
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/extra_training/simulation/chronaris/physics_weight_0100/fold01/seed17/self_supervised/chronaris/C/best.pt",
+      "sha256": "7754ce85a4fc618fe945ca9a25f8a10791375b8b90d26e2077b4ff343329b396"
+    },
+    {
+      "weight": 0.1,
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/extra_training/simulation/chronaris/physics_weight_0100/fold01/seed17/task_guided/chronaris/best.pt",
+      "sha256": "2cbe8880c63bf34d330d6bf7c5cbf6e56ee00061bcb90c978aa19669fc825e36"
+    }
+  ],
+  "thresholds": [
+    0.5835019747416178,
+    0.7804179787635803
+  ],
+  "confirmation_opened": false,
+  "optimizer_updates": 0
+}
