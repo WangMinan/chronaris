@@ -1,0 +1,51 @@
+{
+  "request": {
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/8/clare/sensorllm_deepseek/summary_adapted/encoder.pt",
+    "checkpoint_sha256": "9b937cf42172e585629479269ef53bfa4cf0786a12566745cffd9710e0a5f6f8",
+    "assets_sha256": "2d4561e37a9ef00169798beb15b63670009e6a23939ed28991f91b74660043e0",
+    "sample_ids": [
+      "1026__experiment0_window0",
+      "1026__experiment0_window1",
+      "1026__experiment0_window2",
+      "1026__experiment0_window3"
+    ],
+    "source_sample_hashes": [
+      "e69ffc62cf3b2d762e5c928ec5edd77da189d6bee262e9e453a0f10da0d228fd",
+      "36cba914296ed78bccfa222a142aab367bf81cfac0a0b5dcf07cd1806739c519",
+      "cb0cabadfea8e053ffc5dd76250a123db521d4207e97922a89ac1a1743efef4d",
+      "86b93b84dc0d3500941f577c65d2c880991155b709f715e84300dd7c6e8e6b02"
+    ],
+    "fold_id": "v4_clare_confirmation_fold01",
+    "role": "validation",
+    "seed": 17,
+    "channel_names": [
+      "physiology.central.eeg_tp9",
+      "physiology.central.eeg_af7",
+      "physiology.central.eeg_af8",
+      "physiology.central.eeg_tp10",
+      "vehicle.peripheral.eda",
+      "vehicle.peripheral.ecg"
+    ],
+    "data_manifest_sha256": "d5f91022cc41b6372d1ed35d6ba694d4e1dc102c0d6751fba22858dd4e3a2547",
+    "worker_sha256": "05781bfccb4d0a6bd8b451dfda5110146d64d785074d493524e3a6a44a1e1ef3",
+    "values_sha256": "2dd8a4f4825eed4b7ef75c0d2f921a40788f041507c6e8aa39350be86ce2e8ee",
+    "mask_sha256": "adeb61a1cb7008ea95de0e84a2c65234e79de9b04bd4cac3d0e95686328495a9"
+  },
+  "device": "NVIDIA GeForce RTX 4090",
+  "source_code_sha256": "d89dfcc5bf0c444aea09b6defc058e535b63b9ff723102a3535f570de8625b4b",
+  "optimizer_updates": 0,
+  "features_sha256": "aa1d2452c1dc8447620e67cdb1ac9e79d4a256dd29feacb818982e89c41e9c65",
+  "cost": {
+    "seconds": 4.28147607203573,
+    "peak_cuda_bytes": 16601613312,
+    "windows_per_second": 0.9342572357523663
+  },
+  "torch": "2.11.0+cu130",
+  "host": "wangminan@10.69.120.91",
+  "remote_root": "/home/wangminan/chronaris-sensor-reference-20261016/05781bfccb4d0a6bd8b451dfda5110146d64d785074d493524e3a6a44a1e1ef3/76c1e6419a443556c7719bded970d15fd2316303a75672b3d1414ad9380eb0cd",
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-10-16-sensor-replay-repair/transport-smoke/reference_executor/input.pt": "dc1a338935ad05aacb75ffe4496eff344d948250b688accca2fc4ea54e955bfb",
+    "/mnt/e/chronaris-v4-results/2026-10-16-sensor-replay-repair/transport-smoke/reference_executor/features.pt": "aa1d2452c1dc8447620e67cdb1ac9e79d4a256dd29feacb818982e89c41e9c65",
+    "/mnt/e/chronaris-v4-results/2026-10-16-sensor-replay-repair/transport-smoke/reference_executor/remote.log": "20e91df8d05cfbfb0c963a0101b0791595604c26bedc18f0d3b377e0333f4d04"
+  }
+}

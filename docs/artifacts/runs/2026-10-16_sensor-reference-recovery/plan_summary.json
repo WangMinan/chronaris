@@ -1,0 +1,20 @@
+{
+  "plan_path": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery/delivery_plan.json",
+  "plan_file_sha256": "8ca132ab7153f402ec4c97bb5483d36a147a711f7eb72dc29877e433ea6262b2",
+  "plan_sha256": "0be7b0cc8001676282b41ecac98a0d9177eb1cb4180a342c49c8edcdcc912ee3",
+  "sensor_replay_keys": [
+    "reference_8",
+    "reference_35",
+    "reference_62",
+    "reference_89",
+    "reference_116"
+  ],
+  "native_units": 108,
+  "replay_units": 32,
+  "runtime_commit": "293ae6b2",
+  "runtime": "/home/wangminan/projects/chronaris-runtime-sensor-reference-20261016",
+  "full_sensor_replay_status": "pending_background_qualification",
+  "strict_atol": 1e-05,
+  "strict_rtol": 1e-05,
+  "allowed_class_flips": 0
+}

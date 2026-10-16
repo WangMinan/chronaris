@@ -1,0 +1,32 @@
+{
+  "pid": 10896,
+  "launched_at": "2026-10-16T10:55:27.478811+08:00",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-sensor-reference-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py",
+    "run",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery",
+    "--workspace",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012"
+  ],
+  "cwd": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "runtime_commit": "293ae6b2",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery",
+  "qualification": "four-window strict passed; five complete folds gate formal training",
+  "monitoring": "single startup verification only",
+  "startup_state": {
+    "status": "running",
+    "pid": 10896,
+    "phase": "engineering:24",
+    "completed": [
+      "assets"
+    ],
+    "total": 167,
+    "plan_sha256": "0be7b0cc8001676282b41ecac98a0d9177eb1cb4180a342c49c8edcdcc912ee3",
+    "started_at": 1792119336.528452,
+    "child_pid": 10915
+  },
+  "detached_session_id": 10896,
+  "proc_start_ticks": "237962"
+}

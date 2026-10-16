@@ -1,12 +1,14 @@
 # Chronaris 复核入口
 
-更新时间：2026-10-15
+更新时间：2026-10-16
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。
 
 ## 当前复核
 
-[第五章首批写作交付](stage/thesis-v4/chapter5-writing-delivery-20261015/README.md)：独立冻结门、四项新增训练、108 个原生评价单元、近期模型显存适配和开放格式素材；38 项定向测试通过，显卡实跑等待其他会话释放。
+[传感器语言模型原设备重放恢复](stage/thesis-v4/sensor-reference-recovery-20261016/README.md)：原 RTX 4090 逐层对照、固定原阈值、四窗口真实链路零差异及 42 项测试；总控 `10896` 已启动，完整五折资格通过后自动接续正式实验。
+
+[第五章首批写作交付](stage/thesis-v4/chapter5-writing-delivery-20261015/README.md)：独立冻结门、四项新增训练、108 个原生评价单元、近期模型显存适配和开放格式素材；历史队列已因传感器模型重放失败退出，当前接续见上方原设备恢复记录。
 
 [历史信息隔离的数值容差](stage/thesis-v4/causality-tolerance-20261015/README.md)：逐层定位GPU单精度形状相关舍入，双精度与反例对照、48组扩展核验及29项回归通过；审计策略独立绑定，冻结训练源码与旧失败保留。
 

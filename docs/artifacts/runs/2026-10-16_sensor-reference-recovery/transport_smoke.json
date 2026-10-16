@@ -1,0 +1,14 @@
+{
+  "rows": 8,
+  "classification_rows": 4,
+  "class_flips": 0,
+  "max_probability_difference": 0.0,
+  "max_regression_difference": 0.0,
+  "strict": {
+    "passed": true,
+    "rows": 8,
+    "max_absolute_difference": 0.0,
+    "atol": 1e-05,
+    "rtol": 1e-05
+  }
+}

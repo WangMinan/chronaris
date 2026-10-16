@@ -1,7 +1,15 @@
-from copy import deepcopy
 import pytest
 import torch
 from chronaris.evaluation.application_tasks import chapter5_delivery_sensor as sensor
+
+
+def test_all_sensor_fold_gates_precede_formal_training_and_outer_evaluation():
+    from chronaris.evaluation.application_tasks.chapter5_delivery import steps
+    keys=[f'reference_{i}' for i in (8,35,62,89,116)]
+    stages=steps(dict(replay=keys,native=[dict(key=k) for k in keys]))
+    last_replay=max(stages.index('replay:'+k) for k in keys)
+    assert last_replay < min(stages.index(s) for s in stages if s.startswith('train:'))
+    assert last_replay < stages.index('freeze') < min(stages.index('native:'+k) for k in keys)
 
 
 def test_reference_requires_exact_identity_original_device_and_full_finite_features():
