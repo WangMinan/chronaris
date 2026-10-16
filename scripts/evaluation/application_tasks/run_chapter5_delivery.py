@@ -24,7 +24,7 @@ def main():
     if args.action=='prepare':
         if not all((args.subset_root,args.policy,args.plot_root)):parser.error('prepare requires subset, policy and plot roots')
         result=module.prepare(args.root,args.subset_root,args.policy,Path(__file__).resolve(),args.plot_root)
-    elif args.action=='revise':result=module.revise(args.root)
+    elif args.action=='revise':result=module.revise(args.root,phase=args.stage or 'sensitivity')
     elif args.action=='run':result=module.run(args.root,Path(__file__).resolve(),args.workspace)
     else:
         if not args.stage or not args.result:parser.error('worker requires stage and result')

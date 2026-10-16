@@ -22,7 +22,8 @@ def execution_files():
 
 
 def execution_binding(root, plan):
-    path=Path(root)/'execution_revision.json'
+    path=Path(root)/'diagnostics_revision.json'
+    if not path.exists():path=Path(root)/'execution_revision.json'
     if not path.exists():
         if any(plan['input_files'].get(p)!=digest for p,digest in execution_files().items()):
             raise ValueError('delivery execution changed without a bound revision')
@@ -109,31 +110,40 @@ def plan_at(root):
     return plan
 
 
-def revise(root):
-    """Bind the target-guard repair without rewriting completed training or replay receipts."""
+def revise(root, phase='sensitivity'):
+    """Bind a pre-confirmation repair without rewriting completed receipts or model freeze."""
     import fcntl
+    if phase not in ('sensitivity','diagnostics'):raise ValueError('unsupported repair phase')
     root=Path(root)
     with (root/'controller.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         plan=validated_plan(root);state=read(root/'state.json')
-        completed=steps(plan)[:steps(plan).index('sensitivity')]
-        if (state['status']!='failed' or state['phase']!='sensitivity' or state['completed']!=completed
+        completed=steps(plan)[:steps(plan).index(phase)]
+        if (state['status']!='failed' or state['phase']!=phase or state['completed']!=completed
             or state['plan_sha256']!=plan['plan_sha256']
-            or (root/'delivery_models.json').exists() or (root/'sensitivity/result.json').exists()):
-            raise ValueError('target-guard revision requires the stopped pre-sensitivity queue')
+            or (root/phase/'result.json').exists() or (root/'confirmation').exists()
+            or ((root/'delivery_models.json').exists() != (phase=='diagnostics'))):
+            raise ValueError('repair requires the stopped pre-'+phase+' queue')
         files={}
         for stage in completed:
             path=root/'steps'/(stage.replace(':','_')+'.json');receipt=read(path)
             if receipt['stage']!=stage or receipt['plan_sha256']!=plan['plan_sha256'] or receipt['exit_code']!=0:
                 raise ValueError('completed step binding changed')
             verify(receipt['files']);files.update(receipt['files']);files[str(path)]=sha(path)
-        for name in ('state.json','controller.log','logs/sensitivity.log'):
-            original=root/name;backup=root/'recovery/target_guard'/Path(name).name
+        if phase=='diagnostics':
+            prior=root/'execution_revision.json';revision=read(prior)
+            if revision['plan_sha256']!=plan['plan_sha256']:raise ValueError('prior revision plan changed')
+            verify(revision['preserved_files']|revision['execution_files'])
+            files[str(prior)]=sha(prior)
+        archive='target_guard' if phase=='sensitivity' else 'diagnostics'
+        for name in ('state.json','controller.log',f'logs/{phase}.log'):
+            original=root/name;backup=root/'recovery'/archive/Path(name).name
             backup.parent.mkdir(parents=True,exist_ok=True)
             if backup.exists() and backup.read_bytes()!=original.read_bytes():raise ValueError('failure backup differs')
             backup.write_bytes(original.read_bytes());files[str(backup)]=sha(backup)
-        return immutable(root/'execution_revision.json',dict(status='completed',plan_sha256=plan['plan_sha256'],
-            reason='use five frozen reference methods for target access, independent of sensitivity grid and ablations',
+        destination='execution_revision.json' if phase=='sensitivity' else 'diagnostics_revision.json'
+        return immutable(root/destination,dict(status='completed',plan_sha256=plan['plan_sha256'],
+            reason='target reference guard repair' if phase=='sensitivity' else 'use existing non-neural inference adapter for fixed synchronization baseline',
             preserved_stages=completed,preserved_files=files,execution_files=execution_files(),confirmation_opened=False))
 
 
@@ -156,12 +166,13 @@ def check_extra(result, unit, plan):
             raise ValueError('extra checkpoint does not implement its declared intervention')
 
 
-def freeze(root, plan):
+def freeze(root, plan, *, execution_evidence=None):
     from chronaris.evaluation.application_tasks.chapter5_subset import require_subset_freeze
     from chronaris.evaluation.application_tasks.chapter5_subset_evaluation import simulation_records
     import torch
     require_subset_freeze(plan['subset_root'])
-    files = dict(plan['input_files'])|execution_binding(root,plan); models = simulation_records(plan['subset_root'])
+    files = dict(plan['input_files'])|(execution_binding(root,plan) if execution_evidence is None else execution_evidence)
+    models = simulation_records(plan['subset_root'])
     for key in plan['replay']:
         path=Path(root)/'replay'/key/'result.json'; result=read(path)
         if (result['status']!='completed' or not result['rows'] or result['confirmation_opened']
@@ -200,7 +211,12 @@ def require_freeze(root, plan):
     if not path.exists():
         raise ValueError('delivery outer evaluation requires all extra models and restored assets')
     old=read(path)
-    if freeze(root,plan)!=old:
+    evidence=None
+    if (Path(root)/'diagnostics_revision.json').exists():
+        execution_binding(root,plan)
+        prior=Path(root)/'execution_revision.json';revision=read(prior)
+        evidence=revision['execution_files']|revision['preserved_files']|{str(prior.resolve()):sha(prior)}
+    if freeze(root,plan,execution_evidence=evidence)!=old:
         raise ValueError('delivery freeze changed')
     return old
 

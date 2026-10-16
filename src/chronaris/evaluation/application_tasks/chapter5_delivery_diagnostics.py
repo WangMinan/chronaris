@@ -65,6 +65,7 @@ def sensitivity(root, plan):
 
 def diagnostics(root,plan,models):
     from chronaris.modeling.training import TrainedFusionAdapter
+    from chronaris.modeling.fusion_encoders import NaiveTimeSyncEncoder,NaiveTimeSyncFusionAdapter
     from chronaris.evaluation.application_tasks.v4_naive_baseline import load_v4_naive_encoder
     spec=importlib.util.spec_from_file_location('delivery_auditor',Path(__file__).with_name('v4_correctness.py'))
     auditor=importlib.util.module_from_spec(spec);spec.loader.exec_module(auditor)
@@ -87,15 +88,20 @@ def diagnostics(root,plan,models):
                     encoder,normalizer,_=load_v4_naive_encoder(checkpoint,fold=fold,data_manifest_sha256=unit['data_manifest_sha256'],
                         expected_training_source_sha256=unit['training_source_sha256'])
                 else:encoder,normalizer,_=load_frozen_application_encoder(checkpoint,route=route,fold=fold,device='cuda')
-                adapter=TrainedFusionAdapter(encoder=encoder,normalizer=normalizer,fold_id=fold.fold_id,checkpoint_sha256=sha(checkpoint))
+                is_naive=isinstance(encoder,NaiveTimeSyncEncoder)
+                adapter=(NaiveTimeSyncFusionAdapter(encoder=encoder,fold_id=fold.fold_id,checkpoint_sha256=sha(checkpoint))
+                    if is_naive else
+                    TrainedFusionAdapter(encoder=encoder,normalizer=normalizer,fold_id=fold.fold_id,checkpoint_sha256=sha(checkpoint)))
                 timed_batch=select_observation_batch(batch,batch.sample_ids[:4])
                 for _ in range(2):adapter(timed_batch)
                 for repeat in range(10):
-                    torch.cuda.synchronize();torch.cuda.reset_peak_memory_stats();started=time.perf_counter()
-                    adapter(timed_batch);torch.cuda.synchronize()
+                    if not is_naive:torch.cuda.synchronize();torch.cuda.reset_peak_memory_stats()
+                    started=time.perf_counter();adapter(timed_batch)
+                    if not is_naive:torch.cuda.synchronize()
                     timings.append(identity|dict(repeat=repeat,batch_size=4,seconds=time.perf_counter()-started,
-                        max_allocated_bytes=torch.cuda.max_memory_allocated(),max_reserved_bytes=torch.cuda.max_memory_reserved(),
-                        device=torch.cuda.get_device_name(),scope='four_validation_windows_end_to_end_adapter_excludes_downstream'))
+                        max_allocated_bytes=0 if is_naive else torch.cuda.max_memory_allocated(),
+                        max_reserved_bytes=0 if is_naive else torch.cuda.max_memory_reserved(),
+                        device='cpu' if is_naive else torch.cuda.get_device_name(),scope='four_validation_windows_end_to_end_adapter_excludes_downstream'))
                 del encoder,adapter;torch.cuda.empty_cache()
     path=Path(root)/'diagnostics/result.json'
     return write(path,dict(status='completed',causality=rows,timings=timings,confirmation_opened=False,files={}))
