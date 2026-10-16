@@ -67,6 +67,7 @@ def prepare(root, subset_root, policy_path, launcher, plot_root):
         sensitivity_weights=[0.,.025,.05,.1], sensitivity_role='validation',
         sensitivity_changes_reference=False, pressure_conditions=38,
         sensorllm_inference='qualified_original_RTX4090_frozen_encoder_remote_features_local_frozen_consumers',
+        dingxin_chronos2_inference='qualified_original_RTX4090_frozen_encoder_remote_features_local_frozen_consumers',
         confirmation_opened=False, legacy_full_matrix_complete=False,
         statistics='subject-first then equal fold means; fold population SD, not seed uncertainty',
         completion='all declared results plus independently redrawable materials; failures stop queue'))
@@ -165,7 +166,7 @@ def native_record(plan, key):
     row=records[0]
     result=unit_record(plan['main_root'],row['index']) if row['origin']=='reference' else read(row['receipt'])
     if result['unit']!=row['unit']:raise ValueError('native receipt identity changed')
-    if row['unit']['method']=='sensorllm_deepseek':
+    if helper('chapter5_delivery_sensor').supports(row['unit']):
         from chronaris.evaluation.application_tasks import chapter5_native
         chapter5_native._encode=helper('chapter5_delivery_sensor').encode_remote
     return row,result
@@ -206,7 +207,7 @@ def worker(root, stage):
             if not acquired:return dict(status='waiting_gpu')
             result=helper('device_replay').replay_record(unit,dict(index=row['index'],plan_sha256=plan['plan_sha256'],
                 role='validation',sample_limit=0),root/'replay'/row['key'],data_root=plan['data_root'],registry_path=plan['registry_path'])
-            if row['unit']['method']=='sensorllm_deepseek':
+            if helper('chapter5_delivery_sensor').supports(row['unit']):
                 result=helper('chapter5_delivery_sensor').bind_evidence(result,root/'replay'/row['key'])
             if row['unit']['method'] in ('timecma','chronos2','sensorllm_deepseek') and any(
                 not r['strict']['passed'] or r['class_flips'] for r in result['rows']):
@@ -234,7 +235,7 @@ def worker(root, stage):
         row,unit=native_record(plan,stage.split(':')[1])
         result=_evaluate_native_record(unit,binding|dict(key=row['key']),root/'native'/row['key'],
             role='held_out',sample_limit=0,data_root=plan['data_root'],registry_path=plan['registry_path'])
-        if row['unit']['method']=='sensorllm_deepseek' and result['status']=='completed':
+        if helper('chapter5_delivery_sensor').supports(row['unit']) and result['status']=='completed':
             result=helper('chapter5_delivery_sensor').bind_evidence(result,root/'native'/row['key'])
         return result
     if stage.startswith('simulation:'):
