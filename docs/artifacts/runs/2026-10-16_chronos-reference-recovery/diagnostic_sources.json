@@ -1,0 +1,16 @@
+{
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/probe.py": "db7b6d8f1cfacbc6639e68cbf4bf2cd41e19db8b4c89bb0373b263a12331016f",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/remote_probe.py": "7a44c13d1094ae998d6e94cfc3caa29af8a186c6b51c66a5bb889fb0a695683b",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/qualify.py": "43cac75511b0d030825ddb1e8b4da2e5062d8240d6a3bad4ae663e9ba9e8b1c5",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/jobs.json": "dced5fccb7e3c08ef6afefb7514e670c0a71b27f4c0376e64e900ac520b32391",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/frozen_original.npz": "64888d678f84dcecee01c9f3089d4189e9b0a21138fc7b68a8735266d40a22af",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/history_adapted_original.npz": "04f649042262efd8989b980e359943306a061221dbaa6f80a0bb90a7ab5127ba",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/frozen.pt": "9dcc8944d294e9543f24dd9a3f686f7065bd0cb07260dd05856a5cd0ee341910",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/history_adapted.pt": "d5b89654e42eceee61c661b0987e4df1036477ec424e303f0d8d56d72221607d",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/frozen_remote.pt": "19a5170869724976dd4674d5a513a335ceb4a30467f4a1901908381d5c56f501",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chronos-replay-diagnosis/history_adapted_remote.pt": "4dee3bf9d75961c3542a444933c429d5a8d62104890db041279efb098ee01181"
+  },
+  "optimizer_updates": 0,
+  "confirmation_opened": false
+}

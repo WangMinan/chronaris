@@ -1,0 +1,33 @@
+{
+  "status": "failed",
+  "pid": 10896,
+  "phase": "replay:reference_262",
+  "completed": [
+    "assets",
+    "engineering:24",
+    "engineering:27",
+    "engineering:30",
+    "engineering:33",
+    "replay:reference_6",
+    "replay:reference_7",
+    "replay:reference_8",
+    "replay:reference_35",
+    "replay:reference_62",
+    "replay:reference_89",
+    "replay:reference_116",
+    "replay:reference_141",
+    "replay:reference_142",
+    "replay:reference_255",
+    "replay:reference_256",
+    "replay:reference_257",
+    "replay:reference_258",
+    "replay:reference_259",
+    "replay:reference_260",
+    "replay:reference_261"
+  ],
+  "total": 167,
+  "plan_sha256": "0be7b0cc8001676282b41ecac98a0d9177eb1cb4180a342c49c8edcdcc912ee3",
+  "started_at": 1792119336.528452,
+  "error": "RuntimeError: replay:reference_262 exited 1: /mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery/logs/replay_reference_262.log",
+  "finished_at": 1792122467.237783
+}

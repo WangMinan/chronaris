@@ -1,0 +1,21 @@
+{
+  "pid": 16013,
+  "launched_at": "2026-10-16T12:58:52.327045+08:00",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py",
+    "run",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+    "--workspace",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012"
+  ],
+  "cwd": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "runtime_commit": "6f873cca",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+  "qualification": "Dingxin Chronos-2 both full validation routes: 156 predictions identical at atol=rtol=1e-5",
+  "monitoring": "single startup process check only",
+  "startup_state": null,
+  "detached_session_id": 16013,
+  "proc_start_ticks": "963363"
+}

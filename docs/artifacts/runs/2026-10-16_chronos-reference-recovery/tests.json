@@ -1,0 +1,27 @@
+{
+  "python": "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+  "environment": {
+    "PYTHONNOUSERSITE": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "runs": [
+    {
+      "files": [
+        "tests/evaluation/application_tasks/test_sensor_reference.py",
+        "tests/evaluation/application_tasks/test_chapter5_delivery.py",
+        "tests/evaluation/application_tasks/test_chapter5.py"
+      ],
+      "passed": 26,
+      "seconds": 7.96
+    },
+    {
+      "files": [
+        "tests/evaluation/application_tasks/test_device_replay.py",
+        "tests/evaluation/application_tasks/test_chapter5_subset.py"
+      ],
+      "passed": 12,
+      "seconds": 3.43
+    }
+  ]
+}

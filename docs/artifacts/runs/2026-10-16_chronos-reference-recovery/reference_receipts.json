@@ -1,0 +1,66 @@
+[
+  {
+    "route": "frozen",
+    "device": "NVIDIA GeForce RTX 4090",
+    "source_code_sha256": "d89dfcc5bf0c444aea09b6defc058e535b63b9ff723102a3535f570de8625b4b",
+    "optimizer_updates": 0,
+    "cost": {
+      "seconds": 3.128911007195711,
+      "peak_cuda_bytes": 1546738688,
+      "windows_per_second": 1.9176000807314442
+    },
+    "features_sha256": "81e8833cafdfc59df5f335625a1a23680771147673b5ccf52f60f1b8c89c9da6",
+    "request": {
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/262/dingxin/chronos2/frozen/encoder.pt",
+      "checkpoint_sha256": "c101ba4ed634da1fc05a2ade781e4161b883c2eb017e74604cd1d0fe7ee4c479",
+      "assets_sha256": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+      "method": "chronos2",
+      "domain": "dingxin",
+      "feature_dim": 750336,
+      "fold_id": "single_record_chronological_blocks_v1",
+      "role": "validation",
+      "seed": 17,
+      "data_manifest_sha256": "a43c50475d027aa6a0c2bafa5a86c7b73045cda193f0f2374a751d5c16c52e99",
+      "worker_sha256": "bc31da376cfa80dd566860ff0b90fd7bbf94d7e53c3a0c1c1024a941a8a6cf34",
+      "values_sha256": "bb96c6986f774e201fc1102e8aa734b418febcf9b7f39efed342a09bfba5031f",
+      "mask_sha256": "3e2e38f9d13a336905aa2a4a4dccd23465078ade5edd8dd088783a47682523f9"
+    },
+    "files": {
+      "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/input.pt": "513ddfeb7aae3fa78410f1a7b3625907cf71ff358b9c528c1a5e6dd76066c3b1",
+      "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/features.pt": "81e8833cafdfc59df5f335625a1a23680771147673b5ccf52f60f1b8c89c9da6",
+      "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/remote.log": "f2aac05a39b1da85442e1aa4d68f115ffd640f00c0ed7df7de98e0a1cd3317b5"
+    }
+  },
+  {
+    "route": "history_adapted",
+    "device": "NVIDIA GeForce RTX 4090",
+    "source_code_sha256": "d89dfcc5bf0c444aea09b6defc058e535b63b9ff723102a3535f570de8625b4b",
+    "optimizer_updates": 0,
+    "cost": {
+      "seconds": 2.7477764897048473,
+      "peak_cuda_bytes": 1546738688,
+      "windows_per_second": 2.183583716681589
+    },
+    "features_sha256": "a68670afed5db0daca2f808323a660192cda66fceece7b39f29a0c971ceef99a",
+    "request": {
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/262/dingxin/chronos2/history_adapted/encoder.pt",
+      "checkpoint_sha256": "4d20c31db30d1ded22df48e161725ea819c61767c8645f52fea391efca102b14",
+      "assets_sha256": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+      "method": "chronos2",
+      "domain": "dingxin",
+      "feature_dim": 750336,
+      "fold_id": "single_record_chronological_blocks_v1",
+      "role": "validation",
+      "seed": 17,
+      "data_manifest_sha256": "a43c50475d027aa6a0c2bafa5a86c7b73045cda193f0f2374a751d5c16c52e99",
+      "worker_sha256": "bc31da376cfa80dd566860ff0b90fd7bbf94d7e53c3a0c1c1024a941a8a6cf34",
+      "values_sha256": "bb96c6986f774e201fc1102e8aa734b418febcf9b7f39efed342a09bfba5031f",
+      "mask_sha256": "3e2e38f9d13a336905aa2a4a4dccd23465078ade5edd8dd088783a47682523f9"
+    },
+    "files": {
+      "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/input.pt": "5b118293f3b9da1bdf290edae8613d67fda46767ac77260608de992e8e16c021",
+      "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/features.pt": "a68670afed5db0daca2f808323a660192cda66fceece7b39f29a0c971ceef99a",
+      "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/remote.log": "f2aac05a39b1da85442e1aa4d68f115ffd640f00c0ed7df7de98e0a1cd3317b5"
+    }
+  }
+]

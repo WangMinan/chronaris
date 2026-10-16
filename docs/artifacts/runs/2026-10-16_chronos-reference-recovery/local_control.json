@@ -1,0 +1,38 @@
+[
+  {
+    "route": "frozen",
+    "feature_max_delta": 2.384185791015625e-06,
+    "saved_feature_control": {
+      "rows": 78,
+      "classification_rows": 6,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 78,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    }
+  },
+  {
+    "route": "history_adapted",
+    "feature_max_delta": 1.9073486328125e-06,
+    "saved_feature_control": {
+      "rows": 78,
+      "classification_rows": 6,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 78,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    }
+  }
+]

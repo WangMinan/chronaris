@@ -1,0 +1,110 @@
+{
+  "status": "completed",
+  "binding": {
+    "index": 262,
+    "plan_sha256": "d4ad49f8638727fc9a2db2641b1c9009805112709f2909e9f227c5444c1df7cc",
+    "role": "validation",
+    "sample_limit": 0
+  },
+  "rows": [
+    {
+      "index": 262,
+      "domain": "dingxin",
+      "method": "chronos2",
+      "seed": 17,
+      "fold_index": 0,
+      "route": "frozen",
+      "family": "linear",
+      "samples": 6,
+      "metrics": [
+        {
+          "task": "maneuver_regression",
+          "metric": "rmse",
+          "before": 1.0162475041452546,
+          "after": 1.0162475041452546
+        },
+        {
+          "task": "maneuver_classification",
+          "metric": "macro_f1",
+          "before": 0.16666666666666666,
+          "after": 0.16666666666666666
+        },
+        {
+          "task": "physiology_regression",
+          "metric": "rmse",
+          "before": 2.396400257404019,
+          "after": 2.396400257404019
+        }
+      ],
+      "rows": 78,
+      "classification_rows": 6,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 78,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "index": 262,
+      "domain": "dingxin",
+      "method": "chronos2",
+      "seed": 17,
+      "fold_index": 0,
+      "route": "history_adapted",
+      "family": "linear",
+      "samples": 6,
+      "metrics": [
+        {
+          "task": "maneuver_regression",
+          "metric": "rmse",
+          "before": 0.9590481077965981,
+          "after": 0.9590481077965981
+        },
+        {
+          "task": "maneuver_classification",
+          "metric": "macro_f1",
+          "before": 0.26666666666666666,
+          "after": 0.26666666666666666
+        },
+        {
+          "task": "physiology_regression",
+          "metric": "rmse",
+          "before": 2.4753902401747125,
+          "after": 2.4753902401747125
+        }
+      ],
+      "rows": 78,
+      "classification_rows": 6,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 78,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    }
+  ],
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/linear.json": "88b593c69d6fdb6b3e8b4e610d098675b1a1d0c27ba99ff9aaac7dc762e536e5",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/linear.json": "909b2d13ec8e084f717829f71e88d3d9db1b39131dc718f7430c3af2721e8a24",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/input.pt": "513ddfeb7aae3fa78410f1a7b3625907cf71ff358b9c528c1a5e6dd76066c3b1",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/features.pt": "81e8833cafdfc59df5f335625a1a23680771147673b5ccf52f60f1b8c89c9da6",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/remote.log": "f2aac05a39b1da85442e1aa4d68f115ffd640f00c0ed7df7de98e0a1cd3317b5",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/frozen/representation/reference_executor/receipt.json": "d7c3b9991348edb80e2df7560897c9df92a947bbbe0b75cbd32e31487cb77e8d",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/input.pt": "5b118293f3b9da1bdf290edae8613d67fda46767ac77260608de992e8e16c021",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/features.pt": "a68670afed5db0daca2f808323a660192cda66fceece7b39f29a0c971ceef99a",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/remote.log": "f2aac05a39b1da85442e1aa4d68f115ffd640f00c0ed7df7de98e0a1cd3317b5",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/replay/reference_262/history_adapted/representation/reference_executor/receipt.json": "3b406f79160d41960839df39b5a78e604a3b1caf0d20c91865dcc9f6665219f0"
+  },
+  "seconds": 234.9010630949997,
+  "confirmation_opened": false,
+  "downstream_refitted": false
+}

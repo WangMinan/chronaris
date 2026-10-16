@@ -1,0 +1,12 @@
+[
+  {
+    "route": "frozen",
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/262/dingxin/chronos2/frozen/encoder.pt",
+    "checkpoint_sha256": "c101ba4ed634da1fc05a2ade781e4161b883c2eb017e74604cd1d0fe7ee4c479"
+  },
+  {
+    "route": "history_adapted",
+    "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-02-stage5-performance-recovery/training/262/dingxin/chronos2/history_adapted/encoder.pt",
+    "checkpoint_sha256": "4d20c31db30d1ded22df48e161725ea819c61767c8645f52fea391efca102b14"
+  }
+]

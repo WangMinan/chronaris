@@ -1,0 +1,186 @@
+{
+  "source_root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery",
+  "rows": [
+    {
+      "index": 8,
+      "domain": "clare",
+      "method": "sensorllm_deepseek",
+      "seed": 17,
+      "fold_index": 0,
+      "route": "summary_adapted",
+      "family": "linear",
+      "samples": 432,
+      "metrics": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "before": 0.356586837980309,
+          "after": 0.356586837980309
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "before": 2.909192307113514,
+          "after": 2.909192307113514
+        }
+      ],
+      "rows": 864,
+      "classification_rows": 432,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 864,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "index": 35,
+      "domain": "clare",
+      "method": "sensorllm_deepseek",
+      "seed": 17,
+      "fold_index": 1,
+      "route": "summary_adapted",
+      "family": "linear",
+      "samples": 432,
+      "metrics": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "before": 0.5047128354139763,
+          "after": 0.5047128354139763
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "before": 2.054174698801963,
+          "after": 2.054174698801963
+        }
+      ],
+      "rows": 864,
+      "classification_rows": 432,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 864,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "index": 62,
+      "domain": "clare",
+      "method": "sensorllm_deepseek",
+      "seed": 17,
+      "fold_index": 2,
+      "route": "summary_adapted",
+      "family": "linear",
+      "samples": 427,
+      "metrics": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "before": 0.4489534058664565,
+          "after": 0.4489534058664565
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "before": 2.2277578180118156,
+          "after": 2.2277578180118156
+        }
+      ],
+      "rows": 854,
+      "classification_rows": 427,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 854,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "index": 89,
+      "domain": "clare",
+      "method": "sensorllm_deepseek",
+      "seed": 17,
+      "fold_index": 3,
+      "route": "summary_adapted",
+      "family": "linear",
+      "samples": 431,
+      "metrics": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "before": 0.5019723993838435,
+          "after": 0.5019723993838435
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "before": 2.013312263183748,
+          "after": 2.013312263183748
+        }
+      ],
+      "rows": 862,
+      "classification_rows": 431,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 862,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "index": 116,
+      "domain": "clare",
+      "method": "sensorllm_deepseek",
+      "seed": 17,
+      "fold_index": 4,
+      "route": "summary_adapted",
+      "family": "linear",
+      "samples": 324,
+      "metrics": [
+        {
+          "task": "workload_classification",
+          "metric": "macro_f1",
+          "before": 0.486390191384642,
+          "after": 0.486390191384642
+        },
+        {
+          "task": "workload_regression",
+          "metric": "rmse",
+          "before": 2.3393164808481073,
+          "after": 2.3393164808481073
+        }
+      ],
+      "rows": 648,
+      "classification_rows": 324,
+      "class_flips": 0,
+      "max_probability_difference": 0.0,
+      "max_regression_difference": 0.0,
+      "strict": {
+        "passed": true,
+        "rows": 648,
+        "max_absolute_difference": 0.0,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    }
+  ],
+  "all_passed": true
+}

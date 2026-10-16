@@ -1,0 +1,26 @@
+[
+  {
+    "route": "frozen",
+    "original_delta": 0.0,
+    "local_delta": 2.384185791015625e-06,
+    "cost": {
+      "seconds": 5.1009064838290215,
+      "peak_cuda_bytes": 1546738688,
+      "windows_per_second": 1.176261517246258
+    },
+    "device": "NVIDIA GeForce RTX 4090",
+    "torch": "2.11.0+cu130"
+  },
+  {
+    "route": "history_adapted",
+    "original_delta": 0.0,
+    "local_delta": 1.9073486328125e-06,
+    "cost": {
+      "seconds": 1.1039401199668646,
+      "peak_cuda_bytes": 1546161152,
+      "windows_per_second": 5.4350774027309505
+    },
+    "device": "NVIDIA GeForce RTX 4090",
+    "torch": "2.11.0+cu130"
+  }
+]

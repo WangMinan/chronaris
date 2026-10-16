@@ -1,0 +1,101 @@
+{
+  "status": "completed",
+  "binding": {
+    "index": 262,
+    "plan_sha256": "0be7b0cc8001676282b41ecac98a0d9177eb1cb4180a342c49c8edcdcc912ee3",
+    "role": "validation",
+    "sample_limit": 0
+  },
+  "rows": [
+    {
+      "index": 262,
+      "domain": "dingxin",
+      "method": "chronos2",
+      "seed": 17,
+      "fold_index": 0,
+      "route": "frozen",
+      "family": "linear",
+      "samples": 6,
+      "metrics": [
+        {
+          "task": "maneuver_regression",
+          "metric": "rmse",
+          "before": 1.0162475041452546,
+          "after": 1.0162520960529973
+        },
+        {
+          "task": "maneuver_classification",
+          "metric": "macro_f1",
+          "before": 0.16666666666666666,
+          "after": 0.16666666666666666
+        },
+        {
+          "task": "physiology_regression",
+          "metric": "rmse",
+          "before": 2.396400257404019,
+          "after": 2.3964012985615035
+        }
+      ],
+      "rows": 78,
+      "classification_rows": 6,
+      "class_flips": 0,
+      "max_probability_difference": 2.674954179271438e-07,
+      "max_regression_difference": 0.002197265625,
+      "strict": {
+        "passed": true,
+        "rows": 78,
+        "max_absolute_difference": 0.002197265625,
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "index": 262,
+      "domain": "dingxin",
+      "method": "chronos2",
+      "seed": 17,
+      "fold_index": 0,
+      "route": "history_adapted",
+      "family": "linear",
+      "samples": 6,
+      "metrics": [
+        {
+          "task": "maneuver_regression",
+          "metric": "rmse",
+          "before": 0.9590481077965981,
+          "after": 0.959044520611474
+        },
+        {
+          "task": "maneuver_classification",
+          "metric": "macro_f1",
+          "before": 0.26666666666666666,
+          "after": 0.26666666666666666
+        },
+        {
+          "task": "physiology_regression",
+          "metric": "rmse",
+          "before": 2.4753902401747125,
+          "after": 2.4753921225129543
+        }
+      ],
+      "rows": 78,
+      "classification_rows": 6,
+      "class_flips": 0,
+      "max_probability_difference": 5.523818272235026e-06,
+      "max_regression_difference": 0.002197265625,
+      "strict": {
+        "passed": false,
+        "error": "frozen replay prediction differs: ('20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024', 'physiology_regression', 4)/prediction",
+        "atol": 1e-05,
+        "rtol": 1e-05
+      }
+    }
+  ],
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery/replay/reference_262/frozen/linear.json": "d2d126c2aa53e6efcd13aab89a5dab355939ba570d55ce452c13d2129d447819",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-reference-recovery/replay/reference_262/history_adapted/linear.json": "271e1759863d8099b87c4e669f7ad33ad6598af1bdb2f50681c2a3aa33ab43ae"
+  },
+  "seconds": 53.16757736100044,
+  "confirmation_opened": false,
+  "downstream_refitted": false
+}
