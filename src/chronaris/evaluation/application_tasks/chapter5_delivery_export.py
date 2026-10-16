@@ -58,6 +58,8 @@ def export(root,plan,models):
     def source(path):
         path=Path(path);sources[str(path)]=sha(path);return read(path)
     source(root/'delivery_plan.json');source(root/'delivery_models.json')
+    if (root/'execution_revision.json').exists():
+        write(data/'protocol/execution_revision.json',source(root/'execution_revision.json'))
     for spec in plan['native']:
         receipt=source(spec['receipt']);unit=spec['unit'];result=source(root/'native'/spec['key']/'result.json')
         verify(result['files'])

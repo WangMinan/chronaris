@@ -7,7 +7,7 @@ import sys
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=('prepare','run','worker'))
+    parser.add_argument('action',choices=('prepare','revise','run','worker'))
     parser.add_argument('--root',required=True)
     parser.add_argument('--workspace',required=True)
     parser.add_argument('--subset-root')
@@ -24,6 +24,7 @@ def main():
     if args.action=='prepare':
         if not all((args.subset_root,args.policy,args.plot_root)):parser.error('prepare requires subset, policy and plot roots')
         result=module.prepare(args.root,args.subset_root,args.policy,Path(__file__).resolve(),args.plot_root)
+    elif args.action=='revise':result=module.revise(args.root)
     elif args.action=='run':result=module.run(args.root,Path(__file__).resolve(),args.workspace)
     else:
         if not args.stage or not args.result:parser.error('worker requires stage and result')

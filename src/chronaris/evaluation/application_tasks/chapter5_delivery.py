@@ -12,6 +12,28 @@ from chronaris.evaluation.application_tasks.v4_public_screen import seal_develop
 EXTRA = (24, 27, 30, 33)
 
 
+def execution_files():
+    code=[Path(__file__).parents[4]/'scripts/evaluation/application_tasks/run_chapter5_delivery.py',
+          *Path(__file__).parent.glob('chapter5_delivery*.py')]
+    code += [Path(__file__).with_name(n+'.py') for n in ('device_replay','v4_mechanism_data','v4_mechanism_evaluation',
+        'v4_correctness','causality_recovery','v4_simulation_confirmation_evaluation')]
+    code.append(Path(__file__).parents[2]/'modeling/fusion_encoders/sensorllm_adapter.py')
+    return {str(p.resolve()):sha(p) for p in code}
+
+
+def execution_binding(root, plan):
+    path=Path(root)/'execution_revision.json'
+    if not path.exists():
+        if any(plan['input_files'].get(p)!=digest for p,digest in execution_files().items()):
+            raise ValueError('delivery execution changed without a bound revision')
+        return {}
+    revision=read(path)
+    if revision['plan_sha256']!=plan['plan_sha256'] or revision['execution_files']!=execution_files():
+        raise ValueError('delivery execution revision differs from plan or running source')
+    files=revision['execution_files']|revision['preserved_files'];verify(files)
+    return files|{str(path.resolve()):sha(path)}
+
+
 def helper(name):
     path = Path(__file__).with_name(name+'.py')
     spec = importlib.util.spec_from_file_location('_delivery_'+name, path)
@@ -39,11 +61,8 @@ def prepare(root, subset_root, policy_path, launcher, plot_root):
         files[str(p)] = sha(p)
     files.update(read(policy_path)['files'])
     # Bind only delivery code: importing it never changes the frozen trainer fingerprint.
-    code = [Path(launcher).resolve(), *Path(__file__).parent.glob('chapter5_delivery*.py')]
-    code += [Path(__file__).with_name(n+'.py') for n in ('device_replay','v4_mechanism_data','v4_mechanism_evaluation','v4_correctness','causality_recovery')]
-    code += [Path(__file__).parents[2]/'modeling/fusion_encoders/sensorllm_adapter.py']
-    code += [p for p in Path(plot_root).rglob('*') if p.is_file()]
-    files.update({str(p.resolve()):sha(p) for p in code})
+    files.update(execution_files())
+    files.update({str(p.resolve()):sha(p) for p in Path(plot_root).rglob('*') if p.is_file()})
     state = read(Path(subset['main_root'])/'pipeline_state.json')
     formal = read(Path(subset['main_root'])/'formal_plan.json')
     native = [dict(key=f"reference_{r['index']}", index=r['index'], origin='reference', unit=r['unit'],
@@ -75,7 +94,7 @@ def prepare(root, subset_root, policy_path, launcher, plot_root):
     return immutable(root/'delivery_plan.json', result)
 
 
-def plan_at(root):
+def validated_plan(root):
     from chronaris.evaluation.application_tasks.v4_development_data import v4_workflow_source_sha256
     plan = read(Path(root)/'delivery_plan.json')
     if (plan['root'] != str(Path(root).resolve()) or plan['source_code_sha256'] != v4_workflow_source_sha256()
@@ -83,6 +102,39 @@ def plan_at(root):
         raise ValueError('delivery plan or frozen implementation changed')
     verify(plan['input_files'])
     return plan
+
+
+def plan_at(root):
+    plan=validated_plan(root);execution_binding(root,plan)
+    return plan
+
+
+def revise(root):
+    """Bind the target-guard repair without rewriting completed training or replay receipts."""
+    import fcntl
+    root=Path(root)
+    with (root/'controller.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        plan=validated_plan(root);state=read(root/'state.json')
+        completed=steps(plan)[:steps(plan).index('sensitivity')]
+        if (state['status']!='failed' or state['phase']!='sensitivity' or state['completed']!=completed
+            or state['plan_sha256']!=plan['plan_sha256']
+            or (root/'delivery_models.json').exists() or (root/'sensitivity/result.json').exists()):
+            raise ValueError('target-guard revision requires the stopped pre-sensitivity queue')
+        files={}
+        for stage in completed:
+            path=root/'steps'/(stage.replace(':','_')+'.json');receipt=read(path)
+            if receipt['stage']!=stage or receipt['plan_sha256']!=plan['plan_sha256'] or receipt['exit_code']!=0:
+                raise ValueError('completed step binding changed')
+            verify(receipt['files']);files.update(receipt['files']);files[str(path)]=sha(path)
+        for name in ('state.json','controller.log','logs/sensitivity.log'):
+            original=root/name;backup=root/'recovery/target_guard'/Path(name).name
+            backup.parent.mkdir(parents=True,exist_ok=True)
+            if backup.exists() and backup.read_bytes()!=original.read_bytes():raise ValueError('failure backup differs')
+            backup.write_bytes(original.read_bytes());files[str(backup)]=sha(backup)
+        return immutable(root/'execution_revision.json',dict(status='completed',plan_sha256=plan['plan_sha256'],
+            reason='use five frozen reference methods for target access, independent of sensitivity grid and ablations',
+            preserved_stages=completed,preserved_files=files,execution_files=execution_files(),confirmation_opened=False))
 
 
 def check_extra(result, unit, plan):
@@ -109,7 +161,7 @@ def freeze(root, plan):
     from chronaris.evaluation.application_tasks.chapter5_subset_evaluation import simulation_records
     import torch
     require_subset_freeze(plan['subset_root'])
-    files = dict(plan['input_files']); models = simulation_records(plan['subset_root'])
+    files = dict(plan['input_files'])|execution_binding(root,plan); models = simulation_records(plan['subset_root'])
     for key in plan['replay']:
         path=Path(root)/'replay'/key/'result.json'; result=read(path)
         if (result['status']!='completed' or not result['rows'] or result['confirmation_opened']
@@ -239,12 +291,13 @@ def worker(root, stage):
             result=helper('chapter5_delivery_sensor').bind_evidence(result,root/'native'/row['key'])
         return result
     if stage.startswith('simulation:'):
-        from chronaris.evaluation.application_tasks.v4_simulation_confirmation_evaluation import _evaluate_simulation_unit
+        evaluate=helper('v4_simulation_confirmation_evaluation')._evaluate_simulation_unit
         with development_gpu_lock() as acquired:
             if not acquired:return dict(status='waiting_gpu')
-            return _evaluate_simulation_unit(models=models,unit=models['records'][int(stage.split(':')[1])],
+            return evaluate(models=models,unit=models['records'][int(stage.split(':')[1])],
                 freeze_sha256=plan['plan_sha256'],model_freeze_sha256=sha(model_path),output_root=root/'simulation',
-                confirmation_root=root/'confirmation',include_pressure=True)
+                confirmation_root=root/'confirmation',include_pressure=True,
+                target_initializations=helper('chapter5_delivery_diagnostics').reference_initializations(models['records'],17))
     if stage=='mechanisms':
         return helper('v4_mechanism_evaluation').evaluate_frozen_mechanisms(models=models,model_path=model_path,
             timing_root=root/'timing_data',confirmation_root=root/'confirmation',simulation_evaluation_root=root/'simulation',
@@ -295,7 +348,7 @@ def run(root, launcher, workspace):
                 value=read(result)
                 if value.get('status') not in ('completed','frozen'):
                     raise ValueError(f'{stage} did not complete')
-                files={str(result):sha(result)}|value.get('files',{})
+                files={str(result):sha(result)}|value.get('files',{})|execution_binding(root,plan)
                 # Preserve every completed stage output without repeatedly writing large payloads.
                 write(path,dict(plan_sha256=plan['plan_sha256'],stage=stage,exit_code=code,files=files,
                     started_at=started,seconds=time.time()-started,log=str(log),command=args))

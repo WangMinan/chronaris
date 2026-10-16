@@ -39,7 +39,8 @@ def evaluate_simulation_confirmation(*, freeze_path, freeze_sha256, model_freeze
             model_freeze_sha256=model_freeze_sha256,output_root=output_root,confirmation_root=confirmation_root)
 
 
-def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha256, output_root, confirmation_root, include_pressure=True):
+def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha256, output_root, confirmation_root, include_pressure=True,
+                              target_initializations=None):
     method, seed = unit['method'], unit['seed']
     root = simulation_unit_root(output_root,unit)
     development, fold = load_v4_simulation_development(simulation_root=models['simulation_root'],registry_path=SIMULATION_REGISTRY)
@@ -48,8 +49,9 @@ def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha25
     held = load_simulation_confirmation(confirmation_root,model_freeze_sha256=model_freeze_sha256)
     if held.batch.sample_ids!=fold.held_out_sample_ids or held.schema!=development.schema:
         raise ValueError('confirmation samples or schema differ from the frozen encoder contract')
-    initializations = [row['checkpoints']['self_supervised'] for row in models['records']
-                       if row['seed']==seed and row['method']!='naive_time_sync' and 'self_supervised' in row['routes']]
+    initializations = target_initializations if target_initializations is not None else [
+        row['checkpoints']['self_supervised'] for row in models['records']
+        if row['seed']==seed and row['method']!='naive_time_sync' and 'self_supervised' in row['routes']]
     train_targets = build_guarded_application_consumer_targets(development,completed_pretraining_checkpoints=initializations,smoke_only=False)
     held_targets = build_guarded_application_consumer_targets(held,completed_pretraining_checkpoints=initializations,smoke_only=False,
         workload_thresholds=tuple(train_targets.manifest['workload_thresholds_train_only']))

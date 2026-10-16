@@ -29,6 +29,7 @@ def test_plan_source_and_content_mutation_rejected(tmp_path,monkeypatch):
     from chronaris.evaluation.application_tasks import v4_development_data as data
     monkeypatch.setattr(data,'v4_workflow_source_sha256',lambda:'frozen')
     source=tmp_path/'model';source.write_text('original')
+    monkeypatch.setattr(delivery,'execution_files',lambda:{str(source):sha(source)})
     value=delivery.seal_development_plan(dict(root=str(tmp_path),source_code_sha256='frozen',input_files={str(source):sha(source)}))
     write(tmp_path/'delivery_plan.json',value);assert delivery.plan_at(tmp_path)==value
     value['source_code_sha256']='other';write(tmp_path/'delivery_plan.json',value)

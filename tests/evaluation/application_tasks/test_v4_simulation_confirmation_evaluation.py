@@ -33,6 +33,8 @@ def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation
         torch.linspace(0,1,13),torch.arange(13)%3,states,boundaries,
         dict(smoke_only=True,oracle_files=[],workload_thresholds_train_only=[.2,.4]))
     def select_targets(data,**kw):
+        if not kw.get('task_guided_development'):
+            assert len(kw['completed_pretraining_checkpoints'])==5
         selected=[batch.sample_ids.index(sample) for sample in data.batch.sample_ids]
         return replace(targets,sample_ids=data.batch.sample_ids,roles=tuple(targets.roles[i] for i in selected),
                        **{name:getattr(targets,name)[selected] for name in ('future_workload_mean','workload_class','maneuver_state','boundary_mask')})
@@ -65,6 +67,7 @@ def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation
         checkpoints={route:baseline['checkpoint'] for route in ('self_supervised','task_guided')},fold=fold.to_dict(),data_manifest_sha256='d'*64)
     models={'simulation_root':'engineering','records':[unit]+[dict(seed=17,method=m,routes=['self_supervised'],checkpoints={'self_supervised':'fixture'})
         for m in ('physiology_only','vehicle_only','mult','contiformer','chronaris')]}
+    models['records'].append(dict(seed=17,method='chronaris',routes=['self_supervised'],checkpoints={'self_supervised':'ablation'}))
     monkeypatch.setattr(evaluation,'load_v4_simulation_development',lambda **kw:(development,fold))
     def observed(root,**kw):
         if kw.get('condition','clean_asynchronous')=='clean_asynchronous':return held
@@ -85,7 +88,7 @@ def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation
         return frozen_evaluate(**kw)
     monkeypatch.setattr(evaluation,'evaluate_frozen_application_consumers',evaluate)
     arguments=dict(models=models,unit=unit,freeze_sha256=kwargs['freeze_sha256'],model_freeze_sha256='m'*64,
-                   output_root=kwargs['output_root'],confirmation_root='engineering')
+                   output_root=kwargs['output_root'],confirmation_root='engineering',target_initializations=['fixture']*5)
     actual=evaluation._evaluate_simulation_unit(**arguments)
     assert actual['completed'] and len(actual['routes']['self_supervised']['conditions'])==38
     assert actual['routes']['task_guided']['shared_with']=='self_supervised'

@@ -13,6 +13,14 @@ from chronaris.evaluation.application_tasks.application_finetuning_export import
 from chronaris.representation import select_observation_batch
 
 
+def reference_initializations(records, seed):
+    methods={'chronaris','physiology_only','vehicle_only','mult','contiformer'}
+    selected=[r for r in records if r['seed']==seed and r['method'] in methods and r['candidate_name']=='reference']
+    if len(selected)!=5 or {r['method'] for r in selected}!=methods:
+        raise ValueError('target access requires all five distinct frozen reference methods')
+    return [r['checkpoints']['self_supervised'] for r in selected]
+
+
 def sensitivity(root, plan):
     from chronaris.evaluation.application_tasks.application_consumer_smoke_data import build_guarded_application_consumer_targets
     from chronaris.evaluation.application_tasks.application_consumer_runtime import ApplicationConsumerProtocol, run_application_method_consumers
@@ -29,7 +37,8 @@ def sensitivity(root, plan):
     with development_gpu_lock() as acquired:
         if not acquired:return dict(status='waiting_gpu')
         data,fold=load_v4_simulation_development(simulation_root=plan['simulation_root'],registry_path=SIMULATION_REGISTRY)
-        targets=build_guarded_application_consumer_targets(data,completed_pretraining_checkpoints=[c['self_supervised'] for _,c in selected],smoke_only=False)
+        targets=build_guarded_application_consumer_targets(data,
+            completed_pretraining_checkpoints=reference_initializations(records,17),smoke_only=False)
         for weight,checkpoints in sorted(selected):
             for route,checkpoint in checkpoints.items():
                 destination=Path(root)/'sensitivity'/str(weight)/route
