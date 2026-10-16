@@ -1,0 +1,19 @@
+/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: The AccumulateGrad node's stream does not match the stream of the node that produced the incoming gradient. This may incur unnecessary synchronization and break CUDA graph capture if the AccumulateGrad node's stream is the default stream. This mismatch is caused by an AccumulateGrad node created prior to the current iteration being kept alive. This can happen if the autograd graph is still being kept alive by tensors such as the loss, or if you are using DDP, which will stash a reference to the node. To resolve the mismatch, delete all references to the autograd graph or ensure that DDP initialization is performed under the same stream as subsequent forwards. If the mismatch is intentional, you can use torch.autograd.graph.set_warn_on_accumulate_grad_stream_mismatch(False) to suppress this warning. (Triggered internally at /pytorch/torch/csrc/autograd/input_buffer.cpp:240.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-target-guard-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 37, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-target-guard-20261016/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 31, in main
+    result=module.worker(args.root,args.stage)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-target-guard-20261016/src/chronaris/evaluation/application_tasks/chapter5_delivery.py", line 279, in worker
+    return helper('chapter5_delivery_diagnostics').diagnostics(root,plan,models)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-target-guard-20261016/src/chronaris/evaluation/application_tasks/chapter5_delivery_diagnostics.py", line 92, in diagnostics
+    for _ in range(2):adapter(timed_batch)
+                      ^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/modeling/training/common_pretraining.py", line 107, in __call__
+    device = next(self.encoder.parameters()).device
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NaiveTimeSyncEncoder' object has no attribute 'parameters'

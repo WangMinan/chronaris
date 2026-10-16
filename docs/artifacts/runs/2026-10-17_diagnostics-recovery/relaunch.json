@@ -1,0 +1,22 @@
+{
+  "pid": 32032,
+  "launched_at": "2026-10-17T01:54:11.294175+08:00",
+  "started_epoch": 1792173248.293443,
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/scripts/evaluation/application_tasks/run_chapter5_delivery.py",
+    "run",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+    "--workspace",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012"
+  ],
+  "cwd": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "runtime_commit": "1e9151ea",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+  "preserved_stages": 44,
+  "monitor_seconds": 900,
+  "proc_start_ticks": "5615267",
+  "initial_monitor_epoch": 1792172423.4507833,
+  "failure_archive": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/recovery/historical_manifests"
+}

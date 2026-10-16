@@ -1,0 +1,43 @@
+{
+  "status": "completed",
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "manifests": [
+    {
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/simulation_manifest.json",
+      "source": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/simulation_manifest.json",
+      "sha256": "0c9389057b2b5ca9af25037b4156944ac256628e7775fbbca241f7edb6eeb008",
+      "bytes": 681066,
+      "restored": true
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-10_aviation-simulation-smoke/simulation_manifest.json",
+      "source": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-07-10_aviation-simulation-smoke/simulation_manifest.json",
+      "sha256": "1680b79ce409970bfca531f562eb415b0c93de72db7f0814d155cc60e9f69a36",
+      "bytes": 7516,
+      "restored": true
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-12_aviation-simulation-locked-stress/simulation_manifest.json",
+      "source": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-07-12_aviation-simulation-locked-stress/simulation_manifest.json",
+      "sha256": "4ae2c7d95f925a4ef1909264b04c952fd0e1fc631227694c081475555e374bf6",
+      "bytes": 1261591,
+      "restored": true
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-12_chronaris-v2-confirmation-family-smoke/simulation_manifest.json",
+      "source": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-07-12_chronaris-v2-confirmation-family-smoke/simulation_manifest.json",
+      "sha256": "afb261f33770439d5be43db47b435f5d15fe537c202fcde1065dbf6d9993fc16",
+      "bytes": 3544,
+      "restored": true
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-07-12_chronaris-v2-independent-confirmation-family/simulation_manifest.json",
+      "source": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/artifacts/application_evaluation/2026-07-12_chronaris-v2-independent-confirmation-family/simulation_manifest.json",
+      "sha256": "77ec797b28dbde7dea399b72838f3ea2446ee5b0e039bc61776065295b2f0811",
+      "bytes": 1365781,
+      "restored": true
+    }
+  ],
+  "generator_source_files_verified": 15,
+  "raw_trajectories_copied": false
+}

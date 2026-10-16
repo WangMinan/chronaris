@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "source": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/diagnostics/result.json",
+  "sha256": "cc7fb17557a16bf5082d55130d6d707e87d80a88ddbb521fd1ee132e1f55f0c5",
+  "audit_count": 6,
+  "all_audits_passed": true,
+  "timing_count": 210,
+  "naive_timing_count": 10,
+  "naive_devices": [
+    "cpu"
+  ],
+  "confirmation_opened": false
+}

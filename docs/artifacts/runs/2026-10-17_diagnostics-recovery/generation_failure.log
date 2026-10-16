@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 37, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 31, in main
+    result=module.worker(args.root,args.stage)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/src/chronaris/evaluation/application_tasks/chapter5_delivery.py", line 298, in worker
+    return _generate_frozen_simulation(freeze_sha256=plan['plan_sha256'],model_freeze_sha256=sha(model_path),output_root=root/'confirmation')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/application_tasks/v4_simulation_confirmation_data.py", line 51, in _generate_frozen_simulation
+    if sha256_file(item['path']) != item['sha256']:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/simulation/aviation_dual_stream/deterministic_npz.py", line 46, in sha256_file
+    with Path(path).open("rb") as stream:
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/env/anaconda3/envs/chronaris/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'artifacts/application_evaluation/2026-07-10_aviation-simulation-formal/simulation_manifest.json'

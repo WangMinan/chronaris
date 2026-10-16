@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-17T02:00:12.998700+08:00",
+  "observed_seconds": 1190,
+  "pid": 32032,
+  "status": "running",
+  "phase": "generate",
+  "completed_stages": 44,
+  "total_stages": 167,
+  "generated_scenario_manifests": 2385,
+  "planned_scenarios": 4608,
+  "diagnostics_completed": true,
+  "historical_manifest_count_restored": 5
+}
