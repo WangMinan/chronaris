@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-17T23:53:23.722265+08:00",
+  "original_165_stage_order_unchanged": true,
+  "original_16_mechanism_units_unchanged": true,
+  "original_17_mechanism_records_unchanged": true,
+  "model_freeze_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+  "mechanism_units_completed": 18,
+  "mechanism_units_expected": 21,
+  "mechanism_records_completed": 19,
+  "mechanism_records_expected": 22,
+  "remaining_mechanism_units": 3,
+  "mechanism_completed_units": [
+    "chronaris/reference/seed17/self_supervised",
+    "chronaris/reference/seed17/task_guided",
+    "physiology_only/reference/seed17/self_supervised",
+    "physiology_only/reference/seed17/task_guided",
+    "vehicle_only/reference/seed17/self_supervised",
+    "vehicle_only/reference/seed17/task_guided",
+    "mult/reference/seed17/self_supervised",
+    "mult/reference/seed17/task_guided",
+    "contiformer/reference/seed17/self_supervised",
+    "contiformer/reference/seed17/task_guided",
+    "naive_time_sync/reference/seed17/self_supervised",
+    "chronaris/no_continuous_evolution/seed17/self_supervised",
+    "chronaris/no_continuous_evolution/seed17/task_guided",
+    "chronaris/no_physics_residual/seed17/self_supervised",
+    "chronaris/no_physics_residual/seed17/task_guided",
+    "chronaris/no_event_semantics/seed17/self_supervised",
+    "chronaris/no_event_semantics/seed17/task_guided",
+    "chronaris/no_explicit_shift/seed17/self_supervised"
+  ],
+  "materials_status": "pending_background_export_then_independent_redraw_visual_review_and_git_import"
+}

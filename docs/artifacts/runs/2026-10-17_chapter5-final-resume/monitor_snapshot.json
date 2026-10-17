@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-17T23:52:29.889888+08:00",
+  "elapsed_seconds": 988,
+  "pid": 55881,
+  "alive": true,
+  "status": "running",
+  "phase": "mechanisms",
+  "completed": 165,
+  "child_pid": 55965,
+  "mechanism_units": 18,
+  "mechanism_records": 19,
+  "progress": {
+    "method": "final_time_mechanisms",
+    "status": "running",
+    "optimizer_updates": 0,
+    "current_unit": "chronaris/no_explicit_shift/seed17/task_guided",
+    "phase": "export_train_validation",
+    "wall_elapsed_s": 570.015978476993
+  },
+  "material_files": 0
+}

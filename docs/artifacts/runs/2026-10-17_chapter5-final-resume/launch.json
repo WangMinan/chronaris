@@ -1,0 +1,25 @@
+{
+  "pid": 55881,
+  "proc_start_ticks": "13430716",
+  "launched_at": "2026-10-17T23:36:02.118789+08:00",
+  "started_epoch": 1792251362.1336524,
+  "root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+  "runtime": "/home/wangminan/projects/chronaris-runtime-simulation-contract-resume-20261017",
+  "runtime_commit": "14577462",
+  "workspace": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+  "command": [
+    "/home/wangminan/env/anaconda3/envs/chronaris/bin/python",
+    "/home/wangminan/projects/chronaris-runtime-simulation-contract-resume-20261017/scripts/evaluation/application_tasks/run_chapter5_delivery.py",
+    "run",
+    "--root",
+    "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+    "--workspace",
+    "/home/wangminan/projects/chronaris-runtime-local-validation-20261012"
+  ],
+  "preserved_stage_count": 165,
+  "preserved_mechanism_units": 16,
+  "preserved_mechanism_records": 17,
+  "model_freeze_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+  "previous_pause": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/recovery/user_pause_20261017_220733",
+  "request": "resume mechanisms and chapter five materials; preserve completed results; monitor progress"
+}
