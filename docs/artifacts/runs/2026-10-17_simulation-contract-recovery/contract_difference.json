@@ -1,0 +1,113 @@
+{
+  "registered_ids_equal_frozen": true,
+  "ids_set_equal": true,
+  "expected_count": 512,
+  "actual_count": 512,
+  "development_schema": {
+    "schema_id": "aviation_simulation_observed.v1",
+    "source_kind": "method_independent_simulation",
+    "physiology_feature_names": [
+      "physiology.eeg_low_relative",
+      "physiology.eeg_high_relative",
+      "physiology.eeg_complexity",
+      "physiology.spo2_percent",
+      "physiology.heart_rate_bpm",
+      "physiology.physiology_variability",
+      "physiology.individual_baseline"
+    ],
+    "vehicle_feature_names": [
+      "vehicle.speed_mps",
+      "vehicle.altitude_m",
+      "vehicle.vertical_speed_mps",
+      "vehicle.roll_rad",
+      "vehicle.pitch_rad",
+      "vehicle.yaw_rad",
+      "vehicle.roll_rate_rps",
+      "vehicle.pitch_rate_rps",
+      "vehicle.yaw_rate_rps",
+      "vehicle.longitudinal_acc_mps2",
+      "vehicle.lateral_acc_mps2",
+      "vehicle.normal_load_g"
+    ],
+    "physiology_feature_roles": [
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "vehicle_feature_roles": [
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "excluded_feature_names": [],
+    "source_manifest_sha256": "e665e50431d68ffe0269f07da426dd9e595e190fbb5dc148a066579e620877ae"
+  },
+  "confirmation_schema": {
+    "schema_id": "aviation_simulation_observed.v1",
+    "source_kind": "method_independent_simulation",
+    "physiology_feature_names": [
+      "physiology.eeg_low_relative",
+      "physiology.eeg_high_relative",
+      "physiology.eeg_complexity",
+      "physiology.spo2_percent",
+      "physiology.heart_rate_bpm",
+      "physiology.physiology_variability",
+      "physiology.individual_baseline"
+    ],
+    "vehicle_feature_names": [
+      "vehicle.speed_mps",
+      "vehicle.altitude_m",
+      "vehicle.vertical_speed_mps",
+      "vehicle.roll_rad",
+      "vehicle.pitch_rad",
+      "vehicle.yaw_rad",
+      "vehicle.roll_rate_rps",
+      "vehicle.pitch_rate_rps",
+      "vehicle.yaw_rate_rps",
+      "vehicle.longitudinal_acc_mps2",
+      "vehicle.lateral_acc_mps2",
+      "vehicle.normal_load_g"
+    ],
+    "physiology_feature_roles": [
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "vehicle_feature_roles": [
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed",
+      "observed"
+    ],
+    "excluded_feature_names": [],
+    "source_manifest_sha256": "5fdadeb150aa84410d5f60d9b3755a63b09403fa755f736cdc3998a8bceab85a"
+  },
+  "schema_equal": false,
+  "first_development_sample": "g1_state_space__v4_train_profile_000__trajectory_000__seed_4110000000__clean_asynchronous::context_030.000",
+  "first_confirmation_sample": "g2_event_spline__v4_confirmation_profile_000__trajectory_000__seed_4112000000__clean_asynchronous::context_030.000"
+}

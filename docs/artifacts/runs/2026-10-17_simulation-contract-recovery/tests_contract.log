@@ -1,0 +1,8 @@
+.......................                                                  [100%]
+=============================== warnings summary ===============================
+tests/evaluation/application_tasks/test_v4_simulation_confirmation_evaluation.py: 74 warnings
+  /home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/application_metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    correlation = spearmanr(truth, prediction).statistic
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+23 passed, 74 warnings in 30.91s

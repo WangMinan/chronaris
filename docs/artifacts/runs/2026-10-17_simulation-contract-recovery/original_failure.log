@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 37, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/scripts/evaluation/application_tasks/run_chapter5_delivery.py", line 31, in main
+    result=module.worker(args.root,args.stage)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/src/chronaris/evaluation/application_tasks/chapter5_delivery.py", line 313, in worker
+    return evaluate(models=models,unit=models['records'][int(stage.split(':')[1])],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/src/chronaris/evaluation/application_tasks/v4_simulation_confirmation_evaluation.py", line 51, in _evaluate_simulation_unit
+    raise ValueError('confirmation samples or schema differ from the frozen encoder contract')
+ValueError: confirmation samples or schema differ from the frozen encoder contract

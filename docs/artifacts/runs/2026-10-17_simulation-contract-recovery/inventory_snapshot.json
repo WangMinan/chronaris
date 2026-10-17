@@ -1,0 +1,32 @@
+{
+  "preserved_completed_stage_count": 154,
+  "completed_stage_counts": {
+    "assets": 1,
+    "engineering": 4,
+    "replay": 32,
+    "train": 4,
+    "sensitivity": 1,
+    "freeze": 1,
+    "diagnostics": 1,
+    "generate": 1,
+    "timing-data": 1,
+    "native": 108
+  },
+  "native_domains": {
+    "clare": 55,
+    "cogpilot": 45,
+    "dingxin": 8
+  },
+  "native_results_completed": 108,
+  "native_downstream_refitted": false,
+  "simulation_units": 11,
+  "simulation_routes": 21,
+  "pressure_conditions": 38,
+  "model_freeze_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+  "preserved_file_count": 2256,
+  "execution_revision_files": [
+    "execution_revision.json",
+    "diagnostics_revision.json",
+    "simulation_revision.json"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-10-17T17:20:45.352979+08:00",
+  "elapsed_seconds": 927,
+  "pid": 49760,
+  "alive": true,
+  "status": "running",
+  "phase": "simulation:0",
+  "completed": 154,
+  "child_pid": 49793,
+  "new_log_bytes": 3044,
+  "log_tail": "atus=alive updates=0 wall_elapsed_s=183.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=213.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=243.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=273.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=303.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=333.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=363.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=393.2\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=424.7\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=454.7\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=484.7\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=514.7\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=544.7\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=574.7\n[candidate-heartbeat] method=simulation_confirmation status=alive updates=0 wall_elapsed_s=604.7\n",
+  "simulation_progress": {
+    "method": "simulation_confirmation",
+    "status": "running",
+    "optimizer_updates": 0,
+    "phase": "pressure_evaluation",
+    "route": "self_supervised",
+    "condition": "observation_snr_20db",
+    "wall_elapsed_s": 604.7429298049974
+  },
+  "exported_roles": [
+    "evaluation/self_supervised/representations/held_out/representation_manifest.json",
+    "evaluation/self_supervised/representations/train/representation_manifest.json",
+    "evaluation/self_supervised/representations/validation/representation_manifest.json"
+  ],
+  "condition_counts": {
+    "self_supervised": 33
+  },
+  "total_elapsed_seconds": 927,
+  "model_freeze_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+  "monitoring_conclusion": "running_after_original_failure_point; no new failure observed; full delivery pending"
+}
