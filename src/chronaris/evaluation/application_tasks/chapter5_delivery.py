@@ -6,7 +6,7 @@ import subprocess
 import sys
 import time
 
-from chronaris.evaluation.application_tasks.chapter5_assets import read, sha, verify, write
+from chronaris.evaluation.application_tasks.chapter5_assets import bind, read, sha, verify, write
 from chronaris.evaluation.application_tasks.v4_public_screen import seal_development_plan
 
 EXTRA = (24, 27, 30, 33)
@@ -111,6 +111,19 @@ def plan_at(root):
     return plan
 
 
+def completed_files(root, plan, stages):
+    files={}
+    for stage in stages:
+        path=Path(root)/'steps'/(stage.replace(':','_')+'.json');receipt=read(path)
+        if receipt['stage']!=stage or receipt['plan_sha256']!=plan['plan_sha256'] or receipt['exit_code']!=0:
+            raise ValueError('completed step binding changed')
+        for filename,digest in receipt['files'].items():bind(files,filename,digest)
+        bind(files,path,sha(path))
+    # Receipts share immutable sources; verify every distinct file once, rejecting conflicting hashes.
+    verify(files)
+    return files
+
+
 def revise(root, phase='sensitivity'):
     """Bind a stopped-stage repair without rewriting completed receipts or model freeze."""
     import fcntl
@@ -127,12 +140,7 @@ def revise(root, phase='sensitivity'):
             or ((root/'delivery_models.json').exists() != (phase!='sensitivity'))
             or (phase=='simulation:0' and any((root/'simulation').rglob('confirmation_unit.json')))):
             raise ValueError('repair requires the stopped pre-'+phase+' queue')
-        files={}
-        for stage in completed:
-            path=root/'steps'/(stage.replace(':','_')+'.json');receipt=read(path)
-            if receipt['stage']!=stage or receipt['plan_sha256']!=plan['plan_sha256'] or receipt['exit_code']!=0:
-                raise ValueError('completed step binding changed')
-            verify(receipt['files']);files.update(receipt['files']);files[str(path)]=sha(path)
+        files=completed_files(root,plan,completed)
         if phase!='sensitivity':
             prior=root/('diagnostics_revision.json' if phase=='simulation:0' else 'execution_revision.json');revision=read(prior)
             if revision['plan_sha256']!=plan['plan_sha256']:raise ValueError('prior revision plan changed')
@@ -339,13 +347,13 @@ def run(root, launcher, workspace):
         state=dict(status='running',pid=os.getpid(),phase='starting',completed=[],total=len(steps(plan)),
                    plan_sha256=plan['plan_sha256'],started_at=time.time())
         try:
-            for stage in steps(plan):
+            stages=steps(plan)
+            completed=[stage for stage in stages if (root/'steps'/(stage.replace(':','_')+'.json')).exists()]
+            completed_files(root,plan,completed)
+            for stage in stages:
                 path=root/'steps'/(stage.replace(':','_')+'.json')
-                if path.exists():
-                    receipt=read(path)
-                    if receipt['plan_sha256']!=plan['plan_sha256'] or receipt['exit_code']!=0:
-                        raise ValueError('step receipt changed')
-                    verify(receipt['files']); state['completed'].append(stage); continue
+                if stage in completed:
+                    state['completed'].append(stage);continue
                 log=root/'logs'/(stage.replace(':','_')+'.log');log.parent.mkdir(parents=True,exist_ok=True)
                 result=root/'worker_results'/(stage.replace(':','_')+'.json')
                 args=[sys.executable,str(launcher),'worker','--root',str(root),'--workspace',str(workspace),

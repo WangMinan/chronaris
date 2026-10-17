@@ -109,7 +109,7 @@ def test_resume_skips_verified_training_and_runs_only_pending_sensitivity(tmp_pa
     monkeypatch.setattr(v4_public_screen,'GPU_LOCK_PATH',str(tmp_path/'gpu.lock'))
     output=tmp_path/'training.json';write(output,{'status':'completed'})
     receipt=tmp_path/'steps/train_24.json'
-    write(receipt,dict(plan_sha256='fixed',exit_code=0,files={str(output):sha(output)}))
+    write(receipt,dict(stage='train:24',plan_sha256='fixed',exit_code=0,files={str(output):sha(output)}))
     original=receipt.read_bytes();called=[]
     def spawn(args,**kw):
         stage=args[args.index('--stage')+1];called.append(stage)
@@ -119,3 +119,19 @@ def test_resume_skips_verified_training_and_runs_only_pending_sensitivity(tmp_pa
     result=delivery.run(tmp_path,'launcher.py',tmp_path)
     assert called==['sensitivity'] and result['completed']==['train:24','sensitivity']
     assert receipt.read_bytes()==original
+
+
+def test_completed_evidence_deduplicates_shared_files_and_rejects_conflicting_hashes(tmp_path,monkeypatch):
+    shared=tmp_path/'model';shared.write_text('frozen')
+    stages=['train:24','train:27'];plan={'plan_sha256':'p'}
+    for stage in stages:
+        write(tmp_path/'steps'/(stage.replace(':','_')+'.json'),dict(stage=stage,plan_sha256='p',exit_code=0,files={str(shared):sha(shared)}))
+    checked=[];verify=delivery.verify
+    def check(files):checked.append(dict(files));verify(files)
+    monkeypatch.setattr(delivery,'verify',check)
+    files=delivery.completed_files(tmp_path,plan,stages)
+    assert len(checked)==1 and len(files)==3 and checked[0][str(shared)]==sha(shared)
+    path=tmp_path/'steps/train_27.json';receipt=read(path);receipt['files'][str(shared)]='0'*64;write(path,receipt)
+    with pytest.raises(ValueError,match='conflicting source hashes'):
+        delivery.completed_files(tmp_path,plan,stages)
+    assert len(checked)==1
