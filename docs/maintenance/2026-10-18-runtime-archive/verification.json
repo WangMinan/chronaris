@@ -1,0 +1,250 @@
+{
+  "status": "passed",
+  "worktrees": 34,
+  "verified_file_versions": 147205,
+  "existing_destination_rejected": true,
+  "changed_manifest_rejected": true,
+  "unsafe_relative_path_rejected": true,
+  "original_worktrees_unchanged": true,
+  "seconds": 54.58718252182007,
+  "verified": [
+    {
+      "name": "chronaris-runtime-causality-policy-20261015",
+      "commit": "767379ef6a44b9f22f38ade89ff326741d9c5f29",
+      "verified_files": 5189,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-chapter5-20261011",
+      "commit": "cfd12a83b717d6949cd293b19a21e4f604a2a9cf",
+      "verified_files": 4182,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-chapter5-reload-20261011",
+      "commit": "8b198dc61210f853fecd72726423c00934c14661",
+      "verified_files": 5098,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-chapter5-writing-20261015",
+      "commit": "d97c5c522378753c62b1d001d4de2f4fa7a8c238",
+      "verified_files": 5217,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-chronos-reference-20261016",
+      "commit": "6f873ccad80a0d20057cc2d8399dbad4791f0bd1",
+      "verified_files": 5235,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-device-compatible-20261012",
+      "commit": "8b198dc61210f853fecd72726423c00934c14661",
+      "verified_files": 5098,
+      "patch_restored": true,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-diagnostics-20261017",
+      "commit": "1e9151ea58a0426706ca841d7d2dc31597bb1074",
+      "verified_files": 5263,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-local-validation-20261012",
+      "commit": "4c391e87f8271518b02023f7e6e4ac9f10c4e380",
+      "verified_files": 5170,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-power-recovery-20261013",
+      "commit": "2ae4a70bced323be8e3c1e1e7bdd24f3091d2043",
+      "verified_files": 5181,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-semantic-20261012",
+      "commit": "35cf42ced4ef3d0afa966cd6886c2a3d17e080d2",
+      "verified_files": 5131,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-sensor-reference-20261016",
+      "commit": "293ae6b277f9b5cdbe3e1380cad15a1333d4fc8e",
+      "verified_files": 5231,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-simulation-contract-resume-20261017",
+      "commit": "14577462758a20e2a47fd3df944204861e77171d",
+      "verified_files": 5280,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-stage4-20260911",
+      "commit": "9b4548d98fe0cd5f73111f14160b2a4407748149",
+      "verified_files": 3871,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage4-graph-20260913",
+      "commit": "2b7db555f72b3567a9761d0cf2931fcb3bb8a976",
+      "verified_files": 3899,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage4-recovery-20260912",
+      "commit": "475fc7b4d270af51cb3378b42ff408cc5cbb5d8d",
+      "verified_files": 3882,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage45b-20260921",
+      "commit": "0150c397717b727822b30b1db42c810bd0d41d69",
+      "verified_files": 3994,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage45c-20260922",
+      "commit": "c3b8f50d9b24aa2235b9e3e6b8d3cf86f74c310a",
+      "verified_files": 4000,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage5-20260923",
+      "commit": "dd16e6885c26b03d2e54bbe5052132564e3ebdd4",
+      "verified_files": 4009,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage5-formal-20260928",
+      "commit": "0b8f0d14fd4da624fbc49bf7d96f683ce7780ddf",
+      "verified_files": 4080,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage5-performance-20261002",
+      "commit": "a80289e88c27a214ed333aa06abe90ba5a546089",
+      "verified_files": 4119,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage5-recovery-20260926",
+      "commit": "389cea665c92241a01fa839d071ad2b916bfad81",
+      "verified_files": 4043,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage5-recovery-scaled-20260926",
+      "commit": "63753427db9a0e4847fca2dd8c0f8280b46cd3d9",
+      "verified_files": 4045,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-stage5-sensor-recovery-qualified-20260930",
+      "commit": "008f7065e8043be4d8b52f615bcf8b3dcdb76bef",
+      "verified_files": 4103,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-target-guard-20261016",
+      "commit": "c75253f14c9df2ed1fd44c9fcadf251d52acce23",
+      "verified_files": 5252,
+      "patch_restored": false,
+      "asset_links_restored": 0
+    },
+    {
+      "name": "chronaris-runtime-v4-candidate-pressure-gpu-20260908",
+      "commit": "87afc941f9833cbd9d7947376b9fe9be258bd4a2",
+      "verified_files": 3626,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-candidates-20260908",
+      "commit": "ed2e24e3629bcb91060d57e2251b68847fecdc77",
+      "verified_files": 3605,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-code-complete-20260908",
+      "commit": "bee5112e76ecd07af268dcead61bd098cf9b8e6b",
+      "verified_files": 3763,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-complete-confirmation-20260908",
+      "commit": "f9a0aada1deb13f95dc01920ede78cdbdd39c0a7",
+      "verified_files": 3735,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-confirmation-20260908",
+      "commit": "b763ac2e053b93007ef9ca88f6c1da2ed8298a69",
+      "verified_files": 3727,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-development-chain-20260908",
+      "commit": "dce2625e586ac4fab33b7796ecbe00d52545b3a0",
+      "verified_files": 3699,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-diagnostic-20260906",
+      "commit": "ef8d88eb1458ee54801b8eb77663a43f96894be9",
+      "verified_files": 3543,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-dingxin-target-order-20260908",
+      "commit": "d23dc66fa9ccf0c699994272cd6824e0e02f43bd",
+      "verified_files": 3671,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-naive-development-20260908",
+      "commit": "847c9c4e4279a68618976b318ffd07d2014cecfc",
+      "verified_files": 3654,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    },
+    {
+      "name": "chronaris-runtime-v4-public-preparation-20260908",
+      "commit": "b8b53d8100bb4a18190617be1499ea91442dbed0",
+      "verified_files": 3610,
+      "patch_restored": false,
+      "asset_links_restored": 1
+    }
+  ]
+}

@@ -1,0 +1,523 @@
+{
+  "format": "chronaris.runtime_archive.v1",
+  "repository": "/home/wangminan/projects/chronaris",
+  "source_history": "All commits are ancestors of origin/main at 0354ebe7",
+  "worktrees": [
+    {
+      "name": "chronaris-runtime-causality-policy-20261015",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015",
+      "commit": "767379ef6a44b9f22f38ade89ff326741d9c5f29",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-causality-policy-20261015.json.gz",
+      "checksums_sha256": "e21b766272a0bfc6975822835cf9f0c2316b2290635163a2f6c53d4c09642b25",
+      "tracked_file_count": 5189,
+      "allocated_kib": 290900
+    },
+    {
+      "name": "chronaris-runtime-chapter5-20261011",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-chapter5-20261011",
+      "commit": "cfd12a83b717d6949cd293b19a21e4f604a2a9cf",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-chapter5-20261011.json.gz",
+      "checksums_sha256": "794fab609c49b5a8ba8c64ee6ba485cffdd950d91eaf4ec7750be0dc1b21ba69",
+      "tracked_file_count": 4182,
+      "allocated_kib": 204928
+    },
+    {
+      "name": "chronaris-runtime-chapter5-reload-20261011",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011",
+      "commit": "8b198dc61210f853fecd72726423c00934c14661",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-chapter5-reload-20261011.json.gz",
+      "checksums_sha256": "684dfcb178308280fc074631eead6a460c97b0ca428acc1424b22f40242f4c79",
+      "tracked_file_count": 5098,
+      "allocated_kib": 289368
+    },
+    {
+      "name": "chronaris-runtime-chapter5-writing-20261015",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-chapter5-writing-20261015",
+      "commit": "d97c5c522378753c62b1d001d4de2f4fa7a8c238",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-chapter5-writing-20261015.json.gz",
+      "checksums_sha256": "5daad37fd98136488204a29e17e7675fa1f4ff77b200607296cf747892300688",
+      "tracked_file_count": 5217,
+      "allocated_kib": 291164
+    },
+    {
+      "name": "chronaris-runtime-chronos-reference-20261016",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016",
+      "commit": "6f873ccad80a0d20057cc2d8399dbad4791f0bd1",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-chronos-reference-20261016.json.gz",
+      "checksums_sha256": "33d5632cce9054eb5b88d91014d45ba079cd80f118a92ba1adc9e886aafac438",
+      "tracked_file_count": 5235,
+      "allocated_kib": 291284
+    },
+    {
+      "name": "chronaris-runtime-device-compatible-20261012",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012",
+      "commit": "8b198dc61210f853fecd72726423c00934c14661",
+      "status": [
+        " M src/chronaris/evaluation/application_tasks/v4_diagnostic_run.py",
+        "?? artifacts"
+      ],
+      "patch": {
+        "file": "patches/chronaris-runtime-device-compatible-20261012.patch",
+        "sha256": "5abb9e9a1d71112bef824285b7292ac6b2e7d6b66fd4aff69b28ca530b973ea0"
+      },
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-device-compatible-20261012.json.gz",
+      "checksums_sha256": "798464e05ccc70c8d64cd3df7178695535910f39ae974da7c4f9d73bf6a720aa",
+      "tracked_file_count": 5098,
+      "allocated_kib": 289360
+    },
+    {
+      "name": "chronaris-runtime-diagnostics-20261017",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017",
+      "commit": "1e9151ea58a0426706ca841d7d2dc31597bb1074",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-diagnostics-20261017.json.gz",
+      "checksums_sha256": "546e79ce865c43532db127a95b3c3186dec7c20390f9c6c4f3d3a5da9826354b",
+      "tracked_file_count": 5263,
+      "allocated_kib": 291480
+    },
+    {
+      "name": "chronaris-runtime-local-validation-20261012",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+      "commit": "4c391e87f8271518b02023f7e6e4ac9f10c4e380",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-local-validation-20261012.json.gz",
+      "checksums_sha256": "402fd0bc44db85850951bf1eb73916812095d9b19b80cf49e4eaccd23fc9ef74",
+      "tracked_file_count": 5170,
+      "allocated_kib": 290792
+    },
+    {
+      "name": "chronaris-runtime-power-recovery-20261013",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013",
+      "commit": "2ae4a70bced323be8e3c1e1e7bdd24f3091d2043",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-power-recovery-20261013.json.gz",
+      "checksums_sha256": "3136f992668a75a43d2261f157f232e1a09b8885175dc3e1675e1fafaa2bbb58",
+      "tracked_file_count": 5181,
+      "allocated_kib": 290856
+    },
+    {
+      "name": "chronaris-runtime-semantic-20261012",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-semantic-20261012",
+      "commit": "35cf42ced4ef3d0afa966cd6886c2a3d17e080d2",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-semantic-20261012.json.gz",
+      "checksums_sha256": "f9308b656aceca4db7b3ef1a76b1987d64dff1cdb54976689534f6e39ef9ffac",
+      "tracked_file_count": 5131,
+      "allocated_kib": 290512
+    },
+    {
+      "name": "chronaris-runtime-sensor-reference-20261016",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-sensor-reference-20261016",
+      "commit": "293ae6b277f9b5cdbe3e1380cad15a1333d4fc8e",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-sensor-reference-20261016.json.gz",
+      "checksums_sha256": "e8423ec5f6b6912263b7e03ffb3cab4374c6a90fb7b0001c2bb53723516cc5c0",
+      "tracked_file_count": 5231,
+      "allocated_kib": 291256
+    },
+    {
+      "name": "chronaris-runtime-simulation-contract-resume-20261017",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-simulation-contract-resume-20261017",
+      "commit": "14577462758a20e2a47fd3df944204861e77171d",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-simulation-contract-resume-20261017.json.gz",
+      "checksums_sha256": "c47350e161ccef2aeb17dfad3dcef34d2b952082f243ff324f4fc8fd973d6085",
+      "tracked_file_count": 5280,
+      "allocated_kib": 291912
+    },
+    {
+      "name": "chronaris-runtime-stage4-20260911",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage4-20260911",
+      "commit": "9b4548d98fe0cd5f73111f14160b2a4407748149",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage4-20260911.json.gz",
+      "checksums_sha256": "a1c591234f490205c60d3af2d34bda77b8e9d71b53fc0b0f3dc96c3dd2ae2a54",
+      "tracked_file_count": 3871,
+      "allocated_kib": 194084
+    },
+    {
+      "name": "chronaris-runtime-stage4-graph-20260913",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913",
+      "commit": "2b7db555f72b3567a9761d0cf2931fcb3bb8a976",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage4-graph-20260913.json.gz",
+      "checksums_sha256": "aae9007cb47ce1599755837e8f0f8345caaee8b0baab6f421ccc9d26d5902cba",
+      "tracked_file_count": 3899,
+      "allocated_kib": 194636
+    },
+    {
+      "name": "chronaris-runtime-stage4-recovery-20260912",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage4-recovery-20260912",
+      "commit": "475fc7b4d270af51cb3378b42ff408cc5cbb5d8d",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage4-recovery-20260912.json.gz",
+      "checksums_sha256": "d7600e5efe1b0d14222cec207c435d5cdafa2c494be29f623319c5796dab5475",
+      "tracked_file_count": 3882,
+      "allocated_kib": 194388
+    },
+    {
+      "name": "chronaris-runtime-stage45b-20260921",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage45b-20260921",
+      "commit": "0150c397717b727822b30b1db42c810bd0d41d69",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage45b-20260921.json.gz",
+      "checksums_sha256": "a51547e28a6a7a5ca7b9aaaf85dd8f6de920881a4d98cb0e36e1606be685802d",
+      "tracked_file_count": 3994,
+      "allocated_kib": 198992
+    },
+    {
+      "name": "chronaris-runtime-stage45c-20260922",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage45c-20260922",
+      "commit": "c3b8f50d9b24aa2235b9e3e6b8d3cf86f74c310a",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage45c-20260922.json.gz",
+      "checksums_sha256": "6c83b70b7f8bfaebedbfc5072d1c8a243dc2b52eadfb6fe5aba795d180bb1bbd",
+      "tracked_file_count": 4000,
+      "allocated_kib": 199080
+    },
+    {
+      "name": "chronaris-runtime-stage5-20260923",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage5-20260923",
+      "commit": "dd16e6885c26b03d2e54bbe5052132564e3ebdd4",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage5-20260923.json.gz",
+      "checksums_sha256": "6d8cb6e8f48d838933104fede2b0aed3426826fad7a06b7466610ad89fd4ad3e",
+      "tracked_file_count": 4009,
+      "allocated_kib": 199300
+    },
+    {
+      "name": "chronaris-runtime-stage5-formal-20260928",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928",
+      "commit": "0b8f0d14fd4da624fbc49bf7d96f683ce7780ddf",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage5-formal-20260928.json.gz",
+      "checksums_sha256": "5fef938d5c5027b10e752a7c276e2a98fc5667a8252d591bf324a7d9645438cc",
+      "tracked_file_count": 4080,
+      "allocated_kib": 201836
+    },
+    {
+      "name": "chronaris-runtime-stage5-performance-20261002",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002",
+      "commit": "a80289e88c27a214ed333aa06abe90ba5a546089",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage5-performance-20261002.json.gz",
+      "checksums_sha256": "fabf3902bd25ac71dfe75d0d3c16cafe357d06e3adb95ea5ef339a77888cb30f",
+      "tracked_file_count": 4119,
+      "allocated_kib": 202292
+    },
+    {
+      "name": "chronaris-runtime-stage5-recovery-20260926",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage5-recovery-20260926",
+      "commit": "389cea665c92241a01fa839d071ad2b916bfad81",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage5-recovery-20260926.json.gz",
+      "checksums_sha256": "468a33d52df173950d5089f90cc37810f40743c1b626b0d811bbb75c84f24207",
+      "tracked_file_count": 4043,
+      "allocated_kib": 200168
+    },
+    {
+      "name": "chronaris-runtime-stage5-recovery-scaled-20260926",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage5-recovery-scaled-20260926",
+      "commit": "63753427db9a0e4847fca2dd8c0f8280b46cd3d9",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage5-recovery-scaled-20260926.json.gz",
+      "checksums_sha256": "568966549dcb754ecacc041ad215d6865b3e902f4a5df158a0d0d8d0d22d9296",
+      "tracked_file_count": 4045,
+      "allocated_kib": 200180
+    },
+    {
+      "name": "chronaris-runtime-stage5-sensor-recovery-qualified-20260930",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930",
+      "commit": "008f7065e8043be4d8b52f615bcf8b3dcdb76bef",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-stage5-sensor-recovery-qualified-20260930.json.gz",
+      "checksums_sha256": "7bf276bee691551d86441ae6ff6dd792042c4033a84da4ade863c54f0384e3fb",
+      "tracked_file_count": 4103,
+      "allocated_kib": 202084
+    },
+    {
+      "name": "chronaris-runtime-target-guard-20261016",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-target-guard-20261016",
+      "commit": "c75253f14c9df2ed1fd44c9fcadf251d52acce23",
+      "status": [],
+      "patch": null,
+      "symlinks": {},
+      "checksums": "checksums/chronaris-runtime-target-guard-20261016.json.gz",
+      "checksums_sha256": "dbae05685b82a08d79892c0cfe812441f46cee4057b910872a79c9893f7a5380",
+      "tracked_file_count": 5252,
+      "allocated_kib": 291372
+    },
+    {
+      "name": "chronaris-runtime-v4-candidate-pressure-gpu-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908",
+      "commit": "87afc941f9833cbd9d7947376b9fe9be258bd4a2",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-candidate-pressure-gpu-20260908.json.gz",
+      "checksums_sha256": "2c0b5a77e160576e000cb682d1ae506a4368cc12ecc161be4404338504e37c75",
+      "tracked_file_count": 3626,
+      "allocated_kib": 187624
+    },
+    {
+      "name": "chronaris-runtime-v4-candidates-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-candidates-20260908",
+      "commit": "ed2e24e3629bcb91060d57e2251b68847fecdc77",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-candidates-20260908.json.gz",
+      "checksums_sha256": "f9a080178b66b00ea1126121f2f047ca8a2d6a3991de613a959301fc8f2caa27",
+      "tracked_file_count": 3605,
+      "allocated_kib": 187472
+    },
+    {
+      "name": "chronaris-runtime-v4-code-complete-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908",
+      "commit": "bee5112e76ecd07af268dcead61bd098cf9b8e6b",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-code-complete-20260908.json.gz",
+      "checksums_sha256": "b533875db6b7ec2f406d510fb168239ef4367961908862177544a317d51e876f",
+      "tracked_file_count": 3763,
+      "allocated_kib": 191536
+    },
+    {
+      "name": "chronaris-runtime-v4-complete-confirmation-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908",
+      "commit": "f9a0aada1deb13f95dc01920ede78cdbdd39c0a7",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-complete-confirmation-20260908.json.gz",
+      "checksums_sha256": "8d2097bb1efc47da056563a1c3f57c98711cc8e043aad900bb66f88b06f89af4",
+      "tracked_file_count": 3735,
+      "allocated_kib": 191304
+    },
+    {
+      "name": "chronaris-runtime-v4-confirmation-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-confirmation-20260908",
+      "commit": "b763ac2e053b93007ef9ca88f6c1da2ed8298a69",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-confirmation-20260908.json.gz",
+      "checksums_sha256": "c08800d87a2dff65f63b676bdbeb6af7d588a75559e8004bcb67e063e9dc53df",
+      "tracked_file_count": 3727,
+      "allocated_kib": 191244
+    },
+    {
+      "name": "chronaris-runtime-v4-development-chain-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908",
+      "commit": "dce2625e586ac4fab33b7796ecbe00d52545b3a0",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-development-chain-20260908.json.gz",
+      "checksums_sha256": "676ec745c36d5b275146cecdeb9b507710aed771bbac1706966d8d6a8d9d46a2",
+      "tracked_file_count": 3699,
+      "allocated_kib": 190984
+    },
+    {
+      "name": "chronaris-runtime-v4-diagnostic-20260906",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-diagnostic-20260906",
+      "commit": "ef8d88eb1458ee54801b8eb77663a43f96894be9",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-diagnostic-20260906.json.gz",
+      "checksums_sha256": "7b98a22f49ea9955cdf552e38c38104060dab3f88796e7aeb21d6ba6aadad9a9",
+      "tracked_file_count": 3543,
+      "allocated_kib": 185640
+    },
+    {
+      "name": "chronaris-runtime-v4-dingxin-target-order-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-dingxin-target-order-20260908",
+      "commit": "d23dc66fa9ccf0c699994272cd6824e0e02f43bd",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-dingxin-target-order-20260908.json.gz",
+      "checksums_sha256": "57bc3df9c86dc31ea2b7b65bf638a1fab59309f983eb7ad126903c721288f475",
+      "tracked_file_count": 3671,
+      "allocated_kib": 190376
+    },
+    {
+      "name": "chronaris-runtime-v4-naive-development-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-naive-development-20260908",
+      "commit": "847c9c4e4279a68618976b318ffd07d2014cecfc",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-naive-development-20260908.json.gz",
+      "checksums_sha256": "bcac825bbdd327c0a23d315027d2dbf61dcbdc4b0e0f13b998f62082686195f4",
+      "tracked_file_count": 3654,
+      "allocated_kib": 190168
+    },
+    {
+      "name": "chronaris-runtime-v4-public-preparation-20260908",
+      "original_path": "/home/wangminan/projects/chronaris-runtime-v4-public-preparation-20260908",
+      "commit": "b8b53d8100bb4a18190617be1499ea91442dbed0",
+      "status": [
+        "?? artifacts"
+      ],
+      "patch": null,
+      "symlinks": {
+        "artifacts": "/home/wangminan/projects/chronaris/artifacts"
+      },
+      "checksums": "checksums/chronaris-runtime-v4-public-preparation-20260908.json.gz",
+      "checksums_sha256": "bb916c643706eba7f348778395a88b6f88ba8b372142f8861cbdb53e94e92c1f",
+      "tracked_file_count": 3610,
+      "allocated_kib": 187516
+    }
+  ]
+}
