@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+  "source_fingerprint": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+  "active_training_rows": 11600,
+  "active_step_min": 51,
+  "active_step_max": 1500,
+  "total_updates": 1500,
+  "relations": [
+    {
+      "source": "vehicle.speed_mps",
+      "target": "vehicle.longitudinal_acc_mps2",
+      "count": 896,
+      "loss": 0.036435943096876144,
+      "gradient_norm": 0.9090784573015687
+    },
+    {
+      "source": "vehicle.altitude_m",
+      "target": "vehicle.vertical_speed_mps",
+      "count": 896,
+      "loss": 0.021157430484890938,
+      "gradient_norm": 0.380886806842096
+    },
+    {
+      "source": "vehicle.roll_rad",
+      "target": "vehicle.roll_rate_rps",
+      "count": 896,
+      "loss": 0.011309747584164143,
+      "gradient_norm": 0.18236931322130667
+    },
+    {
+      "source": "vehicle.pitch_rad",
+      "target": "vehicle.pitch_rate_rps",
+      "count": 896,
+      "loss": 0.06428930908441544,
+      "gradient_norm": 0.6851504884138703
+    },
+    {
+      "source": "vehicle.yaw_rad",
+      "target": "vehicle.yaw_rate_rps",
+      "count": 896,
+      "loss": 0.007409487850964069,
+      "gradient_norm": 0.11610412207397935
+    }
+  ],
+  "effective_physics_weight": 0.05,
+  "weighted_physics_loss": 0.0014060192042961717,
+  "total_gradient_difference_norm": 0.014419282431880082,
+  "optimizer_updates_this_check": 0,
+  "checkpoint_unchanged": true
+}

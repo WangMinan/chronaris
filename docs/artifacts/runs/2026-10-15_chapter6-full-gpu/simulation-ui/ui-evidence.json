@@ -1,0 +1,4538 @@
+[
+  {
+    "name": "fusion-replay.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "results",
+    "window": 1,
+    "query": 40,
+    "dimension": 13,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-f34e580c67be481f95369ce10709f24b",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 16",
+            "start_s": 120,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "physics_relation_count": 0,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-f34e580c67be481f95369ce10709f24b"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "label": "连续对齐与事件语义融合 · 8721ff27",
+        "physics_relation_count": 5,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 2048,
+        "validation_windows": 256,
+        "compatible_cases": [
+          "simulation-validation",
+          "simulation-windows"
+        ],
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "da6eaace57c54cbc8510bab86fac8bee",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:55:29.119773+00:00",
+        "elapsed_s": 6.489096486009657,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "3dd2f459cf42436caee9dae2d81fb62e",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "69c39359f8b4a2fd733f7705e99d7303a56eede3468f8065c067e8ec7ffc5b86",
+          "f2c9c9f5f17d7f9dba9a2c46e1caa7552e70fa04200b7e4ad6879dadcb318f3e",
+          "950d2e53f447dc48efc50238f4b39b319e3f72cfd4365075f1d63956c7bf1178"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:30.815359+00:00",
+        "elapsed_s": 1.8449183200136758,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "43777e78b6e248fb8515bcbaa490e8ad",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:07.520069+00:00",
+        "elapsed_s": 6.279065114998957,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "365294c2e6d14ff798e84a2ef6a6da0f",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:52:07.462112+00:00",
+        "elapsed_s": 6.771703423990402,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "87eb331c483b41409acee2979affc3a5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:59.948385+00:00",
+        "elapsed_s": 6.863883444981184,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "c1583fa43c6d4b90b8cbd7ac91687c99",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:52.236522+00:00",
+        "elapsed_s": 7.230142736021662,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "10289e3c1b88427e89f446cc8e7758d4",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:45.743956+00:00",
+        "elapsed_s": 6.27531473300769,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "12f44dfd23a54696b024b54d6ab0c1b5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:39.378224+00:00",
+        "elapsed_s": 6.145912575011607,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "72f1a0f6935141c1b29110992daf5406",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:32.988631+00:00",
+        "elapsed_s": 6.1608039689890575,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "08baac32ad93448cbaa135838b27aa9c",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:26.715974+00:00",
+        "elapsed_s": 6.131828288984252,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "5c3c2c8d3039481eab7e287cd64092d7",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:20.111278+00:00",
+        "elapsed_s": 6.463155848003225,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "7d62046bfc1946a0bbabc1b127495f81",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:11.660091+00:00",
+        "elapsed_s": 8.295458534994395,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "da6eaace57c54cbc8510bab86fac8bee",
+      "case_id": "simulation-validation",
+      "title": "仿真数据 · 完整方法案例",
+      "request": {
+        "case_id": "simulation-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "incremental": false
+      },
+      "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+        "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+        "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+      ],
+      "retry_of": null,
+      "range_s": [
+        30,
+        120
+      ],
+      "device": "cuda:0",
+      "execution": {
+        "device": "cuda:0",
+        "precision": "float32",
+        "matmul_tf32": false,
+        "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+        "torch_version": "2.11.0+cu130",
+        "cuda_runtime": "13.0"
+      },
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T14:55:29.119773+00:00",
+      "elapsed_s": 6.489096486009657,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  },
+  {
+    "name": "feature-export.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "exports",
+    "window": 1,
+    "query": 41,
+    "dimension": 13,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-f34e580c67be481f95369ce10709f24b",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 16",
+            "start_s": 120,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "physics_relation_count": 0,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-f34e580c67be481f95369ce10709f24b"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "label": "连续对齐与事件语义融合 · 8721ff27",
+        "physics_relation_count": 5,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 2048,
+        "validation_windows": 256,
+        "compatible_cases": [
+          "simulation-validation",
+          "simulation-windows"
+        ],
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "da6eaace57c54cbc8510bab86fac8bee",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:55:29.119773+00:00",
+        "elapsed_s": 6.489096486009657,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "3dd2f459cf42436caee9dae2d81fb62e",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "69c39359f8b4a2fd733f7705e99d7303a56eede3468f8065c067e8ec7ffc5b86",
+          "f2c9c9f5f17d7f9dba9a2c46e1caa7552e70fa04200b7e4ad6879dadcb318f3e",
+          "950d2e53f447dc48efc50238f4b39b319e3f72cfd4365075f1d63956c7bf1178"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:30.815359+00:00",
+        "elapsed_s": 1.8449183200136758,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "43777e78b6e248fb8515bcbaa490e8ad",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:07.520069+00:00",
+        "elapsed_s": 6.279065114998957,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "365294c2e6d14ff798e84a2ef6a6da0f",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:52:07.462112+00:00",
+        "elapsed_s": 6.771703423990402,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "87eb331c483b41409acee2979affc3a5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:59.948385+00:00",
+        "elapsed_s": 6.863883444981184,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "c1583fa43c6d4b90b8cbd7ac91687c99",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:52.236522+00:00",
+        "elapsed_s": 7.230142736021662,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "10289e3c1b88427e89f446cc8e7758d4",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:45.743956+00:00",
+        "elapsed_s": 6.27531473300769,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "12f44dfd23a54696b024b54d6ab0c1b5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:39.378224+00:00",
+        "elapsed_s": 6.145912575011607,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "72f1a0f6935141c1b29110992daf5406",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:32.988631+00:00",
+        "elapsed_s": 6.1608039689890575,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "08baac32ad93448cbaa135838b27aa9c",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:26.715974+00:00",
+        "elapsed_s": 6.131828288984252,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "5c3c2c8d3039481eab7e287cd64092d7",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:20.111278+00:00",
+        "elapsed_s": 6.463155848003225,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "7d62046bfc1946a0bbabc1b127495f81",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:11.660091+00:00",
+        "elapsed_s": 8.295458534994395,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "da6eaace57c54cbc8510bab86fac8bee",
+      "case_id": "simulation-validation",
+      "title": "仿真数据 · 完整方法案例",
+      "request": {
+        "case_id": "simulation-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "incremental": false
+      },
+      "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+        "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+        "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+      ],
+      "retry_of": null,
+      "range_s": [
+        30,
+        120
+      ],
+      "device": "cuda:0",
+      "execution": {
+        "device": "cuda:0",
+        "precision": "float32",
+        "matmul_tf32": false,
+        "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+        "torch_version": "2.11.0+cu130",
+        "cuda_runtime": "13.0"
+      },
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T14:55:29.119773+00:00",
+      "elapsed_s": 6.489096486009657,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  },
+  {
+    "name": "models-and-fields.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "models",
+    "window": 1,
+    "query": 41,
+    "dimension": 13,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-f34e580c67be481f95369ce10709f24b",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 16",
+            "start_s": 120,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "physics_relation_count": 0,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-f34e580c67be481f95369ce10709f24b"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "label": "连续对齐与事件语义融合 · 8721ff27",
+        "physics_relation_count": 5,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 2048,
+        "validation_windows": 256,
+        "compatible_cases": [
+          "simulation-validation",
+          "simulation-windows"
+        ],
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "da6eaace57c54cbc8510bab86fac8bee",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:55:29.119773+00:00",
+        "elapsed_s": 6.489096486009657,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "3dd2f459cf42436caee9dae2d81fb62e",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "69c39359f8b4a2fd733f7705e99d7303a56eede3468f8065c067e8ec7ffc5b86",
+          "f2c9c9f5f17d7f9dba9a2c46e1caa7552e70fa04200b7e4ad6879dadcb318f3e",
+          "950d2e53f447dc48efc50238f4b39b319e3f72cfd4365075f1d63956c7bf1178"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:30.815359+00:00",
+        "elapsed_s": 1.8449183200136758,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "43777e78b6e248fb8515bcbaa490e8ad",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:07.520069+00:00",
+        "elapsed_s": 6.279065114998957,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "365294c2e6d14ff798e84a2ef6a6da0f",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:52:07.462112+00:00",
+        "elapsed_s": 6.771703423990402,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "87eb331c483b41409acee2979affc3a5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:59.948385+00:00",
+        "elapsed_s": 6.863883444981184,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "c1583fa43c6d4b90b8cbd7ac91687c99",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:52.236522+00:00",
+        "elapsed_s": 7.230142736021662,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "10289e3c1b88427e89f446cc8e7758d4",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:45.743956+00:00",
+        "elapsed_s": 6.27531473300769,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "12f44dfd23a54696b024b54d6ab0c1b5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:39.378224+00:00",
+        "elapsed_s": 6.145912575011607,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "72f1a0f6935141c1b29110992daf5406",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:32.988631+00:00",
+        "elapsed_s": 6.1608039689890575,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "08baac32ad93448cbaa135838b27aa9c",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:26.715974+00:00",
+        "elapsed_s": 6.131828288984252,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "5c3c2c8d3039481eab7e287cd64092d7",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:20.111278+00:00",
+        "elapsed_s": 6.463155848003225,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "7d62046bfc1946a0bbabc1b127495f81",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:11.660091+00:00",
+        "elapsed_s": 8.295458534994395,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "da6eaace57c54cbc8510bab86fac8bee",
+      "case_id": "simulation-validation",
+      "title": "仿真数据 · 完整方法案例",
+      "request": {
+        "case_id": "simulation-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "incremental": false
+      },
+      "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+        "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+        "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+      ],
+      "retry_of": null,
+      "range_s": [
+        30,
+        120
+      ],
+      "device": "cuda:0",
+      "execution": {
+        "device": "cuda:0",
+        "precision": "float32",
+        "matmul_tf32": false,
+        "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+        "torch_version": "2.11.0+cu130",
+        "cuda_runtime": "13.0"
+      },
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T14:55:29.119773+00:00",
+      "elapsed_s": 6.489096486009657,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": [
+      {
+        "id": "8ebf2cd01762879481daf131f6f09bcc9fa6eaf651d09718a540369a1a16a7ec",
+        "label": "脑电低频相对分量",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "a859b669da395ace01f6402bfd72c4a0a191135778321b6f621deb7e62024ff4",
+        "label": "脑电高频相对分量",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "1419c2251b97cabebb87f2783a7c558d4cad86ea9f87ae6ee758372b5283eaf8",
+        "label": "脑电复杂度",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "cf72e82e5158744bee1af2ac43ce69ce22243aaaf49d2492fe712a8410a2b95c",
+        "label": "血氧饱和度（%）",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "324473a5e5d37016e5e63e8f873f872eca97b59e7e4e47887a4d8b9500e0cd82",
+        "label": "心率（次/分）",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "93e45b845e239cd0eb905eca31eec590a57becbdb948f6a33e08615c184bd69a",
+        "label": "生理变异量",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "0664c8dd66012cdfa7945bdd348a41078bfbf25ea5a1fdb3bf669fa6a2cbe8da",
+        "label": "个体基线",
+        "stream": "生理",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "36f4fe5196d0b767b1f335249279bddece74657bf1b9108c383f0fa8cc5e8909",
+        "label": "飞机速度（米/秒）",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "c262222d702340c2fd2af1d8716ff2b3be173efa7ea2cf76fa9c4d432b2259cc",
+        "label": "飞机高度（米）",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "5d1158985e8643ecdb165667806cec4b0434e40c9a7da863e43c1fca501bfd6c",
+        "label": "航电字段 003",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "fd86866c7aad3e79e7fa932ad50aee8f05e90ac75c8bb5ad28ace53f147770fd",
+        "label": "滚转角（弧度）",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "e4396147156185a55ad1296aa2c2926bd819e4b8dcb8db5a7c6c63dec14505c1",
+        "label": "航电字段 005",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "55262204010e298567d5c173750039e7663d7c338c385e29c104b863bbfe70c7",
+        "label": "航电字段 006",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "004c95a1f953c9682b64fd5277f61650d9275020655cbb2d62971b786c059e75",
+        "label": "航电字段 007",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "e08e267b5e9799adc6781ab04c135b915d208dce44cff6d71e55220f78db4eb9",
+        "label": "航电字段 008",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "8050cf630be56bf2aa49620ba4a8eef924907c803c07c3579a98e128ac5a950e",
+        "label": "航电字段 009",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "75875a9eca592c73e3522e60bfbe731f7088222b7172bcffe964a13eea5cebf9",
+        "label": "航电字段 010",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "0b300a5313136ec71e2b8683011401c96d00fae74d71c493cee451077bb4a165",
+        "label": "航电字段 011",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      },
+      {
+        "id": "0904b0020e3058b6f268f9d045e75dd3dbad220c8ddb050d65bc13732ed26e37",
+        "label": "航电字段 012",
+        "stream": "航电",
+        "role": "观测字段",
+        "unit": "待核定",
+        "confidence": null,
+        "source": "输入字段定义",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "name": "mobile-replay.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "tab": "results",
+    "window": 0,
+    "query": 0,
+    "dimension": 1,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-f34e580c67be481f95369ce10709f24b",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 16",
+            "start_s": 120,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "physics_relation_count": 0,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-f34e580c67be481f95369ce10709f24b"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "label": "连续对齐与事件语义融合 · 8721ff27",
+        "physics_relation_count": 5,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 2048,
+        "validation_windows": 256,
+        "compatible_cases": [
+          "simulation-validation",
+          "simulation-windows"
+        ],
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "da6eaace57c54cbc8510bab86fac8bee",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:55:29.119773+00:00",
+        "elapsed_s": 6.489096486009657,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "3dd2f459cf42436caee9dae2d81fb62e",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "69c39359f8b4a2fd733f7705e99d7303a56eede3468f8065c067e8ec7ffc5b86",
+          "f2c9c9f5f17d7f9dba9a2c46e1caa7552e70fa04200b7e4ad6879dadcb318f3e",
+          "950d2e53f447dc48efc50238f4b39b319e3f72cfd4365075f1d63956c7bf1178"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:30.815359+00:00",
+        "elapsed_s": 1.8449183200136758,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "43777e78b6e248fb8515bcbaa490e8ad",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:07.520069+00:00",
+        "elapsed_s": 6.279065114998957,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "365294c2e6d14ff798e84a2ef6a6da0f",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:52:07.462112+00:00",
+        "elapsed_s": 6.771703423990402,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "87eb331c483b41409acee2979affc3a5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:59.948385+00:00",
+        "elapsed_s": 6.863883444981184,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "c1583fa43c6d4b90b8cbd7ac91687c99",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:52.236522+00:00",
+        "elapsed_s": 7.230142736021662,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "10289e3c1b88427e89f446cc8e7758d4",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:45.743956+00:00",
+        "elapsed_s": 6.27531473300769,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "12f44dfd23a54696b024b54d6ab0c1b5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:39.378224+00:00",
+        "elapsed_s": 6.145912575011607,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "72f1a0f6935141c1b29110992daf5406",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:32.988631+00:00",
+        "elapsed_s": 6.1608039689890575,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "08baac32ad93448cbaa135838b27aa9c",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:26.715974+00:00",
+        "elapsed_s": 6.131828288984252,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "5c3c2c8d3039481eab7e287cd64092d7",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:20.111278+00:00",
+        "elapsed_s": 6.463155848003225,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "7d62046bfc1946a0bbabc1b127495f81",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:11.660091+00:00",
+        "elapsed_s": 8.295458534994395,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "da6eaace57c54cbc8510bab86fac8bee",
+      "case_id": "simulation-validation",
+      "title": "仿真数据 · 完整方法案例",
+      "request": {
+        "case_id": "simulation-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "incremental": false
+      },
+      "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+        "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+        "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+      ],
+      "retry_of": null,
+      "range_s": [
+        30,
+        120
+      ],
+      "device": "cuda:0",
+      "execution": {
+        "device": "cuda:0",
+        "precision": "float32",
+        "matmul_tf32": false,
+        "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+        "torch_version": "2.11.0+cu130",
+        "cuda_runtime": "13.0"
+      },
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T14:55:29.119773+00:00",
+      "elapsed_s": 6.489096486009657,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  },
+  {
+    "name": "data-and-tasks.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "data",
+    "window": 0,
+    "query": 0,
+    "dimension": 1,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-f34e580c67be481f95369ce10709f24b",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "description": "原生仿真观测与受物理约束训练的完整语义模型。",
+        "model_label": "连续对齐与物理约束语义融合",
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "source_label": "受控仿真数据",
+        "appendable": false,
+        "field_counts": [
+          7,
+          12
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 120,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 60,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 16",
+            "start_s": 120,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "physics_relation_count": 0,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-f34e580c67be481f95369ce10709f24b"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "label": "连续对齐与事件语义融合 · 8721ff27",
+        "physics_relation_count": 5,
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 2048,
+        "validation_windows": 256,
+        "compatible_cases": [
+          "simulation-validation",
+          "simulation-windows"
+        ],
+        "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "da6eaace57c54cbc8510bab86fac8bee",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:55:29.119773+00:00",
+        "elapsed_s": 6.489096486009657,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "3dd2f459cf42436caee9dae2d81fb62e",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "69c39359f8b4a2fd733f7705e99d7303a56eede3468f8065c067e8ec7ffc5b86",
+          "f2c9c9f5f17d7f9dba9a2c46e1caa7552e70fa04200b7e4ad6879dadcb318f3e",
+          "950d2e53f447dc48efc50238f4b39b319e3f72cfd4365075f1d63956c7bf1178"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:30.815359+00:00",
+        "elapsed_s": 1.8449183200136758,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "43777e78b6e248fb8515bcbaa490e8ad",
+        "case_id": "simulation-validation",
+        "title": "仿真数据 · 完整方法案例",
+        "request": {
+          "case_id": "simulation-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          120
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T14:53:07.520069+00:00",
+        "elapsed_s": 6.279065114998957,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "365294c2e6d14ff798e84a2ef6a6da0f",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:52:07.462112+00:00",
+        "elapsed_s": 6.771703423990402,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "87eb331c483b41409acee2979affc3a5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:59.948385+00:00",
+        "elapsed_s": 6.863883444981184,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "c1583fa43c6d4b90b8cbd7ac91687c99",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 16,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+          "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+          "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+          "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+          "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+          "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+          "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+          "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+          "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+          "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+          "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+          "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+          "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 16,
+        "total": 16,
+        "created_at": "2026-10-15T14:51:52.236522+00:00",
+        "elapsed_s": 7.230142736021662,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "10289e3c1b88427e89f446cc8e7758d4",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:45.743956+00:00",
+        "elapsed_s": 6.27531473300769,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "12f44dfd23a54696b024b54d6ab0c1b5",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:39.378224+00:00",
+        "elapsed_s": 6.145912575011607,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "72f1a0f6935141c1b29110992daf5406",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 4,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+          "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+          "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+          "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          150
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 4,
+        "total": 4,
+        "created_at": "2026-10-15T14:51:32.988631+00:00",
+        "elapsed_s": 6.1608039689890575,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "08baac32ad93448cbaa135838b27aa9c",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:26.715974+00:00",
+        "elapsed_s": 6.131828288984252,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "5c3c2c8d3039481eab7e287cd64092d7",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:20.111278+00:00",
+        "elapsed_s": 6.463155848003225,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "7d62046bfc1946a0bbabc1b127495f81",
+        "case_id": "simulation-windows",
+        "title": "仿真数据 · 独立轨迹窗口集合",
+        "request": {
+          "case_id": "simulation-windows",
+          "start": 0,
+          "stop": 1,
+          "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+          "incremental": false
+        },
+        "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9"
+        ],
+        "retry_of": null,
+        "range_s": [
+          30,
+          60
+        ],
+        "device": "cuda:0",
+        "execution": {
+          "device": "cuda:0",
+          "precision": "float32",
+          "matmul_tf32": false,
+          "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+          "torch_version": "2.11.0+cu130",
+          "cuda_runtime": "13.0"
+        },
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T14:51:11.660091+00:00",
+        "elapsed_s": 8.295458534994395,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "da6eaace57c54cbc8510bab86fac8bee",
+      "case_id": "simulation-validation",
+      "title": "仿真数据 · 完整方法案例",
+      "request": {
+        "case_id": "simulation-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+        "incremental": false
+      },
+      "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+        "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+        "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+      ],
+      "retry_of": null,
+      "range_s": [
+        30,
+        120
+      ],
+      "device": "cuda:0",
+      "execution": {
+        "device": "cuda:0",
+        "precision": "float32",
+        "matmul_tf32": false,
+        "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+        "torch_version": "2.11.0+cu130",
+        "cuda_runtime": "13.0"
+      },
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T14:55:29.119773+00:00",
+      "elapsed_s": 6.489096486009657,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  }
+]

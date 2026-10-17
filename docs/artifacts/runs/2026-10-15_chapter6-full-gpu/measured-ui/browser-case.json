@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "run_id": "b180cdcf1d034d6e83c46a7d679ac61f",
+  "device": "cuda:0",
+  "errors": [],
+  "viewport": [
+    1366,
+    768
+  ],
+  "window": 1,
+  "query": 40,
+  "dimension": 13,
+  "views": [
+    "data",
+    "results",
+    "models",
+    "exports"
+  ]
+}

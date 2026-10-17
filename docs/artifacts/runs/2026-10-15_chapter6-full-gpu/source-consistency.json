@@ -1,0 +1,57 @@
+{
+  "main_at_start": "f5d1b6398e39688042b244ea9c63618b924b205b",
+  "main_at_closeout_check": "3ca4bad00785c58854b349d913fb702a60f52099",
+  "frozen_training_checkout": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011",
+  "frozen_training_commit": "8b198dc6",
+  "frozen_training_source_sha256": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+  "checkpoint_source_sha256": "178776ac2cf350600f5e8378b219593d27bcf1d043c368bdaa0b75c29f018fde",
+  "files": [
+    {
+      "path": "src/chronaris/models/alignment/calibrated_physics.py",
+      "current_sha256": "cfaa170136f917200037e1e46e39e6eff2ba783451fadab26bb166334a152064",
+      "main_sha256": "cfaa170136f917200037e1e46e39e6eff2ba783451fadab26bb166334a152064"
+    },
+    {
+      "path": "src/chronaris/evaluation/application_tasks/v4_development_data.py",
+      "current_sha256": "6823659e7f4b4f4b5103a2909ded72698cc607d84ce51e39a0008d870680ed56",
+      "main_sha256": "6823659e7f4b4f4b5103a2909ded72698cc607d84ce51e39a0008d870680ed56"
+    },
+    {
+      "path": "src/chronaris/modeling/training/candidate_screen.py",
+      "current_sha256": "e4350d4a4d6bef68e25158ea5fbd16c66e8ff62667ab091820a4277c58b2ba27",
+      "main_sha256": "e4350d4a4d6bef68e25158ea5fbd16c66e8ff62667ab091820a4277c58b2ba27"
+    },
+    {
+      "path": "src/chronaris/modeling/training/candidate_step.py",
+      "current_sha256": "f7d6f421b4770be22b64bf93e8c9e0d2527d17888f3fc55bc8bf3abc13a8e65d",
+      "main_sha256": "f7d6f421b4770be22b64bf93e8c9e0d2527d17888f3fc55bc8bf3abc13a8e65d"
+    },
+    {
+      "path": "src/chronaris/modeling/training/chronaris_auxiliary.py",
+      "current_sha256": "ca41aebe1f6637b3a8a4040beec133f901f38f0fae549bad51f79bd9839a1a38",
+      "main_sha256": "ca41aebe1f6637b3a8a4040beec133f901f38f0fae549bad51f79bd9839a1a38"
+    },
+    {
+      "path": "src/chronaris/modeling/fusion_encoders/chronaris_continuous.py",
+      "current_sha256": "60fc9b55593d1628fcc3dab8d37417b7702d7f6afc933deb1cd8ec7285e36926",
+      "main_sha256": "60fc9b55593d1628fcc3dab8d37417b7702d7f6afc933deb1cd8ec7285e36926"
+    },
+    {
+      "path": "src/chronaris/models/fusion/semantic_event.py",
+      "current_sha256": "192a6ce78b0ab9a1626c6df71d26beb81e5a8f985997a8dd0bc49a8c37cf3399",
+      "main_sha256": "192a6ce78b0ab9a1626c6df71d26beb81e5a8f985997a8dd0bc49a8c37cf3399"
+    },
+    {
+      "path": "src/chronaris/simulation/aviation_dual_stream/vehicle_g1.py",
+      "current_sha256": "93115ddf992c766bf40ae9f33277c3461800a356107776a297f537ea044fc620",
+      "main_sha256": "93115ddf992c766bf40ae9f33277c3461800a356107776a297f537ea044fc620"
+    },
+    {
+      "path": "src/chronaris/simulation/aviation_dual_stream/vehicle_g2.py",
+      "current_sha256": "2d0c14aadd9a8727b53c8734e13b93df644923964fd47438133b96a55139a9eb",
+      "main_sha256": "2d0c14aadd9a8727b53c8734e13b93df644923964fd47438133b96a55139a9eb"
+    }
+  ],
+  "other_model_diff": " .../modeling/fusion_encoders/sensorllm_adapter.py      | 18 +++---------------\n 1 file changed, 3 insertions(+), 15 deletions(-)\n",
+  "synchronization": "no Chronaris algorithm sync required; later main SensorLLM adapter changes are outside this service; no full branch merge; fixed 1e-5 criterion"
+}

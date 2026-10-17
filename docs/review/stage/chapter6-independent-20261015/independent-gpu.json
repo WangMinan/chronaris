@@ -1,0 +1,152 @@
+{
+  "source_commit": "9a9962a87154037b73f1bc757cdee4b0cbfacca8",
+  "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+  "cases": {
+    "simulation-validation-cpu": {
+      "run_id": "f485400d225840fbb710e5b0bee00152",
+      "pid": 98821,
+      "elapsed_with_probe_s": 5.413954365008976,
+      "shape": [
+        3,
+        96,
+        64
+      ],
+      "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+      "device": "cpu",
+      "delivery": {
+        "run_id": "f485400d225840fbb710e5b0bee00152",
+        "status": "completed",
+        "consumer": "\u6807\u51c6\u8868\u793a\u8bfb\u53d6\u4e0e\u6c47\u603b\u7279\u5f81\u63a5\u53e3",
+        "windows": 3,
+        "valid_points": 285,
+        "output_dim": 64,
+        "created_at": "2026-10-15T15:44:58.220414+00:00"
+      },
+      "timings": {
+        "model_load_s": 4.996512505982537,
+        "input_read_s": 0.003404421004233882,
+        "inference_s": 0.07038334902608767,
+        "chunk_write_s": 0.01943023197236471,
+        "cache_read_s": 0.0,
+        "standard_export_readback_csv_s": 0.012790059990948066,
+        "result_json_zip_s": 0.04746225100825541,
+        "gpu_peak_allocated_mib": 0.0,
+        "gpu_peak_reserved_mib": 0.0,
+        "pipeline_total_s": 5.158063153998228
+      }
+    },
+    "dingxin-validation-cpu": {
+      "run_id": "a02a8abf40cf497aaee46277a997f6af",
+      "pid": 98821,
+      "elapsed_with_probe_s": 1.262223300000187,
+      "shape": [
+        3,
+        96,
+        64
+      ],
+      "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+      "device": "cpu",
+      "delivery": {
+        "run_id": "a02a8abf40cf497aaee46277a997f6af",
+        "status": "completed",
+        "consumer": "\u6807\u51c6\u8868\u793a\u8bfb\u53d6\u4e0e\u6c47\u603b\u7279\u5f81\u63a5\u53e3",
+        "windows": 3,
+        "valid_points": 288,
+        "output_dim": 64,
+        "created_at": "2026-10-15T15:44:59.482805+00:00"
+      },
+      "timings": {
+        "model_load_s": 0.45311609099735506,
+        "input_read_s": 0.043060895026428625,
+        "inference_s": 0.5469919370370917,
+        "chunk_write_s": 0.021309881034540012,
+        "cache_read_s": 0.0,
+        "standard_export_readback_csv_s": 0.01145095398533158,
+        "result_json_zip_s": 0.043733027996495366,
+        "gpu_peak_allocated_mib": 0.0,
+        "gpu_peak_reserved_mib": 0.0,
+        "pipeline_total_s": 1.129695616022218
+      }
+    },
+    "simulation-validation-cuda": {
+      "run_id": "2b482993ddba44289c67829ba8ac5f37",
+      "pid": 98881,
+      "elapsed_with_probe_s": 9.391055090993177,
+      "shape": [
+        3,
+        96,
+        64
+      ],
+      "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+      "device": "cuda:0",
+      "delivery": {
+        "run_id": "2b482993ddba44289c67829ba8ac5f37",
+        "status": "completed",
+        "consumer": "\u6807\u51c6\u8868\u793a\u8bfb\u53d6\u4e0e\u6c47\u603b\u7279\u5f81\u63a5\u53e3",
+        "windows": 3,
+        "valid_points": 285,
+        "output_dim": 64,
+        "created_at": "2026-10-15T15:45:11.447699+00:00"
+      },
+      "timings": {
+        "model_load_s": 5.088017993984977,
+        "input_read_s": 0.0027244500524830073,
+        "inference_s": 3.958201345987618,
+        "chunk_write_s": 0.02078737801639363,
+        "cache_read_s": 0.0,
+        "standard_export_readback_csv_s": 0.011736585991457105,
+        "result_json_zip_s": 0.048235530994134024,
+        "gpu_peak_allocated_mib": 67.166015625,
+        "gpu_peak_reserved_mib": 166.0,
+        "pipeline_total_s": 9.135728894994827
+      }
+    },
+    "dingxin-validation-cuda": {
+      "run_id": "0c8a7b69fd814c3190a7c0bb8cb683c3",
+      "pid": 98881,
+      "elapsed_with_probe_s": 7.7672527019749396,
+      "shape": [
+        3,
+        96,
+        64
+      ],
+      "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+      "device": "cuda:0",
+      "delivery": {
+        "run_id": "0c8a7b69fd814c3190a7c0bb8cb683c3",
+        "status": "completed",
+        "consumer": "\u6807\u51c6\u8868\u793a\u8bfb\u53d6\u4e0e\u6c47\u603b\u7279\u5f81\u63a5\u53e3",
+        "windows": 3,
+        "valid_points": 288,
+        "output_dim": 64,
+        "created_at": "2026-10-15T15:45:19.216305+00:00"
+      },
+      "timings": {
+        "model_load_s": 0.4767858709965367,
+        "input_read_s": 0.04449310799827799,
+        "inference_s": 7.052066092001041,
+        "chunk_write_s": 0.01705526898149401,
+        "cache_read_s": 0.0,
+        "standard_export_readback_csv_s": 0.012142182007664815,
+        "result_json_zip_s": 0.045068915002048016,
+        "gpu_peak_allocated_mib": 123.73095703125,
+        "gpu_peak_reserved_mib": 230.0,
+        "pipeline_total_s": 7.656888450001134
+      }
+    }
+  },
+  "live_nvidia_processes": "",
+  "profiled_cuda_events": 42867,
+  "status": "passed",
+  "comparisons": {
+    "simulation-validation": {
+      "max_abs": 1.430511474609375e-06,
+      "pooled_max_abs": 2.384185791015625e-07
+    },
+    "dingxin-validation": {
+      "max_abs": 1.0728836059570312e-06,
+      "pooled_max_abs": 2.384185791015625e-07
+    }
+  },
+  "timing_scope": "instrumented independent checks; not performance benchmark"
+}

@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "duplicate_window_count": 1,
+  "original_record_preserved": true,
+  "checks": [
+    {
+      "check": "conflicting observation identity",
+      "http_status": 400,
+      "body": {
+        "error": "同一窗口标识的内容发生变化，请使用新的记录标识"
+      }
+    },
+    {
+      "check": "field order changed",
+      "http_status": 400,
+      "body": {
+        "error": "导入字段顺序、角色与模型输入不一致"
+      }
+    },
+    {
+      "check": "time outside window",
+      "http_status": 400,
+      "body": {
+        "error": "physiology timestamps must be finite, ordered and inside the context"
+      }
+    },
+    {
+      "check": "non boolean mask",
+      "http_status": 400,
+      "body": {
+        "error": "有效观测掩码必须使用布尔值"
+      }
+    },
+    {
+      "check": "non finite input",
+      "http_status": 400,
+      "body": {
+        "error": "数值必须有限"
+      }
+    }
+  ]
+}

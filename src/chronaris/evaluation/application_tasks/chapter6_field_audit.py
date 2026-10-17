@@ -29,7 +29,9 @@ def audit_observed_fields(output):
         position=plan.vehicle_raw_to_index[retained].get(raw)
         selected.append(dict(raw_field=raw,canonical_field=plan.schema.vehicle_feature_names[position] if position is not None else None,
             label=label,unit_hint=r['unit_hint'],semantic_key=r['semantic_key'],
-            observed_points=int(r['observed_point_count']),metadata_status=r['metadata_status']))
+            observed_points=int(r['observed_point_count']),metadata_status=r['metadata_status'],
+            training_valid_count=payload['normalizer']['vehicle']['valid_count'][position] if position is not None else None,
+            training_active=payload['normalizer']['vehicle']['active_mask'][position] if position is not None else None))
     own_rate=[r for r in selected if re.search('角速度|角速率|滚转速率|俯仰速率|偏航速率',r['label'])]
     context=Path('docs/artifacts/runs/2026-06-14_llm-preprocessing-context/llm_preprocessing_context.json')
     llm=read_json(context)

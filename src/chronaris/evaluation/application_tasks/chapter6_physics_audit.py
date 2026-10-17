@@ -8,7 +8,7 @@ from chronaris.modeling.training.chronaris_auxiliary import build_chronaris_auxi
 from chronaris.modeling.training.pretext import chronaris_auxiliary_weight_schedule
 from chronaris.modeling.fusion_encoders.alignment_bridge import build_alignment_batch_from_observations
 from chronaris.models.alignment.calibrated_physics import (SIMULATION_RELATIONS, fit_physics_calibration,
-    calibrated_kinematic_losses, relation_samples)
+    calibrated_kinematic_losses, relation_samples, KinematicRelation)
 from chronaris.representation import collate_observation_samples, select_observation_batch, TrainOnlyRobustNormalizer
 from chronaris.serving.fusion_workbench.cases import write_json
 from chronaris.simulation.aviation_dual_stream.deterministic_npz import sha256_file
@@ -48,13 +48,21 @@ def audit_full_physics(output):
         physiology_feature_names=tuple(payload['physiology_feature_names']),
         vehicle_feature_names=tuple(payload['vehicle_feature_names']))
     rows = calibrated_kinematic_losses(aligned.vehicle.reconstructions, batch.vehicle, calibration)
+    physical = (aligned.vehicle.reconstructions.float()*torch.tensor(calibration['scale'])
+                +torch.tensor(calibration['center']))
     parameters = tuple(encoder.backbone.continuous_backbone.vehicle_stream.parameters())
     relation_rows = []
     for spec, (_, loss, count) in zip(calibration['relations'], rows, strict=True):
         gradients = torch.autograd.grad(loss, parameters, retain_graph=True, allow_unused=True)
         norm = sum(float(g.detach().square().sum()) for g in gradients if g is not None)**.5
         assert count > 0 and norm > 0 and torch.isfinite(loss)
+        residual, _ = relation_samples(physical, batch.vehicle.offsets_s,
+            batch.vehicle.feature_valid_mask & batch.vehicle.mask.unsqueeze(-1),
+            tuple(payload['vehicle_feature_names']), KinematicRelation(**spec))
         relation_rows.append(dict(**spec, valid_pairs=count, raw_loss=float(loss.detach()),
+            physical_residual_mean=float(residual.detach().mean()),
+            physical_residual_abs_mean=float(residual.detach().abs().mean()),
+            physical_residual_rmse=float(residual.detach().square().mean().sqrt()),
             mean_contribution=float(loss.detach())/5, weighted_contribution=float(loss.detach())/5*config['physics_weight'],
             vehicle_parameter_gradient_norm=norm))
     audit = encoded.auxiliary['physical_consistency']

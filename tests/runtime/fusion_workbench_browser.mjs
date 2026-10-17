@@ -91,6 +91,7 @@ try {
   const fontHeight=await page.locator('#phys-traces svg text').first().evaluate(e=>e.getBoundingClientRect().height);
   assert(fontHeight>=11);checks.push('mobile axes readable and no horizontal overflow');
   await page.setViewportSize({width:1366,height:768});await page.locator('[data-tab=data]').click();
+  await page.locator('#case').selectOption(caseId);
   await capture('data-and-tasks.png');
   await page.locator('#case').selectOption('dingxin-validation');
   // Archive ingestion uses actual permitted source observations, including more than eight windows.

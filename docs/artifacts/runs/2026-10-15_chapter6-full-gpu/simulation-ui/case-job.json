@@ -1,0 +1,44 @@
+{
+  "id": "da6eaace57c54cbc8510bab86fac8bee",
+  "case_id": "simulation-validation",
+  "title": "仿真数据 · 完整方法案例",
+  "request": {
+    "case_id": "simulation-validation",
+    "start": 0,
+    "stop": 3,
+    "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+    "incremental": false
+  },
+  "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+  "selected_indices": [
+    0,
+    1,
+    2
+  ],
+  "window_keys": [
+    "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+    "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+    "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e"
+  ],
+  "retry_of": null,
+  "range_s": [
+    30,
+    120
+  ],
+  "device": "cuda:0",
+  "execution": {
+    "device": "cuda:0",
+    "precision": "float32",
+    "matmul_tf32": false,
+    "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+    "torch_version": "2.11.0+cu130",
+    "cuda_runtime": "13.0"
+  },
+  "status": "completed",
+  "done": 3,
+  "total": 3,
+  "created_at": "2026-10-15T14:55:29.119773+00:00",
+  "elapsed_s": 6.489096486009657,
+  "reused_windows": 0,
+  "retryable": false
+}

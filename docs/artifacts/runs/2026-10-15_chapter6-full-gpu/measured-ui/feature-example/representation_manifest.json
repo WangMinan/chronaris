@@ -1,0 +1,22 @@
+{
+  "format": "chronaris.fusion_stream.v1",
+  "method_name": "chronaris",
+  "fold_id": "single_record_chronological_blocks_v1",
+  "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+  "export_role": "fusion_workbench",
+  "sample_ids": [
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0023",
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0024",
+    "20251002_单01_ACT-8_翼云_J16_12#01__pilot_10033::context_end_0025"
+  ],
+  "source_sample_hashes": [
+    "39b6c9130fed1df7a5f02a69bdc76fd85bdc4d5d692f63c7df478623f8097022",
+    "52de4b9d371d5511da56aa545f3d107ccf1a4c8be0b81063a8a50a47d7baa839",
+    "0abaffd8d746ac89c04de165cf3efa8a59b9a5b7169e6fe14ce84f1d2fd6890f"
+  ],
+  "representation_archive": "fusion_stream.npz",
+  "representation_sha256": "2bdbc9f325e3d687444c67988effeeeead82071098bd8fec04305794113c73b7",
+  "label_used_for_encoder_training": false,
+  "output_dim": 64,
+  "query_point_count": 96
+}

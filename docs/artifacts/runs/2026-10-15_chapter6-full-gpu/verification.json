@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "implementation_commit": "9a9962a87154037b73f1bc757cdee4b0cbfacca8",
+  "inference_implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+  "measurement_base_commit": "d5850b7d66e092ddb7bb20fd7907aeef856d6ecd",
+  "original_six_simulation_checkpoints_unchanged": true,
+  "original_measured_checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+  "optimizer_updates_this_round": 0,
+  "code_tests": 63,
+  "main_method_consistency": "source-consistency.json",
+  "physics": "physics-training.json",
+  "numeric": "numeric-comparison.json",
+  "recovery": "gpu-recovery.json",
+  "browser": "simulation-ui/browser-check.json",
+  "measured_browser": "measured-ui/browser-case.json"
+}
