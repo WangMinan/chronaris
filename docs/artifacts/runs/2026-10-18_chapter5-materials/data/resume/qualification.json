@@ -1,0 +1,71 @@
+{
+  "status": "completed",
+  "passed": true,
+  "checks": {
+    "model_state_dict": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "optimizer_state_dict": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "rng_state": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "data_cursor": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "update_rows": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "epoch_rows": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "stage_update_counts": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "protocol_sha256": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    },
+    "best_update": {
+      "bitwise_equal": true,
+      "close": true,
+      "max_abs": 0.0,
+      "failures": []
+    }
+  },
+  "optimizer_updates": 175,
+  "files": {
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/qualification_checkpoints/resumed.pt": "9089c02cc665d033b79d87229efa03d1472aa30920266df8d1673d8107a784cb",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/qualification_checkpoints/continuous.pt": "7b0f83de2c777e62caaf062554071779d6f1d9107709e0f81441ad64c566ce11"
+  },
+  "execution_copy": {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/resume/execution_copy.json",
+    "sha256": "21e0d999964260854ac083285a23603f9a390e3a6e72c97d49f2aade8170c370"
+  },
+  "confirmation_opened": false,
+  "interpretation": "same-device independent resume from an unchanged 4090 checkpoint"
+}

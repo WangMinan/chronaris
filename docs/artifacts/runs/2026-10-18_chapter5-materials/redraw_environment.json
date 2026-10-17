@@ -1,0 +1,13 @@
+{
+  "python": "3.11.15 | packaged by conda-forge | (main, Aug 11 2026, 10:26:29) [GCC 14.4.0]",
+  "matplotlib": "3.11.2",
+  "experiment_package_available": false,
+  "torch_available": false,
+  "cjk_fonts": [
+    "Noto Sans CJK HK",
+    "Noto Sans CJK JP",
+    "Noto Sans CJK KR",
+    "Noto Sans CJK SC",
+    "Noto Sans CJK TC"
+  ]
+}

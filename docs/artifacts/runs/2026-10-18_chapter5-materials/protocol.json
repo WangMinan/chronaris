@@ -1,0 +1,16 @@
+{
+  "seed_policy": [
+    17
+  ],
+  "public_folds": 5,
+  "native_units": 108,
+  "simulation_model_units": 11,
+  "public_aggregation": "field_mean_then_subject_mean_then_equal_fold_mean",
+  "error_bars": "population_SD_across_folds_or_simulation_profiles_not_CI",
+  "dingxin": "single_record_chronological_blocks_descriptive_only",
+  "sensitivity_role": "validation",
+  "time_mechanism": "linear_decodability_not_direct_clock_identification",
+  "query_step_s": 0.3125,
+  "no_outer_model_selection": true,
+  "legacy_three_seed_scope_complete": false
+}

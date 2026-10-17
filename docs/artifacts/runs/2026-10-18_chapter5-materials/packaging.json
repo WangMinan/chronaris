@@ -1,0 +1,16 @@
+{
+  "source_root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/materials",
+  "source_evidence_sha256": "d27ee570c49bdb304dbe2c89857c0ebeddfe990d3b26646d50e4b96660c49d13",
+  "changes": [
+    {
+      "original": "data/training_contracts.csv",
+      "delivered": "data/training_contracts.csv.gz",
+      "reason": "lossless compression for regular Git size limits",
+      "uncompressed_sha256": "d9effbbc9d6bcfd39d48b9b3ec53bcad75a8a666450a0fec808aff349a01d327",
+      "compressed_sha256": "fb3713b1d0ae746c16e77f7bcb39e068cf2a873ac06fdd94ef2dc7ba97aa528c",
+      "uncompressed_bytes": 1071174612,
+      "compressed_bytes": 49791506
+    }
+  ],
+  "frozen_results_modified": false
+}

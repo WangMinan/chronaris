@@ -1,0 +1,282 @@
+[
+  {
+    "figure": "native_clare_frozen_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_clare_history_adapted_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_clare_self_supervised_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_clare_self_supervised_minirocket",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_clare_summary_adapted_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_clare_task_guided_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_clare_task_guided_minirocket",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_frozen_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_history_adapted_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_self_supervised_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_self_supervised_minirocket",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_summary_adapted_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_task_guided_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_cogpilot_task_guided_minirocket",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_dingxin_frozen_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_dingxin_history_adapted_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_dingxin_self_supervised_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_dingxin_summary_adapted_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "native_dingxin_task_guided_linear",
+    "inputs": [
+      "data/native_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "simulation_self_supervised_workload_classification",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "simulation_self_supervised_workload_regression",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "simulation_self_supervised_maneuver_segmentation",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "missing_self_supervised_linear",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "missing_self_supervised_minirocket",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "simulation_task_guided_workload_classification",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "simulation_task_guided_workload_regression",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "simulation_task_guided_maneuver_segmentation",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "missing_task_guided_linear",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "missing_task_guided_minirocket",
+    "inputs": [
+      "data/simulation_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "sensitivity_self_supervised",
+    "inputs": [
+      "data/sensitivity.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "sensitivity_task_guided",
+    "inputs": [
+      "data/sensitivity.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "causality",
+    "inputs": [
+      "data/causality_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "inference",
+    "inputs": [
+      "data/inference_summary.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "timing_self_supervised",
+    "inputs": [
+      "data/timing_metrics.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  },
+  {
+    "figure": "timing_task_guided",
+    "inputs": [
+      "data/timing_metrics.csv"
+    ],
+    "script": "plot.py",
+    "style": "style.json"
+  }
+]

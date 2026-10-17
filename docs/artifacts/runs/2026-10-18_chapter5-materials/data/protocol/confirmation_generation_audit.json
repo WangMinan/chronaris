@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "model_freeze_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+  "contract_sha256": "8253248fdb6033592a93adfbaec5e3cef2daf0f62af9694c59d9b3937053c77c",
+  "simulation_manifest_sha256": "020b486698345924c0c4c0a3c30472ced9c558a233bb43845183aa34f6592df4",
+  "registry_sha256": "ae9550e082acf987ea8f773b4d672db4eec98908b29dcd37e1fab9310fa24af2",
+  "trajectory_count": 128,
+  "profile_count": 16,
+  "scenario_count": 36,
+  "stress_scenario_count": 35,
+  "contexts_per_scenario": 512,
+  "model_scores_generated": false
+}

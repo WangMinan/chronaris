@@ -1,0 +1,30 @@
+{
+  "status": "completed",
+  "scope": "seed17_first_draft_delivery",
+  "data_files": 1205,
+  "figure_pairs": 35,
+  "minimal_environment_redraw": true,
+  "isolated_python": true,
+  "experiment_package_available": false,
+  "torch_available": false,
+  "external_redraw_directory": "/tmp/chronaris-chapter5-final-redraw-20261018",
+  "validation": "PASS 1205 data files and 35 figures",
+  "visually_inspected_original_figures": [
+    "inference",
+    "timing_task_guided",
+    "native_clare_task_guided_linear",
+    "missing_task_guided_minirocket",
+    "simulation_task_guided_workload_regression",
+    "sensitivity_self_supervised",
+    "causality"
+  ],
+  "visually_inspected_redrawn_figures": [
+    "timing_task_guided",
+    "native_dingxin_task_guided_linear"
+  ],
+  "visual_result": "Chinese labels, legends, long method labels and axes readable; no observed overlap or clipping in sampled figures",
+  "original_material_file_hashes_verified": 1285,
+  "original_frozen_model_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+  "data_values_changed": false,
+  "git_delivery": "complete bundle tracked in the same commit as this record"
+}
