@@ -1,0 +1,267 @@
+{
+  "status": "passed",
+  "atol": 1e-05,
+  "rtol": 1e-05,
+  "cases": {
+    "simulation-validation": {
+      "cpu": {
+        "run_id": "9aa6b6ce3d384e37b001a7490c599572",
+        "device": "cpu",
+        "shape": [
+          3,
+          96,
+          64
+        ],
+        "delivery": {
+          "run_id": "9aa6b6ce3d384e37b001a7490c599572",
+          "status": "completed",
+          "consumer": "标准表示读取与汇总特征接口",
+          "windows": 3,
+          "valid_points": 285,
+          "output_dim": 64,
+          "created_at": "2026-10-15T14:53:07.491517+00:00"
+        },
+        "model": {
+          "variant": "full",
+          "fusion_kind": "safe_lag",
+          "semantic_event_enabled": true,
+          "attention_kind": "legacy_cosine"
+        },
+        "execution": [
+          {
+            "parameter_device": "cpu",
+            "input_tensor_devices": [
+              "cpu"
+            ],
+            "forward_output_device": "cpu",
+            "normalized_s": 0.0003429329954087734,
+            "input_transfer_s": 0.0001891510037239641,
+            "forward_s": 0.01990060298703611,
+            "output_transfer_pool_s": 3.731000469997525e-05
+          },
+          {
+            "parameter_device": "cpu",
+            "input_tensor_devices": [
+              "cpu"
+            ],
+            "forward_output_device": "cpu",
+            "normalized_s": 0.00025132199516519904,
+            "input_transfer_s": 0.00023328099632635713,
+            "forward_s": 0.022085358999902382,
+            "output_transfer_pool_s": 6.876100087538362e-05
+          },
+          {
+            "parameter_device": "cpu",
+            "input_tensor_devices": [
+              "cpu"
+            ],
+            "forward_output_device": "cpu",
+            "normalized_s": 0.0002265920047648251,
+            "input_transfer_s": 0.00015721097588539124,
+            "forward_s": 0.019211528997402638,
+            "output_transfer_pool_s": 6.271101301535964e-05
+          }
+        ],
+        "csv_exact": true
+      },
+      "gpu": {
+        "run_id": "43777e78b6e248fb8515bcbaa490e8ad",
+        "device": "cuda:0",
+        "shape": [
+          3,
+          96,
+          64
+        ],
+        "delivery": {
+          "run_id": "43777e78b6e248fb8515bcbaa490e8ad",
+          "status": "completed",
+          "consumer": "标准表示读取与汇总特征接口",
+          "windows": 3,
+          "valid_points": 285,
+          "output_dim": 64,
+          "created_at": "2026-10-15T14:53:13.973409+00:00"
+        },
+        "model": {
+          "variant": "full",
+          "fusion_kind": "safe_lag",
+          "semantic_event_enabled": true,
+          "attention_kind": "legacy_cosine"
+        },
+        "execution": [
+          {
+            "parameter_device": "cuda:0",
+            "input_tensor_devices": [
+              "cuda:0"
+            ],
+            "forward_output_device": "cuda:0",
+            "normalized_s": 0.00047533298493362963,
+            "input_transfer_s": 0.0024148880038410425,
+            "forward_s": 1.3161904620064888,
+            "output_transfer_pool_s": 0.002093754999805242
+          },
+          {
+            "parameter_device": "cuda:0",
+            "input_tensor_devices": [
+              "cuda:0"
+            ],
+            "forward_output_device": "cuda:0",
+            "normalized_s": 0.0003425129980314523,
+            "input_transfer_s": 0.002462220989400521,
+            "forward_s": 0.03078454898786731,
+            "output_transfer_pool_s": 0.0002718519826885313
+          },
+          {
+            "parameter_device": "cuda:0",
+            "input_tensor_devices": [
+              "cuda:0"
+            ],
+            "forward_output_device": "cuda:0",
+            "normalized_s": 0.0002984520106110722,
+            "input_transfer_s": 0.004031962977023795,
+            "forward_s": 0.02839037199737504,
+            "output_transfer_pool_s": 0.0001599309907760471
+          }
+        ],
+        "csv_exact": true
+      },
+      "comparison": {
+        "sequence_max_abs": 1.430511474609375e-06,
+        "pooled_max_abs": 2.384185791015625e-07,
+        "gpu_batch_vs_window": {
+          "sequence_max_abs": 1.1920928955078125e-06,
+          "pooled_max_abs": 2.384185791015625e-07
+        }
+      }
+    },
+    "dingxin-validation": {
+      "cpu": {
+        "run_id": "7343e0429b9c4f29bf82eed7df3eb31c",
+        "device": "cpu",
+        "shape": [
+          3,
+          96,
+          64
+        ],
+        "delivery": {
+          "run_id": "7343e0429b9c4f29bf82eed7df3eb31c",
+          "status": "completed",
+          "consumer": "标准表示读取与汇总特征接口",
+          "windows": 3,
+          "valid_points": 288,
+          "output_dim": 64,
+          "created_at": "2026-10-15T14:53:30.785333+00:00"
+        },
+        "model": {
+          "variant": "full",
+          "fusion_kind": "safe_lag",
+          "semantic_event_enabled": true,
+          "attention_kind": "legacy_cosine"
+        },
+        "execution": [
+          {
+            "parameter_device": "cpu",
+            "input_tensor_devices": [
+              "cpu"
+            ],
+            "forward_output_device": "cpu",
+            "normalized_s": 0.026741103996755555,
+            "input_transfer_s": 0.02466816798551008,
+            "forward_s": 0.10750387702137232,
+            "output_transfer_pool_s": 3.643002128228545e-05
+          },
+          {
+            "parameter_device": "cpu",
+            "input_tensor_devices": [
+              "cpu"
+            ],
+            "forward_output_device": "cpu",
+            "normalized_s": 0.02191295800730586,
+            "input_transfer_s": 0.021359365026000887,
+            "forward_s": 0.10103158201673068,
+            "output_transfer_pool_s": 3.632099833339453e-05
+          },
+          {
+            "parameter_device": "cpu",
+            "input_tensor_devices": [
+              "cpu"
+            ],
+            "forward_output_device": "cpu",
+            "normalized_s": 0.021135522023541853,
+            "input_transfer_s": 0.020229485991876572,
+            "forward_s": 0.0944106119859498,
+            "output_transfer_pool_s": 3.7420017179101706e-05
+          }
+        ],
+        "csv_exact": true
+      },
+      "gpu": {
+        "run_id": "3dd2f459cf42436caee9dae2d81fb62e",
+        "device": "cuda:0",
+        "shape": [
+          3,
+          96,
+          64
+        ],
+        "delivery": {
+          "run_id": "3dd2f459cf42436caee9dae2d81fb62e",
+          "status": "completed",
+          "consumer": "标准表示读取与汇总特征接口",
+          "windows": 3,
+          "valid_points": 288,
+          "output_dim": 64,
+          "created_at": "2026-10-15T14:53:32.770315+00:00"
+        },
+        "model": {
+          "variant": "full",
+          "fusion_kind": "safe_lag",
+          "semantic_event_enabled": true,
+          "attention_kind": "legacy_cosine"
+        },
+        "execution": [
+          {
+            "parameter_device": "cuda:0",
+            "input_tensor_devices": [
+              "cuda:0"
+            ],
+            "forward_output_device": "cuda:0",
+            "normalized_s": 0.022130269993795082,
+            "input_transfer_s": 0.00932536699110642,
+            "forward_s": 0.34747829800471663,
+            "output_transfer_pool_s": 0.00046596399624831975
+          },
+          {
+            "parameter_device": "cuda:0",
+            "input_tensor_devices": [
+              "cuda:0"
+            ],
+            "forward_output_device": "cuda:0",
+            "normalized_s": 0.023495810019085184,
+            "input_transfer_s": 0.004732294008135796,
+            "forward_s": 0.3252250180230476,
+            "output_transfer_pool_s": 0.00048678400344215333
+          },
+          {
+            "parameter_device": "cuda:0",
+            "input_tensor_devices": [
+              "cuda:0"
+            ],
+            "forward_output_device": "cuda:0",
+            "normalized_s": 0.02415529900463298,
+            "input_transfer_s": 0.00511283302330412,
+            "forward_s": 0.32296449100249447,
+            "output_transfer_pool_s": 0.00037892197724431753
+          }
+        ],
+        "csv_exact": true
+      },
+      "comparison": {
+        "sequence_max_abs": 1.0728836059570312e-06,
+        "pooled_max_abs": 2.384185791015625e-07,
+        "gpu_batch_vs_window": {
+          "sequence_max_abs": 9.5367431640625e-07,
+          "pooled_max_abs": 1.7881393432617188e-07
+        }
+      }
+    }
+  }
+}

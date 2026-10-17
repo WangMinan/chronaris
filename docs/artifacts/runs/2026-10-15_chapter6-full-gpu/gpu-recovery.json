@@ -1,0 +1,183 @@
+{
+  "status": "passed",
+  "interrupted": {
+    "id": "9b9662f8d5b24cd48965001f81dec463",
+    "case_id": "simulation-windows",
+    "title": "仿真数据 · 独立轨迹窗口集合",
+    "request": {
+      "case_id": "simulation-windows",
+      "start": 0,
+      "stop": 16,
+      "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+      "incremental": false
+    },
+    "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+    "selected_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "window_keys": [
+      "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+      "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+      "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+      "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+      "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+      "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+      "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+      "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+      "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+      "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+      "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+      "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+      "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+      "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+      "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+      "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+    ],
+    "retry_of": null,
+    "range_s": [
+      30.0,
+      150.0
+    ],
+    "device": "cuda:0",
+    "execution": {
+      "device": "cuda:0",
+      "precision": "float32",
+      "matmul_tf32": false,
+      "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+      "torch_version": "2.11.0+cu130",
+      "cuda_runtime": "13.0"
+    },
+    "status": "failed",
+    "done": 1,
+    "total": 16,
+    "created_at": "2026-10-15T14:58:52.126342+00:00",
+    "error": "服务已中断，可按原参数继续处理。"
+  },
+  "recovered": {
+    "id": "87b6e4cbe59a4b88b7fec848a0e8a551",
+    "case_id": "simulation-windows",
+    "title": "仿真数据 · 独立轨迹窗口集合",
+    "request": {
+      "case_id": "simulation-windows",
+      "start": 0,
+      "stop": 16,
+      "model_id": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+      "incremental": false
+    },
+    "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+    "selected_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "window_keys": [
+      "57368de69af1a649fdd6e703688ecf880537dfd97296c45840166ab6b89f29d9",
+      "0fe6e8b97025ae600d3264a46fae883e528ac090b91e0f4649522f4a900f6c99",
+      "d4726870cab161b5944182209df7f3b64f0ff7e6d909469547846e8046b7a82e",
+      "726466e38360bb7bccef3b8d5cc653e6c82ec679b2e5bcc63f3d6bfde12dc41b",
+      "dfd5c03226126bb96eef515d830f84728512b6d6989b0fd732beb70014016e65",
+      "9ea63a0c6fb4bb4ac82819561c36f7a5eb260f852f0651827300229eb8a8ed25",
+      "04476d7492675594a035492fe52128b633d253af26b038109269007f012e3918",
+      "326ab4d835a105010dc2520d009cea8d5c01c30b4c326fa26b0f495e4ea416ac",
+      "2a9152a3435a596de6b477e9d99f95eae6e68ad1bd7dece0561830eb693947b4",
+      "139fe085d1bd515bafef969f9d79036da74dbd5405bdcd5cc3f6bfa868ebe4c9",
+      "2130ca7346fd7fd0be03c43970c0acde105e7457c5491d33024f7c70b44fa2ca",
+      "dd3f3875a735e05e4cce25e05ed1d2fb6dec187ae1a1a881daadaee50b2d9d29",
+      "e6a1c9a658cbe52898e682de85b878e334557230bd1fc8677e15aaaf6e2aa56f",
+      "103b12e6eedae053c43ba3d4509f8b06c747fa7042a77d4665249fdd91d3ba77",
+      "dcda49af991cdb1349fed02889ac0628c5110f35c2eec10a32ee37190526d539",
+      "0186b5adf5b4a117b5956f13e7eac6dedcc090fa96987bdc58163e4303bd7ccb"
+    ],
+    "retry_of": "9b9662f8d5b24cd48965001f81dec463",
+    "range_s": [
+      30.0,
+      150.0
+    ],
+    "device": "cuda:0",
+    "execution": {
+      "device": "cuda:0",
+      "precision": "float32",
+      "matmul_tf32": false,
+      "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+      "torch_version": "2.11.0+cu130",
+      "cuda_runtime": "13.0"
+    },
+    "status": "completed",
+    "done": 16,
+    "total": 16,
+    "created_at": "2026-10-15T14:59:00.516784+00:00",
+    "elapsed_s": 7.832122799009085,
+    "reused_windows": 1
+  },
+  "reused_windows": 1,
+  "original_preserved": true,
+  "comparison": {
+    "sequence_max_abs": 0.0,
+    "pooled_max_abs": 0.0
+  },
+  "cross_device_reused_windows": 0,
+  "cross_device_actual_execution": [
+    {
+      "parameter_device": "cuda:0",
+      "input_tensor_devices": [
+        "cuda:0"
+      ],
+      "forward_output_device": "cuda:0",
+      "normalized_s": 0.00034623200190253556,
+      "input_transfer_s": 0.0810440150089562,
+      "forward_s": 2.3464720180199947,
+      "output_transfer_pool_s": 0.00023215700639411807
+    },
+    {
+      "parameter_device": "cuda:0",
+      "input_tensor_devices": [
+        "cuda:0"
+      ],
+      "forward_output_device": "cuda:0",
+      "normalized_s": 0.000326162000419572,
+      "input_transfer_s": 0.0017584729939699173,
+      "forward_s": 0.026359449984738603,
+      "output_transfer_pool_s": 0.00013815099373459816
+    },
+    {
+      "parameter_device": "cuda:0",
+      "input_tensor_devices": [
+        "cuda:0"
+      ],
+      "forward_output_device": "cuda:0",
+      "normalized_s": 0.00026522198459133506,
+      "input_transfer_s": 0.0020463039982132614,
+      "forward_s": 0.023754400986945257,
+      "output_transfer_pool_s": 0.00015249100397340953
+    }
+  ],
+  "busy_rejection": "GPU正由其他实验使用，请稍后再启动GPU服务"
+}

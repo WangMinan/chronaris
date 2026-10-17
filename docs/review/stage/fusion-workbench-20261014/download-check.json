@@ -1,0 +1,8 @@
+{
+  "run_id": "662e0cfbddbc46fea0f3939dd277ca9a",
+  "shape": [1, 96, 64],
+  "csv_rows": 96,
+  "download_readback": true,
+  "csv_equal": true,
+  "zip_members_checked": true
+}

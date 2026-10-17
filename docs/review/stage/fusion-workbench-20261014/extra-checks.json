@@ -1,0 +1,13 @@
+{
+  "mobile": {
+    "overflow": false,
+    "axisFontCSS": "9px",
+    "axisRenderedHeight": 7,
+    "svgWidth": 320
+  },
+  "invalid": {
+    "buttonEnabled": true,
+    "text": "结束窗口须不早于起始窗口。",
+    "response": "每次请选择 1—8 个连续窗口"
+  }
+}

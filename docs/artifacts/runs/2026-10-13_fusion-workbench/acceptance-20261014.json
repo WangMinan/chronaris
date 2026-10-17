@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "http_run_id": "3159432cd3674a0fa88a331fd09f2cd9",
+  "device": "cpu",
+  "threads": 1,
+  "shape": [
+    3,
+    96,
+    64
+  ],
+  "http_incremental_s": 1.1948261099969386,
+  "direct_batch_s": 1.855751089999103,
+  "batch_max_absolute_difference": 5.960464477539062e-07,
+  "tolerance": {
+    "atol": 1e-05,
+    "rtol": 1e-05
+  },
+  "csv_values_match_npz": true,
+  "download_readback": true,
+  "peak_verifier_rss_mib": 813.7578125,
+  "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+  "shared_checkpoint_unchanged": true
+}

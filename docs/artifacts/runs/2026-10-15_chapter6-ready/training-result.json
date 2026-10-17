@@ -1,0 +1,527 @@
+{
+  "method_name": "chronaris",
+  "candidate_id": "C",
+  "status": "resumed",
+  "best_checkpoint_path": "artifacts/chapter6-final/training/chronaris/C/best.pt",
+  "last_checkpoint_path": "artifacts/chapter6-final/training/chronaris/C/last.pt",
+  "protocol_sha256": "6ce0f7ff74e5f92aea80e7b938506b947185f2f864e44885ba4b43552a183f2b",
+  "best_epoch": 200,
+  "completed_epochs": 200,
+  "stopped_early": false,
+  "best_validation_losses": {
+    "masked_reconstruction": 1.2279266566053741,
+    "short_horizon_prediction": 2.4532534095186342,
+    "lag_discrimination": 0.12471049030621846
+  },
+  "best_public_selection_loss": 1.474218015210466,
+  "training_elapsed_s": 3301.2529568060127,
+  "parameter_count": 124053,
+  "epoch_rows": [
+    {
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "epoch": 33,
+      "optimizer_updates": 50,
+      "train_losses": {
+        "masked_reconstruction": 0.7306444878332092,
+        "short_horizon_prediction": 1.2972849733128897,
+        "lag_discrimination": 0.41002271324396133
+      },
+      "validation_losses": {
+        "masked_reconstruction": 1.2528524182276675,
+        "short_horizon_prediction": 2.4673544197351602,
+        "lag_discrimination": 0.46196848154067993
+      },
+      "mechanism_validation": {
+        "weighted_total": 0.5813796318158236,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 506,
+            "weight": 0.2,
+            "raw_loss": 0.9853540171276439,
+            "weighted_loss": 0.19707080445035172,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "unavailable",
+            "count": 0,
+            "weight": 0.05,
+            "raw_loss": null,
+            "weighted_loss": null,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 506,
+            "weight": 0.1,
+            "raw_loss": 0.09843485475528853,
+            "weighted_loss": 0.009843485661793367,
+            "reason": null
+          },
+          {
+            "term_name": "observation_anchor",
+            "status": "active",
+            "count": 4153330,
+            "weight": 1.0,
+            "raw_loss": 0.1740602009858542,
+            "weighted_loss": 0.1740602009858542,
+            "reason": null
+          },
+          {
+            "term_name": "explicit_time_shift",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 2.004051367441813,
+            "weighted_loss": 0.2004051407178243,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": 0.16666666666666666,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0,
+        "independent_pairing": {
+          "valid_pair_count": 0,
+          "negative_pair_count": 0,
+          "actual_batch_size": 4,
+          "negative_pool": "actual_forward_batch",
+          "positive_similarity": null,
+          "negative_similarity": null,
+          "recall_at_1": null
+        }
+      },
+      "public_selection_loss": 1.9401365662486176,
+      "improved": true,
+      "epochs_without_improvement": 0,
+      "mean_gradient_norm_before_clip": 0.20262260735034943
+    },
+    {
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "epoch": 66,
+      "optimizer_updates": 100,
+      "train_losses": {
+        "masked_reconstruction": 0.6169823350235693,
+        "short_horizon_prediction": 1.1818737738354483,
+        "lag_discrimination": 0.22483107820153236
+      },
+      "validation_losses": {
+        "masked_reconstruction": 1.2364850088926052,
+        "short_horizon_prediction": 2.461139544043156,
+        "lag_discrimination": 0.34052032232284546
+      },
+      "mechanism_validation": {
+        "weighted_total": 0.3182170822138467,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 506,
+            "weight": 0.2,
+            "raw_loss": 0.013614311806945932,
+            "weighted_loss": 0.002722862454521444,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "unavailable",
+            "count": 0,
+            "weight": 0.05,
+            "raw_loss": null,
+            "weighted_loss": null,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 506,
+            "weight": 0.1,
+            "raw_loss": 0.09337212919835516,
+            "weighted_loss": 0.009337213100210245,
+            "reason": null
+          },
+          {
+            "term_name": "observation_anchor",
+            "status": "active",
+            "count": 4153330,
+            "weight": 1.0,
+            "raw_loss": 0.1578754075745788,
+            "weighted_loss": 0.1578754075745788,
+            "reason": null
+          },
+          {
+            "term_name": "explicit_time_shift",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 1.4828159809112549,
+            "weighted_loss": 0.14828159908453623,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": 0.3333333333333333,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0,
+        "independent_pairing": {
+          "valid_pair_count": 0,
+          "negative_pair_count": 0,
+          "actual_batch_size": 4,
+          "negative_pool": "actual_forward_batch",
+          "positive_similarity": null,
+          "negative_similarity": null,
+          "recall_at_1": null
+        }
+      },
+      "public_selection_loss": 1.6368745532516495,
+      "improved": true,
+      "epochs_without_improvement": 0,
+      "mean_gradient_norm_before_clip": 0.45930811762809753
+    },
+    {
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "epoch": 100,
+      "optimizer_updates": 150,
+      "train_losses": {
+        "masked_reconstruction": 0.5727673915732598,
+        "short_horizon_prediction": 1.0834714628388635,
+        "lag_discrimination": 0.23853097061316172
+      },
+      "validation_losses": {
+        "masked_reconstruction": 1.226233868249164,
+        "short_horizon_prediction": 2.4555277805756357,
+        "lag_discrimination": 0.27451666196187335
+      },
+      "mechanism_validation": {
+        "weighted_total": 0.29023904926389066,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 506,
+            "weight": 0.2,
+            "raw_loss": 0.006064845930063442,
+            "weighted_loss": 0.0012129691780062592,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "unavailable",
+            "count": 0,
+            "weight": 0.05,
+            "raw_loss": null,
+            "weighted_loss": null,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 506,
+            "weight": 0.1,
+            "raw_loss": 0.09555745386912418,
+            "weighted_loss": 0.00955574532875077,
+            "reason": null
+          },
+          {
+            "term_name": "observation_anchor",
+            "status": "active",
+            "count": 4153330,
+            "weight": 1.0,
+            "raw_loss": 0.15007036458329787,
+            "weighted_loss": 0.15007036458329787,
+            "reason": null
+          },
+          {
+            "term_name": "explicit_time_shift",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 1.2939996719360352,
+            "weighted_loss": 0.12939997017383575,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": 0.3333333333333333,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0,
+        "independent_pairing": {
+          "valid_pair_count": 0,
+          "negative_pair_count": 0,
+          "actual_batch_size": 4,
+          "negative_pool": "actual_forward_batch",
+          "positive_similarity": null,
+          "negative_similarity": null,
+          "recall_at_1": null
+        }
+      },
+      "public_selection_loss": 1.5858670940228499,
+      "improved": true,
+      "epochs_without_improvement": 0,
+      "mean_gradient_norm_before_clip": 0.9200084209442139
+    },
+    {
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "epoch": 133,
+      "optimizer_updates": 200,
+      "train_losses": {
+        "masked_reconstruction": 0.8622703381749973,
+        "short_horizon_prediction": 1.2830417817139932,
+        "lag_discrimination": 0.1965042402346929
+      },
+      "validation_losses": {
+        "masked_reconstruction": 1.2383442774098457,
+        "short_horizon_prediction": 2.4599961230850633,
+        "lag_discrimination": 0.27654556433359784
+      },
+      "mechanism_validation": {
+        "weighted_total": 0.25557468096983316,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 506,
+            "weight": 0.2,
+            "raw_loss": 0.004787485325053746,
+            "weighted_loss": 0.0009574970955640196,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "unavailable",
+            "count": 0,
+            "weight": 0.05,
+            "raw_loss": null,
+            "weighted_loss": null,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 506,
+            "weight": 0.1,
+            "raw_loss": 0.09589373134812819,
+            "weighted_loss": 0.009589373192974466,
+            "reason": null
+          },
+          {
+            "term_name": "observation_anchor",
+            "status": "active",
+            "count": 4153330,
+            "weight": 1.0,
+            "raw_loss": 0.1455709689343286,
+            "weighted_loss": 0.1455709689343286,
+            "reason": null
+          },
+          {
+            "term_name": "explicit_time_shift",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 0.994568387667338,
+            "weighted_loss": 0.09945684174696605,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": 0.6666666666666666,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0,
+        "independent_pairing": {
+          "valid_pair_count": 0,
+          "negative_pair_count": 0,
+          "actual_batch_size": 4,
+          "negative_pool": "actual_forward_batch",
+          "positive_similarity": null,
+          "negative_similarity": null,
+          "recall_at_1": null
+        }
+      },
+      "public_selection_loss": 1.5588822415294212,
+      "improved": true,
+      "epochs_without_improvement": 0,
+      "mean_gradient_norm_before_clip": 0.74636310338974
+    },
+    {
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "epoch": 166,
+      "optimizer_updates": 250,
+      "train_losses": {
+        "masked_reconstruction": 0.5943676838973506,
+        "short_horizon_prediction": 1.1855515722028418,
+        "lag_discrimination": 0.1428509125342736
+      },
+      "validation_losses": {
+        "masked_reconstruction": 1.222643908154087,
+        "short_horizon_prediction": 2.446632986321968,
+        "lag_discrimination": 0.15714014569918314
+      },
+      "mechanism_validation": {
+        "weighted_total": 0.2360781462474379,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 506,
+            "weight": 0.2,
+            "raw_loss": 0.004572137922468216,
+            "weighted_loss": 0.0009144276190501281,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "unavailable",
+            "count": 0,
+            "weight": 0.05,
+            "raw_loss": null,
+            "weighted_loss": null,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 506,
+            "weight": 0.1,
+            "raw_loss": 0.09538761941576193,
+            "weighted_loss": 0.00953876187752476,
+            "reason": null
+          },
+          {
+            "term_name": "observation_anchor",
+            "status": "active",
+            "count": 4153330,
+            "weight": 1.0,
+            "raw_loss": 0.1422300890723797,
+            "weighted_loss": 0.1422300890723797,
+            "reason": null
+          },
+          {
+            "term_name": "explicit_time_shift",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 0.8339486519495646,
+            "weighted_loss": 0.08339486767848332,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": 0.8333333333333334,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0,
+        "independent_pairing": {
+          "valid_pair_count": 0,
+          "negative_pair_count": 0,
+          "actual_batch_size": 4,
+          "negative_pool": "actual_forward_batch",
+          "positive_similarity": null,
+          "negative_similarity": null,
+          "recall_at_1": null
+        }
+      },
+      "public_selection_loss": 1.4983433833297692,
+      "improved": true,
+      "epochs_without_improvement": 0,
+      "mean_gradient_norm_before_clip": 0.7596087455749512
+    },
+    {
+      "method_name": "chronaris",
+      "candidate_id": "C",
+      "epoch": 200,
+      "optimizer_updates": 300,
+      "train_losses": {
+        "masked_reconstruction": 0.5284009004716825,
+        "short_horizon_prediction": 1.0809692421948218,
+        "lag_discrimination": 0.07219427358359098
+      },
+      "validation_losses": {
+        "masked_reconstruction": 1.2279266566053741,
+        "short_horizon_prediction": 2.4532534095186342,
+        "lag_discrimination": 0.12471049030621846
+      },
+      "mechanism_validation": {
+        "weighted_total": 0.2157637119515658,
+        "terms": [
+          {
+            "term_name": "chronaris_continuous_alignment",
+            "status": "active",
+            "count": 506,
+            "weight": 0.2,
+            "raw_loss": 0.005834828094089691,
+            "weighted_loss": 0.0011669656035413031,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_physical_consistency",
+            "status": "unavailable",
+            "count": 0,
+            "weight": 0.05,
+            "raw_loss": null,
+            "weighted_loss": null,
+            "reason": null
+          },
+          {
+            "term_name": "chronaris_causal_direction",
+            "status": "active",
+            "count": 506,
+            "weight": 0.1,
+            "raw_loss": 0.0954454480247064,
+            "weighted_loss": 0.009544545361264185,
+            "reason": null
+          },
+          {
+            "term_name": "observation_anchor",
+            "status": "active",
+            "count": 4153330,
+            "weight": 1.0,
+            "raw_loss": 0.14047313385587676,
+            "weighted_loss": 0.14047313385587676,
+            "reason": null
+          },
+          {
+            "term_name": "explicit_time_shift",
+            "status": "active",
+            "count": 6,
+            "weight": 0.1,
+            "raw_loss": 0.6457906564076742,
+            "weighted_loss": 0.06457906713088353,
+            "reason": null
+          }
+        ],
+        "explicit_time_shift_accuracy": 0.8333333333333334,
+        "event_pair_positive_similarity": null,
+        "event_pair_negative_similarity": null,
+        "event_pair_recall_at_1": null,
+        "event_pair_count": 0,
+        "independent_pairing": {
+          "valid_pair_count": 0,
+          "negative_pair_count": 0,
+          "actual_batch_size": 4,
+          "negative_pool": "actual_forward_batch",
+          "positive_similarity": null,
+          "negative_similarity": null,
+          "recall_at_1": null
+        }
+      },
+      "public_selection_loss": 1.474218015210466,
+      "improved": true,
+      "epochs_without_improvement": 0,
+      "mean_gradient_norm_before_clip": 0.606120765209198
+    }
+  ],
+  "optimizer_updates": 300,
+  "best_update": 300
+}

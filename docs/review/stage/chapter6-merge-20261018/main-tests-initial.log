@@ -1,0 +1,66 @@
+.........................................F..............                 [100%]
+=================================== FAILURES ===================================
+_ test_sensitivity_four_weights_use_real_five_checkpoint_guard_and_training_only_thresholds _
+
+tmp_path = PosixPath('/tmp/pytest-of-wangminan/pytest-16/test_sensitivity_four_weights_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76930b493ed0>
+
+    def test_sensitivity_four_weights_use_real_five_checkpoint_guard_and_training_only_thresholds(tmp_path,monkeypatch):
+        from chronaris.evaluation.application_tasks import chapter5_subset_evaluation as subset
+        from chronaris.evaluation.application_tasks import application_consumer_runtime as runtime,v4_public_screen
+        rows=references(tmp_path);zero=rows[0]|dict(candidate_name='no_physics_residual')
+        rows.append(zero)
+        for i in (30,33):
+            write(tmp_path/'extra_units'/f'{i}.json',dict(files={},training={
+                r+'_training':dict(best_checkpoint_path=rows[0]['checkpoints'][r]) for r in ('self_supervised','task_guided')}))
+        samples=[_sample('train'),_sample('validation')];batch=collate_observation_samples(samples)
+        manifest=[]
+        for role,value in [('train',.2),('validation',.9)]:
+            folder=tmp_path/role;folder.mkdir()
+            np.savez(folder/'ground_truth.npz',true_time_s=np.arange(800)*.05,workload=np.full(800,value),maneuver_state=np.zeros(800))
+            manifest.append(dict(sample_id=role,role=role,observed_path=str(folder/'observed.npz'),context_start_s=0.,context_end_s=30.))
+        data=ApplicationConsumerSmokeData(batch,samples[0].schema,dict(train=('train',),validation=('validation',),held_out=()),tuple(manifest))
+        monkeypatch.setattr(subset,'simulation_records',lambda root:dict(records=rows))
+        monkeypatch.setattr(diagnostics,'load_v4_simulation_development',lambda **kw:(data,SimpleNamespace(fold_id='f')))
+        monkeypatch.setattr(diagnostics,'load_frozen_application_encoder',lambda *a,**kw:(object(),None,None))
+        monkeypatch.setattr(diagnostics,'export_loaded_application_encoder',lambda **kw:{})
+        monkeypatch.setattr(v4_public_screen,'GPU_LOCK_PATH',str(tmp_path/'gpu.lock'))
+        seen=[];result_type=make_dataclass('Result',[('status',str)])
+        def consume(**kw):
+            targets=kw['targets'];seen.append(targets)
+            assert targets.sample_ids==('train','validation') and 'held_out' not in targets.roles
+            assert targets.manifest['oracle_opened_after_checkpoint_count']==5
+            assert targets.manifest['workload_thresholds_train_only']==pytest.approx([.2,.2])
+            return result_type('completed')
+        monkeypatch.setattr(runtime,'run_application_method_consumers',consume)
+>       result=diagnostics.sensitivity(tmp_path,dict(subset_root='unused',simulation_root='unused',sensitivity_weights=[0.,.025,.05,.1]))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/evaluation/application_tasks/test_chapter5_target_recovery.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/chronaris/evaluation/application_tasks/chapter5_delivery_diagnostics.py:56: in sensitivity
+    tcn=TCNConsumerConfig(epochs=40,patience=6,seed=17,device='cuda'),label_used_for_encoder_training=route=='task_guided'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:16: in __init__
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TCNConsumerConfig(input_dim=64, hidden_channels=64, class_count=5, kernel_size=3, dilations=(1, 2), dropout=0.1, epochs=40, learning_rate=0.001, weight_decay=0.0001, seed=17, patience=6, minimum_delta=0.0, device='cuda')
+
+    def __post_init__(self) -> None:
+        if self.device not in {"cpu", "cuda"}:
+            raise ValueError("TCN device must be cpu or cuda")
+        if self.device == "cuda" and not torch.cuda.is_available():
+>           raise ValueError("TCN requested unavailable CUDA device")
+E           ValueError: TCN requested unavailable CUDA device
+
+src/chronaris/evaluation/application_tasks/application_consumers.py:242: ValueError
+=============================== warnings summary ===============================
+tests/evaluation/application_tasks/test_v4_simulation_confirmation_evaluation.py: 74 warnings
+  /home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/application_metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    correlation = spearmanr(truth, prediction).statistic
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/evaluation/application_tasks/test_chapter5_target_recovery.py::test_sensitivity_four_weights_use_real_five_checkpoint_guard_and_training_only_thresholds
+1 failed, 55 passed, 74 warnings in 23.28s

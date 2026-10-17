@@ -1,0 +1,12 @@
+Browser acceptance passed: /home/wangminan/projects/chronaris/docs/review/stage/chapter6-merge-20261018/browser
+Starting server 1/1: exec /home/wangminan/env/anaconda3/envs/chronaris/bin/python scripts/runtime/run_fusion_workbench.py --device cpu --port 8876 --data-root artifacts/chapter6-merge-20261018
+Waiting for server on port 8876...
+Server ready on port 8876
+
+All 1 server(s) ready
+Running: node tests/runtime/fusion_workbench_browser.mjs
+
+
+Stopping 1 server(s)...
+Server 1 stopped
+All servers stopped

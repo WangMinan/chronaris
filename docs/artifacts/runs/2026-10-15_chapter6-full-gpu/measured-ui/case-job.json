@@ -1,0 +1,44 @@
+{
+  "id": "b180cdcf1d034d6e83c46a7d679ac61f",
+  "case_id": "dingxin-validation",
+  "title": "实测数据集 · 人机观测记录",
+  "request": {
+    "case_id": "dingxin-validation",
+    "start": 0,
+    "stop": 3,
+    "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+    "incremental": false
+  },
+  "implementation_digest": "bf429147118afd6297f9c26945d597c906852d78a412731b30463f3710d3b866",
+  "selected_indices": [
+    0,
+    1,
+    2
+  ],
+  "window_keys": [
+    "69c39359f8b4a2fd733f7705e99d7303a56eede3468f8065c067e8ec7ffc5b86",
+    "f2c9c9f5f17d7f9dba9a2c46e1caa7552e70fa04200b7e4ad6879dadcb318f3e",
+    "950d2e53f447dc48efc50238f4b39b319e3f72cfd4365075f1d63956c7bf1178"
+  ],
+  "retry_of": null,
+  "range_s": [
+    90,
+    130
+  ],
+  "device": "cuda:0",
+  "execution": {
+    "device": "cuda:0",
+    "precision": "float32",
+    "matmul_tf32": false,
+    "device_name": "NVIDIA GeForce RTX 4070 SUPER",
+    "torch_version": "2.11.0+cu130",
+    "cuda_runtime": "13.0"
+  },
+  "status": "completed",
+  "done": 3,
+  "total": 3,
+  "created_at": "2026-10-15T14:58:00.815934+00:00",
+  "elapsed_s": 1.6659378379990812,
+  "reused_windows": 0,
+  "retryable": false
+}

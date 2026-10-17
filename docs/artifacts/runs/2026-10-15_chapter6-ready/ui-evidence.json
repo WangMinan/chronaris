@@ -1,0 +1,4038 @@
+[
+  {
+    "name": "fusion-replay.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "results",
+    "window": 1,
+    "query": 40,
+    "dimension": 13,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-3afde08012ed4e55a399bd0e4263fb80",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "实测数据集 · 归档记录",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 0,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 5,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 10,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 15,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 20,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 25,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 35,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 40,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 45,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 50,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 55,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+        "label": "连续对齐与因果融合 · 207c2fd3",
+        "semantic_event_enabled": false,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:30.720709+00:00",
+        "elapsed_s": 1.1058912230073474,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "a43c22b0b9cb4b6fb0b9561afe20c613",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": "dede8e3be40e40839bc5953e6ed8e431",
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:23.858283+00:00",
+        "elapsed_s": 3.307039420993533,
+        "reused_windows": 1,
+        "retryable": false
+      },
+      {
+        "id": "dede8e3be40e40839bc5953e6ed8e431",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "failed",
+        "done": 1,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:22.098295+00:00",
+        "error": "服务已中断，可按原参数继续处理。",
+        "retryable": true
+      },
+      {
+        "id": "acaf8ebb692744c199dc25caec4b5949",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:16.375729+00:00",
+        "elapsed_s": 1.1426139380200766,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d7611a51003448d6948ee2c6a20f94ce",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:11.398783+00:00",
+        "elapsed_s": 3.304515761003131,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "9c5e800b42254a8cb3a62ca5c288f323",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:07.533245+00:00",
+        "elapsed_s": 3.443534080986865,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f7e79354a2ae455292d62841fc32602e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:03.655013+00:00",
+        "elapsed_s": 3.5519964340201113,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "996cc0baea314862a2115a5265982a89",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:01.179217+00:00",
+        "elapsed_s": 1.1165177580260206,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "39d7cd2a721249ab84871e6d671ef363",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:00.025018+00:00",
+        "elapsed_s": 1.0485248570039403,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d1e56e0d18294a49826313cbe633462e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:23:58.802716+00:00",
+        "elapsed_s": 1.1303548300056718,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "b67acd7ce8ff43c9a04d66b6b99c26c1",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:56.665926+00:00",
+        "elapsed_s": 0.7370740140031558,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "828a0031a63b41cd8298457d7229a025",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.952793+00:00",
+        "elapsed_s": 0.6525263160001487,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f8bc06e7bd3a4ebf8e2b55f24bf26fd4",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.132934+00:00",
+        "elapsed_s": 0.7637750570138451,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+      "case_id": "dingxin-validation",
+      "title": "实测数据集 · 人机观测记录",
+      "request": {
+        "case_id": "dingxin-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "incremental": false
+      },
+      "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+        "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+        "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+      ],
+      "retry_of": null,
+      "range_s": [
+        90,
+        130
+      ],
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T07:24:30.720709+00:00",
+      "elapsed_s": 1.1058912230073474,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  },
+  {
+    "name": "feature-export.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "exports",
+    "window": 1,
+    "query": 41,
+    "dimension": 13,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-3afde08012ed4e55a399bd0e4263fb80",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "实测数据集 · 归档记录",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 0,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 5,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 10,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 15,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 20,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 25,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 35,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 40,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 45,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 50,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 55,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+        "label": "连续对齐与因果融合 · 207c2fd3",
+        "semantic_event_enabled": false,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:30.720709+00:00",
+        "elapsed_s": 1.1058912230073474,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "a43c22b0b9cb4b6fb0b9561afe20c613",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": "dede8e3be40e40839bc5953e6ed8e431",
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:23.858283+00:00",
+        "elapsed_s": 3.307039420993533,
+        "reused_windows": 1,
+        "retryable": false
+      },
+      {
+        "id": "dede8e3be40e40839bc5953e6ed8e431",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "failed",
+        "done": 1,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:22.098295+00:00",
+        "error": "服务已中断，可按原参数继续处理。",
+        "retryable": true
+      },
+      {
+        "id": "acaf8ebb692744c199dc25caec4b5949",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:16.375729+00:00",
+        "elapsed_s": 1.1426139380200766,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d7611a51003448d6948ee2c6a20f94ce",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:11.398783+00:00",
+        "elapsed_s": 3.304515761003131,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "9c5e800b42254a8cb3a62ca5c288f323",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:07.533245+00:00",
+        "elapsed_s": 3.443534080986865,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f7e79354a2ae455292d62841fc32602e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:03.655013+00:00",
+        "elapsed_s": 3.5519964340201113,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "996cc0baea314862a2115a5265982a89",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:01.179217+00:00",
+        "elapsed_s": 1.1165177580260206,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "39d7cd2a721249ab84871e6d671ef363",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:00.025018+00:00",
+        "elapsed_s": 1.0485248570039403,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d1e56e0d18294a49826313cbe633462e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:23:58.802716+00:00",
+        "elapsed_s": 1.1303548300056718,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "b67acd7ce8ff43c9a04d66b6b99c26c1",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:56.665926+00:00",
+        "elapsed_s": 0.7370740140031558,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "828a0031a63b41cd8298457d7229a025",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.952793+00:00",
+        "elapsed_s": 0.6525263160001487,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f8bc06e7bd3a4ebf8e2b55f24bf26fd4",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.132934+00:00",
+        "elapsed_s": 0.7637750570138451,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+      "case_id": "dingxin-validation",
+      "title": "实测数据集 · 人机观测记录",
+      "request": {
+        "case_id": "dingxin-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "incremental": false
+      },
+      "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+        "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+        "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+      ],
+      "retry_of": null,
+      "range_s": [
+        90,
+        130
+      ],
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T07:24:30.720709+00:00",
+      "elapsed_s": 1.1058912230073474,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  },
+  {
+    "name": "models-and-fields.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "models",
+    "window": 1,
+    "query": 41,
+    "dimension": 13,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-3afde08012ed4e55a399bd0e4263fb80",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "实测数据集 · 归档记录",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 0,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 5,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 10,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 15,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 20,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 25,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 35,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 40,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 45,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 50,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 55,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+        "label": "连续对齐与因果融合 · 207c2fd3",
+        "semantic_event_enabled": false,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:30.720709+00:00",
+        "elapsed_s": 1.1058912230073474,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "a43c22b0b9cb4b6fb0b9561afe20c613",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": "dede8e3be40e40839bc5953e6ed8e431",
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:23.858283+00:00",
+        "elapsed_s": 3.307039420993533,
+        "reused_windows": 1,
+        "retryable": false
+      },
+      {
+        "id": "dede8e3be40e40839bc5953e6ed8e431",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "failed",
+        "done": 1,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:22.098295+00:00",
+        "error": "服务已中断，可按原参数继续处理。",
+        "retryable": true
+      },
+      {
+        "id": "acaf8ebb692744c199dc25caec4b5949",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:16.375729+00:00",
+        "elapsed_s": 1.1426139380200766,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d7611a51003448d6948ee2c6a20f94ce",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:11.398783+00:00",
+        "elapsed_s": 3.304515761003131,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "9c5e800b42254a8cb3a62ca5c288f323",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:07.533245+00:00",
+        "elapsed_s": 3.443534080986865,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f7e79354a2ae455292d62841fc32602e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:03.655013+00:00",
+        "elapsed_s": 3.5519964340201113,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "996cc0baea314862a2115a5265982a89",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:01.179217+00:00",
+        "elapsed_s": 1.1165177580260206,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "39d7cd2a721249ab84871e6d671ef363",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:00.025018+00:00",
+        "elapsed_s": 1.0485248570039403,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d1e56e0d18294a49826313cbe633462e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:23:58.802716+00:00",
+        "elapsed_s": 1.1303548300056718,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "b67acd7ce8ff43c9a04d66b6b99c26c1",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:56.665926+00:00",
+        "elapsed_s": 0.7370740140031558,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "828a0031a63b41cd8298457d7229a025",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.952793+00:00",
+        "elapsed_s": 0.6525263160001487,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f8bc06e7bd3a4ebf8e2b55f24bf26fd4",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.132934+00:00",
+        "elapsed_s": 0.7637750570138451,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+      "case_id": "dingxin-validation",
+      "title": "实测数据集 · 人机观测记录",
+      "request": {
+        "case_id": "dingxin-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "incremental": false
+      },
+      "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+        "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+        "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+      ],
+      "retry_of": null,
+      "range_s": [
+        90,
+        130
+      ],
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T07:24:30.720709+00:00",
+      "elapsed_s": 1.1058912230073474,
+      "reused_windows": 0
+    },
+    "fieldSearch": "脑电",
+    "fields": [
+      {
+        "id": "0c0b39c85754ce376d1a7a98d19bf4e1e3591da9db2b05366ea7ac2f54d59c53",
+        "label": "脑电 AF3（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "4d808a5809dea22ad6843543c5a2a762e46d42b2a6c98a7f23e9b5fc4bfbac18",
+        "label": "脑电 AF4（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "526f6fdb2ef6a954df15d11e119ece8677c352157e963c946381a6cda96a1eef",
+        "label": "脑电 F3（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "34ecb04f98387c7d3a3fb3d39f830735514d604304af1fd02a3b7c7d9329e328",
+        "label": "脑电 F4（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "0e6f46796ab5a0dffeec9fabd55599b944e1951cc1f69f764ba05e0e43fb5463",
+        "label": "脑电 F7（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "7992db9ffc065039918c8408a0808f9a7c1254b0fa23b3ab7d75df7fddbe5478",
+        "label": "脑电 F8（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "c6b8dd7fc6188a6bbdf54022e3094bd0a4c17377d20a5d1c6a03e1d7cd9557b2",
+        "label": "脑电 FP1（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "a243b9d610aa144c5d222ca97eb2bf820f6ee5162368f689a02b7da7f743cabb",
+        "label": "脑电 FP2（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "1342391b2f77fdcb28a40b1830331ab61204b5f3511ab67b9e61494c009d934e",
+        "label": "脑电 FPZ（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      },
+      {
+        "id": "985b1f544574267bf3302a8c7b7f763dff0829db4a68302d46048cfdedec418a",
+        "label": "脑电 FZ（原始标度）",
+        "stream": "生理",
+        "role": "生理负荷相关观测",
+        "unit": "待核定",
+        "confidence": 0.72,
+        "source": "语言模型解释记录",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "name": "mobile-replay.png",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "tab": "results",
+    "window": 0,
+    "query": 0,
+    "dimension": 1,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-3afde08012ed4e55a399bd0e4263fb80",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "实测数据集 · 归档记录",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 0,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 5,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 10,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 15,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 20,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 25,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 35,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 40,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 45,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 50,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 55,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+        "label": "连续对齐与因果融合 · 207c2fd3",
+        "semantic_event_enabled": false,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:30.720709+00:00",
+        "elapsed_s": 1.1058912230073474,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "a43c22b0b9cb4b6fb0b9561afe20c613",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": "dede8e3be40e40839bc5953e6ed8e431",
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:23.858283+00:00",
+        "elapsed_s": 3.307039420993533,
+        "reused_windows": 1,
+        "retryable": false
+      },
+      {
+        "id": "dede8e3be40e40839bc5953e6ed8e431",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "failed",
+        "done": 1,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:22.098295+00:00",
+        "error": "服务已中断，可按原参数继续处理。",
+        "retryable": true
+      },
+      {
+        "id": "acaf8ebb692744c199dc25caec4b5949",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:16.375729+00:00",
+        "elapsed_s": 1.1426139380200766,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d7611a51003448d6948ee2c6a20f94ce",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:11.398783+00:00",
+        "elapsed_s": 3.304515761003131,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "9c5e800b42254a8cb3a62ca5c288f323",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:07.533245+00:00",
+        "elapsed_s": 3.443534080986865,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f7e79354a2ae455292d62841fc32602e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:03.655013+00:00",
+        "elapsed_s": 3.5519964340201113,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "996cc0baea314862a2115a5265982a89",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:01.179217+00:00",
+        "elapsed_s": 1.1165177580260206,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "39d7cd2a721249ab84871e6d671ef363",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:00.025018+00:00",
+        "elapsed_s": 1.0485248570039403,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d1e56e0d18294a49826313cbe633462e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:23:58.802716+00:00",
+        "elapsed_s": 1.1303548300056718,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "b67acd7ce8ff43c9a04d66b6b99c26c1",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:56.665926+00:00",
+        "elapsed_s": 0.7370740140031558,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "828a0031a63b41cd8298457d7229a025",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.952793+00:00",
+        "elapsed_s": 0.6525263160001487,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f8bc06e7bd3a4ebf8e2b55f24bf26fd4",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.132934+00:00",
+        "elapsed_s": 0.7637750570138451,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+      "case_id": "dingxin-validation",
+      "title": "实测数据集 · 人机观测记录",
+      "request": {
+        "case_id": "dingxin-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "incremental": false
+      },
+      "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+        "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+        "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+      ],
+      "retry_of": null,
+      "range_s": [
+        90,
+        130
+      ],
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T07:24:30.720709+00:00",
+      "elapsed_s": 1.1058912230073474,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  },
+  {
+    "name": "data-and-tasks.png",
+    "viewport": {
+      "width": 1366,
+      "height": 768
+    },
+    "tab": "data",
+    "window": 0,
+    "query": 0,
+    "dimension": 1,
+    "cases": [
+      {
+        "id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "description": "选取三个相邻的 30 秒观测窗口，复现冻结模型的连续对齐与融合特征输出。",
+        "model_label": "连续对齐与事件语义融合 · 自监督模型",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "航空人机实测数据集",
+        "appendable": false,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-3afde08012ed4e55a399bd0e4263fb80",
+        "title": "导入观测记录",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "导入观测",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 90,
+            "duration_s": 30
+          }
+        ]
+      },
+      {
+        "id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "description": "",
+        "model_label": "融合模型 · 7912efba",
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "source_label": "实测数据集 · 归档记录",
+        "appendable": true,
+        "field_counts": [
+          12,
+          965
+        ],
+        "windows": [
+          {
+            "label": "窗口 01",
+            "start_s": 0,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 02",
+            "start_s": 5,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 03",
+            "start_s": 10,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 04",
+            "start_s": 15,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 05",
+            "start_s": 20,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 06",
+            "start_s": 25,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 07",
+            "start_s": 30,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 08",
+            "start_s": 35,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 09",
+            "start_s": 40,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 10",
+            "start_s": 45,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 11",
+            "start_s": 50,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 12",
+            "start_s": 55,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 13",
+            "start_s": 90,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 14",
+            "start_s": 95,
+            "duration_s": 30
+          },
+          {
+            "label": "窗口 15",
+            "start_s": 100,
+            "duration_s": 30
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "label": "连续对齐与事件语义融合 · 7912efba",
+        "semantic_event_enabled": true,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592"
+      },
+      {
+        "id": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2",
+        "label": "连续对齐与因果融合 · 207c2fd3",
+        "semantic_event_enabled": false,
+        "training_status": "训练完成",
+        "training_kind": "自监督学习",
+        "seed": 17,
+        "training_windows": 24,
+        "validation_windows": 6,
+        "compatible_cases": [
+          "dingxin-validation",
+          "record-3afde08012ed4e55a399bd0e4263fb80",
+          "record-a41e3381ae2447928a10acc61e5a0bf1"
+        ],
+        "checkpoint_sha256": "207c2fd39604e1625006b722bb43b46563d839c7f9829a738889d8998b1278b2"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:30.720709+00:00",
+        "elapsed_s": 1.1058912230073474,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "a43c22b0b9cb4b6fb0b9561afe20c613",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": "dede8e3be40e40839bc5953e6ed8e431",
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:23.858283+00:00",
+        "elapsed_s": 3.307039420993533,
+        "reused_windows": 1,
+        "retryable": false
+      },
+      {
+        "id": "dede8e3be40e40839bc5953e6ed8e431",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "failed",
+        "done": 1,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:22.098295+00:00",
+        "error": "服务已中断，可按原参数继续处理。",
+        "retryable": true
+      },
+      {
+        "id": "acaf8ebb692744c199dc25caec4b5949",
+        "case_id": "dingxin-validation",
+        "title": "实测数据集 · 人机观测记录",
+        "request": {
+          "case_id": "dingxin-validation",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+          "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+          "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+        ],
+        "retry_of": null,
+        "range_s": [
+          90,
+          130
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:16.375729+00:00",
+        "elapsed_s": 1.1426139380200766,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d7611a51003448d6948ee2c6a20f94ce",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:11.398783+00:00",
+        "elapsed_s": 3.304515761003131,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "9c5e800b42254a8cb3a62ca5c288f323",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:07.533245+00:00",
+        "elapsed_s": 3.443534080986865,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f7e79354a2ae455292d62841fc32602e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 15,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f",
+          "84631b69a05f7ba8a0e2e9fd2934c431851c5c0f5b8162177272fea10aa13598",
+          "7d9334e045085eac98fb1d4892c7fdc2b068387b132a97dfb05c6e2ef9c71af7",
+          "d9a09e0891dd80fe77c2ddf9d7fadf97693770aac59fb31c28e4b511a930c0b1",
+          "19dabd56cf78dd8fc27c76ea6c906df0ac60e5af5bd2c40970bef24dfca8ac29",
+          "2074b52f419facc66aac5e3edec2df0c6d438829b3ba92387193771e029097ee",
+          "f4c0627e829aa812c30ea9060c453e4e7c60f57d309316754364aedaa9f02392",
+          "b3be23491f9cd0bc216cea46884523ea26f41eded8677da7d36587f1c1b28e10",
+          "403bfd533f9a2f0d60a7267b7d96669568702754f856ca61ebb83b21c7f206f6",
+          "a574d3cbf83c1a90371d77bd07611a0a627c364d28c35befef80791e8b598341",
+          "c59242c31418a3015be81753681ad8029d684217af4b38894b37832effc4b7a1",
+          "744ac9a0d0eefb08744850ff8c85fa56b00282bd8d1c2893588e7a8d0588e9b6",
+          "a57c335e3dbd6161596bfe87f5be49f7991bbb400f9d8475ab96bf41bc75b188"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          130
+        ],
+        "status": "completed",
+        "done": 15,
+        "total": 15,
+        "created_at": "2026-10-15T07:24:03.655013+00:00",
+        "elapsed_s": 3.5519964340201113,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "996cc0baea314862a2115a5265982a89",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:01.179217+00:00",
+        "elapsed_s": 1.1165177580260206,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "39d7cd2a721249ab84871e6d671ef363",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:24:00.025018+00:00",
+        "elapsed_s": 1.0485248570039403,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "d1e56e0d18294a49826313cbe633462e",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 3,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0,
+          1,
+          2
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c",
+          "2035839c608c65724ae09dd478505b2c23bbac56808dc2043575dd4e299802bf",
+          "86370a71b47b5aa9facd33f73e42bc51bc8f324033ff5707455c8d89c19afc3f"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          40
+        ],
+        "status": "completed",
+        "done": 3,
+        "total": 3,
+        "created_at": "2026-10-15T07:23:58.802716+00:00",
+        "elapsed_s": 1.1303548300056718,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "b67acd7ce8ff43c9a04d66b6b99c26c1",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:56.665926+00:00",
+        "elapsed_s": 0.7370740140031558,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "828a0031a63b41cd8298457d7229a025",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.952793+00:00",
+        "elapsed_s": 0.6525263160001487,
+        "reused_windows": 0,
+        "retryable": false
+      },
+      {
+        "id": "f8bc06e7bd3a4ebf8e2b55f24bf26fd4",
+        "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+        "title": "实测数据集 · 观测记录 01 · 0—130 秒",
+        "request": {
+          "case_id": "record-a41e3381ae2447928a10acc61e5a0bf1",
+          "start": 0,
+          "stop": 1,
+          "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+          "incremental": false
+        },
+        "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+        "selected_indices": [
+          0
+        ],
+        "window_keys": [
+          "f1e4f81c1957879dd735171a22b7c35c4cdd6fe3a59adb3a4fcb2d1160b7002c"
+        ],
+        "retry_of": null,
+        "range_s": [
+          0,
+          30
+        ],
+        "status": "completed",
+        "done": 1,
+        "total": 1,
+        "created_at": "2026-10-15T07:23:55.132934+00:00",
+        "elapsed_s": 0.7637750570138451,
+        "reused_windows": 0,
+        "retryable": false
+      }
+    ],
+    "activeJob": {
+      "id": "e991b56d2e3a4ef3909df88c5bc4a73f",
+      "case_id": "dingxin-validation",
+      "title": "实测数据集 · 人机观测记录",
+      "request": {
+        "case_id": "dingxin-validation",
+        "start": 0,
+        "stop": 3,
+        "model_id": "7912efbad9a42391f26880d7da067afc1a031a30015cd45576c5e50dbfd5e592",
+        "incremental": false
+      },
+      "implementation_digest": "39d7edb57ab8d302af6e99fe54cf4ff32c833d3b04aefe5216d5a74384e9f568",
+      "selected_indices": [
+        0,
+        1,
+        2
+      ],
+      "window_keys": [
+        "5dfcbe193139d7e3dfd98fac71fa78fdfd4e16d19f904a50438c9b3b6c8ea8d5",
+        "6bf97632cb18e96d6a2e488eef2cb7dd5171f325192c32f865b3774d6fa8eb51",
+        "f9a196eafb477f451ce6faca84d836cc1b7e9a48a98020fc5a6e660e12eed39a"
+      ],
+      "retry_of": null,
+      "range_s": [
+        90,
+        130
+      ],
+      "status": "completed",
+      "done": 3,
+      "total": 3,
+      "created_at": "2026-10-15T07:24:30.720709+00:00",
+      "elapsed_s": 1.1058912230073474,
+      "reused_windows": 0
+    },
+    "fieldSearch": "",
+    "fields": []
+  }
+]

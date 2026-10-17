@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "CPU inference from changed window selection",
+    "progress and completion",
+    "window playback",
+    "query slider",
+    "ZIP download",
+    "history after reload",
+    "mobile no horizontal overflow",
+    "no browser errors"
+  ],
+  "errors": []
+}

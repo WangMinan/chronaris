@@ -1,0 +1,287 @@
+[
+  {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+    "format": "chronaris.common_pretraining_checkpoint.v2",
+    "status": "completed",
+    "updates": 1500,
+    "source": null,
+    "config": {
+      "variant": "full",
+      "fusion_kind": "safe_lag",
+      "semantic_event_enabled": true,
+      "learnable_semantic_queries": true,
+      "physics_weight": 0.05,
+      "attention_kind": "legacy_cosine",
+      "cuda_graph_recurrence": true
+    },
+    "calibrated_relations": [
+      {
+        "source": "vehicle.speed_mps",
+        "target": "vehicle.longitudinal_acc_mps2",
+        "component": "vehicle_rigid_body_translation",
+        "unit": "m/s^2",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 2.087709228447248
+      },
+      {
+        "source": "vehicle.altitude_m",
+        "target": "vehicle.vertical_speed_mps",
+        "component": "vehicle_rigid_body_vertical",
+        "unit": "m/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 54.2050728006671
+      },
+      {
+        "source": "vehicle.roll_rad",
+        "target": "vehicle.roll_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.17363549897586605
+      },
+      {
+        "source": "vehicle.pitch_rad",
+        "target": "vehicle.pitch_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.07615341472996412
+      },
+      {
+        "source": "vehicle.yaw_rad",
+        "target": "vehicle.yaw_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.16744598767854948
+      }
+    ],
+    "normalization_fit_hash": "3b838215ae6c6f7ff5cbf904e9b87e6b14e7e3339179481ed0ce6328eb324324",
+    "role_counts": {
+      "train_sample_ids": 2048,
+      "validation_sample_ids": 256,
+      "held_out_sample_ids": 512
+    }
+  },
+  {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/task_guided/chronaris/best.pt",
+    "sha256": "4f0d68bcabb5150b362d2c1d3d74bf3bb0bf54023de3fcb486dc016fd511c8dd",
+    "format": "chronaris.application_end_to_end_finetuning.v3",
+    "status": "completed",
+    "updates": 550,
+    "source": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed17/self_supervised/chronaris/C/best.pt",
+    "config": {
+      "variant": null,
+      "fusion_kind": null,
+      "semantic_event_enabled": null,
+      "learnable_semantic_queries": null,
+      "physics_weight": null,
+      "attention_kind": null,
+      "cuda_graph_recurrence": null
+    },
+    "calibrated_relations": [],
+    "normalization_fit_hash": null,
+    "role_counts": {}
+  },
+  {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed29/self_supervised/chronaris/C/best.pt",
+    "sha256": "5eba792ae36b171c631636ca084aaf5ad09b64849edd04c8d178d275cf8146c5",
+    "format": "chronaris.common_pretraining_checkpoint.v2",
+    "status": "completed",
+    "updates": 1500,
+    "source": null,
+    "config": {
+      "variant": "full",
+      "fusion_kind": "safe_lag",
+      "semantic_event_enabled": true,
+      "learnable_semantic_queries": true,
+      "physics_weight": 0.05,
+      "attention_kind": "legacy_cosine",
+      "cuda_graph_recurrence": true
+    },
+    "calibrated_relations": [
+      {
+        "source": "vehicle.speed_mps",
+        "target": "vehicle.longitudinal_acc_mps2",
+        "component": "vehicle_rigid_body_translation",
+        "unit": "m/s^2",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 2.087709228447248
+      },
+      {
+        "source": "vehicle.altitude_m",
+        "target": "vehicle.vertical_speed_mps",
+        "component": "vehicle_rigid_body_vertical",
+        "unit": "m/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 54.2050728006671
+      },
+      {
+        "source": "vehicle.roll_rad",
+        "target": "vehicle.roll_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.17363549897586605
+      },
+      {
+        "source": "vehicle.pitch_rad",
+        "target": "vehicle.pitch_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.07615341472996412
+      },
+      {
+        "source": "vehicle.yaw_rad",
+        "target": "vehicle.yaw_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.16744598767854948
+      }
+    ],
+    "normalization_fit_hash": "3b838215ae6c6f7ff5cbf904e9b87e6b14e7e3339179481ed0ce6328eb324324",
+    "role_counts": {
+      "train_sample_ids": 2048,
+      "validation_sample_ids": 256,
+      "held_out_sample_ids": 512
+    }
+  },
+  {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed29/task_guided/chronaris/best.pt",
+    "sha256": "e126db450b7503ffbe0dcdb549bdfc91c049178eb670139db0e5cba6dce154af",
+    "format": "chronaris.application_end_to_end_finetuning.v3",
+    "status": "completed",
+    "updates": 550,
+    "source": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed29/self_supervised/chronaris/C/best.pt",
+    "config": {
+      "variant": null,
+      "fusion_kind": null,
+      "semantic_event_enabled": null,
+      "learnable_semantic_queries": null,
+      "physics_weight": null,
+      "attention_kind": null,
+      "cuda_graph_recurrence": null
+    },
+    "calibrated_relations": [],
+    "normalization_fit_hash": null,
+    "role_counts": {}
+  },
+  {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed43/self_supervised/chronaris/C/best.pt",
+    "sha256": "f5ef48133a07ffee2744ecc10a08fa808b13a25b894081e338fbf1f89f5b15cc",
+    "format": "chronaris.common_pretraining_checkpoint.v2",
+    "status": "completed",
+    "updates": 1500,
+    "source": null,
+    "config": {
+      "variant": "full",
+      "fusion_kind": "safe_lag",
+      "semantic_event_enabled": true,
+      "learnable_semantic_queries": true,
+      "physics_weight": 0.05,
+      "attention_kind": "legacy_cosine",
+      "cuda_graph_recurrence": true
+    },
+    "calibrated_relations": [
+      {
+        "source": "vehicle.speed_mps",
+        "target": "vehicle.longitudinal_acc_mps2",
+        "component": "vehicle_rigid_body_translation",
+        "unit": "m/s^2",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 2.087709228447248
+      },
+      {
+        "source": "vehicle.altitude_m",
+        "target": "vehicle.vertical_speed_mps",
+        "component": "vehicle_rigid_body_vertical",
+        "unit": "m/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 54.2050728006671
+      },
+      {
+        "source": "vehicle.roll_rad",
+        "target": "vehicle.roll_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.17363549897586605
+      },
+      {
+        "source": "vehicle.pitch_rad",
+        "target": "vehicle.pitch_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.07615341472996412
+      },
+      {
+        "source": "vehicle.yaw_rad",
+        "target": "vehicle.yaw_rate_rps",
+        "component": "vehicle_rigid_body_rotation",
+        "unit": "rad/s",
+        "provenance": "aviation_dual_stream vehicle_g1/vehicle_g2 generation equations",
+        "source_multiplier": 1.0,
+        "target_multiplier": 1.0,
+        "residual_scale": 0.16744598767854948
+      }
+    ],
+    "normalization_fit_hash": "3b838215ae6c6f7ff5cbf904e9b87e6b14e7e3339179481ed0ce6328eb324324",
+    "role_counts": {
+      "train_sample_ids": 2048,
+      "validation_sample_ids": 256,
+      "held_out_sample_ids": 512
+    }
+  },
+  {
+    "path": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed43/task_guided/chronaris/best.pt",
+    "sha256": "d722419db9406381db0dfd1c49643104b4d3ef21c1b19470fec88e91a36c0bb2",
+    "format": "chronaris.application_end_to_end_finetuning.v3",
+    "status": "completed",
+    "updates": 550,
+    "source": "/mnt/e/chronaris-v4-results/2026-10-11-chapter5-reload/core_training/simulation/chronaris/reference/fold01/seed43/self_supervised/chronaris/C/best.pt",
+    "config": {
+      "variant": null,
+      "fusion_kind": null,
+      "semantic_event_enabled": null,
+      "learnable_semantic_queries": null,
+      "physics_weight": null,
+      "attention_kind": null,
+      "cuda_graph_recurrence": null
+    },
+    "calibrated_relations": [],
+    "normalization_fit_hash": null,
+    "role_counts": {}
+  }
+]

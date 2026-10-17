@@ -1,0 +1,22 @@
+{
+  "format": "chronaris.fusion_stream.v1",
+  "method_name": "chronaris",
+  "fold_id": "v4_simulation_g1_development_g2_confirmation__training512",
+  "checkpoint_sha256": "8721ff2732db1144ea48e27956b2b2e873e00b9288080c024ec71d7ea83a2c5e",
+  "export_role": "fusion_workbench",
+  "sample_ids": [
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_030.000",
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_060.000",
+    "g1_state_space__v4_development_profile_000__trajectory_000__seed_4111000000__clean_asynchronous::context_090.000"
+  ],
+  "source_sample_hashes": [
+    "dc7172b478a58dbd229f7a631c0b4c2c8146c6bccb22c42292cdbef2f05d03e0",
+    "6859d0033e81dd04de3c8ee67d82dca0f8a919e20996022913b366de53b38784",
+    "54adb10979d261395506d00fae917cae890f689cc9916b52654c32df1e0a42cd"
+  ],
+  "representation_archive": "fusion_stream.npz",
+  "representation_sha256": "a6132a309607408546979e777dd9971f25c01ba1469ac5ce8cba45a14f6e1634",
+  "label_used_for_encoder_training": false,
+  "output_dim": 64,
+  "query_point_count": 96
+}

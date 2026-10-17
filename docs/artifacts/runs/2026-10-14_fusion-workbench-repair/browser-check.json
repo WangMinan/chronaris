@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "checks": [
+    "primary action visible at 1366x768",
+    "reader-facing names",
+    "invalid range blocks submission",
+    "latest result remains bound after viewing older history",
+    "common color scale",
+    "keyboard feature selection",
+    "shared time cursor",
+    "time playback",
+    "complete package download",
+    "real pooled-feature consumer",
+    "existing language-model annotations visible",
+    "current job restored after reload",
+    "mobile axes readable and no horizontal overflow",
+    "real archive ingestion",
+    "ten-window task",
+    "incremental task consumes five remaining windows",
+    "JSON observation import",
+    "append deduplicates existing input",
+    "incremental processing after append",
+    "transient status disconnect recovers"
+  ],
+  "errors": [],
+  "archiveId": "record-a9a57a3a573b4dd490515bed57f2b6e3",
+  "firstJob": "9662a675612c40268b67006085a82a54",
+  "secondJob": "39aefb8731504379ba0ead3c1880908b",
+  "primaryButtonY": 474.953125,
+  "mobileAxisHeight": 17
+}

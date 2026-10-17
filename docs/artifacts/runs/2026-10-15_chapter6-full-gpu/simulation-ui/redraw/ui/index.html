@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>航空人机时序融合系统</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/charts.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">∿</span><span>航空人机<br>时序融合系统</span></a>
+    <nav aria-label="主要功能">
+      <button class="nav active" data-tab="data" aria-current="page">数据与任务</button>
+      <button class="nav" data-tab="models">模型与字段</button>
+      <button class="nav" data-tab="results">结果分析</button>
+      <button class="nav" data-tab="exports">特征交付</button>
+    </nav>
+    <div class="connection"><span id="connection-dot" class="dot"></span><span id="connection">正在连接</span></div>
+  </aside>
+  <main>
+    <header><h1 id="page-title">数据与任务</h1><span id="record-total" class="muted"></span></header>
+    <div id="message" role="status" aria-live="polite" hidden></div>
+    <section id="data" class="view">
+      <div class="data-grid">
+        <article class="panel">
+          <div class="panel-heading"><h2>新建处理任务</h2><button id="add-data" class="secondary">接入数据</button></div>
+          <label for="case">观测记录</label><select id="case"></select>
+          <div class="two-col">
+            <div><label for="start">起始窗口</label><select id="start"></select></div>
+            <div><label for="stop">结束窗口</label><select id="stop"></select></div>
+          </div>
+          <p id="range-label" class="field-hint" aria-live="polite"></p>
+          <label for="model">处理模型</label><select id="model"></select>
+          <div class="task-actions"><label class="check"><input id="incremental" type="checkbox">处理新增窗口</label><button id="run" class="primary" disabled>开始处理 →</button></div>
+        </article>
+        <article class="panel task-status">
+          <div class="panel-heading"><h2>当前任务</h2><span id="status-badge" class="tag">待创建</span></div>
+          <p id="task-name">选择观测记录，开始处理。</p>
+          <div class="progress-label"><span id="progress-text">等待任务</span><strong id="progress-number">0%</strong></div>
+          <progress id="progress" max="100" value="0" aria-label="任务进度"></progress>
+          <ol id="pipeline" class="pipeline"><li>校验输入</li><li>生成特征</li><li>封装结果</li></ol>
+          <button id="open-results" class="secondary" disabled>查看本次结果 →</button>
+          <button id="retry-current" class="secondary" hidden>按原参数重试</button>
+        </article>
+      </div>
+      <article class="panel history">
+        <div class="panel-heading"><h2>处理记录</h2><button id="refresh" class="text-button">刷新</button></div>
+        <div id="history" class="table-wrap"></div>
+      </article>
+    </section>
+    <section id="models" class="view" hidden>
+      <article class="panel"><div class="panel-heading"><h2>可用模型</h2><button id="refresh-models" class="text-button">刷新模型</button></div><div id="model-list" class="model-list"></div></article>
+      <article class="panel">
+        <div class="panel-heading"><h2>字段解释与规则复核</h2><span id="field-count" class="tag"></span></div>
+        <div class="toolbar"><label for="field-search" class="sr-only">检索字段</label><input id="field-search" type="search" placeholder="检索字段或规则"><select id="field-filter" aria-label="复核状态"><option value="all">全部条目</option><option value="pending">待复核</option><option value="approved">已确认</option><option value="needs_revision">待修订</option></select><button id="approve-fields" class="secondary">确认选中项</button><button id="revise-fields" class="text-button">标记待修订</button></div>
+        <div id="field-table" class="table-wrap"></div><div class="pagination"><button id="fields-prev" class="text-button">上一页</button><span id="fields-page"></span><button id="fields-next" class="text-button">下一页</button></div>
+      </article>
+    </section>
+    <section id="results" class="view" hidden>
+      <div class="panel empty result-empty">选择一条已完成的处理记录，查看结果。</div>
+      <div class="result-content" hidden>
+        <div class="panel-heading"><div><h2 id="result-title"></h2><p id="result-identity" class="field-hint"></p></div><button id="to-export" class="primary">交付特征 →</button></div>
+        <div class="panel replay-controls"><button id="play" class="secondary">播放</button><label for="window-slider">窗口</label><input id="window-slider" type="range" min="0" max="0" value="0"><strong id="window-label"></strong></div>
+        <div class="two-col"><article class="panel"><div class="panel-heading"><h2>生理观测</h2><span id="phys-coverage" class="tag"></span></div><div id="phys-traces" class="traces"></div></article><article class="panel"><div class="panel-heading"><h2>航电观测</h2><span id="vehicle-coverage" class="tag"></span></div><div id="vehicle-traces" class="traces"></div></article></div>
+        <article class="panel fusion">
+          <div class="panel-heading"><h2>融合特征</h2><div class="heat-legend"><span id="scale-min"></span><span class="gradient"></span><span id="scale-max"></span></div></div>
+          <div class="heat-layout"><div class="heat-y"><span>维度 1</span><span id="last-dimension">64</span></div><canvas id="heatmap" width="1100" height="240" tabindex="0" role="img" aria-label="融合特征热力图，可用方向键选择时刻和维度"></canvas></div>
+          <div class="axis"><span>0 秒</span><span>窗口内时间</span><span id="end-time"></span></div>
+          <div class="query"><label for="query">参考时刻</label><input id="query" type="range" min="0" max="95" value="0"><label for="dimension">特征维度</label><input id="dimension" type="number" min="1" max="64" value="1"></div>
+          <output id="query-value" aria-live="polite"></output>
+        </article>
+      </div>
+    </section>
+    <section id="exports" class="view" hidden>
+      <div class="panel empty result-empty">选择一条已完成的处理记录，交付特征。</div>
+      <div class="result-content" hidden>
+        <div class="data-grid"><article class="panel"><h2>特征文件</h2><p id="export-summary"></p><a id="download-zip" class="primary" download>下载完整特征包 ↓</a><div class="download-links"><a id="download-csv" download>序列特征表</a><a id="download-npz" download>标准表示文件</a><a id="download-manifest" download>来源清单</a></div><h3>特征预览</h3><p id="feature-position" class="field-hint"></p><div id="feature-table" class="table-wrap"></div></article>
+        <article class="panel"><h2>下游交付</h2><p>生成各窗口的汇总特征，供下游任务读取。</p><button id="deliver" class="primary">生成汇总特征</button><p id="delivery-status" role="status"></p><a id="download-pooled" class="secondary" download hidden>下载汇总特征表 ↓</a><details><summary>来源详情</summary><dl id="provenance"></dl></details></article></div>
+      </div>
+    </section>
+  </main>
+  <dialog id="data-dialog">
+    <form method="dialog" class="panel-heading"><h2>接入观测数据</h2><button aria-label="关闭" class="text-button">✕</button></form>
+    <div id="dialog-message" role="status" hidden></div>
+    <label for="source">归档记录</label><select id="source"></select>
+    <div class="two-col"><div><label for="source-start">起始时间（秒）</label><input id="source-start" type="number" min="0"></div><div><label for="source-stop">结束时间（秒）</label><input id="source-stop" type="number" min="0"></div></div>
+    <button id="prepare-source" class="primary">接入所选时段</button>
+    <hr><h3>导入观测文件</h3>
+    <label for="import-model">字段与模型</label><select id="import-model"></select>
+    <label for="import-file">标准观测文件（JSON）</label><input id="import-file" type="file" accept=".json,application/json">
+    <label class="check"><input id="append-record" type="checkbox">追加到当前导入记录</label>
+    <div class="toolbar"><button id="import-record" class="primary">校验并导入</button><button id="import-template" class="text-button">下载输入格式</button></div>
+  </dialog>
+</body>
+</html>

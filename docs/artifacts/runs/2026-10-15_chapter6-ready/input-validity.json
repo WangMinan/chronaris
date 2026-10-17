@@ -1,0 +1,80 @@
+[
+  {
+    "window": 1,
+    "start_s": 90.0,
+    "duration_s": 30.0,
+    "archive_sha256": "9d1ed64422f2c4f7d63299ddd9f0f5f71463b07bdb287bc17eb586ee98e7e4f9",
+    "streams": {
+      "physiology": {
+        "shape": [
+          150,
+          12
+        ],
+        "valid_values": 1260,
+        "observed_points": 150,
+        "coverage": 0.7
+      },
+      "vehicle": {
+        "shape": [
+          1779,
+          965
+        ],
+        "valid_values": 849690,
+        "observed_points": 1779,
+        "coverage": 0.49494534683570846
+      }
+    }
+  },
+  {
+    "window": 2,
+    "start_s": 95.0,
+    "duration_s": 30.0,
+    "archive_sha256": "8c91edbc87a1b21a253dec254862378fc8f3ec85fad7fe179b1948b7e514002a",
+    "streams": {
+      "physiology": {
+        "shape": [
+          150,
+          12
+        ],
+        "valid_values": 1260,
+        "observed_points": 150,
+        "coverage": 0.7
+      },
+      "vehicle": {
+        "shape": [
+          1775,
+          965
+        ],
+        "valid_values": 847446,
+        "observed_points": 1775,
+        "coverage": 0.49475063854630374
+      }
+    }
+  },
+  {
+    "window": 3,
+    "start_s": 100.0,
+    "duration_s": 30.0,
+    "archive_sha256": "2c8509917cc2e12e47b2c145ea2007d67239447363fd6a1658d6d869e720c96f",
+    "streams": {
+      "physiology": {
+        "shape": [
+          150,
+          12
+        ],
+        "valid_values": 1260,
+        "observed_points": 150,
+        "coverage": 0.7
+      },
+      "vehicle": {
+        "shape": [
+          1774,
+          965
+        ],
+        "valid_values": 847425,
+        "observed_points": 1774,
+        "coverage": 0.49501726142145325
+      }
+    }
+  }
+]

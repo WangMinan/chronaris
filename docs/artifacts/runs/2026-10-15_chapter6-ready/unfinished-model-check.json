@@ -1,0 +1,5 @@
+{
+  "status": "passed",
+  "unfinished_checkpoint_registration": "rejected",
+  "error": "请选择已完成训练且兼容当前接口的自监督模型"
+}

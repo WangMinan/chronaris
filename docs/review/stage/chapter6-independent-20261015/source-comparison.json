@@ -1,0 +1,56 @@
+[
+  {
+    "path": "src/chronaris/models/alignment/calibrated_physics.py",
+    "demo_sha256": "CFAA170136F917200037E1E46E39E6EFF2BA783451FADAB26BB166334A152064",
+    "main_sha256": "CFAA170136F917200037E1E46E39E6EFF2BA783451FADAB26BB166334A152064",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/evaluation/application_tasks/v4_development_data.py",
+    "demo_sha256": "6823659E7F4B4F4B5103A2909DED72698CC607D84CE51E39A0008D870680ED56",
+    "main_sha256": "6823659E7F4B4F4B5103A2909DED72698CC607D84CE51E39A0008D870680ED56",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/modeling/training/candidate_screen.py",
+    "demo_sha256": "E4350D4A4D6BEF68E25158EA5FBD16C66E8FF62667AB091820A4277C58B2BA27",
+    "main_sha256": "E4350D4A4D6BEF68E25158EA5FBD16C66E8FF62667AB091820A4277C58B2BA27",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/modeling/training/candidate_step.py",
+    "demo_sha256": "F7D6F421B4770BE22B64BF93E8C9E0D2527D17888F3FC55BC8BF3ABC13A8E65D",
+    "main_sha256": "F7D6F421B4770BE22B64BF93E8C9E0D2527D17888F3FC55BC8BF3ABC13A8E65D",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/modeling/training/chronaris_auxiliary.py",
+    "demo_sha256": "CA41AEBE1F6637B3A8A4040BEEC133F901F38F0FAE549BAD51F79BD9839A1A38",
+    "main_sha256": "CA41AEBE1F6637B3A8A4040BEEC133F901F38F0FAE549BAD51F79BD9839A1A38",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/modeling/fusion_encoders/chronaris_continuous.py",
+    "demo_sha256": "60FC9B55593D1628FCC3DAB8D37417B7702D7F6AFC933DEB1CD8EC7285E36926",
+    "main_sha256": "60FC9B55593D1628FCC3DAB8D37417B7702D7F6AFC933DEB1CD8EC7285E36926",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/models/fusion/semantic_event.py",
+    "demo_sha256": "192A6CE78B0AB9A1626C6DF71D26BEB81E5A8F985997A8DD0BC49A8C37CF3399",
+    "main_sha256": "192A6CE78B0AB9A1626C6DF71D26BEB81E5A8F985997A8DD0BC49A8C37CF3399",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/simulation/aviation_dual_stream/vehicle_g1.py",
+    "demo_sha256": "93115DDF992C766BF40AE9F33277C3461800A356107776A297F537EA044FC620",
+    "main_sha256": "93115DDF992C766BF40AE9F33277C3461800A356107776A297F537EA044FC620",
+    "equal": true
+  },
+  {
+    "path": "src/chronaris/simulation/aviation_dual_stream/vehicle_g2.py",
+    "demo_sha256": "2D0C14AADD9A8727B53C8734E13B93DF644923964FD47438133B96A55139A9EB",
+    "main_sha256": "2D0C14AADD9A8727B53C8734E13B93DF644923964FD47438133B96A55139A9EB",
+    "equal": true
+  }
+]
