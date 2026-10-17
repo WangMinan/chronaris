@@ -1,0 +1,20 @@
+{
+  "request": "user requested pause to free GPU for gaming; do not automatically resume",
+  "requested_at": "2026-10-17T22:07:33.050008+08:00",
+  "controller_pid": 49760,
+  "child_pid": 53561,
+  "completed_stages": 165,
+  "phase": "mechanisms",
+  "signal": "SIGTERM to controller; existing handler terminates and waits for its worker",
+  "root": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery",
+  "evidence_path": "/mnt/e/chronaris-v4-results/2026-10-16-chapter5-chronos-recovery/recovery/user_pause_20261017_220733",
+  "status": "paused_by_user",
+  "verified_at": "2026-10-17T22:08:10.003230+08:00",
+  "controller_and_worker_exited": true,
+  "gpu_compute_processes": [],
+  "gpu_lock_released": true,
+  "completed_simulation_units": 11,
+  "mechanism_completed_units": 16,
+  "mechanism_records": 17,
+  "automatic_resume": false
+}
