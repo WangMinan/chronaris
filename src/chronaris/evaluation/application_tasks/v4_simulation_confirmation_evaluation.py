@@ -39,6 +39,14 @@ def evaluate_simulation_confirmation(*, freeze_path, freeze_sha256, model_freeze
             model_freeze_sha256=model_freeze_sha256,output_root=output_root,confirmation_root=confirmation_root)
 
 
+def _require_confirmation_contract(held, fold, schema):
+    if held.batch.sample_ids!=fold.held_out_sample_ids:
+        raise ValueError('confirmation sample identity or order differs from the frozen encoder contract')
+    # File provenance is verified separately by each loader; distinct splits have distinct source files.
+    if held.schema.schema_sha256!=schema.schema_sha256:
+        raise ValueError('confirmation observation schema differs from the frozen encoder contract')
+
+
 def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha256, output_root, confirmation_root, include_pressure=True,
                               target_initializations=None):
     method, seed = unit['method'], unit['seed']
@@ -47,8 +55,7 @@ def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha25
     if fold.to_dict()!=unit['fold']:
         raise ValueError('simulation evaluation changed the encoder training or confirmation roles')
     held = load_simulation_confirmation(confirmation_root,model_freeze_sha256=model_freeze_sha256)
-    if held.batch.sample_ids!=fold.held_out_sample_ids or held.schema!=development.schema:
-        raise ValueError('confirmation samples or schema differ from the frozen encoder contract')
+    _require_confirmation_contract(held,fold,development.schema)
     initializations = target_initializations if target_initializations is not None else [
         row['checkpoints']['self_supervised'] for row in models['records']
         if row['seed']==seed and row['method']!='naive_time_sync' and 'self_supervised' in row['routes']]
@@ -109,6 +116,7 @@ def _evaluate_simulation_unit(*, models, unit, freeze_sha256, model_freeze_sha25
                     continue
                 observed=held if condition=='clean_asynchronous' else load_simulation_confirmation(
                     confirmation_root,model_freeze_sha256=model_freeze_sha256,condition=condition)
+                _require_confirmation_contract(observed,fold,development.schema)
                 location=destination/'pressure'/condition
                 pressure=export_loaded_application_encoder(encoder=encoder,normalizer=normalizer,checkpoint=checkpoint,
                     provider=lambda ids:select_observation_batch(observed.batch,ids),fold=fold,root=location/'representation',

@@ -62,6 +62,8 @@ def export(root,plan,models):
         write(data/'protocol/execution_revision.json',source(root/'execution_revision.json'))
     if (root/'diagnostics_revision.json').exists():
         write(data/'protocol/diagnostics_revision.json',source(root/'diagnostics_revision.json'))
+    if (root/'simulation_revision.json').exists():
+        write(data/'protocol/simulation_revision.json',source(root/'simulation_revision.json'))
     for spec in plan['native']:
         receipt=source(spec['receipt']);unit=spec['unit'];result=source(root/'native'/spec['key']/'result.json')
         verify(result['files'])

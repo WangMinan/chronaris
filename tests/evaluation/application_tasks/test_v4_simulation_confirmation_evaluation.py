@@ -16,6 +16,24 @@ from tests.representation.test_contracts import _sample
 from tests.evaluation.application_tasks.test_v4_simulation_confirmation import _configuration
 
 
+def test_confirmation_contract_checks_structure_and_exact_order_not_cross_split_file_identity():
+    schema=_sample('schema').schema
+    fold=SimpleNamespace(held_out_sample_ids=('a','b'))
+    held=SimpleNamespace(batch=SimpleNamespace(sample_ids=('a','b')),
+        schema=replace(schema,source_manifest_sha256='b'*64))
+    evaluation._require_confirmation_contract(held,fold,schema)
+    for ids in (('b','a'),('a',),('a','a'),('a','c')):
+        with pytest.raises(ValueError,match='sample identity or order'):
+            evaluation._require_confirmation_contract(SimpleNamespace(batch=SimpleNamespace(sample_ids=ids),schema=held.schema),fold,schema)
+    for changed in (replace(schema,schema_id='other'),replace(schema,source_kind='other'),
+                    replace(schema,physiology_feature_names=tuple(reversed(schema.physiology_feature_names))),
+                    replace(schema,vehicle_feature_names=('vehicle.changed',)),
+                    replace(schema,physiology_feature_roles=('target','observed')),
+                    replace(schema,excluded_feature_names=('unexpected',))):
+        with pytest.raises(ValueError,match='observation schema'):
+            evaluation._require_confirmation_contract(SimpleNamespace(batch=held.batch,schema=changed),fold,schema)
+
+
 def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation_isolated(tmp_path,monkeypatch):
     frozen,kwargs=_configuration(tmp_path)
     batch=collate_observation_samples([_sample(f'sample_{i}',shift=i/10) for i in range(13)])
@@ -25,7 +43,8 @@ def test_shared_simulation_training_and_all_pressure_consumers_keep_confirmation
                for role,ids in roles.items() for sample in ids)
     development=ApplicationConsumerSmokeData(select_observation_batch(batch,batch.sample_ids[:9]),_sample('schema').schema,
         roles,rows[:9])
-    held=ApplicationConsumerSmokeData(select_observation_batch(batch,fold.held_out_sample_ids),development.schema,
+    held=ApplicationConsumerSmokeData(select_observation_batch(batch,fold.held_out_sample_ids),
+        replace(development.schema,source_manifest_sha256='b'*64),
         dict(train=(),validation=(),held_out=fold.held_out_sample_ids),rows[9:])
     states=torch.arange(96).repeat(13,1)%5
     boundaries=torch.cat((torch.zeros(13,1,dtype=torch.bool),states[:,1:]!=states[:,:-1]),dim=1)

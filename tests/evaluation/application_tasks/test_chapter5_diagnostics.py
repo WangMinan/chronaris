@@ -65,3 +65,28 @@ def test_diagnostics_revision_keeps_prior_revision_and_freeze_bytes(tmp_path,mon
     assert delivery.require_freeze(tmp_path,plan)==read(frozen)
     frozen.write_text('modified')
     with pytest.raises(ValueError,match='source changed'):delivery.execution_binding(tmp_path,plan)
+
+
+def test_simulation_revision_preserves_completed_outer_results_and_prior_revisions(tmp_path,monkeypatch):
+    source=tmp_path/'new.py';source.write_text('schema fix')
+    old_source=tmp_path/'old.py';old_source.write_text('prior executor')
+    plan={'plan_sha256':'p','input_files':{}}
+    monkeypatch.setattr(delivery,'validated_plan',lambda root:plan)
+    monkeypatch.setattr(delivery,'execution_files',lambda:{str(source):sha(source)})
+    monkeypatch.setattr(delivery,'steps',lambda plan:['native:reference_0','simulation:0','mechanisms'])
+    prior=tmp_path/'diagnostics_revision.json'
+    write(prior,dict(plan_sha256='p',execution_files={str(old_source):sha(old_source)},preserved_files={}))
+    frozen=tmp_path/'delivery_models.json';write(frozen,dict(status='frozen'))
+    native=tmp_path/'native/reference_0/result.json';write(native,dict(status='completed',confirmation_opened=True))
+    write(tmp_path/'steps/native_reference_0.json',dict(stage='native:reference_0',plan_sha256='p',exit_code=0,
+        files={str(native):sha(native),str(frozen):sha(frozen)}))
+    write(tmp_path/'state.json',dict(status='failed',phase='simulation:0',completed=['native:reference_0'],plan_sha256='p'))
+    (tmp_path/'controller.log').write_text('failure');(tmp_path/'logs').mkdir()
+    (tmp_path/'logs/simulation_0.log').write_text('schema mismatch');(tmp_path/'confirmation').mkdir()
+    original=[p.read_bytes() for p in (prior,frozen,native)]
+    result=delivery.revise(tmp_path,phase='simulation:0')
+    assert result['confirmation_opened'] and result['preserved_stages']==['native:reference_0']
+    assert [p.read_bytes() for p in (prior,frozen,native)]==original
+    assert str(tmp_path/'simulation_revision.json') in delivery.execution_binding(tmp_path,plan)
+    native.write_text('changed')
+    with pytest.raises(ValueError,match='source changed'):delivery.execution_binding(tmp_path,plan)

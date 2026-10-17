@@ -22,7 +22,8 @@ def execution_files():
 
 
 def execution_binding(root, plan):
-    path=Path(root)/'diagnostics_revision.json'
+    path=Path(root)/'simulation_revision.json'
+    if not path.exists():path=Path(root)/'diagnostics_revision.json'
     if not path.exists():path=Path(root)/'execution_revision.json'
     if not path.exists():
         if any(plan['input_files'].get(p)!=digest for p,digest in execution_files().items()):
@@ -111,9 +112,9 @@ def plan_at(root):
 
 
 def revise(root, phase='sensitivity'):
-    """Bind a pre-confirmation repair without rewriting completed receipts or model freeze."""
+    """Bind a stopped-stage repair without rewriting completed receipts or model freeze."""
     import fcntl
-    if phase not in ('sensitivity','diagnostics'):raise ValueError('unsupported repair phase')
+    if phase not in ('sensitivity','diagnostics','simulation:0'):raise ValueError('unsupported repair phase')
     root=Path(root)
     with (root/'controller.lock').open('a') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -121,8 +122,10 @@ def revise(root, phase='sensitivity'):
         completed=steps(plan)[:steps(plan).index(phase)]
         if (state['status']!='failed' or state['phase']!=phase or state['completed']!=completed
             or state['plan_sha256']!=plan['plan_sha256']
-            or (root/phase/'result.json').exists() or (root/'confirmation').exists()
-            or ((root/'delivery_models.json').exists() != (phase=='diagnostics'))):
+            or (root/phase/'result.json').exists()
+            or ((root/'confirmation').exists() != (phase=='simulation:0'))
+            or ((root/'delivery_models.json').exists() != (phase!='sensitivity'))
+            or (phase=='simulation:0' and any((root/'simulation').rglob('confirmation_unit.json')))):
             raise ValueError('repair requires the stopped pre-'+phase+' queue')
         files={}
         for stage in completed:
@@ -130,21 +133,24 @@ def revise(root, phase='sensitivity'):
             if receipt['stage']!=stage or receipt['plan_sha256']!=plan['plan_sha256'] or receipt['exit_code']!=0:
                 raise ValueError('completed step binding changed')
             verify(receipt['files']);files.update(receipt['files']);files[str(path)]=sha(path)
-        if phase=='diagnostics':
-            prior=root/'execution_revision.json';revision=read(prior)
+        if phase!='sensitivity':
+            prior=root/('diagnostics_revision.json' if phase=='simulation:0' else 'execution_revision.json');revision=read(prior)
             if revision['plan_sha256']!=plan['plan_sha256']:raise ValueError('prior revision plan changed')
             verify(revision['preserved_files']|revision['execution_files'])
             files[str(prior)]=sha(prior)
-        archive='target_guard' if phase=='sensitivity' else 'diagnostics'
-        for name in ('state.json','controller.log',f'logs/{phase}.log'):
+        archive={'sensitivity':'target_guard','diagnostics':'diagnostics','simulation:0':'simulation_contract'}[phase]
+        for name in ('state.json','controller.log',f'logs/{phase.replace(":","_")}.log'):
             original=root/name;backup=root/'recovery'/archive/Path(name).name
             backup.parent.mkdir(parents=True,exist_ok=True)
             if backup.exists() and backup.read_bytes()!=original.read_bytes():raise ValueError('failure backup differs')
             backup.write_bytes(original.read_bytes());files[str(backup)]=sha(backup)
-        destination='execution_revision.json' if phase=='sensitivity' else 'diagnostics_revision.json'
+        destination={'sensitivity':'execution_revision.json','diagnostics':'diagnostics_revision.json',
+            'simulation:0':'simulation_revision.json'}[phase]
+        reason={'sensitivity':'target reference guard repair','diagnostics':'use existing non-neural inference adapter for fixed synchronization baseline',
+            'simulation:0':'compare the existing structural schema fingerprint while retaining separate source file hashes'}[phase]
         return immutable(root/destination,dict(status='completed',plan_sha256=plan['plan_sha256'],
-            reason='target reference guard repair' if phase=='sensitivity' else 'use existing non-neural inference adapter for fixed synchronization baseline',
-            preserved_stages=completed,preserved_files=files,execution_files=execution_files(),confirmation_opened=False))
+            reason=reason,preserved_stages=completed,preserved_files=files,execution_files=execution_files(),
+            confirmation_opened=phase=='simulation:0'))
 
 
 def check_extra(result, unit, plan):
