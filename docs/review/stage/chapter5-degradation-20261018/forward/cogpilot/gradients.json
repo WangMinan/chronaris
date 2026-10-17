@@ -1,0 +1,899 @@
+{
+  "status": "completed",
+  "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/best.pt",
+  "checkpoint_sha256": "fed4a8ead610ee7596b8b70b242fd51ddd46d6329c79be9b642a2efebc63e5ac",
+  "route": "task_guided",
+  "batches": [
+    {
+      "sample_ids": [
+        "sub-cp005::ses-20210226::level-01B_run-001::window0005",
+        "sub-cp005::ses-20210226::level-01B_run-001::window0002",
+        "sub-cp005::ses-20210226::level-01B_run-001::window0011",
+        "sub-cp005::ses-20210226::level-01B_run-001::window0012"
+      ],
+      "task_valid_counts": {
+        "difficulty": 4.0,
+        "event_response": 0.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.00021419962286017835,
+          "weighted_loss": 4.283992529963143e-05,
+          "count": 248,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.0921015739440918,
+          "weighted_loss": 0.009210157208144665,
+          "count": 248,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.011219854466617107,
+          "weighted_loss": 0.011219854466617107,
+          "count": 174920,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 1.080662488937378,
+          "weighted_loss": 0.10806625336408615,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "measured",
+          "norm": 2.415989637374878,
+          "loss": 0.9216333627700806
+        },
+        "event_response": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.5565096735954285,
+          "loss": 0.05451550707221031
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.002470281906425953,
+          "loss": 4.283992529963143e-05
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.0072209956124424934,
+          "loss": 0.009210157208144665
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.5850258469581604,
+          "loss": 0.011219854466617107
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.3517935872077942,
+          "loss": 0.10806625336408615
+        }
+      },
+      "cosines": {
+        "difficulty / public": -0.21650384366512299,
+        "difficulty / chronaris_continuous_alignment": -0.02473466843366623,
+        "difficulty / chronaris_causal_direction": 0.02028493769466877,
+        "difficulty / observation_anchor": -0.01760854199528694,
+        "difficulty / explicit_time_shift": 0.15195754170417786,
+        "public / chronaris_continuous_alignment": 0.02503172867000103,
+        "public / chronaris_causal_direction": 0.013314008712768555,
+        "public / observation_anchor": 0.31126669049263,
+        "public / explicit_time_shift": 0.2685834467411041,
+        "chronaris_continuous_alignment / chronaris_causal_direction": -0.3528629541397095,
+        "chronaris_continuous_alignment / observation_anchor": 0.02517828904092312,
+        "chronaris_continuous_alignment / explicit_time_shift": -0.04901688173413277,
+        "chronaris_causal_direction / observation_anchor": -0.023448262363672256,
+        "chronaris_causal_direction / explicit_time_shift": 0.1493576318025589,
+        "observation_anchor / explicit_time_shift": 0.12872937321662903
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp005::ses-20210226::level-01B_run-001::window0007",
+        "sub-cp005::ses-20210226::level-01B_run-001::window0001",
+        "sub-cp005::ses-20210226::level-01B_run-001::window0013",
+        "sub-cp005::ses-20210226::level-01B_run-001::window0010"
+      ],
+      "task_valid_counts": {
+        "difficulty": 4.0,
+        "event_response": 0.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.0013723396696150303,
+          "weighted_loss": 0.00027446795138530433,
+          "count": 288,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.09254191070795059,
+          "weighted_loss": 0.00925419107079506,
+          "count": 288,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.09363701939582825,
+          "weighted_loss": 0.09363701939582825,
+          "count": 221284,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 1.3601067066192627,
+          "weighted_loss": 0.13601067662239075,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "measured",
+          "norm": 2.2849843502044678,
+          "loss": 0.8383122682571411
+        },
+        "event_response": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.6209167242050171,
+          "loss": 0.06991760432720184
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.010480165481567383,
+          "loss": 0.00027446795138530433
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.0040521277114748955,
+          "loss": 0.00925419107079506
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.5526880621910095,
+          "loss": 0.09363701939582825
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.22836390137672424,
+          "loss": 0.13601067662239075
+        }
+      },
+      "cosines": {
+        "difficulty / public": -0.3153148293495178,
+        "difficulty / chronaris_continuous_alignment": -0.03560520336031914,
+        "difficulty / chronaris_causal_direction": 0.005881031509488821,
+        "difficulty / observation_anchor": 0.04269520938396454,
+        "difficulty / explicit_time_shift": 0.035924434661865234,
+        "public / chronaris_continuous_alignment": 0.02746862918138504,
+        "public / chronaris_causal_direction": -0.00040663735126145184,
+        "public / observation_anchor": 0.23204122483730316,
+        "public / explicit_time_shift": 0.13058556616306305,
+        "chronaris_continuous_alignment / chronaris_causal_direction": -0.8905692100524902,
+        "chronaris_continuous_alignment / observation_anchor": 0.018971895799040794,
+        "chronaris_continuous_alignment / explicit_time_shift": -0.11242364346981049,
+        "chronaris_causal_direction / observation_anchor": -0.024976318702101707,
+        "chronaris_causal_direction / explicit_time_shift": 0.16455967724323273,
+        "observation_anchor / explicit_time_shift": 0.11707519739866257
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp005::ses-20210226::level-01B_run-001::event0013",
+        "sub-cp005::ses-20210226::level-01B_run-001::event0000",
+        "sub-cp005::ses-20210226::level-01B_run-001::event0014",
+        "sub-cp005::ses-20210226::level-01B_run-001::event0007"
+      ],
+      "task_valid_counts": {
+        "difficulty": 0.0,
+        "event_response": 4.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.006855962797999382,
+          "weighted_loss": 0.0013711926294490695,
+          "count": 170,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.10390802472829819,
+          "weighted_loss": 0.010390802286565304,
+          "count": 170,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.019392382353544235,
+          "weighted_loss": 0.019392382353544235,
+          "count": 75980,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 0.5697370767593384,
+          "weighted_loss": 0.05697370693087578,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "event_response": {
+          "status": "measured",
+          "norm": 0.17036820948123932,
+          "loss": 0.013217129744589329
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.6573916077613831,
+          "loss": 0.053779780864715576
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.05373799055814743,
+          "loss": 0.0013711926294490695
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.016316602006554604,
+          "loss": 0.010390802286565304
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.6120021343231201,
+          "loss": 0.019392382353544235
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.10741790384054184,
+          "loss": 0.05697370693087578
+        }
+      },
+      "cosines": {
+        "event_response / public": -0.19600942730903625,
+        "event_response / chronaris_continuous_alignment": 0.051728807389736176,
+        "event_response / chronaris_causal_direction": 0.082441546022892,
+        "event_response / observation_anchor": -0.015752969309687614,
+        "event_response / explicit_time_shift": -0.27119579911231995,
+        "public / chronaris_continuous_alignment": 0.032926466315984726,
+        "public / chronaris_causal_direction": 0.02109278365969658,
+        "public / observation_anchor": 0.21055717766284943,
+        "public / explicit_time_shift": 0.4857640564441681,
+        "chronaris_continuous_alignment / chronaris_causal_direction": 0.9811421036720276,
+        "chronaris_continuous_alignment / observation_anchor": 0.0029785619117319584,
+        "chronaris_continuous_alignment / explicit_time_shift": 0.01221475563943386,
+        "chronaris_causal_direction / observation_anchor": -0.007144857197999954,
+        "chronaris_causal_direction / explicit_time_shift": 0.003108049277216196,
+        "observation_anchor / explicit_time_shift": 0.09116316586732864
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp005::ses-20210226::level-01B_run-001::event0019",
+        "sub-cp005::ses-20210226::level-01B_run-001::event0010",
+        "sub-cp005::ses-20210226::level-01B_run-001::event0009",
+        "sub-cp005::ses-20210226::level-01B_run-001::event0004"
+      ],
+      "task_valid_counts": {
+        "difficulty": 0.0,
+        "event_response": 4.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.0021482990123331547,
+          "weighted_loss": 0.0004296598199289292,
+          "count": 145,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.09795082360506058,
+          "weighted_loss": 0.009795082733035088,
+          "count": 145,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.08743773400783539,
+          "weighted_loss": 0.08743773400783539,
+          "count": 54780,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 0.6724958419799805,
+          "weighted_loss": 0.0672495886683464,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "event_response": {
+          "status": "measured",
+          "norm": 0.042483098804950714,
+          "loss": 0.00038621440762653947
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.47747495770454407,
+          "loss": 0.07185135036706924
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.015401575714349747,
+          "loss": 0.0004296598199289292
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.009075594134628773,
+          "loss": 0.009795082733035088
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.7680513262748718,
+          "loss": 0.08743773400783539
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.20779390633106232,
+          "loss": 0.0672495886683464
+        }
+      },
+      "cosines": {
+        "event_response / public": 0.08086526393890381,
+        "event_response / chronaris_continuous_alignment": 0.008189938962459564,
+        "event_response / chronaris_causal_direction": 0.005617071874439716,
+        "event_response / observation_anchor": 0.006780638359487057,
+        "event_response / explicit_time_shift": 0.13374777138233185,
+        "public / chronaris_continuous_alignment": 0.024153031408786774,
+        "public / chronaris_causal_direction": -0.017081016674637794,
+        "public / observation_anchor": 0.168284609913826,
+        "public / explicit_time_shift": 0.4008590877056122,
+        "chronaris_continuous_alignment / chronaris_causal_direction": -0.9597353935241699,
+        "chronaris_continuous_alignment / observation_anchor": 0.030799612402915955,
+        "chronaris_continuous_alignment / explicit_time_shift": -0.017054686322808266,
+        "chronaris_causal_direction / observation_anchor": -0.02042388543486595,
+        "chronaris_causal_direction / explicit_time_shift": 0.015222873538732529,
+        "observation_anchor / explicit_time_shift": -0.04373132809996605
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp006::ses-20210324::level-04B_run-004::window0000",
+        "sub-cp006::ses-20210324::level-01B_run-012::window0007",
+        "sub-cp006::ses-20210324::level-04B_run-006::window0001",
+        "sub-cp006::ses-20210324::level-04B_run-004::window0005"
+      ],
+      "task_valid_counts": {
+        "difficulty": 4.0,
+        "event_response": 0.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.0003414727689232677,
+          "weighted_loss": 6.829455378465354e-05,
+          "count": 347,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.09412042796611786,
+          "weighted_loss": 0.009412042796611786,
+          "count": 347,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.01537399273365736,
+          "weighted_loss": 0.01537399273365736,
+          "count": 220020,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 1.414219617843628,
+          "weighted_loss": 0.14142195880413055,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "measured",
+          "norm": 1.3170186281204224,
+          "loss": 0.6993387341499329
+        },
+        "event_response": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.6535599827766418,
+          "loss": 0.05206742882728577
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.003104751231148839,
+          "loss": 6.829455378465354e-05
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.004139754455536604,
+          "loss": 0.009412042796611786
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.7313257455825806,
+          "loss": 0.01537399273365736
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.3376331031322479,
+          "loss": 0.14142195880413055
+        }
+      },
+      "cosines": {
+        "difficulty / public": -0.8057622313499451,
+        "difficulty / chronaris_continuous_alignment": -0.00628197705373168,
+        "difficulty / chronaris_causal_direction": 0.008997615426778793,
+        "difficulty / observation_anchor": -0.2968631386756897,
+        "difficulty / explicit_time_shift": -0.06489767134189606,
+        "public / chronaris_continuous_alignment": -0.00026986628654412925,
+        "public / chronaris_causal_direction": 0.0006533277919515967,
+        "public / observation_anchor": 0.13940872251987457,
+        "public / explicit_time_shift": 0.15993867814540863,
+        "chronaris_continuous_alignment / chronaris_causal_direction": -0.6948800683021545,
+        "chronaris_continuous_alignment / observation_anchor": 0.017841752618551254,
+        "chronaris_continuous_alignment / explicit_time_shift": -0.15771235525608063,
+        "chronaris_causal_direction / observation_anchor": -0.007381959352642298,
+        "chronaris_causal_direction / explicit_time_shift": 0.1807132512331009,
+        "observation_anchor / explicit_time_shift": -0.18105436861515045
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp006::ses-20210324::level-02B_run-008::window0013",
+        "sub-cp006::ses-20210324::level-01B_run-001::window0001",
+        "sub-cp006::ses-20210324::level-02B_run-010::window0013",
+        "sub-cp006::ses-20210324::level-01B_run-012::window0010"
+      ],
+      "task_valid_counts": {
+        "difficulty": 4.0,
+        "event_response": 0.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.002316141966730356,
+          "weighted_loss": 0.0004632284108083695,
+          "count": 332,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.09588140994310379,
+          "weighted_loss": 0.009588140994310379,
+          "count": 332,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.01776544749736786,
+          "weighted_loss": 0.01776544749736786,
+          "count": 215692,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 1.0973514318466187,
+          "weighted_loss": 0.1097351461648941,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "measured",
+          "norm": 1.9123432636260986,
+          "loss": 1.022414207458496
+        },
+        "event_response": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.6126679182052612,
+          "loss": 0.05634353309869766
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.017413312569260597,
+          "loss": 0.0004632284108083695
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.005124329589307308,
+          "loss": 0.009588140994310379
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.7406021952629089,
+          "loss": 0.01776544749736786
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.27759018540382385,
+          "loss": 0.1097351461648941
+        }
+      },
+      "cosines": {
+        "difficulty / public": -0.0859549269080162,
+        "difficulty / chronaris_continuous_alignment": -0.035809263586997986,
+        "difficulty / chronaris_causal_direction": -0.03988073021173477,
+        "difficulty / observation_anchor": 0.05961418151855469,
+        "difficulty / explicit_time_shift": 0.07572957873344421,
+        "public / chronaris_continuous_alignment": -0.0028491837438195944,
+        "public / chronaris_causal_direction": -0.012947694398462772,
+        "public / observation_anchor": 0.21697703003883362,
+        "public / explicit_time_shift": -0.05292683467268944,
+        "chronaris_continuous_alignment / chronaris_causal_direction": 0.9538085460662842,
+        "chronaris_continuous_alignment / observation_anchor": 0.011242938227951527,
+        "chronaris_continuous_alignment / explicit_time_shift": -0.06290952116250992,
+        "chronaris_causal_direction / observation_anchor": -0.003930139821022749,
+        "chronaris_causal_direction / explicit_time_shift": -0.09435991942882538,
+        "observation_anchor / explicit_time_shift": 0.10840079188346863
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp006::ses-20210324::level-03B_run-002::event0012",
+        "sub-cp006::ses-20210324::level-02B_run-003::event0013",
+        "sub-cp006::ses-20210324::level-02B_run-008::event0016",
+        "sub-cp006::ses-20210324::level-04B_run-006::event0010"
+      ],
+      "task_valid_counts": {
+        "difficulty": 0.0,
+        "event_response": 4.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.0018115447601303458,
+          "weighted_loss": 0.00036230895784683526,
+          "count": 122,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.06352140754461288,
+          "weighted_loss": 0.006352141033858061,
+          "count": 122,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.012085655704140663,
+          "weighted_loss": 0.012085655704140663,
+          "count": 72436,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 1.705336093902588,
+          "weighted_loss": 0.17053361237049103,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "event_response": {
+          "status": "measured",
+          "norm": 0.018803898245096207,
+          "loss": 0.006504951044917107
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.5386367440223694,
+          "loss": 0.04026751592755318
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.0162248183041811,
+          "loss": 0.00036230895784683526
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.014496378600597382,
+          "loss": 0.006352141033858061
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.7780947089195251,
+          "loss": 0.012085655704140663
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.417530357837677,
+          "loss": 0.17053361237049103
+        }
+      },
+      "cosines": {
+        "event_response / public": 0.07901888340711594,
+        "event_response / chronaris_continuous_alignment": -0.02489740587770939,
+        "event_response / chronaris_causal_direction": 0.02398538589477539,
+        "event_response / observation_anchor": -0.0002994228561874479,
+        "event_response / explicit_time_shift": -0.02160545438528061,
+        "public / chronaris_continuous_alignment": 0.021235089749097824,
+        "public / chronaris_causal_direction": -0.024444952607154846,
+        "public / observation_anchor": 0.08895546197891235,
+        "public / explicit_time_shift": 0.13853102922439575,
+        "chronaris_continuous_alignment / chronaris_causal_direction": -0.966970682144165,
+        "chronaris_continuous_alignment / observation_anchor": 0.010347651317715645,
+        "chronaris_continuous_alignment / explicit_time_shift": 0.1249924898147583,
+        "chronaris_causal_direction / observation_anchor": -0.010127943940460682,
+        "chronaris_causal_direction / explicit_time_shift": -0.13642270863056183,
+        "observation_anchor / explicit_time_shift": -0.011400037445127964
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    },
+    {
+      "sample_ids": [
+        "sub-cp006::ses-20210324::level-01B_run-001::event0012",
+        "sub-cp006::ses-20210324::level-01B_run-001::event0011",
+        "sub-cp006::ses-20210324::level-04B_run-006::event0004",
+        "sub-cp006::ses-20210324::level-04B_run-004::event0017"
+      ],
+      "task_valid_counts": {
+        "difficulty": 0.0,
+        "event_response": 4.0
+      },
+      "schedule_update": 200,
+      "mechanisms": [
+        {
+          "term_name": "chronaris_continuous_alignment",
+          "weight": 0.2,
+          "raw_loss": 0.00015235792670864612,
+          "weighted_loss": 3.0471584977931343e-05,
+          "count": 240,
+          "status": "active"
+        },
+        {
+          "term_name": "chronaris_physical_consistency",
+          "weight": 0.05,
+          "raw_loss": 0.0,
+          "weighted_loss": 0.0,
+          "count": 0,
+          "status": "scheduled_zero_or_unavailable"
+        },
+        {
+          "term_name": "chronaris_causal_direction",
+          "weight": 0.1,
+          "raw_loss": 0.07851893454790115,
+          "weighted_loss": 0.00785189401358366,
+          "count": 240,
+          "status": "active"
+        },
+        {
+          "term_name": "observation_anchor",
+          "weight": 1.0,
+          "raw_loss": 0.01919110119342804,
+          "weighted_loss": 0.01919110119342804,
+          "count": 71920,
+          "status": "active"
+        },
+        {
+          "term_name": "explicit_time_shift",
+          "weight": 0.1,
+          "status": "active",
+          "count": 4,
+          "raw_loss": 0.7070975303649902,
+          "weighted_loss": 0.07070975750684738,
+          "reason": null,
+          "modality_losses": {}
+        }
+      ],
+      "terms": {
+        "difficulty": {
+          "status": "unavailable",
+          "norm": null
+        },
+        "event_response": {
+          "status": "measured",
+          "norm": 0.14839348196983337,
+          "loss": 0.012625539675354958
+        },
+        "public": {
+          "status": "measured",
+          "norm": 0.5583209991455078,
+          "loss": 0.04077114537358284
+        },
+        "chronaris_continuous_alignment": {
+          "status": "measured",
+          "norm": 0.0019128327257931232,
+          "loss": 3.0471584977931343e-05
+        },
+        "chronaris_causal_direction": {
+          "status": "measured",
+          "norm": 0.022016584873199463,
+          "loss": 0.00785189401358366
+        },
+        "observation_anchor": {
+          "status": "measured",
+          "norm": 0.708758533000946,
+          "loss": 0.01919110119342804
+        },
+        "explicit_time_shift": {
+          "status": "measured",
+          "norm": 0.2151869535446167,
+          "loss": 0.07070975750684738
+        }
+      },
+      "cosines": {
+        "event_response / public": 0.019604304805397987,
+        "event_response / chronaris_continuous_alignment": 0.018642520532011986,
+        "event_response / chronaris_causal_direction": 0.01236038375645876,
+        "event_response / observation_anchor": 0.06461625546216965,
+        "event_response / explicit_time_shift": 0.10067790746688843,
+        "public / chronaris_continuous_alignment": -0.0010643004206940532,
+        "public / chronaris_causal_direction": 0.007351636420935392,
+        "public / observation_anchor": 0.2222757637500763,
+        "public / explicit_time_shift": 0.2860458493232727,
+        "chronaris_continuous_alignment / chronaris_causal_direction": -0.15418291091918945,
+        "chronaris_continuous_alignment / observation_anchor": 0.028133487328886986,
+        "chronaris_continuous_alignment / explicit_time_shift": 0.06663353741168976,
+        "chronaris_causal_direction / observation_anchor": -0.01710209622979164,
+        "chronaris_causal_direction / explicit_time_shift": 0.1558474749326706,
+        "observation_anchor / explicit_time_shift": 0.3458634912967682
+      },
+      "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+    }
+  ],
+  "optimizer_steps": 0,
+  "task_readout": "trained_task_heads",
+  "confirmation_opened": false
+}

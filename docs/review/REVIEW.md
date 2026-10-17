@@ -2,6 +2,8 @@
 
 更新时间：2026-10-18
 
+[完整方法退化诊断与统计审查](stage/chapter5-degradation-20261018/README.md)：公开原始预测复算、受试者配对统计、训练预算、冻结分支读出、简单参照、正则范围与无更新梯度实跑；保留冻结结果，给出分阶段修复和补实验方案。
+
 [第六章工作区合并验收](stage/chapter6-merge-20261018/README.md)：检查当前分支与未提交改动，保存完整方法 GPU 证据；验证服务、工作流、物理与语义功能，在主分支复核真实浏览器链路。
 
 本目录保存代码与协议复核的计划、发现、修复及验证记录。当前研究和执行入口为[融合表示下游评价方案](../requirements/thesis-downstream-representation-plan-20260909.md)、[任务队列](../implementation/TASKS.md)和[状态页](../STATE.md)。

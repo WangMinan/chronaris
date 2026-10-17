@@ -1,0 +1,20 @@
+{
+  "source_commit": "a725a23b538f9d4395d2fd96f614f8328fed47bd",
+  "compared_frozen_source": "14577462",
+  "unchanged_model_and_diagnostic_paths": [
+    "src/chronaris/modeling",
+    "src/chronaris/models",
+    "src/chronaris/representation",
+    "src/chronaris/evaluation/application_tasks/application_finetuning.py",
+    "src/chronaris/evaluation/application_tasks/consumer_model_selection.py",
+    "src/chronaris/evaluation/application_tasks/stage45b_diagnostics.py",
+    "src/chronaris/evaluation/application_tasks/stage45_diagnostics.py"
+  ],
+  "diff_empty": true,
+  "python": "3.11.15",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.2.6",
+  "scikit_learn": "1.7.2",
+  "gpu": "NVIDIA GeForce RTX 4070 SUPER",
+  "scope": "diagnostic source provenance; not a new frozen experiment"
+}

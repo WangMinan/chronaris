@@ -1,0 +1,2664 @@
+{
+  "records": [
+    {
+      "domain": "clare",
+      "variant": "historical_reference",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sample_ids": [
+        "1026__experiment3_window10",
+        "1106__experiment1_window7",
+        "1026__experiment0_window37",
+        "1106__experiment3_window22",
+        "1106__experiment2_window39",
+        "1026__experiment0_window45",
+        "1026__experiment0_window43",
+        "1106__experiment1_window14",
+        "1106__experiment0_window42",
+        "1106__experiment0_window18",
+        "1106__experiment3_window11",
+        "1026__experiment3_window52",
+        "1106__experiment0_window14",
+        "1026__experiment2_window18",
+        "1106__experiment0_window28",
+        "1026__experiment0_window31"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.08435288071632385,
+        0.11186701878905296,
+        0.21142025291919708,
+        0.8933686017990112,
+        0.9091774225234985
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999991880475189,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0330805778503418,
+          "mean_norm": 2.9748663902282715
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0232338905334473,
+          "mean_norm": 2.6942696571350098
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0833276510238647,
+          "mean_norm": 2.7060935497283936
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0593128204345703,
+          "mean_norm": 5.0648393630981445
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0267682075500488,
+          "mean_norm": 5.73307991027832
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.085902214050293,
+          "mean_norm": 5.834197044372559
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0330729484558105,
+          "mean_norm": 3.0007524490356445
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0232218503952026,
+          "mean_norm": 2.7015700340270996
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0833276510238647,
+          "mean_norm": 2.7060935497283936
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0593128204345703,
+          "mean_norm": 5.0648393630981445
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0259931087493896,
+          "mean_norm": 5.745111465454102
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.085902214050293,
+          "mean_norm": 5.834197044372559
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 1.0599395036697388,
+          "mean_norm": 5.728938102722168
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 1.0766171216964722,
+          "mean_norm": 5.872063636779785
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 1.0598325729370117,
+          "mean_norm": 5.778801918029785
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 1.0765292644500732,
+          "mean_norm": 5.92380428314209
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "clare",
+      "variant": "historical_reference",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/0/clare/chronaris/task_guided/chronaris/best.pt",
+      "sample_ids": [
+        "1026__experiment3_window10",
+        "1106__experiment1_window7",
+        "1026__experiment0_window37",
+        "1106__experiment3_window22",
+        "1106__experiment2_window39",
+        "1026__experiment0_window45",
+        "1026__experiment0_window43",
+        "1106__experiment1_window14",
+        "1106__experiment0_window42",
+        "1106__experiment0_window18",
+        "1106__experiment3_window11",
+        "1026__experiment3_window52",
+        "1106__experiment0_window14",
+        "1026__experiment2_window18",
+        "1106__experiment0_window28",
+        "1026__experiment0_window31"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.05231786519289017,
+        0.0899159587919712,
+        0.17023002356290817,
+        0.8553372859954834,
+        0.8878595232963562
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999988393978678,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0115187168121338,
+          "mean_norm": 2.6423466205596924
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0085642337799072,
+          "mean_norm": 2.975691795349121
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0713646411895752,
+          "mean_norm": 2.732393741607666
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0501430034637451,
+          "mean_norm": 5.190464019775391
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0131862163543701,
+          "mean_norm": 5.679224014282227
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0734485387802124,
+          "mean_norm": 5.81911563873291
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0115060806274414,
+          "mean_norm": 2.665560245513916
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0084917545318604,
+          "mean_norm": 2.9840807914733887
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0713646411895752,
+          "mean_norm": 2.732393741607666
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0501430034637451,
+          "mean_norm": 5.190464019775391
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0128684043884277,
+          "mean_norm": 5.69304084777832
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0734485387802124,
+          "mean_norm": 5.81911563873291
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 1.0510133504867554,
+          "mean_norm": 5.991322040557861
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 1.0608446598052979,
+          "mean_norm": 6.100417137145996
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 1.050825834274292,
+          "mean_norm": 6.042022705078125
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 1.0606805086135864,
+          "mean_norm": 6.152629375457764
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "clare",
+      "variant": "thesis_reference",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sample_ids": [
+        "1026__experiment3_window10",
+        "1106__experiment1_window7",
+        "1026__experiment0_window37",
+        "1106__experiment3_window22",
+        "1106__experiment2_window39",
+        "1026__experiment0_window45",
+        "1026__experiment0_window43",
+        "1106__experiment1_window14",
+        "1106__experiment0_window42",
+        "1106__experiment0_window18",
+        "1106__experiment3_window11",
+        "1026__experiment3_window52",
+        "1106__experiment0_window14",
+        "1026__experiment2_window18",
+        "1106__experiment0_window28",
+        "1026__experiment0_window31"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.02861689031124115,
+        0.037536374479532245,
+        0.10526228696107864,
+        0.41675490140914917,
+        0.47500988841056824
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999985293411523,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0777769088745117,
+          "mean_norm": 2.511202096939087
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0179400444030762,
+          "mean_norm": 2.3771417140960693
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.052590012550354,
+          "mean_norm": 2.806689500808716
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.047376275062561,
+          "mean_norm": 4.631510257720947
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.047322154045105,
+          "mean_norm": 5.590559959411621
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0613536834716797,
+          "mean_norm": 5.865337371826172
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0763022899627686,
+          "mean_norm": 2.527160167694092
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0168533325195312,
+          "mean_norm": 2.3885202407836914
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.052590012550354,
+          "mean_norm": 2.806689500808716
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.047376275062561,
+          "mean_norm": 4.631510257720947
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0447460412979126,
+          "mean_norm": 5.6076555252075195
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0613536834716797,
+          "mean_norm": 5.865337371826172
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 1.047439455986023,
+          "mean_norm": 5.194736480712891
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 1.0611289739608765,
+          "mean_norm": 5.627548694610596
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 1.0473814010620117,
+          "mean_norm": 5.242842197418213
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 1.0610816478729248,
+          "mean_norm": 5.680933952331543
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "clare",
+      "variant": "thesis_reference",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/chronaris/best.pt",
+      "sample_ids": [
+        "1026__experiment3_window10",
+        "1106__experiment1_window7",
+        "1026__experiment0_window37",
+        "1106__experiment3_window22",
+        "1106__experiment2_window39",
+        "1026__experiment0_window45",
+        "1026__experiment0_window43",
+        "1106__experiment1_window14",
+        "1106__experiment0_window42",
+        "1106__experiment0_window18",
+        "1106__experiment3_window11",
+        "1026__experiment3_window52",
+        "1106__experiment0_window14",
+        "1026__experiment2_window18",
+        "1106__experiment0_window28",
+        "1026__experiment0_window31"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.027939457446336746,
+        0.038152285665273664,
+        0.1132865697145462,
+        0.4050586462020874,
+        0.4625813663005829
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999986234918344,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0488431453704834,
+          "mean_norm": 2.464496374130249
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0103332996368408,
+          "mean_norm": 2.4254021644592285
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0497386455535889,
+          "mean_norm": 2.8417420387268066
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0420477390289307,
+          "mean_norm": 4.732995986938477
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0319139957427979,
+          "mean_norm": 5.566283702850342
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0575467348098755,
+          "mean_norm": 5.874057769775391
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0477957725524902,
+          "mean_norm": 2.479933738708496
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0097236633300781,
+          "mean_norm": 2.436774492263794
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0497386455535889,
+          "mean_norm": 2.8417420387268066
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0420477390289307,
+          "mean_norm": 4.732995986938477
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0302118062973022,
+          "mean_norm": 5.583388328552246
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0575467348098755,
+          "mean_norm": 5.874057769775391
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 1.0422940254211426,
+          "mean_norm": 5.299581527709961
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 1.0561248064041138,
+          "mean_norm": 5.668993949890137
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 1.0422061681747437,
+          "mean_norm": 5.348517894744873
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 1.056052565574646,
+          "mean_norm": 5.722475051879883
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "clare",
+      "variant": "thesis_no_event_semantics",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/self_supervised/chronaris/C/best.pt",
+      "sample_ids": [
+        "1026__experiment3_window10",
+        "1106__experiment1_window7",
+        "1026__experiment0_window37",
+        "1106__experiment3_window22",
+        "1106__experiment2_window39",
+        "1026__experiment0_window45",
+        "1026__experiment0_window43",
+        "1106__experiment1_window14",
+        "1106__experiment0_window42",
+        "1106__experiment0_window18",
+        "1106__experiment3_window11",
+        "1026__experiment3_window52",
+        "1106__experiment0_window14",
+        "1026__experiment2_window18",
+        "1106__experiment0_window28",
+        "1026__experiment0_window31"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.05176496133208275,
+        0.07786432430148124,
+        0.2618599385023117,
+        0.7831570208072662,
+        0.8253477811813354
+      ],
+      "attention_entropy_over_uniform_mean": 0.999998581682821,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0679080486297607,
+          "mean_norm": 2.5679943561553955
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0146230459213257,
+          "mean_norm": 2.4136531352996826
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.052985668182373,
+          "mean_norm": 2.8722658157348633
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.053896188735962,
+          "mean_norm": 4.877241611480713
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0410021543502808,
+          "mean_norm": 5.597171783447266
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0601723194122314,
+          "mean_norm": 5.897249698638916
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0665565729141235,
+          "mean_norm": 2.5846493244171143
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0136573314666748,
+          "mean_norm": 2.425492286682129
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.052985668182373,
+          "mean_norm": 2.8722658157348633
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.053896188735962,
+          "mean_norm": 4.877241611480713
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0386556386947632,
+          "mean_norm": 5.61525297164917
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0601723194122314,
+          "mean_norm": 5.897249698638916
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 1.053741693496704,
+          "mean_norm": 5.4214372634887695
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 1.0646365880966187,
+          "mean_norm": 5.737480640411377
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 1.0536824464797974,
+          "mean_norm": 5.4721784591674805
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 1.064586877822876,
+          "mean_norm": 5.7920427322387695
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "clare",
+      "variant": "thesis_no_event_semantics",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/task_guided/chronaris/best.pt",
+      "sample_ids": [
+        "1026__experiment3_window10",
+        "1106__experiment1_window7",
+        "1026__experiment0_window37",
+        "1106__experiment3_window22",
+        "1106__experiment2_window39",
+        "1026__experiment0_window45",
+        "1026__experiment0_window43",
+        "1106__experiment1_window14",
+        "1106__experiment0_window42",
+        "1106__experiment0_window18",
+        "1106__experiment3_window11",
+        "1026__experiment3_window52",
+        "1106__experiment0_window14",
+        "1026__experiment2_window18",
+        "1106__experiment0_window28",
+        "1026__experiment0_window31"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.0447220616042614,
+        0.07846808806061745,
+        0.25616493821144104,
+        0.7677952289581299,
+        0.8168634176254272
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999986422790897,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0410990715026855,
+          "mean_norm": 2.50607967376709
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0085327625274658,
+          "mean_norm": 2.463021993637085
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.0505892038345337,
+          "mean_norm": 2.919623374938965
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.0484058856964111,
+          "mean_norm": 4.970447540283203
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.027255654335022,
+          "mean_norm": 5.569365501403809
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.0571433305740356,
+          "mean_norm": 5.903294086456299
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.040202260017395,
+          "mean_norm": 2.5219783782958984
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0080020427703857,
+          "mean_norm": 2.474492073059082
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0505892038345337,
+          "mean_norm": 2.919623374938965
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.0484058856964111,
+          "mean_norm": 4.970447540283203
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.025810718536377,
+          "mean_norm": 5.587153911590576
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.0571433305740356,
+          "mean_norm": 5.903294086456299
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 1.0485140085220337,
+          "mean_norm": 5.521365165710449
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 1.0589245557785034,
+          "mean_norm": 5.792815208435059
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 1.0484217405319214,
+          "mean_norm": 5.572687149047852
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 1.0588457584381104,
+          "mean_norm": 5.8474602699279785
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "historical_reference",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sample_ids": [
+        "sub-cp014::ses-20211112::level-04B_run-009::event0015",
+        "sub-cp026::ses-20210716::level-02B_run-010::window0001",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0003",
+        "sub-cp043::ses-20220127::level-04B_run-004::window0011",
+        "sub-cp014::ses-20211112::level-02B_run-010::window0006",
+        "sub-cp043::ses-20220127::level-03B_run-011::event0006",
+        "sub-cp043::ses-20220127::level-04B_run-006::event0009",
+        "sub-cp012::ses-20210723::level-02B_run-010::window0008",
+        "sub-cp026::ses-20210716::level-03B_run-005::event0015",
+        "sub-cp043::ses-20220127::level-01B_run-012::event0003",
+        "sub-cp043::ses-20220127::level-04B_run-009::window0010",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0004",
+        "sub-cp043::ses-20220127::level-04B_run-009::event0017",
+        "sub-cp012::ses-20210723::level-01B_run-007::window0002",
+        "sub-cp012::ses-20210723::level-02B_run-008::event0004",
+        "sub-cp043::ses-20220127::level-01B_run-001::window0005"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.2674180269241333,
+        0.4219604730606079,
+        0.6237096190452576,
+        0.8244974195957184,
+        0.8850402235984802
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999983268196319,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.6373757123947144,
+          "mean_norm": 3.6416220664978027
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 2.061572790145874,
+          "mean_norm": 2.538741111755371
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 3.90617299079895,
+          "mean_norm": 2.730782985687256
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 2.9380757808685303,
+          "mean_norm": 3.3545632362365723
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.6995487213134766,
+          "mean_norm": 6.044620513916016
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 3.669301748275757,
+          "mean_norm": 6.492471694946289
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.6373757123947144,
+          "mean_norm": 3.6416220664978027
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 2.061572790145874,
+          "mean_norm": 2.538741111755371
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.90617299079895,
+          "mean_norm": 2.730782985687256
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 2.9380757808685303,
+          "mean_norm": 3.3545632362365723
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.6995487213134766,
+          "mean_norm": 6.044620513916016
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.669301748275757,
+          "mean_norm": 6.492471694946289
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 3.4349634647369385,
+          "mean_norm": 4.295050621032715
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 3.461646318435669,
+          "mean_norm": 4.510934829711914
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 3.4349634647369385,
+          "mean_norm": 4.295050621032715
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 3.461646318435669,
+          "mean_norm": 4.510934829711914
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "historical_reference",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sample_ids": [
+        "sub-cp014::ses-20211112::level-04B_run-009::event0015",
+        "sub-cp026::ses-20210716::level-02B_run-010::window0001",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0003",
+        "sub-cp043::ses-20220127::level-04B_run-004::window0011",
+        "sub-cp014::ses-20211112::level-02B_run-010::window0006",
+        "sub-cp043::ses-20220127::level-03B_run-011::event0006",
+        "sub-cp043::ses-20220127::level-04B_run-006::event0009",
+        "sub-cp012::ses-20210723::level-02B_run-010::window0008",
+        "sub-cp026::ses-20210716::level-03B_run-005::event0015",
+        "sub-cp043::ses-20220127::level-01B_run-012::event0003",
+        "sub-cp043::ses-20220127::level-04B_run-009::window0010",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0004",
+        "sub-cp043::ses-20220127::level-04B_run-009::event0017",
+        "sub-cp012::ses-20210723::level-01B_run-007::window0002",
+        "sub-cp012::ses-20210723::level-02B_run-008::event0004",
+        "sub-cp043::ses-20220127::level-01B_run-001::window0005"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.22168013453483582,
+        0.3528129518032074,
+        0.5495986640453339,
+        0.7767071485519409,
+        0.8683276772499084
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999983663756239,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 1.662583827972412,
+          "mean_norm": 3.661529064178467
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.9700045585632324,
+          "mean_norm": 2.686070680618286
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 3.618671417236328,
+          "mean_norm": 2.87070894241333
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 2.7007195949554443,
+          "mean_norm": 3.4376420974731445
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 1.6606597900390625,
+          "mean_norm": 6.004502296447754
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 3.331958532333374,
+          "mean_norm": 6.513711929321289
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.662583827972412,
+          "mean_norm": 3.661529064178467
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.9700045585632324,
+          "mean_norm": 2.686070680618286
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.618671417236328,
+          "mean_norm": 2.87070894241333
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 2.7007195949554443,
+          "mean_norm": 3.4376420974731445
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 1.6606597900390625,
+          "mean_norm": 6.004502296447754
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.331958532333374,
+          "mean_norm": 6.513711929321289
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 3.3215954303741455,
+          "mean_norm": 4.4499735832214355
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 3.3463008403778076,
+          "mean_norm": 4.638916015625
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 3.3215954303741455,
+          "mean_norm": 4.4499735832214355
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 3.3463008403778076,
+          "mean_norm": 4.638916015625
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "thesis_reference",
+      "route": "self_supervised",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/best.pt",
+      "sample_ids": [
+        "sub-cp014::ses-20211112::level-04B_run-009::event0015",
+        "sub-cp026::ses-20210716::level-02B_run-010::window0001",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0003",
+        "sub-cp043::ses-20220127::level-04B_run-004::window0011",
+        "sub-cp014::ses-20211112::level-02B_run-010::window0006",
+        "sub-cp043::ses-20220127::level-03B_run-011::event0006",
+        "sub-cp043::ses-20220127::level-04B_run-006::event0009",
+        "sub-cp012::ses-20210723::level-02B_run-010::window0008",
+        "sub-cp026::ses-20210716::level-03B_run-005::event0015",
+        "sub-cp043::ses-20220127::level-01B_run-012::event0003",
+        "sub-cp043::ses-20220127::level-04B_run-009::window0010",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0004",
+        "sub-cp043::ses-20220127::level-04B_run-009::event0017",
+        "sub-cp012::ses-20210723::level-01B_run-007::window0002",
+        "sub-cp012::ses-20210723::level-02B_run-008::event0004",
+        "sub-cp043::ses-20220127::level-01B_run-001::window0005"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.0627300813794136,
+        0.11242063716053963,
+        0.203161358833313,
+        0.32172794342041017,
+        0.426120400428772
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999967836748258,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 2.135807752609253,
+          "mean_norm": 3.4212028980255127
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.9120516777038574,
+          "mean_norm": 2.5491843223571777
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 3.965512275695801,
+          "mean_norm": 2.5670204162597656
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 2.95854115486145,
+          "mean_norm": 3.637317180633545
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 2.164869785308838,
+          "mean_norm": 5.984200954437256
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 3.7649941444396973,
+          "mean_norm": 6.404549598693848
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 2.135807752609253,
+          "mean_norm": 3.4212028980255127
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.9120516777038574,
+          "mean_norm": 2.5491843223571777
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.965512275695801,
+          "mean_norm": 2.5670204162597656
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 2.95854115486145,
+          "mean_norm": 3.637317180633545
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 2.164869785308838,
+          "mean_norm": 5.984200954437256
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.7649941444396973,
+          "mean_norm": 6.404549598693848
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 3.3361432552337646,
+          "mean_norm": 4.5056328773498535
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 3.3385863304138184,
+          "mean_norm": 4.833340167999268
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 3.3361432552337646,
+          "mean_norm": 4.5056328773498535
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 3.3385863304138184,
+          "mean_norm": 4.833340167999268
+        }
+      },
+      "physics_relations": 0
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "thesis_reference",
+      "route": "task_guided",
+      "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/best.pt",
+      "sample_ids": [
+        "sub-cp014::ses-20211112::level-04B_run-009::event0015",
+        "sub-cp026::ses-20210716::level-02B_run-010::window0001",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0003",
+        "sub-cp043::ses-20220127::level-04B_run-004::window0011",
+        "sub-cp014::ses-20211112::level-02B_run-010::window0006",
+        "sub-cp043::ses-20220127::level-03B_run-011::event0006",
+        "sub-cp043::ses-20220127::level-04B_run-006::event0009",
+        "sub-cp012::ses-20210723::level-02B_run-010::window0008",
+        "sub-cp026::ses-20210716::level-03B_run-005::event0015",
+        "sub-cp043::ses-20220127::level-01B_run-012::event0003",
+        "sub-cp043::ses-20220127::level-04B_run-009::window0010",
+        "sub-cp043::ses-20220127::level-04B_run-006::window0004",
+        "sub-cp043::ses-20220127::level-04B_run-009::event0017",
+        "sub-cp012::ses-20210723::level-01B_run-007::window0002",
+        "sub-cp012::ses-20210723::level-02B_run-008::event0004",
+        "sub-cp043::ses-20220127::level-01B_run-001::window0005"
+      ],
+      "role": "validation",
+      "gate_quantiles": [
+        0.044483207166194916,
+        0.08402131423354149,
+        0.15641458332538605,
+        0.2480477586388588,
+        0.3214101791381836
+      ],
+      "attention_entropy_over_uniform_mean": 0.9999972517908201,
+      "branches": {
+        "physiology_before_projection": {
+          "dim": 32,
+          "effective_rank": 2.1634719371795654,
+          "mean_norm": 3.437934160232544
+        },
+        "physiology_after_projection": {
+          "dim": 24,
+          "effective_rank": 1.849514365196228,
+          "mean_norm": 2.8655571937561035
+        },
+        "vehicle_before_projection": {
+          "dim": 32,
+          "effective_rank": 3.696258783340454,
+          "mean_norm": 2.654696464538574
+        },
+        "vehicle_after_projection": {
+          "dim": 24,
+          "effective_rank": 2.7155330181121826,
+          "mean_norm": 3.7396438121795654
+        },
+        "physiology_after_normalization": {
+          "dim": 32,
+          "effective_rank": 2.1714813709259033,
+          "mean_norm": 5.951436996459961
+        },
+        "vehicle_after_normalization": {
+          "dim": 32,
+          "effective_rank": 3.438600778579712,
+          "mean_norm": 6.438487529754639
+        },
+        "physiology_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 2.1634719371795654,
+          "mean_norm": 3.437934160232544
+        },
+        "physiology_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 1.849514365196228,
+          "mean_norm": 2.8655571937561035
+        },
+        "vehicle_before_projection_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.696258783340454,
+          "mean_norm": 2.654696464538574
+        },
+        "vehicle_after_projection_common_mask": {
+          "dim": 24,
+          "effective_rank": 2.7155330181121826,
+          "mean_norm": 3.7396438121795654
+        },
+        "physiology_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 2.1714813709259033,
+          "mean_norm": 5.951436996459961
+        },
+        "vehicle_after_normalization_common_mask": {
+          "dim": 32,
+          "effective_rank": 3.438600778579712,
+          "mean_norm": 6.438487529754639
+        },
+        "branches_concatenated": {
+          "dim": 48,
+          "effective_rank": 3.0973522663116455,
+          "mean_norm": 4.756385326385498
+        },
+        "full": {
+          "dim": 64,
+          "effective_rank": 3.1064810752868652,
+          "mean_norm": 4.896602630615234
+        },
+        "branches_concatenated_common_mask": {
+          "dim": 48,
+          "effective_rank": 3.0973522663116455,
+          "mean_norm": 4.756385326385498
+        },
+        "full_common_mask": {
+          "dim": 64,
+          "effective_rank": 3.1064810752868652,
+          "mean_norm": 4.896602630615234
+        }
+      },
+      "physics_relations": 0
+    }
+  ],
+  "gradients": [
+    {
+      "domain": "clare",
+      "result": {
+        "status": "completed",
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/chronaris/best.pt",
+        "checkpoint_sha256": "d16760d3f4d61c5543661fb9d5f88017aff38cbb74bfa628d1c019537f7e46f7",
+        "route": "task_guided",
+        "batches": [
+          {
+            "sample_ids": [
+              "1337__experiment2_window16",
+              "1337__experiment0_window45",
+              "1337__experiment0_window31",
+              "1337__experiment0_window11"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.0018596857553347945,
+                "weighted_loss": 0.0003719371452461928,
+                "count": 94,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.10119175910949707,
+                "weighted_loss": 0.010119176469743252,
+                "count": 94,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.037505291402339935,
+                "weighted_loss": 0.037505291402339935,
+                "count": 36036,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 0.7254177927970886,
+                "weighted_loss": 0.07254178076982498,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 0.8420912623405457,
+                "loss": 0.574033260345459
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.49939867854118347,
+                "loss": 0.6068590879440308
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.13999754190444946,
+                "loss": 0.08244156837463379
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.009782622568309307,
+                "loss": 0.0003719371452461928
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.0045824209228158,
+                "loss": 0.010119176469743252
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.38916292786598206,
+                "loss": 0.037505291402339935
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.24474897980690002,
+                "loss": 0.07254178076982498
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": -0.5464180707931519,
+              "workload_classification / public": -0.38529789447784424,
+              "workload_classification / chronaris_continuous_alignment": 0.007680411450564861,
+              "workload_classification / chronaris_causal_direction": 0.016049474477767944,
+              "workload_classification / observation_anchor": 0.0683789998292923,
+              "workload_classification / explicit_time_shift": 0.10307639837265015,
+              "workload_regression / public": 0.4351567029953003,
+              "workload_regression / chronaris_continuous_alignment": 0.010521754622459412,
+              "workload_regression / chronaris_causal_direction": 0.024554921314120293,
+              "workload_regression / observation_anchor": -0.03112976998090744,
+              "workload_regression / explicit_time_shift": -0.04677183926105499,
+              "public / chronaris_continuous_alignment": 0.10522159934043884,
+              "public / chronaris_causal_direction": 0.0796511322259903,
+              "public / observation_anchor": -0.02148200385272503,
+              "public / explicit_time_shift": 0.061829786747694016,
+              "chronaris_continuous_alignment / chronaris_causal_direction": 0.858376681804657,
+              "chronaris_continuous_alignment / observation_anchor": -0.001239997218362987,
+              "chronaris_continuous_alignment / explicit_time_shift": 0.23311732709407806,
+              "chronaris_causal_direction / observation_anchor": -0.0065522510558366776,
+              "chronaris_causal_direction / explicit_time_shift": 0.22898231446743011,
+              "observation_anchor / explicit_time_shift": 0.007973375730216503
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "1337__experiment3_window51",
+              "1337__experiment2_window36",
+              "1337__experiment2_window5",
+              "1337__experiment0_window41"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.0007943485397845507,
+                "weighted_loss": 0.0001588697050465271,
+                "count": 141,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.09979959577322006,
+                "weighted_loss": 0.009979959577322006,
+                "count": 141,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.04746556282043457,
+                "weighted_loss": 0.04746556282043457,
+                "count": 38518,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 0.7850788831710815,
+                "weighted_loss": 0.07850789278745651,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 0.21288779377937317,
+                "loss": 0.05888541787862778
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 1.6838980913162231,
+                "loss": 0.45465612411499023
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.11749961227178574,
+                "loss": 0.07658354938030243
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.005522591061890125,
+                "loss": 0.0001588697050465271
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.0021573950070887804,
+                "loss": 0.009979959577322006
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.6646764278411865,
+                "loss": 0.04746556282043457
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.124559186398983,
+                "loss": 0.07850789278745651
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": 0.5956815481185913,
+              "workload_classification / public": 0.08639027178287506,
+              "workload_classification / chronaris_continuous_alignment": 0.01413788553327322,
+              "workload_classification / chronaris_causal_direction": 0.008266494609415531,
+              "workload_classification / observation_anchor": -0.09115692228078842,
+              "workload_classification / explicit_time_shift": -0.2657419443130493,
+              "workload_regression / public": 0.16005383431911469,
+              "workload_regression / chronaris_continuous_alignment": -0.01862499862909317,
+              "workload_regression / chronaris_causal_direction": -0.018209606409072876,
+              "workload_regression / observation_anchor": -0.07117100805044174,
+              "workload_regression / explicit_time_shift": -0.3023512661457062,
+              "public / chronaris_continuous_alignment": 0.024385442957282066,
+              "public / chronaris_causal_direction": -0.04368629306554794,
+              "public / observation_anchor": 0.07155422121286392,
+              "public / explicit_time_shift": 0.10356781631708145,
+              "chronaris_continuous_alignment / chronaris_causal_direction": 0.38293033838272095,
+              "chronaris_continuous_alignment / observation_anchor": -0.00566590391099453,
+              "chronaris_continuous_alignment / explicit_time_shift": 0.05229952931404114,
+              "chronaris_causal_direction / observation_anchor": 0.015854252502322197,
+              "chronaris_causal_direction / explicit_time_shift": -0.09934698790311813,
+              "observation_anchor / explicit_time_shift": 0.0016150273149833083
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "1419__experiment1_window34",
+              "1419__experiment2_window48",
+              "1419__experiment2_window37",
+              "1419__experiment0_window7"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.00014429846487473696,
+                "weighted_loss": 2.8859692974947393e-05,
+                "count": 95,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.09998123347759247,
+                "weighted_loss": 0.009998123161494732,
+                "count": 95,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.012414415366947651,
+                "weighted_loss": 0.012414415366947651,
+                "count": 37197,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.4949252605438232,
+                "weighted_loss": 0.1494925320148468,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 0.8792621493339539,
+                "loss": 0.25446105003356934
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.5455381274223328,
+                "loss": 0.05281538516283035
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.16809925436973572,
+                "loss": 0.06307801604270935
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.002718518488109112,
+                "loss": 2.8859692974947393e-05
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.0007205123547464609,
+                "loss": 0.009998123161494732
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.21345165371894836,
+                "loss": 0.012414415366947651
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.3658766746520996,
+                "loss": 0.1494925320148468
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": -0.625328004360199,
+              "workload_classification / public": -0.027152175083756447,
+              "workload_classification / chronaris_continuous_alignment": 0.0133425397798419,
+              "workload_classification / chronaris_causal_direction": -0.013630861416459084,
+              "workload_classification / observation_anchor": -0.2633168697357178,
+              "workload_classification / explicit_time_shift": -0.42663684487342834,
+              "workload_regression / public": 0.0784861221909523,
+              "workload_regression / chronaris_continuous_alignment": -0.06160261854529381,
+              "workload_regression / chronaris_causal_direction": 0.0082941809669137,
+              "workload_regression / observation_anchor": 0.09043139964342117,
+              "workload_regression / explicit_time_shift": 0.42735832929611206,
+              "public / chronaris_continuous_alignment": -0.03987220674753189,
+              "public / chronaris_causal_direction": 0.039878372102975845,
+              "public / observation_anchor": -0.012146562337875366,
+              "public / explicit_time_shift": -0.13954058289527893,
+              "chronaris_continuous_alignment / chronaris_causal_direction": 0.2743111252784729,
+              "chronaris_continuous_alignment / observation_anchor": 0.010287958197295666,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.02985546551644802,
+              "chronaris_causal_direction / observation_anchor": -0.00032048841239884496,
+              "chronaris_causal_direction / explicit_time_shift": -0.011052098125219345,
+              "observation_anchor / explicit_time_shift": 0.09549243748188019
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "1419__experiment3_window31",
+              "1419__experiment2_window23",
+              "1419__experiment1_window2",
+              "1419__experiment2_window39"
+            ],
+            "task_valid_counts": {
+              "workload_classification": 4.0,
+              "workload_regression": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.00012599914043676108,
+                "weighted_loss": 2.5199828087352216e-05,
+                "count": 47,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.10003919154405594,
+                "weighted_loss": 0.010003919713199139,
+                "count": 47,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.015428604558110237,
+                "weighted_loss": 0.015428604558110237,
+                "count": 29944,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.7706644535064697,
+                "weighted_loss": 0.17706644535064697,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "workload_classification": {
+                "status": "measured",
+                "norm": 0.9164189696311951,
+                "loss": 0.2667768895626068
+              },
+              "workload_regression": {
+                "status": "measured",
+                "norm": 0.1611926257610321,
+                "loss": 0.054877761751413345
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.11863364279270172,
+                "loss": 0.07265620678663254
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.0025376807898283005,
+                "loss": 2.5199828087352216e-05
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.001084323157556355,
+                "loss": 0.010003919713199139
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.17055201530456543,
+                "loss": 0.015428604558110237
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.30724653601646423,
+                "loss": 0.17706644535064697
+              }
+            },
+            "cosines": {
+              "workload_classification / workload_regression": -0.4251614511013031,
+              "workload_classification / public": 0.16258643567562103,
+              "workload_classification / chronaris_continuous_alignment": -0.0202748104929924,
+              "workload_classification / chronaris_causal_direction": -0.00229278183542192,
+              "workload_classification / observation_anchor": -0.2442810833454132,
+              "workload_classification / explicit_time_shift": 0.09104081988334656,
+              "workload_regression / public": -0.20682774484157562,
+              "workload_regression / chronaris_continuous_alignment": 0.013150246813893318,
+              "workload_regression / chronaris_causal_direction": -0.008136418648064137,
+              "workload_regression / observation_anchor": 0.11676988750696182,
+              "workload_regression / explicit_time_shift": -0.05914122238755226,
+              "public / chronaris_continuous_alignment": -0.020273281261324883,
+              "public / chronaris_causal_direction": -0.007234649732708931,
+              "public / observation_anchor": -0.06678588688373566,
+              "public / explicit_time_shift": -0.5985347032546997,
+              "chronaris_continuous_alignment / chronaris_causal_direction": 0.41100698709487915,
+              "chronaris_continuous_alignment / observation_anchor": 0.007025941275060177,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.0024012511130422354,
+              "chronaris_causal_direction / observation_anchor": -0.007575123105198145,
+              "chronaris_causal_direction / explicit_time_shift": -0.006001935340464115,
+              "observation_anchor / explicit_time_shift": 0.13551458716392517
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          }
+        ],
+        "optimizer_steps": 0,
+        "task_readout": "trained_task_heads",
+        "confirmation_opened": false
+      }
+    },
+    {
+      "domain": "cogpilot",
+      "result": {
+        "status": "completed",
+        "checkpoint": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/best.pt",
+        "checkpoint_sha256": "fed4a8ead610ee7596b8b70b242fd51ddd46d6329c79be9b642a2efebc63e5ac",
+        "route": "task_guided",
+        "batches": [
+          {
+            "sample_ids": [
+              "sub-cp005::ses-20210226::level-01B_run-001::window0005",
+              "sub-cp005::ses-20210226::level-01B_run-001::window0002",
+              "sub-cp005::ses-20210226::level-01B_run-001::window0011",
+              "sub-cp005::ses-20210226::level-01B_run-001::window0012"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.00021419962286017835,
+                "weighted_loss": 4.283992529963143e-05,
+                "count": 248,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.0921015739440918,
+                "weighted_loss": 0.009210157208144665,
+                "count": 248,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.011219854466617107,
+                "weighted_loss": 0.011219854466617107,
+                "count": 174920,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.080662488937378,
+                "weighted_loss": 0.10806625336408615,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 2.415989637374878,
+                "loss": 0.9216333627700806
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.5565096735954285,
+                "loss": 0.05451550707221031
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.002470281906425953,
+                "loss": 4.283992529963143e-05
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.0072209956124424934,
+                "loss": 0.009210157208144665
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.5850258469581604,
+                "loss": 0.011219854466617107
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.3517935872077942,
+                "loss": 0.10806625336408615
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.21650384366512299,
+              "difficulty / chronaris_continuous_alignment": -0.02473466843366623,
+              "difficulty / chronaris_causal_direction": 0.02028493769466877,
+              "difficulty / observation_anchor": -0.01760854199528694,
+              "difficulty / explicit_time_shift": 0.15195754170417786,
+              "public / chronaris_continuous_alignment": 0.02503172867000103,
+              "public / chronaris_causal_direction": 0.013314008712768555,
+              "public / observation_anchor": 0.31126669049263,
+              "public / explicit_time_shift": 0.2685834467411041,
+              "chronaris_continuous_alignment / chronaris_causal_direction": -0.3528629541397095,
+              "chronaris_continuous_alignment / observation_anchor": 0.02517828904092312,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.04901688173413277,
+              "chronaris_causal_direction / observation_anchor": -0.023448262363672256,
+              "chronaris_causal_direction / explicit_time_shift": 0.1493576318025589,
+              "observation_anchor / explicit_time_shift": 0.12872937321662903
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp005::ses-20210226::level-01B_run-001::window0007",
+              "sub-cp005::ses-20210226::level-01B_run-001::window0001",
+              "sub-cp005::ses-20210226::level-01B_run-001::window0013",
+              "sub-cp005::ses-20210226::level-01B_run-001::window0010"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.0013723396696150303,
+                "weighted_loss": 0.00027446795138530433,
+                "count": 288,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.09254191070795059,
+                "weighted_loss": 0.00925419107079506,
+                "count": 288,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.09363701939582825,
+                "weighted_loss": 0.09363701939582825,
+                "count": 221284,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.3601067066192627,
+                "weighted_loss": 0.13601067662239075,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 2.2849843502044678,
+                "loss": 0.8383122682571411
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.6209167242050171,
+                "loss": 0.06991760432720184
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.010480165481567383,
+                "loss": 0.00027446795138530433
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.0040521277114748955,
+                "loss": 0.00925419107079506
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.5526880621910095,
+                "loss": 0.09363701939582825
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.22836390137672424,
+                "loss": 0.13601067662239075
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.3153148293495178,
+              "difficulty / chronaris_continuous_alignment": -0.03560520336031914,
+              "difficulty / chronaris_causal_direction": 0.005881031509488821,
+              "difficulty / observation_anchor": 0.04269520938396454,
+              "difficulty / explicit_time_shift": 0.035924434661865234,
+              "public / chronaris_continuous_alignment": 0.02746862918138504,
+              "public / chronaris_causal_direction": -0.00040663735126145184,
+              "public / observation_anchor": 0.23204122483730316,
+              "public / explicit_time_shift": 0.13058556616306305,
+              "chronaris_continuous_alignment / chronaris_causal_direction": -0.8905692100524902,
+              "chronaris_continuous_alignment / observation_anchor": 0.018971895799040794,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.11242364346981049,
+              "chronaris_causal_direction / observation_anchor": -0.024976318702101707,
+              "chronaris_causal_direction / explicit_time_shift": 0.16455967724323273,
+              "observation_anchor / explicit_time_shift": 0.11707519739866257
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp005::ses-20210226::level-01B_run-001::event0013",
+              "sub-cp005::ses-20210226::level-01B_run-001::event0000",
+              "sub-cp005::ses-20210226::level-01B_run-001::event0014",
+              "sub-cp005::ses-20210226::level-01B_run-001::event0007"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.006855962797999382,
+                "weighted_loss": 0.0013711926294490695,
+                "count": 170,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.10390802472829819,
+                "weighted_loss": 0.010390802286565304,
+                "count": 170,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.019392382353544235,
+                "weighted_loss": 0.019392382353544235,
+                "count": 75980,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 0.5697370767593384,
+                "weighted_loss": 0.05697370693087578,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.17036820948123932,
+                "loss": 0.013217129744589329
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.6573916077613831,
+                "loss": 0.053779780864715576
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.05373799055814743,
+                "loss": 0.0013711926294490695
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.016316602006554604,
+                "loss": 0.010390802286565304
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.6120021343231201,
+                "loss": 0.019392382353544235
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.10741790384054184,
+                "loss": 0.05697370693087578
+              }
+            },
+            "cosines": {
+              "event_response / public": -0.19600942730903625,
+              "event_response / chronaris_continuous_alignment": 0.051728807389736176,
+              "event_response / chronaris_causal_direction": 0.082441546022892,
+              "event_response / observation_anchor": -0.015752969309687614,
+              "event_response / explicit_time_shift": -0.27119579911231995,
+              "public / chronaris_continuous_alignment": 0.032926466315984726,
+              "public / chronaris_causal_direction": 0.02109278365969658,
+              "public / observation_anchor": 0.21055717766284943,
+              "public / explicit_time_shift": 0.4857640564441681,
+              "chronaris_continuous_alignment / chronaris_causal_direction": 0.9811421036720276,
+              "chronaris_continuous_alignment / observation_anchor": 0.0029785619117319584,
+              "chronaris_continuous_alignment / explicit_time_shift": 0.01221475563943386,
+              "chronaris_causal_direction / observation_anchor": -0.007144857197999954,
+              "chronaris_causal_direction / explicit_time_shift": 0.003108049277216196,
+              "observation_anchor / explicit_time_shift": 0.09116316586732864
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp005::ses-20210226::level-01B_run-001::event0019",
+              "sub-cp005::ses-20210226::level-01B_run-001::event0010",
+              "sub-cp005::ses-20210226::level-01B_run-001::event0009",
+              "sub-cp005::ses-20210226::level-01B_run-001::event0004"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.0021482990123331547,
+                "weighted_loss": 0.0004296598199289292,
+                "count": 145,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.09795082360506058,
+                "weighted_loss": 0.009795082733035088,
+                "count": 145,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.08743773400783539,
+                "weighted_loss": 0.08743773400783539,
+                "count": 54780,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 0.6724958419799805,
+                "weighted_loss": 0.0672495886683464,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.042483098804950714,
+                "loss": 0.00038621440762653947
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.47747495770454407,
+                "loss": 0.07185135036706924
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.015401575714349747,
+                "loss": 0.0004296598199289292
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.009075594134628773,
+                "loss": 0.009795082733035088
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.7680513262748718,
+                "loss": 0.08743773400783539
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.20779390633106232,
+                "loss": 0.0672495886683464
+              }
+            },
+            "cosines": {
+              "event_response / public": 0.08086526393890381,
+              "event_response / chronaris_continuous_alignment": 0.008189938962459564,
+              "event_response / chronaris_causal_direction": 0.005617071874439716,
+              "event_response / observation_anchor": 0.006780638359487057,
+              "event_response / explicit_time_shift": 0.13374777138233185,
+              "public / chronaris_continuous_alignment": 0.024153031408786774,
+              "public / chronaris_causal_direction": -0.017081016674637794,
+              "public / observation_anchor": 0.168284609913826,
+              "public / explicit_time_shift": 0.4008590877056122,
+              "chronaris_continuous_alignment / chronaris_causal_direction": -0.9597353935241699,
+              "chronaris_continuous_alignment / observation_anchor": 0.030799612402915955,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.017054686322808266,
+              "chronaris_causal_direction / observation_anchor": -0.02042388543486595,
+              "chronaris_causal_direction / explicit_time_shift": 0.015222873538732529,
+              "observation_anchor / explicit_time_shift": -0.04373132809996605
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp006::ses-20210324::level-04B_run-004::window0000",
+              "sub-cp006::ses-20210324::level-01B_run-012::window0007",
+              "sub-cp006::ses-20210324::level-04B_run-006::window0001",
+              "sub-cp006::ses-20210324::level-04B_run-004::window0005"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.0003414727689232677,
+                "weighted_loss": 6.829455378465354e-05,
+                "count": 347,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.09412042796611786,
+                "weighted_loss": 0.009412042796611786,
+                "count": 347,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.01537399273365736,
+                "weighted_loss": 0.01537399273365736,
+                "count": 220020,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.414219617843628,
+                "weighted_loss": 0.14142195880413055,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 1.3170186281204224,
+                "loss": 0.6993387341499329
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.6535599827766418,
+                "loss": 0.05206742882728577
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.003104751231148839,
+                "loss": 6.829455378465354e-05
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.004139754455536604,
+                "loss": 0.009412042796611786
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.7313257455825806,
+                "loss": 0.01537399273365736
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.3376331031322479,
+                "loss": 0.14142195880413055
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.8057622313499451,
+              "difficulty / chronaris_continuous_alignment": -0.00628197705373168,
+              "difficulty / chronaris_causal_direction": 0.008997615426778793,
+              "difficulty / observation_anchor": -0.2968631386756897,
+              "difficulty / explicit_time_shift": -0.06489767134189606,
+              "public / chronaris_continuous_alignment": -0.00026986628654412925,
+              "public / chronaris_causal_direction": 0.0006533277919515967,
+              "public / observation_anchor": 0.13940872251987457,
+              "public / explicit_time_shift": 0.15993867814540863,
+              "chronaris_continuous_alignment / chronaris_causal_direction": -0.6948800683021545,
+              "chronaris_continuous_alignment / observation_anchor": 0.017841752618551254,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.15771235525608063,
+              "chronaris_causal_direction / observation_anchor": -0.007381959352642298,
+              "chronaris_causal_direction / explicit_time_shift": 0.1807132512331009,
+              "observation_anchor / explicit_time_shift": -0.18105436861515045
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp006::ses-20210324::level-02B_run-008::window0013",
+              "sub-cp006::ses-20210324::level-01B_run-001::window0001",
+              "sub-cp006::ses-20210324::level-02B_run-010::window0013",
+              "sub-cp006::ses-20210324::level-01B_run-012::window0010"
+            ],
+            "task_valid_counts": {
+              "difficulty": 4.0,
+              "event_response": 0.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.002316141966730356,
+                "weighted_loss": 0.0004632284108083695,
+                "count": 332,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.09588140994310379,
+                "weighted_loss": 0.009588140994310379,
+                "count": 332,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.01776544749736786,
+                "weighted_loss": 0.01776544749736786,
+                "count": 215692,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.0973514318466187,
+                "weighted_loss": 0.1097351461648941,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "measured",
+                "norm": 1.9123432636260986,
+                "loss": 1.022414207458496
+              },
+              "event_response": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.6126679182052612,
+                "loss": 0.05634353309869766
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.017413312569260597,
+                "loss": 0.0004632284108083695
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.005124329589307308,
+                "loss": 0.009588140994310379
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.7406021952629089,
+                "loss": 0.01776544749736786
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.27759018540382385,
+                "loss": 0.1097351461648941
+              }
+            },
+            "cosines": {
+              "difficulty / public": -0.0859549269080162,
+              "difficulty / chronaris_continuous_alignment": -0.035809263586997986,
+              "difficulty / chronaris_causal_direction": -0.03988073021173477,
+              "difficulty / observation_anchor": 0.05961418151855469,
+              "difficulty / explicit_time_shift": 0.07572957873344421,
+              "public / chronaris_continuous_alignment": -0.0028491837438195944,
+              "public / chronaris_causal_direction": -0.012947694398462772,
+              "public / observation_anchor": 0.21697703003883362,
+              "public / explicit_time_shift": -0.05292683467268944,
+              "chronaris_continuous_alignment / chronaris_causal_direction": 0.9538085460662842,
+              "chronaris_continuous_alignment / observation_anchor": 0.011242938227951527,
+              "chronaris_continuous_alignment / explicit_time_shift": -0.06290952116250992,
+              "chronaris_causal_direction / observation_anchor": -0.003930139821022749,
+              "chronaris_causal_direction / explicit_time_shift": -0.09435991942882538,
+              "observation_anchor / explicit_time_shift": 0.10840079188346863
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp006::ses-20210324::level-03B_run-002::event0012",
+              "sub-cp006::ses-20210324::level-02B_run-003::event0013",
+              "sub-cp006::ses-20210324::level-02B_run-008::event0016",
+              "sub-cp006::ses-20210324::level-04B_run-006::event0010"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.0018115447601303458,
+                "weighted_loss": 0.00036230895784683526,
+                "count": 122,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.06352140754461288,
+                "weighted_loss": 0.006352141033858061,
+                "count": 122,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.012085655704140663,
+                "weighted_loss": 0.012085655704140663,
+                "count": 72436,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 1.705336093902588,
+                "weighted_loss": 0.17053361237049103,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.018803898245096207,
+                "loss": 0.006504951044917107
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.5386367440223694,
+                "loss": 0.04026751592755318
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.0162248183041811,
+                "loss": 0.00036230895784683526
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.014496378600597382,
+                "loss": 0.006352141033858061
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.7780947089195251,
+                "loss": 0.012085655704140663
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.417530357837677,
+                "loss": 0.17053361237049103
+              }
+            },
+            "cosines": {
+              "event_response / public": 0.07901888340711594,
+              "event_response / chronaris_continuous_alignment": -0.02489740587770939,
+              "event_response / chronaris_causal_direction": 0.02398538589477539,
+              "event_response / observation_anchor": -0.0002994228561874479,
+              "event_response / explicit_time_shift": -0.02160545438528061,
+              "public / chronaris_continuous_alignment": 0.021235089749097824,
+              "public / chronaris_causal_direction": -0.024444952607154846,
+              "public / observation_anchor": 0.08895546197891235,
+              "public / explicit_time_shift": 0.13853102922439575,
+              "chronaris_continuous_alignment / chronaris_causal_direction": -0.966970682144165,
+              "chronaris_continuous_alignment / observation_anchor": 0.010347651317715645,
+              "chronaris_continuous_alignment / explicit_time_shift": 0.1249924898147583,
+              "chronaris_causal_direction / observation_anchor": -0.010127943940460682,
+              "chronaris_causal_direction / explicit_time_shift": -0.13642270863056183,
+              "observation_anchor / explicit_time_shift": -0.011400037445127964
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          },
+          {
+            "sample_ids": [
+              "sub-cp006::ses-20210324::level-01B_run-001::event0012",
+              "sub-cp006::ses-20210324::level-01B_run-001::event0011",
+              "sub-cp006::ses-20210324::level-04B_run-006::event0004",
+              "sub-cp006::ses-20210324::level-04B_run-004::event0017"
+            ],
+            "task_valid_counts": {
+              "difficulty": 0.0,
+              "event_response": 4.0
+            },
+            "schedule_update": 200,
+            "mechanisms": [
+              {
+                "term_name": "chronaris_continuous_alignment",
+                "weight": 0.2,
+                "raw_loss": 0.00015235792670864612,
+                "weighted_loss": 3.0471584977931343e-05,
+                "count": 240,
+                "status": "active"
+              },
+              {
+                "term_name": "chronaris_physical_consistency",
+                "weight": 0.05,
+                "raw_loss": 0.0,
+                "weighted_loss": 0.0,
+                "count": 0,
+                "status": "scheduled_zero_or_unavailable"
+              },
+              {
+                "term_name": "chronaris_causal_direction",
+                "weight": 0.1,
+                "raw_loss": 0.07851893454790115,
+                "weighted_loss": 0.00785189401358366,
+                "count": 240,
+                "status": "active"
+              },
+              {
+                "term_name": "observation_anchor",
+                "weight": 1.0,
+                "raw_loss": 0.01919110119342804,
+                "weighted_loss": 0.01919110119342804,
+                "count": 71920,
+                "status": "active"
+              },
+              {
+                "term_name": "explicit_time_shift",
+                "weight": 0.1,
+                "status": "active",
+                "count": 4,
+                "raw_loss": 0.7070975303649902,
+                "weighted_loss": 0.07070975750684738,
+                "reason": null,
+                "modality_losses": {}
+              }
+            ],
+            "terms": {
+              "difficulty": {
+                "status": "unavailable",
+                "norm": null
+              },
+              "event_response": {
+                "status": "measured",
+                "norm": 0.14839348196983337,
+                "loss": 0.012625539675354958
+              },
+              "public": {
+                "status": "measured",
+                "norm": 0.5583209991455078,
+                "loss": 0.04077114537358284
+              },
+              "chronaris_continuous_alignment": {
+                "status": "measured",
+                "norm": 0.0019128327257931232,
+                "loss": 3.0471584977931343e-05
+              },
+              "chronaris_causal_direction": {
+                "status": "measured",
+                "norm": 0.022016584873199463,
+                "loss": 0.00785189401358366
+              },
+              "observation_anchor": {
+                "status": "measured",
+                "norm": 0.708758533000946,
+                "loss": 0.01919110119342804
+              },
+              "explicit_time_shift": {
+                "status": "measured",
+                "norm": 0.2151869535446167,
+                "loss": 0.07070975750684738
+              }
+            },
+            "cosines": {
+              "event_response / public": 0.019604304805397987,
+              "event_response / chronaris_continuous_alignment": 0.018642520532011986,
+              "event_response / chronaris_causal_direction": 0.01236038375645876,
+              "event_response / observation_anchor": 0.06461625546216965,
+              "event_response / explicit_time_shift": 0.10067790746688843,
+              "public / chronaris_continuous_alignment": -0.0010643004206940532,
+              "public / chronaris_causal_direction": 0.007351636420935392,
+              "public / observation_anchor": 0.2222757637500763,
+              "public / explicit_time_shift": 0.2860458493232727,
+              "chronaris_continuous_alignment / chronaris_causal_direction": -0.15418291091918945,
+              "chronaris_continuous_alignment / observation_anchor": 0.028133487328886986,
+              "chronaris_continuous_alignment / explicit_time_shift": 0.06663353741168976,
+              "chronaris_causal_direction / observation_anchor": -0.01710209622979164,
+              "chronaris_causal_direction / explicit_time_shift": 0.1558474749326706,
+              "observation_anchor / explicit_time_shift": 0.3458634912967682
+            },
+            "scope": "isolated_weighted_loss_gradients_on_shared_continuous_backbone"
+          }
+        ],
+        "optimizer_steps": 0,
+        "task_readout": "trained_task_heads",
+        "confirmation_opened": false
+      }
+    }
+  ],
+  "training_logs": [
+    {
+      "domain": "clare",
+      "variant": "historical_reference",
+      "route": "self_supervised",
+      "status": "last_checkpoint_not_present",
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/0/clare/chronaris/self_supervised/chronaris/C/last.pt"
+    },
+    {
+      "domain": "clare",
+      "variant": "historical_reference",
+      "route": "task_guided",
+      "status": "last_checkpoint_not_present",
+      "path": "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/0/clare/chronaris/task_guided/chronaris/last.pt"
+    },
+    {
+      "domain": "clare",
+      "variant": "thesis_reference",
+      "route": "task_guided",
+      "best_update": 200,
+      "updates": 250,
+      "mean_task_loss": 0.8264666466228664,
+      "mean_public_weighted": 0.1978609201833606,
+      "mean_mechanism_loss": 0.12482776642777026,
+      "weighted_term_means": {
+        "chronaris_continuous_alignment": 7.455030583287226e-05,
+        "chronaris_physical_consistency": 0.0,
+        "chronaris_causal_direction": 0.008921180237084627,
+        "observation_anchor": 0.03415243906434626,
+        "explicit_time_shift": 0.08167959679150955
+      },
+      "task_heads_standardize_input": false,
+      "downstream_standardizes_input": true
+    },
+    {
+      "domain": "clare",
+      "variant": "thesis_no_event_semantics",
+      "route": "task_guided",
+      "best_update": 200,
+      "updates": 250,
+      "mean_task_loss": 0.8226331351697445,
+      "mean_public_weighted": 0.19840578413009646,
+      "mean_mechanism_loss": 0.12442790317349135,
+      "weighted_term_means": {
+        "chronaris_continuous_alignment": 9.019907338711164e-05,
+        "chronaris_physical_consistency": 0.0,
+        "chronaris_causal_direction": 0.008917335172882304,
+        "observation_anchor": 0.034534642984217497,
+        "explicit_time_shift": 0.08088572579086759
+      },
+      "task_heads_standardize_input": false,
+      "downstream_standardizes_input": true
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "historical_reference",
+      "route": "self_supervised",
+      "status": "last_checkpoint_not_present",
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/self_supervised/chronaris/C/last.pt"
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "historical_reference",
+      "route": "task_guided",
+      "status": "last_checkpoint_not_present",
+      "path": "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/task_guided/chronaris/last.pt"
+    },
+    {
+      "domain": "cogpilot",
+      "variant": "thesis_reference",
+      "route": "task_guided",
+      "best_update": 350,
+      "updates": 401,
+      "mean_task_loss": 1.1204720402986013,
+      "mean_public_weighted": 0.0888237492502415,
+      "mean_mechanism_loss": 0.2640398559810599,
+      "weighted_term_means": {
+        "chronaris_continuous_alignment": 0.0003481000978821835,
+        "chronaris_physical_consistency": 0.0,
+        "chronaris_causal_direction": 0.008666953802615552,
+        "observation_anchor": 0.14427801701963278,
+        "explicit_time_shift": 0.1107467849263948
+      },
+      "task_heads_standardize_input": false,
+      "downstream_standardizes_input": true
+    }
+  ],
+  "checkpoint_hashes": {
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt": "35d9aec91bfb461f0f22017c1352eeba44d933876f2993396f7931d6d5d6e2a0",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/0/clare/chronaris/task_guided/chronaris/best.pt": "840214895ee7c92d6efb9abf4ee33fc3f4ddcb852f049a398a6c43b991747624",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt": "d213b4016e579ea160a5b2751489376046101ac028d4f453d5b74b03b4984560",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/chronaris/C/last.pt": "a42d249d153b349ab63002be01ba08dce8bb81b9d9f3dfa179f68bec8072662b",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/chronaris/best.pt": "d16760d3f4d61c5543661fb9d5f88017aff38cbb74bfa628d1c019537f7e46f7",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/chronaris/last.pt": "24776fd82eb5795d187c2f7d15e14b149c6f55895110b5958cea9a2b2ee4e882",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/self_supervised/chronaris/C/best.pt": "42ecdef6f17d2fbe58158cc25e4e9960cf66ed63ed2946cccf34c1edffd43ead",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/self_supervised/chronaris/C/last.pt": "5d2103850527d95d127d7d2d64c51ffb55c58d8832cad6d6e6613473e8ff30a3",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/task_guided/chronaris/best.pt": "ac261c80c930deaed475e2fd773d51d369b9b49690c95b22d078d14c92d0f258",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/1/clare/chronaris/task_guided/chronaris/last.pt": "628324be66a0194418733d557e12bc4457d4a16ddd0505232c8756c975a03e3d",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/self_supervised/chronaris/C/best.pt": "b63b8551becabd39cbd8c78f7409bde49995732ecadeeceff4769c81ebaaab25",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/135/cogpilot/chronaris/task_guided/chronaris/best.pt": "1b2fccdc8a7a274f63b522d9ebf15f9274347812dc4106397b3e90e837f9e723",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/best.pt": "50d1dd4a036e671d29eb00eee20088f643728b383f6c7ffb57213437451ceb5c",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/last.pt": "fae9dd2b653ec9d1d71494220a81fbef844bcd7ac3a886c3d3e69fc9ec28ed9e",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/best.pt": "fed4a8ead610ee7596b8b70b242fd51ddd46d6329c79be9b642a2efebc63e5ac",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/last.pt": "0fa468a48c89fe4a828636fa984c5dc1ac95dbc65a22aa548888e4bc11dcca63"
+  },
+  "checkpoint_files_unchanged": true,
+  "optimizer_updates": 0,
+  "consumer_fits": 0,
+  "sampling": "fixed first fold, hash-selected 16 validation windows; training-only task-supported gradient batches",
+  "gradient_scope": "local per-task weighted gradient diagnosis, not exact accumulated optimizer-update replay"
+}
