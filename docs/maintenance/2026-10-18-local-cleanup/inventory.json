@@ -1,0 +1,1389 @@
+{
+  "reference_files_scanned": 49462,
+  "remove_worktrees": [
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-replay-20261012",
+      "commit": "1348b525ee7e054107ee192f2a22c66a1a422bbc",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 294820,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-semantic-final-20261012",
+      "commit": "bb417051d54b971d4b6f380f18bafec50f2be51a",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 290512,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-simulation-contract-20261017",
+      "commit": "3aca29851b2bbf4391866223e3238ee380595c65",
+      "artifact_symlink": null,
+      "allocated_kib": 291956,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-20260930",
+      "commit": "24088f951dabb314400153bb69af4f7621518a0a",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 202072,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-cpu-pressure-20260908",
+      "commit": "e70fea76c867d27b5d557859d69d9935e9f03798",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 187512,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-pressure-20260907",
+      "commit": "3e386265e367327a7502052e1dd9877323384b40",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 186176,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage4-performance-20260913",
+      "commit": "c9d3f21067228c0bacaf6e5679f6ec8db982aa52",
+      "artifact_symlink": null,
+      "allocated_kib": 194592,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    }
+  ],
+  "retained_worktrees": [
+    {
+      "path": "/home/wangminan/projects/chronaris",
+      "commit": "4da71078c471e01d17bf3beb69bf65e5a5856b81",
+      "dirty": [],
+      "reference_count": 0
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo",
+      "commit": "41388403779b025dc8ed2dab6ee7671555b01970",
+      "dirty": [],
+      "reference_count": 23
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012",
+      "commit": "bb417051d54b971d4b6f380f18bafec50f2be51a",
+      "dirty": [
+        " M docs/STATE.md",
+        " M docs/artifacts/ARTIFACTS.md",
+        " M docs/implementation/TASKS.md",
+        " M docs/review/REVIEW.md",
+        " M src/chronaris/evaluation/application_tasks/chapter5_native.py",
+        " M src/chronaris/evaluation/application_tasks/common_downstream_smoke.py",
+        " M src/chronaris/evaluation/application_tasks/stage45_recipe.py",
+        " M src/chronaris/evaluation/application_tasks/v4_confirmation_training.py",
+        " M src/chronaris/evaluation/application_tasks/v4_diagnostic_run.py",
+        " M src/chronaris/evaluation/application_tasks/v4_simulation_confirmation_data.py",
+        " M src/chronaris/evaluation/application_tasks/v4_simulation_confirmation_evaluation.py",
+        "?? artifacts",
+        "?? docs/review/stage/thesis-v4/thesis-subset-20261012/",
+        "?? scripts/evaluation/application_tasks/run_chapter5_budget_probe.py",
+        "?? scripts/evaluation/application_tasks/run_chapter5_subset.py",
+        "?? src/chronaris/evaluation/application_tasks/chapter5_budget_probe.py",
+        "?? src/chronaris/evaluation/application_tasks/chapter5_subset.py",
+        "?? src/chronaris/evaluation/application_tasks/chapter5_subset_checkpoints.py",
+        "?? src/chronaris/evaluation/application_tasks/chapter5_subset_evaluation.py",
+        "?? tests/evaluation/application_tasks/test_chapter5_subset.py"
+      ],
+      "reference_count": 0
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015",
+      "commit": "767379ef6a44b9f22f38ade89ff326741d9c5f29",
+      "dirty": [],
+      "reference_count": 191
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-20261011",
+      "commit": "cfd12a83b717d6949cd293b19a21e4f604a2a9cf",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 2
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011",
+      "commit": "8b198dc61210f853fecd72726423c00934c14661",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 156
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-writing-20261015",
+      "commit": "d97c5c522378753c62b1d001d4de2f4fa7a8c238",
+      "dirty": [],
+      "reference_count": 10
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016",
+      "commit": "6f873ccad80a0d20057cc2d8399dbad4791f0bd1",
+      "dirty": [],
+      "reference_count": 182
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012",
+      "commit": "8b198dc61210f853fecd72726423c00934c14661",
+      "dirty": [
+        " M src/chronaris/evaluation/application_tasks/v4_diagnostic_run.py",
+        "?? artifacts"
+      ],
+      "reference_count": 194
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017",
+      "commit": "1e9151ea58a0426706ca841d7d2dc31597bb1074",
+      "dirty": [],
+      "reference_count": 141
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012",
+      "commit": "4c391e87f8271518b02023f7e6e4ac9f10c4e380",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 381
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013",
+      "commit": "2ae4a70bced323be8e3c1e1e7bdd24f3091d2043",
+      "dirty": [],
+      "reference_count": 3
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-semantic-20261012",
+      "commit": "35cf42ced4ef3d0afa966cd6886c2a3d17e080d2",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 38
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-sensor-reference-20261016",
+      "commit": "293ae6b277f9b5cdbe3e1380cad15a1333d4fc8e",
+      "dirty": [],
+      "reference_count": 25
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-simulation-contract-resume-20261017",
+      "commit": "14577462758a20e2a47fd3df944204861e77171d",
+      "dirty": [],
+      "reference_count": 22
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage4-20260911",
+      "commit": "9b4548d98fe0cd5f73111f14160b2a4407748149",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 47
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage4-graph-20260913",
+      "commit": "2b7db555f72b3567a9761d0cf2931fcb3bb8a976",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 44
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage4-recovery-20260912",
+      "commit": "475fc7b4d270af51cb3378b42ff408cc5cbb5d8d",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 44
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage45b-20260921",
+      "commit": "0150c397717b727822b30b1db42c810bd0d41d69",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage45c-20260922",
+      "commit": "c3b8f50d9b24aa2235b9e3e6b8d3cf86f74c310a",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-20260923",
+      "commit": "dd16e6885c26b03d2e54bbe5052132564e3ebdd4",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 92
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-formal-20260928",
+      "commit": "0b8f0d14fd4da624fbc49bf7d96f683ce7780ddf",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 168
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-performance-20261002",
+      "commit": "a80289e88c27a214ed333aa06abe90ba5a546089",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 396
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-recovery-20260926",
+      "commit": "389cea665c92241a01fa839d071ad2b916bfad81",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-recovery-scaled-20260926",
+      "commit": "63753427db9a0e4847fca2dd8c0f8280b46cd3d9",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 2
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-qualified-20260930",
+      "commit": "008f7065e8043be4d8b52f615bcf8b3dcdb76bef",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 381
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-target-guard-20261016",
+      "commit": "c75253f14c9df2ed1fd44c9fcadf251d52acce23",
+      "dirty": [],
+      "reference_count": 144
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-candidate-pressure-gpu-20260908",
+      "commit": "87afc941f9833cbd9d7947376b9fe9be258bd4a2",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 2
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-candidates-20260908",
+      "commit": "ed2e24e3629bcb91060d57e2251b68847fecdc77",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-code-complete-20260908",
+      "commit": "bee5112e76ecd07af268dcead61bd098cf9b8e6b",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 5
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-complete-confirmation-20260908",
+      "commit": "f9a0aada1deb13f95dc01920ede78cdbdd39c0a7",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 2
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-confirmation-20260908",
+      "commit": "b763ac2e053b93007ef9ca88f6c1da2ed8298a69",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 2
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-development-chain-20260908",
+      "commit": "dce2625e586ac4fab33b7796ecbe00d52545b3a0",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-diagnostic-20260906",
+      "commit": "ef8d88eb1458ee54801b8eb77663a43f96894be9",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-dingxin-target-order-20260908",
+      "commit": "d23dc66fa9ccf0c699994272cd6824e0e02f43bd",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-naive-development-20260908",
+      "commit": "847c9c4e4279a68618976b318ffd07d2014cecfc",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 1
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-public-preparation-20260908",
+      "commit": "b8b53d8100bb4a18190617be1499ea91442dbed0",
+      "dirty": [
+        "?? artifacts"
+      ],
+      "reference_count": 3
+    }
+  ],
+  "branch_to_remove": "feat/chapter6-demo",
+  "branch_commit": "41388403779b025dc8ed2dab6ee7671555b01970",
+  "removed_worktrees": [
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-replay-20261012",
+      "commit": "1348b525ee7e054107ee192f2a22c66a1a422bbc",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 294820,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-semantic-final-20261012",
+      "commit": "bb417051d54b971d4b6f380f18bafec50f2be51a",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 290512,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-simulation-contract-20261017",
+      "commit": "3aca29851b2bbf4391866223e3238ee380595c65",
+      "artifact_symlink": null,
+      "allocated_kib": 291956,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-stage5-sensor-recovery-20260930",
+      "commit": "24088f951dabb314400153bb69af4f7621518a0a",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 202072,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-cpu-pressure-20260908",
+      "commit": "e70fea76c867d27b5d557859d69d9935e9f03798",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 187512,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-v4-pressure-20260907",
+      "commit": "3e386265e367327a7502052e1dd9877323384b40",
+      "artifact_symlink": "/home/wangminan/projects/chronaris/artifacts",
+      "allocated_kib": 186176,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage4-performance-20260913",
+      "commit": "c9d3f21067228c0bacaf6e5679f6ec8db982aa52",
+      "artifact_symlink": null,
+      "allocated_kib": 194592,
+      "machine_reference_count": 0,
+      "tracked_changes": false
+    }
+  ],
+  "removed_cache_directories": [
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chronos-reference-20261016/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 105701
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/.pytest_cache",
+      "bytes": 23028
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/__pycache__",
+      "bytes": 33526
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/evaluation/__pycache__",
+      "bytes": 172
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/evaluation/application_tasks/__pycache__",
+      "bytes": 588866
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/runtime/__pycache__",
+      "bytes": 94636
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/modeling/__pycache__",
+      "bytes": 170
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/modeling/fusion_encoders/__pycache__",
+      "bytes": 90282
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/dataset/__pycache__",
+      "bytes": 51134
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/tests/representation/__pycache__",
+      "bytes": 42426
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/scripts/evaluation/application_tasks/__pycache__",
+      "bytes": 3804
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/third_party/__pycache__",
+      "bytes": 230
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/third_party/mult/__pycache__",
+      "bytes": 209
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/third_party/mult/modules/__pycache__",
+      "bytes": 30958
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/third_party/contiformer/__pycache__",
+      "bytes": 252
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 261
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9515
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/__pycache__",
+      "bytes": 201
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/evidence/__pycache__",
+      "bytes": 52600
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/llm/__pycache__",
+      "bytes": 39768
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/pipelines/__pycache__",
+      "bytes": 100502
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/evaluation/__pycache__",
+      "bytes": 85646
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 2573798
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/evaluation/dingxin/__pycache__",
+      "bytes": 43982
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57515
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/simulation/__pycache__",
+      "bytes": 233
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 108537
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/feature_export/__pycache__",
+      "bytes": 24519
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/access/__pycache__",
+      "bytes": 105125
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/schema/__pycache__",
+      "bytes": 14531
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/features/__pycache__",
+      "bytes": 154973
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9186
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 196425
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/__pycache__",
+      "bytes": 219745
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/models/__pycache__",
+      "bytes": 230
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/models/alignment/__pycache__",
+      "bytes": 165709
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45176
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/dataset/__pycache__",
+      "bytes": 160211
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 70886
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/serving/__pycache__",
+      "bytes": 23427
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/serving/fusion_workbench/__pycache__",
+      "bytes": 105325
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/src/chronaris/representation/__pycache__",
+      "bytes": 205932
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-diagnostics-20261017/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 115320
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/third_party/__pycache__",
+      "bytes": 262
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/third_party/mult/__pycache__",
+      "bytes": 241
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/third_party/mult/modules/__pycache__",
+      "bytes": 31086
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/third_party/contiformer/__pycache__",
+      "bytes": 284
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 293
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9579
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/__pycache__",
+      "bytes": 233
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/pipelines/__pycache__",
+      "bytes": 100662
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/evaluation/__pycache__",
+      "bytes": 85806
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 1493441
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57643
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/simulation/__pycache__",
+      "bytes": 265
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 109017
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/feature_export/__pycache__",
+      "bytes": 24615
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/access/__pycache__",
+      "bytes": 105573
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/schema/__pycache__",
+      "bytes": 14627
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/features/__pycache__",
+      "bytes": 155197
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9250
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 158387
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/modeling/training/__pycache__",
+      "bytes": 220289
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/models/__pycache__",
+      "bytes": 262
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/models/alignment/__pycache__",
+      "bytes": 153862
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45304
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/dataset/__pycache__",
+      "bytes": 156939
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 71142
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-power-recovery-20261013/src/chronaris/representation/__pycache__",
+      "bytes": 202943
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/third_party/__pycache__",
+      "bytes": 263
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/third_party/mult/__pycache__",
+      "bytes": 242
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/third_party/mult/modules/__pycache__",
+      "bytes": 31090
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/third_party/contiformer/__pycache__",
+      "bytes": 285
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 294
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9581
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/__pycache__",
+      "bytes": 234
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/pipelines/__pycache__",
+      "bytes": 100667
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/evaluation/__pycache__",
+      "bytes": 85811
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 1558474
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/evaluation/dingxin/__pycache__",
+      "bytes": 44015
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57647
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/simulation/__pycache__",
+      "bytes": 266
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 109032
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/feature_export/__pycache__",
+      "bytes": 24618
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/access/__pycache__",
+      "bytes": 105587
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/schema/__pycache__",
+      "bytes": 14630
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/features/__pycache__",
+      "bytes": 155204
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9252
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 158397
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/modeling/training/__pycache__",
+      "bytes": 220306
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/models/__pycache__",
+      "bytes": 263
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/models/alignment/__pycache__",
+      "bytes": 166303
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45463
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/dataset/__pycache__",
+      "bytes": 156953
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 71150
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-reload-20261011/src/chronaris/representation/__pycache__",
+      "bytes": 202955
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/.pytest_cache",
+      "bytes": 5426
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/tests/__pycache__",
+      "bytes": 232
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/tests/evaluation/__pycache__",
+      "bytes": 206
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/tests/evaluation/application_tasks/__pycache__",
+      "bytes": 261292
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/tests/representation/__pycache__",
+      "bytes": 25425
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/third_party/__pycache__",
+      "bytes": 264
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/third_party/mult/__pycache__",
+      "bytes": 243
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/third_party/mult/modules/__pycache__",
+      "bytes": 31094
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/third_party/contiformer/__pycache__",
+      "bytes": 286
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 295
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9583
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/__pycache__",
+      "bytes": 235
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/pipelines/__pycache__",
+      "bytes": 100672
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/__pycache__",
+      "bytes": 85816
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 2282100
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/dingxin/__pycache__",
+      "bytes": 44016
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57651
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/simulation/__pycache__",
+      "bytes": 267
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 109047
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/feature_export/__pycache__",
+      "bytes": 24621
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/access/__pycache__",
+      "bytes": 105601
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/schema/__pycache__",
+      "bytes": 14633
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/features/__pycache__",
+      "bytes": 155211
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9254
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 195724
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/modeling/training/__pycache__",
+      "bytes": 220323
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/models/__pycache__",
+      "bytes": 264
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/models/alignment/__pycache__",
+      "bytes": 166321
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45312
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/dataset/__pycache__",
+      "bytes": 156967
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 71158
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-local-validation-20261012/src/chronaris/representation/__pycache__",
+      "bytes": 206374
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-causality-policy-20261015/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 18972
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-target-guard-20261016/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 63549
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-sensor-reference-20261016/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 90554
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/.pytest_cache",
+      "bytes": 8191
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/tests/__pycache__",
+      "bytes": 203
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/tests/runtime/__pycache__",
+      "bytes": 94651
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/tests/modeling/__pycache__",
+      "bytes": 175
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/tests/modeling/fusion_encoders/__pycache__",
+      "bytes": 19423
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/scripts/runtime/__pycache__",
+      "bytes": 6894
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/third_party/__pycache__",
+      "bytes": 235
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/third_party/mult/__pycache__",
+      "bytes": 214
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/third_party/mult/modules/__pycache__",
+      "bytes": 30978
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/third_party/contiformer/__pycache__",
+      "bytes": 257
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 266
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9525
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/__pycache__",
+      "bytes": 206
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/llm/__pycache__",
+      "bytes": 39783
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/pipelines/__pycache__",
+      "bytes": 100527
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/evaluation/__pycache__",
+      "bytes": 85671
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 1508747
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57535
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/simulation/__pycache__",
+      "bytes": 238
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 108612
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/feature_export/__pycache__",
+      "bytes": 24534
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/access/__pycache__",
+      "bytes": 105195
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/schema/__pycache__",
+      "bytes": 14546
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/features/__pycache__",
+      "bytes": 155008
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9196
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 158117
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/modeling/training/__pycache__",
+      "bytes": 219830
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/models/__pycache__",
+      "bytes": 235
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/models/alignment/__pycache__",
+      "bytes": 165779
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45196
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/dataset/__pycache__",
+      "bytes": 156561
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 70926
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/serving/__pycache__",
+      "bytes": 386
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/serving/fusion_workbench/__pycache__",
+      "bytes": 105370
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/src/chronaris/representation/__pycache__",
+      "bytes": 202619
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/.pytest_cache",
+      "bytes": 1835
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/tests/__pycache__",
+      "bytes": 220
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/tests/evaluation/__pycache__",
+      "bytes": 194
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/tests/evaluation/application_tasks/__pycache__",
+      "bytes": 47590
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/third_party/__pycache__",
+      "bytes": 252
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/third_party/mult/__pycache__",
+      "bytes": 231
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/third_party/mult/modules/__pycache__",
+      "bytes": 31046
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/third_party/contiformer/__pycache__",
+      "bytes": 274
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 283
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9559
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/__pycache__",
+      "bytes": 223
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/pipelines/__pycache__",
+      "bytes": 100612
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/evaluation/__pycache__",
+      "bytes": 85756
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 2099366
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/evaluation/dingxin/__pycache__",
+      "bytes": 44004
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57603
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/simulation/__pycache__",
+      "bytes": 255
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 108867
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/feature_export/__pycache__",
+      "bytes": 24585
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/access/__pycache__",
+      "bytes": 105433
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/schema/__pycache__",
+      "bytes": 14597
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/features/__pycache__",
+      "bytes": 155127
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9230
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 158287
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/modeling/training/__pycache__",
+      "bytes": 220119
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/models/__pycache__",
+      "bytes": 252
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/models/alignment/__pycache__",
+      "bytes": 166105
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45264
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/dataset/__pycache__",
+      "bytes": 156799
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 71062
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-local-budget-20261012/src/chronaris/representation/__pycache__",
+      "bytes": 206218
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-writing-20261015/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 71834
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-chapter5-writing-20261015/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 20056
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-simulation-contract-resume-20261017/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 125719
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/third_party/__pycache__",
+      "bytes": 265
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/third_party/mult/__pycache__",
+      "bytes": 244
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/third_party/mult/modules/__pycache__",
+      "bytes": 31098
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/third_party/contiformer/__pycache__",
+      "bytes": 287
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/third_party/contiformer/physiopro/__pycache__",
+      "bytes": 296
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/third_party/contiformer/physiopro/network/__pycache__",
+      "bytes": 9585
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/__pycache__",
+      "bytes": 236
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/pipelines/__pycache__",
+      "bytes": 100677
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/evaluation/__pycache__",
+      "bytes": 85821
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/evaluation/application_tasks/__pycache__",
+      "bytes": 1783945
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/evaluation/dingxin/__pycache__",
+      "bytes": 44017
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/evaluation/dingxin/pipelines/__pycache__",
+      "bytes": 57655
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/simulation/__pycache__",
+      "bytes": 268
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/simulation/aviation_dual_stream/__pycache__",
+      "bytes": 109062
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/feature_export/__pycache__",
+      "bytes": 24624
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/access/__pycache__",
+      "bytes": 105615
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/schema/__pycache__",
+      "bytes": 14636
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/features/__pycache__",
+      "bytes": 155218
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/modeling/common/__pycache__",
+      "bytes": 9256
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/modeling/fusion_encoders/__pycache__",
+      "bytes": 158417
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/modeling/training/__pycache__",
+      "bytes": 220340
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/models/__pycache__",
+      "bytes": 265
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/models/alignment/__pycache__",
+      "bytes": 166339
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/models/fusion/__pycache__",
+      "bytes": 45471
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/dataset/__pycache__",
+      "bytes": 156981
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/dataset/application_evaluation/__pycache__",
+      "bytes": 71166
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-runtime-device-compatible-20261012/src/chronaris/representation/__pycache__",
+      "bytes": 202979
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/chronos-forecasting/src/chronos/__pycache__",
+      "bytes": 112661
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/chronos-forecasting/src/chronos/chronos2/__pycache__",
+      "bytes": 184070
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/TimeCMA/models/__pycache__",
+      "bytes": 6665
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/TimeCMA/layers/__pycache__",
+      "bytes": 26568
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/SensorLLM/sensorllm/__pycache__",
+      "bytes": 12816
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/SensorLLM/sensorllm/model/__pycache__",
+      "bytes": 50186
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris-stage3-upstream/SensorLLM/sensorllm/model/chronos_model/__pycache__",
+      "bytes": 31657
+    }
+  ],
+  "removed_temporary_directories": [
+    {
+      "path": "/home/wangminan/projects/chronaris-demo/artifacts/chapter6-merge-audit-20261018",
+      "allocated_kib": 1024
+    },
+    {
+      "path": "/home/wangminan/projects/chronaris/artifacts/chapter6-merge-20261018/browser-inputs",
+      "allocated_kib": 114824
+    },
+    {
+      "path": "/tmp/chronaris-chapter5-final-redraw-20261018",
+      "allocated_kib": 215256
+    },
+    {
+      "path": "/tmp/chronaris-chapter5-delivery-redraw-20261017",
+      "allocated_kib": 203012
+    }
+  ],
+  "branch_deleted": true,
+  "chapter6_worktree_retained_detached": true,
+  "completed_at": 1792257933.448505,
+  "checks": {
+    "retained_worktrees_unchanged": 37,
+    "current_manifest_paths_exist": true,
+    "chapter6_browser_dependency_available": true,
+    "model_freeze_sha256": "abd41a4df28ca7cf185e1a93dd5f5a2573548ac694e0f6076065cfd61aa41352",
+    "local_branches": [
+      "main"
+    ],
+    "symlink_target": "AGENTS.md",
+    "symlink_commit": "4da71078"
+  }
+}
