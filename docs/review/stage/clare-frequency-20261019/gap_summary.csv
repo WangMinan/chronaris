@@ -1,0 +1,7 @@
+stream,field,too_few,bad_order,gap
+ECG,ECG LL-RA CAL,153,0,345
+EDA,GSR Conductance CAL,177,0,40
+EEG,AF7,29,0,38
+EEG,AF8,29,0,38
+EEG,TP10,29,0,38
+EEG,TP9,29,0,38

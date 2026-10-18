@@ -1,0 +1,14 @@
+{
+  "root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-clare-frequency",
+  "files": {
+    "first-extraction-failure.log": "6396fc5297900e981942e70645d2f0ebc1c8269fe94ef8465bfe52ac1cb7ab08",
+    "first-extraction-failure.partial": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gaps.json.gz": "5ee6a83564eeac83bca6ce505f84c1876cd2c941be1324e61b28973f5413b61c",
+    "gaps.json.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "observations.log": "61f878e9701c2e84b4885b2281d323f596553d323660ba76dbd3d990d64d70ec",
+    "observations.npz": "f9f8d13c655afb905df480120607471924d46beb56ab82a019a7e9348fceba17",
+    "probe.log": "7312fd863eba4727dac32c6d539c3d27dd7b60db5fad3a9045cc0f157b6b8142",
+    "second-extraction-failure.log": "4ce93eb49efa0f24005b7a11630202f78ffe4cb67aee6d0131b51806b2e8a436",
+    "second-extraction-failure.partial": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

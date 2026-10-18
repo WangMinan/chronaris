@@ -1,0 +1,20 @@
+{
+  "status": "failed",
+  "gates": {
+    "coverage": false,
+    "finite": true,
+    "source_identity": true,
+    "roles": true,
+    "labels": true
+  },
+  "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-clare-frequency/observations.npz",
+  "snapshot_sha256": "f9f8d13c655afb905df480120607471924d46beb56ab82a019a7e9348fceba17",
+  "windows": 2322,
+  "source_files": 176,
+  "old_development_labels_checked": 664,
+  "contract_path": "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/evaluation/common_contract.json",
+  "contract_sha256": "ffa0c99a7950d239dbab51b2ba1d9546162c9e7b5f6779f2f3db1f6e75eab1a9",
+  "source_label_threshold": 5,
+  "encoder_updates": 0,
+  "outer_scored": false
+}

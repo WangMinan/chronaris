@@ -1,0 +1,388 @@
+{
+  "status": "passed",
+  "folds": [
+    {
+      "status": "passed",
+      "gates": {
+        "preflight": true,
+        "calibration_coverage": true,
+        "original_identity": true,
+        "finite": true,
+        "fit_only_floor": true,
+        "history_isolation": true
+      },
+      "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-rest-development/fold01_inputs.npz",
+      "snapshot_sha256": "33c36ce3637e2532fd2df963fe1d3f12b2487241eb42960cbce370619fbdecc1",
+      "fit_subjects": [
+        "sub-cp004",
+        "sub-cp008",
+        "sub-cp019"
+      ],
+      "floor_fit_subjects": [
+        "sub-cp004",
+        "sub-cp008",
+        "sub-cp019"
+      ],
+      "floors": [
+        27.252747252746804,
+        0.43379999999999797,
+        0.01477095858636801,
+        0.15017141229491432
+      ],
+      "windows": 5951
+    },
+    {
+      "status": "passed",
+      "gates": {
+        "preflight": true,
+        "calibration_coverage": true,
+        "original_identity": true,
+        "finite": true,
+        "fit_only_floor": true,
+        "history_isolation": true
+      },
+      "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-rest-development/fold02_inputs.npz",
+      "snapshot_sha256": "e30e6d3e06a877bf0699736f69decbf3272e358524e6542567f5316157c8335f",
+      "fit_subjects": [
+        "sub-cp003",
+        "sub-cp004",
+        "sub-cp011",
+        "sub-cp019"
+      ],
+      "floor_fit_subjects": [
+        "sub-cp003",
+        "sub-cp004",
+        "sub-cp011",
+        "sub-cp019"
+      ],
+      "floors": [
+        43.44322344322271,
+        0.30275999999999975,
+        0.011299167427986844,
+        0.23879716381318566
+      ],
+      "windows": 5951
+    }
+  ],
+  "windows": 5951,
+  "subjects": [
+    "sub-cp003",
+    "sub-cp004",
+    "sub-cp008",
+    "sub-cp011",
+    "sub-cp019",
+    "sub-cp022",
+    "sub-cp025"
+  ],
+  "calibrations": [
+    {
+      "subject": "sub-cp003",
+      "session": "ses-20210206",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp003/ses-20210206/level-000_run-001",
+      "accepted": true,
+      "start_native": 738193.7926026753,
+      "end_native": 738193.7932971197,
+      "center": [
+        1214.65201465201,
+        6.346400000000012,
+        464.725138909635,
+        -0.881710952326968
+      ],
+      "scale": [
+        413.55311355311005,
+        0.955800000000024,
+        0.010866325401991617,
+        0.5376186614376689
+      ],
+      "gap_to_first_input_s": 289.5253960043192,
+      "quality": [
+        {
+          "points": 7679,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98840928077698
+        },
+        {
+          "points": 7679,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98840928077698
+        },
+        {
+          "points": 30422,
+          "maximum_gap_s": 0.0020015984773635864,
+          "span_s": 59.998588263988495
+        },
+        {
+          "points": 30422,
+          "maximum_gap_s": 0.0020015984773635864,
+          "span_s": 59.998588263988495
+        }
+      ]
+    },
+    {
+      "subject": "sub-cp004",
+      "session": "ses-20210330",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp004/ses-20210330/level-000_run-001",
+      "accepted": true,
+      "start_native": 738245.4887238394,
+      "end_native": 738245.4894182838,
+      "center": [
+        429.304029304029,
+        15.515599999999997,
+        64.3152155115411,
+        2.32642597735527
+      ],
+      "scale": [
+        1.4652014652010052,
+        1.1609999999999925,
+        0.012309132155309044,
+        0.3077283038829699
+      ],
+      "gap_to_first_input_s": 191.28417670726776,
+      "quality": [
+        {
+          "points": 59061,
+          "maximum_gap_s": 0.0010460615158081055,
+          "span_s": 59.99942310154438
+        },
+        {
+          "points": 59061,
+          "maximum_gap_s": 0.0010460615158081055,
+          "span_s": 59.99942310154438
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98841933906078
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98841933906078
+        }
+      ]
+    },
+    {
+      "subject": "sub-cp008",
+      "session": "ses-20210503",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp008/ses-20210503/level-000_run-001",
+      "accepted": true,
+      "start_native": 738279.4988602529,
+      "end_native": 738279.4995546973,
+      "center": [
+        1257.14285714286,
+        3.8032000000000035,
+        61.3610237942646,
+        13.8354645425784
+      ],
+      "scale": [
+        130.40293040293,
+        1.6846000000000054,
+        0.024618264310603877,
+        0.11078218939790041
+      ],
+      "gap_to_first_input_s": 145.31622044742107,
+      "quality": [
+        {
+          "points": 60687,
+          "maximum_gap_s": 0.001015886664390564,
+          "span_s": 59.99868884682655
+        },
+        {
+          "points": 60687,
+          "maximum_gap_s": 0.001015886664390564,
+          "span_s": 59.99868884682655
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98615622520447
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98615622520447
+        }
+      ]
+    },
+    {
+      "subject": "sub-cp011",
+      "session": "ses-20210408",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp011/ses-20210408/level-000_run-001",
+      "accepted": true,
+      "start_native": 738254.454362966,
+      "end_native": 738254.4550574104,
+      "center": [
+        1344.32234432234,
+        4.737199999999997,
+        60.6594032614114,
+        -0.504674418368074
+      ],
+      "scale": [
+        141.39194139194,
+        0.4212000000000007,
+        0.049236528621300124,
+        0.209255246640421
+      ],
+      "gap_to_first_input_s": 2837.2088715434074,
+      "quality": [
+        {
+          "points": 61249,
+          "maximum_gap_s": 0.0010058283805847168,
+          "span_s": 59.999413043260574
+        },
+        {
+          "points": 61249,
+          "maximum_gap_s": 0.0010058283805847168,
+          "span_s": 59.999413043260574
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98646803200245
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.98646803200245
+        }
+      ]
+    },
+    {
+      "subject": "sub-cp019",
+      "session": "ses-20210625",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp019/ses-20210625/level-000_run-001",
+      "accepted": true,
+      "start_native": 738332.3869513053,
+      "end_native": 738332.3876457497,
+      "center": [
+        1253.47985347985,
+        3.6352000000000007,
+        63.3551032034262,
+        3.04035564236376
+      ],
+      "scale": [
+        430.76923076923003,
+        0.25199999999999934,
+        0.06154566077659496,
+        0.9601123081148701
+      ],
+      "gap_to_first_input_s": 305.8222398161888,
+      "quality": [
+        {
+          "points": 60481,
+          "maximum_gap_s": 0.001015886664390564,
+          "span_s": 59.99849773943424
+        },
+        {
+          "points": 60481,
+          "maximum_gap_s": 0.001015886664390564,
+          "span_s": 59.99849773943424
+        },
+        {
+          "points": 7676,
+          "maximum_gap_s": 0.007845461368560791,
+          "span_s": 59.99125577509403
+        },
+        {
+          "points": 7676,
+          "maximum_gap_s": 0.007845461368560791,
+          "span_s": 59.99125577509403
+        }
+      ]
+    },
+    {
+      "subject": "sub-cp022",
+      "session": "ses-20210621",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp022/ses-20210621/level-000_run-001",
+      "accepted": true,
+      "start_native": 738328.5173708285,
+      "end_native": 738328.518065273,
+      "center": [
+        1367.76556776557,
+        0.9160418000000021,
+        61.9272438734092,
+        -5.6129642628254
+      ],
+      "scale": [
+        87.91208791207987,
+        0.03828720000000174,
+        0.036927396465998186,
+        0.1723278501744705
+      ],
+      "gap_to_first_input_s": 1076.7124861478806,
+      "quality": [
+        {
+          "points": 61105,
+          "maximum_gap_s": 0.0010058283805847168,
+          "span_s": 59.99864861369133
+        },
+        {
+          "points": 61105,
+          "maximum_gap_s": 0.0010058283805847168,
+          "span_s": 59.99864861369133
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007825344800949097,
+          "span_s": 59.98712182044983
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007825344800949097,
+          "span_s": 59.98712182044983
+        }
+      ]
+    },
+    {
+      "subject": "sub-cp025",
+      "session": "ses-20210820",
+      "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-rest/sub-cp025/ses-20210820/level-000_run-001",
+      "accepted": true,
+      "start_native": 738388.4609595381,
+      "end_native": 738388.4616539825,
+      "center": [
+        1293.04029304029,
+        0.46616720000000006,
+        5.38216803491317,
+        3.92353587450789
+      ],
+      "scale": [
+        230.03663003662996,
+        0.008660199999999951,
+        0.02769554734945956,
+        0.18463698232977954
+      ],
+      "gap_to_first_input_s": 1139.3565841019154,
+      "quality": [
+        {
+          "points": 61320,
+          "maximum_gap_s": 0.0010058283805847168,
+          "span_s": 59.99910123646259
+        },
+        {
+          "points": 61320,
+          "maximum_gap_s": 0.0010058283805847168,
+          "span_s": 59.99910123646259
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.99030023813248
+        },
+        {
+          "points": 7678,
+          "maximum_gap_s": 0.007835403084754944,
+          "span_s": 59.99030023813248
+        }
+      ]
+    }
+  ],
+  "rest_source_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-rest-calibration/rest.json",
+  "rest_source_sha256": "eeb4d6d459e9bb2256664afb62f723234d321a7f34c2ec87f1cc23fdd76e778a",
+  "original_snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/inputs-v2.npz",
+  "original_snapshot_sha256": "fb3d0baa7463d26009c49b06f4cfc8d934c42114640a3440e6718bea13149a50",
+  "native_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-shape-mult/native.npz",
+  "native_sha256": "ec06c3092ea43e80e29d056ac653088f71f8de990d2d351d7130cd58b173b576",
+  "encoder_updates": 0,
+  "condition": "preflight_unlabelled_rest_observation_available"
+}

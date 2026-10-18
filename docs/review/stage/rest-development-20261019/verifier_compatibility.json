@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "protected_files": 1729,
+  "predictions": 75582,
+  "maximum_metric_delta": 4.440892098500626e-16,
+  "old_results_modified": false,
+  "temporary_report": "/tmp/chronaris-verifier-compatibility-gx1t6w7o/report",
+  "new_training_updates": 0
+}

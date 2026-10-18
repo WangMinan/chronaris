@@ -1,0 +1,79 @@
+{
+  "status": "completed",
+  "readiness": "failed",
+  "legal_windows": 2950,
+  "qualified_windows": 2322,
+  "failed_subjects": [
+    {
+      "subject": "1544",
+      "legal": 216,
+      "accepted": 90,
+      "class_counts": [
+        21,
+        69
+      ],
+      "passed": false
+    },
+    {
+      "subject": "1717",
+      "legal": 215,
+      "accepted": 160,
+      "class_counts": [
+        46,
+        114
+      ],
+      "passed": false
+    },
+    {
+      "subject": "1953",
+      "legal": 216,
+      "accepted": 137,
+      "class_counts": [
+        49,
+        88
+      ],
+      "passed": false
+    },
+    {
+      "subject": "1981",
+      "legal": 216,
+      "accepted": 74,
+      "class_counts": [
+        40,
+        34
+      ],
+      "passed": false
+    },
+    {
+      "subject": "1629",
+      "legal": 216,
+      "accepted": 111,
+      "class_counts": [
+        13,
+        98
+      ],
+      "passed": false
+    }
+  ],
+  "rejections": {
+    "finite_time_order_or_points": 236,
+    "missing_source": 54,
+    "source_gap": 338
+  },
+  "field_windows": 17376,
+  "nonincreasing_field_windows": 0,
+  "peripheral_incomplete_windows": 520,
+  "eeg_incomplete_windows": 67,
+  "brain_above_4_8_hz_median": 0.5178370571779289,
+  "median_rates": {
+    "0": 256.0,
+    "1": 256.0,
+    "2": 256.0,
+    "3": 256.0,
+    "4": 128.0,
+    "5": 512.0
+  },
+  "encoder_updates": 0,
+  "classifier_fits": 0,
+  "outer_scored": false
+}

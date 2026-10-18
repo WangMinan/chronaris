@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "gates": {
+    "preflight": true,
+    "calibration_coverage": true,
+    "original_identity": true,
+    "finite": true,
+    "fit_only_floor": true,
+    "history_isolation": true
+  },
+  "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-rest-development/fold02_inputs.npz",
+  "snapshot_sha256": "e30e6d3e06a877bf0699736f69decbf3272e358524e6542567f5316157c8335f",
+  "fit_subjects": [
+    "sub-cp003",
+    "sub-cp004",
+    "sub-cp011",
+    "sub-cp019"
+  ],
+  "floor_fit_subjects": [
+    "sub-cp003",
+    "sub-cp004",
+    "sub-cp011",
+    "sub-cp019"
+  ],
+  "floors": [
+    43.44322344322271,
+    0.30275999999999975,
+    0.011299167427986844,
+    0.23879716381318566
+  ],
+  "windows": 5951
+}
