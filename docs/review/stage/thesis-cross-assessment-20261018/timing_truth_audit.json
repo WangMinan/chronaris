@@ -1,0 +1,178 @@
+[
+  {
+    "file": "0.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "1.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "10.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "11.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "12.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "13.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "14.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "15.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "16.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "17.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "18.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "19.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "2.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "20.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "21.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "3.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "4.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "5.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "6.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "7.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "8.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  },
+  {
+    "file": "9.csv.gz",
+    "n": 512,
+    "clock_abs_max": 0.0,
+    "signed_abs_max": 0.0,
+    "lag_min": 2.0,
+    "lag_max": 25.385185714459
+  }
+]

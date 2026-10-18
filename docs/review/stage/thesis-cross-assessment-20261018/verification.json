@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "date": "2026-10-18",
+  "source_commit": "e250f4fd4476efd6d4592168093174874e50ddcf",
+  "protected_sources_checked": 68,
+  "changed_sources": [],
+  "word_nonempty_paragraphs_extracted": 1183,
+  "timing_prediction_files_checked": 22,
+  "clean_rows_per_file": 512,
+  "clean_clock_targets_all_zero": true,
+  "selected_simulation_summary_assertions": 3,
+  "encoder_updates": 0,
+  "new_readout_fits": 0,
+  "training_started": false,
+  "scope": "read-only thesis and recorded-result cross-assessment; not full rerun, full checkpoint hashing, document rendering, or fresh SOTA survey"
+}
