@@ -26,5 +26,6 @@ def scout_ocular_sources(records):
             if column.startswith('validity'):row[column+'_counts']={str(k):int(v) for k,v in frame[column].value_counts().items()}
         row['has_time_series']=bool(len(frame)>=50 and np.isfinite(time).all() and np.all(np.diff(time)>0))
         row['all_zero_single_row']=len(frame)==1 and bool((frame.to_numpy(float)==0).all())
+        row['zero_signal_single_row']=len(frame)==1 and bool((frame[columns[1:]].to_numpy(float)==0).all())
         assert file_digest(path)==digest;rows.append(row)
     return dict(records=rows,sources=sources,encoder_updates=0,field_validity_decoded=False)

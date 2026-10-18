@@ -8,6 +8,9 @@ def test_named_placeholder_and_header_only_streams_are_not_observations(tmp_path
     pd.DataFrame([[0]*len(columns)],columns=columns).to_csv(path,index=False)
     r=scout_ocular_sources([dict(record_id=str(run),subject='a')])
     assert r['records'][0]['all_zero_single_row'] and not r['records'][0]['has_time_series']
+    frame=pd.DataFrame([[0]*len(columns)],columns=columns);frame['time_dn']=738000.;frame.to_csv(path,index=False)
+    r=scout_ocular_sources([dict(record_id=str(run),subject='a')])
+    assert r['records'][0]['zero_signal_single_row'] and not r['records'][0]['all_zero_single_row']
     pd.DataFrame(columns=columns).to_csv(path,index=False)
     r=scout_ocular_sources([dict(record_id=str(run),subject='a')])
     assert r['records'][0]['rows']==0 and r['records'][0]['minimum_time'] is None
