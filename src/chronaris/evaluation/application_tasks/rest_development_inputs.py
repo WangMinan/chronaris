@@ -39,7 +39,9 @@ def qualify_rest_development(source,report,assets):
     for spec in FOLDS:
         fit=np.flatnonzero(np.isin(unique,spec['fit']));floors=shape_scale_floors(person_scales,fit)
         values=resting_values(native['values'],native['masks'],local,centers,scales,floors)
-        assert np.isfinite(values).all();np.testing.assert_array_equal(values[:,:,3::4],old['physiology'][:,:,3::4])
+        assert np.isfinite(values).all()
+        unchanged_crossings=np.where(native['masks'][:,:,3::4],native['values'][:,:,3::4],0).astype(np.float32)
+        np.testing.assert_array_equal(values[:,:,3::4],unchanged_crossings)
         path=assets/(spec['name']+'_inputs.npz');assert not path.exists()
         np.savez_compressed(path,**dict(old,physiology=values))
         gates=dict(preflight=True,calibration_coverage=True,original_identity=True,finite=True,fit_only_floor=True,history_isolation=True)

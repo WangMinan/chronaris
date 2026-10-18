@@ -1,0 +1,10 @@
+{
+  "status": "failed_check_corrected",
+  "encoder_updates": 0,
+  "reason": "Initial check compared unclipped zero crossings with the old clipped input. The contract preserves the unclipped native zero crossings; corrected to that source with exact float32 storage equality.",
+  "mismatched_clipped_elements": 65047,
+  "total_elements": 2285184,
+  "maximum_clipped_difference": 23.51621,
+  "threshold_changed": false,
+  "input_transformation_changed": false
+}
