@@ -1,0 +1,12 @@
+{
+  "starter_sources": {
+    "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/starterCode/extractSaccFix.py": "e39c195db07456d5af04028ff3e273efdc608e109759f125403ea790046f4c88",
+    "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/starterCode/assembleFeatureMatrix.py": "6d95a397d0e87b3e61a1e7bec3a9475778a8269b2f097b21cf90532b9b93e0d1",
+    "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/starterCode/trainModel.py": "b5f5e5ed18a4d86638d493495208bfc8a81be797c8a90d189d0366d966eb6bd8"
+  },
+  "starter_target": "Cumulative_Error",
+  "starter_features": "ocular aggregate statistics",
+  "current_target": "strict future five-second mean",
+  "current_inputs": "four non-ocular physiological channels plus aircraft/history",
+  "encoder_updates": 0
+}
