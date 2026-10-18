@@ -23,7 +23,7 @@ VERSIONS={'aircraft':'mult_aircraft','original':'mult','candidate':'mult'}
 def shape_data(report,assets,spec,version):
     if version in ('candidate','repaired_contiformer'):
         return FairResidualData(assets/(spec['name']+'_inputs.npz'),report/(spec['name']+'_qualification.json'),spec)
-    receipt=ORIGINAL/'qualification.json'
+    receipt=report/'original_qualification.json' if (report/'folds.json').exists() else ORIGINAL/'qualification.json'
     return FairResidualData(json.loads(receipt.read_text())['snapshot_path'],receipt,spec)
 
 
@@ -40,6 +40,12 @@ def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_au
     binding=dict(source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
                  plan_sha256=file_digest(report/'PLAN.md'),qualification_sha256=file_digest(report/'qualification.json'),
                  seed=seed,folds=FOLDS,selection_policy=selection_policy,history_aux_weight=history_aux_weight)
+    if (report/'folds.json').exists():
+        import datetime
+        binding['folds']=json.loads((report/'folds.json').read_text())
+        binding['expanded_fit']=True
+        binding['deadline']=datetime.datetime.fromisoformat('2026-10-19T09:30:00+08:00').timestamp()
+        if time.time()>=binding['deadline']:raise TimeoutError('night deadline reached')
     if history_aux_weight:
         qualification=json.loads((report/'history_anchor_qualification.json').read_text())
         assert qualification['status']=='passed'
@@ -75,7 +81,8 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
                 data.history_anchor_mask=torch.tensor(raw['mask'],device=data.device)
         datasets[name]=data
         save_json(report/'run_status.json',dict(status='running',stage=name,elapsed_s=time.monotonic()-start))
-        model,r=trainer(method,data,assets/'training'/name,report,name,binding,start+14400)
+        deadline=min(start+14400,time.monotonic()+binding['deadline']-time.time()) if 'deadline' in binding else start+14400
+        model,r=trainer(method,data,assets/'training'/name,report,name,binding,deadline)
         receipts[name]=r
         if not r['complete']:raise TimeoutError('bounded training incomplete')
         features={role:predict_fair(model,data,data.indices(role))[0] for role in ('fit','select')}
@@ -88,7 +95,7 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
         path=assets/(name+'.joblib');joblib.dump(readouts,path)
         save_json(report/(name+'.json'),dict(receipts=receipts,selected_alpha=choices,readout_path=str(path.resolve()),
                                              readout_sha256=file_digest(path),binding=binding))
-    for spec in FOLDS:
+    for spec in binding['folds']:
         for version,method in VERSIONS.items():train(spec,version,method)
     lock('locked_primary')
     old=pd.read_csv(ORIGINAL/'predictions.csv.gz')
@@ -102,7 +109,7 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
         prior['method']=ref['prefix']+'_'+prior.method
         rows.extend(prior.to_dict('records'))
     replay={}
-    for spec in FOLDS:
+    for spec in binding['folds']:
         fold=spec['name']
         for version in VERSIONS:
             name=fold+'_'+version;data=datasets[name]
@@ -113,7 +120,7 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
                     values=pd.DataFrame([r for r in scored if r['method']=='original_'+route])
                     before=old[(old.fold==fold)&(old.method=='mult_'+route)]
                     assert values.sample_id.tolist()==before.sample_id.tolist()
-                    if binding.get('selection_policy','task_head')=='task_head':
+                    if binding.get('selection_policy','task_head')=='task_head' and not binding.get('expanded_fit'):
                         np.testing.assert_allclose(values.prediction,before.prediction,atol=1e-5,rtol=1e-5)
                     replay[fold+'_'+route]=float(np.abs(values.prediction.to_numpy()-before.prediction.to_numpy()).max())
             if version=='candidate':
@@ -122,12 +129,12 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
                 p,d=pairing_predictions(data,receipts[name]['checkpoint_path'],readouts[name]);pair_rows+=p;donors+=d
     save_json(report/'original_reproduction.json',replay)
     preliminary=write_shape_results(report,rows,pair_rows,donors)
-    add_baseline=preliminary['representation_success'] and preliminary['pairing_success']
+    add_baseline=preliminary['representation_success'] and preliminary['pairing_success'] and not binding.get('expanded_fit')
     save_json(report/'conditional_baseline_decision.json',dict(run=add_baseline,primary_result=preliminary))
     if add_baseline:
-        for spec in FOLDS:train(spec,'repaired_contiformer','contiformer')
+        for spec in binding['folds']:train(spec,'repaired_contiformer','contiformer')
         lock('locked_with_baseline')
-        for spec in FOLDS:
+        for spec in binding['folds']:
             name=spec['name']+'_repaired_contiformer'
             rows+=score_shape_model(datasets[name],receipts[name]['checkpoint_path'],readouts[name],'repaired_contiformer')
     result=write_shape_results(report,rows,pair_rows,donors)

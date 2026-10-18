@@ -35,11 +35,22 @@ def verify_shape_mult(report,assets,replay=True):
         q=json.loads(path.read_text());assert q['status']=='passed' and file_digest(q['mask_path'])==q['mask_sha256']
     locked=json.loads((report/('locked_with_baseline.json' if run['same_input_traditional_checked'] else 'locked_primary.json')).read_text())
     assert file_digest(locked['readout_path'])==locked['readout_sha256']
-    original_path=json.loads((ORIGINAL/'qualification.json').read_text())['snapshot_path']
+    original_receipt=report/'original_qualification.json' if binding.get('expanded_fit') else ORIGINAL/'qualification.json'
+    original_path=json.loads(original_receipt.read_text())['snapshot_path']
     with np.load(original_path,allow_pickle=False) as raw:old={k:raw[k] for k in raw.files}
     meta=json.loads(str(old['metadata']));subjects=np.array([r['subject'] for r in meta['windows']])
     with np.load(assets/'native.npz',allow_pickle=False) as raw:native={k:raw[k] for k in raw.files}
-    for spec in FOLDS:
+    if binding.get('expanded_fit'):
+        frozen=json.loads((ORIGINAL/'qualification.json').read_text())
+        with np.load(frozen['snapshot_path'],allow_pickle=False) as raw:
+            for key in raw.files:
+                if key!='metadata':np.testing.assert_array_equal(old[key][:5951],raw[key])
+            assert meta['windows'][:5951]==json.loads(str(raw['metadata']))['windows']
+        assert binding['folds']==json.loads((report/'folds.json').read_text())
+        for spec,base in zip(binding['folds'],FOLDS):
+            assert spec['score']==list(base['score']) and spec['select']==list(base['select'])
+            assert len(spec['fit'])==len(base['fit'])+18
+    for spec in binding['folds']:
         q=json.loads((report/(spec['name']+'_qualification.json')).read_text())
         assert file_digest(q['snapshot_path'])==q['snapshot_sha256']
         fit=np.flatnonzero(np.isin(subjects,spec['fit']))
@@ -68,7 +79,7 @@ def verify_shape_mult(report,assets,replay=True):
     maximum=0.
     for data,persons,totals in ((prediction,people,summary),(pair,pair_people,pair_summary)):
         assert not data[['fold','method','sample_id']].duplicated().any()
-        for spec in FOLDS:
+        for spec in binding['folds']:
             expected={r['sample_id']:r['target'] for r in meta['windows'] if r['subject'] in spec['score']}
             for method,block in data[data.fold==spec['name']].groupby('method'):
                 assert set(block.sample_id)==set(expected)
@@ -101,20 +112,20 @@ def verify_shape_mult(report,assets,replay=True):
     expected=all(g['passed'] for g in gates if g['route']=='ridge') and all(g['passed'] for g in pair_gates) and run['same_input_traditional_checked']
     assert run['stable_success']==expected
     original_weights={}
-    for spec in FOLDS:
+    for spec in binding['folds']:
         name=spec['name']+'_original';new=torch.load(receipts[name]['checkpoint_path'],map_location='cpu',weights_only=True)
         before=json.loads((ORIGINAL/(spec['name']+'_mult_receipt.json')).read_text())
         previous=torch.load(before['checkpoint_path'],map_location='cpu',weights_only=True)
         assert new['state'].keys()==previous['state'].keys()
         original_weights[spec['name']]=all(same_tensor_bytes(new['state'][k],previous['state'][k]) for k in new['state'])
-    if binding.get('selection_policy','task_head')=='task_head':assert all(original_weights.values())
+    if binding.get('selection_policy','task_head')=='task_head' and not binding.get('expanded_fit'):assert all(original_weights.values())
     errors={}
     if replay:
         torch.set_num_threads(1)
         readouts=joblib.load(locked['readout_path'])
         with development_gpu_lock() as acquired:
             if not acquired:raise BlockingIOError('GPU busy')
-            for spec in FOLDS:
+            for spec in binding['folds']:
                 versions=list(VERSIONS)+(['repaired_contiformer'] if run['same_input_traditional_checked'] else [])
                 for version in versions:
                     name=spec['name']+'_'+version;data=shape_data(report,assets,spec,version);data.score_open=True
