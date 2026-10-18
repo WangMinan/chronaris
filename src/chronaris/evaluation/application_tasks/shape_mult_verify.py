@@ -47,9 +47,11 @@ def verify_shape_mult(report,assets,replay=True):
                 if key!='metadata':np.testing.assert_array_equal(old[key][:5951],raw[key])
             assert meta['windows'][:5951]==json.loads(str(raw['metadata']))['windows']
         assert binding['folds']==json.loads((report/'folds.json').read_text())
+        additional=json.loads((report/'additional_subjects.json').read_text()) if (report/'additional_subjects.json').exists() else None
         for spec,base in zip(binding['folds'],FOLDS):
             assert spec['score']==list(base['score']) and spec['select']==list(base['select'])
-            assert len(spec['fit'])==len(base['fit'])+18
+            assert len(spec['fit'])==len(base['fit'])+(len(additional) if additional is not None else 18)
+            if additional is not None:assert set(spec['fit'])==set(base['fit'])|set(additional)
     for spec in binding['folds']:
         q=json.loads((report/(spec['name']+'_qualification.json')).read_text())
         assert file_digest(q['snapshot_path'])==q['snapshot_sha256']

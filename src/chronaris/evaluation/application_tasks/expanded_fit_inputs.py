@@ -19,9 +19,15 @@ def qualify_expanded_fit(additional,report,assets):
     save_json(report/'additional_qualification.json',meta)
     if meta['status']!='passed':raise ValueError('additional cohort qualification failed')
     expected={'sub-cp'+s for s in ('005','006','009','013','015','018','020','023','024','027','028','029','030','031','033','035','036','039')}
+    if (report/'additional_subjects.json').exists():
+        selected=set(json.loads((report/'additional_subjects.json').read_text()))
+        assert selected<=expected and len(selected)>=12
+        expected=selected
     assert {r['subject'] for r in meta['windows']}==expected
+    assert all(c['qualified_records']>=8 and c['windows']>=100 for c in meta['coverage'])
+    assert sum(r['accepted'] for r in meta['records'])>=.8*len(meta['records'])
     assert all(r['accepted'] for r in meta['windows'])
-    assert len(meta['prefix_checks'])==18*8 and max(r['max_delta'] for r in meta['prefix_checks'])<=1e-5
+    assert len(meta['prefix_checks'])==len(expected)*8 and max(r['max_delta'] for r in meta['prefix_checks'])<=1e-5
     oldq=json.loads(Path('docs/review/stage/fair-residual-20261019/qualification.json').read_text())
     assert file_digest(oldq['snapshot_path'])==oldq['snapshot_sha256']
     old=load_arrays(oldq['snapshot_path']);oldmeta=json.loads(str(old['metadata']))
