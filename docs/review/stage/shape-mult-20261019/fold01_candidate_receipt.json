@@ -1,0 +1,19 @@
+{
+  "name": "fold01_candidate",
+  "method": "mult",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 35,
+  "best_epoch": 20,
+  "updates": 2835,
+  "selection_rmse": 0.20763353218028371,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-shape-mult/training/fold01_candidate/best.pt",
+  "checkpoint_sha256": "5f5ad4a254d683cba90c7d988bdaf909ed49a1f0f467e27b6db87df7eeb5f840",
+  "parameter_count": 1016577,
+  "elapsed_s": 97.43384293597774,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "reload_max_delta": 0.0
+}

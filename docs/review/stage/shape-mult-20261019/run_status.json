@@ -1,0 +1,52 @@
+{
+  "representation_success": false,
+  "task_head_success": false,
+  "pairing_success": false,
+  "status": "completed",
+  "completed_models": 6,
+  "updates": 18360,
+  "stable_success": false,
+  "same_input_traditional_checked": false,
+  "elapsed_s": 671.4301452879736,
+  "scope": "two_previously_exposed_development_folds_seed17",
+  "binding": {
+    "source_commit": "72a2617003b71cc87576f07177f87ab94bf95feb",
+    "plan_sha256": "22e1ef18b45e65c1fe9fd9a2783cf3b93457fbe623a45df5c887fc156337703c",
+    "qualification_sha256": "294cdd080026bce588244dffe245e4cadaedbe73991953029dc6974cd96a61dc",
+    "seed": 17,
+    "folds": [
+      {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp008",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp011",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      }
+    ]
+  }
+}

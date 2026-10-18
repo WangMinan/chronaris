@@ -1,0 +1,23 @@
+{
+  "root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-shape-mult",
+  "files": {
+    "fold01_inputs.npz": "4b05e4686b0d4591b3f653b299a074ba96ebf53dab812301a4ac61b1c5a4b53d",
+    "fold02_inputs.npz": "d5eac00d3d2538053edc1680f4716bfa407eec27b823f44fc6b7c52542214596",
+    "locked_primary.joblib": "a0a19be8d15950071f85708c471421323c69717950e0515a2dd45ce6ae8639ba",
+    "native.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native.npz": "ec06c3092ea43e80e29d056ac653088f71f8de990d2d351d7130cd58b173b576",
+    "training/fold01_aircraft/best.pt": "8c228ad38c112138b1b756ba171149fbdbc5edb10331ace49a34f47f15221ebf",
+    "training/fold01_aircraft/last.pt": "77c51a2548ca584c83420edf97a5b752e7ffc455a1f96970adfc7de6b4b2de7f",
+    "training/fold01_candidate/best.pt": "5f5ad4a254d683cba90c7d988bdaf909ed49a1f0f467e27b6db87df7eeb5f840",
+    "training/fold01_candidate/last.pt": "e6cf2d9a77a2531f317605192993ca0939687166d17699236e6061a01b3eb125",
+    "training/fold01_original/best.pt": "e66c147c303580b99847f6aac3a84cd8e340a6ec00f79024fb6444a39a892cd1",
+    "training/fold01_original/last.pt": "60a9953af1c99e16c85984831f24eb2be296ff4d7e5890a55a1e26ba74d22906",
+    "training/fold02_aircraft/best.pt": "89a1ced3775ba857d18cf4b2ee2b7d28f2f176c470f127e0991d66d8d4dfe39c",
+    "training/fold02_aircraft/last.pt": "7a8e5c38235a80ba39504df93698f9a79af7e64d8dd39914998a7b334317824c",
+    "training/fold02_candidate/best.pt": "8bd86a3bd5b5055bc51d6987ef25e1ec459b6bf045589e72ff98f2980452b81f",
+    "training/fold02_candidate/last.pt": "b5e333c8251a962c1b07e25a20a19a88b87e5c5955cdd95ed7f055972ddb0042",
+    "training/fold02_original/best.pt": "aabb0e8747f5124192e1268fe8bcdfa9d7d16d36e69fc5a822ad069ce9cbf2c6",
+    "training/fold02_original/last.pt": "1fe8d27fae72ff0f84314794ea9ddf4fdd452f2aee9cd62629d147c6b24e3b6b",
+    "training.log": "80017c6a50a79ff2e38539f56c12d6e89114fe761cd250b08407d074cf00d225"
+  }
+}

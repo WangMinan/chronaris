@@ -1,0 +1,40 @@
+{
+  "source_commit": "72a2617003b71cc87576f07177f87ab94bf95feb",
+  "plan_sha256": "22e1ef18b45e65c1fe9fd9a2783cf3b93457fbe623a45df5c887fc156337703c",
+  "qualification_sha256": "294cdd080026bce588244dffe245e4cadaedbe73991953029dc6974cd96a61dc",
+  "seed": 17,
+  "folds": [
+    {
+      "name": "fold01",
+      "fit": [
+        "sub-cp004",
+        "sub-cp008",
+        "sub-cp019"
+      ],
+      "select": [
+        "sub-cp025"
+      ],
+      "score": [
+        "sub-cp003",
+        "sub-cp011",
+        "sub-cp022"
+      ]
+    },
+    {
+      "name": "fold02",
+      "fit": [
+        "sub-cp003",
+        "sub-cp004",
+        "sub-cp011",
+        "sub-cp019"
+      ],
+      "select": [
+        "sub-cp022"
+      ],
+      "score": [
+        "sub-cp008",
+        "sub-cp025"
+      ]
+    }
+  ]
+}

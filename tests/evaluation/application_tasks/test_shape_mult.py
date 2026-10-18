@@ -36,3 +36,12 @@ def test_stable_gate_requires_both_folds_and_pairing():
     assert next(r for r in gates if r['fold']=='fold01' and r['route']=='ridge')['passed']
     assert not next(r for r in gates if r['fold']=='fold02' and r['route']=='ridge')['passed']
     assert not any(r['passed'] for r in pair_gates)
+
+
+def test_exact_state_bytes_include_nan_dtype_markers():
+    from chronaris.evaluation.application_tasks.shape_mult_verify import same_tensor_bytes
+    a=torch.tensor([float('nan'),1.])
+    assert same_tensor_bytes(a,a.clone())
+    b=a.clone();b[1]=1.001
+    assert not same_tensor_bytes(a,b)
+    assert not same_tensor_bytes(a,a.double())

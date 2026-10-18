@@ -14,6 +14,11 @@ from chronaris.evaluation.application_tasks.performance_pilot_audit import save_
 from chronaris.evaluation.application_tasks.v4_public_screen import development_gpu_lock
 
 
+def same_tensor_bytes(a,b):
+    return a.dtype==b.dtype and a.shape==b.shape and torch.equal(
+        a.contiguous().reshape(-1).view(torch.uint8),b.contiguous().reshape(-1).view(torch.uint8))
+
+
 def verify_shape_mult(report,assets,replay=True):
     report,assets=Path(report),Path(assets)
     protected=json.loads((report/'protected_sources.json').read_text())
@@ -95,7 +100,8 @@ def verify_shape_mult(report,assets,replay=True):
         before=json.loads((ORIGINAL/(spec['name']+'_mult_receipt.json')).read_text())
         previous=torch.load(before['checkpoint_path'],map_location='cpu',weights_only=True)
         assert new['state'].keys()==previous['state'].keys()
-        original_weights[spec['name']]=all(torch.equal(new['state'][k],previous['state'][k]) for k in new['state'])
+        original_weights[spec['name']]=all(same_tensor_bytes(new['state'][k],previous['state'][k]) for k in new['state'])
+    if binding.get('selection_policy','task_head')=='task_head':assert all(original_weights.values())
     errors={}
     if replay:
         torch.set_num_threads(1)
