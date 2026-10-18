@@ -1,0 +1,14 @@
+{
+  "root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-rest-development",
+  "files": {
+    "fold01_inputs.npz": "33c36ce3637e2532fd2df963fe1d3f12b2487241eb42960cbce370619fbdecc1",
+    "fold02_inputs.npz": "e30e6d3e06a877bf0699736f69decbf3272e358524e6542567f5316157c8335f",
+    "locked_primary.joblib": "427807fbc432a58c3423e205d8e22203a12737a5ad9c41fa163cbe036b04397e",
+    "training/fold01_candidate/best.pt": "fd944724f5613fb57d0928a60edcc6aea81638fb883838e2d80f33ba163632ee",
+    "training/fold01_candidate/last.pt": "3d90f7ffd010db33af348875f877a01619a56d435cbd98564ea898a450fc763d",
+    "training/fold02_candidate/best.pt": "e56f1f884b506f2a16dc0755e75844e5bf3e0a3dacafea5f02493edafc72ffbe",
+    "training/fold02_candidate/last.pt": "02ff368a19cd839ec8b191d916be306e5426f621f3153d9b8a81cd5da7a9eb86",
+    "training.log": "161920b2a5fdc74aa65397fc0d2d12af51f9d63f9a68781664827b0e066c6667",
+    "verification.log": "c637c476ca667dd6263aa8f1b2e5708c9cf4d013fe6adff9f46dcd794e332e17"
+  }
+}

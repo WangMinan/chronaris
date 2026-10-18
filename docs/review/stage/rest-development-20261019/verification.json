@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "protected_files": 2179,
+  "changed_sources": [],
+  "predictions": 243542,
+  "pairing_predictions": 16796,
+  "subject_metrics": 310,
+  "maximum_metric_delta": 4.440892098500626e-16,
+  "completed_models": 2,
+  "original_mult_weights_identical": {},
+  "replay": {
+    "fold01_candidate_head": 1.7763568394002505e-15,
+    "fold01_candidate_ridge": 1.7763568394002505e-15,
+    "fold01_shape_statistics": 1.7763568394002505e-15,
+    "fold02_candidate_head": 8.881784197001252e-16,
+    "fold02_candidate_ridge": 8.881784197001252e-16,
+    "fold02_shape_statistics": 8.881784197001252e-16
+  },
+  "optimizer_updates_in_verification": 0,
+  "new_readout_fits": 0,
+  "stable_success": false
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "fold": "fold01",
+    "route": "ridge",
+    "strongest": "expanded_aircraft_ridge",
+    "improvement": -0.28941824437475505,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold01",
+    "route": "head",
+    "strongest": "expanded_aircraft_ridge",
+    "improvement": -0.7943680884702848,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "ridge",
+    "strongest": "expanded_candidate_head",
+    "improvement": -0.3172735316017019,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "head",
+    "strongest": "expanded_candidate_head",
+    "improvement": -0.42916726094420343,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  }
+]

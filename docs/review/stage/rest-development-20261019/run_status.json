@@ -1,0 +1,148 @@
+{
+  "representation_success": false,
+  "task_head_success": false,
+  "pairing_success": false,
+  "status": "completed",
+  "completed_models": 2,
+  "updates": 6453,
+  "stable_success": false,
+  "same_input_traditional_checked": false,
+  "elapsed_s": 296.6974424479995,
+  "scope": "two_previously_exposed_development_folds_seed17",
+  "binding": {
+    "source_commit": "065d49f4f6063adbfe63489382b35256168b7b60",
+    "plan_sha256": "f992edbfc64118e11abff467999256fdbb87b9f29613441b6811058983c7c505",
+    "qualification_sha256": "b75092de3133b74b2cee0c62ae570a9965e1d9b3685e6205e24f2b70907a3e7e",
+    "seed": 17,
+    "folds": [
+      {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp008",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp011",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      }
+    ],
+    "selection_policy": "common_readout",
+    "history_aux_weight": 0.0,
+    "rest_calibration": true,
+    "versions": {
+      "candidate": "mult"
+    },
+    "predecessor_sha256": "7d308105ba4373e19bb40095e751500633888cfe2013e842e9762949de54b91a",
+    "deadline": 1792373400.0,
+    "reference_reports": [
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/shape-mult-20261019/predictions.csv.gz",
+        "predictions_sha256": "3768140d3724218fe1c056e8018ea646c26e37781e77bed50bb2694080a36bf6",
+        "methods": [
+          "aircraft_head",
+          "aircraft_ridge",
+          "original_head",
+          "original_ridge",
+          "candidate_head",
+          "candidate_ridge",
+          "shape_statistics"
+        ],
+        "prefix": "shape"
+      },
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/readout-selection-20261019/predictions.csv.gz",
+        "predictions_sha256": "2498ab27289e716f2fad6e8cca0d84543e3b39491714e2308a94d3d34e2b7064",
+        "methods": [
+          "aircraft_head",
+          "aircraft_ridge",
+          "original_head",
+          "original_ridge",
+          "candidate_head",
+          "candidate_ridge",
+          "shape_statistics"
+        ],
+        "prefix": "readout"
+      },
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/history-supervision-20261019/predictions.csv.gz",
+        "predictions_sha256": "11b833dcbccadd1486e23d53ecdda622d07bb20c8a557d6953cd97406c3d6913",
+        "methods": [
+          "aircraft_head",
+          "aircraft_ridge",
+          "original_head",
+          "original_ridge",
+          "candidate_head",
+          "candidate_ridge",
+          "shape_statistics"
+        ],
+        "prefix": "history"
+      },
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/chronos-information-20261019/predictions.csv.gz",
+        "predictions_sha256": "333fd68a5111d9408bd24df5da6024bc6064f56f83b730aaed60848e84f352f9",
+        "methods": [
+          "chronos_frozen_aircraft",
+          "chronos_frozen_physiology_history",
+          "chronos_frozen_independent",
+          "chronos_frozen_joint",
+          "chronos_adapted_aircraft",
+          "chronos_adapted_physiology_history",
+          "chronos_adapted_independent",
+          "chronos_adapted_joint"
+        ],
+        "prefix": "chronos"
+      },
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/chronos-information-20261019/numeric_predictions.csv.gz",
+        "predictions_sha256": "3076a6877076b70325ad90f2fb29c594ac2b90c4fefa22c2680c526d9c174ab3",
+        "methods": [
+          "chronos_frozen_aircraft",
+          "chronos_frozen_physiology_history",
+          "chronos_frozen_independent",
+          "chronos_frozen_joint",
+          "chronos_adapted_aircraft",
+          "chronos_adapted_physiology_history",
+          "chronos_adapted_independent",
+          "chronos_adapted_joint"
+        ],
+        "prefix": "chronos_float64"
+      },
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/eligible-fit-20261019/predictions.csv.gz",
+        "predictions_sha256": "0902d4016376edc6766f1265cafa2bfc29a63a20b7ecc426ccc1929443a7a8b5",
+        "prefix": "expanded",
+        "methods": [
+          "aircraft_head",
+          "aircraft_ridge",
+          "original_head",
+          "original_ridge",
+          "candidate_head",
+          "candidate_ridge",
+          "shape_statistics"
+        ]
+      }
+    ]
+  }
+}
