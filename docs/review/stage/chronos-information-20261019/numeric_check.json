@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "encoder_updates": 0,
+  "readout_fits": 16,
+  "fixed_original_alphas": true,
+  "sensitive_routes": [],
+  "maximum_relative_rmse_change": 2.1186681335105817e-05
+}

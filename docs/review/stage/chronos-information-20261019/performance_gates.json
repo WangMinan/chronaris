@@ -1,0 +1,42 @@
+[
+  {
+    "fold": "fold01",
+    "route": "frozen",
+    "strongest": "reference_frozen_mult_ridge",
+    "rmse": 1.0550556550123715,
+    "improvement": -2.7470604160285634,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold01",
+    "route": "adapted",
+    "strongest": "reference_frozen_mult_ridge",
+    "rmse": 1.0185281715177177,
+    "improvement": -2.6173320108494558,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "frozen",
+    "strongest": "reference_aircraft_head",
+    "rmse": 0.8419051859913177,
+    "improvement": -3.932441069092099,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "adapted",
+    "strongest": "reference_aircraft_head",
+    "rmse": 0.8597890069414189,
+    "improvement": -4.037216398184179,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  }
+]

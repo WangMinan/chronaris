@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "gates": {
+    "original_identity": true,
+    "fit_roles": true,
+    "coverage": true,
+    "source_identity": true,
+    "formula": true,
+    "prefix": true,
+    "finite": true
+  },
+  "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/original_inputs.npz",
+  "snapshot_sha256": "685982ebeea3c5049671f924731f93d0361c3a18b1831a7ab9c0c36a719fda4d"
+}

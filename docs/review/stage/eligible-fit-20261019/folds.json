@@ -1,0 +1,66 @@
+[
+  {
+    "name": "fold01",
+    "fit": [
+      "sub-cp004",
+      "sub-cp006",
+      "sub-cp008",
+      "sub-cp009",
+      "sub-cp013",
+      "sub-cp015",
+      "sub-cp018",
+      "sub-cp019",
+      "sub-cp020",
+      "sub-cp023",
+      "sub-cp024",
+      "sub-cp027",
+      "sub-cp028",
+      "sub-cp029",
+      "sub-cp030",
+      "sub-cp031",
+      "sub-cp035",
+      "sub-cp036",
+      "sub-cp039"
+    ],
+    "select": [
+      "sub-cp025"
+    ],
+    "score": [
+      "sub-cp003",
+      "sub-cp011",
+      "sub-cp022"
+    ]
+  },
+  {
+    "name": "fold02",
+    "fit": [
+      "sub-cp003",
+      "sub-cp004",
+      "sub-cp006",
+      "sub-cp009",
+      "sub-cp011",
+      "sub-cp013",
+      "sub-cp015",
+      "sub-cp018",
+      "sub-cp019",
+      "sub-cp020",
+      "sub-cp023",
+      "sub-cp024",
+      "sub-cp027",
+      "sub-cp028",
+      "sub-cp029",
+      "sub-cp030",
+      "sub-cp031",
+      "sub-cp035",
+      "sub-cp036",
+      "sub-cp039"
+    ],
+    "select": [
+      "sub-cp022"
+    ],
+    "score": [
+      "sub-cp008",
+      "sub-cp025"
+    ]
+  }
+]

@@ -1,0 +1,17 @@
+subject,expected_records,qualified_records,windows,passed
+sub-cp006,12,12,829,True
+sub-cp009,12,8,579,True
+sub-cp013,12,12,738,True
+sub-cp015,12,12,843,True
+sub-cp018,12,10,673,True
+sub-cp020,12,12,871,True
+sub-cp023,12,12,808,True
+sub-cp024,12,12,883,True
+sub-cp027,12,12,874,True
+sub-cp028,12,12,842,True
+sub-cp029,12,12,856,True
+sub-cp030,11,11,802,True
+sub-cp031,12,12,872,True
+sub-cp035,12,11,802,True
+sub-cp036,12,12,682,True
+sub-cp039,12,11,482,True

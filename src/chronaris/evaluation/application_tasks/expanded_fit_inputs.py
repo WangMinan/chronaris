@@ -16,7 +16,9 @@ def qualify_expanded_fit(additional,report,assets):
     report,assets=Path(report),Path(assets)
     if (report/'qualification.json').exists():raise FileExistsError('qualification already retained')
     extra=load_arrays(additional);meta=json.loads(str(extra['metadata']))
-    save_json(report/'additional_qualification.json',meta)
+    save_json(report/'additional_qualification.json',dict(
+        {k:v for k,v in meta.items() if k!='windows'},windows=len(meta['windows']),
+        snapshot_path=str(Path(additional).resolve()),snapshot_sha256=file_digest(additional)))
     if meta['status']!='passed':raise ValueError('additional cohort qualification failed')
     expected={'sub-cp'+s for s in ('005','006','009','013','015','018','020','023','024','027','028','029','030','031','033','035','036','039')}
     if (report/'additional_subjects.json').exists():

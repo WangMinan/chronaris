@@ -1,0 +1,74 @@
+[
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/shape-mult-20261019/predictions.csv.gz",
+    "predictions_sha256": "3768140d3724218fe1c056e8018ea646c26e37781e77bed50bb2694080a36bf6",
+    "methods": [
+      "aircraft_head",
+      "aircraft_ridge",
+      "original_head",
+      "original_ridge",
+      "candidate_head",
+      "candidate_ridge",
+      "shape_statistics"
+    ],
+    "prefix": "shape"
+  },
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/readout-selection-20261019/predictions.csv.gz",
+    "predictions_sha256": "2498ab27289e716f2fad6e8cca0d84543e3b39491714e2308a94d3d34e2b7064",
+    "methods": [
+      "aircraft_head",
+      "aircraft_ridge",
+      "original_head",
+      "original_ridge",
+      "candidate_head",
+      "candidate_ridge",
+      "shape_statistics"
+    ],
+    "prefix": "readout"
+  },
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/history-supervision-20261019/predictions.csv.gz",
+    "predictions_sha256": "11b833dcbccadd1486e23d53ecdda622d07bb20c8a557d6953cd97406c3d6913",
+    "methods": [
+      "aircraft_head",
+      "aircraft_ridge",
+      "original_head",
+      "original_ridge",
+      "candidate_head",
+      "candidate_ridge",
+      "shape_statistics"
+    ],
+    "prefix": "history"
+  },
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/chronos-information-20261019/predictions.csv.gz",
+    "predictions_sha256": "333fd68a5111d9408bd24df5da6024bc6064f56f83b730aaed60848e84f352f9",
+    "methods": [
+      "chronos_frozen_aircraft",
+      "chronos_frozen_physiology_history",
+      "chronos_frozen_independent",
+      "chronos_frozen_joint",
+      "chronos_adapted_aircraft",
+      "chronos_adapted_physiology_history",
+      "chronos_adapted_independent",
+      "chronos_adapted_joint"
+    ],
+    "prefix": "chronos"
+  },
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/chronos-information-20261019/numeric_predictions.csv.gz",
+    "predictions_sha256": "3076a6877076b70325ad90f2fb29c594ac2b90c4fefa22c2680c526d9c174ab3",
+    "methods": [
+      "chronos_frozen_aircraft",
+      "chronos_frozen_physiology_history",
+      "chronos_frozen_independent",
+      "chronos_frozen_joint",
+      "chronos_adapted_aircraft",
+      "chronos_adapted_physiology_history",
+      "chronos_adapted_independent",
+      "chronos_adapted_joint"
+    ],
+    "prefix": "chronos_float64"
+  }
+]

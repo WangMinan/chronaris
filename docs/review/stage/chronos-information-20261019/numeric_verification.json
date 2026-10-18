@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "predictions": 33592,
+  "metrics": 40,
+  "maximum_delta": 2.220446049250313e-16,
+  "updates": 0
+}

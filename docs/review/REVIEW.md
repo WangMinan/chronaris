@@ -1,5 +1,7 @@
 # Chronaris 复核入口
 
+夜间时序预训练诊断完成及合格拟合人群扩展：见[结果](stage/chronos-information-20261019/README.md)、[18人资格失败](stage/expanded-fit-20261019/README.md)、[接续合同](stage/eligible-fit-20261019/PLAN.md)。
+
 更新时间：2026-10-19
 
 **夜间历史监督单元已完成且未获生理增量，接续时序预训练基底诊断。** 第二折飞机专用头降至0.17069，候选两折共同读出0.30358/0.19177；六拟合25191次更新及14路线重放通过，1838份来源未变。Chronos-2三个输入视图的两折前向、梯度、隔离与重载资格通过，优化更新为零；下一阶段执行固定一次全拟合历史适配，见[已完成结果](stage/history-supervision-20261019/README.md)与[新合同](stage/chronos-information-20261019/PLAN.md)。

@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "qualified_routes": [],
+  "paired_routes": [],
+  "readouts": 16,
+  "predictions": 167960,
+  "elapsed_s": 159.70817187899956,
+  "task_encoder_labels_used": false,
+  "criterion": "development_information_only"
+}

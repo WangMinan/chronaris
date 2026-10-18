@@ -1,0 +1,101 @@
+{
+  "binding": {
+    "encoding_status_sha256": "8c03142a719de75aa2c08da0464e4ce0ad0068d6cef32cf74ea74777ae247cfa",
+    "alphas": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      1000.0,
+      10000.0,
+      100000.0,
+      1000000.0
+    ],
+    "source_sha256": "472158e01ce4e4f3fd8ec85fdd62445d499bdc7f2adcbc02de2a22f88023b388",
+    "outer_scores_opened": false
+  },
+  "choices": {
+    "fold01_frozen_aircraft": {
+      "alpha": 10.0,
+      "features": 9244,
+      "selection_rmse": 0.3966460174378313
+    },
+    "fold01_frozen_physiology_history": {
+      "alpha": 0.1,
+      "features": 15404,
+      "selection_rmse": 0.8009272666144738
+    },
+    "fold01_frozen_independent": {
+      "alpha": 0.1,
+      "features": 24648,
+      "selection_rmse": 0.6572201750801007
+    },
+    "fold01_frozen_joint": {
+      "alpha": 10.0,
+      "features": 21564,
+      "selection_rmse": 0.7713790227893949
+    },
+    "fold01_adapted_aircraft": {
+      "alpha": 10.0,
+      "features": 9244,
+      "selection_rmse": 0.3859567469122493
+    },
+    "fold01_adapted_physiology_history": {
+      "alpha": 0.1,
+      "features": 15404,
+      "selection_rmse": 0.7927776316810543
+    },
+    "fold01_adapted_independent": {
+      "alpha": 0.1,
+      "features": 24648,
+      "selection_rmse": 0.6450184876541029
+    },
+    "fold01_adapted_joint": {
+      "alpha": 0.1,
+      "features": 21564,
+      "selection_rmse": 0.7234589481989756
+    },
+    "fold02_frozen_aircraft": {
+      "alpha": 10.0,
+      "features": 9244,
+      "selection_rmse": 0.48234486852404945
+    },
+    "fold02_frozen_physiology_history": {
+      "alpha": 0.1,
+      "features": 15404,
+      "selection_rmse": 0.8555084612656618
+    },
+    "fold02_frozen_independent": {
+      "alpha": 100.0,
+      "features": 24648,
+      "selection_rmse": 0.7604322963502288
+    },
+    "fold02_frozen_joint": {
+      "alpha": 100.0,
+      "features": 21564,
+      "selection_rmse": 0.8221711487230993
+    },
+    "fold02_adapted_aircraft": {
+      "alpha": 10.0,
+      "features": 9244,
+      "selection_rmse": 0.4420483821369654
+    },
+    "fold02_adapted_physiology_history": {
+      "alpha": 0.1,
+      "features": 15404,
+      "selection_rmse": 0.8163335444055648
+    },
+    "fold02_adapted_independent": {
+      "alpha": 0.1,
+      "features": 24648,
+      "selection_rmse": 0.7015490205598647
+    },
+    "fold02_adapted_joint": {
+      "alpha": 100.0,
+      "features": 21564,
+      "selection_rmse": 0.8273555500557713
+    }
+  },
+  "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-information/readouts.joblib",
+  "sha256": "30a45d0c8ad2f9a9051e297e051c8952a42682333ede910d8f0e9f6e804ed602"
+}

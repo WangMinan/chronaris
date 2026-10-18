@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "source_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-expanded-fit/additional.npz",
+  "source_sha256": "48c1395de2c9141ffa90984c271792236072eeaaf65c6434a2222b790ccd8928",
+  "included_subjects": [
+    "sub-cp006",
+    "sub-cp009",
+    "sub-cp013",
+    "sub-cp015",
+    "sub-cp018",
+    "sub-cp020",
+    "sub-cp023",
+    "sub-cp024",
+    "sub-cp027",
+    "sub-cp028",
+    "sub-cp029",
+    "sub-cp030",
+    "sub-cp031",
+    "sub-cp035",
+    "sub-cp036",
+    "sub-cp039"
+  ],
+  "excluded": [
+    {
+      "subject": "sub-cp005",
+      "expected_records": 12,
+      "qualified_records": 1,
+      "windows": 67,
+      "passed": false
+    },
+    {
+      "subject": "sub-cp033",
+      "expected_records": 12,
+      "qualified_records": 7,
+      "windows": 513,
+      "passed": false
+    }
+  ],
+  "rule": "all participants with >=8 records and >=100 windows; >=12 participants; >=80% cohort records"
+}

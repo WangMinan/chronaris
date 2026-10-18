@@ -1,0 +1,104 @@
+{
+  "path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-information/numeric_float64.joblib",
+  "sha256": "e9139a4c2c58c32f743cdb6b00b650c390696ab3390f12976f6615181b7392f1",
+  "original_readout_sha256": "30a45d0c8ad2f9a9051e297e051c8952a42682333ede910d8f0e9f6e804ed602",
+  "outer_opened": false,
+  "selection": [
+    {
+      "name": "fold01_frozen_aircraft",
+      "alpha": 10.0,
+      "rmse": 0.3966524147955668,
+      "original_rmse": 0.3966460174378313
+    },
+    {
+      "name": "fold01_frozen_physiology_history",
+      "alpha": 0.1,
+      "rmse": 0.8009261191294176,
+      "original_rmse": 0.8009272666144738
+    },
+    {
+      "name": "fold01_frozen_independent",
+      "alpha": 0.1,
+      "rmse": 0.6572227142152676,
+      "original_rmse": 0.6572201750801007
+    },
+    {
+      "name": "fold01_frozen_joint",
+      "alpha": 10.0,
+      "rmse": 0.7713784772842046,
+      "original_rmse": 0.7713790227893949
+    },
+    {
+      "name": "fold01_adapted_aircraft",
+      "alpha": 10.0,
+      "rmse": 0.385952256258814,
+      "original_rmse": 0.3859567469122493
+    },
+    {
+      "name": "fold01_adapted_physiology_history",
+      "alpha": 0.1,
+      "rmse": 0.7927790606817244,
+      "original_rmse": 0.7927776316810543
+    },
+    {
+      "name": "fold01_adapted_independent",
+      "alpha": 0.1,
+      "rmse": 0.6450181279054145,
+      "original_rmse": 0.6450184876541029
+    },
+    {
+      "name": "fold01_adapted_joint",
+      "alpha": 0.1,
+      "rmse": 0.7234541100553856,
+      "original_rmse": 0.7234589481989756
+    },
+    {
+      "name": "fold02_frozen_aircraft",
+      "alpha": 10.0,
+      "rmse": 0.4823352382246544,
+      "original_rmse": 0.48234486852404945
+    },
+    {
+      "name": "fold02_frozen_physiology_history",
+      "alpha": 0.1,
+      "rmse": 0.8555128904257567,
+      "original_rmse": 0.8555084612656618
+    },
+    {
+      "name": "fold02_frozen_independent",
+      "alpha": 100.0,
+      "rmse": 0.7604317982474406,
+      "original_rmse": 0.7604322963502288
+    },
+    {
+      "name": "fold02_frozen_joint",
+      "alpha": 100.0,
+      "rmse": 0.8221722150984084,
+      "original_rmse": 0.8221711487230993
+    },
+    {
+      "name": "fold02_adapted_aircraft",
+      "alpha": 10.0,
+      "rmse": 0.4420472731609882,
+      "original_rmse": 0.4420483821369654
+    },
+    {
+      "name": "fold02_adapted_physiology_history",
+      "alpha": 0.1,
+      "rmse": 0.8163297248204878,
+      "original_rmse": 0.8163335444055648
+    },
+    {
+      "name": "fold02_adapted_independent",
+      "alpha": 0.1,
+      "rmse": 0.7015529737161333,
+      "original_rmse": 0.7015490205598647
+    },
+    {
+      "name": "fold02_adapted_joint",
+      "alpha": 100.0,
+      "rmse": 0.827351882163714,
+      "original_rmse": 0.8273555500557713
+    }
+  ]
+}
