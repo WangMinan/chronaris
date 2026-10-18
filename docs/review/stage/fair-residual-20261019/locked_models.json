@@ -1,0 +1,394 @@
+{
+  "binding": {
+    "snapshot_sha256": "fb3d0baa7463d26009c49b06f4cfc8d934c42114640a3440e6718bea13149a50",
+    "plan_sha256": "813d8a33cc862881951d3bfce118d06a9ff9e5772cf882a41d9bb96470d5c5b4",
+    "qualification_sha256": "7b0d8f9baa3dbf8ea3aa02e6406c0df3cc95aac2f7f006fcb746376403546631",
+    "real_prefix_sha256": "e6207a71f85f5244bba6be3cdcefc7032bcd6af3bc7b945ba872e9120e4bf91a",
+    "source_commit": "59bd67b82201593525f9fcf2b8ef7792c14590d3",
+    "device": "NVIDIA GeForce RTX 4070 SUPER",
+    "folds": [
+      {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp008",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp011",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      }
+    ]
+  },
+  "receipts": {
+    "fold01_aircraft": {
+      "name": "fold01_aircraft",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 20,
+      "best_epoch": 1,
+      "updates": 1620,
+      "selection_rmse": 0.27753412933127697,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_aircraft/best.pt",
+      "checkpoint_sha256": "e393d737eb0a6d1079eeb1e63e5e0422f12ce63ad4b1be4bd26c1f7c4f682f82",
+      "parameter_count": 111233,
+      "elapsed_s": 24.315067660994828,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_aircraft": {
+      "name": "fold02_aircraft",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 25,
+      "best_epoch": 10,
+      "updates": 2700,
+      "selection_rmse": 0.5102178798467899,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_aircraft/best.pt",
+      "checkpoint_sha256": "7f602c2277f5ad9f1e8376cba513b8006874c7153db37c8bc7589aaf8c13c0c7",
+      "parameter_count": 111233,
+      "elapsed_s": 33.85175044700736,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_oof_sub-cp004": {
+      "name": "fold01_oof_sub-cp004",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 20,
+      "best_epoch": 2,
+      "updates": 1100,
+      "selection_rmse": 0.2774612185349502,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_oof_sub-cp004/best.pt",
+      "checkpoint_sha256": "dccb6410a695412039fcd3b0eb3eb9a2ac699229e18e12851b6688ff33aa41b3",
+      "parameter_count": 111233,
+      "elapsed_s": 15.623925508989487,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_oof_sub-cp008": {
+      "name": "fold01_oof_sub-cp008",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 66,
+      "best_epoch": 51,
+      "updates": 3630,
+      "selection_rmse": 0.19234592759573407,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_oof_sub-cp008/best.pt",
+      "checkpoint_sha256": "d69c2f8c4ab98399558f778fa0aaacb01630202a0a3a1229c7a97bde51069d82",
+      "parameter_count": 111233,
+      "elapsed_s": 49.83572775000357,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_oof_sub-cp019": {
+      "name": "fold01_oof_sub-cp019",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 53,
+      "best_epoch": 38,
+      "updates": 2756,
+      "selection_rmse": 0.24251089187500804,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_oof_sub-cp019/best.pt",
+      "checkpoint_sha256": "0af967d2717f5bca4605f55357612704a32c936bc927f79eb5421bf3a568d7b7",
+      "parameter_count": 111233,
+      "elapsed_s": 38.06625909201102,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_contiformer": {
+      "name": "fold01_contiformer",
+      "method": "contiformer",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 20,
+      "best_epoch": 2,
+      "updates": 1620,
+      "selection_rmse": 0.2773224786978721,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_contiformer/best.pt",
+      "checkpoint_sha256": "badd7ec0f1063394c2c36a2783ef16474597b2ccc626c912f24d51039baa8c0e",
+      "parameter_count": 114305,
+      "elapsed_s": 21.874397172010504,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_mult": {
+      "name": "fold01_mult",
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 27,
+      "best_epoch": 12,
+      "updates": 2187,
+      "selection_rmse": 0.20795068610022222,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_mult/best.pt",
+      "checkpoint_sha256": "13a6fa8f9ea0feac3cb6c659c303c9413df06cf0dae8df300e1b392694bbd5bc",
+      "parameter_count": 1016577,
+      "elapsed_s": 81.67762514500646,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_control": {
+      "name": "fold01_control",
+      "method": "control",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 27,
+      "best_epoch": 12,
+      "updates": 2187,
+      "selection_rmse": 0.27825853981864446,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_control/best.pt",
+      "checkpoint_sha256": "2566cce7e889621cb7b94f3f3743c7a79c1cd621ee7769311d6e34a6f8740ef6",
+      "parameter_count": 114305,
+      "elapsed_s": 27.43030654801987,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold01_candidate": {
+      "name": "fold01_candidate",
+      "method": "candidate",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 27,
+      "best_epoch": 12,
+      "updates": 2187,
+      "selection_rmse": 0.27890203592596713,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_candidate/best.pt",
+      "checkpoint_sha256": "10d5b65689fa85e3fe262a87168eed0ff4a7e05f661a3b2fb4a31e57b7db0646",
+      "parameter_count": 114305,
+      "elapsed_s": 29.379841004993068,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_oof_sub-cp003": {
+      "name": "fold02_oof_sub-cp003",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 26,
+      "best_epoch": 11,
+      "updates": 2106,
+      "selection_rmse": 0.5101914096468658,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_oof_sub-cp003/best.pt",
+      "checkpoint_sha256": "dfd6f94e51e5d07a9cd56d4dcabf0b36134e5327cb4df116175f6e9d460c82a1",
+      "parameter_count": 111233,
+      "elapsed_s": 25.30026810700656,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_oof_sub-cp004": {
+      "name": "fold02_oof_sub-cp004",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 45,
+      "best_epoch": 30,
+      "updates": 3690,
+      "selection_rmse": 0.5089310195216571,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_oof_sub-cp004/best.pt",
+      "checkpoint_sha256": "ce1c7956140701bbf83d4d313763711818e3585fb28aa295ae50d2ead9ee898c",
+      "parameter_count": 111233,
+      "elapsed_s": 45.714813924976625,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_oof_sub-cp011": {
+      "name": "fold02_oof_sub-cp011",
+      "method": "aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 69,
+      "best_epoch": 54,
+      "updates": 5658,
+      "selection_rmse": 0.3413285331423991,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_oof_sub-cp011/best.pt",
+      "checkpoint_sha256": "16068b5829a776bbe6be7770437b54f396ec5e6869743b732d55e8ef96adeeab",
+      "parameter_count": 111233,
+      "elapsed_s": 69.68664316702052,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_oof_sub-cp019": {
+      "name": "fold02_oof_sub-cp019",
+      "method": "aircraft",
+      "status": "max_epochs",
+      "complete": true,
+      "epochs": 100,
+      "best_epoch": 97,
+      "updates": 7900,
+      "selection_rmse": 0.3913119978157827,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_oof_sub-cp019/best.pt",
+      "checkpoint_sha256": "4e47964ff03a27a28a057187e8ce324d076e9057299957cb8ff2a4be6eb3a4a9",
+      "parameter_count": 111233,
+      "elapsed_s": 96.93224609299796,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_contiformer": {
+      "name": "fold02_contiformer",
+      "method": "contiformer",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 75,
+      "best_epoch": 60,
+      "updates": 8100,
+      "selection_rmse": 0.3153999993122327,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_contiformer/best.pt",
+      "checkpoint_sha256": "058871a2a87d43cb3f0a7a913e3afa53114bb52d610e52f6eaf5762719ba6994",
+      "parameter_count": 114305,
+      "elapsed_s": 97.17079411799205,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_mult": {
+      "name": "fold02_mult",
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 29,
+      "best_epoch": 14,
+      "updates": 3132,
+      "selection_rmse": 0.32531353768362054,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_mult/best.pt",
+      "checkpoint_sha256": "e138848e98afbfb7c601080fb2acf66234ea58e5116cd5253dbc51f0738f41cf",
+      "parameter_count": 1016577,
+      "elapsed_s": 108.62036400000216,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_control": {
+      "name": "fold02_control",
+      "method": "control",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 20,
+      "best_epoch": 1,
+      "updates": 2160,
+      "selection_rmse": 0.5116175925560323,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_control/best.pt",
+      "checkpoint_sha256": "4efa527e01db736f36e0bc068b5c158dda10bcf2e84c3d03fc1e84ac16439df6",
+      "parameter_count": 114305,
+      "elapsed_s": 26.683660929993493,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    },
+    "fold02_candidate": {
+      "name": "fold02_candidate",
+      "method": "candidate",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 20,
+      "best_epoch": 1,
+      "updates": 2160,
+      "selection_rmse": 0.5114491666685657,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_candidate/best.pt",
+      "checkpoint_sha256": "ae76b4853546c270fe33fa6cfb7ea265bfbae4186d45dacd8816a7ade117d9cb",
+      "parameter_count": 114305,
+      "elapsed_s": 25.408604071999434,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "reload_max_delta": 0.0
+    }
+  },
+  "selected_ridge": {
+    "fold01": {
+      "aircraft": 1.0,
+      "contiformer": 10.0,
+      "mult": 1.0,
+      "control": 10.0,
+      "candidate": 10.0,
+      "vehicle_statistics": 0.1,
+      "dual_statistics": 0.1
+    },
+    "fold02": {
+      "aircraft": 100.0,
+      "contiformer": 10.0,
+      "mult": 10.0,
+      "control": 0.1,
+      "candidate": 10.0,
+      "vehicle_statistics": 10.0,
+      "dual_statistics": 1.0
+    }
+  },
+  "readout_sha256": {
+    "fold01": "3cd3386f2c8b2bf60c8cb51a8192e1531eb1e3fe8e2004a6a865b4b2647a824b",
+    "fold02": "daf0a9bcbd29f743ba5022b66183fbf40d55b14e1e65cbc544992d60ec880d50"
+  },
+  "outer_scores_opened": false
+}

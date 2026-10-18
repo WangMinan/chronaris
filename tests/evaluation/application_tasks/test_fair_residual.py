@@ -8,6 +8,7 @@ from chronaris.evaluation.application_tasks.fair_residual_inputs import FairResi
 from chronaris.evaluation.application_tasks.performance_pilot_data import future_query_variants
 from chronaris.modeling.fusion_encoders.causal_query import CausalQueryStream
 from chronaris.modeling.fusion_encoders.fair_residual import FairResidualModel
+from chronaris.evaluation.application_tasks.fair_residual_verify import verify_fair_residual
 
 
 def stream(features):
@@ -54,3 +55,10 @@ def test_fold_normalization_sealing_and_crossfit_roles(tmp_path):
     oof.score_open=True
     assert set(oof.subjects[oof.indices('score')])=={subjects[0]}
     with pytest.raises(PermissionError):oof.queries(data.roles['score'])
+
+
+def test_verification_fails_on_changed_frozen_source(tmp_path):
+    original=tmp_path/'original.txt';original.write_text('frozen')
+    (tmp_path/'protected_sources.json').write_text(json.dumps({str(original):file_digest(original)}))
+    original.write_text('changed')
+    with pytest.raises(AssertionError):verify_fair_residual(tmp_path)

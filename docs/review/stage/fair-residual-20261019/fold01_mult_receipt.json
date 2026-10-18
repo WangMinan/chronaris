@@ -1,0 +1,19 @@
+{
+  "name": "fold01_mult",
+  "method": "mult",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 27,
+  "best_epoch": 12,
+  "updates": 2187,
+  "selection_rmse": 0.20795068610022222,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_mult/best.pt",
+  "checkpoint_sha256": "13a6fa8f9ea0feac3cb6c659c303c9413df06cf0dae8df300e1b392694bbd5bc",
+  "parameter_count": 1016577,
+  "elapsed_s": 81.67762514500646,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "reload_max_delta": 0.0
+}

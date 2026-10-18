@@ -1,0 +1,16 @@
+[
+  {
+    "fold": "fold01",
+    "selection_rmse": 0.27753412933127697,
+    "mean_rmse": 1.1321501550753719,
+    "persistence_rmse": 0.2780514783842524,
+    "passed": true
+  },
+  {
+    "fold": "fold02",
+    "selection_rmse": 0.5102178798467899,
+    "mean_rmse": 1.1451796843989184,
+    "persistence_rmse": 0.5118418212142867,
+    "passed": true
+  }
+]

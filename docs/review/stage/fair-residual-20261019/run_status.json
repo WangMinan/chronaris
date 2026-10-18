@@ -1,0 +1,95 @@
+{
+  "status": "completed",
+  "representation_success": false,
+  "task_head_success": false,
+  "stable_success": false,
+  "gates": [
+    {
+      "fold": "fold01",
+      "candidate": "candidate_ridge",
+      "strongest": "mult_ridge",
+      "improvement": -0.16491605470577508,
+      "subjects_improved": 0,
+      "subjects": 3,
+      "mae_passed": false,
+      "passed": false
+    },
+    {
+      "fold": "fold01",
+      "candidate": "candidate_head",
+      "strongest": "mult_ridge",
+      "improvement": -0.6332389944152685,
+      "subjects_improved": 0,
+      "subjects": 3,
+      "mae_passed": false,
+      "passed": false
+    },
+    {
+      "fold": "fold02",
+      "candidate": "candidate_ridge",
+      "strongest": "mult_head",
+      "improvement": -0.14197172555831505,
+      "subjects_improved": 0,
+      "subjects": 2,
+      "mae_passed": false,
+      "passed": false
+    },
+    {
+      "fold": "fold02",
+      "candidate": "candidate_head",
+      "strongest": "mult_head",
+      "improvement": -0.5780013815715477,
+      "subjects_improved": 0,
+      "subjects": 2,
+      "mae_passed": false,
+      "passed": false
+    }
+  ],
+  "prediction_rows": 62985,
+  "scoring_scope": "two_previously_exposed_development_folds_seed17",
+  "elapsed_s": 836.5406670229859,
+  "completed_models": 17,
+  "updates": 54893,
+  "binding": {
+    "snapshot_sha256": "fb3d0baa7463d26009c49b06f4cfc8d934c42114640a3440e6718bea13149a50",
+    "plan_sha256": "813d8a33cc862881951d3bfce118d06a9ff9e5772cf882a41d9bb96470d5c5b4",
+    "qualification_sha256": "7b0d8f9baa3dbf8ea3aa02e6406c0df3cc95aac2f7f006fcb746376403546631",
+    "real_prefix_sha256": "e6207a71f85f5244bba6be3cdcefc7032bcd6af3bc7b945ba872e9120e4bf91a",
+    "source_commit": "59bd67b82201593525f9fcf2b8ef7792c14590d3",
+    "device": "NVIDIA GeForce RTX 4070 SUPER",
+    "folds": [
+      {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp008",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp011",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      }
+    ]
+  }
+}

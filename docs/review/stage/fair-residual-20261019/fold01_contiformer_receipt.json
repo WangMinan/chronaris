@@ -1,0 +1,19 @@
+{
+  "name": "fold01_contiformer",
+  "method": "contiformer",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 20,
+  "best_epoch": 2,
+  "updates": 1620,
+  "selection_rmse": 0.2773224786978721,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_contiformer/best.pt",
+  "checkpoint_sha256": "badd7ec0f1063394c2c36a2783ef16474597b2ccc626c912f24d51039baa8c0e",
+  "parameter_count": 114305,
+  "elapsed_s": 21.874397172010504,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "reload_max_delta": 0.0
+}

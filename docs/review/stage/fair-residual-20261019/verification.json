@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "run_status": "completed",
+  "protected_files": 1610,
+  "changed_sources": [],
+  "completed_models": 17,
+  "optimizer_updates_in_original_run": 54893,
+  "optimizer_updates_in_verification": 0,
+  "predictions": 62985,
+  "subject_metrics": 75,
+  "max_recompute_delta": 4.440892098500626e-16,
+  "stable_success": false,
+  "replay": {
+    "status": "passed",
+    "maximum_deltas": {
+      "fold01_aircraft_head": 0.0,
+      "fold01_aircraft_ridge": 0.0,
+      "fold01_contiformer_head": 0.0,
+      "fold01_contiformer_ridge": 0.0,
+      "fold01_mult_head": 0.0,
+      "fold01_mult_ridge": 0.0,
+      "fold01_control_head": 0.0,
+      "fold01_control_ridge": 0.0,
+      "fold01_candidate_head": 0.0,
+      "fold01_candidate_ridge": 0.0,
+      "fold02_aircraft_head": 0.0,
+      "fold02_aircraft_ridge": 0.0,
+      "fold02_contiformer_head": 0.0,
+      "fold02_contiformer_ridge": 0.0,
+      "fold02_mult_head": 0.0,
+      "fold02_mult_ridge": 0.0,
+      "fold02_control_head": 0.0,
+      "fold02_control_ridge": 0.0,
+      "fold02_candidate_head": 0.0,
+      "fold02_candidate_ridge": 0.0
+    },
+    "optimizer_updates": 0
+  }
+}

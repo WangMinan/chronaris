@@ -1,0 +1,19 @@
+{
+  "name": "fold02_oof_sub-cp019",
+  "method": "aircraft",
+  "status": "max_epochs",
+  "complete": true,
+  "epochs": 100,
+  "best_epoch": 97,
+  "updates": 7900,
+  "selection_rmse": 0.3913119978157827,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold02_oof_sub-cp019/best.pt",
+  "checkpoint_sha256": "4e47964ff03a27a28a057187e8ce324d076e9057299957cb8ff2a4be6eb3a4a9",
+  "parameter_count": 111233,
+  "elapsed_s": 96.93224609299796,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "reload_max_delta": 0.0
+}

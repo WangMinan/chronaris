@@ -1,0 +1,19 @@
+{
+  "name": "fold01_candidate",
+  "method": "candidate",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 27,
+  "best_epoch": 12,
+  "updates": 2187,
+  "selection_rmse": 0.27890203592596713,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/training/fold01_candidate/best.pt",
+  "checkpoint_sha256": "10d5b65689fa85e3fe262a87168eed0ff4a7e05f661a3b2fb4a31e57b7db0646",
+  "parameter_count": 114305,
+  "elapsed_s": 29.379841004993068,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "reload_max_delta": 0.0
+}
