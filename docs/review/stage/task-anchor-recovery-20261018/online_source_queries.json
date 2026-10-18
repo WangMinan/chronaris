@@ -1,0 +1,72 @@
+[
+  {
+    "name": "clare_metadata",
+    "url": "https://borealisdata.ca/api/datasets/:persistentId/?persistentId=doi:10.5683/SP3/H0AELT",
+    "status": "read",
+    "result": "{'status': 'OK', 'data': {'id': 446033, 'identifier': 'SP3/H0AELT', 'persistentUrl': 'https://doi.org/10.5683/SP3/H0AELT', 'protocol': 'doi', 'authority': '10.5683', 'separator': '/', 'publisher': 'Borealis', 'publicationDate': '2025-10-24', 'storageIdentifier': 's3://10.5683/SP3/H0AELT', 'datasetType': 'dataset', 'latestVersion': {'id': 30278, 'datasetId': 446033, 'datasetPersistentId': 'doi:10.5683/SP3/H0AELT', 'datasetType': 'dataset', 'storageIdentifier': 's3://10.5683/SP3/H0AELT', 'versionNumber': 1, 'internalVersionNumber': 13, 'versionMinorNumber': 0, 'versionState': 'RELEASED', 'latestVersionPublishingState': 'RELEASED', 'deaccessionLink': '', 'lastUpdateTime': '2025-10-24T19:39:39Z'"
+  },
+  {
+    "name": "clare_commits",
+    "url": "https://api.github.com/repos/Prithila05/CLARE/commits?per_page=30",
+    "status": "read",
+    "result": [
+      [
+        "3285f1fdd1",
+        "Update README.md"
+      ],
+      [
+        "08b6a893d6",
+        "Update README.md"
+      ],
+      [
+        "5d98a272cc",
+        "Delete test.txt"
+      ],
+      [
+        "c252c34a67",
+        "Update README.md"
+      ],
+      [
+        "c286ce2fc8",
+        "Update README.md"
+      ],
+      [
+        "bf0203847d",
+        "Add files via upload"
+      ],
+      [
+        "4b12320024",
+        "Create test.txt"
+      ],
+      [
+        "a87b0630a0",
+        "Update README.md"
+      ],
+      [
+        "5e507fdf9b",
+        "Update README.md"
+      ],
+      [
+        "bddf4195f4",
+        "Initial commit"
+      ]
+    ]
+  },
+  {
+    "name": "clare_tree",
+    "url": "https://api.github.com/repos/Prithila05/CLARE/git/trees/main?recursive=1",
+    "status": "read",
+    "result": [
+      "Figures",
+      "Figures/sensor_placement_clare.JPG",
+      "LICENSE",
+      "README.md"
+    ]
+  },
+  {
+    "name": "clare_issues",
+    "url": "https://api.github.com/repos/Prithila05/CLARE/issues?state=all&per_page=100",
+    "status": "read",
+    "result": []
+  }
+]

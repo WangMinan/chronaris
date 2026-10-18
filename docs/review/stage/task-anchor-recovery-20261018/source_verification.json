@@ -1,0 +1,57 @@
+{
+  "status": "passed_with_unresolved_anchor",
+  "clare_publication": "2025-10-24",
+  "clare_version": 1,
+  "official_files": [
+    {
+      "name": "ECG.rar",
+      "size": 464556950,
+      "md5": "417e5c00184cb2a7bdc2a3a4fa27d1c2",
+      "id": 446035
+    },
+    {
+      "name": "EDA.rar",
+      "size": 103945348,
+      "md5": "72778de74c0f03c1b49ddce13d2edcc4",
+      "id": 446037
+    },
+    {
+      "name": "EEG.rar",
+      "size": 135197778,
+      "md5": "9ad251a86902b27688f1a4c6d31ee25e",
+      "id": 446034
+    },
+    {
+      "name": "Gaze.rar",
+      "size": 177211579,
+      "md5": "6a69eefb9669b8cacf3ea4f90b5bddca",
+      "id": 446036
+    },
+    {
+      "name": "Labels.rar",
+      "size": 4991,
+      "md5": "cab4ae13aa3ca25c93a8667eee5d2968",
+      "id": 446038
+    },
+    {
+      "name": "README.txt",
+      "size": 3789,
+      "md5": "aa7113db3d3f3aa6d0b09ec1a4187c18",
+      "id": 446039
+    }
+  ],
+  "readme_exact_md5_match": true,
+  "archive_identity": "names and sizes match prior manifest; full archive hashes not reverified",
+  "clare_development_sessions": 15,
+  "clare_development_subjects": 4,
+  "clare_1674_first_session_finite_labels": 42,
+  "performance_records": 84,
+  "performance_rows": 163768,
+  "instantaneous_total_identity_max_error": 1.7763568394002505e-15,
+  "cumulative_total_max_abs_difference": 0.006399999999757711,
+  "all_cumulative_differences_within_export_rounding": true,
+  "event_input_or_target_reversal_overlaps": 0,
+  "matched_control_reversal_overlaps": 1,
+  "clare_repository_current_tree_entries": 4,
+  "clare_repository_current_files": 3
+}

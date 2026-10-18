@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "scope": "closed-form protocol examples only; no fitted estimator, model inference, or training",
+  "affine_cases": [
+    {
+      "offset_s": -3.0,
+      "drift_ppm": -100.0,
+      "max_inverse_error_s": 1.4210854715202004e-14,
+      "max_uncorrected_error_s": 3.0180000000000007
+    },
+    {
+      "offset_s": -3.0,
+      "drift_ppm": 0.0,
+      "max_inverse_error_s": 2.220446049250313e-16,
+      "max_uncorrected_error_s": 3.0
+    },
+    {
+      "offset_s": -3.0,
+      "drift_ppm": 100.0,
+      "max_inverse_error_s": 2.220446049250313e-16,
+      "max_uncorrected_error_s": 3.0
+    },
+    {
+      "offset_s": 0.0,
+      "drift_ppm": -100.0,
+      "max_inverse_error_s": 1.4210854715202004e-14,
+      "max_uncorrected_error_s": 0.018000000000000682
+    },
+    {
+      "offset_s": 0.0,
+      "drift_ppm": 0.0,
+      "max_inverse_error_s": 0.0,
+      "max_uncorrected_error_s": 0.0
+    },
+    {
+      "offset_s": 0.0,
+      "drift_ppm": 100.0,
+      "max_inverse_error_s": 0.0,
+      "max_uncorrected_error_s": 0.018000000000000682
+    },
+    {
+      "offset_s": 3.0,
+      "drift_ppm": -100.0,
+      "max_inverse_error_s": 1.4210854715202004e-14,
+      "max_uncorrected_error_s": 3.0
+    },
+    {
+      "offset_s": 3.0,
+      "drift_ppm": 0.0,
+      "max_inverse_error_s": 1.4210854715202004e-14,
+      "max_uncorrected_error_s": 3.000000000000014
+    },
+    {
+      "offset_s": 3.0,
+      "drift_ppm": 100.0,
+      "max_inverse_error_s": 1.4210854715202004e-14,
+      "max_uncorrected_error_s": 3.0180000000000007
+    }
+  ],
+  "ambiguous_pairs": [
+    {
+      "offset_s": -1.0,
+      "response_delay_s": 5.0,
+      "total_lag_s": 4.0
+    },
+    {
+      "offset_s": 1.0,
+      "response_delay_s": 3.0,
+      "total_lag_s": 4.0
+    },
+    {
+      "offset_s": 3.0,
+      "response_delay_s": 1.0,
+      "total_lag_s": 4.0
+    }
+  ],
+  "visible_signal_max_differences": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "positive_offset_requires_subtraction": true,
+  "independent_sync_pulse_breaks_this_ambiguity": true,
+  "clock_drift_100ppm_over_30s_s": 0.003,
+  "clock_drift_100ppm_over_180s_s": 0.018
+}

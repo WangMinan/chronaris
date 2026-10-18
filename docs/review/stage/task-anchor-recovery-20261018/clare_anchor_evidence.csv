@@ -1,0 +1,16 @@
+subject,experiment,first_eeg_s,last_eeg_s,eeg_duration_s,baseline_file_exists,baseline_first_s,baseline_last_s,label_rows,finite_label_rows,frozen_windows,first_peripheral_s,peripheral_minus_eeg_s,anchor_evidence
+1390,0,120.00390625,658.63671875,538.6328125,True,0.00390625,121.0,54,54,53,120.7114695,0.7075632500000069,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1390,1,120.00390625,659.24609375,539.2421875,True,0.00390625,121.0,54,54,53,120.718916,0.715009749999993,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1390,2,120.00390625,658.51953125,538.515625,True,0.00390625,121.0,54,54,53,119.254456275,-0.7494499750000045,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1390,3,120.00390625,657.55859375,537.5546875,True,0.00390625,121.0,54,54,53,119.7241606,-0.2797456499999953,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1624,0,0.00390625,541.23046875,541.2265625,True,0.0,181.73046875,54,54,54,39.5283492,39.52444295,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1624,1,0.00390625,540.09375,540.08984375,False,,,54,54,54,13.8137559,13.80984965,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1624,2,0.00390625,540.859375,540.85546875,False,,,54,54,54,4.9380909,4.93418465,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1624,3,0.00390625,540.0390625,540.03515625,False,,,54,54,54,14.67936275,14.6754565,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1629,0,0.00390625,540.734375,540.73046875,True,0.0,181.49609375,54,54,54,12.0376574,12.03375115,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1629,1,0.00390625,541.390625,541.38671875,True,0.0,120.88671875,54,54,54,7.7042139,7.70030765,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1629,2,0.00390625,541.05859375,541.0546875,True,0.0,121.91796875,54,54,54,9.0458792,9.04197295,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1629,3,0.00390625,541.1484375,541.14453125,True,0.0,108.69921875,54,54,54,15.279886875,15.275980625,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1674,0,120.0078125,566.80859375,446.80078125,True,0.00390625,121.0,54,42,42,120.017087375,0.00927487500000268,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1674,1,120.00390625,662.41015625,542.40625,True,0.00390625,121.0,54,54,54,128.03075755,8.026851300000004,file-relative mapping consistent with metadata; no task-start/beep timestamps
+1674,2,120.00390625,661.41015625,541.40625,True,0.00390625,121.0,54,54,54,121.01334055,1.0094342999999952,file-relative mapping consistent with metadata; no task-start/beep timestamps

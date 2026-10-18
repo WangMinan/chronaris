@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "initial_plan_commit": "1b9f3db3",
+  "trend_rule_commit": "5bef401b",
+  "protected_sources": 1423,
+  "changed_sources": [],
+  "no_fit_subject_metrics": 35,
+  "max_metric_recompute_error": 9.020562075079397e-17,
+  "unchanged_constant_references": 4,
+  "official_performance_records": 84,
+  "official_performance_rows": 163768,
+  "affine_formula_checks": 9,
+  "indistinguishable_parameter_pairs": 3,
+  "planned_base_conditions": 25,
+  "new_encoder_updates": 0,
+  "new_readout_fits": 0,
+  "new_recovery_estimators_fit": 0,
+  "unresolved": [
+    "CLARE per-record task/beep/report anchors",
+    "real clock calibration truth"
+  ],
+  "scope": "source and algebra audit; no new model, target benchmark, or direct-recovery benchmark executed"
+}
