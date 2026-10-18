@@ -27,17 +27,24 @@ def shape_data(report,assets,spec,version):
     return FairResidualData(json.loads(receipt.read_text())['snapshot_path'],receipt,spec)
 
 
-def run_shape_mult(report,assets,selection_policy='task_head',seed=17):
+def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_aux_weight=0.):
     report,assets=Path(report),Path(assets)
     if (report/'run_status.json').exists():raise FileExistsError('existing run retained')
     assert json.loads((report/'qualification.json').read_text())['status']=='passed'
     assert all(file_digest(p)==h for p,h in json.loads((report/'protected_sources.json').read_text()).items())
     if selection_policy not in ('task_head','common_readout'):raise ValueError(selection_policy)
     if selection_policy=='task_head' and seed!=17:raise ValueError('original trainer is fixed to seed17')
+    if history_aux_weight not in (0.,.5) or (history_aux_weight and selection_policy!='common_readout'):
+        raise ValueError('unregistered history supervision')
     torch.set_num_threads(1);start=time.monotonic()
     binding=dict(source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
                  plan_sha256=file_digest(report/'PLAN.md'),qualification_sha256=file_digest(report/'qualification.json'),
-                 seed=seed,folds=FOLDS,selection_policy=selection_policy)
+                 seed=seed,folds=FOLDS,selection_policy=selection_policy,history_aux_weight=history_aux_weight)
+    if history_aux_weight:
+        qualification=json.loads((report/'history_anchor_qualification.json').read_text())
+        assert qualification['status']=='passed'
+        assert file_digest(qualification['mask_path'])==qualification['mask_sha256']
+        binding['history_anchor_qualification_sha256']=file_digest(report/'history_anchor_qualification.json')
     save_json(report/'training_binding.json',binding)
     with development_gpu_lock() as acquired:
         if not acquired:raise BlockingIOError('GPU unavailable')
@@ -57,6 +64,11 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
     def train(spec,version,method):
         name=spec['name']+'_'+version
         data=shape_data(report,assets,spec,version)
+        if binding.get('history_aux_weight',0.):
+            q=json.loads((report/'history_anchor_qualification.json').read_text())
+            assert q['sample_ids']==[r['sample_id'] for r in data.rows]
+            with np.load(q['mask_path'],allow_pickle=False) as raw:
+                data.history_anchor_mask=torch.tensor(raw['mask'],device=data.device)
         datasets[name]=data
         save_json(report/'run_status.json',dict(status='running',stage=name,elapsed_s=time.monotonic()-start))
         model,r=trainer(method,data,assets/'training'/name,report,name,binding,start+14400)

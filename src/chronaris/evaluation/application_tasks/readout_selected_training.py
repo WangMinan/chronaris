@@ -13,6 +13,17 @@ from chronaris.modeling.fusion_encoders.fair_residual import FairResidualModel
 from chronaris.modeling.training.rng import isolated_training_rng,capture_rng_state
 
 
+def correction_loss(correction,targets,anchor,scale,weights,history_weight=0.,anchor_mask=None):
+    final=((correction[:,-1]-targets)**2)*weights
+    if not history_weight:return final.mean()
+    if anchor_mask is None:raise ValueError('historical target availability must be source-qualified')
+    # Queries 5..25 seconds predict their next five seconds, all inside training history.
+    historical=(anchor[:,31:96]-anchor[:,15:80])/scale
+    valid=anchor_mask[:,31:96]&anchor_mask[:,15:80]
+    auxiliary=(((correction[:,15:80]-historical)**2)*valid).sum(1)/valid.sum(1).clamp(min=1)*weights
+    return (final+history_weight*auxiliary).mean()
+
+
 def fit_readout_selected(method,data,root,report,name,binding,deadline):
     root=Path(root);root.mkdir(parents=True,exist_ok=False)
     start=time.monotonic();fit=data.indices('fit');select=data.indices('select');seed=binding['seed']
@@ -28,7 +39,9 @@ def fit_readout_selected(method,data,root,report,name,binding,deadline):
             for offset in range(0,len(order),32):
                 ids=order[offset:offset+32];optimizer.zero_grad(set_to_none=True)
                 _,correction=model(*data.queries(ids))
-                loss=(((correction[:,-1]-data.targets[ids])**2)*data.weights[ids]).mean()
+                loss=correction_loss(correction,data.targets[ids],data.anchor[ids],data.target_scale,data.weights[ids],
+                                     binding.get('history_aux_weight',0.),
+                                     data.history_anchor_mask[ids] if hasattr(data,'history_anchor_mask') else None)
                 if not torch.isfinite(loss):raise ValueError('nonfinite readout-selected loss')
                 loss.backward();torch.nn.utils.clip_grad_norm_(model.parameters(),1.,error_if_nonfinite=True)
                 optimizer.step();updates+=1;losses.append((float(loss.detach()),len(ids)))
