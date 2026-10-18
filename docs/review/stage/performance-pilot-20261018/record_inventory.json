@@ -1,0 +1,2196 @@
+[
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-001",
+    "subject": "sub-cp003",
+    "candidates": 65,
+    "accepted": 65,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-001/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-001/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-001/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-001/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-007",
+    "subject": "sub-cp003",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-007/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-007/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-007/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-007/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-012",
+    "subject": "sub-cp003",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-012/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-012/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-012/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-012/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-003",
+    "subject": "sub-cp003",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-003/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-003/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-003/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-003/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-008",
+    "subject": "sub-cp003",
+    "candidates": 74,
+    "accepted": 74,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-008/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-008/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-008/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-008/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-010",
+    "subject": "sub-cp003",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-010/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-010/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-010/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-010/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-002",
+    "subject": "sub-cp003",
+    "candidates": 74,
+    "accepted": 74,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-002/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-002/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-002/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-002/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-005",
+    "subject": "sub-cp003",
+    "candidates": 75,
+    "accepted": 75,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-005/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-005/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-005/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-005/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-011",
+    "subject": "sub-cp003",
+    "candidates": 76,
+    "accepted": 76,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-011/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-011/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-011/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-011/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-004",
+    "subject": "sub-cp003",
+    "candidates": 71,
+    "accepted": 71,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-004/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-004/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-004/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-004/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-006",
+    "subject": "sub-cp003",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-006/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-006/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-006/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-006/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-009",
+    "subject": "sub-cp003",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-009/sub-cp003_ses-20210206_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-009/sub-cp003_ses-20210206_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-009/sub-cp003_ses-20210206_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-009/sub-cp003_ses-20210206_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-001",
+    "subject": "sub-cp004",
+    "candidates": 67,
+    "accepted": 67,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-001/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-001/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-001/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-001/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-007",
+    "subject": "sub-cp004",
+    "candidates": 67,
+    "accepted": 67,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-007/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-007/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-007/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-007/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-012",
+    "subject": "sub-cp004",
+    "candidates": 67,
+    "accepted": 67,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-012/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-012/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-012/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-012/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-003",
+    "subject": "sub-cp004",
+    "candidates": 73,
+    "accepted": 73,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-003/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-003/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-003/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-003/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-008",
+    "subject": "sub-cp004",
+    "candidates": 71,
+    "accepted": 71,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-008/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-008/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-008/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-008/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-010",
+    "subject": "sub-cp004",
+    "candidates": 71,
+    "accepted": 71,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-010/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-010/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-010/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-010/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-002",
+    "subject": "sub-cp004",
+    "candidates": 73,
+    "accepted": 73,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-002/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-002/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-002/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-002/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-005",
+    "subject": "sub-cp004",
+    "candidates": 74,
+    "accepted": 74,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-005/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-005/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-005/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-005/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-011",
+    "subject": "sub-cp004",
+    "candidates": 73,
+    "accepted": 73,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-011/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-011/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-011/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-011/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-004",
+    "subject": "sub-cp004",
+    "candidates": 60,
+    "accepted": 60,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-004/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-004/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-004/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-004/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-006",
+    "subject": "sub-cp004",
+    "candidates": 59,
+    "accepted": 59,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-006/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-006/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-006/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-006/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-009",
+    "subject": "sub-cp004",
+    "candidates": 61,
+    "accepted": 61,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-009/sub-cp004_ses-20210330_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-009/sub-cp004_ses-20210330_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-009/sub-cp004_ses-20210330_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-009/sub-cp004_ses-20210330_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-001",
+    "subject": "sub-cp008",
+    "candidates": 70,
+    "accepted": 68,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-001/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-001/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-001/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-001/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-007",
+    "subject": "sub-cp008",
+    "candidates": 67,
+    "accepted": 67,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-007/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-007/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-007/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-007/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-012",
+    "subject": "sub-cp008",
+    "candidates": 66,
+    "accepted": 66,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-012/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-012/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-012/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-012/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-003",
+    "subject": "sub-cp008",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-003/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-003/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-003/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-003/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-008",
+    "subject": "sub-cp008",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 1.1102230246251565e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-008/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-008/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-008/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-008/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-010",
+    "subject": "sub-cp008",
+    "candidates": 71,
+    "accepted": 71,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-010/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-010/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-010/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-010/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-002",
+    "subject": "sub-cp008",
+    "candidates": 69,
+    "accepted": 69,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-002/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-002/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-002/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-002/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-005",
+    "subject": "sub-cp008",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-005/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-005/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-005/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-005/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-011",
+    "subject": "sub-cp008",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-011/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-011/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-011/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-011/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-004",
+    "subject": "sub-cp008",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-004/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-004/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-004/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-004/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-006",
+    "subject": "sub-cp008",
+    "candidates": 65,
+    "accepted": 65,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-006/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-006/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-006/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-006/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-009",
+    "subject": "sub-cp008",
+    "candidates": 60,
+    "accepted": 60,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-009/sub-cp008_ses-20210503_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-009/sub-cp008_ses-20210503_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-009/sub-cp008_ses-20210503_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-009/sub-cp008_ses-20210503_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-001",
+    "subject": "sub-cp011",
+    "candidates": 61,
+    "accepted": 61,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-001/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-001/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-001/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-001/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-007",
+    "subject": "sub-cp011",
+    "candidates": 49,
+    "accepted": 49,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-007/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-007/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-007/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-007/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-012",
+    "subject": "sub-cp011",
+    "candidates": 60,
+    "accepted": 60,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-012/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-012/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-012/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-012/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-003",
+    "subject": "sub-cp011",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 1.7763568394002505e-15,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-003/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-003/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-003/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-003/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-008",
+    "subject": "sub-cp011",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-008/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-008/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-008/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-008/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-010",
+    "subject": "sub-cp011",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-010/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-010/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-010/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-010/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-002",
+    "subject": "sub-cp011",
+    "candidates": 37,
+    "accepted": 37,
+    "component_max_error": 1.7763568394002505e-15,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-002/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-002/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-002/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-002/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-005",
+    "subject": "sub-cp011",
+    "candidates": 67,
+    "accepted": 67,
+    "component_max_error": 1.7763568394002505e-15,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-005/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-005/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-005/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-005/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-011",
+    "subject": "sub-cp011",
+    "candidates": 69,
+    "accepted": 69,
+    "component_max_error": 1.7763568394002505e-15,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-011/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-011/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-011/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-011/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-004",
+    "subject": "sub-cp011",
+    "candidates": 139,
+    "accepted": 139,
+    "component_max_error": 1.7763568394002505e-15,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-004/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-004/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-004/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-004/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-006",
+    "subject": "sub-cp011",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 1.7763568394002505e-15,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-006/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-006/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-006/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-006/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-009",
+    "subject": "sub-cp011",
+    "candidates": 62,
+    "accepted": 62,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-009/sub-cp011_ses-20210408_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-009/sub-cp011_ses-20210408_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-009/sub-cp011_ses-20210408_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-009/sub-cp011_ses-20210408_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-001",
+    "subject": "sub-cp019",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-001/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-001/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-001/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-001/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-007",
+    "subject": "sub-cp019",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-007/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-007/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-007/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-007/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-012",
+    "subject": "sub-cp019",
+    "candidates": 69,
+    "accepted": 69,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [
+      [
+        433.7772186845541,
+        435.91296449303627
+      ]
+    ],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-012/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-012/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-012/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-012/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-003",
+    "subject": "sub-cp019",
+    "candidates": 77,
+    "accepted": 77,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-003/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-003/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-003/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-003/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-008",
+    "subject": "sub-cp019",
+    "candidates": 79,
+    "accepted": 79,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-008/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-008/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-008/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-008/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-010",
+    "subject": "sub-cp019",
+    "candidates": 76,
+    "accepted": 76,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-010/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-010/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-010/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-010/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-002",
+    "subject": "sub-cp019",
+    "candidates": 90,
+    "accepted": 90,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-002/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-002/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-002/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-002/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-005",
+    "subject": "sub-cp019",
+    "candidates": 80,
+    "accepted": 80,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-005/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-005/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-005/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-005/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011",
+    "subject": "sub-cp019",
+    "candidates": 80,
+    "accepted": 75,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [
+      [
+        408.94385911524296,
+        412.0765719562769
+      ]
+    ],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 47
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-004",
+    "subject": "sub-cp019",
+    "candidates": 85,
+    "accepted": 85,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-004/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-004/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-004/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-004/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-006",
+    "subject": "sub-cp019",
+    "candidates": 82,
+    "accepted": 82,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-006/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-006/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-006/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-006/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-009",
+    "subject": "sub-cp019",
+    "candidates": 85,
+    "accepted": 85,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-009/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-009/sub-cp019_ses-20210625_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-009/sub-cp019_ses-20210625_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-009/sub-cp019_ses-20210625_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-001",
+    "subject": "sub-cp022",
+    "candidates": 63,
+    "accepted": 63,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-001/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-001/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-001/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-001/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-007",
+    "subject": "sub-cp022",
+    "candidates": 66,
+    "accepted": 66,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-007/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-007/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-007/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-007/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-012",
+    "subject": "sub-cp022",
+    "candidates": 66,
+    "accepted": 66,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-012/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-012/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-012/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-012/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-003",
+    "subject": "sub-cp022",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-003/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-003/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-003/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-003/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-008",
+    "subject": "sub-cp022",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-008/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-008/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-008/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-008/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-010",
+    "subject": "sub-cp022",
+    "candidates": 73,
+    "accepted": 73,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-010/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-010/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-010/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-010/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-002",
+    "subject": "sub-cp022",
+    "candidates": 73,
+    "accepted": 73,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-002/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-002/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-002/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-002/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-005",
+    "subject": "sub-cp022",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-005/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-005/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-005/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-005/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-011",
+    "subject": "sub-cp022",
+    "candidates": 69,
+    "accepted": 69,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-011/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-011/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-011/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-011/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-004",
+    "subject": "sub-cp022",
+    "candidates": 69,
+    "accepted": 69,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-004/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-004/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-004/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-004/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-006",
+    "subject": "sub-cp022",
+    "candidates": 71,
+    "accepted": 71,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-006/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-006/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-006/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-006/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-009",
+    "subject": "sub-cp022",
+    "candidates": 74,
+    "accepted": 74,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-009/sub-cp022_ses-20210621_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-009/sub-cp022_ses-20210621_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-009/sub-cp022_ses-20210621_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-009/sub-cp022_ses-20210621_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-001",
+    "subject": "sub-cp025",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-001/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-001/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-001/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-001/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-001_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-007",
+    "subject": "sub-cp025",
+    "candidates": 66,
+    "accepted": 66,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-007/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-007/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-007/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-007/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-007_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-012",
+    "subject": "sub-cp025",
+    "candidates": 68,
+    "accepted": 68,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-012/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-012/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-012/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-012/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-01B_run-012_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-003",
+    "subject": "sub-cp025",
+    "candidates": 75,
+    "accepted": 73,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-003/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-003/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-003/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-003/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-003_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-008",
+    "subject": "sub-cp025",
+    "candidates": 72,
+    "accepted": 72,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-008/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-008/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-008/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-008/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-008_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-010",
+    "subject": "sub-cp025",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 2.220446049250313e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-010/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-010/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-010/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-010/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-02B_run-010_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-002",
+    "subject": "sub-cp025",
+    "candidates": 71,
+    "accepted": 71,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-002/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-002/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-002/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-002/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-002_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-005",
+    "subject": "sub-cp025",
+    "candidates": 75,
+    "accepted": 75,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-005/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-005/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-005/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-005/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-005_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-011",
+    "subject": "sub-cp025",
+    "candidates": 75,
+    "accepted": 75,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-011/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-011/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-011/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-011/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-03B_run-011_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-004",
+    "subject": "sub-cp025",
+    "candidates": 75,
+    "accepted": 75,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-004/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-004/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-004/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-004/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-004_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-006",
+    "subject": "sub-cp025",
+    "candidates": 70,
+    "accepted": 70,
+    "component_max_error": 4.440892098500626e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-006/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-006/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-006/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-006/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-006_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-009",
+    "subject": "sub-cp025",
+    "candidates": 77,
+    "accepted": 77,
+    "component_max_error": 8.881784197001252e-16,
+    "reversals": [],
+    "duplicate_counts": [
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-009/sub-cp025_ses-20210820_task-ils_stream-lslshimmereda_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-009/sub-cp025_ses-20210820_task-ils_stream-lslshimmerresp_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-009/sub-cp025_ses-20210820_task-ils_stream-lslshimmerecg_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      },
+      {
+        "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-009/sub-cp025_ses-20210820_task-ils_stream-lslxp11xpcac_feat-chunk_level-04B_run-009_dat.csv",
+        "duplicate_timestamps": 0
+      }
+    ]
+  }
+]

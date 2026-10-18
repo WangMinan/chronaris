@@ -59,7 +59,7 @@ def qualify_performance_task(snapshot, output):
                 assert t.max() < hi
             assert max(t[0]-lo, hi-t[-1], np.diff(t).max()) <= 1
             # Independent quadrature: trapezoids plus two boundary rectangles.
-            mean = (np.trapz(v, t) + (t[0]-lo)*v[0] + (hi-t[-1])*v[-1])/(hi-lo)
+            mean = (np.trapezoid(v, t) + (t[0]-lo)*v[0] + (hi-t[-1])*v[-1])/(hi-lo)
             target_deltas.append(abs(mean - expected))
     assert max(target_deltas, default=0) < 1e-10
     summaries = []

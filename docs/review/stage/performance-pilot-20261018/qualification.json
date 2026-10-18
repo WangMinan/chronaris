@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "gates": {
+    "records": true,
+    "source_file_count": true,
+    "subjects": true,
+    "per_subject_support": true,
+    "retained_fraction": true,
+    "nonconstant": true,
+    "persistence_not_trivial": true,
+    "target_recomputed": true,
+    "history_only": true
+  },
+  "snapshot_sha256": "795ae38b38ee0fb86fb3988c9d5545ed51e151836ae2a3625b657235f565cc47",
+  "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/observations-v2.npz",
+  "samples": 5951,
+  "candidates": 5960,
+  "rejected_reasons": {
+    "target_gap": 4,
+    "input_clock_reversal": 5
+  },
+  "target_recompute_max_delta": 4.440892098500626e-15,
+  "training_pool_baselines": {
+    "train_mean": 1.2927012209200834,
+    "train_median": 1.2899309910992296,
+    "persistence": 0.33563673957650053
+  },
+  "persistence_to_mean_rmse_ratio": 0.2596398410899699,
+  "fit_subjects": [
+    "sub-cp004",
+    "sub-cp008",
+    "sub-cp019"
+  ],
+  "selection_subjects": [
+    "sub-cp025"
+  ],
+  "score_subjects": [
+    "sub-cp003",
+    "sub-cp011",
+    "sub-cp022"
+  ],
+  "encoder_updates": 0,
+  "evidence_scope": "previously_exposed_development_subjects"
+}

@@ -104,8 +104,12 @@ class CausalMulTFusionEncoder(nn.Module):
 
     def forward(self, batch: DualStreamObservationBatch) -> DeepBaselineEncoding:
         physiology, vehicle = _dual_query_inputs(batch, self.config)
+        return self.forward_queried(physiology, vehicle)
+
+    def forward_queried(self, physiology, vehicle) -> DeepBaselineEncoding:
+        """Encode the same causal queries without repeating raw-time lookup."""
         time_features = _time_features(
-            batch.query_timestamps_s.to(physiology.values.device),
+            physiology.timestamps_s.to(physiology.values.device),
             maximum_time_s=self.config.maximum_age_s,
             dtype=physiology.values.dtype,
         )
@@ -178,6 +182,10 @@ class CausalContiFormerFusionEncoder(nn.Module):
 
     def forward(self, batch: DualStreamObservationBatch) -> DeepBaselineEncoding:
         physiology, vehicle = _dual_query_inputs(batch, self.config)
+        return self.forward_queried(physiology, vehicle)
+
+    def forward_queried(self, physiology, vehicle) -> DeepBaselineEncoding:
+        """Encode the same causal queries without repeating raw-time lookup."""
         inputs = torch.cat(
             (
                 _stream_features(physiology, self.config),
@@ -188,7 +196,7 @@ class CausalContiFormerFusionEncoder(nn.Module):
         available = physiology.modality_mask | vehicle.modality_mask
         encoded, _attention = self.encoder(
             inputs,
-            time_axis=batch.query_timestamps_s.to(
+            time_axis=physiology.timestamps_s.to(
                 device=inputs.device,
                 dtype=inputs.dtype,
             ),

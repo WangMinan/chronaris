@@ -79,6 +79,10 @@ class ContinuousTimeSingleStreamEncoder(nn.Module):
 
     def forward(self, batch: DualStreamObservationBatch) -> SingleStreamEncoding:
         queried = causal_query_stream(batch, stream_name=self.config.active_stream)
+        return self.forward_queried(queried)
+
+    def forward_queried(self, queried) -> SingleStreamEncoding:
+        """Reuse a source-verified causal query snapshot during repeated epochs."""
         if queried.values.shape[-1] != self.config.input_feature_dim:
             raise RepresentationContractError(
                 "single-stream input dimension does not match encoder config"
