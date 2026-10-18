@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "fold": "fold01",
+      "view": "aircraft",
+      "channels": 22,
+      "parameters": 119477664,
+      "gradient_norm": 24.19855308532715,
+      "loss": 0.12599632143974304,
+      "forward_backward_seconds": 0.2652847529971041,
+      "peak_allocated_bytes": 1424352256,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold01",
+      "view": "joint",
+      "channels": 42,
+      "parameters": 119477664,
+      "gradient_norm": 31.991458892822266,
+      "loss": 0.17560359835624695,
+      "forward_backward_seconds": 0.2421313039958477,
+      "peak_allocated_bytes": 2354745344,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold02",
+      "view": "aircraft",
+      "channels": 22,
+      "parameters": 119477664,
+      "gradient_norm": 24.963687896728516,
+      "loss": 0.10392799228429794,
+      "forward_backward_seconds": 0.10094135397230275,
+      "peak_allocated_bytes": 1424353280,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold02",
+      "view": "joint",
+      "channels": 42,
+      "parameters": 119477664,
+      "gradient_norm": 27.47127914428711,
+      "loss": 0.10259252786636353,
+      "forward_backward_seconds": 0.14277158898767084,
+      "peak_allocated_bytes": 2354745344,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    }
+  ],
+  "input_qualification_sha256": "f8d67f54598e353779c1ef54a100659cb04889ccdd8ab8d19205440c8dc3650c",
+  "assets_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/assets.json",
+  "assets_sha256": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+  "source_files": {
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/chronos_forecast_qualification.py": "478614b4d300fbe68d82fa15cc16e3aa913a6c9dfae55d791aeccc6effd3a7de",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/chronos_forecast_inputs.py": "fde9d87117685fbc7e0210118df1d447ff6ccca5e0ab05e73e78d878c8894249",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/fair_residual_inputs.py": "3c2a6093d8b6755ff0f0eca55cd5b8ba13ee5a07daa1e2d53b79cf5b05149e88",
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/chronos_forecast.py": "5717cf6f5a1b7ff42bdc7325dec2e6d07a26bf44753d81f6061d76c61c6e7229",
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/rng.py": "de48565e87adbe3d8ea8ad4f5b668fe65ee1b290ddec45b2af724107a6b1c711"
+  },
+  "optimizer_updates": 0,
+  "device": "NVIDIA GeForce RTX 4070 SUPER"
+}
