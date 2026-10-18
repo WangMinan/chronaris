@@ -1,5 +1,7 @@
 # Chronaris 产物索引
 
+夜间扩展与静息单元完成：见[扩展结果](../review/stage/eligible-fit-20261019/README.md)、[人员暴露核验](../review/stage/eligible-fit-20261019/EXPOSURE.md)、[静息结果](../review/stage/rest-development-20261019/README.md)；当前接续[冻结读出核验](../review/stage/observed-mean-readout-20261019/PLAN.md)，原冻结资产保留。
+
 夜间接续材料：见[CLARE输入审计](../review/stage/clare-frequency-20261019/README.md)、[原七人静息输入](../review/stage/rest-development-20261019/INPUTS.md)、[原生预测准备](../review/stage/chronos-forecast-20261019/INPUTS.md)。
 
 夜间预训练诊断及拟合人群核验：见[结果与资产清单](../review/stage/chronos-information-20261019/README.md)、[原18人输入失败](../review/stage/expanded-fit-20261019/README.md)、[16人合格扩展](../review/stage/eligible-fit-20261019/PLAN.md)。
