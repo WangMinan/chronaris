@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/home/wangminan/projects/chronaris/docs/review/stage/observed-mean-readout-20261019/predictions.csv.gz",
+    "sha256": "7a083d8e74b710665ed7abea3829a68d47bc5dc6441da9cd1c7fc7f7c5cf45dc",
+    "prefix": "reference"
+  },
+  {
+    "path": "/home/wangminan/projects/chronaris/docs/review/stage/rest-development-20261019/predictions.csv.gz",
+    "sha256": "7668271f769718309364ddd58fe6c4c1a37a8d0e40405274b61917ea1937c3d9",
+    "prefix": "context_rest",
+    "methods": [
+      "candidate_head",
+      "candidate_ridge",
+      "shape_statistics"
+    ]
+  }
+]
