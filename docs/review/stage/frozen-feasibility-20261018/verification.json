@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "protected_sources": 1351,
+  "changed_sources": [],
+  "checkpoint_hashes": {
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/1/clare/physiology_only/self_supervised/physiology_only/C/best.pt": "edf8095aae685a668152baa000ed6fdf028756c3e6aca7f2b058bb6bdefbe977",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/1/clare/physiology_only/task_guided/physiology_only/best.pt": "50e9c15ee03caae512f3669acaed99dae5ee1a64bd1887238035eac3aa2c4543",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/2/clare/vehicle_only/self_supervised/vehicle_only/C/best.pt": "d0ed0b5f407ec87134a738675b6187617a07af529777526e8631f251e2170c3b",
+    "/mnt/e/chronaris-v4-results/2026-09-28-stage5-formal-training/training/2/clare/vehicle_only/task_guided/vehicle_only/best.pt": "777dbb548b8bd9d60b14d7b177472b70f4f540601e164a860c5ff1ec57ac2fa0",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/self_supervised/chronaris/C/best.pt": "d213b4016e579ea160a5b2751489376046101ac028d4f453d5b74b03b4984560",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/chronaris/best.pt": "d16760d3f4d61c5543661fb9d5f88017aff38cbb74bfa628d1c019537f7e46f7",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/136/cogpilot/physiology_only/self_supervised/physiology_only/C/best.pt": "91078ea49d0faa77a3b90d5f0c0ef187fe9c9ab34b3f9c56eee92694ca17e6e0",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/136/cogpilot/physiology_only/task_guided/physiology_only/best.pt": "b7f01dba7a32fe3ad33924181285740fea547b4d2ee86120072047a8020b43d6",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/137/cogpilot/vehicle_only/self_supervised/vehicle_only/C/best.pt": "ec26160297c01372e2b875dff8cb2386ff56c63edd8811453d53d130126321ed",
+    "/mnt/e/chronaris-v4-results/2026-09-30-stage5-sensor-recovery/training/137/cogpilot/vehicle_only/task_guided/vehicle_only/best.pt": "f467b26dd667c0e5cd05b32ef3b9ed443b2c54eb208fd54d0378013c3bd54973",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/self_supervised/chronaris/C/best.pt": "50d1dd4a036e671d29eb00eee20088f643728b383f6c7ffb57213437451ceb5c",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/chronaris/best.pt": "fed4a8ead610ee7596b8b70b242fd51ddd46d6329c79be9b642a2efebc63e5ac"
+  },
+  "new_outer_predictions": 108164,
+  "subject_metrics": 564,
+  "fold_metrics": 342,
+  "max_recomputed_score_error": 4.440892098500626e-16,
+  "original_timing_metrics_recomputed": 792,
+  "raw_event_target_matches": 1462,
+  "raw_clare_windows": 794,
+  "encoder_updates": 0,
+  "new_gpu_exports": 0,
+  "source_scope": "registered files plus 12 bound encoder checkpoints; raw remote files independently hashed before and after reading"
+}

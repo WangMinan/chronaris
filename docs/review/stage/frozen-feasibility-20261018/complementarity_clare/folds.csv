@@ -1,0 +1,235 @@
+domain,task,fold,route,method,rule,value,parameter,weight
+clare,workload_classification,0,self_supervised,first,raw,0.26853238733412166,1.0,
+clare,workload_classification,0,self_supervised,second,raw,0.3682645500856404,0.1,
+clare,workload_classification,0,self_supervised,full,raw,0.35213905710290083,0.1,
+clare,workload_classification,0,self_supervised,concat128,raw,0.3423251384607674,0.1,
+clare,workload_classification,0,self_supervised,concat_pca64,raw,0.29341052315473737,0.1,
+clare,workload_classification,0,self_supervised,equal_prediction,raw,0.31457681391456227,"[1.0, 0.1]",0.5
+clare,workload_classification,0,self_supervised,selected_prediction,raw,0.3682645500856404,"[1.0, 0.1]",0.0
+clare,workload_classification,0,self_supervised,majority,constant,0.394044022442814,null,
+clare,workload_classification,0,task_guided,first,raw,0.302689785764493,10.0,
+clare,workload_classification,0,task_guided,second,raw,0.3682645500856404,0.1,
+clare,workload_classification,0,task_guided,full,raw,0.3505531778211928,0.1,
+clare,workload_classification,0,task_guided,concat128,raw,0.36291995812315603,0.1,
+clare,workload_classification,0,task_guided,concat_pca64,raw,0.29244009378551644,0.1,
+clare,workload_classification,0,task_guided,equal_prediction,raw,0.33296803837128686,"[10.0, 0.1]",0.5
+clare,workload_classification,0,task_guided,selected_prediction,raw,0.3682645500856404,"[10.0, 0.1]",0.0
+clare,workload_classification,0,task_guided,majority,constant,0.394044022442814,null,
+clare,workload_classification,1,self_supervised,first,raw,0.14873603762492651,10.0,
+clare,workload_classification,1,self_supervised,second,raw,0.46,0.1,
+clare,workload_classification,1,self_supervised,full,raw,0.4517766497461929,10.0,
+clare,workload_classification,1,self_supervised,concat128,raw,0.4531645569620253,10.0,
+clare,workload_classification,1,self_supervised,concat_pca64,raw,0.4489795918367347,10.0,
+clare,workload_classification,1,self_supervised,equal_prediction,raw,0.46,"[10.0, 0.1]",0.5
+clare,workload_classification,1,self_supervised,selected_prediction,raw,0.46,"[10.0, 0.1]",0.25
+clare,workload_classification,1,self_supervised,majority,constant,0.46,null,
+clare,workload_classification,1,task_guided,first,raw,0.1430066271363795,10.0,
+clare,workload_classification,1,task_guided,second,raw,0.46,0.1,
+clare,workload_classification,1,task_guided,full,raw,0.4517766497461929,10.0,
+clare,workload_classification,1,task_guided,concat128,raw,0.4531645569620253,10.0,
+clare,workload_classification,1,task_guided,concat_pca64,raw,0.2359637275709049,0.1,
+clare,workload_classification,1,task_guided,equal_prediction,raw,0.46,"[10.0, 0.1]",0.5
+clare,workload_classification,1,task_guided,selected_prediction,raw,0.46,"[10.0, 0.1]",0.5
+clare,workload_classification,1,task_guided,majority,constant,0.46,null,
+clare,workload_classification,2,self_supervised,first,raw,0.5024325519681556,0.1,
+clare,workload_classification,2,self_supervised,second,raw,0.49400299850074963,1.0,
+clare,workload_classification,2,self_supervised,full,raw,0.12790697674418605,0.1,
+clare,workload_classification,2,self_supervised,concat128,raw,0.23945917096602026,0.1,
+clare,workload_classification,2,self_supervised,concat_pca64,raw,0.15824915824915825,10.0,
+clare,workload_classification,2,self_supervised,equal_prediction,raw,0.5178786661309763,"[0.1, 1.0]",0.5
+clare,workload_classification,2,self_supervised,selected_prediction,raw,0.49400299850074963,"[0.1, 1.0]",0.0
+clare,workload_classification,2,self_supervised,majority,constant,0.12790697674418605,null,
+clare,workload_classification,2,task_guided,first,raw,0.44910066861286374,10.0,
+clare,workload_classification,2,task_guided,second,raw,0.12790697674418605,10.0,
+clare,workload_classification,2,task_guided,full,raw,0.12790697674418605,0.1,
+clare,workload_classification,2,task_guided,concat128,raw,0.16125541125541126,0.1,
+clare,workload_classification,2,task_guided,concat_pca64,raw,0.16606886657101866,10.0,
+clare,workload_classification,2,task_guided,equal_prediction,raw,0.494949494949495,"[10.0, 10.0]",0.5
+clare,workload_classification,2,task_guided,selected_prediction,raw,0.4084047327621379,"[10.0, 10.0]",0.25
+clare,workload_classification,2,task_guided,majority,constant,0.12790697674418605,null,
+clare,workload_regression,0,self_supervised,first,raw,2.486337984565449,10000.0,
+clare,workload_regression,0,self_supervised,first,raw_clipped,2.479115341627627,10000.0,
+clare,workload_regression,0,self_supervised,second,raw,2.012215632607247,10000.0,
+clare,workload_regression,0,self_supervised,second,raw_clipped,2.012215632607247,10000.0,
+clare,workload_regression,0,self_supervised,full,raw,2.1432634262831662,1000.0,
+clare,workload_regression,0,self_supervised,full,raw_clipped,2.13942634148751,1000.0,
+clare,workload_regression,0,self_supervised,concat128,raw,2.400329849091683,10000.0,
+clare,workload_regression,0,self_supervised,concat128,raw_clipped,2.400329849091683,10000.0,
+clare,workload_regression,0,self_supervised,concat_pca64,raw,87.26314062567484,10000.0,
+clare,workload_regression,0,self_supervised,concat_pca64,raw_clipped,2.033437597954563,10000.0,
+clare,workload_regression,0,self_supervised,equal_prediction,raw,2.161926647942443,"[10000.0, 10000.0]",0.5
+clare,workload_regression,0,self_supervised,equal_prediction,raw_clipped,2.161926647942443,"[10000.0, 10000.0]",0.5
+clare,workload_regression,0,self_supervised,selected_prediction,raw,2.05959980021854,"[10000.0, 10000.0]",0.25
+clare,workload_regression,0,self_supervised,selected_prediction,raw_clipped,2.05959980021854,"[10000.0, 10000.0]",0.25
+clare,workload_regression,0,self_supervised,first,bounded,2.479115341627627,10000.0,
+clare,workload_regression,0,self_supervised,second,bounded,2.012215632607247,10000.0,
+clare,workload_regression,0,self_supervised,full,bounded,2.13942634148751,1000.0,
+clare,workload_regression,0,self_supervised,concat128,bounded,2.400329849091683,10000.0,
+clare,workload_regression,0,self_supervised,concat_pca64,bounded,2.033437597954563,10000.0,
+clare,workload_regression,0,self_supervised,equal_prediction,bounded,2.161926647942443,"[10000.0, 10000.0]",0.5
+clare,workload_regression,0,self_supervised,selected_prediction,bounded,2.05959980021854,"[10000.0, 10000.0]",0.25
+clare,workload_regression,0,self_supervised,mean,constant,1.5550706523859446,null,
+clare,workload_regression,0,self_supervised,median,constant,1.5631170225753481,null,
+clare,workload_regression,0,task_guided,first,raw,2.434553874199052,10000.0,
+clare,workload_regression,0,task_guided,first,raw_clipped,2.4312957153441968,10000.0,
+clare,workload_regression,0,task_guided,second,raw,2.0097103431511285,10000.0,
+clare,workload_regression,0,task_guided,second,raw_clipped,2.0097103431511285,10000.0,
+clare,workload_regression,0,task_guided,full,raw,2.3956152244878957,1000.0,
+clare,workload_regression,0,task_guided,full,raw_clipped,2.389664918516451,1000.0,
+clare,workload_regression,0,task_guided,concat128,raw,2.374399542208441,10000.0,
+clare,workload_regression,0,task_guided,concat128,raw_clipped,2.374399542208441,10000.0,
+clare,workload_regression,0,task_guided,concat_pca64,raw,666.3101442824616,10000.0,
+clare,workload_regression,0,task_guided,concat_pca64,raw_clipped,1.8354416033083356,10000.0,
+clare,workload_regression,0,task_guided,equal_prediction,raw,2.1385185428358544,"[10000.0, 10000.0]",0.5
+clare,workload_regression,0,task_guided,equal_prediction,raw_clipped,2.1385185428358544,"[10000.0, 10000.0]",0.5
+clare,workload_regression,0,task_guided,selected_prediction,raw,2.0477896892431584,"[10000.0, 10000.0]",0.25
+clare,workload_regression,0,task_guided,selected_prediction,raw_clipped,2.0477896892431584,"[10000.0, 10000.0]",0.25
+clare,workload_regression,0,task_guided,first,bounded,2.4312957153441968,10000.0,
+clare,workload_regression,0,task_guided,second,bounded,2.0097103431511285,10000.0,
+clare,workload_regression,0,task_guided,full,bounded,2.389664918516451,1000.0,
+clare,workload_regression,0,task_guided,concat128,bounded,2.374399542208441,10000.0,
+clare,workload_regression,0,task_guided,concat_pca64,bounded,1.8354416033083356,10000.0,
+clare,workload_regression,0,task_guided,equal_prediction,bounded,2.1385185428358544,"[10000.0, 10000.0]",0.5
+clare,workload_regression,0,task_guided,selected_prediction,bounded,2.0477896892431584,"[10000.0, 10000.0]",0.25
+clare,workload_regression,0,task_guided,mean,constant,1.5550706523859446,null,
+clare,workload_regression,0,task_guided,median,constant,1.5631170225753481,null,
+clare,workload_regression,1,self_supervised,first,raw,2.548484099471108,10000.0,
+clare,workload_regression,1,self_supervised,first,raw_clipped,2.548484099471108,10000.0,
+clare,workload_regression,1,self_supervised,second,raw,2.441280548364166,10000.0,
+clare,workload_regression,1,self_supervised,second,raw_clipped,2.441280548364166,10000.0,
+clare,workload_regression,1,self_supervised,full,raw,2.431125804749789,10000.0,
+clare,workload_regression,1,self_supervised,full,raw_clipped,2.431125804749789,10000.0,
+clare,workload_regression,1,self_supervised,concat128,raw,2.95102516615361,10000.0,
+clare,workload_regression,1,self_supervised,concat128,raw_clipped,2.95102516615361,10000.0,
+clare,workload_regression,1,self_supervised,concat_pca64,raw,4.571660969290886,10000.0,
+clare,workload_regression,1,self_supervised,concat_pca64,raw_clipped,4.279053600726399,10000.0,
+clare,workload_regression,1,self_supervised,equal_prediction,raw,2.4941796184670144,"[10000.0, 10000.0]",0.5
+clare,workload_regression,1,self_supervised,equal_prediction,raw_clipped,2.4941796184670144,"[10000.0, 10000.0]",0.5
+clare,workload_regression,1,self_supervised,selected_prediction,raw,2.548484099471108,"[10000.0, 10000.0]",1.0
+clare,workload_regression,1,self_supervised,selected_prediction,raw_clipped,2.548484099471108,"[10000.0, 10000.0]",1.0
+clare,workload_regression,1,self_supervised,first,bounded,2.548484099471108,10000.0,
+clare,workload_regression,1,self_supervised,second,bounded,2.441280548364166,10000.0,
+clare,workload_regression,1,self_supervised,full,bounded,2.431125804749789,10000.0,
+clare,workload_regression,1,self_supervised,concat128,bounded,2.95102516615361,10000.0,
+clare,workload_regression,1,self_supervised,concat_pca64,bounded,4.279053600726399,10000.0,
+clare,workload_regression,1,self_supervised,equal_prediction,bounded,2.4941796184670144,"[10000.0, 10000.0]",0.5
+clare,workload_regression,1,self_supervised,selected_prediction,bounded,2.548484099471108,"[10000.0, 10000.0]",1.0
+clare,workload_regression,1,self_supervised,mean,constant,2.3492891047519056,null,
+clare,workload_regression,1,self_supervised,median,constant,2.139790574730084,null,
+clare,workload_regression,1,task_guided,first,raw,2.546951518788529,10000.0,
+clare,workload_regression,1,task_guided,first,raw_clipped,2.546951518788529,10000.0,
+clare,workload_regression,1,task_guided,second,raw,2.4268313351854185,10000.0,
+clare,workload_regression,1,task_guided,second,raw_clipped,2.4268313351854185,10000.0,
+clare,workload_regression,1,task_guided,full,raw,2.3932141186743303,10000.0,
+clare,workload_regression,1,task_guided,full,raw_clipped,2.3932141186743303,10000.0,
+clare,workload_regression,1,task_guided,concat128,raw,2.9505420894761634,10000.0,
+clare,workload_regression,1,task_guided,concat128,raw_clipped,2.9505420894761634,10000.0,
+clare,workload_regression,1,task_guided,concat_pca64,raw,6.202396564845729,10000.0,
+clare,workload_regression,1,task_guided,concat_pca64,raw_clipped,4.499231224840068,10000.0,
+clare,workload_regression,1,task_guided,equal_prediction,raw,2.486105012416491,"[10000.0, 10000.0]",0.5
+clare,workload_regression,1,task_guided,equal_prediction,raw_clipped,2.486105012416491,"[10000.0, 10000.0]",0.5
+clare,workload_regression,1,task_guided,selected_prediction,raw,2.546951518788529,"[10000.0, 10000.0]",1.0
+clare,workload_regression,1,task_guided,selected_prediction,raw_clipped,2.546951518788529,"[10000.0, 10000.0]",1.0
+clare,workload_regression,1,task_guided,first,bounded,2.546951518788529,10000.0,
+clare,workload_regression,1,task_guided,second,bounded,2.4268313351854185,10000.0,
+clare,workload_regression,1,task_guided,full,bounded,2.3932141186743303,10000.0,
+clare,workload_regression,1,task_guided,concat128,bounded,2.9505420894761634,10000.0,
+clare,workload_regression,1,task_guided,concat_pca64,bounded,4.499231224840068,10000.0,
+clare,workload_regression,1,task_guided,equal_prediction,bounded,2.486105012416491,"[10000.0, 10000.0]",0.5
+clare,workload_regression,1,task_guided,selected_prediction,bounded,2.546951518788529,"[10000.0, 10000.0]",1.0
+clare,workload_regression,1,task_guided,mean,constant,2.3492891047519056,null,
+clare,workload_regression,1,task_guided,median,constant,2.139790574730084,null,
+clare,workload_regression,2,self_supervised,first,raw,2.496536924484298,10000.0,
+clare,workload_regression,2,self_supervised,first,raw_clipped,2.496536924484298,10000.0,
+clare,workload_regression,2,self_supervised,second,raw,2.292072603427315,10000.0,
+clare,workload_regression,2,self_supervised,second,raw_clipped,2.292072603427315,10000.0,
+clare,workload_regression,2,self_supervised,full,raw,2.359832832502773,10000.0,
+clare,workload_regression,2,self_supervised,full,raw_clipped,2.359832832502773,10000.0,
+clare,workload_regression,2,self_supervised,concat128,raw,2.407144342114574,10000.0,
+clare,workload_regression,2,self_supervised,concat128,raw_clipped,2.407144342114574,10000.0,
+clare,workload_regression,2,self_supervised,concat_pca64,raw,2.629716111143766,10000.0,
+clare,workload_regression,2,self_supervised,concat_pca64,raw_clipped,2.629716111143766,10000.0,
+clare,workload_regression,2,self_supervised,equal_prediction,raw,2.3937062235921993,"[10000.0, 10000.0]",0.5
+clare,workload_regression,2,self_supervised,equal_prediction,raw_clipped,2.3937062235921993,"[10000.0, 10000.0]",0.5
+clare,workload_regression,2,self_supervised,selected_prediction,raw,2.342729998100957,"[10000.0, 10000.0]",0.25
+clare,workload_regression,2,self_supervised,selected_prediction,raw_clipped,2.342729998100957,"[10000.0, 10000.0]",0.25
+clare,workload_regression,2,self_supervised,first,bounded,2.496536924484298,10000.0,
+clare,workload_regression,2,self_supervised,second,bounded,2.292072603427315,10000.0,
+clare,workload_regression,2,self_supervised,full,bounded,2.359832832502773,10000.0,
+clare,workload_regression,2,self_supervised,concat128,bounded,2.407144342114574,10000.0,
+clare,workload_regression,2,self_supervised,concat_pca64,bounded,2.629716111143766,10000.0,
+clare,workload_regression,2,self_supervised,equal_prediction,bounded,2.3937062235921993,"[10000.0, 10000.0]",0.5
+clare,workload_regression,2,self_supervised,selected_prediction,bounded,2.342729998100957,"[10000.0, 10000.0]",0.25
+clare,workload_regression,2,self_supervised,mean,constant,2.4517654640417383,null,
+clare,workload_regression,2,self_supervised,median,constant,1.9966638842495916,null,
+clare,workload_regression,2,task_guided,first,raw,2.4862559261481487,10000.0,
+clare,workload_regression,2,task_guided,first,raw_clipped,2.4862559261481487,10000.0,
+clare,workload_regression,2,task_guided,second,raw,2.2874553982947976,10000.0,
+clare,workload_regression,2,task_guided,second,raw_clipped,2.2874553982947976,10000.0,
+clare,workload_regression,2,task_guided,full,raw,2.362035917246268,10000.0,
+clare,workload_regression,2,task_guided,full,raw_clipped,2.362035917246268,10000.0,
+clare,workload_regression,2,task_guided,concat128,raw,2.403917607611767,10000.0,
+clare,workload_regression,2,task_guided,concat128,raw_clipped,2.403917607611767,10000.0,
+clare,workload_regression,2,task_guided,concat_pca64,raw,2.620771800623997,10000.0,
+clare,workload_regression,2,task_guided,concat_pca64,raw_clipped,2.620771800623997,10000.0,
+clare,workload_regression,2,task_guided,equal_prediction,raw,2.3862405185831035,"[10000.0, 10000.0]",0.5
+clare,workload_regression,2,task_guided,equal_prediction,raw_clipped,2.3862405185831035,"[10000.0, 10000.0]",0.5
+clare,workload_regression,2,task_guided,selected_prediction,raw,2.3366843748788524,"[10000.0, 10000.0]",0.25
+clare,workload_regression,2,task_guided,selected_prediction,raw_clipped,2.3366843748788524,"[10000.0, 10000.0]",0.25
+clare,workload_regression,2,task_guided,first,bounded,2.4862559261481487,10000.0,
+clare,workload_regression,2,task_guided,second,bounded,2.2874553982947976,10000.0,
+clare,workload_regression,2,task_guided,full,bounded,2.362035917246268,10000.0,
+clare,workload_regression,2,task_guided,concat128,bounded,2.403917607611767,10000.0,
+clare,workload_regression,2,task_guided,concat_pca64,bounded,2.620771800623997,10000.0,
+clare,workload_regression,2,task_guided,equal_prediction,bounded,2.3862405185831035,"[10000.0, 10000.0]",0.5
+clare,workload_regression,2,task_guided,selected_prediction,bounded,2.3366843748788524,"[10000.0, 10000.0]",0.25
+clare,workload_regression,2,task_guided,mean,constant,2.4517654640417383,null,
+clare,workload_regression,2,task_guided,median,constant,1.9966638842495916,null,
+clare,workload_standard_classification,0,self_supervised,first,raw,0.31072635460399334,10.0,
+clare,workload_standard_classification,0,self_supervised,second,raw,0.48044717423003847,0.1,
+clare,workload_standard_classification,0,self_supervised,full,raw,0.5086219729740512,1.0,
+clare,workload_standard_classification,0,self_supervised,concat128,raw,0.2940423705355889,0.1,
+clare,workload_standard_classification,0,self_supervised,concat_pca64,raw,0.3188143516551657,0.1,
+clare,workload_standard_classification,0,self_supervised,equal_prediction,raw,0.34669999917561806,"[10.0, 0.1]",0.5
+clare,workload_standard_classification,0,self_supervised,selected_prediction,raw,0.48044717423003847,"[10.0, 0.1]",0.0
+clare,workload_standard_classification,0,self_supervised,majority,constant,0.45022703457911284,null,
+clare,workload_standard_classification,0,task_guided,first,raw,0.3120342123538124,10.0,
+clare,workload_standard_classification,0,task_guided,second,raw,0.48044717423003847,0.1,
+clare,workload_standard_classification,0,task_guided,full,raw,0.5054010272531055,1.0,
+clare,workload_standard_classification,0,task_guided,concat128,raw,0.28992692219693045,0.1,
+clare,workload_standard_classification,0,task_guided,concat_pca64,raw,0.17739938080495357,0.1,
+clare,workload_standard_classification,0,task_guided,equal_prediction,raw,0.3049810534293293,"[10.0, 0.1]",0.5
+clare,workload_standard_classification,0,task_guided,selected_prediction,raw,0.48044717423003847,"[10.0, 0.1]",0.0
+clare,workload_standard_classification,0,task_guided,majority,constant,0.45022703457911284,null,
+clare,workload_standard_classification,1,self_supervised,first,raw,0.36649150678235365,10.0,
+clare,workload_standard_classification,1,self_supervised,second,raw,0.42496485298076636,10.0,
+clare,workload_standard_classification,1,self_supervised,full,raw,0.3590504451038576,0.1,
+clare,workload_standard_classification,1,self_supervised,concat128,raw,0.29180327868852457,0.1,
+clare,workload_standard_classification,1,self_supervised,concat_pca64,raw,0.29411764705882354,10.0,
+clare,workload_standard_classification,1,self_supervised,equal_prediction,raw,0.3818125865517772,"[10.0, 10.0]",0.5
+clare,workload_standard_classification,1,self_supervised,selected_prediction,raw,0.42496485298076636,"[10.0, 10.0]",0.0
+clare,workload_standard_classification,1,self_supervised,majority,constant,0.3590504451038576,null,
+clare,workload_standard_classification,1,task_guided,first,raw,0.3705357142857143,10.0,
+clare,workload_standard_classification,1,task_guided,second,raw,0.4554409005628518,10.0,
+clare,workload_standard_classification,1,task_guided,full,raw,0.3590504451038576,0.1,
+clare,workload_standard_classification,1,task_guided,concat128,raw,0.29180327868852457,0.1,
+clare,workload_standard_classification,1,task_guided,concat_pca64,raw,0.29411764705882354,10.0,
+clare,workload_standard_classification,1,task_guided,equal_prediction,raw,0.3818125865517772,"[10.0, 10.0]",0.5
+clare,workload_standard_classification,1,task_guided,selected_prediction,raw,0.4554409005628518,"[10.0, 10.0]",0.0
+clare,workload_standard_classification,1,task_guided,majority,constant,0.3590504451038576,null,
+clare,workload_standard_classification,2,self_supervised,first,raw,0.24347951390556702,1.0,
+clare,workload_standard_classification,2,self_supervised,second,raw,0.494949494949495,0.1,
+clare,workload_standard_classification,2,self_supervised,full,raw,0.0196078431372549,1.0,
+clare,workload_standard_classification,2,self_supervised,concat128,raw,0.03329036846082048,1.0,
+clare,workload_standard_classification,2,self_supervised,concat_pca64,raw,0.0196078431372549,1.0,
+clare,workload_standard_classification,2,self_supervised,equal_prediction,raw,0.494949494949495,"[1.0, 0.1]",0.5
+clare,workload_standard_classification,2,self_supervised,selected_prediction,raw,0.494949494949495,"[1.0, 0.1]",0.0
+clare,workload_standard_classification,2,self_supervised,majority,constant,0.494949494949495,null,
+clare,workload_standard_classification,2,task_guided,first,raw,0.23599320882852293,10.0,
+clare,workload_standard_classification,2,task_guided,second,raw,0.494949494949495,0.1,
+clare,workload_standard_classification,2,task_guided,full,raw,0.0196078431372549,1.0,
+clare,workload_standard_classification,2,task_guided,concat128,raw,0.03329036846082048,10.0,
+clare,workload_standard_classification,2,task_guided,concat_pca64,raw,0.026493598862019914,1.0,
+clare,workload_standard_classification,2,task_guided,equal_prediction,raw,0.49324324324324326,"[10.0, 0.1]",0.5
+clare,workload_standard_classification,2,task_guided,selected_prediction,raw,0.49324324324324326,"[10.0, 0.1]",0.5
+clare,workload_standard_classification,2,task_guided,majority,constant,0.494949494949495,null,

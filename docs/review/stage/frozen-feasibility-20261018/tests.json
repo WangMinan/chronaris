@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "tests": 9,
+  "seconds": 4.19,
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /home/wangminan/env/anaconda3/envs/chronaris/bin/python -m pytest -q tests/evaluation/application_tasks/test_frozen_feasibility.py tests/evaluation/application_tasks/test_readout_repair.py",
+  "scope": "5 new information-boundary and timing checks plus 4 existing readout-repair tests"
+}

@@ -1,0 +1,8 @@
+{
+  "document": "CogPilot Data Quality Summary",
+  "source": "https://physionet.org/files/virtual-reality-piloting/1.0.0/referenceDocuments/DataQualitySummary.pdf",
+  "sha256": "a077be7fc566e6f4bed1c48bd2f3b71c1a0617b046e3ffda360b5cfd3e0ce35f",
+  "pages": 7,
+  "text_path": "artifacts/application_evaluation/2026-10-18-frozen-feasibility/DataQualitySummary.txt",
+  "scope": "all summary pages extracted; companion 307 MiB detailed report parse stopped before completion; no claims rely on its unreviewed content"
+}

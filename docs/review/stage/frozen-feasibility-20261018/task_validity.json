@@ -1,0 +1,16 @@
+{
+  "status": "completed_with_semantic_gaps",
+  "source_sha256": "fd8464c8fbc1ee5c1e664143b353b593cb1f052bd2894a1310917fa9abfa64b7",
+  "event_targets_exact": 1462,
+  "clare_targets_exact": 794,
+  "clare_task_checks": 2382,
+  "matched_events": 1462,
+  "unique_controls": 1016,
+  "eda_records_with_reversal": 2,
+  "max_reversal_s": 3.1327128410339355,
+  "clare_label_files_have_explicit_timestamps": false,
+  "clare_signal_units_fully_documented": false,
+  "intervals": "descriptive subject bootstrap, 10000 resamples, seed17; 7 subjects, not randomized causal inference",
+  "target_changes": 0,
+  "encoder_updates": 0
+}

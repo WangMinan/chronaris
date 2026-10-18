@@ -1,0 +1,13 @@
+condition,physiology_clock_offset_s,vehicle_clock_offset_s,additional_lag_s,physiology_jitter_std_ms,vehicle_jitter_std_ms,clock_drift_ppm
+clean_asynchronous,0.0,0.0,0.0,5.0,2.0,0.0
+clock_offset_+0.00s,0.0,0.0,0.0,0.0,0.0,0.0
+clock_offset_-0.25s,-0.25,0.0,0.0,0.0,0.0,0.0
+clock_offset_+0.25s,0.25,0.0,0.0,0.0,0.0,0.0
+clock_offset_-1.00s,-1.0,0.0,0.0,0.0,0.0,0.0
+clock_offset_+1.00s,1.0,0.0,0.0,0.0,0.0,0.0
+clock_offset_-3.00s,-3.0,0.0,0.0,0.0,0.0,0.0
+clock_offset_+3.00s,3.0,0.0,0.0,0.0,0.0,0.0
+physiology_lag_02s,0.0,0.0,2.0,0.0,0.0,0.0
+physiology_lag_05s,0.0,0.0,5.0,0.0,0.0,0.0
+physiology_lag_15s,0.0,0.0,15.0,0.0,0.0,0.0
+physiology_lag_30s,0.0,0.0,30.0,0.0,0.0,0.0

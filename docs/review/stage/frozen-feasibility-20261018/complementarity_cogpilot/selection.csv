@@ -1,0 +1,331 @@
+domain,task,fold,route,method,rule,candidate,parameter,weight,value,selected
+cogpilot,difficulty,0,self_supervised,first,raw,0,0.1,,0.12330127517648776,True
+cogpilot,difficulty,0,self_supervised,first,raw,1,1.0,,0.10928299132189766,False
+cogpilot,difficulty,0,self_supervised,first,raw,2,10.0,,0.1005789897478654,False
+cogpilot,difficulty,0,self_supervised,second,raw,0,0.1,,0.4257001018728385,False
+cogpilot,difficulty,0,self_supervised,second,raw,1,1.0,,0.4535010479943872,False
+cogpilot,difficulty,0,self_supervised,second,raw,2,10.0,,0.5000081019285504,True
+cogpilot,difficulty,0,self_supervised,full,raw,0,0.1,,0.27754153304852813,False
+cogpilot,difficulty,0,self_supervised,full,raw,1,1.0,,0.3057811004023798,True
+cogpilot,difficulty,0,self_supervised,full,raw,2,10.0,,0.24840686122451977,False
+cogpilot,difficulty,0,self_supervised,concat128,raw,0,0.1,,0.21698992000039052,True
+cogpilot,difficulty,0,self_supervised,concat128,raw,1,1.0,,0.20800180923535128,False
+cogpilot,difficulty,0,self_supervised,concat128,raw,2,10.0,,0.1973914446718994,False
+cogpilot,difficulty,0,self_supervised,concat_pca64,raw,0,0.1,,0.14197728910998064,False
+cogpilot,difficulty,0,self_supervised,concat_pca64,raw,1,1.0,,0.16097445819831613,False
+cogpilot,difficulty,0,self_supervised,concat_pca64,raw,2,10.0,,0.16677548867306802,True
+cogpilot,difficulty,0,self_supervised,selected_prediction,raw,0,"[0.1, 10.0]",0.0,0.5000081019285504,True
+cogpilot,difficulty,0,self_supervised,selected_prediction,raw,1,"[0.1, 10.0]",0.25,0.46206831836049467,False
+cogpilot,difficulty,0,self_supervised,selected_prediction,raw,2,"[0.1, 10.0]",0.5,0.29356721272949815,False
+cogpilot,difficulty,0,self_supervised,selected_prediction,raw,3,"[0.1, 10.0]",0.75,0.1849334103411524,False
+cogpilot,difficulty,0,self_supervised,selected_prediction,raw,4,"[0.1, 10.0]",1.0,0.12330127517648776,False
+cogpilot,difficulty,0,task_guided,first,raw,0,0.1,,0.11422644249941812,True
+cogpilot,difficulty,0,task_guided,first,raw,1,1.0,,0.10209022872540315,False
+cogpilot,difficulty,0,task_guided,first,raw,2,10.0,,0.10277275365965026,False
+cogpilot,difficulty,0,task_guided,second,raw,0,0.1,,0.44872081453964535,False
+cogpilot,difficulty,0,task_guided,second,raw,1,1.0,,0.4671946199026513,False
+cogpilot,difficulty,0,task_guided,second,raw,2,10.0,,0.5348355094604886,True
+cogpilot,difficulty,0,task_guided,full,raw,0,0.1,,0.2588431153576072,False
+cogpilot,difficulty,0,task_guided,full,raw,1,1.0,,0.29542034698026026,True
+cogpilot,difficulty,0,task_guided,full,raw,2,10.0,,0.255569960319854,False
+cogpilot,difficulty,0,task_guided,concat128,raw,0,0.1,,0.22542309954009118,False
+cogpilot,difficulty,0,task_guided,concat128,raw,1,1.0,,0.2684054807254612,True
+cogpilot,difficulty,0,task_guided,concat128,raw,2,10.0,,0.16190201619789524,False
+cogpilot,difficulty,0,task_guided,concat_pca64,raw,0,0.1,,0.14381321707734987,False
+cogpilot,difficulty,0,task_guided,concat_pca64,raw,1,1.0,,0.14627211489421593,True
+cogpilot,difficulty,0,task_guided,concat_pca64,raw,2,10.0,,0.13624052061168784,False
+cogpilot,difficulty,0,task_guided,selected_prediction,raw,0,"[0.1, 10.0]",0.0,0.5348355094604886,True
+cogpilot,difficulty,0,task_guided,selected_prediction,raw,1,"[0.1, 10.0]",0.25,0.48358788848295264,False
+cogpilot,difficulty,0,task_guided,selected_prediction,raw,2,"[0.1, 10.0]",0.5,0.1940437830933648,False
+cogpilot,difficulty,0,task_guided,selected_prediction,raw,3,"[0.1, 10.0]",0.75,0.12736018826135104,False
+cogpilot,difficulty,0,task_guided,selected_prediction,raw,4,"[0.1, 10.0]",1.0,0.11422644249941812,False
+cogpilot,difficulty,1,self_supervised,first,raw,0,0.1,,0.12225138927534906,False
+cogpilot,difficulty,1,self_supervised,first,raw,1,1.0,,0.1615970477239857,True
+cogpilot,difficulty,1,self_supervised,first,raw,2,10.0,,0.12418665766685118,False
+cogpilot,difficulty,1,self_supervised,second,raw,0,0.1,,0.3430451492259299,False
+cogpilot,difficulty,1,self_supervised,second,raw,1,1.0,,0.4073045450117262,False
+cogpilot,difficulty,1,self_supervised,second,raw,2,10.0,,0.469518554155344,True
+cogpilot,difficulty,1,self_supervised,full,raw,0,0.1,,0.24094214072773035,False
+cogpilot,difficulty,1,self_supervised,full,raw,1,1.0,,0.26537027647205474,True
+cogpilot,difficulty,1,self_supervised,full,raw,2,10.0,,0.22297996032090356,False
+cogpilot,difficulty,1,self_supervised,concat128,raw,0,0.1,,0.17759315963348465,False
+cogpilot,difficulty,1,self_supervised,concat128,raw,1,1.0,,0.19036240538451618,False
+cogpilot,difficulty,1,self_supervised,concat128,raw,2,10.0,,0.22460464363261295,True
+cogpilot,difficulty,1,self_supervised,concat_pca64,raw,0,0.1,,0.18155025263394492,True
+cogpilot,difficulty,1,self_supervised,concat_pca64,raw,1,1.0,,0.1739922425046049,False
+cogpilot,difficulty,1,self_supervised,concat_pca64,raw,2,10.0,,0.15490055118439844,False
+cogpilot,difficulty,1,self_supervised,selected_prediction,raw,0,"[1.0, 10.0]",0.0,0.469518554155344,True
+cogpilot,difficulty,1,self_supervised,selected_prediction,raw,1,"[1.0, 10.0]",0.25,0.3958635560191741,False
+cogpilot,difficulty,1,self_supervised,selected_prediction,raw,2,"[1.0, 10.0]",0.5,0.23043790340733014,False
+cogpilot,difficulty,1,self_supervised,selected_prediction,raw,3,"[1.0, 10.0]",0.75,0.173848520575208,False
+cogpilot,difficulty,1,self_supervised,selected_prediction,raw,4,"[1.0, 10.0]",1.0,0.1615970477239857,False
+cogpilot,difficulty,1,task_guided,first,raw,0,0.1,,0.12240482465963858,False
+cogpilot,difficulty,1,task_guided,first,raw,1,1.0,,0.13907546167212376,True
+cogpilot,difficulty,1,task_guided,first,raw,2,10.0,,0.12540340638357406,False
+cogpilot,difficulty,1,task_guided,second,raw,0,0.1,,0.365001838439895,False
+cogpilot,difficulty,1,task_guided,second,raw,1,1.0,,0.4221952469954272,False
+cogpilot,difficulty,1,task_guided,second,raw,2,10.0,,0.4632812156271634,True
+cogpilot,difficulty,1,task_guided,full,raw,0,0.1,,0.23281803420732813,False
+cogpilot,difficulty,1,task_guided,full,raw,1,1.0,,0.24730720833161798,True
+cogpilot,difficulty,1,task_guided,full,raw,2,10.0,,0.20138652255932915,False
+cogpilot,difficulty,1,task_guided,concat128,raw,0,0.1,,0.19085160600849221,False
+cogpilot,difficulty,1,task_guided,concat128,raw,1,1.0,,0.20333107369453945,False
+cogpilot,difficulty,1,task_guided,concat128,raw,2,10.0,,0.23767415630859512,True
+cogpilot,difficulty,1,task_guided,concat_pca64,raw,0,0.1,,0.19698854082098424,True
+cogpilot,difficulty,1,task_guided,concat_pca64,raw,1,1.0,,0.1921369130013654,False
+cogpilot,difficulty,1,task_guided,concat_pca64,raw,2,10.0,,0.18744562731689846,False
+cogpilot,difficulty,1,task_guided,selected_prediction,raw,0,"[1.0, 10.0]",0.0,0.4632812156271634,True
+cogpilot,difficulty,1,task_guided,selected_prediction,raw,1,"[1.0, 10.0]",0.25,0.4101159543823082,False
+cogpilot,difficulty,1,task_guided,selected_prediction,raw,2,"[1.0, 10.0]",0.5,0.22176035538511227,False
+cogpilot,difficulty,1,task_guided,selected_prediction,raw,3,"[1.0, 10.0]",0.75,0.17260569563045486,False
+cogpilot,difficulty,1,task_guided,selected_prediction,raw,4,"[1.0, 10.0]",1.0,0.13907546167212376,False
+cogpilot,difficulty,2,self_supervised,first,raw,0,0.1,,0.1046350557829208,False
+cogpilot,difficulty,2,self_supervised,first,raw,1,1.0,,0.10736246767914717,False
+cogpilot,difficulty,2,self_supervised,first,raw,2,10.0,,0.11362699938801546,True
+cogpilot,difficulty,2,self_supervised,second,raw,0,0.1,,0.39036959919074,False
+cogpilot,difficulty,2,self_supervised,second,raw,1,1.0,,0.42997322121008696,False
+cogpilot,difficulty,2,self_supervised,second,raw,2,10.0,,0.4799903056492477,True
+cogpilot,difficulty,2,self_supervised,full,raw,0,0.1,,0.22079607911644983,False
+cogpilot,difficulty,2,self_supervised,full,raw,1,1.0,,0.20548851303587953,False
+cogpilot,difficulty,2,self_supervised,full,raw,2,10.0,,0.23736778249800414,True
+cogpilot,difficulty,2,self_supervised,concat128,raw,0,0.1,,0.20155256115181444,False
+cogpilot,difficulty,2,self_supervised,concat128,raw,1,1.0,,0.18801048928892589,False
+cogpilot,difficulty,2,self_supervised,concat128,raw,2,10.0,,0.2035562475976,True
+cogpilot,difficulty,2,self_supervised,concat_pca64,raw,0,0.1,,0.18048145376711247,False
+cogpilot,difficulty,2,self_supervised,concat_pca64,raw,1,1.0,,0.1832582646661355,False
+cogpilot,difficulty,2,self_supervised,concat_pca64,raw,2,10.0,,0.20102771902250377,True
+cogpilot,difficulty,2,self_supervised,selected_prediction,raw,0,"[10.0, 10.0]",0.0,0.4799903056492477,True
+cogpilot,difficulty,2,self_supervised,selected_prediction,raw,1,"[10.0, 10.0]",0.25,0.3957594267069555,False
+cogpilot,difficulty,2,self_supervised,selected_prediction,raw,2,"[10.0, 10.0]",0.5,0.23038771841135222,False
+cogpilot,difficulty,2,self_supervised,selected_prediction,raw,3,"[10.0, 10.0]",0.75,0.11320976939297087,False
+cogpilot,difficulty,2,self_supervised,selected_prediction,raw,4,"[10.0, 10.0]",1.0,0.11362699938801546,False
+cogpilot,difficulty,2,task_guided,first,raw,0,0.1,,0.1358258485695736,True
+cogpilot,difficulty,2,task_guided,first,raw,1,1.0,,0.11517170070411371,False
+cogpilot,difficulty,2,task_guided,first,raw,2,10.0,,0.10127136359586944,False
+cogpilot,difficulty,2,task_guided,second,raw,0,0.1,,0.3947077531196503,False
+cogpilot,difficulty,2,task_guided,second,raw,1,1.0,,0.43403470633708113,False
+cogpilot,difficulty,2,task_guided,second,raw,2,10.0,,0.4860417988683465,True
+cogpilot,difficulty,2,task_guided,full,raw,0,0.1,,0.23164315360213122,False
+cogpilot,difficulty,2,task_guided,full,raw,1,1.0,,0.20627285265569323,False
+cogpilot,difficulty,2,task_guided,full,raw,2,10.0,,0.2444799226674869,True
+cogpilot,difficulty,2,task_guided,concat128,raw,0,0.1,,0.20299446257121528,True
+cogpilot,difficulty,2,task_guided,concat128,raw,1,1.0,,0.18247846903750342,False
+cogpilot,difficulty,2,task_guided,concat128,raw,2,10.0,,0.17515045943111587,False
+cogpilot,difficulty,2,task_guided,concat_pca64,raw,0,0.1,,0.2245400811877681,True
+cogpilot,difficulty,2,task_guided,concat_pca64,raw,1,1.0,,0.21575075628712206,False
+cogpilot,difficulty,2,task_guided,concat_pca64,raw,2,10.0,,0.21285153972928544,False
+cogpilot,difficulty,2,task_guided,selected_prediction,raw,0,"[0.1, 10.0]",0.0,0.4860417988683465,True
+cogpilot,difficulty,2,task_guided,selected_prediction,raw,1,"[0.1, 10.0]",0.25,0.42948577384018033,False
+cogpilot,difficulty,2,task_guided,selected_prediction,raw,2,"[0.1, 10.0]",0.5,0.3002439779836778,False
+cogpilot,difficulty,2,task_guided,selected_prediction,raw,3,"[0.1, 10.0]",0.75,0.16601654433603374,False
+cogpilot,difficulty,2,task_guided,selected_prediction,raw,4,"[0.1, 10.0]",1.0,0.1358258485695736,False
+cogpilot,event_response,0,self_supervised,first,raw,0,0.1,,0.5312030098922894,False
+cogpilot,event_response,0,self_supervised,first,raw,1,1.0,,0.46195346958361905,False
+cogpilot,event_response,0,self_supervised,first,raw,2,10.0,,0.29141132309333173,False
+cogpilot,event_response,0,self_supervised,first,raw,3,100.0,,0.22531550717836316,True
+cogpilot,event_response,0,self_supervised,first,raw,4,1000.0,,0.23064647462462656,False
+cogpilot,event_response,0,self_supervised,first,raw,5,10000.0,,0.22543240387324814,False
+cogpilot,event_response,0,self_supervised,second,raw,0,0.1,,0.24114874301717695,False
+cogpilot,event_response,0,self_supervised,second,raw,1,1.0,,0.23267662482552112,False
+cogpilot,event_response,0,self_supervised,second,raw,2,10.0,,0.2279710400649884,False
+cogpilot,event_response,0,self_supervised,second,raw,3,100.0,,0.22798027973533558,False
+cogpilot,event_response,0,self_supervised,second,raw,4,1000.0,,0.22576311317225312,False
+cogpilot,event_response,0,self_supervised,second,raw,5,10000.0,,0.22414633283553,True
+cogpilot,event_response,0,self_supervised,full,raw,0,0.1,,0.5606487973651029,False
+cogpilot,event_response,0,self_supervised,full,raw,1,1.0,,0.3198764708834679,False
+cogpilot,event_response,0,self_supervised,full,raw,2,10.0,,0.2574601327281242,False
+cogpilot,event_response,0,self_supervised,full,raw,3,100.0,,0.22952004847235338,False
+cogpilot,event_response,0,self_supervised,full,raw,4,1000.0,,0.2289849908323102,False
+cogpilot,event_response,0,self_supervised,full,raw,5,10000.0,,0.22434338116773056,True
+cogpilot,event_response,0,self_supervised,concat128,raw,0,0.1,,0.4911651540026085,False
+cogpilot,event_response,0,self_supervised,concat128,raw,1,1.0,,0.5254249252739545,False
+cogpilot,event_response,0,self_supervised,concat128,raw,2,10.0,,0.3187198540085158,False
+cogpilot,event_response,0,self_supervised,concat128,raw,3,100.0,,0.2254843866298849,False
+cogpilot,event_response,0,self_supervised,concat128,raw,4,1000.0,,0.2278795912219052,False
+cogpilot,event_response,0,self_supervised,concat128,raw,5,10000.0,,0.22427117768201035,True
+cogpilot,event_response,0,self_supervised,concat_pca64,raw,0,0.1,,1.385688888429231,False
+cogpilot,event_response,0,self_supervised,concat_pca64,raw,1,1.0,,1.38387916977152,False
+cogpilot,event_response,0,self_supervised,concat_pca64,raw,2,10.0,,1.3660605180164638,False
+cogpilot,event_response,0,self_supervised,concat_pca64,raw,3,100.0,,1.2119828004924305,False
+cogpilot,event_response,0,self_supervised,concat_pca64,raw,4,1000.0,,0.6136610954873543,False
+cogpilot,event_response,0,self_supervised,concat_pca64,raw,5,10000.0,,0.2575877920590003,True
+cogpilot,event_response,0,self_supervised,selected_prediction,raw,0,"[100.0, 10000.0]",0.0,0.22414633283553,False
+cogpilot,event_response,0,self_supervised,selected_prediction,raw,1,"[100.0, 10000.0]",0.25,0.21975585015225121,False
+cogpilot,event_response,0,self_supervised,selected_prediction,raw,2,"[100.0, 10000.0]",0.5,0.2184499058809561,True
+cogpilot,event_response,0,self_supervised,selected_prediction,raw,3,"[100.0, 10000.0]",0.75,0.22036290169189543,False
+cogpilot,event_response,0,self_supervised,selected_prediction,raw,4,"[100.0, 10000.0]",1.0,0.22531550717836316,False
+cogpilot,event_response,0,task_guided,first,raw,0,0.1,,0.319769213175443,False
+cogpilot,event_response,0,task_guided,first,raw,1,1.0,,0.26919518459617076,False
+cogpilot,event_response,0,task_guided,first,raw,2,10.0,,0.21791258862198543,True
+cogpilot,event_response,0,task_guided,first,raw,3,100.0,,0.2353203762879846,False
+cogpilot,event_response,0,task_guided,first,raw,4,1000.0,,0.23070935154198033,False
+cogpilot,event_response,0,task_guided,first,raw,5,10000.0,,0.22478429884347076,False
+cogpilot,event_response,0,task_guided,second,raw,0,0.1,,0.24343220516269748,False
+cogpilot,event_response,0,task_guided,second,raw,1,1.0,,0.23515339500520627,False
+cogpilot,event_response,0,task_guided,second,raw,2,10.0,,0.22866554004734746,False
+cogpilot,event_response,0,task_guided,second,raw,3,100.0,,0.22814396221285585,False
+cogpilot,event_response,0,task_guided,second,raw,4,1000.0,,0.22579290261864016,False
+cogpilot,event_response,0,task_guided,second,raw,5,10000.0,,0.22409097264050243,True
+cogpilot,event_response,0,task_guided,full,raw,0,0.1,,0.5135244418135007,False
+cogpilot,event_response,0,task_guided,full,raw,1,1.0,,0.3222797986522457,False
+cogpilot,event_response,0,task_guided,full,raw,2,10.0,,0.2569121768887057,False
+cogpilot,event_response,0,task_guided,full,raw,3,100.0,,0.22952872929594745,False
+cogpilot,event_response,0,task_guided,full,raw,4,1000.0,,0.2279696590185598,False
+cogpilot,event_response,0,task_guided,full,raw,5,10000.0,,0.22423751475232076,True
+cogpilot,event_response,0,task_guided,concat128,raw,0,0.1,,0.5576025236029112,False
+cogpilot,event_response,0,task_guided,concat128,raw,1,1.0,,0.32641832269975224,False
+cogpilot,event_response,0,task_guided,concat128,raw,2,10.0,,0.24269999267178177,False
+cogpilot,event_response,0,task_guided,concat128,raw,3,100.0,,0.2341669032677727,False
+cogpilot,event_response,0,task_guided,concat128,raw,4,1000.0,,0.22855756965092006,False
+cogpilot,event_response,0,task_guided,concat128,raw,5,10000.0,,0.2237807811623194,True
+cogpilot,event_response,0,task_guided,concat_pca64,raw,0,0.1,,2.914401486290248,False
+cogpilot,event_response,0,task_guided,concat_pca64,raw,1,1.0,,2.9104560035362463,False
+cogpilot,event_response,0,task_guided,concat_pca64,raw,2,10.0,,2.871598496617847,False
+cogpilot,event_response,0,task_guided,concat_pca64,raw,3,100.0,,2.534770963506181,False
+cogpilot,event_response,0,task_guided,concat_pca64,raw,4,1000.0,,1.2003299401937408,False
+cogpilot,event_response,0,task_guided,concat_pca64,raw,5,10000.0,,0.3081777827746262,True
+cogpilot,event_response,0,task_guided,selected_prediction,raw,0,"[10.0, 10000.0]",0.0,0.22409097264050243,False
+cogpilot,event_response,0,task_guided,selected_prediction,raw,1,"[10.0, 10000.0]",0.25,0.21957944291557493,False
+cogpilot,event_response,0,task_guided,selected_prediction,raw,2,"[10.0, 10000.0]",0.5,0.21700736620324879,False
+cogpilot,event_response,0,task_guided,selected_prediction,raw,3,"[10.0, 10000.0]",0.75,0.21645539687471127,True
+cogpilot,event_response,0,task_guided,selected_prediction,raw,4,"[10.0, 10000.0]",1.0,0.21791258862198543,False
+cogpilot,event_response,1,self_supervised,first,raw,0,0.1,,3.3023492840184345,False
+cogpilot,event_response,1,self_supervised,first,raw,1,1.0,,4.749201563922473,False
+cogpilot,event_response,1,self_supervised,first,raw,2,10.0,,2.08884011880386,False
+cogpilot,event_response,1,self_supervised,first,raw,3,100.0,,0.4292102463991615,False
+cogpilot,event_response,1,self_supervised,first,raw,4,1000.0,,0.31657564178917863,False
+cogpilot,event_response,1,self_supervised,first,raw,5,10000.0,,0.3041874345900441,True
+cogpilot,event_response,1,self_supervised,second,raw,0,0.1,,0.31717252415841257,False
+cogpilot,event_response,1,self_supervised,second,raw,1,1.0,,0.305881500359839,False
+cogpilot,event_response,1,self_supervised,second,raw,2,10.0,,0.3011233817654032,False
+cogpilot,event_response,1,self_supervised,second,raw,3,100.0,,0.30017243839335633,True
+cogpilot,event_response,1,self_supervised,second,raw,4,1000.0,,0.30046771823671425,False
+cogpilot,event_response,1,self_supervised,second,raw,5,10000.0,,0.30075672398089703,False
+cogpilot,event_response,1,self_supervised,full,raw,0,0.1,,1.0189009865719536,False
+cogpilot,event_response,1,self_supervised,full,raw,1,1.0,,0.7960544643185135,False
+cogpilot,event_response,1,self_supervised,full,raw,2,10.0,,0.5820341840544958,False
+cogpilot,event_response,1,self_supervised,full,raw,3,100.0,,0.5655039919893884,False
+cogpilot,event_response,1,self_supervised,full,raw,4,1000.0,,0.37037252703038714,False
+cogpilot,event_response,1,self_supervised,full,raw,5,10000.0,,0.3075452103119712,True
+cogpilot,event_response,1,self_supervised,concat128,raw,0,0.1,,1.4161454127933184,False
+cogpilot,event_response,1,self_supervised,concat128,raw,1,1.0,,3.870687434502284,False
+cogpilot,event_response,1,self_supervised,concat128,raw,2,10.0,,1.663101537414581,False
+cogpilot,event_response,1,self_supervised,concat128,raw,3,100.0,,0.35201823502850116,False
+cogpilot,event_response,1,self_supervised,concat128,raw,4,1000.0,,0.312429983788802,False
+cogpilot,event_response,1,self_supervised,concat128,raw,5,10000.0,,0.30328866964394846,True
+cogpilot,event_response,1,self_supervised,concat_pca64,raw,0,0.1,,9.598713159893753,False
+cogpilot,event_response,1,self_supervised,concat_pca64,raw,1,1.0,,9.58818087922106,False
+cogpilot,event_response,1,self_supervised,concat_pca64,raw,2,10.0,,9.484131365536019,False
+cogpilot,event_response,1,self_supervised,concat_pca64,raw,3,100.0,,8.55699190557532,False
+cogpilot,event_response,1,self_supervised,concat_pca64,raw,4,1000.0,,4.364059242925402,False
+cogpilot,event_response,1,self_supervised,concat_pca64,raw,5,10000.0,,0.8799508535160923,True
+cogpilot,event_response,1,self_supervised,selected_prediction,raw,0,"[10000.0, 100.0]",0.0,0.30017243839335633,False
+cogpilot,event_response,1,self_supervised,selected_prediction,raw,1,"[10000.0, 100.0]",0.25,0.29868350828932844,True
+cogpilot,event_response,1,self_supervised,selected_prediction,raw,2,"[10000.0, 100.0]",0.5,0.29882993812314046,False
+cogpilot,event_response,1,self_supervised,selected_prediction,raw,3,"[10000.0, 100.0]",0.75,0.3006675411712488,False
+cogpilot,event_response,1,self_supervised,selected_prediction,raw,4,"[10000.0, 100.0]",1.0,0.3041874345900441,False
+cogpilot,event_response,1,task_guided,first,raw,0,0.1,,2.739190781392048,False
+cogpilot,event_response,1,task_guided,first,raw,1,1.0,,3.859676349079943,False
+cogpilot,event_response,1,task_guided,first,raw,2,10.0,,1.85297786271765,False
+cogpilot,event_response,1,task_guided,first,raw,3,100.0,,0.3949496686710682,False
+cogpilot,event_response,1,task_guided,first,raw,4,1000.0,,0.3113452665026857,False
+cogpilot,event_response,1,task_guided,first,raw,5,10000.0,,0.30320863328495884,True
+cogpilot,event_response,1,task_guided,second,raw,0,0.1,,0.3194678640238624,False
+cogpilot,event_response,1,task_guided,second,raw,1,1.0,,0.3099554370001387,False
+cogpilot,event_response,1,task_guided,second,raw,2,10.0,,0.30168864601485235,False
+cogpilot,event_response,1,task_guided,second,raw,3,100.0,,0.30003098849167004,True
+cogpilot,event_response,1,task_guided,second,raw,4,1000.0,,0.3000351970572229,False
+cogpilot,event_response,1,task_guided,second,raw,5,10000.0,,0.3003791437158148,False
+cogpilot,event_response,1,task_guided,full,raw,0,0.1,,1.2249041056103327,False
+cogpilot,event_response,1,task_guided,full,raw,1,1.0,,0.9336409745004841,False
+cogpilot,event_response,1,task_guided,full,raw,2,10.0,,0.6333585435993241,False
+cogpilot,event_response,1,task_guided,full,raw,3,100.0,,0.565952296701009,False
+cogpilot,event_response,1,task_guided,full,raw,4,1000.0,,0.3696135633351834,False
+cogpilot,event_response,1,task_guided,full,raw,5,10000.0,,0.3075433542352985,True
+cogpilot,event_response,1,task_guided,concat128,raw,0,0.1,,0.9783329292895722,False
+cogpilot,event_response,1,task_guided,concat128,raw,1,1.0,,3.0777170493038555,False
+cogpilot,event_response,1,task_guided,concat128,raw,2,10.0,,1.448159225659647,False
+cogpilot,event_response,1,task_guided,concat128,raw,3,100.0,,0.3370271849474573,False
+cogpilot,event_response,1,task_guided,concat128,raw,4,1000.0,,0.31125446044035837,False
+cogpilot,event_response,1,task_guided,concat128,raw,5,10000.0,,0.3022708980507664,True
+cogpilot,event_response,1,task_guided,concat_pca64,raw,0,0.1,,2.072916342854394,False
+cogpilot,event_response,1,task_guided,concat_pca64,raw,1,1.0,,2.0707514315149362,False
+cogpilot,event_response,1,task_guided,concat_pca64,raw,2,10.0,,2.0493692889642947,False
+cogpilot,event_response,1,task_guided,concat_pca64,raw,3,100.0,,1.8592971423668996,False
+cogpilot,event_response,1,task_guided,concat_pca64,raw,4,1000.0,,1.016023261310012,False
+cogpilot,event_response,1,task_guided,concat_pca64,raw,5,10000.0,,0.36794157219029844,True
+cogpilot,event_response,1,task_guided,selected_prediction,raw,0,"[10000.0, 100.0]",0.0,0.30003098849167004,False
+cogpilot,event_response,1,task_guided,selected_prediction,raw,1,"[10000.0, 100.0]",0.25,0.2984122758044889,False
+cogpilot,event_response,1,task_guided,selected_prediction,raw,2,"[10000.0, 100.0]",0.5,0.2983715800687222,True
+cogpilot,event_response,1,task_guided,selected_prediction,raw,3,"[10000.0, 100.0]",0.75,0.2999708612205342,False
+cogpilot,event_response,1,task_guided,selected_prediction,raw,4,"[10000.0, 100.0]",1.0,0.30320863328495884,False
+cogpilot,event_response,2,self_supervised,first,raw,0,0.1,,1.9434209219531333,False
+cogpilot,event_response,2,self_supervised,first,raw,1,1.0,,2.136289407969744,False
+cogpilot,event_response,2,self_supervised,first,raw,2,10.0,,1.5433551903872307,False
+cogpilot,event_response,2,self_supervised,first,raw,3,100.0,,0.5683350821687764,False
+cogpilot,event_response,2,self_supervised,first,raw,4,1000.0,,0.33308291060629075,False
+cogpilot,event_response,2,self_supervised,first,raw,5,10000.0,,0.2681211714926375,True
+cogpilot,event_response,2,self_supervised,second,raw,0,0.1,,0.26455121009142707,False
+cogpilot,event_response,2,self_supervised,second,raw,1,1.0,,0.26116336781574767,False
+cogpilot,event_response,2,self_supervised,second,raw,2,10.0,,0.2608309262856947,False
+cogpilot,event_response,2,self_supervised,second,raw,3,100.0,,0.25878925081708215,False
+cogpilot,event_response,2,self_supervised,second,raw,4,1000.0,,0.2537212240121046,False
+cogpilot,event_response,2,self_supervised,second,raw,5,10000.0,,0.25146213059430067,True
+cogpilot,event_response,2,self_supervised,full,raw,0,0.1,,0.4239008170998009,False
+cogpilot,event_response,2,self_supervised,full,raw,1,1.0,,0.6550059781352459,False
+cogpilot,event_response,2,self_supervised,full,raw,2,10.0,,0.6752493159762617,False
+cogpilot,event_response,2,self_supervised,full,raw,3,100.0,,0.5291062992790286,False
+cogpilot,event_response,2,self_supervised,full,raw,4,1000.0,,0.30279447118622904,False
+cogpilot,event_response,2,self_supervised,full,raw,5,10000.0,,0.2532258609630631,True
+cogpilot,event_response,2,self_supervised,concat128,raw,0,0.1,,0.9036110530585235,False
+cogpilot,event_response,2,self_supervised,concat128,raw,1,1.0,,1.5829737239966715,False
+cogpilot,event_response,2,self_supervised,concat128,raw,2,10.0,,1.272276342254048,False
+cogpilot,event_response,2,self_supervised,concat128,raw,3,100.0,,0.5011192287511502,False
+cogpilot,event_response,2,self_supervised,concat128,raw,4,1000.0,,0.3410820928504676,False
+cogpilot,event_response,2,self_supervised,concat128,raw,5,10000.0,,0.2694965074443811,True
+cogpilot,event_response,2,self_supervised,concat_pca64,raw,0,0.1,,10.069105488744748,False
+cogpilot,event_response,2,self_supervised,concat_pca64,raw,1,1.0,,10.057785306198072,False
+cogpilot,event_response,2,self_supervised,concat_pca64,raw,2,10.0,,9.945984023713994,False
+cogpilot,event_response,2,self_supervised,concat_pca64,raw,3,100.0,,8.952338773586504,False
+cogpilot,event_response,2,self_supervised,concat_pca64,raw,4,1000.0,,4.517505752790445,False
+cogpilot,event_response,2,self_supervised,concat_pca64,raw,5,10000.0,,0.9038690217689714,True
+cogpilot,event_response,2,self_supervised,selected_prediction,raw,0,"[10000.0, 10000.0]",0.0,0.25146213059430067,True
+cogpilot,event_response,2,self_supervised,selected_prediction,raw,1,"[10000.0, 10000.0]",0.25,0.25327538227493795,False
+cogpilot,event_response,2,self_supervised,selected_prediction,raw,2,"[10000.0, 10000.0]",0.5,0.25677138401066796,False
+cogpilot,event_response,2,self_supervised,selected_prediction,raw,3,"[10000.0, 10000.0]",0.75,0.2617872944105205,False
+cogpilot,event_response,2,self_supervised,selected_prediction,raw,4,"[10000.0, 10000.0]",1.0,0.2681211714926375,False
+cogpilot,event_response,2,task_guided,first,raw,0,0.1,,1.3052804298077798,False
+cogpilot,event_response,2,task_guided,first,raw,1,1.0,,2.0536152686523463,False
+cogpilot,event_response,2,task_guided,first,raw,2,10.0,,1.3203710487225226,False
+cogpilot,event_response,2,task_guided,first,raw,3,100.0,,0.46854413490061,False
+cogpilot,event_response,2,task_guided,first,raw,4,1000.0,,0.30621307707341533,False
+cogpilot,event_response,2,task_guided,first,raw,5,10000.0,,0.2621369247593072,True
+cogpilot,event_response,2,task_guided,second,raw,0,0.1,,0.2691202570140719,False
+cogpilot,event_response,2,task_guided,second,raw,1,1.0,,0.26426498197584714,False
+cogpilot,event_response,2,task_guided,second,raw,2,10.0,,0.26164055624945703,False
+cogpilot,event_response,2,task_guided,second,raw,3,100.0,,0.25894003985909186,False
+cogpilot,event_response,2,task_guided,second,raw,4,1000.0,,0.25425874008246596,False
+cogpilot,event_response,2,task_guided,second,raw,5,10000.0,,0.2512600204558889,True
+cogpilot,event_response,2,task_guided,full,raw,0,0.1,,0.5070579288402367,False
+cogpilot,event_response,2,task_guided,full,raw,1,1.0,,0.7048890405261008,False
+cogpilot,event_response,2,task_guided,full,raw,2,10.0,,0.6654195184144576,False
+cogpilot,event_response,2,task_guided,full,raw,3,100.0,,0.5169722711019895,False
+cogpilot,event_response,2,task_guided,full,raw,4,1000.0,,0.3049209336937616,False
+cogpilot,event_response,2,task_guided,full,raw,5,10000.0,,0.25355870217944765,True
+cogpilot,event_response,2,task_guided,concat128,raw,0,0.1,,1.0177829633538766,False
+cogpilot,event_response,2,task_guided,concat128,raw,1,1.0,,1.6899487490521465,False
+cogpilot,event_response,2,task_guided,concat128,raw,2,10.0,,1.1459793357437673,False
+cogpilot,event_response,2,task_guided,concat128,raw,3,100.0,,0.4376281444527841,False
+cogpilot,event_response,2,task_guided,concat128,raw,4,1000.0,,0.3167330829083302,False
+cogpilot,event_response,2,task_guided,concat128,raw,5,10000.0,,0.2636344710828717,True
+cogpilot,event_response,2,task_guided,concat_pca64,raw,0,0.1,,5.904998827478635,False
+cogpilot,event_response,2,task_guided,concat_pca64,raw,1,1.0,,5.898399731293166,False
+cogpilot,event_response,2,task_guided,concat_pca64,raw,2,10.0,,5.833224568745657,False
+cogpilot,event_response,2,task_guided,concat_pca64,raw,3,100.0,,5.253933907194238,False
+cogpilot,event_response,2,task_guided,concat_pca64,raw,4,1000.0,,2.6697151267402446,False
+cogpilot,event_response,2,task_guided,concat_pca64,raw,5,10000.0,,0.5808554734270202,True
+cogpilot,event_response,2,task_guided,selected_prediction,raw,0,"[10000.0, 10000.0]",0.0,0.2512600204558889,True
+cogpilot,event_response,2,task_guided,selected_prediction,raw,1,"[10000.0, 10000.0]",0.25,0.2521689779104469,False
+cogpilot,event_response,2,task_guided,selected_prediction,raw,2,"[10000.0, 10000.0]",0.5,0.2543172229208384,False
+cogpilot,event_response,2,task_guided,selected_prediction,raw,3,"[10000.0, 10000.0]",0.75,0.2576747283789913,False
+cogpilot,event_response,2,task_guided,selected_prediction,raw,4,"[10000.0, 10000.0]",1.0,0.2621369247593072,False
