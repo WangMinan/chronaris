@@ -37,6 +37,10 @@ def extract_clare_frequency(request):
         label_path=root/'Labels'/(subject+'.csv');sources[str(label_path)]=file_digest(label_path)
         labels=pd.read_csv(label_path)
         for experiment in range(4):
+            if f'level_{experiment}' not in labels:
+                records.append(dict(subject=subject,experiment=experiment,legal=0,accepted=0,reason='missing_label_column'))
+                print(subject,experiment,'missing_label_column',file=sys.stderr,flush=True)
+                continue
             paths=[root/'EEG'/subject/f'eeg_data_exp_{experiment}.csv',
                    root/'EDA'/subject/f'eda_data_experiment_{experiment}.csv',
                    root/'ECG'/subject/f'ecg_data_experiment_{experiment}.csv']
@@ -85,6 +89,6 @@ def extract_clare_frequency(request):
         coverage.append(dict(subject=subject,legal=len(rows),accepted=len(valid),
                              class_counts=[sum(r['target']==k for r in valid) for k in (0,1)],
                              passed=len(valid)>=100 and len(valid)>=.8*len(rows)))
-    return dict(features=np.asarray(features),metadata=np.array(json.dumps(dict(
+    return dict(features=np.asarray(features).reshape(-1,36),metadata=np.array(json.dumps(dict(
         status='passed' if all(r['passed'] for r in coverage) else 'failed',windows=windows,quality=quality,
         sources=sources,records=records,coverage=coverage),allow_nan=False)))
