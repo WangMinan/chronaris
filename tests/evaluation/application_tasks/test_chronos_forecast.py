@@ -58,3 +58,27 @@ def test_native_training_resume_preserves_optimizer_rng_and_window_order(tmp_pat
     left=torch.load(whole['last_path'],weights_only=True);right=torch.load(resumed['last_path'],weights_only=True)
     assert left['steps']==right['steps'] and left['history']==right['history'] and left['orders']==right['orders']
     for key in left['model']:torch.testing.assert_close(left['model'][key],right['model'][key],atol=0,rtol=0,equal_nan=True)
+
+
+def test_historical_mean_zero_requires_a_valid_missingness_witness():
+    import numpy as np,pytest
+    from chronaris.evaluation.application_tasks.chronos_forecast_inputs import historical_mean_mask
+    anchor=np.ones((1,96));anchor[0,20]=0;latest=np.ones_like(anchor);valid=np.ones_like(anchor,dtype=bool)
+    mask=historical_mean_mask(anchor,latest,valid)
+    assert not mask[0,:15].any() and not mask[0,20] and mask[0,-1]
+    latest[0,20]=0
+    with pytest.raises(AssertionError):historical_mean_mask(anchor,latest,valid)
+
+
+def test_forecast_gate_separates_extra_calibration_context_and_keeps_strong_controls():
+    from chronaris.evaluation.application_tasks.chronos_forecast_results import forecast_gates
+    from chronaris.evaluation.application_tasks.shape_mult_results import metric_tables
+    rows=[]
+    for subject in ('a','b'):
+        for method,value in [('reference_strong',.9),('context_rest',.1),('native_frozen_aircraft',1.),
+                             ('native_adapted_aircraft',1.),('native_frozen_joint',.8),('native_adapted_joint',.8)]:
+            rows.append(dict(fold='fold01',subject=subject,sample_id=subject,method=method,truth=0.,prediction=value))
+    people,summary=metric_tables(rows);assert all(g['passed'] for g in forecast_gates(people,summary))
+    for r in rows:
+        if r['method']=='reference_strong':r['prediction']=.7
+    people,summary=metric_tables(rows);assert not any(g['passed'] for g in forecast_gates(people,summary))

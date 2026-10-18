@@ -1,0 +1,6 @@
+{
+  "reason": "The legacy first fifteen anchor queries summarize less than five seconds. They are now masked rather than represented as full five-second means. All original source arrays and labels remain unchanged.",
+  "encoder_updates": 0,
+  "hardware_qualification_started": false,
+  "threshold_changed": false
+}
