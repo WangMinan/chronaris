@@ -1,0 +1,21 @@
+{
+  "method": "vehicle_only",
+  "status": "max_epochs",
+  "complete": true,
+  "epochs": 100,
+  "updates": 8100,
+  "best_epoch": 86,
+  "parameter_count": 110400,
+  "elapsed_s": 207.77155421700445,
+  "preflight_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "trained_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "checkpoint_sha256": "ab5bc7fdc011786c3dda4e8968f797859d18b691faa3ce9c1d4c1ecd8b5a76ad",
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/vehicle_only/best.pt",
+  "reload_passed": true
+}

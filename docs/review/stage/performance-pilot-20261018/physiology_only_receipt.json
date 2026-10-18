@@ -1,0 +1,21 @@
+{
+  "method": "physiology_only",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 30,
+  "updates": 2430,
+  "best_epoch": 15,
+  "parameter_count": 109632,
+  "elapsed_s": 88.7532064980187,
+  "preflight_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "trained_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "checkpoint_sha256": "3362cdbe5bd54c1bdc234c4489b45bc49bd1989dacb9ce584d226fab8b289b4c",
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/physiology_only/best.pt",
+  "reload_passed": true
+}

@@ -8,6 +8,7 @@ from chronaris.evaluation.application_tasks.performance_pilot_audit import (
 )
 from chronaris.dataset.cogpilot_performance import file_digest
 from chronaris.evaluation.application_tasks.performance_pilot_data import PerformancePilotData
+from chronaris.evaluation.application_tasks.performance_pilot_verify import verify_performance_pilot
 
 
 def test_qualification_checks_coverage_and_trivial_persistence(tmp_path):
@@ -60,3 +61,11 @@ def test_data_binding_fit_only_normalization_and_sealed_scoring(tmp_path):
     receipt.write_text(json.dumps(dict(status='failed', gates={}, snapshot_sha256=file_digest(path))))
     with pytest.raises(ValueError, match='did not pass'):
         PerformancePilotData(path, receipt, 'cpu')
+
+
+def test_verification_refuses_changed_frozen_source(tmp_path):
+    source = tmp_path/'old.txt'; source.write_text('frozen')
+    (tmp_path/'protected_sources.json').write_text(json.dumps({str(source): file_digest(source)}))
+    source.write_text('changed')
+    with pytest.raises(AssertionError, match='protected sources changed'):
+        verify_performance_pilot(tmp_path)

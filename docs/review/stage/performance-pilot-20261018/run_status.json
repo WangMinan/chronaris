@@ -1,0 +1,52 @@
+{
+  "status": "completed",
+  "success": false,
+  "candidate_rmse": 0.8314444008439548,
+  "strongest_control": {
+    "method": "persistence",
+    "rmse": 0.45967971814297864,
+    "mae": 0.30876636175657196,
+    "scope": "primary"
+  },
+  "relative_improvements": {
+    "vehicle_only": -0.16614012147185608,
+    "physiology_only": 0.6091462114202701,
+    "contiformer": 0.4790473639380757,
+    "mult": 0.06749427735505364,
+    "independent_concat": -0.16868883080790775,
+    "physiology_statistics": 0.9602896730136898,
+    "vehicle_statistics": 0.41561912159958003,
+    "dual_statistics": 0.9594083812005173,
+    "train_mean": 0.5188228058084023,
+    "train_median": 0.5244113798764202,
+    "persistence": -0.8087471951184553
+  },
+  "subjects_improved_over_strongest": 0,
+  "encoder_updates": 25191,
+  "model_count": 5,
+  "score_samples": 2517,
+  "elapsed_s": 779.0144143280049,
+  "scope": "one_previously_exposed_development_fold_seed17",
+  "binding": {
+    "snapshot_sha256": "795ae38b38ee0fb86fb3988c9d5545ed51e151836ae2a3625b657235f565cc47",
+    "qualification_sha256": "d010d119c5b74ca4862dfafd2a3f8b0cec89b0afe5376a1901c71c19cde6e093",
+    "plan_sha256": "a5b7da3986f19f29606c429b14b95087164235e9273c2bcfa399bb734ef6a8e4",
+    "source_commit": "41d00f9e51ca2f4da0993f1290648c1fbcf6a8b6",
+    "device": "NVIDIA GeForce RTX 4070 SUPER",
+    "role_subjects": {
+      "fit": [
+        "sub-cp004",
+        "sub-cp008",
+        "sub-cp019"
+      ],
+      "select": [
+        "sub-cp025"
+      ],
+      "score": [
+        "sub-cp003",
+        "sub-cp011",
+        "sub-cp022"
+      ]
+    }
+  }
+}

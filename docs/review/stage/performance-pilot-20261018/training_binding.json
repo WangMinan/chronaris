@@ -1,0 +1,22 @@
+{
+  "snapshot_sha256": "795ae38b38ee0fb86fb3988c9d5545ed51e151836ae2a3625b657235f565cc47",
+  "qualification_sha256": "d010d119c5b74ca4862dfafd2a3f8b0cec89b0afe5376a1901c71c19cde6e093",
+  "plan_sha256": "a5b7da3986f19f29606c429b14b95087164235e9273c2bcfa399bb734ef6a8e4",
+  "source_commit": "41d00f9e51ca2f4da0993f1290648c1fbcf6a8b6",
+  "device": "NVIDIA GeForce RTX 4070 SUPER",
+  "role_subjects": {
+    "fit": [
+      "sub-cp004",
+      "sub-cp008",
+      "sub-cp019"
+    ],
+    "select": [
+      "sub-cp025"
+    ],
+    "score": [
+      "sub-cp003",
+      "sub-cp011",
+      "sub-cp022"
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "binding": {
+    "snapshot_sha256": "795ae38b38ee0fb86fb3988c9d5545ed51e151836ae2a3625b657235f565cc47",
+    "qualification_sha256": "d010d119c5b74ca4862dfafd2a3f8b0cec89b0afe5376a1901c71c19cde6e093",
+    "plan_sha256": "a5b7da3986f19f29606c429b14b95087164235e9273c2bcfa399bb734ef6a8e4",
+    "source_commit": "41d00f9e51ca2f4da0993f1290648c1fbcf6a8b6",
+    "device": "NVIDIA GeForce RTX 4070 SUPER",
+    "role_subjects": {
+      "fit": [
+        "sub-cp004",
+        "sub-cp008",
+        "sub-cp019"
+      ],
+      "select": [
+        "sub-cp025"
+      ],
+      "score": [
+        "sub-cp003",
+        "sub-cp011",
+        "sub-cp022"
+      ]
+    }
+  },
+  "selected_ridge_alpha": {
+    "vehicle_only": 1000.0,
+    "physiology_only": 1000.0,
+    "contiformer": 1000.0,
+    "mult": 10.0,
+    "same_backbone": 1000.0,
+    "independent_concat": 1000.0,
+    "physiology_statistics": 100.0,
+    "vehicle_statistics": 0.1,
+    "dual_statistics": 1000.0
+  },
+  "receipts": {
+    "vehicle_only": {
+      "method": "vehicle_only",
+      "status": "max_epochs",
+      "complete": true,
+      "epochs": 100,
+      "updates": 8100,
+      "best_epoch": 86,
+      "parameter_count": 110400,
+      "elapsed_s": 207.77155421700445,
+      "preflight_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "trained_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "checkpoint_sha256": "ab5bc7fdc011786c3dda4e8968f797859d18b691faa3ce9c1d4c1ecd8b5a76ad",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/vehicle_only/best.pt",
+      "reload_passed": true
+    },
+    "physiology_only": {
+      "method": "physiology_only",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 30,
+      "updates": 2430,
+      "best_epoch": 15,
+      "parameter_count": 109632,
+      "elapsed_s": 88.7532064980187,
+      "preflight_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "trained_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "checkpoint_sha256": "3362cdbe5bd54c1bdc234c4489b45bc49bd1989dacb9ce584d226fab8b289b4c",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/physiology_only/best.pt",
+      "reload_passed": true
+    },
+    "contiformer": {
+      "method": "contiformer",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 36,
+      "updates": 2916,
+      "best_epoch": 21,
+      "parameter_count": 111168,
+      "elapsed_s": 146.43585225200513,
+      "preflight_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "trained_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "checkpoint_sha256": "841f6cb9e3fd0e5883de67e844bb8a43bf15e9592d3bba6be2dc07a7af964bad",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/contiformer/best.pt",
+      "reload_passed": true
+    },
+    "mult": {
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 49,
+      "updates": 3969,
+      "best_epoch": 34,
+      "parameter_count": 1013440,
+      "elapsed_s": 166.25679250701796,
+      "preflight_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "trained_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "checkpoint_sha256": "aab46e3c26d434a3057e054301b3f53ed76bab5736710669d6adcfad20be0092",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/mult/best.pt",
+      "reload_passed": true
+    },
+    "same_backbone": {
+      "method": "same_backbone",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 96,
+      "updates": 7776,
+      "best_epoch": 81,
+      "parameter_count": 228288,
+      "elapsed_s": 166.25401379799587,
+      "preflight_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "trained_history": {
+        "changed": 0.0,
+        "deleted": 0.0
+      },
+      "checkpoint_sha256": "50d6201a48f04fc6efa1057f73d9d26b1cc10fddd4e5ec725ca3e22e5bf3dbfb",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/same_backbone/best.pt",
+      "reload_passed": true
+    }
+  },
+  "readout_sha256": "e58477e75a3857fc9bec9dfe627a02d4cd4b9182be074333035138f5ab2a323b",
+  "score_role_opened": false
+}

@@ -1,0 +1,21 @@
+{
+  "method": "contiformer",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 36,
+  "updates": 2916,
+  "best_epoch": 21,
+  "parameter_count": 111168,
+  "elapsed_s": 146.43585225200513,
+  "preflight_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "trained_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "checkpoint_sha256": "841f6cb9e3fd0e5883de67e844bb8a43bf15e9592d3bba6be2dc07a7af964bad",
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/contiformer/best.pt",
+  "reload_passed": true
+}

@@ -1,0 +1,8 @@
+{
+  "source_files": 420,
+  "overlap_with_previous_audit": 168,
+  "all_shared_identical": true,
+  "source_identity": "full original file SHA256; no source rewriting",
+  "extraction_failure": "observations.partial retained; 47 conflicting duplicate time groups quarantined by original reversal rule",
+  "qualification_commit": "41d00f9e"
+}

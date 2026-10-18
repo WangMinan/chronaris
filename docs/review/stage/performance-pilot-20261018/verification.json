@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "protected_files": 1553,
+  "changed_sources": [],
+  "source_files_bound": 420,
+  "prediction_rows": 42789,
+  "subject_metrics": 51,
+  "max_metric_recompute_delta": 4.440892098500626e-16,
+  "complete_models": 5,
+  "encoder_updates": 25191,
+  "candidate_passed": false,
+  "best_control": "persistence",
+  "candidate_relative_improvement": -0.8087471951184553,
+  "score_subject_wins": 0
+}

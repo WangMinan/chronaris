@@ -1,0 +1,21 @@
+{
+  "method": "mult",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 49,
+  "updates": 3969,
+  "best_epoch": 34,
+  "parameter_count": 1013440,
+  "elapsed_s": 166.25679250701796,
+  "preflight_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "trained_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "checkpoint_sha256": "aab46e3c26d434a3057e054301b3f53ed76bab5736710669d6adcfad20be0092",
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/mult/best.pt",
+  "reload_passed": true
+}

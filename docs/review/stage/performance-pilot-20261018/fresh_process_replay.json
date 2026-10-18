@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "models": 5,
+  "samples_per_model": 2517,
+  "max_prediction_deltas": {
+    "vehicle_only": 0.0,
+    "vehicle_only_task_head": 0.0,
+    "physiology_only": 0.0,
+    "physiology_only_task_head": 0.0,
+    "contiformer": 0.0,
+    "contiformer_task_head": 0.0,
+    "mult": 0.0,
+    "mult_task_head": 0.0,
+    "same_backbone": 0.0,
+    "same_backbone_task_head": 0.0
+  },
+  "optimizer_updates": 0,
+  "atol": 1e-05,
+  "rtol": 1e-05
+}

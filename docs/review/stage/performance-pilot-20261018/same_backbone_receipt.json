@@ -1,0 +1,21 @@
+{
+  "method": "same_backbone",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 96,
+  "updates": 7776,
+  "best_epoch": 81,
+  "parameter_count": 228288,
+  "elapsed_s": 166.25401379799587,
+  "preflight_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "trained_history": {
+    "changed": 0.0,
+    "deleted": 0.0
+  },
+  "checkpoint_sha256": "50d6201a48f04fc6efa1057f73d9d26b1cc10fddd4e5ec725ca3e22e5bf3dbfb",
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-performance-pilot/training/same_backbone/best.pt",
+  "reload_passed": true
+}
