@@ -45,9 +45,15 @@ def test_locked_native_workflow_replays_and_checks_actual_training_lineage(tmp_p
         monkeypatch.setattr(module,'forecast_data',inputs);monkeypatch.setattr(module,'forecast_folds',lambda:folds)
         monkeypatch.setattr(module,'verify_assets',lambda _:{});monkeypatch.setattr(module,'development_gpu_lock',lock)
     report=tmp_path/'report';report.mkdir();assets=tmp_path/'assets';assets.mkdir()
-    (report/'PLAN.md').write_text('CPU end-to-end check');save_json(report/'qualification.json',dict(status='passed'))
+    (report/'PLAN.md').write_text('CPU end-to-end check')
+    source=tmp_path/'assets.json';save_json(source,{})
+    for module in (scoring,verification):monkeypatch.setattr(module,'ASSETS',str(source))
+    save_json(report/'input_qualification.json',dict(status='passed'))
+    save_json(report/'qualification.json',dict(status='passed',input_qualification_sha256=file_digest(report/'input_qualification.json'),
+                                              assets_sha256=file_digest(source),optimizer_updates=0,checks=[{}]*4,source_files={}))
     save_json(report/'protected_sources.json',{})
-    binding=dict(plan_sha256=file_digest(report/'PLAN.md'),qualification_sha256=file_digest(report/'qualification.json'),source_files={})
+    binding=dict(plan_sha256=file_digest(report/'PLAN.md'),qualification_sha256=file_digest(report/'qualification.json'),source_files={},
+                 input_qualification_sha256=file_digest(report/'input_qualification.json'),assets_sha256=file_digest(source))
     units=[]
     for spec in folds:
         for view in scoring.VIEWS:

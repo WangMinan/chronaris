@@ -34,10 +34,13 @@ def run_chronos_forecast(report,root,deadline=NIGHT_DEADLINE):
         attempts=report/'attempts';attempts.mkdir(exist_ok=True)
         save_json(attempts/(str(time.time_ns())+'.json'),old)
     q=json.loads((report/'qualification.json').read_text());assert q['status']=='passed'
+    assert len(q['checks'])==4 and q['input_qualification_sha256']==file_digest(report/'input_qualification.json')
+    assert q['assets_sha256']==file_digest(ASSETS) and all(file_digest(p)==h for p,h in q['source_files'].items())
     protected=json.loads((report/'protected_sources.json').read_text());assert all(file_digest(p)==h for p,h in protected.items())
     assets=verify_assets(ASSETS);torch.set_num_threads(1)
     code=[Path(__file__),Path(__file__).with_name('chronos_forecast_inputs.py'),Path(__file__).with_name('chronos_forecast_training.py'),
-          Path(__file__).parents[2]/'modeling/fusion_encoders/chronos_forecast.py']
+          Path(__file__).with_name('fair_residual_inputs.py'),Path(__file__).with_name('performance_pilot_training.py'),
+          Path(__file__).parents[2]/'modeling/fusion_encoders/chronos_forecast.py',Path(__file__).parents[2]/'modeling/training/rng.py']
     binding=dict(plan_sha256=file_digest(report/'PLAN.md'),qualification_sha256=file_digest(report/'qualification.json'),
                  input_qualification_sha256=file_digest(report/'input_qualification.json'),assets_sha256=file_digest(ASSETS),seed=17,
                  folds=forecast_folds(),source_files={str(p.resolve()):file_digest(p) for p in code})

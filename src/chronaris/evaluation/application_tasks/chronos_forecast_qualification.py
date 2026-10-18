@@ -68,6 +68,9 @@ def qualify_forecast_hardware(report):
                     del fresh,loss;torch.cuda.empty_cache()
                 del data,x,mask;print(spec['name'],view,'qualified',flush=True)
     verify_assets(ASSETS)
+    code=[Path(__file__),Path(__file__).with_name('chronos_forecast_inputs.py'),Path(__file__).with_name('fair_residual_inputs.py'),
+          Path(__file__).parents[2]/'modeling/fusion_encoders/chronos_forecast.py',Path(__file__).parents[2]/'modeling/training/rng.py']
     result=dict(status='passed',checks=checks,input_qualification_sha256=file_digest(report/'input_qualification.json'),
-                assets_path=ASSETS,assets_sha256=file_digest(ASSETS),optimizer_updates=0,device=torch.cuda.get_device_name())
+                assets_path=ASSETS,assets_sha256=file_digest(ASSETS),source_files={str(p.resolve()):file_digest(p) for p in code},
+                optimizer_updates=0,device=torch.cuda.get_device_name())
     save_json(report/'qualification.json',result);return result

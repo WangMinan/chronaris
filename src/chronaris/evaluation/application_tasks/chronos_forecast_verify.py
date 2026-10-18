@@ -42,6 +42,12 @@ def verify_chronos_forecast(report,root,deadline=NIGHT_DEADLINE):
     assert file_digest(Path(__file__).with_name('chronos_forecast_results.py'))==result['scoring_source_sha256']
     assert file_digest(report/'PLAN.md')==binding['plan_sha256']
     assert file_digest(report/'qualification.json')==binding['qualification_sha256']
+    assert file_digest(report/'input_qualification.json')==binding['input_qualification_sha256']
+    q=json.loads((report/'qualification.json').read_text())
+    assert q['input_qualification_sha256']==binding['input_qualification_sha256']
+    assert q['assets_sha256']==binding['assets_sha256']==file_digest(ASSETS)
+    assert q['optimizer_updates']==0 and len(q['checks'])==4
+    assert all(file_digest(p)==h for p,h in q['source_files'].items())
     assert all(file_digest(p)==h for p,h in binding['source_files'].items())
     for ref in result['reference_reports']:assert file_digest(ref['path'])==ref['sha256']
     assets=verify_assets(ASSETS);expected={};updates=0;exposures=0
