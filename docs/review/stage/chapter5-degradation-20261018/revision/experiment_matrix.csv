@@ -1,0 +1,9 @@
+id,hypothesis,only_change,control,data_role,seed,updates,resource_cap_not_estimate,gate_or_stop,status
+data_audit,标签、单位或参照缺口,仅独立重算目标及增加简单参照,原目标、训练均值、多数类、零响应与历史趋势,registered_development,deterministic_hash,0,CPU 2h,标签/时间/单位不一致则停止,planned
+equal_dimension,信息来源与维度混杂,训练内PCA或固定随机投影,完整64及同维度24/16/48完整压缩与原生分支,registered_development_inner_selection,projection 17/29/43,0,CPU 4h,训练内拟合；保留全投影；不过同维度对照不作来源归因,planned
+readout_selection,读出收缩及选模偏差,正则范围或选模规则分别改变,全传统方法同网格及简单参照,registered_development_inner_selection,17,0,CPU 4h + GPU frozen export 2h,选择评分隔离；超过简单参照；完整候选记录,planned
+task_objectives,任务共同训练影响泛化,仅改变分类/回归损失开关,同起点联合、仅分类、仅回归三臂,development_fold01,17,head50+joint200,6 units x GPU 2h = 12h,50仅工程；200及曝光匹配才归因；超时不作性能失败,conditional_not_started
+replication,效果跨设置稳定性,仅更换预定开发设置,全部三臂配置保持,development_fold02,29,head50+joint200,6 units x GPU 2h = 12h,所有臂完成；不一致则降级结论,conditional_not_started
+same_backbone,骨干与融合混杂,仅允许输入流改变,同ODE-RNN和64维输出的第一流、第二流、双流,development_fold01,17,pre300+head50+joint200,6 units x GPU 4h = 24h,训练资格未实现；先核对失活目标和有效曝光,conditional_not_started
+single_mechanism,梯度或注意力线索的因果贡献,预先指定的一个辅助项或注意力因素,同起点同阶段唯一改动,registered_development,17,same frozen reference budget,max 4 units x GPU 2h = 8h,前置门未过不启动；保留因果/时移/任务完整评价,conditional_not_started
+independent_confirmation,新方案独立确认,只评价冻结新方案,简单、传统、大模型完整矩阵,new_source_exposure_audit_required,17/29/43,not_allocated,not_allocated,无新来源、名单、精度及协议则关闭,blocked_no_verified_new_source

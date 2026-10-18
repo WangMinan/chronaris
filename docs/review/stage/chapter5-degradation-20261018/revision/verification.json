@@ -1,0 +1,31 @@
+{
+  "sources": {
+    "/home/wangminan/projects/chronaris/docs/review/stage/chapter5-degradation-20261018/statistics/constant_baselines.csv": "a25f34992f6b40279b52251d42f2853f105890addbbc60ac4127584f3d814750",
+    "/home/wangminan/projects/chronaris/docs/review/stage/chapter5-degradation-20261018/readouts/metrics.csv": "47e739ae947aa04253cf864ff51b608ff792d341087262610f7136df7e483d88",
+    "/home/wangminan/projects/chronaris/docs/artifacts/runs/2026-10-18_chapter5-materials/data/inventory.csv": "f17f6154ce88ac28f3f1671a557179879f8f518d773ed8ba91c04be90babe89b",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/0.json": "7e782fd98841e9ea12825d55b486ac571fd9ffdeb5f6b6057727c1052a9e8152",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/0/clare/chronaris/task_guided/evaluation/consumers/linear_results.json": "b720cf0f43dd7df6acc2f4283a65b649f73e64f6b368c7fc602d7c0378868ab1",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/2.json": "aaa00ba404eeb4353ff9927c8d90a6d8d21dfaa93a09e4280b2c5061326f54ee",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/2/clare/chronaris/task_guided/evaluation/consumers/linear_results.json": "e8145552fc3b1dd7f9ca797b0c7d9186f694e7542a08c378d25461e219768ba3",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/4.json": "a5e3c6c54a8df70bf7644e890116408c99bd65d139c14dccca12699757a52a04",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/4/clare/chronaris/task_guided/evaluation/consumers/linear_results.json": "b32577d157542acfe181c5a834737548a838ed08726ec5e884319a4d954d6df7",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/6.json": "47ccd1b6a9fee1d8004272134ba21247443be3ad4d69007de7cb4f3bbe403dba",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/6/clare/chronaris/task_guided/evaluation/consumers/linear_results.json": "ab37a27015825f41daf9e6ed0d0cc515f9e0f9e58f3508e6047b08ed5606faea",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/8.json": "5c69ce958acdcaefbf1acc32b55a36fc578a93df59eea41ab147bad82eef936c",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/8/clare/chronaris/task_guided/evaluation/consumers/linear_results.json": "c02d2fd35634cfbc7bda3ad341c6bf03d01b8fbc5bccbaed70805370cee27110",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/10.json": "5eb4fd850179c066058e2e6eb46ffefc8ddb2493b81f988677a3a0d03058986e",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/10/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json": "182f745649f200c82aa933e8ee5130a516c01dee07bae4538d8b322d9c86c6b9",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/11.json": "87f12395b408c382e1854329cde3ee132c6438e96352684ef3c72a67c5f59573",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/11/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json": "d8b6c5b31e2d53fef0ba5e934d2be2274f5e058c3e1fb7f9103bf86bf50606ad",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/12.json": "99c79f80500df20f010cb90af520ca695b72fc4e5fcf0038d842368287011423",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/12/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json": "dd68277719e116b9f16014232e4b8be8c05033984db1ef06b6148f57c30c0527",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/13.json": "1b4cfb1709034bdc5ccc16e9ff5f9045b9ebcff9b388e32ad97be28a657a5268",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/13/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json": "e42bd0ccb9fcc0b3aa6f17ae78339b8d9aec16f8ae81719b13b99dd58971c88d",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/units/14.json": "47f18744241f494fc82a9c7229db03c3c921738e80003ead617fcfce7187d71c",
+    "/mnt/e/chronaris-v4-results/2026-10-12-device-validation/workflow-thread1/subset/training/14/cogpilot/chronaris/task_guided/evaluation/consumers/linear_results.json": "5fb63dd895d86a99b8de32bd7172551de2f8762bf17bc43ac94abd8c93160ba9"
+  },
+  "source_files_unchanged": true,
+  "model_fits": 0,
+  "encoder_updates": 0,
+  "scope": "same_validation_rows_subject_first_equal_fold_mean"
+}

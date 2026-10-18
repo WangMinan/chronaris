@@ -2,9 +2,10 @@
   "format": "chronaris.degradation_review.v1",
   "date": "2026-10-18",
   "files": {
-    "FORWARD.md": "97e99585640e29b123d97ea07d88e233c9646ccf25926a55b2c649a38e14f5ca",
-    "PLAN.md": "d3c3607ffbe6051f2f0f1900a8113acd550d0398c21de6415fcf201022f26cc3",
-    "README.md": "f54990d2c35320c7250d8988fe207da9b6fd782d4672b75fd5b0d5cf221f70eb",
+    "FORWARD.md": "4fa510c37569f4b878227065a95fe22418f1087bdf5af4e9e012fc65ab1fec37",
+    "PLAN.md": "41ca4eccdc1e0d64d919d7e7658046d7598ee9d04227426eaf2c6f4fc5551a7b",
+    "README.md": "2e31b28a36f9ee92795cc540f00df0ed7d5ef9002e1d8927eee79559c9a21ea2",
+    "REVISION.md": "69bf1f76d35a78bedf4e70bb82fea26f2b8d9bc699e75f4c1df9312aefc1e143",
     "audit_branch_readouts.py": "4e38254a7c534587fe58e6a3ceff2cedf4975a3b96e81a0ea8dde325455a3118",
     "audit_constants.py": "3baa599fcd0733885587d4c00e04631e45c3710f9fc669af84a1574aca4df926",
     "audit_frozen_forward.py": "0d1350454e93a6e7f0d162f1ac13c8a30c81dcdabdd77145e3420ae89eb54e36",
@@ -15,6 +16,13 @@
     "forward/summary.json": "134799fb323ff1fc5d27a553b1ce1a5b1c17c7097fd43a5115f9972895f0a150",
     "readouts/metrics.csv": "47e739ae947aa04253cf864ff51b608ff792d341087262610f7136df7e483d88",
     "readouts/verification.json": "12670cdc0c50900dc8b3115796ab6f73fe1c0ab8bf74c4fec1e61ca553aa43f4",
+    "revision/audit_validation_reference.py": "cdc9168621035547d5a391c4b42fbafdaebd69281004680e2f1e1710271e69ad",
+    "revision/data_roles.json": "01574291cde05eea502c8437a895b2cf3b6c128b5a54cc4e0c64800feb9e9f7c",
+    "revision/experiment_matrix.csv": "e679f81a39c676ae8e8c4f91c51dece74d23cd9675799c462d35f841821bae76",
+    "revision/validation_folds.csv": "e8316f6c72fab72f89e09c9db7d567a3b14f8227e63c5eb6331f29f5af0d45ec",
+    "revision/validation_groups.csv": "9411d1eab91a198c55fc69f2d2ec7dcef72c51d301fb20778cf39deb008b0822",
+    "revision/validation_summary.csv": "6a0913f2f3ee2dc0eb4e3ae3c2658652dec2df0e2c3c9ec693978d35f882ed63",
+    "revision/verification.json": "79bff884526974c2b66351c3974ac7cff7a414266f09d927774c08e1a01fea29",
     "source_check.json": "c664d3a8f2253dbf9bdec5df6acc01cb284b2dc3bafe2fcb682c64492ef54b1f",
     "statistics/classification_profiles.csv": "21005a4f13f4b989f04632658e77f9a06872e2049988c5ab038f46b63524c977",
     "statistics/constant_baselines.csv": "a25f34992f6b40279b52251d42f2853f105890addbbc60ac4127584f3d814750",
@@ -31,11 +39,13 @@
     "training/training_units.csv": "4882d6cd69914e52f9ae33b7ef3bb7744b2866d1d57bad84cceae28b429bd5e3",
     "training/validation_metrics.csv": "bf432706b21a1230b56cfe1ac87f919649448d0bc6cf63a31d9d68f0b18e64e9",
     "training/verification.json": "0eba25c3e1e19161468f4d2b745c9197d794f5ef3d00b78ddee49dd5cd3be9f1",
-    "verification.json": "b459d66792669c4132890708eb5fd3f915634bc1829cabc9978e3caee215ff6e",
-    "verify.py": "bc2f23ba43d09b623d5faa328e03e06fc46703e3343555f2a42d5b25f1feae11"
+    "verification.json": "7b1f87b37655c516e9cf041fb28401918ab997fdd363818263e9a07f93fd3922",
+    "verify.py": "0adc9031c8ee154d5765d085bb5e5af5143583aeb5a801a4481e67540381a86d"
   },
   "frozen_experiment_results_overwritten": false,
   "production_source_modified": false,
   "long_training_started": false,
-  "csv_line_ending_normalization_preserves_all_parsed_cells": true
+  "csv_line_ending_normalization_preserves_all_parsed_cells": true,
+  "previous_evidence_commit": "2843d612",
+  "revision_scope": "validation_constant_recomputation_and_plan_correction_only"
 }

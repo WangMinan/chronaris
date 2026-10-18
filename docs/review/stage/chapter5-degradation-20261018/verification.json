@@ -1,12 +1,14 @@
 {
   "status": "passed",
-  "original_files_rehashed": 851,
+  "original_files_rehashed": 853,
   "frozen_files_unchanged": true,
   "public_metric_recomputation": "exact",
   "full_feature_refits": 40,
   "encoder_optimizer_steps": 0,
   "bounded_linear_probe_fits": 220,
   "probe_models_saved": false,
+  "revision_no_fits": true,
+  "revision_strong_ridge_still_worse_than_train_mean": true,
   "constant_gate_standardization_identity_max_error": 4.440892098500626e-16,
   "cosine_attention_max_weight_ratio": 1.4241190194809816
 }

@@ -26,6 +26,15 @@ def main():
     for key,value in constants['sources'].items():
         assert key not in sources or sources[key]==value
         sources[key]=value
+    revision=json.loads((HERE/'revision/verification.json').read_text())
+    assert revision['model_fits']==0 and revision['encoder_updates']==0
+    for key,value in revision['sources'].items():
+        assert key not in sources or sources[key]==value
+        sources[key]=value
+    with (HERE/'revision/validation_summary.csv').open() as f:
+        corrected=next(r for r in csv.DictReader(f) if r['domain']=='cogpilot')
+    assert float(corrected['train_mean_rmse'])<float(corrected['strong_ridge_rmse'])
+    assert int(corrected['train_mean_better_than_strong_folds'])==4
     forward=json.loads((HERE/'forward/summary.json').read_text())
     sources.update(forward['checkpoint_hashes'])
     assert forward['optimizer_updates']==0 and forward['consumer_fits']==0
@@ -49,6 +58,7 @@ def main():
     result=dict(status='passed',original_files_rehashed=len(sources),frozen_files_unchanged=True,
         public_metric_recomputation='exact',full_feature_refits=40,encoder_optimizer_steps=0,
         bounded_linear_probe_fits=readouts['independent_selected_probe_heads'],probe_models_saved=False,
+        revision_no_fits=True,revision_strong_ridge_still_worse_than_train_mean=True,
         constant_gate_standardization_identity_max_error=float(np.max(np.abs(a-b))),
         cosine_attention_max_weight_ratio=float(np.exp(2/np.sqrt(32))))
     (HERE/'verification.json').write_text(json.dumps(result,indent=2)+'\n')
