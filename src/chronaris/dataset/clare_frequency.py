@@ -40,7 +40,19 @@ def extract_clare_frequency(request):
             paths=[root/'EEG'/subject/f'eeg_data_exp_{experiment}.csv',
                    root/'EDA'/subject/f'eda_data_experiment_{experiment}.csv',
                    root/'ECG'/subject/f'ecg_data_experiment_{experiment}.csv']
-            if not all(p.exists() for p in paths):raise FileNotFoundError(f'{subject} experiment{experiment}')
+            if not all(p.exists() for p in paths):
+                count=0
+                for index,label in enumerate(labels[f'level_{experiment}']):
+                    if not np.isfinite(label):continue
+                    if not 1<=label<=9:raise ValueError('label outside declared scale')
+                    count+=1
+                    windows.append(dict(sample_id=f'{subject}__experiment{experiment}_window{index}',subject=subject,
+                                        experiment=experiment,index=index,start_s=None,end_s=None,score=float(label),
+                                        target=int(label>=5),accepted=False,reason='missing_source'))
+                records.append(dict(subject=subject,experiment=experiment,legal=count,accepted=0,
+                                    missing_sources=[str(p) for p in paths if not p.exists()]))
+                print(subject,experiment,0,count,'missing_source',file=sys.stderr,flush=True)
+                continue
             before={str(p):file_digest(p) for p in paths};sources.update(before)
             tables=[pd.read_csv(p) for p in paths];origin=float(tables[0].Timestamp.iloc[0])
             if not np.isfinite(origin):raise ValueError('invalid recording origin')

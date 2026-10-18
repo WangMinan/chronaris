@@ -1,0 +1,5 @@
+{
+  "reason": "Missing source stopped first scan; continue census while counting missing-record label windows as unqualified.",
+  "log": "1337 0 54 54\n1337 1 54 54\n1337 2 54 54\n1337 3 54 54\n1419 0 54 54\n1419 1 54 54\n1419 2 40 54\n1419 3 54 54\n1544 0 44 54\n1544 1 12 54\n1544 2 34 54\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"<string>\", line 79, in <module>\n  File \"<string>\", line 40, in extract_clare_frequency\nFileNotFoundError: 1544 experiment3\n",
+  "encoder_updates": 0
+}
