@@ -1,0 +1,40 @@
+{
+  "format": "chronaris.public_readout_revision.v1",
+  "domain": "clare",
+  "source_root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-public-development",
+  "registry_path": "/home/wangminan/projects/chronaris/docs/requirements/thesis-v4-public-subjects.json",
+  "sources": {
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-public-development/clare/summary.json": "50d9df4102afdeab9c3882fd4281c2be86a7f23d5612aaffbdfef1d26adab077",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-public-development/clare/sample_manifest.jsonl": "473c1da735e5acd875e67b2856abead361699cc865f5eb4a5a266fbd291a09ce",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-public-development/clare/task_targets.pt": "b361e7cc20be49ad37e0ef2eb5a214fbf46dabf8bb765d86dae5e8590ad3f745",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-09-06_v4-public-development/clare/prepared_cache_index.json": "f0775c6f8ec78cd73ad1c72e6a41bedf55b67f667bb5788d4adf547b5737c147",
+    "/home/wangminan/projects/chronaris/docs/requirements/thesis-v4-public-subjects.json": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/public_readout_revision.py": "6059459d922c4cc6baa69368545179cbb85fd32647f9a17e9c38a15e75b9fab1"
+  },
+  "files": {
+    "task_targets.pt": "83746b1a8d729a3f965ac798b490e4d7add84bbd167bf1e746180f42de7fa7f4",
+    "sample_manifest.jsonl": "9069168393a2f35882ded6f6cdd76dfb6348456b0f3c1d74c4cb8beec883096a"
+  },
+  "observations": "lazy immutable source view; no source cache writes",
+  "task_definitions": [
+    {
+      "name": "workload_classification",
+      "kind": "classification",
+      "output_dim": 2
+    },
+    {
+      "name": "workload_regression",
+      "kind": "regression",
+      "output_dim": 1
+    },
+    {
+      "name": "workload_standard_classification",
+      "kind": "classification",
+      "output_dim": 2
+    }
+  ],
+  "standard_threshold": 5,
+  "historical_threshold": 7,
+  "endpoint_version": null,
+  "encoder_updates": 0
+}

@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "tests": 9,
+  "seconds": 3.8,
+  "command": "python -m pytest -q tests/evaluation/application_tasks/test_readout_repair.py tests/dataset/test_v4_native_windows.py tests/evaluation/application_tasks/test_v4_public_roles.py",
+  "cli_help": "passed"
+}

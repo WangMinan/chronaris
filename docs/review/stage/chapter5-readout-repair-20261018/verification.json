@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "original_files_verified": 979,
+  "original_files_unchanged": true,
+  "previous_audit_bundle_unchanged": true,
+  "encoder_updates": 0,
+  "new_gpu_exports": 0,
+  "reused_frozen_routes": 22,
+  "observations_verified": 3318,
+  "predictions_recomputed": 151100,
+  "subject_metrics_recomputed": 810,
+  "unchanged_control_scores": 144,
+  "max_control_difference": 0.0,
+  "primary_cells": 8,
+  "primary_joint_passes": 0
+}

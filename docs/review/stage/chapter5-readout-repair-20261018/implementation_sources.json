@@ -1,0 +1,6 @@
+{
+  "src/chronaris/evaluation/application_tasks/public_readout_revision.py": "6059459d922c4cc6baa69368545179cbb85fd32647f9a17e9c38a15e75b9fab1",
+  "src/chronaris/evaluation/application_tasks/grouped_readout_repair.py": "fc0d7090f391385db4729a2bac548b8cdeb2e58e81fdd3f215add7f53f37c8ff",
+  "scripts/evaluation/application_tasks/prepare_readout_revision.py": "edbd015e1b03f1b20222a3810f156d418eb7699974d40d99dfd31baff86c013f",
+  "tests/evaluation/application_tasks/test_readout_repair.py": "c686d83f3fa2fd0242eb8bc7d139f2ab4c9efc601ec36c92ee8cd04c6e0589d8"
+}

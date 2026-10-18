@@ -1,0 +1,11 @@
+domain,task,route,main_arm,mean_beats_all_simple,mean_beats_both_single,mean_beats_all_main_traditional,also_beats_all_preserved_control_arms,mean_joint_pass,stable_joint_pass,legacy_task
+clare,workload_classification,self_supervised,block_selected,False,False,False,False,False,False,True
+clare,workload_classification,task_guided,block_selected,True,True,False,False,True,False,True
+clare,workload_regression,self_supervised,ridge_bounded_selection,False,False,False,False,False,False,False
+clare,workload_regression,task_guided,ridge_bounded_selection,False,False,False,False,False,False,False
+clare,workload_standard_classification,self_supervised,block_selected,False,False,False,False,False,False,False
+clare,workload_standard_classification,task_guided,block_selected,False,False,False,False,False,False,False
+cogpilot,difficulty,self_supervised,block_selected,True,False,False,False,False,False,False
+cogpilot,difficulty,task_guided,block_selected,True,False,False,False,False,False,False
+cogpilot,event_response,self_supervised,ridge,False,True,False,False,False,False,False
+cogpilot,event_response,task_guided,ridge,False,True,False,False,False,False,False

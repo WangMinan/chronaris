@@ -1,0 +1,325 @@
+domain,task,fold,route,method,arm,value,parameter,candidate,samples,subjects,metric
+clare,workload_classification,0,self_supervised,constant,majority,0.394044022442814,,-1,428,2,macro_f1
+clare,workload_classification,0,self_supervised,chronaris,block_selected,0.3732567601694836,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,428,2,macro_f1
+clare,workload_classification,0,self_supervised,chronaris,uniform3,0.35213905710290083,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,428,2,macro_f1
+clare,workload_classification,0,self_supervised,chronaris,favor_second,0.3732567601694836,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,428,2,macro_f1
+clare,workload_classification,0,self_supervised,chronaris,favor_first,0.29606369924847786,"{""parameter"": 1.0, ""weights"": [1.0, 0.1, 0.1]}",7,428,2,macro_f1
+clare,workload_classification,0,self_supervised,chronaris_second24,selected,0.36773069145506515,"{""parameter"": 10.0, ""projection"": ""second24""}",2,428,2,macro_f1
+clare,workload_classification,0,self_supervised,chronaris_pca24,selected,0.2695996279207481,"{""parameter"": 0.1, ""projection"": ""pca24""}",0,428,2,macro_f1
+clare,workload_classification,0,self_supervised,physiology_only,matched9,0.2547606123113668,"{""parameter"": 0.01}",2,428,2,macro_f1
+clare,workload_classification,0,self_supervised,physiology_only,uniform3,0.26853238733412166,"{""parameter"": 1.0}",6,428,2,macro_f1
+clare,workload_classification,0,self_supervised,vehicle_only,matched9,0.3682645500856404,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,self_supervised,vehicle_only,uniform3,0.3682645500856404,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,self_supervised,naive_time_sync,matched9,0.3327396374481746,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_classification,0,self_supervised,naive_time_sync,uniform3,0.4331599128124353,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,self_supervised,mult,matched9,0.3434694063949484,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_classification,0,self_supervised,mult,uniform3,0.2524590163934426,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,self_supervised,contiformer,matched9,0.2547606123113668,"{""parameter"": 0.3}",5,428,2,macro_f1
+clare,workload_classification,0,self_supervised,contiformer,uniform3,0.2637634408602151,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,task_guided,constant,majority,0.394044022442814,,-1,428,2,macro_f1
+clare,workload_classification,0,task_guided,chronaris,block_selected,0.3732567601694836,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,428,2,macro_f1
+clare,workload_classification,0,task_guided,chronaris,uniform3,0.3505531778211928,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,428,2,macro_f1
+clare,workload_classification,0,task_guided,chronaris,favor_second,0.3732567601694836,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,428,2,macro_f1
+clare,workload_classification,0,task_guided,chronaris,favor_first,0.3941905172750704,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,428,2,macro_f1
+clare,workload_classification,0,task_guided,chronaris_second24,selected,0.3732567601694836,"{""parameter"": 0.1, ""projection"": ""second24""}",0,428,2,macro_f1
+clare,workload_classification,0,task_guided,chronaris_pca24,selected,0.2684128273090045,"{""parameter"": 0.1, ""projection"": ""pca24""}",0,428,2,macro_f1
+clare,workload_classification,0,task_guided,physiology_only,matched9,0.2568294314381271,"{""parameter"": 0.003}",1,428,2,macro_f1
+clare,workload_classification,0,task_guided,physiology_only,uniform3,0.302689785764493,"{""parameter"": 10.0}",8,428,2,macro_f1
+clare,workload_classification,0,task_guided,vehicle_only,matched9,0.3682645500856404,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,task_guided,vehicle_only,uniform3,0.3682645500856404,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,task_guided,naive_time_sync,matched9,0.3327396374481746,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_classification,0,task_guided,naive_time_sync,uniform3,0.4331599128124353,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,task_guided,mult,matched9,0.3409652583219833,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_classification,0,task_guided,mult,uniform3,0.2524590163934426,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,0,task_guided,contiformer,matched9,0.2982515369190749,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_classification,0,task_guided,contiformer,uniform3,0.2713649271813042,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_classification,1,self_supervised,constant,majority,0.46,,-1,216,1,macro_f1
+clare,workload_classification,1,self_supervised,chronaris,block_selected,0.13496006127585075,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,216,1,macro_f1
+clare,workload_classification,1,self_supervised,chronaris,uniform3,0.4517766497461929,"{""parameter"": 10.0, ""weights"": [1.0, 1.0, 1.0]}",2,216,1,macro_f1
+clare,workload_classification,1,self_supervised,chronaris,favor_second,0.46,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,216,1,macro_f1
+clare,workload_classification,1,self_supervised,chronaris,favor_first,0.13496006127585075,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,216,1,macro_f1
+clare,workload_classification,1,self_supervised,chronaris_second24,selected,0.46,"{""parameter"": 10.0, ""projection"": ""second24""}",2,216,1,macro_f1
+clare,workload_classification,1,self_supervised,chronaris_pca24,selected,0.45454545454545453,"{""parameter"": 1.0, ""projection"": ""pca24""}",1,216,1,macro_f1
+clare,workload_classification,1,self_supervised,physiology_only,matched9,0.14873603762492651,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,self_supervised,physiology_only,uniform3,0.14873603762492651,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,self_supervised,vehicle_only,matched9,0.46,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_classification,1,self_supervised,vehicle_only,uniform3,0.46,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_classification,1,self_supervised,naive_time_sync,matched9,0.46,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,self_supervised,naive_time_sync,uniform3,0.46,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,self_supervised,mult,matched9,0.18600017326518237,"{""parameter"": 0.001}",0,216,1,macro_f1
+clare,workload_classification,1,self_supervised,mult,uniform3,0.46,"{""parameter"": 1.0}",6,216,1,macro_f1
+clare,workload_classification,1,self_supervised,contiformer,matched9,0.12903225806451613,"{""parameter"": 0.001}",0,216,1,macro_f1
+clare,workload_classification,1,self_supervised,contiformer,uniform3,0.46,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,task_guided,constant,majority,0.46,,-1,216,1,macro_f1
+clare,workload_classification,1,task_guided,chronaris,block_selected,0.14083398898505115,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,216,1,macro_f1
+clare,workload_classification,1,task_guided,chronaris,uniform3,0.4517766497461929,"{""parameter"": 10.0, ""weights"": [1.0, 1.0, 1.0]}",2,216,1,macro_f1
+clare,workload_classification,1,task_guided,chronaris,favor_second,0.46,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,216,1,macro_f1
+clare,workload_classification,1,task_guided,chronaris,favor_first,0.14083398898505115,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,216,1,macro_f1
+clare,workload_classification,1,task_guided,chronaris_second24,selected,0.46,"{""parameter"": 10.0, ""projection"": ""second24""}",2,216,1,macro_f1
+clare,workload_classification,1,task_guided,chronaris_pca24,selected,0.45591939546599497,"{""parameter"": 10.0, ""projection"": ""pca24""}",2,216,1,macro_f1
+clare,workload_classification,1,task_guided,physiology_only,matched9,0.1430066271363795,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,task_guided,physiology_only,uniform3,0.1430066271363795,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,task_guided,vehicle_only,matched9,0.46,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_classification,1,task_guided,vehicle_only,uniform3,0.46,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_classification,1,task_guided,naive_time_sync,matched9,0.46,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,task_guided,naive_time_sync,uniform3,0.46,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,1,task_guided,mult,matched9,0.18600017326518237,"{""parameter"": 0.001}",0,216,1,macro_f1
+clare,workload_classification,1,task_guided,mult,uniform3,0.46,"{""parameter"": 1.0}",6,216,1,macro_f1
+clare,workload_classification,1,task_guided,contiformer,matched9,0.12903225806451613,"{""parameter"": 0.001}",0,216,1,macro_f1
+clare,workload_classification,1,task_guided,contiformer,uniform3,0.46,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_classification,2,self_supervised,constant,majority,0.12790697674418605,,-1,150,1,macro_f1
+clare,workload_classification,2,self_supervised,chronaris,block_selected,0.12790697674418605,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,150,1,macro_f1
+clare,workload_classification,2,self_supervised,chronaris,uniform3,0.12790697674418605,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,150,1,macro_f1
+clare,workload_classification,2,self_supervised,chronaris,favor_second,0.12790697674418605,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,150,1,macro_f1
+clare,workload_classification,2,self_supervised,chronaris,favor_first,0.5055721236854497,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,150,1,macro_f1
+clare,workload_classification,2,self_supervised,chronaris_second24,selected,0.12790697674418605,"{""parameter"": 0.1, ""projection"": ""second24""}",0,150,1,macro_f1
+clare,workload_classification,2,self_supervised,chronaris_pca24,selected,0.12790697674418605,"{""parameter"": 0.1, ""projection"": ""pca24""}",0,150,1,macro_f1
+clare,workload_classification,2,self_supervised,physiology_only,matched9,0.47835471879122193,"{""parameter"": 0.03}",3,150,1,macro_f1
+clare,workload_classification,2,self_supervised,physiology_only,uniform3,0.5024325519681556,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_classification,2,self_supervised,vehicle_only,matched9,0.49400299850074963,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_classification,2,self_supervised,vehicle_only,uniform3,0.49400299850074963,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_classification,2,self_supervised,naive_time_sync,matched9,0.23329925774478866,"{""parameter"": 0.01}",2,150,1,macro_f1
+clare,workload_classification,2,self_supervised,naive_time_sync,uniform3,0.5856587180788093,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_classification,2,self_supervised,mult,matched9,0.4652406417112299,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_classification,2,self_supervised,mult,uniform3,0.4652406417112299,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_classification,2,self_supervised,contiformer,matched9,0.13640690874473005,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_classification,2,self_supervised,contiformer,uniform3,0.13640690874473005,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_classification,2,task_guided,constant,majority,0.12790697674418605,,-1,150,1,macro_f1
+clare,workload_classification,2,task_guided,chronaris,block_selected,0.5055721236854497,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,150,1,macro_f1
+clare,workload_classification,2,task_guided,chronaris,uniform3,0.12790697674418605,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,150,1,macro_f1
+clare,workload_classification,2,task_guided,chronaris,favor_second,0.12790697674418605,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,150,1,macro_f1
+clare,workload_classification,2,task_guided,chronaris,favor_first,0.5055721236854497,"{""parameter"": 0.1, ""weights"": [1.0, 0.1, 0.1]}",6,150,1,macro_f1
+clare,workload_classification,2,task_guided,chronaris_second24,selected,0.12790697674418605,"{""parameter"": 0.1, ""projection"": ""second24""}",0,150,1,macro_f1
+clare,workload_classification,2,task_guided,chronaris_pca24,selected,0.12790697674418605,"{""parameter"": 10.0, ""projection"": ""pca24""}",2,150,1,macro_f1
+clare,workload_classification,2,task_guided,physiology_only,matched9,0.47835471879122193,"{""parameter"": 0.03}",3,150,1,macro_f1
+clare,workload_classification,2,task_guided,physiology_only,uniform3,0.44910066861286374,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_classification,2,task_guided,vehicle_only,matched9,0.16125541125541126,"{""parameter"": 3.0}",7,150,1,macro_f1
+clare,workload_classification,2,task_guided,vehicle_only,uniform3,0.12790697674418605,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_classification,2,task_guided,naive_time_sync,matched9,0.23329925774478866,"{""parameter"": 0.01}",2,150,1,macro_f1
+clare,workload_classification,2,task_guided,naive_time_sync,uniform3,0.5856587180788093,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_classification,2,task_guided,mult,matched9,0.5055721236854497,"{""parameter"": 0.03}",3,150,1,macro_f1
+clare,workload_classification,2,task_guided,mult,uniform3,0.6335173287485296,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_classification,2,task_guided,contiformer,matched9,0.12790697674418605,"{""parameter"": 0.3}",5,150,1,macro_f1
+clare,workload_classification,2,task_guided,contiformer,uniform3,0.12790697674418605,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_regression,0,self_supervised,constant,mean,1.5550706523859446,,-1,428,2,rmse
+clare,workload_regression,0,self_supervised,constant,median,1.5631170225753481,,-1,428,2,rmse
+clare,workload_regression,0,self_supervised,chronaris,ridge,2.1432634262831662,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,chronaris,ridge_clipped,2.13942634148751,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,chronaris,ridge_bounded_selection,2.13942634148751,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,physiology_only,ridge,2.486337984565449,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,self_supervised,physiology_only,ridge_clipped,2.479115341627627,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,self_supervised,physiology_only,ridge_bounded_selection,2.479115341627627,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,self_supervised,vehicle_only,ridge,2.012215632607247,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,self_supervised,vehicle_only,ridge_clipped,2.012215632607247,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,self_supervised,vehicle_only,ridge_bounded_selection,2.012215632607247,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,self_supervised,naive_time_sync,ridge,3.7842445275538212,"{""parameter"": 100.0}",3,428,2,rmse
+clare,workload_regression,0,self_supervised,naive_time_sync,ridge_clipped,2.6970354461751453,"{""parameter"": 100.0}",3,428,2,rmse
+clare,workload_regression,0,self_supervised,naive_time_sync,ridge_bounded_selection,2.6970354461751453,"{""parameter"": 100.0}",3,428,2,rmse
+clare,workload_regression,0,self_supervised,mult,ridge,3.0336401519791547,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,mult,ridge_clipped,2.8232973636222196,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,mult,ridge_bounded_selection,2.8232973636222196,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,contiformer,ridge,2.5543155328791824,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,contiformer,ridge_clipped,2.552683094149449,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,self_supervised,contiformer,ridge_bounded_selection,2.552683094149449,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,constant,mean,1.5550706523859446,,-1,428,2,rmse
+clare,workload_regression,0,task_guided,constant,median,1.5631170225753481,,-1,428,2,rmse
+clare,workload_regression,0,task_guided,chronaris,ridge,2.3956152244878957,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,chronaris,ridge_clipped,2.389664918516451,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,chronaris,ridge_bounded_selection,2.389664918516451,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,physiology_only,ridge,2.434553874199052,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,task_guided,physiology_only,ridge_clipped,2.4312957153441968,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,task_guided,physiology_only,ridge_bounded_selection,2.4312957153441968,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,task_guided,vehicle_only,ridge,2.0097103431511285,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,task_guided,vehicle_only,ridge_clipped,2.0097103431511285,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,task_guided,vehicle_only,ridge_bounded_selection,2.0097103431511285,"{""parameter"": 10000.0}",5,428,2,rmse
+clare,workload_regression,0,task_guided,naive_time_sync,ridge,3.7842445275538212,"{""parameter"": 100.0}",3,428,2,rmse
+clare,workload_regression,0,task_guided,naive_time_sync,ridge_clipped,2.6970354461751453,"{""parameter"": 100.0}",3,428,2,rmse
+clare,workload_regression,0,task_guided,naive_time_sync,ridge_bounded_selection,2.6970354461751453,"{""parameter"": 100.0}",3,428,2,rmse
+clare,workload_regression,0,task_guided,mult,ridge,3.8495343715849355,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,mult,ridge_clipped,2.895735237748652,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,mult,ridge_bounded_selection,2.895735237748652,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,contiformer,ridge,2.348252082970669,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,contiformer,ridge_clipped,2.348252082970669,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,0,task_guided,contiformer,ridge_bounded_selection,2.348252082970669,"{""parameter"": 1000.0}",4,428,2,rmse
+clare,workload_regression,1,self_supervised,constant,mean,2.3492891047519056,,-1,216,1,rmse
+clare,workload_regression,1,self_supervised,constant,median,2.139790574730084,,-1,216,1,rmse
+clare,workload_regression,1,self_supervised,chronaris,ridge,2.431125804749789,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,chronaris,ridge_clipped,2.431125804749789,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,chronaris,ridge_bounded_selection,2.431125804749789,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,physiology_only,ridge,2.548484099471108,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,physiology_only,ridge_clipped,2.548484099471108,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,physiology_only,ridge_bounded_selection,2.548484099471108,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,vehicle_only,ridge,2.441280548364166,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,vehicle_only,ridge_clipped,2.441280548364166,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,vehicle_only,ridge_bounded_selection,2.441280548364166,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,naive_time_sync,ridge,2.377902446827086,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,naive_time_sync,ridge_clipped,2.377902446827086,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,naive_time_sync,ridge_bounded_selection,2.377902446827086,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,mult,ridge,1.9728935142588835,"{""parameter"": 100.0}",3,216,1,rmse
+clare,workload_regression,1,self_supervised,mult,ridge_clipped,1.9728935142588835,"{""parameter"": 100.0}",3,216,1,rmse
+clare,workload_regression,1,self_supervised,mult,ridge_bounded_selection,1.9728935142588835,"{""parameter"": 100.0}",3,216,1,rmse
+clare,workload_regression,1,self_supervised,contiformer,ridge,2.6917261135485755,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,contiformer,ridge_clipped,2.6917261135485755,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,self_supervised,contiformer,ridge_bounded_selection,2.6917261135485755,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,constant,mean,2.3492891047519056,,-1,216,1,rmse
+clare,workload_regression,1,task_guided,constant,median,2.139790574730084,,-1,216,1,rmse
+clare,workload_regression,1,task_guided,chronaris,ridge,2.3932141186743303,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,chronaris,ridge_clipped,2.3932141186743303,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,chronaris,ridge_bounded_selection,2.3932141186743303,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,physiology_only,ridge,2.546951518788529,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,physiology_only,ridge_clipped,2.546951518788529,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,physiology_only,ridge_bounded_selection,2.546951518788529,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,vehicle_only,ridge,2.4268313351854185,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,vehicle_only,ridge_clipped,2.4268313351854185,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,vehicle_only,ridge_bounded_selection,2.4268313351854185,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,naive_time_sync,ridge,2.377902446827086,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,naive_time_sync,ridge_clipped,2.377902446827086,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,naive_time_sync,ridge_bounded_selection,2.377902446827086,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,mult,ridge,2.426424663854179,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,mult,ridge_clipped,2.426424663854179,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,mult,ridge_bounded_selection,2.426424663854179,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,contiformer,ridge,2.645060250992665,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,contiformer,ridge_clipped,2.645060250992665,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,1,task_guided,contiformer,ridge_bounded_selection,2.645060250992665,"{""parameter"": 10000.0}",5,216,1,rmse
+clare,workload_regression,2,self_supervised,constant,mean,2.4517654640417383,,-1,150,1,rmse
+clare,workload_regression,2,self_supervised,constant,median,1.9966638842495916,,-1,150,1,rmse
+clare,workload_regression,2,self_supervised,chronaris,ridge,2.359832832502773,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,chronaris,ridge_clipped,2.359832832502773,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,chronaris,ridge_bounded_selection,2.359832832502773,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,physiology_only,ridge,2.496536924484298,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,physiology_only,ridge_clipped,2.496536924484298,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,physiology_only,ridge_bounded_selection,2.496536924484298,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,vehicle_only,ridge,2.292072603427315,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,vehicle_only,ridge_clipped,2.292072603427315,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,vehicle_only,ridge_bounded_selection,2.292072603427315,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,naive_time_sync,ridge,2.431871249416436,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,naive_time_sync,ridge_clipped,2.431871249416436,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,naive_time_sync,ridge_bounded_selection,2.431871249416436,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,mult,ridge,2.3644154774861126,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,mult,ridge_clipped,2.3644154774861126,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,mult,ridge_bounded_selection,2.3644154774861126,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,contiformer,ridge,2.3966967802039947,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,contiformer,ridge_clipped,2.3966967802039947,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,self_supervised,contiformer,ridge_bounded_selection,2.3966967802039947,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,constant,mean,2.4517654640417383,,-1,150,1,rmse
+clare,workload_regression,2,task_guided,constant,median,1.9966638842495916,,-1,150,1,rmse
+clare,workload_regression,2,task_guided,chronaris,ridge,2.362035917246268,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,chronaris,ridge_clipped,2.362035917246268,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,chronaris,ridge_bounded_selection,2.362035917246268,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,physiology_only,ridge,2.4862559261481487,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,physiology_only,ridge_clipped,2.4862559261481487,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,physiology_only,ridge_bounded_selection,2.4862559261481487,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,vehicle_only,ridge,2.2874553982947976,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,vehicle_only,ridge_clipped,2.2874553982947976,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,vehicle_only,ridge_bounded_selection,2.2874553982947976,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,naive_time_sync,ridge,2.431871249416436,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,naive_time_sync,ridge_clipped,2.431871249416436,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,naive_time_sync,ridge_bounded_selection,2.431871249416436,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,mult,ridge,2.3591075028749513,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,mult,ridge_clipped,2.3591075028749513,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,mult,ridge_bounded_selection,2.3591075028749513,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,contiformer,ridge,2.3929084787920996,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,contiformer,ridge_clipped,2.3929084787920996,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_regression,2,task_guided,contiformer,ridge_bounded_selection,2.3929084787920996,"{""parameter"": 10000.0}",5,150,1,rmse
+clare,workload_standard_classification,0,self_supervised,constant,majority,0.45022703457911284,,-1,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,chronaris,block_selected,0.5086219729740512,"{""parameter"": 1.0, ""weights"": [1.0, 1.0, 1.0]}",1,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,chronaris,uniform3,0.5086219729740512,"{""parameter"": 1.0, ""weights"": [1.0, 1.0, 1.0]}",1,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,chronaris,favor_second,0.4773519163763066,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,chronaris,favor_first,0.44867844766467224,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,chronaris_second24,selected,0.47433601820522797,"{""parameter"": 10.0, ""projection"": ""second24""}",2,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,chronaris_pca24,selected,0.47203960949459145,"{""parameter"": 10.0, ""projection"": ""pca24""}",2,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,physiology_only,matched9,0.4330841774362557,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,physiology_only,uniform3,0.31072635460399334,"{""parameter"": 10.0}",8,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,vehicle_only,matched9,0.48044717423003847,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,vehicle_only,uniform3,0.48044717423003847,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,naive_time_sync,matched9,0.4587902110552394,"{""parameter"": 0.3}",5,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,naive_time_sync,uniform3,0.4550225029160496,"{""parameter"": 1.0}",6,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,mult,matched9,0.47433601820522797,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,mult,uniform3,0.45022703457911284,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,contiformer,matched9,0.49936034115138594,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,self_supervised,contiformer,uniform3,0.4600654444175227,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,constant,majority,0.45022703457911284,,-1,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,chronaris,block_selected,0.455374800674174,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,chronaris,uniform3,0.5054010272531055,"{""parameter"": 1.0, ""weights"": [1.0, 1.0, 1.0]}",1,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,chronaris,favor_second,0.4862710734496073,"{""parameter"": 10.0, ""weights"": [0.1, 1.0, 0.1]}",5,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,chronaris,favor_first,0.455374800674174,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,chronaris_second24,selected,0.47433601820522797,"{""parameter"": 10.0, ""projection"": ""second24""}",2,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,chronaris_pca24,selected,0.4650377807706122,"{""parameter"": 1.0, ""projection"": ""pca24""}",1,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,physiology_only,matched9,0.43650629204481095,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,physiology_only,uniform3,0.3120342123538124,"{""parameter"": 10.0}",8,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,vehicle_only,matched9,0.48044717423003847,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,vehicle_only,uniform3,0.48044717423003847,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,naive_time_sync,matched9,0.4587902110552394,"{""parameter"": 0.3}",5,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,naive_time_sync,uniform3,0.4550225029160496,"{""parameter"": 1.0}",6,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,mult,matched9,0.4773519163763066,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,mult,uniform3,0.45022703457911284,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,contiformer,matched9,0.48363183143025923,"{""parameter"": 0.001}",0,428,2,macro_f1
+clare,workload_standard_classification,0,task_guided,contiformer,uniform3,0.4600654444175227,"{""parameter"": 0.1}",4,428,2,macro_f1
+clare,workload_standard_classification,1,self_supervised,constant,majority,0.3590504451038576,,-1,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,chronaris,block_selected,0.3590504451038576,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,chronaris,uniform3,0.3590504451038576,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,chronaris,favor_second,0.3590504451038576,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,chronaris,favor_first,0.3590504451038576,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,chronaris_second24,selected,0.42496485298076636,"{""parameter"": 0.1, ""projection"": ""second24""}",0,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,chronaris_pca24,selected,0.4359075646849694,"{""parameter"": 1.0, ""projection"": ""pca24""}",1,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,physiology_only,matched9,0.36649150678235365,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,physiology_only,uniform3,0.36649150678235365,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,vehicle_only,matched9,0.42496485298076636,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,vehicle_only,uniform3,0.42496485298076636,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,naive_time_sync,matched9,0.4037674037674038,"{""parameter"": 0.003}",1,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,naive_time_sync,uniform3,0.3590504451038576,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,mult,matched9,0.3590504451038576,"{""parameter"": 0.03}",3,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,mult,uniform3,0.3590504451038576,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,contiformer,matched9,0.3705357142857143,"{""parameter"": 0.001}",0,216,1,macro_f1
+clare,workload_standard_classification,1,self_supervised,contiformer,uniform3,0.36649150678235365,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,constant,majority,0.3590504451038576,,-1,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,chronaris,block_selected,0.3590504451038576,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,chronaris,uniform3,0.3590504451038576,"{""parameter"": 0.1, ""weights"": [1.0, 1.0, 1.0]}",0,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,chronaris,favor_second,0.3590504451038576,"{""parameter"": 0.1, ""weights"": [0.1, 1.0, 0.1]}",3,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,chronaris,favor_first,0.40132758821474324,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,chronaris_second24,selected,0.42496485298076636,"{""parameter"": 0.1, ""projection"": ""second24""}",0,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,chronaris_pca24,selected,0.29180327868852457,"{""parameter"": 0.1, ""projection"": ""pca24""}",0,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,physiology_only,matched9,0.3705357142857143,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,physiology_only,uniform3,0.3705357142857143,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,vehicle_only,matched9,0.4554409005628518,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,vehicle_only,uniform3,0.4554409005628518,"{""parameter"": 10.0}",8,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,naive_time_sync,matched9,0.4037674037674038,"{""parameter"": 0.003}",1,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,naive_time_sync,uniform3,0.3590504451038576,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,mult,matched9,0.3590504451038576,"{""parameter"": 0.03}",3,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,mult,uniform3,0.35522388059701493,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,contiformer,matched9,0.3705357142857143,"{""parameter"": 0.001}",0,216,1,macro_f1
+clare,workload_standard_classification,1,task_guided,contiformer,uniform3,0.35522388059701493,"{""parameter"": 0.1}",4,216,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,constant,majority,0.494949494949495,,-1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,chronaris,block_selected,0.0196078431372549,"{""parameter"": 1.0, ""weights"": [1.0, 1.0, 1.0]}",1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,chronaris,uniform3,0.0196078431372549,"{""parameter"": 1.0, ""weights"": [1.0, 1.0, 1.0]}",1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,chronaris,favor_second,0.48647723382403285,"{""parameter"": 1.0, ""weights"": [0.1, 1.0, 0.1]}",4,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,chronaris,favor_first,0.0196078431372549,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,chronaris_second24,selected,0.494949494949495,"{""parameter"": 1.0, ""projection"": ""second24""}",1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,chronaris_pca24,selected,0.0196078431372549,"{""parameter"": 1.0, ""projection"": ""pca24""}",1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,physiology_only,matched9,0.22184493491794002,"{""parameter"": 0.3}",5,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,physiology_only,uniform3,0.24347951390556702,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,vehicle_only,matched9,0.494949494949495,"{""parameter"": 0.01}",2,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,vehicle_only,uniform3,0.494949494949495,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,naive_time_sync,matched9,0.494949494949495,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,naive_time_sync,uniform3,0.494949494949495,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,mult,matched9,0.5990836197021764,"{""parameter"": 0.003}",1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,mult,uniform3,0.49324324324324326,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,contiformer,matched9,0.39148073022312374,"{""parameter"": 0.003}",1,150,1,macro_f1
+clare,workload_standard_classification,2,self_supervised,contiformer,uniform3,0.0196078431372549,"{""parameter"": 1.0}",6,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,constant,majority,0.494949494949495,,-1,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,chronaris,block_selected,0.48647723382403285,"{""parameter"": 1.0, ""weights"": [0.1, 1.0, 0.1]}",4,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,chronaris,uniform3,0.0196078431372549,"{""parameter"": 1.0, ""weights"": [1.0, 1.0, 1.0]}",1,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,chronaris,favor_second,0.48647723382403285,"{""parameter"": 1.0, ""weights"": [0.1, 1.0, 0.1]}",4,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,chronaris,favor_first,0.0196078431372549,"{""parameter"": 10.0, ""weights"": [1.0, 0.1, 0.1]}",8,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,chronaris_second24,selected,0.494949494949495,"{""parameter"": 1.0, ""projection"": ""second24""}",1,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,chronaris_pca24,selected,0.0196078431372549,"{""parameter"": 1.0, ""projection"": ""pca24""}",1,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,physiology_only,matched9,0.23599320882852293,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,physiology_only,uniform3,0.23599320882852293,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,vehicle_only,matched9,0.494949494949495,"{""parameter"": 0.01}",2,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,vehicle_only,uniform3,0.494949494949495,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,naive_time_sync,matched9,0.494949494949495,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,naive_time_sync,uniform3,0.494949494949495,"{""parameter"": 10.0}",8,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,mult,matched9,0.6697074551745832,"{""parameter"": 0.003}",1,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,mult,uniform3,0.49324324324324326,"{""parameter"": 0.1}",4,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,contiformer,matched9,0.4877460827641623,"{""parameter"": 0.001}",0,150,1,macro_f1
+clare,workload_standard_classification,2,task_guided,contiformer,uniform3,0.0196078431372549,"{""parameter"": 1.0}",6,150,1,macro_f1

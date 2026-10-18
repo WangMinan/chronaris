@@ -1,0 +1,32 @@
+{
+  "status": "completed",
+  "sources": {
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-readout-repair/clare/revision_manifest.json": "912f25d935c995b83b42d89914f0286b11b8ff1863ccd8755847a599756895ab",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__chronaris__self_supervised.npz": "28be414245d26e2cd1a82789642fc9a355758c1184119216cf344c58e9dd09cb",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__chronaris__task_guided.npz": "93743072375f6e9741001514277226e4b7755968c98ad8857ac0bdf034e2b53f",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__physiology_only__self_supervised.npz": "ca0f4879075b62edda419a9f3164049fe2ba6cd7542fdcc4328d34a6ad293c25",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__physiology_only__task_guided.npz": "5d9986880c5bc2bf6417531360a0bb848bfee9eaef0ed757cb87b37d92182690",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__vehicle_only__self_supervised.npz": "7e7420cb54365c90de14a184d02a56d3dda54fbd046234271b39e30a5b456c42",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__vehicle_only__task_guided.npz": "1cf56533fb4b0c16969775fd7425fb2015c9bcbc3da3ffe8ad0250a082daebb2",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__naive_time_sync__self_supervised.npz": "641f7e805a419972cf3caeb88a0a9d0da633659523ac27e47c867853d10d7477",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__mult__self_supervised.npz": "8c4047a549fc784bb8255ac0d3917a9a999018fcc54b4b477040d2361932f150",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__mult__task_guided.npz": "f091e2b781ba49b6e1ad4347b87085973bfc005031d294a4810524ff74efe6b4",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__contiformer__self_supervised.npz": "70d45002b63675b61e64056c4628795a858dddf00f9b269d2b5f5e964df4ae58",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/clare__contiformer__task_guided.npz": "3d5fc600023380bf2fd0260d876cc0ad40f32df58fb441ce10080a3a4d0b72cb"
+  },
+  "fold_scores": 324,
+  "subject_scores": 432,
+  "predictions": 85752,
+  "inner_fits": 2496,
+  "seconds": 7.325173799996264,
+  "encoder_updates": 0,
+  "new_gpu_exports": 0,
+  "classification_main_candidates_per_method": 9,
+  "regression_candidates_per_method": 6,
+  "task_manifest": {
+    "domain": "clare",
+    "source_role": "fixed_development_subjects",
+    "smoke_only": false,
+    "revision_format": "chronaris.public_readout_revision.v1"
+  }
+}
