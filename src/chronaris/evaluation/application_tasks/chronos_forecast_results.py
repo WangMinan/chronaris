@@ -19,6 +19,16 @@ from chronaris.modeling.fusion_encoders.recent_models import verify_assets
 ROUTES=('frozen','adapted')
 
 
+def paired_forecast_inputs(x,mask,ids,mapping):
+    if x.shape[-1]!=42 or x.shape!=mask.shape:raise ValueError('joint forecast layout changed')
+    values=x.clone();valid=mask.clone()
+    if mapping is None:values[ids,:,:16]=0
+    else:
+        for columns in (slice(0,16),slice(28,32)):
+            values[ids,:,columns]=x[mapping,:,columns];valid[ids,:,columns]=mask[mapping,:,columns]
+    return values,valid
+
+
 def forecast_gates(people,summary):
     gates=[]
     for fold,panel in summary.groupby('fold'):
@@ -96,11 +106,8 @@ def forecast_pairing(report,assets,units,routes,summary,deadline):
         for route in routes:
             model=load_selected(assets,unit,route)
             for variant,mapping in variants.items():
-                values=x.clone();valid=mask.clone()
-                if mapping is None:values[ids,:,:16]=0
-                else:
-                    for columns in (slice(0,16),slice(28,44)):
-                        values[ids,:,columns]=x[mapping,:,columns];valid[ids,:,columns]=mask[mapping,:,columns]
+                values,valid=paired_forecast_inputs(x,mask,ids,mapping)
+                if mapping is not None:
                     for i,j in zip(ids,mapping):
                         assert data.subjects[i]==data.subjects[j] and data.rows[i]['record_id']!=data.rows[j]['record_id']
                         donors.append(dict(fold=spec['name'],route=route,variant=variant,sample_id=data.rows[i]['sample_id'],donor=data.rows[j]['sample_id']))

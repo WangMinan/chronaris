@@ -40,13 +40,19 @@ def forecast_data(spec,view):
     streams=[data.streams['vehicle']] if view=='aircraft' else [data.streams[s] for s in ('physiology','vehicle')]
     values=torch.cat([s[0] for s in streams],-1);mask=torch.cat([s[1] for s in streams],-1)
     ages=torch.cat([s[2] for s in streams],-1)
+    groups=[list(range(8,12))] if view=='aircraft' else [list(range(c,c+4)) for c in (0,4,8,12,24)]
+    for group in groups:
+        for column in group[1:]:
+            assert torch.equal(ages[:,:,group[0]],ages[:,:,column]) and torch.equal(mask[:,:,group[0]],mask[:,:,column])
+    age_columns=list(range(9)) if view=='aircraft' else [0,4,8,12,*range(16,25)]
     center=data.normalizer['vehicle']['center'][11];scale=data.normalizer['vehicle']['scale'][11]
     history=((data.anchor-center)/scale).masked_fill(~anchor_mask,0)
-    x=torch.cat((values,ages,history[:,:,None]),-1);m=torch.cat((mask,mask,anchor_mask[:,:,None]),-1)
-    assert x.shape[-1]==(25 if view=='aircraft' else 57) and torch.isfinite(x).all()
+    x=torch.cat((values,ages[:,:,age_columns],history[:,:,None]),-1)
+    m=torch.cat((mask,mask[:,:,age_columns],anchor_mask[:,:,None]),-1)
+    assert x.shape[-1]==(22 if view=='aircraft' else 42) and torch.isfinite(x).all()
     proof=dict(snapshot_sha256=file_digest(q['snapshot_path']),view=view,channels=x.shape[-1],
                missing_historical_means=int((~anchor_mask).sum()),zero_cached_means=int(zero.sum()),
-               prefix_queries_masked=15,ambiguous_zero_means=0,center=center,scale=scale,
+               prefix_queries_masked=15,age_columns=age_columns,duplicate_ages_exact=True,ambiguous_zero_means=0,center=center,scale=scale,
                input_sha256=canonical_training_state_sha256(x,m,[r['sample_id'] for r in data.rows],data.normalizer))
     return data,x,m,proof
 

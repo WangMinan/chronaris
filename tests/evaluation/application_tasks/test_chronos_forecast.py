@@ -82,3 +82,16 @@ def test_forecast_gate_separates_extra_calibration_context_and_keeps_strong_cont
     for r in rows:
         if r['method']=='reference_strong':r['prediction']=.7
     people,summary=metric_tables(rows);assert not any(g['passed'] for g in forecast_gates(people,summary))
+
+
+def test_pairing_changes_only_physiology_and_its_unique_age_channels():
+    import numpy as np
+    from chronaris.evaluation.application_tasks.chronos_forecast_results import paired_forecast_inputs
+    x=torch.arange(3*96*42,dtype=torch.float32).reshape(3,96,42);mask=torch.ones_like(x,dtype=torch.bool)
+    mask[1,:,:16]=False;before=x.clone();ids=np.array([0]);donor=np.array([1])
+    changed,valid=paired_forecast_inputs(x,mask,ids,donor)
+    for cols in (slice(0,16),slice(28,32)):torch.testing.assert_close(changed[0,:,cols],x[1,:,cols],atol=0,rtol=0)
+    for cols in (slice(16,28),slice(32,42)):torch.testing.assert_close(changed[0,:,cols],x[0,:,cols],atol=0,rtol=0)
+    assert not valid[0,:,:16].any();torch.testing.assert_close(changed[1:],x[1:],atol=0,rtol=0)
+    zero,zm=paired_forecast_inputs(x,mask,ids,None);assert (zero[0,:,:16]==0).all() and torch.equal(zm,mask)
+    torch.testing.assert_close(x,before,atol=0,rtol=0)

@@ -156,7 +156,7 @@ def _replay_pairs(report,model,data,x,mask,ids,route,deadline,errors):
             block=donors[(donors.fold==data.fold['name'])&(donors.route==route)&(donors.variant==variant)].set_index('sample_id')
             mapping=np.array([lookup[block.loc[data.rows[i]['sample_id'],'donor']] for i in ids])
             assert all(data.subjects[i]==data.subjects[j] and data.rows[i]['record_id']!=data.rows[j]['record_id'] for i,j in zip(ids,mapping))
-            for cols in (slice(0,16),slice(28,44)):
+            for cols in (slice(0,16),slice(28,32)):
                 values[ids,:,cols]=x[mapping,:,cols];valid[ids,:,cols]=mask[mapping,:,cols]
         actual=predict_forecast(model,data,values,valid,ids,deadline)
         expected=old[(old.fold==data.fold['name'])&(old.method==route+'_'+variant)]

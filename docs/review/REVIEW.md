@@ -1,5 +1,7 @@
 # Chronaris 复核入口
 
+夜间接续输入审计：见[CLARE频率与缺测](stage/clare-frequency-20261019/README.md)、[扩展人群静息资格失败](stage/rest-calibration-20261019/README.md)、[原固定七人静息输入](stage/rest-development-20261019/INPUTS.md)、[原生预测输入与软件验证](stage/chronos-forecast-20261019/INPUTS.md)。
+
 夜间时序预训练诊断完成及合格拟合人群扩展：见[结果](stage/chronos-information-20261019/README.md)、[18人资格失败](stage/expanded-fit-20261019/README.md)、[接续合同](stage/eligible-fit-20261019/PLAN.md)。
 
 更新时间：2026-10-19
