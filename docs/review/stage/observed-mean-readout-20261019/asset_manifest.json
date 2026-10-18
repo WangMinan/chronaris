@@ -1,0 +1,23 @@
+{
+  "root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout",
+  "files": {
+    "fold01_aircraft_score.npz": "6f471d847ca3d9b1f70bdbff91b8a092cd958cea132cc7fb7ed7419c820faa21",
+    "fold01_aircraft_selection.npz": "ead4bd91913a70d91244ce4c6862f493c3459f69e21c99286d5f67cc39b15cac",
+    "fold01_candidate_score.npz": "a95248b7a70bf1f69da0443592e7dff9461030880023446765d933a63c383bae",
+    "fold01_candidate_selection.npz": "9387327a908b64659fcc2288374ec7b9f6d8edd3ec966fb15e79c3dd4799dd4c",
+    "fold01_original_score.npz": "a0a6b6980f75501432e44b5d3ffe61d69b116c6f9fee0f4fb091a4cec4a4b940",
+    "fold01_original_selection.npz": "98a8977f5835c2a641a42defd4785080df6a09f2ebb63e0959f193326b670953",
+    "fold02_aircraft_score.npz": "716acb44249b6ce041f32d1e4dc45b38113b61abde7f6a1f479ae8f4b58cb3e6",
+    "fold02_aircraft_selection.npz": "e041e53e9416b7edd7a4b42c05870e320d6d838f08eadafa26c32f2ad5e1b194",
+    "fold02_candidate_score.npz": "21e36a45b29772448902f0f7aafc2b66e59d566808db62af84af1593e88a4a72",
+    "fold02_candidate_selection.npz": "8d0b86312f64f5658738c26d30c9ad530d501f79d3f5cdd1f2a8173be7ec13e4",
+    "fold02_original_score.npz": "93d0e9afa6e5e37511c04716a686f841b06d124b62305ee9f09cd7e6f8676878",
+    "fold02_original_selection.npz": "e018eba7bf23c5e0b6d5e0855f0cfb24d0516ca8c374a9e2a5aa1d904d0ee6df",
+    "readouts.joblib": "db15d1205dea90e6a424110881ef8b376b3a84496880d083b65f50b09077dce3"
+  },
+  "logs": {
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-logs/prerequisite_not_yet_written.log": "a2d2e5273e0f495a10ef7bc085871658c58f83cc64f36924b75eeb7517e35a5c",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-logs/run.log": "8ddbfddd32371ae436caf1c645644c914a5bb7ce8162db536c93d6790f422e8f",
+    "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-logs/verification.log": "1c8b7be9d01bf309e9df8ae8855f1ef74f2a5f9e05f4dda1ebb33dcdecc6e27a"
+  }
+}

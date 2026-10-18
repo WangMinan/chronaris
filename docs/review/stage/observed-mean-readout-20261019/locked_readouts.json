@@ -1,0 +1,269 @@
+{
+  "items": [
+    {
+      "name": "fold01_aircraft",
+      "fold": {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp006",
+          "sub-cp008",
+          "sub-cp009",
+          "sub-cp013",
+          "sub-cp015",
+          "sub-cp018",
+          "sub-cp019",
+          "sub-cp020",
+          "sub-cp023",
+          "sub-cp024",
+          "sub-cp027",
+          "sub-cp028",
+          "sub-cp029",
+          "sub-cp030",
+          "sub-cp031",
+          "sub-cp035",
+          "sub-cp036",
+          "sub-cp039"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      "version": "aircraft",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold01_aircraft/best.pt",
+      "checkpoint_sha256": "3d299d904da813f6570d77cc76d3935ec9b1568f831b19d23b5614501a9added",
+      "cache_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/fold01_aircraft_selection.npz",
+      "cache_sha256": "ead4bd91913a70d91244ce4c6862f493c3459f69e21c99286d5f67cc39b15cac"
+    },
+    {
+      "name": "fold01_original",
+      "fold": {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp006",
+          "sub-cp008",
+          "sub-cp009",
+          "sub-cp013",
+          "sub-cp015",
+          "sub-cp018",
+          "sub-cp019",
+          "sub-cp020",
+          "sub-cp023",
+          "sub-cp024",
+          "sub-cp027",
+          "sub-cp028",
+          "sub-cp029",
+          "sub-cp030",
+          "sub-cp031",
+          "sub-cp035",
+          "sub-cp036",
+          "sub-cp039"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      "version": "original",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold01_original/best.pt",
+      "checkpoint_sha256": "45f01c34c3fa1f5ed534b2e444eeeb9df831da735ad131545a3e509fa9377605",
+      "cache_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/fold01_original_selection.npz",
+      "cache_sha256": "98a8977f5835c2a641a42defd4785080df6a09f2ebb63e0959f193326b670953"
+    },
+    {
+      "name": "fold01_candidate",
+      "fold": {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp006",
+          "sub-cp008",
+          "sub-cp009",
+          "sub-cp013",
+          "sub-cp015",
+          "sub-cp018",
+          "sub-cp019",
+          "sub-cp020",
+          "sub-cp023",
+          "sub-cp024",
+          "sub-cp027",
+          "sub-cp028",
+          "sub-cp029",
+          "sub-cp030",
+          "sub-cp031",
+          "sub-cp035",
+          "sub-cp036",
+          "sub-cp039"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      "version": "candidate",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold01_candidate/best.pt",
+      "checkpoint_sha256": "abf902f1e5b00da18521137f79bbdab1286ba2394f03bc4752433027bf4e1afe",
+      "cache_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/fold01_candidate_selection.npz",
+      "cache_sha256": "9387327a908b64659fcc2288374ec7b9f6d8edd3ec966fb15e79c3dd4799dd4c"
+    },
+    {
+      "name": "fold02_aircraft",
+      "fold": {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp006",
+          "sub-cp009",
+          "sub-cp011",
+          "sub-cp013",
+          "sub-cp015",
+          "sub-cp018",
+          "sub-cp019",
+          "sub-cp020",
+          "sub-cp023",
+          "sub-cp024",
+          "sub-cp027",
+          "sub-cp028",
+          "sub-cp029",
+          "sub-cp030",
+          "sub-cp031",
+          "sub-cp035",
+          "sub-cp036",
+          "sub-cp039"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      },
+      "version": "aircraft",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold02_aircraft/best.pt",
+      "checkpoint_sha256": "e77dc0000a18891b82094d882b07d0fbf1b2f146f7db3038a3c8b2660804b31e",
+      "cache_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/fold02_aircraft_selection.npz",
+      "cache_sha256": "e041e53e9416b7edd7a4b42c05870e320d6d838f08eadafa26c32f2ad5e1b194"
+    },
+    {
+      "name": "fold02_original",
+      "fold": {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp006",
+          "sub-cp009",
+          "sub-cp011",
+          "sub-cp013",
+          "sub-cp015",
+          "sub-cp018",
+          "sub-cp019",
+          "sub-cp020",
+          "sub-cp023",
+          "sub-cp024",
+          "sub-cp027",
+          "sub-cp028",
+          "sub-cp029",
+          "sub-cp030",
+          "sub-cp031",
+          "sub-cp035",
+          "sub-cp036",
+          "sub-cp039"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      },
+      "version": "original",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold02_original/best.pt",
+      "checkpoint_sha256": "52fb8322284e8e81d672245d57d6c20bdad77a74c39233838afb4f456960d8df",
+      "cache_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/fold02_original_selection.npz",
+      "cache_sha256": "e018eba7bf23c5e0b6d5e0855f0cfb24d0516ca8c374a9e2a5aa1d904d0ee6df"
+    },
+    {
+      "name": "fold02_candidate",
+      "fold": {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp006",
+          "sub-cp009",
+          "sub-cp011",
+          "sub-cp013",
+          "sub-cp015",
+          "sub-cp018",
+          "sub-cp019",
+          "sub-cp020",
+          "sub-cp023",
+          "sub-cp024",
+          "sub-cp027",
+          "sub-cp028",
+          "sub-cp029",
+          "sub-cp030",
+          "sub-cp031",
+          "sub-cp035",
+          "sub-cp036",
+          "sub-cp039"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      },
+      "version": "candidate",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold02_candidate/best.pt",
+      "checkpoint_sha256": "c6feee54d60c35b76418064ac892768cc4b7d93b8a0c6e3d9119a55d4d72bcf6",
+      "cache_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/fold02_candidate_selection.npz",
+      "cache_sha256": "8d0b86312f64f5658738c26d30c9ad530d501f79d3f5cdd1f2a8173be7ec13e4"
+    }
+  ],
+  "selected_alpha": {
+    "fold01_aircraft_raw64": 0.1,
+    "fold01_aircraft_augmented65": 0.1,
+    "fold01_aircraft_residual64": 1.0,
+    "fold01_original_raw64": 0.1,
+    "fold01_original_augmented65": 0.1,
+    "fold01_original_residual64": 0.1,
+    "fold01_candidate_raw64": 0.1,
+    "fold01_candidate_augmented65": 0.1,
+    "fold01_candidate_residual64": 0.1,
+    "fold02_aircraft_raw64": 10.0,
+    "fold02_aircraft_augmented65": 100.0,
+    "fold02_aircraft_residual64": 0.1,
+    "fold02_original_raw64": 1.0,
+    "fold02_original_augmented65": 100.0,
+    "fold02_original_residual64": 0.1,
+    "fold02_candidate_raw64": 0.1,
+    "fold02_candidate_augmented65": 100.0,
+    "fold02_candidate_residual64": 0.1
+  },
+  "readout_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-observed-mean-readout/readouts.joblib",
+  "readout_sha256": "db15d1205dea90e6a424110881ef8b376b3a84496880d083b65f50b09077dce3",
+  "plan_sha256": "09d04dc487f825bf0b26a16e25d2b2a09cf5b37059bc3c1e3ea0fba268378008",
+  "source_sha256": "e1dc248a813badd09ef81cccc910736d8916322f7e83018347e5759c6d3b2373",
+  "outer_scored": false
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "fold": "fold01",
+    "style": "raw64",
+    "strongest": "aircraft_raw64",
+    "improvement": -0.017249089185150668,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold01",
+    "style": "augmented65",
+    "strongest": "aircraft_raw64",
+    "improvement": -0.045081428959844905,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold01",
+    "style": "residual64",
+    "strongest": "aircraft_raw64",
+    "improvement": -0.15229205865625683,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "style": "raw64",
+    "strongest": "aircraft_augmented65",
+    "improvement": -0.09600233592802687,
+    "subjects_improved": 1,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "style": "augmented65",
+    "strongest": "aircraft_augmented65",
+    "improvement": 0.0009753624687934837,
+    "subjects_improved": 1,
+    "mae_passed": true,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "style": "residual64",
+    "strongest": "aircraft_augmented65",
+    "improvement": -0.0031784852043561518,
+    "subjects_improved": 1,
+    "mae_passed": false,
+    "passed": false
+  }
+]
