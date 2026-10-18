@@ -1,0 +1,38 @@
+[
+  {
+    "fold": "fold01",
+    "route": "ridge",
+    "strongest": "frozen_mult_ridge",
+    "improvement": -0.016920588832891825,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold01",
+    "route": "head",
+    "strongest": "frozen_mult_ridge",
+    "improvement": -0.45746564173009796,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "ridge",
+    "strongest": "aircraft_head",
+    "improvement": -0.08964908500017987,
+    "subjects_improved": 1,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "head",
+    "strongest": "aircraft_head",
+    "improvement": -0.08863230180995996,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  }
+]
