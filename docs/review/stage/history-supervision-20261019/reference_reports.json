@@ -1,0 +1,30 @@
+[
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/shape-mult-20261019/predictions.csv.gz",
+    "predictions_sha256": "3768140d3724218fe1c056e8018ea646c26e37781e77bed50bb2694080a36bf6",
+    "prefix": "prior_shape",
+    "methods": [
+      "aircraft_head",
+      "aircraft_ridge",
+      "original_head",
+      "original_ridge",
+      "candidate_head",
+      "candidate_ridge",
+      "shape_statistics"
+    ]
+  },
+  {
+    "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/readout-selection-20261019/predictions.csv.gz",
+    "predictions_sha256": "2498ab27289e716f2fad6e8cca0d84543e3b39491714e2308a94d3d34e2b7064",
+    "prefix": "prior_readout",
+    "methods": [
+      "aircraft_head",
+      "aircraft_ridge",
+      "original_head",
+      "original_ridge",
+      "candidate_head",
+      "candidate_ridge",
+      "shape_statistics"
+    ]
+  }
+]

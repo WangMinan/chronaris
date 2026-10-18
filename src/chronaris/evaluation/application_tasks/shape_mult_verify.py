@@ -27,6 +27,12 @@ def verify_shape_mult(report,assets,replay=True):
     binding=json.loads((report/'training_binding.json').read_text())
     assert file_digest(report/'PLAN.md')==binding['plan_sha256']
     assert file_digest(report/'qualification.json')==binding['qualification_sha256']
+    for ref in binding.get('reference_reports',[]):
+        assert file_digest(ref['predictions_path'])==ref['predictions_sha256']
+    if binding.get('history_aux_weight',0.):
+        path=report/'history_anchor_qualification.json'
+        assert file_digest(path)==binding['history_anchor_qualification_sha256']
+        q=json.loads(path.read_text());assert q['status']=='passed' and file_digest(q['mask_path'])==q['mask_sha256']
     locked=json.loads((report/('locked_with_baseline.json' if run['same_input_traditional_checked'] else 'locked_primary.json')).read_text())
     assert file_digest(locked['readout_path'])==locked['readout_sha256']
     original_path=json.loads((ORIGINAL/'qualification.json').read_text())['snapshot_path']

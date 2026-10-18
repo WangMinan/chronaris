@@ -45,6 +45,10 @@ def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_au
         assert qualification['status']=='passed'
         assert file_digest(qualification['mask_path'])==qualification['mask_sha256']
         binding['history_anchor_qualification_sha256']=file_digest(report/'history_anchor_qualification.json')
+    if (report/'reference_reports.json').exists():
+        binding['reference_reports']=json.loads((report/'reference_reports.json').read_text())
+        for ref in binding['reference_reports']:
+            assert file_digest(ref['predictions_path'])==ref['predictions_sha256']
     save_json(report/'training_binding.json',binding)
     with development_gpu_lock() as acquired:
         if not acquired:raise BlockingIOError('GPU unavailable')
@@ -92,6 +96,11 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
                  'contiformer_head','contiformer_ridge','mult_head','mult_ridge','vehicle_statistics','dual_statistics')
     reference=old[old.method.isin(old_methods)].copy();reference['method']='frozen_'+reference.method
     rows.extend(reference.to_dict('records'))
+    for ref in binding.get('reference_reports',[]):
+        prior=pd.read_csv(ref['predictions_path'])
+        prior=prior[prior.method.isin(ref['methods'])].copy()
+        prior['method']=ref['prefix']+'_'+prior.method
+        rows.extend(prior.to_dict('records'))
     replay={}
     for spec in FOLDS:
         fold=spec['name']
