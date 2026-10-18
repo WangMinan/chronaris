@@ -92,3 +92,31 @@ def extract_clare_frequency(request):
     return dict(features=np.asarray(features).reshape(-1,36),metadata=np.array(json.dumps(dict(
         status='passed' if all(r['passed'] for r in coverage) else 'failed',windows=windows,quality=quality,
         sources=sources,records=records,coverage=coverage),allow_nan=False)))
+
+
+def audit_clare_gaps(request):
+    sources=request['sources'];assert all(file_digest(p)==h for p,h in sources.items())
+    groups={};rows=[];root=Path(request['root'])
+    for r in request['windows']:
+        if r['start_s'] is not None:groups.setdefault((r['subject'],r['experiment']),[]).append(r)
+    for (subject,experiment),windows in groups.items():
+        definitions=[('EEG',f'eeg_data_exp_{experiment}.csv',('TP9','AF7','AF8','TP10')),
+                     ('EDA',f'eda_data_experiment_{experiment}.csv',('GSR Conductance CAL',)),
+                     ('ECG',f'ecg_data_experiment_{experiment}.csv',('ECG LL-RA CAL',))]
+        for stream,name,columns in definitions:
+            path=root/stream/subject/name;assert str(path) in sources
+            frame=pd.read_csv(path);times=frame.Timestamp.to_numpy(float)
+            for column in columns:
+                values=frame[column].to_numpy(float)
+                for r in windows:
+                    interval=(times>=r['start_s'])&(times<r['end_s']);finite=interval&np.isfinite(values)
+                    t=times[finite];dt=np.diff(t)
+                    rows.append(dict(sample_id=r['sample_id'],subject=subject,experiment=experiment,stream=stream,field=column,
+                                     stored_rows=int(interval.sum()),finite_points=len(t),
+                                     repeated_time=int((dt==0).sum()),reversed_time=int((dt<0).sum()),
+                                     initial_gap_s=float(t[0]-r['start_s']) if len(t) else None,
+                                     final_gap_s=float(r['end_s']-t[-1]) if len(t) else None,
+                                     internal_gap_s=float(dt.max()) if len(dt) else None,
+                                     window_qualified=r['accepted']))
+    assert all(file_digest(p)==h for p,h in sources.items())
+    return dict(rows=rows,sources=sources,encoder_updates=0)

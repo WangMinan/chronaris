@@ -39,7 +39,18 @@ def verify_shape_mult(report,assets,replay=True):
     original_path=json.loads(original_receipt.read_text())['snapshot_path']
     with np.load(original_path,allow_pickle=False) as raw:old={k:raw[k] for k in raw.files}
     meta=json.loads(str(old['metadata']));subjects=np.array([r['subject'] for r in meta['windows']])
-    with np.load(assets/'native.npz',allow_pickle=False) as raw:native={k:raw[k] for k in raw.files}
+    qualification=json.loads((report/'qualification.json').read_text())
+    native_path=Path(qualification['native_path']) if binding.get('rest_calibration') else assets/'native.npz'
+    with np.load(native_path,allow_pickle=False) as raw:native={k:raw[k] for k in raw.files}
+    if binding.get('rest_calibration'):
+        assert file_digest(native_path)==qualification['native_sha256']
+        assert file_digest(qualification['rest_source_path'])==qualification['rest_source_sha256']
+        rest={r['subject']:r for r in qualification['calibrations']};unique=sorted(set(subjects))
+        assert set(rest)==set(unique)
+        for s in unique:
+            earliest=min(r['source_origin_native']+(r['cutoff_s']-30)/86400 for r in meta['windows'] if r['subject']==s)
+            assert rest[s]['end_native']<earliest and rest[s]['start_native']==rest[s]['end_native']-60/86400
+            assert all(q['maximum_gap_s']<=.25 for q in rest[s]['quality'])
     if binding.get('expanded_fit'):
         frozen=json.loads((ORIGINAL/'qualification.json').read_text())
         with np.load(frozen['snapshot_path'],allow_pickle=False) as raw:
@@ -56,12 +67,22 @@ def verify_shape_mult(report,assets,replay=True):
         q=json.loads((report/(spec['name']+'_qualification.json')).read_text())
         assert file_digest(q['snapshot_path'])==q['snapshot_sha256']
         fit=np.flatnonzero(np.isin(subjects,spec['fit']))
-        assert q['floors']==shape_scale_floors(native['scales'],fit)
-        assert q['fit_sample_ids']==[meta['windows'][i]['sample_id'] for i in fit]
+        if binding.get('rest_calibration'):
+            from chronaris.evaluation.application_tasks.rest_development_inputs import resting_values
+            floor_ids=np.flatnonzero(np.isin(unique,spec['fit']))
+            assert q['floors']==shape_scale_floors(np.array([rest[s]['scale'] for s in unique]),floor_ids)
+            assert q['floor_fit_subjects']==[unique[i] for i in floor_ids]
+            expected=resting_values(native['values'],native['masks'],
+                np.array([[p['center'] for p in r['physiology_quality']] for r in meta['windows']]),
+                np.array([rest[s]['center'] for s in subjects]),np.array([rest[s]['scale'] for s in subjects]),q['floors'])
+        else:
+            assert q['floors']==shape_scale_floors(native['scales'],fit)
+            assert q['fit_sample_ids']==[meta['windows'][i]['sample_id'] for i in fit]
+            expected=shape_scale_features(native['values'],native['masks'],native['scales'],q['floors'])
         with np.load(q['snapshot_path'],allow_pickle=False) as raw:
             for key in old:
                 if key!='physiology':np.testing.assert_array_equal(raw[key],old[key])
-            np.testing.assert_array_equal(raw['physiology'],shape_scale_features(native['values'],native['masks'],native['scales'],q['floors']))
+            np.testing.assert_array_equal(raw['physiology'],expected)
     receipts=locked['receipts'];updates=0
     for name,r in receipts.items():
         assert file_digest(r['checkpoint_path'])==r['checkpoint_sha256']
@@ -115,6 +136,7 @@ def verify_shape_mult(report,assets,replay=True):
     assert run['stable_success']==expected
     original_weights={}
     for spec in binding['folds']:
+        if 'original' not in binding.get('versions',VERSIONS):continue
         name=spec['name']+'_original';new=torch.load(receipts[name]['checkpoint_path'],map_location='cpu',weights_only=True)
         before=json.loads((ORIGINAL/(spec['name']+'_mult_receipt.json')).read_text())
         previous=torch.load(before['checkpoint_path'],map_location='cpu',weights_only=True)
@@ -128,7 +150,7 @@ def verify_shape_mult(report,assets,replay=True):
         with development_gpu_lock() as acquired:
             if not acquired:raise BlockingIOError('GPU busy')
             for spec in binding['folds']:
-                versions=list(VERSIONS)+(['repaired_contiformer'] if run['same_input_traditional_checked'] else [])
+                versions=list(binding.get('versions',VERSIONS))+(['repaired_contiformer'] if run['same_input_traditional_checked'] else [])
                 for version in versions:
                     name=spec['name']+'_'+version;data=shape_data(report,assets,spec,version);data.score_open=True
                     ids=data.indices('score');model=load_fair_model(receipts[name]['checkpoint_path'],data)

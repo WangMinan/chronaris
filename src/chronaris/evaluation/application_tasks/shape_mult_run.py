@@ -27,7 +27,7 @@ def shape_data(report,assets,spec,version):
     return FairResidualData(json.loads(receipt.read_text())['snapshot_path'],receipt,spec)
 
 
-def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_aux_weight=0.):
+def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_aux_weight=0.,rest_calibration=False):
     report,assets=Path(report),Path(assets)
     if (report/'run_status.json').exists():raise FileExistsError('existing run retained')
     assert json.loads((report/'qualification.json').read_text())['status']=='passed'
@@ -40,10 +40,20 @@ def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_au
     binding=dict(source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
                  plan_sha256=file_digest(report/'PLAN.md'),qualification_sha256=file_digest(report/'qualification.json'),
                  seed=seed,folds=FOLDS,selection_policy=selection_policy,history_aux_weight=history_aux_weight)
-    if (report/'folds.json').exists():
+    if rest_calibration:
+        prior=Path('docs/review/stage/eligible-fit-20261019')
+        result=json.loads((prior/'run_status.json').read_text())
+        assert result['status']=='completed' and json.loads((prior/'verification.json').read_text())['status']=='passed'
+        assert not (result['representation_success'] and result['pairing_success'])
+        assert selection_policy=='common_readout' and seed==17 and history_aux_weight==0.
+        q=json.loads((report/'qualification.json').read_text())
+        assert q['condition']=='preflight_unlabelled_rest_observation_available'
+        binding.update(rest_calibration=True,versions={'candidate':'mult'},predecessor_sha256=file_digest(prior/'run_status.json'))
+    if (report/'folds.json').exists() or rest_calibration:
         import datetime
-        binding['folds']=json.loads((report/'folds.json').read_text())
-        binding['expanded_fit']=True
+        if (report/'folds.json').exists():
+            binding['folds']=json.loads((report/'folds.json').read_text())
+            binding['expanded_fit']=True
         binding['deadline']=datetime.datetime.fromisoformat('2026-10-19T09:30:00+08:00').timestamp()
         if time.time()>=binding['deadline']:raise TimeoutError('night deadline reached')
     if history_aux_weight:
@@ -72,6 +82,7 @@ def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_au
 
 def _execute(report,assets,binding,start,trainer=fit_fair_model):
     receipts={};readouts={};choices={};datasets={};rows=[];pair_rows=[];donors=[]
+    versions=binding.get('versions',VERSIONS)
     def train(spec,version,method):
         name=spec['name']+'_'+version
         data=shape_data(report,assets,spec,version)
@@ -97,7 +108,7 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
         save_json(report/(name+'.json'),dict(receipts=receipts,selected_alpha=choices,readout_path=str(path.resolve()),
                                              readout_sha256=file_digest(path),binding=binding))
     for spec in binding['folds']:
-        for version,method in VERSIONS.items():train(spec,version,method)
+        for version,method in versions.items():train(spec,version,method)
     lock('locked_primary')
     old=pd.read_csv(ORIGINAL/'predictions.csv.gz')
     old_methods=('persistence','train_mean','train_median','aircraft_head','aircraft_ridge',
@@ -112,7 +123,7 @@ def _execute(report,assets,binding,start,trainer=fit_fair_model):
     replay={}
     for spec in binding['folds']:
         fold=spec['name']
-        for version in VERSIONS:
+        for version in versions:
             name=fold+'_'+version;data=datasets[name]
             scored=score_shape_model(data,receipts[name]['checkpoint_path'],readouts[name],version)
             rows+=scored

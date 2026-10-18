@@ -30,7 +30,7 @@ def qualify_rest_development(source,report,assets):
     for subject in unique:
         item=lookup[subject];assert item['accepted'] and len(item['center'])==len(item['scale'])==4
         earliest=min(r['source_origin_native']+(r['cutoff_s']-30)/86400 for r in rows if r['subject']==subject)
-        assert item['end_native']<earliest and abs((item['end_native']-item['start_native'])*86400-60)<1e-4
+        assert item['end_native']<earliest and item['start_native']==item['end_native']-60/86400
         assert all(q['maximum_gap_s']<=.25 for q in item['quality'])
     local=np.array([[q['center'] for q in r['physiology_quality']] for r in rows])
     centers=np.array([lookup[s]['center'] for s in subjects]);scales=np.array([lookup[s]['scale'] for s in subjects])
