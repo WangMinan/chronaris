@@ -15,8 +15,8 @@ class FairResidualModel(nn.Module):
         self.method = method
         if method == 'aircraft':
             self.encoder = ContinuousTimeSingleStreamEncoder(SingleStreamEncoderConfig('vehicle', 12))
-        elif method in ('contiformer', 'mult', 'control', 'candidate'):
-            name = 'mult' if method == 'mult' else 'contiformer'
+        elif method in ('contiformer', 'mult', 'mult_aircraft', 'control', 'candidate'):
+            name = 'mult' if method in ('mult', 'mult_aircraft') else 'contiformer'
             cls = CausalMulTFusionEncoder if name == 'mult' else CausalContiFormerFusionEncoder
             self.encoder = cls(DeepBaselineEncoderConfig(name, 16, 12))
         else:
@@ -28,7 +28,7 @@ class FairResidualModel(nn.Module):
         if self.method == 'aircraft':
             output = self.encoder.forward_queried(vehicle)
         else:
-            if self.method == 'control':
+            if self.method in ('control', 'mult_aircraft'):
                 mask = torch.zeros_like(physiology.feature_mask)
                 physiology = replace(physiology, values=torch.zeros_like(physiology.values), feature_mask=mask,
                                      modality_mask=mask.any(-1), observation_age_s=torch.full_like(physiology.values, torch.inf),
