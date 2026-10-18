@@ -1,0 +1,38 @@
+[
+  {
+    "unit": "shape-mult",
+    "status": "completed",
+    "models": 6,
+    "updates": 18360
+  },
+  {
+    "unit": "readout-selection",
+    "status": "completed",
+    "models": 6,
+    "updates": 15957
+  },
+  {
+    "unit": "history-supervision",
+    "status": "completed",
+    "models": 6,
+    "updates": 25191
+  },
+  {
+    "unit": "chronos-information",
+    "status": "completed",
+    "models": 6,
+    "updates": 18021
+  },
+  {
+    "unit": "eligible-fit",
+    "status": "completed",
+    "models": 6,
+    "updates": 136773
+  },
+  {
+    "unit": "rest-development",
+    "status": "completed",
+    "models": 2,
+    "updates": 6453
+  }
+]
