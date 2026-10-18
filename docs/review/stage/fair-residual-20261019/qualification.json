@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "gates": {
+    "sources": true,
+    "records": true,
+    "coverage": true,
+    "per_person": true,
+    "formula": true,
+    "historical_anchor": true,
+    "finite": true
+  },
+  "snapshot_sha256": "fb3d0baa7463d26009c49b06f4cfc8d934c42114640a3440e6718bea13149a50",
+  "snapshot_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-fair-residual/inputs-v2.npz",
+  "windows": 5951,
+  "rejected": {},
+  "maximum_reconstruction_errors": [
+    0.0,
+    0.0,
+    9.999999999998899e-05,
+    9.999999999998899e-05
+  ],
+  "encoder_updates": 0
+}

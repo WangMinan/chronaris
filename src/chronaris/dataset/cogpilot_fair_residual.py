@@ -88,3 +88,34 @@ def extract_fair_residual(request):
     return {**{k: np.asarray(v) for k, v in arrays.items()},
             'metadata': np.array(json.dumps(dict(windows=metadata, records=records, sources=sources,
                                                  reconstruction=checks), allow_nan=False))}
+
+
+def audit_fair_prefix(request):
+    results = []
+    for row in request['windows']:
+        run = Path(row['record_id']); start = row['cutoff_s']-30
+        queries = start+QUERY_SECONDS; before = QUERY_SECONDS <= 15
+        f = 0
+        for token, columns in list(STREAM_COLUMNS.items())[:3]:
+            path = next(run.glob(f'*stream-{token}*_dat.csv'))
+            identity = file_digest(path)
+            assert identity == request['source_hashes'][str(path)]
+            table = pd.read_csv(path, usecols=['time_dn', *columns])
+            t = (table.time_dn.to_numpy(float)-row['source_origin_native'])*86400
+            for column in columns:
+                x = table[column].to_numpy(float)
+                if column == 'eda_hand_l_kOhms':
+                    x = np.divide(1000., x, out=np.full_like(x, np.nan), where=np.isfinite(x)&(x > 0))
+                expected = native_dynamic_features(t, x, start, queries, PHYSIOLOGY_BANDS[f])
+                changed = x.copy();changed[t >= start+15] = 123456.
+                short = t < start+15
+                variants = [native_dynamic_features(t, changed, start, queries, PHYSIOLOGY_BANDS[f]),
+                            native_dynamic_features(t[short], x[short], start, queries, PHYSIOLOGY_BANDS[f])]
+                for variant, actual in zip(('changed', 'deleted'), variants):
+                    np.testing.assert_array_equal(expected[1][before], actual[1][before])
+                    np.testing.assert_allclose(expected[0][before], actual[0][before], atol=1e-5, rtol=1e-5)
+                    results.append(dict(sample_id=row['sample_id'], field=f, variant=variant,
+                                        max_delta=float(np.max(np.abs(expected[0][before]-actual[0][before])))))
+                f += 1
+            assert file_digest(path) == identity
+    return dict(status='passed', checks=results, encoder_updates=0)

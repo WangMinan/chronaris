@@ -1,0 +1,1010 @@
+[
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-001",
+    "rows": 1616,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-007",
+    "rows": 1681,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-01B_run-012",
+    "rows": 1669,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-003",
+    "rows": 1801,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-008",
+    "rows": 1827,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-02B_run-010",
+    "rows": 1762,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-002",
+    "rows": 1846,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      9.999999999998899e-05,
+      9.999999999998899e-05
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-005",
+    "rows": 1860,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-03B_run-011",
+    "rows": 1834,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-004",
+    "rows": 1743,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-006",
+    "rows": 1782,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp003/ses-20210206/level-04B_run-009",
+    "rows": 1767,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-001",
+    "rows": 1823,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-007",
+    "rows": 1803,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-01B_run-012",
+    "rows": 1977,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-003",
+    "rows": 2020,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-008",
+    "rows": 1947,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-02B_run-010",
+    "rows": 2097,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-002",
+    "rows": 2076,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-005",
+    "rows": 2035,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-03B_run-011",
+    "rows": 2230,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-004",
+    "rows": 1660,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-006",
+    "rows": 1609,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp004/ses-20210330/level-04B_run-009",
+    "rows": 1795,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-001",
+    "rows": 1837,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-007",
+    "rows": 1955,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-01B_run-012",
+    "rows": 1729,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-003",
+    "rows": 1796,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-008",
+    "rows": 2076,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.1102230246251565e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-02B_run-010",
+    "rows": 2080,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-002",
+    "rows": 1899,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-005",
+    "rows": 2074,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-03B_run-011",
+    "rows": 2107,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-004",
+    "rows": 1996,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-006",
+    "rows": 1855,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp008/ses-20210503/level-04B_run-009",
+    "rows": 1740,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-001",
+    "rows": 1672,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-007",
+    "rows": 1209,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-01B_run-012",
+    "rows": 1441,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-003",
+    "rows": 2091,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.7763568394002505e-15
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-008",
+    "rows": 1695,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-02B_run-010",
+    "rows": 1699,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-002",
+    "rows": 1152,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.7763568394002505e-15
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-005",
+    "rows": 1917,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.7763568394002505e-15
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-03B_run-011",
+    "rows": 1699,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.7763568394002505e-15
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-004",
+    "rows": 3613,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.7763568394002505e-15
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-006",
+    "rows": 1789,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      1.7763568394002505e-15
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp011/ses-20210408/level-04B_run-009",
+    "rows": 1489,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-001",
+    "rows": 2106,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-007",
+    "rows": 1859,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-01B_run-012",
+    "rows": 1998,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-003",
+    "rows": 2306,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-008",
+    "rows": 2250,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-02B_run-010",
+    "rows": 2250,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-002",
+    "rows": 2782,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-005",
+    "rows": 2413,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011",
+    "rows": 2450,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      9.999999999998899e-05,
+      9.999999999998899e-05
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-004",
+    "rows": 2465,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-006",
+    "rows": 2328,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-04B_run-009",
+    "rows": 2409,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-001",
+    "rows": 1934,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-007",
+    "rows": 1552,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-01B_run-012",
+    "rows": 1635,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-003",
+    "rows": 2107,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-008",
+    "rows": 1639,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-02B_run-010",
+    "rows": 1887,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-002",
+    "rows": 2246,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-005",
+    "rows": 2104,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-03B_run-011",
+    "rows": 1856,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-004",
+    "rows": 2024,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      9.999999999998899e-05,
+      9.999999999976694e-05
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-006",
+    "rows": 1735,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp022/ses-20210621/level-04B_run-009",
+    "rows": 1752,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-001",
+    "rows": 2096,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-007",
+    "rows": 1904,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-01B_run-012",
+    "rows": 2124,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      9.999999999998899e-05,
+      9.999999999998899e-05
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-003",
+    "rows": 2156,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-008",
+    "rows": 2041,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-02B_run-010",
+    "rows": 2006,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      2.220446049250313e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-002",
+    "rows": 2033,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-005",
+    "rows": 2150,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-03B_run-011",
+    "rows": 2158,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-004",
+    "rows": 2140,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-006",
+    "rows": 1993,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      4.440892098500626e-16
+    ]
+  },
+  {
+    "record_id": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp025/ses-20210820/level-04B_run-009",
+    "rows": 2010,
+    "time_max_delta_s": 5.029141902923584e-05,
+    "canonical_time_max_delta_s": 0.0,
+    "component_max_errors": [
+      0.0,
+      0.0,
+      0.0,
+      8.881784197001252e-16
+    ]
+  }
+]

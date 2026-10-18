@@ -1,0 +1,342 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp003::ses-20210206::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp004::ses-20210330::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp008::ses-20210503::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp011::ses-20210408::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp019::ses-20210625::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp022::ses-20210621::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 0,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 1,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 2,
+      "variant": "deleted",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "changed",
+      "max_delta": 0.0
+    },
+    {
+      "sample_id": "sub-cp025::ses-20210820::level-01B_run-001::performance0000",
+      "field": 3,
+      "variant": "deleted",
+      "max_delta": 0.0
+    }
+  ],
+  "encoder_updates": 0
+}
