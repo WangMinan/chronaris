@@ -1,0 +1,6 @@
+fold,held_count,fitted_held_overlap,read_only_held_overlap,fitted_validation_overlap
+v4_cogpilot_confirmation_fold01,6,0,0,0
+v4_cogpilot_confirmation_fold02,6,3,0,3
+v4_cogpilot_confirmation_fold03,6,5,0,2
+v4_cogpilot_confirmation_fold04,5,5,0,3
+v4_cogpilot_confirmation_fold05,5,3,2,2

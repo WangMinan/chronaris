@@ -1,0 +1,167 @@
+{
+  "status": "audited",
+  "original_role_registry": "/home/wangminan/projects/chronaris/docs/requirements/thesis-v4-public-subjects.json",
+  "registry_sha256": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+  "new_target_construction_subjects": [
+    "sub-cp005",
+    "sub-cp006",
+    "sub-cp009",
+    "sub-cp013",
+    "sub-cp015",
+    "sub-cp018",
+    "sub-cp020",
+    "sub-cp023",
+    "sub-cp024",
+    "sub-cp027",
+    "sub-cp028",
+    "sub-cp029",
+    "sub-cp030",
+    "sub-cp031",
+    "sub-cp033",
+    "sub-cp035",
+    "sub-cp036",
+    "sub-cp039"
+  ],
+  "new_model_fit_subjects": [
+    "sub-cp006",
+    "sub-cp009",
+    "sub-cp013",
+    "sub-cp015",
+    "sub-cp018",
+    "sub-cp020",
+    "sub-cp023",
+    "sub-cp024",
+    "sub-cp027",
+    "sub-cp028",
+    "sub-cp029",
+    "sub-cp030",
+    "sub-cp031",
+    "sub-cp035",
+    "sub-cp036",
+    "sub-cp039"
+  ],
+  "folds": [
+    {
+      "fold": "v4_cogpilot_confirmation_fold01",
+      "held_subjects": [
+        "sub-cp016",
+        "sub-cp017",
+        "sub-cp032",
+        "sub-cp037",
+        "sub-cp038",
+        "sub-cp042"
+      ],
+      "fitted_held_overlap": [],
+      "read_only_held_overlap": [],
+      "fitted_validation_overlap": []
+    },
+    {
+      "fold": "v4_cogpilot_confirmation_fold02",
+      "held_subjects": [
+        "sub-cp006",
+        "sub-cp009",
+        "sub-cp012",
+        "sub-cp014",
+        "sub-cp028",
+        "sub-cp043"
+      ],
+      "fitted_held_overlap": [
+        "sub-cp006",
+        "sub-cp009",
+        "sub-cp028"
+      ],
+      "read_only_held_overlap": [],
+      "fitted_validation_overlap": [
+        "sub-cp020",
+        "sub-cp024",
+        "sub-cp035"
+      ]
+    },
+    {
+      "fold": "v4_cogpilot_confirmation_fold03",
+      "held_subjects": [
+        "sub-cp013",
+        "sub-cp023",
+        "sub-cp026",
+        "sub-cp030",
+        "sub-cp031",
+        "sub-cp036"
+      ],
+      "fitted_held_overlap": [
+        "sub-cp013",
+        "sub-cp023",
+        "sub-cp030",
+        "sub-cp031",
+        "sub-cp036"
+      ],
+      "read_only_held_overlap": [],
+      "fitted_validation_overlap": [
+        "sub-cp020",
+        "sub-cp027"
+      ]
+    },
+    {
+      "fold": "v4_cogpilot_confirmation_fold04",
+      "held_subjects": [
+        "sub-cp015",
+        "sub-cp018",
+        "sub-cp020",
+        "sub-cp029",
+        "sub-cp035"
+      ],
+      "fitted_held_overlap": [
+        "sub-cp015",
+        "sub-cp018",
+        "sub-cp020",
+        "sub-cp029",
+        "sub-cp035"
+      ],
+      "read_only_held_overlap": [],
+      "fitted_validation_overlap": [
+        "sub-cp009",
+        "sub-cp028",
+        "sub-cp036"
+      ]
+    },
+    {
+      "fold": "v4_cogpilot_confirmation_fold05",
+      "held_subjects": [
+        "sub-cp005",
+        "sub-cp024",
+        "sub-cp027",
+        "sub-cp033",
+        "sub-cp039"
+      ],
+      "fitted_held_overlap": [
+        "sub-cp024",
+        "sub-cp027",
+        "sub-cp039"
+      ],
+      "read_only_held_overlap": [
+        "sub-cp005",
+        "sub-cp033"
+      ],
+      "fitted_validation_overlap": [
+        "sub-cp020",
+        "sub-cp036"
+      ]
+    }
+  ],
+  "first_fold_new_target_held_reserve": [
+    "sub-cp016",
+    "sub-cp017",
+    "sub-cp042",
+    "sub-cp038",
+    "sub-cp037",
+    "sub-cp032"
+  ],
+  "first_fold_new_target_selection_reserve": [
+    "sub-cp014",
+    "sub-cp012",
+    "sub-cp043",
+    "sub-cp026"
+  ],
+  "original_results_modified": false,
+  "new_results_scope": "development_only",
+  "optimizer_updates": 0
+}
