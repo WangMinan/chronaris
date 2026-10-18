@@ -1,0 +1,22 @@
+[
+  {
+    "file": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/sub-cp019/ses-20210625/level-03B_run-011/sub-cp019_ses-20210625_task-ils_stream-lslshimmereda_feat-chunk_level-03B_run-011_dat.csv",
+    "rows": 460270,
+    "nonfinite_time": 0,
+    "duplicate_rows": 94,
+    "duplicate_times": 47,
+    "conflicting_groups": 47,
+    "duplicate_range_s": [
+      402.47296281158924,
+      405.57845793664455
+    ],
+    "reversals": [
+      {
+        "index": 383055,
+        "low_s": 402.4499695748091,
+        "high_s": 405.582682415843
+      }
+    ],
+    "sha256": "d08a60432406dbe93a5026bc738920d3878d8ad7d30585a1a831756864d6d159"
+  }
+]
