@@ -9,12 +9,15 @@ from chronaris.dataset.cogpilot_history_features import (
     QUERY_SECONDS, PHYSIOLOGY_BANDS, published_performance, strict_history_queries, native_dynamic_features,
     performance_row_identity,
 )
+from chronaris.dataset.cogpilot_shape_features import shape_native_features
 
 
 def extract_fair_residual(request):
     sources, records, metadata, checks = {}, [], [], []
     arrays = {k: [] for k in ('physiology', 'physiology_mask', 'physiology_age',
                               'vehicle', 'vehicle_mask', 'vehicle_age', 'anchor')}
+    if request.get('include_shape_native'):
+        arrays.update({k: [] for k in ('native_values','native_mask','native_age','native_scales')})
     for record in request['records']:
         run = Path(record['record_id'])
         paths = [next(run.glob(f'*stream-{token}*_dat.csv')) for token in STREAM_COLUMNS]
@@ -35,7 +38,7 @@ def extract_fair_residual(request):
         errors = np.max(np.abs(reconstructed[indices]-perf_values), axis=0)
         checks.append(dict(record_id=str(run), rows=len(pt), time_max_delta_s=float(np.max(np.abs(vt[indices]-pt))),
                            canonical_time_max_delta_s=0., component_max_errors=errors.tolist()))
-        if np.any(errors[:3] > .0002+1e-10) or errors[3] > .0006+1e-10:
+        if not np.isfinite(errors).all() or np.any(errors[:3] > .0002+1e-10) or errors[3] > .0006+1e-10:
             raise ValueError(f'performance reconstruction failed {run}: {errors}')
         physiology = []
         for path, columns in zip(paths[:3], list(STREAM_COLUMNS.values())[:3]):
@@ -74,9 +77,20 @@ def extract_fair_residual(request):
                 row['minimum_vehicle_coverage'] = float(vm.mean(0).min())
                 if min(row['minimum_phys_coverage'], row['minimum_vehicle_coverage']) < .9:
                     raise ValueError('dynamic_or_history_coverage')
+                native = None
+                if request.get('include_shape_native'):
+                    native = [shape_native_features(t,x,start,queries,band)
+                              for (t,x),band in zip(physiology,PHYSIOLOGY_BANDS)]
+                    for k,expected in ((1,pm),(2,pa)):
+                        np.testing.assert_array_equal(np.concatenate([a[k] for a in native],axis=1),expected)
                 row['accepted'] = True
-                for name, value in zip(arrays, (p, pm, pa, v, vm, va, anchor)):
+                for name, value in zip(('physiology','physiology_mask','physiology_age','vehicle','vehicle_mask','vehicle_age','anchor'),
+                                       (p, pm, pa, v, vm, va, anchor)):
                     arrays[name].append(value)
+                if native is not None:
+                    for k,name in enumerate(('native_values','native_mask','native_age')):
+                        arrays[name].append(np.concatenate([a[k] for a in native],axis=1))
+                    arrays['native_scales'].append(np.array([a[3]['scale'] for a in native]))
                 accepted += 1
             except ValueError as exc:
                 row['reason'] = str(exc)

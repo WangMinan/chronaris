@@ -49,7 +49,7 @@ def extract_shape_native(request):
                                                max_delta=float(np.abs(actual[0][past]-out[0][past]).max())))
                 field += 1
         tested_subjects.add(rows[0][1]['subject'])
-    assert len(checks) == 56
+    assert len(checks) == 8*len({r['subject'] for r in request['windows']})
     assert all(file_digest(p) == h for p, h in sources.items())
     return dict(values=values, masks=masks, ages=ages, scales=scales,
                 metadata=np.array(json.dumps(dict(sample_ids=[r['sample_id'] for r in request['windows']],
