@@ -23,7 +23,8 @@ def extract_expanded_fit(request):
             run=matches[0];row['record_id']=str(run)
             paths=[]
             for token in (*STREAM_COLUMNS,'lslxp11_feat-perfmetric'):
-                found=list(run.glob(f'*stream-{token}*.csv'))
+                suffix='*_dat.csv' if token in STREAM_COLUMNS else '*.csv'
+                found=list(run.glob(f'*stream-{token}'+suffix))
                 if len(found)!=1:raise ValueError('source missing or ambiguous: '+token)
                 paths+=found
             before={str(p):file_digest(p) for p in paths};sources.update(before)
