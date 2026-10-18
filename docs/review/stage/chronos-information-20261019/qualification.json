@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "fold": "fold01",
+      "view": "aircraft",
+      "channels": 12,
+      "features": 9244,
+      "history_loss": 2.941375732421875,
+      "gradient_norm": 227.03292846679688,
+      "parameters": 119477664,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold01",
+      "view": "physiology_history",
+      "channels": 20,
+      "features": 15404,
+      "history_loss": 7.7767205238342285,
+      "gradient_norm": 132.4630126953125,
+      "parameters": 119477664,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold01",
+      "view": "joint",
+      "channels": 28,
+      "features": 21564,
+      "history_loss": 6.308802127838135,
+      "gradient_norm": 115.40133666992188,
+      "parameters": 119477664,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold02",
+      "view": "aircraft",
+      "channels": 12,
+      "features": 9244,
+      "history_loss": 3.67383074760437,
+      "gradient_norm": 256.1969909667969,
+      "parameters": 119477664,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold02",
+      "view": "physiology_history",
+      "channels": 20,
+      "features": 15404,
+      "history_loss": 6.113359451293945,
+      "gradient_norm": 123.3733901977539,
+      "parameters": 119477664,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    },
+    {
+      "fold": "fold02",
+      "view": "joint",
+      "channels": 28,
+      "features": 21564,
+      "history_loss": 5.4633660316467285,
+      "gradient_norm": 117.90837097167969,
+      "parameters": 119477664,
+      "batch_isolation_delta": 0.0,
+      "fresh_reload_delta": 0.0
+    }
+  ],
+  "assets_path": "/mnt/e/chronaris-v4-results/2026-09-11-stage3-models/assets.json",
+  "assets_sha256": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+  "optimizer_updates": 0,
+  "forward_backward_checks": 6,
+  "device": "NVIDIA GeForce RTX 4070 SUPER"
+}
