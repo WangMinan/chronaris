@@ -1,0 +1,20 @@
+{
+  "name": "fold02_aircraft",
+  "method": "mult_aircraft",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 35,
+  "best_epoch": 20,
+  "updates": 17395,
+  "selection_rmse": 0.2352214873532314,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit/training/fold02_aircraft/best.pt",
+  "checkpoint_sha256": "e77dc0000a18891b82094d882b07d0fbf1b2f146f7db3038a3c8b2660804b31e",
+  "parameter_count": 1016577,
+  "elapsed_s": 726.7489832560241,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "selection_policy": "common_readout",
+  "selected_alpha": 10.0
+}

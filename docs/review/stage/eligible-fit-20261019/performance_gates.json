@@ -1,0 +1,38 @@
+[
+  {
+    "fold": "fold01",
+    "route": "ridge",
+    "strongest": "aircraft_ridge",
+    "improvement": -0.017229513386424866,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold01",
+    "route": "head",
+    "strongest": "aircraft_ridge",
+    "improvement": -0.18086797185312253,
+    "subjects_improved": 0,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "ridge",
+    "strongest": "original_head",
+    "improvement": -0.02820094815370955,
+    "subjects_improved": 1,
+    "mae_passed": false,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "route": "head",
+    "strongest": "original_head",
+    "improvement": 0.04546311377018897,
+    "subjects_improved": 1,
+    "mae_passed": true,
+    "passed": false
+  }
+]

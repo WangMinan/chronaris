@@ -1,0 +1,25 @@
+{
+  "root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-eligible-fit",
+  "files": {
+    "additional.npz": "518dc5fa4b57fe8ebffe823282a1841a42ee3a5da69951658350f380d9e053f5",
+    "fold01_inputs.npz": "4e2ca35e1cc8cd0e6ec969c9ecefb5d29afe1e732a0dad9af38e88872cffd887",
+    "fold02_inputs.npz": "cf690076782ec3248fee32aefc8cc8b3411dd92f10accc01c483ef2cc948d2af",
+    "locked_primary.joblib": "7381c8a5cd0bd4e7208db50e08c95487707208165f497601d1d01f3e4c442e04",
+    "native.npz": "b80a5ad900bf40ed1e4f284d700ecc4388eb4a3f004c1c406bad5096062e2de4",
+    "original_inputs.npz": "685982ebeea3c5049671f924731f93d0361c3a18b1831a7ab9c0c36a719fda4d",
+    "training/fold01_aircraft/best.pt": "3d299d904da813f6570d77cc76d3935ec9b1568f831b19d23b5614501a9added",
+    "training/fold01_aircraft/last.pt": "278e5c6a7396d3d56e10ed7e0d184e62dc4b86d65b0bd83618dd4bf29614a6ce",
+    "training/fold01_candidate/best.pt": "abf902f1e5b00da18521137f79bbdab1286ba2394f03bc4752433027bf4e1afe",
+    "training/fold01_candidate/last.pt": "261d505264386bf875f56547d3bb7ef77c2071e5070c611a46b8cb5ae5f47bc5",
+    "training/fold01_original/best.pt": "45f01c34c3fa1f5ed534b2e444eeeb9df831da735ad131545a3e509fa9377605",
+    "training/fold01_original/last.pt": "07a66adcd8160e73beb2f76e3cc171c14166e24e1dc425d497990d7811b78620",
+    "training/fold02_aircraft/best.pt": "e77dc0000a18891b82094d882b07d0fbf1b2f146f7db3038a3c8b2660804b31e",
+    "training/fold02_aircraft/last.pt": "26d64fbead1263f28e963a4611388bd5b4e5ac5cbd7772fcdf9d665253eb6e03",
+    "training/fold02_candidate/best.pt": "c6feee54d60c35b76418064ac892768cc4b7d93b8a0c6e3d9119a55d4d72bcf6",
+    "training/fold02_candidate/last.pt": "a07028fee3062a9af5dcf7c30c789680992d41c19480f69ddd06e398b3d337e6",
+    "training/fold02_original/best.pt": "52fb8322284e8e81d672245d57d6c20bdad77a74c39233838afb4f456960d8df",
+    "training/fold02_original/last.pt": "28ffaae247f858b7921dcd567b5c501c12e810d8c3829dea65f7641569a46380",
+    "training.log": "630166eb102d0084b80f65a6a965fa50af555c096dd7830f8c11d0959c6afce5",
+    "verification.log": "76849a89636e6068980e6bdd6df74a6d3596ab5e1e631164dafd8488f2ff087a"
+  }
+}
