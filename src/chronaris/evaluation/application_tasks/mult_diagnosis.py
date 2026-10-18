@@ -8,7 +8,8 @@ import numpy as np
 import pandas as pd
 import torch
 
-from chronaris.dataset.cogpilot_performance import file_digest
+from chronaris.dataset.cogpilot_performance import STREAM_COLUMNS, file_digest
+from chronaris.dataset.cogpilot_history_features import PHYSIOLOGY_BANDS
 from chronaris.evaluation.application_tasks.fair_residual_inputs import FOLDS, FairResidualData
 from chronaris.evaluation.application_tasks.fair_residual_training import load_fair_model
 from chronaris.evaluation.application_tasks.performance_pilot_audit import save_json, save_rows
@@ -148,11 +149,16 @@ def native_clip_audit(request):
                                          np.count_nonzero(np.diff(np.signbit(f[tail])))/(t[tail][-1]-t[tail][0])])
                     old, unbounded = feature(clipped, b), feature(z, a)
                     expected = np.array(row['final_features'][field*4:field*4+4])
-                    np.testing.assert_allclose(old.astype(np.float32), expected, atol=1e-5, rtol=1e-5)
+                    ct = t[tail]
+                    valid = len(ct) >= 50 and max(ct[0]-28, 30-ct[-1], np.diff(ct).max()) <= .25
+                    assert row['final_mask'][field*4:field*4+4] == [bool(valid)]*4
+                    replayed = old.astype(np.float32) if valid else np.zeros(4, np.float32)
+                    np.testing.assert_allclose(replayed, expected, atol=1e-5, rtol=1e-5)
                     whole_iqr = np.quantile(x, .75)-np.quantile(x, .25)
                     std = z[tail].std(); clipped_std = clipped[tail].std()
                     rms = np.sqrt(np.mean(a[tail]**2)); clipped_rms = np.sqrt(np.mean(b[tail]**2))
                     results.append(dict(sample_id=row['sample_id'], subject=row['subject'], channel=field,
+                                        final_feature_valid=bool(valid),
                                         scale=scale, whole_iqr_over_initial=whole_iqr/scale,
                                         clipped_fraction=float(np.mean(np.abs(z) > 20)),
                                         final_clipped_fraction=float(np.mean(np.abs(z[tail]) > 20)),
@@ -160,7 +166,7 @@ def native_clip_audit(request):
                                         std_retained=float(clipped_std/std) if std > 1e-12 else 1.,
                                         band_rms_retained=float(clipped_rms/rms) if rms > 1e-12 else 1.,
                                         final_flattened=bool(std > 1e-6 and clipped_std < 1e-8),
-                                        feature_replay_delta=float(np.max(np.abs(old.astype(np.float32)-expected))),
+                                        feature_replay_delta=float(np.max(np.abs(replayed-expected))),
                                         mean_abs_change=float(abs(old[0]-unbounded[0])),
                                         log_std_abs_change=float(abs(old[1]-unbounded[1])),
                                         log_rms_abs_change=float(abs(old[2]-unbounded[2])),
@@ -169,3 +175,86 @@ def native_clip_audit(request):
             assert file_digest(path) == sha
             identities[str(path)] = sha
     return dict(rows=results, sources=identities, encoder_updates=0, readout_fits=0)
+
+
+def summarize_diagnosis(report, output):
+    report, output = Path(report), Path(output)
+    manifest = json.loads((output/'protected_sources.json').read_text())
+    assert all(file_digest(p) == sha for p, sha in manifest.items())
+    predictions = pd.read_csv(output/'intervention_predictions.csv.gz')
+    recorded = pd.read_csv(output/'intervention_metrics.csv')
+    delta = 0.
+    for keys, group in predictions.groupby(['fold', 'variant', 'route', 'subject']):
+        row = recorded[(recorded[['fold', 'variant', 'route', 'subject']] == keys).all(axis=1)].iloc[0]
+        err = group.prediction-group.truth
+        assert len(group) == row.samples and group.sample_id.nunique() == len(group)
+        delta = max(delta, abs(np.sqrt(np.mean(err**2))-row.rmse), abs(np.abs(err).mean()-row.mae))
+    assert delta < 1e-10
+    recorded.groupby(['fold', 'variant', 'route'])[['rmse', 'mae']].mean().to_csv(output/'intervention_summary.csv')
+    original = pd.read_csv(report/'subject_metrics.csv')
+    table = original.pivot(index=['fold', 'subject'], columns='method', values='rmse')
+    table['mult_over_aircraft_improvement'] = 1-table.mult_ridge/table.aircraft_ridge
+    table['aircraft_minus_mult_rmse'] = table.aircraft_ridge-table.mult_ridge
+    table['share_of_fold_rmse_drop'] = table.aircraft_minus_mult_rmse/table.groupby(level=0).aircraft_minus_mult_rmse.transform('sum')
+    table.to_csv(output/'subject_comparison.csv')
+    receipts = []
+    for fold in FOLDS:
+        for method in ('aircraft', 'contiformer', 'mult', 'candidate', 'control'):
+            name = fold['name']+'_'+method
+            receipt = json.loads((report/f'{name}_receipt.json').read_text())
+            history = pd.read_csv(report/f'{name}_history.csv')
+            best = history.loc[history.epoch == receipt['best_epoch']].iloc[0]
+            receipts.append(dict(fold=fold['name'], method=method, parameters=receipt['parameter_count'],
+                                 best_epoch=receipt['best_epoch'], normalized_training_mse=best.training_mse,
+                                 selection_rmse=receipt['selection_rmse']))
+    save_rows(output/'training_comparison.csv', receipts)
+    native = pd.read_csv(output/'native_clip_windows.csv')
+    assert len(native) == 5951*4 and not native[['sample_id', 'channel']].duplicated().any()
+    old = pd.read_csv(report/'physiology_quality.csv')
+    match = native.merge(old, on=['sample_id', 'channel'], validate='one_to_one', suffixes=('', '_old'))
+    assert np.max(np.abs(match.clipped_fraction-match.clipped_fraction_old)) < 1e-12
+    assert native.feature_replay_delta.max() <= 1e-5
+    quality = []
+    for (subject, channel), group in native.groupby(['subject', 'channel']):
+        quality.append(dict(subject=subject, channel=channel, windows=len(group),
+                            clipped_over_10=int((group.clipped_fraction > .1).sum()),
+                            final_clipped_over_50=int((group.final_clipped_fraction > .5).sum()),
+                            final_flattened=int(group.final_flattened.sum()),
+                            std_below_half=int((group.std_retained < .5).sum()),
+                            band_below_half=int((group.band_rms_retained < .5).sum()),
+                            band_over_double=int((group.band_rms_retained > 2).sum()),
+                            scale_ratio_median=group.whole_iqr_over_initial.median(),
+                            scale_ratio_p95=group.whole_iqr_over_initial.quantile(.95)))
+    save_rows(output/'clipping_by_subject.csv', quality)
+    aggregate = []
+    for channel, group in native.groupby('channel'):
+        valid = group[group.final_feature_valid]
+        aggregate.append(dict(channel=channel, windows=len(group), final_valid=len(valid),
+                              initial_scale_floor=int((group.scale <= 1e-6).sum()),
+                              clipped_over_10=int((group.clipped_fraction > .1).sum()),
+                              final_flattened=int(valid.final_flattened.sum()),
+                              std_below_half=int((valid.std_retained < .5).sum()),
+                              band_below_half=int((valid.band_rms_retained < .5).sum()),
+                              band_over_double=int((valid.band_rms_retained > 2).sum()),
+                              whole_over_initial_iqr_median=group.whole_iqr_over_initial.median(),
+                              whole_over_initial_iqr_p95=group.whole_iqr_over_initial.quantile(.95)))
+    save_rows(output/'clipping_summary.csv', aggregate)
+    # Descriptive slices only: overlapping windows do not provide independent tests.
+    strata = native.groupby('sample_id').agg(high_clip=('clipped_fraction', lambda x: bool((x > .1).any())),
+                                            flattened=('final_flattened', 'any'))
+    source = pd.read_csv(report/'predictions.csv.gz')
+    source = source[source.method.isin(['aircraft_ridge', 'mult_ridge', 'candidate_ridge'])]
+    source = source.merge(strata, on='sample_id', validate='many_to_one')
+    rows = []
+    for (fold, subject, method, high), group in source.groupby(['fold', 'subject', 'method', 'high_clip']):
+        rows.append(dict(fold=fold, subject=subject, method=method, high_clip=bool(high), samples=len(group),
+                         rmse=float(np.sqrt(np.mean((group.prediction-group.truth)**2)))))
+    save_rows(output/'clipping_error_slices.csv', rows)
+    result = dict(status='passed', protected_files=len(manifest), changed_sources=[],
+                  native_windows=5951, native_channel_windows=len(native),
+                  native_sources=len(json.loads((output/'native_clip_receipt.json').read_text())['sources']),
+                  max_native_replay_delta=float(native.feature_replay_delta.max()),
+                  intervention_predictions=len(predictions), intervention_subject_metrics=len(recorded),
+                  max_metric_recompute_delta=float(delta), encoder_updates=0, new_readout_fits=0)
+    save_json(output/'verification.json', result)
+    return result

@@ -1,0 +1,10 @@
+{
+  "maximum_deltas": {
+    "fold01_head": 1.7763568394002505e-15,
+    "fold01_ridge": 1.7763568394002505e-15,
+    "fold02_head": 4.440892098500626e-16,
+    "fold02_ridge": 8.881784197001252e-16
+  },
+  "optimizer_updates": 0,
+  "readout_fits": 0
+}

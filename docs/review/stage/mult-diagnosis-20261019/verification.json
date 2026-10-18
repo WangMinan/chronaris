@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "protected_files": 1711,
+  "changed_sources": [],
+  "native_windows": 5951,
+  "native_channel_windows": 23804,
+  "native_sources": 252,
+  "max_native_replay_delta": 0.0,
+  "intervention_predictions": 41990,
+  "intervention_subject_metrics": 50,
+  "max_metric_recompute_delta": 1.1102230246251565e-16,
+  "encoder_updates": 0,
+  "new_readout_fits": 0
+}
