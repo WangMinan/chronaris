@@ -1,0 +1,209 @@
+{
+  "receipts": {
+    "fold01_aircraft": {
+      "name": "fold01_aircraft",
+      "method": "mult_aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 23,
+      "best_epoch": 8,
+      "updates": 1863,
+      "selection_rmse": 0.1726905807867353,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold01_aircraft/best.pt",
+      "checkpoint_sha256": "dec278d4183e253a4bd389c17671cb46f21d746c48bccb4c78b819e1587a5af3",
+      "parameter_count": 1016577,
+      "elapsed_s": 84.33984836298623,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "selection_policy": "common_readout",
+      "selected_alpha": 1.0
+    },
+    "fold01_original": {
+      "name": "fold01_original",
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 24,
+      "best_epoch": 9,
+      "updates": 1944,
+      "selection_rmse": 0.17559811353974591,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold01_original/best.pt",
+      "checkpoint_sha256": "a4ca5e69d9d3b56f45afb26dd87aff67c095be8a107d74ab53b5511d310c5bc6",
+      "parameter_count": 1016577,
+      "elapsed_s": 85.70957756298594,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "selection_policy": "common_readout",
+      "selected_alpha": 10.0
+    },
+    "fold01_candidate": {
+      "name": "fold01_candidate",
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 48,
+      "best_epoch": 33,
+      "updates": 3888,
+      "selection_rmse": 0.17309781089353832,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold01_candidate/best.pt",
+      "checkpoint_sha256": "5292cda6eece426789f80a6b65e705ea0e1a0857dcfd923008b2d6e5e9ba791f",
+      "parameter_count": 1016577,
+      "elapsed_s": 170.16227381798672,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "selection_policy": "common_readout",
+      "selected_alpha": 0.1
+    },
+    "fold02_aircraft": {
+      "name": "fold02_aircraft",
+      "method": "mult_aircraft",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 52,
+      "best_epoch": 37,
+      "updates": 5616,
+      "selection_rmse": 0.2546704792382667,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold02_aircraft/best.pt",
+      "checkpoint_sha256": "af18bc689a899942f3db732202b3b1e12a0ba9e040b497da25d7a0d92c7ac058",
+      "parameter_count": 1016577,
+      "elapsed_s": 239.145789289003,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "selection_policy": "common_readout",
+      "selected_alpha": 0.1
+    },
+    "fold02_original": {
+      "name": "fold02_original",
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 50,
+      "best_epoch": 35,
+      "updates": 5400,
+      "selection_rmse": 0.25855202079512074,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold02_original/best.pt",
+      "checkpoint_sha256": "38a05fa7f16a1942dd8b3489a6fcaba2b302e12a264dee4e1afb7770b6bc5d8b",
+      "parameter_count": 1016577,
+      "elapsed_s": 232.06547652199515,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "selection_policy": "common_readout",
+      "selected_alpha": 0.1
+    },
+    "fold02_candidate": {
+      "name": "fold02_candidate",
+      "method": "mult",
+      "status": "early_stopped",
+      "complete": true,
+      "epochs": 60,
+      "best_epoch": 45,
+      "updates": 6480,
+      "selection_rmse": 0.25564772933094904,
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold02_candidate/best.pt",
+      "checkpoint_sha256": "4ea4475e56dfc979ffa92ac2c8f82652d7709786d993329bfacd9ad47dc70dd4",
+      "parameter_count": 1016577,
+      "elapsed_s": 284.91839354200056,
+      "history_check": {
+        "modified": 0.0,
+        "deleted": 0.0
+      },
+      "selection_policy": "common_readout",
+      "selected_alpha": 0.1
+    }
+  },
+  "selected_alpha": {
+    "fold01_aircraft": 1.0,
+    "fold01_original": 10.0,
+    "fold01_candidate": 0.1,
+    "fold01_shape_statistics": 0.1,
+    "fold02_aircraft": 0.1,
+    "fold02_original": 0.1,
+    "fold02_candidate": 0.1,
+    "fold02_shape_statistics": 0.1
+  },
+  "readout_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/locked_primary.joblib",
+  "readout_sha256": "5323381b9fa09f50bb2bdc376ba519dad93505b125bba73acf6df11b932f91bc",
+  "binding": {
+    "source_commit": "df218ef2837d6ff8db1d052a5ed8b7f6d77cd177",
+    "plan_sha256": "a67fa5c3c66730e274f51a13332a6829452d284cfebf034feb2868593b445d5c",
+    "qualification_sha256": "294cdd080026bce588244dffe245e4cadaedbe73991953029dc6974cd96a61dc",
+    "seed": 17,
+    "folds": [
+      {
+        "name": "fold01",
+        "fit": [
+          "sub-cp004",
+          "sub-cp008",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp025"
+        ],
+        "score": [
+          "sub-cp003",
+          "sub-cp011",
+          "sub-cp022"
+        ]
+      },
+      {
+        "name": "fold02",
+        "fit": [
+          "sub-cp003",
+          "sub-cp004",
+          "sub-cp011",
+          "sub-cp019"
+        ],
+        "select": [
+          "sub-cp022"
+        ],
+        "score": [
+          "sub-cp008",
+          "sub-cp025"
+        ]
+      }
+    ],
+    "selection_policy": "common_readout",
+    "history_aux_weight": 0.5,
+    "history_anchor_qualification_sha256": "dfd7cff39b8d1978b1753927b65a7e349c50e23224e9a4e0d9d198b102735516",
+    "reference_reports": [
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/shape-mult-20261019/predictions.csv.gz",
+        "predictions_sha256": "3768140d3724218fe1c056e8018ea646c26e37781e77bed50bb2694080a36bf6",
+        "prefix": "prior_shape",
+        "methods": [
+          "aircraft_head",
+          "aircraft_ridge",
+          "original_head",
+          "original_ridge",
+          "candidate_head",
+          "candidate_ridge",
+          "shape_statistics"
+        ]
+      },
+      {
+        "predictions_path": "/home/wangminan/projects/chronaris/docs/review/stage/readout-selection-20261019/predictions.csv.gz",
+        "predictions_sha256": "2498ab27289e716f2fad6e8cca0d84543e3b39491714e2308a94d3d34e2b7064",
+        "prefix": "prior_readout",
+        "methods": [
+          "aircraft_head",
+          "aircraft_ridge",
+          "original_head",
+          "original_ridge",
+          "candidate_head",
+          "candidate_ridge",
+          "shape_statistics"
+        ]
+      }
+    ]
+  }
+}

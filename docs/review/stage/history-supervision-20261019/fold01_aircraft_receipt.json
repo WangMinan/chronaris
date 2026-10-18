@@ -1,0 +1,20 @@
+{
+  "name": "fold01_aircraft",
+  "method": "mult_aircraft",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 23,
+  "best_epoch": 8,
+  "updates": 1863,
+  "selection_rmse": 0.1726905807867353,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold01_aircraft/best.pt",
+  "checkpoint_sha256": "dec278d4183e253a4bd389c17671cb46f21d746c48bccb4c78b819e1587a5af3",
+  "parameter_count": 1016577,
+  "elapsed_s": 84.33984836298623,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "selection_policy": "common_readout",
+  "selected_alpha": 1.0
+}

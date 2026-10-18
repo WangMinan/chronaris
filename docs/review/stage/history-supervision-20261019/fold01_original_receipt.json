@@ -1,0 +1,20 @@
+{
+  "name": "fold01_original",
+  "method": "mult",
+  "status": "early_stopped",
+  "complete": true,
+  "epochs": 24,
+  "best_epoch": 9,
+  "updates": 1944,
+  "selection_rmse": 0.17559811353974591,
+  "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision/training/fold01_original/best.pt",
+  "checkpoint_sha256": "a4ca5e69d9d3b56f45afb26dd87aff67c095be8a107d74ab53b5511d310c5bc6",
+  "parameter_count": 1016577,
+  "elapsed_s": 85.70957756298594,
+  "history_check": {
+    "modified": 0.0,
+    "deleted": 0.0
+  },
+  "selection_policy": "common_readout",
+  "selected_alpha": 10.0
+}

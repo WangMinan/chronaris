@@ -1,0 +1,23 @@
+{
+  "root": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-history-supervision",
+  "files": {
+    "classification_probe.log": "0072a5eb44e896efe8de9933e71c6286446ec99ad52b748062f292f8a88c9de7",
+    "fold01_inputs.npz": "4b05e4686b0d4591b3f653b299a074ba96ebf53dab812301a4ac61b1c5a4b53d",
+    "fold02_inputs.npz": "d5eac00d3d2538053edc1680f4716bfa407eec27b823f44fc6b7c52542214596",
+    "locked_primary.joblib": "5323381b9fa09f50bb2bdc376ba519dad93505b125bba73acf6df11b932f91bc",
+    "native.npz": "ec06c3092ea43e80e29d056ac653088f71f8de990d2d351d7130cd58b173b576",
+    "training/fold01_aircraft/best.pt": "dec278d4183e253a4bd389c17671cb46f21d746c48bccb4c78b819e1587a5af3",
+    "training/fold01_aircraft/last.pt": "eb0f84cd297be4250d8dc7b4c1df8ea3718149072d683d0d3061e4762ae00e44",
+    "training/fold01_candidate/best.pt": "5292cda6eece426789f80a6b65e705ea0e1a0857dcfd923008b2d6e5e9ba791f",
+    "training/fold01_candidate/last.pt": "0d843e87bb0a9dbb3dced136d566c04161d94ce9c76941037531fe9b9110236f",
+    "training/fold01_original/best.pt": "a4ca5e69d9d3b56f45afb26dd87aff67c095be8a107d74ab53b5511d310c5bc6",
+    "training/fold01_original/last.pt": "2e5cef95ad22f40f2aeb7a497064f8f182d649f07b2543688b1197ae4614beb7",
+    "training/fold02_aircraft/best.pt": "af18bc689a899942f3db732202b3b1e12a0ba9e040b497da25d7a0d92c7ac058",
+    "training/fold02_aircraft/last.pt": "0e78a5ca387537e9fb1c622bc7519fb1c42103c6e4a24218e09c2d8cb0d2e33d",
+    "training/fold02_candidate/best.pt": "4ea4475e56dfc979ffa92ac2c8f82652d7709786d993329bfacd9ad47dc70dd4",
+    "training/fold02_candidate/last.pt": "c76b36fc749a5e3e15701f1183af3a7dcc3534ea9fe4c1cbbe0145a75bb78f94",
+    "training/fold02_original/best.pt": "38a05fa7f16a1942dd8b3489a6fcaba2b302e12a264dee4e1afb7770b6bc5d8b",
+    "training/fold02_original/last.pt": "256cd9a86230ef1ea6a673e669460aec8b2a08578c6f004545815424eee91aec",
+    "training.log": "12d8d82bee842b21f118461b5c5a1db4916bbbb521fb4b460f5b7c8c83b21635"
+  }
+}

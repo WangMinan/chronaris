@@ -1,0 +1,151 @@
+{
+  "status": "qualified",
+  "source_path": "/home/wangminan/dataset/chronaris/physio_net/physionet.org/files/virtual-reality-piloting/1.0.0/dataPackage/task-ils/PerfMetrics.csv",
+  "source_sha256": "f35ef629b7420034baec2e534eddc74ad567d98c75e6301f168e9a22bf2fa05b",
+  "windows": 5951,
+  "coverage": [
+    {
+      "fold": "fold01",
+      "subject": "sub-cp003",
+      "counts": [
+        201,
+        218,
+        225,
+        215
+      ]
+    },
+    {
+      "fold": "fold01",
+      "subject": "sub-cp004",
+      "counts": [
+        201,
+        215,
+        220,
+        180
+      ]
+    },
+    {
+      "fold": "fold01",
+      "subject": "sub-cp008",
+      "counts": [
+        201,
+        209,
+        213,
+        195
+      ]
+    },
+    {
+      "fold": "fold01",
+      "subject": "sub-cp011",
+      "counts": [
+        170,
+        214,
+        173,
+        269
+      ]
+    },
+    {
+      "fold": "fold01",
+      "subject": "sub-cp019",
+      "counts": [
+        207,
+        232,
+        245,
+        252
+      ]
+    },
+    {
+      "fold": "fold01",
+      "subject": "sub-cp022",
+      "counts": [
+        195,
+        211,
+        212,
+        214
+      ]
+    },
+    {
+      "fold": "fold01",
+      "subject": "sub-cp025",
+      "counts": [
+        206,
+        215,
+        221,
+        222
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp003",
+      "counts": [
+        201,
+        218,
+        225,
+        215
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp004",
+      "counts": [
+        201,
+        215,
+        220,
+        180
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp008",
+      "counts": [
+        201,
+        209,
+        213,
+        195
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp011",
+      "counts": [
+        170,
+        214,
+        173,
+        269
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp019",
+      "counts": [
+        207,
+        232,
+        245,
+        252
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp022",
+      "counts": [
+        195,
+        211,
+        212,
+        214
+      ]
+    },
+    {
+      "fold": "fold02",
+      "subject": "sub-cp025",
+      "counts": [
+        206,
+        215,
+        221,
+        222
+      ]
+    }
+  ],
+  "encoder_updates": 0,
+  "outer_score_opened": false,
+  "scope": "fit_selection_only"
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "fold": "fold01",
+    "mean_pairing_degradation": -0.001929087927250439,
+    "original_rmse": 0.30358035662438465,
+    "zero_values_rmse": 0.2995774911476486,
+    "passed": false
+  },
+  {
+    "fold": "fold02",
+    "mean_pairing_degradation": 0.00014066713904248296,
+    "original_rmse": 0.19176651659145688,
+    "zero_values_rmse": 0.17983370414685024,
+    "passed": false
+  }
+]
