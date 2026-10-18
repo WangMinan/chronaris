@@ -1,0 +1,10 @@
+{
+  "windows": 1462,
+  "windows_with_eda_at_event": 28,
+  "windows_with_eda_after_event": 0,
+  "windows_with_vehicle_at_event": 1462,
+  "windows_with_vehicle_after_event": 0,
+  "raw_event_reconstruction_checks": 41,
+  "maximum_rounding_s": 4.738569259643555e-06,
+  "source_windows_changed": false
+}

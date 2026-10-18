@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "encoder_updates": 0,
+  "scores": 30,
+  "subject_scores": 70,
+  "predictions": 13820,
+  "inner_scores": 0,
+  "unavailable": [],
+  "seconds": 0.10079580498859286,
+  "registry_sha256": "173a71489839505c6634d48c4002ced7bb79c051232af9d5940483db0389c6a6",
+  "targets_sha256": "e21a541a713dbe30592b5f0ece2259529f3d6b3cc7e4eb963a2f08a5e64a3904"
+}

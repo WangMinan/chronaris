@@ -1,0 +1,17 @@
+path,column,rows,finite,finite_duplicate_rows,conflicting_timestamps,finite_start,finite_end,value_min,value_max
+/home/wangminan/dataset/chronaris/clare/EDA/1390/eda_data_experiment_0.csv,GSR Conductance CAL,513484,69609,0,0,120.7127244,664.5252244,0.893106893106893,1.1515151515151514
+/home/wangminan/dataset/chronaris/clare/ECG/1390/ecg_data_experiment_0.csv,ECG LL-RA CAL,513484,278433,0,0,120.711486925,664.52594005,-10.541297261869582,-7.24418488075553
+/home/wangminan/dataset/chronaris/clare/EDA/1390/eda_data_experiment_3.csv,GSR Conductance CAL,513341,69584,0,0,119.7241606,663.3413480999999,1.163947163947164,1.8058608058608057
+/home/wangminan/dataset/chronaris/clare/ECG/1390/ecg_data_experiment_3.csv,ECG LL-RA CAL,513341,278333,0,0,119.724202575,663.3433432,-9.184184573195529,-5.511606992674708
+/home/wangminan/dataset/chronaris/clare/EDA/1624/eda_data_experiment_0.csv,GSR Conductance CAL,507306,69468,0,0,39.535164900000005,582.2461023999999,7.548084900001274,8.834603259690367
+/home/wangminan/dataset/chronaris/clare/ECG/1624/ecg_data_experiment_0.csv,ECG LL-RA CAL,507306,274048,0,0,39.5283492,582.2490523250001,-4.659994800090169,0.2025175336024205
+/home/wangminan/dataset/chronaris/clare/EDA/1624/eda_data_experiment_3.csv,GSR Conductance CAL,498021,69379,0,0,14.6850998,556.7007248,6.210514224451505,7.9207668057842255
+/home/wangminan/dataset/chronaris/clare/ECG/1624/ecg_data_experiment_3.csv,ECG LL-RA CAL,498021,265241,0,0,14.67936275,556.700847125,-5.317671932896607,-0.544301932370893
+/home/wangminan/dataset/chronaris/clare/EDA/1629/eda_data_experiment_0.csv,GSR Conductance CAL,493881,69625,0,0,12.0376574,555.9751574000001,2.6424908424908424,4.862733085729601
+/home/wangminan/dataset/chronaris/clare/ECG/1629/ecg_data_experiment_0.csv,ECG LL-RA CAL,493881,229635,0,0,12.03857235,555.981931725,4.801064705975617,7.154032844785792
+/home/wangminan/dataset/chronaris/clare/EDA/1629/eda_data_experiment_3.csv,GSR Conductance CAL,502268,69261,0,0,15.2856654,556.4028529000001,2.457875457875458,4.057875457875458
+/home/wangminan/dataset/chronaris/clare/ECG/1629/ecg_data_experiment_3.csv,ECG LL-RA CAL,502268,243056,0,0,15.279886875,556.40293375,3.277567419715812,5.657436926059357
+/home/wangminan/dataset/chronaris/clare/EDA/1674/eda_data_experiment_0.csv,GSR Conductance CAL,422481,57103,0,0,120.0213922,566.1307672,2.075457875457875,4.219047619047617
+/home/wangminan/dataset/chronaris/clare/ECG/1674/ecg_data_experiment_0.csv,ECG LL-RA CAL,422481,228412,0,0,120.017087375,566.134274875,1.6646393137740272,4.182838104109537
+/home/wangminan/dataset/chronaris/clare/EDA/1674/eda_data_experiment_2.csv,GSR Conductance CAL,515141,69627,0,0,121.0162173,664.9693423,2.0637362637362635,3.341391941391941
+/home/wangminan/dataset/chronaris/clare/ECG/1674/ecg_data_experiment_2.csv,ECG LL-RA CAL,515141,278508,0,0,121.01334055,664.97427805,2.8028628591135574,5.303463972027776

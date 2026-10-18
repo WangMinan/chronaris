@@ -1,0 +1,11 @@
+{
+  "source_semantics_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/source_semantics.json",
+  "source_semantics_sha256": "351af05732f37db1fa148791fe029b5735d14e231253d0b6f95c9ab80ffb04c5",
+  "dictionary_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-18-controlled-readouts/DataDictionary.pdf",
+  "dictionary_sha256": "060c812e6c3295a0ea324ab8b6efd956065f99e183d60915a5931bad52a293ef",
+  "clare_paper": "https://arxiv.org/html/2404.17098v2",
+  "clare_paper_section": "VI-B",
+  "original_binary_threshold": 5,
+  "frozen_binary_threshold": 7,
+  "labels_changed": false
+}

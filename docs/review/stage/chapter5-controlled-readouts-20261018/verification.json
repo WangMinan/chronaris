@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "prior_frozen_source_files_verified": 853,
+  "total_original_files_verified": 979,
+  "frozen_encoder_routes": 22,
+  "additional_boundary_exports": 11,
+  "encoder_updates": 0,
+  "prediction_rows_recomputed": 258028,
+  "subject_metrics_recomputed": 1388,
+  "original_files_unchanged": true,
+  "outer_scoring_subjects_excluded_from_selection": true
+}

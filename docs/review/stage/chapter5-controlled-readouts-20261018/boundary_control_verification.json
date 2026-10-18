@@ -1,0 +1,89 @@
+{
+  "classification_exact": true,
+  "feature_checks": [
+    {
+      "method": "chronaris",
+      "route": "self_supervised",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 3.5762786865234375e-07,
+      "event_mean_delta": 3.23467475027428e-10
+    },
+    {
+      "method": "chronaris",
+      "route": "task_guided",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 2.384185791015625e-07,
+      "event_mean_delta": 3.075174559441507e-10
+    },
+    {
+      "method": "contiformer",
+      "route": "self_supervised",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "contiformer",
+      "route": "task_guided",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "mult",
+      "route": "self_supervised",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "mult",
+      "route": "task_guided",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "naive_time_sync",
+      "route": "self_supervised",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "physiology_only",
+      "route": "self_supervised",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "physiology_only",
+      "route": "task_guided",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "vehicle_only",
+      "route": "self_supervised",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    },
+    {
+      "method": "vehicle_only",
+      "route": "task_guided",
+      "classification_max_delta": 0.0,
+      "event_max_delta": 0.0,
+      "event_mean_delta": 0.0
+    }
+  ],
+  "identical_window_ids": true,
+  "identical_targets": true,
+  "encoder_updates": 0,
+  "input_change": "exclude native event endpoint",
+  "query_points": 96,
+  "query_grid_end_s": 11.875,
+  "query_grid_source": "src/chronaris/representation/collation.py"
+}
