@@ -1,0 +1,23 @@
+{
+  "neural_aircraft_fields": [
+    "aircraft_indicated_airspeed_kias",
+    "aircraft_pitch_deg",
+    "aircraft_roll_deg",
+    "aircraft_agl_altitude_m",
+    "aircraft_climb_rate_mps",
+    "aircraft_ils_deflection_gs",
+    "aircraft_ils_deflection_h",
+    "aircraft_velocity_u_mps"
+  ],
+  "missing_geometry_fields": [
+    "aircraft_longitude_deg",
+    "aircraft_latitude_deg",
+    "aircraft_elevation_m"
+  ],
+  "persistence_information": "published historical total_error",
+  "neural_information": "four physiological and eight aircraft raw-value channels; no historical total_error",
+  "query_rate_hz": 3.2,
+  "query_preprocessing": "latest observed point per feature, no anti-alias filter or waveform feature extraction",
+  "official_source_snapshot_sha256": "7b94c53dde64813f7f4350d952eaae204d56f9cf1d5f0b78202a7b2e0110fbb9",
+  "source_scope": "inspected local copy of official MATLAB script and 7 identity-selected vehicle CSV headers"
+}

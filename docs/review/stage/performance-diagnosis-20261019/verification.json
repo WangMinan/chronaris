@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "protected_files": 44,
+  "changed_sources": [],
+  "encoder_updates": 0,
+  "new_readout_fits": 0,
+  "frozen_prediction_replay": true,
+  "branch_linear_decomposition_verified": true,
+  "diagnosis_scope": "post_hoc_development_only",
+  "combined_protected_files": 1597,
+  "previous_frozen_sources_unchanged": true,
+  "raw_sampling_files": 28,
+  "synthetic_arithmetic_tests": 2
+}
