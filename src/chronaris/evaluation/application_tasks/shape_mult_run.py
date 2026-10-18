@@ -65,7 +65,8 @@ def run_shape_mult(report,assets,selection_policy='task_head',seed=17,history_au
                 trainer=fit_readout_selected
             return _execute(report,assets,binding,start,trainer)
         except BaseException as exc:
-            save_json(report/'run_status.json',dict(status='failed',error=repr(exc),elapsed_s=time.monotonic()-start))
+            save_json(report/'run_status.json',dict(status='budget_incomplete' if isinstance(exc,TimeoutError) else 'failed',
+                                                   error=repr(exc),elapsed_s=time.monotonic()-start))
             raise
 
 

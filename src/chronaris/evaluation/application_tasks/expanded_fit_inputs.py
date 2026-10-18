@@ -27,6 +27,7 @@ def qualify_expanded_fit(additional,report,assets):
     assert all(c['qualified_records']>=8 and c['windows']>=100 for c in meta['coverage'])
     assert sum(r['accepted'] for r in meta['records'])>=.8*len(meta['records'])
     assert all(r['accepted'] for r in meta['windows'])
+    assert all(np.std([r['target'] for r in meta['windows'] if r['subject']==s])>=.01 for s in expected)
     assert len(meta['prefix_checks'])==len(expected)*8 and max(r['max_delta'] for r in meta['prefix_checks'])<=1e-5
     oldq=json.loads(Path('docs/review/stage/fair-residual-20261019/qualification.json').read_text())
     assert file_digest(oldq['snapshot_path'])==oldq['snapshot_sha256']
@@ -82,5 +83,6 @@ def qualify_expanded_fit(additional,report,assets):
     save_rows(report/'sample_manifest.csv',[{k:r[k] for k in ('sample_id','subject','record_id','target','persistence')} for r in rows])
     result=dict(status='passed',gates=gates,folds=receipts,windows=len(rows),original_windows=5951,
                 additional_sha256=file_digest(additional),native_sha256=file_digest(native_path),
+                merged_native_path=str(native_output.resolve()),merged_native_sha256=file_digest(native_output),
                 source_files=len(sources),encoder_updates=0)
     save_json(report/'qualification.json',result);return result
