@@ -1,6 +1,6 @@
 # Chronaris 产物索引
 
-四模型最终收口：训练、评分、重放与交付已完成；五秒飞行误差路线停止追加训练，完整结果和唯一下一项资格提案见[研究路线取舍](../review/stage/chronos-forecast-20261019/ROUTE_DECISION.md)。
+四模型最终收口：训练、评分、重放与交付已完成；五秒飞行误差路线停止追加训练，完整结果和停止探索决定见[研究路线取舍](../review/stage/chronos-forecast-20261019/ROUTE_DECISION.md)。
 
 电脑重启后的原生预测恢复：见[检查点、来源、零更新显卡核验与预算](../review/stage/chronos-forecast-20261019/recovery-0945/README.md)。
 
