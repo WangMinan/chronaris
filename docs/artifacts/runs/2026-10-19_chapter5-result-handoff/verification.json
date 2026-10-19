@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "source_commit": "8d513df1302f8cfd07e1dcbd7ecbdce941012aed",
+  "checked_local_links": 79,
+  "source_files": 43,
+  "source_files_git_tracked": true,
+  "summary_values_checked": 14,
+  "historical_text": {
+    "docs/README.md": "exact historical text preserved",
+    "docs/STATE.md": "exact historical text preserved",
+    "docs/implementation/TASKS.md": "exact historical text preserved",
+    "docs/artifacts/ARTIFACTS.md": "exact historical text preserved",
+    "docs/review/REVIEW.md": "exact historical text preserved"
+  },
+  "original_materials_verifier": "PASS 1205 data files and 35 figures",
+  "four_model_closeout_bindings": "passed",
+  "changed_existing_files": [
+    "docs/README.md",
+    "docs/STATE.md",
+    "docs/artifacts/ARTIFACTS.md",
+    "docs/implementation/TASKS.md",
+    "docs/review/REVIEW.md"
+  ],
+  "scope": "navigation and handoff only",
+  "new_training": false,
+  "new_figures": false,
+  "source_manifest": "SHA256SUMS",
+  "original_materials_git_tracked": {
+    "data_files": 1205,
+    "figures": 35,
+    "required_unique_files": 1277
+  },
+  "reader_review": {
+    "status": "passed",
+    "questions_answered": 5,
+    "required_changes": 0,
+    "scope": "independent reader comprehension; links and values separately verified"
+  },
+  "handoff_sha256": "fdf284efedcd1a858bc9daa9758f752f2e8e5153016c9752e32fe3bc3c0cb3ca",
+  "source_manifest_sha256": "5beec392e7a3e598fa4fcd68cf3cd5996a23656664d7564b1d3d59a904feb4c5",
+  "visible_terminology": "passed"
+}

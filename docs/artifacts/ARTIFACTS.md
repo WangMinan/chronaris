@@ -1,5 +1,25 @@
 # Chronaris 产物索引
 
+更新时间：2026-10-19
+
+## 当前结果入口
+
+**第五章结果已整理，实验探索停止，论文侧从统一交接开始取用。** 以下报告分别提供冻结素材、后续审查、原生模型对照和应用验收；不把历史计划作为新任务执行。
+
+- [第五章结果整理与论文写作交接](../artifacts/runs/2026-10-19_chapter5-result-handoff/README.md)：证据分层、可引用数值、全部主要来源与校验入口。
+- [原种子17素材及独立绘图包](../artifacts/runs/2026-10-18_chapter5-materials/USE_IN_THESIS.md)：1205个数据文件、35组图形与脚本，结合后续审查使用。
+- [四模型最终结果](../review/stage/chronos-forecast-20261019/README.md)、[独立重放](../review/stage/chronos-forecast-20261019/verification.json)与[停止探索决定](../review/stage/chronos-forecast-20261019/ROUTE_DECISION.md)。
+- [任务、锚点与时间机制核查](../review/stage/task-anchor-recovery-20261018/README.md)及[非零时差对照](../review/stage/frozen-feasibility-20261018/TIMING.md)：明确对应指标所支撑的论断。
+- [论文逐章交叉评估](../review/stage/thesis-cross-assessment-20261018/README.md)：参考已完成审查，未来实验部分已归档。
+- [第六章主分支合并验收](../review/stage/chapter6-merge-20261018/README.md)：应用功能与实验性能分别引用。
+
+## 历史索引
+
+以下历次条目按原文保留，阶段安排和进行中状态均属于当时快照；当前执行范围见[任务入口](../implementation/TASKS.md)。
+
+<details>
+<summary>展开历次产物与复核记录</summary>
+
 四模型最终收口：训练、评分、重放与交付已完成；五秒飞行误差路线停止追加训练，完整结果和停止探索决定见[研究路线取舍](../review/stage/chronos-forecast-20261019/ROUTE_DECISION.md)。
 
 电脑重启后的原生预测恢复：见[检查点、来源、零更新显卡核验与预算](../review/stage/chronos-forecast-20261019/recovery-0945/README.md)。
@@ -359,3 +379,5 @@
 - `cleanup/20260705-name-migration-cleanup.md`：本轮职责命名迁移和产物整理记录。
 - `../maintenance/2026-07-05_name-migration-map.md`：old path 到 new path 的迁移表。
 - 更早 cleanup 记录保留在 `cleanup/`，用于追溯历史删除、外置备份和 LFS 决策。
+
+</details>

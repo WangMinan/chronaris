@@ -1,12 +1,26 @@
 # Chronaris 文档入口
 
-[第六章写作交接包](artifacts/runs/2026-10-15_chapter6-ready/README.md)：系统最终配置与案例已验收，提供逐节依据、性能原始表、截图、标准特征和独立重绘。
+更新时间：2026-10-19
 
-更新时间：2026-10-11
-
-当前统一在 `main` 继续研究开发，除用户明确要求外不另建开发分支；已整合各历史分支的全部提交。研究主线为“各方法提取融合特征，再分别训练相同类型的下游算法”。优先读取新方案、当前状态和任务；历史协议承担来源追溯职责。写作、术语和代码边界统一遵守仓库根目录的 [AGENTS.md](../AGENTS.md)，分支来源见[主分支整理记录](maintenance/2026-10-11-main-consolidation.md)。
+**第五章结果已整理，追加实验探索停止；当前主分支用于结果交接与论文事实收口。** 研究对象仍按连续时间表示、历史信息约束融合和标准特征交付说明，性能与机制结论以实际证据为准。写作、术语和代码边界遵守[协作说明](../AGENTS.md)。
 
 ## 当前入口
+
+- [第五章结果整理与论文写作交接](artifacts/runs/2026-10-19_chapter5-result-handoff/README.md)：优先入口，包含结果分层、数据和图形来源、当前取舍与章节取用说明。
+- [当前状态](STATE.md)与[当前任务](implementation/TASKS.md)：以页面开头摘要为准，展开部分是历史快照。
+- [原种子17素材与独立绘图包](artifacts/runs/2026-10-18_chapter5-materials/USE_IN_THESIS.md)：结合最新审查引用，原数值与不利结果保留。
+- [四模型结果及最终路线决定](review/stage/chronos-forecast-20261019/ROUTE_DECISION.md)：训练、评分与重放已完成，后续探索提案归档。
+- [产物索引](artifacts/ARTIFACTS.md)与[复核入口](review/REVIEW.md)：全部主要证据与历史来源。
+- [论文需求](requirements/SPEC.md)：论文目标与仓库能力；旧执行计划服从最新停止决定。
+- [第六章主分支验收](review/stage/chapter6-merge-20261018/README.md)：从实际合并验收进入系统、案例、性能及基础写作资料。
+
+## 历史入口
+
+下列旧导航按原文保留，只用于追溯当时交付与执行计划。
+
+<details>
+<summary>展开早期阶段导航</summary>
+
 
 - [第五章详细数据与独立绘图包](artifacts/runs/2026-10-11_chapter5-main-materials/README.md)：主模型内部验证的全部预测、分组指标、训练曲线与成本，可在论文侧独立修改重绘。
 - [第五章核心队列接续](artifacts/runs/2026-10-11_chapter5-continuation/report.md)：完整显卡验证通过，原模型复用与 36 单元核心矩阵；后台停止于核心模型冻结。
@@ -34,6 +48,8 @@
 - [v4 开发合同](requirements/thesis-v4-development-plan.md)：已有六方法实现的预算与数据角色来源；执行优先级服从新方案。
 - [artifacts/ARTIFACTS.md](artifacts/ARTIFACTS.md)：报告、指标、图表与来源清单。
 - [review/REVIEW.md](review/REVIEW.md)：复核计划、发现、修复和验证。
+
+</details>
 
 ## 目录职责
 
