@@ -1,0 +1,34 @@
+{
+  "status": "completed",
+  "pid": 9142,
+  "started_epoch": 1792386324.3166397,
+  "stages": [
+    {
+      "stage": "run",
+      "returncode": 0,
+      "log": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-forecast/run_unit.log",
+      "finished_epoch": 1792390295.979603
+    },
+    {
+      "stage": "score",
+      "returncode": 0,
+      "log": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-forecast/score_unit.log",
+      "finished_epoch": 1792390453.9631855
+    },
+    {
+      "stage": "verify",
+      "returncode": 0,
+      "log": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-forecast/verify_unit.log",
+      "finished_epoch": 1792390680.1519134
+    },
+    {
+      "stage": "deliver",
+      "returncode": 0,
+      "log": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-forecast/deliver_unit.log",
+      "finished_epoch": 1792390686.9288552
+    }
+  ],
+  "deadline": "2026-10-19T17:10:00+08:00",
+  "stage": "deliver",
+  "finished_epoch": 1792390686.92909
+}

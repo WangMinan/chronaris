@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "protected_files": 2246,
+  "changed_sources": [],
+  "models": 4,
+  "updates": 77210,
+  "windows_seen": 308790,
+  "predictions": 298129,
+  "subject_metrics": 355,
+  "maximum_metric_delta": 4.440892098500626e-16,
+  "replay": {
+    "fold01_native_frozen_aircraft": 1.7763568394002505e-15,
+    "fold01_native_adapted_aircraft": 1.7763568394002505e-15,
+    "fold01_native_frozen_joint": 1.7763568394002505e-15,
+    "fold01_native_adapted_joint": 1.7763568394002505e-15,
+    "fold02_native_frozen_aircraft": 8.881784197001252e-16,
+    "fold02_native_adapted_aircraft": 4.440892098500626e-16,
+    "fold02_native_frozen_joint": 8.881784197001252e-16,
+    "fold02_native_adapted_joint": 8.881784197001252e-16
+  },
+  "selected_zero_states_identical": {},
+  "optimizer_updates_in_verification": 0
+}

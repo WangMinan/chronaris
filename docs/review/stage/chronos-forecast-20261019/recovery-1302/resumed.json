@@ -1,0 +1,18 @@
+{
+  "status": "running_after_verified_resume",
+  "checked_epoch": 1792386389.362745,
+  "pipeline_pid": 9142,
+  "training_pid": 9144,
+  "progress": {
+    "status": "running",
+    "stage": "fold02_aircraft",
+    "epoch": 2,
+    "updates": 6336,
+    "samples_in_epoch": 9468,
+    "total_samples": 15873,
+    "elapsed_s": 32.215467120999165
+  },
+  "retained_completed_models": 2,
+  "retained_completed_updates": 37520,
+  "deadline": "2026-10-19T17:10:00+08:00"
+}

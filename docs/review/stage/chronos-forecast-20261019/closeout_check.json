@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "checked_epoch": 1792397397.7833345,
+  "protected_files": 2246,
+  "completed_models": 4,
+  "predictions": 298129,
+  "maximum_metric_delta": 8.881784197001252e-16,
+  "comparisons": [
+    {
+      "fold": "fold01",
+      "joint_gain_vs_native_aircraft_pct": 0.42487423864036034,
+      "small_candidate_gain_vs_native_joint_pct": 10.986693675107052,
+      "small_candidate_gain_vs_original_mult_pct": -0.04768995876742732,
+      "augmented_candidate_gain_vs_matched_aircraft_pct": -2.1201308565955035
+    },
+    {
+      "fold": "fold02",
+      "joint_gain_vs_native_aircraft_pct": -0.5234048382987577,
+      "small_candidate_gain_vs_native_joint_pct": 12.21525943349706,
+      "small_candidate_gain_vs_original_mult_pct": 4.390355778852029,
+      "augmented_candidate_gain_vs_matched_aircraft_pct": 0.09753624687931506
+    }
+  ],
+  "new_optimizer_updates": 0,
+  "fresh_gpu_replay": "existing verified receipt; not rerun",
+  "sources_sha256": {
+    "pipeline_receipt.json": "d9cf33dfcceb983af2cf73cfad5fa92d92115631616e2387f72066f1cd3d64a8",
+    "locked_models.json": "28e6f1adb43dff46bad270436810c7af6abab61f861758f2065ad8db2c3122e7",
+    "performance_status.json": "23a5f9a22bcfde0384ec7909b94bea35d0d5384d2ccf1806d9b3e1c0ea4622a5",
+    "verification.json": "c874cbe3b56ff8a885a7dae28e03c58d6389043cfe1f30271292783db70e04c8",
+    "delivery.json": "5d63949bb3b5283977857e9571e5b8467842ec869f01fdb57511573d88a0e713",
+    "predictions.csv.gz": "368449a301261ade358f21b6cfb88c9d42b9e4ecae9b5edf35669b3a141a75d6",
+    "summary.csv": "573286f9ee0fa8eb6f6f924dcc322f1043ab6e615a99322f5ad111119fad4783",
+    "subject_metrics.csv": "4f53eca6ba8c3f95c7f54ebe8a629c8f65e51196f3c8eb2b49335b3a0bea6194"
+  }
+}

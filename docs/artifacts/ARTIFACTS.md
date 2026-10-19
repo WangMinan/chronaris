@@ -1,5 +1,7 @@
 # Chronaris 产物索引
 
+四模型最终收口：训练、评分、重放与交付已完成；五秒飞行误差路线停止追加训练，完整结果和唯一下一项资格提案见[研究路线取舍](../review/stage/chronos-forecast-20261019/ROUTE_DECISION.md)。
+
 电脑重启后的原生预测恢复：见[检查点、来源、零更新显卡核验与预算](../review/stage/chronos-forecast-20261019/recovery-0945/README.md)。
 
 夜间扩展与静息单元完成：见[扩展结果](../review/stage/eligible-fit-20261019/README.md)、[人员暴露核验](../review/stage/eligible-fit-20261019/EXPOSURE.md)、[静息结果](../review/stage/rest-development-20261019/README.md)；当前接续[冻结读出核验](../review/stage/observed-mean-readout-20261019/PLAN.md)，原冻结资产保留。
