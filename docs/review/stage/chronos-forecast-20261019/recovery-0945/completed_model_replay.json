@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checkpoint_sha256": "732e41953c25f924721cb848e3b54dee95a6fb0117b0f53a4696832eb524af11",
+  "windows": 864,
+  "rmse": 0.17386156189034954,
+  "previous_rmse": 0.17386156189034954,
+  "delta": 0.0,
+  "optimizer_updates": 0,
+  "outer_scored": false
+}

@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "protected_files": 2246,
+  "changed_sources": [],
+  "checks": [
+    {
+      "name": "fold01_aircraft",
+      "complete": true,
+      "updates": 18760,
+      "best_epoch": 4,
+      "last_sha256": "bb0b55d93f2a49ffb476c49a088fc96b74c7d5235d5ecab670901d7ed53220b3"
+    },
+    {
+      "name": "fold01_joint",
+      "complete": false,
+      "updates": 1000,
+      "epoch": 1,
+      "next_offset": 4000,
+      "last_sha256": "b6ba542d990115be1ba4d327ed3ca0786119ead6c8ff29c70efccdca721d747e"
+    }
+  ],
+  "optimizer_updates": 0,
+  "boot_id": "ca4bd21d-b60c-4963-a8ac-07a28c566043",
+  "assets_backup": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-forecast/recovery-0945"
+}

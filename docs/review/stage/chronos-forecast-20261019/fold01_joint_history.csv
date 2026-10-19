@@ -1,0 +1,2 @@
+epoch,updates,selection_rmse,scaled_rmse,best_epoch,training_mse
+0,0,0.27058962429480277,0.6255795737578169,0,
