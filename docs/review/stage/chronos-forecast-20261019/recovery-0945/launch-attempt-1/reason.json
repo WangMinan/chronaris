@@ -1,0 +1,5 @@
+{
+  "status": "launcher_terminated_before_training",
+  "reason": "Detached child did not survive launcher completion; retry in managed running command session",
+  "optimizer_updates_observed": 0
+}

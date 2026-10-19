@@ -1,0 +1,19 @@
+{
+  "status": "running_after_restore",
+  "checked_epoch": 1792374669.6279826,
+  "pipeline_pid": 2466,
+  "progress": {
+    "status": "running",
+    "stage": "fold01_joint",
+    "epoch": 1,
+    "updates": 1234,
+    "samples_in_epoch": 4936,
+    "total_samples": 15006,
+    "elapsed_s": 32.33694881700001
+  },
+  "retained_completed_models": 1,
+  "retained_completed_updates": 18760,
+  "deadline": "2026-10-19T13:50:00+08:00",
+  "launcher_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-overnight-control/resume-0945.sh",
+  "launcher_sha256": "c48f53280a7650992fcd6aaae3393185df0a37adad9b5b1be335acb559d21f27"
+}
