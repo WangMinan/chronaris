@@ -1,0 +1,9 @@
+{
+  "status": "running",
+  "stage": "fold02_aircraft",
+  "epoch": 2,
+  "updates": 6436,
+  "samples_in_epoch": 9868,
+  "total_samples": 15873,
+  "elapsed_s": 680.7729309169999
+}

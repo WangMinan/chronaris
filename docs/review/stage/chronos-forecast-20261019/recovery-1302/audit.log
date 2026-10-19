@@ -1,0 +1,5 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+{"name": "fold01_aircraft", "updates": 18760, "epoch": 6, "next_offset": 0, "last_sha256": "bb0b55d93f2a49ffb476c49a088fc96b74c7d5235d5ecab670901d7ed53220b3", "best_sha256": "732e41953c25f924721cb848e3b54dee95a6fb0117b0f53a4696832eb524af11", "complete": true, "replay_windows": 864, "replay_rmse": 0.17386156189034954, "replay_delta": 0.0}
+{"name": "fold01_joint", "updates": 18760, "epoch": 6, "next_offset": 0, "last_sha256": "906fdfb009a1d4ef547e961ce0ab30f3f42bd036d76f98ec6b62135b073ae013", "best_sha256": "a85d63f9d6ab6a3df60fb38c240798e8c918af6d51ee08fc8c46a680386ee54e", "complete": true, "replay_windows": 864, "replay_rmse": 0.1768126785835087, "replay_delta": 0.0}
+{"name": "fold02_aircraft", "updates": 6000, "epoch": 2, "next_offset": 8124, "last_sha256": "223b5dd47717a6e551d8a1f63085af4df2dae267fbe1b77e8db3f07196b1414b", "best_sha256": "963cd3f2f3b8ca044a0a1fe6a427d1ba12ae011b0d6c09266b2e1ed08fd67f86", "complete": false, "unsaved_updates_at_least": 436}

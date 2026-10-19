@@ -1,0 +1,13 @@
+{
+  "reason": "Lossless removal of ages duplicated by construction across four statistics of one physiological channel and across the four jointly published performance components. Every removed age and mask must exactly equal its retained representative.",
+  "previous_channels": [
+    25,
+    57
+  ],
+  "final_channels": [
+    22,
+    42
+  ],
+  "encoder_updates": 0,
+  "hardware_qualification_started": false
+}

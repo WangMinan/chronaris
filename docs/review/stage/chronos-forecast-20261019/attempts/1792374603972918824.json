@@ -1,0 +1,19 @@
+{
+  "status": "running",
+  "stage": "fold01_joint",
+  "completed_units": [
+    {
+      "name": "fold01_aircraft",
+      "fold": "fold01",
+      "view": "aircraft",
+      "updates": 18760,
+      "epochs": 5,
+      "best_epoch": 4,
+      "windows_seen": 75030,
+      "receipt_path": "/home/wangminan/projects/chronaris/docs/review/stage/chronos-forecast-20261019/fold01_aircraft_receipt.json",
+      "receipt_sha256": "19dcc7752c6ceaafc3790c01772f27a6fa70bbfa1fe4dda69b8de912071dad37",
+      "checkpoint_path": "/home/wangminan/projects/chronaris/artifacts/application_evaluation/2026-10-19-chronos-forecast/training/fold01_aircraft/best.pt",
+      "checkpoint_sha256": "732e41953c25f924721cb848e3b54dee95a6fb0117b0f53a4696832eb524af11"
+    }
+  ]
+}

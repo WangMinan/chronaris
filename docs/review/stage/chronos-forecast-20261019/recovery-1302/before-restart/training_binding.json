@@ -1,0 +1,83 @@
+{
+  "plan_sha256": "ac6923a16c5686fa806c54aaba02cadfed78d3b16bda0a98ce981a642ed3b4e2",
+  "qualification_sha256": "b87ef5d380e5846e078cc766c5354aaf7e8f890d07d79c2fdd4d43420eb10e29",
+  "input_qualification_sha256": "f8d67f54598e353779c1ef54a100659cb04889ccdd8ab8d19205440c8dc3650c",
+  "assets_sha256": "d2186bba47f0dc1cd1a099604589a2584c2049491e6e5ca1350b82b7257e7fc7",
+  "seed": 17,
+  "folds": [
+    {
+      "name": "fold01",
+      "fit": [
+        "sub-cp004",
+        "sub-cp006",
+        "sub-cp008",
+        "sub-cp009",
+        "sub-cp013",
+        "sub-cp015",
+        "sub-cp018",
+        "sub-cp019",
+        "sub-cp020",
+        "sub-cp023",
+        "sub-cp024",
+        "sub-cp027",
+        "sub-cp028",
+        "sub-cp029",
+        "sub-cp030",
+        "sub-cp031",
+        "sub-cp035",
+        "sub-cp036",
+        "sub-cp039"
+      ],
+      "select": [
+        "sub-cp025"
+      ],
+      "score": [
+        "sub-cp003",
+        "sub-cp011",
+        "sub-cp022"
+      ]
+    },
+    {
+      "name": "fold02",
+      "fit": [
+        "sub-cp003",
+        "sub-cp004",
+        "sub-cp006",
+        "sub-cp009",
+        "sub-cp011",
+        "sub-cp013",
+        "sub-cp015",
+        "sub-cp018",
+        "sub-cp019",
+        "sub-cp020",
+        "sub-cp023",
+        "sub-cp024",
+        "sub-cp027",
+        "sub-cp028",
+        "sub-cp029",
+        "sub-cp030",
+        "sub-cp031",
+        "sub-cp035",
+        "sub-cp036",
+        "sub-cp039"
+      ],
+      "select": [
+        "sub-cp022"
+      ],
+      "score": [
+        "sub-cp008",
+        "sub-cp025"
+      ]
+    }
+  ],
+  "source_files": {
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/chronos_forecast_run.py": "29ba0285184af15265f250dc781989e6becf197da2dc637ce560f99793f3c2f4",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/chronos_forecast_inputs.py": "fde9d87117685fbc7e0210118df1d447ff6ccca5e0ab05e73e78d878c8894249",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/chronos_forecast_training.py": "b07c92d43f2eb7cd6d6b29bec4e75dadf5d5c00d603314d8ef7c4f2fbb8d7f92",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/fair_residual_inputs.py": "3c2a6093d8b6755ff0f0eca55cd5b8ba13ee5a07daa1e2d53b79cf5b05149e88",
+    "/home/wangminan/projects/chronaris/src/chronaris/evaluation/application_tasks/performance_pilot_training.py": "087ef729056f8d121deb7f12e5a7d37e97ed58546cffd4ab335a85b0831dc3de",
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/fusion_encoders/chronos_forecast.py": "5717cf6f5a1b7ff42bdc7325dec2e6d07a26bf44753d81f6061d76c61c6e7229",
+    "/home/wangminan/projects/chronaris/src/chronaris/modeling/training/rng.py": "de48565e87adbe3d8ea8ad4f5b668fe65ee1b290ddec45b2af724107a6b1c711"
+  },
+  "source_commit": "f563e426f58f5b9272b13a8306e21591eb185576"
+}
